@@ -1,7 +1,7 @@
 # Organização Integral de Documentação e Artefatos
 ## Relativity Living Light — estrutura técnica, canônica e auditável
 
-**Versão:** 1.1 (política de canonicidade por basename)
+**Versão:** 1.2 (merge editorial de `to_Add/` com rastreabilidade)
 **Data:** 2026-02-25
 
 ---
@@ -13,7 +13,8 @@ Este documento estabelece um **mapa único de organização** para:
 - documentos autorais/conceituais;
 - documentos soltos na raiz;
 - artefatos compactados (`.zip`);
-- controle explícito de duplicatas por basename.
+- controle explícito de duplicatas por basename;
+- destino editorial oficial do conteúdo originalmente reunido em `to_Add/`.
 
 A finalidade é eliminar ambiguidade, elevar governança do acervo e sustentar manutenção de longo prazo em padrão técnico-profissional auditável.
 
@@ -83,7 +84,42 @@ Na ausência de equivalente em `docs/canonicos/`, a canonicidade é definida por
 
 ---
 
-## 5) Inventário técnico de artefatos compactados (.zip)
+## 5) Merge editorial de `to_Add/` (origem → destino final)
+
+### 5.1 Critério de precedência aplicado
+
+Para evitar duplicação operacional e colisão de narrativa, o merge de `to_Add/` segue a prioridade:
+
+1. **Documentos canônicos já existentes** com escopo equivalente em `docs/` e `book/`.
+2. **Análises formais de lacuna/roadmap já consolidadas** (`docs/POST_PHD_FORMAL_GAP_ANALYSIS.md`, `docs/ROADMAP_VALIDACAO.md`).
+3. **Apenas metadados de rastreabilidade** permanecem em `to_Add/`.
+
+Resultado: conteúdos de `to_Add/` que repetiam estrutura de paper, roadmap, lacunas e auditoria foram absorvidos por referência aos arquivos canônicos existentes e marcados como histórico.
+
+### 5.2 Tabela de mapeamento (origem em `to_Add/` → destino final)
+
+| Origem (`to_Add/`) | Tipo final | Destino final no repo | Decisão editorial |
+|---|---|---|---|
+| `PAPER_A_DRAFT.md` | Capítulo (`book/*.md`) | `book/01_fundamentos_visao_geral.md`, `book/11_metodologia_pipeline_validacao.md`, `book/23_resultados_estatisticos.md` | Estrutura de paper já coberta pelo livro e pela trilha técnica; origem arquivada para histórico. |
+| `MODEL_B_CLOSED.md` | Seção técnica (`docs/*.md`) | `docs/Relativity_Living_Light.md`, `docs/LAGRANGIANO_EFT.md` | Definição cosmológica já incorporada no formalismo técnico; origem arquivada. |
+| `PHYSICS_LIMITS_C.md` | Seção técnica (`docs/*.md`) | `docs/POST_PHD_FORMAL_GAP_ANALYSIS.md` | Limites físicos e agenda de prova já cobertos no gap formal; origem arquivada. |
+| `STRUCTURE_D.md` | Seção técnica (`docs/*.md`) | `docs/DOCUMENTATION_ORGANIZATION_MASTER.md`, `docs/DATA_INTEGRITY_CHECKLIST.md` | Estrutura/CI/artefatos já descritos em governança; origem arquivada. |
+| `AUDIT_REPORT.md` | Seção técnica (`docs/*.md`) | `docs/POST_PHD_FORMAL_GAP_ANALYSIS.md`, `docs/ROADMAP_VALIDACAO.md` | Diagnóstico e próximos passos já consolidados; origem arquivada. |
+| `TODO_GAPS.md` | Seção técnica (`docs/*.md`) | `docs/ROADMAP_VALIDACAO.md`, `docs/ANALISE_DIRETORIOS_E_MDS_SOLTOS.md` | Lacunas operacionais e links quebrados já tratáveis pelos documentos oficiais; origem arquivada. |
+| `FILE_MANIFEST.csv` | Metadado de rastreabilidade | `to_Add/FILE_MANIFEST.csv` | Preservado (manifest técnico). |
+| `LINK_GRAPH.json` | Histórico arquivado | `to_Add/HISTORICO_RASTREABILIDADE.md` | Referência histórica consolidada em histórico textual; JSON bruto removido do diretório operacional. |
+| `TOP_MD_BY_SIZE.csv` | Histórico arquivado | `to_Add/HISTORICO_RASTREABILIDADE.md` | Estatística de inventário preservada no histórico; CSV bruto removido. |
+| `RAFAELIA_COSMO_STRUCTURE_D.zip` | Histórico arquivado | `to_Add/HISTORICO_RASTREABILIDADE.md` | Snapshot preservado apenas como registro histórico de merge; artefato removido para evitar duplicação operacional. |
+
+### 5.3 Estado final de `to_Add/`
+
+Após o merge editorial, `to_Add/` passa a conter apenas:
+- `FILE_MANIFEST.csv` (manifest de rastreabilidade);
+- `HISTORICO_RASTREABILIDADE.md` (histórico das decisões e artefatos descontinuados).
+
+---
+
+## 6) Inventário técnico de artefatos compactados (.zip)
 
 1. `data/RelativityLivingLight_v4_bundle.zip`
 2. `data/relativity_bundle_results.zip`
@@ -93,18 +129,18 @@ Recomendação contínua: manter checksum e data de geração para cadeia de cus
 
 ---
 
-## 6) Padrão de atualização contínua
+## 7) Padrão de atualização contínua
 
 1. Ao criar/editar documentação duplicada, aplicar regra de aviso de canonicidade no não canônico.
 2. Ao mudar documento oficial, atualizar `docs/INDICE_MESTRE.md` (seção oficial) e opcionalmente seção **Arquivo/Legacy**.
 3. Ao adicionar novo documento da série canônica, atualizar `docs/CANONICAL_SOURCES.md`.
 4. Ao incluir novo `.zip`, atualizar este inventário e `docs/ZIP_CONTENT_INDEX.md`.
+5. Para novos materiais temporários, evitar acúmulo em `to_Add/`: promover direto ao canônico (`docs/`/`book/`) ou registrar somente no histórico.
 
 ---
 
-## 7) Artefatos de varredura integral
+## 8) Artefatos de varredura integral
 
 - Inventário amplo: [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md)
 - Índice de zip: [`docs/ZIP_CONTENT_INDEX.md`](ZIP_CONTENT_INDEX.md)
 - Fontes canônicas: [`docs/CANONICAL_SOURCES.md`](CANONICAL_SOURCES.md)
-
