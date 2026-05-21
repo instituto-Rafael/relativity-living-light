@@ -252,8 +252,6 @@ Leitura sugerida: `README.md` → `docs/INDICE_MESTRE.md` → `docs/DOCUMENTATIO
 - [Catálogo bibliográfico observacional (YAML)](data/observational_sources.yml)
 - [Matriz YAML de validação cosmológica](data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml)
 - [Artefatos matemáticos YAML para DESI/BAO](data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml)
-- [Matriz de falseabilidade RLL × GR/ΛCDM](RLL_FALSEABILITY_MATRIX.md)
-- [Script comparativo inicial RLL vs ΛCDM](rll_vs_lcdm.py)
 
 ### Trilha autoral e conceitual (integridade de selo)
 
