@@ -1,0 +1,70 @@
+{
+  "generated_utc": "2026-06-04T11:17:25+00:00",
+  "region_of_validity": {
+    "z_min": 0.0,
+    "z_max": 2.4
+  },
+  "constants": {
+    "c_km_s": 299792.458,
+    "rd_mpc": 147.09
+  },
+  "summary": {
+    "LCDM": {
+      "params": {
+        "name": "LCDM",
+        "H0": 67.4,
+        "Om": 0.315,
+        "Or": 9.2e-05,
+        "Os": 0.0,
+        "zt": 1.0,
+        "wt": 0.3,
+        "k_params": 3
+      },
+      "chi2_bao": 25.0878,
+      "chi2_hz": 14.2945,
+      "chi2_total": 39.3823,
+      "n_points": 45,
+      "k_params": 3,
+      "chi2_per_dof": 0.9377,
+      "aic": 45.3823,
+      "bic": 50.8023,
+      "mean_abs_pull_bao": 1.0938,
+      "mean_abs_pull_hz": 0.4664,
+      "falsified_bao": false,
+      "falsified_hz": false
+    },
+    "RLL": {
+      "params": {
+        "name": "RLL",
+        "H0": 67.4,
+        "Om": 0.315,
+        "Or": 9.2e-05,
+        "Os": 0.02,
+        "zt": 1.0,
+        "wt": 0.3,
+        "k_params": 5
+      },
+      "chi2_bao": 30.8473,
+      "chi2_hz": 14.042,
+      "chi2_total": 44.8893,
+      "n_points": 45,
+      "k_params": 5,
+      "chi2_per_dof": 1.1222,
+      "aic": 54.8893,
+      "bic": 63.9226,
+      "mean_abs_pull_bao": 1.3744,
+      "mean_abs_pull_hz": 0.4585,
+      "falsified_bao": false,
+      "falsified_hz": false
+    }
+  },
+  "verdict": {
+    "compared": "LCDM - RLL",
+    "delta_chi2": -5.507,
+    "delta_aic": -9.507,
+    "delta_bic": -13.1203,
+    "preferred_by_aic": "LCDM",
+    "preferred_by_bic": "LCDM",
+    "reject_sigma": 3.0
+  }
+}
