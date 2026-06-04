@@ -1,0 +1,269 @@
+name: Real Data Complete Execution
+
+on:
+  workflow_dispatch:
+    inputs:
+      execution_mode:
+        description: "audit_only checks registry; materialize downloads official inputs; validate runs real-data validations; full runs all."
+        required: true
+        default: full
+        type: choice
+        options:
+          - audit_only
+          - materialize
+          - validate
+          - full
+      materialize_pantheon:
+        description: "Download Pantheon+SH0ES official files from the public DataRelease repository."
+        required: true
+        default: true
+        type: boolean
+      run_structure_d:
+        description: "Run Structure-D real validation after data checks."
+        required: true
+        default: true
+        type: boolean
+      run_pantheon_validation:
+        description: "Run Pantheon+ real validation when Pantheon+ files are present."
+        required: true
+        default: true
+        type: boolean
+      strict_real_data:
+        description: "Fail instead of silently fabricating data when a required real source/check is missing."
+        required: true
+        default: true
+        type: boolean
+      commit_light_artifacts:
+        description: "Commit only lightweight reports/manifests/checksums under results/pipeline-runs/<run_id>."
+        required: true
+        default: false
+        type: boolean
+      retention_days:
+        description: "Artifact retention days."
+        required: true
+        default: "30"
+        type: choice
+        options:
+          - "7"
+          - "14"
+          - "30"
+          - "90"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: real-data-complete-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  real-data-complete:
+    runs-on: ubuntu-latest
+    env:
+      RUN_DIR: artifacts/real-data-complete
+      CLAIM_BOUNDARY: "No superiority claim unless real-data metrics pass predefined thresholds."
+      STRUCTURE_D_PROFILE: structure_d_real_validation
+      STRUCTURE_D_SEED: "42"
+      STRUCTURE_D_MAXITER_LCDM: "80"
+      STRUCTURE_D_MAXITER_RLL: "120"
+      STRUCTURE_D_TOL: "1e-5"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy matplotlib pyyaml requests
+
+      - name: Create run plan and five-level repository inventory
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR" "$RUN_DIR/reports" "$RUN_DIR/checks"
+          cat > "$RUN_DIR/EXECUTION_PLAN.md" <<PLAN
+          # Real Data Complete Execution
+
+          - execution_mode: ${{ inputs.execution_mode }}
+          - materialize_pantheon: ${{ inputs.materialize_pantheon }}
+          - run_structure_d: ${{ inputs.run_structure_d }}
+          - run_pantheon_validation: ${{ inputs.run_pantheon_validation }}
+          - strict_real_data: ${{ inputs.strict_real_data }}
+          - commit_light_artifacts: ${{ inputs.commit_light_artifacts }}
+          - claim_boundary: $CLAIM_BOUNDARY
+
+          ## Failsafe / failover / rollback
+          - Never promote mock/synthetic/example/placeholder files as real data.
+          - Download only from documented public primary sources.
+          - Write new run artifacts under $RUN_DIR first.
+          - Commit only lightweight reports when explicitly requested.
+          - If a required real input is missing and strict mode is true, fail the workflow instead of fabricating data.
+          PLAN
+          find . -maxdepth 5 -type f \
+            -not -path './.git/*' \
+            -not -path './artifacts/*' \
+            -not -path './.venv/*' \
+            -print | sort > "$RUN_DIR/checks/repository_files_depth5.txt"
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > "$RUN_DIR/RUN_UTC.txt"
+          git rev-parse HEAD > "$RUN_DIR/COMMIT_SHA.txt"
+
+      - name: Validate real-data registry without rewriting committed data
+        run: |
+          set -euo pipefail
+          python - <<'PY' | tee "artifacts/real-data-complete/reports/real_data_policy_check.log"
+          from pathlib import Path
+          required = [
+              Path('docs/real_data/REAL_DATA_REQUIRED_INPUTS.md'),
+              Path('docs/real_data/RLL_REAL_DATA_INGESTION_REPORT_2026.md'),
+              Path('data/real/rll_real_sources_manifest_2026.yml'),
+              Path('data/real/cosmology_observational_seed_2026.csv'),
+              Path('data/real/cosmology_observational_seed_2026.provenance.json'),
+              Path('data/pipelines/structure_d/datasets_config.json'),
+          ]
+          missing = [str(path) for path in required if not path.exists()]
+          if missing:
+              raise SystemExit('missing required real-data policy files: ' + ', '.join(missing))
+          text = Path('docs/real_data/REAL_DATA_REQUIRED_INPUTS.md').read_text(encoding='utf-8')
+          for term in ['dado real', 'checksum', 'mock', 'synthetic', 'Pantheon+SH0ES', 'DESI DR2 BAO']:
+              if term not in text:
+                  raise SystemExit(f'real-data policy term missing: {term}')
+          csv_text = Path('data/real/cosmology_observational_seed_2026.csv').read_text(encoding='utf-8')
+          for source_id in ['cc_borghi_2021_lega_c', 'cc_jiao_2022_lega_c_full_spectrum', 'cc_tomasetti_2025_clusters', 'desi_dr2_bao_2025']:
+              if source_id not in csv_text:
+                  raise SystemExit(f'real-data seed row missing: {source_id}')
+          print('real-data policy files, provenance files, and seed source ids OK')
+          PY
+
+      - name: Materialize Pantheon+SH0ES official inputs
+        if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'full' }}
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.materialize_pantheon }}" = "true" ]; then
+            bash scripts/download_real_cosmology_inputs.sh | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
+          else
+            echo "Pantheon+ materialization disabled by workflow input." | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
+          fi
+
+      - name: Verify Pantheon+ inputs with strict failover
+        if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'validate' || inputs.execution_mode == 'full' }}
+        run: |
+          set -euo pipefail
+          if python scripts/verify_pantheon_inputs.py --json > "$RUN_DIR/reports/pantheon_inputs.json"; then
+            echo "Pantheon+ verification OK" | tee "$RUN_DIR/reports/pantheon_inputs.status"
+          else
+            echo "Pantheon+ verification failed or files are missing." | tee "$RUN_DIR/reports/pantheon_inputs.status"
+            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+              exit 2
+            fi
+          fi
+
+      - name: Run real-source signature verification and materialization audit
+        run: |
+          set -euo pipefail
+          python tools/verify_real_source_signatures.py | tee "$RUN_DIR/reports/real_source_signature_verification.log"
+          python tools/real_data_materialization_audit.py | tee "$RUN_DIR/reports/real_data_materialization_audit.log"
+          cp results/audit/real_source_signature_verification.md "$RUN_DIR/reports/" || true
+          cp results/audit/real_data_materialization_audit.md "$RUN_DIR/reports/" || true
+          cp results/audit/real_data_materialization_audit.json "$RUN_DIR/reports/" || true
+
+      - name: Run Structure-D real validation
+        if: ${{ inputs.run_structure_d && (inputs.execution_mode == 'validate' || inputs.execution_mode == 'full') }}
+        run: |
+          set -euo pipefail
+          python -m data.pipelines.structure_d.run_all_real | tee "$RUN_DIR/reports/structure_d_real_validation.log"
+          cp results/structure_d/model_comparison_real.csv "$RUN_DIR/reports/" || true
+          cp results/structure_d/model_comparison_real_fit_metadata.json "$RUN_DIR/reports/" || true
+          cp results/structure_d/execution_timing_real.csv "$RUN_DIR/reports/" || true
+          cp results/structure_d/error_mode_usage.csv "$RUN_DIR/reports/" || true
+
+      - name: Run Pantheon+ real validation
+        if: ${{ inputs.run_pantheon_validation && (inputs.execution_mode == 'validate' || inputs.execution_mode == 'full') }}
+        run: |
+          set -euo pipefail
+          if python scripts/run_real_pantheon_validation.py > "$RUN_DIR/reports/run_real_pantheon_validation.log" 2>&1; then
+            echo "Pantheon+ real validation OK" | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
+            cp data/results/model_comparison.json "$RUN_DIR/reports/" || true
+          else
+            cat "$RUN_DIR/reports/run_real_pantheon_validation.log"
+            echo "Pantheon+ real validation failed." | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
+            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+              exit 3
+            fi
+          fi
+
+      - name: Build final report, checksums, and rollback manifest
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('artifacts/real-data-complete')
+          reports = sorted(str(path.relative_to(root)) for path in (root / 'reports').glob('*') if path.is_file())
+          checks = sorted(str(path.relative_to(root)) for path in (root / 'checks').glob('*') if path.is_file())
+          payload = {
+              'schema': 'rll.real_data_complete_execution.v1',
+              'claim_boundary': 'No superiority claim unless real-data metrics pass predefined thresholds.',
+              'reports': reports,
+              'checks': checks,
+              'failsafe': [
+                  'no synthetic promotion',
+                  'strict mode fails on missing required real inputs',
+                  'lightweight commit is opt-in',
+                  'workflow artifacts preserve rollback evidence',
+              ],
+          }
+          (root / 'MANIFEST.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          lines = [
+              '# Real Data Complete Execution Report',
+              '',
+              f"Claim boundary: `{payload['claim_boundary']}`",
+              '',
+              '## Reports',
+              *[f'- `{item}`' for item in reports],
+              '',
+              '## Checks',
+              *[f'- `{item}`' for item in checks],
+              '',
+              '## Failsafe / failover / rollback',
+              *[f"- {item}" for item in payload['failsafe']],
+              '',
+          ]
+          (root / 'PIPELINE_REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
+          PY
+          (cd "$RUN_DIR" && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > "$RUN_DIR/CHECKSUMS.sha256"
+
+      - name: Upload complete real-data artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-data-complete-${{ github.run_id }}
+          path: artifacts/real-data-complete/
+          retention-days: ${{ fromJSON(inputs.retention_days) }}
+
+      - name: Commit lightweight artifacts
+        if: ${{ inputs.commit_light_artifacts }}
+        run: |
+          set -euo pipefail
+          DEST="results/pipeline-runs/${{ github.run_id }}"
+          mkdir -p "$DEST"
+          rsync -av --prune-empty-dirs \
+            --include='*/' \
+            --include='*.md' --include='*.json' --include='*.csv' --include='*.txt' --include='*.sha256' --include='*.log' --include='*.status' \
+            --exclude='*' \
+            "$RUN_DIR/" "$DEST/"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$DEST"
+          if git diff --cached --quiet; then
+            echo "No lightweight artifacts to commit."
+          else
+            git commit -m "ci(real-data): complete execution artifacts ${{ github.run_id }}"
+            git push
+          fi
