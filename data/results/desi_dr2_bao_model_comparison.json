@@ -1,0 +1,36 @@
+{
+  "schema": "rll.desi_dr2_bao.model_comparison.v1",
+  "claim_boundary": "No superiority claim unless real-data metrics pass predefined thresholds.",
+  "dataset": {
+    "name": "DESI DR2 Gaussian BAO ALL_GCcomb",
+    "n_obs": 13,
+    "covariance_used": "full_13x13_inverse_covariance",
+    "rd_mpc": 147.09,
+    "c_km_s": 299792.458
+  },
+  "models": {
+    "LCDM": {
+      "n_obs": 13,
+      "k_params": 3,
+      "chi2": 28.69374102,
+      "chi2_per_dof": 2.8693741,
+      "AIC": 34.69374102,
+      "BIC": 36.38858909
+    },
+    "RLL": {
+      "n_obs": 13,
+      "k_params": 5,
+      "chi2": 34.52753599,
+      "chi2_per_dof": 4.315942,
+      "AIC": 44.52753599,
+      "BIC": 47.35228277
+    }
+  },
+  "delta": {
+    "delta_chi2_rll_minus_lcdm": 5.83379497,
+    "delta_aic_rll_minus_lcdm": 9.83379497,
+    "delta_bic_rll_minus_lcdm": 10.96369368,
+    "interpretation_label": "lcdm_preferred_for_this_desi_dr2_bao_setup"
+  },
+  "note": "Fixed current RLL parameterization against materialized DESI DR2 BAO. Prior timestamped predictions require separate authorship/timestamp comparison artifact."
+}

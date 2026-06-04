@@ -1,0 +1,176 @@
+name: repo-real-inventory
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/DOCUMENTATION_FULL_INVENTORY.md'
+      - 'docs/REAL_NUMBERS_REPORT.md'
+      - 'docs/YML_WORKFLOWS_INDEX.md'
+      - 'data/results/repo_inventory.json'
+      - 'data/results/repo_inventory.tsv'
+      - 'data/results/repo_inventory_summary.json'
+
+permissions:
+  contents: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate real inventory from git tracked files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs data/results
+          python3 - <<'PY'
+          from __future__ import annotations
+          import csv, hashlib, json, math, os, subprocess
+          from collections import Counter, defaultdict
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root = Path('.')
+          now = datetime.now(timezone.utc).isoformat()
+          commit = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+          tracked = subprocess.check_output(['git','ls-files'], text=True).splitlines()
+
+          def sha256(path: Path) -> str:
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024*1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def is_text(path: Path) -> bool:
+              try:
+                  b = path.read_bytes()[:4096]
+                  return b'\0' not in b
+              except Exception:
+                  return False
+
+          def lines(path: Path, text: bool) -> int | None:
+              if not text:
+                  return None
+              try:
+                  return sum(1 for _ in path.open('r', encoding='utf-8', errors='replace'))
+              except Exception:
+                  return None
+
+          def kind(p: str, ext: str) -> str:
+              pl = p.lower()
+              if pl.startswith('.github/workflows/') and ext in ('.yml','.yaml'):
+                  return 'github_workflow_yml'
+              if ext in ('.yml','.yaml'):
+                  return 'config_yml'
+              if ext == '.md':
+                  return 'documentation_md'
+              if ext in ('.py','.sh','.c','.h','.cpp','.hpp','.rs','.js','.ts','.tsx','.jsx'):
+                  return 'source_code'
+              if ext in ('.json','.csv','.tsv','.dat','.txt') and ('data/' in pl or 'results/' in pl):
+                  return 'data_or_result'
+              if pl.startswith('tests/') or 'test' in pl:
+                  return 'test_or_validation'
+              if ext in ('.zip','.tar','.gz','.xz','.7z'):
+                  return 'archive'
+              return 'other'
+
+          def flags(p: str, sample: str) -> list[str]:
+              s = sample.lower()
+              out = []
+              if 'synthetic' in s: out.append('mentions_synthetic')
+              if 'mock' in s or 'placeholder' in s: out.append('mentions_mock_or_placeholder')
+              if 'token_vazio' in s: out.append('token_vazio_declared')
+              if any(x in s for x in ['pantheon','desi','bao','cosmic chronometer','lcdm','chi2','aic','bic']): out.append('cosmology_validation_marker')
+              if p.startswith('data/results/') or p.startswith('results/'): out.append('result_artifact')
+              return out
+
+          rows=[]; errors=[]
+          for p in tracked:
+              path = Path(p)
+              try:
+                  st = path.stat()
+                  ext = path.suffix.lower() or 'NO_EXT'
+                  text = is_text(path)
+                  sample = path.read_text('utf-8', errors='replace')[:12000] if text else ''
+                  rows.append({
+                      'path': p,
+                      'size_bytes': st.st_size,
+                      'ext': ext,
+                      'kind': kind(p, ext),
+                      'sha256': sha256(path),
+                      'line_count': lines(path, text),
+                      'is_text': text,
+                      'risk_flags': flags(p, sample),
+                  })
+              except Exception as e:
+                  errors.append({'path': p, 'error': repr(e)})
+
+          extc=Counter(r['ext'] for r in rows); kindc=Counter(r['kind'] for r in rows); flagc=Counter()
+          for r in rows: flagc.update(r['risk_flags'])
+          summary={
+              'tracked_files_total': len(tracked),
+              'cataloged_files': len(rows),
+              'uncataloged_or_error_files': len(errors),
+              'total_bytes': sum(r['size_bytes'] for r in rows),
+              'total_text_lines': sum(r['line_count'] or 0 for r in rows),
+              'markdown_files': sum(1 for r in rows if r['ext']=='.md'),
+              'yml_yaml_files': sum(1 for r in rows if r['ext'] in ('.yml','.yaml')),
+              'github_workflow_yml_files': sum(1 for r in rows if r['kind']=='github_workflow_yml'),
+              'data_or_result_files': sum(1 for r in rows if r['kind']=='data_or_result'),
+          }
+          payload={'generated_at':now,'git_commit':commit,'summary':summary,'counts_by_ext':dict(extc),'counts_by_kind':dict(kindc),'flags':dict(flagc),'files':rows,'errors':errors,'claim_boundary':'Only measured git-tracked repository facts; no synthetic fill.'}
+          Path('data/results/repo_inventory.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False)+'\n')
+          Path('data/results/repo_inventory_summary.json').write_text(json.dumps({'generated_at':now,'git_commit':commit,'summary':summary,'flags':dict(flagc),'errors':errors}, indent=2, ensure_ascii=False)+'\n')
+          with Path('data/results/repo_inventory.tsv').open('w', newline='', encoding='utf-8') as f:
+              w=csv.DictWriter(f, fieldnames=['path','size_bytes','ext','kind','sha256','line_count','is_text','risk_flags'], delimiter='\t')
+              w.writeheader()
+              for r in rows:
+                  rr=r.copy(); rr['risk_flags']=','.join(rr['risk_flags']); w.writerow(rr)
+
+          def table(counter, a, b):
+              lines=[f'| {a} | {b} |','|---|---:|']
+              for k,v in counter.most_common(): lines.append(f'| `{k}` | {v} |')
+              return '\n'.join(lines)
+
+          real=['# Real Numbers Report','',f'Gerado em: `{now}`  ',f'Commit: `{commit}`','', '| Métrica | Valor |','|---|---:|']
+          for k,v in summary.items(): real.append(f'| `{k}` | {v} |')
+          real += ['', '## Categorias', '', table(kindc,'Categoria','Arquivos'), '', '## Extensões', '', table(extc,'Extensão','Arquivos'), '', '## Flags', '', table(flagc,'Flag','Ocorrências') if flagc else 'Nenhuma flag detectada.', '', '## Fronteira', '', 'tracked_files_total é a contagem bruta de `git ls-files`. cataloged_files é o que foi lido, medido e hasheado. uncataloged_or_error_files mostra a lacuna real.']
+          Path('docs/REAL_NUMBERS_REPORT.md').write_text('\n'.join(real)+'\n')
+
+          yml=['# YML Workflows Index','',f'Gerado em: `{now}`  ',f'Commit: `{commit}`','', '| Path | Tipo | Bytes | Linhas | SHA256 |','|---|---|---:|---:|---|']
+          for r in rows:
+              if r['ext'] in ('.yml','.yaml'):
+                  yml.append(f"| `{r['path']}` | `{r['kind']}` | {r['size_bytes']} | {r['line_count'] or 0} | `{r['sha256']}` |")
+          Path('docs/YML_WORKFLOWS_INDEX.md').write_text('\n'.join(yml)+'\n')
+
+          inv=['# Documentation Full Inventory','',f'Gerado em: `{now}`  ',f'Commit: `{commit}`','', '## Resumo', '', '| Métrica | Valor |','|---|---:|']
+          for k,v in summary.items(): inv.append(f'| `{k}` | {v} |')
+          inv += ['', '## Inventário completo', '', '| Path | Bytes | Ext | Tipo | Linhas | SHA256 | Flags |','|---|---:|---|---|---:|---|---|']
+          for r in rows:
+              inv.append(f"| `{r['path']}` | {r['size_bytes']} | `{r['ext']}` | `{r['kind']}` | {r['line_count'] or 0} | `{r['sha256']}` | `{','.join(r['risk_flags'])}` |")
+          inv += ['', '## Arquivos com erro/lacuna', '']
+          inv += [f"- `{e['path']}`: `{e['error']}`" for e in errors] if errors else ['Nenhum erro de leitura.']
+          Path('docs/DOCUMENTATION_FULL_INVENTORY.md').write_text('\n'.join(inv)+'\n')
+          print(json.dumps(summary, indent=2, ensure_ascii=False))
+          PY
+
+      - name: Commit generated real inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/DOCUMENTATION_FULL_INVENTORY.md docs/REAL_NUMBERS_REPORT.md docs/YML_WORKFLOWS_INDEX.md data/results/repo_inventory.json data/results/repo_inventory.tsv data/results/repo_inventory_summary.json
+          if git diff --cached --quiet; then
+            echo "No inventory changes."
+            exit 0
+          fi
+          git commit -m "Generate measured repository inventory"
+          git push

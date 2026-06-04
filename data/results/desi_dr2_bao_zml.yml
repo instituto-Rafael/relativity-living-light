@@ -1,0 +1,91 @@
+zml:
+  schema: rll.desi_dr2_bao.zml.v1
+  source: DESI_DR2_Gaussian_BAO_ALL_GCcomb
+  n_obs: 13
+  covariance_used: full_13x13_inverse_covariance
+  model_comparison:
+    LCDM_chi2: 28.69374102
+    RLL_chi2: 34.52753599
+    delta_chi2_rll_minus_lcdm: 5.83379497
+    delta_aic_rll_minus_lcdm: 9.83379497
+    delta_bic_rll_minus_lcdm: 10.96369368
+    interpretation_label: lcdm_preferred_for_this_desi_dr2_bao_setup
+  observables:
+    - index: 0
+      tracer: BGS
+      z_eff: 0.295
+      observable: DV_over_rd
+      value: 7.94167639
+      sigma: 0.0760919632419
+    - index: 1
+      tracer: LRG_z0
+      z_eff: 0.51
+      observable: DM_over_rd
+      value: 13.58758434
+      sigma: 0.168366784729
+    - index: 2
+      tracer: LRG_z0
+      z_eff: 0.51
+      observable: DH_over_rd
+      value: 21.86294686
+      sigma: 0.42886832478
+    - index: 3
+      tracer: LRG_z1
+      z_eff: 0.706
+      observable: DM_over_rd
+      value: 17.35069094
+      sigma: 0.179931220748
+    - index: 4
+      tracer: LRG_z1
+      z_eff: 0.706
+      observable: DH_over_rd
+      value: 19.45534918
+      sigma: 0.333870031599
+    - index: 5
+      tracer: LRGplusELG
+      z_eff: 0.934
+      observable: DM_over_rd
+      value: 21.57563956
+      sigma: 0.161781586097
+    - index: 6
+      tracer: LRGplusELG
+      z_eff: 0.934
+      observable: DH_over_rd
+      value: 17.64149464
+      sigma: 0.201043248581
+    - index: 7
+      tracer: ELG
+      z_eff: 1.321
+      observable: DM_over_rd
+      value: 27.60085612
+      sigma: 0.324555875005
+    - index: 8
+      tracer: ELG
+      z_eff: 1.321
+      observable: DH_over_rd
+      value: 14.17602155
+      sigma: 0.22455135092
+    - index: 9
+      tracer: QSO
+      z_eff: 1.484
+      observable: DM_over_rd
+      value: 30.51190063
+      sigma: 0.763557644844
+    - index: 10
+      tracer: QSO
+      z_eff: 1.484
+      observable: DH_over_rd
+      value: 12.81699964
+      sigma: 0.518011769171
+    - index: 11
+      tracer: Lya
+      z_eff: 2.33
+      observable: DH_over_rd
+      value: 8.63154567485
+      sigma: 0.101062452968
+    - index: 12
+      tracer: Lya
+      z_eff: 2.33
+      observable: DM_over_rd
+      value: 38.988973962
+      sigma: 0.531682028096

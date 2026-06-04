@@ -1,0 +1,56 @@
+# RAFAELIA/RLL real inventory config
+# Este YML não inventa dado: orienta o scanner para gerar prova reproduzível.
+project_name: relativity-living-light
+claim_boundary: "No synthetic claim without repository-measured evidence. TOKEN_VAZIO preserves unmeasured gaps."
+
+outputs:
+  markdown_inventory: docs/DOCUMENTATION_FULL_INVENTORY.md
+  real_numbers_report: docs/REAL_NUMBERS_REPORT.md
+  yml_index: docs/YML_WORKFLOWS_INDEX.md
+  json_inventory: data/results/repo_inventory.json
+  tsv_inventory: data/results/repo_inventory.tsv
+  machine_summary: data/results/repo_inventory_summary.json
+
+exclude_dirs:
+  - .git
+  - node_modules
+  - .venv
+  - venv
+  - __pycache__
+  - .pytest_cache
+  - .mypy_cache
+  - .ruff_cache
+  - data/raw
+  - data/cache
+
+text_extensions:
+  - .md
+  - .txt
+  - .py
+  - .sh
+  - .yml
+  - .yaml
+  - .json
+  - .csv
+  - .tsv
+  - .c
+  - .h
+  - .cpp
+  - .hpp
+  - .rs
+  - .js
+  - .ts
+  - .tsx
+  - .jsx
+  - .html
+  - .css
+  - .toml
+  - .ini
+  - .cfg
+
+real_data_markers:
+  - data/results
+  - data/processed
+  - scripts
+  - tests
+  - docs
