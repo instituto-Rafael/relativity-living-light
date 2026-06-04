@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-06-04T11:17:25+00:00",
+  "generated_utc": "2026-06-04T13:25:15+00:00",
   "sources": [
     {
       "source_id": "desi_dr2_bao",
-      "fetched_utc": "2026-06-04T11:17:25+00:00",
+      "fetched_utc": "2026-06-04T13:25:16+00:00",
       "portal": "https://arxiv.org/abs/2503.14738",
       "remote_bytes": 84766,
       "used": "remote_then_validated_fallback",
@@ -11,7 +11,7 @@
     },
     {
       "source_id": "hz_cosmic_chronometers",
-      "fetched_utc": "2026-06-04T11:17:25+00:00",
+      "fetched_utc": "2026-06-04T13:25:16+00:00",
       "portal": "https://gitlab.com/mmoresco/CCcovariance",
       "remote_bytes": 44055,
       "used": "remote_then_validated_fallback",
