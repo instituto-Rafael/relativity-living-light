@@ -17,7 +17,8 @@ BAO observables (dimensionless, divided by r_d):
   DM/rd = (c/H0) * integral_0^z dz'/E(z')  / r_d
   DV/rd = [ z * DM^2 * DH ]^(1/3) / r_d
 
-Scoring: chi2 (diagonal), AIC = 2k + chi2, BIC = k ln(n) + chi2.
+Scoring: chi2 uses DESI covariance when present and diagonal H(z) errors;
+AIC = 2k + chi2, BIC = k ln(n) + chi2.
 Falsifiability: per-point pull = (model-obs)/sigma; a model is rejected in a
 regime if the mean |pull| there exceeds REJECT_SIGMA.
 
@@ -115,6 +116,59 @@ def model_bao(c: Cosmo, z: float, observable: str) -> float:
     raise ValueError(f"unknown observable: {observable}")
 
 
+
+def covariance_matrix(points: list[dict]) -> list[list[float]]:
+    size = len(points)
+    matrix = [[0.0 for _ in range(size)] for _ in range(size)]
+    for idx, point in enumerate(points):
+        matrix[idx][idx] = point["sigma"] * point["sigma"]
+    for idx, point in enumerate(points):
+        paired = point.get("paired_observable")
+        cov = point.get("covariance")
+        if paired is None:
+            continue
+        for jdx, other in enumerate(points):
+            if idx == jdx:
+                continue
+            if point.get("tracer") != other.get("tracer"):
+                continue
+            if abs(point["z_eff"] - other["z_eff"]) > 1e-9:
+                continue
+            if other.get("observable") != paired:
+                continue
+            if cov is None:
+                corr = point.get("correlation_coefficient", 0.0)
+                cov = corr * point["sigma"] * other["sigma"]
+            matrix[idx][jdx] = float(cov)
+            matrix[jdx][idx] = float(cov)
+            break
+    return matrix
+
+
+def invert_matrix(matrix: list[list[float]]) -> list[list[float]]:
+    size = len(matrix)
+    augmented = [row[:] + [1.0 if i == j else 0.0 for j in range(size)] for i, row in enumerate(matrix)]
+    for col in range(size):
+        pivot = max(range(col, size), key=lambda row: abs(augmented[row][col]))
+        if abs(augmented[pivot][col]) < 1e-15:
+            raise ValueError("singular covariance matrix")
+        if pivot != col:
+            augmented[col], augmented[pivot] = augmented[pivot], augmented[col]
+        scale = augmented[col][col]
+        augmented[col] = [value / scale for value in augmented[col]]
+        for row in range(size):
+            if row == col:
+                continue
+            factor = augmented[row][col]
+            if factor:
+                augmented[row] = [value - factor * base for value, base in zip(augmented[row], augmented[col])]
+    return [row[size:] for row in augmented]
+
+
+def quadratic_form(vector: list[float], inverse: list[list[float]]) -> float:
+    return sum(vector[i] * sum(inverse[i][j] * vector[j] for j in range(len(vector))) for i in range(len(vector)))
+
+
 def load_points(path: Path) -> list[dict]:
     return yaml.safe_load(path.read_text(encoding="utf-8")).get("points", [])
 
@@ -126,6 +180,8 @@ def evaluate(models: dict[str, Cosmo]) -> dict:
     rows = []
     chi2 = {m: {"bao": 0.0, "hz": 0.0} for m in models}
     pulls = {m: {"bao": [], "hz": []} for m in models}
+    bao_residuals = {m: [] for m in models}
+    bao_inverse_cov = invert_matrix(covariance_matrix(bao))
 
     for p in bao:
         z, obs, val, sig = p["z_eff"], p["observable"], p["value"], p["sigma"]
@@ -133,12 +189,16 @@ def evaluate(models: dict[str, Cosmo]) -> dict:
                "observable": obs, "obs_value": val, "sigma": sig}
         for m, c in models.items():
             pred = model_bao(c, z, obs)
-            pull = (pred - val) / sig
-            chi2[m]["bao"] += pull * pull
+            residual = pred - val
+            pull = residual / sig
+            bao_residuals[m].append(residual)
             pulls[m]["bao"].append(abs(pull))
             row[f"pred_{m}"] = round(pred, 5)
             row[f"pull_{m}"] = round(pull, 4)
         rows.append(row)
+
+    for m in models:
+        chi2[m]["bao"] = quadratic_form(bao_residuals[m], bao_inverse_cov)
 
     for p in hz:
         z, val, sig = p["z"], p["H"], p["sigma"]
@@ -198,6 +258,7 @@ def evaluate(models: dict[str, Cosmo]) -> dict:
         "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "region_of_validity": {"z_min": 0.0, "z_max": 2.4},
         "constants": {"c_km_s": C_KM_S, "rd_mpc": RD_MPC},
+        "scoring": {"bao": "full covariance when present", "hz": "diagonal sigma"},
         "summary": summary,
         "verdict": verdict,
         "rows": rows,

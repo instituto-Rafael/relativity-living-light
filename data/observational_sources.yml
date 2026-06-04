@@ -36,7 +36,10 @@ catalog:
     zenodo_url: "https://zenodo.org/records/16644577"
     local_primary_points: "data/real/cosmology/desi_dr2_bao_primary_points.csv"
     local_covariance_summary: "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
-    usage: "Primary 2025 DESI DR2 BAO distance-ratio constraints for expansion-history likelihoods"
+    local_cobaya_likelihood_dir: "data/real/cosmology/desi_bao_dr2_cobaya"
+    local_cobaya_mean: "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_mean.txt"
+    local_cobaya_covariance: "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_cov.txt"
+    usage: "Primary 2025 DESI DR2 BAO distance-ratio constraints and public mean/covariance likelihood files for expansion-history likelihoods"
     observation_scope:
       years_of_operation: 3
       tracers_reported: [BGS, LRG, ELG, QSO, Lya]

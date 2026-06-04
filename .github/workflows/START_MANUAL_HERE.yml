@@ -8,13 +8,13 @@ on:
         required: true
         default: full_validation
         type: choice
-        options: [quick_yaml_only, interoperability_only, full_validation]
+        options: [quick_yaml_only, workflow_audit, interoperability_only, full_validation]
       pipeline_scope:
         description: Escopo de pipeline para formalizar seleção de run
         required: true
         default: all
         type: choice
-        options: [rll, iml, formulas, book, all]
+        options: [rll, iml, formulas, book, real_validation, validation_paths, all]
       dataset_group:
         description: Grupo de dados principal para análise
         required: true
@@ -32,9 +32,9 @@ on:
         required: true
         default: metadata_only
         type: choice
-        options: [metadata_only, dry_run, fetch, compute, full]
+        options: [metadata_only, dry_run, fetch, compute, figures, report, full]
       validate_workflows:
-        description: Validar todos os YAML em .github/workflows
+        description: Validar todos os workflows executaveis em .github/workflows
         required: true
         default: true
         type: boolean
@@ -44,7 +44,7 @@ on:
         default: true
         type: boolean
       run_data_preparation_probe:
-        description: Executar sonda de preparação (fetch/compute) sem commit
+        description: Executar sonda de preparação/orquestração sem commit
         required: true
         default: true
         type: boolean
@@ -88,27 +88,34 @@ jobs:
           - strict_mode: ${{ inputs.strict_mode }}
 
           ## Methodology Angle
-          1. Parse YAML syntax safety.
-          2. Validate interoperability contracts.
-          3. Probe data preparation pathway (metadata/fetch/compute) for selected scope.
-          4. Persist summary for reproducible audit.
+          1. Parse YAML syntax safety using a GitHub-aware loader for `on`.
+          2. Keep executable workflows isolated from data YML, scripts, images, PDFs and ZIPs.
+          3. Validate interoperability contracts and validation-path methodology.
+          4. Probe selected orchestration path without committing artifacts.
+          5. Persist summary for reproducible audit.
           PLAN
 
       - name: Validate YAML parse (workflows + data)
-        if: ${{ inputs.run_profile == 'quick_yaml_only' || inputs.run_profile == 'full_validation' }}
+        if: ${{ inputs.run_profile == 'quick_yaml_only' || inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
         run: |
           python - <<'PY'
           import glob
           import yaml
 
           files = []
+          workflow_files = []
           if "${{ inputs.validate_workflows }}" == "true":
-              files.extend(sorted(glob.glob('.github/workflows/*.[Yy][Aa][Mm][Ll]') + glob.glob('.github/workflows/*.yml') + glob.glob('.github/workflows/*.yaml')))
+              workflow_files = sorted(set(glob.glob('.github/workflows/*.yml') + glob.glob('.github/workflows/*.yaml')))
+              files.extend(workflow_files)
           if "${{ inputs.validate_data_yml }}" == "true":
               files.extend([
                   'data/observational_sources.yml',
                   'data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml',
                   'data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml',
+                  'validacao_real/sources.yml',
+                  'validacao_real/data/desi_dr2_bao.yml',
+                  'validacao_real/data/hz_cosmic_chronometers.yml',
+                  'docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml',
               ])
 
           files = sorted(set(files))
@@ -118,9 +125,17 @@ jobs:
 
           for path in files:
               with open(path, 'r', encoding='utf-8') as fh:
-                  yaml.safe_load(fh)
+                  doc = yaml.load(fh, Loader=yaml.BaseLoader)
+              if path in workflow_files:
+                  missing = [key for key in ('name', 'on', 'jobs') if key not in (doc or {})]
+                  if missing:
+                      raise SystemExit(f'{path}: missing workflow keys {missing}')
               print(f'OK YAML: {path}')
           PY
+
+      - name: Validate workflow directory hygiene
+        if: ${{ inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
+        run: python3 tools/audit_github_workflows.py --strict
 
       - name: Validate interoperability contracts
         if: ${{ inputs.run_profile == 'interoperability_only' || inputs.run_profile == 'full_validation' }}
@@ -180,11 +195,29 @@ jobs:
         if: ${{ inputs.run_data_preparation_probe }}
         run: |
           mkdir -p artifacts/manual-start/probe
-          python3 scripts/rll_pipeline.py \
-            --book-scope "${{ inputs.book_scope }}" \
-            --dataset-group "${{ inputs.dataset_group }}" \
-            --mode "${{ inputs.mode == 'full' && 'compute' || inputs.mode }}" \
-            --output-dir artifacts/manual-start/probe
+          if [ "${{ inputs.pipeline_scope }}" = "real_validation" ]; then
+            (cd validacao_real && python3 fetch_real_data.py)
+            if [ "${{ inputs.mode }}" = "compute" ] || [ "${{ inputs.mode }}" = "figures" ] || [ "${{ inputs.mode }}" = "report" ] || [ "${{ inputs.mode }}" = "full" ]; then
+              (cd validacao_real && python3 compute_validation.py)
+            fi
+            if [ "${{ inputs.mode }}" = "figures" ] || [ "${{ inputs.mode }}" = "report" ] || [ "${{ inputs.mode }}" = "full" ]; then
+              (cd validacao_real && python3 make_figures.py)
+            fi
+            if [ "${{ inputs.mode }}" = "report" ] || [ "${{ inputs.mode }}" = "full" ]; then
+              (cd validacao_real && python3 render_report.py)
+            fi
+            rsync -a validacao_real/fetched validacao_real/results artifacts/manual-start/probe/ 2>/dev/null || true
+          elif [ "${{ inputs.pipeline_scope }}" = "validation_paths" ]; then
+            python3 -c "import json, yaml; from pathlib import Path; doc=yaml.safe_load(Path('docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml').read_text(encoding='utf-8')); out=Path('artifacts/manual-start/probe/validation_paths_summary.json'); out.write_text(json.dumps({'schema': doc.get('meta', {}).get('schema'), 'count': len(doc.get('caminhos', [])), 'ids': [item.get('id') for item in doc.get('caminhos', [])]}, indent=2), encoding='utf-8'); print(out)"
+          else
+            RLL_MODE="${{ inputs.mode }}"
+            if [ "$RLL_MODE" = "full" ] || [ "$RLL_MODE" = "figures" ] || [ "$RLL_MODE" = "report" ]; then RLL_MODE="compute"; fi
+            python3 scripts/rll_pipeline.py \
+              --book-scope "${{ inputs.book_scope }}" \
+              --dataset-group "${{ inputs.dataset_group }}" \
+              --mode "$RLL_MODE" \
+              --output-dir artifacts/manual-start/probe
+          fi
 
       - name: Build methodology summary
         run: |
@@ -200,6 +233,12 @@ jobs:
 
           Output probe path:
           - artifacts/manual-start/probe
+
+          Validation-path methodology file:
+          - docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml
+
+          Real-validation executable bundle:
+          - validacao_real/
 
           This supports reproducibility and clearer run selection semantics.
           EOF_SUM

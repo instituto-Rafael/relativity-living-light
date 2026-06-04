@@ -11,8 +11,9 @@ sources:
     method: baryon_acoustic_oscillation
     embedded_fallback: data/desi_dr2_bao.yml
     remote:
-      portal: "https://arxiv.org/abs/2503.14738"
-      note: "DESI DR2 Results II. Table IV. Fetch tenta o portal; se falhar, usa fallback embutido."
+      portal: "https://github.com/CobayaSampler/bao_data/tree/master/desi_bao_dr2"
+      zenodo: "https://zenodo.org/records/16644577"
+      note: "DESI DR2 Results II public BAO likelihood mean/covariance files materializados em data/real/cosmology/desi_bao_dr2_cobaya; se ausentes, usa fallback embutido."
     falsifier: "Se RLL nao reproduzir DM/rd, DH/rd, DV/rd dentro das barras DESI, o setor de superposicao e rejeitado nesse regime."
 
   - id: hz_cosmic_chronometers
