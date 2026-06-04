@@ -1,7 +1,7 @@
 # YML Workflows Index
 
-Gerado em: `2026-06-04T13:58:43.690883+00:00`  
-Commit: `cc8a12045e615fd96ac20eb9735610e823b2a8e4`
+Gerado em: `2026-06-04T14:06:02.860050+00:00`  
+Commit: `e564eaa144eb0d9fc8b2ac3f0dcc3173a9abcba0`
 
 | Path | Tipo | Bytes | Linhas | SHA256 |
 |---|---|---:|---:|---|
@@ -34,4 +34,6 @@ Commit: `cc8a12045e615fd96ac20eb9735610e823b2a8e4`
 | `tools/inventory_config.yml` | `config_yml` | 1050 | 56 | `66629d935fd917fc3e6bcd20d9a0f761e71fe2e59e8b30e03fd313a54a1fd1d8` |
 | `validacao_real/data/desi_dr2_bao.yml` | `config_yml` | 2502 | 99 | `86d80d1290c039175e2b524b92111fa365b7cccb689cd16ba396ed883a21b690` |
 | `validacao_real/data/hz_cosmic_chronometers.yml` | `config_yml` | 1589 | 41 | `0d37ddd2a24f51eb43ee196e8d2d33313e4662c730070cfadfa22537ff25d4a7` |
+| `validacao_real/fetched/desi_dr2_bao.yml` | `config_yml` | 2305 | 98 | `d7eea61898fbf62b489aa244c7dc201b1e6f84f3dc5e95996d27735868c4e661` |
+| `validacao_real/fetched/hz_cosmic_chronometers.yml` | `config_yml` | 1475 | 105 | `d780c26dced451af32e91435d70710a0a210a13aa0422eb0d925fba76cdb6a45` |
 | `validacao_real/sources.yml` | `config_yml` | 1289 | 30 | `ef38522ef37bb78d394b9844183936d48c3a61d7072c53f8abf8c76411fcae5b` |
