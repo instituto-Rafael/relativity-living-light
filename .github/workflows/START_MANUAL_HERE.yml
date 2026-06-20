@@ -33,6 +33,12 @@ on:
         default: metadata_only
         type: choice
         options: [metadata_only, dry_run, fetch, compute, figures, report, full]
+      real_data_source:
+        description: Fonte dos dados reais não sintéticos para cálculo
+        required: true
+        default: auto
+        type: choice
+        options: [auto, materialized, repo]
       validate_workflows:
         description: Validar todos os workflows executaveis em .github/workflows
         required: true
@@ -54,9 +60,17 @@ on:
         default: true
         type: boolean
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   manual-start:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -82,6 +96,7 @@ jobs:
           - dataset_group: ${{ inputs.dataset_group }}
           - book_scope: ${{ inputs.book_scope }}
           - mode: ${{ inputs.mode }}
+          - real_data_source: ${{ inputs.real_data_source }}
           - validate_workflows: ${{ inputs.validate_workflows }}
           - validate_data_yml: ${{ inputs.validate_data_yml }}
           - run_data_preparation_probe: ${{ inputs.run_data_preparation_probe }}
