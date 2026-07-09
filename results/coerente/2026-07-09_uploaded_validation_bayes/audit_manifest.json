@@ -1,0 +1,70 @@
+{
+  "schema": "rll.coerente.uploaded_results_audit_manifest.v1",
+  "created_utc_date": "2026-07-09",
+  "claim_boundary": "Uploaded-result custody and comparison audit only. No claim of RLL superiority, cosmological validation, dark matter, or dark energy validation is made by this manifest.",
+  "source_packages": [
+    "rll-validation-results.zip",
+    "resultados-bayesianos.zip"
+  ],
+  "repo_target": "instituto-Rafael/relativity-living-light",
+  "intended_path_prefix": "results/coerente/2026-07-09_uploaded_validation_bayes/",
+  "files": [
+    {
+      "local_path": "rll-validation-results.zip",
+      "sha256": "5da0decc8254eba3b7e1c6731fe5e92d51fc0bffd2a482dece5332844d080cb6",
+      "bytes": 1569
+    },
+    {
+      "local_path": "rll-validation-results/comparison.json",
+      "sha256": "c5c91913f509f5446bceded6275a66f5d284660b1616b075d1f580fa0b7a3079",
+      "bytes": 211
+    },
+    {
+      "local_path": "rll-validation-results/lcdm.json",
+      "sha256": "386710143c188b6954b2135e5fc5adafefbf287407061e6dc72a411078f506bf",
+      "bytes": 666
+    },
+    {
+      "local_path": "rll-validation-results/rll.json",
+      "sha256": "ed3b733b0dae4b01bfc2a3d9c14e23be64e8b9cd0b7274172f9b002e8e226959",
+      "bytes": 665
+    },
+    {
+      "local_path": "rll-validation-results/plot_results_report.md",
+      "sha256": "b909d56076110bffad57e26939773f5ccaa792c802d190237ca70f078cb0411b",
+      "bytes": 237
+    },
+    {
+      "local_path": "resultados-bayesianos.zip",
+      "sha256": "c1ecb9d4d235d1d3bd577e23efacd04fa5f81c1eb5840ba55a35f1a91a9a5a67",
+      "bytes": 91467
+    },
+    {
+      "local_path": "resultados-bayesianos/data/bayes_result.json",
+      "sha256": "36224c79c195efd6a5e98ec29ed94b3ad92dd1f7a9e1a18e8b0b978cb67d0207",
+      "bytes": 541
+    },
+    {
+      "local_path": "resultados-bayesianos/figs/model_comparison.png",
+      "sha256": "5d449533cc7e45dd6dbf8f05673983a8d209deccbce6ad7acfff35e38ef62dfd",
+      "bytes": 54854,
+      "repo_storage_note": "hashed in this manifest; binary image not embedded in this text-only commit"
+    },
+    {
+      "local_path": "resultados-bayesianos/figs/posterior_epsilon.png",
+      "sha256": "0f3a0a53f84276ede2b791350de1d88a96a7044285c0180a89b71ed53a01e88c",
+      "bytes": 49213,
+      "repo_storage_note": "hashed in this manifest; binary image not embedded in this text-only commit"
+    },
+    {
+      "local_path": "rll_uploaded_results_audit.md",
+      "sha256": "2ac405775f89fc89d1898d0bbc93a2eee2f7f72fb7162e4aced7ccd2f6d8dd1f",
+      "bytes": 2737
+    },
+    {
+      "local_path": "rll_uploaded_results_delta_audit.csv",
+      "sha256": "948f3fd42b7caaf7a1145edc403cbdec307ba10bec1b1b1955fd13d2f7ca4532",
+      "bytes": 2679
+    }
+  ]
+}
