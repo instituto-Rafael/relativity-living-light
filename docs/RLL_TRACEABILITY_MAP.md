@@ -27,6 +27,7 @@ RLL v1.0.0 tag / 2025 formula
 → possible mobile-Termux execution provenance
 → 2026 DESI/CPL/AICc validation
 → joint-real likelihood and claim gate
+→ uploaded validation/Bayes artifact custody
 → presentation / academic framing
 ```
 
@@ -54,6 +55,7 @@ RLL v1.0.0 tag / 2025 formula
 | DESI linkage | VERIFIED as 2026 work | existing and future DESI docs | map first DESI commit and materialization commits |
 | CPL/wCDM/AICc fairness | VERIFIED in 2026 code/docs | existing missing-calculations and fairness docs | preserve distinction from 2025 tag |
 | Joint-real result and claim gate | VERIFIED in current result files | current result docs and future summary | keep `claim_allowed=false` where appropriate |
+| Uploaded validation/Bayes package, 2026-07-09 | VERIFIED as uploaded artifact custody / CLAIM_BOUNDED | `results/coerente/2026-07-09_uploaded_validation_bayes/README.md` and `results/coerente/2026-07-09_uploaded_validation_bayes/audit_manifest.json` | add raw observational data, covariance, priors, likelihood, script, environment and convergence diagnostics before scientific validation claims |
 | False positives | DECLARED_BY_AUTHOR / TOKEN_VAZIO | future `docs/RLL_FALSE_POSITIVE_LEDGER.md` | locate failed outputs/logs/rejected hypotheses |
 | Non-post-hoc formulation | PARTIALLY VERIFIED | future `docs/RLL_NON_POSTHOC_FORMULATION_AUDIT.md` | connect formula date → data date → result date |
 
@@ -104,6 +106,16 @@ Do not use:
 
 > RLL beats CPL because it has anteriority.
 
+### If speaking about uploaded validation/Bayes artifacts
+
+Use:
+
+> The 2026-07-09 uploaded validation/Bayes package is verified as artifact custody with hashes and claim boundary; in this artifact, RLL is numerically close to LCDM, while χ² and Bayes factor favor LCDM.
+
+Do not use:
+
+> The uploaded Bayes package proves RLL or declares cosmological superiority.
+
 ### If speaking about `1234.zip`
 
 Use:
@@ -126,10 +138,11 @@ Do not use:
 
 ## 7. Current summary
 
-The project now has three active documentation layers:
+The project now has four active documentation layers:
 
 1. `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` — what the 2025 tag proves.
 2. `docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md` — what remains to prove about mobile/Termux execution.
 3. `docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md` — what documents must be built next.
+4. `results/coerente/2026-07-09_uploaded_validation_bayes/` — what the uploaded validation/Bayes package proves as artifact custody, and what it does not prove scientifically.
 
 This map binds those layers and prevents the project from scattering claims across unrelated files.
