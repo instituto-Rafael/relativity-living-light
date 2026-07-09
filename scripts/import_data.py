@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
 """
-Importa dados reais de uma URL (JSON ou CSV) e salva localmente.
-- Usa REAL_DATA_URL (env) ou argumento --url
-- Opcional: REAL_DATA_API_KEY (env) para autorização Bearer
+Importa dados reais de uma URL pública explícita (JSON ou CSV) e salva em um
+arquivo local definido pelo chamador.
+
+Uso esperado no workflow guardado:
+- entrada: URL pública fornecida manualmente;
+- saída: `_audit/raw/data.json` como artifact temporário;
+- sem commit automático de dados brutos.
+
+Configuração:
+- Usa REAL_DATA_URL (env) ou argumento --url;
+- Opcional: REAL_DATA_API_KEY (env) para autorização Bearer.
+
+Fronteira de claim:
+este script materializa uma amostra/artefato de auditoria. Ele não valida RLL,
+matéria escura, energia escura ou qualquer hipótese cosmológica.
 """
 
 import os
@@ -10,6 +22,7 @@ import sys
 import argparse
 import requests
 import json
+from pathlib import Path
 import pandas as pd
 
 
@@ -24,8 +37,10 @@ def fetch(url, api_key=None):
 
 
 def save_json(obj, out_path):
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(obj, f, ensure_ascii=False, indent=2)
+    out = Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open('w', encoding='utf-8') as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2, allow_nan=False)
 
 
 def try_parse_text_as_json_or_csv(text, out_path):
@@ -36,15 +51,17 @@ def try_parse_text_as_json_or_csv(text, out_path):
     except Exception:
         # try CSV with pandas
         from io import StringIO
+        out = Path(out_path)
+        out.parent.mkdir(parents=True, exist_ok=True)
         df = pd.read_csv(StringIO(text))
-        df.to_json(out_path, orient='records', force_ascii=False, indent=2)
+        df.to_json(out, orient='records', force_ascii=False, indent=2)
         return
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--url', help='URL para baixar os dados (opcional)', default=None)
-    p.add_argument('--out', help='Caminho do arquivo de saída (ex.: data/raw/data.json)', required=True)
+    p.add_argument('--out', help='Caminho do arquivo de saída (ex.: _audit/raw/data.json)', required=True)
     args = p.parse_args()
 
     url = args.url or os.environ.get('REAL_DATA_URL')
