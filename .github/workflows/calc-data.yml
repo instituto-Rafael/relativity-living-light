@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       input_path:
-        description: 'Caminho no repositório para JSON/CSV já commitado; padrão data/raw/data.json'
+        description: 'Caminho no repositório para JSON/CSV já commitado; padrão data/real/Hz_data_real.csv'
         required: false
-        default: 'data/raw/data.json'
+        default: 'data/real/Hz_data_real.csv'
       output_name:
         description: 'Nome do artifact gerado'
         required: false
@@ -48,6 +48,12 @@ jobs:
           if [ ! -f "$INPUT_PATH" ]; then
             echo "Input file not found: $INPUT_PATH" >&2
             echo "This guarded workflow does not fetch or commit raw data automatically." >&2
+            echo "Use one of the committed canonical real-data inputs, for example:" >&2
+            echo "  data/real/Hz_data_real.csv" >&2
+            echo "  data/real/BAO_data_real.csv" >&2
+            echo "  data/real/CMB_shift_real.json" >&2
+            echo "  data/real/cosmology/fsigma8_growth_real.csv" >&2
+            echo "  data/real/cosmology/desi_dr2_bao_primary_points.csv" >&2
             exit 2
           fi
           mkdir -p _audit/processed
@@ -55,13 +61,15 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import hashlib, json
-          p = Path('_audit/processed/results.json')
+          input_path = Path('${{ github.event.inputs.input_path }}')
+          artifact_path = Path('_audit/processed/results.json')
           payload = {
               'schema': 'rll.calc_data_audit_manifest.v1',
-              'input_path': '${{ github.event.inputs.input_path }}',
-              'artifact_path': str(p),
-              'sha256': hashlib.sha256(p.read_bytes()).hexdigest(),
-              'bytes': p.stat().st_size,
+              'input_path': str(input_path),
+              'input_sha256': hashlib.sha256(input_path.read_bytes()).hexdigest(),
+              'artifact_path': str(artifact_path),
+              'artifact_sha256': hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
+              'artifact_bytes': artifact_path.stat().st_size,
               'claim_boundary': 'Processed audit artifact only. This workflow does not commit results and does not validate RLL, dark matter, dark energy, or cosmology claims.'
           }
           Path('_audit/processed/calc_manifest.json').write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
