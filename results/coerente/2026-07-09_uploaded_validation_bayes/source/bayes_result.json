@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-07-09T04:38:32.978779",
+  "random_seed": 42,
+  "model_rll": {
+    "epsilon_median": -0.0004020261204191113,
+    "epsilon_credible_interval": [
+      -0.0010932647839503895,
+      0.00029754985513013677
+    ],
+    "log_evidence": -1241.932079944736,
+    "log_evidence_error": 0.13861133676216814
+  },
+  "model_lcdm": {
+    "log_evidence": -1235.2981367231564,
+    "note": "ΛCDM fixo, logZ = log-likelihood no valor observado"
+  },
+  "bayes_factor": 0.0013149676405794565,
+  "log_bayes_factor": -6.633943221579557
+}
