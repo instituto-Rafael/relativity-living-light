@@ -42,9 +42,10 @@ jobs:
         run: python -m pip install --upgrade pip && pip install pandas numpy
 
       - name: Run calculations in audit workspace
+        env:
+          INPUT_PATH: ${{ github.event.inputs.input_path }}
         run: |
           set -euo pipefail
-          INPUT_PATH="${{ github.event.inputs.input_path }}"
           if [ ! -f "$INPUT_PATH" ]; then
             echo "Input file not found: $INPUT_PATH" >&2
             echo "This guarded workflow does not fetch or commit raw data automatically." >&2
@@ -60,8 +61,8 @@ jobs:
           python scripts/calc_data.py --in "$INPUT_PATH" --out _audit/processed/results.json
           python - <<'PY'
           from pathlib import Path
-          import hashlib, json
-          input_path = Path('${{ github.event.inputs.input_path }}')
+          import hashlib, json, os
+          input_path = Path(os.environ['INPUT_PATH'])
           artifact_path = Path('_audit/processed/results.json')
           payload = {
               'schema': 'rll.calc_data_audit_manifest.v1',
