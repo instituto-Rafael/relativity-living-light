@@ -129,6 +129,111 @@
       "generator_script": "rll_reproducivel.zip (rll_pkg/results/RLL_relatorio_simulacao.txt)",
       "reproduction_command": "unzip -p rll_reproducivel.zip rll_pkg/results/RLL_relatorio_simulacao.txt",
       "data_or_version": "2026-03-05"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/README.md",
+      "format": "md",
+      "description": "Varredura coerente dos pacotes enviados em 2026-07-09, com inventário, métricas centrais, fronteira de claim e F_ok/F_gap/F_next.",
+      "schema": {
+        "type": "markdown_sections",
+        "sections": [
+          "Inventário pronto",
+          "Métricas centrais",
+          "Fronteira de claim",
+          "F_ok / F_gap / F_next"
+        ]
+      },
+      "generator_script": "Curadoria/auditoria manual a partir dos pacotes enviados rll-validation-results.zip e resultados-bayesianos.zip",
+      "reproduction_command": "cat results/coerente/2026-07-09_uploaded_validation_bayes/README.md",
+      "data_or_version": "2026-07-09_uploaded_validation_bayes"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/audit_manifest.json",
+      "format": "json",
+      "description": "Manifesto SHA256 dos pacotes enviados, fontes textuais, derivados e figuras PNG hasheadas.",
+      "schema": {
+        "type": "object",
+        "required": [
+          "schema",
+          "created_utc_date",
+          "claim_boundary",
+          "source_packages",
+          "files"
+        ]
+      },
+      "generator_script": "Hash local dos artefatos enviados em 2026-07-09",
+      "reproduction_command": "cat results/coerente/2026-07-09_uploaded_validation_bayes/audit_manifest.json",
+      "data_or_version": "rll.coerente.uploaded_results_audit_manifest.v1"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/source/comparison.json",
+      "format": "json",
+      "description": "Fonte textual enviada com χ² LCDM, χ² RLL, delta e fronteira de claim.",
+      "schema": {
+        "type": "object",
+        "keys": [
+          "chi2_lcdm",
+          "chi2_rll",
+          "delta",
+          "claim_boundary"
+        ]
+      },
+      "generator_script": "Extraído de rll-validation-results.zip/comparison.json",
+      "reproduction_command": "cat results/coerente/2026-07-09_uploaded_validation_bayes/source/comparison.json",
+      "data_or_version": "2026-07-09 uploaded artifact"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/source/bayes_result.json",
+      "format": "json",
+      "description": "Fonte textual enviada com ε posterior, evidências logZ e Bayes factor.",
+      "schema": {
+        "type": "object",
+        "keys": [
+          "timestamp",
+          "random_seed",
+          "model_rll",
+          "model_lcdm",
+          "bayes_factor",
+          "log_bayes_factor"
+        ]
+      },
+      "generator_script": "Extraído de resultados-bayesianos.zip/data/bayes_result.json",
+      "reproduction_command": "cat results/coerente/2026-07-09_uploaded_validation_bayes/source/bayes_result.json",
+      "data_or_version": "2026-07-09 uploaded artifact"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/derived/rll_uploaded_results_audit.md",
+      "format": "md",
+      "description": "Auditoria humana derivada dos pacotes enviados: comparação χ², Bayes factor, lacunas e próximos passos.",
+      "schema": {
+        "type": "markdown_sections",
+        "sections": [
+          "Pacotes inspecionados",
+          "Resultado direto",
+          "Conclusão operacional"
+        ]
+      },
+      "generator_script": "Derivado de source/*.json e dos pacotes enviados",
+      "reproduction_command": "cat results/coerente/2026-07-09_uploaded_validation_bayes/derived/rll_uploaded_results_audit.md",
+      "data_or_version": "2026-07-09"
+    },
+    {
+      "path": "results/coerente/2026-07-09_uploaded_validation_bayes/derived/rll_uploaded_results_delta_audit.csv",
+      "format": "csv",
+      "description": "Delta ponto a ponto RLL - LCDM para os 33 pontos enviados.",
+      "schema": {
+        "type": "columns",
+        "columns": [
+          "idx",
+          "LCDM",
+          "RLL",
+          "RLL_minus_LCDM",
+          "rel_delta_pct"
+        ]
+      },
+      "generator_script": "Derivado de source/lcdm.json e source/rll.json",
+      "reproduction_command": "python - <<'PY'\nimport json\nfrom pathlib import Path\nbase = Path('results/coerente/2026-07-09_uploaded_validation_bayes/source')\nlcdm = json.loads((base/'lcdm.json').read_text())['values']\nrll = json.loads((base/'rll.json').read_text())['values']\nfor i,(l,r) in enumerate(zip(lcdm,rll),1): print(i,l,r,r-l,(r-l)/l*100)\nPY",
+      "data_or_version": "2026-07-09"
     }
   ]
 }
