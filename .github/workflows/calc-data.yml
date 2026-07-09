@@ -4,9 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       input_path:
-        description: 'Caminho no repositório para JSON/CSV já commitado; padrão data/real/Hz_data_real.csv'
-        required: false
+        description: 'Arquivo JSON/CSV já commitado no repositório para auditoria estatística'
+        required: true
         default: 'data/real/Hz_data_real.csv'
+        type: choice
+        options:
+          - 'data/real/Hz_data_real.csv'
+          - 'data/real/BAO_data_real.csv'
+          - 'data/real/CMB_shift_real.json'
+          - 'data/real/cosmology/fsigma8_growth_real.csv'
+          - 'data/real/cosmology/desi_dr2_bao_primary_points.csv'
+          - 'data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv'
+          - 'data/real/cosmology_observational_seed_2026.csv'
       output_name:
         description: 'Nome do artifact gerado'
         required: false
@@ -46,15 +55,25 @@ jobs:
           INPUT_PATH: ${{ github.event.inputs.input_path }}
         run: |
           set -euo pipefail
+          case "$INPUT_PATH" in
+            data/real/Hz_data_real.csv|\
+            data/real/BAO_data_real.csv|\
+            data/real/CMB_shift_real.json|\
+            data/real/cosmology/fsigma8_growth_real.csv|\
+            data/real/cosmology/desi_dr2_bao_primary_points.csv|\
+            data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv|\
+            data/real/cosmology_observational_seed_2026.csv)
+              ;;
+            *)
+              echo "Input path is not in the guarded allowlist: $INPUT_PATH" >&2
+              echo "This workflow intentionally processes only committed local JSON/CSV audit inputs." >&2
+              exit 2
+              ;;
+          esac
           if [ ! -f "$INPUT_PATH" ]; then
             echo "Input file not found: $INPUT_PATH" >&2
             echo "This guarded workflow does not fetch or commit raw data automatically." >&2
-            echo "Use one of the committed canonical real-data inputs, for example:" >&2
-            echo "  data/real/Hz_data_real.csv" >&2
-            echo "  data/real/BAO_data_real.csv" >&2
-            echo "  data/real/CMB_shift_real.json" >&2
-            echo "  data/real/cosmology/fsigma8_growth_real.csv" >&2
-            echo "  data/real/cosmology/desi_dr2_bao_primary_points.csv" >&2
+            echo "Use one of the committed canonical real-data inputs listed in workflow_dispatch.options." >&2
             exit 2
           fi
           mkdir -p _audit/processed
@@ -71,6 +90,15 @@ jobs:
               'artifact_path': str(artifact_path),
               'artifact_sha256': hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
               'artifact_bytes': artifact_path.stat().st_size,
+              'allowed_inputs': [
+                  'data/real/Hz_data_real.csv',
+                  'data/real/BAO_data_real.csv',
+                  'data/real/CMB_shift_real.json',
+                  'data/real/cosmology/fsigma8_growth_real.csv',
+                  'data/real/cosmology/desi_dr2_bao_primary_points.csv',
+                  'data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv',
+                  'data/real/cosmology_observational_seed_2026.csv',
+              ],
               'claim_boundary': 'Processed audit artifact only. This workflow does not commit results and does not validate RLL, dark matter, dark energy, or cosmology claims.'
           }
           Path('_audit/processed/calc_manifest.json').write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
