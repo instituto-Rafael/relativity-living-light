@@ -5,16 +5,20 @@ on:
     paths:
       - "schemas/**"
       - "scripts/validate_omega_schemas.py"
+      - "scripts/validate_semantic_governance_schemas.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tests/test_schemas_claim_boundary.py"
+      - "tests/test_semantic_governance_schemas.py"
       - ".github/workflows/validate-schema-contracts.yml"
   push:
     branches: [main]
     paths:
       - "schemas/**"
       - "scripts/validate_omega_schemas.py"
+      - "scripts/validate_semantic_governance_schemas.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tests/test_schemas_claim_boundary.py"
+      - "tests/test_semantic_governance_schemas.py"
       - ".github/workflows/validate-schema-contracts.yml"
   workflow_dispatch:
 
@@ -42,5 +46,10 @@ jobs:
         run: python tools/validate_schemas_claim_boundary.py
       - name: Validate RAFAELIA Omega schema layer
         run: python scripts/validate_omega_schemas.py
+      - name: Validate semantic-governance 7D schema layer
+        run: python scripts/validate_semantic_governance_schemas.py
       - name: Run schema validator tests
-        run: python -m pytest -q tests/test_schemas_claim_boundary.py
+        run: >-
+          python -m pytest -q
+          tests/test_schemas_claim_boundary.py
+          tests/test_semantic_governance_schemas.py
