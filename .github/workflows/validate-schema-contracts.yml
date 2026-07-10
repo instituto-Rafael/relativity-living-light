@@ -5,9 +5,11 @@ on:
     paths:
       - "schemas/**"
       - "fixtures/ambient_field_observation.example.json"
+      - "fixtures/rmrcti_delta_p_observation.example.json"
       - "scripts/validate_omega_schemas.py"
       - "scripts/validate_semantic_governance_schemas.py"
       - "scripts/validate_ambient_field_observation.py"
+      - "scripts/validate_rmrcti_delta_p_observation.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tests/test_schemas_claim_boundary.py"
       - "tests/test_semantic_governance_schemas.py"
@@ -17,9 +19,11 @@ on:
     paths:
       - "schemas/**"
       - "fixtures/ambient_field_observation.example.json"
+      - "fixtures/rmrcti_delta_p_observation.example.json"
       - "scripts/validate_omega_schemas.py"
       - "scripts/validate_semantic_governance_schemas.py"
       - "scripts/validate_ambient_field_observation.py"
+      - "scripts/validate_rmrcti_delta_p_observation.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tests/test_schemas_claim_boundary.py"
       - "tests/test_semantic_governance_schemas.py"
@@ -54,6 +58,8 @@ jobs:
         run: python scripts/validate_semantic_governance_schemas.py
       - name: Validate ambient-field observation contract
         run: python scripts/validate_ambient_field_observation.py
+      - name: Validate RMRCTI Delta-P observation contract
+        run: python scripts/validate_rmrcti_delta_p_observation.py
       - name: Run schema validator tests
         run: >-
           python -m pytest -q
