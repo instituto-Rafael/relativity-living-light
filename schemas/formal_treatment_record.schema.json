@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/formal_treatment_record.schema.json",
   "title": "RAFAELIA FormalTreatmentRecord",
-  "description": "Operational record that classifies an artifact before it is integrated, executed, indexed or used for model-related processing.",
+  "description": "Structural contract for an operational record that classifies an artifact before it is integrated, executed, indexed or used for model-related processing.",
   "type": "object",
   "additionalProperties": false,
   "required": ["record_id", "name", "family", "artifact_type", "nature", "status", "origin", "evidence", "risk", "relations", "next_action", "execution_gate", "created_at", "updated_at"],
