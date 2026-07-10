@@ -11,3 +11,7 @@ safety,Separação epistemológica,docs/canonicos/24_RAFAELIA_MASTER_SPEC.md,VER
 schema,OmegaArtifact schema,schemas/omega_artifact.schema.json,VERIFIED,repository schema,low,gerar fixture JSON válida e validar em CI
 schema,OmegaNode schema,schemas/omega_node.schema.json,VERIFIED,repository schema,low,gerar fixture JSON válida e validar em CI
 schema,OmegaRelation schema,schemas/omega_relation.schema.json,VERIFIED,repository schema,low,gerar fixture JSON válida e validar em CI
+architecture,Semantic Matrix 7D,docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md,OPERATIONAL,documented+schema+fixture+CI,medium,validar branch e ligar ao Drive
+schema,SemanticTokenUnit 7D,schemas/semantic_token_unit.schema.json,OPERATIONAL,repository schema+fixture+validator,low,adotar IDs em artefatos reais
+schema,FormalTreatmentRecord,schemas/formal_treatment_record.schema.json,OPERATIONAL,repository schema+fixture+validator,low,popular ledger a partir de fontes reais
+governance,Tail Protocol use policy,schemas/rafaelia_tail_trailer.schema.json,OPERATIONAL,repository schema,low,propagar privacy train ret purpose owner
