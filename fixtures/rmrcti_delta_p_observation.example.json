@@ -1,0 +1,102 @@
+{
+  "observation_id": "RMRCTI-DP-SYNTHETIC_018",
+  "source": {
+    "repository": "rafaelmeloreisnovo/llamaRafaelia",
+    "code_path": "rmrCti/gbs3_color.c",
+    "code_ref": "research/rmrcti-delta-p-stability",
+    "code_state": "synthetic_fixture",
+    "spoken_alias": "thanks ponto de Exu",
+    "spoken_alias_state": "token_vazio"
+  },
+  "metric": {
+    "name": "delta_p_stability_enrichment",
+    "formula": "P(stable_any=1|peak)-P(stable_any=1|nonpeak)",
+    "peak_definition": {
+      "preferred_column": "gate_in_peaks",
+      "fallback_gates": [3, 4, 8]
+    },
+    "expected_delta_p": 0.18,
+    "expected_state": "author_observation",
+    "tolerance": 0.02
+  },
+  "runs": [
+    {
+      "run_id": "synthetic-01",
+      "source_state": "synthetic_fixture",
+      "trace_path": "synthetic://delta-p/01",
+      "trace_sha256": null,
+      "counts": {
+        "peaks_total": 100,
+        "peaks_stable": 68,
+        "nonpeaks_total": 100,
+        "nonpeaks_stable": 50
+      },
+      "p_stable_given_peaks": 0.68,
+      "p_stable_given_nonpeaks": 0.50,
+      "delta_p": 0.18
+    },
+    {
+      "run_id": "synthetic-02",
+      "source_state": "synthetic_fixture",
+      "trace_path": "synthetic://delta-p/02",
+      "trace_sha256": null,
+      "counts": {
+        "peaks_total": 100,
+        "peaks_stable": 67,
+        "nonpeaks_total": 100,
+        "nonpeaks_stable": 50
+      },
+      "p_stable_given_peaks": 0.67,
+      "p_stable_given_nonpeaks": 0.50,
+      "delta_p": 0.17
+    },
+    {
+      "run_id": "synthetic-03",
+      "source_state": "synthetic_fixture",
+      "trace_path": "synthetic://delta-p/03",
+      "trace_sha256": null,
+      "counts": {
+        "peaks_total": 100,
+        "peaks_stable": 69,
+        "nonpeaks_total": 100,
+        "nonpeaks_stable": 50
+      },
+      "p_stable_given_peaks": 0.69,
+      "p_stable_given_nonpeaks": 0.50,
+      "delta_p": 0.19
+    }
+  ],
+  "aggregate": {
+    "run_count": 3,
+    "delta_p_mean": 0.18,
+    "delta_p_median": 0.18,
+    "delta_p_min": 0.17,
+    "delta_p_max": 0.19,
+    "delta_p_sample_stdev": 0.01,
+    "delta_p_mad": 0.01,
+    "replicated_stability_candidate": true,
+    "claim_state": "REPLICATED_STABILITY_CANDIDATE"
+  },
+  "claim_boundary": {
+    "attractor_claim": "TOKEN_VAZIO",
+    "universal_constant_claim": "NOT_ESTABLISHED",
+    "causal_mechanism_claim": "NOT_ESTABLISHED",
+    "cosmological_inference": "BLOCKED",
+    "fractal_claim": "NOT_ESTABLISHED",
+    "missing_evidence": [
+      "real independent traces",
+      "seed sweep",
+      "parameter basin",
+      "randomized gate null model",
+      "label shuffle",
+      "held-out corpus",
+      "independent implementation"
+    ]
+  },
+  "use_policy": {
+    "data_class": "synthetic",
+    "training_eligibility": "no",
+    "purpose": "validation",
+    "operational_gate": "research_only"
+  }
+}
