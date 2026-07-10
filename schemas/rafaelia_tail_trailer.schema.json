@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rafaelia_tail_trailer.schema.json",
   "title": "RAFAELIA Tail Trailer",
-  "description": "Machine-readable trailer for human-first subjects, titles, calendar events, HTML blocks and custody-chain memos.",
+  "description": "Structural contract for a machine-readable trailer attached to human-first subjects, titles, calendar events, HTML blocks and custody-chain memos.",
   "type": "object",
   "additionalProperties": false,
   "required": ["raf", "id", "fam", "st"],
