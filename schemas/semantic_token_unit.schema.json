@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/semantic_token_unit.schema.json",
   "title": "RAFAELIA SemanticTokenUnit 7D",
-  "description": "Contract for a governed semantic token unit analyzed through exactly seven complementary directions. It preserves lexical form, semantic variables, relations, counterforces, causal paths, epistemic gaps and operational governance. It does not claim that language-model tokenizers natively expose these fields.",
+  "description": "Structural contract for a governed semantic token unit analyzed through exactly seven complementary directions. It preserves lexical form, semantic variables, relations, counterforces, causal paths, epistemic gaps and operational governance. It does not claim that language-model tokenizers natively expose these fields.",
   "type": "object",
   "additionalProperties": false,
   "required": ["unit_id", "raw_span", "lexical_tokens", "views_7d", "evidence_refs", "uncertainty", "epistemic_status", "use_policy", "created_at"],
