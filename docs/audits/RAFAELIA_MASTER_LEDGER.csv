@@ -15,3 +15,6 @@ architecture,Semantic Matrix 7D,docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MA
 schema,SemanticTokenUnit 7D,schemas/semantic_token_unit.schema.json,OPERATIONAL,repository schema+fixture+validator,low,adotar IDs em artefatos reais
 schema,FormalTreatmentRecord,schemas/formal_treatment_record.schema.json,OPERATIONAL,repository schema+fixture+validator,low,popular ledger a partir de fontes reais
 governance,Tail Protocol use policy,schemas/rafaelia_tail_trailer.schema.json,OPERATIONAL,repository schema,low,propagar privacy train ret purpose owner
+perception,Percepção memória e integração multissensorial,docs/canonicos/31_PERCEPCAO_MEMORIA_INTEGRACAO_MULTISSENSORIAL.md,VERIFIED_EXPERIMENT+HYPOTHESIS,primary literature+author observation,medium,submeter protocolo histórico-espectral a pré-registro
+research,Trajetória Espectral Pessoal,rafaelmeloreisnovo/papers:docs/perception-memory/02_PERSONAL_SPECTRAL_TRAJECTORY_PROTOCOL.md,HYPOTHESIS,preregistration candidate,medium,calibrar dosímetro definir amostra e análise
+research,Mão de borracha visão pela língua e sala móvel,rafaelmeloreisnovo/papers:docs/perception-memory/03_MULTISENSORY_BODY_SPACE_EXPERIMENTS.md,VERIFIED_EXPERIMENT,primary literature,low,definir módulos opcionais e controles de segurança
