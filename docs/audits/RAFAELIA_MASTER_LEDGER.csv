@@ -22,3 +22,6 @@ ambient,Observatório Ambiental Distribuído por Telefones,docs/canonicos/32_OBS
 schema,AmbientFieldObservation,schemas/ambient_field_observation.schema.json,OPERATIONAL_CONTRACT,repository schema,medium,adicionar validação automática e fixtures adversariais
 fixture,AmbientFieldObservation synthetic example,fixtures/ambient_field_observation.example.json,SYNTHETIC_FIXTURE,non-personal synthetic data,low,validar contra schema em CI
 research,Distributed phone environmental observatory,rafaelmeloreisnovo/papers:docs/perception-memory/04_DISTRIBUTED_PHONE_ENVIRONMENTAL_OBSERVATORY.md,HYPOTHESIS,official data+literature review,high,comparar ganho de nowcasting contra baseline oficial
+rmrcti,RMRCTI Omega Delta-P stability,docs/canonicos/33_RMRCTI_OMEGA_DELTA_P_STABILITY.md,DOCUMENTED_METRIC+HYPOTHESIS,repository code+claim contract,medium,gerar traces reais independentes e executar falsificadores
+schema,RMRCTI Delta-P Observation,schemas/rmrcti_delta_p_observation.schema.json,OPERATIONAL_CONTRACT,repository schema+validator,medium,validar relatórios reais e adicionar nulos adversariais
+fixture,RMRCTI Delta-P synthetic 0.18 example,fixtures/rmrcti_delta_p_observation.example.json,SYNTHETIC_FIXTURE,synthetic conditional proportions,low,não promover a atrator e substituir por traces reais quando disponíveis
