@@ -1,3 +1,5 @@
+# CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+# CLAIM_BOUNDARY: This workflow generates structural comparison artifacts only. A synthetic/demo fallback validates plumbing and never counts as real observational evidence.
 name: RLL Balance Report
 
 on:
@@ -25,6 +27,9 @@ on:
       - "docs/livro_vivo_bridge/RLL_BALANCE_SCRIPT_USAGE.md"
       - ".github/workflows/rll-balance-report.yml"
 
+permissions:
+  contents: read
+
 jobs:
   balance-report:
     name: Generate RLL balance report
@@ -33,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -53,9 +60,10 @@ jobs:
           if [ -f "$INPUT_JSON" ]; then
             echo "Using provided input: $INPUT_JSON"
             cp "$INPUT_JSON" artifacts/rll_balance/input.json
+            echo "source_kind=provided" >> "$GITHUB_OUTPUT"
           else
             echo "Input JSON not found: $INPUT_JSON"
-            echo "Creating minimal demo input so workflow still validates the script."
+            echo "Creating a synthetic demo fixture only to validate workflow plumbing."
             cat > artifacts/rll_balance/input.json <<'JSON'
           {
             "RLL":  {"chi2": 84.4824, "aicc": 103.1006, "bic": 117.7535},
@@ -64,6 +72,7 @@ jobs:
             "CPL":  {"chi2": 62.0717, "aicc": 78.0717,  "bic": 91.1839}
           }
           JSON
+            echo "source_kind=synthetic_demo" >> "$GITHUB_OUTPUT"
           fi
 
           echo "metric=$METRIC" >> "$GITHUB_OUTPUT"
@@ -78,11 +87,39 @@ jobs:
             --output-json artifacts/rll_balance/rll_balance_report.json \
             --metric "${{ steps.prepare.outputs.metric }}"
 
+      - name: Write claim boundary and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > artifacts/rll_balance/CLAIM_BOUNDARY.md <<EOF
+          # Claim Boundary
+
+          - source_kind: `${{ steps.prepare.outputs.source_kind }}`
+          - canonical_real_data_workflow: `.github/workflows/real-data-complete-execution.yml`
+          - this workflow compares supplied metrics and emits structural artifacts;
+          - a synthetic/demo/mock/fixture fallback is plumbing evidence only;
+          - no artifact from a synthetic fallback validates a scientific claim.
+          EOF
+
+          (
+            cd artifacts/rll_balance
+            find . -type f ! -name 'CHECKSUMS.sha256' -print0 \
+              | sort -z \
+              | while IFS= read -r -d '' file; do sha256sum "$file"; done \
+              > CHECKSUMS.sha256
+          )
+          test -s artifacts/rll_balance/CHECKSUMS.sha256
+          sha256sum -c artifacts/rll_balance/CHECKSUMS.sha256 --ignore-missing
+
       - name: Show report summary
         shell: bash
         run: |
           set -euo pipefail
           sed -n '1,120p' artifacts/rll_balance/rll_balance_report.md
+          echo "--- CLAIM BOUNDARY ---"
+          cat artifacts/rll_balance/CLAIM_BOUNDARY.md
+          echo "--- CHECKSUMS ---"
+          cat artifacts/rll_balance/CHECKSUMS.sha256
 
       - name: Upload RLL balance artifacts
         uses: actions/upload-artifact@v4
