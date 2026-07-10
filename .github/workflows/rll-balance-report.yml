@@ -94,8 +94,8 @@ jobs:
           cat > artifacts/rll_balance/CLAIM_BOUNDARY.md <<EOF
           # Claim Boundary
 
-          - source_kind: `${{ steps.prepare.outputs.source_kind }}`
-          - canonical_real_data_workflow: `.github/workflows/real-data-complete-execution.yml`
+          - source_kind: ${{ steps.prepare.outputs.source_kind }}
+          - canonical_real_data_workflow: .github/workflows/real-data-complete-execution.yml
           - this workflow compares supplied metrics and emits structural artifacts;
           - a synthetic/demo/mock/fixture fallback is plumbing evidence only;
           - no artifact from a synthetic fallback validates a scientific claim.
@@ -107,9 +107,9 @@ jobs:
               | sort -z \
               | while IFS= read -r -d '' file; do sha256sum "$file"; done \
               > CHECKSUMS.sha256
+            test -s CHECKSUMS.sha256
+            sha256sum -c CHECKSUMS.sha256
           )
-          test -s artifacts/rll_balance/CHECKSUMS.sha256
-          sha256sum -c artifacts/rll_balance/CHECKSUMS.sha256 --ignore-missing
 
       - name: Show report summary
         shell: bash
