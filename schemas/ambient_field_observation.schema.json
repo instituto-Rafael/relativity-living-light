@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/ambient_field_observation.schema.json",
   "title": "RAFAELIA AmbientFieldObservation",
-  "description": "Governed contract for a heterogeneous phone-node environmental observation. It separates raw measurement, device context, physical reference, residual, uncertainty and operational policy. It does not authorize person identification or autonomous public weather alerts.",
+  "description": "Structural contract for a governed heterogeneous phone-node environmental observation. It separates raw measurement, device context, physical reference, residual, uncertainty and operational policy. It does not authorize person identification or autonomous public weather alerts.",
   "type": "object",
   "additionalProperties": false,
   "required": [
