@@ -28,6 +28,62 @@ def load_scanner():
     return _scanner_module
 
 
+# Convenience alias so tests can call scan(...) directly (mirrors direct-import style).
+scan = _scanner_module.scan
+
+
+# ---------------------------------------------------------------------------
+# Helpers (compact style — used by tests imported from main branch)
+# ---------------------------------------------------------------------------
+
+_COLS = [
+    "model", "chi2", "AIC", "AICc", "BIC",
+    "N", "k", "dof",
+    "H0", "Om", "Os0", "zt", "wt",
+]
+
+
+def _make_csv(tmp_path: Path, rows: list[dict]) -> Path:
+    path = tmp_path / "results.csv"
+    fieldnames = list(rows[0].keys()) if rows else _COLS
+    with path.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    return path
+
+
+def _make_registry(tmp_path: Path) -> Path:
+    path = tmp_path / "registry.json"
+    path.write_text(json.dumps({"schema": "rll.parameter_origin_registry.v2"}), encoding="utf-8")
+    return path
+
+
+def _base_rows(
+    h0_lcdm: float = 67.0,
+    h0_wcdm: float = 67.5,
+    h0_cpl: float = 68.0,
+    h0_rll: float = 67.0,
+    os0_rll: float = 0.05,
+) -> list[dict]:
+    """Four-model result table with configurable H0 and Os0 values."""
+    return [
+        {"model": "LCDM_joint", "chi2": "100", "AIC": "106", "AICc": "106.5", "BIC": "112",
+         "N": "64", "k": "3", "dof": "61", "H0": str(h0_lcdm), "Om": "0.31", "Os0": "", "zt": "", "wt": ""},
+        {"model": "wCDM_joint", "chi2": "99", "AIC": "107", "AICc": "107.5", "BIC": "115",
+         "N": "64", "k": "4", "dof": "60", "H0": str(h0_wcdm), "Om": "0.31", "Os0": "", "zt": "", "wt": ""},
+        {"model": "CPL_w0waCDM_joint", "chi2": "90", "AIC": "100", "AICc": "101", "BIC": "110",
+         "N": "64", "k": "5", "dof": "59", "H0": str(h0_cpl), "Om": "0.30", "Os0": "", "zt": "", "wt": ""},
+        {"model": "RLL_joint", "chi2": "95", "AIC": "107", "AICc": "108", "BIC": "118",
+         "N": "64", "k": "6", "dof": "58", "H0": str(h0_rll), "Om": "0.31", "Os0": str(os0_rll), "zt": "1.2", "wt": "0.4"},
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Helpers (verbose style — used by tests from PR #422)
+# ---------------------------------------------------------------------------
+
+
 def _write_minimal_csv(path: Path, rows: list[dict]) -> None:
     """Write a minimal CSV to *path* in the expected format."""
     if not rows:
@@ -328,3 +384,101 @@ def test_write_markdown_shows_token_vazio_for_missing_rll(tmp_path: Path) -> Non
 
     text = md_out.read_text(encoding="utf-8")
     assert "TOKEN_VAZIO" in text
+
+
+# ---------------------------------------------------------------------------
+# H0_all_equal — additional assertions (from PR #423)
+# ---------------------------------------------------------------------------
+
+
+def test_h0_all_equal_warning_references_ablation_matrix(tmp_path: Path) -> None:
+    """The H0_all_equal warning must reference the ablation matrix file."""
+    rows = _base_rows(h0_lcdm=60.0, h0_wcdm=60.0, h0_cpl=60.0, h0_rll=60.0)
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert result.H0_all_equal is True
+    assert any("h0_rd_ablation_matrix" in w for w in result.warnings), (
+        "H0_all_equal warning must reference the h0_rd_ablation_matrix file"
+    )
+
+
+def test_h0_not_all_equal_no_warning(tmp_path: Path) -> None:
+    """When H0 values differ across models, H0_all_equal=False and no H0 warning is emitted."""
+    rows = _base_rows(h0_lcdm=67.0, h0_wcdm=67.5, h0_cpl=68.0, h0_rll=67.2)
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert result.H0_all_equal is False
+    assert not any("H0_all_equal" in w for w in result.warnings)
+
+
+# ---------------------------------------------------------------------------
+# Claim blocking — absent models (from PR #423)
+# ---------------------------------------------------------------------------
+
+
+def test_claim_blocked_when_rll_absent(tmp_path: Path) -> None:
+    """When no RLL row is present, claim_status is CLAIM_BLOCKED."""
+    rows = [
+        {"model": "LCDM_joint", "chi2": "100", "AIC": "106", "AICc": "107", "BIC": "112",
+         "N": "64", "k": "3", "dof": "61", "H0": "67", "Om": "0.31", "Os0": "", "zt": "", "wt": ""},
+        {"model": "CPL_w0waCDM_joint", "chi2": "90", "AIC": "100", "AICc": "101", "BIC": "110",
+         "N": "64", "k": "5", "dof": "59", "H0": "68", "Om": "0.30", "Os0": "", "zt": "", "wt": ""},
+    ]
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert result.claim_status == "CLAIM_BLOCKED"
+    assert any("RLL" in r for r in result.blocking_reasons)
+
+
+def test_claim_blocked_when_cpl_absent(tmp_path: Path) -> None:
+    """When no CPL row is present, claim_status is CLAIM_BLOCKED (no baseline for comparison)."""
+    rows = [
+        {"model": "LCDM_joint", "chi2": "100", "AIC": "106", "AICc": "107", "BIC": "112",
+         "N": "64", "k": "3", "dof": "61", "H0": "67", "Om": "0.31", "Os0": "", "zt": "", "wt": ""},
+        {"model": "RLL_joint", "chi2": "89", "AIC": "101", "AICc": "100", "BIC": "109",
+         "N": "64", "k": "6", "dof": "58", "H0": "67.2", "Om": "0.31", "Os0": "0.06", "zt": "1.2", "wt": "0.4"},
+    ]
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert result.claim_status == "CLAIM_BLOCKED"
+    assert any("CPL" in r or "baseline" in r.lower() for r in result.blocking_reasons)
+
+
+# ---------------------------------------------------------------------------
+# N-k-dof consistency (from PR #423)
+# ---------------------------------------------------------------------------
+
+
+def test_dof_mismatch_is_flagged_and_blocks_claim(tmp_path: Path) -> None:
+    """A row where N-k != dof should receive a local flag and block the claim."""
+    rows = _base_rows()
+    rows[2]["dof"] = "55"  # CPL row: should be 59
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert result.claim_status == "CLAIM_BLOCKED"
+    flagged = [ms for ms in result.model_scans if ms.dof_consistent is False]
+    assert flagged, "Expected at least one row with dof_consistent=False"
+    assert any("N-k-dof" in flag for ms in flagged for flag in ms.local_flags)
+
+
+# ---------------------------------------------------------------------------
+# Output structure — best-model names (from PR #423)
+# ---------------------------------------------------------------------------
+
+
+def test_scan_best_by_aicc_and_bic_are_correct(tmp_path: Path) -> None:
+    """best_by_AICc and best_by_BIC identify the model with the lowest respective values."""
+    rows = _base_rows()
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    # CPL has AICc=101 (lowest) and BIC=110 (lowest) in _base_rows
+    assert result.best_by_AICc == "CPL_w0waCDM_joint"
+    assert result.best_by_BIC == "CPL_w0waCDM_joint"
+
+
+def test_scan_models_present_field(tmp_path: Path) -> None:
+    """models_present lists all four model classes when all are in the CSV."""
+    rows = _base_rows()
+    result = scan(_make_csv(tmp_path, rows), _make_registry(tmp_path))
+
+    assert set(result.models_present) == {"LCDM", "wCDM", "CPL", "RLL"}
