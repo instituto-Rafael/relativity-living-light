@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """Validate the claim-bounded information evolution trace contract and fixture.
 
-This validator checks structural invariants with the Python standard library.
-It does not establish scientific truth, historical provenance or external validity.
+The validator performs two independent checks:
+
+1. full JSON Schema Draft 2020-12 validation, including date-time formats;
+2. repository-specific semantic invariants that JSON Schema cannot express,
+   such as contiguous state transitions and a pending external-validity gate.
+
+Passing this validator establishes structural conformance only. It does not
+establish scientific truth, historical provenance or external validity.
 """
 
 from __future__ import annotations
@@ -10,6 +16,15 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any
+
+try:
+    from jsonschema import Draft202012Validator, FormatChecker
+    from jsonschema.exceptions import SchemaError
+except ModuleNotFoundError as exc:  # pragma: no cover - exercised by deployment environments
+    raise SystemExit(
+        "information evolution trace validation failed: missing dependency 'jsonschema'; "
+        "install it with 'pip install jsonschema'"
+    ) from exc
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "schemas" / "information_evolution_trace.schema.json"
@@ -80,6 +95,37 @@ def validate_schema(schema: dict[str, Any]) -> None:
     for marker in ("structural contract", "does not establish"):
         if marker not in description:
             fail(f"schema description missing boundary marker: {marker}")
+
+    try:
+        Draft202012Validator.check_schema(schema)
+    except SchemaError as exc:
+        fail(f"invalid Draft 2020-12 schema: {exc.message}")
+
+
+def format_json_path(parts: list[Any]) -> str:
+    if not parts:
+        return "$"
+    return "$" + "".join(
+        f"[{part}]" if isinstance(part, int) else f".{part}"
+        for part in parts
+    )
+
+
+def validate_instance_against_schema(
+    schema: dict[str, Any],
+    instance: dict[str, Any],
+) -> None:
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    errors = sorted(
+        validator.iter_errors(instance),
+        key=lambda error: tuple(str(part) for part in error.absolute_path),
+    )
+    if not errors:
+        return
+
+    first = errors[0]
+    path = format_json_path(list(first.absolute_path))
+    fail(f"fixture violates JSON Schema at {path}: {first.message}")
 
 
 def repository_references(payload: Any) -> list[str]:
@@ -190,8 +236,12 @@ def main() -> int:
     schema = load_object(SCHEMA_PATH)
     example = load_object(EXAMPLE_PATH)
     validate_schema(schema)
+    validate_instance_against_schema(schema, example)
     validate_example(example)
-    print("OK: information evolution trace contract is structural, contiguous and claim-bounded")
+    print(
+        "OK: information evolution trace is Draft 2020-12 valid, "
+        "contiguous and claim-bounded"
+    )
     return 0
 
 
