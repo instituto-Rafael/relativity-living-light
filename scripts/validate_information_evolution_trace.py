@@ -3,7 +3,7 @@
 
 The validator performs two independent checks:
 
-1. full JSON Schema Draft 2020-12 validation, including date-time formats;
+1. full JSON Schema Draft 2020-12 validation, including RFC 3339 date-time formats;
 2. repository-specific semantic invariants that JSON Schema cannot express,
    such as contiguous state transitions and a pending external-validity gate.
 
@@ -18,12 +18,13 @@ from pathlib import Path
 from typing import Any
 
 try:
+    import rfc3339_validator  # noqa: F401 - proves date-time validation support exists
     from jsonschema import Draft202012Validator, FormatChecker
     from jsonschema.exceptions import SchemaError
-except ModuleNotFoundError as exc:  # pragma: no cover - exercised by deployment environments
+except ModuleNotFoundError as exc:  # pragma: no cover - deployment guard
     raise SystemExit(
-        "information evolution trace validation failed: missing dependency 'jsonschema'; "
-        "install it with 'pip install jsonschema'"
+        "information evolution trace validation failed: missing JSON Schema format "
+        "dependencies; install them with \"pip install 'jsonschema[format]'\""
     ) from exc
 
 ROOT = Path(__file__).resolve().parents[1]
