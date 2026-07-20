@@ -14,6 +14,23 @@ TOKEN_VAZIO protegido vira verdade futura.
 
 ---
 
+## Live machine-readable layer
+
+This table is preserved as a historical priority snapshot. The executable layer for current unknowns, contradictions, creative alternatives, falsifiers and exit conditions is now:
+
+```text
+data/epistemic_void/rll_epistemic_void.json
+schemas/rll_epistemic_void.schema.json
+tools/validate_epistemic_void.py
+docs/science/CAMPO_ENTROPICO_TOKEN_VAZIO.md
+```
+
+The live layer does not erase this ledger. It gives each selected gap explicit known facts, unknowns, `[H]` hypotheses, `[P]` analogies and objective conditions for leaving the void.
+
+Operational entropy in that layer is a routing convention only; it is not physical entropy or evidence.
+
+---
+
 ## Priority classes
 
 | Priority | Meaning |
@@ -41,8 +58,8 @@ TOKEN_VAZIO protegido vira verdade futura.
 |---|---|---|---|
 | TV-P1-001 | compact_remnant_boundary | GW posterior samples | compute mass_gap_overlap_probability |
 | TV-P1-002 | orbital_shape_angular_momentum | raw ephemerides and baselines | ingest one SPICE/JPL state-vector table |
-| TV-P1-003 | all | JSON schemas | add schema validation in CI |
-| TV-P1-004 | all | unit tests | add parser, ingestion, orbital and claim-boundary tests |
+| TV-P1-003 | all | JSON schemas | continue domain-specific schemas; core schema CI is now present |
+| TV-P1-004 | all | unit tests | continue parser, ingestion, orbital and claim-boundary regression coverage |
 
 ---
 
