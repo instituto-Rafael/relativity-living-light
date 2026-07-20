@@ -1,0 +1,528 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/rll/rll_route_forest_blueprint.schema.json",
+  "title": "RLL Omega Route Forest Blueprint",
+  "description": "Structural contract for a declarative RLL Omega route-forest blueprint. It organizes regions, operational flow frequencies, seven-direction vectors, knowledge trees and machine-learning readiness gates without training a model or validating scientific claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "forest_id",
+    "generated_at",
+    "source_commit",
+    "claim_allowed",
+    "frequency_semantics",
+    "vector_semantics",
+    "regions",
+    "nodes",
+    "routes",
+    "trees",
+    "source_refs",
+    "next_gate"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.route_forest_blueprint.v1"
+    },
+    "forest_id": {
+      "type": "string",
+      "pattern": "^RLL-[A-Z0-9-]{8,80}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "frequency_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "window_id",
+        "window_kind",
+        "unit",
+        "definition",
+        "boundary"
+      ],
+      "properties": {
+        "class": {
+          "const": "[C]"
+        },
+        "window_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "window_kind": {
+          "const": "structural_snapshot"
+        },
+        "unit": {
+          "const": "events_per_snapshot"
+        },
+        "definition": {
+          "type": "string",
+          "minLength": 20
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    },
+    "vector_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "directions",
+        "score_scale",
+        "normalization",
+        "boundary"
+      ],
+      "properties": {
+        "class": {
+          "const": "[C]"
+        },
+        "directions": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "D1"
+            },
+            {
+              "const": "D2"
+            },
+            {
+              "const": "D3"
+            },
+            {
+              "const": "D4"
+            },
+            {
+              "const": "D5"
+            },
+            {
+              "const": "D6"
+            },
+            {
+              "const": "D7"
+            }
+          ],
+          "items": false
+        },
+        "score_scale": {
+          "type": "object",
+          "required": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "0": {
+              "type": "string",
+              "minLength": 2
+            },
+            "1": {
+              "type": "string",
+              "minLength": 2
+            },
+            "2": {
+              "type": "string",
+              "minLength": 2
+            },
+            "3": {
+              "type": "string",
+              "minLength": 2
+            },
+            "4": {
+              "type": "string",
+              "minLength": 2
+            }
+          }
+        },
+        "normalization": {
+          "type": "string",
+          "minLength": 5
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "$ref": "#/$defs/region"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/route"
+      }
+    },
+    "trees": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/tree"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/path"
+      }
+    },
+    "next_gate": {
+      "type": "string",
+      "minLength": 20
+    }
+  },
+  "$defs": {
+    "path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._@+%=-]+(?:/[A-Za-z0-9._@+%=-]+)*$"
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "region_id",
+        "direction_id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "region_id": {
+          "type": "string",
+          "pattern": "^R[1-7]$"
+        },
+        "direction_id": {
+          "enum": [
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "tree_id",
+        "region_id",
+        "label",
+        "kind",
+        "epistemic_status",
+        "direction_scores",
+        "source_refs",
+        "parent_id"
+      ],
+      "properties": {
+        "node_id": {
+          "type": "string",
+          "pattern": "^N-[A-Z0-9-]{3,80}$"
+        },
+        "tree_id": {
+          "type": "string",
+          "pattern": "^T-[A-Z0-9-]{3,80}$"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^R[1-7]$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 3
+        },
+        "kind": {
+          "enum": [
+            "root",
+            "artifact",
+            "gap",
+            "hypothesis",
+            "control",
+            "dataset"
+          ]
+        },
+        "epistemic_status": {
+          "enum": [
+            "VERIFIED",
+            "READY_FOR_TEST",
+            "PARTIAL",
+            "BLOCKED",
+            "TOKEN_VAZIO",
+            "HYPOTHESIS"
+          ]
+        },
+        "direction_scores": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7"
+          ],
+          "properties": {
+            "D1": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D2": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D3": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D4": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D5": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D6": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            },
+            "D7": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4
+            }
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/path"
+          }
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^N-[A-Z0-9-]{3,80}$"
+            }
+          ]
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_id",
+        "tree_id",
+        "source_node_id",
+        "target_node_id",
+        "relation_type",
+        "source_refs",
+        "claim_allowed"
+      ],
+      "properties": {
+        "route_id": {
+          "type": "string",
+          "pattern": "^RT-[A-Z0-9-]{3,100}$"
+        },
+        "tree_id": {
+          "type": "string",
+          "pattern": "^T-[A-Z0-9-]{3,80}$"
+        },
+        "source_node_id": {
+          "type": "string",
+          "pattern": "^N-[A-Z0-9-]{3,80}$"
+        },
+        "target_node_id": {
+          "type": "string",
+          "pattern": "^N-[A-Z0-9-]{3,80}$"
+        },
+        "relation_type": {
+          "enum": [
+            "governs",
+            "constrains",
+            "evaluates",
+            "requires",
+            "opens_gap",
+            "derives",
+            "expands",
+            "projects",
+            "scores",
+            "routes",
+            "blocked_by"
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/path"
+          }
+        },
+        "claim_allowed": {
+          "const": false
+        }
+      }
+    },
+    "tree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tree_id",
+        "domain",
+        "root_node_id",
+        "purpose",
+        "node_ids",
+        "ml_role",
+        "ml_gates",
+        "training_allowed"
+      ],
+      "properties": {
+        "tree_id": {
+          "type": "string",
+          "pattern": "^T-[A-Z0-9-]{3,80}$"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 3
+        },
+        "root_node_id": {
+          "type": "string",
+          "pattern": "^N-[A-Z0-9-]{3,80}$"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 10
+        },
+        "node_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^N-[A-Z0-9-]{3,80}$"
+          }
+        },
+        "ml_role": {
+          "enum": [
+            "governance_only",
+            "candidate_dataset",
+            "feature_source",
+            "training_candidate"
+          ]
+        },
+        "ml_gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "provenance",
+            "rights_license",
+            "immutable_data",
+            "target_definition",
+            "feature_schema",
+            "split_contract",
+            "leakage_check",
+            "baseline_model",
+            "uncertainty",
+            "bias_review",
+            "model_card",
+            "independent_review"
+          ],
+          "properties": {
+            "provenance": {
+              "type": "boolean"
+            },
+            "rights_license": {
+              "type": "boolean"
+            },
+            "immutable_data": {
+              "type": "boolean"
+            },
+            "target_definition": {
+              "type": "boolean"
+            },
+            "feature_schema": {
+              "type": "boolean"
+            },
+            "split_contract": {
+              "type": "boolean"
+            },
+            "leakage_check": {
+              "type": "boolean"
+            },
+            "baseline_model": {
+              "type": "boolean"
+            },
+            "uncertainty": {
+              "type": "boolean"
+            },
+            "bias_review": {
+              "type": "boolean"
+            },
+            "model_card": {
+              "type": "boolean"
+            },
+            "independent_review": {
+              "type": "boolean"
+            }
+          }
+        },
+        "training_allowed": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
