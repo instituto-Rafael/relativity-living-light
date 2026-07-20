@@ -1,0 +1,375 @@
+{
+  "schema": "rll.epistemic_void_ledger.v1",
+  "ledger_id": "EVL-RLL-20260720",
+  "updated_at": "2026-07-20T08:30:00Z",
+  "purpose": "Convert uncertainty, contradiction and creative alternatives into explicit, testable and claim-bounded routes inside the RLL repository.",
+  "claim_allowed": false,
+  "operational_entropy_definition": "routing_metric_not_physical_entropy",
+  "records": [
+    {
+      "id": "EV-RLL-PROVENANCE-001",
+      "state": "READY_FOR_TEST",
+      "priority": "P0",
+      "domain": "scientific_provenance",
+      "epistemic_class": "V",
+      "question": "Which result should be current when a complete historical run and a newer partial run disagree by omission?",
+      "known": [
+        "RLL now has a structural run-manifest schema with field-level provenance.",
+        "A partial execution can contain TOKEN_VAZIO for a field measured numerically in an earlier lineage."
+      ],
+      "unknowns": [
+        "Historical runs have not all been materialized into the new manifest schema.",
+        "No field-level precedence resolver is yet committed as the canonical implementation."
+      ],
+      "contradictions": [
+        {
+          "id": "C-RUN-STATE-001",
+          "statement_a": "A historical complete artifact may contain a numerical Bayes result.",
+          "statement_b": "A newer partial artifact may expose the same field as TOKEN_VAZIO.",
+          "resolution_gate": "Materialize both manifests and evaluate precedence within a compatible lineage."
+        }
+      ],
+      "possibilities": [
+        {
+          "id": "C-FIELD-PRECEDENCE",
+          "classification": "C",
+          "role": "convention",
+          "statement": "Precedence is resolved per field and lineage instead of replacing the entire prior run.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Encode the convention in a deterministic resolver and regression tests.",
+          "claim_allowed": false
+        },
+        {
+          "id": "H-LINEAGE-RESOLVER",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "A lineage-aware resolver preserves valid numeric evidence while marking newer missing fields as non-superseding.",
+          "falsifier": "The resolver selects a compatible TOKEN_VAZIO field over an earlier complete numeric result.",
+          "predicted_observation": "The canonical snapshot retains the complete value and records the partial run as a non-superseding event.",
+          "promotion_gate": "Pass resolver tests over at least one historical and one partial manifest.",
+          "claim_allowed": false
+        },
+        {
+          "id": "P-RIVER-LINEAGE",
+          "classification": "P",
+          "role": "analogy",
+          "statement": "Runs are tributaries: a dry tributary does not erase water measured upstream.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Translate only into lineage and precedence tests; never cite the analogy as evidence.",
+          "claim_allowed": false
+        }
+      ],
+      "exit_conditions": [
+        {
+          "id": "X-MANIFEST-PAIR",
+          "evidence_required": "Two schema-valid manifests representing a complete and a partial compatible lineage.",
+          "acceptance_criterion": "Both manifests validate and preserve distinct run, commit, method and artifact provenance.",
+          "artifact_path": "results/run_manifests/reconciliation_pair.json",
+          "command": "python tools/materialize_rll_run_manifest.py --reconcile-example"
+        },
+        {
+          "id": "X-PRECEDENCE-TEST",
+          "evidence_required": "Deterministic field-level resolver with regression coverage.",
+          "acceptance_criterion": "TOKEN_VAZIO never supersedes compatible complete evidence and incompatible lineages remain separate.",
+          "artifact_path": "artifacts/run-ledger/precedence_report.json",
+          "command": "pytest -q tests/test_rll_result_precedence.py"
+        }
+      ],
+      "creative_boundary": "creativity_generates_candidates_not_evidence",
+      "conclusion": null,
+      "resolution_evidence": [],
+      "claim_allowed": false,
+      "next_gate": "Implement manifest materialization and field-level precedence.",
+      "source_refs": [
+        "schemas/rll_run_manifest.schema.json",
+        "docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md",
+        "docs/science/TOKEN_VAZIO_PRIORITY_LEDGER.md"
+      ]
+    },
+    {
+      "id": "EV-RLL-GROWTH-001",
+      "state": "TOKEN_VAZIO",
+      "priority": "P1",
+      "domain": "cosmology_growth",
+      "epistemic_class": "V",
+      "question": "Does an RLL parameter region remain compatible with independent growth-of-structure observations?",
+      "known": [
+        "The repository contains background-expansion and growth-related routes.",
+        "Background compatibility alone does not establish perturbation or structure-growth compatibility."
+      ],
+      "unknowns": [
+        "The canonical covariance-aware f_sigma8 likelihood and dataset lineage are not unified in one current run.",
+        "The stability of viable parameters under joint background and growth constraints remains open."
+      ],
+      "contradictions": [],
+      "possibilities": [
+        {
+          "id": "H-GROWTH-VIABLE",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "At least one prior-bounded RLL parameter region is jointly compatible with background and f_sigma8 data.",
+          "falsifier": "No sampled parameter region passes the preregistered joint fit and posterior-predictive thresholds.",
+          "predicted_observation": "A stable posterior region remains after adding growth data without collapsing to a boundary artifact.",
+          "promotion_gate": "Run a covariance-aware joint likelihood with preregistered priors and convergence diagnostics.",
+          "claim_allowed": false
+        },
+        {
+          "id": "H-GROWTH-EXCLUDES",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "Independent growth data eliminate the background-compatible RLL region.",
+          "falsifier": "A converged joint posterior retains a stable non-boundary RLL region under sensitivity checks.",
+          "predicted_observation": "The posterior concentrates at a null or excluded boundary and predictive residuals remain unacceptable.",
+          "promotion_gate": "Compare RLL, LCDM, wCDM and CPL under the same dataset lineage and priors.",
+          "claim_allowed": false
+        },
+        {
+          "id": "P-TWO-SHADOWS",
+          "classification": "P",
+          "role": "analogy",
+          "statement": "Expansion and growth are two shadows of one object, but neither shadow proves the other.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Use only to explain why independent likelihoods are required.",
+          "claim_allowed": false
+        }
+      ],
+      "exit_conditions": [
+        {
+          "id": "X-GROWTH-DATA",
+          "evidence_required": "Versioned f_sigma8 dataset, covariance or uncertainty model, license and SHA-256.",
+          "acceptance_criterion": "The dataset manifest is reproducible and no placeholder or synthetic row enters the real-data likelihood.",
+          "artifact_path": "data/real/cosmology/fsigma8_manifest.json",
+          "command": "python scripts/check_rll_growth.py --validate-data"
+        },
+        {
+          "id": "X-GROWTH-JOINT",
+          "evidence_required": "Joint posterior and posterior-predictive report using identical baselines and priors.",
+          "acceptance_criterion": "Convergence, prior sensitivity and model-comparison outputs are all present and checksum-bound.",
+          "artifact_path": "artifacts/cosmology-growth/joint_growth_report.json",
+          "command": "python scripts/check_rll_growth.py --joint"
+        }
+      ],
+      "creative_boundary": "creativity_generates_candidates_not_evidence",
+      "conclusion": null,
+      "resolution_evidence": [],
+      "claim_allowed": false,
+      "next_gate": "Unify real growth data, covariance and joint model comparison.",
+      "source_refs": [
+        "scripts/check_rll_growth.py",
+        "docs/RLL_PERTURBATION_LAYER.md",
+        "docs/science/TOKEN_VAZIO_PRIORITY_LEDGER.md"
+      ]
+    },
+    {
+      "id": "EV-RLL-GENERALIZATION-001",
+      "state": "TOKEN_VAZIO",
+      "priority": "P1",
+      "domain": "out_of_sample_validation",
+      "epistemic_class": "V",
+      "question": "Does RLL performance generalize to observations not used for parameter selection or model construction?",
+      "known": [
+        "Optimization on the same observations used for evaluation can overstate apparent performance.",
+        "The repository preserves multiple observational routes and model-comparison artifacts."
+      ],
+      "unknowns": [
+        "A canonical train-test split or temporal preregistration contract is not yet attached to the full scientific run.",
+        "Out-of-sample predictive calibration relative to LCDM, wCDM and CPL remains unmeasured."
+      ],
+      "contradictions": [],
+      "possibilities": [
+        {
+          "id": "H-OOS-GENERALIZES",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "RLL retains competitive predictive calibration on observations withheld from all fitting and design choices.",
+          "falsifier": "Withheld-data residuals or predictive scores are materially worse than preregistered baselines.",
+          "predicted_observation": "The held-out predictive distribution remains calibrated without post-hoc parameter adjustment.",
+          "promotion_gate": "Freeze model, priors and split before revealing held-out scores.",
+          "claim_allowed": false
+        },
+        {
+          "id": "H-OOS-OVERFIT",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "The strongest current fit improvements are primarily in-sample optimization effects.",
+          "falsifier": "Repeated withheld-set evaluations remain stable across split seeds and external datasets.",
+          "predicted_observation": "Performance degrades substantially when evaluated on observations excluded from fitting.",
+          "promotion_gate": "Run repeated or temporally ordered holdout evaluation with locked configuration.",
+          "claim_allowed": false
+        },
+        {
+          "id": "C-OOS-LOCK",
+          "classification": "C",
+          "role": "convention",
+          "statement": "No held-out result is promoted unless the split, metric and model version were locked first.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Encode the lock in a versioned preregistration manifest and CI check.",
+          "claim_allowed": false
+        }
+      ],
+      "exit_conditions": [
+        {
+          "id": "X-OOS-CONTRACT",
+          "evidence_required": "Versioned preregistration defining fit data, held-out data, metrics, thresholds and model commit.",
+          "acceptance_criterion": "The contract predates or cryptographically commits to the held-out evaluation.",
+          "artifact_path": "data/experiments/rll_out_of_sample_contract.json",
+          "command": "python tools/validate_out_of_sample_contract.py"
+        },
+        {
+          "id": "X-OOS-REPORT",
+          "evidence_required": "Held-out predictions and equal-footing baseline comparison.",
+          "acceptance_criterion": "Results include uncertainty, residuals, predictive scores, checksums and no post-hoc refit.",
+          "artifact_path": "artifacts/out-of-sample/OOS_REPORT.json",
+          "command": "python scripts/run_out_of_sample_validation.py"
+        }
+      ],
+      "creative_boundary": "creativity_generates_candidates_not_evidence",
+      "conclusion": null,
+      "resolution_evidence": [],
+      "claim_allowed": false,
+      "next_gate": "Create a preregistered held-out evaluation contract.",
+      "source_refs": [
+        "docs/RLL_NEXT_ROBUST_FIT_PLAN.md",
+        "docs/RLL_ROBUST_FIT_CHECKLIST.md",
+        "docs/RLL_CLAIM_GATE_LEDGER.md"
+      ]
+    },
+    {
+      "id": "EV-RLL-CMB-001",
+      "state": "PARTIAL",
+      "priority": "P1",
+      "domain": "cmb_backend_scope",
+      "epistemic_class": "V",
+      "question": "Which CMB validation level is sufficient for each class of RLL physical claim?",
+      "known": [
+        "The repository contains a CMB backend route and documentation.",
+        "Compressed distance checks and full power-spectrum calculations support different claim scopes."
+      ],
+      "unknowns": [
+        "The exact claim-to-backend matrix is not yet enforced as a machine-readable gate.",
+        "Sensitivity to perturbation implementation and nuisance assumptions remains route-dependent."
+      ],
+      "contradictions": [],
+      "possibilities": [
+        {
+          "id": "C-CMB-TIERING",
+          "classification": "C",
+          "role": "convention",
+          "statement": "CMB evidence is divided into compressed, background-solver and full-spectrum tiers with separate allowed claims.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Create and validate a claim-to-backend tier registry.",
+          "claim_allowed": false
+        },
+        {
+          "id": "H-CMB-COMPRESSED-SUFFICIENT",
+          "classification": "H",
+          "role": "testable_hypothesis",
+          "statement": "Compressed CMB observables are sufficient only for narrowly scoped background-consistency claims.",
+          "falsifier": "A claimed background modification changes spectrum-level observables while passing compressed checks in a misleading way.",
+          "predicted_observation": "Claims outside background consistency require escalation to a Boltzmann and spectrum-level backend.",
+          "promotion_gate": "Map each claim to observables and demonstrate counterexamples across tiers.",
+          "claim_allowed": false
+        },
+        {
+          "id": "P-LENS-TIERS",
+          "classification": "P",
+          "role": "analogy",
+          "statement": "A coarse lens locates the star; a spectroscope is required to describe its composition.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Use only to explain tiered evidentiary scope.",
+          "claim_allowed": false
+        }
+      ],
+      "exit_conditions": [
+        {
+          "id": "X-CMB-TIER-REGISTRY",
+          "evidence_required": "Machine-readable mapping from claim type to required CMB backend and observables.",
+          "acceptance_criterion": "CI rejects a claim package whose requested scope exceeds the executed backend tier.",
+          "artifact_path": "data/contracts/cmb_claim_backend_tiers.json",
+          "command": "python tools/validate_cmb_claim_backend_tiers.py"
+        },
+        {
+          "id": "X-CMB-BACKEND-EVIDENCE",
+          "evidence_required": "At least one checksum-bound execution receipt per supported tier.",
+          "acceptance_criterion": "Each receipt records code commit, inputs, backend version, outputs and allowed claim scope.",
+          "artifact_path": "artifacts/cmb/backend_tier_receipts.json",
+          "command": "python scripts/run_cmb_power_backend.py --emit-tier-receipt"
+        }
+      ],
+      "creative_boundary": "creativity_generates_candidates_not_evidence",
+      "conclusion": null,
+      "resolution_evidence": [],
+      "claim_allowed": false,
+      "next_gate": "Formalize claim-to-backend tiers and attach execution receipts.",
+      "source_refs": [
+        "scripts/run_cmb_power_backend.py",
+        "docs/RLL_CMB_NONLINEAR_BACKEND.md",
+        "docs/RLL_CLAIM_GATE_LEDGER.md"
+      ]
+    },
+    {
+      "id": "EV-GOV-BRANCH-001",
+      "state": "BLOCKED",
+      "priority": "P2",
+      "domain": "github_governance",
+      "epistemic_class": "V",
+      "question": "Which repository checks are actually required by the external GitHub branch-protection configuration?",
+      "known": [
+        "Repository-local workflow and job existence can be validated.",
+        "Repository-local files do not prove external branch-protection settings."
+      ],
+      "unknowns": [
+        "The current external required-check configuration has not been attached as evidence to the repository ledger."
+      ],
+      "contradictions": [],
+      "possibilities": [
+        {
+          "id": "C-EXTERNAL-EVIDENCE",
+          "classification": "C",
+          "role": "convention",
+          "statement": "Branch protection remains unverified until an authenticated configuration receipt is captured.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Attach an API or settings export receipt with date, branch and repository identity.",
+          "claim_allowed": false
+        },
+        {
+          "id": "P-DOOR-LOCK",
+          "classification": "P",
+          "role": "analogy",
+          "statement": "A lock drawn on a blueprint does not prove that the physical door is locked.",
+          "falsifier": null,
+          "predicted_observation": null,
+          "promotion_gate": "Use only to explain the distinction between repository code and platform configuration.",
+          "claim_allowed": false
+        }
+      ],
+      "exit_conditions": [
+        {
+          "id": "X-BRANCH-RECEIPT",
+          "evidence_required": "Authenticated branch-protection or ruleset receipt for main.",
+          "acceptance_criterion": "The receipt lists required checks, enforcement state, branch, repository and capture time.",
+          "artifact_path": "artifacts/governance/main_branch_protection_receipt.json",
+          "command": null
+        }
+      ],
+      "creative_boundary": "creativity_generates_candidates_not_evidence",
+      "conclusion": null,
+      "resolution_evidence": [],
+      "claim_allowed": false,
+      "next_gate": "Capture external GitHub configuration evidence without inferring it from YAML.",
+      "source_refs": [
+        ".github/workflow-contract.yml",
+        ".github/GUIA_WORKFLOWS.md",
+        "docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md"
+      ]
+    }
+  ],
+  "next_gate": "Validate this ledger in CI, then implement the P0 provenance materializer and precedence resolver."
+}
