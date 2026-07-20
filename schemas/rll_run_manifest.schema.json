@@ -139,7 +139,52 @@
         },
         "supersedes_result_id": {"type": ["string", "null"]},
         "invalidation_reason": {"type": ["string", "null"]}
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"status": {"const": "TOKEN_VAZIO"}},
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "value": {"type": "null"},
+              "uncertainty": {"type": "null"},
+              "artifact_sha256": {"const": "TOKEN_VAZIO"},
+              "supersedes_result_id": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {"enum": ["PASS", "FAIL", "INFORMATIONAL"]}
+            },
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "value": {"not": {"type": "null"}},
+              "artifact_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"status": {"const": "INVALIDATED"}},
+            "required": ["status"]
+          },
+          "then": {
+            "required": ["invalidation_reason"],
+            "properties": {
+              "invalidation_reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      ]
     }
   }
 }
