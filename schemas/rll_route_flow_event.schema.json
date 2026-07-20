@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/rll/rll_route_flow_event.schema.json",
+  "title": "RLL Route Flow Event",
+  "description": "Structural contract for one append-only operational route-flow event. Event frequency is a versioned count inside a declared snapshot, not physical Hertz, probability or evidence of model performance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "window_id",
+    "route_id",
+    "event_kind",
+    "observed_at",
+    "source_ref",
+    "weight"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^EVT-[0-9]{4,12}$"
+    },
+    "window_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "route_id": {
+      "type": "string",
+      "pattern": "^RT-[A-Z0-9-]{3,100}$"
+    },
+    "event_kind": {
+      "enum": [
+        "artifact_declared",
+        "validation_pass",
+        "gap_opened",
+        "route_linked"
+      ]
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_ref": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._@+%=-]+(?:/[A-Za-z0-9._@+%=-]+)*$"
+    },
+    "weight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    }
+  }
+}
