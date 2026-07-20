@@ -31,6 +31,10 @@
     "operational_invariant": {
       "$ref": "./omega_operational_invariant.schema.json",
       "description": "Optional Ω7 operational assessment. Passing its structural validator does not validate scientific claims."
+    },
+    "route_forest": {
+      "$ref": "./rll_route_forest.schema.json",
+      "description": "Optional compiled Ω route forest. Operational flow and vector readiness do not constitute physical evidence or machine-learning validation."
     }
   }
 }
