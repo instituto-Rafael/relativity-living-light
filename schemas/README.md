@@ -29,6 +29,8 @@ A schema can verify that an object has the required fields and claim gates. It c
 | `relational_validation_package.schema.json` | Structural contract for relational validation packages. | `claim_allowed=false` |
 | `relation_graph.schema.json` | Structural contract for claim-bounded relation graphs. | `claim_allowed=false` |
 | `information_evolution_trace.schema.json` | Structural contract for internal custody traces across information states, transformations, tests and epistemic gates. | `claim_allowed=false`; unknown origin remains `TOKEN_VAZIO` |
+| `rll_run_manifest.schema.json` | Structural contract for field-level provenance of one scientific execution. | `claim_allowed=false`; partial absence cannot silently supersede prior evidence |
+| `rll_epistemic_void.schema.json` | Structural contract for unknowns, contradictions, creative alternatives, falsifiers and objective exit conditions. | `claim_allowed=false`; creativity generates candidates, not evidence |
 | `omega_artifact.schema.json` | Structural contract for RAFAELIA Ω living knowledge units. | epistemic status required |
 | `omega_node.schema.json` | Structural contract for RAFAELIA Ω versioned semantic cells. | score fields are routing metadata |
 | `omega_relation.schema.json` | Structural contract for RAFAELIA Ω weighted semantic relations. | preserves relation-weight formula |
@@ -51,6 +53,14 @@ Validate the Omega schemas and examples with:
 ```bash
 python3 scripts/validate_omega_schemas.py
 ```
+
+Validate the RLL epistemic-void ledger with:
+
+```bash
+python tools/validate_epistemic_void.py --strict --write-report
+```
+
+The operational entropy emitted by this validator is a routing convention. It is not thermodynamic entropy, Shannon entropy, evidence or a scientific score.
 
 ## Required discipline
 
