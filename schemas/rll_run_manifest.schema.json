@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_run_manifest.schema.json",
   "title": "RLL Scientific Run Manifest",
-  "description": "Field-level provenance for one RLL execution. TOKEN_VAZIO records absence in this run and must not silently erase prior valid evidence.",
+  "description": "Structural contract for field-level provenance of one RLL execution. TOKEN_VAZIO records absence in this run and must not silently erase prior valid evidence; schema parse success is not scientific validation.",
   "type": "object",
   "additionalProperties": false,
   "required": [
