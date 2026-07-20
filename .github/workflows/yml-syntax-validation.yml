@@ -5,11 +5,19 @@ on:
     paths:
       - '**/*.yml'
       - '**/*.yaml'
+      - '.github/GUIA_WORKFLOWS.md'
+      - 'docs/workflows/**'
+      - 'tools/validate_workflow_docs.py'
+      - 'tests/test_validate_workflow_docs.py'
   push:
     branches: [ main ]
     paths:
       - '**/*.yml'
       - '**/*.yaml'
+      - '.github/GUIA_WORKFLOWS.md'
+      - 'docs/workflows/**'
+      - 'tools/validate_workflow_docs.py'
+      - 'tests/test_validate_workflow_docs.py'
   workflow_dispatch:
 
 permissions:
@@ -26,6 +34,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -133,10 +143,20 @@ jobs:
           PY
           exit "$status"
 
+      - name: Validate workflow documentation contract
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/validate_workflow_docs.py --strict --write-report \
+            2>&1 | tee artifacts/yml-syntax-validation/workflow_docs_contract.log
+
       - name: Upload consultable YAML validation artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: yml-syntax-validation-${{ github.run_id }}
-          path: artifacts/yml-syntax-validation/
+          path: |
+            artifacts/yml-syntax-validation/
+            artifacts/workflow-docs/
           retention-days: 14
+          if-no-files-found: error
