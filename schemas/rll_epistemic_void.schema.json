@@ -1,0 +1,497 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_epistemic_void.schema.json",
+  "title": "RLL Epistemic Void Ledger",
+  "description": "Structural contract for a claim-bounded RLL ledger that turns TOKEN_VAZIO, uncertainty, contradiction and creative alternatives into auditable test routes without treating operational entropy as physical evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "ledger_id",
+    "updated_at",
+    "purpose",
+    "claim_allowed",
+    "operational_entropy_definition",
+    "records",
+    "next_gate"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.epistemic_void_ledger.v1"
+    },
+    "ledger_id": {
+      "type": "string",
+      "pattern": "^EVL-[A-Z0-9-]+$"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 20
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "operational_entropy_definition": {
+      "const": "routing_metric_not_physical_entropy",
+      "description": "Convention marker: counts open alternatives and unknowns for routing only; it is not thermodynamic or Shannon entropy."
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/record"
+      }
+    },
+    "next_gate": {
+      "type": "string",
+      "minLength": 5
+    }
+  },
+  "$defs": {
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "description"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!https?://)(?!/)(?!.*\\.\\.).+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement_a",
+        "statement_b",
+        "resolution_gate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^C-[A-Z0-9-]+$"
+        },
+        "statement_a": {
+          "type": "string",
+          "minLength": 5
+        },
+        "statement_b": {
+          "type": "string",
+          "minLength": 5
+        },
+        "resolution_gate": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
+    },
+    "possibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "classification",
+        "role",
+        "statement",
+        "falsifier",
+        "predicted_observation",
+        "promotion_gate",
+        "claim_allowed"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(H|P|C)-[A-Z0-9-]+$"
+        },
+        "classification": {
+          "enum": [
+            "H",
+            "P",
+            "C"
+          ]
+        },
+        "role": {
+          "enum": [
+            "testable_hypothesis",
+            "analogy",
+            "convention"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 8
+        },
+        "falsifier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "predicted_observation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "promotion_gate": {
+          "type": "string",
+          "minLength": 8
+        },
+        "claim_allowed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "H"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "const": "testable_hypothesis"
+              },
+              "falsifier": {
+                "type": "string",
+                "minLength": 8
+              },
+              "predicted_observation": {
+                "type": "string",
+                "minLength": 8
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "P"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "const": "analogy"
+              },
+              "falsifier": {
+                "type": "null"
+              },
+              "predicted_observation": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "C"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "const": "convention"
+              },
+              "falsifier": {
+                "type": "null"
+              },
+              "predicted_observation": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exit_condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "evidence_required",
+        "acceptance_criterion",
+        "artifact_path",
+        "command"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^X-[A-Z0-9-]+$"
+        },
+        "evidence_required": {
+          "type": "string",
+          "minLength": 8
+        },
+        "acceptance_criterion": {
+          "type": "string",
+          "minLength": 8
+        },
+        "artifact_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!https?://)(?!/)(?!.*\\.\\.).+$"
+        },
+        "command": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state",
+        "priority",
+        "domain",
+        "epistemic_class",
+        "question",
+        "known",
+        "unknowns",
+        "contradictions",
+        "possibilities",
+        "exit_conditions",
+        "creative_boundary",
+        "conclusion",
+        "resolution_evidence",
+        "claim_allowed",
+        "next_gate",
+        "source_refs"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^EV-[A-Z0-9-]+$"
+        },
+        "state": {
+          "enum": [
+            "TOKEN_VAZIO",
+            "BLOCKED",
+            "PARTIAL",
+            "CONTRADICTION",
+            "READY_FOR_TEST",
+            "RESOLVED"
+          ]
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "epistemic_class": {
+          "const": "V"
+        },
+        "question": {
+          "type": "string",
+          "minLength": 10
+        },
+        "known": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "uniqueItems": true
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "uniqueItems": true
+        },
+        "contradictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contradiction"
+          }
+        },
+        "possibilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/possibility"
+          }
+        },
+        "exit_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/exit_condition"
+          }
+        },
+        "creative_boundary": {
+          "const": "creativity_generates_candidates_not_evidence"
+        },
+        "conclusion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resolution_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence_ref"
+          }
+        },
+        "claim_allowed": {
+          "const": false
+        },
+        "next_gate": {
+          "type": "string",
+          "minLength": 8
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!https?://)(?!/)(?!.*\\.\\.).+$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "TOKEN_VAZIO",
+                  "BLOCKED",
+                  "PARTIAL",
+                  "CONTRADICTION",
+                  "READY_FOR_TEST"
+                ]
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "conclusion": {
+                "type": "null"
+              },
+              "resolution_evidence": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "TOKEN_VAZIO"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "unknowns": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "CONTRADICTION"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "contradictions": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "RESOLVED"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "conclusion": {
+                "type": "string",
+                "minLength": 10
+              },
+              "resolution_evidence": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
