@@ -1,0 +1,75 @@
+schema: rll.workflow_contract.v1
+updated_at: "2026-07-20"
+
+inventory:
+  active_workflows: 44
+  inclusion: ".github/workflows/*.{yml,yaml}"
+  exclusion:
+    - ".github/To_add/**"
+    - ".github/workflow-orchestrator/**"
+
+canonical_pipeline:
+  path: .github/workflows/rll-pipeline-linear-completo.yml
+  triggers:
+    - workflow_dispatch
+    - workflow_call
+    - pull_request
+  job_id: deterministic-gate
+  github_actions_steps: 6
+  logical_steps: 44
+  logical_phases: 8
+  pull_request_mode: dry_run
+  claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
+
+aliases:
+  - path: .github/workflows/RLL-CI.yml
+    job_id: canonical-science
+    uses: ./.github/workflows/rll-pipeline-linear-completo.yml
+    modo: apenas_ciencia
+  - path: .github/workflows/RLL_SCIENTIFIC.yml
+    job_id: canonical-science
+    uses: ./.github/workflows/rll-pipeline-linear-completo.yml
+    modo: apenas_ciencia
+
+documented_checks:
+  evidence_scope: repository_local_only
+  branch_protection_verified: false
+  checks:
+    - context: deterministic-gate
+      workflow: .github/workflows/rll-pipeline-linear-completo.yml
+      job_id: deterministic-gate
+    - context: test
+      workflow: .github/workflows/python-tests.yml
+      job_id: test
+    - context: validate-yaml
+      workflow: .github/workflows/yml-syntax-validation.yml
+      job_id: validate-yaml
+    - context: check-conventions
+      workflow: .github/workflows/convention-check.yml
+      job_id: check-conventions
+    - context: build-formulas-artifacts
+      workflow: .github/workflows/formulas-artifacts.yml
+      job_id: build-formulas-artifacts
+    - context: formulas-manifest
+      workflow: .github/workflows/formulas-artifacts-validation.yml
+      job_id: formulas-manifest
+
+documentation:
+  authority_order:
+    - .github/workflow-contract.yml
+    - tools/validate_workflow_docs.py
+    - artifacts/workflow-docs/workflow_registry.json
+    - docs/workflows/INDICE_CANONICO.md
+  required_markers:
+    .github/GUIA_WORKFLOWS.md:
+      - "44 etapas lógicas"
+      - "8 fases"
+      - "6 steps físicos"
+      - "não comprova a configuração de branch protection"
+    docs/workflows/README.md:
+      - "contrato executável"
+      - "44 etapas lógicas"
+      - "8 fases"
+    docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md:
+      - "fonte de verdade executável"
+      - "TOKEN_VAZIO não apaga evidência histórica"
