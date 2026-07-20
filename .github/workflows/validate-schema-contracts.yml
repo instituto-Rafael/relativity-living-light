@@ -5,7 +5,9 @@ on:
     paths:
       - "schemas/**"
       - "data/epistemic_void/**"
+      - "data/omega_operational/**"
       - "docs/science/CAMPO_ENTROPICO_TOKEN_VAZIO.md"
+      - "docs/architecture/31_OMEGA7_OPERATIONAL_INVARIANT.md"
       - "fixtures/ambient_field_observation.example.json"
       - "fixtures/rmrcti_delta_p_observation.example.json"
       - "fixtures/rll_run_manifest.partial.example.json"
@@ -18,19 +20,23 @@ on:
       - "scripts/validate_rmrcti_delta_p_observation.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tools/validate_epistemic_void.py"
+      - "tools/validate_omega7_operational.py"
       - "tests/test_schemas_claim_boundary.py"
       - "tests/test_semantic_governance_schemas.py"
       - "tests/test_information_evolution_trace.py"
       - "tests/test_scientific_infinity.py"
       - "tests/test_rll_run_manifest_schema.py"
       - "tests/test_epistemic_void.py"
+      - "tests/test_omega7_operational.py"
       - ".github/workflows/validate-schema-contracts.yml"
   push:
     branches: [main]
     paths:
       - "schemas/**"
       - "data/epistemic_void/**"
+      - "data/omega_operational/**"
       - "docs/science/CAMPO_ENTROPICO_TOKEN_VAZIO.md"
+      - "docs/architecture/31_OMEGA7_OPERATIONAL_INVARIANT.md"
       - "fixtures/ambient_field_observation.example.json"
       - "fixtures/rmrcti_delta_p_observation.example.json"
       - "fixtures/rll_run_manifest.partial.example.json"
@@ -43,12 +49,14 @@ on:
       - "scripts/validate_rmrcti_delta_p_observation.py"
       - "tools/validate_schemas_claim_boundary.py"
       - "tools/validate_epistemic_void.py"
+      - "tools/validate_omega7_operational.py"
       - "tests/test_schemas_claim_boundary.py"
       - "tests/test_semantic_governance_schemas.py"
       - "tests/test_information_evolution_trace.py"
       - "tests/test_scientific_infinity.py"
       - "tests/test_rll_run_manifest_schema.py"
       - "tests/test_epistemic_void.py"
+      - "tests/test_omega7_operational.py"
       - ".github/workflows/validate-schema-contracts.yml"
   workflow_dispatch:
 
@@ -76,6 +84,8 @@ jobs:
         run: python tools/validate_schemas_claim_boundary.py
       - name: Validate epistemic void ledger
         run: python tools/validate_epistemic_void.py --strict --write-report
+      - name: Validate Omega7 operational invariant
+        run: python tools/validate_omega7_operational.py --strict --write-report
       - name: Validate RAFAELIA Omega schema layer
         run: python scripts/validate_omega_schemas.py
       - name: Validate information evolution custody trace
@@ -99,6 +109,7 @@ jobs:
           tests/test_scientific_infinity.py
           tests/test_rll_run_manifest_schema.py
           tests/test_epistemic_void.py
+          tests/test_omega7_operational.py
       - name: Upload epistemic void validation receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -107,3 +118,11 @@ jobs:
           path: artifacts/epistemic-void/
           retention-days: 30
           if-no-files-found: warn
+      - name: Upload Omega7 operational validation receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: omega7-operational-${{ github.run_id }}
+          path: artifacts/omega7-operational/
+          retention-days: 30
+          if-no-files-found: error
