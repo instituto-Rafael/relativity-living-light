@@ -27,6 +27,10 @@
     "governance": {"type": "object", "additionalProperties": true},
     "audit": {"type": "object", "additionalProperties": true},
     "rollback": {"type": "object", "additionalProperties": true},
-    "next_state": {"type": "string", "minLength": 1}
+    "next_state": {"type": "string", "minLength": 1},
+    "operational_invariant": {
+      "$ref": "./omega_operational_invariant.schema.json",
+      "description": "Optional Ω7 operational assessment. Passing its structural validator does not validate scientific claims."
+    }
   }
 }
