@@ -70,7 +70,7 @@ def test_invalidated_result_requires_reason() -> None:
             "value": -6.19,
             "uncertainty": 0.691,
             "artifact_sha256": "0" * 64,
-            "invalidation_reason": null if False else None
+            "invalidation_reason": None,
         }
     )
 
