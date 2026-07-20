@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_run_manifest.schema.json",
+  "title": "RLL Scientific Run Manifest",
+  "description": "Field-level provenance for one RLL execution. TOKEN_VAZIO records absence in this run and must not silently erase prior valid evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "run_id",
+    "commit_sha",
+    "run_date",
+    "execution_mode",
+    "completeness",
+    "lineage_id",
+    "dataset_lineage",
+    "environment",
+    "results",
+    "claim_allowed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.scientific_run_manifest.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "run_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "execution_mode": {
+      "enum": [
+        "completo",
+        "apenas_ciencia",
+        "apenas_governanca",
+        "apenas_dados",
+        "dry_run"
+      ]
+    },
+    "completeness": {
+      "enum": [
+        "complete",
+        "partial",
+        "failed",
+        "dry_run"
+      ]
+    },
+    "lineage_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for compatible code, dataset, prior and method lineage."
+    },
+    "parent_run_id": {
+      "type": ["string", "null"]
+    },
+    "dataset_lineage": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          {
+            "const": "TOKEN_VAZIO"
+          }
+        ]
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["python", "platform", "dependency_lock_sha256", "random_seed"],
+      "properties": {
+        "python": {"type": "string", "minLength": 1},
+        "platform": {"type": "string", "minLength": 1},
+        "dependency_lock_sha256": {
+          "oneOf": [
+            {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            {"const": "TOKEN_VAZIO"}
+          ]
+        },
+        "random_seed": {
+          "oneOf": [
+            {"type": "integer"},
+            {"const": "TOKEN_VAZIO"}
+          ]
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/result"}
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_id",
+        "value",
+        "uncertainty",
+        "unit",
+        "status",
+        "method",
+        "artifact_path",
+        "artifact_sha256"
+      ],
+      "properties": {
+        "result_id": {"type": "string", "minLength": 1},
+        "value": {"type": ["number", "string", "null"]},
+        "uncertainty": {"type": ["number", "string", "null"]},
+        "unit": {"type": "string", "minLength": 1},
+        "status": {
+          "enum": ["PASS", "FAIL", "TOKEN_VAZIO", "INVALIDATED", "INFORMATIONAL"]
+        },
+        "method": {"type": "string", "minLength": 1},
+        "artifact_path": {"type": "string", "minLength": 1},
+        "artifact_sha256": {
+          "oneOf": [
+            {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            {"const": "TOKEN_VAZIO"}
+          ]
+        },
+        "supersedes_result_id": {"type": ["string", "null"]},
+        "invalidation_reason": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
