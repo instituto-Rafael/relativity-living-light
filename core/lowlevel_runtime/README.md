@@ -57,3 +57,25 @@ Build/teste focal:
 ```bash
 pytest -q tests/test_sqrt3_2_freestanding_kernel.py
 ```
+
+## Região canônica RLL em C freestanding
+- `include/rll_canonical_region.h` — ABI fixa para observação, unidade, incerteza, proveniência, estado e recibo.
+- `c/rll_canonical_region.c` — ingestão streaming sem heap/libc/floating point, conversão Q32.32 e falha fechada.
+- Consome diretamente os blocos reais versionados de H(z), DESI DR2 BAO, fσ8/RSD e CMB Planck com covariância 3×3.
+- Contrato atual: 65 observações canônicas (`33 + 13 + 16 + 3`), SHA-256 externo obrigatório e `claim_allowed=0`.
+- Ausência de bloco obrigatório produz `RLLC_TOKEN_VAZIO`; dado sintético, incerteza inválida ou proveniência ausente é bloqueado.
+- O adaptador de física/geofísica local permanece `LOCAL_CONTEXT_ONLY` e não satisfaz o gate cosmológico.
+
+Build/teste focal:
+```bash
+gcc -std=c11 -Wall -Wextra -Werror -pedantic \
+  -ffreestanding -fno-builtin -fno-stack-protector \
+  -fno-asynchronous-unwind-tables -nostdlib -c \
+  core/lowlevel_runtime/c/rll_canonical_region.c \
+  -Icore/lowlevel_runtime/include \
+  -o /tmp/rll_canonical_region.o
+nm -u /tmp/rll_canonical_region.o
+pytest -q tests/test_rll_canonical_region_freestanding.py
+```
+
+Contrato completo: [`docs/CANONICAL_REGION_FREESTANDING_C_V1.md`](../../docs/CANONICAL_REGION_FREESTANDING_C_V1.md).
