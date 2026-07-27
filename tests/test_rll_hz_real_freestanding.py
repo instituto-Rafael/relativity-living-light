@@ -4,6 +4,7 @@ import csv
 import hashlib
 import re
 import subprocess
+import sys
 import zlib
 from pathlib import Path
 
@@ -59,19 +60,9 @@ def test_real_hz_dataset_is_exactly_anchored_to_compiled_q16_rows() -> None:
 def test_real_hz_models_run_inside_the_canonical_coupling_region() -> None:
     exe = Path("/tmp/rll_hz_real_vectors")
     cp = _run([
-        "gcc",
-        "-std=c11",
-        "-O2",
-        "-Wall",
-        "-Wextra",
-        "-Werror",
-        HARNESS,
-        CANONICAL,
-        MODEL,
-        DATASET_C,
-        f"-I{INCLUDE}",
-        "-o",
-        str(exe),
+        "gcc", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",
+        HARNESS, CANONICAL, MODEL, DATASET_C,
+        f"-I{INCLUDE}", "-o", str(exe),
     ])
     assert cp.returncode == 0, cp.stderr
     run = _run([str(exe)])
@@ -81,23 +72,10 @@ def test_real_hz_models_run_inside_the_canonical_coupling_region() -> None:
 def test_combined_real_hz_runtime_has_no_external_symbols() -> None:
     obj = Path("/tmp/rll_hz_real_combined.o")
     cp = _run([
-        "gcc",
-        "-std=c11",
-        "-O2",
-        "-Wall",
-        "-Wextra",
-        "-Werror",
-        "-ffreestanding",
-        "-fno-builtin",
-        "-fno-stack-protector",
-        "-nostdlib",
-        "-r",
-        CANONICAL,
-        MODEL,
-        DATASET_C,
-        f"-I{INCLUDE}",
-        "-o",
-        str(obj),
+        "gcc", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",
+        "-ffreestanding", "-fno-builtin", "-fno-stack-protector",
+        "-nostdlib", "-r", CANONICAL, MODEL, DATASET_C,
+        f"-I{INCLUDE}", "-o", str(obj),
     ])
     assert cp.returncode == 0, cp.stderr
     nm = _run(["nm", "-u", str(obj)])
@@ -111,21 +89,16 @@ def test_real_hz_model_cross_compiles_for_armv7_and_aarch64() -> None:
         "aarch64-none-elf": "/tmp/rll_hz_real_aarch64.o",
     }.items():
         cp = _run([
-            "clang",
-            f"--target={target}",
-            "-std=c11",
-            "-Oz",
-            "-Wall",
-            "-Wextra",
-            "-Werror",
-            "-ffreestanding",
-            "-fno-builtin",
-            "-fno-stack-protector",
-            "-nostdlib",
-            "-c",
-            MODEL,
-            f"-I{INCLUDE}",
-            "-o",
-            output,
+            "clang", f"--target={target}", "-std=c11", "-Oz",
+            "-Wall", "-Wextra", "-Werror", "-ffreestanding", "-fno-builtin",
+            "-fno-stack-protector", "-nostdlib", "-c", MODEL,
+            f"-I{INCLUDE}", "-o", output,
         ])
         assert cp.returncode == 0, f"{target}: {cp.stderr}"
+
+
+def test_single_real_hz_validator_passes() -> None:
+    cp = _run([sys.executable, "tools/validate_rll_hz_real_freestanding.py"])
+    assert cp.returncode == 0, cp.stdout + cp.stderr
+    assert '"status": "PASS"' in cp.stdout
+    assert '"claim_allowed": false' in cp.stdout
