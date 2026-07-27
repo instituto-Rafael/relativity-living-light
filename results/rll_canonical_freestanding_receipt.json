@@ -2,6 +2,7 @@
   "schema": "rll.canonical-freestanding-receipt.v1",
   "executed_at_utc": "2026-07-27T05:00:55Z",
   "base_commit": "9ac210b605575738a7f303cee1f75e894eb423cd",
+  "integrated_on_main_base": "6cf57d2db398eae5f177c2186b991bd2ee253e59",
   "claim_allowed": false,
   "sources": {
     "hz_csv": {
@@ -55,7 +56,7 @@
     "compiler_runtime_helpers": []
   },
   "tests": {
-    "command": "pytest -q tests/test_rll_canonical_freestanding.py",
+    "command": "pytest -q tests/test_rll_canonical_model_kernel.py",
     "passed": 4,
     "failed": 0
   },
