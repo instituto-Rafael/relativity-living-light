@@ -9,9 +9,9 @@ extern "C" {
 
 #define RLL_HZ_SOURCE_CC_MORESCO2022 1u
 #define RLL_HZ_SOURCE_CC_BAO_BOSS 2u
-#define RLL_HZ_DATASET_FNV1A64 0x8fcfaccd5d192767ull
-#define RLL_HZ_DATASET_CRC32 0x2840ace1u
-#define RLL_HZ_DATASET_BYTES 999ull
+#define RLL_HZ_DATASET_FNV1A64 0x7bcbeeaf770538d3ull
+#define RLL_HZ_DATASET_CRC32 0xdad619bdu
+#define RLL_HZ_DATASET_BYTES 1033ull
 #define RLL_HZ_DATASET_ROWS 33u
 
 typedef struct rll_hz_sample_q16 {
