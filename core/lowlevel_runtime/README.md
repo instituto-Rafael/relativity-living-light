@@ -101,3 +101,24 @@ pytest -q tests/test_rll_canonical_model_kernel.py
 ```
 
 Contrato completo: [`docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md`](../../docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md).
+
+## Ingestão freestanding dos quatro blocos reais
+
+O núcleo executável H(z) agora recebe uma camada única de entrada para todos os
+blocos cosmológicos reais versionados:
+
+- `include/rll_canonical_real_inputs.h` — ABI de buffers, callback de modelo e recibo;
+- `c/rll_canonical_real_inputs.c` — SHA-256 interno, parsers CSV/JSON streaming e Q16.16;
+- `include/rll_canonical_real_models.h` / `c/rll_canonical_real_models.c` — bridge para os avaliadores ΛCDM/RLL já existentes;
+- 33 H(z) + 13 DESI DR2 BAO + 16 fσ8/RSD + 3 CMB = **65 observações**;
+- `DV/r_d`, `DM/r_d`, `DH/r_d` e os três parâmetros CMB permanecem tipados separadamente;
+- a matriz CMB 3×3 é usada somente quando as três previsões do modelo existem;
+- ΛCDM/RLL nominais ligam os 33 H(z) reais; os 32 pontos sem avaliador físico permanecem `TOKEN_VAZIO`/bloqueados;
+- nenhuma rota promove dados por identidade ou libera claim: `claim_allowed=0`.
+
+Validação focal:
+```bash
+pytest -q tests/test_rll_canonical_real_inputs.py
+```
+
+Contrato completo: [`docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md`](../../docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md).
