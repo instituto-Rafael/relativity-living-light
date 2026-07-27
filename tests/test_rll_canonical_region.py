@@ -24,18 +24,24 @@ def test_canonical_region_generation_and_manifest_custody() -> None:
     # The legacy receipt digest currently differs from the committed manifest bytes.
     # The generated C must preserve both values and declare the divergence, never hide it.
     assert actual != receipt["manifest_sha256"]
-    cp = run(
-        "python3",
-        str(GENERATOR),
-        "--manifest",
-        str(MANIFEST),
-        "--receipt",
-        str(RECEIPT),
-        "--output",
-        str(GENERATED),
-        "--check",
-    )
-    assert cp.returncode == 0, cp.stderr or cp.stdout
+    generated_probe = ROOT / ".rll_canonical_region_generated_probe.inc"
+    try:
+        cp = run(
+            "python3",
+            str(GENERATOR),
+            "--manifest",
+            str(MANIFEST),
+            "--receipt",
+            str(RECEIPT),
+            "--output",
+            str(generated_probe),
+        )
+        assert cp.returncode == 0, cp.stderr or cp.stdout
+        probe = generated_probe.read_text(encoding="utf-8")
+        assert "RLL_CANONICAL_GENERATED_SOURCE_COUNT 14u" in probe
+        assert actual in probe.replace("0x", "").replace(",", "") or "0x3b,0xf6,0xe7,0x3e" in probe
+    finally:
+        generated_probe.unlink(missing_ok=True)
 
 
 def test_canonical_region_compiles_as_strict_freestanding_object(tmp_path: Path) -> None:

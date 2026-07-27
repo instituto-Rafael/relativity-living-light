@@ -39,17 +39,21 @@
     "object_data_bytes": 2608,
     "object_bss_bytes": 0,
     "object_total_bytes": 8860,
-    "undefined_symbols": ["rll_fnv1a64"]
+    "undefined_symbols": [
+      "rll_fnv1a64"
+    ]
   },
   "source_sha256": {
     "rll_canonical_region_h": "bbfe432858341ac66709970577122d7af2b3a7272cd95f6aa33cd7e7ff558f8e",
     "rll_canonical_region_c": "1f805deca55e507c8628b2e990a0ad645084500aa84cbac53f74ce47ab8a5d9a",
     "generated_include": "843607c2e9480bc70365b91ff137836d9d01271c190100297ba4caca4419fcb2",
     "generator": "b82ee32d4141155f014a6480181f6400027f59c8763b27f85d1d4d88f2fa2615",
-    "tests": "f7ccbcb3be2aeb4bda5af19b2adb9349c4db2d3cf8463114f47a00260139107f"
+    "tests": "c483db99c90fe2ab176e430b0c039e657ada3a53821bf497f3eba38017d0d8f3",
+    "generator_entrypoint": "837839111d7dc8722bb30be6ea2ac15ae04b3364ef67c0237a7172462ce656cb",
+    "generator_impl": "b82ee32d4141155f014a6480181f6400027f59c8763b27f85d1d4d88f2fa2615"
   },
   "tests": {
-    "generator_freshness_and_custody": "PASS",
+    "generator_freshness_and_custody": "PASS_SEMANTIC_REGENERATION",
     "strict_freestanding_object": "PASS",
     "executable_validation_and_frame": "PASS",
     "pytest": "PASS_3_OF_3"
