@@ -1,7 +1,7 @@
 # RLL Canonical Real Inputs — Freestanding C V1
 
 **State:** implemented / fail-closed / `claim_allowed=false`  
-**Base kernel:** `rll_canonical_coupling.c` merged in PR #592.
+**Base kernels:** canonical gate #592, executable model #594, real H(z) #595.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ raw committed bytes
 → internal SHA-256 verification
 → strict schema parser
 → typed observable + unit + uncertainty
-→ model callback
+→ real model callback
 → canonical coupling decision
 → covariance-aware contribution
 → deterministic receipt
@@ -78,9 +78,30 @@ observation and uncertainty.
   preserved but blocked from evidence promotion;
 - callback returns `RLL_REAL_MODEL_BLOCKED`: the record is explicitly blocked.
 
-The test identity callback returns the observation itself only to prove the
-mechanical path and therefore yields χ²=0. It is not a cosmological model and
-never authorizes a scientific claim.
+`rll_canonical_real_models.c` is the production bridge to the already merged
+H(z) evaluators:
+
+```text
+RLL_REAL_PROFILE_LCDM_NOMINAL → rll_hz_lcdm_q16
+RLL_REAL_PROFILE_RLL_NOMINAL  → rll_hz_rll_q16
+```
+
+For the current nominal parameter set, the 33 verified H(z) observations
+reproduce the existing freestanding receipts:
+
+```text
+LCDM chi2_q16 = 1491916
+RLL  chi2_q16 = 1800068
+delta          = 308152
+```
+
+BAO, fσ8 and CMB are fully verified, parsed and typed, but their model-side
+freestanding evaluators are not yet present. Their **32 observations remain
+`TOKEN_VAZIO`/blocked**, rather than being assigned fabricated predictions.
+
+The identity callback remains only as a structural test of the complete
+65-observation and CMB-covariance path. It is not a cosmological model and never
+authorizes a scientific claim.
 
 ## CMB covariance
 
@@ -110,7 +131,7 @@ cmb_rows = 3
 claim_allowed = 0
 ```
 
-With no model callback, the expected state is:
+With no model callback:
 
 ```text
 model_token_vazio_rows = 65
@@ -119,8 +140,18 @@ canonical.blocked = 65
 claim_allowed = 0
 ```
 
+With either current nominal ΛCDM or RLL profile:
+
+```text
+model_bound_rows = 33
+model_token_vazio_rows = 32
+canonical.evidence = 33
+canonical.blocked = 32
+claim_allowed = 0
+```
+
 This is deliberate: real measurements are not automatically evidence for an
-unregistered model.
+unregistered or unimplemented model route.
 
 ## Verification
 
@@ -130,17 +161,20 @@ pytest -q tests/test_rll_canonical_real_inputs.py
 
 The test suite verifies:
 
-1. strict freestanding compilation of the existing coupling kernel and adapter;
+1. strict freestanding compilation of the coupling, ingestion and model bridge;
 2. a combined relocatable object with no unresolved symbols;
 3. ARMv7 and AArch64 cross-compilation;
 4. exact ingestion of all four committed files;
-5. 65 model-bound observations through the structural identity harness;
+5. the full 65-row structural/covariance path;
 6. fail-closed behavior when no model callback exists;
-7. rejection after a single-byte source mutation.
+7. exact ΛCDM and RLL H(z) Q16 receipts through the real bridge;
+8. preservation of 32 typed model gaps as blocked/TOKEN_VAZIO;
+9. rejection after a single-byte source mutation.
 
 ## Scientific boundary
 
 `RLL_REAL_OK` means the committed inputs passed byte integrity, schema, units,
-uncertainty and coupling mechanics. It does **not** mean that RLL fits the data,
-outperforms ΛCDM/CPL, resolves a tension or has been independently reproduced.
-Every receipt remains `claim_allowed=0` until the higher scientific gates pass.
+uncertainty and coupling mechanics. It does **not** mean that RLL fits the full
+joint dataset, outperforms ΛCDM/CPL, resolves a tension or has been independently
+reproduced. Every receipt remains `claim_allowed=0` until the higher scientific
+gates pass.
