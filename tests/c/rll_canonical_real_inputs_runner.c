@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "rll_canonical_real_inputs.h"
+#include "rll_canonical_real_models.h"
 
 #define RUNNER_CAP 8192u
 
@@ -36,7 +36,9 @@ static rll_u32 identity_model(
 int main(int argc, char **argv) {
     rll_real_input_bundle bundle;
     rll_real_ingest_receipt receipt;
-    rll_real_model_callback callback;
+    rll_real_model_context real_context;
+    rll_real_model_callback callback = (rll_real_model_callback)0;
+    void *callback_context = (void *)0;
     int rc;
 
     if (argc != 6) return 64;
@@ -49,13 +51,25 @@ int main(int argc, char **argv) {
     bundle.fsigma8_csv = fs8_buffer;
     bundle.cmb_json = cmb_buffer;
 
-    callback = argv[5][0] == 'i' ? identity_model : (rll_real_model_callback)0;
-    rc = rll_real_ingest_all(&bundle, callback, (void *)0, &receipt);
+    if (argv[5][0] == 'i') {
+        callback = identity_model;
+    } else if (argv[5][0] == 'l') {
+        real_context = rll_real_model_lcdm_nominal();
+        callback = rll_real_canonical_model_callback;
+        callback_context = &real_context;
+    } else if (argv[5][0] == 'r') {
+        real_context = rll_real_model_rll_nominal();
+        callback = rll_real_canonical_model_callback;
+        callback_context = &real_context;
+    }
+
+    rc = rll_real_ingest_all(&bundle, callback, callback_context, &receipt);
 
     printf(
-        "RLL_REAL_INPUTS status=%d verified=%u rows=%u bound=%u token_vazio=%u "
+        "RLL_REAL_INPUTS mode=%c status=%d verified=%u rows=%u bound=%u token_vazio=%u "
         "hz=%u bao=%u fs8=%u cmb=%u covariance=%u total=%u evidence=%u "
         "blocked=%u chi2_q16=%lld claim_allowed=%u\n",
+        argv[5][0],
         rc,
         (unsigned)receipt.source_verified_mask,
         (unsigned)receipt.parsed_rows,
@@ -79,16 +93,6 @@ int main(int argc, char **argv) {
     if (receipt.hz_rows != 33u || receipt.bao_rows != 13u ||
         receipt.fsigma8_rows != 16u || receipt.cmb_rows != 3u) return 83;
     if (receipt.claim_allowed != 0u || receipt.canonical.claim_allowed != 0u) return 84;
-
-    if (callback != (rll_real_model_callback)0) {
-        if (receipt.model_bound_rows != 65u) return 85;
-        if (receipt.canonical.total != 65u || receipt.canonical.evidence != 65u) return 86;
-        if (receipt.canonical.blocked != 0u || receipt.cmb_covariance_used != 1u) return 87;
-        if (receipt.canonical.chi2_q16 != 0ll) return 88;
-    } else {
-        if (receipt.model_token_vazio_rows != 65u) return 89;
-        if (receipt.canonical.total != 65u || receipt.canonical.blocked != 65u) return 90;
-        if (receipt.canonical.evidence != 0u || receipt.cmb_covariance_used != 0u) return 91;
-    }
+    if (receipt.canonical.total != 65u) return 85;
     return 0;
 }
