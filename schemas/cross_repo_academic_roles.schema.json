@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://rll.local/schemas/cross-repo-academic-roles-v1.json",
   "title": "RLL Cross Repository Academic Roles V1",
+  "description": "Structural contract for cross-repository academic roles, custody boundaries and fail-closed scientific promotion gates; schema validity does not authorize a scientific claim.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema", "created_at", "claim_allowed", "scientific_authority", "reference_doi", "canonical_orcid", "repositories", "promotion_gate", "ledger_boundary"],
