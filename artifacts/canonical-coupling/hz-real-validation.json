@@ -5,11 +5,12 @@
   "source": {
     "path": "data/real/Hz_data_real.csv",
     "git_blob": "3ac5da2594bfc127c28c6b4e817259e1bee28085",
-    "bytes": 999,
+    "bytes": 1033,
+    "line_ending": "CRLF",
     "rows": 33,
-    "sha256": "83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15",
-    "fnv1a64": "8fcfaccd5d192767",
-    "crc32": "2840ace1",
+    "sha256": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6",
+    "fnv1a64": "7bcbeeaf770538d3",
+    "crc32": "dad619bd",
     "anchor_ok": true
   },
   "parameters": {
@@ -21,12 +22,12 @@
     "fit_state": "NOMINAL_NOT_OPTIMIZED"
   },
   "freestanding_q16": {
-    "lcdm_chi2_q16": 1491933,
-    "rll_chi2_q16": 1800087,
-    "delta_chi2_q16": 308154,
-    "lcdm_chi2": 22.765090942382812,
-    "rll_chi2": 27.467147827148438,
-    "delta_chi2": 4.702056884765625
+    "lcdm_chi2_q16": 1491916,
+    "rll_chi2_q16": 1800068,
+    "delta_chi2_q16": 308152,
+    "lcdm_chi2": 22.76483154296875,
+    "rll_chi2": 27.46685791015625,
+    "delta_chi2": 4.7020263671875
   },
   "reference_float64": {
     "path": "results/moresco_hz_chi2.json",
@@ -35,9 +36,9 @@
     "delta_chi2": 4.7009
   },
   "absolute_difference": {
-    "lcdm_chi2": 0.000990942382812,
-    "rll_chi2": 0.002047827148438,
-    "delta_chi2": 0.001156884765625,
+    "lcdm_chi2": 0.00073154296875,
+    "rll_chi2": 0.00175791015625,
+    "delta_chi2": 0.0011263671875,
     "tolerance": 0.005,
     "parity_ok": true
   },
