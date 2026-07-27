@@ -1,0 +1,63 @@
+{
+  "schema": "rll_hz_real_freestanding_validation_v1",
+  "status": "PASS",
+  "claim_allowed": false,
+  "source": {
+    "path": "data/real/Hz_data_real.csv",
+    "git_blob": "3ac5da2594bfc127c28c6b4e817259e1bee28085",
+    "bytes": 1033,
+    "line_ending": "CRLF",
+    "rows": 33,
+    "sha256": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6",
+    "fnv1a64": "7bcbeeaf770538d3",
+    "crc32": "dad619bd",
+    "anchor_ok": true
+  },
+  "parameters": {
+    "H0": 67.4,
+    "Omega_m": 0.315,
+    "Omega_s0": 0.02,
+    "z_t": 1.0,
+    "w_t": 0.3,
+    "fit_state": "NOMINAL_NOT_OPTIMIZED"
+  },
+  "freestanding_q16": {
+    "lcdm_chi2_q16": 1491916,
+    "rll_chi2_q16": 1800068,
+    "delta_chi2_q16": 308152,
+    "lcdm_chi2": 22.76483154296875,
+    "rll_chi2": 27.46685791015625,
+    "delta_chi2": 4.7020263671875
+  },
+  "reference_float64": {
+    "path": "results/moresco_hz_chi2.json",
+    "lcdm_chi2": 22.7641,
+    "rll_chi2": 27.4651,
+    "delta_chi2": 4.7009
+  },
+  "absolute_difference": {
+    "lcdm_chi2": 0.00073154296875,
+    "rll_chi2": 0.00175791015625,
+    "delta_chi2": 0.0011263671875,
+    "tolerance": 0.005,
+    "parity_ok": true
+  },
+  "runtime": {
+    "c_standard": "C11",
+    "numeric_format": "Q16.16",
+    "heap": false,
+    "libc_calls": false,
+    "floating_point": false,
+    "combined_undefined_symbols_empty": true,
+    "host_vectors": "PASS",
+    "armv7_object": "PASS",
+    "aarch64_object": "PASS"
+  },
+  "boundaries": {
+    "nominal_parameters_not_fitted": true,
+    "result_is_not_mcmc": true,
+    "result_is_not_independent_replication": true,
+    "claim_allowed": false
+  },
+  "reproduce": "python3 tools/validate_rll_hz_real_freestanding.py --write-report"
+}
