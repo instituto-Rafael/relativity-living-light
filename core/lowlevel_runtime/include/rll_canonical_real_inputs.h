@@ -65,7 +65,7 @@ typedef struct rll_real_input_bundle {
 
 typedef struct rll_real_ingest_receipt {
     rll_u32 schema;
-    rll_u32 status;
+    int status;
     rll_u32 source_verified_mask;
     rll_u32 required_source_mask;
     rll_u32 parsed_rows;
