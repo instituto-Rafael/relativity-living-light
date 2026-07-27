@@ -57,3 +57,18 @@ Build/teste focal:
 ```bash
 pytest -q tests/test_sqrt3_2_freestanding_kernel.py
 ```
+
+
+## Região canônica de acoplamento freestanding
+- `include/rll_canonical_coupling.h` — tipos, unidades, estados e políticas de região.
+- `c/rll_canonical_coupling.c` — acoplamento Q16.16 sem heap/libc entre observações, modelos, incertezas, proveniência e recibos.
+- separa evidência cosmológica, contexto geofísico local, operadores geométricos exatos, referências de gravidade forte, dados sintéticos e `TOKEN_VAZIO`;
+- nunca promove geofísica local, geometria exata ou fixture sintética a evidência cosmológica;
+- acumula contribuição `chi²` apenas para observações cosmológicas tipadas com unidade, incerteza, calibração, hash e modelo registrado;
+- gera recibo determinístico FNV-1a/CRC32 com `claim_allowed=0`;
+- valida objetos host, ARMv7 e AArch64.
+
+Comando canônico único:
+```bash
+python3 tools/validate_rll_canonical_freestanding.py --write-report
+```
