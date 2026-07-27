@@ -56,7 +56,7 @@ The fixed-point exponential uses range reduction by `ln(2)` and a sixth-order po
 - `core/lowlevel_runtime/c/rll_canonical_hz_data.c`
 - `core/lowlevel_runtime/c/rll_canonical_entry.c`
 - `scripts/build_rll_canonical_freestanding.sh`
-- `tests/test_rll_canonical_freestanding.py`
+- `tests/test_rll_canonical_model_kernel.py`
 - `results/rll_canonical_freestanding_receipt.json`
 
 ## One-command execution
