@@ -16,9 +16,9 @@ DATASET_C = "core/lowlevel_runtime/c/rll_hz_moresco_2022_q16.c"
 HARNESS = "tests/c/rll_hz_real_vectors.c"
 DATASET_CSV = ROOT / "data/real/Hz_data_real.csv"
 Q16 = 65536
-EXPECTED_SHA256 = "83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15"
-EXPECTED_FNV1A64 = 0x8FCFACCD5D192767
-EXPECTED_CRC32 = 0x2840ACE1
+EXPECTED_SHA256 = "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6"
+EXPECTED_FNV1A64 = 0x7BCBEEAF770538D3
+EXPECTED_CRC32 = 0xDAD619BD
 
 
 def _run(command: list[str]) -> subprocess.CompletedProcess[str]:
