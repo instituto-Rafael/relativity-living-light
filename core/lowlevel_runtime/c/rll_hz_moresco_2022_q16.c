@@ -3,11 +3,12 @@
 /*
  * Generated deterministically from data/real/Hz_data_real.csv.
  * Git blob: 3ac5da2594bfc127c28c6b4e817259e1bee28085
- * Content SHA-256: 83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15
+ * Raw content SHA-256: 1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6
+ * Raw line ending: CRLF; raw bytes: 1033.
  * Encoding: decimal source values rounded to nearest Q16.16 integer.
  */
 const rll_u8 rll_hz_moresco_2022_sha256_hex[65] =
-    "83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15";
+    "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6";
 
 const rll_hz_sample_q16 rll_hz_moresco_2022_q16[RLL_HZ_DATASET_ROWS] = {
     {4588ll, 4521984ll, 1284506ll, 1u, 1u},
