@@ -58,13 +58,28 @@ Build/teste focal:
 pytest -q tests/test_sqrt3_2_freestanding_kernel.py
 ```
 
-## Região canônica RLL em C freestanding
-- `include/rll_canonical_region.h` — ABI fixa para observação, unidade, incerteza, proveniência, estado e recibo.
-- `c/rll_canonical_region.c` — ingestão streaming sem heap/libc/floating point, conversão Q32.32 e falha fechada.
-- Consome diretamente os blocos reais versionados de H(z), DESI DR2 BAO, fσ8/RSD e CMB Planck com covariância 3×3.
-- Contrato atual: 65 observações canônicas (`33 + 13 + 16 + 3`), SHA-256 externo obrigatório e `claim_allowed=0`.
-- Ausência de bloco obrigatório produz `RLLC_TOKEN_VAZIO`; dado sintético, incerteza inválida ou proveniência ausente é bloqueado.
-- O adaptador de física/geofísica local permanece `LOCAL_CONTEXT_ONLY` e não satisfaz o gate cosmológico.
+
+## Região canônica de acoplamento freestanding
+- `include/rll_canonical_coupling.h` — tipos, unidades, estados e políticas de região.
+- `c/rll_canonical_coupling.c` — acoplamento Q16.16 sem heap/libc entre observações, modelos, incertezas, proveniência e recibos.
+- separa evidência cosmológica, contexto geofísico local, operadores geométricos exatos, referências de gravidade forte, dados sintéticos e `TOKEN_VAZIO`;
+- nunca promove geofísica local, geometria exata ou fixture sintética a evidência cosmológica;
+- acumula contribuição `chi²` apenas para observações cosmológicas tipadas com unidade, incerteza, calibração, hash e modelo registrado;
+- gera recibo determinístico FNV-1a/CRC32 com `claim_allowed=0`;
+- valida objetos host, ARMv7 e AArch64.
+
+Comando canônico único:
+```bash
+python3 tools/validate_rll_canonical_freestanding.py --write-report
+```
+
+## Ingestão canônica dos dados reais
+- `include/rll_canonical_region.h` — ABI fixa para observação, unidade, incerteza, SHA-256, estado e recibo de ingestão.
+- `c/rll_canonical_region.c` — parser streaming Q32.32, sem heap/libc/floating point, que alimenta a região de acoplamento com arquivos reais versionados.
+- consome H(z), DESI DR2 BAO, fσ8/RSD e CMB Planck com covariância 3×3;
+- contrato atual: 65 observações (`33 + 13 + 16 + 3`), `claim_allowed=0` e `TOKEN_VAZIO` se faltar qualquer bloco;
+- rejeita sintético, sigma não positiva, schema inválido ou SHA-256 ausente;
+- o bridge geofísico/sensorial continua `LOCAL_CONTEXT_ONLY` e não completa o gate cosmológico.
 
 Build/teste focal:
 ```bash
