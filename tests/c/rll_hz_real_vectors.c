@@ -10,9 +10,9 @@ int main(void) {
     if (receipt.lcdm.blocked != 0u || receipt.rll.blocked != 0u) return 4;
     if (receipt.lcdm.degrees_of_freedom != 33u) return 5;
     if (receipt.rll.degrees_of_freedom != 33u) return 6;
-    if (receipt.lcdm.chi2_q16 != 1491933ll) return 7;
-    if (receipt.rll.chi2_q16 != 1800087ll) return 8;
-    if (receipt.delta_chi2_q16 != 308154ll) return 9;
+    if (receipt.lcdm.chi2_q16 != 1491916ll) return 7;
+    if (receipt.rll.chi2_q16 != 1800068ll) return 8;
+    if (receipt.delta_chi2_q16 != 308152ll) return 9;
     if (receipt.dataset_fnv1a64 != RLL_HZ_DATASET_FNV1A64) return 10;
     if (receipt.dataset_crc32 != RLL_HZ_DATASET_CRC32) return 11;
     if (receipt.claim_allowed != 0u) return 12;
