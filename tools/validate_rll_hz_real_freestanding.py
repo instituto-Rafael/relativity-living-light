@@ -17,9 +17,9 @@ DATASET_C = "core/lowlevel_runtime/c/rll_hz_moresco_2022_q16.c"
 DATASET_CSV = ROOT / "data/real/Hz_data_real.csv"
 REFERENCE = ROOT / "results/moresco_hz_chi2.json"
 REPORT = ROOT / "artifacts/canonical-coupling/hz-real-validation.json"
-EXPECTED_SHA256 = "83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15"
-EXPECTED_FNV1A64 = 0x8FCFACCD5D192767
-EXPECTED_CRC32 = 0x2840ACE1
+EXPECTED_SHA256 = "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6"
+EXPECTED_FNV1A64 = 0x7BCBEEAF770538D3
+EXPECTED_CRC32 = 0xDAD619BD
 Q16 = 65536.0
 
 
@@ -148,6 +148,7 @@ def main() -> int:
             "path": "data/real/Hz_data_real.csv",
             "git_blob": "3ac5da2594bfc127c28c6b4e817259e1bee28085",
             "bytes": len(raw),
+            "line_ending": "CRLF",
             "rows": 33,
             "sha256": data_sha256,
             "fnv1a64": f"{data_fnv1a64:016x}",
