@@ -10,7 +10,7 @@ freestanding runtime and pushes each result through the canonical evidence gate.
 
 ```text
 data/real/Hz_data_real.csv
-        ↓ exact byte digests + 33-row Q16 materialization
+        ↓ exact raw-byte digests + 33-row Q16 materialization
 rll_hz_moresco_2022_q16.c
         ↓ z, H_obs, sigma_H
 rll_hz_freestanding.c
@@ -28,15 +28,17 @@ hz-real-validation.json
 path        data/real/Hz_data_real.csv
 Git blob    3ac5da2594bfc127c28c6b4e817259e1bee28085
 rows        33
-bytes       999
-SHA-256     83e36c1fabdb31f6b9a192a1a235f61c7cb10d4dba0ef97c00f34a8a13482f15
-FNV-1a 64   8fcfaccd5d192767
-CRC32       2840ace1
+bytes       1033
+line ending CRLF
+SHA-256     1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6
+FNV-1a 64   7bcbeeaf770538d3
+CRC32       dad619bd
 ```
 
-Every decimal `z`, `H_obs` and `sigma_H` value is rounded once to Q16.16 and the
-test suite reconstructs all 33 rows from the CSV to prove the compiled table is
-not a hand-written substitute.
+The raw-byte anchor deliberately preserves CRLF instead of silently normalizing
+the file to LF. Every decimal `z`, `H_obs` and `sigma_H` value is rounded once to
+Q16.16, and the test suite reconstructs all 33 rows from the CSV to prove the
+compiled table is not a hand-written substitute.
 
 ## Equations implemented in C
 
@@ -89,9 +91,9 @@ These are the same nominal parameters used by
 
 ```text
                     Q16 integer    decoded
-chi2_LCDM           1491933        22.765090942382812
-chi2_RLL            1800087        27.467147827148438
-delta RLL-LCDM      308154         4.702056884765625
+chi2_LCDM           1491916        22.76483154296875
+chi2_RLL            1800068        27.46685791015625
+delta RLL-LCDM      308152         4.7020263671875
 ```
 
 The existing float64 reference is:
@@ -102,9 +104,9 @@ chi2_RLL            27.4651
 delta RLL-LCDM      4.7009
 ```
 
-All absolute differences remain below `0.005`. The small difference is the
-explicit Q16.16 quantization and fixed-point exponential/square-root path, not a
-silent change of equations.
+All absolute differences remain below `0.005`. The largest is about `0.001758`.
+The difference is the explicit Q16.16 quantization and fixed-point
+exponential/square-root path, not a silent change of equations.
 
 ## Freestanding proof
 
@@ -116,7 +118,7 @@ python3 tools/validate_rll_hz_real_freestanding.py --write-report
 
 performs:
 
-1. byte-level SHA-256/FNV/CRC check of the real CSV;
+1. raw-byte SHA-256/FNV/CRC check of the real CSV;
 2. row-for-row CSV ↔ compiled-Q16 comparison;
 3. hosted C vector execution;
 4. float64 ↔ Q16 result parity;
