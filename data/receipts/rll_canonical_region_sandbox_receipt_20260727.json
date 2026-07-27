@@ -1,0 +1,62 @@
+{
+  "schema": "rll.canonical_region_sandbox_receipt.v1",
+  "recorded_at": "2026-07-27T00:00:00-03:00",
+  "state": "IMPLEMENTED_VERIFIED_LIMITED_LOCAL",
+  "environment": {
+    "os": "Linux x86_64 isolated sandbox",
+    "compiler": "gcc 14.2.0",
+    "python": "3.13",
+    "claim_allowed": false
+  },
+  "inputs": {
+    "repository_base_commit": "9ac210b605575738a7f303cee1f75e894eb423cd",
+    "manifest_git_blob_sha1": "85cf806ec05e920c795f33d9687ba12a88761499",
+    "receipt_manifest_sha256": "ccb546b713cc8c8a144cd50b90dac8dda57cde026df1a2b8b3141c56a8b51736",
+    "compiled_manifest_sha256": "3bf6e73eb25568648570ff90185d6ab4f7888124ca9b3892aee3772bb9419c0e",
+    "receipt_digest_matches_compiled_manifest": false,
+    "receipt_digest_semantics": "TOKEN_VAZIO_RECEIPT_DIGEST_SEMANTICS"
+  },
+  "canonical_region": {
+    "abi": "0x00010000",
+    "frame_size": 128,
+    "source_count": 14,
+    "verified_local_hash_count": 12,
+    "metadata_only_count": 1,
+    "private_pointer_only_count": 1,
+    "chunk_count": 198,
+    "missing_count": 0,
+    "hash_mismatch_count": 0,
+    "vector_model": "rll-hash32-v1",
+    "vector_dimensions": 32,
+    "custody_flags": "0x00000005",
+    "fingerprint64": "0x8e4ad37ef3c2ec86",
+    "validation_mask": 0
+  },
+  "build": {
+    "flags": "-std=c11 -Wall -Wextra -Werror -pedantic -ffreestanding -fno-builtin -fno-stack-protector -nostdlib",
+    "object_sha256": "ff9c5626302f2796852d78cf7cb759fd9bb6476172f8c2b8f3e21c88946ee7f8",
+    "object_text_bytes": 6252,
+    "object_data_bytes": 2608,
+    "object_bss_bytes": 0,
+    "object_total_bytes": 8860,
+    "undefined_symbols": [
+      "rll_fnv1a64"
+    ]
+  },
+  "source_sha256": {
+    "rll_canonical_region_h": "bbfe432858341ac66709970577122d7af2b3a7272cd95f6aa33cd7e7ff558f8e",
+    "rll_canonical_region_c": "1f805deca55e507c8628b2e990a0ad645084500aa84cbac53f74ce47ab8a5d9a",
+    "generated_include": "843607c2e9480bc70365b91ff137836d9d01271c190100297ba4caca4419fcb2",
+    "generator": "b82ee32d4141155f014a6480181f6400027f59c8763b27f85d1d4d88f2fa2615",
+    "tests": "c483db99c90fe2ab176e430b0c039e657ada3a53821bf497f3eba38017d0d8f3",
+    "generator_entrypoint": "837839111d7dc8722bb30be6ea2ac15ae04b3364ef67c0237a7172462ce656cb",
+    "generator_impl": "b82ee32d4141155f014a6480181f6400027f59c8763b27f85d1d4d88f2fa2615"
+  },
+  "tests": {
+    "generator_freshness_and_custody": "PASS_SEMANTIC_REGENERATION",
+    "strict_freestanding_object": "PASS",
+    "executable_validation_and_frame": "PASS",
+    "pytest": "PASS_3_OF_3"
+  },
+  "boundary": "This receipt proves deterministic compilation and internal validation in the stated sandbox. It does not independently re-run the original 12 source-body hashes and does not validate scientific claims."
+}
