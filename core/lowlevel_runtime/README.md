@@ -101,19 +101,3 @@ pytest -q tests/test_rll_canonical_model_kernel.py
 ```
 
 Contrato completo: [`docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md`](../../docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md).
-
-## Acoplamento dos arquivos cosmológicos reais
-- `include/rll_canonical_real_inputs.h` — ABI de buffers, callback de modelo e recibo de ingestão real.
-- `c/rll_canonical_real_inputs.c` — SHA-256, CSV/JSON streaming, Q16.16 e extensão tipada para `DM/r_d`, `DH/r_d` e os três parâmetros CMB.
-- verifica byte a byte os SHA-256 versionados de H(z), DESI DR2 BAO, fσ8/RSD e CMB Planck antes de analisar qualquer linha;
-- encaminha 65 observações (`33 + 13 + 16 + 3`) ao acumulador canônico;
-- usa a matriz de correlação CMB 3×3 para o termo χ² correlacionado quando o callback fornece as três predições;
-- sem callback de modelo, preserva os dados mas bloqueia promoção (`65 blocked`, `claim_allowed=0`);
-- sem heap, libc, ponto flutuante ou I/O no módulo de produção; o runner hospedado faz apenas a adaptação de arquivos para buffers.
-
-Teste focal:
-```bash
-pytest -q tests/test_rll_canonical_real_inputs.py
-```
-
-Contrato: [`docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md`](../../docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md).
