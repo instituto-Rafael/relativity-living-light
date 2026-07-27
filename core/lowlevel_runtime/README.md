@@ -68,10 +68,39 @@ pytest -q tests/test_sqrt3_2_freestanding_kernel.py
 - gera recibo determinístico FNV-1a/CRC32 com `claim_allowed=0`;
 - valida objetos host, ARMv7 e AArch64.
 
-Comando canônico único:
+Comando canônico de validação da fronteira:
 ```bash
 python3 tools/validate_rll_canonical_freestanding.py --write-report
 ```
+
+## Kernel canônico executável RLL v1
+
+A fronteira acima decide **o que pode entrar**. Este kernel complementar executa **o modelo físico sobre o que entrou**:
+
+- `include/rll_canonical_freestanding.h` — ABI independente, tipos e recibo canônico;
+- `c/rll_canonical_freestanding.c` — H(z), RLL/ΛCDM, χ², Q16.16, raiz inteira, exponencial e divisão software;
+- `c/rll_canonical_hz_data.c` — 33 linhas reais de `data/real/Hz_data_real.csv` materializadas bit a bit;
+- `c/rll_canonical_entry.c` — `_start` e syscalls diretas para x86_64, AArch64, ARMv7/EABI e RISC-V 64;
+- `results/rll_canonical_freestanding_receipt.json` — cadeia de custódia da compilação e do resultado.
+
+Não há substituição entre os dois módulos:
+
+```text
+rll_canonical_coupling  = classificação, unidades, proveniência e gate
+rll_canonical_freestanding = execução cosmológica determinística e recibo
+```
+
+Execução única do ELF:
+```bash
+./scripts/build_rll_canonical_freestanding.sh
+```
+
+Validação focal:
+```bash
+pytest -q tests/test_rll_canonical_model_kernel.py
+```
+
+Contrato completo: [`docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md`](../../docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md).
 
 ## Acoplamento dos arquivos cosmológicos reais
 - `include/rll_canonical_real_inputs.h` — ABI de buffers, callback de modelo e recibo de ingestão real.
