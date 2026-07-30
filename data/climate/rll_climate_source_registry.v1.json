@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "rll-climate-source-registry-v1",
+  "claim_allowed": false,
+  "network_policy": {
+    "https_only": true,
+    "default_mode": "DRY_RUN",
+    "max_bytes_default": 5000000,
+    "receipt_required": true,
+    "no_secret_in_repository": true
+  },
+  "sources": [
+    {
+      "id": "jpl_horizons_moon_ephemeris",
+      "authority": "NASA_JPL",
+      "domain": "ssd.jpl.nasa.gov",
+      "format": "json_wrapped_text",
+      "access": "PUBLIC_GET_TEMPLATE",
+      "sample_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27301%27&OBJ_DATA=%27NO%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500@399%27&START_TIME=%272026-07-29%27&STOP_TIME=%272026-07-30%27&STEP_SIZE=%271%20h%27&QUANTITIES=%271,9,20,23,24%27",
+      "variables": ["moon_earth_distance", "lunar_declination", "sun_moon_elongation"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_coops_tides_and_met",
+      "authority": "NOAA_COOPS",
+      "domain": "api.tidesandcurrents.noaa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET_TEMPLATE_REQUIRES_STATION",
+      "sample_url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=water_level&application=rll&begin_date=20230701&end_date=20230702&datum=MSL&station=8724580&time_zone=gmt&units=metric&format=json",
+      "variables": ["ocean_tide_residual", "storm_surge_residual", "mean_sea_level_pressure", "air_temperature_2m", "relative_humidity_2m"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "usgs_fdsn_earthquake_catalog",
+      "authority": "USGS",
+      "domain": "earthquake.usgs.gov",
+      "format": "geojson",
+      "access": "PUBLIC_GET",
+      "sample_url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-07-28&endtime=2026-07-29&minmagnitude=4",
+      "variables": ["earthquake_event_context_for_tidal_falsification"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_swpc_realtime_solar_wind",
+      "authority": "NOAA_SWPC",
+      "domain": "services.swpc.noaa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET",
+      "sample_url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",
+      "variables": ["solar_wind_speed", "solar_wind_proton_density"],
+      "historical": false,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_swpc_realtime_imf",
+      "authority": "NOAA_SWPC",
+      "domain": "services.swpc.noaa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET",
+      "sample_url": "https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",
+      "variables": ["interplanetary_magnetic_field_bz"],
+      "historical": false,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_swpc_kp",
+      "authority": "NOAA_SWPC",
+      "domain": "services.swpc.noaa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET",
+      "sample_url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
+      "variables": ["planetary_k_index"],
+      "historical": false,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_swpc_aurora",
+      "authority": "NOAA_SWPC",
+      "domain": "services.swpc.noaa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET_LARGE",
+      "sample_url": "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json",
+      "variables": ["auroral_ionization_transition_rate"],
+      "historical": false,
+      "fetch_by_default": false
+    },
+    {
+      "id": "nasa_power_hourly_point",
+      "authority": "NASA_POWER",
+      "domain": "power.larc.nasa.gov",
+      "format": "json",
+      "access": "PUBLIC_GET_TEMPLATE_REQUIRES_LOCATION_AND_TIME",
+      "sample_url": "https://power.larc.nasa.gov/api/temporal/hourly/point?parameters=T2M,T2MDEW,RH2M,PS,WS10M,PRECTOTCORR&community=AG&longitude=-65.0&latitude=-3.35&start=20230920&end=20230921&format=JSON",
+      "variables": ["air_temperature_2m", "dew_point_temperature_2m", "relative_humidity_2m", "mean_sea_level_pressure", "zonal_wind_10m", "meridional_wind_10m"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_ibtracs",
+      "authority": "NOAA_NCEI",
+      "domain": "www.ncei.noaa.gov",
+      "format": "netcdf_or_csv",
+      "access": "PUBLIC_DATASET_METADATA",
+      "sample_url": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+      "variables": ["tropical_cyclone_track", "tropical_cyclone_intensity", "forecast_verification_context"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_nhc_verification",
+      "authority": "NOAA_NHC",
+      "domain": "www.nhc.noaa.gov",
+      "format": "html_text_zip",
+      "access": "PUBLIC_DATASET_INDEX",
+      "sample_url": "https://www.nhc.noaa.gov/verification/",
+      "variables": ["tropical_cyclone_track_spread", "forecast_error_growth_rate"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_eddi",
+      "authority": "NOAA_CPC_PSL",
+      "domain": "www.psl.noaa.gov",
+      "format": "data_and_images",
+      "access": "PUBLIC_DATASET_INDEX",
+      "sample_url": "https://www.psl.noaa.gov/eddi/index.html",
+      "variables": ["evaporative_demand_drought_index", "evaporative_demand"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "noaa_ndbc_wave_and_met",
+      "authority": "NOAA_NDBC",
+      "domain": "www.ndbc.noaa.gov",
+      "format": "text_gzip",
+      "access": "PUBLIC_GET_TEMPLATE_REQUIRES_STATION_YEAR",
+      "sample_url": "https://www.ndbc.noaa.gov/data/realtime2/41010.txt",
+      "variables": ["significant_wave_height", "sea_or_lake_surface_temperature", "mean_sea_level_pressure", "wind"],
+      "historical": true,
+      "fetch_by_default": false
+    },
+    {
+      "id": "inpe_amazonia1_catalog",
+      "authority": "INPE",
+      "domain": "www.dgi.inpe.br",
+      "format": "catalog",
+      "access": "PUBLIC_DATASET_INDEX",
+      "sample_url": "https://www.dgi.inpe.br/catalogo/",
+      "variables": ["river_or_lake_stage_anomaly", "surface_water_extent", "deforestation_rate"],
+      "historical": true,
+      "fetch_by_default": false
+    }
+  ]
+}
