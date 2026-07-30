@@ -73,6 +73,34 @@ class ClimateRegistryTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 fetcher.fetch(source, Path(temp), 1.0, 10)
 
+    def test_fetcher_rejects_redirect_domain_mismatch_before_read(self):
+        class RedirectedResponse:
+            status = 200
+            headers = {"Content-Type": "application/json"}
+            read_called = False
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+            def read(self, size=-1):
+                self.read_called = True
+                return b"{}"
+
+            def geturl(self):
+                return "https://unexpected.example/data"
+
+        response = RedirectedResponse()
+        source = {"id": "mock", "sample_url": "https://example.org/data", "domain": "example.org"}
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
+            fetcher.urllib.request, "urlopen", return_value=response
+        ):
+            with self.assertRaises(ValueError):
+                fetcher.fetch(source, Path(temp), 1.0, 100)
+        self.assertFalse(response.read_called)
+
     def test_fetcher_dry_registry_has_no_default_fetch(self):
         data = json.loads((ROOT / "data" / "climate" / "rll_climate_source_registry.v1.json").read_text(encoding="utf-8"))
         self.assertTrue(all(source["fetch_by_default"] is False for source in data["sources"]))
