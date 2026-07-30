@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_climate_multiphysics_registry.schema.json",
+  "title": "RLL Climate Multiphysics 8x8 Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "claim_allowed", "matrix_contract", "scheduler", "sectors", "lateral_candidates", "next_gate"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "registry_id": {"const": "rll-climate-multiphysics-8x8-v1"},
+    "claim_allowed": {"const": false},
+    "matrix_contract": {
+      "type": "object",
+      "required": ["shape", "column_semantics", "row_0_role", "rows_1_7_role", "strict_lorentz_projection_default", "canonical_lift_required", "absence_policy"],
+      "properties": {
+        "shape": {"const": [8, 8]},
+        "column_semantics": {"type": "string", "minLength": 20},
+        "row_0_role": {"const": "sector_transition_or_evidence_gate"},
+        "rows_1_7_role": {"const": "physical_coordinates_for_declared_canonical_lift_H7_to_B7"},
+        "strict_lorentz_projection_default": {"const": false},
+        "canonical_lift_required": {"const": true},
+        "absence_policy": {"const": "VALIDITY_MASK_AND_TYPED_TOKEN_VAZIO"}
+      },
+      "additionalProperties": false
+    },
+    "scheduler": {
+      "type": "object",
+      "required": ["sequence", "policy", "default_native_cadence_minutes", "default_max_cadence_minutes", "continuous_cycle"],
+      "properties": {
+        "sequence": {"const": [1, 2, 3, 5, 8, 13, 21, 34]},
+        "policy": {"type": "string", "minLength": 20},
+        "default_native_cadence_minutes": {"type": "integer", "minimum": 1},
+        "default_max_cadence_minutes": {"type": "integer", "minimum": 1},
+        "continuous_cycle": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "sectors": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["column", "id", "temporal_gate", "variables", "native_cadence_minutes", "max_cadence_minutes", "claim_boundary"],
+        "properties": {
+          "column": {"type": "integer", "minimum": 0, "maximum": 7},
+          "id": {"type": "string", "minLength": 5},
+          "temporal_gate": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "unit", "role", "meaning"],
+            "properties": {
+              "id": {"type": "string"},
+              "unit": {"type": "string"},
+              "role": {"const": "DERIVED_GATE"},
+              "meaning": {"type": "string", "minLength": 20}
+            }
+          },
+          "variables": {
+            "type": "array",
+            "minItems": 7,
+            "maxItems": 7,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["row", "id", "unit", "role", "warning_z"],
+              "properties": {
+                "row": {"type": "integer", "minimum": 1, "maximum": 7},
+                "id": {"type": "string"},
+                "unit": {"type": "string"},
+                "role": {"type": "string"},
+                "warning_z": {"type": "number", "exclusiveMinimum": 0}
+              }
+            }
+          },
+          "native_cadence_minutes": {"type": "integer", "minimum": 1},
+          "max_cadence_minutes": {"type": "integer", "minimum": 1},
+          "claim_boundary": {"type": "string", "minLength": 30}
+        }
+      }
+    },
+    "lateral_candidates": {"type": "array", "minItems": 20, "items": {"type": "string"}},
+    "next_gate": {"type": "string", "minLength": 40}
+  }
+}
