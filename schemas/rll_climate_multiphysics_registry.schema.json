@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_climate_multiphysics_registry.schema.json",
   "title": "RLL Climate Multiphysics 8x8 Registry",
+  "description": "Structural and epistemic contract for an eight-sector climate matrix with fifty-six physical variables, eight temporal gates, explicit validity masks, a declared canonical H7-to-B7 lift and a source-aware Fibonacci scheduler. The schema does not authorize a weather forecast or causal claim.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "registry_id", "claim_allowed", "matrix_contract", "scheduler", "sectors", "lateral_candidates", "next_gate"],
