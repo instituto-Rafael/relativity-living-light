@@ -35,19 +35,26 @@ def safe_filename(source_id: str, content_type: str) -> str:
     return source_id + suffix
 
 
-def fetch(source: dict[str, Any], output_dir: Path, timeout: float, max_bytes: int) -> dict[str, Any]:
-    url = source["sample_url"]
+def require_declared_https_domain(url: str, declared_domain: str, *, stage: str) -> None:
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme != "https":
-        raise ValueError("only HTTPS is allowed")
-    if parsed.hostname != source["domain"]:
-        raise ValueError("URL hostname does not match declared source domain")
+        raise ValueError(f"{stage} URL must use HTTPS")
+    if parsed.hostname != declared_domain:
+        raise ValueError(f"{stage} URL hostname does not match declared source domain")
+
+
+def fetch(source: dict[str, Any], output_dir: Path, timeout: float, max_bytes: int) -> dict[str, Any]:
+    url = source["sample_url"]
+    declared_domain = source["domain"]
+    require_declared_https_domain(url, declared_domain, stage="requested")
     request = urllib.request.Request(url, headers={"User-Agent": "RLL-Climate-Custody/1.0"})
     context = ssl.create_default_context()
     digest = hashlib.sha256()
     chunks: list[bytes] = []
     total = 0
     with urllib.request.urlopen(request, timeout=timeout, context=context) as response:
+        final_url = response.geturl()
+        require_declared_https_domain(final_url, declared_domain, stage="final")
         content_type = response.headers.get("Content-Type", "application/octet-stream")
         while True:
             chunk = response.read(min(65536, max_bytes - total + 1))
@@ -59,7 +66,6 @@ def fetch(source: dict[str, Any], output_dir: Path, timeout: float, max_bytes: i
             digest.update(chunk)
             chunks.append(chunk)
         status = getattr(response, "status", 200)
-        final_url = response.geturl()
     output_dir.mkdir(parents=True, exist_ok=True)
     target = output_dir / safe_filename(source["id"], content_type)
     target.write_bytes(b"".join(chunks))
