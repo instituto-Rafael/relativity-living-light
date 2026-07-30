@@ -1,7 +1,7 @@
 {
   "schema": "rll.climate.local_receipt.v1",
   "event_id": "RLL-CLIMATE-MULTIPHYSICS-8X8-20260729",
-  "generated_at_utc": "2026-07-30T01:25:48.241647+00:00",
+  "generated_at_utc": "2026-07-30T01:44:16.167807+00:00",
   "mode": "LOCAL_OFFLINE_SYNTHETIC_VALIDATION",
   "claim_allowed": false,
   "network_accessed": false,
@@ -27,19 +27,61 @@
     },
     "strict_lorentz_projection_attempted": false,
     "projection_mode": "DECLARED_CANONICAL_LIFT_H7_TO_B7",
-    "forecast_generated": false
+    "forecast_generated": false,
+    "remote_ci_first_attempt": "BLOCKED_BY_SCHEMA_DESCRIPTION_REQUIREMENT",
+    "remote_ci_fix_commit": "dc8b5adb876f582263b39f980e6f009caa61cc9b"
   },
   "hashes": [
-    {"path": "data/climate/rll_climate_multiphysics_registry.v1.json", "bytes": 13875, "sha256": "2d29482cbaa597eb869c01bc94355ea0788c040a0375bd8c3bfe9e53a78220bb"},
-    {"path": "data/climate/rll_climate_source_registry.v1.json", "bytes": 6260, "sha256": "c9ec5a535bf327b33eb0fe8849f3e79f8a26ec3030c86df370ff7dcba9d8a784"},
-    {"path": "docs/science/RLL_CLIMATE_MULTIPHYSICS_CYCLE_V1.md", "bytes": 10698, "sha256": "0646e01af7a4e916712913541c32c89335dd0621f569d9710e49ba372632dd9a"},
-    {"path": "results/rll_climate_cycle.synthetic.v1.json", "bytes": 6806, "sha256": "b37b635579a917c9a51024fbe53b9c64a35a916e39ea3ed3b0a958b1cced4406"},
-    {"path": "schemas/rll_climate_multiphysics_registry.schema.json", "bytes": 3751, "sha256": "5ff047fdb357b99b767c3712a011f61323527cffae4b66f01245b99928f17e6e"},
-    {"path": "scripts/fetch_rll_climate_sources.py", "bytes": 4850, "sha256": "f47f4b36f1f6c4794a06ef7e8f498c6943a93fdf090b586b3647ab6b5bc4e1af"},
-    {"path": "scripts/rll_climate_fibonacci_scheduler.py", "bytes": 6563, "sha256": "a17684497d3674cb5a281fe7aef0527df37d78f8c8042d0e4be5cf99a95cda8a"},
-    {"path": "scripts/validate_rll_climate_multiphysics_registry.py", "bytes": 6327, "sha256": "902dd595b677365aabd0eb82bf357238d513eb75b2061104f7027865754074b8"},
-    {"path": "tests/fixtures/rll_climate_tile.synthetic.v1.json", "bytes": 2272, "sha256": "650c436763f3e475162f72f1187a42755ccd8ccd9dc9ed920a5739b8e561be73"},
-    {"path": "tests/test_rll_climate_multiphysics.py", "bytes": 4628, "sha256": "a9b3a4afbc43acbdb94c3da296d0e8b5f0d39ce7cdbb0dd6e3b71b4988ef6d73"}
+    {
+      "path": "data/climate/rll_climate_multiphysics_registry.v1.json",
+      "bytes": 13875,
+      "sha256": "2d29482cbaa597eb869c01bc94355ea0788c040a0375bd8c3bfe9e53a78220bb"
+    },
+    {
+      "path": "data/climate/rll_climate_source_registry.v1.json",
+      "bytes": 6260,
+      "sha256": "c9ec5a535bf327b33eb0fe8849f3e79f8a26ec3030c86df370ff7dcba9d8a784"
+    },
+    {
+      "path": "docs/science/RLL_CLIMATE_MULTIPHYSICS_CYCLE_V1.md",
+      "bytes": 10698,
+      "sha256": "0646e01af7a4e916712913541c32c89335dd0621f569d9710e49ba372632dd9a"
+    },
+    {
+      "path": "results/rll_climate_cycle.synthetic.v1.json",
+      "bytes": 6806,
+      "sha256": "b37b635579a917c9a51024fbe53b9c64a35a916e39ea3ed3b0a958b1cced4406"
+    },
+    {
+      "path": "schemas/rll_climate_multiphysics_registry.schema.json",
+      "bytes": 5545,
+      "sha256": "4e148a7ef5d7a7dc8de2281552bd8a8e91bb7d6dd30d2308b872c29775f9e91e"
+    },
+    {
+      "path": "scripts/fetch_rll_climate_sources.py",
+      "bytes": 4850,
+      "sha256": "f47f4b36f1f6c4794a06ef7e8f498c6943a93fdf090b586b3647ab6b5bc4e1af"
+    },
+    {
+      "path": "scripts/rll_climate_fibonacci_scheduler.py",
+      "bytes": 6563,
+      "sha256": "a17684497d3674cb5a281fe7aef0527df37d78f8c8042d0e4be5cf99a95cda8a"
+    },
+    {
+      "path": "scripts/validate_rll_climate_multiphysics_registry.py",
+      "bytes": 6327,
+      "sha256": "902dd595b677365aabd0eb82bf357238d513eb75b2061104f7027865754074b8"
+    },
+    {
+      "path": "tests/fixtures/rll_climate_tile.synthetic.v1.json",
+      "bytes": 2272,
+      "sha256": "650c436763f3e475162f72f1187a42755ccd8ccd9dc9ed920a5739b8e561be73"
+    },
+    {
+      "path": "tests/test_rll_climate_multiphysics.py",
+      "bytes": 4628,
+      "sha256": "a9b3a4afbc43acbdb94c3da296d0e8b5f0d39ce7cdbb0dd6e3b71b4988ef6d73"
+    }
   ],
   "F_ok": "8x8 registry, source custody, masks, canonical lift, Fibonacci scheduler and offline tests passed",
   "F_gap": "no historical event hydrated; no forecast skill, causal attribution or operational warning demonstrated",
