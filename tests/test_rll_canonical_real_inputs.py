@@ -18,6 +18,12 @@ HZ_MODEL = ROOT / "core/lowlevel_runtime/c/rll_hz_freestanding.c"
 HZ_DATA = ROOT / "core/lowlevel_runtime/c/rll_hz_moresco_2022_q16.c"
 RUNNER = ROOT / "tests/c/rll_canonical_real_inputs_runner.c"
 
+EXPECTED_JOINT_CHI2_Q16 = {
+    "L": 4_641_555,
+    "R": 4_261_420,
+}
+EXPECTED_JOINT_DELTA_Q16 = -380_135
+
 PRODUCTION_SOURCES = [
     COUPLING,
     REAL_INPUTS,
@@ -190,19 +196,22 @@ def test_joint_fase18e_profiles_bind_all_real_observations(mode: str, tmp_path: 
     assert "verified=15 rows=65 bound=65 token_vazio=0" in first.stdout
     assert "hz=33 bao=13 fs8=16 cmb=3 covariance=1" in first.stdout
     assert "total=65 evidence=65 blocked=0" in first.stdout
-    assert chi2_from_output(first.stdout) > 0
+    assert chi2_from_output(first.stdout) == EXPECTED_JOINT_CHI2_Q16[mode]
     assert "claim_allowed=0" in first.stdout
 
 
-def test_joint_profiles_are_numerically_distinct(tmp_path: Path) -> None:
+def test_joint_profiles_have_pinned_delta(tmp_path: Path) -> None:
     executable = tmp_path / "rll-real-inputs"
     compile_host_runner(executable)
     lcdm = execute(executable, "L")
     rll = execute(executable, "R")
     assert lcdm.returncode == 0, lcdm.stderr or lcdm.stdout
     assert rll.returncode == 0, rll.stderr or rll.stdout
-    assert chi2_from_output(lcdm.stdout) != chi2_from_output(rll.stdout)
-    raise AssertionError(f"CALIBRATION_LCDM={lcdm.stdout.strip()}\nCALIBRATION_RLL={rll.stdout.strip()}")
+    lcdm_chi2 = chi2_from_output(lcdm.stdout)
+    rll_chi2 = chi2_from_output(rll.stdout)
+    assert lcdm_chi2 == EXPECTED_JOINT_CHI2_Q16["L"]
+    assert rll_chi2 == EXPECTED_JOINT_CHI2_Q16["R"]
+    assert rll_chi2 - lcdm_chi2 == EXPECTED_JOINT_DELTA_Q16
 
 
 def test_single_byte_tamper_is_rejected_before_parsing(tmp_path: Path) -> None:
