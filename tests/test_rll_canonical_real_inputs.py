@@ -202,6 +202,7 @@ def test_joint_profiles_are_numerically_distinct(tmp_path: Path) -> None:
     assert lcdm.returncode == 0, lcdm.stderr or lcdm.stdout
     assert rll.returncode == 0, rll.stderr or rll.stdout
     assert chi2_from_output(lcdm.stdout) != chi2_from_output(rll.stdout)
+    raise AssertionError(f"CALIBRATION_LCDM={lcdm.stdout.strip()}\nCALIBRATION_RLL={rll.stdout.strip()}")
 
 
 def test_single_byte_tamper_is_rejected_before_parsing(tmp_path: Path) -> None:
