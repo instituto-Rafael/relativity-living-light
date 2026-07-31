@@ -3,6 +3,11 @@
 **State:** implemented / fail-closed / `claim_allowed=false`  
 **Base kernels:** canonical gate #592, executable model #594, real H(z) #595.
 
+> **Current model status:** this document preserves the V1 input contract and
+> H(z)-only callback behavior. The V2 joint profiles now bind all 65 observations
+> while keeping V1 constructors and receipts unchanged. See
+> `docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md`.
+
 ## Purpose
 
 This module closes the executable boundary between the real files committed in
@@ -95,9 +100,11 @@ RLL  chi2_q16 = 1800068
 delta          = 308152
 ```
 
-BAO, fσ8 and CMB are fully verified, parsed and typed, but their model-side
-freestanding evaluators are not yet present. Their **32 observations remain
-`TOKEN_VAZIO`/blocked**, rather than being assigned fabricated predictions.
+In the historical V1 profiles, BAO, fσ8 and CMB are fully verified, parsed and
+typed, but their model-side evaluators remain intentionally unbound. Their **32
+observations remain `TOKEN_VAZIO`/blocked** under profiles 1 and 2. V2 adds
+profiles 3 and 4, which bind those same records through the existing canonical
+cosmology evaluator without altering this V1 behavior.
 
 The identity callback remains only as a structural test of the complete
 65-observation and CMB-covariance path. It is not a cosmological model and never
@@ -140,13 +147,24 @@ canonical.blocked = 65
 claim_allowed = 0
 ```
 
-With either current nominal ΛCDM or RLL profile:
+With either historical V1 ΛCDM or RLL profile:
 
 ```text
 model_bound_rows = 33
 model_token_vazio_rows = 32
 canonical.evidence = 33
 canonical.blocked = 32
+claim_allowed = 0
+```
+
+With either V2 joint FASE18E profile:
+
+```text
+model_bound_rows = 65
+model_token_vazio_rows = 0
+canonical.evidence = 65
+canonical.blocked = 0
+cmb_covariance_used = 1
 claim_allowed = 0
 ```
 
@@ -167,9 +185,10 @@ The test suite verifies:
 4. exact ingestion of all four committed files;
 5. the full 65-row structural/covariance path;
 6. fail-closed behavior when no model callback exists;
-7. exact ΛCDM and RLL H(z) Q16 receipts through the real bridge;
-8. preservation of 32 typed model gaps as blocked/TOKEN_VAZIO;
-9. rejection after a single-byte source mutation.
+7. exact ΛCDM and RLL H(z) Q16 receipts through the historical bridge;
+8. preservation of 32 typed model gaps under V1 profiles;
+9. binding of all 65 observations under V2 joint profiles;
+10. rejection after a single-byte source mutation.
 
 ## Scientific boundary
 
