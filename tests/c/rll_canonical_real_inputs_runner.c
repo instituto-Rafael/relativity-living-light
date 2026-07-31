@@ -61,6 +61,14 @@ int main(int argc, char **argv) {
         real_context = rll_real_model_rll_nominal();
         callback = rll_real_canonical_model_callback;
         callback_context = &real_context;
+    } else if (argv[5][0] == 'L') {
+        real_context = rll_real_model_lcdm_joint_fase18e();
+        callback = rll_real_canonical_model_callback;
+        callback_context = &real_context;
+    } else if (argv[5][0] == 'R') {
+        real_context = rll_real_model_rll_joint_fase18e();
+        callback = rll_real_canonical_model_callback;
+        callback_context = &real_context;
     }
 
     rc = rll_real_ingest_all(&bundle, callback, callback_context, &receipt);
