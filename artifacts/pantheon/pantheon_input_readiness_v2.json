@@ -1,0 +1,62 @@
+{
+  "schema": "rll_pantheon_input_readiness_v2",
+  "created_utc": "2026-07-31T08:15:00Z",
+  "data_dir": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR",
+  "route_state": "TOKEN_VAZIO_FULL_COVARIANCE",
+  "claim_allowed": false,
+  "all_required_present": true,
+  "all_present": false,
+  "all_verified": false,
+  "diagonal_diagnostic_ready": true,
+  "full_covariance_likelihood_ready": false,
+  "catalog": {
+    "file": "Pantheon+SH0ES.dat",
+    "status": "READY_DIAGONAL_DIAGNOSTIC",
+    "size_bytes": 579283,
+    "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+    "rows": 1701,
+    "calibrator_rows": 77,
+    "cosmology_rows": 1624,
+    "required_fields": [
+      "zHD",
+      "MU_SH0ES",
+      "MU_SH0ES_ERR_DIAG",
+      "IS_CALIBRATOR"
+    ]
+  },
+  "stat_sys_covariance": {
+    "file": "Pantheon+SH0ES_STAT+SYS.cov",
+    "status": "TOKEN_VAZIO_FULL_COVARIANCE",
+    "present": false,
+    "sha256_sidecar_required": true,
+    "expected_dimension": 1701,
+    "expected_values": 2893401
+  },
+  "stat_only_covariance": {
+    "file": "Pantheon+SH0ES_STATONLY.cov",
+    "status": "TOKEN_VAZIO_STAT_ONLY_COVARIANCE",
+    "present": false,
+    "sha256_sidecar_required": true
+  },
+  "gates": {
+    "default_verification_exit": 0,
+    "require_diagonal_diagnostic_exit": 0,
+    "require_full_covariance_exit": 3,
+    "single_byte_catalog_tamper": "BLOCKED_CATALOG_SHA256",
+    "covariance_without_sidecar": "TOKEN_VAZIO_COVARIANCE_SHA256_POLICY",
+    "hash_verified_wrong_shape": "BLOCKED_COVARIANCE_DIMENSION"
+  },
+  "commands": {
+    "inspect": "python3 scripts/verify_pantheon_inputs.py --json",
+    "require_diagonal": "python3 scripts/verify_pantheon_inputs.py --require-diagonal-diagnostic",
+    "require_full_covariance": "python3 scripts/verify_pantheon_inputs.py --require-full-covariance"
+  },
+  "boundaries": {
+    "diagonal_diagnostic_is_full_likelihood": false,
+    "catalog_presence_is_covariance_presence": false,
+    "full_likelihood_requires_stat_sys_covariance": true,
+    "covariance_requires_pinned_sha256": true,
+    "negative_or_positive_diagonal_result_cannot_authorize_claim": true,
+    "claim_allowed": false
+  }
+}
