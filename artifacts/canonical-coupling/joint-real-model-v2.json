@@ -1,0 +1,98 @@
+{
+  "schema": "rll_joint_real_model_receipt_v2",
+  "created_utc": "2026-07-31T08:00:00Z",
+  "claim_allowed": false,
+  "scientific_scope": "compressed 65-observation canonical route",
+  "source_custody": {
+    "required_mask": 15,
+    "verified_mask": 15,
+    "datasets": [
+      {
+        "path": "data/real/Hz_data_real.csv",
+        "rows": 33,
+        "sha256": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6"
+      },
+      {
+        "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+        "rows": 13,
+        "sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69"
+      },
+      {
+        "path": "data/real/cosmology/fsigma8_growth_real.csv",
+        "rows": 16,
+        "sha256": "3781a2fa7bce9ea600060f9feb6e74ba49f4baa4ce2e7344803295c912318211"
+      },
+      {
+        "path": "data/real/CMB_shift_real.json",
+        "rows": 3,
+        "sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979"
+      }
+    ]
+  },
+  "route": {
+    "parsed_rows": 65,
+    "model_bound_rows": 65,
+    "model_token_vazio_rows": 0,
+    "canonical_total": 65,
+    "canonical_evidence": 65,
+    "canonical_blocked": 0,
+    "cmb_covariance_used": true,
+    "identity_model_is_scientific_model": false
+  },
+  "profiles": {
+    "lcdm_joint_fase18e": {
+      "profile_id": 3,
+      "model_kind": "RLL_MODEL_LCDM",
+      "chi2_q16": 4641555,
+      "chi2_decoded": 70.82450866699219,
+      "claim_allowed": false
+    },
+    "rll_joint_fase18e": {
+      "profile_id": 4,
+      "model_kind": "RLL_MODEL_LOGISTIC",
+      "chi2_q16": 4261420,
+      "chi2_decoded": 65.02410888671875,
+      "claim_allowed": false
+    },
+    "delta_rll_minus_lcdm": {
+      "chi2_q16": -380135,
+      "chi2_decoded": -5.8003997802734375
+    }
+  },
+  "compatibility": {
+    "lcdm_hz_v1_chi2_q16": 1491916,
+    "rll_hz_v1_chi2_q16": 1800068,
+    "v1_profiles_preserved": true
+  },
+  "runtime": {
+    "language": "C11",
+    "freestanding": true,
+    "heap": false,
+    "libc_math_calls": false,
+    "filesystem_in_production_kernel": false,
+    "combined_undefined_symbols_empty": true,
+    "armv7_cross_object": true,
+    "aarch64_cross_object": true
+  },
+  "calibration_evidence": {
+    "workflow_run": 30614623222,
+    "artifact_id": 8786862662,
+    "artifact_sha256": "68b8d15bc10fcfdfa174d328aa791bfacb5fe93ee0c94f74d010e6a881c363f4",
+    "result": "819 passed; one intentional receipt-exposure assertion",
+    "intentional_assertion_removed": true
+  },
+  "all_green_pre_pin_evidence": {
+    "workflow_run": 30614407324,
+    "artifact_id": 8786777690,
+    "artifact_sha256": "93b48f849fa46e21a6330a76c1421cfc32efb76adbf88eeaec69495836ae9916",
+    "result": "820 passed, 3 subtests passed"
+  },
+  "boundaries": {
+    "not_full_1677_point_likelihood": true,
+    "not_parameter_refit": true,
+    "not_full_planck_likelihood": true,
+    "not_independent_replication": true,
+    "negative_delta_is_not_claim_authorization": true,
+    "claim_allowed": false
+  }
+}
