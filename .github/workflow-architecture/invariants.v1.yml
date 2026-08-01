@@ -55,6 +55,38 @@ omega_feedback_cycle:
     - receipts
     - superseded_decisions
 
+branch_maturity:
+  topology:
+    feature_to_lab:
+      head: any_non_protected_branch
+      base: rll/lab
+    lab_to_integration:
+      head: rll/lab
+      base: rll/integration
+    integration_to_release:
+      head: rll/integration
+      base: rll/release
+    release_to_main:
+      head: rll/release
+      base: main
+  score_dimensions:
+    - topology
+    - semantic_amplitude
+    - validation
+    - evidence
+    - governance
+  thresholds:
+    LAB: 40
+    INTEGRATION: 60
+    RELEASE: 80
+    MAIN: 90
+  invariant: >-
+    Promotion is allowed only through the ordered branch topology and a new
+    repository-local receipt. Semantic breadth without tests, evidence or an
+    explicit TOKEN_VAZIO plus verifiable next step cannot mature a change.
+  branch_protection_verified: false
+  scientific_claim_effect: NONE
+
 workflow_classes:
   structural:
     allowed_permissions:
@@ -70,7 +102,8 @@ workflow_classes:
       contents: read
       actions: write
     publication_effect: NONE
-    manual_dispatch_only: true
+    manual_dispatch_only: false
+    write_jobs_manual_dispatch_only: true
   publishing:
     requires_environment_protection: true
     requires_explicit_owner: true
@@ -123,6 +156,7 @@ managed_workflows:
       - checkout_without_persistent_credentials
       - always_upload_receipt
       - claim_boundary
+      - externalized_algorithm
 
 policy:
   errors:
