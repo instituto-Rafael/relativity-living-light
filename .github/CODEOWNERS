@@ -1,0 +1,10 @@
+# Repository-local ownership. Enforcement requires a GitHub ruleset or branch rule.
+* @rafaelmeloreisnovo
+
+/.github/ @rafaelmeloreisnovo
+/.github/workflows/ @rafaelmeloreisnovo
+/.github/workflow-architecture/ @rafaelmeloreisnovo
+/tools/*workflow* @rafaelmeloreisnovo
+/tools/github_actions_capability_gate.py @rafaelmeloreisnovo
+/tests/test_github_actions_capability_gate.py @rafaelmeloreisnovo
+/docs/governance/ @rafaelmeloreisnovo
