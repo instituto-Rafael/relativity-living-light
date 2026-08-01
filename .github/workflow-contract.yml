@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-07-31"
+updated_at: "2026-08-01"
 
 inventory:
-  active_workflows: 51
+  active_workflows: 52
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -20,6 +20,23 @@ canonical_pipeline:
   logical_phases: 8
   pull_request_mode: dry_run
   claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
+
+branch_maturity:
+  workflow: .github/workflows/unified-workflow-session-orchestrator.yml
+  job_id: branch-maturity-gate
+  topology:
+    - "non-protected work branch -> rll/lab"
+    - "rll/lab -> rll/integration"
+    - "rll/integration -> rll/release"
+    - "rll/release -> main"
+  thresholds:
+    LAB: 40
+    INTEGRATION: 60
+    RELEASE: 80
+    MAIN: 90
+  branch_protection_verified: false
+  claim_allowed: false
+  publication_effect: NONE
 
 aliases:
   - path: .github/workflows/RLL-CI.yml
@@ -65,6 +82,12 @@ documented_checks:
     - context: governance-quality-gate
       workflow: .github/workflows/rll-governance-quality-gate.yml
       job_id: governance-quality-gate
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: branch-maturity-gate
+      workflow: .github/workflows/unified-workflow-session-orchestrator.yml
+      job_id: branch-maturity-gate
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
