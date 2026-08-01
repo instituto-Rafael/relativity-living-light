@@ -10,13 +10,13 @@ Efeito científico: `NONE`
 O repositório separa oficina, integração, estabilização e estado canônico:
 
 ```text
-feature/* → rll/lab → rll/integration → rll/release → main
+branch de trabalho não protegida → rll/lab → rll/integration → rll/release → main
 ```
 
-- `feature/*`: construção delimitada, hipótese de implementação e testes focados.
-- `rll/lab`: laboratório reprodutível; aceita somente branches não protegidas.
-- `rll/integration`: entrelace entre dados, código, testes, governança e documentação.
-- `rll/release`: candidato estabilizado, com evidência ou lacuna explicitamente auditável.
+- branch de trabalho não protegida: construção delimitada, hipótese de implementação e testes focados;
+- `rll/lab`: laboratório reprodutível; aceita somente branches não protegidas;
+- `rll/integration`: entrelace entre dados, código, testes, governança e documentação;
+- `rll/release`: candidato estabilizado, com evidência ou lacuna explicitamente auditável;
 - `main`: estado canônico; recebe somente `rll/release`.
 
 Nenhum salto lateral ou promoção direta para `main` é aceito pelo gate.
