@@ -13,14 +13,13 @@ authority:
     - https://docs.github.com/en/code-security/reference/code-scanning/codeql/codeql-queries/actions-built-in-queries
     - https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations
   invariant: >-
-    Repository files prove only repository-local implementation. Branch rules,
-    required checks, environments, secret scanning, push protection, Actions
-    policy and audit-log state remain TOKEN_VAZIO until configuration evidence
-    is collected from the GitHub control plane.
+    Repository files prove repository-local implementation. GitHub control-plane
+    settings remain TOKEN_VAZIO until a bounded settings or successful execution
+    receipt records what was observed, when, and which conclusions remain forbidden.
 
 state_legend:
   IMPLEMENTED_REPOSITORY: versioned repository evidence exists
-  IMPLEMENTED_WORKFLOW: executable workflow evidence exists
+  IMPLEMENTED_WORKFLOW: executable workflow evidence exists, including bounded external-control observation when a receipt is attached
   PARTIAL: a bounded implementation exists with a named residual
   TOKEN_VAZIO_EXTERNAL_SETTING: requires GitHub repository, organization, or enterprise settings evidence
   NOT_APPLICABLE_UNTIL_USED: capability is mandatory only when the named surface is adopted
@@ -62,8 +61,25 @@ capabilities:
     evidence:
       - .github/workflows/rll-pipeline-linear-completo.yml
       - .github/workflow-orchestrator/session.yml
-    residual: the 53-workflow estate is not yet normalized into reusable workflow families
+    residual: the 55-workflow estate is not yet normalized into reusable workflow families
     f_next: extract repeated setup, receipt, and policy jobs behind workflow_call contracts
+
+  - id: workflow_contract_reconciliation
+    category: configuration_consistency
+    state: IMPLEMENTED_WORKFLOW
+    evidence:
+      - .github/workflows/workflow-contract-sync.yml
+      - tools/workflow_contract_sync.py
+      - tests/test_workflow_contract_sync.py
+
+  - id: branch_content_reconciliation
+    category: change_control
+    state: PARTIAL
+    evidence:
+      - .github/workflow-contract.yml
+      - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
+    residual: main, rll/lab, rll/integration, and rll/release retain divergent commit histories
+    f_next: reconcile content through the declared maturity chain and append a new receipt per edge
 
   - id: artifacts_and_receipts
     category: evidence
@@ -74,19 +90,26 @@ capabilities:
 
   - id: dependency_review
     category: dependency_security
-    state: PARTIAL
+    state: IMPLEMENTED_WORKFLOW
     evidence:
       - .github/workflows/github-platform-assurance.yml
-    residual: dependency review workflow exists but repository Dependency Graph is disabled
-    f_next: enable Dependency Graph; laboratory failures remain TOKEN_VAZIO and higher maturity fails closed
+      - governance/receipts/github-settings/dependency-graph-20260801.yml
+    verification_scope: PR_638_TO_RLL_INTEGRATION
+    observed_run_id: 30720882430
+    residual: re-execute on every promotion edge; one successful run does not prove permanent control-plane state
 
   - id: dependency_graph
     category: dependency_security
-    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    state: IMPLEMENTED_WORKFLOW
     setting_scope: repository
-    verified: false
-    evidence: []
-    f_next: enable and verify Dependency Graph in repository security analysis settings
+    verified: true
+    evidence:
+      - governance/receipts/github-settings/dependency-graph-20260801.yml
+      - .github/workflows/github-platform-assurance.yml
+    verification_method: successful_dependency_review_execution
+    verification_scope: PR_638_TO_RLL_INTEGRATION
+    observed_run_id: 30720882430
+    residual: verification is time- and execution-scoped; other security settings remain unverified
 
   - id: codeql_actions_python
     category: static_analysis

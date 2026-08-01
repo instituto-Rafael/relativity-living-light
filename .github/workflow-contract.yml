@@ -2,11 +2,13 @@ schema: rll.workflow_contract.v1
 updated_at: "2026-08-01"
 
 inventory:
-  active_workflows: 53
+  active_workflows: 55
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
     - ".github/workflow-orchestrator/**"
+  source_of_truth: executable_files
+  sync_tool: tools/workflow_contract_sync.py
 
 canonical_pipeline:
   path: .github/workflows/rll-pipeline-linear-completo.yml
@@ -53,6 +55,37 @@ github_platform_assurance:
   external_state: TOKEN_VAZIO_EXTERNAL_SETTINGS
   claim_allowed: false
   publication_effect: NONE
+
+workflow_contract_reconciliation:
+  workflow: .github/workflows/workflow-contract-sync.yml
+  tool: tools/workflow_contract_sync.py
+  proposal_tool: tools/propose_workflow_contract_pr.py
+  tests: tests/test_workflow_contract_sync.py
+  local_hook: .githooks/pre-commit
+  installer: scripts/install_repo_hooks.sh
+  modes:
+    check: read_only_fail_closed
+    write: local_workspace_only
+    propose: workflow_dispatch_pull_request_to_rll_lab
+  direct_main_commit: FORBIDDEN
+  external_pr_permission_verified: false
+  external_pr_permission_state: TOKEN_VAZIO_EXTERNAL_SETTING
+  claim_allowed: false
+  publication_effect: NONE
+
+branch_reconciliation:
+  main_to_maturity_content_forward_ported:
+    - .github/workflows/rare-events-evidence-gate.yml
+    - data/knowledge_forest/rare_events_claim_registry_v1.yml
+    - docs/canonicos/MATRIZ_EVIDENCIAS_EVENTOS_RAROS_V1.md
+    - docs/canonicos/PROTOCOLO_EVENTOS_RAROS_EVIDENCIA_V1.md
+    - scripts/validate_rare_events_registry.py
+    - tests/test_rare_events_registry.py
+  history_reconciliation: TOKEN_VAZIO_HISTORY_RECONCILIATION
+  invariant: >-
+    Content added directly to main must be forward-ported through the maturity
+    chain without deleting laboratory-only governance. Commit-history divergence
+    does not become equivalence without a new receipt.
 
 aliases:
   - path: .github/workflows/RLL-CI.yml
@@ -131,6 +164,18 @@ documented_checks:
       permissions: security_events_write
       certification_claim: false
       conformity_claim: false
+    - context: Rare Events Evidence Gate
+      workflow: .github/workflows/rare-events-evidence-gate.yml
+      job_id: evidence-governance
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: Verify workflow contract inventory
+      workflow: .github/workflows/workflow-contract-sync.yml
+      job_id: verify-contract
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
 
 documentation:
   authority_order:
@@ -141,9 +186,12 @@ documentation:
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
     - tools/github_actions_capability_gate.py
+    - tools/workflow_contract_sync.py
+    - tools/propose_workflow_contract_pr.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
+    - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
     - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
@@ -161,6 +209,9 @@ documentation:
     docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md:
       - "fonte de verdade executável"
       - "TOKEN_VAZIO não apaga evidência histórica"
+    docs/workflows/WORKFLOW_CONTRACT_SYNC.md:
+      - "TOKEN_VAZIO_EXTERNAL_SETTING"
+      - "Commit direto em `main` é proibido"
     docs/governance/RLL_OPERATIONAL_GOVERNANCE.md:
       - "sem certificação"
       - "auditoria absoluta"

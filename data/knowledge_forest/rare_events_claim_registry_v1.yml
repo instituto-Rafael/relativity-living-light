@@ -1,0 +1,101 @@
+schema_version: "1.1"
+registry_id: RLL-RARE-EVENTS-V1
+claim_allowed: false
+publication_ready: false
+updated_at: "2026-08-01T17:28:00-03:00"
+
+classification:
+  allowed:
+    - PROVADO
+    - EVIDENCIADO
+    - HIPOTESE
+    - MODELO_ANALOGICO
+    - PARABOLA
+    - REFUTADO
+    - TOKEN_VAZIO
+
+promotion_contract:
+  required:
+    - primary_source
+    - provenance_record
+    - explicit_falsifier
+    - uncertainty_or_scope
+    - independent_review
+  rule: "Sem todos os requisitos, o claim permanece TOKEN_VAZIO ou HIPOTESE."
+
+invariants:
+  - evidence_before_claim
+  - preserve_unknowns
+  - distinguish_spiritual_meaning_from_physical_causation
+  - use_intervals_without_telemetry
+  - declare_falsifiers
+  - no_victim_as_proof_of_unrelated_theory
+
+events:
+  - event_id: AI171-2025-06-12
+    title: "Sobrevivência rara no voo Air India AI171"
+    provenance:
+      primary_source: TOKEN_VAZIO
+      chain_of_custody: TOKEN_VAZIO
+      independent_review: TOKEN_VAZIO
+    claims:
+      - id: AI171-C01
+        statement: "Houve um sobrevivente entre os ocupantes."
+        state: EVIDENCIADO
+        evidence_scope: "Existência pública do sobrevivente; mecanismo causal não incluído."
+        falsifier: "Documentação oficial conclusiva demonstrando inexistência do sobrevivente."
+      - id: AI171-C02
+        statement: "A rota física completa de sobrevivência foi reconstruída."
+        state: TOKEN_VAZIO
+      - id: AI171-C03
+        statement: "O evento violou leis físicas conhecidas."
+        state: REFUTADO
+        evidence_scope: "Não há demonstração positiva de violação física; o claim forte é rejeitado."
+        falsifier: "Modelo físico reproduzível, revisão independente e dados primários mostrando incompatibilidade com todas as explicações físicas conhecidas."
+      - id: AI171-C04
+        statement: "O evento pode receber interpretação espiritual pessoal."
+        state: MODELO_ANALOGICO
+        evidence_scope: "Interpretação de sentido, não mecanismo causal."
+        falsifier: "Não aplicável à experiência pessoal; é invalidado apenas quando apresentado como causalidade física sem evidência."
+    next_evidence:
+      - final_investigation_report
+      - seat_and_fuselage_geometry
+      - injury_and_exit_timeline
+      - independent_forensic_reconstruction
+
+  - event_id: AUTO-BRIDGE-UNIDENTIFIED
+    title: "Caso automotivo citado por Rafael"
+    provenance:
+      primary_source: TOKEN_VAZIO
+      exact_location: TOKEN_VAZIO
+      occurrence_identifier: TOKEN_VAZIO
+      chain_of_custody: TOKEN_VAZIO
+    claims:
+      - id: AUTO-C01
+        statement: "A ocorrência pública foi identificada com segurança."
+        state: TOKEN_VAZIO
+      - id: AUTO-C02
+        statement: "A velocidade estava entre 160 e 190 km/h."
+        state: TOKEN_VAZIO
+      - id: AUTO-C03
+        statement: "Homem, mulher, porta-malas, banco e porta estavam nas posições relatadas."
+        state: TOKEN_VAZIO
+      - id: AUTO-C04
+        statement: "O mecanismo de sobrevivência é inexplicável fisicamente."
+        state: TOKEN_VAZIO
+    next_evidence:
+      - original_video
+      - exact_location
+      - police_or_forensic_report
+      - vehicle_model
+      - occupant_positions
+      - complete_impact_sequence
+
+metrics:
+  explainability_index:
+    formula: "(confirmed + plausible) / total_variables"
+    warning: "Mede cobertura explicativa; não mede verdade metafísica."
+  evidence_completeness:
+    formula: "verified_required_fields / required_fields"
+  contradiction_density:
+    formula: "unresolved_contradictions / evaluated_claims"

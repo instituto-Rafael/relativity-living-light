@@ -4,7 +4,14 @@
 /.github/ @rafaelmeloreisnovo
 /.github/workflows/ @rafaelmeloreisnovo
 /.github/workflow-architecture/ @rafaelmeloreisnovo
+/.githooks/ @rafaelmeloreisnovo
 /tools/*workflow* @rafaelmeloreisnovo
 /tools/github_actions_capability_gate.py @rafaelmeloreisnovo
+/tools/propose_workflow_contract_pr.py @rafaelmeloreisnovo
+/scripts/install_repo_hooks.sh @rafaelmeloreisnovo
+/scripts/validate_rare_events_registry.py @rafaelmeloreisnovo
 /tests/test_github_actions_capability_gate.py @rafaelmeloreisnovo
+/tests/test_workflow_contract_sync.py @rafaelmeloreisnovo
+/tests/test_rare_events_registry.py @rafaelmeloreisnovo
 /docs/governance/ @rafaelmeloreisnovo
+/docs/workflows/ @rafaelmeloreisnovo
