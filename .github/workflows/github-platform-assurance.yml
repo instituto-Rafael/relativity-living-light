@@ -113,8 +113,11 @@ jobs:
           mkdir -p "$RECEIPT_DIR"
           decision=PASS
           residual=NONE
-          if [[ "$REVIEW_OUTCOME" != success ]]; then
+          if [[ "$REVIEW_OUTCOME" != success && "$BASE_REF" == rll/lab ]]; then
             decision=TOKEN_VAZIO_ALLOWED_IN_LAB
+            residual=DEPENDENCY_GRAPH_OR_REVIEW_FAILURE
+          elif [[ "$REVIEW_OUTCOME" != success ]]; then
+            decision=BLOCKED_DEPENDENCY_REVIEW
             residual=DEPENDENCY_GRAPH_OR_REVIEW_FAILURE
           fi
           printf '{"schema":"rll.dependency_review.v1","base_ref":"%s","outcome":"%s","decision":"%s","residual":"%s","claim_allowed":false}\n' \
@@ -122,7 +125,7 @@ jobs:
           cat "$RECEIPT_DIR/receipt.json" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Fail closed above laboratory maturity
-        if: steps.dependency-review.outcome != 'success' && github.base_ref != 'rll/lab'
+        if: always() && steps.dependency-review.outcome != 'success' && github.base_ref != 'rll/lab'
         run: exit 1
 
       - name: Upload dependency review receipt
