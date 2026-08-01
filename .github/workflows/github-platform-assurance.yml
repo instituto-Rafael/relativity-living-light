@@ -94,11 +94,45 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+    env:
+      BASE_REF: ${{ github.base_ref }}
+      RECEIPT_DIR: artifacts/dependency-review
     steps:
-      - name: Reject newly introduced high-severity vulnerable dependencies
+      - name: Review newly introduced dependencies
+        id: dependency-review
+        continue-on-error: ${{ github.base_ref == 'rll/lab' }}
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
         with:
           fail-on-severity: high
+
+      - name: Materialize dependency review residual
+        if: always()
+        env:
+          REVIEW_OUTCOME: ${{ steps.dependency-review.outcome }}
+        run: |
+          mkdir -p "$RECEIPT_DIR"
+          decision=PASS
+          residual=NONE
+          if [[ "$REVIEW_OUTCOME" != success ]]; then
+            decision=TOKEN_VAZIO_ALLOWED_IN_LAB
+            residual=DEPENDENCY_GRAPH_OR_REVIEW_FAILURE
+          fi
+          printf '{"schema":"rll.dependency_review.v1","base_ref":"%s","outcome":"%s","decision":"%s","residual":"%s","claim_allowed":false}\n' \
+            "$BASE_REF" "$REVIEW_OUTCOME" "$decision" "$residual" > "$RECEIPT_DIR/receipt.json"
+          cat "$RECEIPT_DIR/receipt.json" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail closed above laboratory maturity
+        if: steps.dependency-review.outcome != 'success' && github.base_ref != 'rll/lab'
+        run: exit 1
+
+      - name: Upload dependency review receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dependency-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/dependency-review/
+          retention-days: 30
+          if-no-files-found: error
 
   codeql:
     name: CodeQL (${{ matrix.language }})
