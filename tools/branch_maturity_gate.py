@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Fail-closed branch maturity gate for the RLL promotion topology.
 
-This module evaluates repository-local implementation maturity. It does not
-validate scientific claims and always preserves claim_allowed=false.
+The gate evaluates repository-local implementation maturity. It distinguishes
+operational policy files from tests, fixtures and documentation so adversarial
+examples can prove a rejection rule without being mistaken for active state.
+It never validates scientific claims and always emits ``claim_allowed=false``.
 """
 from __future__ import annotations
 
@@ -26,9 +28,22 @@ STAGE_BY_BASE = {
     "main": ("MAIN", 90),
 }
 TEXT_LIMIT = 1_000_000
-CLAIM_TRUE_RE = re.compile(r"(?im)^\s*claim_allowed\s*:\s*(?:true|yes|on|1)\s*(?:#.*)?$")
-NEXT_STEP_RE = re.compile(r"(?i)(?:F_next|next[_ -]?(?:step|test|action|verification)|pr[oó]ximo passo)")
+CLAIM_TRUE_RE = re.compile(
+    r"(?im)^\s*claim_allowed\s*:\s*(?:true|yes|on|1)\s*(?:#.*)?$"
+)
+NEXT_STEP_RE = re.compile(
+    r"(?i)(?:F_next|next[_ -]?(?:step|test|action|verification)|pr[oó]ximo passo)"
+)
 TOKEN_VAZIO_RE = re.compile(r"TOKEN_VAZIO")
+POLICY_SUFFIXES = {".yml", ".yaml", ".json", ".toml"}
+NON_OPERATIONAL_PREFIXES = (
+    "tests/",
+    "test/",
+    "fixtures/",
+    "examples/",
+    "docs/",
+    "papers/",
+)
 
 
 @dataclass(frozen=True)
@@ -50,7 +65,7 @@ class Promotion:
 def normalize_ref(ref: str) -> str:
     for prefix in ("refs/heads/", "origin/"):
         if ref.startswith(prefix):
-            return ref[len(prefix):]
+            return ref[len(prefix) :]
     return ref
 
 
@@ -63,7 +78,11 @@ def promotion_for(head_ref: str, base_ref: str) -> Promotion:
     stage, threshold = stage_info
     if base == "rll/lab":
         valid = head not in PROTECTED_BRANCHES and head != base
-        reason = "feature/research branch enters laboratory" if valid else "laboratory accepts only non-protected source branches"
+        reason = (
+            "feature/research branch enters laboratory"
+            if valid
+            else "laboratory accepts only non-protected source branches"
+        )
     elif base == "rll/integration":
         valid = head == "rll/lab"
         reason = "laboratory promotes to integration" if valid else "integration accepts only rll/lab"
@@ -91,7 +110,9 @@ def domains_for(path: str) -> set[str]:
     domains: set[str] = set()
     if p.startswith(("data/", "datasets/", "results/", "validation/", "validacao_real/")):
         domains.add("data")
-    if p.startswith(("src/", "models/", "analysis/", "scripts/", "tools/")) or p.endswith((".c", ".h", ".py", ".rs", ".go")):
+    if p.startswith(("src/", "models/", "analysis/", "scripts/", "tools/")) or p.endswith(
+        (".c", ".h", ".py", ".rs", ".go")
+    ):
         domains.add("implementation")
     if p.startswith("tests/") or "/test" in p or p.endswith(("_test.py", ".spec.ts", ".test.js")):
         domains.add("tests")
@@ -108,14 +129,28 @@ def forbidden_path(path: str) -> bool:
     p = path.lower()
     name = Path(p).name
     forbidden_names = {
-        ".env", "rclone.conf", "id_rsa", "id_ed25519", "credentials.json",
-        "service-account.json", "secrets.yml", "secrets.yaml",
+        ".env",
+        "rclone.conf",
+        "id_rsa",
+        "id_ed25519",
+        "credentials.json",
+        "service-account.json",
+        "secrets.yml",
+        "secrets.yaml",
     }
     return (
         name in forbidden_names
         or p.startswith(".ssh/")
         or p.endswith((".pem", ".p12", ".pfx", ".key"))
     )
+
+
+def claim_policy_surface(path: str) -> bool:
+    """Return true only for structured operational state, never prose/test fixtures."""
+    p = path.lower().lstrip("./")
+    if p.startswith(NON_OPERATIONAL_PREFIXES):
+        return False
+    return Path(p).suffix in POLICY_SUFFIXES
 
 
 def read_text(root: Path, rel: str) -> str | None:
@@ -135,32 +170,60 @@ def inspect_files(root: Path, files: Iterable[str]) -> tuple[dict[str, object], 
     next_step = 0
     evidence_files = 0
     yaml_files = 0
+    policy_files = 0
+    policy_scan_skipped = 0
+
     for rel in files:
         rel_domains = domains_for(rel)
         domains.update(rel_domains)
         if "evidence" in rel_domains:
             evidence_files += 1
         if forbidden_path(rel):
-            findings.append(Finding("ERROR", "FORBIDDEN_SENSITIVE_PATH", "sensitive file path may not enter CI history", rel))
+            findings.append(
+                Finding(
+                    "ERROR",
+                    "FORBIDDEN_SENSITIVE_PATH",
+                    "sensitive file path may not enter CI history",
+                    rel,
+                )
+            )
         text = read_text(root, rel)
         if text is None:
             continue
         token_vazio += len(TOKEN_VAZIO_RE.findall(text))
         next_step += len(NEXT_STEP_RE.findall(text))
-        if CLAIM_TRUE_RE.search(text):
-            findings.append(Finding("ERROR", "CLAIM_ALLOWED_TRUE", "claim_allowed=true is forbidden in promotion inputs", rel))
+
+        if claim_policy_surface(rel):
+            policy_files += 1
+            if CLAIM_TRUE_RE.search(text):
+                findings.append(
+                    Finding(
+                        "ERROR",
+                        "CLAIM_ALLOWED_TRUE",
+                        "claim_allowed=true is forbidden in operational promotion inputs",
+                        rel,
+                    )
+                )
+        elif CLAIM_TRUE_RE.search(text):
+            policy_scan_skipped += 1
+
         if Path(rel).suffix.lower() in {".yml", ".yaml"}:
             yaml_files += 1
             try:
                 list(yaml.safe_load_all(text))
             except yaml.YAMLError as exc:
-                findings.append(Finding("ERROR", "YAML_PARSE_ERROR", str(exc).splitlines()[0], rel))
+                findings.append(
+                    Finding("ERROR", "YAML_PARSE_ERROR", str(exc).splitlines()[0], rel)
+                )
+
     return {
         "domains": sorted(domains),
         "token_vazio_count": token_vazio,
         "next_step_marker_count": next_step,
         "evidence_file_count": evidence_files,
         "yaml_file_count": yaml_files,
+        "claim_policy_file_count": policy_files,
+        "claim_policy_scan_skipped_count": policy_scan_skipped,
     }, findings
 
 
@@ -194,35 +257,59 @@ def evaluate(
     if not status_ok(tests_status):
         findings.append(Finding("ERROR", "TESTS_NOT_PASSING", f"test status: {tests_status}"))
     if not status_ok(architecture_status):
-        findings.append(Finding("ERROR", "ARCHITECTURE_NOT_PASSING", f"architecture status: {architecture_status}"))
+        findings.append(
+            Finding("ERROR", "ARCHITECTURE_NOT_PASSING", f"architecture status: {architecture_status}")
+        )
     if not status_ok(docs_status):
-        findings.append(Finding("ERROR", "WORKFLOW_DOCS_NOT_PASSING", f"documentation contract status: {docs_status}"))
+        findings.append(
+            Finding(
+                "ERROR",
+                "WORKFLOW_DOCS_NOT_PASSING",
+                f"documentation contract status: {docs_status}",
+            )
+        )
 
     scientific_change = bool(domains & {"data", "implementation"})
     explicit_gap = inspection["token_vazio_count"] > 0 and inspection["next_step_marker_count"] > 0
     evidence_present = inspection["evidence_file_count"] > 0
-    if promotion.stage in {"RELEASE", "MAIN"} and scientific_change and not (evidence_present or explicit_gap):
-        findings.append(Finding(
-            "ERROR",
-            "EVIDENCE_OR_EXPLICIT_GAP_REQUIRED",
-            "release/main scientific changes require evidence/provenance or TOKEN_VAZIO with a verifiable next step",
-        ))
+    if promotion.stage in {"RELEASE", "MAIN"} and scientific_change and not (
+        evidence_present or explicit_gap
+    ):
+        findings.append(
+            Finding(
+                "ERROR",
+                "EVIDENCE_OR_EXPLICIT_GAP_REQUIRED",
+                "release/main scientific changes require evidence/provenance or TOKEN_VAZIO with a verifiable next step",
+            )
+        )
 
-    if "governance" in domains and ".github/workflow-contract.yml" not in files and promotion.stage in {"RELEASE", "MAIN"}:
-        findings.append(Finding(
-            "ERROR",
-            "GOVERNANCE_CONTRACT_TOUCH_REQUIRED",
-            "release/main governance changes must touch .github/workflow-contract.yml",
-        ))
+    if (
+        "governance" in domains
+        and ".github/workflow-contract.yml" not in files
+        and promotion.stage in {"RELEASE", "MAIN"}
+    ):
+        findings.append(
+            Finding(
+                "ERROR",
+                "GOVERNANCE_CONTRACT_TOUCH_REQUIRED",
+                "release/main governance changes must touch .github/workflow-contract.yml",
+            )
+        )
 
     score = {
         "topology": 20 if promotion.valid else 0,
         "semantic_amplitude": min(20, 5 + 5 * min(3, len(domains))) if files else 0,
         "validation": 20 if status_ok(tests_status) else 0,
         "evidence": 20 if (not scientific_change or evidence_present) else (15 if explicit_gap else 0),
-        "governance": 20 if status_ok(architecture_status) and status_ok(docs_status) and not any(
-            f.code in {"FORBIDDEN_SENSITIVE_PATH", "CLAIM_ALLOWED_TRUE", "YAML_PARSE_ERROR"} for f in findings
-        ) else 0,
+        "governance": 20
+        if status_ok(architecture_status)
+        and status_ok(docs_status)
+        and not any(
+            item.code
+            in {"FORBIDDEN_SENSITIVE_PATH", "CLAIM_ALLOWED_TRUE", "YAML_PARSE_ERROR"}
+            for item in findings
+        )
+        else 0,
     }
     total = sum(score.values())
     blocking = [item for item in findings if item.severity == "ERROR"]
@@ -259,7 +346,9 @@ def evaluate(
         "changed_files": files,
         "inspection": inspection,
         "residuals": [asdict(item) for item in findings],
-        "next_decision": "PROMOTION_REVIEW_ALLOWED" if passed else "RESOLVE_RESIDUALS_AND_REEXECUTE",
+        "next_decision": (
+            "PROMOTION_REVIEW_ALLOWED" if passed else "RESOLVE_RESIDUALS_AND_REEXECUTE"
+        ),
         "scientific_boundary": "Structural maturity does not validate a theory, dataset rights, model preference, or independent replication.",
     }
 
@@ -267,7 +356,8 @@ def evaluate(
 def write_reports(output_dir: Path, payload: dict[str, object]) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "branch_maturity_receipt.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
     )
     lines = [
         "# RLL Branch Maturity Receipt",
@@ -291,10 +381,14 @@ def write_reports(output_dir: Path, payload: dict[str, object]) -> None:
     if residuals:
         lines.extend(["| severity | code | path | message |", "|---|---|---|---|"])
         for item in residuals:
-            lines.append(f"| {item['severity']} | `{item['code']}` | `{item['path']}` | {item['message']} |")
+            lines.append(
+                f"| {item['severity']} | `{item['code']}` | `{item['path']}` | {item['message']} |"
+            )
     else:
         lines.append("No blocking residuals.")
-    (output_dir / "BRANCH_MATURITY_REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (output_dir / "BRANCH_MATURITY_REPORT.md").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
 
 
 def parse_args() -> argparse.Namespace:
