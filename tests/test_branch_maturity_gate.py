@@ -54,9 +54,14 @@ def test_release_science_requires_evidence_or_explicit_gap(tmp_path: Path) -> No
         files=["tools/model.py"],
     )
     assert payload["decision"] == "BLOCKED"
-    assert any(item["code"] == "EVIDENCE_OR_EXPLICIT_GAP_REQUIRED" for item in payload["residuals"])
+    assert any(
+        item["code"] == "EVIDENCE_OR_EXPLICIT_GAP_REQUIRED"
+        for item in payload["residuals"]
+    )
 
-    source.write_text("TOKEN_VAZIO\nF_next: execute independent replication\n", encoding="utf-8")
+    source.write_text(
+        "TOKEN_VAZIO\nF_next: execute independent replication\n", encoding="utf-8"
+    )
     payload = module.evaluate(
         root=tmp_path,
         head_ref="rll/integration",
@@ -74,9 +79,36 @@ def test_release_science_requires_evidence_or_explicit_gap(tmp_path: Path) -> No
     assert payload["claim_allowed"] is False
 
 
-def test_claim_allowed_true_is_blocking(tmp_path: Path) -> None:
+def test_claim_allowed_true_is_blocking_on_operational_policy(tmp_path: Path) -> None:
     policy = tmp_path / "governance" / "policy.yml"
     policy.parent.mkdir(parents=True)
     policy.write_text("claim_allowed: true\n", encoding="utf-8")
-    _, findings = module.inspect_files(tmp_path, ["governance/policy.yml"])
+    inspection, findings = module.inspect_files(tmp_path, ["governance/policy.yml"])
+    assert inspection["claim_policy_file_count"] == 1
     assert any(item.code == "CLAIM_ALLOWED_TRUE" for item in findings)
+
+
+def test_adversarial_fixture_does_not_become_active_policy(tmp_path: Path) -> None:
+    fixture = tmp_path / "tests" / "test_negative_policy.py"
+    fixture.parent.mkdir(parents=True)
+    fixture.write_text(
+        'INVALID = """\nclaim_allowed: true\n"""\n', encoding="utf-8"
+    )
+    inspection, findings = module.inspect_files(
+        tmp_path, ["tests/test_negative_policy.py"]
+    )
+    assert inspection["claim_policy_file_count"] == 0
+    assert inspection["claim_policy_scan_skipped_count"] == 1
+    assert not any(item.code == "CLAIM_ALLOWED_TRUE" for item in findings)
+
+
+def test_yaml_fixture_is_not_active_policy_but_still_parses(tmp_path: Path) -> None:
+    fixture = tmp_path / "tests" / "fixtures" / "negative.yml"
+    fixture.parent.mkdir(parents=True)
+    fixture.write_text("claim_allowed: true\n", encoding="utf-8")
+    inspection, findings = module.inspect_files(
+        tmp_path, ["tests/fixtures/negative.yml"]
+    )
+    assert inspection["yaml_file_count"] == 1
+    assert inspection["claim_policy_scan_skipped_count"] == 1
+    assert not findings
