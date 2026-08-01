@@ -1,0 +1,159 @@
+schema: rll.github_actions_capabilities.v1
+status: ACTIVE_GOVERNANCE
+updated_at: "2026-08-01"
+claim_allowed: false
+publication_effect: NONE
+
+authority:
+  scope: repository_local_plus_explicit_external_settings
+  official_documentation:
+    - https://docs.github.com/en/actions/reference/security/secure-use
+    - https://docs.github.com/en/actions/using-workflows/reusing-workflows
+    - https://docs.github.com/en/code-security/concepts/supply-chain-security/dependency-review
+    - https://docs.github.com/en/code-security/reference/code-scanning/codeql/codeql-queries/actions-built-in-queries
+    - https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations
+  invariant: >-
+    Repository files prove only repository-local implementation. Branch rules,
+    required checks, environments, secret scanning, push protection, Actions
+    policy and audit-log state remain TOKEN_VAZIO until configuration evidence
+    is collected from the GitHub control plane.
+
+state_legend:
+  IMPLEMENTED_REPOSITORY: versioned repository evidence exists
+  IMPLEMENTED_WORKFLOW: executable workflow evidence exists
+  PARTIAL: a bounded implementation exists with a named residual
+  TOKEN_VAZIO_EXTERNAL_SETTING: requires GitHub repository, organization, or enterprise settings evidence
+  NOT_APPLICABLE_UNTIL_USED: capability is mandatory only when the named surface is adopted
+
+capabilities:
+  - id: workflow_syntax_and_events
+    category: workflow_foundations
+    state: IMPLEMENTED_REPOSITORY
+    evidence:
+      - tools/workflow_architecture.py
+      - .github/workflow-contract.yml
+
+  - id: least_privilege_token
+    category: identity_and_permissions
+    state: IMPLEMENTED_REPOSITORY
+    evidence:
+      - .github/workflow-architecture/invariants.v1.yml
+      - .github/workflows/github-platform-assurance.yml
+
+  - id: immutable_action_pinning
+    category: supply_chain
+    state: PARTIAL
+    evidence:
+      - tools/workflow_architecture.py
+      - tools/github_actions_capability_gate.py
+    residual: legacy workflows may still contain mutable action references
+    f_next: migrate warnings to full-length reviewed SHAs by workflow risk tier
+
+  - id: concurrency_and_timeouts
+    category: resource_governance
+    state: PARTIAL
+    evidence:
+      - tools/workflow_architecture.py
+    residual: legacy workflows are warning-only until migration closes
+
+  - id: reusable_workflows
+    category: composition
+    state: PARTIAL
+    evidence:
+      - .github/workflows/rll-pipeline-linear-completo.yml
+      - .github/workflow-orchestrator/session.yml
+    residual: the 53-workflow estate is not yet normalized into reusable workflow families
+    f_next: extract repeated setup, receipt, and policy jobs behind workflow_call contracts
+
+  - id: artifacts_and_receipts
+    category: evidence
+    state: IMPLEMENTED_WORKFLOW
+    evidence:
+      - .github/workflows/github-platform-assurance.yml
+      - tools/github_actions_capability_gate.py
+
+  - id: dependency_review
+    category: dependency_security
+    state: IMPLEMENTED_WORKFLOW
+    evidence:
+      - .github/workflows/github-platform-assurance.yml
+
+  - id: codeql_actions_python
+    category: static_analysis
+    state: IMPLEMENTED_WORKFLOW
+    evidence:
+      - .github/workflows/github-platform-assurance.yml
+
+  - id: dependabot_actions
+    category: dependency_maintenance
+    state: IMPLEMENTED_REPOSITORY
+    evidence:
+      - .github/dependabot.yml
+
+  - id: code_ownership
+    category: review_governance
+    state: IMPLEMENTED_REPOSITORY
+    evidence:
+      - .github/CODEOWNERS
+    residual: enforcement depends on branch rules or rulesets
+
+  - id: security_policy
+    category: vulnerability_intake
+    state: IMPLEMENTED_REPOSITORY
+    evidence:
+      - .github/SECURITY.md
+
+  - id: branch_rulesets
+    category: protected_change_control
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: export or inspect active rulesets and append a settings receipt without secrets
+
+  - id: required_status_checks
+    category: protected_change_control
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: verify required checks for rll/lab, rll/integration, rll/release, and main
+
+  - id: protected_environments
+    category: deployment_governance
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: create or inspect release and publication environments with reviewers and branch restrictions
+
+  - id: secret_scanning_push_protection
+    category: secret_protection
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: verify secret scanning and push protection in repository security settings
+
+  - id: artifact_attestations
+    category: provenance
+    state: PARTIAL
+    evidence:
+      - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
+    residual: no release artifact has a verified attestation receipt yet
+    f_next: attest a release artifact only on rll/release or main and verify it with GitHub CLI
+
+  - id: oidc_boundary
+    category: federated_identity
+    state: NOT_APPLICABLE_UNTIL_USED
+    evidence: []
+    residual: no cloud deployment or attestation job currently requests id-token write
+    f_next: permit id-token write only in a named release provenance job
+
+  - id: audit_log_and_settings_evidence
+    category: control_plane_audit
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: organization
+    verified: false
+    evidence: []
+    f_next: collect a redacted organization and repository settings receipt with timestamp and actor
