@@ -2,7 +2,7 @@ schema: rll.workflow_contract.v1
 updated_at: "2026-08-01"
 
 inventory:
-  active_workflows: 52
+  active_workflows: 53
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -35,6 +35,22 @@ branch_maturity:
     RELEASE: 80
     MAIN: 90
   branch_protection_verified: false
+  claim_allowed: false
+  publication_effect: NONE
+
+github_platform_assurance:
+  workflow: .github/workflows/github-platform-assurance.yml
+  capability_matrix: .github/workflow-architecture/github-actions-capabilities.v1.yml
+  gate: tools/github_actions_capability_gate.py
+  jobs:
+    - platform-capability-contract
+    - dependency-review
+    - codeql
+  codeql_languages:
+    - actions
+    - python
+  external_settings_verified: false
+  external_state: TOKEN_VAZIO_EXTERNAL_SETTINGS
   claim_allowed: false
   publication_effect: NONE
 
@@ -91,17 +107,44 @@ documented_checks:
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
+    - context: GitHub platform capability contract
+      workflow: .github/workflows/github-platform-assurance.yml
+      job_id: platform-capability-contract
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: Dependency review
+      workflow: .github/workflows/github-platform-assurance.yml
+      job_id: dependency-review
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: CodeQL (actions)
+      workflow: .github/workflows/github-platform-assurance.yml
+      job_id: codeql
+      permissions: security_events_write
+      certification_claim: false
+      conformity_claim: false
+    - context: CodeQL (python)
+      workflow: .github/workflows/github-platform-assurance.yml
+      job_id: codeql
+      permissions: security_events_write
+      certification_claim: false
+      conformity_claim: false
 
 documentation:
   authority_order:
     - .github/workflow-contract.yml
     - .github/workflow-architecture/invariants.v1.yml
+    - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
+    - tools/github_actions_capability_gate.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
+    - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
       - "44 etapas lógicas"
