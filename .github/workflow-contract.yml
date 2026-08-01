@@ -25,7 +25,7 @@ branch_maturity:
   workflow: .github/workflows/unified-workflow-session-orchestrator.yml
   job_id: branch-maturity-gate
   topology:
-    - "feature/* -> rll/lab"
+    - "non-protected work branch -> rll/lab"
     - "rll/lab -> rll/integration"
     - "rll/integration -> rll/release"
     - "rll/release -> main"
