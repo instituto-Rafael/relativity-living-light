@@ -34,6 +34,9 @@ on:
 permissions:
   contents: read
 
+env:
+  CLAIM_BOUNDARY: "Inventory reconciliation only; claim_allowed=false and publication_effect=NONE."
+
 concurrency:
   group: workflow-contract-sync-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
