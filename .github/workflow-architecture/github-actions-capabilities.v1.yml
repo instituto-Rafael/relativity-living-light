@@ -74,9 +74,19 @@ capabilities:
 
   - id: dependency_review
     category: dependency_security
-    state: IMPLEMENTED_WORKFLOW
+    state: PARTIAL
     evidence:
       - .github/workflows/github-platform-assurance.yml
+    residual: dependency review workflow exists but repository Dependency Graph is disabled
+    f_next: enable Dependency Graph; laboratory failures remain TOKEN_VAZIO and higher maturity fails closed
+
+  - id: dependency_graph
+    category: dependency_security
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: enable and verify Dependency Graph in repository security analysis settings
 
   - id: codeql_actions_python
     category: static_analysis
