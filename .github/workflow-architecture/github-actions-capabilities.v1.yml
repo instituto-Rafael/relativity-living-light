@@ -62,8 +62,25 @@ capabilities:
     evidence:
       - .github/workflows/rll-pipeline-linear-completo.yml
       - .github/workflow-orchestrator/session.yml
-    residual: the 53-workflow estate is not yet normalized into reusable workflow families
+    residual: the 55-workflow estate is not yet normalized into reusable workflow families
     f_next: extract repeated setup, receipt, and policy jobs behind workflow_call contracts
+
+  - id: workflow_contract_reconciliation
+    category: configuration_consistency
+    state: IMPLEMENTED_WORKFLOW
+    evidence:
+      - .github/workflows/workflow-contract-sync.yml
+      - tools/workflow_contract_sync.py
+      - tests/test_workflow_contract_sync.py
+
+  - id: branch_content_reconciliation
+    category: change_control
+    state: PARTIAL
+    evidence:
+      - .github/workflow-contract.yml
+      - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
+    residual: main, rll/lab, rll/integration, and rll/release retain divergent commit histories
+    f_next: reconcile content through the declared maturity chain and append a new receipt per edge
 
   - id: artifacts_and_receipts
     category: evidence
