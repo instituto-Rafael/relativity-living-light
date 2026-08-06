@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://instituto-rafael.invalid/schemas/rll_execution_queue_effective_v1.schema.json",
   "title": "RLL Effective Execution Queue V1",
-  "description": "Append-only projection of the immutable RLL execution queue after strictly matching successor receipts.",
+  "description": "Structural contract for an append-only projection of the immutable RLL execution queue after strictly matching successor receipts.",
   "type": "object",
   "additionalProperties": false,
   "required": [
