@@ -300,7 +300,7 @@
           ],
           "properties": {
             "role": {
-              "enum": ["governance_only", "candidate_dataset", "feature_source", "training_candidate"]
+              "enum": ["governance_only", "candidate_dataset", "feature_source", "training_candidate", "evidence_base"]
             },
             "state": {
               "enum": [

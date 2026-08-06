@@ -65,11 +65,14 @@ jobs:
           python -m pytest -q tests/test_ci_scientific_skills.py
 
       - name: Run claim-bounded repository diagnostics
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          STRICT_REPOSITORY_EVIDENCE: ${{ inputs.strict_repository_evidence }}
         run: |
           set -euo pipefail
           mkdir -p "$RUN_DIR"
           STRICT=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.strict_repository_evidence }}" = "true" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$STRICT_REPOSITORY_EVIDENCE" = "true" ]; then
             STRICT="--strict"
           fi
           python tools/ci_scientific_skills.py \
