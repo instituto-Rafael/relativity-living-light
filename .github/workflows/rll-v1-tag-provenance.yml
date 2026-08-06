@@ -66,11 +66,18 @@ jobs:
           python -m pytest -q tests/test_v1_tag_media_provenance.py
 
       - name: Fetch exact tag from canonical source repository
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_TAG: ${{ inputs.tag }}
         run: |
           set -euo pipefail
           TAG="v1.0.0"
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            TAG="${{ inputs.tag }}"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            TAG="$REQUESTED_TAG"
+          fi
+          if [ -z "$TAG" ] || [[ ! "$TAG" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+            echo "invalid source tag" >&2
+            exit 2
           fi
           SAFE_TAG="${TAG//\//-}"
           LOCAL_TAG="rll-source-${SAFE_TAG}"
