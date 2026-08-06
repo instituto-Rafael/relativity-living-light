@@ -33,7 +33,7 @@ OUT_DIR=${3:-artifacts/termux/rll-evidence-replay-v1}
   exit 2
 }
 
-for cmd in python sha256sum git uname getprop awk date; do
+for cmd in python sha256sum git uname getprop awk date wc; do
   require_command "$cmd"
 done
 
