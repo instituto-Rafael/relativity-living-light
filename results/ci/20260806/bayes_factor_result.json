@@ -1,0 +1,17 @@
+{
+  "pipeline": "rll-validacao-cientifica-completa",
+  "job": "bayes_factor_p0",
+  "timestamp_utc": "2026-08-06T02:40:07.380058+00:00",
+  "ln_B10_rll_over_lcdm": null,
+  "jeffreys_label": "TOKEN_VAZIO P0",
+  "method": "BIC proxy (ln B ≈ −ΔBIC/2)",
+  "threshold_strong": 5.0,
+  "threshold_substantial": 2.3,
+  "token_vazio_p0": true,
+  "claim_boundary": "BIC proxy é aproximação; nested sampling (dynesty) recomendado para claim formal",
+  "falsifier_gate": {
+    "id": "F-COS-04",
+    "threshold": "ln(B10) > −5",
+    "status": "TOKEN_VAZIO"
+  }
+}
