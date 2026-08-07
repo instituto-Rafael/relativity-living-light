@@ -82,7 +82,7 @@ jobs:
       - name: Checkout for explicit opt-in commit
         uses: actions/checkout@v4
       - name: Download pipeline artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline

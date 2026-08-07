@@ -94,7 +94,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Download validation artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: validacao-real-artifacts
         path: validacao_real

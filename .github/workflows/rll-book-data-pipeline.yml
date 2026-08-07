@@ -133,7 +133,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Download book pipeline artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline

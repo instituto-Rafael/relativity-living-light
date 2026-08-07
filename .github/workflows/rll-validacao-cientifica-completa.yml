@@ -584,7 +584,7 @@ jobs:
         run: pip install numpy scipy matplotlib pandas PyYAML jsonschema
 
       - name: Baixar artefatos MCMC
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -712,7 +712,7 @@ jobs:
         run: pip install numpy
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -944,7 +944,7 @@ jobs:
         run: pip install numpy
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -1128,7 +1128,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
