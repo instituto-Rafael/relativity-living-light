@@ -1,6 +1,6 @@
 {
   "schema": "rll.gap_closure_input.v1",
-  "generated_at": "2026-08-07T22:49:11Z",
+  "generated_at": "2026-08-07T23:18:00Z",
   "repository": "instituto-Rafael/relativity-living-light",
   "claim_allowed": false,
   "purpose": "Canonicalize currently relevant RLL gaps so stale TOKEN_VAZIO labels can be resolved, narrowed, or retained without inventing evidence.",
@@ -11,6 +11,7 @@
     {"token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE", "priority": "P0", "domain": "supernovae"},
     {"token": "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY", "priority": "P0", "domain": "supernovae"},
     {"token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE", "priority": "P0", "domain": "bayesian_inference"},
+    {"token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK", "priority": "P0", "domain": "bayesian_inference"},
     {"token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION", "priority": "P0", "domain": "replication"},
     {"token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION", "priority": "P0", "domain": "bao"},
     {"token": "TOKEN_VAZIO_PHYSICAL_EXECUTION", "priority": "P0", "domain": "termux"},
