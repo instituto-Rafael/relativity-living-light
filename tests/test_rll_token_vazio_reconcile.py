@@ -24,7 +24,7 @@ def effective_rules():
 
 
 def current_receipt():
-    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:18:00Z")
+    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:40:00Z")
 
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
@@ -32,29 +32,38 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 20
-    assert receipt["summary"]["terminal_resolved"] == 5
-    assert receipt["summary"]["reduced_generic"] == 2
-    assert receipt["summary"]["open"] == 13
+    assert receipt["summary"]["input_tokens"] == 22
+    assert receipt["summary"]["terminal_resolved"] == 7
+    assert receipt["summary"]["reduced_generic"] == 3
+    assert receipt["summary"]["open"] == 12
 
-    assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" in receipt["reduced_tokens"]
-    assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" in receipt["reduced_tokens"]
-    assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" not in receipt["canonical_open_tokens"]
-    assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" not in receipt["canonical_open_tokens"]
+    for token in (
+        "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+        "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+        "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+    ):
+        assert token in receipt["reduced_tokens"]
+        assert token not in receipt["canonical_open_tokens"]
 
     for token in (
         "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
         "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
         "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+        "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+        "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
         "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
     ):
         assert token in receipt["terminal_tokens"]
         assert token not in receipt["canonical_open_tokens"]
 
-    assert "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE" in receipt["canonical_open_tokens"]
-    assert "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK" in receipt["open_by_priority"]["P0"]
-    assert "TOKEN_VAZIO_INDEPENDENT_REPLICATION" in receipt["open_by_priority"]["P0"]
+    for token in (
+        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+        "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+        "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+    ):
+        assert token in receipt["open_by_priority"]["P0"]
+
     assert not any(r["state"] == "OPEN_EVIDENCE_MISSING" for r in receipt["results"])
 
 
@@ -167,20 +176,44 @@ def test_common_nuisance_ablation_is_positive_operational_resolution_only():
     assert receipt["claim_allowed"] is False
 
 
-def test_legacy_real_bayes_reduces_but_does_not_close_modern_gate():
+def test_legacy_real_bayes_reduces_and_modern_dovekie_gate_is_closed():
     receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     bayes = rows["TOKEN_VAZIO_REAL_BAYES_INFERENCE"]
     modern = rows["TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK"]
+    joint = rows["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE"]
 
     assert bayes["state"] == "REDUCED"
     assert bayes["evidence_verified"] is True
     assert "dynesty" in bayes["resolved_fact"]
-    assert bayes["successors"] == [
-        "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
-        "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
-    ]
-    assert modern["state"] == "OPEN_INTERNAL"
+    assert modern["state"] == "RESOLVED"
+    assert modern["evidence_verified"] is True
+    assert "lnB(CPL/LCDM)=-0.1107" in modern["resolved_fact"]
+    assert joint["state"] == "OPEN_MIXED"
+    assert receipt["claim_allowed"] is False
+
+
+def test_finite_wa_lower_profile_token_is_closed_by_bracketed_receipt():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    lower = rows["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
+
+    assert lower["state"] == "RESOLVED"
+    assert lower["evidence_verified"] is True
+    assert "wa≈-12.60645" in lower["resolved_fact"]
+    assert lower["successors"] == []
+
+
+def test_desi_generic_gap_is_reduced_not_falsely_called_official():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    generic = rows["TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION"]
+    official = rows["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]
+
+    assert generic["state"] == "REDUCED"
+    assert generic["evidence_verified"] is True
+    assert "13-observable" in generic["resolved_fact"]
+    assert official["state"] == "OPEN_EXTERNAL"
     assert receipt["claim_allowed"] is False
 
 
