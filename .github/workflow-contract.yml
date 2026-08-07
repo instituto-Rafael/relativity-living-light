@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-06"
+updated_at: "2026-08-07"
 
 inventory:
-  active_workflows: 60
+  active_workflows: 61
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -68,6 +68,12 @@ documented_checks:
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
+    - context: modern-validation-contract
+      workflow: .github/workflows/rll-modern-validation-gate.yml
+      job_id: modern-validation-contract
+      certification_claim: false
+      conformity_claim: false
+      scientific_claim: false
 
 documentation:
   authority_order:
