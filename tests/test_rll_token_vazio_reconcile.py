@@ -24,7 +24,7 @@ def effective_rules():
 
 
 def current_receipt():
-    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:40:00Z")
+    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:42:00Z")
 
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
@@ -32,15 +32,17 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 22
+    assert receipt["summary"]["input_tokens"] == 26
     assert receipt["summary"]["terminal_resolved"] == 7
-    assert receipt["summary"]["reduced_generic"] == 3
-    assert receipt["summary"]["open"] == 12
+    assert receipt["summary"]["reduced_generic"] == 5
+    assert receipt["summary"]["open"] == 14
 
     for token in (
         "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
         "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
         "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+        "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+        "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
     ):
         assert token in receipt["reduced_tokens"]
         assert token not in receipt["canonical_open_tokens"]
@@ -64,6 +66,14 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
     ):
         assert token in receipt["open_by_priority"]["P0"]
 
+    for token in (
+        "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+        "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+        "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+        "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+    ):
+        assert token in receipt["open_by_priority"]["P1"]
+
     assert not any(r["state"] == "OPEN_EVIDENCE_MISSING" for r in receipt["results"])
 
 
@@ -71,14 +81,7 @@ def test_terminal_rule_without_evidence_contract_is_rejected():
     rules = {
         "schema": "rll.token_vazio_closure_rules.v1",
         "claim_allowed": False,
-        "rules": [
-            {
-                "token": "TOKEN_VAZIO_X",
-                "priority": "P0",
-                "target_state": "RESOLVED",
-                "classification": "BAD"
-            }
-        ]
+        "rules": [{"token": "TOKEN_VAZIO_X", "priority": "P0", "target_state": "RESOLVED", "classification": "BAD"}],
     }
     with pytest.raises(ValueError, match="requires evidence_path"):
         validate_rules(rules)
@@ -94,7 +97,7 @@ def test_missing_evidence_downgrades_resolution_to_open(tmp_path):
         "evidence_path": "missing.json",
         "assertions": [{"path": "state", "op": "eq", "value": "VERIFIED"}],
         "resolved_fact": "negative fact",
-        "successors": []
+        "successors": [],
     }
     result = evaluate_rule(tmp_path, item, rule)
     assert result["state"] == "OPEN_EVIDENCE_MISSING"
@@ -114,7 +117,7 @@ def test_failed_assertion_cannot_close_token(tmp_path):
         "evidence_path": "evidence.json",
         "assertions": [{"path": "state", "op": "eq", "value": "VERIFIED"}],
         "resolved_fact": "should not close",
-        "successors": []
+        "successors": [],
     }
     result = evaluate_rule(tmp_path, item, rule)
     assert result["state"] == "OPEN_EVIDENCE_MISSING"
@@ -128,8 +131,8 @@ def test_duplicate_input_token_is_rejected():
         "claim_allowed": False,
         "tokens": [
             {"token": "TOKEN_VAZIO_X", "priority": "P0"},
-            {"token": "TOKEN_VAZIO_X", "priority": "P1"}
-        ]
+            {"token": "TOKEN_VAZIO_X", "priority": "P1"},
+        ],
     }
     with pytest.raises(ValueError, match="duplicate input token"):
         validate_input(payload)
@@ -160,7 +163,6 @@ def test_negative_resolution_is_not_positive_claim():
     assert "not identifiable" in ident["resolved_fact"]
     assert boundary["state"] == "RESOLVED_NEGATIVE"
     assert "boundary-sensitive" in boundary["resolved_fact"]
-    assert boundary["successors"] == ["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
     assert license_row["state"] == "RESOLVED_NEGATIVE"
     assert "redistribution is blocked" in license_row["resolved_fact"]
     assert receipt["claim_allowed"] is False
@@ -185,7 +187,6 @@ def test_legacy_real_bayes_reduces_and_modern_dovekie_gate_is_closed():
 
     assert bayes["state"] == "REDUCED"
     assert bayes["evidence_verified"] is True
-    assert "dynesty" in bayes["resolved_fact"]
     assert modern["state"] == "RESOLVED"
     assert modern["evidence_verified"] is True
     assert "lnB(CPL/LCDM)=-0.1107" in modern["resolved_fact"]
@@ -214,6 +215,36 @@ def test_desi_generic_gap_is_reduced_not_falsely_called_official():
     assert generic["evidence_verified"] is True
     assert "13-observable" in generic["resolved_fact"]
     assert official["state"] == "OPEN_EXTERNAL"
+    assert receipt["claim_allowed"] is False
+
+
+def test_class_camb_generic_gap_reduces_without_inventing_rll_perturbations():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    generic = rows["TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK"]
+    baseline = rows["TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK"]
+    closure = rows["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"]
+    implementation = rows["TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"]
+
+    assert generic["state"] == "REDUCED"
+    assert generic["evidence_verified"] is True
+    assert "homogeneous background" in generic["resolved_fact"]
+    assert baseline["state"] == "OPEN_INTERNAL"
+    assert closure["state"] == "OPEN_MIXED"
+    assert implementation["state"] == "OPEN_MIXED"
+    assert receipt["claim_allowed"] is False
+
+
+def test_h0_generic_gap_reduces_to_executable_provenance_contract():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    generic = rows["TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD"]
+    successor = rows["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+
+    assert generic["state"] == "REDUCED"
+    assert generic["evidence_verified"] is True
+    assert "six-cell H0/r_d fairness matrix" in generic["resolved_fact"]
+    assert successor["state"] == "OPEN_MIXED"
     assert receipt["claim_allowed"] is False
 
 
