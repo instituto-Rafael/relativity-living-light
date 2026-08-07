@@ -14,6 +14,7 @@ import importlib.metadata
 import json
 import os
 import tempfile
+import traceback
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -62,6 +63,8 @@ def parameter_vector(model: str) -> dict[str, float]:
         "wa": 0.0,
     }
     if model == "cpl":
+        # Keep the baseline away from w=-1 crossing so this gate tests engine
+        # plumbing/numerics rather than crossing-regularization choices.
         common.update({"w0": -0.90, "wa": 0.20})
     elif model != "lcdm":
         raise ValueError(f"unsupported model {model}")
@@ -81,25 +84,49 @@ def run_camb(model_name: str, z_values: Sequence[float], k_values: Sequence[floa
     if model_name == "cpl":
         pars.set_dark_energy(w=p["w0"], wa=p["wa"], dark_energy_model="ppf")
     pars.set_for_lmax(int(lmax), lens_potential_accuracy=0)
-    pars.set_matter_power(redshifts=sorted(set(map(float, z_values)), reverse=True), kmax=max(k_values) * 1.2)
+    z_for_power = np.asarray(sorted(set(map(float, z_values)), reverse=True), dtype=float)
+    pars.set_matter_power(redshifts=z_for_power.tolist(), kmax=float(max(k_values) * 1.2))
     pars.NonLinear = camb_model.NonLinear_none
     results = camb.get_results(pars)
     spectra = results.get_cmb_power_spectra(pars, CMB_unit=None, raw_cl=True)
     unlensed = np.asarray(spectra["unlensed_scalar"], dtype=float)
+
+    z_array = np.asarray(list(map(float, z_values)), dtype=float)
+    h_values = np.asarray(results.hubble_parameter(z_array), dtype=float).reshape(-1)
+    if h_values.size != z_array.size:
+        raise ValueError(f"CAMB H(z) shape mismatch: {h_values.shape} vs {z_array.shape}")
+
+    positive_z = np.asarray([float(z) for z in z_values if float(z) > 0.0], dtype=float)
+    da_values = np.asarray(results.angular_diameter_distance(positive_z), dtype=float).reshape(-1)
+    if da_values.size != positive_z.size:
+        raise ValueError(f"CAMB D_A(z) shape mismatch: {da_values.shape} vs {positive_z.shape}")
+
     pk_interp = camb.get_matter_power_interpolator(
         pars,
         nonlinear=False,
         hubble_units=False,
         k_hunit=False,
-        kmax=max(k_values) * 1.2,
-        zmax=max(z_values) + 0.2,
+        kmax=float(max(k_values) * 1.2),
+        zmax=float(max(z_values) + 0.2),
     )
+    k_array = np.asarray(list(map(float, k_values)), dtype=float)
+    pk_grid = np.asarray(pk_interp.P(z_array, k_array, grid=True), dtype=float)
+    expected_shape = (z_array.size, k_array.size)
+    if pk_grid.shape != expected_shape:
+        raise ValueError(f"CAMB P(k,z) shape mismatch: {pk_grid.shape} vs {expected_shape}")
+
     return {
         "version": importlib.metadata.version("camb"),
-        "H_km_s_Mpc": {str(z): scalar(results.hubble_parameter(z)) for z in z_values},
-        "D_A_Mpc": {str(z): scalar(results.angular_diameter_distance(z)) for z in z_values if z > 0.0},
-        "Pk_Mpc3": {f"z={z},k={k}": scalar(pk_interp.P(z, k)) for z in z_values for k in k_values},
-        "Cl_TT_dimensionless": {str(ell): scalar(unlensed[ell, 0]) for ell in (30, 100, 300, 700) if ell <= lmax},
+        "H_km_s_Mpc": {str(float(z)): float(value) for z, value in zip(z_array, h_values)},
+        "D_A_Mpc": {str(float(z)): float(value) for z, value in zip(positive_z, da_values)},
+        "Pk_Mpc3": {
+            f"z={float(z)},k={float(k)}": float(pk_grid[zi, ki])
+            for zi, z in enumerate(z_array)
+            for ki, k in enumerate(k_array)
+        },
+        "Cl_TT_dimensionless": {
+            str(ell): scalar(unlensed[ell, 0]) for ell in (30, 100, 300, 700) if ell <= lmax
+        },
     }
 
 
@@ -116,8 +143,8 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
         "tau_reio": p["tau"],
         "output": "tCl,pCl,mPk",
         "l_max_scalars": int(lmax),
-        "P_k_max_1/Mpc": max(k_values) * 1.2,
-        "z_pk": ",".join(str(z) for z in sorted(set(map(float, z_values)))),
+        "P_k_max_1/Mpc": float(max(k_values) * 1.2),
+        "z_pk": ",".join(str(float(z)) for z in sorted(set(map(float, z_values)))),
         "non linear": "none",
     }
     if model_name == "cpl":
@@ -137,10 +164,15 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
         raw_cl = cosmo.raw_cl(int(lmax))
         result = {
             "version": importlib.metadata.version("classy"),
-            "H_km_s_Mpc": {str(z): scalar(cosmo.Hubble(z) * C_KM_S) for z in z_values},
-            "D_A_Mpc": {str(z): scalar(cosmo.angular_distance(z)) for z in z_values if z > 0.0},
-            "Pk_Mpc3": {f"z={z},k={k}": scalar(cosmo.pk(k, z)) for z in z_values for k in k_values},
-            "Cl_TT_dimensionless": {str(ell): scalar(raw_cl["tt"][ell]) for ell in (30, 100, 300, 700) if ell <= lmax},
+            "H_km_s_Mpc": {str(float(z)): scalar(cosmo.Hubble(float(z)) * C_KM_S) for z in z_values},
+            "D_A_Mpc": {str(float(z)): scalar(cosmo.angular_distance(float(z))) for z in z_values if z > 0.0},
+            "Pk_Mpc3": {
+                f"z={float(z)},k={float(k)}": scalar(cosmo.pk(float(k), float(z)))
+                for z in z_values for k in k_values
+            },
+            "Cl_TT_dimensionless": {
+                str(ell): scalar(raw_cl["tt"][ell]) for ell in (30, 100, 300, 700) if ell <= lmax
+            },
         }
     finally:
         try:
@@ -163,6 +195,8 @@ def compare_model(model_name: str, z_values: Sequence[float], k_values: Sequence
     all_pass = True
     for family, tolerance in tolerances.items():
         rows = []
+        if set(camb_result[family]) != set(class_result[family]):
+            raise ValueError(f"engine key mismatch for {model_name}/{family}")
         for key in sorted(camb_result[family], key=str):
             a = scalar(camb_result[family][key])
             b = scalar(class_result[family][key])
@@ -234,7 +268,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         payload = build(args.output, lmax=args.lmax)
     except Exception as exc:
-        print(f"ERROR: {exc}")
+        traceback.print_exc()
+        print(f"ERROR: {type(exc).__name__}: {exc}")
         return 2
     print(json.dumps({"state": payload["state"], "claim_allowed": False}, sort_keys=True))
     return 0 if payload["state"] == "VERIFIED_BASELINE_ENGINE_CROSSCHECK" else 3
