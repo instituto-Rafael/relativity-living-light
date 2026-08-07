@@ -9,6 +9,7 @@ pipeline scripts can load them without making GitHub Actions parse them as jobs.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 from typing import Iterable
@@ -40,6 +41,14 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
+# Artifact custody is the invariant. The historical audit hard-coded @v4 even
+# after the repository migrated to supported newer majors. Accept explicit
+# supported majors or a full immutable SHA; never accept a floating branch/tag
+# such as @main.
+UPLOAD_ARTIFACT_RE = re.compile(
+    r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
+)
+CHECKOUT_RE = re.compile(r"actions/checkout@(?:v\d+|[0-9a-fA-F]{40})(?:\s|$)")
 
 
 def workflow_text(path: Path) -> str:
@@ -77,10 +86,13 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if "actions/checkout@v4" in text and "persist-credentials: false" not in text:
+        if CHECKOUT_RE.search(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
-        if "actions/upload-artifact@v4" not in text:
-            errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact@v4")
+        if not UPLOAD_ARTIFACT_RE.search(text):
+            errors.append(
+                f"{rel}: real workflow must upload artifacts with a supported explicit "
+                "actions/upload-artifact major (v4-v7) or full immutable SHA"
+            )
         if "rll_real_data_write_checksums" not in text and (
             "CHECKSUMS.sha256" not in text or "sha256sum" not in text
         ):
