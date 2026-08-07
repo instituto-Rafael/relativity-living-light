@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.github.io/schemas/rll_token_vazio_reconciliation_v1.schema.json",
+  "title": "RLL TOKEN_VAZIO Reconciliation V1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "generated_at",
+    "repository",
+    "claim_allowed",
+    "publication_ready",
+    "summary",
+    "terminal_tokens",
+    "reduced_tokens",
+    "canonical_open_tokens",
+    "open_by_priority",
+    "results"
+  ],
+  "properties": {
+    "schema": {"const": "rll.token_vazio_reconciliation.v1"},
+    "generated_at": {"type": "string", "minLength": 1},
+    "repository": {"type": ["string", "null"]},
+    "claim_allowed": {"const": false},
+    "publication_ready": {"const": false},
+    "summary": {
+      "type": "object",
+      "required": ["input_tokens", "terminal_resolved", "reduced_generic", "open", "counts_by_state", "uncertainty_elimination_ratio", "narrowing_or_resolution_ratio"],
+      "properties": {
+        "input_tokens": {"type": "integer", "minimum": 1},
+        "terminal_resolved": {"type": "integer", "minimum": 0},
+        "reduced_generic": {"type": "integer", "minimum": 0},
+        "open": {"type": "integer", "minimum": 0},
+        "counts_by_state": {"type": "object"},
+        "uncertainty_elimination_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "narrowing_or_resolution_ratio": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "terminal_tokens": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^TOKEN_VAZIO_"}
+    },
+    "reduced_tokens": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^TOKEN_VAZIO_"}
+    },
+    "canonical_open_tokens": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^TOKEN_VAZIO_"}
+    },
+    "open_by_priority": {
+      "type": "object",
+      "required": ["P0", "P1", "P2"],
+      "properties": {
+        "P0": {"type": "array", "items": {"type": "string"}},
+        "P1": {"type": "array", "items": {"type": "string"}},
+        "P2": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["token", "priority", "state", "classification", "successors"],
+        "properties": {
+          "token": {"type": "string", "pattern": "^TOKEN_VAZIO_"},
+          "priority": {"enum": ["P0", "P1", "P2"]},
+          "state": {"enum": ["RESOLVED", "RESOLVED_NEGATIVE", "REDUCED", "OPEN_INTERNAL", "OPEN_EXTERNAL", "OPEN_HUMAN", "OPEN_GOVERNANCE", "OPEN_MIXED", "OPEN_EVIDENCE_MISSING"]},
+          "successors": {"type": "array", "items": {"type": "string", "pattern": "^TOKEN_VAZIO_"}}
+        }
+      }
+    }
+  }
+}
