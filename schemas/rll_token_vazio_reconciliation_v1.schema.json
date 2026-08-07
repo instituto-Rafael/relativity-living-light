@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://instituto-rafael.github.io/schemas/rll_token_vazio_reconciliation_v1.schema.json",
   "title": "RLL TOKEN_VAZIO Reconciliation V1",
-  "description": "Fail-closed contract for reconciling RLL epistemic voids into evidence-backed resolved, negative, narrowed, or explicitly open states without promoting scientific claims.",
+  "description": "Fail-closed structural contract for reconciling RLL epistemic voids into evidence-backed resolved, negative, narrowed, or explicitly open states without promoting scientific claims.",
   "type": "object",
   "additionalProperties": true,
   "required": [
