@@ -1,0 +1,68 @@
+name: RLL Modern Validation Gate
+
+on:
+  pull_request:
+    paths:
+      - "data/governance/RLL_MODERN_VALIDATION_GAPS_20260807_V1.json"
+      - "scripts/rll_modern_validation_gate.py"
+      - "tests/test_rll_modern_validation_gate.py"
+      - "docs/science/RLL_MODERN_VALIDATION_GAPS_20260807_V1.md"
+      - "artifacts/science/**"
+      - ".github/workflows/rll-modern-validation-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  modern-validation-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Contract tests
+        run: python -m pytest -q tests/test_rll_modern_validation_gate.py
+
+      - name: Evaluate materialized evidence fail-closed
+        shell: bash
+        run: |
+          mkdir -p artifacts/science
+          set +e
+          python scripts/rll_modern_validation_gate.py \
+            --output artifacts/science/modern_validation_gate_receipt.json
+          rc=$?
+          set -e
+
+          # The current branch is expected to stay blocked until real external
+          # receipts are materialized. rc=0 becomes valid only when every gate
+          # has a VERIFIED, provenance-bearing receipt.
+          test "$rc" -eq 0 -o "$rc" -eq 3
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("artifacts/science/modern_validation_gate_receipt.json")
+          value = json.loads(path.read_text(encoding="utf-8"))
+          assert value["claim_allowed"] is False
+          assert value["publication_ready"] is False
+          assert value["automatic_promotion_forbidden"] is True
+          if value["all_gates_verified"]:
+              assert value["scientific_gate"] == "READY_FOR_INDEPENDENT_HUMAN_REVIEW"
+          else:
+              assert value["token_vazio"]
+              assert value["scientific_gate"] in {"BLOCKED_P0_TOKEN_VAZIO", "P0_READY_P1_BLOCKED"}
+          PY
+
+      - name: Upload validation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-modern-validation-gate-receipt
+          path: artifacts/science/modern_validation_gate_receipt.json
