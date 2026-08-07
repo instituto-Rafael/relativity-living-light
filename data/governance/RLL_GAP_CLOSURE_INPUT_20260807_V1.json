@@ -1,6 +1,6 @@
 {
   "schema": "rll.gap_closure_input.v1",
-  "generated_at": "2026-08-07T23:22:29Z",
+  "generated_at": "2026-08-07T23:40:00Z",
   "repository": "instituto-Rafael/relativity-living-light",
   "claim_allowed": false,
   "purpose": "Canonicalize currently relevant RLL gaps so stale TOKEN_VAZIO labels can be resolved, narrowed, or retained without inventing evidence.",
@@ -15,6 +15,7 @@
     {"token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE", "priority": "P0", "domain": "bayesian_inference"},
     {"token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION", "priority": "P0", "domain": "replication"},
     {"token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION", "priority": "P0", "domain": "bao"},
+    {"token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION", "priority": "P0", "domain": "bao"},
     {"token": "TOKEN_VAZIO_PHYSICAL_EXECUTION", "priority": "P0", "domain": "termux"},
     {"token": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD", "priority": "P1", "domain": "cmb"},
     {"token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "priority": "P1", "domain": "lss"},
@@ -34,6 +35,7 @@
     "physical execution requires physical-device authority",
     "external likelihood gates require materialized upstream data and provenance",
     "overlapping supernova compilations are not multiplied as statistically independent likelihoods",
+    "block-diagonal or local DESI setups are never relabeled as official joint/cross-block likelihoods",
     "claim_allowed remains false until a separate scientific promotion gate passes"
   ]
 }
