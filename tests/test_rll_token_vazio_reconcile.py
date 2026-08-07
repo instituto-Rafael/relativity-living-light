@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from tools.rll_token_vazio_reconcile import (
+    apply_rule_overrides,
     evaluate_rule,
     load_json,
     reconcile,
@@ -15,20 +16,31 @@ from tools.rll_token_vazio_reconcile import (
 ROOT = Path(__file__).resolve().parents[1]
 INPUT = ROOT / "data/governance/RLL_GAP_CLOSURE_INPUT_20260807_V1.json"
 RULES = ROOT / "data/governance/RLL_TOKEN_VAZIO_CLOSURE_RULES_20260807_V1.json"
+OVERRIDES = ROOT / "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260807_V1.json"
+
+
+def effective_rules():
+    return apply_rule_overrides(load_json(RULES), load_json(OVERRIDES))
+
+
+def current_receipt():
+    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:18:00Z")
 
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
-    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
+    receipt = current_receipt()
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 19
+    assert receipt["summary"]["input_tokens"] == 20
     assert receipt["summary"]["terminal_resolved"] == 4
-    assert receipt["summary"]["reduced_generic"] == 1
+    assert receipt["summary"]["reduced_generic"] == 2
     assert receipt["summary"]["open"] == 14
 
     assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" in receipt["reduced_tokens"]
+    assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" in receipt["reduced_tokens"]
     assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" not in receipt["canonical_open_tokens"]
+    assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" not in receipt["canonical_open_tokens"]
 
     for token in (
         "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
@@ -40,7 +52,8 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         assert token not in receipt["canonical_open_tokens"]
 
     assert "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE" in receipt["canonical_open_tokens"]
-    assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" in receipt["open_by_priority"]["P0"]
+    assert "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK" in receipt["open_by_priority"]["P0"]
+    assert "TOKEN_VAZIO_INDEPENDENT_REPLICATION" in receipt["open_by_priority"]["P0"]
     assert not any(r["state"] == "OPEN_EVIDENCE_MISSING" for r in receipt["results"])
 
 
@@ -112,8 +125,22 @@ def test_duplicate_input_token_is_rejected():
         validate_input(payload)
 
 
+def test_duplicate_override_token_is_rejected():
+    base = {"schema": "rll.token_vazio_closure_rules.v1", "claim_allowed": False, "rules": []}
+    override = {
+        "schema": "rll.token_vazio_closure_overrides.v1",
+        "claim_allowed": False,
+        "overrides": [
+            {"token": "TOKEN_VAZIO_X", "priority": "P0", "target_state": "OPEN_INTERNAL"},
+            {"token": "TOKEN_VAZIO_X", "priority": "P0", "target_state": "OPEN_INTERNAL"},
+        ],
+    }
+    with pytest.raises(ValueError, match="duplicate override token"):
+        apply_rule_overrides(base, override)
+
+
 def test_negative_resolution_is_not_positive_claim():
-    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
+    receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     ident = rows["TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY"]
     boundary = rows["TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY"]
@@ -130,10 +157,27 @@ def test_negative_resolution_is_not_positive_claim():
 
 
 def test_common_nuisance_ablation_is_positive_operational_resolution_only():
-    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
+    receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     ablation = rows["TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION"]
     assert ablation["state"] == "RESOLVED"
     assert ablation["evidence_verified"] is True
     assert "RLL remained effectively LCDM-like" in ablation["resolved_fact"]
+    assert receipt["claim_allowed"] is False
+
+
+def test_legacy_real_bayes_reduces_but_does_not_close_modern_gate():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    bayes = rows["TOKEN_VAZIO_REAL_BAYES_INFERENCE"]
+    modern = rows["TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK"]
+
+    assert bayes["state"] == "REDUCED"
+    assert bayes["evidence_verified"] is True
+    assert "dynesty" in bayes["resolved_fact"]
+    assert bayes["successors"] == [
+        "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+        "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    ]
+    assert modern["state"] == "OPEN_INTERNAL"
     assert receipt["claim_allowed"] is False
