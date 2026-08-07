@@ -33,9 +33,9 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
     assert receipt["summary"]["input_tokens"] == 20
-    assert receipt["summary"]["terminal_resolved"] == 4
+    assert receipt["summary"]["terminal_resolved"] == 5
     assert receipt["summary"]["reduced_generic"] == 2
-    assert receipt["summary"]["open"] == 14
+    assert receipt["summary"]["open"] == 13
 
     assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" in receipt["reduced_tokens"]
     assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" in receipt["reduced_tokens"]
@@ -47,6 +47,7 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
         "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+        "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
     ):
         assert token in receipt["terminal_tokens"]
         assert token not in receipt["canonical_open_tokens"]
@@ -180,4 +181,16 @@ def test_legacy_real_bayes_reduces_but_does_not_close_modern_gate():
         "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
     ]
     assert modern["state"] == "OPEN_INTERNAL"
+    assert receipt["claim_allowed"] is False
+
+
+def test_release_refresh_requires_non_destructive_identity_receipt():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    release = rows["TOKEN_VAZIO_PENDING_RELEASE_REFRESH"]
+
+    assert release["state"] == "RESOLVED"
+    assert release["evidence_verified"] is True
+    assert "force=false" in release["resolved_fact"]
+    assert release["successors"] == []
     assert receipt["claim_allowed"] is False
