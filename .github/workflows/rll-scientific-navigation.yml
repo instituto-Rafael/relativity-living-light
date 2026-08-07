@@ -1,0 +1,201 @@
+name: RLL Scientific Navigation Bundle
+
+on:
+  workflow_dispatch:
+    inputs:
+      strict_repository_sources:
+        description: "Fail when a registered required repository source is absent. Scientific TOKEN_VAZIO records remain preserved."
+        required: true
+        default: true
+        type: boolean
+      retention_days:
+        description: "Artifact retention days."
+        required: true
+        default: "30"
+        type: choice
+        options:
+          - "7"
+          - "14"
+          - "30"
+          - "90"
+  pull_request:
+    paths:
+      - "data/navigation/**"
+      - "schemas/rll_evidence_capsule.v1.schema.json"
+      - "schemas/rll_token_vazio.v1.schema.json"
+      - "tools/build_scientific_navigation_bundle.py"
+      - "tests/test_scientific_navigation_bundle.py"
+      - "docs/scientific_navigation/**"
+      - ".github/workflows/rll-scientific-navigation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data/navigation/**"
+      - "schemas/rll_evidence_capsule.v1.schema.json"
+      - "schemas/rll_token_vazio.v1.schema.json"
+      - "tools/build_scientific_navigation_bundle.py"
+      - "tests/test_scientific_navigation_bundle.py"
+      - "docs/scientific_navigation/**"
+      - ".github/workflows/rll-scientific-navigation.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-scientific-navigation-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUN_DIR: artifacts/rll-scientific-navigation
+  CLAIM_BOUNDARY: >-
+    Navigation, provenance and uncertainty classification only;
+    no physical validation, theorem proof, superiority claim or peer-review endorsement.
+
+jobs:
+  build-navigation-bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "pytest>=8,<9" "jsonschema>=4.21,<5"
+
+      - name: Validate source syntax and run deterministic tests
+        run: |
+          set -euo pipefail
+          python -m json.tool data/navigation/scientific_mechanisms.v1.json >/dev/null
+          python -m json.tool schemas/rll_evidence_capsule.v1.schema.json >/dev/null
+          python -m json.tool schemas/rll_token_vazio.v1.schema.json >/dev/null
+          python -m py_compile tools/build_scientific_navigation_bundle.py
+          python -m pytest -q tests/test_scientific_navigation_bundle.py
+
+      - name: Build read-only navigation bundle
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          STRICT_REPOSITORY_SOURCES: ${{ inputs.strict_repository_sources }}
+        run: |
+          set -euo pipefail
+          STRICT=""
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$STRICT_REPOSITORY_SOURCES" = "true" ]; then
+            STRICT="--strict"
+          elif [ "$EVENT_NAME" != "workflow_dispatch" ]; then
+            STRICT="--strict"
+          fi
+          python tools/build_scientific_navigation_bundle.py \
+            --root . \
+            --registry data/navigation/scientific_mechanisms.v1.json \
+            --output "$RUN_DIR" \
+            $STRICT | tee "$RUN_DIR.build.log"
+          mv "$RUN_DIR.build.log" "$RUN_DIR/BUILD.log"
+
+      - name: Validate generated capsules and TOKEN_VAZIO ledger
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          from jsonschema import Draft202012Validator
+
+          root = Path("artifacts/rll-scientific-navigation")
+          capsule_schema = json.loads(
+              Path("schemas/rll_evidence_capsule.v1.schema.json").read_text(encoding="utf-8")
+          )
+          token_schema = json.loads(
+              Path("schemas/rll_token_vazio.v1.schema.json").read_text(encoding="utf-8")
+          )
+          Draft202012Validator.check_schema(capsule_schema)
+          Draft202012Validator.check_schema(token_schema)
+          capsule_validator = Draft202012Validator(capsule_schema)
+          token_validator = Draft202012Validator(token_schema)
+
+          capsules = sorted(root.glob("capsules/*/CAPSULE.json"))
+          if not capsules:
+              raise SystemExit("no evidence capsules generated")
+          for path in capsules:
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              capsule_validator.validate(payload)
+              if payload.get("claim_allowed") is not False:
+                  raise SystemExit(f"claim boundary violated in {path}")
+
+          token_count = 0
+          for line_number, line in enumerate(
+              (root / "TOKEN_VAZIO_LEDGER.jsonl").read_text(encoding="utf-8").splitlines(),
+              start=1,
+          ):
+              if not line.strip():
+                  continue
+              payload = json.loads(line)
+              token_validator.validate(payload)
+              if payload.get("claim_weight") != 0:
+                  raise SystemExit(f"non-zero TOKEN_VAZIO claim weight at line {line_number}")
+              token_count += 1
+
+          manifest = json.loads((root / "NAVIGATION_MANIFEST.json").read_text(encoding="utf-8"))
+          if manifest.get("claim_allowed") is not False:
+              raise SystemExit("global claim boundary violated")
+          if manifest.get("mechanism_count") != len(capsules):
+              raise SystemExit("manifest/capsule count mismatch")
+          if manifest.get("open_token_vazio_count") > token_count:
+              raise SystemExit("manifest TOKEN_VAZIO count exceeds ledger records")
+          print(f"validated capsules={len(capsules)} token_records={token_count}")
+          PY
+
+      - name: Verify bundle checksums
+        run: |
+          set -euo pipefail
+          (cd "$RUN_DIR" && sha256sum -c CHECKSUMS.sha256)
+
+      - name: Emit workflow boundary receipt
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          path = Path("artifacts/rll-scientific-navigation/WORKFLOW_RECEIPT.json")
+          path.write_text(
+              json.dumps(
+                  {
+                      "schema": "rll.scientific_navigation_workflow_receipt.v1",
+                      "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                      "commit_sha": os.environ.get("GITHUB_SHA", "TOKEN_VAZIO_COMMIT_SHA"),
+                      "run_id": os.environ.get("GITHUB_RUN_ID", "TOKEN_VAZIO_RUN_ID"),
+                      "claim_boundary": os.environ["CLAIM_BOUNDARY"],
+                      "automatic_commit": False,
+                      "automatic_merge": False,
+                      "claim_allowed": False,
+                  },
+                  indent=2,
+                  ensure_ascii=False,
+                  sort_keys=True,
+              ) + "\n",
+              encoding="utf-8",
+          )
+          PY
+          (cd "$RUN_DIR" && sha256sum WORKFLOW_RECEIPT.json) >> "$RUN_DIR/CHECKSUMS.sha256"
+
+      - name: Upload scientific navigation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-scientific-navigation-${{ github.run_id }}
+          path: artifacts/rll-scientific-navigation/
+          retention-days: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.retention_days || '30') }}

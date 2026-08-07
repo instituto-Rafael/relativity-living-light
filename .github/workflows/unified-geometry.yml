@@ -27,7 +27,7 @@ jobs:
         run: |
           python scripts/unified_geometry_system.py --a 1.0 --r 1.0 --R 2.0
       - name: Upload textual artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: unified-geometry-text-artifacts
           path: |

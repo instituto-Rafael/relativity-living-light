@@ -60,7 +60,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.11'
     - name: Validate registry JSON and academic governance invariants
@@ -112,7 +112,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: academic-parameter-governance-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/academic-parameter-governance/${{ github.job }}/

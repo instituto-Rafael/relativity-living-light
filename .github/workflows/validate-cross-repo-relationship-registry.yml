@@ -97,7 +97,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -209,7 +209,7 @@ jobs:
             tests/test_session_unified_interaction.py
 
       - name: Upload traceability artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: session-knowledge-os-audit-v2
           path: artifacts/session-knowledge-os/

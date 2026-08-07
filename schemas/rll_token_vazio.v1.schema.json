@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rafaelmeloreisnovo/relativity-living-light/schemas/rll_token_vazio.v1.schema.json",
+  "title": "RLL TOKEN_VAZIO V1",
+  "description": "Structural contract for an explicit unresolved uncertainty. Absence of evidence has zero claim weight and must carry a verifiable closure route.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "token_vazio_id",
+    "type",
+    "mechanism_id",
+    "source_paths",
+    "state",
+    "claim_weight",
+    "blocking_claims",
+    "required_evidence",
+    "F_next"
+  ],
+  "properties": {
+    "schema": {"const": "rll.token_vazio.v1"},
+    "token_vazio_id": {"type": "string", "pattern": "^TV-RLL-[A-Z0-9-]+$"},
+    "type": {
+      "enum": [
+        "MISSING_DEFINITION",
+        "MISSING_SOURCE",
+        "MISSING_DATA",
+        "MISSING_CODE",
+        "MISSING_TEST",
+        "MISSING_COVARIANCE",
+        "MISSING_ENVIRONMENT",
+        "MISSING_REPLICATION",
+        "MISSING_REVIEW",
+        "NON_IDENTIFIABLE",
+        "CONTRADICTORY_EVIDENCE",
+        "OUT_OF_SCOPE",
+        "UNKNOWN_UNKNOWN"
+      ]
+    },
+    "mechanism_id": {"type": "string", "minLength": 1},
+    "source_paths": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "state": {"enum": ["OPEN", "PARTIALLY_RESOLVED", "RESOLVED", "PRESERVED"]},
+    "claim_weight": {"const": 0},
+    "severity": {"enum": ["low", "medium", "high", "critical"]},
+    "blocking_claims": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "affected_artifacts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "required_evidence": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "resolution_evidence": {"type": "array", "items": {"type": "string"}},
+    "F_next": {"type": "string", "minLength": 1}
+  }
+}

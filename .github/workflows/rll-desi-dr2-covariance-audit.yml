@@ -1,0 +1,101 @@
+name: RLL DESI DR2 Covariance Block Audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/audit_desi_dr2_covariance_blocks.py"
+      - "tests/test_desi_dr2_covariance_blocks.py"
+      - "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md"
+      - "data/navigation/scientific_mechanisms.v1.json"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
+      - ".github/workflows/rll-desi-dr2-covariance-audit.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/audit_desi_dr2_covariance_blocks.py"
+      - "tests/test_desi_dr2_covariance_blocks.py"
+      - "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md"
+      - "data/navigation/scientific_mechanisms.v1.json"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
+      - ".github/workflows/rll-desi-dr2-covariance-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-desi-dr2-covariance-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit-covariance-blocks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      RUN_DIR: artifacts/desi-dr2-covariance-blocks
+      CLAIM_BOUNDARY: >-
+        Repository-declared real-data covariance blocks and deterministic synthetic
+        diagnostics only; no synthetic/mock/fixture diagnostic is a physical fit,
+        no full joint covariance is claimed, and no model superiority claim is allowed.
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install focused test dependency
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "pytest>=8,<9"
+
+      - name: Run deterministic covariance tests
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_desi_dr2_covariance_blocks.py
+
+      - name: Build repository-declared covariance artifact
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          python tools/audit_desi_dr2_covariance_blocks.py \
+            --primary data/real/cosmology/desi_dr2_bao_primary_points.csv \
+            --summary data/real/cosmology/desi_dr2_bao_covariance_summary.csv \
+            --output "$RUN_DIR" | tee "$RUN_DIR/BUILD.log"
+          (cd "$RUN_DIR" && find . -maxdepth 1 -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > "$RUN_DIR/CHECKSUMS.sha256"
+
+      - name: Verify checksums and claim boundary
+        run: |
+          set -euo pipefail
+          (cd "$RUN_DIR" && sha256sum -c CHECKSUMS.sha256)
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("artifacts/desi-dr2-covariance-blocks")
+          audit = json.loads((root / "COVARIANCE_AUDIT.json").read_text(encoding="utf-8"))
+          assert audit["claim_allowed"] is False
+          assert audit["scientific_fit_executed"] is False
+          assert audit["diagnostic_residual_is_synthetic"] is True
+          assert audit["block_diagonal_matrix_materialized"] is True
+          assert audit["full_cross_block_covariance_materialized"] is False
+          assert audit["paired_2x2_blocks"] > 0
+          assert all(block["positive_definite"] for block in audit["blocks"])
+          print("DESI DR2 covariance block boundary OK")
+          PY
+
+      - name: Upload covariance audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-desi-dr2-covariance-${{ github.run_id }}
+          path: artifacts/desi-dr2-covariance-blocks/
+          retention-days: 90

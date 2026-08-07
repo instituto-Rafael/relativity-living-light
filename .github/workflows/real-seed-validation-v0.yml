@@ -35,7 +35,7 @@ jobs:
 
         '
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: 3.x
     - name: Compile validation scripts
@@ -65,7 +65,7 @@ jobs:
 
         '
     - name: Upload real seed validation artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: real-seed-validation-v0
         path: 'data/results/compact_objects/remnant_boundary_validation.json

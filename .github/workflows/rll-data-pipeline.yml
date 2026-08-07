@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Prepare artifact directory
@@ -65,7 +65,7 @@ jobs:
           echo "${GITHUB_SHA}" > artifacts/rll-pipeline/COMMIT_SHA.txt
           printf '%s\n' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
           (cd artifacts/rll-pipeline && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > artifacts/rll-pipeline/CHECKSUMS.sha256
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline/
@@ -82,7 +82,7 @@ jobs:
       - name: Checkout for explicit opt-in commit
         uses: actions/checkout@v7
       - name: Download pipeline artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline

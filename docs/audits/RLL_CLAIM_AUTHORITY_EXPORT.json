@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-17T00:00:00-03:00",
+  "producer": "rafaelmeloreisnovo/relativity-living-light",
+  "canonical_domain": "rll_scientific_validation",
+  "claim_allowed": false,
+  "export_state": "DRAFT_AUDITABLE",
+  "state_vocabulary": [
+    "VERIFIED",
+    "VERIFIED_LIMITED",
+    "DECLARED_BY_AUTHOR",
+    "HYPOTHESIS",
+    "TOKEN_VAZIO",
+    "CONTRADICTION",
+    "CLAIM_BLOCKED"
+  ],
+  "source_policy": {
+    "canonical_paths": [
+      "README.md",
+      "docs/RLL_TRACEABILITY_MAP.md",
+      "docs/architecture/ARCHITECTURE_CLAIM_GATED.md",
+      "docs/audits/CROSS_REPO_RELATIONSHIP_REGISTRY.md",
+      "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.json"
+    ],
+    "consumer_may_elevate_state": false,
+    "negative_results_must_be_preserved": true,
+    "synthetic_data_may_support_real_data_claims": false
+  },
+  "claims": [
+    {
+      "claim_id": "C-RLL-DOC-001",
+      "statement": "O repositório contém uma formulação documentada do RLL e uma arquitetura de rastreabilidade de claims.",
+      "state": "VERIFIED_LIMITED",
+      "scope": "existência documental e governança no repositório; não verdade física",
+      "source_path": "README.md",
+      "source_ref": "main",
+      "source_blob_sha": "23c349ba1512f52149855283025836d0535ae998",
+      "not_claimed": [
+        "RLL confirmado pela observação",
+        "RLL superior universalmente a LambdaCDM",
+        "aceitação científica externa"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "claim_id": "C-RLL-BALANCE-20260709",
+      "statement": "Na execução registrada 20260709-132833-utc, o relatório de balança classificou RLL_PERDE e registrou CPL como vencedor pela métrica BIC.",
+      "state": "VERIFIED_LIMITED",
+      "scope": "somente o JSON de entrada, modelos, métrica e execução registrados nesse artefato",
+      "source_path": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.json",
+      "source_ref": "main",
+      "source_blob_sha": "b184d188517196e0d2637fbe474c4f647907a2bd",
+      "observed_result": {
+        "decision_state": "RLL_PERDE",
+        "winner": "CPL",
+        "metric": "bic",
+        "rll_bic": 117.7535,
+        "cpl_bic": 91.1839
+      },
+      "not_claimed": [
+        "derrota universal do RLL",
+        "invalidade definitiva do modelo",
+        "comparabilidade com qualquer execução posterior"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "claim_id": "C-RLL-BLANKET-SUPERIORITY",
+      "statement": "A alegação ampla de que o RLL é estatisticamente favorecido sobre todos os baselines não é sustentada pelo artefato de balança registrado.",
+      "state": "CONTRADICTION",
+      "scope": "contradição da alegação ampla pela execução registrada; outras execuções exigem seus próprios artefatos",
+      "source_path": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.json",
+      "source_ref": "main",
+      "source_blob_sha": "b184d188517196e0d2637fbe474c4f647907a2bd",
+      "not_claimed": [
+        "todas as execuções futuras terão o mesmo resultado",
+        "CPL é a teoria física verdadeira",
+        "o resultado dispensa revisão de dados, priors, seeds e tolerâncias"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "claim_id": "C-RLL-PHYSICAL-TRUTH",
+      "statement": "Confirmação física independente do RLL.",
+      "state": "TOKEN_VAZIO",
+      "scope": "validação científica externa, replicação independente e evidência observacional suficiente",
+      "source_path": "README.md",
+      "source_ref": "main",
+      "source_blob_sha": "23c349ba1512f52149855283025836d0535ae998",
+      "not_claimed": [
+        "nova física confirmada",
+        "modelo cosmológico estabelecido",
+        "substituição do LambdaCDM"
+      ],
+      "claim_allowed": false
+    }
+  ],
+  "consumer_contract": {
+    "required_fields": [
+      "claim_id",
+      "producer",
+      "source_path",
+      "source_ref",
+      "source_blob_sha",
+      "state",
+      "scope",
+      "not_claimed",
+      "claim_allowed"
+    ],
+    "stale_when": "producer source blob or state changes after consumer pin",
+    "on_stale": "STALE_CONSUMER",
+    "on_missing": "TOKEN_VAZIO"
+  }
+}

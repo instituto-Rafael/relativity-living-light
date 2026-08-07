@@ -70,7 +70,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -298,7 +298,7 @@ jobs:
 
       - name: Upload complete real-data artifact without committing
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: real-data-complete-${{ github.run_id }}
           path: artifacts/real-data-complete/

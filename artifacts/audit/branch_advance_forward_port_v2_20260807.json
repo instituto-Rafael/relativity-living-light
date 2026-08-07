@@ -1,0 +1,31 @@
+{
+  "schema": "rll.branch_advance_forward_port.receipt.v2",
+  "date": "2026-08-07",
+  "baseline_main_sha": "89991f5465cc332b34dbac6121df06f5eda83f1d",
+  "integration_branch": "audit/branch-advance-forward-port-v2-20260807",
+  "audited_branch_entries": 47,
+  "forward_ported_capabilities": [
+    "UTM185_EXPLICIT_VOID_MASK_ATTENTION",
+    "DERIVED_WORKFLOW_INVENTORY_SYNC",
+    "GITHUB_PLATFORM_ASSURANCE_FRESH_STATE",
+    "BRANCH_MATURITY_TOPOLOGY_V2",
+    "NAVIGABLE_BRANCH_ADVANCE_REGISTRY"
+  ],
+  "anti_regression": {
+    "blind_branch_merge": false,
+    "force_update": false,
+    "stale_55_workflow_contract_reused": false,
+    "historical_external_setting_promoted_to_current_truth": false,
+    "main_direct_write_by_new_workflows": false
+  },
+  "token_vazio": [
+    "TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS",
+    "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+    "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
+    "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION",
+    "TOKEN_VAZIO_UTM185_REAL_MODEL_TRAINING"
+  ],
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "f_next": "Execute this PR CI; use failures as bounded residuals, then refresh rll/release in a dedicated maturity edge."
+}

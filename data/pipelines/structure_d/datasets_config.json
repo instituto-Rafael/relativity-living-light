@@ -41,8 +41,25 @@
         "real_cmb_shift",
         "real_fsigma8",
         "real_desi_dr2_bao"
+      ]
+    },
+    "structure_d_fundamentals": {
+      "run_name": "structure_d_fundamentals",
+      "active_datasets": [
+        "real_hz",
+        "real_bao",
+        "real_desi_dr2_bao",
+        "real_cmb_shift",
+        "real_fsigma8"
       ],
-      "real_data_profile": true
+      "covariance_policy": "prefer_full",
+      "metadata": {
+        "description": "Perfil canônico fundamental — todos os dados reais verificados e integrados no pipeline. Referência: data/manifests/dados_reais_fundamentais_v1.json",
+        "canonical_manifest": "data/manifests/dados_reais_fundamentais_v1.json",
+        "methodology_doc": "docs/canonicos/METODOLOGIA_COERENTE_RLL.md",
+        "epistemic_state": "VERIFIED",
+        "claim_allowed": false
+      }
     }
   },
   "datasets": {

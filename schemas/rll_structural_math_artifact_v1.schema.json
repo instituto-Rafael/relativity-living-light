@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rafaelmeloreisnovo/relativity-living-light/schemas/rll_structural_math_artifact_v1.schema.json",
+  "title": "RLL structural mathematics artifact",
+  "description": "Structural contract for deterministic RLL mathematics artifacts; schema success does not authorize scientific claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_utc",
+    "commit_sha",
+    "claim_boundary",
+    "domain",
+    "parameters",
+    "invariants",
+    "existing_engine_cross_check",
+    "verdict"
+  ],
+  "properties": {
+    "schema": {"const": "rll.structural_math_artifact.v1"},
+    "generated_utc": {"type": "string"},
+    "commit_sha": {"type": "string", "minLength": 1},
+    "claim_boundary": {"type": "string", "minLength": 20},
+    "domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["z_min", "z_max", "points"],
+      "properties": {
+        "z_min": {"type": "number", "minimum": 0},
+        "z_max": {"type": "number", "exclusiveMinimum": 0},
+        "points": {"type": "integer", "minimum": 3}
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["H0", "Om", "Or", "Os0", "zt", "wt", "OB0", "OP0", "rd_mpc"],
+      "properties": {
+        "H0": {"type": "number", "exclusiveMinimum": 0},
+        "Om": {"type": "number", "minimum": 0},
+        "Or": {"type": "number", "minimum": 0},
+        "Os0": {"type": "number"},
+        "zt": {"type": "number"},
+        "wt": {"type": "number", "exclusiveMinimum": 0},
+        "OB0": {"type": "number"},
+        "OP0": {"type": "number"},
+        "rd_mpc": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "required": [
+        "normalization_residual",
+        "null_limit_max_abs_residual",
+        "minimum_e2",
+        "transition_bounds_max_violation",
+        "transition_max_derivative",
+        "f_prime_max_relative_residual",
+        "f_second_max_relative_residual",
+        "e2_prime_max_relative_residual",
+        "e2_second_max_relative_residual",
+        "passed"
+      ],
+      "properties": {
+        "normalization_residual": {"type": "number", "minimum": 0},
+        "null_limit_max_abs_residual": {"type": "number", "minimum": 0},
+        "minimum_e2": {"type": "number", "exclusiveMinimum": 0},
+        "transition_bounds_max_violation": {"type": "number", "minimum": 0},
+        "transition_max_derivative": {"type": "number"},
+        "f_prime_max_relative_residual": {"type": "number", "minimum": 0},
+        "f_second_max_relative_residual": {"type": "number", "minimum": 0},
+        "e2_prime_max_relative_residual": {"type": "number", "minimum": 0},
+        "e2_second_max_relative_residual": {"type": "number", "minimum": 0},
+        "passed": {"type": "boolean"}
+      }
+    },
+    "existing_engine_cross_check": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["PASS", "LIMITED", "TOKEN_VAZIO", "SKIP", "FAIL"]}
+      }
+    },
+    "verdict": {"enum": ["PASS", "FAIL"]}
+  }
+}

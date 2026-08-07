@@ -38,7 +38,7 @@ jobs:
 
         '
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
     - name: Install DESI DR2 BAO test dependencies
@@ -56,7 +56,7 @@ jobs:
     - name: Show DESI DR2 BAO result
       run: cat results/desi_dr2_bao_covariance_chi2.json
     - name: Upload DESI DR2 BAO result
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: desi-dr2-bao-covariance-chi2
         path: results/desi_dr2_bao_covariance_chi2.json
