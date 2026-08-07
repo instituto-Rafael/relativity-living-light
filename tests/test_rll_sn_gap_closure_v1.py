@@ -10,7 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PRODUCT = ROOT / "products/rll-evidence-runner"
 sys.path.insert(0, str(PRODUCT / "src"))
 
-from rll_evidence.dovekie_cpl_wa_profile import classify_profile, fit_fixed_wa
+from rll_evidence.dovekie_cpl_wa_profile import (
+    asymptotic_profiled_likelihood,
+    classify_profile,
+    fit_asymptotic_limit,
+    fit_fixed_wa,
+)
 from rll_evidence.dovekie_fit_three_model import LCDM as D_LCDM
 from rll_evidence.dovekie_fit_three_model import distance_modulus as dov_distance_modulus
 from rll_evidence.dovekie_fit_three_model import prepare_data as dov_prepare_data
@@ -134,3 +139,15 @@ def test_fixed_wa_fit_is_finite_on_synthetic_dovekie_data():
     assert 0.10 <= row["Omega_m"] <= 0.60
     assert -2.0 <= row["w0"] <= -0.3
     assert row["wa"] == -1.0
+
+
+def test_asymptotic_cpl_limit_is_finite_and_w0_free():
+    data = _dovekie_synthetic()
+    chi2, offset = asymptotic_profiled_likelihood(data, 0.3)
+    assert np.isfinite(chi2)
+    assert np.isfinite(offset)
+    fit = fit_asymptotic_limit(data, maxiter=60, ftol=1e-12)
+    assert fit["all_starts_converged"] is True
+    assert np.isfinite(fit["chi2"])
+    assert 0.10 <= fit["Omega_m"] <= 0.60
+    assert fit["w0_identifiable_in_limit"] is False
