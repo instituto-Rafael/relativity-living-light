@@ -12,7 +12,6 @@ allowed to inherit those backends.
 import argparse
 import importlib.metadata
 import json
-import math
 import os
 import tempfile
 from pathlib import Path
@@ -40,6 +39,13 @@ def atomic_json(path: Path, payload: dict[str, Any]) -> None:
         tmp.unlink(missing_ok=True)
 
 
+def scalar(value: Any) -> float:
+    array = np.asarray(value, dtype=float)
+    if array.size != 1:
+        raise ValueError(f"expected scalar-like engine result, got shape={array.shape}")
+    return float(array.reshape(-1)[0])
+
+
 def relative_error(a: float, b: float, floor: float = 1.0e-30) -> float:
     return abs(float(a) - float(b)) / max(abs(float(a)), abs(float(b)), floor)
 
@@ -56,8 +62,6 @@ def parameter_vector(model: str) -> dict[str, float]:
         "wa": 0.0,
     }
     if model == "cpl":
-        # Non-crossing test point keeps the baseline comparison focused on
-        # numerical engine consistency rather than w=-1 crossing policy.
         common.update({"w0": -0.90, "wa": 0.20})
     elif model != "lcdm":
         raise ValueError(f"unsupported model {model}")
@@ -92,10 +96,10 @@ def run_camb(model_name: str, z_values: Sequence[float], k_values: Sequence[floa
     )
     return {
         "version": importlib.metadata.version("camb"),
-        "H_km_s_Mpc": {str(z): float(results.hubble_parameter(z)) for z in z_values},
-        "D_A_Mpc": {str(z): float(results.angular_diameter_distance(z)) for z in z_values if z > 0.0},
-        "Pk_Mpc3": {f"z={z},k={k}": float(pk_interp.P(z, k)) for z in z_values for k in k_values},
-        "Cl_TT_dimensionless": {str(ell): float(unlensed[ell, 0]) for ell in (30, 100, 300, 700) if ell <= lmax},
+        "H_km_s_Mpc": {str(z): scalar(results.hubble_parameter(z)) for z in z_values},
+        "D_A_Mpc": {str(z): scalar(results.angular_diameter_distance(z)) for z in z_values if z > 0.0},
+        "Pk_Mpc3": {f"z={z},k={k}": scalar(pk_interp.P(z, k)) for z in z_values for k in k_values},
+        "Cl_TT_dimensionless": {str(ell): scalar(unlensed[ell, 0]) for ell in (30, 100, 300, 700) if ell <= lmax},
     }
 
 
@@ -133,10 +137,10 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
         raw_cl = cosmo.raw_cl(int(lmax))
         result = {
             "version": importlib.metadata.version("classy"),
-            "H_km_s_Mpc": {str(z): float(cosmo.Hubble(z) * C_KM_S) for z in z_values},
-            "D_A_Mpc": {str(z): float(cosmo.angular_distance(z)) for z in z_values if z > 0.0},
-            "Pk_Mpc3": {f"z={z},k={k}": float(cosmo.pk(k, z)) for z in z_values for k in k_values},
-            "Cl_TT_dimensionless": {str(ell): float(raw_cl["tt"][ell]) for ell in (30, 100, 300, 700) if ell <= lmax},
+            "H_km_s_Mpc": {str(z): scalar(cosmo.Hubble(z) * C_KM_S) for z in z_values},
+            "D_A_Mpc": {str(z): scalar(cosmo.angular_distance(z)) for z in z_values if z > 0.0},
+            "Pk_Mpc3": {f"z={z},k={k}": scalar(cosmo.pk(k, z)) for z in z_values for k in k_values},
+            "Cl_TT_dimensionless": {str(ell): scalar(raw_cl["tt"][ell]) for ell in (30, 100, 300, 700) if ell <= lmax},
         }
     finally:
         try:
@@ -160,8 +164,8 @@ def compare_model(model_name: str, z_values: Sequence[float], k_values: Sequence
     for family, tolerance in tolerances.items():
         rows = []
         for key in sorted(camb_result[family], key=str):
-            a = float(camb_result[family][key])
-            b = float(class_result[family][key])
+            a = scalar(camb_result[family][key])
+            b = scalar(class_result[family][key])
             error = relative_error(a, b)
             passed = error <= tolerance
             all_pass = all_pass and passed
@@ -205,7 +209,7 @@ def build(output: Path, *, lmax: int = 700) -> dict[str, Any]:
             "ell_values": [30, 100, 300, 700],
             "lmax": lmax,
             "massive_neutrinos": "disabled in both engines for this baseline crosscheck",
-            "nonlinear": false if False else False
+            "nonlinear": False,
         },
         "scientific_boundary": "This receipt validates matched standard LCDM/CPL backend plumbing only. It does not define or validate RLL perturbations and cannot authorize RLL CMB/growth claims.",
         "resolves_token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK" if passed else None,
