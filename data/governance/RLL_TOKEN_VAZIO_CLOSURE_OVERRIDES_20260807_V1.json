@@ -1,0 +1,35 @@
+{
+  "schema": "rll.token_vazio_closure_overrides.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Preserve the earlier closure rule ledger while narrowing the generic Bayes token after auditing the existing FASE20 dynesty result.",
+  "overrides": [
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "priority": "P0",
+      "target_state": "REDUCED",
+      "classification": "LEGACY_REAL_NESTED_SAMPLING_EXISTS_MODERN_GATE_REMAINS",
+      "evidence_path": "artifacts/science/bayes/RLL_FASE20_NESTED_EVIDENCE_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_LEGACY_REAL_NESTED_SAMPLING"},
+        {"path": "sampler.name", "op": "eq", "value": "dynesty.NestedSampler"},
+        {"path": "sampler.nlive", "op": "eq", "value": 150},
+        {"path": "models.LCDM.logZ", "op": "eq", "value": -398.15007573481137},
+        {"path": "models.RLL.logZ", "op": "eq", "value": -404.34028649723075},
+        {"path": "models.CPL.included_in_same_nested_run", "op": "eq", "value": false},
+        {"path": "replication.independent_replication", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "Real dynesty nested sampling was already executed historically and produced stored logZ values, so the generic statement 'Bayes was never run' is stale. The modern three-model prior-locked evidence contract and independent replication remain open.",
+      "successors": [
+        "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+        "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+      ]
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+      "priority": "P0",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "MODERN_THREE_MODEL_NESTED_EVIDENCE_CONTRACT",
+      "next_action": "Execute LCDM, CPL and RLL with one versioned modern likelihood/prior registry; store sampler/version, prior-payload hash, logZ/logZ_error, stopping criterion and numerical sensitivity before any promotion."
+    }
+  ]
+}
