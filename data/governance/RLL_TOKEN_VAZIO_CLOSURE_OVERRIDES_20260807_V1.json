@@ -1,7 +1,7 @@
 {
   "schema": "rll.token_vazio_closure_overrides.v1",
   "claim_allowed": false,
-  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing, modern Dovekie three-model nested evidence, finite CPL wa lower-bound closure, DESI boundary narrowing, and the non-destructive rll/release refresh.",
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for SN profile closure, Bayes, DESI, CLASS/CAMB boundary decomposition, H0/r_d policy decomposition, and release refresh.",
   "overrides": [
     {
       "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
@@ -35,11 +35,8 @@
         {"path": "models.CPL.included_in_same_nested_run", "op": "eq", "value": false},
         {"path": "replication.independent_replication", "op": "eq", "value": false}
       ],
-      "resolved_fact": "Real dynesty nested sampling was already executed historically and produced stored logZ values, so the generic statement 'Bayes was never run' is stale. The modern three-model prior-locked evidence contract and independent replication remain distinct successors.",
-      "successors": [
-        "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
-        "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
-      ]
+      "resolved_fact": "Real dynesty nested sampling was already executed historically and produced stored logZ values, so the generic statement 'Bayes was never run' is stale. Modern and independent authorities remain distinct successors.",
+      "successors": ["TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"]
     },
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
@@ -59,11 +56,8 @@
         {"path": "interpretation.independent_replication_completed", "op": "eq", "value": false},
         {"path": "interpretation.joint_multi_probe_evidence_completed", "op": "eq", "value": false}
       ],
-      "resolved_fact": "A proper prior-locked normalized Dovekie SN-only nested-sampling comparison was executed for LCDM, CPL and RLL with two numerically consistent RNG seeds. The stored Bayes factors are lnB(CPL/LCDM)=-0.1107±0.2990 and lnB(RLL/LCDM)=-0.2264±0.2716, so this SN-only run does not strongly discriminate the three models under the declared priors.",
-      "successors": [
-        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
-        "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
-      ]
+      "resolved_fact": "A proper prior-locked normalized Dovekie SN-only nested-sampling comparison was executed for LCDM, CPL and RLL with two numerically consistent RNG seeds. lnB(CPL/LCDM)=-0.1107±0.2990 and lnB(RLL/LCDM)=-0.2264±0.2716, so this SN-only run does not strongly discriminate the three models under the declared priors.",
+      "successors": ["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"]
     },
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
@@ -84,7 +78,7 @@
         {"path": "boundary.official_joint_crossblock_covariance_reproduced", "op": "eq", "value": false},
         {"path": "boundary.block_diagonal_or_local_setup_must_not_be_called_official_joint", "op": "eq", "value": true}
       ],
-      "resolved_fact": "The repository already contains a real 13-observable DESI DR2 BAO comparison setup, so the generic notion that all DESI DR2 work is absent is stale. The existing local result favors LCDM over RLL; what remains unclosed is reproduction of official joint/cross-block likelihood products and LCDM/CPL reference tolerances.",
+      "resolved_fact": "The repository already contains a real 13-observable DESI DR2 BAO comparison setup. The local result favors LCDM over RLL; official joint/cross-block likelihood reproduction remains a narrower external successor.",
       "successors": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]
     },
     {
@@ -93,6 +87,70 @@
       "target_state": "OPEN_EXTERNAL",
       "classification": "OFFICIAL_JOINT_CROSSBLOCK_PRODUCTS_REQUIRED",
       "next_action": "Materialize immutable official DESI DR2 joint/cross-block products or likelihood release and reproduce official LCDM/CPL reference outputs within declared tolerance before interpreting RLL deltas."
+    },
+    {
+      "token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "BACKGROUND_AND_INTERNAL_GROWTH_EXIST_FULL_PERTURBATION_CLOSURE_MISSING",
+      "evidence_path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PARTIAL_BACKGROUND_AND_INTERNAL_GROWTH_ONLY"},
+        {"path": "existing_implementation.real_fsigma8_points", "op": "eq", "value": 16},
+        {"path": "benchmark_boundary.lcdm_class_camb_crosscheck_possible_without_new_rll_physics", "op": "eq", "value": true},
+        {"path": "benchmark_boundary.rll_full_class_camb_implementation_possible_without_closure_relations", "op": "eq", "value": false},
+        {"path": "benchmark_boundary.current_internal_growth_kernel_is_equivalent_to_full_boltzmann_solver", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The RLL homogeneous background and an internal GR matter-growth approximation already exist, so the generic CLASS/CAMB token is too broad. Full Boltzmann validation remains blocked by explicit RLL perturbation closure relations and implementation, while LCDM/CPL baseline crosschecks can proceed independently.",
+      "successors": [
+        "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+        "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+        "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
+      ]
+    },
+    {
+      "token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+      "priority": "P1",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "STANDARD_MODEL_ENGINE_CROSSCHECK_EXECUTABLE",
+      "next_action": "Run pinned CLASS and CAMB on identical LCDM/CPL parameter vectors and compare H(z), distances, transfer outputs and CMB spectra under declared numerical tolerances."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "PHYSICAL_THEORY_CLOSURE_REQUIRED",
+      "next_action": "Define a covariant or explicitly phenomenological RLL perturbation closure for delta_s, theta_s, rest-frame sound speed, entropy/non-adiabatic terms, anisotropic stress, interaction Q_mu, gauge initial conditions and transition regularization. Preserve TOKEN_VAZIO for every undefined degree of freedom."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "IMPLEMENTATION_BLOCKED_BY_THEORY_CLOSURE",
+      "next_action": "After closure relations are versioned and tested, implement the same equations independently in CLASS and CAMB and compare CMB Cl, transfer functions, growth and matter power."
+    },
+    {
+      "token": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "SIX_CELL_H0_RD_POLICY_MATRIX_EXISTS_EXECUTION_PROVENANCE_MISSING",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_POLICY_MATRIX_NOT_EXECUTED_FORMAL_LIKELIHOOD"},
+        {"path": "existing_contract.declared_runs", "op": "eq", "value": 6},
+        {"path": "boundary.formal_policy_grid_exists", "op": "eq", "value": true},
+        {"path": "boundary.six_policy_execution_receipts_exist", "op": "eq", "value": false},
+        {"path": "boundary.h0_relief_or_tension_claim_allowed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A six-cell H0/r_d fairness matrix already exists for broad/free, Planck-prior and local-distance-ladder H0, each with fixed-rd and derived-rd routes across LCDM/wCDM/CPL/RLL. The generic methodological void is therefore stale; execution, source provenance and derived-rd reproducibility remain open.",
+      "successors": ["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "EXECUTION_AND_EXTERNAL_PRIOR_PROVENANCE_REQUIRED",
+      "next_action": "Pin/hash the H0 prior sources, execute all six H0/r_d cells for LCDM/wCDM/CPL/RLL with equal applicable likelihood components, and version early-universe assumptions for every derived-rd run."
     },
     {
       "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
