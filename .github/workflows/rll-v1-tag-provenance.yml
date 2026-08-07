@@ -1,0 +1,132 @@
+name: RLL V1 Tag Media Provenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Immutable tag from the canonical organization repository."
+        required: true
+        default: "v1.0.0"
+        type: string
+  pull_request:
+    paths:
+      - "tools/audit_v1_tag_media_provenance.py"
+      - "tests/test_v1_tag_media_provenance.py"
+      - "docs/RLL_V1_IMAGE_CSV_PROVENANCE.md"
+      - "data/navigation/scientific_mechanisms.v1.json"
+      - ".github/workflows/rll-v1-tag-provenance.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/audit_v1_tag_media_provenance.py"
+      - "tests/test_v1_tag_media_provenance.py"
+      - "docs/RLL_V1_IMAGE_CSV_PROVENANCE.md"
+      - "data/navigation/scientific_mechanisms.v1.json"
+      - ".github/workflows/rll-v1-tag-provenance.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-v1-tag-provenance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit-v1-tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RUN_DIR: artifacts/rll-v1-tag-provenance
+      SOURCE_REPOSITORY: instituto-Rafael/relativity-living-light
+      CLAIM_BOUNDARY: >-
+        Git tag inventory and blob hashes establish repository provenance only;
+        they do not establish DOI equivalence, scientific validity, or physical truth.
+    steps:
+      - name: Checkout consumer repository without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install focused test dependency
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "pytest>=8,<9"
+
+      - name: Run deterministic provenance tests
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_v1_tag_media_provenance.py
+
+      - name: Fetch exact tag from canonical source repository
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          TAG="v1.0.0"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            TAG="$REQUESTED_TAG"
+          fi
+          if [ -z "$TAG" ] || [[ ! "$TAG" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+            echo "invalid source tag" >&2
+            exit 2
+          fi
+          SAFE_TAG="${TAG//\//-}"
+          LOCAL_TAG="rll-source-${SAFE_TAG}"
+          git fetch --no-tags --depth=1 \
+            "https://github.com/${SOURCE_REPOSITORY}.git" \
+            "refs/tags/${TAG}:refs/tags/${LOCAL_TAG}"
+          printf '%s\n' "$TAG" > /tmp/rll_source_tag
+          printf '%s\n' "$LOCAL_TAG" > /tmp/rll_local_tag
+
+      - name: Build immutable tag artifact
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          TAG="$(cat /tmp/rll_source_tag)"
+          LOCAL_TAG="$(cat /tmp/rll_local_tag)"
+          python tools/audit_v1_tag_media_provenance.py \
+            --root . \
+            --ref "$LOCAL_TAG" \
+            --source-repository "$SOURCE_REPOSITORY" \
+            --source-tag "$TAG" \
+            --output "$RUN_DIR" | tee "$RUN_DIR/BUILD.log"
+          (cd "$RUN_DIR" && find . -maxdepth 1 -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > "$RUN_DIR/CHECKSUMS.sha256"
+
+      - name: Verify artifact checksums and boundaries
+        run: |
+          set -euo pipefail
+          (cd "$RUN_DIR" && sha256sum -c CHECKSUMS.sha256)
+          python - <<'PY'
+          import csv
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("artifacts/rll-v1-tag-provenance")
+          receipt = json.loads((root / "TAG_RECEIPT.json").read_text(encoding="utf-8"))
+          rows = list(csv.DictReader((root / "V1_IMAGE_CSV_INVENTORY.csv").open(encoding="utf-8")))
+          assert receipt["claim_allowed"] is False
+          assert receipt["doi_snapshot_state"] == "TOKEN_VAZIO"
+          assert receipt["source_repository"] == os.environ["SOURCE_REPOSITORY"]
+          assert receipt["source_tag"] == Path("/tmp/rll_source_tag").read_text().strip()
+          assert receipt["counts"]["selected_total"] == len(rows)
+          assert all(row["category"] in {"image", "csv"} for row in rows)
+          print("canonical tag provenance artifact boundary OK")
+          PY
+
+      - name: Upload immutable provenance artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-v1-tag-provenance-${{ github.run_id }}
+          path: artifacts/rll-v1-tag-provenance/
+          retention-days: 90

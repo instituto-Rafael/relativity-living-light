@@ -1,0 +1,52 @@
+name: RLL Claim Authority Export
+
+on:
+  pull_request:
+    paths:
+      - "docs/audits/RLL_CLAIM_AUTHORITY_EXPORT.json"
+      - "scripts/validate_rll_claim_export.py"
+      - ".github/workflows/rll-claim-authority-export.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-claim-export-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Compile validator
+        run: python3 -m py_compile scripts/validate_rll_claim_export.py
+
+      - name: Validate export
+        run: python3 scripts/validate_rll_claim_export.py | tee rll-claim-export-validation.json
+
+      - name: Check JSON syntax
+        run: python3 -m json.tool docs/audits/RLL_CLAIM_AUTHORITY_EXPORT.json >/dev/null
+
+      - name: Generate checksums
+        run: |
+          sha256sum \
+            docs/audits/RLL_CLAIM_AUTHORITY_EXPORT.json \
+            scripts/validate_rll_claim_export.py \
+            > RLL_CLAIM_EXPORT_CHECKSUMS.sha256
+
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-claim-authority-export
+          path: |
+            rll-claim-export-validation.json
+            RLL_CLAIM_EXPORT_CHECKSUMS.sha256
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.invalid/schemas/rll_evidence_result_v1.schema.json",
+  "title": "RLL Evidence Result V1",
+  "description": "Structural contract fail-closed para distinguir evidência extraída, cálculo derivado, hipótese e checkpoint TOKEN_VAZIO sem autorizar claims científicos.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "metric",
+    "value",
+    "evidence_class",
+    "state",
+    "source_receipts",
+    "claim_allowed"
+  ],
+  "properties": {
+    "metric": {"type": "string", "minLength": 1},
+    "value": {},
+    "evidence_class": {
+      "type": "string",
+      "enum": ["E", "C", "H", "P"]
+    },
+    "state": {"type": "string", "minLength": 1},
+    "method": {"type": "string", "minLength": 1},
+    "source_receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact", "sha256"],
+        "properties": {
+          "artifact": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "internal_checksums_valid": {"type": "boolean"}
+        }
+      }
+    },
+    "claim_allowed": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"evidence_class": {"enum": ["E", "C"]}}},
+      "then": {
+        "properties": {
+          "value": {"not": {"type": "null"}},
+          "source_receipts": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"evidence_class": {"const": "P"}}},
+      "then": {
+        "properties": {
+          "value": {"type": "null"},
+          "state": {"pattern": "^TOKEN_VAZIO"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"evidence_class": {"enum": ["C", "H"]}}},
+      "then": {"required": ["method"]}
+    }
+  ]
+}

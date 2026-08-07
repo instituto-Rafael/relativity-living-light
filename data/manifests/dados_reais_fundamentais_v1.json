@@ -1,0 +1,187 @@
+{
+  "schema": "rll.dados_reais_fundamentais.v1",
+  "manifest_id": "DADOS-REAIS-FUNDAMENTAIS-20260803",
+  "generated_at": "2026-08-03T00:00:00Z",
+  "claim_allowed": false,
+  "description": "Catálogo canônico de todos os dados observacionais reais e fundamentais do projeto RLL. Serve como âncora de proveniência para a topologia estrutural do conhecimento (rll_route_forest_blueprint.json) e para a metodologia coerente (METODOLOGIA_COERENTE_RLL.md).",
+  "epistemic_note": "Materialização e verificação SHA256 não constituem validação científica. Nenhum dataset neste manifesto, isoladamente ou em conjunto, autoriza claim de superioridade do modelo RLL sobre ΛCDM, wCDM ou CPL.",
+  "datasets": {
+    "hz_cosmic_chronometers": {
+      "label": "H(z) Cronômetros Cósmicos",
+      "local_path": "data/real/Hz_data_real.csv",
+      "sha256": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6",
+      "n_obs": 33,
+      "z_range": [0.07, 2.34],
+      "observable": "H(z) [km/s/Mpc]",
+      "columns": ["z", "H_obs", "sigma_H", "source"],
+      "epistemic_state": "VERIFIED",
+      "failsafe_snapshot": "data/failsafe/hz_cosmic_chronometers_FROZEN.json",
+      "primary_source": {
+        "title": "Unveiling the Universe with emerging cosmological probes",
+        "authors": "Moresco et al. 2022",
+        "arxiv": "2205.05701"
+      },
+      "pipeline_uses": ["structure_d_real_validation", "structure_d_real_growth_validation", "structure_d_fundamentals"],
+      "datasets_config_id": "real_hz",
+      "methodology_step": "likelihood",
+      "knowledge_node": "N-RD-HZ"
+    },
+    "bao_legacy": {
+      "label": "BAO DV/rs BOSS+DESI2024 (legado)",
+      "local_path": "data/real/BAO_data_real.csv",
+      "sha256": "1decb159dd8c276e356e1f2ca45028da0079302a0b7b279797d8e40aab0c9527",
+      "n_obs": 10,
+      "z_range": [0.106, 2.33],
+      "observable": "DV/rs",
+      "columns": ["z_eff", "DV_over_rs", "sigma", "survey"],
+      "epistemic_state": "VERIFIED",
+      "failsafe_snapshot": "data/failsafe/desi_dr2_bao_FROZEN.json",
+      "primary_source": {
+        "title": "BOSS DR12 + DESI 2024 BAO compilation",
+        "surveys": ["6dFGS", "SDSS_MGS", "BOSS_DR12", "DESI2024_BGS", "DESI2024_LRG", "DESI2024_ELG", "DESI2024_QSO", "BOSS_Lya"]
+      },
+      "pipeline_uses": ["structure_d_real_validation", "structure_d_partial_real", "structure_d_fundamentals"],
+      "datasets_config_id": "real_bao",
+      "methodology_step": "likelihood",
+      "knowledge_node": "N-RD-BAO"
+    },
+    "desi_dr2_bao": {
+      "label": "DESI DR2 BAO — Tabela IV primária com covariância 13×13",
+      "local_path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+      "covariance_path": "data/real/desi_dr2_bao_covariance.csv",
+      "n_obs": 13,
+      "z_range": [0.295, 2.330],
+      "observable": "DM/rd, DH/rd, DV/rd",
+      "tracers": ["BGS", "LRG1", "LRG2", "LRG3+ELG1", "ELG2", "QSO", "Lya"],
+      "epistemic_state": "VERIFIED",
+      "failsafe_snapshot": "data/failsafe/desi_dr2_bao_FROZEN.json",
+      "primary_source": {
+        "title": "DESI DR2 BAO Results II",
+        "arxiv": "2503.14738",
+        "table": "Table IV"
+      },
+      "cobaya_format": {
+        "mean_tsv": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_mean.tsv",
+        "cov_tsv": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_cov.tsv"
+      },
+      "pipeline_uses": ["structure_d_real_growth_validation", "structure_d_fundamentals"],
+      "datasets_config_id": "real_desi_dr2_bao",
+      "methodology_step": "likelihood",
+      "knowledge_node": "N-RD-DESI-DR2"
+    },
+    "fsigma8_rsd": {
+      "label": "Taxa de crescimento fσ8 — compilação RSD",
+      "local_path": "data/real/cosmology/fsigma8_growth_real.csv",
+      "sha256": "3781a2fa7bce9ea600060f9feb6e74ba49f4baa4ce2e7344803295c912318211",
+      "n_obs": 16,
+      "z_range": [0.02, 0.78],
+      "observable": "fσ8(z)",
+      "columns": ["z", "fs8", "sigma", "survey", "method", "reference", "source_url"],
+      "surveys": ["2M++", "6dFGS", "2dFGRS", "WiggleZ", "SDSS", "BOSS", "VVDS"],
+      "epistemic_state": "VERIFIED",
+      "failsafe_snapshot": "data/failsafe/fsigma8_growth_FROZEN.json",
+      "primary_source": {
+        "title": "Compilação RSD multi-survey fσ8 para z=0.02–0.78",
+        "note": "Hudson & Turnbull 2013 + Beutler 2012 + compilação da literatura"
+      },
+      "pipeline_uses": ["structure_d_real_validation", "structure_d_real_growth_validation", "structure_d_fundamentals"],
+      "datasets_config_id": "real_fsigma8",
+      "methodology_step": "likelihood",
+      "knowledge_node": "N-RD-FSigma8"
+    },
+    "cmb_shift_planck2018": {
+      "label": "Priors comprimidos CMB — Parâmetros de shift Planck 2018",
+      "local_path": "data/real/CMB_shift_real.json",
+      "sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979",
+      "n_obs": 2,
+      "observable": "R (shift parameter), l_A (acoustic scale)",
+      "values": {"R_obs": 1.7502, "la_obs": 301.471, "ob_h2_obs": 0.02236},
+      "covariance_available": true,
+      "covariance_size": "3x3",
+      "epistemic_state": "VERIFIED",
+      "failsafe_snapshot": "data/failsafe/planck_2018_cmb_FROZEN.json",
+      "primary_source": {
+        "title": "Distance Priors from Planck Final Release",
+        "authors": "Chen, Huang & Wang 2019",
+        "arxiv": "1808.05724",
+        "doi": "10.1088/1475-7516/2019/02/028"
+      },
+      "claim_boundary": "Prior comprimido (R, l_A, Ωb h²) — não substitui a likelihood Planck completa (plik). Não autoriza claim contra ΛCDM apenas por materialização.",
+      "pipeline_uses": ["structure_d_real_validation", "structure_d_real_growth_validation", "structure_d_fundamentals"],
+      "datasets_config_id": "real_cmb_shift",
+      "methodology_step": "likelihood",
+      "knowledge_node": "N-RD-CMB"
+    },
+    "pantheon_plus_shoes": {
+      "label": "Pantheon+SH0ES — Supernovas Tipo Ia",
+      "local_path": "data/real/cosmology/pantheon_plus/",
+      "files_present": [
+        "data/real/cosmology/pantheon_plus/all_redshifts_PVs.csv",
+        "data/real/cosmology/pantheon_plus/Pantheon+SH0ES.dat"
+      ],
+      "n_obs": "~1700 (arquivo Pantheon+SH0ES.dat)",
+      "z_range": [0.001, 2.26],
+      "observable": "μ (módulo de distância)",
+      "epistemic_state": "PARTIAL",
+      "failsafe_snapshot": "data/failsafe/pantheon_plus_shoes_FROZEN.json",
+      "primary_source": {
+        "title": "Pantheon+ Analysis: Cosmological Constraints",
+        "arxiv": "2202.04077",
+        "note": "SH0ES Cepheid host distances: Riess et al. 2022 (R22)"
+      },
+      "token_vazio_items": [
+        "stat+sys covariance matrix completa (excluída do git por tamanho >100MB)",
+        "modelo de módulo de distância μ(z) não registrado em models.py",
+        "integração no pipeline structure_d pendente"
+      ],
+      "pipeline_uses": [],
+      "datasets_config_id": null,
+      "methodology_step": "TOKEN_VAZIO — requer modelo SNe Ia em models.py",
+      "knowledge_node": "N-RD-PANTHEON"
+    }
+  },
+  "token_vazio_summary": {
+    "pantheon_sne_pipeline": {
+      "description": "Integração de Pantheon+SH0ES no pipeline structure_d como observable μ(z)",
+      "required_files": ["data/real/cosmology/pantheon_plus/Pantheon+SH0ES_STAT+SYS.cov"],
+      "required_code": ["model_LCDM_mu_distance em models.py", "model_RLL_like_mu_distance em models.py"],
+      "required_config": "entrada real_pantheon_sne em datasets_config.json"
+    },
+    "mcmc_posterior_chains": {
+      "description": "Cadeias MCMC/Cobaya posteriores — apenas otimização pontual (differential_evolution) disponível",
+      "required_tool": "Cobaya ou MontePython com backend CLASS",
+      "required_data": "desi_gaussian_bao_ALL_GCcomb_cov.tsv já disponível para Cobaya"
+    },
+    "class_camb_growth": {
+      "description": "Cálculo de crescimento de estrutura via Boltzmann code (CLASS/CAMB) — atualmente usa proxy analítico",
+      "required_code": "src/rll/class_rll_background.c (stub incompleto)"
+    },
+    "gw_ligo_posterior": {
+      "description": "Amostras posteriores LIGO/Virgo para GW190814, GW230529",
+      "source": "GWOSC public data"
+    },
+    "act_dr6_lensing": {
+      "description": "Bandpowers de lensing ACT DR6 e Planck PR4",
+      "arxiv": "2304.05202"
+    }
+  },
+  "methodology_connection": {
+    "canonical_document": "docs/canonicos/METODOLOGIA_COERENTE_RLL.md",
+    "pipeline_config": "data/pipelines/structure_d/datasets_config.json",
+    "fundamental_profile": "structure_d_fundamentals",
+    "knowledge_forest": "data/knowledge_forest/rll_route_forest_blueprint.json",
+    "equation_registry": "rll_equation_registry.yml"
+  },
+  "current_results_summary": {
+    "best_run": "results/structure_d/joint_real_likelihood.json",
+    "n_obs_joint": 64,
+    "chi2_lcdm": 93.95,
+    "chi2_rll": 93.96,
+    "delta_aic_rll_minus_lcdm": 6.0,
+    "os0_best_fit": 0.0,
+    "interpretation": "ΛCDM preferido; setor RLL colapsa a zero no best-fit",
+    "claim_allowed": false,
+    "h0_boundary_artifact": "H0=60.0 km/s/Mpc em todos os runs — documentado em data/real/cosmology/h0_grid_expansion.yml"
+  }
+}

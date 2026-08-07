@@ -1,66 +1,145 @@
 equations:
+  - id: rll_friedmann_e2
+    equation: "E2(a) = Omega_r a^{-4} + Omega_m a^{-3} + Omega_Lambda + Omega_s0 [f(a) + (1-f(a)) a^{-3}] + Omega_B0 a^{-4} + Omega_P0 a^{-4}"
+    domain: ["cosmology", "RLL"]
+    status: "author_model"
+    source_doc: "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md"
+    implementation: "src/rll/structural_integration.py"
+    parameters_rll_authorial: ["Omega_s0", "z_t", "w_t"]
+    parameters_standard: ["H0", "Omega_m", "Omega_r", "Omega_Lambda"]
+    null_limit: "when Omega_s0=Omega_B0=Omega_P0=0, E2(a) reduces exactly to LCDM"
+    methodology_phase: "model_evaluation"
+    real_data_validators:
+      - "data/real/Hz_data_real.csv"
+      - "data/real/BAO_data_real.csv"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/cosmology/fsigma8_growth_real.csv"
+      - "data/real/CMB_shift_real.json"
+    claim_boundary: "Modelo autoral; best-fit atual mostra Omega_s0=0 em todos os runs reais — setor RLL colapsa a LCDM. Nenhum claim de superioridade autorizado."
+
+  - id: logistic_transition
+    equation: "f(z) = 1 / (1 + exp((z - z_t) / w_t))"
+    domain: ["cosmology", "RLL", "signal_processing"]
+    status: "author_model"
+    source_doc: "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md"
+    implementation: "src/rll/structural_integration.py:logistic_transition_z"
+    parameters: ["z_t (transition redshift)", "w_t (transition width)"]
+    methodology_phase: "model_evaluation"
+    real_data_validators:
+      - "data/real/Hz_data_real.csv"
+    claim_boundary: "Função de transição autoral; shape e parâmetros requerem evidência observacional; not yet validated against cosmological data with statistical significance"
+
+  - id: null_limit_lcdm
+    equation: "lim_{Omega_s0->0, Omega_B0->0, Omega_P0->0} E2_RLL(a) = E2_LCDM(a)"
+    domain: ["cosmology", "RLL", "model_reduction"]
+    status: "known_physics"
+    source_doc: "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md"
+    implementation: "src/rll/structural_integration.py"
+    methodology_phase: "model_selection"
+    real_data_validators:
+      - "data/results/model_comparison.json"
+      - "data/results/structure_d/joint_real_likelihood.json"
+    claim_boundary: "Verificado analiticamente e numericamente; confirma que RLL é extensão legítima de LCDM com limite nulo bem definido"
+
   - id: impulse_response
     equation: "y(t) = (I * h)(t) + eta(t)"
     domain: ["physics", "signal_processing", "RLL"]
     status: "core_modeling_principle"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
     claim_boundary: "modeling analogy; requires dataset-specific validation"
 
   - id: modal_response
     equation: "h(t) = sum_k A_k exp(-gamma_k t) cos(omega_k t + phi_k)"
     domain: ["waves", "seismology", "resonance"]
     status: "known_physics"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
 
   - id: tidal_triggering
     equation: "Delta CFS = Delta tau + mu_prime Delta sigma_n"
     domain: ["geophysics", "critical_systems"]
     status: "known_physics"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
     claim_boundary: "statistical trigger, not deterministic earthquake prediction"
 
   - id: lyapunov_growth
     equation: "||delta x(t)|| ~= ||delta x0|| exp(lambda t)"
     domain: ["chaos", "galactic_dynamics"]
     status: "known_dynamics"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
 
   - id: cosmic_web_graph
     equation: "G_z = (V_z, E_z, W_z)"
     domain: ["cosmology", "graph_theory", "RLL"]
     status: "modeling_representation"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
 
   - id: density_contrast
     equation: "delta(x,z) = (rho(x,z)-rho_bar(z))/rho_bar(z)"
     domain: ["cosmology"]
     status: "known_physics"
+    methodology_phase: "model_evaluation"
+    real_data_validators:
+      - "data/real/cosmology/fsigma8_growth_real.csv"
 
   - id: rafaelia_coherence
     equation: "phi = (1-H)C"
     domain: ["RafaelIA", "information_metrics"]
     status: "author_model"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
 
   - id: chi2
     equation: "chi2 = (d-m)^T C^-1 (d-m)"
     domain: ["statistics", "model_validation"]
     status: "known_statistics"
+    implementation: "data/pipelines/structure_d/likelihood.py:chi2_with_covariance"
+    methodology_phase: "likelihood"
+    real_data_validators:
+      - "data/real/Hz_data_real.csv"
+      - "data/real/BAO_data_real.csv"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/CMB_shift_real.json"
+      - "data/real/cosmology/fsigma8_growth_real.csv"
 
   - id: aic
     equation: "AIC = chi2 + 2k"
     domain: ["statistics", "model_selection"]
     status: "known_statistics"
+    implementation: "data/pipelines/structure_d/likelihood.py:aic"
+    methodology_phase: "model_selection"
+    real_data_validators:
+      - "data/results/model_comparison.json"
+      - "data/results/structure_d/joint_real_likelihood.json"
 
   - id: bic
     equation: "BIC = chi2 + k ln(n)"
     domain: ["statistics", "model_selection"]
     status: "known_statistics"
+    implementation: "data/pipelines/structure_d/likelihood.py:bic"
+    methodology_phase: "model_selection"
+    real_data_validators:
+      - "data/results/model_comparison.json"
+      - "data/results/structure_d/joint_real_likelihood.json"
 
   - id: tag14_entropy
     equation: "H_Tag14 = f(tokens, transitions, symbolic_classes, compression)"
     domain: ["RafaelIA", "information_metrics", "implementation"]
     status: "implementation_defined"
+    methodology_phase: "claim_gate"
+    real_data_validators: []
     claim_boundary: "placeholder metric; formula depends on code implementation"
 
   - id: toroidal_state_space
     equation: "s in [0,1)^7 ; T^7 = (R/Z)^7"
     domain: ["RafaelIA", "state_space", "topology"]
     status: "author_model"
+    methodology_phase: "model_evaluation"
+    real_data_validators: []
     claim_boundary: "conceptual state representation; requires task-specific validation"
 
   - id: observation_equation
@@ -68,6 +147,8 @@ equations:
     domain: ["cosmology", "observational_astronomy", "radiative_transfer", "RLL"]
     status: "author_model"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+    methodology_phase: "ingest"
+    real_data_validators: []
     claim_boundary: "formal decomposition of observed signal; F_prop uses d_L(z) from RLL eq; not yet validated against specific sources"
 
   - id: v_info_vector
@@ -75,6 +156,8 @@ equations:
     domain: ["cosmology", "information_theory", "observational_astronomy", "RLL"]
     status: "author_model"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+    methodology_phase: "ingest"
+    real_data_validators: []
     claim_boundary: "typed 13-component tuple; claim_state component maps to info_prime.schema.json enum"
 
   - id: fisher_information_total
@@ -82,6 +165,10 @@ equations:
     domain: ["statistics", "information_theory", "multi_messenger_astronomy"]
     status: "known_statistics"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+    methodology_phase: "model_selection"
+    real_data_validators:
+      - "data/real/Hz_data_real.csv"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
     claim_boundary: "holds under conditional independence between sensory layers; relaxed when mutual information I(L_k;L_k') > 0"
 
   - id: claim_state_entropy
@@ -89,6 +176,9 @@ equations:
     domain: ["information_theory", "epistemology", "RLL"]
     status: "author_model"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+    methodology_phase: "claim_gate"
+    real_data_validators:
+      - "data/results/model_comparison.json"
     claim_boundary: "TOKEN_VAZIO corresponds to H_max; CLAIM_ALLOWED to H=0; monotonic decrease as evidence accumulates"
 
 # Operational documentation consumers for metadata-only YAML.

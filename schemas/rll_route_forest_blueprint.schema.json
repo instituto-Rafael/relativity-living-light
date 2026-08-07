@@ -98,6 +98,10 @@
       "type": "string",
       "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._@+%=-]+(?:/[A-Za-z0-9._@+%=-]+)*$"
     },
+    "node_id": {
+      "type": "string",
+      "pattern": "^N-[A-Za-z0-9-]+$"
+    },
     "region": {
       "type": "object",
       "additionalProperties": false,
@@ -128,9 +132,20 @@
         "parent": {
           "anyOf": [
             {"type": "null"},
-            {"type": "string", "pattern": "^N-[A-Z0-9-]+$"}
+            {"$ref": "#/$defs/node_id"}
           ]
-        }
+        },
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "n_obs": {"type": "integer", "minimum": 0},
+        "z_range": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "number"}
+        },
+        "arxiv": {"type": "string", "minLength": 4},
+        "token_vazio": {"type": "string", "minLength": 5},
+        "partial_resolution_note": {"type": "string", "minLength": 5}
       }
     },
     "route": {
@@ -139,10 +154,14 @@
       "required": ["tree", "source", "target", "relation", "refs"],
       "properties": {
         "tree": {"type": "string", "pattern": "^T-[A-Z0-9-]+$"},
-        "source": {"type": "string", "pattern": "^N-[A-Z0-9-]+$"},
-        "target": {"type": "string", "pattern": "^N-[A-Z0-9-]+$"},
+        "source": {"$ref": "#/$defs/node_id"},
+        "target": {"$ref": "#/$defs/node_id"},
         "relation": {
-          "enum": ["governs", "evaluates", "derives", "opens_gap", "expands", "projects", "constrains", "routes", "blocked_by"]
+          "enum": [
+            "governs", "evaluates", "derives", "opens_gap", "expands",
+            "projects", "constrains", "routes", "blocked_by", "defines",
+            "anchors", "partial_anchor"
+          ]
         },
         "status": {"enum": ["verified", "partial_resolution", "TOKEN_VAZIO"]},
         "refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/path"}}
@@ -154,22 +173,24 @@
       "required": ["domain", "root", "purpose", "nodes", "ml_role", "ml_gates", "training_allowed"],
       "properties": {
         "domain": {"type": "string"},
-        "root": {"type": "string", "pattern": "^N-[A-Z0-9-]+$"},
+        "root": {"$ref": "#/$defs/node_id"},
         "purpose": {"type": "string", "minLength": 10},
         "nodes": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": {"type": "string", "pattern": "^N-[A-Z0-9-]+$"}
+          "items": {"$ref": "#/$defs/node_id"}
         },
-        "ml_role": {"enum": ["governance_only", "candidate_dataset", "feature_source", "training_candidate"]},
+        "ml_role": {"enum": ["governance_only", "candidate_dataset", "feature_source", "training_candidate", "evidence_base"]},
         "ml_gates": {
           "type": "array",
           "minItems": 12,
           "maxItems": 12,
           "items": {"type": "boolean"}
         },
-        "training_allowed": {"type": "boolean"}
+        "training_allowed": {"type": "boolean"},
+        "canonical_manifest": {"$ref": "#/$defs/path"},
+        "canonical_document": {"$ref": "#/$defs/path"}
       }
     }
   }

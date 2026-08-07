@@ -6,10 +6,14 @@ on:
     paths:
       - "products/rll-evidence-runner/**"
       - "scripts/fetch_pantheon_covariance.py"
+      - "scripts/fetch_dovekie_inputs.py"
       - "scripts/verify_pantheon_inputs.py"
       - "tests/test_fetch_pantheon_covariance.py"
+      - "tests/test_fetch_dovekie_inputs.py"
       - "tests/test_verify_pantheon_inputs_v2.py"
       - "tests/test_rll_pantheon_full_covariance_fit_v1.py"
+      - "tests/test_rll_pantheon_three_model_cpl_v1.py"
+      - "tests/test_rll_dovekie_three_model_v1.py"
       - ".github/workflows/pantheon-covariance-materialization.yml"
       - ".gitignore"
 
@@ -45,10 +49,13 @@ jobs:
         run: |
           python -m pytest -q \
             tests/test_fetch_pantheon_covariance.py \
+            tests/test_fetch_dovekie_inputs.py \
             tests/test_verify_pantheon_inputs_v2.py \
-            tests/test_rll_pantheon_full_covariance_fit_v1.py
+            tests/test_rll_pantheon_full_covariance_fit_v1.py \
+            tests/test_rll_pantheon_three_model_cpl_v1.py \
+            tests/test_rll_dovekie_three_model_v1.py
 
-      - name: Materialize pinned official STAT+SYS covariance
+      - name: Materialize pinned official Pantheon STAT+SYS covariance
         env:
           OUTPUT_DIR: ${{ runner.temp }}/pantheon-covariance
           RECEIPT: ${{ runner.temp }}/pantheon-covariance-receipt.json
@@ -73,7 +80,7 @@ jobs:
              "${{ runner.temp }}/Pantheon+SH0ES_STAT+SYS.cov.sha256"
           test -z "$(git status --porcelain --untracked-files=all -- "$CANONICAL_DIR/Pantheon+SH0ES_STAT+SYS.cov")"
 
-      - name: Execute Evidence Runner full-covariance fit
+      - name: Execute canonical Pantheon LCDM-RLL full-covariance fit
         run: |
           set -euo pipefail
           rll-evidence run \
@@ -81,48 +88,119 @@ jobs:
           rll-evidence verify \
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json
 
+      - name: Execute modern Pantheon LCDM-CPL-RLL full-covariance fit
+        run: |
+          set -euo pipefail
+          rll-evidence run \
+            products/rll-evidence-runner/experiments/pantheon_full_covariance_lcdm_cpl_rll_fit_v1.yml
+          rll-evidence verify \
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
+
+      - name: Materialize pinned official DES-Dovekie HD and precision matrix
+        run: |
+          set -euo pipefail
+          python scripts/fetch_dovekie_inputs.py \
+            --output-dir data/real/cosmology/des_dovekie \
+            --receipt artifacts/science/sn_modern/dovekie_materialization_receipt.json
+          test -z "$(git status --porcelain --untracked-files=all -- \
+            data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            'data/real/cosmology/des_dovekie/STAT+SYS.npz')"
+
+      - name: Execute DES-Dovekie LCDM-CPL-RLL full-precision fit
+        run: |
+          set -euo pipefail
+          rll-evidence run \
+            products/rll-evidence-runner/experiments/dovekie_full_precision_lcdm_cpl_rll_fit_v1.yml
+          rll-evidence verify \
+            artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
+
       - name: Validate scientific boundary and summarize metrics
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
-          result_path = Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json")
-          receipt_path = Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json")
-          result = json.loads(result_path.read_text(encoding="utf-8"))
-          receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-          assert result["claim_allowed"] is False
-          assert result["publication_effect"] == "NONE"
-          assert receipt["claim_allowed"] is False
-          assert len(result["rows"]) == 2
-          comparison = result["comparison"]["candidate_minus_baseline"]
+          canonical = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json"
+          ).read_text(encoding="utf-8"))
+          canonical_receipt = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json"
+          ).read_text(encoding="utf-8"))
+          pantheon = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/pantheon_three_model_result.json"
+          ).read_text(encoding="utf-8"))
+          pantheon_receipt = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json"
+          ).read_text(encoding="utf-8"))
+          dovekie = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json"
+          ).read_text(encoding="utf-8"))
+          dovekie_receipt = json.loads(Path(
+              "artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json"
+          ).read_text(encoding="utf-8"))
+          materialization = json.loads(Path(
+              "artifacts/science/sn_modern/dovekie_materialization_receipt.json"
+          ).read_text(encoding="utf-8"))
+
+          assert canonical["claim_allowed"] is False
+          assert canonical_receipt["claim_allowed"] is False
+          assert pantheon["claim_allowed"] is False
+          assert pantheon_receipt["claim_allowed"] is False
+          assert dovekie["claim_allowed"] is False
+          assert dovekie_receipt["claim_allowed"] is False
+          assert materialization["claim_allowed"] is False
+          assert materialization["precision_matrix"]["matrix_semantics"] == "inverse_covariance_precision"
+          assert [row["model"] for row in pantheon["rows"]] == [
+              "LCDM_pantheon_full", "CPL_pantheon_full", "RLL_pantheon_full"
+          ]
+          assert [row["model"] for row in dovekie["rows"]] == [
+              "LCDM_dovekie", "CPL_dovekie", "RLL_dovekie"
+          ]
+
+          p_cpl = pantheon["comparison"]["cpl_minus_baseline"]
+          p_rll = pantheon["comparison"]["rll_minus_baseline"]
+          d_cpl = dovekie["comparison"]["cpl_minus_baseline"]
+          d_rll = dovekie["comparison"]["rll_minus_baseline"]
           summary = [
-              "# Pantheon+ full-covariance fit",
+              "# Modern SN likelihood validation",
               "",
-              f"- status: `{result['status']}`",
-              f"- selected rows: `{result['inputs']['selected_rows']}`",
-              f"- covariance SHA-256: `{result['inputs']['covariance']['sha256']}`",
-              f"- Δχ² (RLL−ΛCDM): `{comparison['chi2']:.12g}`",
-              f"- ΔAIC: `{comparison['AIC']:.12g}`",
-              f"- ΔAICc: `{comparison['AICc']:.12g}`",
-              f"- ΔBIC: `{comparison['BIC']:.12g}`",
-              f"- interpretation: `{result['interpretation_label']}`",
+              f"- Pantheon+ status: `{pantheon['status']}`",
+              f"- Pantheon+ selected rows: `{pantheon['inputs']['selected_rows']}`",
+              f"- Pantheon+ covariance SHA-256: `{pantheon['inputs']['covariance']['sha256']}`",
+              f"- Pantheon+ Δχ² CPL−ΛCDM: `{p_cpl['chi2']:.12g}`",
+              f"- Pantheon+ ΔBIC CPL−ΛCDM: `{p_cpl['BIC']:.12g}`",
+              f"- Pantheon+ Δχ² RLL−ΛCDM: `{p_rll['chi2']:.12g}`",
+              f"- Pantheon+ ΔBIC RLL−ΛCDM: `{p_rll['BIC']:.12g}`",
+              "",
+              f"- DES-Dovekie status: `{dovekie['status']}`",
+              f"- DES-Dovekie selected rows: `{dovekie['inputs']['selected_rows']}`",
+              f"- DES-Dovekie HD SHA-256: `{dovekie['inputs']['hubble_diagram']['sha256']}`",
+              f"- DES-Dovekie precision SHA-256: `{dovekie['inputs']['precision_matrix']['sha256']}`",
+              f"- DES-Dovekie Δχ² CPL−ΛCDM: `{d_cpl['chi2']:.12g}`",
+              f"- DES-Dovekie ΔBIC CPL−ΛCDM: `{d_cpl['BIC']:.12g}`",
+              f"- DES-Dovekie Δχ² RLL−ΛCDM: `{d_rll['chi2']:.12g}`",
+              f"- DES-Dovekie ΔBIC RLL−ΛCDM: `{d_rll['BIC']:.12g}`",
+              "",
               "- claim_allowed: `false`",
+              "- clean Pantheon+↔Dovekie common-nuisance ablation: `TOKEN_VAZIO`",
+              "- real nested-sampling evidence: `TOKEN_VAZIO`",
+              "- independent replication: `TOKEN_VAZIO`",
               "",
-              "Numerical model comparison inside one likelihood block is not external validation.",
+              "These are common-likelihood fairness controls, not external model validation.",
           ]
           Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md").write_text(
               "\n".join(summary) + "\n", encoding="utf-8"
           )
-          with Path(__import__("os").environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
               handle.write("\n".join(summary) + "\n")
           PY
 
       - name: Upload compact custody and fit receipts only
         uses: actions/upload-artifact@v7
         with:
-          name: pantheon-full-fit-receipt-${{ github.run_id }}
+          name: modern-sn-fit-receipt-${{ github.run_id }}
           path: |
             ${{ runner.temp }}/pantheon-covariance-receipt.json
             ${{ runner.temp }}/pantheon-readiness.json
@@ -130,5 +208,13 @@ jobs:
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/pantheon_three_model_result.json
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
+            artifacts/science/sn_modern/dovekie_materialization_receipt.json
+            artifacts/science/sn_modern/dovekie_existing_verification.json
+            artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
+            artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
+            data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv.sha256
+            data/real/cosmology/des_dovekie/STAT+SYS.npz.sha256
           if-no-files-found: error
           retention-days: 30
