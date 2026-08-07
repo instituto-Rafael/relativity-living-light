@@ -18,28 +18,29 @@ RULES = ROOT / "data/governance/RLL_TOKEN_VAZIO_CLOSURE_RULES_20260807_V1.json"
 
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
-    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:36:00Z")
+    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 18
-    assert receipt["summary"]["terminal_resolved"] == 2
+    assert receipt["summary"]["input_tokens"] == 19
+    assert receipt["summary"]["terminal_resolved"] == 4
     assert receipt["summary"]["reduced_generic"] == 1
-    assert receipt["summary"]["open"] == 15
+    assert receipt["summary"]["open"] == 14
 
     assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" in receipt["reduced_tokens"]
     assert "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD" not in receipt["canonical_open_tokens"]
 
-    assert "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY" in receipt["terminal_tokens"]
-    assert "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY" not in receipt["canonical_open_tokens"]
+    for token in (
+        "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
+        "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
+        "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+        "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+    ):
+        assert token in receipt["terminal_tokens"]
+        assert token not in receipt["canonical_open_tokens"]
 
-    assert "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND" in receipt["terminal_tokens"]
-    assert "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND" not in receipt["canonical_open_tokens"]
-
-    assert "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION" in receipt["canonical_open_tokens"]
-    assert "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY" in receipt["canonical_open_tokens"]
+    assert "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE" in receipt["canonical_open_tokens"]
     assert "TOKEN_VAZIO_REAL_BAYES_INFERENCE" in receipt["open_by_priority"]["P0"]
-
     assert not any(r["state"] == "OPEN_EVIDENCE_MISSING" for r in receipt["results"])
 
 
@@ -112,13 +113,27 @@ def test_duplicate_input_token_is_rejected():
 
 
 def test_negative_resolution_is_not_positive_claim():
-    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:36:00Z")
+    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
     rows = {row["token"]: row for row in receipt["results"]}
     ident = rows["TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY"]
+    boundary = rows["TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY"]
     license_row = rows["TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND"]
 
     assert ident["state"] == "RESOLVED_NEGATIVE"
     assert "not identifiable" in ident["resolved_fact"]
+    assert boundary["state"] == "RESOLVED_NEGATIVE"
+    assert "boundary-sensitive" in boundary["resolved_fact"]
+    assert boundary["successors"] == ["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
     assert license_row["state"] == "RESOLVED_NEGATIVE"
     assert "redistribution is blocked" in license_row["resolved_fact"]
+    assert receipt["claim_allowed"] is False
+
+
+def test_common_nuisance_ablation_is_positive_operational_resolution_only():
+    receipt = reconcile(ROOT, load_json(INPUT), load_json(RULES), "2026-08-07T22:49:11Z")
+    rows = {row["token"]: row for row in receipt["results"]}
+    ablation = rows["TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION"]
+    assert ablation["state"] == "RESOLVED"
+    assert ablation["evidence_verified"] is True
+    assert "RLL remained effectively LCDM-like" in ablation["resolved_fact"]
     assert receipt["claim_allowed"] is False
