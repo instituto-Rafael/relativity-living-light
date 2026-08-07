@@ -4,7 +4,7 @@ from __future__ import annotations
 
 This companion likelihood removes SH0ES calibrator rows, fixes H0 only as a
 reference distance scale, and analytically profiles one additive SN magnitude
-offset.  That makes the supernova nuisance treatment comparable to the
+offset. That makes the supernova nuisance treatment comparable to the
 DES-Dovekie likelihood without pretending the two samples/calibrations are the
 same dataset.
 """
@@ -29,6 +29,8 @@ H0_REFERENCE = 70.0
 LCDM = _core.LCDM
 CPL = _three.CPL
 RLL = _core.RLL
+NUISANCE_POLICY = "one additive SN magnitude offset analytically profiled and counted in k"
+H0_POLICY = "fixed reference H0=70 km/s/Mpc; absorbed by profiled magnitude offset; no H0 inference"
 
 LOCAL_SPECS: dict[str, dict[str, Any]] = {
     LCDM: {
@@ -234,7 +236,8 @@ def build_result(
         "covariance_sha256": _core.sha256_file(covariance_path),
         "n_supernovae": data.n,
         "original_rows": original_rows,
-        "nuisance_policy": "one additive SN magnitude offset analytically profiled; H0 fixed only as a reference distance scale and not inferred",
+        "nuisance_policy": NUISANCE_POLICY,
+        "H0_policy": H0_POLICY,
         "H0_reference": H0_REFERENCE,
         "z_min": float(z_min),
         "models": fits,
