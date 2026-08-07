@@ -2,11 +2,13 @@ schema: rll.workflow_contract.v1
 updated_at: "2026-08-07"
 
 inventory:
-  active_workflows: 61
+  active_workflows: 64
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
     - ".github/workflow-orchestrator/**"
+  source_of_truth: executable_files
+  sync_tool: tools/workflow_contract_sync.py
 
 canonical_pipeline:
   path: .github/workflows/rll-pipeline-linear-completo.yml
@@ -21,6 +23,54 @@ canonical_pipeline:
   pull_request_mode: dry_run
   claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
 
+branch_maturity_v2:
+  workflow: .github/workflows/branch-maturity-v2.yml
+  tool: tools/branch_maturity_gate_v2.py
+  topology:
+    - "non-protected work branch -> rll/lab"
+    - "rll/lab -> rll/integration"
+    - "rll/integration -> rll/release"
+    - "rll/release -> main"
+  automatic_enforcement:
+    - rll/lab
+    - rll/integration
+    - rll/release
+  main_edge_activation: TOKEN_VAZIO_PENDING_RELEASE_REFRESH
+  claim_allowed: false
+  publication_effect: NONE
+
+github_platform_assurance_v2:
+  workflow: .github/workflows/github-platform-assurance-v2.yml
+  capability_matrix: .github/workflow-architecture/github-actions-capabilities.v2.yml
+  gate: tools/github_actions_capability_gate.py
+  jobs:
+    - platform-capability-contract
+    - dependency-review
+    - codeql
+  external_settings_verified: false
+  external_state: TOKEN_VAZIO_EXTERNAL_SETTINGS
+  rule: "Historical settings receipts are not promoted to current truth without fresh execution."
+  claim_allowed: false
+  publication_effect: NONE
+
+workflow_contract_reconciliation_v2:
+  workflow: .github/workflows/workflow-contract-sync-v2.yml
+  tool: tools/workflow_contract_sync.py
+  tests: tests/test_workflow_contract_sync.py
+  mode: read_only_fail_closed
+  direct_main_commit: FORBIDDEN
+  automatic_proposal: TOKEN_VAZIO_NOT_ENABLED_IN_V2
+  claim_allowed: false
+  publication_effect: NONE
+
+branch_advance_registry:
+  path: data/governance/branch_advance_registry.v2.json
+  validator: tools/validate_branch_advance_registry.py
+  tests: tests/test_branch_advance_registry.py
+  audited_refs_minimum: 40
+  unclassified_remainder_must_be_token_vazio: true
+  claim_allowed: false
+
 aliases:
   - path: .github/workflows/RLL-CI.yml
     job_id: canonical-science
@@ -32,7 +82,7 @@ aliases:
     modo: apenas_ciencia
 
 documented_checks:
-  evidence_scope: repository_local_only
+  evidence_scope: repository_local_plus_fresh_pr_execution
   branch_protection_verified: false
   checks:
     - context: deterministic-gate
@@ -74,14 +124,45 @@ documented_checks:
       certification_claim: false
       conformity_claim: false
       scientific_claim: false
+    - context: GitHub platform capability contract V2
+      workflow: .github/workflows/github-platform-assurance-v2.yml
+      job_id: platform-capability-contract
+      certification_claim: false
+      conformity_claim: false
+    - context: Dependency review fresh-state gate
+      workflow: .github/workflows/github-platform-assurance-v2.yml
+      job_id: dependency-review
+      certification_claim: false
+      conformity_claim: false
+    - context: CodeQL V2
+      workflow: .github/workflows/github-platform-assurance-v2.yml
+      job_id: codeql
+      certification_claim: false
+      conformity_claim: false
+    - context: Verify derived workflow inventory V2
+      workflow: .github/workflows/workflow-contract-sync-v2.yml
+      job_id: verify-contract
+      certification_claim: false
+      conformity_claim: false
+    - context: Branch maturity gate V2
+      workflow: .github/workflows/branch-maturity-v2.yml
+      job_id: branch-maturity-gate-v2
+      certification_claim: false
+      conformity_claim: false
 
 documentation:
   authority_order:
     - .github/workflow-contract.yml
     - .github/workflow-architecture/invariants.v1.yml
+    - .github/workflow-architecture/github-actions-capabilities.v2.yml
     - governance/rll-governance-profile.v1.json
+    - data/governance/branch_advance_registry.v2.json
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
+    - tools/github_actions_capability_gate.py
+    - tools/workflow_contract_sync.py
+    - tools/branch_maturity_gate_v2.py
+    - tools/validate_branch_advance_registry.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
