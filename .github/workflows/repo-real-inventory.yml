@@ -44,7 +44,7 @@ jobs:
 
         '
     - name: Upload generated inventory artifact without committing
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: repo-real-inventory-${{ github.run_id }}
