@@ -14,7 +14,7 @@ import sys
 
 TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integration","main":"rll/release"}
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
-CLAIM_TRUE=re.compile(r"(?im)^\s*claim_allowed\s*:\s*(?:true|yes|on|1)\s*(?:#.*)?$")
+CLAIM_TRUE=re.compile(r"(?i)[\"']?claim_allowed[\"']?\s*[:=]\s*(?:true|yes|on|1)\b")
 
 
 def norm(ref:str)->str:
