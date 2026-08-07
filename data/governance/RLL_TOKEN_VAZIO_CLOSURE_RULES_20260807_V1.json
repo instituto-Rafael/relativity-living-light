@@ -24,6 +24,45 @@
       ]
     },
     {
+      "token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+      "priority": "P0",
+      "target_state": "RESOLVED",
+      "classification": "MATERIALIZED_COMMON_NUISANCE_ABLATION",
+      "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json",
+      "assertions": [
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "common_nuisance_ablation.state", "op": "eq", "value": "VERIFIED"},
+        {"path": "common_nuisance_ablation.same_nuisance_policy", "op": "eq", "value": true},
+        {"path": "common_nuisance_ablation.pantheon_hubbleflow.n_supernovae", "op": "eq", "value": 1580},
+        {"path": "common_nuisance_ablation.des_dovekie.n_supernovae", "op": "eq", "value": 1820}
+      ],
+      "resolved_fact": "Pantheon+ Hubble-flow and DES-Dovekie were compared under the same profiled-offset/fixed-reference-H0 nuisance logic. RLL remained effectively LCDM-like in SN-only, so nuisance-policy mismatch no longer explains the RLL null direction.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+      "priority": "P0",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "BOUNDARY_SENSITIVITY_CONFIRMED_AND_NARROWED",
+      "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json",
+      "assertions": [
+        {"path": "cpl_wa_boundary_sensitivity.state", "op": "eq", "value": "RESOLVED_NEGATIVE_WITH_SUCCESSOR"},
+        {"path": "cpl_wa_boundary_sensitivity.all_starts_converged", "op": "eq", "value": true},
+        {"path": "cpl_wa_boundary_sensitivity.historical_lower_bound", "op": "eq", "value": -3.0},
+        {"path": "cpl_wa_boundary_sensitivity.best_wa", "op": "eq", "value": -6.0},
+        {"path": "cpl_wa_boundary_sensitivity.bounded_95_on_grid", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The historical wa=-3 optimum was boundary-sensitive: the expanded profile moved to wa≈-6 and remained unbounded on the lower side. The original boundary ambiguity is closed negatively; lower-profile closure remains a narrower successor gap.",
+      "successors": ["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
+    },
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+      "priority": "P0",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "PROFILE_IDENTIFIABILITY_RESIDUAL",
+      "next_action": "Extend the fixed-wa profile below -8 using the same Dovekie full-precision likelihood until a left 95% exclusion is observed or an asymptotic/non-identifiable lower direction is explicitly characterized."
+    },
+    {
       "token": "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
       "priority": "P0",
       "target_state": "RESOLVED_NEGATIVE",
@@ -36,34 +75,6 @@
       ],
       "resolved_fact": "RLL transition parameters are not identifiable from the two materialized SN-only likelihoods under the tested parameterization. This is a negative conclusion, not an unresolved uncertainty.",
       "successors": ["TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK", "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION"]
-    },
-    {
-      "token": "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
-      "priority": "P1",
-      "target_state": "RESOLVED_NEGATIVE",
-      "classification": "GOVERNANCE_NEGATIVE_RESULT",
-      "evidence_path": "artifacts/governance/DES_SN5YR_LICENSE_AUDIT_20260807_V1.json",
-      "assertions": [
-        {"path": "state", "op": "eq", "value": "VERIFIED_NEGATIVE_ROOT_LICENSE"},
-        {"path": "redistribution_allowed_by_this_audit", "op": "eq", "value": false},
-        {"path": "source_commit", "op": "eq", "value": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f"}
-      ],
-      "resolved_fact": "No explicit repository-root license grant was found at the pinned upstream commit; redistribution is blocked by policy until a separate applicable license/permission is verified.",
-      "successors": []
-    },
-    {
-      "token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
-      "priority": "P0",
-      "target_state": "OPEN_INTERNAL",
-      "classification": "EXECUTABLE_RESEARCH_GAP",
-      "next_action": "Build and execute a Pantheon+ Hubble-flow-only profiled-offset companion likelihood matching the Dovekie nuisance contract."
-    },
-    {
-      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
-      "priority": "P0",
-      "target_state": "OPEN_INTERNAL",
-      "classification": "EXECUTABLE_RESEARCH_GAP",
-      "next_action": "Profile wa and repeat fits under expanded/layered bounds; store likelihood profile and boundary-hit diagnostics."
     },
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
@@ -120,6 +131,20 @@
       "target_state": "OPEN_EXTERNAL",
       "classification": "EXTERNAL_LIKELIHOOD_REQUIRED",
       "next_action": "Materialize separate early- and late-time H0 likelihoods with explicit rd policy; do not infer H0 relief from SN-only fits."
+    },
+    {
+      "token": "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
+      "priority": "P1",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "GOVERNANCE_NEGATIVE_RESULT",
+      "evidence_path": "artifacts/governance/DES_SN5YR_LICENSE_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_NEGATIVE_ROOT_LICENSE"},
+        {"path": "redistribution_allowed_by_this_audit", "op": "eq", "value": false},
+        {"path": "source_commit", "op": "eq", "value": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f"}
+      ],
+      "resolved_fact": "No explicit repository-root license grant was found at the pinned upstream commit; redistribution is blocked by policy until a separate applicable license/permission is verified.",
+      "successors": []
     },
     {
       "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
