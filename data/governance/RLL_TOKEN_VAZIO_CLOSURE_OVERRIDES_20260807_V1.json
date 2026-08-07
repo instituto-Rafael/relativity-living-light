@@ -1,7 +1,7 @@
 {
   "schema": "rll.token_vazio_closure_overrides.v1",
   "claim_allowed": false,
-  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing and the non-destructive rll/release refresh.",
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing, modern Dovekie three-model nested evidence, and the non-destructive rll/release refresh.",
   "overrides": [
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
@@ -18,7 +18,7 @@
         {"path": "models.CPL.included_in_same_nested_run", "op": "eq", "value": false},
         {"path": "replication.independent_replication", "op": "eq", "value": false}
       ],
-      "resolved_fact": "Real dynesty nested sampling was already executed historically and produced stored logZ values, so the generic statement 'Bayes was never run' is stale. The modern three-model prior-locked evidence contract and independent replication remain open.",
+      "resolved_fact": "Real dynesty nested sampling was already executed historically and produced stored logZ values, so the generic statement 'Bayes was never run' is stale. The modern three-model prior-locked evidence contract and independent replication remain distinct successors.",
       "successors": [
         "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
         "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
@@ -27,9 +27,33 @@
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
       "priority": "P0",
-      "target_state": "OPEN_INTERNAL",
-      "classification": "MODERN_THREE_MODEL_NESTED_EVIDENCE_CONTRACT",
-      "next_action": "Execute LCDM, CPL and RLL with one versioned modern likelihood/prior registry; store sampler/version, prior-payload hash, logZ/logZ_error, stopping criterion and numerical sensitivity before any promotion."
+      "target_state": "RESOLVED",
+      "classification": "MODERN_DOVEKIE_THREE_MODEL_NESTED_EVIDENCE_MATERIALIZED",
+      "evidence_path": "artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_INTERNAL_NUMERICAL_REPLICATION"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "sampler.name", "op": "eq", "value": "dynesty.NestedSampler"},
+        {"path": "sampler.version", "op": "eq", "value": "3.1.0"},
+        {"path": "sampler.nlive_per_run", "op": "eq", "value": 160},
+        {"path": "likelihood.full_gaussian_normalization", "op": "eq", "value": true},
+        {"path": "likelihood.magnitude_offset", "op": "eq", "value": "sampled proper shared nuisance"},
+        {"path": "interpretation.modern_three_model_prior_locked_evidence_executed", "op": "eq", "value": true},
+        {"path": "interpretation.independent_replication_completed", "op": "eq", "value": false},
+        {"path": "interpretation.joint_multi_probe_evidence_completed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A proper prior-locked normalized Dovekie SN-only nested-sampling comparison was executed for LCDM, CPL and RLL with two numerically consistent RNG seeds. The stored Bayes factors are lnB(CPL/LCDM)=-0.1107±0.2990 and lnB(RLL/LCDM)=-0.2264±0.2716, so this SN-only run does not strongly discriminate the three models under the declared priors.",
+      "successors": [
+        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+        "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+      ]
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+      "priority": "P0",
+      "target_state": "OPEN_MIXED",
+      "classification": "JOINT_MULTI_PROBE_EVIDENCE_REQUIRES_CLOSED_COMPONENT_GATES",
+      "next_action": "Construct a joint LCDM/CPL/RLL nested likelihood only after official DESI reproduction and applicable CMB/LSS/H0 component gates close. Do not multiply Pantheon+ and Dovekie as independent overlapping SN likelihoods."
     },
     {
       "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
