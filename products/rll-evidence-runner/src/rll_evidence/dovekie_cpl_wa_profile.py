@@ -5,7 +5,7 @@ from __future__ import annotations
 The production three-model fit found wa at its declared lower bound (-3). This
 module expands the scanned wa domain while preserving the same Dovekie HD,
 precision matrix, profiled magnitude offset, H0 reference scale and CPL
-background equations.  It does not turn a profile scan into Bayesian evidence.
+background equations. It does not turn a profile scan into Bayesian evidence.
 """
 
 import argparse
@@ -180,7 +180,11 @@ def build_profile(
     else:
         state = classification["state"]
 
-    token_vazio = [] if state == "VERIFIED_BOUNDED_PROFILE" else ["TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY"]
+    token_vazio = (
+        []
+        if state == "VERIFIED_BOUNDED_PROFILE"
+        else ["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
+    )
     payload: dict[str, Any] = {
         "schema": SCHEMA,
         "state": state,
@@ -203,14 +207,14 @@ def build_profile(
         "F_ok": [
             "The wa scan extends below the historical -3 bound while holding the Dovekie data, precision matrix and nuisance policy fixed.",
             "Omega_m and w0 are re-optimized at every fixed wa value.",
-            "The result explicitly records whether the expanded profile remains edge-limited."
+            "The result explicitly records whether the expanded profile remains edge-limited or lacks one-sided 95% closure."
         ],
         "F_gap": [] if state == "VERIFIED_BOUNDED_PROFILE" else [
             "The expanded wa profile is not yet bounded at 95% on both sides of the best grid point, or one/more optimization starts did not converge."
         ],
         "F_next": [
-            "If the minimum remains at the expanded grid edge, extend the grid again before interpreting wa.",
-            "If the profile becomes bounded, use the bounded profile only as a frequentist diagnostic and retain real nested-sampling evidence as a separate P0 gate."
+            "If no left-side 95% exclusion is observed, extend the lower wa grid and characterize whether the direction approaches an asymptotic/non-identifiable degeneracy.",
+            "If the profile becomes bounded, use it only as a frequentist diagnostic and retain modern three-model nested-sampling evidence as a separate P0 gate."
         ],
     }
     _atomic_json(output_path, payload)
