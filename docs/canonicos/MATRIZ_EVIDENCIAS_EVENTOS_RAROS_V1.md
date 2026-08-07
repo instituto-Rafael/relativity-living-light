@@ -59,7 +59,6 @@ Um claim só pode deixar `TOKEN_VAZIO` quando possuir, no mínimo:
 
 ## Receipt de execução
 
-- branch: `rafaelia/rare-events-evidence-v1`
 - registry: `data/knowledge_forest/rare_events_claim_registry_v1.yml`
 - validator: `scripts/validate_rare_events_registry.py`
 - tests: `tests/test_rare_events_registry.py`

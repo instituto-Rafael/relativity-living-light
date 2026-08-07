@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Deterministic dependency-free gate for the rare-events claim registry.
 
-This validator intentionally checks governance invariants without interpreting
-scientific truth. Unknown evidence must remain TOKEN_VAZIO until promoted by a
-traceable source and independent review.
+This validator checks governance invariants without interpreting scientific
+truth. Unknown evidence remains TOKEN_VAZIO until promoted by a traceable source
+and independent review.
 """
 from __future__ import annotations
 
@@ -42,11 +42,9 @@ ALLOWED_STATES = {
 
 def validate_text(text: str) -> list[str]:
     errors: list[str] = []
-
     for token in REQUIRED_TOP_LEVEL:
         if token not in text:
             errors.append(f"missing required token: {token}")
-
     for invariant in REQUIRED_INVARIANTS:
         if invariant not in text:
             errors.append(f"missing invariant: {invariant}")
@@ -73,7 +71,6 @@ def validate_text(text: str) -> list[str]:
     if unknown_states:
         errors.append(f"unknown claim states: {', '.join(unknown_states)}")
 
-    # Every claim must expose a falsifier or explicitly preserve the unknown.
     blocks = re.split(r"(?=^\s*- id:\s*)", text, flags=re.MULTILINE)[1:]
     for block in blocks:
         claim_match = re.search(r"^\s*- id:\s*([^\s#]+)", block, re.MULTILINE)
@@ -85,7 +82,6 @@ def validate_text(text: str) -> list[str]:
         has_falsifier = bool(re.search(r"^\s*falsifier:\s*.+", block, re.MULTILINE))
         if state != "TOKEN_VAZIO" and not has_falsifier:
             errors.append(f"claim {claim_id} has state {state or '<missing>'} but no falsifier")
-
     return errors
 
 
@@ -101,13 +97,11 @@ def main() -> int:
     if not path.is_file():
         print(f"FAIL: registry not found: {path}", file=sys.stderr)
         return 2
-
     errors = validate_text(path.read_text(encoding="utf-8"))
     if errors:
         for error in errors:
             print(f"FAIL: {error}", file=sys.stderr)
         return 1
-
     print("PASS: RLL rare-events registry governance invariants satisfied")
     return 0
 

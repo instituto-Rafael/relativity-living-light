@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-07"
+updated_at: "2026-08-01"
 
 inventory:
-  active_workflows: 64
+  active_workflows: 55
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -23,53 +23,69 @@ canonical_pipeline:
   pull_request_mode: dry_run
   claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
 
-branch_maturity_v2:
-  workflow: .github/workflows/branch-maturity-v2.yml
-  tool: tools/branch_maturity_gate_v2.py
+branch_maturity:
+  workflow: .github/workflows/unified-workflow-session-orchestrator.yml
+  job_id: branch-maturity-gate
   topology:
     - "non-protected work branch -> rll/lab"
     - "rll/lab -> rll/integration"
     - "rll/integration -> rll/release"
     - "rll/release -> main"
-  automatic_enforcement:
-    - rll/lab
-    - rll/integration
-    - rll/release
-  main_edge_activation: TOKEN_VAZIO_PENDING_RELEASE_REFRESH
+  thresholds:
+    LAB: 40
+    INTEGRATION: 60
+    RELEASE: 80
+    MAIN: 90
+  branch_protection_verified: false
   claim_allowed: false
   publication_effect: NONE
 
-github_platform_assurance_v2:
-  workflow: .github/workflows/github-platform-assurance-v2.yml
-  capability_matrix: .github/workflow-architecture/github-actions-capabilities.v2.yml
+github_platform_assurance:
+  workflow: .github/workflows/github-platform-assurance.yml
+  capability_matrix: .github/workflow-architecture/github-actions-capabilities.v1.yml
   gate: tools/github_actions_capability_gate.py
   jobs:
     - platform-capability-contract
     - dependency-review
     - codeql
+  codeql_languages:
+    - actions
+    - python
   external_settings_verified: false
   external_state: TOKEN_VAZIO_EXTERNAL_SETTINGS
-  rule: "Historical settings receipts are not promoted to current truth without fresh execution."
   claim_allowed: false
   publication_effect: NONE
 
-workflow_contract_reconciliation_v2:
-  workflow: .github/workflows/workflow-contract-sync-v2.yml
+workflow_contract_reconciliation:
+  workflow: .github/workflows/workflow-contract-sync.yml
   tool: tools/workflow_contract_sync.py
+  proposal_tool: tools/propose_workflow_contract_pr.py
   tests: tests/test_workflow_contract_sync.py
-  mode: read_only_fail_closed
+  local_hook: .githooks/pre-commit
+  installer: scripts/install_repo_hooks.sh
+  modes:
+    check: read_only_fail_closed
+    write: local_workspace_only
+    propose: workflow_dispatch_pull_request_to_rll_lab
   direct_main_commit: FORBIDDEN
-  automatic_proposal: TOKEN_VAZIO_NOT_ENABLED_IN_V2
+  external_pr_permission_verified: false
+  external_pr_permission_state: TOKEN_VAZIO_EXTERNAL_SETTING
   claim_allowed: false
   publication_effect: NONE
 
-branch_advance_registry:
-  path: data/governance/branch_advance_registry.v2.json
-  validator: tools/validate_branch_advance_registry.py
-  tests: tests/test_branch_advance_registry.py
-  audited_refs_minimum: 40
-  unclassified_remainder_must_be_token_vazio: true
-  claim_allowed: false
+branch_reconciliation:
+  main_to_maturity_content_forward_ported:
+    - .github/workflows/rare-events-evidence-gate.yml
+    - data/knowledge_forest/rare_events_claim_registry_v1.yml
+    - docs/canonicos/MATRIZ_EVIDENCIAS_EVENTOS_RAROS_V1.md
+    - docs/canonicos/PROTOCOLO_EVENTOS_RAROS_EVIDENCIA_V1.md
+    - scripts/validate_rare_events_registry.py
+    - tests/test_rare_events_registry.py
+  history_reconciliation: TOKEN_VAZIO_HISTORY_RECONCILIATION
+  invariant: >-
+    Content added directly to main must be forward-ported through the maturity
+    chain without deleting laboratory-only governance. Commit-history divergence
+    does not become equivalence without a new receipt.
 
 aliases:
   - path: .github/workflows/RLL-CI.yml
@@ -118,35 +134,46 @@ documented_checks:
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
-    - context: modern-validation-contract
-      workflow: .github/workflows/rll-modern-validation-gate.yml
-      job_id: modern-validation-contract
+    - context: branch-maturity-gate
+      workflow: .github/workflows/unified-workflow-session-orchestrator.yml
+      job_id: branch-maturity-gate
+      permissions: contents_read
       certification_claim: false
       conformity_claim: false
-      scientific_claim: false
-    - context: GitHub platform capability contract V2
-      workflow: .github/workflows/github-platform-assurance-v2.yml
+    - context: GitHub platform capability contract
+      workflow: .github/workflows/github-platform-assurance.yml
       job_id: platform-capability-contract
+      permissions: contents_read
       certification_claim: false
       conformity_claim: false
-    - context: Dependency review fresh-state gate
-      workflow: .github/workflows/github-platform-assurance-v2.yml
+    - context: Dependency review
+      workflow: .github/workflows/github-platform-assurance.yml
       job_id: dependency-review
+      permissions: contents_read
       certification_claim: false
       conformity_claim: false
-    - context: CodeQL V2
-      workflow: .github/workflows/github-platform-assurance-v2.yml
+    - context: CodeQL (actions)
+      workflow: .github/workflows/github-platform-assurance.yml
       job_id: codeql
+      permissions: security_events_write
       certification_claim: false
       conformity_claim: false
-    - context: Verify derived workflow inventory V2
-      workflow: .github/workflows/workflow-contract-sync-v2.yml
+    - context: CodeQL (python)
+      workflow: .github/workflows/github-platform-assurance.yml
+      job_id: codeql
+      permissions: security_events_write
+      certification_claim: false
+      conformity_claim: false
+    - context: Rare Events Evidence Gate
+      workflow: .github/workflows/rare-events-evidence-gate.yml
+      job_id: evidence-governance
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: Verify workflow contract inventory
+      workflow: .github/workflows/workflow-contract-sync.yml
       job_id: verify-contract
-      certification_claim: false
-      conformity_claim: false
-    - context: Branch maturity gate V2
-      workflow: .github/workflows/branch-maturity-v2.yml
-      job_id: branch-maturity-gate-v2
+      permissions: contents_read
       certification_claim: false
       conformity_claim: false
 
@@ -154,18 +181,19 @@ documentation:
   authority_order:
     - .github/workflow-contract.yml
     - .github/workflow-architecture/invariants.v1.yml
-    - .github/workflow-architecture/github-actions-capabilities.v2.yml
+    - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
     - data/governance/branch_advance_registry.v2.json
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
     - tools/github_actions_capability_gate.py
     - tools/workflow_contract_sync.py
-    - tools/branch_maturity_gate_v2.py
-    - tools/validate_branch_advance_registry.py
+    - tools/propose_workflow_contract_pr.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
+    - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
+    - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
       - "44 etapas lógicas"
@@ -182,6 +210,9 @@ documentation:
     docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md:
       - "fonte de verdade executável"
       - "TOKEN_VAZIO não apaga evidência histórica"
+    docs/workflows/WORKFLOW_CONTRACT_SYNC.md:
+      - "TOKEN_VAZIO_EXTERNAL_SETTING"
+      - "Commit direto em `main` é proibido"
     docs/governance/RLL_OPERATIONAL_GOVERNANCE.md:
       - "sem certificação"
       - "auditoria absoluta"

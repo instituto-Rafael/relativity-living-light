@@ -1,0 +1,138 @@
+name: Workflow Contract Reconciliation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - rll/release
+      - rll/integration
+      - rll/lab
+    paths:
+      - ".github/workflows/**"
+      - ".github/workflow-contract.yml"
+      - "tools/workflow_contract_sync.py"
+      - "tools/propose_workflow_contract_pr.py"
+      - "tests/test_workflow_contract_sync.py"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check validates only; propose opens a reviewed synchronization PR"
+        required: true
+        default: check
+        type: choice
+        options:
+          - check
+          - propose
+      base:
+        description: "Review target; maturity topology limits automated proposals to rll/lab"
+        required: true
+        default: rll/lab
+        type: choice
+        options:
+          - rll/lab
+
+permissions:
+  contents: read
+
+env:
+  CLAIM_BOUNDARY: "Inventory reconciliation only; claim_allowed=false and publication_effect=NONE."
+
+concurrency:
+  group: workflow-contract-sync-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-contract:
+    name: Verify workflow contract inventory
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Install focused test dependency
+        run: python -m pip install pytest
+
+      - name: Test synchronizer invariants
+        run: python -m pytest -q tests/test_workflow_contract_sync.py
+
+      - name: Compare executable inventory with contract
+        id: contract
+        continue-on-error: true
+        run: |
+          python tools/workflow_contract_sync.py \
+            --write-report --output-dir artifacts/workflow-contract-sync
+
+      - name: Publish reconciliation summary
+        if: always()
+        run: |
+          report=artifacts/workflow-contract-sync/REPORT.md
+          if [[ -f "$report" ]]; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Upload reconciliation receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: workflow-contract-sync-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/workflow-contract-sync/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Fail closed on contract drift
+        if: always() && steps.contract.outcome != 'success'
+        run: exit 1
+
+  propose-reviewed-update:
+    name: Propose synchronization by pull request
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'propose'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout proposal base without persistent credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.base }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Synchronize workspace contract
+        run: |
+          python tools/workflow_contract_sync.py --write --write-report \
+            --output-dir artifacts/workflow-contract-sync
+
+      - name: Open review pull request
+        id: proposal
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/propose_workflow_contract_pr.py --base "${{ inputs.base }}"
+
+      - name: Upload proposal receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: workflow-contract-proposal-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/workflow-contract-sync/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Preserve external permission failure
+        if: always() && steps.proposal.outcome != 'success'
+        run: exit 1

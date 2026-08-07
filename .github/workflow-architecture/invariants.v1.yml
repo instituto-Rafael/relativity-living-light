@@ -55,6 +55,53 @@ omega_feedback_cycle:
     - receipts
     - superseded_decisions
 
+branch_maturity:
+  topology:
+    feature_to_lab:
+      head: any_non_protected_branch
+      base: rll/lab
+    lab_to_integration:
+      head: rll/lab
+      base: rll/integration
+    integration_to_release:
+      head: rll/integration
+      base: rll/release
+    release_to_main:
+      head: rll/release
+      base: main
+  score_dimensions:
+    - topology
+    - semantic_amplitude
+    - validation
+    - evidence
+    - governance
+  thresholds:
+    LAB: 40
+    INTEGRATION: 60
+    RELEASE: 80
+    MAIN: 90
+  invariant: >-
+    Promotion is allowed only through the ordered branch topology and a new
+    repository-local receipt. Semantic breadth without tests, evidence or an
+    explicit TOKEN_VAZIO plus verifiable next step cannot mature a change.
+  branch_protection_verified: false
+  scientific_claim_effect: NONE
+
+branch_reconciliation:
+  invariant: >-
+    Content merged directly into main must be forward-ported into the maturity
+    chain without replacing laboratory-only governance. Workflow inventory and
+    branch content drift require separate receipts.
+  direct_main_hotfix:
+    state: BREAK_GLASS_ONLY
+    required_follow_up: forward_port_to_rll_lab
+  history_reconciliation: TOKEN_VAZIO_HISTORY_RECONCILIATION
+  contract_sync:
+    source: .github/workflows/*.{yml,yaml}
+    target: .github/workflow-contract.yml
+    direct_main_commit: FORBIDDEN
+    review_target: rll/lab
+
 workflow_classes:
   structural:
     allowed_permissions:
@@ -70,7 +117,17 @@ workflow_classes:
       contents: read
       actions: write
     publication_effect: NONE
-    manual_dispatch_only: true
+    manual_dispatch_only: false
+    write_jobs_manual_dispatch_only: true
+  reconciliation:
+    default_permissions:
+      contents: read
+    manual_write_permissions:
+      contents: write
+      pull-requests: write
+    write_jobs_manual_dispatch_only: true
+    direct_main_commit: FORBIDDEN
+    publication_effect: NONE
   publishing:
     requires_environment_protection: true
     requires_explicit_owner: true
@@ -123,6 +180,27 @@ managed_workflows:
       - checkout_without_persistent_credentials
       - always_upload_receipt
       - claim_boundary
+      - externalized_algorithm
+  .github/workflows/rare-events-evidence-gate.yml:
+    class: scientific_shadow
+    require:
+      - permissions
+      - concurrency
+      - job_timeout
+      - checkout_without_persistent_credentials
+      - always_upload_receipt
+      - claim_boundary
+      - externalized_algorithm
+  .github/workflows/workflow-contract-sync.yml:
+    class: reconciliation
+    require:
+      - permissions
+      - concurrency
+      - job_timeout
+      - checkout_without_persistent_credentials
+      - always_upload_receipt
+      - claim_boundary
+      - externalized_algorithm
 
 policy:
   errors:
@@ -172,8 +250,15 @@ security:
   persist_credentials_default: false
   treat_github_event_text_as_untrusted: true
   secrets_must_not_be_echoed: true
-  write_permissions_require_explicit_workflow_class: orchestrator
+  write_permissions_require_explicit_workflow_class:
+    - orchestrator
+    - reconciliation
   pull_request_target_default: FORBIDDEN
+  automated_pull_requests:
+    review_required: true
+    target: rll/lab
+    external_permission_verified: false
+    unavailable_state: TOKEN_VAZIO_EXTERNAL_SETTING
 
 scientific_boundary:
   structural_ci_pass_means: implementation_structure_executed_as_declared

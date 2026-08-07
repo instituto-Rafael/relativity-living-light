@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -69,13 +69,13 @@ jobs:
         run: python scripts/export_dha_forecast.py
 
       - name: Upload DHA forecast artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dha-fisher-forecast
           path: results/dha/fisher_forecast_reference.json
 
       - name: Upload ln(1+z) extractor artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ln1pz-extractor
           path: |
@@ -83,7 +83,7 @@ jobs:
             results/dha/ln1pz_fit_summary.json
 
       - name: Upload DESI DHA extractor artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: desi-dha-extractor
           path: results/dha/desi_dha_pipeline_summary.json

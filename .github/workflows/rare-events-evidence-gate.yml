@@ -2,35 +2,79 @@ name: Rare Events Evidence Gate
 
 on:
   pull_request:
+    branches:
+      - main
+      - rll/release
+      - rll/integration
+      - rll/lab
     paths:
       - "data/knowledge_forest/rare_events_claim_registry_v1.yml"
+      - "docs/canonicos/*EVENTOS_RAROS*"
       - "scripts/validate_rare_events_registry.py"
       - "tests/test_rare_events_registry.py"
       - ".github/workflows/rare-events-evidence-gate.yml"
   push:
-    branches: [main]
+    branches:
+      - main
+      - rll/release
+      - rll/integration
+      - rll/lab
     paths:
       - "data/knowledge_forest/rare_events_claim_registry_v1.yml"
       - "scripts/validate_rare_events_registry.py"
       - "tests/test_rare_events_registry.py"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: rare-events-evidence-${{ github.ref }}
+  group: rare-events-evidence-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   evidence-governance:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
+
       - name: Validate registry invariants
         run: python scripts/validate_rare_events_registry.py
+
       - name: Run positive and negative tests
         run: python -m unittest tests/test_rare_events_registry.py -v
+
+      - name: Materialize claim-bounded receipt
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          out=artifacts/rare-events-evidence
+          mkdir -p "$out"
+          input_sha=$(sha256sum data/knowledge_forest/rare_events_claim_registry_v1.yml | cut -d' ' -f1)
+          decision=PASS
+          residuals=NONE
+          [[ "$JOB_STATUS" == success ]] || { decision=FAIL; residuals=VALIDATION_OR_TEST_FAILURE; }
+          printf '{"schema":"rll.rare_events_evidence.v1","commit_sha":"%s","workflow":"%s","job":"%s","claim_allowed":false,"publication_effect":"NONE","inputs_sha256":"%s","decision":"%s","residuals":"%s"}\n' \
+            "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$GITHUB_JOB" "$input_sha" "$decision" "$residuals" > "$out/receipt.json"
+          cat "$out/receipt.json" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload rare-events receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rare-events-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/rare-events-evidence/
+          retention-days: 30
+          if-no-files-found: error

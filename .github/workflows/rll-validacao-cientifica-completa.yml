@@ -49,7 +49,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -112,7 +112,7 @@ jobs:
           printf "modo=%s\ncommit_resultados=%s\n" \
             "${{ inputs.modo }}" "${{ inputs.commit_resultados }}" > artifacts/setup/INPUTS.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: setup-checksums
           path: artifacts/setup/
@@ -132,7 +132,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -212,7 +212,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: pantheon-fit-results
           path: artifacts/pantheon_fit/
@@ -232,7 +232,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -294,7 +294,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: desi-bao-results
           path: artifacts/desi_bao/
@@ -314,7 +314,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -342,7 +342,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: weff-mapping-results
           path: artifacts/weff_mapping/
@@ -362,7 +362,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -407,7 +407,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: zt-falsification-results
           path: artifacts/zt_falsification/
@@ -427,7 +427,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -458,7 +458,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: h0-grid-results
           path: artifacts/h0_grid/
@@ -478,7 +478,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -553,7 +553,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -575,7 +575,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -584,7 +584,7 @@ jobs:
         run: pip install numpy scipy matplotlib pandas PyYAML jsonschema
 
       - name: Baixar artefatos MCMC
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -675,7 +675,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: bayes-factor-results
           path: artifacts/bayes_factor/
@@ -703,7 +703,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -712,7 +712,7 @@ jobs:
         run: pip install numpy
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -906,7 +906,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: contrato-falsificadores
           path: artifacts/contrato/
@@ -935,7 +935,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -944,7 +944,7 @@ jobs:
         run: pip install numpy
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -1099,7 +1099,7 @@ jobs:
 
           rll_real_data_write_checksums "$OUT_DIR"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: relatorio-final
           path: artifacts/relatorio/
@@ -1128,7 +1128,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: artifacts/
