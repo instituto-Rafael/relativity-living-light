@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-"""Execute the declared six-cell H0/r_d sensitivity matrix.
+"""Execute the six-cell H0/r_d sensitivity matrix with claim boundaries.
 
-This runner is deliberately an ablation authority, not a publication likelihood.
-It reuses the repository's joint real-data objective, widens H0 to the matrix's
-50..90 interval, applies the declared H0 conditioning terms, and evaluates fixed
-versus derived r_d under one identical model/data implementation.
-
-Important epistemic boundary: the Planck H0 Gaussian is correlated with the
-Planck compressed CMB information already present in the joint objective, so its
-penalty is reported as a conditioning sensitivity term, not as independent new
-data for evidence/Bayes claims.
+This is an ablation/sensitivity authority, not a publication likelihood. The
+Planck H0 Gaussian is correlated with the compressed Planck CMB term already in
+the joint objective, and the current derived-r_d function is an approximation.
+Both facts are preserved explicitly in the receipt.
 """
 
 import argparse
@@ -21,6 +16,7 @@ import hashlib
 import json
 import math
 import os
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -29,12 +25,21 @@ from typing import Any, Iterator, Sequence
 import numpy as np
 from scipy.optimize import minimize
 
-from data.pipelines.structure_d import joint_real_likelihood as joint
-
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from data.pipelines.structure_d import joint_real_likelihood as joint  # noqa: E402
+
 MATRIX = ROOT / "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json"
-BASELINE_RESULT = ROOT / "results/structure_d/joint_real_likelihood.json"
 SCHEMA = "rll.h0_rd_ablation_execution.v1"
+
+CANONICAL_STARTS: dict[str, np.ndarray] = {
+    joint.MODEL_LCDM: np.asarray([68.0, 0.30, 0.70, 0.0224, 0.80]),
+    joint.MODEL_WCDM: np.asarray([68.0, 0.30, 0.70, -1.0, 0.0224, 0.80]),
+    joint.MODEL_CPL: np.asarray([68.0, 0.30, 0.70, -1.0, 0.0, 0.0224, 0.80]),
+    joint.MODEL_RLL: np.asarray([68.0, 0.30, 0.70, 0.01, 1.0, 0.30, 0.0224, 0.80]),
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -64,7 +69,7 @@ def parse_h0_bounds(text: str) -> tuple[float, float]:
     if len(parts) != 2:
         raise ValueError(f"invalid H0 bounds: {text!r}")
     lower, upper = map(float, parts)
-    if not (math.isfinite(lower) and math.isfinite(upper) and 0 < lower < upper):
+    if not (math.isfinite(lower) and math.isfinite(upper) and 0.0 < lower < upper):
         raise ValueError(f"invalid H0 interval: {text!r}")
     return lower, upper
 
@@ -86,16 +91,6 @@ def load_matrix(path: Path = MATRIX) -> dict[str, Any]:
         if row["H0_policy"] not in {"broad_free", "planck_prior", "shoes_local_prior"}:
             raise ValueError(f"unsupported H0 policy: {row['H0_policy']}")
     return payload
-
-
-def load_baseline_vectors(path: Path = BASELINE_RESULT) -> dict[str, np.ndarray]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    rows = {row["model"]: row for row in payload["rows"]}
-    vectors: dict[str, np.ndarray] = {}
-    for model in joint.MODEL_ORDER:
-        row = rows[model]
-        vectors[model] = np.asarray([float(row[name]) for name in joint.MODEL_PARAM_NAMES[model]], dtype=float)
-    return vectors
 
 
 @contextlib.contextmanager
@@ -130,20 +125,20 @@ def policy_role(spec: dict[str, Any]) -> dict[str, Any]:
             "role": "conditioning_sensitivity_correlated_with_existing_CMB",
             "independent_external_likelihood": False,
             "information_criteria_authoritative": False,
-            "reason": "Planck-derived H0 information is correlated with the Planck compressed CMB shift term already present in the joint objective.",
+            "reason": "Planck-derived H0 information overlaps the Planck compressed CMB-shift term already in the joint objective.",
         }
     if spec["H0_policy"] == "shoes_local_prior":
         return {
-            "role": "external_local_ladder_likelihood_candidate_pending_primary_source_receipt",
+            "role": "external_local_ladder_candidate_pending_primary_source_receipt",
             "independent_external_likelihood": True,
             "information_criteria_authoritative": False,
-            "reason": "The numerical Gaussian is declared, but primary-source provenance is not yet frozen/hash-custodied by this ablation runner.",
+            "reason": "The Gaussian is declared numerically, but this runner does not freeze/hash its primary-source artifact.",
         }
     return {
         "role": "no_external_H0_conditioning",
         "independent_external_likelihood": True,
         "information_criteria_authoritative": True,
-        "reason": "No external H0 Gaussian term is added.",
+        "reason": "No external H0 Gaussian is added.",
     }
 
 
@@ -153,42 +148,45 @@ def model_bounds(model: str, spec: dict[str, Any]) -> list[tuple[float, float]]:
     return bounds
 
 
-def objective(model: str, vector: np.ndarray, inputs: dict[str, Any], spec: dict[str, Any]) -> tuple[float, dict[str, float]]:
+def objective(
+    model: str,
+    vector: np.ndarray,
+    inputs: dict[str, Any],
+    spec: dict[str, Any],
+) -> tuple[float, dict[str, float]]:
     components = joint.evaluate_components(model, np.asarray(vector, dtype=float), inputs)
     data_total = float(components["total"])
     if not math.isfinite(data_total):
         return math.inf, {**components, "H0_conditioning": math.inf, "objective_total": math.inf}
     penalty = float(h0_penalty(float(vector[0]), spec))
-    return data_total + penalty, {**components, "H0_conditioning": penalty, "objective_total": data_total + penalty}
+    return data_total + penalty, {
+        **{key: float(value) for key, value in components.items()},
+        "H0_conditioning": penalty,
+        "objective_total": data_total + penalty,
+    }
 
 
-def starts_for(model: str, spec: dict[str, Any], baseline: np.ndarray) -> list[np.ndarray]:
+def starts_for(model: str, spec: dict[str, Any]) -> list[np.ndarray]:
     bounds = model_bounds(model, spec)
+    primary = CANONICAL_STARTS[model].copy()
     candidates: list[np.ndarray] = []
-    primary = np.asarray(baseline, dtype=float).copy()
-    if spec.get("H0_prior_mean") is not None:
-        primary[0] = float(spec["H0_prior_mean"])
-    else:
-        primary[0] = min(max(primary[0], bounds[0][0]), bounds[0][1])
-    candidates.append(primary)
-
-    for h0 in (55.0, 67.4, 73.04, 82.0):
-        if bounds[0][0] <= h0 <= bounds[0][1]:
-            alt = np.asarray(primary, dtype=float).copy()
-            alt[0] = h0
-            candidates.append(alt)
-
-    unique: list[np.ndarray] = []
-    seen = set()
-    for candidate in candidates:
+    h0_values = [float(spec["H0_prior_mean"])] if spec.get("H0_prior_mean") is not None else [68.0]
+    h0_values += [55.0, 67.4, 73.04, 82.0]
+    for h0 in h0_values:
+        candidate = primary.copy()
+        candidate[0] = h0
         clipped = np.asarray([
             min(max(float(value), lower), upper)
             for value, (lower, upper) in zip(candidate, bounds)
         ])
-        key = tuple(np.round(clipped, 10))
+        candidates.append(clipped)
+    unique: list[np.ndarray] = []
+    seen: set[tuple[float, ...]] = set()
+    for candidate in candidates:
+        key = tuple(np.round(candidate, 10))
         if key not in seen:
             seen.add(key)
-            unique.append(clipped)
+            unique.append(candidate)
     return unique
 
 
@@ -196,14 +194,13 @@ def fit_model(
     model: str,
     inputs: dict[str, Any],
     spec: dict[str, Any],
-    baseline: np.ndarray,
     *,
     maxiter: int,
     ftol: float,
 ) -> dict[str, Any]:
     bounds = model_bounds(model, spec)
-    attempts = []
-    for start_index, start in enumerate(starts_for(model, spec, baseline)):
+    attempts: list[dict[str, Any]] = []
+    for index, start in enumerate(starts_for(model, spec)):
         began = time.perf_counter()
         result = minimize(
             lambda values: objective(model, np.asarray(values, dtype=float), inputs, spec)[0],
@@ -214,7 +211,7 @@ def fit_model(
         )
         total, components = objective(model, np.asarray(result.x, dtype=float), inputs, spec)
         attempts.append({
-            "start_index": start_index,
+            "start_index": index,
             "success": bool(result.success),
             "message": str(result.message),
             "iterations": int(result.nit),
@@ -222,7 +219,7 @@ def fit_model(
             "runtime_seconds": float(time.perf_counter() - began),
             "vector": [float(x) for x in result.x],
             "objective_total": float(total),
-            "components": {key: float(value) for key, value in components.items()},
+            "components": components,
         })
     finite = [row for row in attempts if math.isfinite(row["objective_total"])]
     if not finite:
@@ -231,7 +228,11 @@ def fit_model(
     vector = np.asarray(best["vector"], dtype=float)
     runtime = joint._model_runtime(model, vector)
     ob_h2 = float(runtime[3])
-    rd = float(spec["rd_fixed_value_mpc"]) if spec["rd_policy"] == "fixed_for_all" else float(joint.rd_drag_mpc(vector[0], vector[1], ob_h2))
+    rd = (
+        float(spec["rd_fixed_value_mpc"])
+        if spec["rd_policy"] == "fixed_for_all"
+        else float(joint.rd_drag_mpc(vector[0], vector[1], ob_h2))
+    )
     names = joint.MODEL_PARAM_NAMES[model]
     params = {name: float(value) for name, value in zip(names, vector)}
     boundary_hits = []
@@ -243,7 +244,6 @@ def fit_model(
             boundary_hits.append({"parameter": name, "side": "upper", "bound": upper, "value": float(value)})
     return {
         "model": model,
-        "parameter_names": list(names),
         "parameters": params,
         "rd_mpc": rd,
         "chi2_data": float(best["components"]["total"]),
@@ -266,7 +266,6 @@ def n_data(inputs: dict[str, Any]) -> int:
 def run_cell(
     spec: dict[str, Any],
     inputs: dict[str, Any],
-    baselines: dict[str, np.ndarray],
     *,
     maxiter: int,
     ftol: float,
@@ -274,7 +273,7 @@ def run_cell(
     role = policy_role(spec)
     with rd_policy_context(spec["rd_policy"], spec.get("rd_fixed_value_mpc")):
         models = {
-            model: fit_model(model, inputs, spec, baselines[model], maxiter=maxiter, ftol=ftol)
+            model: fit_model(model, inputs, spec, maxiter=maxiter, ftol=ftol)
             for model in joint.MODEL_ORDER
         }
     cpl = models[joint.MODEL_CPL]
@@ -298,20 +297,29 @@ def run_cell(
 
 def write_csvs(output_dir: Path, cells: list[dict[str, Any]], nobs: int) -> list[str]:
     output_dir.mkdir(parents=True, exist_ok=True)
-    paths = []
+    paths: list[str] = []
+    fields = [
+        "model", "chi2", "AIC", "AICc", "BIC", "N", "k", "dof",
+        "H0_policy", "rd_policy", "H0", "rd", "Os0", "Delta_AICc_RLL_CPL",
+        "Delta_BIC_RLL_CPL", "claim_status", "chi2_data", "chi2_H0_conditioning",
+        "information_criteria_authoritative",
+    ]
     for cell in cells:
         path = output_dir / f"{cell['run_id']}.csv"
-        rows = []
+        rows: list[dict[str, Any]] = []
         for model in joint.MODEL_ORDER:
             result = cell["models"][model]
             k = len(joint.MODEL_PARAM_NAMES[model])
-            objective_total = result["objective_total"]
+            chi2 = result["objective_total"]
+            aic = chi2 + 2.0 * k
+            aicc = aic + 2.0 * k * (k + 1) / (nobs - k - 1)
+            bic = chi2 + k * math.log(nobs)
             rows.append({
                 "model": model,
-                "chi2": objective_total,
-                "AIC": objective_total + 2 * k,
-                "AICc": objective_total + 2 * k + (2 * k * (k + 1) / (nobs - k - 1)),
-                "BIC": objective_total + k * math.log(nobs),
+                "chi2": chi2,
+                "AIC": aic,
+                "AICc": aicc,
+                "BIC": bic,
                 "N": nobs,
                 "k": k,
                 "dof": nobs - k,
@@ -332,19 +340,18 @@ def write_csvs(output_dir: Path, cells: list[dict[str, Any]], nobs: int) -> list
         rll["Delta_AICc_RLL_CPL"] = float(rll["AICc"] - cpl["AICc"])
         rll["Delta_BIC_RLL_CPL"] = float(rll["BIC"] - cpl["BIC"])
         with path.open("w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+            writer = csv.DictWriter(handle, fieldnames=fields)
             writer.writeheader()
             writer.writerows(rows)
         paths.append(str(path.relative_to(ROOT)))
     return paths
 
 
-def build(output: Path, output_dir: Path, *, maxiter: int = 100, ftol: float = 1.0e-9) -> dict[str, Any]:
+def build(output: Path, output_dir: Path, *, maxiter: int = 60, ftol: float = 1.0e-8) -> dict[str, Any]:
     matrix = load_matrix()
     inputs = joint.load_joint_inputs()
-    baselines = load_baseline_vectors()
     began = time.perf_counter()
-    cells = [run_cell(spec, inputs, baselines, maxiter=maxiter, ftol=ftol) for spec in matrix["runs"]]
+    cells = [run_cell(spec, inputs, maxiter=maxiter, ftol=ftol) for spec in matrix["runs"]]
     nobs = n_data(inputs)
     csv_paths = write_csvs(output_dir, cells, nobs)
     all_finite = all(
@@ -358,8 +365,8 @@ def build(output: Path, output_dir: Path, *, maxiter: int = 100, ftol: float = 1
         "publication_ready": False,
         "matrix_path": str(MATRIX.relative_to(ROOT)),
         "matrix_sha256": sha256_file(MATRIX),
-        "baseline_result_path": str(BASELINE_RESULT.relative_to(ROOT)),
-        "baseline_result_sha256": sha256_file(BASELINE_RESULT),
+        "joint_likelihood_path": "data/pipelines/structure_d/joint_real_likelihood.py",
+        "joint_likelihood_sha256": sha256_file(ROOT / "data/pipelines/structure_d/joint_real_likelihood.py"),
         "n_joint_data_coordinates": nobs,
         "cells": cells,
         "csv_outputs": csv_paths,
@@ -371,23 +378,23 @@ def build(output: Path, output_dir: Path, *, maxiter: int = 100, ftol: float = 1
             "primary_external_h0_source_receipts_frozen": False,
             "derived_rd_is_full_boltzmann_recombination_solution": False,
         },
-        "scientific_boundary": "This execution closes the internal six-cell sensitivity computation only. Planck H0 conditioning is correlated with the existing Planck CMB-shift term, external H0 primary-source receipts are not frozen here, and derived r_d uses the repository's calibrated approximation rather than a full recombination/Boltzmann solver. Therefore no H0-tension-resolution or model-evidence claim is authorized.",
+        "scientific_boundary": "This closes only the internal six-cell sensitivity computation. Planck H0 conditioning overlaps the existing Planck CMB-shift term, external H0 primary-source receipts are not frozen here, and derived r_d uses the repository approximation rather than a full recombination/Boltzmann solver. No H0-tension-resolution or model-evidence claim is authorized.",
         "reduces_token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
         "successor_tokens": [
             "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
-            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
         ],
         "F_ok": [
-            "All six declared H0/r_d policy cells are evaluated under one model/data implementation.",
-            "Data chi2 and H0 conditioning chi2 are stored separately.",
-            "Planck overlap and derived-rd approximation are explicitly marked instead of hidden."
+            "All six H0/r_d cells are evaluated under one model/data implementation.",
+            "Data chi2 and H0-conditioning chi2 are stored separately.",
+            "Planck overlap and derived-r_d approximation are explicit."
         ],
         "F_gap": [
             "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
-            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
         ],
         "F_next": [
-            "Freeze/hash primary H0 source artifacts and explicitly classify correlated versus independent likelihood terms.",
+            "Freeze/hash primary H0 source artifacts and classify correlated versus independent terms.",
             "Replace the calibrated r_d approximation with a pinned CLASS/CAMB recombination calculation before formal H0/r_d inference."
         ],
     }
@@ -399,19 +406,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--maxiter", type=int, default=100)
-    parser.add_argument("--ftol", type=float, default=1.0e-9)
+    parser.add_argument("--maxiter", type=int, default=60)
+    parser.add_argument("--ftol", type=float, default=1.0e-8)
     args = parser.parse_args(argv)
     try:
         payload = build(args.output, args.output_dir, maxiter=args.maxiter, ftol=args.ftol)
     except Exception as exc:
         print(f"ERROR: {type(exc).__name__}: {exc}")
         return 2
-    print(json.dumps({
-        "state": payload["state"],
-        "cells": len(payload["cells"]),
-        "claim_allowed": False,
-    }, sort_keys=True))
+    print(json.dumps({"state": payload["state"], "cells": len(payload["cells"]), "claim_allowed": False}, sort_keys=True))
     return 0 if payload["state"] == "VERIFIED_INTERNAL_H0_RD_SENSITIVITY" else 3
 
 
