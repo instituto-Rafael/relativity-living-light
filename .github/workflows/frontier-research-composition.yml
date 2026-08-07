@@ -78,7 +78,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout without persistent credentials
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4 resolved 2026-07-30
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
         with:
           persist-credentials: false
 
@@ -164,7 +164,7 @@ jobs:
       SMOKE_RECEIPT_DIR: artifacts/frontier-shadow-smoke
     steps:
       - name: Checkout without persistent credentials
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4 resolved 2026-07-30
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
         with:
           persist-credentials: false
 
@@ -210,7 +210,7 @@ jobs:
       MULTISEED_RECEIPT_DIR: artifacts/frontier-multiseed
     steps:
       - name: Checkout without persistent credentials
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4 resolved 2026-07-30
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
         with:
           persist-credentials: false
 
