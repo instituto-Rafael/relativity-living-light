@@ -20,13 +20,13 @@ O reconciliador distingue:
 
 ## Estado efetivo desta revisão
 
-Após materialização científica e auditoria do histórico Bayes:
+Após materialização científica, auditoria Bayes e refresh não destrutivo de release:
 
 ```text
 input_tokens       = 20
-terminal_resolved  = 4
+terminal_resolved  = 5
 reduced_generic    = 2
-open               = 14
+open               = 13
 claim_allowed      = false
 publication_ready  = false
 ```
@@ -140,6 +140,22 @@ redistribution_allowed_by_this_audit = false
 
 Isso não prova que nenhuma licença/permissão exista em Zenodo, ReadTheDocs, publicação ou outro canal; apenas impede que a redistribuição seja presumida.
 
+### 7. `rll/release` refresh — `RESOLVED`
+
+Antes da operação, `rll/release` não possuía commits exclusivos e era ancestral direto do `main`. O refresh foi executado como fast-forward com `force=false`.
+
+Pós-operação:
+
+```text
+rll/release = b781ae198e9e576da14aec3e7e2dc18326b511e5
+main        = b781ae198e9e576da14aec3e7e2dc18326b511e5
+compare     = identical
+ahead_by    = 0
+behind_by   = 0
+```
+
+Assim `TOKEN_VAZIO_PENDING_RELEASE_REFRESH` está fechado para esse baseline. Isso não autoriza transportar automaticamente os commits exclusivos/divergentes de `rll/lab` ou `rll/integration`; eles continuam exigindo classificação e promoção própria.
+
 ## P0 ainda realmente aberto
 
 Após retirar os vazios obsoletos, os P0 principais são:
@@ -154,7 +170,7 @@ Os dois últimos exigem, respectivamente, produtos/likelihood oficial materializ
 
 ## P1/P2 preservados
 
-P1 mantém ACT DR6, DES Y6 3x2pt, CLASS/CAMB + contrato explícito de perturbações RLL, H0 formal, configurações externas do GitHub e refresh coerente de `rll/release`.
+P1 mantém ACT DR6, DES Y6 3x2pt, CLASS/CAMB + contrato explícito de perturbações RLL, H0 formal e configurações externas do GitHub. O refresh de `rll/release` saiu dessa lista por receipt verificável.
 
 P2 mantém arqueologia de refs e validação empírica/Termux/treino do UTM-185.
 
@@ -183,6 +199,7 @@ reconciler saudável != ciência concluída
 - resultado negativo não promove `claim_allowed`;
 - token genérico reduzido sai da fila efetiva e seus sucessores entram;
 - overrides são append-only na visão longitudinal;
+- release refresh exige fast-forward verificável e `force=false`;
 - receipt físico não pode ser substituído por CI/container;
 - external likelihood não pode ser substituída por citação de paper;
 - Bayes histórico não pode ser transplantado para likelihood moderno diferente;
@@ -190,6 +207,6 @@ reconciler saudável != ciência concluída
 
 ## R3
 
-- **F_ok:** common-nuisance SN foi executado; boundary `wa=-3` foi diagnosticado; identificabilidade SN-only foi encerrada negativamente; Bayes histórico foi reconhecido e estreitado; licença upstream foi convertida em política conservadora.
-- **F_gap:** evidência moderna 3-model Bayes, fechamento inferior de `wa`, DESI oficial, Termux físico, perturbações/CMB/LSS e replicação independente permanecem reais.
+- **F_ok:** common-nuisance SN foi executado; boundary `wa=-3` foi diagnosticado; identificabilidade SN-only foi encerrada negativamente; Bayes histórico foi reconhecido e estreitado; licença upstream foi convertida em política conservadora; `rll/release` foi atualizado sem force e sem perda.
+- **F_gap:** evidência moderna 3-model Bayes, fechamento inferior de `wa`, DESI oficial, Termux físico, perturbações/CMB/LSS, configurações externas e replicação independente permanecem reais.
 - **F_next:** fechar o restante por autoridade correta, sem converter ausência externa em PASS artificial.
