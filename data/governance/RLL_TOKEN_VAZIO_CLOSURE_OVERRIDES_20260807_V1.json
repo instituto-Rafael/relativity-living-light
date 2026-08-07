@@ -1,7 +1,7 @@
 {
   "schema": "rll.token_vazio_closure_overrides.v1",
   "claim_allowed": false,
-  "append_only_reason": "Preserve the earlier closure rule ledger while narrowing the generic Bayes token after auditing the existing FASE20 dynesty result.",
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing and the non-destructive rll/release refresh.",
   "overrides": [
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
@@ -30,6 +30,23 @@
       "target_state": "OPEN_INTERNAL",
       "classification": "MODERN_THREE_MODEL_NESTED_EVIDENCE_CONTRACT",
       "next_action": "Execute LCDM, CPL and RLL with one versioned modern likelihood/prior registry; store sampler/version, prior-payload hash, logZ/logZ_error, stopping criterion and numerical sensitivity before any promotion."
+    },
+    {
+      "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "NON_DESTRUCTIVE_RELEASE_FAST_FORWARD",
+      "evidence_path": "artifacts/governance/RLL_RELEASE_REFRESH_RECEIPT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_FAST_FORWARD_IDENTICAL"},
+        {"path": "operation.force", "op": "eq", "value": false},
+        {"path": "after.compare_status", "op": "eq", "value": "identical"},
+        {"path": "after.ahead_by", "op": "eq", "value": 0},
+        {"path": "after.behind_by", "op": "eq", "value": 0},
+        {"path": "before.release_unique_commits", "op": "eq", "value": 0}
+      ],
+      "resolved_fact": "rll/release was safely fast-forwarded to the current main baseline with force=false and no release-unique commits discarded; the release-refresh void is closed for this baseline.",
+      "successors": []
     }
   ]
 }
