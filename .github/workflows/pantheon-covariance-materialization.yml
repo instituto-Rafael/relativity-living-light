@@ -10,6 +10,7 @@ on:
       - "tests/test_fetch_pantheon_covariance.py"
       - "tests/test_verify_pantheon_inputs_v2.py"
       - "tests/test_rll_pantheon_full_covariance_fit_v1.py"
+      - "tests/test_rll_pantheon_three_model_cpl_v1.py"
       - ".github/workflows/pantheon-covariance-materialization.yml"
       - ".gitignore"
 
@@ -46,7 +47,8 @@ jobs:
           python -m pytest -q \
             tests/test_fetch_pantheon_covariance.py \
             tests/test_verify_pantheon_inputs_v2.py \
-            tests/test_rll_pantheon_full_covariance_fit_v1.py
+            tests/test_rll_pantheon_full_covariance_fit_v1.py \
+            tests/test_rll_pantheon_three_model_cpl_v1.py
 
       - name: Materialize pinned official STAT+SYS covariance
         env:
@@ -73,7 +75,7 @@ jobs:
              "${{ runner.temp }}/Pantheon+SH0ES_STAT+SYS.cov.sha256"
           test -z "$(git status --porcelain --untracked-files=all -- "$CANONICAL_DIR/Pantheon+SH0ES_STAT+SYS.cov")"
 
-      - name: Execute Evidence Runner full-covariance fit
+      - name: Execute canonical LCDM-RLL full-covariance fit
         run: |
           set -euo pipefail
           rll-evidence run \
@@ -81,11 +83,20 @@ jobs:
           rll-evidence verify \
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json
 
+      - name: Execute modern LCDM-CPL-RLL full-covariance fit
+        run: |
+          set -euo pipefail
+          rll-evidence run \
+            products/rll-evidence-runner/experiments/pantheon_full_covariance_lcdm_cpl_rll_fit_v1.yml
+          rll-evidence verify \
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
+
       - name: Validate scientific boundary and summarize metrics
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           result_path = Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json")
@@ -97,25 +108,42 @@ jobs:
           assert receipt["claim_allowed"] is False
           assert len(result["rows"]) == 2
           comparison = result["comparison"]["candidate_minus_baseline"]
+
+          three_path = Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/pantheon_three_model_result.json")
+          three_receipt_path = Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json")
+          three = json.loads(three_path.read_text(encoding="utf-8"))
+          three_receipt = json.loads(three_receipt_path.read_text(encoding="utf-8"))
+          assert three["claim_allowed"] is False
+          assert three["publication_effect"] == "NONE"
+          assert three_receipt["claim_allowed"] is False
+          assert [row["model"] for row in three["rows"]] == [
+              "LCDM_pantheon_full", "CPL_pantheon_full", "RLL_pantheon_full"
+          ]
+          cpl = three["comparison"]["cpl_minus_baseline"]
+          rll = three["comparison"]["rll_minus_baseline"]
+
           summary = [
-              "# Pantheon+ full-covariance fit",
+              "# Pantheon+ full-covariance validation",
               "",
-              f"- status: `{result['status']}`",
-              f"- selected rows: `{result['inputs']['selected_rows']}`",
-              f"- covariance SHA-256: `{result['inputs']['covariance']['sha256']}`",
-              f"- Δχ² (RLL−ΛCDM): `{comparison['chi2']:.12g}`",
-              f"- ΔAIC: `{comparison['AIC']:.12g}`",
-              f"- ΔAICc: `{comparison['AICc']:.12g}`",
-              f"- ΔBIC: `{comparison['BIC']:.12g}`",
-              f"- interpretation: `{result['interpretation_label']}`",
+              f"- canonical status: `{result['status']}`",
+              f"- three-model status: `{three['status']}`",
+              f"- selected rows: `{three['inputs']['selected_rows']}`",
+              f"- covariance SHA-256: `{three['inputs']['covariance']['sha256']}`",
+              f"- canonical Δχ² (RLL−ΛCDM): `{comparison['chi2']:.12g}`",
+              f"- three-model Δχ² (CPL−ΛCDM): `{cpl['chi2']:.12g}`",
+              f"- three-model ΔBIC (CPL−ΛCDM): `{cpl['BIC']:.12g}`",
+              f"- three-model Δχ² (RLL−ΛCDM): `{rll['chi2']:.12g}`",
+              f"- three-model ΔBIC (RLL−ΛCDM): `{rll['BIC']:.12g}`",
               "- claim_allowed: `false`",
+              "- DES-Dovekie calibration: `TOKEN_VAZIO`",
+              "- real nested-sampling evidence: `TOKEN_VAZIO`",
               "",
-              "Numerical model comparison inside one likelihood block is not external validation.",
+              "A common full-covariance three-model fit is a fairness control, not external validation.",
           ]
           Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md").write_text(
               "\n".join(summary) + "\n", encoding="utf-8"
           )
-          with Path(__import__("os").environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
               handle.write("\n".join(summary) + "\n")
           PY
 
@@ -130,5 +158,7 @@ jobs:
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/pantheon_three_model_result.json
+            artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
           if-no-files-found: error
           retention-days: 30
