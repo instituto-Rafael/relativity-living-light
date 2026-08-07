@@ -95,7 +95,7 @@ jobs:
 
         '
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline/
@@ -158,7 +158,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rll-book-data-pipeline-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}/

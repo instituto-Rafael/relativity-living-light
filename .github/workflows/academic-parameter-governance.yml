@@ -112,7 +112,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: academic-parameter-governance-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/academic-parameter-governance/${{ github.job }}/

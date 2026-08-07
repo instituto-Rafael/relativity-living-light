@@ -49,7 +49,7 @@ jobs:
 
         '
     - name: Upload orbital validation artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: orbital-shape-angular-momentum-validation
         path: 'data/real/orbital_dynamics/orbital_shape_angular_momentum_seed_v1.csv

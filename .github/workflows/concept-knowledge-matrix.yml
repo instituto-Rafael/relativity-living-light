@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload Knowledge Matrix artifact and test receipt
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: knowledge-matrix-${{ github.run_id }}
           path: artifacts/knowledge-matrix/
