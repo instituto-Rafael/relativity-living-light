@@ -1,0 +1,91 @@
+name: CLASS CAMB Baseline Crosscheck
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/crosscheck_class_camb_baselines.py"
+      - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - ".github/workflows/class-camb-baseline-crosscheck.yml"
+
+permissions:
+  contents: read
+
+env:
+  CLAIM_BOUNDARY: "Standard LCDM/CPL engine agreement validates backend plumbing only; RLL perturbation claims remain blocked until explicit closure relations and independent engine implementations exist."
+
+concurrency:
+  group: class-camb-baseline-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  crosscheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install independent Boltzmann engines
+        run: |
+          python -m pip install --disable-pip-version-check \
+            "numpy>=1.25" \
+            "pytest>=8" \
+            "camb>=1.6,<2" \
+            "classy>=3.3,<4"
+          python - <<'PY'
+          import importlib.metadata
+          print("camb", importlib.metadata.version("camb"))
+          print("classy", importlib.metadata.version("classy"))
+          PY
+
+      - name: Run structural comparator tests
+        run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
+
+      - name: Execute LCDM and CPL crosscheck
+        run: |
+          set -euo pipefail
+          python scripts/crosscheck_class_camb_baselines.py \
+            --output artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
+            --lmax 700
+
+      - name: Verify fail-closed receipt and checksum
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "VERIFIED_BASELINE_ENGINE_CROSSCHECK"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert set(d["models"]) == {"lcdm", "cpl"}
+          assert all(d["models"][model]["pass"] for model in d["models"])
+          print(json.dumps({
+              "state": d["state"],
+              "camb": d["models"]["lcdm"]["engines"]["CAMB"]["version"],
+              "classy": d["models"]["lcdm"]["engines"]["CLASS"]["version"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
+            > artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
+
+      - name: Upload compact crosscheck receipt
+        uses: actions/upload-artifact@v7
+        with:
+          name: class-camb-baseline-${{ github.run_id }}
+          path: |
+            artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json
+            artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
+          if-no-files-found: error
+          retention-days: 30
