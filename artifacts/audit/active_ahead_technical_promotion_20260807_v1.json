@@ -1,0 +1,96 @@
+{
+  "schema": "rll.audit.active_ahead_technical_promotion.v1",
+  "generated_utc": "2026-08-07T21:05:00Z",
+  "baseline": {
+    "branch": "main",
+    "sha": "ef250a0d03f8834a40624027a36cec2f128d3075"
+  },
+  "integration_branch": "audit/promote-active-ahead-technical-20260807-v1",
+  "policy": {
+    "require_ahead_content": true,
+    "require_technical_progress": true,
+    "exclude_already_promoted_equivalent_content": true,
+    "exclude_superseded_work": true,
+    "exclude_docs_only_from_technical_promotion": true,
+    "allow_workflow_overwrite": false,
+    "allow_directory_moves": false,
+    "allow_deletions": false,
+    "claim_allowed": false
+  },
+  "excluded_false_positive_ahead": [
+    {
+      "branch": "feat/rll-joint-real-model-bridge-v2-20260731",
+      "ahead_by": 10,
+      "reason": "PR_617_ALREADY_MERGED; commit ancestry differs but technical content was promoted",
+      "pr": 617
+    },
+    {
+      "branch": "fix/pantheon-full-covariance-readiness-v2-20260731",
+      "ahead_by": 4,
+      "reason": "PR_618_ALREADY_MERGED; commit ancestry differs but technical content was promoted",
+      "pr": 618
+    }
+  ],
+  "excluded_superseded": [
+    {
+      "pr": 593,
+      "reason": "explicitly superseded by PR_597",
+      "successor_pr": 597,
+      "successor_merged": true
+    }
+  ],
+  "excluded_nontechnical_or_obsolete": [
+    {
+      "pr": 402,
+      "reason": "documentation/manuscript only; not selected by technical-progress filter"
+    },
+    {
+      "pr": 387,
+      "reason": "no auditable substantive technical delivery"
+    },
+    {
+      "prs": [55, 57, 58],
+      "reason": "historical documentation/editorial-only work"
+    }
+  ],
+  "recent_branches_with_no_ahead_delta": [
+    "audit/rll-execution-queue-20260806-v1",
+    "audit/rll-modern-observation-gates-20260807-v1",
+    "feat/effective-execution-queue-v1-20260806",
+    "feat/scientific-cycle-closure-v1-20260801",
+    "agent/hotfix-structure-d-real-profile-test-20260731",
+    "agent/real-project-source-seed-v1-20260731",
+    "agent/real-project-source-seed-v1-clean-20260731",
+    "agent/real-project-source-seed-v1-isolated-20260731",
+    "codex/federation-role-adapter-v1-20260731",
+    "feat/pantheon-covariance-materialization-v1-20260731",
+    "feat/pantheon-full-covariance-fit-v1-20260731",
+    "feat/pantheon-full-fit-receipt-v1-20260731",
+    "feat/rll-evidence-runner-v1-20260731",
+    "fix/fase24-1-orchestrator-artifacts-20260731"
+  ],
+  "promoted_source": {
+    "pr": 385,
+    "branch": "codex/refactor-yml-workflow-and-directory-structure-zes1e1",
+    "head_sha": "2c065f3b182cc3142aea2ec658dff25433193d20",
+    "ahead_by": 5,
+    "state": "closed_unmerged",
+    "selection": "only the still-missing additive DESI DR2 materialization/custody delta documented by current main"
+  },
+  "promoted_delta": {
+    "subset_mean_cov_files_added": 14,
+    "custody_manifest_added": true,
+    "fail_closed_materializer_added": true,
+    "materialization_test_added": true,
+    "status_docs_reconciled": true,
+    "existing_workflows_modified": false,
+    "existing_code_deleted": false
+  },
+  "token_vazio": [
+    "TOKEN_VAZIO_HEAVY_ARCHIVE_NOT_REQUIRED_FOR_COMMITTED_SMALL_LIKELIHOOD",
+    "TOKEN_VAZIO_FUTURE_WORKFLOW_EXTRACTION_REQUIRES_FRESH_ISOLATED_DIFF"
+  ],
+  "f_ok": "missing technical DESI DR2 subset/custody materialization from PR385 is isolated without branch-level regression",
+  "f_gap": "scientific model-selection and independent validation gates remain separate and claim_allowed=false",
+  "f_next": "run branch CI/tests and merge only if the current-main comparison remains additive/non-regressive"
+}
