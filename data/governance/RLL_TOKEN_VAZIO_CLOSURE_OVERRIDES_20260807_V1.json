@@ -1,8 +1,25 @@
 {
   "schema": "rll.token_vazio_closure_overrides.v1",
   "claim_allowed": false,
-  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing, modern Dovekie three-model nested evidence, and the non-destructive rll/release refresh.",
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for legacy Bayes narrowing, modern Dovekie three-model nested evidence, finite CPL wa lower-bound closure, DESI boundary narrowing, and the non-destructive rll/release refresh.",
   "overrides": [
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+      "priority": "P0",
+      "target_state": "RESOLVED",
+      "classification": "FINITE_SN_ONLY_PROFILE_LOWER_BOUND_MATERIALIZED",
+      "evidence_path": "artifacts/science/sn_modern/RLL_DOVEKIE_CPL_WA_LOWER_BOUND_RECEIPT_20260807_RUN31227378178.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_FINITE_LOWER_95_BOUND"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "result.all_starts_converged", "op": "eq", "value": true},
+        {"path": "result.excluded_low_delta_chi2", "op": "truthy"},
+        {"path": "result.included_high_delta_chi2", "op": "truthy"},
+        {"path": "result.bracket_width", "op": "truthy"}
+      ],
+      "resolved_fact": "The Dovekie SN-only CPL lower 95% profile crossing is finite and was bracketed at wa≈-12.60645 with bracket width 0.00586. This closes the numerical lower-profile token under the declared parameter box; w0 hitting its -0.3 bound in the tail limits physical interpretation.",
+      "successors": []
+    },
     {
       "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
       "priority": "P0",
@@ -54,6 +71,28 @@
       "target_state": "OPEN_MIXED",
       "classification": "JOINT_MULTI_PROBE_EVIDENCE_REQUIRES_CLOSED_COMPONENT_GATES",
       "next_action": "Construct a joint LCDM/CPL/RLL nested likelihood only after official DESI reproduction and applicable CMB/LSS/H0 component gates close. Do not multiply Pantheon+ and Dovekie as independent overlapping SN likelihoods."
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "priority": "P0",
+      "target_state": "REDUCED",
+      "classification": "LOCAL_13_OBSERVABLE_SETUP_EXISTS_OFFICIAL_JOINT_GATE_REMAINS",
+      "evidence_path": "artifacts/science/desi/RLL_DESI_DR2_REPRODUCTION_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PARTIAL_LOCAL_SETUP_NOT_OFFICIAL_JOINT_REPRODUCTION"},
+        {"path": "existing_local_setup.n_observables", "op": "eq", "value": 13},
+        {"path": "boundary.official_joint_crossblock_covariance_reproduced", "op": "eq", "value": false},
+        {"path": "boundary.block_diagonal_or_local_setup_must_not_be_called_official_joint", "op": "eq", "value": true}
+      ],
+      "resolved_fact": "The repository already contains a real 13-observable DESI DR2 BAO comparison setup, so the generic notion that all DESI DR2 work is absent is stale. The existing local result favors LCDM over RLL; what remains unclosed is reproduction of official joint/cross-block likelihood products and LCDM/CPL reference tolerances.",
+      "successors": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "priority": "P0",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "OFFICIAL_JOINT_CROSSBLOCK_PRODUCTS_REQUIRED",
+      "next_action": "Materialize immutable official DESI DR2 joint/cross-block products or likelihood release and reproduce official LCDM/CPL reference outputs within declared tolerance before interpreting RLL deltas."
     },
     {
       "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
