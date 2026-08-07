@@ -54,7 +54,7 @@ jobs:
           gradle-version: '8.10.2'
 
       - name: Set up Android SDK and NDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android build components
         run: |
