@@ -30,7 +30,7 @@ jobs:
             "numpy>=1.26,<2" "pytest>=8" "camb>=1.6,<2" "classy>=3.3,<4"
       - name: Structural tests
         run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
-      - name: Execute lmax convergence sweep
+      - name: Execute lmax and rdrag convergence sweep
         id: compare
         continue-on-error: true
         run: |
@@ -44,7 +44,7 @@ jobs:
             if [ "$code" -ne 0 ]; then rc="$code"; fi
           done
           exit "$rc"
-      - name: Summarize lmax convergence
+      - name: Summarize lmax and rdrag convergence
         if: always()
         run: |
           python - <<'PY'
@@ -57,15 +57,20 @@ jobs:
               d=json.loads(p.read_text())
               print('lmax=', lmax, 'state=', d['state'])
               for model, md in d['models'].items():
-                  metric=md['metrics']['Cl_TT_dimensionless']
-                  worst=max(metric['points'], key=lambda x:x['relative_error'])
-                  print(model, 'TT pass=',metric['pass'], 'max_rel=',metric['max_relative_error'], 'worst=',worst)
+                  tt=md['metrics']['Cl_TT_dimensionless']
+                  tt_worst=max(tt['points'], key=lambda x:x['relative_error'])
+                  rd=md['metrics']['r_drag_Mpc']
+                  rd_row=rd['points'][0]
+                  approx=md['rd_approximation_diagnostic']
+                  print(model, 'TT pass=',tt['pass'], 'TT max_rel=',tt['max_relative_error'], 'TT worst=',tt_worst)
+                  print(model, 'rdrag pass=',rd['pass'], 'rdrag rel=',rd_row['relative_error'], 'CAMB=',rd_row['CAMB'], 'CLASS=',rd_row['CLASS'])
+                  print(model, 'approx=',approx['repository_approximation_Mpc'], 'approx_vs_CAMB=',approx['relative_error_vs_CAMB'], 'approx_vs_CLASS=',approx['relative_error_vs_CLASS'])
           PY
       - name: Upload convergence receipts
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: class-camb-lmax-convergence-${{ github.run_id }}
+          name: class-camb-lmax-rdrag-convergence-${{ github.run_id }}
           path: artifacts/science/perturbations/CLASS_CAMB_LMAX_*.json
           if-no-files-found: error
           retention-days: 30
@@ -76,6 +81,11 @@ jobs:
           import json
           from pathlib import Path
           d=json.loads(Path('artifacts/science/perturbations/CLASS_CAMB_LMAX_1200.json').read_text())
-          if d['state'] != 'VERIFIED_BASELINE_ENGINE_CROSSCHECK':
+          if d['state'] != 'VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG':
               raise SystemExit(3)
+          for model in ('lcdm', 'cpl'):
+              if not d['models'][model]['metrics']['r_drag_Mpc']['pass']:
+                  raise SystemExit(4)
+          if d['claim_allowed'] is not False or d['publication_ready'] is not False:
+              raise SystemExit(5)
           PY
