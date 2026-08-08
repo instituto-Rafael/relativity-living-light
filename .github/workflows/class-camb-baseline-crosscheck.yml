@@ -6,6 +6,8 @@ on:
     paths:
       - "scripts/crosscheck_class_camb_baselines.py"
       - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - "tools/rll_perturbation_barotropic_candidate_v1.py"
+      - "tests/test_rll_perturbation_barotropic_candidate_v1.py"
       - ".github/workflows/class-camb-baseline-crosscheck.yml"
 
 permissions:
@@ -49,8 +51,31 @@ jobs:
           print("classy", importlib.metadata.version("classy"))
           PY
 
-      - name: Run structural comparator tests
-        run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
+      - name: Run structural comparator and closure-candidate tests
+        run: |
+          python -m pytest -q \
+            tests/test_class_camb_baseline_crosscheck_v1.py \
+            tests/test_rll_perturbation_barotropic_candidate_v1.py
+
+      - name: Execute background-derived barotropic closure falsifier
+        run: |
+          set -euo pipefail
+          python tools/rll_perturbation_barotropic_candidate_v1.py \
+            --output artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["resolved_token"] is None
+          assert d["reduces_token"] == "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"
+          assert d["state"] in {"FALSIFIED_AS_GLOBAL_DEFAULT", "CANDIDATE_SURVIVES_DECLARED_SWEEP"}
+          print(json.dumps({"state": d["state"], "cases": len(d["sweep"]["cases"]), "claim_allowed": False}, sort_keys=True))
+          PY
+          sha256sum artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json \
+            > artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.sha256
 
       - name: Execute LCDM and CPL crosscheck
         id: engine_run
@@ -92,7 +117,7 @@ jobs:
           sha256sum artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
             > artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
 
-      - name: Upload compact crosscheck receipt
+      - name: Upload compact crosscheck and closure-candidate receipts
         if: always()
         uses: actions/upload-artifact@v7
         with:
@@ -100,6 +125,8 @@ jobs:
           path: |
             artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json
             artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
+            artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json
+            artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.sha256
           if-no-files-found: error
           retention-days: 30
 
