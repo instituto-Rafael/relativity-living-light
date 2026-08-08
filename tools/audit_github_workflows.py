@@ -45,6 +45,43 @@ UPLOAD_ARTIFACT_RE = re.compile(
     r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
 )
 CHECKOUT_RE = re.compile(r"actions/checkout@(?:v\d+|[0-9a-fA-F]{40})(?:\s|$)")
+ACTION_USES_RE = re.compile(
+    r"(?m)^\s*(?:-\s*)?uses:\s*actions/(?P<action>[A-Za-z0-9_.-]+)@"
+    r"(?P<ref>v\d+|[0-9a-fA-F]{40})\s*(?:#.*)?$"
+)
+
+
+def action_refs(text: str, action: str) -> list[str]:
+    """Return provider refs from actual YAML `uses:` lines for one GitHub action."""
+    return [
+        match.group("ref")
+        for match in ACTION_USES_RE.finditer(text)
+        if match.group("action") == action
+    ]
+
+
+def action_majors(text: str, action: str) -> list[int]:
+    """Return explicit vN majors for an action, ignoring immutable SHA pins."""
+    majors: list[int] = []
+    for ref in action_refs(text, action):
+        if ref.startswith("v") and ref[1:].isdigit():
+            majors.append(int(ref[1:]))
+    return majors
+
+
+def has_checkout_action(text: str) -> bool:
+    """Detect a real actions/checkout `uses:` reference, versioned or SHA-pinned."""
+    return bool(action_refs(text, "checkout"))
+
+
+def has_supported_upload_artifact(text: str) -> bool:
+    """Accept upload-artifact v4-v7 or an immutable 40-hex commit pin."""
+    for ref in action_refs(text, "upload-artifact"):
+        if len(ref) == 40 and all(char in "0123456789abcdefABCDEF" for char in ref):
+            return True
+        if ref.startswith("v") and ref[1:].isdigit() and 4 <= int(ref[1:]) <= 7:
+            return True
+    return False
 
 
 def workflow_text(path: Path) -> str:
@@ -73,9 +110,9 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if CHECKOUT_RE.search(text) and "persist-credentials: false" not in text:
+        if has_checkout_action(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
-        if not UPLOAD_ARTIFACT_RE.search(text):
+        if not has_supported_upload_artifact(text):
             errors.append(
                 f"{rel}: real workflow must upload artifacts with a supported explicit "
                 "actions/upload-artifact major (v4-v7) or full immutable SHA"
