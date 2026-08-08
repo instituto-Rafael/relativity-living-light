@@ -139,10 +139,9 @@ function validateManifest(candidate) {
   if (!candidate?.manifest_id) errors.push("manifest_id ausente");
   if (!candidate?.experiment?.id) errors.push("experiment.id ausente");
   if (!candidate?.experiment?.model) errors.push("experiment.model ausente");
-  if (typeof candidate?.claim?.allowed !== "boolean") errors.push("claim.allowed deve ser booleano explícito");
+  if (candidate?.claim?.allowed !== false) errors.push("claim.allowed deve ser false; a UI não possui autoridade de promoção");
   if (!candidate?.claim?.state) errors.push("claim.state ausente");
   if (!Array.isArray(candidate?.evidence)) errors.push("evidence deve ser uma lista");
-  if (candidate?.claim?.allowed === true && candidate?.claim?.state !== "PASS") errors.push("claim.allowed=true exige claim.state=PASS");
   for (const item of candidate?.evidence || []) {
     if (!item.id || !item.title || !item.state) errors.push("cada evidência exige id, title e state");
     if (!STATUS[item.state]) errors.push(`estado de evidência não reconhecido: ${text(item.state)}`);
