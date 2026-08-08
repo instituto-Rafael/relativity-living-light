@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.github.io/rll/schemas/rll-experiment-manifest.v1.schema.json",
+  "title": "RLL Experiment Manifest V1",
+  "description": "Structural contract for RLL Studio experiment transport; visualization and interoperability do not authorize scientific claims.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "manifest_id", "manifest_state", "experiment", "execution", "claim", "evidence"],
+  "properties": {
+    "schema_version": { "const": "rll-experiment-manifest/1.0.0" },
+    "manifest_id": { "type": "string", "minLength": 1 },
+    "manifest_state": { "$ref": "#/$defs/state" },
+    "demo": { "type": "boolean" },
+    "summary": { "type": "string" },
+    "experiment": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "name", "model", "dataset", "parameters"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string" },
+        "mode": { "type": "string" },
+        "model": { "type": "string", "minLength": 1 },
+        "comparator": { "type": "string" },
+        "dataset": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "version": { "type": "string" },
+            "hash": { "type": "string" }
+          }
+        },
+        "parameters": { "type": "object" }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["state"],
+      "properties": {
+        "state": { "$ref": "#/$defs/state" },
+        "method": { "type": "string" },
+        "environment": { "type": "string" },
+        "commit": { "type": "string" },
+        "duration_ms": { "type": ["number", "null"], "minimum": 0 },
+        "receipt": { "type": "string" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "state", "reason"],
+      "properties": {
+        "allowed": { "const": false },
+        "state": { "$ref": "#/$defs/state" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "narrative": { "type": "string" },
+        "metrics": { "type": "array", "items": { "type": "object" } },
+        "parameters": { "type": "array", "items": { "type": "object" } },
+        "comparison": { "type": "object" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["id", "title", "state", "summary", "limitation", "next_gate"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "state": { "$ref": "#/$defs/state" },
+          "summary": { "type": "string" },
+          "source": { "type": "string" },
+          "test": { "type": "string" },
+          "receipt": { "type": "string" },
+          "limitation": { "type": "string" },
+          "next_gate": { "type": "string" }
+        }
+      }
+    },
+    "interoperability": { "type": "array", "items": { "type": "object" } },
+    "library": { "type": "array", "items": { "type": "object" } },
+    "provenance": { "type": "object" },
+    "gaps": { "type": "object" }
+  },
+  "$defs": {
+    "state": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "BLOCKED", "OBSERVED", "OBSERVED_LIMITED", "TOKEN_VAZIO", "NOT_MEASURED", "UNAVAILABLE", "INVALIDATED"]
+    }
+  }
+}
