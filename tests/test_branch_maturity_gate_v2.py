@@ -1,5 +1,10 @@
 from pathlib import Path
-from tools.branch_maturity_gate_v2 import evaluate, file_has_claim_true, valid_transition
+from tools.branch_maturity_gate_v2 import (
+    contains_claim_true,
+    evaluate,
+    file_has_claim_true,
+    valid_transition,
+)
 
 
 def test_topology():
