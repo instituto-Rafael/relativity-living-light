@@ -1,0 +1,100 @@
+name: ACT DR6 Local Posterior Preflight
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/rll_act_dr6_posterior_contract_v1.py"
+      - "tests/test_rll_act_dr6_posterior_contract_v1.py"
+      - ".github/workflows/act-dr6-posterior-preflight.yml"
+      - ".github/workflow-contract.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: act-dr6-posterior-preflight-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  ACT_REFERENCE_URL: https://lambda.gsfc.nasa.gov/data/act/chains/lcdm/actlite_lcdm_camb.tar.gz
+  CLAIM_BOUNDARY: "This preflight freezes the official ACT DR6.02 LCDM posterior configuration/reference point. It does not execute or validate a local posterior and has no RLL CMB claim effect."
+
+jobs:
+  freeze-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout reviewed revision
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded parser dependency
+        run: python -m pip install --disable-pip-version-check "PyYAML==6.0.2"
+
+      - name: Run posterior-contract unit tests
+        run: python -m unittest -v tests.test_rll_act_dr6_posterior_contract_v1
+
+      - name: Download and extract official ACT DR6.02 LCDM reference archive
+        run: |
+          set -euo pipefail
+          mkdir -p .act-reference/extracted artifacts/science/act/runtime
+          curl --fail --location --retry 3 --retry-delay 2 \
+            --output .act-reference/actlite_lcdm_camb.tar.gz \
+            "$ACT_REFERENCE_URL"
+          sha256sum .act-reference/actlite_lcdm_camb.tar.gz \
+            > .act-reference/actlite_lcdm_camb.tar.gz.sha256
+          tar -xzf .act-reference/actlite_lcdm_camb.tar.gz -C .act-reference/extracted
+
+      - name: Freeze official priors, MCMC controls, covariance and reference point
+        run: |
+          set -euo pipefail
+          python tools/rll_act_dr6_posterior_contract_v1.py \
+            --extracted .act-reference/extracted \
+            --source-url "$ACT_REFERENCE_URL" \
+            --output artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "OFFICIAL_ACT_DR6_LCDM_POSTERIOR_CONTRACT_FROZEN"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["reference_chains"]["chain_file_count"] == 4
+          assert d["reference_chains"]["total_noncomment_rows"] == 87427
+          assert d["parameters"]["count_sampled"] > 0
+          assert d["components"]["theory_names"] == ["camb"]
+          assert "act_dr6_cmbonly.ACTDR6CMBonly" in d["components"]["likelihood_names"]
+          assert "planck_2018_lowl.EE_sroll2" in d["components"]["likelihood_names"]
+          assert d["resolved_token"] is None
+          assert d["reduces_token"] == "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
+          assert d["local_reproduction_contract"]["must_report_local_Rminus1"] is True
+          print(json.dumps({
+              "sampled_parameters": d["parameters"]["sampled"],
+              "mcmc_contract": d["mcmc_contract"],
+              "best_observed_minuslogpost": d["reference_chains"]["best_observed_minuslogpost"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum \
+            artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json \
+            .act-reference/actlite_lcdm_camb.tar.gz \
+            > artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CHECKSUMS.sha256
+
+      - name: Upload frozen posterior preflight evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: act-dr6-posterior-preflight-${{ github.run_id }}
+          path: |
+            artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json
+            artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CHECKSUMS.sha256
+            .act-reference/actlite_lcdm_camb.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 30
