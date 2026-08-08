@@ -13,6 +13,7 @@ on:
       - "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_*.json"
       - "artifacts/science/h0/RLL_H0_RD_BOLTZMANN_RECONCILIATION_*.json"
       - "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_*.json"
+      - "artifacts/science/external/**"
       - "artifacts/audit/RLL_ALL_REFS_TOPOLOGY_RECONCILIATION_*.json"
       - "tools/rll_token_vazio_reconcile*.py"
       - "tests/test_rll_token_vazio_reconcile*.py"
