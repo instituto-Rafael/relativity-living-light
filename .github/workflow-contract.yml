@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-07"
+updated_at: "2026-08-08"
 
 inventory:
-  active_workflows: 67
+  active_workflows: 68
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -179,6 +179,12 @@ documented_checks:
     - context: Verify workflow contract inventory
       workflow: .github/workflows/workflow-contract-sync.yml
       job_id: verify-contract
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: ACT DR6 CMB-only materialization
+      workflow: .github/workflows/act-dr6-cmbonly-materialization.yml
+      job_id: materialize-reference
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
