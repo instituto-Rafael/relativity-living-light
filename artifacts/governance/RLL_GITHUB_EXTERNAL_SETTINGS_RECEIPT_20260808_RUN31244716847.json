@@ -1,0 +1,67 @@
+{
+  "schema": "rll.github_external_settings_evidence.v1",
+  "state": "VERIFIED_EXTERNAL_SETTINGS_READONLY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "publication_effect": "NONE",
+  "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source": {
+    "workflow": "GitHub Platform Assurance V2",
+    "run_id": 31244716847,
+    "job_id": 93071296551,
+    "source_head_sha": "d461247f90995a0480fd679b4929d5b9f7f9f3a8",
+    "artifact_id": 9018116113,
+    "artifact_zip_sha256": "c5614a76c12885d5555d150ec9c1b60ebcd34a7673e62f8a9dac6abdfb4a8972",
+    "receipt_sha256": "3b71015c940b3651835df6e7f48fb6a7e7dcd7bed0b4392b6ed3ffb74e4967f6",
+    "api": "GitHub REST API 2022-11-28",
+    "authenticated": true,
+    "read_only": true,
+    "secret_material_persisted": false
+  },
+  "rulesets": {
+    "http_status": 200,
+    "observed": true,
+    "ruleset_count": 0,
+    "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "branches": [
+    {
+      "branch": "main",
+      "metadata_http_status": 200,
+      "protected": false,
+      "metadata_response_sha256": "079af8d1e6bf78dea52deaf524a4d6d82e802d5d50dbb2694e6be14b02383835"
+    },
+    {
+      "branch": "rll/release",
+      "metadata_http_status": 200,
+      "protected": false,
+      "metadata_response_sha256": "105bc99fdd74a03879587f149003a2fff89b02240c248098ac16a337eee5a408"
+    },
+    {
+      "branch": "rll/integration",
+      "metadata_http_status": 200,
+      "protected": false,
+      "metadata_response_sha256": "1fc33160b6d0118faaf3f8a0e934135e3d4a2333c5521d1829438652122f3b2c"
+    },
+    {
+      "branch": "rll/lab",
+      "metadata_http_status": 200,
+      "protected": false,
+      "metadata_response_sha256": "f508739875f29b60da0a9d844b6ad262aa745c0039ad67dbf557fe78e42a9354"
+    }
+  ],
+  "summary": {
+    "branch_count": 4,
+    "branch_metadata_complete": true,
+    "protected_branch_count": 0,
+    "unprotected_branch_count": 4,
+    "all_declared_branches_unprotected": true,
+    "rulesets_observed": true,
+    "ruleset_count": 0,
+    "resolution_eligible": true
+  },
+  "resolved_fact": "The previously unknown external GitHub settings are now observed: main, rll/release, rll/integration and rll/lab all report protected=false, and the repository rulesets endpoint returns HTTP 200 with zero rulesets. The uncertainty about settings is resolved negatively; platform-level enforcement is absent and must remain explicit as a successor governance gap.",
+  "successor_token": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+  "boundary": "Resolving uncertainty about settings does not mean governance is adequate. Repository-local CI gates remain bypassable by direct writes until platform enforcement is configured and re-observed."
+}
