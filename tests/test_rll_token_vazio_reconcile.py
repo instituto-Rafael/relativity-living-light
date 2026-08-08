@@ -24,7 +24,7 @@ def effective_rules():
 
 
 def current_receipt():
-    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-07T23:42:00Z")
+    return reconcile(ROOT, load_json(INPUT), effective_rules(), "2026-08-08T00:15:00Z")
 
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
@@ -32,17 +32,19 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 26
-    assert receipt["summary"]["terminal_resolved"] == 7
-    assert receipt["summary"]["reduced_generic"] == 5
+    assert receipt["summary"]["input_tokens"] == 30
+    assert receipt["summary"]["terminal_resolved"] == 9
+    assert receipt["summary"]["reduced_generic"] == 7
     assert receipt["summary"]["open"] == 14
 
     for token in (
         "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
         "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
         "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+        "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
         "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
         "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+        "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
     ):
         assert token in receipt["reduced_tokens"]
         assert token not in receipt["canonical_open_tokens"]
@@ -54,6 +56,8 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
         "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+        "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
         "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
     ):
         assert token in receipt["terminal_tokens"]
@@ -63,16 +67,27 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
         "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
         "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+        "TOKEN_VAZIO_PHYSICAL_EXECUTION",
     ):
         assert token in receipt["open_by_priority"]["P0"]
 
     for token in (
-        "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+        "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
+        "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
         "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
         "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
-        "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+        "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+        "TOKEN_VAZIO_EXTERNAL_SETTINGS",
     ):
         assert token in receipt["open_by_priority"]["P1"]
+
+    for token in (
+        "TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS",
+        "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION",
+        "TOKEN_VAZIO_UTM185_REAL_MODEL_TRAINING",
+    ):
+        assert token in receipt["open_by_priority"]["P2"]
 
     assert not any(r["state"] == "OPEN_EVIDENCE_MISSING" for r in receipt["results"])
 
@@ -218,7 +233,20 @@ def test_desi_generic_gap_is_reduced_not_falsely_called_official():
     assert receipt["claim_allowed"] is False
 
 
-def test_class_camb_generic_gap_reduces_without_inventing_rll_perturbations():
+def test_act_dr6_availability_reduces_to_pinned_local_reproduction():
+    receipt = current_receipt()
+    rows = {row["token"]: row for row in receipt["results"]}
+    generic = rows["TOKEN_VAZIO_ACT_DR6_LIKELIHOOD"]
+    successor = rows["TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION"]
+
+    assert generic["state"] == "REDUCED"
+    assert generic["evidence_verified"] is True
+    assert "public executable ACT DR6 CMB-only Cobaya likelihood" in generic["resolved_fact"]
+    assert successor["state"] == "OPEN_INTERNAL"
+    assert receipt["claim_allowed"] is False
+
+
+def test_class_camb_generic_gap_reduces_and_standard_baseline_is_closed():
     receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     generic = rows["TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK"]
@@ -228,23 +256,41 @@ def test_class_camb_generic_gap_reduces_without_inventing_rll_perturbations():
 
     assert generic["state"] == "REDUCED"
     assert generic["evidence_verified"] is True
-    assert "homogeneous background" in generic["resolved_fact"]
-    assert baseline["state"] == "OPEN_INTERNAL"
+    assert "internal GR matter-growth approximation" in generic["resolved_fact"]
+    assert baseline["state"] == "RESOLVED"
+    assert baseline["evidence_verified"] is True
+    assert "fell to 0.9971%" in baseline["resolved_fact"]
+    assert baseline["successors"] == []
     assert closure["state"] == "OPEN_MIXED"
     assert implementation["state"] == "OPEN_MIXED"
     assert receipt["claim_allowed"] is False
 
 
-def test_h0_generic_gap_reduces_to_executable_provenance_contract():
+def test_h0_generic_gap_reduces_to_converged_execution_with_two_open_successors():
     receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     generic = rows["TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD"]
-    successor = rows["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+    execution = rows["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+    convergence = rows["TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE"]
 
     assert generic["state"] == "REDUCED"
     assert generic["evidence_verified"] is True
     assert "six-cell H0/r_d fairness matrix" in generic["resolved_fact"]
-    assert successor["state"] == "OPEN_MIXED"
+
+    assert execution["state"] == "REDUCED"
+    assert execution["evidence_verified"] is True
+    assert "all 24 selected best fits converged" in execution["resolved_fact"]
+    assert "+22.51 to +34.79" in execution["resolved_fact"]
+    assert set(execution["successors"]) == {
+        "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+    }
+
+    assert convergence["state"] == "RESOLVED"
+    assert convergence["evidence_verified"] is True
+    assert convergence["successors"] == []
+    assert rows["TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE"]["state"] == "OPEN_EXTERNAL"
+    assert rows["TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"]["state"] == "OPEN_MIXED"
     assert receipt["claim_allowed"] is False
 
 

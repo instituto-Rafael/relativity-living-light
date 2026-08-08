@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: actions/setup-python@v7
@@ -80,7 +80,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout for explicit opt-in commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Download pipeline artifact
         uses: actions/download-artifact@v8
         with:

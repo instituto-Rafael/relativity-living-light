@@ -38,7 +38,7 @@ jobs:
       ANDROID_CMAKE_VERSION: '3.22.1'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 

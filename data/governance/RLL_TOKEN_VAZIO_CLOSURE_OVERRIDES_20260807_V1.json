@@ -1,7 +1,7 @@
 {
   "schema": "rll.token_vazio_closure_overrides.v1",
   "claim_allowed": false,
-  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for SN profile closure, Bayes, DESI, CLASS/CAMB decomposition, H0/r_d execution with explicit convergence boundary, ACT DR6 public-likelihood availability, and release refresh.",
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for SN profile closure, Bayes, DESI, verified LCDM/CPL CLASS-CAMB baseline agreement, RLL perturbation decomposition, final H0/r_d 24-of-24 optimizer convergence, ACT DR6 public-likelihood availability, and release refresh.",
   "overrides": [
     {
       "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
@@ -112,9 +112,19 @@
     {
       "token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
       "priority": "P1",
-      "target_state": "OPEN_INTERNAL",
-      "classification": "STANDARD_MODEL_ENGINE_CROSSCHECK_EXECUTABLE",
-      "next_action": "Run pinned CLASS and CAMB on identical LCDM/CPL parameter vectors and compare H(z), distances, linear P(k) and unlensed TT under fixed tolerances."
+      "target_state": "RESOLVED",
+      "classification": "STANDARD_MODEL_CLASS_CAMB_BASELINE_AGREEMENT_VERIFIED",
+      "evidence_path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_BASELINE_ENGINE_CROSSCHECK"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "scope.computed_lmax", "op": "eq", "value": 1000},
+        {"path": "cutoff_diagnostic.tolerance_unchanged", "op": "eq", "value": 0.08},
+        {"path": "max_relative_errors.LCDM.Cl_TT_dimensionless", "op": "eq", "value": 0.00997107964104779},
+        {"path": "max_relative_errors.CPL.Cl_TT_dimensionless", "op": "eq", "value": 0.008861994883696035}
+      ],
+      "resolved_fact": "Pinned CAMB 1.6.6 and CLASS/classy 3.3.4.0 agree for the declared LCDM/CPL baseline observables within unchanged tolerances when ell=700 is evaluated away from the solver cutoff. The prior 8.6568% LCDM TT mismatch at ell=700 fell to 0.9971% with computed lmax=1000; background and linear P(k) agreement are substantially tighter. This closes standard-engine plumbing only, not RLL perturbations.",
+      "successors": []
     },
     {
       "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
@@ -148,24 +158,36 @@
       "token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
       "priority": "P1",
       "target_state": "REDUCED",
-      "classification": "SIX_CELLS_EXECUTED_BUT_CONVERGENCE_AND_PROVENANCE_REMAIN",
-      "evidence_path": "artifacts/science/h0/RLL_H0_RD_EXECUTION_RECEIPT_20260808_RUN31229187067.json",
+      "classification": "SIX_CELLS_EXECUTED_AND_CONVERGED_PROVENANCE_REMAINS",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json",
       "assertions": [
-        {"path": "state", "op": "eq", "value": "VERIFIED_EXECUTED_CONVERGENCE_INCOMPLETE"},
-        {"path": "execution.executed_cells", "op": "eq", "value": 6},
-        {"path": "execution.total_model_fits", "op": "eq", "value": 24},
-        {"path": "execution.finite_best_objectives", "op": "eq", "value": 24},
-        {"path": "epistemic_boundary.all_24_best_fits_converged", "op": "eq", "value": false}
+        {"path": "state", "op": "eq", "value": "VERIFIED_ALL_24_BEST_FITS_CONVERGED"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "execution.cells", "op": "eq", "value": 6},
+        {"path": "execution.total_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.converged_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.all_best_fits_converged", "op": "eq", "value": true},
+        {"path": "epistemic_boundary.primary_external_h0_source_receipts_frozen", "op": "eq", "value": false},
+        {"path": "epistemic_boundary.derived_rd_is_full_boltzmann_recombination_solution", "op": "eq", "value": false}
       ],
-      "resolved_fact": "The complete 6×4 H0/r_d matrix was numerically executed and all 24 best objectives were finite, but only 9/24 selected fits reported formal convergence. Execution itself is no longer empty; convergence, primary-prior custody and full-Boltzmann r_d remain explicit successors.",
-      "successors": ["TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE", "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE", "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"]
+      "resolved_fact": "The full 6×4 H0/r_d sensitivity matrix was executed under the hardened optimizer and all 24 selected best fits converged. Across the six cells RLL-minus-CPL objective deltas remain positive (+22.51 to +34.79). Primary H0 source custody and full-Boltzmann r_d remain explicit successors, so no H0-tension or model-evidence claim is promoted.",
+      "successors": ["TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE", "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"]
     },
     {
       "token": "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
       "priority": "P1",
-      "target_state": "OPEN_INTERNAL",
-      "classification": "ALL_24_BEST_FITS_MUST_CONVERGE",
-      "next_action": "Rerun the six-cell matrix with the hardened L-BFGS-B plus Powell fallback and require every selected best fit to be converged and objective-consistent."
+      "target_state": "RESOLVED",
+      "classification": "ALL_24_BEST_FITS_CONVERGED",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_ALL_24_BEST_FITS_CONVERGED"},
+        {"path": "execution.total_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.converged_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.all_best_fits_converged", "op": "eq", "value": true},
+        {"path": "epistemic_boundary.optimization_convergence_closed", "op": "eq", "value": true}
+      ],
+      "resolved_fact": "The hardened six-cell H0/r_d run selected formally converged best fits in all 24 model/cell combinations. The optimizer-convergence uncertainty is closed independently of the still-open source-provenance and full-Boltzmann r_d questions.",
+      "successors": []
     },
     {
       "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
