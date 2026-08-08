@@ -40,16 +40,21 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install pinned scientific runtime
+      - name: Install upstream-date scientific runtime
         run: |
           set -euo pipefail
+          # Reconstruct the latest package line available when the audited ACT
+          # upstream commit was published (2025-03-28). The previous controlled
+          # 2026 stack executed the likelihood but missed the upstream reference
+          # values, so this experiment changes dependencies only. Data, ACT SHA,
+          # cosmological parameters and ±0.01 assertions remain unchanged.
           python -m pip install --disable-pip-version-check \
-            "numpy==1.26.4" \
-            "scipy==1.17.1" \
-            "camb==1.6.6" \
-            "sacc==2.4" \
-            "cobaya==3.6.2" \
-            "pytest==9.1.1"
+            "numpy==2.2.4" \
+            "scipy==1.15.2" \
+            "camb==1.5.9" \
+            "sacc==0.16" \
+            "cobaya==3.5.6" \
+            "pytest==8.3.5"
           python - <<'PY'
           import importlib.metadata as m
           for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest"):
@@ -80,17 +85,37 @@ jobs:
             > act_dr6_data_files.sha256
           test -s act_dr6_data_files.sha256
 
-      - name: Run pinned upstream ACT tests
+      - name: Run pinned upstream ACT tests and preserve diagnostics
+        id: upstream_tests
         run: |
-          set -euo pipefail
+          set +e
           python -m pytest -q .act-upstream/act_dr6_cmbonly/tests/test_act.py \
             --junitxml=act_dr6_pytest.xml \
             2>&1 | tee act_dr6_pytest.log
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload upstream-test diagnostics before enforcement
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: act-dr6-upstream-test-diagnostics-${{ github.run_id }}
+          path: |
+            act_dr6_pytest.xml
+            act_dr6_pytest.log
+            act_dr6_data_files.sha256
+            act_upstream_tree.txt
+            act_upstream_lstree.sha256
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Reproduce pinned upstream reference likelihood values
+        id: reference_values
+        if: steps.upstream_tests.outputs.exit_code == '0'
         run: |
-          set -euo pipefail
-          python - <<'PY'
+          set +e
+          python - <<'PY' 2>&1 | tee act_dr6_reference.log
           import json
           import math
           from cobaya.model import get_model
@@ -148,15 +173,30 @@ jobs:
               "absolute_error_ACT_PlanckActCut": abs(joint_loglike + 962.27),
               "tolerance": 1e-2,
           }
-          assert math.isclose(act_loglike, -395.48, abs_tol=1e-2)
-          assert math.isclose(joint_loglike, -962.27, abs_tol=1e-2)
           with open("act_dr6_reference_loglikes.json", "w", encoding="utf-8") as handle:
               json.dump(result, handle, indent=2, sort_keys=True)
               handle.write("\n")
           print(json.dumps(result, sort_keys=True))
+          assert math.isclose(act_loglike, -395.48, abs_tol=1e-2)
+          assert math.isclose(joint_loglike, -962.27, abs_tol=1e-2)
           PY
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload reference-value diagnostics before enforcement
+        if: always() && steps.upstream_tests.outputs.exit_code == '0'
+        uses: actions/upload-artifact@v7
+        with:
+          name: act-dr6-reference-diagnostics-${{ github.run_id }}
+          path: |
+            act_dr6_reference.log
+            act_dr6_reference_loglikes.json
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Build provenance-only RLL receipt
+        if: steps.upstream_tests.outputs.exit_code == '0' && steps.reference_values.outputs.exit_code == '0'
         run: |
           set -euo pipefail
           mkdir -p artifacts/science/act/runtime
@@ -245,6 +285,7 @@ jobs:
             > artifacts/science/act/runtime/ACT_DR6_CMBONLY_RUNTIME_CHECKSUMS.sha256
 
       - name: Verify claim boundaries
+        if: steps.upstream_tests.outputs.exit_code == '0' && steps.reference_values.outputs.exit_code == '0'
         run: |
           python - <<'PY'
           import json
@@ -262,7 +303,8 @@ jobs:
           assert d["successor"] == "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
           PY
 
-      - name: Upload provenance-only ACT receipts
+      - name: Upload provenance-only ACT success receipts
+        if: steps.upstream_tests.outputs.exit_code == '0' && steps.reference_values.outputs.exit_code == '0'
         uses: actions/upload-artifact@v7
         with:
           name: act-dr6-cmbonly-${{ github.run_id }}
@@ -270,9 +312,24 @@ jobs:
             artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json
             artifacts/science/act/runtime/ACT_DR6_CMBONLY_RUNTIME_CHECKSUMS.sha256
             act_dr6_reference_loglikes.json
+            act_dr6_reference.log
             act_dr6_data_files.sha256
             act_upstream_lstree.sha256
             act_dr6_pytest.xml
             act_dr6_pytest.log
           if-no-files-found: error
           retention-days: 30
+
+      - name: Enforce ACT upstream/reference authority after diagnostics custody
+        if: always()
+        run: |
+          upstream="${{ steps.upstream_tests.outputs.exit_code }}"
+          if [ "$upstream" != "0" ]; then
+            echo "ACT upstream tests failed with exit code ${upstream:-missing}; diagnostics were uploaded."
+            exit 3
+          fi
+          reference="${{ steps.reference_values.outputs.exit_code }}"
+          if [ "$reference" != "0" ]; then
+            echo "ACT reference likelihood reproduction failed with exit code ${reference:-missing}; diagnostics were uploaded."
+            exit 4
+          fi
