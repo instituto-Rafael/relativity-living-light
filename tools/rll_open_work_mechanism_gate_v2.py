@@ -5,7 +5,8 @@ from __future__ import annotations
 
 V1 keeps the historical 14-open snapshot. V2 composes that registry with the
 late-evidence delta and the TOKEN_VAZIO V3 view, so only evidence-backed
-closures leave the current queue. All remaining open mechanisms stay saturated.
+closures leave the current queue. New evidence may sharpen attention/urgency
+without pretending that an OPEN token has been resolved.
 """
 
 import argparse
@@ -21,6 +22,15 @@ from tools.rll_token_vazio_reconcile_v3 import build_current_view
 DELTA = Path("data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_DELTA_20260808_V2.json")
 OUTPUT = Path("artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V2.json")
 SCHEMA = "rll.open_work_mechanism_registry_delta.v1"
+ALLOWED_ATTENTION_OVERRIDES = {
+    "ACTIVE_EXTERNAL_AVAILABLE",
+    "ACTIVE_EXTERNAL_PARTIAL",
+    "ACTIVE",
+    "BLOCKED_EXTERNAL",
+    "BLOCKED_DEPENDENCY",
+    "NEEDS_HUMAN",
+    "PHYSICAL_REQUIRED",
+}
 
 
 @dataclass(frozen=True)
@@ -36,6 +46,7 @@ class Result:
     priority_counts: dict[str, int]
     expected_priority_counts: dict[str, int]
     resolved_by_evidence: list[str]
+    attention_overrides: dict[str, str]
     missing_tokens: list[str]
     extra_tokens: list[str]
     errors: list[str]
@@ -77,7 +88,7 @@ def validate(root: Path = ROOT, delta_path: Path = DELTA) -> Result:
     base_items = base.get("tokens") if isinstance(base.get("tokens"), list) else []
     base_by_token = {row.get("token"): row for row in base_items if isinstance(row, dict)}
 
-    current = build_current_view(root, generated_at="2026-08-08T05:51:00Z")
+    current = build_current_view(root, generated_at="2026-08-08T05:58:00Z")
     current_open = {
         row["token"]
         for row in current["results"]
@@ -135,6 +146,42 @@ def validate(root: Path = ROOT, delta_path: Path = DELTA) -> Result:
     if actual_counts != expected_counts:
         errors.append(f"priority mismatch actual={actual_counts} expected={expected_counts}")
 
+    attention_rows = delta.get("attention_overrides", [])
+    attention_by_token: dict[str, str] = {}
+    if not isinstance(attention_rows, list):
+        attention_rows = []
+        errors.append("attention_overrides must be list")
+    for index, row in enumerate(attention_rows):
+        prefix = f"attention_overrides[{index}]"
+        if not isinstance(row, dict):
+            errors.append(f"{prefix}: object required")
+            continue
+        token = row.get("token")
+        state = row.get("attention_state")
+        if not isinstance(token, str) or token not in current_open:
+            errors.append(f"{prefix}: token must be currently open")
+            continue
+        if token in attention_by_token:
+            errors.append(f"{token}: duplicate attention override")
+        if state not in ALLOWED_ATTENTION_OVERRIDES:
+            errors.append(f"{token}: unsupported attention override {state!r}")
+        else:
+            attention_by_token[token] = state
+        reason = row.get("reason")
+        if not isinstance(reason, str) or not reason.strip():
+            errors.append(f"{token}: attention override reason required")
+        evidence_path = row.get("evidence_path")
+        if not isinstance(evidence_path, str) or not evidence_path.strip():
+            errors.append(f"{token}: attention evidence_path required")
+        else:
+            full = repo_path(root, evidence_path)
+            if not full.is_file():
+                errors.append(f"{token}: attention evidence_path does not exist: {evidence_path}")
+            else:
+                evidence = load(full)
+                if evidence.get("claim_allowed") is not False:
+                    errors.append(f"{token}: attention evidence must preserve claim_allowed=false")
+
     enrichments = delta.get("mechanism_enrichments")
     if not isinstance(enrichments, list):
         enrichments = []
@@ -177,7 +224,7 @@ def validate(root: Path = ROOT, delta_path: Path = DELTA) -> Result:
             "priority": str(row.get("priority")),
             "token": token,
             "urgency": str(row.get("urgency")),
-            "attention_state": str(row.get("attention_state")),
+            "attention_state": attention_by_token.get(token, str(row.get("attention_state"))),
             "mechanism_id": str((row.get("mechanism") or {}).get("id")),
         }
         for token, row in effective.items()
@@ -196,6 +243,7 @@ def validate(root: Path = ROOT, delta_path: Path = DELTA) -> Result:
         priority_counts=actual_counts,
         expected_priority_counts=expected_counts,
         resolved_by_evidence=sorted(resolved),
+        attention_overrides=dict(sorted(attention_by_token.items())),
         missing_tokens=missing,
         extra_tokens=extra,
         errors=errors,
@@ -221,6 +269,7 @@ def main() -> int:
         "effective_registry_count": result.effective_registry_count,
         "priority_counts": result.priority_counts,
         "resolved_by_evidence": result.resolved_by_evidence,
+        "attention_overrides": result.attention_overrides,
         "error_count": len(result.errors),
     }, sort_keys=True))
     for error in result.errors:
