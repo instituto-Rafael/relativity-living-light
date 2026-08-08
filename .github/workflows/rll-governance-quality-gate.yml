@@ -20,6 +20,8 @@ on:
       - "tests/test_rll_token_vazio_reconcile*.py"
       - "tools/rll_open_work_mechanism_gate*.py"
       - "tests/test_rll_open_work_mechanism_gate*.py"
+      - "tools/rll_modern_validation_reconcile*.py"
+      - "tests/test_rll_modern_validation_reconcile*.py"
       - "scripts/rll_governance_audit.py"
       - "tests/test_rll_governance_audit.py"
       - "docs/governance/**"
@@ -88,6 +90,14 @@ jobs:
           python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v4
           sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V4_CURRENT.json \
             > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V4_CURRENT.sha256
+
+      - name: "Reconcile Modern Validation V1 to current V4 successor state"
+        run: |
+          python3 -m tools.rll_modern_validation_reconcile_v2 \
+            --output artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.json
+          python3 -m unittest -v tests.test_rll_modern_validation_reconcile_v2
+          sha256sum artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.json \
+            > artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.sha256
 
       - name: "Gate historical and effective open-work mechanisms V1-V3"
         run: |
