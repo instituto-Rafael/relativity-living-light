@@ -42,13 +42,9 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install upstream-date scientific runtime
+      - name: Install audited scientific runtime
         run: |
           set -euo pipefail
-          # Reconstruct the package line available when the audited ACT commit
-          # was published. The CAMB pip pin alone is not authoritative because
-          # Cobaya installs its own source tree under packages_path/code/CAMB;
-          # that effective engine is pinned separately below.
           python -m pip install --disable-pip-version-check \
             "numpy==2.2.4" \
             "scipy==1.15.2" \
@@ -61,8 +57,9 @@ jobs:
           for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest"):
               print(package, m.version(package))
           PY
+          gfortran --version | head -1
 
-      - name: Resolve historical CAMB git authority
+      - name: Resolve historical CAMB authority
         run: |
           set -euo pipefail
           rm -rf .camb-history
@@ -72,7 +69,6 @@ jobs:
           echo "$candidate" > camb_historical_authority_sha.txt
           git -C .camb-history show -s --format='%H%n%cI%n%s' "$candidate" > camb_historical_authority.txt
           echo "CAMB_REPO_VERSION=$candidate" >> "$GITHUB_ENV"
-          echo "Resolved CAMB_REPO_VERSION=$candidate"
           cat camb_historical_authority.txt
 
       - name: Acquire exact ACT upstream commit without vendoring
@@ -86,23 +82,36 @@ jobs:
           git -C .act-upstream ls-tree -r HEAD | sha256sum > act_upstream_lstree.sha256
           python -m pip install --disable-pip-version-check --no-deps -e ./.act-upstream
 
-      - name: Materialize official likelihood data and pinned effective CAMB
+      - name: Materialize likelihood data and exact effective CAMB source
         run: |
           set -euo pipefail
-          mkdir -p "$COBAYA_PACKAGES_PATH"
-          cobaya-install act_dr6_cmbonly
-          cobaya-install act_dr6_cmbonly.PlanckActCut
-          test -d "$COBAYA_PACKAGES_PATH"
-          test -d "$COBAYA_PACKAGES_PATH/code/CAMB/.git"
+          mkdir -p "$COBAYA_PACKAGES_PATH/code"
+          cobaya-install act_dr6_cmbonly --packages-path "$COBAYA_PACKAGES_PATH"
+          cobaya-install act_dr6_cmbonly.PlanckActCut --packages-path "$COBAYA_PACKAGES_PATH"
+
+          rm -rf "$COBAYA_PACKAGES_PATH/code/CAMB"
+          git clone --recursive "$CAMB_UPSTREAM_URL" "$COBAYA_PACKAGES_PATH/code/CAMB"
+          git -C "$COBAYA_PACKAGES_PATH/code/CAMB" checkout --detach "$CAMB_REPO_VERSION"
+          git -C "$COBAYA_PACKAGES_PATH/code/CAMB" submodule update --init --recursive
+          test "$(git -C "$COBAYA_PACKAGES_PATH/code/CAMB" rev-parse HEAD)" = "$CAMB_REPO_VERSION"
+
+          (
+            cd "$COBAYA_PACKAGES_PATH/code/CAMB"
+            python setup.py build
+          )
+
           effective_camb_sha="$(git -C "$COBAYA_PACKAGES_PATH/code/CAMB" rev-parse HEAD)"
           echo "$effective_camb_sha" > camb_effective_sha.txt
           test "$effective_camb_sha" = "$CAMB_REPO_VERSION"
+
           PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}" python - <<'PY' > camb_effective_runtime.txt
           import camb
           print(getattr(camb, "__version__", "TOKEN_VAZIO_VERSION_ATTRIBUTE"))
           print(camb.__file__)
           PY
           cat camb_effective_runtime.txt
+          grep -F "$COBAYA_PACKAGES_PATH/code/CAMB" camb_effective_runtime.txt
+
           find "$COBAYA_PACKAGES_PATH" -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum \
@@ -113,6 +122,7 @@ jobs:
         id: upstream_tests
         run: |
           set +e
+          export PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}"
           python -m pytest -q .act-upstream/act_dr6_cmbonly/tests/test_act.py \
             --junitxml=act_dr6_pytest.xml \
             2>&1 | tee act_dr6_pytest.log
@@ -143,12 +153,16 @@ jobs:
         if: steps.upstream_tests.outputs.exit_code == '0'
         run: |
           set +e
+          export PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}"
           python - <<'PY' 2>&1 | tee act_dr6_reference.log
           import json
           import math
+          import os
           from cobaya.model import get_model
 
+          camb_path = os.path.join(os.environ["COBAYA_PACKAGES_PATH"], "code", "CAMB")
           base = {
+              "packages_path": os.environ["COBAYA_PACKAGES_PATH"],
               "params": {
                   "ombh2": 0.022,
                   "omch2": 0.117,
@@ -157,7 +171,7 @@ jobs:
                   "tau": 0.065,
                   "cosmomc_theta": 104.09e-4,
               },
-              "theory": {"camb": {"extra_args": {
+              "theory": {"camb": {"path": camb_path, "extra_args": {
                   "lmax": 9000,
                   "lens_potential_accuracy": 8,
                   "min_l_logl_sampling": 6000,
@@ -253,7 +267,7 @@ jobs:
           camb_runtime = Path("camb_effective_runtime.txt").read_text(encoding="utf-8").splitlines()
 
           receipt = {
-              "schema": "rll.act_dr6_cmbonly_materialization_receipt.v1",
+              "schema": "rll.act_dr6_cmbonly_materialization_receipt.v2",
               "state": "VERIFIED_PINNED_UPSTREAM_REFERENCE_LOGLIKES",
               "claim_allowed": False,
               "publication_ready": False,
@@ -272,6 +286,7 @@ jobs:
                   "resolved_cutoff": os.environ["CAMB_HISTORY_CUTOFF"],
                   "reported_version": camb_runtime[0] if camb_runtime else "TOKEN_VAZIO",
                   "import_path": camb_runtime[1] if len(camb_runtime) > 1 else "TOKEN_VAZIO",
+                  "selection_method": "manual exact git checkout + in-place source build + explicit Cobaya theory path",
               },
               "data_custody": {
                   "installer": "cobaya-install",
@@ -289,24 +304,20 @@ jobs:
                   "log_sha256": sha256(Path("act_dr6_pytest.log")),
               },
               "reference_likelihood": refs,
-              "scientific_boundary": "This receipt verifies pinned ACT DR6 CMB-only acquisition, upstream tests, the effective Cobaya CAMB git authority, and two reference likelihood evaluations. It is not an ACT posterior-chain reproduction and does not validate any RLL CMB prediction; RLL perturbation closure remains a separate TOKEN_VAZIO.",
+              "scientific_boundary": "This receipt verifies pinned ACT DR6 CMB-only acquisition, upstream tests, the exact effective CAMB source authority, and two reference likelihood evaluations. It is not an ACT posterior-chain reproduction and does not validate any RLL CMB prediction.",
               "reduces_token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
               "successor": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
               "F_ok": [
                   "Pinned ACT upstream code was executed at the audited commit.",
-                  "The effective CAMB source tree used by Cobaya was pinned and hash-verified.",
+                  "The effective CAMB source tree was checked out exactly, compiled in place, and hash-verified.",
                   "Official likelihood data were acquired through the declared Cobaya installer and hashed without vendoring into RLL.",
                   "Upstream tests passed.",
-                  "ACT TT/TE/EE and ACT+Planck reference likelihood values matched upstream tolerances."
+                  "Reference likelihood values matched the predeclared tolerance."
               ],
               "F_gap": [
                   "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
                   "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
                   "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
-              ],
-              "F_next": [
-                  "Run a pinned upstream LCDM posterior chain with declared stopping criteria and compare published/reference posterior summaries.",
-                  "Do not attach RLL to this likelihood until RLL perturbation closure and independent CLASS/CAMB implementation exist."
               ]
           }
           out = Path("artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json")
@@ -331,8 +342,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path("artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json")
-          d = json.loads(p.read_text(encoding="utf-8"))
+          d = json.loads(Path("artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json").read_text(encoding="utf-8"))
           assert d["state"] == "VERIFIED_PINNED_UPSTREAM_REFERENCE_LOGLIKES"
           assert d["claim_allowed"] is False
           assert d["publication_ready"] is False
