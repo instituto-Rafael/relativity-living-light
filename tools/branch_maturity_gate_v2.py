@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """Fail-closed maturity gate for RLL promotion edges.
 
-Repository-local structure only; never validates scientific claims or external settings.
+Repository-local structure only; never validates scientific claims or external
+settings. Structured governance files are parsed semantically so quoted
+historical/documentation markers such as ``"claim_allowed=true"`` are not
+mistaken for an active policy flag.
 """
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
-import re
 import subprocess
 import sys
+import tomllib
+from typing import Any
+
+import yaml
 
 TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integration","main":"rll/release"}
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
@@ -73,7 +79,7 @@ def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
         p=Path(rel); low=rel.lower()
         if p.name.lower() in SENSITIVE or low.startswith(".ssh/") or low.endswith((".pem",".p12",".pfx",".key")): residuals.append(f"SENSITIVE_PATH:{rel}")
         if low.startswith(("tests/","docs/","fixtures/","examples/")): continue
-        if p.suffix.lower() in {".yml",".yaml",".json",".toml"}:
+        if p.suffix.lower() in STRUCTURED_SUFFIXES:
             target=root/rel
             if target.is_file() and target.stat().st_size<1_000_000 and file_has_claim_true(target):
                 residuals.append(f"CLAIM_ALLOWED_TRUE:{rel}")

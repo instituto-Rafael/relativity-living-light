@@ -89,7 +89,7 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if "actions/checkout@v4" in text and "persist-credentials: false" not in text:
+        if has_checkout_action(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
         if not has_supported_upload_artifact(text):
             errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact@v4 or newer")
