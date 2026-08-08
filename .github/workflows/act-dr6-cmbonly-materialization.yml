@@ -89,17 +89,12 @@ jobs:
           mkdir -p "$COBAYA_PACKAGES_PATH/code"
           cobaya-install act_dr6_cmbonly --packages-path "$COBAYA_PACKAGES_PATH"
           cobaya-install act_dr6_cmbonly.PlanckActCut --packages-path "$COBAYA_PACKAGES_PATH"
-
           rm -rf "$COBAYA_PACKAGES_PATH/code/CAMB"
           git clone --recursive "$CAMB_UPSTREAM_URL" "$COBAYA_PACKAGES_PATH/code/CAMB"
           git -C "$COBAYA_PACKAGES_PATH/code/CAMB" checkout --detach "$CAMB_REPO_VERSION"
           git -C "$COBAYA_PACKAGES_PATH/code/CAMB" submodule update --init --recursive
           test "$(git -C "$COBAYA_PACKAGES_PATH/code/CAMB" rev-parse HEAD)" = "$CAMB_REPO_VERSION"
-          (
-            cd "$COBAYA_PACKAGES_PATH/code/CAMB"
-            python setup.py build
-          )
-
+          (cd "$COBAYA_PACKAGES_PATH/code/CAMB" && python setup.py build)
           effective_camb_sha="$(git -C "$COBAYA_PACKAGES_PATH/code/CAMB" rev-parse HEAD)"
           echo "$effective_camb_sha" > camb_effective_sha.txt
           test "$effective_camb_sha" = "$CAMB_REPO_VERSION"
@@ -110,11 +105,7 @@ jobs:
           PY
           cat camb_effective_runtime.txt
           grep -F "$COBAYA_PACKAGES_PATH/code/CAMB" camb_effective_runtime.txt
-
-          find "$COBAYA_PACKAGES_PATH" -type f -print0 \
-            | sort -z \
-            | xargs -0 sha256sum \
-            > act_dr6_data_files.sha256
+          find "$COBAYA_PACKAGES_PATH" -type f -print0 | sort -z | xargs -0 sha256sum > act_dr6_data_files.sha256
           test -s act_dr6_data_files.sha256
 
       - name: Run pinned upstream ACT tests and preserve diagnostics
@@ -122,9 +113,7 @@ jobs:
         run: |
           set +e
           export PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}"
-          python -m pytest -q .act-upstream/act_dr6_cmbonly/tests/test_act.py \
-            --junitxml=act_dr6_pytest.xml \
-            2>&1 | tee act_dr6_pytest.log
+          python -m pytest -q .act-upstream/act_dr6_cmbonly/tests/test_act.py --junitxml=act_dr6_pytest.xml 2>&1 | tee act_dr6_pytest.log
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
@@ -163,62 +152,26 @@ jobs:
           camb_path = os.path.join(os.environ["COBAYA_PACKAGES_PATH"], "code", "CAMB")
           base = {
               "packages_path": os.environ["COBAYA_PACKAGES_PATH"],
-              "params": {
-                  "ombh2": 0.022,
-                  "omch2": 0.117,
-                  "ns": 0.96,
-                  "As": 2e-9,
-                  "tau": 0.065,
-                  "cosmomc_theta": 104.09e-4,
-              },
-              "theory": {"camb": {"path": camb_path, "extra_args": {
-                  "lmax": 9000,
-                  "lens_potential_accuracy": 8,
-                  "min_l_logl_sampling": 6000,
-              }}},
+              "params": {"ombh2": 0.022, "omch2": 0.117, "ns": 0.96, "As": 2e-9, "tau": 0.065, "cosmomc_theta": 104.09e-4},
+              "theory": {"camb": {"path": camb_path, "extra_args": {"lmax": 9000, "lens_potential_accuracy": 8, "min_l_logl_sampling": 6000}}},
               "debug": False,
           }
-
           act = dict(base)
-          act["likelihood"] = {
-              "act_dr6_cmbonly": {
-                  "stop_at_error": True,
-                  "input_file": "dr6_data_cmbonly.fits",
-                  "params": {"A_act": 1.0, "P_act": 1.0},
-              }
-          }
+          act["likelihood"] = {"act_dr6_cmbonly": {"stop_at_error": True, "input_file": "dr6_data_cmbonly.fits", "params": {"A_act": 1.0, "P_act": 1.0}}}
           act_loglike = float(sum(get_model(act).loglikes()[0]))
-
           joint = dict(base)
           joint["likelihood"] = {
-              "act_dr6_cmbonly": {
-                  "stop_at_error": True,
-                  "input_file": "dr6_data_cmbonly.fits",
-                  "params": {"A_act": 1.0, "P_act": 1.0},
-              },
-              "act_dr6_cmbonly.PlanckActCut": {
-                  "stop_at_error": True,
-                  "params": {"A_planck": 1.0},
-              },
+              "act_dr6_cmbonly": {"stop_at_error": True, "input_file": "dr6_data_cmbonly.fits", "params": {"A_act": 1.0, "P_act": 1.0}},
+              "act_dr6_cmbonly.PlanckActCut": {"stop_at_error": True, "params": {"A_planck": 1.0}},
           }
           joint_loglike = float(sum(get_model(joint).loglikes()[0]))
-
-          expected_act = -395.48
-          expected_joint = -962.27
-          atol = 1e-2
-          rtol = 1e-5  # numpy.isclose default used by pinned upstream test_act.py
+          expected_act, expected_joint, atol, rtol = -395.48, -962.27, 1e-2, 1e-5
           act_error = abs(act_loglike - expected_act)
           joint_error = abs(joint_loglike - expected_joint)
           act_pass = bool(np.isclose(act_loglike, expected_act, atol=atol, rtol=rtol))
           joint_pass = bool(np.isclose(joint_loglike, expected_joint, atol=atol, rtol=rtol))
           result = {
-              "authority": {
-                  "upstream_test": "act_dr6_cmbonly/tests/test_act.py",
-                  "comparison": "numpy.isclose",
-                  "atol": atol,
-                  "rtol": rtol,
-                  "formula": "abs(actual-expected) <= atol + rtol*abs(expected)",
-              },
+              "authority": {"upstream_test": "act_dr6_cmbonly/tests/test_act.py", "comparison": "numpy.isclose", "atol": atol, "rtol": rtol, "formula": "abs(actual-expected) <= atol + rtol*abs(expected)"},
               "ACT_TTTEEE_loglike": act_loglike,
               "ACT_PlanckActCut_loglike": joint_loglike,
               "expected_ACT_TTTEEE": expected_act,
@@ -259,6 +212,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/science/act/runtime
+          export PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}"
           python - <<'PY'
           import hashlib
           import importlib.metadata as m
@@ -266,6 +220,7 @@ jobs:
           import os
           import xml.etree.ElementTree as ET
           from pathlib import Path
+          import act_dr6_cmbonly
 
           def sha256(path: Path) -> str:
               h = hashlib.sha256()
@@ -280,6 +235,8 @@ jobs:
           data_manifest = Path("act_dr6_data_files.sha256")
           lines = [line for line in data_manifest.read_text(encoding="utf-8").splitlines() if line.strip()]
           camb_runtime = Path("camb_effective_runtime.txt").read_text(encoding="utf-8").splitlines()
+          runtime = {package: m.version(package) for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest")}
+          runtime["ACT_DR6_CMBonly"] = getattr(act_dr6_cmbonly, "__version__", "TOKEN_VAZIO_VERSION_ATTRIBUTE")
           receipt = {
               "schema": "rll.act_dr6_cmbonly_materialization_receipt.v3",
               "state": "VERIFIED_PINNED_UPSTREAM_REFERENCE_PREDICATE",
@@ -292,7 +249,7 @@ jobs:
                   "ls_tree_manifest_sha256": sha256(Path("act_upstream_lstree.sha256")),
                   "reference_test_sha256": sha256(Path(".act-upstream/act_dr6_cmbonly/tests/test_act.py")),
               },
-              "runtime": {package: m.version(package) for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest", "ACT DR6 CMBonly")},
+              "runtime": runtime,
               "effective_camb": {
                   "git_sha": Path("camb_effective_sha.txt").read_text(encoding="utf-8").strip(),
                   "resolved_cutoff": os.environ["CAMB_HISTORY_CUTOFF"],
@@ -300,64 +257,25 @@ jobs:
                   "import_path": camb_runtime[1] if len(camb_runtime) > 1 else "TOKEN_VAZIO",
                   "selection_method": "manual exact git checkout + source build + explicit Cobaya theory path",
               },
-              "data_custody": {
-                  "installer": "cobaya-install",
-                  "components": ["act_dr6_cmbonly", "act_dr6_cmbonly.PlanckActCut"],
-                  "file_count": len(lines),
-                  "file_manifest_sha256": sha256(data_manifest),
-                  "vendored_into_rll": False,
-              },
-              "upstream_tests": {
-                  "tests": int(suite.attrib.get("tests", "0")),
-                  "failures": int(suite.attrib.get("failures", "0")),
-                  "errors": int(suite.attrib.get("errors", "0")),
-                  "skipped": int(suite.attrib.get("skipped", "0")),
-                  "junit_sha256": sha256(Path("act_dr6_pytest.xml")),
-                  "log_sha256": sha256(Path("act_dr6_pytest.log")),
-              },
+              "data_custody": {"installer": "cobaya-install", "components": ["act_dr6_cmbonly", "act_dr6_cmbonly.PlanckActCut"], "file_count": len(lines), "file_manifest_sha256": sha256(data_manifest), "vendored_into_rll": False},
+              "upstream_tests": {"tests": int(suite.attrib.get("tests", "0")), "failures": int(suite.attrib.get("failures", "0")), "errors": int(suite.attrib.get("errors", "0")), "skipped": int(suite.attrib.get("skipped", "0")), "junit_sha256": sha256(Path("act_dr6_pytest.xml")), "log_sha256": sha256(Path("act_dr6_pytest.log"))},
               "reference_likelihood": refs,
-              "diagnostic_boundary": {
-                  "upstream_predicate_is_literal_authority": True,
-                  "strict_absolute_only_0p01_is_upstream_contract": False,
-                  "strict_absolute_only_planck_pass": refs["strict_abs_only_0p01_pass_ACT_PlanckActCut"],
-                  "strict_absolute_only_planck_residual": refs["absolute_error_ACT_PlanckActCut"],
-              },
+              "diagnostic_boundary": {"upstream_predicate_is_literal_authority": True, "strict_absolute_only_0p01_is_upstream_contract": False, "strict_absolute_only_planck_pass": refs["strict_abs_only_0p01_pass_ACT_PlanckActCut"], "strict_absolute_only_planck_residual": refs["absolute_error_ACT_PlanckActCut"]},
               "scientific_boundary": "This receipt verifies pinned ACT DR6 CMB-only acquisition, upstream tests, exact CAMB source authority, and the exact numpy.isclose predicate in pinned upstream test_act.py. It is not a posterior-chain reproduction and does not validate any RLL CMB prediction.",
               "reduces_token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
               "successor": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
-              "F_ok": [
-                  "Pinned ACT upstream code and five upstream tests executed.",
-                  "Effective CAMB source was exact-checkout, compiled and hash-verified.",
-                  "Official likelihood data were acquired and hashed without vendoring into RLL.",
-                  "Both reference values satisfy the exact upstream numpy.isclose predicate."
-              ],
-              "F_gap": [
-                  "The ACT+Planck value has an absolute-only residual greater than 0.01; this is retained as a diagnostic because the upstream predicate also includes rtol=1e-5.",
-                  "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
-                  "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
-                  "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
-              ],
-              "F_next": [
-                  "Treat the upstream predicate, not a stricter undocumented absolute-only rule, as the materialization authority.",
-                  "Keep the strict absolute-only residual visible and do not reinterpret it as a cosmological discrepancy.",
-                  "Posterior-chain reproduction is the next ACT scientific gate."
-              ]
+              "F_ok": ["Pinned ACT upstream code and five upstream tests executed.", "Effective CAMB source was exact-checkout, compiled and hash-verified.", "Official likelihood data were acquired and hashed without vendoring into RLL.", "Both reference values satisfy the exact upstream numpy.isclose predicate."],
+              "F_gap": ["The ACT+Planck value has an absolute-only residual greater than 0.01; this is retained because upstream also includes rtol=1e-5.", "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION", "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"],
+              "F_next": ["Treat the upstream predicate as the materialization authority.", "Keep the strict absolute-only residual visible.", "Posterior-chain reproduction is the next ACT scientific gate."]
           }
           out = Path("artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json")
           out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
           PY
           sha256sum \
             artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json \
-            act_dr6_reference_loglikes.json \
-            act_dr6_data_files.sha256 \
-            act_upstream_lstree.sha256 \
-            act_upstream_reference_test.sha256 \
-            act_dr6_pytest.xml \
-            act_dr6_pytest.log \
-            camb_historical_authority_sha.txt \
-            camb_historical_authority.txt \
-            camb_effective_sha.txt \
-            camb_effective_runtime.txt \
+            act_dr6_reference_loglikes.json act_dr6_data_files.sha256 act_upstream_lstree.sha256 \
+            act_upstream_reference_test.sha256 act_dr6_pytest.xml act_dr6_pytest.log \
+            camb_historical_authority_sha.txt camb_historical_authority.txt camb_effective_sha.txt camb_effective_runtime.txt \
             > artifacts/science/act/runtime/ACT_DR6_CMBONLY_RUNTIME_CHECKSUMS.sha256
 
       - name: Verify claim boundaries
@@ -368,11 +286,9 @@ jobs:
           from pathlib import Path
           d = json.loads(Path("artifacts/science/act/runtime/ACT_DR6_CMBONLY_MATERIALIZATION_CURRENT.json").read_text(encoding="utf-8"))
           assert d["state"] == "VERIFIED_PINNED_UPSTREAM_REFERENCE_PREDICATE"
-          assert d["claim_allowed"] is False
-          assert d["publication_ready"] is False
+          assert d["claim_allowed"] is False and d["publication_ready"] is False
           assert d["data_custody"]["vendored_into_rll"] is False
-          assert d["upstream_tests"]["failures"] == 0
-          assert d["upstream_tests"]["errors"] == 0
+          assert d["upstream_tests"]["failures"] == 0 and d["upstream_tests"]["errors"] == 0
           assert d["reference_likelihood"]["upstream_predicate_pass_ACT_TTTEEE"] is True
           assert d["reference_likelihood"]["upstream_predicate_pass_ACT_PlanckActCut"] is True
           assert d["reference_likelihood"]["authority"]["atol"] == 1e-2
