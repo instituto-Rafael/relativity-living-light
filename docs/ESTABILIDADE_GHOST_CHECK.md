@@ -1,61 +1,131 @@
-# Verificacao de Estabilidade - RLL logistic sector
+# Verificação de Estabilidade — RLL logistic sector
 
-Modulo: `docs/ESTABILIDADE_GHOST_CHECK.md`
-Status: gate minimo executavel conectado a `scripts/check_rll_background.py`.
+Módulo: `docs/ESTABILIDADE_GHOST_CHECK.md`  
+Status: `BACKGROUND_DIAGNOSTIC_WITH_CONTINUITY_BLOCKER`
 
-Este arquivo substitui a nota puramente conceitual por um criterio operacional minimo para o setor logistico RLL. O objetivo nao e declarar validacao completa de perturbacoes; e fechar a primeira barreira fisica: cinetica efetiva nao negativa, ausencia de cruzamento abaixo de w=-1 e velocidade de som prescrita dentro de [0,1].
+Este arquivo descreve o gate mínimo executável do setor logístico RLL. Após a auditoria matemática de 2026-08-08, o gate foi separado em duas perguntas diferentes:
+
+1. o fundo fenomenológico é matematicamente executável e limitado?  
+2. a densidade/pressão escolhida fecha um setor físico conservado ou interagente?
+
+A primeira pode passar enquanto a segunda permanece bloqueada.
 
 ## 1. Setor de fundo
 
-A densidade efetiva do setor logistico e tratada como:
-
 ```text
 rho_s(z) = Omega_s0 rho_c0 [ f(z) + (1-f(z))(1+z)^3 ]
-p_s(z)   = - Omega_s0 rho_c0 f(z)
-f(z)     = 1/(1+exp((z-z_t)/w_t)), with w_t > 0
+f(z)     = 1/(1+exp((z-z_t)/w_t)), w_t > 0
 ```
 
-Assim, a equacao de estado efetiva do fluido misto nao e simplesmente `-f`; ela e:
+O fechamento documental histórico usou:
 
 ```text
-w_eff(z) = p_s/rho_s = -f(z) / [ f(z) + (1-f(z))(1+z)^3 ]
+p_doc(z) = - Omega_s0 rho_c0 f(z)
+w_doc(z) = p_doc/rho_s
+         = -f(z) / [f(z)+(1-f(z))(1+z)^3]
 ```
 
-Essa forma e importante porque garante que o limite de alto redshift seja matter-like (`w_eff -> 0`) e o limite de baixo redshift seja dark-energy-like (`w_eff -> -1`, sem cruzar abaixo de -1 para os parametros fisicos).
+Esse `w_doc` tende a um comportamento matter-like no alto redshift e permanece acima de `-1`, mas isso sozinho não prova conservação do setor.
 
-## 2. Criterio cinetico minimo
+## 2. Gate de continuidade
 
-Para reconstruir o setor como campo escalar canonico:
+Para um componente FLRW separadamente conservado:
 
 ```text
-K(a) = (1+w_eff(a)) rho_s(a) / 2
-V(a) = (1-w_eff(a)) rho_s(a) / 2
+d rho_s/dln a + 3(rho_s+p_s) = 0
 ```
 
-O primeiro gate fisico e:
+Com
 
 ```text
-(1+w_eff) Omega_s(a) >= 0
+R(a)=f+(1-f)a^-3
+f' = df/dln a = f(1-f)(1+z)/w_t
 ```
 
-O script calcula exatamente esse fator como `kinetic_gate`.
-
-## 3. Velocidade de som
-
-Ha duas leituras distintas:
-
-1. Campo escalar canonico no referencial de repouso: `cs2 = 1`.
-2. Fechamento fenomenologico suave usado no pipeline minimo: `cs2_proxy = f(z)`.
-
-O gate executavel verifica que:
+o residual do fechamento documental é exatamente:
 
 ```text
-0 <= cs2_proxy <= 1
+C_doc/(Omega_s0 rho_c0) = f'(1-a^-3)
 ```
 
-A analise completa de perturbacoes, Boltzmann solver e `f_sigma8` permanece marcada como `TOKEN_VAZIO`.
+Portanto, durante uma transição real:
 
-## 4. Comando
+```text
+documented_continuity_closed = false
+```
+
+Isso impede tratar o par `(rho_s,p_doc)` como fluido separadamente conservado sem correção.
+
+## 3. Reconstrução conservada
+
+Se a densidade `rho_s(a)` for mantida e a conservação separada for imposta, a pressão correta é:
+
+```text
+p_cons = -rho_s - (1/3) d rho_s/dln a
+```
+
+ou
+
+```text
+p_cons/(Omega_s0 rho_c0)
+  = -f + f'(a^-3-1)/3
+```
+
+O script agora calcula:
+
+```text
+w_conserved
+continuity_residual_conserved
+kinetic_gate_conserved
+```
+
+A reconstrução foi definida para zerar a continuidade por construção; o teste automatizado verifica a identidade numericamente em vários redshifts.
+
+## 4. Criterio cinético
+
+O gate antigo permanece registrado como diagnóstico histórico:
+
+```text
+kinetic_gate_documented = (1+w_doc) Omega_s(a)
+```
+
+Para a rota de fluido separadamente conservado, o gate coerente é:
+
+```text
+kinetic_gate_conserved = (1+w_conserved) Omega_s(a)
+```
+
+Um resultado não negativo é necessário para uma reconstrução canônica, mas não suficiente para demonstrar uma EFT cosmológica completa.
+
+## 5. Velocidade de som
+
+Duas quantidades continuam separadas:
+
+1. campo escalar canônico no referencial de repouso: `cs2_rest = 1`;
+2. proxy fenomenológico de pipeline: `cs2_proxy = f(z)`.
+
+O fato de `0 <= cs2_proxy <= 1` é apenas uma propriedade do proxy. Não demonstra estabilidade de gradiente da teoria física até que as equações de perturbação sejam derivadas.
+
+## 6. Crescimento
+
+O repositório já possui um solver linear separado para resposta de crescimento no fundo RLL. Portanto o status antigo
+
+```text
+growth_solver=TOKEN_VAZIO
+```
+
+estava desatualizado.
+
+A distinção correta é:
+
+```text
+linear_growth_background_response=AVAILABLE_SEPARATE_SOLVER
+exact_rll_perturbations=TOKEN_VAZIO
+```
+
+O solver atual não inclui perturbações próprias do setor RLL, interação `Q`, pressão não adiabática, anisotropic stress ou hierarquia de Boltzmann.
+
+## 7. Comando
 
 ```bash
 python scripts/check_rll_background.py \
@@ -65,32 +135,36 @@ python scripts/check_rll_background.py \
   --wt 0.405
 ```
 
-Saida principal:
+Saída principal:
 
 ```text
 results/rll_background_check.json
 ```
 
-## 5. Resultado esperado para os parametros centrais
+Os checks agora incluem:
 
-Para `Omega_m=0.315`, `Omega_s0=0.059`, `z_t=1.164`, `w_t=0.405`, em `0 <= z <= 5`, a execucao local retorna:
-
-```json
-{
-  "kinetic_gate_non_negative": true,
-  "w_eff_above_minus_one": true,
-  "cs2_proxy_bounded": true,
-  "growth_solver": "TOKEN_VAZIO"
-}
+```text
+documented_continuity_closed
+conserved_reconstruction_continuity_closed
+kinetic_gate_documented_non_negative
+kinetic_gate_conserved_non_negative
+w_documented_above_minus_one
+w_conserved_above_minus_one
+cs2_proxy_bounded
+linear_growth_background_response
+exact_rll_perturbations
+canonical_eft_closure
 ```
 
-## 6. Fronteira honesta
+## 8. Fronteira honesta
 
-Este fechamento sobe o RLL de esboco fisico para gate minimo de consistencia de fundo. Ainda nao substitui:
+```text
+background_math=PASS
+p_doc_separate_conservation=FAIL
+conserved_pressure_identity=PASS_DIAGNOSTIC
+canonical_EFT=BLOCKED
+exact_perturbations=TOKEN_VAZIO
+claim_allowed=false
+```
 
-- MCMC real;
-- nested sampling;
-- matriz completa de covariancia;
-- crescimento de estrutura;
-- equacoes de Boltzmann;
-- comparacao CMB completa.
+A falha de continuidade não invalida automaticamente o uso de `E2(a)` como parametrização fenomenológica para confronto com dados. Ela invalida apenas a promoção automática desse mesmo fundo para um fluido canônico separadamente conservado usando `p_doc=-f`.
