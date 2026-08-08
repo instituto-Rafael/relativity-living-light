@@ -7,11 +7,18 @@ on:
     paths:
       - "governance/**"
       - "data/governance/**"
+      - "data/science/act/**"
+      - "data/science/h0/**"
+      - "data/science/perturbations/**"
       - "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_*.json"
       - "artifacts/science/h0/RLL_H0_RD_BOLTZMANN_RECONCILIATION_*.json"
+      - "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_*.json"
+      - "artifacts/science/external/**"
       - "artifacts/audit/RLL_ALL_REFS_TOPOLOGY_RECONCILIATION_*.json"
       - "tools/rll_token_vazio_reconcile*.py"
       - "tests/test_rll_token_vazio_reconcile*.py"
+      - "tools/rll_open_work_mechanism_gate*.py"
+      - "tests/test_rll_open_work_mechanism_gate*.py"
       - "scripts/rll_governance_audit.py"
       - "tests/test_rll_governance_audit.py"
       - "docs/governance/**"
@@ -53,7 +60,7 @@ jobs:
       - name: "Run governance unit tests"
         run: python3 -m unittest -v tests/test_rll_governance_audit.py
 
-      - name: "Reconcile TOKEN_VAZIO V2 append-only"
+      - name: "Reproduce TOKEN_VAZIO V2 historical append-only view"
         run: |
           mkdir -p artifacts/governance
           python3 -m tools.rll_token_vazio_reconcile_v2 \
@@ -62,6 +69,28 @@ jobs:
           python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v2
           sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json \
             > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.sha256
+
+      - name: "Reconcile TOKEN_VAZIO V3 current evidence view"
+        run: |
+          python3 -m tools.rll_token_vazio_reconcile_v3 \
+            --generated-at 2026-08-08T05:44:00Z \
+            --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V3_CURRENT.json
+          python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v3
+          sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V3_CURRENT.json \
+            > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V3_CURRENT.sha256
+
+      - name: "Gate historical and effective open-work mechanisms"
+        run: |
+          python3 -m tools.rll_open_work_mechanism_gate_v1 \
+            --output artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V1.json
+          python3 -m unittest -v tests.test_rll_open_work_mechanism_gate_v1
+          python3 -m tools.rll_open_work_mechanism_gate_v2 \
+            --output artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V2.json
+          python3 -m unittest -v tests.test_rll_open_work_mechanism_gate_v2
+          sha256sum \
+            artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V1.json \
+            artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V2.json \
+            > artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATES.sha256
 
       - name: "Publish non-certification report to job summary"
         if: always()
