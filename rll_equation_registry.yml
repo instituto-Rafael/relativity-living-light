@@ -32,14 +32,14 @@ equations:
   - id: null_limit_lcdm
     equation: "lim_{Omega_s0->0, Omega_B0->0, Omega_P0->0} E2_RLL(a) = E2_LCDM(a)"
     domain: ["cosmology", "RLL", "model_reduction"]
-    status: "known_physics"
+    status: "algebraic_model_reduction"
     source_doc: "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md"
     implementation: "src/rll/structural_integration.py"
     methodology_phase: "model_selection"
     real_data_validators:
       - "data/results/model_comparison.json"
       - "data/results/structure_d/joint_real_likelihood.json"
-    claim_boundary: "Verificado analiticamente e numericamente; confirma que RLL é extensão legítima de LCDM com limite nulo bem definido"
+    claim_boundary: "Verificado analiticamente e numericamente como limite algébrico do modelo. Recuperar LCDM no limite nulo é um teste de redução necessário e útil, mas não demonstra por si só validade física, necessidade observacional ou superioridade da extensão RLL."
 
   - id: impulse_response
     equation: "y(t) = (I * h)(t) + eta(t)"
@@ -174,12 +174,12 @@ equations:
   - id: claim_state_entropy
     equation: "H_claim = -sum_{s in C_s} P(s|evidence) log2 P(s|evidence) ; H_max = log2(14) ~ 3.81 bits"
     domain: ["information_theory", "epistemology", "RLL"]
-    status: "author_model"
+    status: "governance_mapping"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
     methodology_phase: "claim_gate"
     real_data_validators:
       - "data/results/model_comparison.json"
-    claim_boundary: "TOKEN_VAZIO corresponds to H_max; CLAIM_ALLOWED to H=0; monotonic decrease as evidence accumulates"
+    claim_boundary: "A fórmula de Shannon é conhecida, mas TOKEN_VAZIO->H_max e CLAIM_ALLOWED->0 são convenções de governança, não identidades automáticas. H=log2(14) exige distribuição uniforme sobre 14 estados; H=0 exige posterior degenerada em um único estado."
 
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:

@@ -63,6 +63,32 @@ def w_conserved(z: float, zt: float, wt: float) -> float:
     return pressure_conserved_factor(z, zt, wt) / rho_factor(z, zt, wt)
 
 
+def local_cpl_mapping_documented(zt: float, wt: float) -> tuple[float, float]:
+    """Local CPL (w0, wa) at a=1 for the documented pressure ratio.
+
+    CPL convention: w(a)=w0+wa(1-a), hence wa=-dw/dln(a) at a=1.
+    For R=f+(1-f)a^-3 and w_doc=-f/R:
+      w0=-f0
+      wa=f0' + 3 f0(1-f0)
+    where f0'=df/dln(a)|a=1.
+    """
+    f0 = f_transition(0.0, zt, wt)
+    fp0 = df_dlna(0.0, zt, wt)
+    return -f0, fp0 + 3.0 * f0 * (1.0 - f0)
+
+
+def local_cpl_mapping_conserved(zt: float, wt: float) -> tuple[float, float]:
+    """Local CPL (w0, wa) at a=1 after imposing separate conservation.
+
+    With p_cons=-rho-(1/3)d rho/dln(a), one obtains at a=1:
+      w0=-f0
+      wa=2 f0' + 3 f0(1-f0)
+    """
+    f0 = f_transition(0.0, zt, wt)
+    fp0 = df_dlna(0.0, zt, wt)
+    return -f0, 2.0 * fp0 + 3.0 * f0 * (1.0 - f0)
+
+
 def continuity_residual_documented(z: float, zt: float, wt: float) -> float:
     """Dimensionless residual C/[Omega_s0 rho_c0] for documented p=-f.
 
@@ -116,6 +142,8 @@ def main() -> None:
     ap.add_argument("--out-json", default="results/rll_background_check.json")
     args = ap.parse_args()
     zs = grid(0.0, args.z_max, args.n)
+    cpl_doc = local_cpl_mapping_documented(args.zt, args.wt)
+    cpl_cons = local_cpl_mapping_conserved(args.zt, args.wt)
     rows = [
         {
             "z": z,
@@ -144,7 +172,12 @@ def main() -> None:
         "semantics": {
             "w_documented": "p_documented/rho; not a separately conserved closure while f varies",
             "w_conserved": "equation of state implied by rho_s(a) under separate FLRW conservation",
+            "local_cpl": "Taylor mapping at a=1 using w(a)=w0+wa(1-a); not a global CPL equivalence",
             "cs2_proxy": "bounded diagnostic only; canonical scalar rest-frame cs2 is 1",
+        },
+        "local_cpl_today": {
+            "documented": {"w0": cpl_doc[0], "wa": cpl_doc[1]},
+            "conserved": {"w0": cpl_cons[0], "wa": cpl_cons[1]},
         },
         "ranges": {
             "f": [min(r["f"] for r in rows), max(r["f"] for r in rows)],
@@ -198,6 +231,8 @@ def main() -> None:
             "w_conserved_above_minus_one": all(
                 r["w_conserved"] >= -1.0 - 1e-10 for r in rows
             ),
+            "local_cpl_documented_wa_positive": cpl_doc[1] > 0.0,
+            "local_cpl_conserved_wa_positive": cpl_cons[1] > 0.0,
             "cs2_proxy_bounded": all(
                 -1e-10 <= r["cs2_proxy"] <= 1.0 + 1e-10 for r in rows
             ),
