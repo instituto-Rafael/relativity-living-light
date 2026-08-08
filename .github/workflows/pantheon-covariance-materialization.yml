@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "products/rll-evidence-runner/**"
+      - "data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json"
       - "scripts/fetch_pantheon_covariance.py"
       - "scripts/fetch_dovekie_inputs.py"
       - "scripts/verify_pantheon_inputs.py"
@@ -14,6 +15,8 @@ on:
       - "tests/test_rll_pantheon_full_covariance_fit_v1.py"
       - "tests/test_rll_pantheon_three_model_cpl_v1.py"
       - "tests/test_rll_dovekie_three_model_v1.py"
+      - "tests/test_rll_sn_gap_closure_v1.py"
+      - "tests/test_rll_dovekie_nested_evidence_v1.py"
       - ".github/workflows/pantheon-covariance-materialization.yml"
       - ".gitignore"
 
@@ -53,7 +56,9 @@ jobs:
             tests/test_verify_pantheon_inputs_v2.py \
             tests/test_rll_pantheon_full_covariance_fit_v1.py \
             tests/test_rll_pantheon_three_model_cpl_v1.py \
-            tests/test_rll_dovekie_three_model_v1.py
+            tests/test_rll_dovekie_three_model_v1.py \
+            tests/test_rll_sn_gap_closure_v1.py \
+            tests/test_rll_dovekie_nested_evidence_v1.py
 
       - name: Materialize pinned official Pantheon STAT+SYS covariance
         env:
@@ -96,6 +101,17 @@ jobs:
           rll-evidence verify \
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
 
+      - name: Execute Pantheon Hubble-flow common-nuisance companion
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.pantheon_hubbleflow_profiled \
+            --catalog data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat \
+            --covariance data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov \
+            --output artifacts/science/sn_modern/pantheon_hubbleflow_profiled_result.json \
+            --seeds 11,23,37 \
+            --maxiter 250 \
+            --integration-points 4096
+
       - name: Materialize pinned official DES-Dovekie HD and precision matrix
         run: |
           set -euo pipefail
@@ -114,7 +130,31 @@ jobs:
           rll-evidence verify \
             artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
 
-      - name: Validate scientific boundary and summarize metrics
+      - name: Execute Dovekie CPL wa profile beyond historical bound
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.dovekie_cpl_wa_profile \
+            --hd data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            --precision 'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            --output artifacts/science/sn_modern/dovekie_cpl_wa_profile_result.json \
+            --wa-grid=-8,-6,-5,-4,-3,-2,-1,0,1,2,3 \
+            --maxiter 180 \
+            --integration-points 4096
+
+      - name: Execute proper prior-locked Dovekie three-model nested evidence
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.dovekie_nested_evidence \
+            --hd data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            --precision 'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            --priors data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json \
+            --output artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json \
+            --seeds 20260807,20260808 \
+            --nlive 160 \
+            --dlogz 0.15 \
+            --integration-points 4096
+
+      - name: Build common-nuisance ablation receipt and summarize metrics
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -134,6 +174,9 @@ jobs:
           pantheon_receipt = json.loads(Path(
               "artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json"
           ).read_text(encoding="utf-8"))
+          pantheon_hf = json.loads(Path(
+              "artifacts/science/sn_modern/pantheon_hubbleflow_profiled_result.json"
+          ).read_text(encoding="utf-8"))
           dovekie = json.loads(Path(
               "artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json"
           ).read_text(encoding="utf-8"))
@@ -143,15 +186,26 @@ jobs:
           materialization = json.loads(Path(
               "artifacts/science/sn_modern/dovekie_materialization_receipt.json"
           ).read_text(encoding="utf-8"))
+          wa_profile = json.loads(Path(
+              "artifacts/science/sn_modern/dovekie_cpl_wa_profile_result.json"
+          ).read_text(encoding="utf-8"))
+          bayes = json.loads(Path(
+              "artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json"
+          ).read_text(encoding="utf-8"))
 
-          assert canonical["claim_allowed"] is False
-          assert canonical_receipt["claim_allowed"] is False
-          assert pantheon["claim_allowed"] is False
-          assert pantheon_receipt["claim_allowed"] is False
-          assert dovekie["claim_allowed"] is False
-          assert dovekie_receipt["claim_allowed"] is False
-          assert materialization["claim_allowed"] is False
+          for payload in (
+              canonical, canonical_receipt, pantheon, pantheon_receipt,
+              pantheon_hf, dovekie, dovekie_receipt, materialization, wa_profile, bayes
+          ):
+              assert payload["claim_allowed"] is False
+
           assert materialization["precision_matrix"]["matrix_semantics"] == "inverse_covariance_precision"
+          assert pantheon_hf["nuisance_policy"] == dovekie["method"]["nuisance"]
+          assert pantheon_hf["H0_reference"] == 70.0
+          assert dovekie["method"]["H0_policy"].startswith("fixed reference H0=70")
+          assert bayes["state"] == "VERIFIED_INTERNAL_NUMERICAL_REPLICATION"
+          assert bayes["independent_replication"] is False
+          assert bayes["likelihood"]["magnitude_offset"] == "sampled proper shared nuisance"
           assert [row["model"] for row in pantheon["rows"]] == [
               "LCDM_pantheon_full", "CPL_pantheon_full", "RLL_pantheon_full"
           ]
@@ -160,35 +214,75 @@ jobs:
           ]
 
           p_cpl = pantheon["comparison"]["cpl_minus_baseline"]
-          p_rll = pantheon["comparison"]["rll_minus_baseline"]
+          ph_cpl = pantheon_hf["comparison"]["cpl_minus_baseline"]
+          ph_rll = pantheon_hf["comparison"]["rll_minus_baseline"]
           d_cpl = dovekie["comparison"]["cpl_minus_baseline"]
           d_rll = dovekie["comparison"]["rll_minus_baseline"]
+
+          ablation = {
+              "schema": "rll.sn_common_nuisance_ablation_receipt.v1",
+              "state": "VERIFIED",
+              "claim_allowed": False,
+              "publication_ready": False,
+              "source_sha256": {
+                  "pantheon_catalog": pantheon_hf["source_sha256"],
+                  "dovekie_hd": dovekie["inputs"]["hubble_diagram"]["sha256"],
+              },
+              "covariance_sha256": {
+                  "pantheon_full_covariance": pantheon_hf["covariance_sha256"],
+                  "dovekie_precision": dovekie["inputs"]["precision_matrix"]["sha256"],
+              },
+              "n_supernovae": {
+                  "pantheon_hubbleflow": pantheon_hf["n_supernovae"],
+                  "dovekie": dovekie["inputs"]["selected_rows"],
+              },
+              "nuisance_policy": pantheon_hf["nuisance_policy"],
+              "same_nuisance_policy": True,
+              "calibration_variant": ["Pantheon+SH0ES_HUBBLE_FLOW_ONLY", "DES-Dovekie"],
+              "chi2_full_covariance": {
+                  "pantheon_hubbleflow": {row["model"]: row["chi2"] for row in pantheon_hf["rows"]},
+                  "dovekie": {row["model"]: row["chi2"] for row in dovekie["rows"]},
+              },
+              "deltas": {
+                  "pantheon_hubbleflow": {"CPL": ph_cpl, "RLL": ph_rll},
+                  "dovekie": {"CPL": d_cpl, "RLL": d_rll},
+              },
+              "wa_profile_state": wa_profile["state"],
+              "wa_profile_best": wa_profile["classification"]["best_wa"],
+              "wa_profile_bounded_95_on_grid": wa_profile["classification"]["bounded_95_on_grid"],
+              "scientific_boundary": (
+                  "The two SN datasets now share the same profiled-offset/fixed-reference-H0 nuisance logic. "
+                  "Differences in sample construction, calibration provenance and matrix construction remain physical/data differences to report, not nuisances to erase."
+              ),
+              "resolves_token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+          }
+          Path("artifacts/science/sn_modern/common_nuisance_ablation_receipt.json").write_text(
+              json.dumps(ablation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+
+          cpl_bayes = bayes["bayes_factors"]["CPL_vs_LCDM"]
+          rll_bayes = bayes["bayes_factors"]["RLL_vs_LCDM"]
           summary = [
-              "# Modern SN likelihood validation",
+              "# Modern SN likelihood validation + gap closure",
               "",
-              f"- Pantheon+ status: `{pantheon['status']}`",
-              f"- Pantheon+ selected rows: `{pantheon['inputs']['selected_rows']}`",
-              f"- Pantheon+ covariance SHA-256: `{pantheon['inputs']['covariance']['sha256']}`",
-              f"- Pantheon+ Δχ² CPL−ΛCDM: `{p_cpl['chi2']:.12g}`",
-              f"- Pantheon+ ΔBIC CPL−ΛCDM: `{p_cpl['BIC']:.12g}`",
-              f"- Pantheon+ Δχ² RLL−ΛCDM: `{p_rll['chi2']:.12g}`",
-              f"- Pantheon+ ΔBIC RLL−ΛCDM: `{p_rll['BIC']:.12g}`",
-              "",
-              f"- DES-Dovekie status: `{dovekie['status']}`",
-              f"- DES-Dovekie selected rows: `{dovekie['inputs']['selected_rows']}`",
-              f"- DES-Dovekie HD SHA-256: `{dovekie['inputs']['hubble_diagram']['sha256']}`",
-              f"- DES-Dovekie precision SHA-256: `{dovekie['inputs']['precision_matrix']['sha256']}`",
+              f"- Pantheon+ full selected rows: `{pantheon['inputs']['selected_rows']}`",
+              f"- Pantheon+ Hubble-flow selected rows: `{pantheon_hf['n_supernovae']}`",
+              f"- Pantheon+ full Δχ² CPL−ΛCDM: `{p_cpl['chi2']:.12g}`",
+              f"- Pantheon+ Hubble-flow Δχ² CPL−ΛCDM: `{ph_cpl['chi2']:.12g}`",
+              f"- Pantheon+ Hubble-flow Δχ² RLL−ΛCDM: `{ph_rll['chi2']:.12g}`",
               f"- DES-Dovekie Δχ² CPL−ΛCDM: `{d_cpl['chi2']:.12g}`",
-              f"- DES-Dovekie ΔBIC CPL−ΛCDM: `{d_cpl['BIC']:.12g}`",
               f"- DES-Dovekie Δχ² RLL−ΛCDM: `{d_rll['chi2']:.12g}`",
-              f"- DES-Dovekie ΔBIC RLL−ΛCDM: `{d_rll['BIC']:.12g}`",
+              f"- Dovekie wa profile state: `{wa_profile['state']}`",
+              f"- Dovekie wa profile best: `{wa_profile['classification']['best_wa']}`",
+              f"- wa bounded at 95% on grid: `{wa_profile['classification']['bounded_95_on_grid']}`",
+              f"- Dovekie nested lnB(CPL/LCDM): `{cpl_bayes['lnB']:.12g} ± {cpl_bayes['approx_error']:.6g}`",
+              f"- Dovekie nested lnB(RLL/LCDM): `{rll_bayes['lnB']:.12g} ± {rll_bayes['approx_error']:.6g}`",
               "",
-              "- claim_allowed: `false`",
-              "- clean Pantheon+↔Dovekie common-nuisance ablation: `TOKEN_VAZIO`",
-              "- real nested-sampling evidence: `TOKEN_VAZIO`",
+              "- common Pantheon+↔Dovekie nuisance-policy ablation: `VERIFIED`",
+              "- modern Dovekie 3-model nested evidence: `VERIFIED_INTERNAL_NUMERICAL_REPLICATION`",
               "- independent replication: `TOKEN_VAZIO`",
-              "",
-              "These are common-likelihood fairness controls, not external model validation.",
+              "- joint multi-probe Bayes: `TOKEN_VAZIO`",
+              "- claim_allowed: `false`",
           ]
           Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md").write_text(
               "\n".join(summary) + "\n", encoding="utf-8"
@@ -197,7 +291,7 @@ jobs:
               handle.write("\n".join(summary) + "\n")
           PY
 
-      - name: Upload compact custody and fit receipts only
+      - name: Upload compact custody, gap-closure, Bayes and fit receipts only
         uses: actions/upload-artifact@v7
         with:
           name: modern-sn-fit-receipt-${{ github.run_id }}
@@ -210,8 +304,13 @@ jobs:
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/pantheon_three_model_result.json
             artifacts/evidence/RLL-EVIDENCE-PANTHEON-3MODEL-001/receipt.json
+            artifacts/science/sn_modern/pantheon_hubbleflow_profiled_result.json
+            artifacts/science/sn_modern/common_nuisance_ablation_receipt.json
+            artifacts/science/sn_modern/dovekie_cpl_wa_profile_result.json
             artifacts/science/sn_modern/dovekie_materialization_receipt.json
             artifacts/science/sn_modern/dovekie_existing_verification.json
+            artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json
+            data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json
             artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
             artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
             data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv.sha256
