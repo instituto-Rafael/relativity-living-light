@@ -150,8 +150,10 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
     if model_name == "cpl":
         params.update(
             {
+                # CLASS requires one dark-energy density to be inferred. Setting
+                # Omega_Lambda=0 delegates flat closure to Omega_fld while the
+                # CPL equation of state is specified below.
                 "Omega_Lambda": 0.0,
-                "Omega_fld": 1.0 - p["Omega_m"],
                 "w0_fld": p["w0"],
                 "wa_fld": p["wa"],
                 "fluid_equation_of_state": "CLP",
