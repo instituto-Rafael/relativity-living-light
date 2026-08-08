@@ -2,7 +2,7 @@ schema: rll.workflow_contract.v1
 updated_at: "2026-08-08"
 
 inventory:
-  active_workflows: 74
+  active_workflows: 75
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -51,8 +51,12 @@ github_platform_assurance:
   codeql_languages:
     - actions
     - python
-  external_settings_verified: false
-  external_state: TOKEN_VAZIO_EXTERNAL_SETTINGS
+  external_settings_verified: true
+  external_state: RESOLVED_NEGATIVE_NO_BRANCH_PROTECTION_OR_RULESETS
+  external_evidence: artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json
+  external_successor: TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT
+  branch_protection_observed: false
+  repository_ruleset_count_observed: 0
   claim_allowed: false
   publication_effect: NONE
 
@@ -225,6 +229,12 @@ documented_checks:
     - context: ACT DR6.02 official LCDM reference chain custody
       workflow: .github/workflows/act-dr6-reference-chain-custody.yml
       job_id: custody
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: ACT DR6 local posterior preflight
+      workflow: .github/workflows/act-dr6-posterior-preflight.yml
+      job_id: freeze-contract
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
