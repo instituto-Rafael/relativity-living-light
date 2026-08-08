@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-07"
+updated_at: "2026-08-08"
 
 inventory:
-  active_workflows: 67
+  active_workflows: 70
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -86,6 +86,40 @@ branch_reconciliation:
     Content added directly to main must be forward-ported through the maturity
     chain without deleting laboratory-only governance. Commit-history divergence
     does not become equivalence without a new receipt.
+  current_release_promotion:
+    source_ref: rll/integration
+    target_ref: rll/release
+    source_sha: 888059a095600c50493d535c2ef5c2a685a453a8
+    source_prs:
+      - 672
+      - 674
+    evidence:
+      - artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json
+      - artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json
+      - data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260807_V1.json
+    ledger:
+      input_tokens: 30
+      terminal_resolved: 9
+      reduced_generic: 7
+      open: 14
+    observed_validation:
+      python_tests: 1049
+      python_subtests: 3
+      class_camb_baseline: VERIFIED_BASELINE_ENGINE_CROSSCHECK
+      h0_rd_optimizer_convergence: VERIFIED_ALL_24_BEST_FITS_CONVERGED
+      pantheon_dovekie_modern_gate: PASS
+    residual_scientific_authorities:
+      - TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION
+      - TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION
+      - TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD
+      - TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE
+      - TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION
+      - TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS
+      - TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION
+      - TOKEN_VAZIO_INDEPENDENT_REPLICATION
+      - TOKEN_VAZIO_PHYSICAL_EXECUTION
+    claim_allowed: false
+    publication_effect: NONE
 
 aliases:
   - path: .github/workflows/RLL-CI.yml
@@ -179,6 +213,12 @@ documented_checks:
     - context: Verify workflow contract inventory
       workflow: .github/workflows/workflow-contract-sync.yml
       job_id: verify-contract
+      permissions: contents_read
+      certification_claim: false
+      conformity_claim: false
+    - context: ACT DR6 CMB-only materialization
+      workflow: .github/workflows/act-dr6-cmbonly-materialization.yml
+      job_id: materialize-reference
       permissions: contents_read
       certification_claim: false
       conformity_claim: false
