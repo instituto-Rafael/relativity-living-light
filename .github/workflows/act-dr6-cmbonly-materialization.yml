@@ -17,6 +17,8 @@ env:
   ACT_UPSTREAM_REPOSITORY: ACTCollaboration/DR6-ACT-lite
   ACT_UPSTREAM_URL: https://github.com/ACTCollaboration/DR6-ACT-lite.git
   ACT_UPSTREAM_SHA: 627aeafb88ae5ad1aa66b406bea2d65cfa66a27d
+  CAMB_UPSTREAM_URL: https://github.com/cmbant/CAMB.git
+  CAMB_HISTORY_CUTOFF: "2024-11-14T00:00:00Z"
   COBAYA_PACKAGES_PATH: ${{ github.workspace }}/.act-cobaya-packages
   CLAIM_BOUNDARY: "This gate reproduces pinned upstream ACT DR6 CMB-only installation/tests/reference likelihood values only. It does not validate RLL CMB predictions, a posterior chain, or any RLL perturbation claim."
 
@@ -43,11 +45,10 @@ jobs:
       - name: Install upstream-date scientific runtime
         run: |
           set -euo pipefail
-          # Reconstruct the latest package line available when the audited ACT
-          # upstream commit was published (2025-03-28). The previous controlled
-          # 2026 stack executed the likelihood but missed the upstream reference
-          # values, so this experiment changes dependencies only. Data, ACT SHA,
-          # cosmological parameters and ±0.01 assertions remain unchanged.
+          # Reconstruct the package line available when the audited ACT commit
+          # was published. The CAMB pip pin alone is not authoritative because
+          # Cobaya installs its own source tree under packages_path/code/CAMB;
+          # that effective engine is pinned separately below.
           python -m pip install --disable-pip-version-check \
             "numpy==2.2.4" \
             "scipy==1.15.2" \
@@ -61,7 +62,20 @@ jobs:
               print(package, m.version(package))
           PY
 
-      - name: Acquire exact upstream commit without vendoring
+      - name: Resolve historical CAMB git authority
+        run: |
+          set -euo pipefail
+          rm -rf .camb-history
+          git clone --filter=blob:none --no-checkout "$CAMB_UPSTREAM_URL" .camb-history
+          candidate="$(git -C .camb-history rev-list -1 --first-parent --before="$CAMB_HISTORY_CUTOFF" origin/master)"
+          test -n "$candidate"
+          echo "$candidate" > camb_historical_authority_sha.txt
+          git -C .camb-history show -s --format='%H%n%cI%n%s' "$candidate" > camb_historical_authority.txt
+          echo "CAMB_REPO_VERSION=$candidate" >> "$GITHUB_ENV"
+          echo "Resolved CAMB_REPO_VERSION=$candidate"
+          cat camb_historical_authority.txt
+
+      - name: Acquire exact ACT upstream commit without vendoring
         run: |
           set -euo pipefail
           rm -rf .act-upstream
@@ -72,13 +86,23 @@ jobs:
           git -C .act-upstream ls-tree -r HEAD | sha256sum > act_upstream_lstree.sha256
           python -m pip install --disable-pip-version-check --no-deps -e ./.act-upstream
 
-      - name: Materialize official likelihood data through Cobaya installer
+      - name: Materialize official likelihood data and pinned effective CAMB
         run: |
           set -euo pipefail
           mkdir -p "$COBAYA_PACKAGES_PATH"
           cobaya-install act_dr6_cmbonly
           cobaya-install act_dr6_cmbonly.PlanckActCut
           test -d "$COBAYA_PACKAGES_PATH"
+          test -d "$COBAYA_PACKAGES_PATH/code/CAMB/.git"
+          effective_camb_sha="$(git -C "$COBAYA_PACKAGES_PATH/code/CAMB" rev-parse HEAD)"
+          echo "$effective_camb_sha" > camb_effective_sha.txt
+          test "$effective_camb_sha" = "$CAMB_REPO_VERSION"
+          PYTHONPATH="$COBAYA_PACKAGES_PATH/code/CAMB${PYTHONPATH:+:$PYTHONPATH}" python - <<'PY' > camb_effective_runtime.txt
+          import camb
+          print(getattr(camb, "__version__", "TOKEN_VAZIO_VERSION_ATTRIBUTE"))
+          print(camb.__file__)
+          PY
+          cat camb_effective_runtime.txt
           find "$COBAYA_PACKAGES_PATH" -type f -print0 \
             | sort -z \
             | xargs -0 sha256sum \
@@ -107,6 +131,10 @@ jobs:
             act_dr6_data_files.sha256
             act_upstream_tree.txt
             act_upstream_lstree.sha256
+            camb_historical_authority_sha.txt
+            camb_historical_authority.txt
+            camb_effective_sha.txt
+            camb_effective_runtime.txt
           if-no-files-found: error
           retention-days: 30
 
@@ -221,6 +249,8 @@ jobs:
           data_manifest = Path("act_dr6_data_files.sha256")
           lines = [line for line in data_manifest.read_text(encoding="utf-8").splitlines() if line.strip()]
           tree = Path("act_upstream_tree.txt").read_text(encoding="utf-8").strip()
+          effective_camb_sha = Path("camb_effective_sha.txt").read_text(encoding="utf-8").strip()
+          camb_runtime = Path("camb_effective_runtime.txt").read_text(encoding="utf-8").splitlines()
 
           receipt = {
               "schema": "rll.act_dr6_cmbonly_materialization_receipt.v1",
@@ -236,6 +266,12 @@ jobs:
               "runtime": {
                   package: m.version(package)
                   for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest", "ACT DR6 CMBonly")
+              },
+              "effective_camb": {
+                  "git_sha": effective_camb_sha,
+                  "resolved_cutoff": os.environ["CAMB_HISTORY_CUTOFF"],
+                  "reported_version": camb_runtime[0] if camb_runtime else "TOKEN_VAZIO",
+                  "import_path": camb_runtime[1] if len(camb_runtime) > 1 else "TOKEN_VAZIO",
               },
               "data_custody": {
                   "installer": "cobaya-install",
@@ -253,11 +289,12 @@ jobs:
                   "log_sha256": sha256(Path("act_dr6_pytest.log")),
               },
               "reference_likelihood": refs,
-              "scientific_boundary": "This receipt verifies pinned ACT DR6 CMB-only acquisition, upstream tests, and two reference likelihood evaluations. It is not an ACT posterior-chain reproduction and does not validate any RLL CMB prediction; RLL perturbation closure remains a separate TOKEN_VAZIO.",
+              "scientific_boundary": "This receipt verifies pinned ACT DR6 CMB-only acquisition, upstream tests, the effective Cobaya CAMB git authority, and two reference likelihood evaluations. It is not an ACT posterior-chain reproduction and does not validate any RLL CMB prediction; RLL perturbation closure remains a separate TOKEN_VAZIO.",
               "reduces_token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
               "successor": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
               "F_ok": [
-                  "Pinned upstream code was executed at the audited commit.",
+                  "Pinned ACT upstream code was executed at the audited commit.",
+                  "The effective CAMB source tree used by Cobaya was pinned and hash-verified.",
                   "Official likelihood data were acquired through the declared Cobaya installer and hashed without vendoring into RLL.",
                   "Upstream tests passed.",
                   "ACT TT/TE/EE and ACT+Planck reference likelihood values matched upstream tolerances."
@@ -282,6 +319,10 @@ jobs:
             act_upstream_lstree.sha256 \
             act_dr6_pytest.xml \
             act_dr6_pytest.log \
+            camb_historical_authority_sha.txt \
+            camb_historical_authority.txt \
+            camb_effective_sha.txt \
+            camb_effective_runtime.txt \
             > artifacts/science/act/runtime/ACT_DR6_CMBONLY_RUNTIME_CHECKSUMS.sha256
 
       - name: Verify claim boundaries
@@ -317,6 +358,10 @@ jobs:
             act_upstream_lstree.sha256
             act_dr6_pytest.xml
             act_dr6_pytest.log
+            camb_historical_authority_sha.txt
+            camb_historical_authority.txt
+            camb_effective_sha.txt
+            camb_effective_runtime.txt
           if-no-files-found: error
           retention-days: 30
 
