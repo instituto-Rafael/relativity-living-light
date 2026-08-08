@@ -4,9 +4,13 @@ from __future__ import annotations
 """Freeze the official ACT DR6.02 LCDM posterior configuration for local replay.
 
 This consumes the official LAMBDA chain archive after extraction and records the
-exact input/updated configuration, MCMC controls, parameter priors, covariance
-files and a best observed chain point. It does not execute a local posterior and
-therefore cannot resolve the posterior reproduction token.
+exact MCMC input/updated configuration, MCMC controls, parameter priors,
+covariance files and a best observed chain point. The archive also contains a
+separate ``*.minimize.*`` configuration; it is preserved as auxiliary custody
+but is never silently selected as the posterior-chain authority.
+
+This tool does not execute a local posterior and therefore cannot resolve the
+posterior reproduction token.
 """
 
 import argparse
@@ -39,11 +43,16 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return value
 
 
-def unique_file(root: Path, suffix: str) -> Path:
-    matches = sorted(root.rglob(f"*{suffix}"))
-    if len(matches) != 1:
-        raise ValueError(f"expected exactly one *{suffix}, found {len(matches)}")
-    return matches[0]
+def primary_mcmc_file(root: Path, suffix: str) -> Path:
+    """Select exactly one non-minimize config for posterior-chain authority."""
+    all_matches = sorted(root.rglob(f"*{suffix}"))
+    primary = [path for path in all_matches if ".minimize." not in path.name]
+    if len(primary) != 1:
+        raise ValueError(
+            f"expected exactly one non-minimize *{suffix}, found {len(primary)} "
+            f"(all matches={len(all_matches)})"
+        )
+    return primary[0]
 
 
 def chain_header_and_best(chain_files: list[Path]) -> tuple[list[str], dict[str, float], int]:
@@ -60,7 +69,8 @@ def chain_header_and_best(chain_files: list[Path]) -> tuple[list[str], dict[str,
                 if line.startswith("#"):
                     if header is None:
                         candidate = line.lstrip("#").strip().split()
-                        if len(candidate) >= 3 and candidate[0].lower() in {"weight", "weights"} and "minuslogpost" in [c.lower() for c in candidate]:
+                        lowered = [c.lower() for c in candidate]
+                        if len(candidate) >= 3 and candidate[0].lower() in {"weight", "weights"} and "minuslogpost" in lowered:
                             header = candidate
                     continue
                 values = [float(x) for x in line.split()]
@@ -87,15 +97,28 @@ def normalize_parameter(value: Any) -> Any:
     return {key: value[key] for key in sorted(value) if key in allowed}
 
 
+def file_receipt(path: Path, root: Path) -> dict[str, Any]:
+    return {
+        "path": str(path.relative_to(root)),
+        "sha256": sha256_file(path),
+        "size_bytes": path.stat().st_size,
+    }
+
+
 def build(extracted: Path, source_url: str) -> dict[str, Any]:
     if not extracted.is_dir():
         raise ValueError("extracted reference directory missing")
-    input_yaml = unique_file(extracted, ".input.yaml")
-    updated_yaml = unique_file(extracted, ".updated.yaml")
+
+    input_yaml = primary_mcmc_file(extracted, ".input.yaml")
+    updated_yaml = primary_mcmc_file(extracted, ".updated.yaml")
     input_cfg = load_yaml(input_yaml)
     updated_cfg = load_yaml(updated_yaml)
 
-    chain_files = sorted(path for path in extracted.rglob("*.txt") if path.name.rsplit(".", 2)[-2].isdigit())
+    chain_files = sorted(
+        path
+        for path in extracted.rglob("*.txt")
+        if len(path.name.rsplit(".", 2)) == 3 and path.name.rsplit(".", 2)[-2].isdigit()
+    )
     if not chain_files:
         raise ValueError("no official chain files found")
     header, best, total_rows = chain_header_and_best(chain_files)
@@ -103,6 +126,12 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
     covmats = sorted(extracted.rglob("*.covmat"))
     minimums = sorted(extracted.rglob("*.minimum"))
     progress = sorted(extracted.rglob("*.progress"))
+    minimize_configs = sorted(
+        path
+        for path in extracted.rglob("*.yaml")
+        if ".minimize." in path.name
+    )
+
     params = input_cfg.get("params") if isinstance(input_cfg.get("params"), dict) else {}
     sampler = input_cfg.get("sampler") if isinstance(input_cfg.get("sampler"), dict) else {}
     updated_sampler = updated_cfg.get("sampler") if isinstance(updated_cfg.get("sampler"), dict) else {}
@@ -114,6 +143,8 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
         for name, spec in params.items()
         if isinstance(spec, dict) and isinstance(spec.get("prior"), dict)
     ]
+    if not sampled_params:
+        raise ValueError("official MCMC config exposes no sampled parameters with explicit prior mappings")
     missing_best = sorted(name for name in sampled_params if name not in best)
     if missing_best:
         raise ValueError("official chain header missing sampled params: " + ", ".join(missing_best))
@@ -140,6 +171,8 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
         for key in sorted(mcmc_keys)
         if key in mcmc_updated or key in mcmc_input
     }
+    if not mcmc_contract:
+        raise ValueError("official MCMC stopping/proposal contract is empty")
 
     return {
         "schema": SCHEMA,
@@ -151,8 +184,10 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
             "provider": "NASA/GSFC LAMBDA",
             "product": "ACT DR6.02 actlite LCDM CAMB chain",
             "source_url": source_url,
-            "input_yaml": {"path": str(input_yaml.relative_to(extracted)), "sha256": sha256_file(input_yaml)},
-            "updated_yaml": {"path": str(updated_yaml.relative_to(extracted)), "sha256": sha256_file(updated_yaml)},
+            "input_yaml": file_receipt(input_yaml, extracted),
+            "updated_yaml": file_receipt(updated_yaml, extracted),
+            "selection_rule": "posterior authority is the unique non-minimize input/updated YAML pair",
+            "auxiliary_minimize_configs": [file_receipt(path, extracted) for path in minimize_configs],
         },
         "components": {
             "likelihood_names": sorted(map(str, likelihood.keys())),
@@ -165,26 +200,16 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
             "specifications": {str(name): normalize_parameter(spec) for name, spec in params.items()},
         },
         "mcmc_contract": mcmc_contract,
-        "covariance": [
-            {"path": str(path.relative_to(extracted)), "sha256": sha256_file(path), "size_bytes": path.stat().st_size}
-            for path in covmats
-        ],
-        "minimum_files": [
-            {"path": str(path.relative_to(extracted)), "sha256": sha256_file(path)} for path in minimums
-        ],
-        "progress_files": [
-            {"path": str(path.relative_to(extracted)), "sha256": sha256_file(path)} for path in progress
-        ],
+        "covariance": [file_receipt(path, extracted) for path in covmats],
+        "minimum_files": [file_receipt(path, extracted) for path in minimums],
+        "progress_files": [file_receipt(path, extracted) for path in progress],
         "reference_chains": {
             "chain_file_count": len(chain_files),
             "total_noncomment_rows": total_rows,
             "header": header,
             "best_observed_minuslogpost": float(best["minuslogpost"]),
             "best_observed_sampled_parameters": {name: float(best[name]) for name in sampled_params},
-            "files": [
-                {"path": str(path.relative_to(extracted)), "sha256": sha256_file(path), "size_bytes": path.stat().st_size}
-                for path in chain_files
-            ],
+            "files": [file_receipt(path, extracted) for path in chain_files],
         },
         "local_reproduction_contract": {
             "must_preserve_sampled_parameter_priors": True,
@@ -199,7 +224,7 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
         "resolved_token": None,
         "reduces_token": TOKEN,
         "next_required_action": "Execute the frozen local Cobaya/CAMB ACT+Planck-lowE LCDM posterior, preserve raw chains and convergence diagnostics, then compare marginals against this official reference contract.",
-        "scientific_boundary": "Freezing the official posterior contract eliminates configuration ambiguity but is not a local posterior reproduction and has no RLL CMB validation effect."
+        "scientific_boundary": "Freezing the official posterior contract eliminates configuration ambiguity but is not a local posterior reproduction and has no RLL CMB validation effect.",
     }
 
 
@@ -225,13 +250,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     payload = build(args.extracted, args.source_url)
     atomic_json(args.output, payload)
-    print(json.dumps({
-        "state": payload["state"],
-        "sampled_parameters": payload["parameters"]["count_sampled"],
-        "chain_rows": payload["reference_chains"]["total_noncomment_rows"],
-        "best_minuslogpost": payload["reference_chains"]["best_observed_minuslogpost"],
-        "claim_allowed": False,
-    }, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "state": payload["state"],
+                "sampled_parameters": payload["parameters"]["count_sampled"],
+                "chain_rows": payload["reference_chains"]["total_noncomment_rows"],
+                "best_minuslogpost": payload["reference_chains"]["best_observed_minuslogpost"],
+                "aux_minimize_configs": len(payload["authority"]["auxiliary_minimize_configs"]),
+                "claim_allowed": False,
+            },
+            sort_keys=True,
+        )
+    )
     return 0
 
 
