@@ -6,6 +6,8 @@ on:
     paths:
       - "tools/run_h0_rd_ablation_v1.py"
       - "tests/test_h0_rd_ablation_v1.py"
+      - "tools/rll_h0_rd_direct_boltzmann_probe_v1.py"
+      - "tests/test_rll_h0_rd_direct_boltzmann_probe_v1.py"
       - "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json"
       - "data/pipelines/structure_d/joint_real_likelihood.py"
       - ".github/workflows/h0-rd-ablation.yml"
@@ -14,7 +16,7 @@ permissions:
   contents: read
 
 env:
-  CLAIM_BOUNDARY: "H0/r_d matrix execution is sensitivity-only. Correlated Planck conditioning, external prior provenance and approximate derived r_d block formal H0-tension or model-evidence claims."
+  CLAIM_BOUNDARY: "H0/r_d matrix execution is sensitivity-only. Correlated Planck conditioning and incomplete RLL early-time mapping block formal H0-tension or model-evidence claims. Direct CAMB probes reduce but do not resolve full-Boltzmann inference integration."
 
 concurrency:
   group: h0-rd-ablation-${{ github.event.pull_request.number || github.ref }}
@@ -36,13 +38,21 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install repository and test dependencies
+      - name: Install repository, test dependencies and pinned CAMB probe backend
         run: |
           python -m pip install --disable-pip-version-check -r requirements.txt
-          python -m pip install --disable-pip-version-check "pytest>=8,<10"
+          python -m pip install --disable-pip-version-check "pytest>=8,<10" "camb==1.6.6"
+          python - <<'PY'
+          import importlib.metadata
+          print("camb", importlib.metadata.version("camb"))
+          assert importlib.metadata.version("camb") == "1.6.6"
+          PY
 
-      - name: Run H0/r_d policy tests
-        run: python -m pytest -q tests/test_h0_rd_ablation_v1.py
+      - name: Run H0/r_d policy and direct-Boltzmann probe tests
+        run: |
+          python -m pytest -q \
+            tests/test_h0_rd_ablation_v1.py \
+            tests/test_rll_h0_rd_direct_boltzmann_probe_v1.py
 
       - name: Execute all six H0/r_d cells with convergence fallback
         env:
@@ -56,6 +66,29 @@ jobs:
             --output-dir "$GITHUB_WORKSPACE/results/structure_d/ablation" \
             --maxiter 180 \
             --ftol 1e-9
+
+      - name: Probe direct full-Boltzmann r_drag at all selected fit vectors
+        run: |
+          set -euo pipefail
+          python tools/rll_h0_rd_direct_boltzmann_probe_v1.py \
+            --ablation artifacts/science/h0/H0_RD_ABLATION_CURRENT.json \
+            --output artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "STANDARD_18_OF_24_DIRECT_CAMB_RDRAG_EVALUATED_RLL_6_BLOCKED"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["summary"]["direct_camb_evaluated"] == 18
+          assert d["summary"]["rll_mapping_blocked"] == 6
+          assert d["resolved_token"] is None
+          assert d["reduces_token"] == "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"
+          print(json.dumps(d["summary"], sort_keys=True))
+          PY
+          sha256sum artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.json \
+            > artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.sha256
 
       - name: Verify claim and convergence boundaries and write checksums
         run: |
@@ -71,7 +104,6 @@ jobs:
           assert d["interpretation"]["six_cells_executed"] is True
           assert d["interpretation"]["all_best_fits_converged"] is True
           assert d["interpretation"]["planck_h0_is_independent_of_planck_cmb_shift"] is False
-          assert d["interpretation"]["primary_external_h0_source_receipts_frozen"] is False
           assert d["interpretation"]["derived_rd_is_full_boltzmann_recombination_solution"] is False
           assert len(d["cells"]) == 6
           assert all(len(cell["models"]) == 4 for cell in d["cells"])
@@ -89,13 +121,15 @@ jobs:
           sha256sum artifacts/science/h0/H0_RD_ABLATION_CURRENT.json results/structure_d/ablation/*.csv \
             > artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
 
-      - name: Upload compact H0/r_d receipts
+      - name: Upload compact H0/r_d and Boltzmann probe receipts
         uses: actions/upload-artifact@v7
         with:
           name: h0-rd-ablation-${{ github.run_id }}
           path: |
             artifacts/science/h0/H0_RD_ABLATION_CURRENT.json
             artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
+            artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.json
+            artifacts/science/h0/H0_RD_DIRECT_BOLTZMANN_PROBE_CURRENT.sha256
             results/structure_d/ablation/*.csv
           if-no-files-found: error
           retention-days: 30
