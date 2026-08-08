@@ -54,11 +54,18 @@ class RllStudioContractTests(unittest.TestCase):
     def test_minimal_fail_closed_manifest_is_valid(self):
         self.assertEqual([], list(self.validator.iter_errors(self.minimal_manifest())))
 
-    def test_claim_true_cannot_be_blocked(self):
+    def test_claim_true_is_always_rejected(self):
         manifest = self.minimal_manifest()
         manifest["claim"]["allowed"] = True
+        manifest["claim"]["state"] = "PASS"
         errors = list(self.validator.iter_errors(manifest))
-        self.assertTrue(errors, "claim.allowed=true with BLOCKED must fail schema validation")
+        self.assertTrue(errors, "RLL Studio V1 must reject claim.allowed=true even with state PASS")
+
+    def test_schema_declares_structural_contract(self):
+        description = self.schema.get("description", "").lower()
+        self.assertIn("structural", description)
+        self.assertIn("contract", description)
+        self.assertIs(self.schema["properties"]["claim"]["properties"]["allowed"].get("const"), False)
 
     def test_token_vazio_is_first_class_state(self):
         states = self.schema["$defs"]["state"]["enum"]
@@ -76,9 +83,10 @@ class RllStudioContractTests(unittest.TestCase):
         self.assertIn("prefers-reduced-motion", self.css)
         self.assertIn(":focus-visible", self.css)
 
-    def test_ui_does_not_auto_promote_claim(self):
-        self.assertIn('candidate?.claim?.allowed === true && candidate?.claim?.state !== "PASS"', self.js)
+    def test_ui_rejects_any_claim_promotion(self):
+        self.assertIn('candidate?.claim?.allowed !== false', self.js)
         self.assertIn('claim: { allowed: false, state: "BLOCKED"', self.js)
+        self.assertNotIn('claim.allowed=true exige claim.state=PASS', self.js)
 
     def test_frontend_is_dependency_free(self):
         self.assertNotIn("https://cdn", self.html)
