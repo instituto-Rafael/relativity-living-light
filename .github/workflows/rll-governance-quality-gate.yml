@@ -20,6 +20,8 @@ on:
       - "tests/test_rll_token_vazio_reconcile*.py"
       - "tools/rll_open_work_mechanism_gate*.py"
       - "tests/test_rll_open_work_mechanism_gate*.py"
+      - "tools/rll_modern_validation_reconcile*.py"
+      - "tests/test_rll_modern_validation_reconcile*.py"
       - "scripts/rll_governance_audit.py"
       - "tests/test_rll_governance_audit.py"
       - "docs/governance/**"
@@ -80,7 +82,7 @@ jobs:
           sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V3_CURRENT.json \
             > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V3_CURRENT.sha256
 
-      - name: "Reconcile TOKEN_VAZIO V4 live-settings evidence view"
+      - name: "Reproduce TOKEN_VAZIO V4 live-settings evidence view"
         run: |
           python3 -m tools.rll_token_vazio_reconcile_v4 \
             --generated-at 2026-08-08T06:50:00Z \
@@ -89,7 +91,24 @@ jobs:
           sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V4_CURRENT.json \
             > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V4_CURRENT.sha256
 
-      - name: "Gate historical and effective open-work mechanisms V1-V3"
+      - name: "Reconcile TOKEN_VAZIO V5 orphan modern-validation view"
+        run: |
+          python3 -m tools.rll_token_vazio_reconcile_v5 \
+            --generated-at 2026-08-08T07:10:00Z \
+            --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V5_CURRENT.json
+          python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v5
+          sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V5_CURRENT.json \
+            > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V5_CURRENT.sha256
+
+      - name: "Reconcile Modern Validation V1 to current canonical tokens"
+        run: |
+          python3 -m tools.rll_modern_validation_reconcile_v2 \
+            --output artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.json
+          python3 -m unittest -v tests.test_rll_modern_validation_reconcile_v2
+          sha256sum artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.json \
+            > artifacts/governance/RLL_MODERN_VALIDATION_RECONCILIATION_V2_CURRENT.sha256
+
+      - name: "Gate historical and effective open-work mechanisms V1-V4"
         run: |
           python3 -m tools.rll_open_work_mechanism_gate_v1 \
             --output artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V1.json
@@ -100,10 +119,14 @@ jobs:
           python3 -m tools.rll_open_work_mechanism_gate_v3 \
             --output artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V3.json
           python3 -m unittest -v tests.test_rll_open_work_mechanism_gate_v3
+          python3 -m tools.rll_open_work_mechanism_gate_v4 \
+            --output artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V4.json
+          python3 -m unittest -v tests.test_rll_open_work_mechanism_gate_v4
           sha256sum \
             artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V1.json \
             artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V2.json \
             artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V3.json \
+            artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V4.json \
             > artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATES.sha256
 
       - name: "Publish non-certification report to job summary"
