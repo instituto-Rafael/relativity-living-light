@@ -15,7 +15,6 @@ def main() -> int:
     findings = data["source_implementation_findings"]
     hotfix = data["hotfix"]
     exact = data["corrected_exact_values"]
-
     assert data["claim_allowed"] is False
     assert data["production_ready"] is False
     assert findings["manifest_v2_entry_bytes"] == 200
@@ -29,12 +28,12 @@ def main() -> int:
     assert hotfix["manifest_v2_abi_changed"] is False
     assert hotfix["sidecar_added"] is True
     assert hotfix["claim_gate"] == "FAIL_CLOSED"
+    assert hotfix["merge_commit"] == "1b54444a2b106c2b160864b31f411fcbb84be092"
     assert exact["gcd_6000_2057"] == 1
     assert exact["gcd_42_60"] == 6
     assert abs(exact["r_corr_formula_value_approx"] - 0.1839415) < 1e-7
     assert abs(exact["redundancy_53_bits_per_1024_bytes"] - 0.0517578125) < 1e-15
     assert len(data["token_vazio"]) >= 8
-
     print("BITRAF64_PHASE1_RECEIPT_PASS")
     print("claim_allowed=false")
     print("production_ready=false")

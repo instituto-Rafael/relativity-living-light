@@ -1,0 +1,12 @@
+{
+  "schema": "rll.gap_closure_input_delta.v1",
+  "claim_allowed": false,
+  "append_only_reason": "The external-settings uncertainty was observed directly in GitHub on run 31244716847. Because the observation is negative (four declared branches unprotected and zero repository rulesets), add a concrete successor instead of erasing the governance risk.",
+  "tokens": [
+    {
+      "token": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+      "priority": "P0",
+      "domain": "GitHub platform governance / branch protection and rulesets"
+    }
+  ]
+}

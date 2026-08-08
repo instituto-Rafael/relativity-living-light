@@ -2,7 +2,7 @@ name: Branch Maturity Gate V2
 
 on:
   pull_request:
-    branches: [rll/lab, rll/integration, rll/release]
+    branches: [rll/lab, rll/integration, rll/release, main]
   workflow_dispatch:
 
 permissions:

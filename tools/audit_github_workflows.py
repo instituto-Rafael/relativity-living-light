@@ -21,67 +21,37 @@ WORKFLOWS = REPO / ".github" / "workflows"
 VALIDATION_BUNDLE = REPO / "validacao_real"
 VALIDATION_PATHS = REPO / "docs" / "pipelines" / "validation_paths"
 
-NON_WORKFLOW_EXTENSIONS = {
-    ".md",
-    ".pdf",
-    ".png",
-    ".py",
-    ".zip",
-    ".json",
-    ".csv",
-    ".txt",
-}
-
+NON_WORKFLOW_EXTENSIONS = {".md", ".pdf", ".png", ".py", ".zip", ".json", ".csv", ".txt"}
 CANONICAL_REAL_DATA_WORKFLOW = ".github/workflows/real-data-complete-execution.yml"
 SYNTHETIC_BOUNDARY_TERMS = ("synthetic", "mock", "fixture", "placeholder", "demo", "example")
-REAL_DATA_IDENTITY_MARKERS = (
-    "real-data",
-    "real_data",
-    "real data",
-    "validacao_real",
-    "validação real",
+REAL_DATA_IDENTITY_MARKERS = ("real-data", "real_data", "real data", "validacao_real", "validação real")
+_ACTION_LINE_RE = re.compile(
+    r"(?m)^\s*(?:-\s*)?uses:\s*actions/(?P<action>[A-Za-z0-9_.-]+)@(?P<ref>v\d+|[0-9a-fA-F]{40})\s*(?:#.*)?$"
 )
-UPLOAD_ARTIFACT_RE = re.compile(
-    r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
-)
-CHECKOUT_RE = re.compile(r"actions/checkout@(?:v\d+|[0-9a-fA-F]{40})(?:\s|$)")
-ACTION_USES_RE = re.compile(
-    r"(?m)^\s*(?:-\s*)?uses:\s*actions/(?P<action>[A-Za-z0-9_.-]+)@"
-    r"(?P<ref>v\d+|[0-9a-fA-F]{40})\s*(?:#.*)?$"
-)
-
-
-def action_refs(text: str, action: str) -> list[str]:
-    """Return provider refs from actual YAML `uses:` lines for one GitHub action."""
-    return [
-        match.group("ref")
-        for match in ACTION_USES_RE.finditer(text)
-        if match.group("action") == action
-    ]
 
 
 def action_majors(text: str, action: str) -> list[int]:
-    """Return explicit vN majors for an action, ignoring immutable SHA pins."""
     majors: list[int] = []
-    for ref in action_refs(text, action):
-        if ref.startswith("v") and ref[1:].isdigit():
-            majors.append(int(ref[1:]))
+    for match in _ACTION_LINE_RE.finditer(text):
+        if match.group("action") == action and match.group("ref").startswith("v"):
+            majors.append(int(match.group("ref")[1:]))
     return majors
 
 
-def has_checkout_action(text: str) -> bool:
-    """Detect a real actions/checkout `uses:` reference, versioned or SHA-pinned."""
-    return bool(action_refs(text, "checkout"))
+def _has_immutable_action_ref(text: str, action: str) -> bool:
+    return any(
+        match.group("action") == action and not match.group("ref").startswith("v")
+        for match in _ACTION_LINE_RE.finditer(text)
+    )
 
 
 def has_supported_upload_artifact(text: str) -> bool:
-    """Accept upload-artifact v4-v7 or an immutable 40-hex commit pin."""
-    for ref in action_refs(text, "upload-artifact"):
-        if len(ref) == 40 and all(char in "0123456789abcdefABCDEF" for char in ref):
-            return True
-        if ref.startswith("v") and ref[1:].isdigit() and 4 <= int(ref[1:]) <= 7:
-            return True
-    return False
+    """Accept upload-artifact v4+ or a full immutable SHA; reject v3."""
+    return any(major >= 4 for major in action_majors(text, "upload-artifact")) or _has_immutable_action_ref(text, "upload-artifact")
+
+
+def has_checkout_action(text: str) -> bool:
+    return bool(action_majors(text, "checkout")) or _has_immutable_action_ref(text, "checkout")
 
 
 def workflow_text(path: Path) -> str:
@@ -113,13 +83,8 @@ def audit_real_workflow_policy() -> list[str]:
         if has_checkout_action(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
         if not has_supported_upload_artifact(text):
-            errors.append(
-                f"{rel}: real workflow must upload artifacts with a supported explicit "
-                "actions/upload-artifact major (v4-v7) or full immutable SHA"
-            )
-        if "rll_real_data_write_checksums" not in text and (
-            "CHECKSUMS.sha256" not in text or "sha256sum" not in text
-        ):
+            errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact v4+ or full immutable SHA")
+        if "rll_real_data_write_checksums" not in text and ("CHECKSUMS.sha256" not in text or "sha256sum" not in text):
             errors.append(f"{rel}: real workflow must build a final CHECKSUMS.sha256 with sha256sum")
         if "CLAIM_BOUNDARY" not in text and "claim_boundary" not in text and "Claim Boundary" not in text:
             errors.append(f"{rel}: real workflow must declare an explicit claim boundary")
@@ -166,7 +131,6 @@ def audit_workflow_contracts() -> list[str]:
         except Exception as exc:
             errors.append(f"{path.relative_to(REPO)}: YAML parse/shape error: {exc}")
             continue
-
         for required in ("name", "on", "jobs"):
             if required not in doc:
                 errors.append(f"{path.relative_to(REPO)}: missing required workflow key '{required}'")
@@ -215,19 +179,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Audit GitHub workflow hygiene and validation YAML placement.")
     parser.add_argument("--strict", action="store_true", help="Fail with exit 1 on any warning/error.")
     args = parser.parse_args()
-
     errors = []
     errors.extend(audit_workflow_contracts())
     errors.extend(audit_workflow_directory_hygiene())
     errors.extend(audit_validation_bundle())
     errors.extend(audit_real_workflow_policy())
-
     if errors:
         print("Workflow audit found issues:")
         for error in errors:
             print(f"- {error}")
         return 1 if args.strict else 0
-
     print("Workflow audit OK: executable workflows are isolated and validation data is externalized.")
     return 0
 

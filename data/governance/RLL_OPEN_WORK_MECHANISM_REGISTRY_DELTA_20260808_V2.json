@@ -1,0 +1,72 @@
+{
+  "schema": "rll.open_work_mechanism_registry_delta.v1",
+  "generated_at": "2026-08-08T05:58:00Z",
+  "base_registry": "data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_20260808_V1.json",
+  "source_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V3_APPEND_ONLY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "expected_open_denominator": 12,
+  "expected_priority_counts": {"P0": 4, "P1": 6, "P2": 2},
+  "resolved_by_evidence": [
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "classification": "FROZEN_35_REF_SEMANTIC_DISPOSITION_COMPLETE",
+      "evidence_path": "data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json",
+      "closure_override_path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V3.json"
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+      "classification": "PRIMARY_PAPER_NUMERIC_PROVENANCE_AND_MATRIX_MAPPING_VERIFIED",
+      "evidence_path": "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_20260808_V1.json",
+      "closure_override_path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V3.json"
+    }
+  ],
+  "attention_overrides": [
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "attention_state": "ACTIVE_EXTERNAL_AVAILABLE",
+      "reason": "Official DESI DR2 cosmology products and the current released Cobaya BAO likelihood are publicly available; local immutable materialization/reference reproduction is still pending.",
+      "evidence_path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"
+    },
+    {
+      "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "attention_state": "ACTIVE_EXTERNAL_PARTIAL",
+      "reason": "Official DES Y6 3x2pt results and some Y6 cosmology products are public, while exact executable likelihood/covariance/nuisance custody remains to be materialized in RLL.",
+      "evidence_path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"
+    }
+  ],
+  "mechanism_enrichments": [
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+      "mechanism_id": "M05_ACT_DR6_LCDM_POSTERIOR",
+      "spec_path": "data/science/act/RLL_ACT_DR6_LCDM_POSTERIOR_CONTRACT_20260808_V1.json",
+      "effect": "CONTENT_SATURATED_EVIDENCE_OPEN"
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "mechanism_id": "M07_RLL_PERTURBATION_CLOSURE",
+      "spec_path": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
+      "effect": "CONTENT_SATURATED_PHYSICAL_CHOICES_OPEN"
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+      "mechanism_id": "M08_RLL_CLASS_CAMB_DUAL_IMPLEMENTATION",
+      "spec_path": "data/science/perturbations/RLL_CLASS_CAMB_IMPLEMENTATION_CONTRACT_20260808_V1.json",
+      "effect": "CONTENT_SATURATED_BLOCKED_BY_CLOSURE"
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "mechanism_id": "M10_H0_FULL_BOLTZMANN_INFERENCE",
+      "spec_path": "data/science/h0/RLL_FULL_BOLTZMANN_INFERENCE_INTEGRATION_CONTRACT_20260808_V1.json",
+      "effect": "CONTENT_SATURATED_IMPLEMENTATION_OPEN"
+    }
+  ],
+  "invariants": [
+    "The base 14-token mechanism registry remains immutable historical custody.",
+    "Only tokens proven RESOLVED in the V3 reconciliation are removed from the effective open queue.",
+    "Attention may be sharpened by new evidence without pretending that an OPEN token is resolved.",
+    "Mechanism enrichment does not change a token state from OPEN to RESOLVED.",
+    "Every evidence_path/spec_path must exist and preserve claim_allowed=false.",
+    "No currently open token may disappear from the effective queue."
+  ]
+}

@@ -51,7 +51,7 @@
     "mode": "LOCAL_EQUIVALENT_SOURCE_COMPILE",
     "compiler_contract": "cc -std=c11 -O2 -Wall -Wextra -Werror ... -lm",
     "observed_marker": "BITRAF64_PHASE1_PROOF_GATE_PASS",
-    "limitations": "The equivalent source was compiled before push against the inspected Manifest V2 field layout; this is not a physical Termux/ARM receipt, GitHub Actions receipt, or independent replication."
+    "limitations": "Not a physical Termux/ARM receipt, GitHub Actions receipt, or independent replication."
   },
   "token_vazio": [
     "GF2_ACTUAL_TRANSFORM_FULL_RANK",
