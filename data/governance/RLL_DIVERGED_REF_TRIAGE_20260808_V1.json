@@ -1,0 +1,162 @@
+{
+  "schema": "rll.diverged_ref_triage.v1",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source": {
+    "census_run": 31239167007,
+    "census_artifact": 9016432221,
+    "lineage_run": 31239898406,
+    "lineage_artifact": 9016670151,
+    "frozen_cohort_size": 35
+  },
+  "rules": [
+    "patch equivalence can remove forward-port review but does not prove identical history",
+    "exact head merged directly to main closes historical forward-port review for that exact head",
+    "a branch that advanced after an older merged PR must have its later head audited separately",
+    "destructive closed branches are not merged merely to preserve documentation; custody is extracted additively",
+    "reverts that would delete stronger current evidence are rejected as regressions",
+    "active recovery PRs remain open work and are not promoted by this triage"
+  ],
+  "patch_equivalent_no_action": [
+    "audit/artifact-custody-run-31066012098",
+    "feature/climate-multiphysics-8x8-fibonacci-20260729",
+    "hotfix/real-validation-data-contract"
+  ],
+  "exact_head_merged_direct_main": [
+    "agent/rll-canonical-c-freestanding-20260727-v1",
+    "architecture/semantic-matrix-7d-v1",
+    "audit/coerente-uploaded-results-20260709",
+    "audit/information-evolution-trace-contract",
+    "codex/rll-campo-entropico-vazio",
+    "codex/rll-fase25-1-workflow-truth",
+    "codex/rll-fase28-route-forest",
+    "docs/distributed-ambient-field-observatory",
+    "docs/perception-memory-three-level-matrix",
+    "docs/rmrcti-delta-p-stability-bridge",
+    "feat/rll-canonical-freestanding-coupling-v1-20260727",
+    "feat/rll-canonical-freestanding-v1",
+    "feat/rll-canonical-real-inputs-v1-20260727",
+    "feat/rll-hz-real-freestanding-model-v1-20260727",
+    "feat/rll-joint-real-model-bridge-v2-20260731",
+    "fix/calc-data-guarded-audit-input",
+    "fix/pantheon-full-covariance-readiness-v2-20260731"
+  ],
+  "promotion_chain_recovered": [
+    {
+      "ref": "feature/utm185-explicit-void-mask-20260728",
+      "state": "FORWARD_PORTED_BY_PR_655",
+      "evidence": "PR #608 merged into the universal-taxonomy branch after #607; PR #655 later forward-ported the four UTM-185 artifacts into main."
+    }
+  ],
+  "semantic_classifications": [
+    {
+      "ref": "audit-act-dr6-cmbonly-lab-v2-20260807",
+      "state": "SUPERSEDED",
+      "evidence": "PR #678 closed unmerged as superseded; corrected ACT lineage continued through #679, #680 and merged #681.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "audit/all-ref-topology-census-20260808-v1",
+      "state": "SUPERSEDED_BY_ACTIVE_HOTFIX",
+      "evidence": "The branch received post-merge governance repairs after #683; hotfix #685 carries the corrected test harness and 73/73 workflow contract with full green census evidence.",
+      "next_action": "REVIEW_PR_685"
+    },
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory",
+      "state": "LEGACY_CUSTODY_EXTRACTED_DESTRUCTIVE_MERGE_REJECTED",
+      "evidence": "Closed PR #58 was unmerged and proposed large documentation deletion/reorganization; nine historical SHA-256 values are preserved additively in RLL_TO_ADD_LEGACY_CUSTODY_20260225_V1.json.",
+      "next_action": "NONE_UNLESS_ORIGINAL_BYTES_ARE_REHASHED"
+    },
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory-gbea3l",
+      "state": "LEGACY_CUSTODY_EXTRACTED_DESTRUCTIVE_MERGE_REJECTED",
+      "evidence": "Closed PR #57 was unmerged; its nine hashes match the #58 variant and are preserved additively without the destructive tree rewrite.",
+      "next_action": "NONE_UNLESS_ORIGINAL_BYTES_ARE_REHASHED"
+    },
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory-l6eilf",
+      "state": "LEGACY_CUSTODY_EXTRACTED_DESTRUCTIVE_MERGE_REJECTED",
+      "evidence": "Closed PR #55 was unmerged and contained no additional hash authority beyond the sibling attempts; destructive deletion/reorganization is not authorized.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "codex/refactor-yml-workflow-and-directory-structure-zes1e1",
+      "state": "SAFE_EXTRACTION_ALREADY_MAIN_FULL_BRANCH_REJECTED",
+      "evidence": "Current main DESI manifest records source_pr=385, source_branch and source_head with mode additive_safe_extraction_only; the historical full branch also contained broad deletions/moves not authorized for replay.",
+      "next_action": "NONE_FOR_FULL_BRANCH"
+    },
+    {
+      "ref": "codex/rll-omega7-operational-invariant",
+      "state": "OBSOLETE_PLACEHOLDER_REPLACED",
+      "evidence": "The later unique head only added an empty {} route-forest schema placeholder; current main contains a real draft-2020-12 schema with required fields and invariants.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "copilot/connect-scan-rll-model-evidence",
+      "state": "ACTIVE_RECOVERY_PR",
+      "evidence": "A post-merge head added adversarial scanner tests absent from current rll/lab; they were reconstructed against current helpers in PR #688 without production-code changes.",
+      "next_action": "REVIEW_PR_688"
+    },
+    {
+      "ref": "docs/workflow-master-index-rafaelia-20260709",
+      "state": "HISTORICAL_DOC_SNAPSHOT_ARCHIVED",
+      "evidence": "The canonical map path exists in main through a different lineage. The divergent branch snapshot is preserved byte-for-byte at docs/archive/2026-07-09/REPO_SESSION_ARTIFACT_MAP_RAFAELIA.branch-573dd27.md with source head/blob metadata.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "feat/rll-canonical-region-freestanding-v1-20260727",
+      "state": "SEMANTICALLY_ABSORBED_CURRENT_MAIN_DOC",
+      "evidence": "The later unique commit only updates core/lowlevel_runtime/README.md to integrate canonical coupling and real-data ingestion documentation; current main contains the coupling section plus a more evolved canonical executable/ingestion description.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "feature/universal-taxonomy-416-token-vazio-20260728",
+      "state": "STACKED_UTM185_CONTENT_FORWARD_PORTED",
+      "evidence": "Its later head is the merge of PR #608 into the taxonomy branch. PR #655 later forward-ported UTM-185 implementation, tests, docs and receipt to main.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "fix/claim-allowed-ci-gate-20260807",
+      "state": "SUPERSEDED_BY_CURRENT_GOVERNANCE_TESTS",
+      "evidence": "The unique post-supersession commit only altered V1 reconciliation tests; current rll/lab V1 tests preserve broader evidence checks and the append-only V2 reconciler adds successor-aware tests without rewriting V1.",
+      "next_action": "NONE"
+    },
+    {
+      "ref": "fix/ref-census-postmerge-governance-20260808-v1",
+      "state": "ACTIVE_RECOVERY_PR",
+      "evidence": "PR #685 is the explicit post-merge repair for #683 and has a 599/599 census receipt plus workflow-contract 73/73 evidence.",
+      "next_action": "REVIEW_PR_685"
+    },
+    {
+      "ref": "revert-336-codex/create-rll-falseability-matrix",
+      "state": "REJECTED_REGRESSION_REVERT",
+      "evidence": "The revert branch removes RLL_FALSEABILITY_MATRIX.md and related validation artifacts while current main intentionally retains the matrix and gated claim_allowed=false structure.",
+      "next_action": "NONE"
+    }
+  ],
+  "summary": {
+    "frozen_cohort_size": 35,
+    "patch_equivalent_no_action": 3,
+    "exact_head_merged_direct_main": 17,
+    "promotion_chain_recovered": 1,
+    "semantically_classified": 14,
+    "active_recovery_refs": 3,
+    "active_recovery_prs": 2,
+    "anonymous_remainder": 0,
+    "unclassified_remainder": 0
+  },
+  "F_ok": [
+    "All 35 frozen diverged refs now have a machine-readable disposition.",
+    "Destructive historical branches were not merged; useful custody was extracted additively.",
+    "One genuinely missing test-only delta was recovered into PR #688.",
+    "No ref is labeled progress merely because it is ahead or diverged."
+  ],
+  "F_gap": [
+    "PR #685 and PR #688 remain active recovery actions; this triage does not merge or promote them.",
+    "External server-side GitHub settings, physical Termux execution and independent scientific replication remain outside this ref-triage scope."
+  ],
+  "F_next": [
+    "Require CI/review for #685 and #688.",
+    "After accepted transitions, reconcile the ref-review successor token append-only rather than editing historical receipts."
+  ]
+}

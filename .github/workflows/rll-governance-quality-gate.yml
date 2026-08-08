@@ -6,6 +6,12 @@ on:
   pull_request:
     paths:
       - "governance/**"
+      - "data/governance/**"
+      - "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_*.json"
+      - "artifacts/science/h0/RLL_H0_RD_BOLTZMANN_RECONCILIATION_*.json"
+      - "artifacts/audit/RLL_ALL_REFS_TOPOLOGY_RECONCILIATION_*.json"
+      - "tools/rll_token_vazio_reconcile*.py"
+      - "tests/test_rll_token_vazio_reconcile*.py"
       - "scripts/rll_governance_audit.py"
       - "tests/test_rll_governance_audit.py"
       - "docs/governance/**"
@@ -46,6 +52,16 @@ jobs:
 
       - name: "Run governance unit tests"
         run: python3 -m unittest -v tests/test_rll_governance_audit.py
+
+      - name: "Reconcile TOKEN_VAZIO V2 append-only"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_token_vazio_reconcile_v2 \
+            --generated-at 2026-08-08T04:30:00Z \
+            --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json
+          python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v2
+          sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json \
+            > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.sha256
 
       - name: "Publish non-certification report to job summary"
         if: always()
