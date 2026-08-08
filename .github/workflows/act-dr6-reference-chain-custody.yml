@@ -1,0 +1,105 @@
+name: ACT DR6.02 Official LCDM Reference Chain Custody
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/rll_act_dr6_reference_chain_custody_v1.py"
+      - "tests/test_rll_act_dr6_reference_chain_custody_v1.py"
+      - ".github/workflows/act-dr6-reference-chain-custody.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: act-dr6-reference-chain-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  ACT_REFERENCE_URL: https://lambda.gsfc.nasa.gov/data/act/chains/lcdm/actlite_lcdm_camb.tar.gz
+  CLAIM_BOUNDARY: "Official LAMBDA reference-chain custody is not local posterior reproduction and does not validate RLL CMB perturbations."
+
+jobs:
+  custody:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout reviewed revision
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded parser dependency
+        run: python -m pip install --disable-pip-version-check "PyYAML==6.0.2"
+
+      - name: Run custody unit tests
+        run: python -m unittest -v tests.test_rll_act_dr6_reference_chain_custody_v1
+
+      - name: Download official LAMBDA ACT DR6.02 actlite LCDM chain
+        run: |
+          set -euo pipefail
+          mkdir -p .reference-chain
+          curl --fail --location --retry 3 --retry-delay 2 \
+            --output .reference-chain/actlite_lcdm_camb.tar.gz \
+            "$ACT_REFERENCE_URL"
+          test -s .reference-chain/actlite_lcdm_camb.tar.gz
+          sha256sum .reference-chain/actlite_lcdm_camb.tar.gz \
+            > .reference-chain/actlite_lcdm_camb.tar.gz.sha256
+          tar -tzf .reference-chain/actlite_lcdm_camb.tar.gz \
+            > .reference-chain/archive_members.txt
+          test -s .reference-chain/archive_members.txt
+
+      - name: Extract and build immutable reference-chain custody receipt
+        run: |
+          set -euo pipefail
+          mkdir -p .reference-chain/extracted artifacts/science/act/runtime
+          tar -xzf .reference-chain/actlite_lcdm_camb.tar.gz \
+            -C .reference-chain/extracted
+          python tools/rll_act_dr6_reference_chain_custody_v1.py \
+            --archive .reference-chain/actlite_lcdm_camb.tar.gz \
+            --extracted .reference-chain/extracted \
+            --source-url "$ACT_REFERENCE_URL" \
+            --output artifacts/science/act/runtime/ACT_DR6_02_ACTLITE_LCDM_REFERENCE_CHAIN_CUSTODY_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/act/runtime/ACT_DR6_02_ACTLITE_LCDM_REFERENCE_CHAIN_CUSTODY_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "OFFICIAL_ACT_DR6_02_ACTLITE_LCDM_REFERENCE_CHAIN_CUSTODY_MATERIALIZED"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["reference_role"]["official_reference_posterior_available"] is True
+          assert d["reference_role"]["locally_reproduced_from_frozen_config"] is False
+          assert d["custody"]["chain_file_count"] > 0
+          assert d["custody"]["updated_yaml_count"] > 0
+          assert d["resolved_token"] is None
+          assert d["reduces_token"] == "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
+          print(json.dumps({
+              "state": d["state"],
+              "chain_files": d["custody"]["chain_file_count"],
+              "rows": d["custody"]["total_noncomment_chain_rows"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum \
+            artifacts/science/act/runtime/ACT_DR6_02_ACTLITE_LCDM_REFERENCE_CHAIN_CUSTODY_CURRENT.json \
+            .reference-chain/actlite_lcdm_camb.tar.gz \
+            .reference-chain/archive_members.txt \
+            > artifacts/science/act/runtime/ACT_DR6_02_REFERENCE_CHAIN_CUSTODY_CHECKSUMS.sha256
+
+      - name: Upload official reference-chain custody evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: act-dr6-reference-chain-custody-${{ github.run_id }}
+          path: |
+            artifacts/science/act/runtime/ACT_DR6_02_ACTLITE_LCDM_REFERENCE_CHAIN_CUSTODY_CURRENT.json
+            artifacts/science/act/runtime/ACT_DR6_02_REFERENCE_CHAIN_CUSTODY_CHECKSUMS.sha256
+            .reference-chain/actlite_lcdm_camb.tar.gz.sha256
+            .reference-chain/archive_members.txt
+          if-no-files-found: error
+          retention-days: 30
