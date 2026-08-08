@@ -1,0 +1,149 @@
+name: All Ref Topology Census
+
+on:
+  pull_request:
+    paths:
+      - "tools/audit_all_git_refs_v1.py"
+      - "tests/test_all_git_refs_topology_census_v1.py"
+      - "data/governance/RLL_DIVERGED_REF_*.json"
+      - "data/governance/RLL_TO_ADD_LEGACY_CUSTODY_*.json"
+      - "docs/archive/2026-07-09/REPO_SESSION_ARTIFACT_MAP_RAFAELIA.branch-573dd27.md"
+      - "tools/audit_diverged_ref_patches_v1.py"
+      - "tools/audit_diverged_ref_pr_lineage_v1.py"
+      - "tests/test_diverged_ref_patch_equivalence_v1.py"
+      - "tests/test_diverged_ref_triage_v1.py"
+      - ".github/workflows/all-ref-topology-census.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  census:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Fetch complete branch and tag namespace
+        run: |
+          set -euo pipefail
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*' '+refs/tags/*:refs/tags/*'
+          git show-ref --verify --quiet refs/remotes/origin/main
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Structural unit tests
+        run: |
+          python -m unittest -v \
+            tests.test_all_git_refs_topology_census_v1 \
+            tests.test_diverged_ref_patch_equivalence_v1 \
+            tests.test_diverged_ref_triage_v1
+      - name: Execute complete current census
+        run: |
+          python tools/audit_all_git_refs_v1.py \
+            --baseline refs/remotes/origin/main \
+            --output artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.json
+          sha256sum artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.json \
+            > artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.sha256
+      - name: Verify no anonymous ref remains
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.json')
+          d=json.loads(p.read_text())
+          assert d['claim_allowed'] is False
+          assert d['anonymous_remainder'] == 0
+          assert d['topology_classified_count'] == d['current_observed_ref_count']
+          assert sum(d['class_counts'].values()) == d['current_observed_ref_count']
+          print(json.dumps({
+              'current_observed_ref_count': d['current_observed_ref_count'],
+              'historical_denominator_matches_current': d['historical_denominator_matches_current'],
+              'class_counts': d['class_counts'],
+              'semantic_review_required_count': d['semantic_review_required_count'],
+              'candidate_transition': d['candidate_transition'],
+              'claim_allowed': False,
+          }, sort_keys=True))
+          PY
+      - name: Audit frozen diverged cohort by patch equivalence
+        run: |
+          python tools/audit_diverged_ref_patches_v1.py \
+            --cohort data/governance/RLL_DIVERGED_REF_COHORT_20260808_V1.json \
+            --baseline refs/remotes/origin/main \
+            --output artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json
+          sha256sum artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json \
+            > artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json').read_text())
+          s=d['summary']
+          assert d['claim_allowed'] is False
+          assert s['cohort_size'] == 35
+          assert s['missing_or_non_commit_refs'] == 0
+          assert s['refs_with_unique_patches'] + s['refs_without_unique_patch_after_equivalence'] == 35
+          assert d['candidate_transition'] == 'REDUCED_PATCH_EQUIVALENCE_COMPLETE'
+          print(json.dumps(s, sort_keys=True))
+          PY
+      - name: Audit exact merged PR head lineage
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python tools/audit_diverged_ref_pr_lineage_v1.py \
+            --patch-receipt artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json \
+            --repo "$GITHUB_REPOSITORY" \
+            --output artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json
+          sha256sum artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json \
+            > artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json').read_text())
+          s=d['summary']
+          assert d['claim_allowed'] is False
+          assert s['cohort_size'] == 35
+          assert (
+              s['patch_equivalent_to_main']
+              + s['exact_head_merged_direct_to_main']
+              + s['exact_head_merged_to_non_main_requires_chain_audit']
+              + s['unique_patch_no_exact_merged_pr_head']
+          ) == 35
+          assert s['remaining_semantic_or_chain_review'] <= 32
+          print(json.dumps(s, sort_keys=True))
+          PY
+      - name: Verify frozen-cohort semantic triage is total
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json').read_text())
+          assert d['claim_allowed'] is False
+          assert d['summary']['frozen_cohort_size'] == 35
+          assert d['summary']['anonymous_remainder'] == 0
+          assert d['summary']['unclassified_remainder'] == 0
+          assert d['summary']['active_recovery_refs'] == 3
+          assert d['summary']['active_recovery_prs'] == 2
+          print(json.dumps(d['summary'], sort_keys=True))
+          PY
+      - name: Upload complete census, lineage and triage receipts
+        uses: actions/upload-artifact@v7
+        with:
+          name: all-ref-topology-census-${{ github.run_id }}
+          path: |
+            artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.json
+            artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.sha256
+            artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json
+            artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
+            artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json
+            artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.sha256
+            data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json
+            data/governance/RLL_TO_ADD_LEGACY_CUSTODY_20260225_V1.json
+            docs/archive/2026-07-09/REPO_SESSION_ARTIFACT_MAP_RAFAELIA.branch-573dd27.md
+          if-no-files-found: error
+          retention-days: 30

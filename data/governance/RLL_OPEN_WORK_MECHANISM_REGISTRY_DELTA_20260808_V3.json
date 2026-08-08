@@ -1,0 +1,51 @@
+{
+  "schema": "rll.open_work_mechanism_registry_delta.v2",
+  "generated_at": "2026-08-08T06:50:00Z",
+  "predecessor_delta": "data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_DELTA_20260808_V2.json",
+  "source_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V4_APPEND_ONLY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "expected_open_denominator": 12,
+  "expected_priority_counts": {"P0": 5, "P1": 5, "P2": 2},
+  "resolved_by_evidence": [
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "classification": "EXTERNAL_SETTINGS_OBSERVED_NO_BRANCH_PROTECTION_OR_RULESETS",
+      "evidence_path": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json",
+      "closure_override_path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V4.json"
+    }
+  ],
+  "added_open_mechanisms": [
+    {
+      "token": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+      "priority": "P0",
+      "domain": "github_platform_governance",
+      "state": "OPEN_GOVERNANCE",
+      "urgency": "URGENT_DIRECT_WRITE_BYPASS_RISK",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M15_GITHUB_PLATFORM_ENFORCEMENT",
+        "class": "PLATFORM_CONFIGURATION_AND_REOBSERVATION",
+        "driver": "GitHub branch protection and/or repository rulesets",
+        "trigger": "Configure platform enforcement for the declared maturity topology so direct writes cannot bypass the repository-local promotion and validation gates, then rerun the read-only external-settings probe.",
+        "deliverable": "artifacts/github-external-settings-v2/enforcement_receipt.json",
+        "verification": "Live GitHub REST evidence must show the intended branches protected or covered by active rulesets, required checks/reviews bound to the promotion path, and force-push/deletion/direct bypass policy observed as configured.",
+        "falsifier": "Any declared maturity branch remaining unprotected and uncovered by an active enforcing ruleset, missing required gate binding, or inability to re-observe the settings keeps the token open."
+      },
+      "close_when": [
+        "main and the declared maturity branches are covered by branch protection and/or active rulesets",
+        "the intended required checks and review policy are observable from GitHub",
+        "force-push/deletion/direct-write bypass policy is explicitly observed",
+        "a fresh read-only receipt verifies the configured state without relying on repository prose"
+      ],
+      "claim_boundary": "Platform enforcement protects repository process integrity only; it cannot promote any scientific claim or replace scientific review."
+    }
+  ],
+  "invariants": [
+    "The historical mechanism registry and V2 delta remain immutable custody.",
+    "Closing unknown external settings does not erase the observed absence of platform enforcement.",
+    "The successor is P0 because direct writes can bypass repository-local promotion policy when no platform protection/ruleset exists.",
+    "No scientific claim state changes as a result of GitHub platform enforcement."
+  ]
+}

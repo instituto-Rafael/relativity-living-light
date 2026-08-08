@@ -1,0 +1,91 @@
+name: CLASS CAMB First Divergence
+
+on:
+  pull_request:
+    paths:
+      - "scripts/crosscheck_class_camb_baselines.py"
+      - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - ".github/workflows/class-camb-first-divergence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned engine ranges
+        run: |
+          python -m pip install --disable-pip-version-check \
+            "numpy>=1.26,<2" "pytest>=8" "camb>=1.6,<2" "classy>=3.3,<4"
+      - name: Structural tests
+        run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
+      - name: Execute lmax and rdrag convergence sweep
+        id: compare
+        continue-on-error: true
+        run: |
+          set +e
+          rc=0
+          for lmax in 700 900 1200; do
+            python scripts/crosscheck_class_camb_baselines.py \
+              --output "artifacts/science/perturbations/CLASS_CAMB_LMAX_${lmax}.json" \
+              --lmax "$lmax"
+            code=$?
+            if [ "$code" -ne 0 ]; then rc="$code"; fi
+          done
+          exit "$rc"
+      - name: Summarize lmax and rdrag convergence
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for lmax in (700, 900, 1200):
+              p=Path(f'artifacts/science/perturbations/CLASS_CAMB_LMAX_{lmax}.json')
+              if not p.exists():
+                  raise SystemExit(f'receipt missing for lmax={lmax}')
+              d=json.loads(p.read_text())
+              print('lmax=', lmax, 'state=', d['state'])
+              for model, md in d['models'].items():
+                  tt=md['metrics']['Cl_TT_dimensionless']
+                  tt_worst=max(tt['points'], key=lambda x:x['relative_error'])
+                  rd=md['metrics']['r_drag_Mpc']
+                  rd_row=rd['points'][0]
+                  approx=md['rd_approximation_diagnostic']
+                  print(model, 'TT pass=',tt['pass'], 'TT max_rel=',tt['max_relative_error'], 'TT worst=',tt_worst)
+                  print(model, 'rdrag pass=',rd['pass'], 'rdrag rel=',rd_row['relative_error'], 'CAMB=',rd_row['CAMB'], 'CLASS=',rd_row['CLASS'])
+                  print(model, 'approx=',approx['repository_approximation_Mpc'], 'approx_vs_CAMB=',approx['relative_error_vs_CAMB'], 'approx_vs_CLASS=',approx['relative_error_vs_CLASS'])
+          PY
+      - name: Upload convergence receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: class-camb-lmax-rdrag-convergence-${{ github.run_id }}
+          path: artifacts/science/perturbations/CLASS_CAMB_LMAX_*.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Enforce high-margin comparison fail-closed
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/science/perturbations/CLASS_CAMB_LMAX_1200.json').read_text())
+          if d['state'] != 'VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG':
+              raise SystemExit(3)
+          for model in ('lcdm', 'cpl'):
+              if not d['models'][model]['metrics']['r_drag_Mpc']['pass']:
+                  raise SystemExit(4)
+          if d['claim_allowed'] is not False or d['publication_ready'] is not False:
+              raise SystemExit(5)
+          PY

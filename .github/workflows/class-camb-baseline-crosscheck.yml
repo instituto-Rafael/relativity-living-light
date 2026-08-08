@@ -6,13 +6,15 @@ on:
     paths:
       - "scripts/crosscheck_class_camb_baselines.py"
       - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - "tools/rll_perturbation_barotropic_candidate_v1.py"
+      - "tests/test_rll_perturbation_barotropic_candidate_v1.py"
       - ".github/workflows/class-camb-baseline-crosscheck.yml"
 
 permissions:
   contents: read
 
 env:
-  CLAIM_BOUNDARY: "Standard LCDM/CPL engine agreement validates backend plumbing only; RLL perturbation claims remain blocked until explicit closure relations and independent engine implementations exist."
+  CLAIM_BOUNDARY: "Standard LCDM/CPL engine agreement including r_drag validates backend plumbing only; RLL perturbation claims remain blocked until explicit closure relations and independent engine implementations exist."
 
 concurrency:
   group: class-camb-baseline-${{ github.event.pull_request.number || github.ref }}
@@ -24,7 +26,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Checkout pinned revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -49,16 +51,36 @@ jobs:
           print("classy", importlib.metadata.version("classy"))
           PY
 
-      - name: Run structural comparator tests
-        run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
+      - name: Run structural comparator and closure-candidate tests
+        run: |
+          python -m pytest -q \
+            tests/test_class_camb_baseline_crosscheck_v1.py \
+            tests/test_rll_perturbation_barotropic_candidate_v1.py
+
+      - name: Execute background-derived barotropic closure falsifier
+        run: |
+          set -euo pipefail
+          python tools/rll_perturbation_barotropic_candidate_v1.py \
+            --output artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["resolved_token"] is None
+          assert d["reduces_token"] == "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"
+          assert d["state"] in {"FALSIFIED_AS_GLOBAL_DEFAULT", "CANDIDATE_SURVIVES_DECLARED_SWEEP"}
+          print(json.dumps({"state": d["state"], "cases": len(d["sweep"]["cases"]), "claim_allowed": False}, sort_keys=True))
+          PY
+          sha256sum artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json \
+            > artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.sha256
 
       - name: Execute LCDM and CPL crosscheck
         id: engine_run
         run: |
           set +e
-          # Compute beyond the highest compared ell so ell=700 is not sampled
-          # exactly at the solver truncation boundary. Compared points and
-          # scientific tolerances remain unchanged.
           python scripts/crosscheck_class_camb_baselines.py \
             --output artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
             --lmax 1000
@@ -73,37 +95,29 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           p = Path("artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json")
           if not p.is_file():
               raise SystemExit("crosscheck receipt missing")
           d = json.loads(p.read_text(encoding="utf-8"))
-          assert d["state"] in {"VERIFIED_BASELINE_ENGINE_CROSSCHECK", "TOKEN_VAZIO_ENGINE_MISMATCH"}
+          assert d["state"] in {"VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG", "TOKEN_VAZIO_ENGINE_MISMATCH"}
           assert d["claim_allowed"] is False
           assert d["publication_ready"] is False
           assert set(d["models"]) == {"lcdm", "cpl"}
-
           summary = {}
           for model, row in d["models"].items():
+              assert "r_drag_Mpc" in row["metrics"]
+              assert "rd_approximation_diagnostic" in row
               summary[model] = {
                   "pass": row["pass"],
-                  "max_relative_error": {
-                      family: metrics["max_relative_error"]
-                      for family, metrics in row["metrics"].items()
-                  },
+                  "max_relative_error": {family: metrics["max_relative_error"] for family, metrics in row["metrics"].items()},
+                  "rd_approximation_diagnostic": row["rd_approximation_diagnostic"],
               }
-          print(json.dumps({
-              "state": d["state"],
-              "camb": d["models"]["lcdm"]["engines"]["CAMB"]["version"],
-              "classy": d["models"]["lcdm"]["engines"]["CLASS"]["version"],
-              "models": summary,
-              "claim_allowed": False,
-          }, sort_keys=True))
+          print(json.dumps({"state": d["state"], "camb": d["models"]["lcdm"]["engines"]["CAMB"]["version"], "classy": d["models"]["lcdm"]["engines"]["CLASS"]["version"], "models": summary, "claim_allowed": False}, sort_keys=True))
           PY
           sha256sum artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
             > artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
 
-      - name: Upload compact crosscheck receipt
+      - name: Upload compact crosscheck and closure-candidate receipts
         if: always()
         uses: actions/upload-artifact@v7
         with:
@@ -111,6 +125,8 @@ jobs:
           path: |
             artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json
             artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
+            artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json
+            artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.sha256
           if-no-files-found: error
           retention-days: 30
 
@@ -120,13 +136,17 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           p = Path("artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json")
           if not p.is_file():
               raise SystemExit(4)
           d = json.loads(p.read_text(encoding="utf-8"))
-          if d["state"] != "VERIFIED_BASELINE_ENGINE_CROSSCHECK":
+          if d["state"] != "VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG":
               raise SystemExit(3)
-          if not all(d["models"][model]["pass"] for model in d["models"]):
-              raise SystemExit(3)
+          for model in d["models"]:
+              if not d["models"][model]["pass"]:
+                  raise SystemExit(3)
+              if not d["models"][model]["metrics"]["r_drag_Mpc"]["pass"]:
+                  raise SystemExit(5)
+          if d["claim_allowed"] is not False or d["publication_ready"] is not False:
+              raise SystemExit(6)
           PY
