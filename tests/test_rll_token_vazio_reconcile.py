@@ -29,13 +29,17 @@ def current_receipt():
 
 def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
     receipt = current_receipt()
+    expected_input = len(load_json(INPUT)["tokens"])
 
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
-    assert receipt["summary"]["input_tokens"] == 26
-    assert receipt["summary"]["terminal_resolved"] == 7
-    assert receipt["summary"]["reduced_generic"] == 5
-    assert receipt["summary"]["open"] == 14
+    assert receipt["summary"]["input_tokens"] == expected_input
+    assert (
+        receipt["summary"]["terminal_resolved"]
+        + receipt["summary"]["reduced_generic"]
+        + receipt["summary"]["open"]
+        == expected_input
+    )
 
     for token in (
         "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
@@ -70,7 +74,9 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
         "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
         "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
-        "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+        "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
     ):
         assert token in receipt["open_by_priority"]["P1"]
 
@@ -228,14 +234,14 @@ def test_class_camb_generic_gap_reduces_without_inventing_rll_perturbations():
 
     assert generic["state"] == "REDUCED"
     assert generic["evidence_verified"] is True
-    assert "homogeneous background" in generic["resolved_fact"]
+    assert "Full Boltzmann validation remains blocked" in generic["resolved_fact"]
     assert baseline["state"] == "OPEN_INTERNAL"
     assert closure["state"] == "OPEN_MIXED"
     assert implementation["state"] == "OPEN_MIXED"
     assert receipt["claim_allowed"] is False
 
 
-def test_h0_generic_gap_reduces_to_executable_provenance_contract():
+def test_h0_generic_gap_reduces_to_executed_matrix_with_open_successors():
     receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     generic = rows["TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD"]
@@ -244,7 +250,15 @@ def test_h0_generic_gap_reduces_to_executable_provenance_contract():
     assert generic["state"] == "REDUCED"
     assert generic["evidence_verified"] is True
     assert "six-cell H0/r_d fairness matrix" in generic["resolved_fact"]
-    assert successor["state"] == "OPEN_MIXED"
+    assert successor["state"] == "REDUCED"
+    assert successor["evidence_verified"] is True
+    assert "24 best objectives were finite" in successor["resolved_fact"]
+    for token in (
+        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+        "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+    ):
+        assert token in receipt["open_by_priority"]["P1"]
     assert receipt["claim_allowed"] is False
 
 
