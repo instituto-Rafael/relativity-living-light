@@ -44,7 +44,7 @@ jobs:
       - name: Run H0/r_d policy tests
         run: python -m pytest -q tests/test_h0_rd_ablation_v1.py
 
-      - name: Execute all six H0/r_d cells
+      - name: Execute all six H0/r_d cells with convergence fallback
         env:
           OMP_NUM_THREADS: "1"
           OPENBLAS_NUM_THREADS: "1"
@@ -54,10 +54,10 @@ jobs:
           python tools/run_h0_rd_ablation_v1.py \
             --output artifacts/science/h0/H0_RD_ABLATION_CURRENT.json \
             --output-dir "$GITHUB_WORKSPACE/results/structure_d/ablation" \
-            --maxiter 60 \
-            --ftol 1e-8
+            --maxiter 180 \
+            --ftol 1e-9
 
-      - name: Verify claim boundaries and write checksums
+      - name: Verify claim and convergence boundaries and write checksums
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -69,14 +69,20 @@ jobs:
           assert d["claim_allowed"] is False
           assert d["publication_ready"] is False
           assert d["interpretation"]["six_cells_executed"] is True
+          assert d["interpretation"]["all_best_fits_converged"] is True
           assert d["interpretation"]["planck_h0_is_independent_of_planck_cmb_shift"] is False
           assert d["interpretation"]["primary_external_h0_source_receipts_frozen"] is False
           assert d["interpretation"]["derived_rd_is_full_boltzmann_recombination_solution"] is False
           assert len(d["cells"]) == 6
           assert all(len(cell["models"]) == 4 for cell in d["cells"])
+          assert all(
+              cell["models"][model]["best_attempt_success"] is True
+              for cell in d["cells"] for model in cell["models"]
+          )
           print(json.dumps({
               "state": d["state"],
               "cells": len(d["cells"]),
+              "all_best_fits_converged": d["interpretation"]["all_best_fits_converged"],
               "claim_allowed": False,
           }, sort_keys=True))
           PY
