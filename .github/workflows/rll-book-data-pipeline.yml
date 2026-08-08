@@ -67,7 +67,7 @@ jobs:
     timeout-minutes: 45
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Setup Python 3.11
@@ -129,7 +129,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout for explicit opt-in commit
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Download book pipeline artifact

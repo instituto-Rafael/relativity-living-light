@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 120
     steps:
       - name: Checkout pinned RLL revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
