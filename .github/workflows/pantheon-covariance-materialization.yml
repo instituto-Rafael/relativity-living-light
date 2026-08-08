@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "products/rll-evidence-runner/**"
+      - "data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json"
       - "scripts/fetch_pantheon_covariance.py"
       - "scripts/fetch_dovekie_inputs.py"
       - "scripts/verify_pantheon_inputs.py"
@@ -15,6 +16,7 @@ on:
       - "tests/test_rll_pantheon_three_model_cpl_v1.py"
       - "tests/test_rll_dovekie_three_model_v1.py"
       - "tests/test_rll_sn_gap_closure_v1.py"
+      - "tests/test_rll_dovekie_nested_evidence_v1.py"
       - ".github/workflows/pantheon-covariance-materialization.yml"
       - ".gitignore"
 
@@ -55,7 +57,8 @@ jobs:
             tests/test_rll_pantheon_full_covariance_fit_v1.py \
             tests/test_rll_pantheon_three_model_cpl_v1.py \
             tests/test_rll_dovekie_three_model_v1.py \
-            tests/test_rll_sn_gap_closure_v1.py
+            tests/test_rll_sn_gap_closure_v1.py \
+            tests/test_rll_dovekie_nested_evidence_v1.py
 
       - name: Materialize pinned official Pantheon STAT+SYS covariance
         env:
@@ -138,6 +141,19 @@ jobs:
             --maxiter 180 \
             --integration-points 4096
 
+      - name: Execute proper prior-locked Dovekie three-model nested evidence
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.dovekie_nested_evidence \
+            --hd data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            --precision 'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            --priors data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json \
+            --output artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json \
+            --seeds 20260807,20260808 \
+            --nlive 160 \
+            --dlogz 0.15 \
+            --integration-points 4096
+
       - name: Build common-nuisance ablation receipt and summarize metrics
         run: |
           set -euo pipefail
@@ -173,10 +189,13 @@ jobs:
           wa_profile = json.loads(Path(
               "artifacts/science/sn_modern/dovekie_cpl_wa_profile_result.json"
           ).read_text(encoding="utf-8"))
+          bayes = json.loads(Path(
+              "artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json"
+          ).read_text(encoding="utf-8"))
 
           for payload in (
               canonical, canonical_receipt, pantheon, pantheon_receipt,
-              pantheon_hf, dovekie, dovekie_receipt, materialization, wa_profile
+              pantheon_hf, dovekie, dovekie_receipt, materialization, wa_profile, bayes
           ):
               assert payload["claim_allowed"] is False
 
@@ -184,6 +203,9 @@ jobs:
           assert pantheon_hf["nuisance_policy"] == dovekie["method"]["nuisance"]
           assert pantheon_hf["H0_reference"] == 70.0
           assert dovekie["method"]["H0_policy"].startswith("fixed reference H0=70")
+          assert bayes["state"] == "VERIFIED_INTERNAL_NUMERICAL_REPLICATION"
+          assert bayes["independent_replication"] is False
+          assert bayes["likelihood"]["magnitude_offset"] == "sampled proper shared nuisance"
           assert [row["model"] for row in pantheon["rows"]] == [
               "LCDM_pantheon_full", "CPL_pantheon_full", "RLL_pantheon_full"
           ]
@@ -192,7 +214,6 @@ jobs:
           ]
 
           p_cpl = pantheon["comparison"]["cpl_minus_baseline"]
-          p_rll = pantheon["comparison"]["rll_minus_baseline"]
           ph_cpl = pantheon_hf["comparison"]["cpl_minus_baseline"]
           ph_rll = pantheon_hf["comparison"]["rll_minus_baseline"]
           d_cpl = dovekie["comparison"]["cpl_minus_baseline"]
@@ -235,9 +256,12 @@ jobs:
               ),
               "resolves_token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
           }
-          ablation_path = Path("artifacts/science/sn_modern/common_nuisance_ablation_receipt.json")
-          ablation_path.write_text(json.dumps(ablation, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          Path("artifacts/science/sn_modern/common_nuisance_ablation_receipt.json").write_text(
+              json.dumps(ablation, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
 
+          cpl_bayes = bayes["bayes_factors"]["CPL_vs_LCDM"]
+          rll_bayes = bayes["bayes_factors"]["RLL_vs_LCDM"]
           summary = [
               "# Modern SN likelihood validation + gap closure",
               "",
@@ -251,10 +275,13 @@ jobs:
               f"- Dovekie wa profile state: `{wa_profile['state']}`",
               f"- Dovekie wa profile best: `{wa_profile['classification']['best_wa']}`",
               f"- wa bounded at 95% on grid: `{wa_profile['classification']['bounded_95_on_grid']}`",
+              f"- Dovekie nested lnB(CPL/LCDM): `{cpl_bayes['lnB']:.12g} ± {cpl_bayes['approx_error']:.6g}`",
+              f"- Dovekie nested lnB(RLL/LCDM): `{rll_bayes['lnB']:.12g} ± {rll_bayes['approx_error']:.6g}`",
               "",
               "- common Pantheon+↔Dovekie nuisance-policy ablation: `VERIFIED`",
-              "- real nested-sampling evidence: `TOKEN_VAZIO`",
+              "- modern Dovekie 3-model nested evidence: `VERIFIED_INTERNAL_NUMERICAL_REPLICATION`",
               "- independent replication: `TOKEN_VAZIO`",
+              "- joint multi-probe Bayes: `TOKEN_VAZIO`",
               "- claim_allowed: `false`",
           ]
           Path("artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/SUMMARY.md").write_text(
@@ -264,7 +291,7 @@ jobs:
               handle.write("\n".join(summary) + "\n")
           PY
 
-      - name: Upload compact custody, gap-closure and fit receipts only
+      - name: Upload compact custody, gap-closure, Bayes and fit receipts only
         uses: actions/upload-artifact@v7
         with:
           name: modern-sn-fit-receipt-${{ github.run_id }}
@@ -282,6 +309,8 @@ jobs:
             artifacts/science/sn_modern/dovekie_cpl_wa_profile_result.json
             artifacts/science/sn_modern/dovekie_materialization_receipt.json
             artifacts/science/sn_modern/dovekie_existing_verification.json
+            artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json
+            data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json
             artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
             artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
             data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv.sha256

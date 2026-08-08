@@ -1,0 +1,40 @@
+{
+  "schema": "rll.release_refresh_receipt.v1",
+  "observed_at": "2026-08-07T23:12:00Z",
+  "state": "VERIFIED_FAST_FORWARD_IDENTICAL",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "rll/release",
+  "target": "main",
+  "before": {
+    "release_sha": "ebecd942b439cef887dc0f9a1437fff1fe009590",
+    "main_sha": "b781ae198e9e576da14aec3e7e2dc18326b511e5",
+    "release_unique_commits": 0,
+    "main_ahead_commits": 311,
+    "fast_forward_possible": true
+  },
+  "operation": {
+    "type": "git_ref_fast_forward",
+    "force": false,
+    "new_release_sha": "b781ae198e9e576da14aec3e7e2dc18326b511e5"
+  },
+  "after": {
+    "release_sha": "b781ae198e9e576da14aec3e7e2dc18326b511e5",
+    "main_sha": "b781ae198e9e576da14aec3e7e2dc18326b511e5",
+    "compare_status": "identical",
+    "ahead_by": 0,
+    "behind_by": 0,
+    "changed_files": 0
+  },
+  "resolves_token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
+  "invariants": [
+    "force=false",
+    "no release-unique commit was discarded",
+    "refresh did not merge rll/lab or rll/integration stranded history",
+    "scientific claims were not promoted"
+  ],
+  "F_ok": "rll/release now matches the current main baseline exactly.",
+  "F_gap": "Future work still must traverse or explicitly reconcile the maturity chain before promotion.",
+  "F_next": "Keep release refresh evidence separate from promotion of the post-merge TOKEN_VAZIO delta."
+}

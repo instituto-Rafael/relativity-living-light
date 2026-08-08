@@ -7,6 +7,10 @@ negative facts, and preserves genuinely open work as explicit typed gaps.
 
 A terminal or reduced state is accepted only when every declared evidence
 assertion passes. Otherwise the token remains open as OPEN_EVIDENCE_MISSING.
+
+The base rule ledger may be extended by an append-only override ledger. Overrides
+replace a rule only in the derived/effective view; the earlier source ledger stays
+intact for longitudinal custody.
 """
 
 from __future__ import annotations
@@ -20,9 +24,11 @@ from typing import Any
 
 INPUT_SCHEMA = "rll.gap_closure_input.v1"
 RULES_SCHEMA = "rll.token_vazio_closure_rules.v1"
+OVERRIDES_SCHEMA = "rll.token_vazio_closure_overrides.v1"
 OUTPUT_SCHEMA = "rll.token_vazio_reconciliation.v1"
 DEFAULT_INPUT = Path("data/governance/RLL_GAP_CLOSURE_INPUT_20260807_V1.json")
 DEFAULT_RULES = Path("data/governance/RLL_TOKEN_VAZIO_CLOSURE_RULES_20260807_V1.json")
+DEFAULT_OVERRIDES = Path("data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260807_V1.json")
 
 TERMINAL = {"RESOLVED", "RESOLVED_NEGATIVE"}
 NARROWING = {"REDUCED"}
@@ -107,6 +113,48 @@ def validate_input(payload: dict[str, Any]) -> None:
         seen.add(token)
         if item.get("priority") not in {"P0", "P1", "P2"}:
             raise ValueError(f"{token}: invalid priority")
+
+
+def apply_rule_overrides(
+    base_payload: dict[str, Any], override_payload: dict[str, Any] | None
+) -> dict[str, Any]:
+    """Return a derived rules payload with append-only overrides applied."""
+    if override_payload is None:
+        return json.loads(json.dumps(base_payload))
+    if override_payload.get("schema") != OVERRIDES_SCHEMA:
+        raise ValueError(f"overrides schema must be {OVERRIDES_SCHEMA}")
+    if override_payload.get("claim_allowed") is not False:
+        raise ValueError("overrides must preserve claim_allowed=false")
+    overrides = override_payload.get("overrides")
+    if not isinstance(overrides, list) or not overrides:
+        raise ValueError("overrides requires non-empty overrides")
+
+    merged = json.loads(json.dumps(base_payload))
+    rules = merged.get("rules")
+    if not isinstance(rules, list):
+        raise ValueError("base rules must contain a rules list")
+    index: dict[str, int] = {}
+    for position, rule in enumerate(rules):
+        if not isinstance(rule, dict) or not isinstance(rule.get("token"), str):
+            raise ValueError("base rule missing token")
+        index[rule["token"]] = position
+
+    seen_overrides: set[str] = set()
+    for override in overrides:
+        if not isinstance(override, dict):
+            raise ValueError("override entry must be object")
+        token = override.get("token")
+        if not isinstance(token, str) or not token.startswith("TOKEN_VAZIO_"):
+            raise ValueError(f"invalid override token: {token!r}")
+        if token in seen_overrides:
+            raise ValueError(f"duplicate override token: {token}")
+        seen_overrides.add(token)
+        if token in index:
+            rules[index[token]] = json.loads(json.dumps(override))
+        else:
+            index[token] = len(rules)
+            rules.append(json.loads(json.dumps(override)))
+    return merged
 
 
 def validate_rules(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -222,8 +270,6 @@ def reconcile(repo_root: Path, input_payload: dict[str, Any], rules_payload: dic
         if result["state"] == "REDUCED":
             canonical_open.update(result["successors"])
         elif result["state"] == "RESOLVED_NEGATIVE":
-            # Successors are contextual next scientific gates, not unresolved forms of
-            # the negative token, so they are added only if already part of the canonical input.
             canonical_open.update(x for x in result["successors"] if x in input_token_set)
 
     canonical_open.difference_update(terminal_tokens)
@@ -255,6 +301,7 @@ def reconcile(repo_root: Path, input_payload: dict[str, Any], rules_payload: dic
             "reduced_generic_token_is_replaced_by_narrower_successors": True,
             "open_external_is_not_failure_of_the_reconciler": True,
             "scientific_claim_promotion_is_out_of_scope": True,
+            "append_only_rule_overrides_preserve_prior_ledger": True,
         },
         "summary": {
             "input_tokens": total,
@@ -285,6 +332,7 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--rules", type=Path, default=DEFAULT_RULES)
+    parser.add_argument("--overrides", type=Path, default=DEFAULT_OVERRIDES)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--generated-at", default=None)
     args = parser.parse_args()
@@ -292,14 +340,21 @@ def main() -> int:
     root = args.repo_root.resolve()
     input_path = args.input if args.input.is_absolute() else root / args.input
     rules_path = args.rules if args.rules.is_absolute() else root / args.rules
+    overrides_path = args.overrides if args.overrides.is_absolute() else root / args.overrides
     output_path = args.output if args.output.is_absolute() else root / args.output
 
     generated_at = args.generated_at or datetime.now(timezone.utc).isoformat()
-    receipt = reconcile(root, load_json(input_path), load_json(rules_path), generated_at)
+    base_rules = load_json(rules_path)
+    overrides = load_json(overrides_path) if overrides_path.is_file() else None
+    effective_rules = apply_rule_overrides(base_rules, overrides)
+    receipt = reconcile(root, load_json(input_path), effective_rules, generated_at)
     receipt["input_path"] = str(input_path.relative_to(root))
     receipt["input_sha256"] = sha256_file(input_path)
     receipt["rules_path"] = str(rules_path.relative_to(root))
     receipt["rules_sha256"] = sha256_file(rules_path)
+    if overrides_path.is_file():
+        receipt["overrides_path"] = str(overrides_path.relative_to(root))
+        receipt["overrides_sha256"] = sha256_file(overrides_path)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")

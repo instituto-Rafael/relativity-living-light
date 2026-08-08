@@ -1,0 +1,113 @@
+name: Dovekie CPL wa Lower-Bound Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "products/rll-evidence-runner/src/rll_evidence/dovekie_cpl_wa_profile.py"
+      - "products/rll-evidence-runner/src/rll_evidence/dovekie_wa_lower_bound.py"
+      - "scripts/fetch_dovekie_inputs.py"
+      - "tests/test_rll_dovekie_wa_lower_bound_v1.py"
+      - ".github/workflows/dovekie-wa-lower-bound.yml"
+
+permissions:
+  contents: read
+
+env:
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  CLAIM_BOUNDARY: "Profile-likelihood closure is a bounded SN-only diagnostic; it does not validate CPL or RLL and does not replace Bayesian or multi-probe evidence."
+  SYNTHETIC_BOUNDARY: "Synthetic, mock, fixture, demo, example and placeholder data are forbidden for the materialized receipt."
+
+concurrency:
+  group: dovekie-wa-lower-bound-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lower-bound:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install runner and test dependency
+        run: |
+          python -m pip install --disable-pip-version-check pytest
+          python -m pip install -e products/rll-evidence-runner
+
+      - name: Run lower-bound unit tests
+        run: |
+          python -m pytest -q tests/test_rll_dovekie_wa_lower_bound_v1.py
+
+      - name: Materialize pinned DES-Dovekie inputs
+        run: |
+          set -euo pipefail
+          python scripts/fetch_dovekie_inputs.py \
+            --output-dir data/real/cosmology/des_dovekie \
+            --receipt artifacts/science/sn_modern/dovekie_lower_bound_materialization_receipt.json
+
+      - name: Recompute finite CPL wa profile
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.dovekie_cpl_wa_profile \
+            --hd data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            --precision 'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            --output artifacts/science/sn_modern/dovekie_cpl_wa_profile_lower_bound_source.json \
+            --wa-grid=-12,-10,-8,-6,-5,-4,-3,-2,-1,0,1,2,3 \
+            --maxiter 180 \
+            --integration-points 4096
+
+      - name: Locate finite lower 95 percent crossing
+        run: |
+          set -euo pipefail
+          python -m rll_evidence.dovekie_wa_lower_bound \
+            --hd data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            --precision 'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            --profile artifacts/science/sn_modern/dovekie_cpl_wa_profile_lower_bound_source.json \
+            --output artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CURRENT.json \
+            --maxiter 180 \
+            --integration-points 4096
+
+      - name: Verify receipt boundary and write checksums
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "VERIFIED_FINITE_LOWER_95_BOUND"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["lower_95_bound"]["excluded_low_delta_chi2"] > d["target"]["delta_chi2"]
+          assert d["lower_95_bound"]["included_high_delta_chi2"] <= d["target"]["delta_chi2"]
+          assert d["lower_95_bound"]["bracket_width"] <= 0.02
+          print(json.dumps({"state": d["state"], "lower_95_bound": d["lower_95_bound"], "claim_allowed": False}, sort_keys=True))
+          PY
+          sha256sum \
+            artifacts/science/sn_modern/dovekie_lower_bound_materialization_receipt.json \
+            artifacts/science/sn_modern/dovekie_cpl_wa_profile_lower_bound_source.json \
+            artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CURRENT.json \
+            data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv \
+            'data/real/cosmology/des_dovekie/STAT+SYS.npz' \
+            > artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CHECKSUMS.sha256
+
+      - name: Upload compact lower-bound receipts
+        uses: actions/upload-artifact@v7
+        with:
+          name: dovekie-wa-lower-bound-${{ github.run_id }}
+          path: |
+            artifacts/science/sn_modern/dovekie_lower_bound_materialization_receipt.json
+            artifacts/science/sn_modern/dovekie_cpl_wa_profile_lower_bound_source.json
+            artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CURRENT.json
+            artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CHECKSUMS.sha256
+          if-no-files-found: error
+          retention-days: 30

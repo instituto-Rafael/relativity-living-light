@@ -1,0 +1,101 @@
+name: H0 rd Ablation Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "tools/run_h0_rd_ablation_v1.py"
+      - "tests/test_h0_rd_ablation_v1.py"
+      - "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json"
+      - "data/pipelines/structure_d/joint_real_likelihood.py"
+      - ".github/workflows/h0-rd-ablation.yml"
+
+permissions:
+  contents: read
+
+env:
+  CLAIM_BOUNDARY: "H0/r_d matrix execution is sensitivity-only. Correlated Planck conditioning, external prior provenance and approximate derived r_d block formal H0-tension or model-evidence claims."
+
+concurrency:
+  group: h0-rd-ablation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ablation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install repository and test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt
+          python -m pip install --disable-pip-version-check "pytest>=8,<10"
+
+      - name: Run H0/r_d policy tests
+        run: python -m pytest -q tests/test_h0_rd_ablation_v1.py
+
+      - name: Execute all six H0/r_d cells with convergence fallback
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          set -euo pipefail
+          python tools/run_h0_rd_ablation_v1.py \
+            --output artifacts/science/h0/H0_RD_ABLATION_CURRENT.json \
+            --output-dir "$GITHUB_WORKSPACE/results/structure_d/ablation" \
+            --maxiter 180 \
+            --ftol 1e-9
+
+      - name: Verify claim and convergence boundaries and write checksums
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/h0/H0_RD_ABLATION_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "VERIFIED_INTERNAL_H0_RD_SENSITIVITY"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["interpretation"]["six_cells_executed"] is True
+          assert d["interpretation"]["all_best_fits_converged"] is True
+          assert d["interpretation"]["planck_h0_is_independent_of_planck_cmb_shift"] is False
+          assert d["interpretation"]["primary_external_h0_source_receipts_frozen"] is False
+          assert d["interpretation"]["derived_rd_is_full_boltzmann_recombination_solution"] is False
+          assert len(d["cells"]) == 6
+          assert all(len(cell["models"]) == 4 for cell in d["cells"])
+          assert all(
+              cell["models"][model]["best_attempt_success"] is True
+              for cell in d["cells"] for model in cell["models"]
+          )
+          print(json.dumps({
+              "state": d["state"],
+              "cells": len(d["cells"]),
+              "all_best_fits_converged": d["interpretation"]["all_best_fits_converged"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum artifacts/science/h0/H0_RD_ABLATION_CURRENT.json results/structure_d/ablation/*.csv \
+            > artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
+
+      - name: Upload compact H0/r_d receipts
+        uses: actions/upload-artifact@v7
+        with:
+          name: h0-rd-ablation-${{ github.run_id }}
+          path: |
+            artifacts/science/h0/H0_RD_ABLATION_CURRENT.json
+            artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
+            results/structure_d/ablation/*.csv
+          if-no-files-found: error
+          retention-days: 30
