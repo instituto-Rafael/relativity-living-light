@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-"""Evaluate the released DESI DR2 all-tracer BAO likelihood at frozen controls.
-
-This is intentionally a likelihood-level probe, not a posterior or joint
-cross-block reproduction. It proves that the released Cobaya likelihood can be
-executed with a pinned Boltzmann backend and preserves exact log-likelihood
-values for fixed, declared cosmologies.
-"""
+"""Evaluate the released DESI DR2 all-tracer BAO likelihood at frozen controls."""
 
 import argparse
 import importlib.metadata
@@ -23,81 +17,41 @@ LIKELIHOOD_CLASS = "bao.desi_dr2.desi_bao_all"
 NNU = 3.044
 
 CONTROL_POINTS: tuple[dict[str, Any], ...] = (
-    {
-        "id": "lcdm_plancklike_control",
-        "model": "LCDM",
-        "params": {
-            "ombh2": 0.02237,
-            "omch2": 0.1200,
-            "H0": 67.4,
-            "As": 2.10e-9,
-            "ns": 0.965,
-            "tau": 0.0544,
-            "mnu": 0.06,
-        },
-    },
-    {
-        "id": "lcdm_high_h0_stress_control",
-        "model": "LCDM",
-        "params": {
-            "ombh2": 0.02237,
-            "omch2": 0.1200,
-            "H0": 73.04,
-            "As": 2.10e-9,
-            "ns": 0.965,
-            "tau": 0.0544,
-            "mnu": 0.06,
-        },
-    },
-    {
-        "id": "cpl_nonlambda_control",
-        "model": "CPL",
-        "params": {
-            "ombh2": 0.02237,
-            "omch2": 0.1200,
-            "H0": 68.0,
-            "As": 2.10e-9,
-            "ns": 0.965,
-            "tau": 0.0544,
-            "mnu": 0.06,
-            "w": -0.9,
-            "wa": -0.3,
-        },
-    },
+    {"id": "lcdm_plancklike_control", "model": "LCDM", "params": {"ombh2": 0.02237, "omch2": 0.1200, "H0": 67.4, "As": 2.10e-9, "ns": 0.965, "tau": 0.0544, "mnu": 0.06}},
+    {"id": "lcdm_high_h0_stress_control", "model": "LCDM", "params": {"ombh2": 0.02237, "omch2": 0.1200, "H0": 73.04, "As": 2.10e-9, "ns": 0.965, "tau": 0.0544, "mnu": 0.06}},
+    {"id": "cpl_nonlambda_control", "model": "CPL", "params": {"ombh2": 0.02237, "omch2": 0.1200, "H0": 68.0, "As": 2.10e-9, "ns": 0.965, "tau": 0.0544, "mnu": 0.06, "w": -0.9, "wa": -0.3}},
 )
 
 
 def cobaya_loglike(packages_path: Path, point: dict[str, Any]) -> float:
     from cobaya.model import get_model
 
-    params = dict(point["params"])
-    theory: dict[str, Any] = {
-        "camb": {
-            "extra_args": {
-                "lens_potential_accuracy": 0,
-                "num_massive_neutrinos": 1,
-                "nnu": NNU,
-            }
-        }
+    extra_args: dict[str, Any] = {
+        "lens_potential_accuracy": 0,
+        "num_massive_neutrinos": 1,
+        "nnu": NNU,
     }
+    if point["model"] == "CPL":
+        # The declared control crosses w=-1. CAMB's fluid implementation cannot
+        # represent that crossing; PPF is the already-versioned policy used by
+        # the repository's independent CPL CLASS/CAMB baseline crosscheck.
+        extra_args["dark_energy_model"] = "ppf"
+
     info = {
         "packages_path": str(packages_path),
-        "params": params,
-        "theory": theory,
+        "params": dict(point["params"]),
+        "theory": {"camb": {"extra_args": extra_args}},
         "likelihood": {LIKELIHOOD: None},
         "debug": False,
     }
     model = get_model(info)
-    values, derived = model.loglikes({})
+    values, _derived = model.loglikes({})
     if len(values) != 1:
         raise RuntimeError(f"expected one DESI loglike, got {len(values)}")
     return float(values[0])
 
 
-def build(
-    packages_path: Path,
-    evaluator: Callable[[Path, dict[str, Any]], float] = cobaya_loglike,
-) -> dict[str, Any]:
+def build(packages_path: Path, evaluator: Callable[[Path, dict[str, Any]], float] = cobaya_loglike) -> dict[str, Any]:
     if not packages_path.is_dir():
         raise ValueError("Cobaya packages path missing")
     rows = []
@@ -105,12 +59,7 @@ def build(
         value = float(evaluator(packages_path, point))
         if not (-1.0e100 < value < 1.0e100):
             raise ValueError(f"non-finite/invalid loglike for {point['id']}: {value}")
-        rows.append({
-            "id": point["id"],
-            "model": point["model"],
-            "params": point["params"],
-            "loglike": value,
-        })
+        rows.append({"id": point["id"], "model": point["model"], "params": point["params"], "loglike": value})
     return {
         "schema": SCHEMA,
         "state": "DESI_DR2_ALL_TRACER_FIXED_COSMOLOGY_LOGLIKES_EXECUTED",
@@ -124,6 +73,7 @@ def build(
             "cobaya_version": importlib.metadata.version("cobaya") if evaluator is cobaya_loglike else "INJECTED_TEST_EVALUATOR",
             "camb_version": importlib.metadata.version("camb") if evaluator is cobaya_loglike else "INJECTED_TEST_EVALUATOR",
             "nnu_backend_extra_arg": NNU,
+            "cpl_dark_energy_policy": "PPF for w=-1 crossing",
         },
         "control_points": rows,
         "resolved_token": None,
@@ -134,10 +84,7 @@ def build(
             "reproduce the intended LCDM/CPL posterior or joint analysis with pinned priors and sampler diagnostics",
             "audit cross-probe overlap/covariance before use in a multi-probe Bayes factor",
         ],
-        "scientific_boundary": (
-            "A finite executable BAO log-likelihood at frozen controls proves likelihood plumbing and data custody. "
-            "It is not an official joint/cross-block posterior reproduction and provides no RLL evidence by itself."
-        ),
+        "scientific_boundary": "Finite BAO log-likelihoods at frozen controls prove likelihood plumbing/data custody only; they are not an official joint/cross-block posterior reproduction or RLL evidence.",
     }
 
 
@@ -162,11 +109,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     payload = build(args.packages_path)
     atomic_json(args.output, payload)
-    print(json.dumps({
-        "state": payload["state"],
-        "loglikes": {row["id"]: row["loglike"] for row in payload["control_points"]},
-        "claim_allowed": False,
-    }, sort_keys=True))
+    print(json.dumps({"state": payload["state"], "loglikes": {row["id"]: row["loglike"] for row in payload["control_points"]}, "claim_allowed": False}, sort_keys=True))
     return 0
 
 
