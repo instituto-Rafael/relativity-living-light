@@ -1,0 +1,28 @@
+{
+  "schema": "rll.external_repository_license_audit.v1",
+  "audited_at": "2026-08-07T22:36:00Z",
+  "state": "VERIFIED_NEGATIVE_ROOT_LICENSE",
+  "claim_allowed": false,
+  "repository": "des-science/DES-SN5YR",
+  "source_commit": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f",
+  "checked_root_paths": {
+    "LICENSE": "NOT_FOUND",
+    "LICENSE.md": "NOT_FOUND",
+    "LICENCE": "NOT_FOUND",
+    "COPYING": "NOT_FOUND"
+  },
+  "readme": {
+    "path": "README.md",
+    "blob_sha": "5bcd518c20f2f45960127f08c23c6aa366677092",
+    "contains_citation_instructions": true,
+    "contains_explicit_redistribution_license_grant": false
+  },
+  "conclusion": "No explicit repository-root license grant was found at the exact DES-SN5YR source commit used by the RLL Dovekie materialization. This converts the former uncertainty into a conservative governance constraint, not into permission.",
+  "redistribution_allowed_by_this_audit": false,
+  "policy": "Use upstream data only through provenance-pinned acquisition or private/local materialization until an explicit applicable license or permission is verified.",
+  "limitations": [
+    "This audit does not prove that no license or permission exists in Zenodo, ReadTheDocs, a publication, institutional terms, or another upstream channel.",
+    "It only resolves the narrower question of an explicit license grant in the audited repository root/README at the pinned commit."
+  ],
+  "resolves_token_as_negative_fact": "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND"
+}

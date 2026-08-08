@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """Fail-closed maturity gate for RLL promotion edges.
 
-Repository-local structure only; never validates scientific claims or external settings.
+Repository-local structure only; never validates scientific claims or external
+settings. Structured governance files are parsed semantically so quoted
+historical/documentation markers such as ``"claim_allowed=true"`` are not
+mistaken for an active policy flag.
 """
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
-import re
 import subprocess
 import sys
+import tomllib
+from typing import Any
+
+import yaml
 
 TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integration","main":"rll/release"}
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
@@ -45,6 +51,36 @@ def changed(base_sha:str,head_sha:str)->list[str]:
     return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
 
 
+def _active_true(value:Any)->bool:
+    if value is True: return True
+    if isinstance(value,str): return value.strip().lower() in TRUE_STRINGS
+    if isinstance(value,(int,float)) and not isinstance(value,bool): return value==1
+    return False
+
+
+def _claim_allowed_true(node:Any)->bool:
+    if isinstance(node,dict):
+        for key,value in node.items():
+            if str(key).strip().lower()=="claim_allowed" and _active_true(value):
+                return True
+            if _claim_allowed_true(value):
+                return True
+        return False
+    if isinstance(node,list):
+        return any(_claim_allowed_true(item) for item in node)
+    # Scalar strings can quote/document policy syntax; they are not active keys.
+    return False
+
+
+def _load_structured(path:Path)->Any:
+    suffix=path.suffix.lower()
+    text=path.read_text(encoding="utf-8",errors="strict")
+    if suffix==".json": return json.loads(text)
+    if suffix in {".yml",".yaml"}: return yaml.safe_load(text)
+    if suffix==".toml": return tomllib.loads(text)
+    raise ValueError(f"unsupported structured suffix: {suffix}")
+
+
 def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
     residuals=[]
     if not valid_transition(head_ref,base_ref): residuals.append("INVALID_BRANCH_TRANSITION")
@@ -53,7 +89,7 @@ def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
         p=Path(rel); low=rel.lower()
         if p.name.lower() in SENSITIVE or low.startswith(".ssh/") or low.endswith((".pem",".p12",".pfx",".key")): residuals.append(f"SENSITIVE_PATH:{rel}")
         if low.startswith(("tests/","docs/","fixtures/","examples/")): continue
-        if p.suffix.lower() in {".yml",".yaml",".json",".toml"}:
+        if p.suffix.lower() in STRUCTURED_SUFFIXES:
             target=root/rel
             if target.is_file() and target.stat().st_size<1_000_000:
                 text=target.read_text(encoding="utf-8",errors="replace")
