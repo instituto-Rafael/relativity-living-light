@@ -17,8 +17,9 @@ class TokenVazioReconcileV3Tests(unittest.TestCase):
         self.assertEqual(summary["terminal_resolved"], 12)
         self.assertEqual(summary["reduced_generic"], 9)
         self.assertEqual(summary["open"], 12)
-        self.assertEqual(summary.get("OPEN_EVIDENCE_MISSING", 0), 0)
-        self.assertFalse(self.receipt["policy"]["claim_allowed"])
+        self.assertFalse(any(row["state"] == "OPEN_EVIDENCE_MISSING" for row in self.receipt["results"]))
+        self.assertIs(self.receipt["claim_allowed"], False)
+        self.assertIs(self.receipt["publication_ready"], False)
         self.assertEqual(self.receipt["view"], "RLL_TOKEN_VAZIO_RECONCILIATION_V3_APPEND_ONLY")
 
     def test_ref_semantic_review_is_resolved_by_complete_disposition(self):
