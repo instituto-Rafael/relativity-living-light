@@ -1,0 +1,73 @@
+name: CLASS CAMB First Divergence
+
+on:
+  pull_request:
+    paths:
+      - "scripts/crosscheck_class_camb_baselines.py"
+      - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - ".github/workflows/class-camb-first-divergence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned engine ranges
+        run: |
+          python -m pip install --disable-pip-version-check \
+            "numpy>=1.26,<2" "pytest>=8" "camb>=1.6,<2" "classy>=3.3,<4"
+      - name: Structural tests
+        run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
+      - name: Execute and preserve mismatch
+        id: compare
+        continue-on-error: true
+        run: |
+          python scripts/crosscheck_class_camb_baselines.py \
+            --output artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json \
+            --lmax 700
+      - name: Summarize first divergence
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json')
+          if not p.exists():
+              raise SystemExit('receipt missing')
+          d=json.loads(p.read_text())
+          print('state=', d['state'])
+          for model, md in d['models'].items():
+              for family, metric in md['metrics'].items():
+                  worst=max(metric['points'], key=lambda x:x['relative_error'])
+                  print(model, family, 'pass=',metric['pass'], 'max_rel=',metric['max_relative_error'], 'worst=',worst)
+          PY
+      - name: Upload diagnostic receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: class-camb-first-divergence-${{ github.run_id }}
+          path: artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Enforce mismatch fail-closed
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json').read_text())
+          if d['state'] != 'VERIFIED_BASELINE_ENGINE_CROSSCHECK':
+              raise SystemExit(3)
+          PY
