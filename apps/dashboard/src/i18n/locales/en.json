@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "analysis": "Analysis",
+    "data": "Data",
+    "settings": "Settings",
+    "export": "Export"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "export": "Export",
+    "import": "Import",
+    "download": "Download",
+    "upload": "Upload",
+    "language": "Language"
+  },
+  "dashboard": {
+    "title": "Real-time Reports",
+    "subtitle": "Advanced data analysis with intuitive visualizations",
+    "overview": "Overview",
+    "metrics": "Metrics",
+    "performance": "Performance",
+    "trends": "Trends"
+  },
+  "analysis": {
+    "title": "Analysis Tools",
+    "advanced": "Advanced Analysis",
+    "comparative": "Comparative Analysis",
+    "predictive": "Predictive Analysis",
+    "statistical": "Statistics"
+  },
+  "export": {
+    "title": "Export Data",
+    "formats": "Formats",
+    "pdf": "PDF",
+    "csv": "CSV",
+    "json": "JSON",
+    "excel": "Excel",
+    "selectFormat": "Select export format"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "dark": "Dark",
+    "light": "Light",
+    "auto": "Auto"
+  }
+}
