@@ -67,11 +67,11 @@ jobs:
     timeout-minutes: 45
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Setup Python 3.11
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.11'
     - name: Prepare artifact directory
@@ -95,7 +95,7 @@ jobs:
 
         '
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline/
@@ -129,11 +129,11 @@ jobs:
       contents: write
     steps:
     - name: Checkout for explicit opt-in commit
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Download book pipeline artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline
@@ -158,7 +158,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rll-book-data-pipeline-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}/

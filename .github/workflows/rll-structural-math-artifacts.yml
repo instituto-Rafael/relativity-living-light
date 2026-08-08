@@ -1,0 +1,182 @@
+name: RLL Structural Mathematics Artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      z_max:
+        description: "Maximum redshift for the structural scan."
+        required: true
+        default: "3.0"
+        type: string
+      points:
+        description: "Number of grid points."
+        required: true
+        default: "301"
+        type: string
+      os0:
+        description: "RLL superposition-sector amplitude."
+        required: true
+        default: "0.02"
+        type: string
+      zt:
+        description: "Logistic transition redshift."
+        required: true
+        default: "1.0"
+        type: string
+      wt:
+        description: "Positive logistic transition width."
+        required: true
+        default: "0.3"
+        type: string
+      retention_days:
+        description: "Artifact retention."
+        required: true
+        default: "30"
+        type: choice
+        options: ["7", "14", "30", "90"]
+  push:
+    branches: [main]
+    paths:
+      - "rll_core/**"
+      - "scripts/rll_structural_invariants.py"
+      - "tests/test_rll_structural_invariants.py"
+      - "schemas/rll_structural_math_artifact_v1.schema.json"
+      - "docs/mathematics/RLL_STRUCTURAL_INVARIANT_PIPELINE.md"
+      - "docs/canonicos/16_PIPELINE_VALIDACAO_RLL.md"
+      - ".github/workflows/rll-structural-math-artifacts.yml"
+  pull_request:
+    paths:
+      - "rll_core/**"
+      - "scripts/rll_structural_invariants.py"
+      - "tests/test_rll_structural_invariants.py"
+      - "schemas/rll_structural_math_artifact_v1.schema.json"
+      - "docs/mathematics/RLL_STRUCTURAL_INVARIANT_PIPELINE.md"
+      - "docs/canonicos/16_PIPELINE_VALIDACAO_RLL.md"
+      - ".github/workflows/rll-structural-math-artifacts.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-structural-math-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structural-math:
+    name: Algebra, geometry, invariants and artifact custody
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RUN_DIR: artifacts/rll-structural-math
+      CLAIM_BOUNDARY: "Structural PASS is not observational confirmation or model superiority."
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validation-only dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml jsonschema
+
+      - name: Run structural regression tests
+        run: |
+          set -euo pipefail
+          python -m unittest discover \
+            -s tests \
+            -p 'test_rll_structural_invariants.py' \
+            -v
+
+      - name: Generate RLL structural mathematics artifacts
+        env:
+          Z_MAX: ${{ inputs.z_max || '3.0' }}
+          POINTS: ${{ inputs.points || '301' }}
+          OS0: ${{ inputs.os0 || '0.02' }}
+          ZT: ${{ inputs.zt || '1.0' }}
+          WT: ${{ inputs.wt || '0.3' }}
+        run: |
+          set -euo pipefail
+          rm -rf "$RUN_DIR"
+          python scripts/rll_structural_invariants.py \
+            --output "$RUN_DIR" \
+            --z-max "$Z_MAX" \
+            --points "$POINTS" \
+            --os0 "$OS0" \
+            --zt "$ZT" \
+            --wt "$WT" \
+            --cross-check-existing
+
+      - name: Validate summary schema and structural graph
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          root = Path('artifacts/rll-structural-math')
+          summary = json.loads((root / 'summary.json').read_text(encoding='utf-8'))
+          schema = json.loads(Path('schemas/rll_structural_math_artifact_v1.schema.json').read_text(encoding='utf-8'))
+          Draft202012Validator(schema).validate(summary)
+          if summary['verdict'] != 'PASS' or not summary['invariants']['passed']:
+              raise SystemExit('structural invariant verdict is not PASS')
+
+          registry = json.loads((root / 'formula_registry.json').read_text(encoding='utf-8'))
+          formulas = registry['formulas']
+          ids = [item['id'] for item in formulas]
+          if len(ids) != 23 or len(ids) != len(set(ids)):
+              raise SystemExit(f'formula registry must contain 23 unique formulas; got {len(ids)}')
+          known = set(ids)
+          for item in formulas:
+              missing = set(item['depends_on']) - known
+              if missing:
+                  raise SystemExit(f"unknown formula dependencies for {item['id']}: {sorted(missing)}")
+
+          graph = json.loads((root / 'structural_map.json').read_text(encoding='utf-8'))
+          node_ids = {node['id'] for node in graph['nodes']}
+          for edge in graph['edges']:
+              if edge['from'] not in node_ids or edge['to'] not in node_ids:
+                  raise SystemExit(f'invalid structural edge: {edge}')
+          print('schema, formula registry and structural graph: PASS')
+          PY
+
+      - name: Finalize checksums and job summary
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          if find "$RUN_DIR" -type f -print -quit | grep -q .; then
+            (cd "$RUN_DIR" && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) \
+              > "$RUN_DIR/CHECKSUMS.sha256"
+          else
+            echo "TOKEN_VAZIO: generator produced no files" > "$RUN_DIR/PIPELINE_FAILURE.txt"
+          fi
+          {
+            echo "# RLL Structural Mathematics"
+            echo
+            echo "- commit: $GITHUB_SHA"
+            echo "- claim boundary: $CLAIM_BOUNDARY"
+            echo "- artifact directory: $RUN_DIR"
+            echo
+            if [ -f "$RUN_DIR/REPORT.md" ]; then
+              cat "$RUN_DIR/REPORT.md"
+            else
+              echo "TOKEN_VAZIO: REPORT.md was not generated."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload structural mathematics artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-structural-math-${{ github.run_id }}
+          path: artifacts/rll-structural-math/
+          retention-days: ${{ fromJSON(inputs.retention_days || '30') }}
+          if-no-files-found: error

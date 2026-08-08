@@ -1,0 +1,38 @@
+{
+  "receipt_id": "UTM185-VOID-MASK-LOCAL-20260728",
+  "module_id": "UTM-185",
+  "scope": "assistant_validation_container",
+  "environment": {
+    "os": "Linux 6.12.13 x86_64",
+    "python": "3.13.5",
+    "termux_device_execution": "TOKEN_VAZIO_RECEIPT_PENDING"
+  },
+  "command": "python -m unittest discover -s tests -p 'test_utm185_void_mask_attention.py' -v",
+  "result": {
+    "state": "LOCAL_SOFTWARE_PASS",
+    "tests_passed": 7,
+    "tests_failed": 0,
+    "tests_errored": 0
+  },
+  "proved": [
+    "Poincare origin is a valid point with finite distance",
+    "missingness is independent from coordinates",
+    "invalid positions receive exactly zero attention weight",
+    "all-masked input fails closed",
+    "unit-ball boundary is enforced"
+  ],
+  "not_proved": [
+    "Termux execution",
+    "integration with a real tokenizer or model",
+    "training stability",
+    "task-quality improvement",
+    "performance superiority over conventional boolean masking"
+  ],
+  "forward_port": {
+    "source_pr": 608,
+    "source_branch": "feature/utm185-explicit-void-mask-20260728",
+    "target_branch": "audit/branch-advance-forward-port-v2-20260807",
+    "historical_hashes_not_reused_as_current_tree_hashes": true
+  },
+  "claim_allowed": false
+}

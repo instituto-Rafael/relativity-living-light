@@ -67,12 +67,12 @@ jobs:
 
     steps:
       - name: "01 · Checkout sem persistência de credencial"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       - name: "Setup Python"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "${{ env.PYTHON_VERSION }}"
           cache: pip
@@ -156,7 +156,7 @@ jobs:
 
       - name: "44 · Publicar evidências mesmo com gate bloqueado"
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rll-fase24-1-${{ github.run_id }}-${{ steps.gate.outputs.mode || 'unknown' }}
           path: |

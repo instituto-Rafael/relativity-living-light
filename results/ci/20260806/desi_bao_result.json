@@ -1,0 +1,28 @@
+{
+  "pipeline": "rll-validacao-cientifica-completa",
+  "job": "fit_desi_bao",
+  "timestamp_utc": "2026-08-06T02:35:52.618614+00:00",
+  "dataset": "DESI DR2 BAO",
+  "n_points": 13,
+  "chi2_nominal_rll": 93.81,
+  "chi2_nominal_note": "parâmetros nominais; otimizado requer joint MCMC (TOKEN_VAZIO P0)",
+  "token_vazio_p0": "Joint MCMC {Ωs0, z_t, w_t} livre — ver job joint_mcmc_p0",
+  "claim_boundary": "Parâmetros nominais; fit otimizado requer joint_mcmc_p0",
+  "prior_run": {
+    "status": "desi_dr2_bao_covariance_chi2",
+    "results": {
+      "lcdm": {
+        "chi2_bao_desi_dr2": 28.96591953128496,
+        "n": 13
+      },
+      "w0wa": {
+        "chi2_bao_desi_dr2": 28.96591953128527,
+        "n": 13
+      },
+      "rll": {
+        "chi2_bao_desi_dr2": 93.80609384146017,
+        "n": 13
+      }
+    }
+  }
+}

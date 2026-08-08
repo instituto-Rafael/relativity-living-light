@@ -1,0 +1,79 @@
+{
+  "schema": "rll.sn_gap_closure_receipt.v1",
+  "generated_at": "2026-08-07T22:49:11Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_workflow": {
+    "name": "Pantheon Covariance Materialization",
+    "run_id": 31225058309,
+    "run_number": 40,
+    "conclusion": "success",
+    "head_sha": "a4604e452ffe7dd0e40e267b4fe41e50f129b173"
+  },
+  "artifact": {
+    "id": 9011803148,
+    "name": "modern-sn-fit-receipt-31225058309",
+    "sha256": "6abbce32098651f98261d6d55d8bc0269ea22a157032fe9fd3350d23a9b44433",
+    "size_in_bytes": 37449
+  },
+  "common_nuisance_ablation": {
+    "state": "VERIFIED",
+    "resolves_token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+    "same_nuisance_policy": true,
+    "nuisance_policy": "one additive SN magnitude offset analytically profiled and counted in k",
+    "pantheon_hubbleflow": {
+      "n_supernovae": 1580,
+      "catalog_sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "covariance_sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "delta_chi2_cpl_minus_lcdm": -0.4693068159149334,
+      "delta_bic_cpl_minus_lcdm": 14.261053436127213,
+      "delta_chi2_rll_minus_lcdm": -2.7284841053187847e-12,
+      "delta_bic_rll_minus_lcdm": 22.095540378060377,
+      "rll_best_omega_s0": 0.0
+    },
+    "des_dovekie": {
+      "n_supernovae": 1820,
+      "hubble_diagram_sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+      "precision_sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+      "delta_chi2_cpl_minus_lcdm": -4.792422503000125,
+      "delta_bic_cpl_minus_lcdm": 10.220761057141544,
+      "delta_chi2_rll_minus_lcdm": -7.501694199163467e-08,
+      "delta_bic_rll_minus_lcdm": 22.519775265195676
+    },
+    "conclusion": "The nuisance/H0 policy mismatch was removed as a confounder. Under the same profiled-offset and fixed-reference-H0 logic, RLL still collapses to the LCDM-like limit for Pantheon+ Hubble-flow and remains effectively likelihood-equivalent to LCDM for Dovekie SN-only."
+  },
+  "cpl_wa_boundary_sensitivity": {
+    "state": "RESOLVED_NEGATIVE_WITH_SUCCESSOR",
+    "resolves_token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+    "successor_token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+    "all_starts_converged": true,
+    "historical_lower_bound": -3.0,
+    "expanded_profile_grid": [-8.0, -6.0, -5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0],
+    "best_wa": -6.0,
+    "best_chi2": 1625.3554394913967,
+    "delta_chi2_at_wa_minus3": 1.274091294623986,
+    "delta_chi2_at_wa_minus8": 0.055706642877112245,
+    "bounded_95_on_grid": false,
+    "has_left_exclusion_95": false,
+    "has_right_exclusion_95": true,
+    "wa_95_grid_interval": [-8.0, -1.0],
+    "conclusion": "The historical wa=-3 optimum was boundary-sensitive: expanding the domain moves the profile optimum to wa≈-6. The parameter remains unbounded on the lower side at 95% over the tested grid, so wa must not be interpreted as measured."
+  },
+  "scientific_boundary": "This receipt closes two uncertainty questions but does not validate RLL, does not provide Bayesian evidence, and does not replace independent replication or perturbation-sector tests.",
+  "F_ok": [
+    "Common-nuisance Pantheon+↔Dovekie ablation was materially executed and verified.",
+    "The former wa=-3 boundary ambiguity was tested on an expanded profile with all starts converged.",
+    "Negative/limited outcomes are preserved rather than promoted."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+    "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+    "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK"
+  ],
+  "F_next": [
+    "Extend the Dovekie wa profile farther into the negative domain until a left 95% exclusion is observed or the non-identifiability is characterized as an asymptotic degeneracy.",
+    "Keep nested-sampling evidence and independent replication as separate P0 authorities."
+  ]
+}

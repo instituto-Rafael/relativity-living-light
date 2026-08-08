@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rafaelmeloreisnovo/relativity-living-light/schemas/rll_omega_residual_input.schema.json",
+  "title": "RLL Omega residual audit input",
+  "description": "Structural contract for RLL Omega residual audit inputs; parsing this contract does not authorize a scientific or physical claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "observed",
+    "predicted",
+    "sigma_observed",
+    "threshold",
+    "checks",
+    "support_weight",
+    "refutation_weight",
+    "scope_overlap",
+    "evidence_complete"
+  ],
+  "properties": {
+    "observed": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "predicted": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 1
+    },
+    "sigma_observed": {
+      "type": "array",
+      "items": {"type": "number", "minimum": 0},
+      "minItems": 1
+    },
+    "sigma_model": {
+      "type": "array",
+      "items": {"type": "number", "minimum": 0}
+    },
+    "threshold": {"type": "number", "exclusiveMinimum": 0},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provenance_complete",
+        "uncertainty_known",
+        "in_domain",
+        "numerical_check_passed",
+        "calibration_check_passed",
+        "instrument_check_passed",
+        "transport_check_passed",
+        "matter_field_check_passed",
+        "physics_candidate"
+      ],
+      "properties": {
+        "provenance_complete": {"type": "boolean"},
+        "uncertainty_known": {"type": "boolean"},
+        "in_domain": {"type": "boolean"},
+        "numerical_check_passed": {"type": "boolean"},
+        "calibration_check_passed": {"type": "boolean"},
+        "instrument_check_passed": {"type": "boolean"},
+        "transport_check_passed": {"type": "boolean"},
+        "matter_field_check_passed": {"type": "boolean"},
+        "physics_candidate": {"type": "boolean"}
+      }
+    },
+    "support_weight": {"type": "number", "minimum": 0},
+    "refutation_weight": {"type": "number", "minimum": 0},
+    "scope_overlap": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence_complete": {"type": "boolean"},
+    "photonic_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intensity"],
+      "properties": {
+        "intensity": {"type": "number"},
+        "q": {"type": "number"},
+        "u": {"type": "number"},
+        "v": {"type": "number"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataset": {"type": ["string", "null"]},
+        "commit": {"type": ["string", "null"]},
+        "operator_chain": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "instrument": {"type": ["string", "null"]},
+        "domain": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

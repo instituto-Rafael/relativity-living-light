@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       input_json:
-        description: "Path to JSON metrics file"
+        description: "Path to an existing JSON metrics file"
         required: false
         default: "artifacts/joint_real_likelihood.json"
       metric:
@@ -30,24 +30,29 @@ on:
 permissions:
   contents: read
 
+env:
+  RUN_DIR: artifacts/rll_balance
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  CLAIM_BOUNDARY: "Balance reporting summarizes supplied metrics; it does not validate source data or authorize superiority claims."
+
 jobs:
   balance-report:
-    name: Generate RLL balance report
+    name: Generate claim-bounded RLL balance report
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
-      - name: Prepare input JSON
+      - name: Prepare input without synthetic fallback
         id: prepare
         shell: bash
         run: |
@@ -55,76 +60,118 @@ jobs:
 
           INPUT_JSON="${{ github.event.inputs.input_json || 'artifacts/joint_real_likelihood.json' }}"
           METRIC="${{ github.event.inputs.metric || 'bic' }}"
-
-          mkdir -p artifacts/rll_balance
+          mkdir -p "$RUN_DIR"
 
           if [ -f "$INPUT_JSON" ]; then
-            echo "Using provided input: $INPUT_JSON"
-            cp "$INPUT_JSON" artifacts/rll_balance/input.json
-            echo "source_kind=provided" >> "$GITHUB_OUTPUT"
+            echo "Using supplied input: $INPUT_JSON"
+            cp "$INPUT_JSON" "$RUN_DIR/input.json"
+            echo "input_available=true" >> "$GITHUB_OUTPUT"
+            INPUT_STATUS="VERIFIED_PATH_PRESENT"
           else
-            echo "Input JSON not found: $INPUT_JSON"
-            echo "Creating a synthetic demo fixture only to validate workflow plumbing."
-            cat > artifacts/rll_balance/input.json <<'JSON'
-          {
-            "RLL":  {"chi2": 84.4824, "aicc": 103.1006, "bic": 117.7535},
-            "LCDM": {"chi2": 84.4824, "aicc": 95.5169,  "bic": 105.2768},
-            "wCDM": {"chi2": 83.7104, "aicc": 97.1841,  "bic": 108.6637},
-            "CPL":  {"chi2": 62.0717, "aicc": 78.0717,  "bic": 91.1839}
-          }
-          JSON
-            echo "source_kind=synthetic_demo" >> "$GITHUB_OUTPUT"
+            echo "TOKEN_VAZIO: input JSON not found: $INPUT_JSON"
+            echo "input_available=false" >> "$GITHUB_OUTPUT"
+            INPUT_STATUS="TOKEN_VAZIO"
           fi
 
           echo "metric=$METRIC" >> "$GITHUB_OUTPUT"
+          echo "input_path=$INPUT_JSON" >> "$GITHUB_OUTPUT"
+          echo "input_status=$INPUT_STATUS" >> "$GITHUB_OUTPUT"
 
-      - name: Run balance report
+          INPUT_JSON_PATH="$INPUT_JSON" INPUT_STATUS_VALUE="$INPUT_STATUS" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ['RUN_DIR'])
+          payload = {
+              'schema': 'rll.balance_input_status.v1',
+              'status': os.environ['INPUT_STATUS_VALUE'],
+              'input_path': os.environ['INPUT_JSON_PATH'],
+              'claim_boundary': os.environ['CLAIM_BOUNDARY'],
+              'canonical_real_data_workflow': os.environ['CANONICAL_REAL_DATA_WORKFLOW'],
+              'synthetic_fallback_used': False,
+          }
+          (root / 'INPUT_STATUS.json').write_text(
+              json.dumps(payload, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Run balance report only with supplied metrics
+        if: steps.prepare.outputs.input_available == 'true'
         shell: bash
         run: |
           set -euo pipefail
           python scripts/rll_balance_report.py \
-            --input artifacts/rll_balance/input.json \
-            --output-md artifacts/rll_balance/rll_balance_report.md \
-            --output-json artifacts/rll_balance/rll_balance_report.json \
+            --input "$RUN_DIR/input.json" \
+            --output-md "$RUN_DIR/rll_balance_report.md" \
+            --output-json "$RUN_DIR/rll_balance_report.json" \
             --metric "${{ steps.prepare.outputs.metric }}"
 
-      - name: Write claim boundary and checksums
+      - name: Record TOKEN_VAZIO report when input is absent
+        if: steps.prepare.outputs.input_available != 'true'
         shell: bash
         run: |
           set -euo pipefail
-          cat > artifacts/rll_balance/CLAIM_BOUNDARY.md <<EOF
-          # Claim Boundary
+          cat > "$RUN_DIR/rll_balance_report.md" <<REPORT
+          # RLL Balance Report — TOKEN_VAZIO
 
-          - source_kind: ${{ steps.prepare.outputs.source_kind }}
-          - canonical_real_data_workflow: .github/workflows/real-data-complete-execution.yml
-          - this workflow compares supplied metrics and emits structural artifacts;
-          - a synthetic/demo/mock/fixture fallback is plumbing evidence only;
-          - no artifact from a synthetic fallback validates a scientific claim.
-          EOF
+          - input: `${{ steps.prepare.outputs.input_path }}`
+          - metric: `${{ steps.prepare.outputs.metric }}`
+          - status: `TOKEN_VAZIO`
+          - synthetic fallback: `false`
+          - canonical workflow: `$CANONICAL_REAL_DATA_WORKFLOW`
+          - claim boundary: $CLAIM_BOUNDARY
 
-          (
-            cd artifacts/rll_balance
-            find . -type f ! -name 'CHECKSUMS.sha256' -print0 \
-              | sort -z \
-              | while IFS= read -r -d '' file; do sha256sum "$file"; done \
-              > CHECKSUMS.sha256
-            test -s CHECKSUMS.sha256
-            sha256sum -c CHECKSUMS.sha256
-          )
+          No metric ranking was produced because the declared input does not exist.
+          REPORT
 
       - name: Show report summary
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
-          sed -n '1,120p' artifacts/rll_balance/rll_balance_report.md
-          echo "--- CLAIM BOUNDARY ---"
-          cat artifacts/rll_balance/CLAIM_BOUNDARY.md
-          echo "--- CHECKSUMS ---"
-          cat artifacts/rll_balance/CHECKSUMS.sha256
+          if [ -f "$RUN_DIR/rll_balance_report.md" ]; then
+            sed -n '1,160p' "$RUN_DIR/rll_balance_report.md"
+          else
+            echo "TOKEN_VAZIO: report file was not generated"
+          fi
+
+      - name: Build manifest and final checksums
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR"
+          METRIC_VALUE="${{ steps.prepare.outputs.metric }}" \
+          INPUT_STATUS_VALUE="${{ steps.prepare.outputs.input_status }}" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ['RUN_DIR'])
+          payload = {
+              'schema': 'rll.balance_report_manifest.v1',
+              'input_status': os.environ.get('INPUT_STATUS_VALUE') or 'TOKEN_VAZIO',
+              'metric': os.environ.get('METRIC_VALUE') or 'TOKEN_VAZIO',
+              'claim_boundary': os.environ['CLAIM_BOUNDARY'],
+              'canonical_real_data_workflow': os.environ['CANONICAL_REAL_DATA_WORKFLOW'],
+              'synthetic_fallback_used': False,
+              'files': sorted(path.name for path in root.iterdir() if path.is_file()),
+          }
+          (root / 'MANIFEST.json').write_text(
+              json.dumps(payload, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          PY
+          (cd "$RUN_DIR" && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) \
+            > "$RUN_DIR/CHECKSUMS.sha256"
 
       - name: Upload RLL balance artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: rll-balance-report
+          name: rll-balance-report-${{ github.run_id }}
           path: artifacts/rll_balance/
+          retention-days: 30
           if-no-files-found: error

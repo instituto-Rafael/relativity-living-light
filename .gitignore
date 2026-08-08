@@ -57,3 +57,11 @@ artifacts/orcid_rll/orcid_work_candidates.json
 **/Pantheon+SH0ES_STAT+SYS.cov
 **/Pantheon+SH0ES_STATONLY.cov
 **/Pantheon+SH0ES_*.cov.*.part
+
+# DES-Dovekie scientific inputs are materialized from immutable upstream Git
+# objects. The STAT+SYS NPZ is a packed precision (inverse-covariance) matrix.
+# Keep source bytes outside Git; retain only compact provenance/result receipts.
+data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv
+data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv.sha256
+data/real/cosmology/des_dovekie/STAT+SYS.npz
+data/real/cosmology/des_dovekie/STAT+SYS.npz.sha256

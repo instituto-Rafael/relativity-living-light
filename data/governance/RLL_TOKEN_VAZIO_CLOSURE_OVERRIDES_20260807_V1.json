@@ -1,0 +1,221 @@
+{
+  "schema": "rll.token_vazio_closure_overrides.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Preserve the earlier closure rule ledger while applying newer evidence for SN profile closure, Bayes, DESI, verified LCDM/CPL CLASS-CAMB baseline agreement, RLL perturbation decomposition, final H0/r_d 24-of-24 optimizer convergence, ACT DR6 public-likelihood availability, and release refresh.",
+  "overrides": [
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+      "priority": "P0",
+      "target_state": "RESOLVED",
+      "classification": "FINITE_SN_ONLY_PROFILE_LOWER_BOUND_MATERIALIZED",
+      "evidence_path": "artifacts/science/sn_modern/RLL_DOVEKIE_CPL_WA_LOWER_BOUND_RECEIPT_20260807_RUN31227378178.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_FINITE_LOWER_95_BOUND"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "result.all_starts_converged", "op": "eq", "value": true}
+      ],
+      "resolved_fact": "The Dovekie SN-only CPL lower 95% profile crossing is finite and was bracketed at wa≈-12.60645 with bracket width 0.00586. This closes the numerical lower-profile token under the declared parameter box; w0 hitting its -0.3 bound in the tail limits physical interpretation.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "priority": "P0",
+      "target_state": "REDUCED",
+      "classification": "LEGACY_REAL_NESTED_SAMPLING_EXISTS_MODERN_GATE_REMAINS",
+      "evidence_path": "artifacts/science/bayes/RLL_FASE20_NESTED_EVIDENCE_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_LEGACY_REAL_NESTED_SAMPLING"},
+        {"path": "sampler.name", "op": "eq", "value": "dynesty.NestedSampler"},
+        {"path": "models.CPL.included_in_same_nested_run", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "Real dynesty nested sampling was already executed historically, so 'Bayes was never run' is stale. Modern and independent authorities remain distinct successors.",
+      "successors": ["TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+      "priority": "P0",
+      "target_state": "RESOLVED",
+      "classification": "MODERN_DOVEKIE_THREE_MODEL_NESTED_EVIDENCE_MATERIALIZED",
+      "evidence_path": "artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_INTERNAL_NUMERICAL_REPLICATION"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "interpretation.modern_three_model_prior_locked_evidence_executed", "op": "eq", "value": true},
+        {"path": "interpretation.independent_replication_completed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A normalized, prior-locked Dovekie SN-only nested-sampling comparison was executed for LCDM, CPL and RLL. lnB(CPL/LCDM)=-0.1107±0.2990 and lnB(RLL/LCDM)=-0.2264±0.2716; SN-only does not strongly discriminate the three models under the declared priors.",
+      "successors": ["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+      "priority": "P0",
+      "target_state": "OPEN_MIXED",
+      "classification": "JOINT_MULTI_PROBE_EVIDENCE_REQUIRES_CLOSED_COMPONENT_GATES",
+      "next_action": "Construct joint LCDM/CPL/RLL nested evidence only after official DESI and applicable CMB/LSS/H0 component gates close; do not double-count overlapping SN compilations."
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "priority": "P0",
+      "target_state": "REDUCED",
+      "classification": "LOCAL_13_OBSERVABLE_SETUP_EXISTS_OFFICIAL_JOINT_GATE_REMAINS",
+      "evidence_path": "artifacts/science/desi/RLL_DESI_DR2_REPRODUCTION_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PARTIAL_LOCAL_SETUP_NOT_OFFICIAL_JOINT_REPRODUCTION"},
+        {"path": "existing_local_setup.n_observables", "op": "eq", "value": 13},
+        {"path": "boundary.official_joint_crossblock_covariance_reproduced", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A real 13-observable DESI DR2 BAO comparison exists and locally favors LCDM over RLL; the remaining authority is official joint/cross-block likelihood reproduction.",
+      "successors": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "priority": "P0",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "OFFICIAL_JOINT_CROSSBLOCK_PRODUCTS_REQUIRED",
+      "next_action": "Materialize immutable official DESI DR2 joint/cross-block products or likelihood release and reproduce official LCDM/CPL references before interpreting RLL deltas."
+    },
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "PUBLIC_EXECUTABLE_DR6_LIKELIHOOD_EXISTS_LOCAL_REPRODUCTION_MISSING",
+      "evidence_path": "artifacts/science/act/RLL_ACT_DR6_AVAILABILITY_AUDIT_20260808_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PUBLIC_EXECUTABLE_LIKELIHOOD_AVAILABLE"},
+        {"path": "verified_capabilities.cobaya_likelihood_for_foreground_marginalized_DR6", "op": "eq", "value": true},
+        {"path": "license_boundary.vendoring_allowed_by_this_audit", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A public executable ACT DR6 CMB-only Cobaya likelihood exists at pinned upstream commit 627aeafb88ae5ad1aa66b406bea2d65cfa66a27d. Availability is resolved; pinned local materialization, tests and LCDM reproduction remain open.",
+      "successors": ["TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
+      "priority": "P1",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "PINNED_UPSTREAM_ACQUISITION_AND_REFERENCE_REPRODUCTION",
+      "next_action": "Install/acquire ACT DR6 CMB-only from pinned upstream provenance, execute upstream tests, run the LCDM reference YAML and store code/data/config hashes without vendoring unlicensed upstream content."
+    },
+    {
+      "token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "BACKGROUND_AND_INTERNAL_GROWTH_EXIST_FULL_PERTURBATION_CLOSURE_MISSING",
+      "evidence_path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PARTIAL_BACKGROUND_AND_INTERNAL_GROWTH_ONLY"},
+        {"path": "existing_implementation.real_fsigma8_points", "op": "eq", "value": 16},
+        {"path": "benchmark_boundary.rll_full_class_camb_implementation_possible_without_closure_relations", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "RLL background and an internal GR matter-growth approximation exist, so the generic CLASS/CAMB token is too broad. Full Boltzmann validation remains blocked by explicit RLL perturbation closure and implementation; LCDM/CPL engine crosscheck is independent.",
+      "successors": ["TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK", "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "STANDARD_MODEL_CLASS_CAMB_BASELINE_AGREEMENT_VERIFIED",
+      "evidence_path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_BASELINE_ENGINE_CROSSCHECK"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "scope.computed_lmax", "op": "eq", "value": 1000},
+        {"path": "cutoff_diagnostic.tolerance_unchanged", "op": "eq", "value": 0.08},
+        {"path": "max_relative_errors.LCDM.Cl_TT_dimensionless", "op": "eq", "value": 0.00997107964104779},
+        {"path": "max_relative_errors.CPL.Cl_TT_dimensionless", "op": "eq", "value": 0.008861994883696035}
+      ],
+      "resolved_fact": "Pinned CAMB 1.6.6 and CLASS/classy 3.3.4.0 agree for the declared LCDM/CPL baseline observables within unchanged tolerances when ell=700 is evaluated away from the solver cutoff. The prior 8.6568% LCDM TT mismatch at ell=700 fell to 0.9971% with computed lmax=1000; background and linear P(k) agreement are substantially tighter. This closes standard-engine plumbing only, not RLL perturbations.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "PHYSICAL_THEORY_CLOSURE_REQUIRED",
+      "next_action": "Define a covariant or explicitly phenomenological RLL perturbation closure for delta_s, theta_s, sound speed, entropy terms, anisotropic stress, Q_mu, gauge initial conditions and transition regularization."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "IMPLEMENTATION_BLOCKED_BY_THEORY_CLOSURE",
+      "next_action": "After closure relations are versioned and tested, implement the same equations independently in CLASS and CAMB and compare CMB Cl, transfer functions, growth and matter power."
+    },
+    {
+      "token": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "SIX_CELL_H0_RD_POLICY_MATRIX_EXISTS_EXECUTION_PROVENANCE_MISSING",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_BOUNDARY_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_POLICY_MATRIX_NOT_EXECUTED_FORMAL_LIKELIHOOD"},
+        {"path": "existing_contract.declared_runs", "op": "eq", "value": 6},
+        {"path": "boundary.h0_relief_or_tension_claim_allowed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "A six-cell H0/r_d fairness matrix already exists for broad/free, Planck-conditioned and local-distance-ladder H0, each with fixed-rd and derived-rd routes across LCDM/wCDM/CPL/RLL.",
+      "successors": ["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "SIX_CELLS_EXECUTED_AND_CONVERGED_PROVENANCE_REMAINS",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_ALL_24_BEST_FITS_CONVERGED"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "execution.cells", "op": "eq", "value": 6},
+        {"path": "execution.total_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.converged_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.all_best_fits_converged", "op": "eq", "value": true},
+        {"path": "epistemic_boundary.primary_external_h0_source_receipts_frozen", "op": "eq", "value": false},
+        {"path": "epistemic_boundary.derived_rd_is_full_boltzmann_recombination_solution", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The full 6×4 H0/r_d sensitivity matrix was executed under the hardened optimizer and all 24 selected best fits converged. Across the six cells RLL-minus-CPL objective deltas remain positive (+22.51 to +34.79). Primary H0 source custody and full-Boltzmann r_d remain explicit successors, so no H0-tension or model-evidence claim is promoted.",
+      "successors": ["TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE", "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "ALL_24_BEST_FITS_CONVERGED",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_ALL_24_BEST_FITS_CONVERGED"},
+        {"path": "execution.total_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.converged_best_fits", "op": "eq", "value": 24},
+        {"path": "execution.all_best_fits_converged", "op": "eq", "value": true},
+        {"path": "epistemic_boundary.optimization_convergence_closed", "op": "eq", "value": true}
+      ],
+      "resolved_fact": "The hardened six-cell H0/r_d run selected formally converged best fits in all 24 model/cell combinations. The optimizer-convergence uncertainty is closed independently of the still-open source-provenance and full-Boltzmann r_d questions.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+      "priority": "P1",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "PRIMARY_SOURCE_CUSTODY_REQUIRED",
+      "next_action": "Freeze primary Planck 2018 and SH0ES/Riess 2022 source provenance for the exact H0 Gaussian values; preserve Planck overlap with the existing CMB term rather than treating it as independent evidence."
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "DERIVED_RD_APPROXIMATION_MUST_BE_REPLACED_FOR_FORMAL_INFERENCE",
+      "next_action": "Compute r_d with a pinned Boltzmann/recombination engine under versioned baryon/radiation/neutrino assumptions and compare it against the repository approximation before formal H0/r_d inference."
+    },
+    {
+      "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "NON_DESTRUCTIVE_RELEASE_FAST_FORWARD",
+      "evidence_path": "artifacts/governance/RLL_RELEASE_REFRESH_RECEIPT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_FAST_FORWARD_IDENTICAL"},
+        {"path": "operation.force", "op": "eq", "value": false},
+        {"path": "after.compare_status", "op": "eq", "value": "identical"}
+      ],
+      "resolved_fact": "rll/release was safely fast-forwarded to the recorded main baseline with force=false and no release-unique commits discarded.",
+      "successors": []
+    }
+  ]
+}

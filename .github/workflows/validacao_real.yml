@@ -23,11 +23,11 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
     - name: Install minimal deps
@@ -53,7 +53,7 @@ jobs:
 
         '
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: validacao-real-artifacts
         path: 'validacao_real/fetched/
@@ -90,11 +90,11 @@ jobs:
       contents: write
     steps:
     - name: Checkout for explicit opt-in commit
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Download validation artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: validacao-real-artifacts
         path: validacao_real
@@ -119,7 +119,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: validacao_real-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/validacao_real/${{ github.job }}/

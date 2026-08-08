@@ -27,11 +27,11 @@ jobs:
     timeout-minutes: 20
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.11'
     - name: Validate Six Sigma real-data controls
@@ -57,7 +57,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: six-sigma-real-data-controls-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/six-sigma-real-data-controls/${{ github.job }}/

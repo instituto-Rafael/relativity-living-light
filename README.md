@@ -1,5 +1,9 @@
 # Relativity Living Light (RLL/MCRP)
 
+**Estado:** `REFERENCE`  
+**Proprietário lógico:** `research-governance`  
+**Repositório:** [`instituto-rafael/relativity-living-light`](https://github.com/instituto-rafael/relativity-living-light)
+
 [![DOI](https://zenodo.org/badge/1046495816.svg)](https://doi.org/10.5281/zenodo.17188137)
 [![License](https://img.shields.io/github/license/instituto-Rafael/relativity-living-light)](./LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/commits)
@@ -7,7 +11,7 @@
 [![Open PRs](https://img.shields.io/github/issues-pr/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/pulls)
 [![Repo Size](https://img.shields.io/github/repo-size/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light)
 
-> **Edição profissional (2026):** organização formal para leitura acadêmica, rastreabilidade metodológica e elegância editorial, **sem remoção de acervo**.
+> **Edição profissional (2026):** organização formal para leitura acadêmica, rastreabilidade metodológica e elegaância editorial, **sem remoção de acervo**.
 
 ---
 
@@ -60,7 +64,7 @@ Estados permitidos para qualquer alegação:
 
 Resumo seguro atual:
 
-> A tag pública `v1.0.0` de 2025 já documenta a base RLL, incluindo formulação cosmológica, termo de superposição e observáveis planejados. As validações DESI/CPL/AICc/joint-real são maturações posteriores. Isso sustenta anterioridade documental/matemática da estrutura-base, mas não confirma verdade física nem vitória estatística.
+> A tag pública `v1.0.0` de 2025 já documenta a base RLL, incluindo formulação cosmológica, termo de superposição e observáveis planejados. As validações DESI/CPL/AICc/joint-real sãoaturações posteriores. Isso sustenta anterioridade documental/matemática da estrutura-base, mas não confirma verdade física nem vitória estatística.
 
 Avaliação honesta de estado (julho 2026):
 
@@ -96,7 +100,7 @@ Este repositório consolida a linha **Relativity Living Light (RLL/MCRP)** em fo
 - **Abertura colaborativa**: badges de issues e pull requests abertas.
 - **Escala de acervo**: badge de tamanho do repositório para transparência operacional.
 
-## Formalidades acadêmicas e “selos” GitHub
+## Formalidades acadêmicas e "selos" GitHub
 - **Citação científica**: `data/CITATION.cff`
 - **Licença**: `LICENSE.md`
 - **Template de PR**: `.github/pull_request_template.md`
@@ -117,7 +121,7 @@ Este repositório consolida a linha **Relativity Living Light (RLL/MCRP)** em fo
 
 ---
 
-O RLL/MCRP passa a separar validação em três blocos: geofísico local, heliosférico-radiativo e cosmológico. A AMAS/SAA é caso observacional local; DESI/Pantheon+/Planck testam a camada cosmológica.
+O RLL/MCRP passa a separar validação em três blocos: geofísico local, helioférico-radiativo e cosmológico. A AMAS/SAA é caso observacional local; DESI/Pantheon+/Planck testam a camada cosmológica.
 
 # README — Edição Técnica Profissional (2026)
 
@@ -135,7 +139,7 @@ O RLL/MCRP passa a separar validação em três blocos: geofísico local, helios
 Este arquivo foi normalizado para **uso acadêmico-profissional** com linguagem formal, clareza de auditoria e integração ao ecossistema documental do repositório. A revisão privilegia rigor epistemológico, verificabilidade, interoperabilidade e manutenção de integridade textual.
 
 ## 2. Fundamentos técnico-científicos
-- **Reprodutibilidade**: processos, decisões e resultados devem ser rastreáveis.
+- **Reprodutibilidade**: processos, decisões e resultados devem ser rastreabeis.
 - **Integração teoria-dados**: hipótese, modelagem, inferência e validação observacional são tratadas como pipeline com fronteiras explícitas de claim.
 - **Estado da arte**: adoção de boas práticas contemporâneas de documentação técnica para pesquisa computacional e ciência de dados.
 

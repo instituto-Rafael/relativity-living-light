@@ -1,0 +1,96 @@
+schema: rll_evidence_experiment_v1
+experiment_id: RLL-EVIDENCE-DOVEKIE-3MODEL-001
+title: DES-Dovekie full-precision LCDM CPL RLL fairness fit
+repository_root: ../../..
+claim_allowed: false
+publication_effect: NONE
+execution:
+  timeout_seconds: 21600
+inputs:
+  - id: dovekie-hubble-diagram
+    path: data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv
+    required: true
+    expected_bytes: 148002
+    expected_sha256: 2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf
+    sha256_sidecar: data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv.sha256
+  - id: dovekie-stat-sys-precision
+    path: data/real/cosmology/des_dovekie/STAT+SYS.npz
+    required: true
+    expected_bytes: 6244951
+    expected_sha256: ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b
+    sha256_sidecar: data/real/cosmology/des_dovekie/STAT+SYS.npz.sha256
+steps:
+  - id: verify-dovekie-materialized-inputs
+    argv:
+      - python
+      - scripts/fetch_dovekie_inputs.py
+      - --output-dir
+      - data/real/cosmology/des_dovekie
+      - --receipt
+      - artifacts/science/sn_modern/dovekie_existing_verification.json
+      - --verify-existing
+    required: true
+    expected_exit_codes: [0]
+    outputs:
+      - path: artifacts/science/sn_modern/dovekie_existing_verification.json
+        required: true
+        media_type: application/json
+  - id: fit-dovekie-lcdm-cpl-rll-multiseed
+    argv:
+      - python
+      - -m
+      - rll_evidence.dovekie_fit_three_model
+      - --hd
+      - data/real/cosmology/des_dovekie/DES-Dovekie_HD.csv
+      - --precision
+      - data/real/cosmology/des_dovekie/STAT+SYS.npz
+      - --output
+      - artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
+      - --seeds
+      - 11,23,37,53,71
+      - --maxiter
+      - "250"
+      - --integration-points
+      - "4096"
+    env:
+      PYTHONPATH: products/rll-evidence-runner/src
+    timeout_seconds: 21600
+    required: true
+    expected_exit_codes: [0]
+    outputs:
+      - path: artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
+        required: true
+        media_type: application/json
+result_extractors:
+  - id: dovekie-three-models
+    path: artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/dovekie_three_model_result.json
+    rows_path: [rows]
+    model_key: model
+    include_models: [LCDM_dovekie, CPL_dovekie, RLL_dovekie]
+    metrics: [chi2, AIC, AICc, BIC, N, k, dof]
+comparisons:
+  - baseline: LCDM_dovekie
+    candidate: CPL_dovekie
+    metrics: [chi2, AIC, AICc, BIC]
+  - baseline: LCDM_dovekie
+    candidate: RLL_dovekie
+    metrics: [chi2, AIC, AICc, BIC]
+receipt:
+  path: artifacts/evidence/RLL-EVIDENCE-DOVEKIE-3MODEL-001/receipt.json
+F_ok:
+  - Source objects are pinned by immutable DES-SN5YR repository commit and Git blob identities in the materializer.
+  - The first successful materialization SHA-256 and byte counts are now pinned in this experiment and independently sidecar-checked.
+  - STAT+SYS.npz is handled as a packed inverse covariance precision matrix, not mislabeled as covariance.
+  - The Hubble-diagram row order is authoritative for the precision matrix.
+  - LCDM, CPL and RLL share one HD vector, one precision matrix, one profiled magnitude-offset policy, seeds, optimizer and integration grid.
+  - H0 is not inferred from the supernova-only likelihood because the profiled magnitude offset is degenerate with H0.
+F_gap:
+  - Pantheon+ versus Dovekie still requires a deliberately identical Hubble-flow-only nuisance contract for a clean sample/calibration ablation.
+  - CPL boundary sensitivity in wa must be profiled before parameter interpretation.
+  - SN-only RLL transition parameters remain non-identifiable when the fit collapses to nested LCDM behavior.
+  - Real nested-sampling evidence and independent replication remain TOKEN_VAZIO.
+  - Explicit repository license was not found and remains TOKEN_VAZIO for redistribution review.
+F_next:
+  - Build the Pantheon+ Hubble-flow-only companion likelihood under the same profiled-offset contract.
+  - Run CPL wa bound/profile sensitivity and RLL identifiability diagnostics.
+  - Use the common likelihood components for real nested sampling and independent reproduction.

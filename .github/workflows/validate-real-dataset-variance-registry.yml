@@ -29,7 +29,7 @@ jobs:
     timeout-minutes: 5
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Validate registry structure
@@ -53,7 +53,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: validate-real-dataset-variance-registry-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/validate-real-dataset-variance-registry/${{ github.job }}/

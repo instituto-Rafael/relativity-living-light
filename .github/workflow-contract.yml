@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-01"
+updated_at: "2026-08-07"
 
 inventory:
-  active_workflows: 55
+  active_workflows: 69
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -98,7 +98,7 @@ aliases:
     modo: apenas_ciencia
 
 documented_checks:
-  evidence_scope: repository_local_only
+  evidence_scope: repository_local_plus_fresh_pr_execution
   branch_protection_verified: false
   checks:
     - context: deterministic-gate
@@ -183,6 +183,7 @@ documentation:
     - .github/workflow-architecture/invariants.v1.yml
     - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
+    - data/governance/branch_advance_registry.v2.json
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
     - tools/github_actions_capability_gate.py

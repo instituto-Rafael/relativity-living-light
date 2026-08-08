@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 20
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
     - name: Show repository state
@@ -37,7 +37,7 @@ jobs:
 
         '
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: 3.x
     - name: Compile ingestion plan builder
@@ -57,7 +57,7 @@ jobs:
 
         '
     - name: Upload ingestion plan artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: real-seed-ingestion-plan
         path: 'data/results/bootstrap/real_seed_ingestion_plan.json

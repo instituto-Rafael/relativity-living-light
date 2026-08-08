@@ -1,0 +1,21 @@
+{
+  "pipeline": "rll-validacao-cientifica-completa",
+  "job": "fit_pantheon_rll",
+  "timestamp_utc": "2026-08-06T02:35:58.372866+00:00",
+  "dataset": "Pantheon+SH0ES",
+  "n_sne": null,
+  "chi2_lcdm": null,
+  "chi2_cpl": null,
+  "chi2_rll_original": null,
+  "aic_lcdm": null,
+  "aic_rll": null,
+  "delta_aic_rll_minus_lcdm": null,
+  "token_vazio": true,
+  "claim_boundary": "Nelder-Mead sem MCMC; parâmetros não marginalizados",
+  "reference": {
+    "chi2_lcdm": 710.808,
+    "chi2_rll": 710.613,
+    "delta_aic": 3.81,
+    "source": "results/pantheon_plus_resultado_real.txt"
+  }
+}

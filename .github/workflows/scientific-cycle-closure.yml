@@ -15,7 +15,7 @@ jobs:
   closure-contract:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -43,7 +43,7 @@ jobs:
           assert value['claim_allowed'] is False
           assert len(value['token_vazio']) == 2
           PY
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: scientific-cycle-closure-receipt
           path: artifacts/scientific-cycle/closure-receipt.json

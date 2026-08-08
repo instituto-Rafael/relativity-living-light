@@ -1,0 +1,18 @@
+{
+  "schema": "rll.scientific_navigation_secondary_audit.v1",
+  "run_id": "31064223594",
+  "artifact_sha256": "419ec4beca36ec978c2bd514090ed85aa26533af5a95f835e741a6557b845105",
+  "commit_sha": "cbe0d6b32c43639b8dc281355ff368a3ba607d66",
+  "head_sha": "0e69fc00c2209f0bb3cb9692d4d1f1e9ad2d03cd",
+  "workflow_result": "PASS",
+  "bundle_maturity": "VERIFIED_LIMITED_WITH_HOTFIX_GAPS",
+  "scientific_claim": "BLOCKED",
+  "claim_allowed": false,
+  "observed_files": 15,
+  "internally_checksummed_files": 13,
+  "declared_mechanisms": 4,
+  "declared_open_token_vazio": 6,
+  "new_hotfix_token_vazio": 3,
+  "automatic_merge": false,
+  "automatic_claim_promotion": false
+}
