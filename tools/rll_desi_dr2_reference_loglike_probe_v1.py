@@ -20,6 +20,7 @@ from typing import Any, Callable, Sequence
 SCHEMA = "rll.desi_dr2_reference_loglike_probe.v1"
 LIKELIHOOD = "bao.desi_dr2"
 LIKELIHOOD_CLASS = "bao.desi_dr2.desi_bao_all"
+NNU = 3.044
 
 CONTROL_POINTS: tuple[dict[str, Any], ...] = (
     {
@@ -33,7 +34,6 @@ CONTROL_POINTS: tuple[dict[str, Any], ...] = (
             "ns": 0.965,
             "tau": 0.0544,
             "mnu": 0.06,
-            "nnu": 3.044,
         },
     },
     {
@@ -47,7 +47,6 @@ CONTROL_POINTS: tuple[dict[str, Any], ...] = (
             "ns": 0.965,
             "tau": 0.0544,
             "mnu": 0.06,
-            "nnu": 3.044,
         },
     },
     {
@@ -61,7 +60,6 @@ CONTROL_POINTS: tuple[dict[str, Any], ...] = (
             "ns": 0.965,
             "tau": 0.0544,
             "mnu": 0.06,
-            "nnu": 3.044,
             "w": -0.9,
             "wa": -0.3,
         },
@@ -78,7 +76,7 @@ def cobaya_loglike(packages_path: Path, point: dict[str, Any]) -> float:
             "extra_args": {
                 "lens_potential_accuracy": 0,
                 "num_massive_neutrinos": 1,
-                "nnu": params.get("nnu", 3.044),
+                "nnu": NNU,
             }
         }
     }
@@ -125,6 +123,7 @@ def build(
             "scope": "DESI DR2 all-tracer BAO only",
             "cobaya_version": importlib.metadata.version("cobaya") if evaluator is cobaya_loglike else "INJECTED_TEST_EVALUATOR",
             "camb_version": importlib.metadata.version("camb") if evaluator is cobaya_loglike else "INJECTED_TEST_EVALUATOR",
+            "nnu_backend_extra_arg": NNU,
         },
         "control_points": rows,
         "resolved_token": None,
