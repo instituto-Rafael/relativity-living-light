@@ -33,9 +33,9 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
     assert receipt["summary"]["input_tokens"] == 30
-    assert receipt["summary"]["terminal_resolved"] == 7
+    assert receipt["summary"]["terminal_resolved"] == 8
     assert receipt["summary"]["reduced_generic"] == 7
-    assert receipt["summary"]["open"] == 16
+    assert receipt["summary"]["open"] == 15
 
     for token in (
         "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
@@ -56,6 +56,7 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
         "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
         "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
         "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
     ):
         assert token in receipt["terminal_tokens"]
@@ -75,7 +76,6 @@ def test_current_reconciliation_closes_only_evidence_backed_uncertainty():
         "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
         "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
         "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
-        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
         "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
         "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
         "TOKEN_VAZIO_EXTERNAL_SETTINGS",
@@ -263,11 +263,12 @@ def test_class_camb_generic_gap_reduces_without_inventing_rll_perturbations():
     assert receipt["claim_allowed"] is False
 
 
-def test_h0_generic_gap_reduces_to_executed_but_convergence_bounded_contract():
+def test_h0_generic_gap_reduces_to_converged_execution_with_two_open_successors():
     receipt = current_receipt()
     rows = {row["token"]: row for row in receipt["results"]}
     generic = rows["TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD"]
     execution = rows["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"]
+    convergence = rows["TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE"]
 
     assert generic["state"] == "REDUCED"
     assert generic["evidence_verified"] is True
@@ -275,15 +276,16 @@ def test_h0_generic_gap_reduces_to_executed_but_convergence_bounded_contract():
 
     assert execution["state"] == "REDUCED"
     assert execution["evidence_verified"] is True
-    assert "24 best objectives were finite" in execution["resolved_fact"]
-    assert "9/24 selected fits" in execution["resolved_fact"]
+    assert "all 24 selected best fits converged" in execution["resolved_fact"]
+    assert "+22.51 to +34.79" in execution["resolved_fact"]
     assert set(execution["successors"]) == {
-        "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
         "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
         "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
     }
 
-    assert rows["TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE"]["state"] == "OPEN_INTERNAL"
+    assert convergence["state"] == "RESOLVED"
+    assert convergence["evidence_verified"] is True
+    assert convergence["successors"] == []
     assert rows["TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE"]["state"] == "OPEN_EXTERNAL"
     assert rows["TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"]["state"] == "OPEN_MIXED"
     assert receipt["claim_allowed"] is False
