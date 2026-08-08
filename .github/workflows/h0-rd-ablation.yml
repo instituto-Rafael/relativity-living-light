@@ -53,7 +53,7 @@ jobs:
           set -euo pipefail
           python tools/run_h0_rd_ablation_v1.py \
             --output artifacts/science/h0/H0_RD_ABLATION_CURRENT.json \
-            --output-dir results/structure_d/ablation \
+            --output-dir "$GITHUB_WORKSPACE/results/structure_d/ablation" \
             --maxiter 60 \
             --ftol 1e-8
 
