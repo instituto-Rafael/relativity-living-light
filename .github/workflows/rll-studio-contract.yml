@@ -6,12 +6,20 @@ on:
       - "studio/**"
       - "schemas/rll-experiment-manifest.v1.schema.json"
       - "tests/test_rll_studio_contract.py"
+      - "tests/test_rll_studio_receipt_adapter.py"
+      - "tools/rll_studio_receipt_adapter.py"
+      - "tools/validate_rll_studio_ux_gaps.py"
+      - "data/governance/RLL_STUDIO_UX_GAPS_V1.json"
       - ".github/workflows/rll-studio-contract.yml"
   push:
     paths:
       - "studio/**"
       - "schemas/rll-experiment-manifest.v1.schema.json"
       - "tests/test_rll_studio_contract.py"
+      - "tests/test_rll_studio_receipt_adapter.py"
+      - "tools/rll_studio_receipt_adapter.py"
+      - "tools/validate_rll_studio_ux_gaps.py"
+      - "data/governance/RLL_STUDIO_UX_GAPS_V1.json"
       - ".github/workflows/rll-studio-contract.yml"
 
 permissions:
@@ -24,7 +32,7 @@ concurrency:
 jobs:
   contract:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,19 +49,95 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install schema validator
-        run: python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+      - name: Install contract dependencies
+        run: |
+          python -m pip install --disable-pip-version-check 'jsonschema>=4,<5'
+          python -m pip install --disable-pip-version-check -e products/rll-evidence-runner
 
-      - name: Validate JavaScript syntax
-        run: node --check studio/app.js
+      - name: Static syntax gates
+        run: |
+          node --check studio/app.js
+          python -m py_compile tools/rll_studio_receipt_adapter.py tools/validate_rll_studio_ux_gaps.py
+
+      - name: Validate UX gap ledger
+        run: python tools/validate_rll_studio_ux_gaps.py
 
       - name: Run RLL Studio contract tests
-        run: python -m unittest tests.test_rll_studio_contract -v
+        run: |
+          python -m unittest tests.test_rll_studio_contract -v
+          python -m unittest tests.test_rll_studio_receipt_adapter -v
+
+      - name: Materialize real Evidence Runner receipt
+        run: |
+          mkdir -p artifacts/rll-studio
+          rll-evidence --repository-root "$GITHUB_WORKSPACE" run \
+            products/rll-evidence-runner/experiments/joint_real_lcdm_rll_v1.yml \
+            --receipt artifacts/rll-studio/joint-real-receipt.json \
+            > artifacts/rll-studio/evidence-runner-output.json
+          rll-evidence --repository-root "$GITHUB_WORKSPACE" verify \
+            artifacts/rll-studio/joint-real-receipt.json \
+            > artifacts/rll-studio/evidence-runner-verification.json
+
+      - name: Adapt verified receipt to Studio Manifest V1
+        run: |
+          python tools/rll_studio_receipt_adapter.py \
+            artifacts/rll-studio/joint-real-receipt.json \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --output artifacts/rll-studio/joint-real-studio-manifest.json \
+            > artifacts/rll-studio/adapter-output.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+          schema = json.loads(Path('schemas/rll-experiment-manifest.v1.schema.json').read_text())
+          manifest = json.loads(Path('artifacts/rll-studio/joint-real-studio-manifest.json').read_text())
+          errors = list(Draft202012Validator(schema).iter_errors(manifest))
+          assert not errors, [e.message for e in errors]
+          assert manifest['claim']['allowed'] is False
+          assert manifest['claim']['state'] == 'BLOCKED'
+          assert manifest['provenance']['verification_state'] == 'PASS'
+          assert manifest['manifest_state'] == 'OBSERVED_LIMITED'
+          print('REAL_RECEIPT_ADAPTER=PASS')
+          print('SCIENTIFIC_CLAIM_PROMOTION=BLOCKED')
+          PY
+
+      - name: Write same-head Studio receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          files = {}
+          for name in ['joint-real-receipt.json','evidence-runner-verification.json','joint-real-studio-manifest.json','adapter-output.json']:
+              p = Path('artifacts/rll-studio') / name
+              files[name] = hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else 'TOKEN_VAZIO_MISSING'
+          payload = {
+              'schema': 'rll_studio_ci_receipt_v1',
+              'commit_sha': os.environ.get('GITHUB_SHA'),
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'claim_allowed': False,
+              'ui_authority': 'NONE',
+              'receipt_adapter': 'PASS' if files['joint-real-studio-manifest.json'] != 'TOKEN_VAZIO_MISSING' else 'TOKEN_VAZIO',
+              'physical_usability': 'TOKEN_VAZIO_UNTIL_HUMAN_DEVICE_TEST',
+              'files_sha256': files,
+          }
+          Path('artifacts/rll-studio/studio-ci-receipt.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+
+      - name: Preserve Studio evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-studio-contract-${{ github.run_id }}
+          path: artifacts/rll-studio/
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Claim boundary receipt
         run: |
           printf '%s\n' \
             'RLL_STUDIO_CONTRACT=PASS' \
+            'REAL_RECEIPT_ADAPTER=PASS' \
             'UI_AUTHORITY=NONE' \
             'CLAIM_PROMOTION=PIPELINE_OWNED' \
             'DEFAULT_NEW_EXPERIMENT=NOT_MEASURED_BLOCKED' \
