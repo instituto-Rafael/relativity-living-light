@@ -1,0 +1,106 @@
+{
+  "schema": "rll_studio_ux_gap_ledger_v1",
+  "updated_at": "2026-08-08",
+  "claim_allowed": false,
+  "automatic_promotion": false,
+  "invariants": [
+    "UI_PASS != scientific_PASS",
+    "CI_PASS != human_usability_PASS",
+    "desktop_smoke != Android_smoke",
+    "TOKEN_VAZIO != zero",
+    "receipt_integrity != scientific_validation",
+    "adapter_transport != claim_authority"
+  ],
+  "items": [
+    {
+      "id": "RLL-UX-P0-RECEIPT-ADAPTER",
+      "priority": "P0",
+      "authority": "INTERNAL_CI",
+      "state": "READY_FOR_CI",
+      "token": "TOKEN_VAZIO_SAME_HEAD_RECEIPT_ADAPTER_CI",
+      "summary": "Evidence Runner receipt -> Studio Manifest V1 adapter implemented; same-head CI must execute a real repository receipt path.",
+      "evidence": [
+        "tools/rll_studio_receipt_adapter.py",
+        "tests/test_rll_studio_receipt_adapter.py"
+      ],
+      "closure_test": "Run RLL-EVIDENCE-JOINT-REAL-001, verify its receipt, adapt it, validate the resulting Studio manifest schema on the same PR head.",
+      "next_producer": ".github/workflows/rll-studio-contract.yml"
+    },
+    {
+      "id": "RLL-UX-P0-ANDROID-HUMAN-SMOKE",
+      "priority": "P0",
+      "authority": "HUMAN_PHYSICAL_ANDROID",
+      "state": "TOKEN_VAZIO",
+      "token": "TOKEN_VAZIO_ANDROID_HUMAN_USABILITY",
+      "summary": "No human task-completion evidence on a physical Android browser is present.",
+      "evidence": [],
+      "closure_test": "On physical Android: open Studio, identify claim gate, import a valid manifest, locate a TOKEN_VAZIO limitation, find next gate, export manifest; record task completion, errors and viewport/browser identity.",
+      "next_producer": "physical Android human usability receipt"
+    },
+    {
+      "id": "RLL-UX-P1-DESKTOP-HUMAN-SMOKE",
+      "priority": "P1",
+      "authority": "HUMAN_PHYSICAL_DESKTOP",
+      "state": "TOKEN_VAZIO",
+      "token": "TOKEN_VAZIO_DESKTOP_HUMAN_USABILITY",
+      "summary": "No independent human desktop task-completion receipt is present.",
+      "evidence": [],
+      "closure_test": "Repeat the canonical Studio task flow on desktop and record completion, confusion points, browser/OS and recovery from invalid import.",
+      "next_producer": "desktop human usability receipt"
+    },
+    {
+      "id": "RLL-UX-P1-ASSISTIVE-TECH",
+      "priority": "P1",
+      "authority": "HUMAN_ASSISTIVE_TECH",
+      "state": "TOKEN_VAZIO",
+      "token": "TOKEN_VAZIO_SCREEN_READER_KEYBOARD_AUDIT",
+      "summary": "Static accessibility hooks exist, but screen-reader and full keyboard usability are not physically observed.",
+      "evidence": [
+        "studio/index.html",
+        "studio/styles.css",
+        "tests/test_rll_studio_contract.py"
+      ],
+      "closure_test": "Run keyboard-only and screen-reader task flow; verify focus order, announcements, labels, evidence filters and error recovery.",
+      "next_producer": "assistive-technology usability receipt"
+    },
+    {
+      "id": "RLL-UX-P1-BROWSER-COMPAT",
+      "priority": "P1",
+      "authority": "MULTI_BROWSER_RUNTIME",
+      "state": "TOKEN_VAZIO",
+      "token": "TOKEN_VAZIO_BROWSER_COMPAT_MATRIX",
+      "summary": "Source is standards-based, but compatibility is not inferred without browser execution.",
+      "evidence": [],
+      "closure_test": "Run canonical smoke on current Chromium desktop, Chrome Android and Firefox; record failures separately and do not pool incompatible results.",
+      "next_producer": "browser compatibility matrix receipt"
+    },
+    {
+      "id": "RLL-UX-P2-PWA-OFFLINE",
+      "priority": "P2",
+      "authority": "PRODUCT_DECISION",
+      "state": "BLOCKED",
+      "token": "TOKEN_VAZIO_PWA_AFTER_CORE_USABILITY",
+      "summary": "Installable/offline PWA is deliberately deferred until the main task flow has human evidence.",
+      "evidence": [],
+      "closure_test": "Only open after P0 Android usability and receipt adapter gates close; then define cache/version/rollback contract before implementation.",
+      "next_producer": "post-usability product decision"
+    }
+  ],
+  "F_ok": [
+    "Studio shell and manifest contract exist.",
+    "Static UX contract CI has passed on the predecessor head.",
+    "Evidence Runner receipt is the canonical scientific transport source.",
+    "Receipt adapter and focused adversarial tests are implemented on this head pending CI."
+  ],
+  "F_gap": [
+    "Same-head real receipt adapter CI receipt is pending.",
+    "Physical Android human usability is unmeasured.",
+    "Desktop human usability is unmeasured.",
+    "Assistive technology and browser matrix remain unmeasured."
+  ],
+  "F_next": [
+    "Execute same-head adapter CI first.",
+    "Then perform physical Android human smoke without replacing it with CI.",
+    "Use observed friction to drive the next UX revision before PWA expansion."
+  ]
+}
