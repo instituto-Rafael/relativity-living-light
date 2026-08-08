@@ -5,10 +5,13 @@ on:
     paths:
       - "tools/audit_all_git_refs_v1.py"
       - "tests/test_all_git_refs_topology_census_v1.py"
-      - "data/governance/RLL_DIVERGED_REF_COHORT_*.json"
+      - "data/governance/RLL_DIVERGED_REF_*.json"
+      - "data/governance/RLL_TO_ADD_LEGACY_CUSTODY_*.json"
+      - "docs/archive/2026-07-09/REPO_SESSION_ARTIFACT_MAP_RAFAELIA.branch-573dd27.md"
       - "tools/audit_diverged_ref_patches_v1.py"
       - "tools/audit_diverged_ref_pr_lineage_v1.py"
       - "tests/test_diverged_ref_patch_equivalence_v1.py"
+      - "tests/test_diverged_ref_triage_v1.py"
       - ".github/workflows/all-ref-topology-census.yml"
   workflow_dispatch:
 
@@ -39,7 +42,8 @@ jobs:
         run: |
           python -m unittest -v \
             tests.test_all_git_refs_topology_census_v1 \
-            tests.test_diverged_ref_patch_equivalence_v1
+            tests.test_diverged_ref_patch_equivalence_v1 \
+            tests.test_diverged_ref_triage_v1
       - name: Execute complete current census
         run: |
           python tools/audit_all_git_refs_v1.py \
@@ -113,7 +117,21 @@ jobs:
           assert s['remaining_semantic_or_chain_review'] <= 32
           print(json.dumps(s, sort_keys=True))
           PY
-      - name: Upload complete census, patch and PR-lineage receipts
+      - name: Verify frozen-cohort semantic triage is total
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json').read_text())
+          assert d['claim_allowed'] is False
+          assert d['summary']['frozen_cohort_size'] == 35
+          assert d['summary']['anonymous_remainder'] == 0
+          assert d['summary']['unclassified_remainder'] == 0
+          assert d['summary']['active_recovery_refs'] == 3
+          assert d['summary']['active_recovery_prs'] == 2
+          print(json.dumps(d['summary'], sort_keys=True))
+          PY
+      - name: Upload complete census, lineage and triage receipts
         uses: actions/upload-artifact@v7
         with:
           name: all-ref-topology-census-${{ github.run_id }}
@@ -124,5 +142,8 @@ jobs:
             artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
             artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json
             artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.sha256
+            data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json
+            data/governance/RLL_TO_ADD_LEGACY_CUSTODY_20260225_V1.json
+            docs/archive/2026-07-09/REPO_SESSION_ARTIFACT_MAP_RAFAELIA.branch-573dd27.md
           if-no-files-found: error
           retention-days: 30
