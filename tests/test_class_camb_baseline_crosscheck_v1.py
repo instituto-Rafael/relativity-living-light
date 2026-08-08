@@ -26,3 +26,21 @@ def test_baseline_parameter_vectors_are_explicit_and_non_crossing():
     assert cpl["w0"] + cpl["wa"] > -1.0
     assert lcdm["Omega_m"] == cpl["Omega_m"]
     assert lcdm["Omega_b"] == cpl["Omega_b"]
+
+
+def test_declared_tolerances_are_not_relaxed_by_diagnostic_cycle():
+    source = SCRIPT.read_text(encoding="utf-8")
+    assert '"H_km_s_Mpc": 5.0e-3' in source
+    assert '"D_A_Mpc": 5.0e-3' in source
+    assert '"Pk_Mpc3": 8.0e-2' in source
+    assert '"Cl_TT_dimensionless": 8.0e-2' in source
+    assert '"r_drag_Mpc": 5.0e-3' in source
+
+
+def test_repository_rd_approximation_is_finite_positive_and_not_relabelled_boltzmann():
+    p = module.parameter_vector("lcdm")
+    rd = module.repository_rd_approximation_mpc(p)
+    assert 100.0 < rd < 200.0
+    source = SCRIPT.read_text(encoding="utf-8")
+    assert "does not replace the H0/r_d inference path" in source
+    assert '"claim_allowed": False' in source

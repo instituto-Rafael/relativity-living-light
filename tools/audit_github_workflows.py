@@ -41,10 +41,6 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
-# Artifact custody is the invariant. The historical audit hard-coded @v4 even
-# after the repository migrated to supported newer majors. Accept explicit
-# supported majors or a full immutable SHA; never accept a floating branch/tag
-# such as @main.
 UPLOAD_ARTIFACT_RE = re.compile(
     r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
 )
@@ -56,15 +52,6 @@ def workflow_text(path: Path) -> str:
 
 
 def is_real_data_workflow(path: Path, doc: dict, text: str) -> bool:
-    """Classify by workflow identity, never by incidental words in step bodies.
-
-    The previous implementation searched the entire YAML text for broad markers.
-    A structural workflow mentioning a real-data policy in a step description was
-    therefore misclassified as a real-data execution workflow. Authority is now
-    derived from the repository path and workflow name only. ``text`` remains in
-    the signature for compatibility with callers and future explicit contracts.
-    """
-
     del text
     rel = path.relative_to(REPO).as_posix().lower()
     name = str(doc.get("name", "")).lower()
@@ -123,7 +110,6 @@ REQUIRED_VALIDATION_FILES = [
 
 
 def parse_yaml(path: Path) -> dict:
-    """Parse with BaseLoader so the GitHub Actions key `on` remains a string."""
     loaded = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
     if not isinstance(loaded, dict):
         raise ValueError("top-level YAML document must be a mapping")
@@ -140,7 +126,7 @@ def audit_workflow_contracts() -> list[str]:
     for path in iter_workflow_yaml():
         try:
             doc = parse_yaml(path)
-        except Exception as exc:  # noqa: BLE001 - report all parse/shape failures.
+        except Exception as exc:
             errors.append(f"{path.relative_to(REPO)}: YAML parse/shape error: {exc}")
             continue
 
@@ -183,7 +169,7 @@ def audit_validation_bundle() -> list[str]:
     for path in [p for p in REQUIRED_VALIDATION_FILES if p.suffix in {'.yml', '.yaml'} and p.exists()]:
         try:
             parse_yaml(path)
-        except Exception as exc:  # noqa: BLE001 - report all parse/shape failures.
+        except Exception as exc:
             errors.append(f"{path.relative_to(REPO)}: YAML parse/shape error: {exc}")
     return errors
 

@@ -1,6 +1,5 @@
 from pathlib import Path
-
-from tools.branch_maturity_gate_v2 import evaluate, valid_transition
+from tools.branch_maturity_gate_v2 import evaluate, file_has_claim_true, valid_transition
 
 
 def test_topology():
@@ -85,6 +84,34 @@ def test_string_truthy_value_on_claim_key_blocks(tmp_path: Path):
     )
     assert data["decision"] == "BLOCKED"
     assert "CLAIM_ALLOWED_TRUE:data/state.toml" in data["residuals"]
+
+
+def test_yaml_and_toml_claim_assignments_still_block():
+    assert contains_claim_true("claim_allowed: true\n")
+    assert contains_claim_true("claim_allowed = true\n")
+    assert contains_claim_true('x: 1\n"claim_allowed": true\n')
+
+
+def test_quoted_documentation_marker_is_not_assignment(tmp_path: Path):
+    (tmp_path/".github").mkdir()
+    path=tmp_path/".github/workflow-contract.yml"
+    path.write_text('required_markers:\n  file.md:\n    - "claim_allowed=true"\n', encoding="utf-8")
+    assert not contains_claim_true(path.read_text(encoding="utf-8"))
+    data=evaluate(tmp_path,"feature/x","rll/lab",[".github/workflow-contract.yml"])
+    assert data["decision"]=="PASS"
+    assert not any(x.startswith("CLAIM_ALLOWED_TRUE") for x in data["residuals"])
+
+
+def test_documented_claim_true_string_does_not_promote_claim(tmp_path: Path):
+    contract=tmp_path/"contract.yml"
+    contract.write_text('claim_allowed: false\nrequired_markers:\n  - "claim_allowed=true"\n',encoding="utf-8")
+    assert file_has_claim_true(contract) is False
+
+
+def test_nested_json_claim_true_still_blocks(tmp_path: Path):
+    policy=tmp_path/"state.json"
+    policy.write_text('{"outer":{"claim_allowed":true}}\n',encoding="utf-8")
+    assert file_has_claim_true(policy) is True
 
 
 def test_release_requires_evidence_or_gap(tmp_path: Path):

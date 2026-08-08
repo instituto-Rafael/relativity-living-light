@@ -3,10 +3,11 @@ from __future__ import annotations
 
 """Numerically cross-check standard LCDM/CPL baselines in CLASS and CAMB.
 
-This script intentionally does not implement RLL perturbations. Its only job is
-to establish that the two independent Boltzmann engines are being called with a
-matched standard-model parameter vector before any future RLL extension is
-allowed to inherit those backends.
+This script intentionally does not implement RLL perturbations. Its job is to
+establish that the two independent Boltzmann engines receive a matched standard
+parameter vector. It also cross-checks the baryon-drag sound horizon r_drag and
+measures the current repository power-law approximation without promoting that
+approximation to a full Boltzmann/recombination solution.
 """
 
 import argparse
@@ -21,7 +22,7 @@ from typing import Any, Sequence
 import numpy as np
 
 C_KM_S = 299792.458
-SCHEMA = "rll.class_camb_baseline_crosscheck.v1"
+SCHEMA = "rll.class_camb_baseline_crosscheck.v2"
 
 
 def atomic_json(path: Path, payload: dict[str, Any]) -> None:
@@ -63,12 +64,17 @@ def parameter_vector(model: str) -> dict[str, float]:
         "wa": 0.0,
     }
     if model == "cpl":
-        # Keep the baseline away from w=-1 crossing so this gate tests engine
-        # plumbing/numerics rather than crossing-regularization choices.
         common.update({"w0": -0.90, "wa": 0.20})
     elif model != "lcdm":
         raise ValueError(f"unsupported model {model}")
     return common
+
+
+def repository_rd_approximation_mpc(p: dict[str, float]) -> float:
+    """Mirror the current joint-real-likelihood lightweight r_d approximation."""
+    om_h2 = float(p["Omega_m"]) * float(p["h"]) ** 2
+    ob_h2 = float(p["Omega_b"]) * float(p["h"]) ** 2
+    return float(147.78 * (om_h2 / 0.1432) ** (-0.255) * (ob_h2 / 0.02236) ** (-0.134))
 
 
 def run_camb(model_name: str, z_values: Sequence[float], k_values: Sequence[float], lmax: int) -> dict[str, Any]:
@@ -90,6 +96,10 @@ def run_camb(model_name: str, z_values: Sequence[float], k_values: Sequence[floa
     results = camb.get_results(pars)
     spectra = results.get_cmb_power_spectra(pars, CMB_unit=None, raw_cl=True)
     unlensed = np.asarray(spectra["unlensed_scalar"], dtype=float)
+    derived = results.get_derived_params()
+    if "rdrag" not in derived:
+        raise ValueError(f"CAMB derived parameters do not contain rdrag: {sorted(derived)}")
+    r_drag = scalar(derived["rdrag"])
 
     z_array = np.asarray(list(map(float, z_values)), dtype=float)
     h_values = np.asarray(results.hubble_parameter(z_array), dtype=float).reshape(-1)
@@ -127,6 +137,7 @@ def run_camb(model_name: str, z_values: Sequence[float], k_values: Sequence[floa
         "Cl_TT_dimensionless": {
             str(ell): scalar(unlensed[ell, 0]) for ell in (30, 100, 300, 700) if ell <= lmax
         },
+        "r_drag_Mpc": {"drag_epoch": r_drag},
     }
 
 
@@ -148,22 +159,19 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
         "non linear": "none",
     }
     if model_name == "cpl":
-        params.update(
-            {
-                # CLASS requires one dark-energy density to be inferred. Setting
-                # Omega_Lambda=0 delegates flat closure to Omega_fld while the
-                # CPL equation of state is specified below.
-                "Omega_Lambda": 0.0,
-                "w0_fld": p["w0"],
-                "wa_fld": p["wa"],
-                "fluid_equation_of_state": "CLP",
-            }
-        )
+        params.update({
+            "Omega_Lambda": 0.0,
+            "w0_fld": p["w0"],
+            "wa_fld": p["wa"],
+            "fluid_equation_of_state": "CLP",
+        })
     cosmo = Class()
     try:
         cosmo.set(params)
         cosmo.compute()
         raw_cl = cosmo.raw_cl(int(lmax))
+        rd_attr = getattr(cosmo, "rs_drag")
+        r_drag = scalar(rd_attr() if callable(rd_attr) else rd_attr)
         result = {
             "version": importlib.metadata.version("classy"),
             "H_km_s_Mpc": {str(float(z)): scalar(cosmo.Hubble(float(z)) * C_KM_S) for z in z_values},
@@ -175,6 +183,7 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
             "Cl_TT_dimensionless": {
                 str(ell): scalar(raw_cl["tt"][ell]) for ell in (30, 100, 300, 700) if ell <= lmax
             },
+            "r_drag_Mpc": {"drag_epoch": r_drag},
         }
     finally:
         try:
@@ -193,6 +202,7 @@ def compare_model(model_name: str, z_values: Sequence[float], k_values: Sequence
         "D_A_Mpc": 5.0e-3,
         "Pk_Mpc3": 8.0e-2,
         "Cl_TT_dimensionless": 8.0e-2,
+        "r_drag_Mpc": 5.0e-3,
     }
     all_pass = True
     for family, tolerance in tolerances.items():
@@ -205,25 +215,33 @@ def compare_model(model_name: str, z_values: Sequence[float], k_values: Sequence
             error = relative_error(a, b)
             passed = error <= tolerance
             all_pass = all_pass and passed
-            rows.append({
-                "point": key,
-                "CAMB": a,
-                "CLASS": b,
-                "relative_error": error,
-                "tolerance": tolerance,
-                "pass": passed,
-            })
+            rows.append({"point": key, "CAMB": a, "CLASS": b, "relative_error": error, "tolerance": tolerance, "pass": passed})
         metrics[family] = {
             "tolerance": tolerance,
             "max_relative_error": max(row["relative_error"] for row in rows),
             "pass": all(row["pass"] for row in rows),
             "points": rows,
         }
+
+    p = parameter_vector(model_name)
+    approximation = repository_rd_approximation_mpc(p)
+    camb_rd = scalar(camb_result["r_drag_Mpc"]["drag_epoch"])
+    class_rd = scalar(class_result["r_drag_Mpc"]["drag_epoch"])
+    approximation_diagnostic = {
+        "repository_approximation_Mpc": approximation,
+        "CAMB_rdrag_Mpc": camb_rd,
+        "CLASS_rs_drag_Mpc": class_rd,
+        "relative_error_vs_CAMB": relative_error(approximation, camb_rd),
+        "relative_error_vs_CLASS": relative_error(approximation, class_rd),
+        "claim_allowed": False,
+        "interpretation": "Diagnostic only: this measures the existing lightweight r_d approximation against full Boltzmann/recombination backends; it does not replace the H0/r_d inference path.",
+    }
     return {
         "model": model_name,
-        "parameter_vector": parameter_vector(model_name),
+        "parameter_vector": p,
         "engines": {"CAMB": camb_result, "CLASS": class_result},
         "metrics": metrics,
+        "rd_approximation_diagnostic": approximation_diagnostic,
         "pass": all_pass,
     }
 
@@ -235,7 +253,7 @@ def build(output: Path, *, lmax: int = 700) -> dict[str, Any]:
     passed = all(row["pass"] for row in models.values())
     payload = {
         "schema": SCHEMA,
-        "state": "VERIFIED_BASELINE_ENGINE_CROSSCHECK" if passed else "TOKEN_VAZIO_ENGINE_MISMATCH",
+        "state": "VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG" if passed else "TOKEN_VAZIO_ENGINE_MISMATCH",
         "claim_allowed": False,
         "publication_ready": False,
         "models": models,
@@ -246,16 +264,23 @@ def build(output: Path, *, lmax: int = 700) -> dict[str, Any]:
             "lmax": lmax,
             "massive_neutrinos": "disabled in both engines for this baseline crosscheck",
             "nonlinear": False,
+            "rd_engine_agreement_tolerance": 5.0e-3,
         },
-        "scientific_boundary": "This receipt validates matched standard LCDM/CPL backend plumbing only. It does not define or validate RLL perturbations and cannot authorize RLL CMB/growth claims.",
+        "scientific_boundary": "This receipt validates matched standard LCDM/CPL backend plumbing and cross-engine r_drag only. It does not define or validate RLL perturbations and it does not by itself replace the repository H0/r_d approximation in inference.",
+        "reduces_token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION" if passed else None,
         "resolves_token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK" if passed else None,
         "F_ok": [
             "Independent CLASS and CAMB engines receive the same standard-model parameter vectors.",
-            "Background, linear matter power and dimensionless unlensed TT spectra are compared pointwise with declared tolerances."
+            "Background, linear matter power, unlensed TT and baryon-drag sound horizon are compared pointwise with predeclared tolerances.",
+            "The existing lightweight repository r_d approximation is measured against both full engines without being silently promoted."
         ],
-        "F_gap": [] if passed else ["TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK"],
+        "F_gap": [
+            "The actual H0/r_d inference route still calls the lightweight approximation; replacement requires a separately validated integration strategy.",
+            "RLL perturbation closure and independent CLASS/CAMB RLL implementations remain absent."
+        ] if passed else ["TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK", "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"],
         "F_next": [
-            "Do not use this baseline receipt as evidence for RLL until RLL perturbation closure relations are explicit and implemented independently in both engines."
+            "If cross-engine r_drag agrees, use this receipt to quantify approximation bias and design a cached/grid or direct Boltzmann H0/r_d route before formal inference.",
+            "Do not use this baseline receipt as RLL perturbation evidence."
         ],
     }
     atomic_json(output, payload)
@@ -273,8 +298,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         traceback.print_exc()
         print(f"ERROR: {type(exc).__name__}: {exc}")
         return 2
-    print(json.dumps({"state": payload["state"], "claim_allowed": False}, sort_keys=True))
-    return 0 if payload["state"] == "VERIFIED_BASELINE_ENGINE_CROSSCHECK" else 3
+    worst = {}
+    for model, model_data in payload["models"].items():
+        worst[model] = {}
+        for family, metric in model_data["metrics"].items():
+            point = max(metric["points"], key=lambda row: row["relative_error"])
+            worst[model][family] = point
+    print(json.dumps({"state": payload["state"], "claim_allowed": False, "worst_points": worst}, sort_keys=True))
+    return 0 if payload["state"] == "VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG" else 3
 
 
 if __name__ == "__main__":
