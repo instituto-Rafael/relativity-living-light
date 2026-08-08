@@ -1,0 +1,22 @@
+{
+  "schema": "rll.gap_closure_input_delta.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Add only successor tokens created by 2026-08-08 evidence. The 30-token V1 input remains unchanged.",
+  "tokens": [
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+      "priority": "P1",
+      "domain": "ACT DR6 / posterior reproduction"
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "priority": "P1",
+      "domain": "H0/r_d / full-Boltzmann inference integration"
+    },
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "priority": "P2",
+      "domain": "Git refs / patch-semantic review"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "rll.h0_rd_boltzmann_reconciliation.v1",
+  "state": "VERIFIED_BASELINE_RDRAG_CROSSCHECK_INFERENCE_NOT_INTEGRATED",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_pr": 682,
+  "source_merge_commit": "2d502a01b3ada8d2587c079460ecd332bcb4c8cf",
+  "source_workflows": [
+    {"run_id": 31238577630, "name": "CLASS CAMB Baseline Crosscheck", "conclusion": "success"},
+    {"run_id": 31238577650, "name": "CLASS CAMB First Divergence", "conclusion": "success"}
+  ],
+  "source_artifact": {
+    "id": 9016272335,
+    "name": "class-camb-baseline-31238577630",
+    "digest": "sha256:c1404631d5c70c891b16d19d59aa0968871faab005e9a03cde32f7d48ef33d7a"
+  },
+  "cross_engine": {
+    "tolerance_relative": 0.005,
+    "lcdm": {
+      "CAMB_rdrag_Mpc": 147.01052713726634,
+      "CLASS_rs_drag_Mpc": 147.01558931489112,
+      "relative_error": 0.00003443293087739714,
+      "pass": true
+    },
+    "cpl": {
+      "CAMB_rdrag_Mpc": 147.01052457405154,
+      "CLASS_rs_drag_Mpc": 147.0156212716008,
+      "relative_error": 0.00003466772785888373,
+      "pass": true
+    }
+  },
+  "repository_approximation": {
+    "value_Mpc": 147.89636071819788,
+    "lcdm_relative_error_vs_CAMB": 0.005989556312473543,
+    "lcdm_relative_error_vs_CLASS": 0.005955328441008707,
+    "cpl_relative_error_vs_CAMB": 0.005989573643628819,
+    "cpl_relative_error_vs_CLASS": 0.005955112365984809,
+    "interpretation": "Measured only at the declared baseline parameter vectors; not a universal error bound."
+  },
+  "boundary": {
+    "class_camb_rdrag_crosscheck_verified": true,
+    "formal_h0_rd_inference_uses_full_boltzmann_rdrag": false,
+    "rll_perturbations_validated": false,
+    "approximation_replaced": false
+  },
+  "reduces": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+  "successor": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"
+}
