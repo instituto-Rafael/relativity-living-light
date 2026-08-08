@@ -52,13 +52,94 @@ jobs:
             > .act-reference/actlite_lcdm_camb.tar.gz.sha256
           tar -xzf .act-reference/actlite_lcdm_camb.tar.gz -C .act-reference/extracted
 
-      - name: Freeze official priors, MCMC controls, covariance and reference point
+      - name: Materialize sanitized real-archive parser diagnostic
         run: |
-          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import yaml
+
+          root = Path('.act-reference/extracted')
+          out = Path('artifacts/science/act/runtime/ACT_DR6_POSTERIOR_PREFLIGHT_DIAGNOSTIC.json')
+          yamls = sorted(root.rglob('*.yaml'))
+          chains = sorted(
+              p for p in root.rglob('*.txt')
+              if len(p.name.rsplit('.', 2)) == 3 and p.name.rsplit('.', 2)[-2].isdigit()
+          )
+          configs = []
+          for p in yamls:
+              try:
+                  d = yaml.safe_load(p.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  configs.append({'path': str(p.relative_to(root)), 'parse_error': type(exc).__name__})
+                  continue
+              if not isinstance(d, dict):
+                  configs.append({'path': str(p.relative_to(root)), 'top_type': type(d).__name__})
+                  continue
+              params = d.get('params') if isinstance(d.get('params'), dict) else {}
+              configs.append({
+                  'path': str(p.relative_to(root)),
+                  'top_keys': sorted(map(str, d.keys())),
+                  'likelihood_names': sorted(map(str, (d.get('likelihood') or {}).keys())) if isinstance(d.get('likelihood'), dict) else [],
+                  'theory_names': sorted(map(str, (d.get('theory') or {}).keys())) if isinstance(d.get('theory'), dict) else [],
+                  'sampler_names': sorted(map(str, (d.get('sampler') or {}).keys())) if isinstance(d.get('sampler'), dict) else [],
+                  'param_names': list(map(str, params.keys())),
+                  'explicit_prior_param_names': [str(k) for k, v in params.items() if isinstance(v, dict) and 'prior' in v],
+                  'prior_value_types': {str(k): type(v.get('prior')).__name__ for k, v in params.items() if isinstance(v, dict) and 'prior' in v},
+              })
+          chain_diag = []
+          for p in chains:
+              comments = []
+              first_data_columns = None
+              with p.open('r', encoding='utf-8', errors='replace') as f:
+                  for raw in f:
+                      s = raw.strip()
+                      if not s:
+                          continue
+                      if s.startswith('#') and len(comments) < 5:
+                          comments.append(s[:4000])
+                          continue
+                      if not s.startswith('#'):
+                          first_data_columns = len(s.split())
+                          break
+              chain_diag.append({
+                  'path': str(p.relative_to(root)),
+                  'first_comments': comments,
+                  'first_data_columns': first_data_columns,
+              })
+          payload = {
+              'schema': 'rll.act_dr6_posterior_preflight_diagnostic.v1',
+              'claim_allowed': False,
+              'publication_ready': False,
+              'yaml_count': len(yamls),
+              'chain_count': len(chains),
+              'configs': configs,
+              'chains': chain_diag,
+          }
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps({'yaml_count': len(yamls), 'chain_count': len(chains), 'claim_allowed': False}, sort_keys=True))
+          PY
+
+      - name: Freeze official priors, MCMC controls, covariance and reference point
+        id: freeze
+        continue-on-error: true
+        run: |
+          set +e
           python tools/rll_act_dr6_posterior_contract_v1.py \
             --extracted .act-reference/extracted \
             --source-url "$ACT_REFERENCE_URL" \
-            --output artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json
+            --output artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json \
+            > .act-reference/freeze.stdout 2> .act-reference/freeze.stderr
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          cat .act-reference/freeze.stdout || true
+          cat .act-reference/freeze.stderr >&2 || true
+          exit "$code"
+
+      - name: Validate frozen contract if materialized
+        if: steps.freeze.outcome == 'success'
+        run: |
           python - <<'PY'
           import json
           from pathlib import Path
@@ -88,13 +169,22 @@ jobs:
             .act-reference/actlite_lcdm_camb.tar.gz \
             > artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CHECKSUMS.sha256
 
-      - name: Upload frozen posterior preflight evidence
+      - name: Upload preflight evidence and diagnostics even after parser failure
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: act-dr6-posterior-preflight-${{ github.run_id }}
           path: |
-            artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json
-            artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CHECKSUMS.sha256
+            artifacts/science/act/runtime/
             .act-reference/actlite_lcdm_camb.tar.gz.sha256
+            .act-reference/freeze.stdout
+            .act-reference/freeze.stderr
           if-no-files-found: error
           retention-days: 30
+
+      - name: Enforce posterior contract after evidence custody
+        if: always()
+        run: |
+          test "${{ steps.freeze.outcome }}" = success
+          test -s artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CURRENT.json
+          test -s artifacts/science/act/runtime/ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_CONTRACT_CHECKSUMS.sha256
