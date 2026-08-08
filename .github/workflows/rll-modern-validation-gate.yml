@@ -9,6 +9,8 @@ on:
       - "scripts/rll_uncertainty_variance_gate.py"
       - "tools/rll_desi_dr2_cobaya_custody_v1.py"
       - "tests/test_rll_desi_dr2_cobaya_custody_v1.py"
+      - "tools/rll_desi_dr2_reference_loglike_probe_v1.py"
+      - "tests/test_rll_desi_dr2_reference_loglike_probe_v1.py"
       - "tests/test_rll_modern_validation_gate.py"
       - "tests/test_rll_uncertainty_variance_gate.py"
       - "docs/science/RLL_MODERN_VALIDATION_GAPS_20260807_V1.md"
@@ -35,19 +37,30 @@ jobs:
 
       - name: Install bounded validation dependencies
         run: |
-          python -m pip install --disable-pip-version-check "pytest>=8,<10" "cobaya==3.5.6"
+          python -m pip install --disable-pip-version-check \
+            "numpy>=1.26,<2" \
+            "pandas>=2,<3" \
+            "pytest>=8,<10" \
+            "cobaya==3.5.6" \
+            "camb==1.6.6"
           python - <<'PY'
           import importlib.metadata
-          assert importlib.metadata.version("cobaya") == "3.5.6"
-          print("cobaya", importlib.metadata.version("cobaya"))
+          from packaging.version import Version
+          versions = {name: importlib.metadata.version(name) for name in ("numpy", "pandas", "cobaya", "camb")}
+          assert Version("1.26") <= Version(versions["numpy"]) < Version("2")
+          assert Version("2") <= Version(versions["pandas"]) < Version("3")
+          assert versions["cobaya"] == "3.5.6"
+          assert versions["camb"] == "1.6.6"
+          print(versions)
           PY
 
-      - name: Contract and DESI custody tests
+      - name: Contract and DESI tests
         run: |
           python -m pytest -q \
             tests/test_rll_modern_validation_gate.py \
             tests/test_rll_uncertainty_variance_gate.py \
-            tests/test_rll_desi_dr2_cobaya_custody_v1.py
+            tests/test_rll_desi_dr2_cobaya_custody_v1.py \
+            tests/test_rll_desi_dr2_reference_loglike_probe_v1.py
 
       - name: Materialize official DESI DR2 all-tracer Cobaya likelihood data
         run: |
@@ -69,32 +82,42 @@ jobs:
           assert d["custody"]["desi_file_count"] > 0
           assert d["resolved_token"] is None
           assert d["reduces_token"] == "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"
-          print(json.dumps({"state": d["state"], "desi_files": d["custody"]["desi_file_count"], "claim_allowed": False}, sort_keys=True))
           PY
-          sha256sum artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.json \
-            > artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.sha256
+          sha256sum artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.json > artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.sha256
+
+      - name: Execute DESI DR2 all-tracer BAO likelihood at frozen cosmology controls
+        run: |
+          set -euo pipefail
+          python tools/rll_desi_dr2_reference_loglike_probe_v1.py \
+            --packages-path "$DESI_COBAYA_PACKAGES_PATH" \
+            --output artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.json").read_text(encoding="utf-8"))
+          assert d["state"] == "DESI_DR2_ALL_TRACER_FIXED_COSMOLOGY_LOGLIKES_EXECUTED"
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert len(d["control_points"]) == 3
+          assert all(isinstance(row["loglike"], (int, float)) for row in d["control_points"])
+          assert d["resolved_token"] is None
+          print(json.dumps({row["id"]: row["loglike"] for row in d["control_points"]}, sort_keys=True))
+          PY
+          sha256sum artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.json > artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.sha256
 
       - name: Evaluate materialized evidence fail-closed
         shell: bash
         run: |
           mkdir -p artifacts/science
           set +e
-          python scripts/rll_modern_validation_gate.py \
-            --output artifacts/science/modern_validation_gate_receipt.json
+          python scripts/rll_modern_validation_gate.py --output artifacts/science/modern_validation_gate_receipt.json
           rc=$?
           set -e
-
-          # The current branch is expected to stay blocked until real external
-          # receipts are materialized. rc=0 becomes valid only when every gate
-          # has a VERIFIED, provenance-bearing receipt.
           test "$rc" -eq 0 -o "$rc" -eq 3
-
           python - <<'PY'
           import json
           from pathlib import Path
-
-          path = Path("artifacts/science/modern_validation_gate_receipt.json")
-          value = json.loads(path.read_text(encoding="utf-8"))
+          value = json.loads(Path("artifacts/science/modern_validation_gate_receipt.json").read_text(encoding="utf-8"))
           assert value["claim_allowed"] is False
           assert value["publication_ready"] is False
           assert value["automatic_promotion_forbidden"] is True
@@ -109,18 +132,14 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/rll_uncertainty_variance_gate.py \
-            --output artifacts/science/uncertainty_variance_gate_receipt.json
+          python scripts/rll_uncertainty_variance_gate.py --output artifacts/science/uncertainty_variance_gate_receipt.json
           rc=$?
           set -e
           test "$rc" -eq 0 -o "$rc" -eq 3
-
           python - <<'PY'
           import json
           from pathlib import Path
-
-          path = Path("artifacts/science/uncertainty_variance_gate_receipt.json")
-          value = json.loads(path.read_text(encoding="utf-8"))
+          value = json.loads(Path("artifacts/science/uncertainty_variance_gate_receipt.json").read_text(encoding="utf-8"))
           assert value["claim_allowed"] is False
           assert value["publication_ready"] is False
           assert value["automatic_promotion_forbidden"] is True
@@ -140,5 +159,7 @@ jobs:
             artifacts/science/uncertainty_variance_gate_receipt.json
             artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.json
             artifacts/science/desi/DESI_DR2_COBAYA_CUSTODY_CURRENT.sha256
+            artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.json
+            artifacts/science/desi/DESI_DR2_REFERENCE_LOGLIKE_PROBE_CURRENT.sha256
           if-no-files-found: error
           retention-days: 90
