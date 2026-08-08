@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://instituto-rafael.github.io/rll/schemas/rll-experiment-manifest.v1.schema.json",
   "title": "RLL Experiment Manifest V1",
+  "description": "Structural contract for RLL Studio experiment transport; visualization and interoperability do not authorize scientific claims.",
   "type": "object",
   "additionalProperties": true,
   "required": ["schema_version", "manifest_id", "manifest_state", "experiment", "execution", "claim", "evidence"],
@@ -53,16 +54,10 @@
       "additionalProperties": false,
       "required": ["allowed", "state", "reason"],
       "properties": {
-        "allowed": { "type": "boolean" },
+        "allowed": { "const": false },
         "state": { "$ref": "#/$defs/state" },
         "reason": { "type": "string", "minLength": 1 }
-      },
-      "allOf": [
-        {
-          "if": { "properties": { "allowed": { "const": true } }, "required": ["allowed"] },
-          "then": { "properties": { "state": { "const": "PASS" } } }
-        }
-      ]
+      }
     },
     "results": {
       "type": "object",
@@ -94,7 +89,9 @@
       }
     },
     "interoperability": { "type": "array", "items": { "type": "object" } },
-    "library": { "type": "array", "items": { "type": "object" } }
+    "library": { "type": "array", "items": { "type": "object" } },
+    "provenance": { "type": "object" },
+    "gaps": { "type": "object" }
   },
   "$defs": {
     "state": {
