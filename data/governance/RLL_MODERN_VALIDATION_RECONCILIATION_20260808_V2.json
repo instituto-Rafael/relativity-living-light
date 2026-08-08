@@ -1,37 +1,78 @@
 {
   "schema": "rll.modern_validation_reconciliation.v2",
-  "generated_at": "2026-08-08T07:15:00Z",
+  "generated_at": "2026-08-08T07:25:00Z",
   "claim_allowed": false,
   "publication_ready": false,
   "append_only": true,
   "source_registry": "data/governance/RLL_MODERN_VALIDATION_GAPS_20260807_V1.json",
-  "current_token_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V5_APPEND_ONLY",
+  "current_token_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V4_APPEND_ONLY",
   "old_required_paths_authority": "HISTORICAL_ONLY_UNLESS_REASSERTED_BY_V2",
   "policy": {
     "renaming_is_not_resolution": true,
     "one_legacy_gate_may_split_into_multiple_current_obligations": true,
     "runtime_receipt_may_reduce_without_resolving": true,
-    "missing_orphan_gate_must_be_surfaced": true,
+    "terminal_successor_chain_may_have_no_current_open_target": true,
     "negative_evidence_is_preserved": true
   },
   "mappings": [
     {
       "legacy_gate_id": "RLL-MOD-P0-SN-CALIBRATION-COVARIANCE",
       "legacy_token": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
-      "relation": "RETAINED_AND_SURFACED_CANONICALLY",
-      "current_tokens": ["TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD"],
-      "evidence_state": "OPEN_NO_MATERIALIZED_FULL_COVARIANCE_RECEIPT",
-      "evidence": [],
-      "residual": "Pantheon+ and DES-Dovekie full-covariance calibration variants under one nuisance policy are not yet materialized."
+      "relation": "HISTORICAL_REDUCED_SUCCESSOR_CHAIN_TERMINAL",
+      "current_tokens": [],
+      "evidence_state": "HISTORICAL_CHAIN_TERMINAL_NO_CURRENT_OPEN_SUCCESSOR",
+      "historical_chain": [
+        {
+          "token": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+          "expected_state": "REDUCED",
+          "evidence_path": "artifacts/science/sn_modern/SN_MODERN_EXECUTION_RECEIPT_20260807_RUN31215323284.json"
+        },
+        {
+          "token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+          "expected_state": "RESOLVED",
+          "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json"
+        },
+        {
+          "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+          "expected_state": "RESOLVED_NEGATIVE",
+          "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json"
+        },
+        {
+          "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+          "expected_state": "RESOLVED",
+          "evidence_path": "artifacts/science/sn_modern/RLL_DOVEKIE_CPL_WA_LOWER_BOUND_RECEIPT_20260807_RUN31227378178.json"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "repository_receipt_chain",
+          "fact": "Pantheon+ full covariance and DES-Dovekie full precision were materially executed; common nuisance policy was checked; the historical CPL wa boundary ambiguity was narrowed and the lower 95% profile crossing was later bracketed finitely."
+        }
+      ],
+      "residual": "No current OPEN successor remains for this legacy SN calibration/covariance gate under the declared SN-only parameter box. The tail w0 boundary limits physical interpretation but is not silently promoted into a new TOKEN_VAZIO."
     },
     {
       "legacy_gate_id": "RLL-MOD-P0-REAL-BAYES",
       "legacy_token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
-      "relation": "SPLIT_CURRENT_OBLIGATIONS",
-      "current_tokens": ["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"],
-      "evidence_state": "OPEN_COMPONENT_GATES_NOT_COMPLETE",
-      "evidence": [],
-      "residual": "Final joint multi-probe evidence and independent replication remain separate mandatory closures; prior single-run or BIC-style evidence cannot close either."
+      "relation": "SPLIT_CURRENT_OBLIGATIONS_AFTER_HISTORICAL_NESTED_EVIDENCE",
+      "current_tokens": [
+        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+        "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+      ],
+      "evidence_state": "HISTORICAL_AND_MODERN_SN_ONLY_NESTED_EVIDENCE_EXISTS",
+      "evidence": [
+        {
+          "kind": "repository_receipt",
+          "evidence_path": "artifacts/science/bayes/RLL_FASE20_NESTED_EVIDENCE_AUDIT_20260807_V1.json",
+          "fact": "Real dynesty nested sampling exists historically, so the generic statement that Bayes was never run is stale."
+        },
+        {
+          "kind": "repository_receipt",
+          "evidence_path": "artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json",
+          "fact": "Prior-locked Dovekie SN-only nested evidence was executed for LCDM/CPL/RLL; independent replication and joint multi-probe evidence were not completed."
+        }
+      ],
+      "residual": "Final joint multi-probe evidence and genuinely independent replication remain separate mandatory closures; SN-only or self-repeated nested evidence cannot close either."
     },
     {
       "legacy_gate_id": "RLL-MOD-P0-DESI-DR2-REPRODUCTION",
@@ -40,8 +81,20 @@
       "current_tokens": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"],
       "evidence_state": "REDUCED_RUNTIME_EVIDENCE_MATERIALIZED",
       "evidence": [
-        {"kind": "official_cobaya_custody", "run_id": 31243689586, "artifact_id": 9017810271, "artifact_sha256": "e4eb39bff8a1c998223dbc57ed3bee90386f0470fa94dfa32cf8ab855eed1052", "fact": "Cobaya 3.5.6 bao.desi_dr2.desi_bao_all custody; 34 DESI files hashed"},
-        {"kind": "fixed_cosmology_loglike_probe", "run_id": 31244537584, "artifact_id": 9018071333, "artifact_sha256": "ba468b1f3cc012cdfd293de3b753cfc2f35e57e237be6f717d9a739244a6fc6c", "fact": "real DESI DR2 BAO loglikes executed for two LCDM controls and one CPL control"}
+        {
+          "kind": "official_cobaya_custody",
+          "run_id": 31243689586,
+          "artifact_id": 9017810271,
+          "artifact_sha256": "e4eb39bff8a1c998223dbc57ed3bee90386f0470fa94dfa32cf8ab855eed1052",
+          "fact": "Cobaya 3.5.6 bao.desi_dr2.desi_bao_all custody; 34 DESI files hashed."
+        },
+        {
+          "kind": "fixed_cosmology_loglike_probe",
+          "run_id": 31244537584,
+          "artifact_id": 9018071333,
+          "artifact_sha256": "ba468b1f3cc012cdfd293de3b753cfc2f35e57e237be6f717d9a739244a6fc6c",
+          "fact": "Real DESI DR2 BAO loglikes executed for two LCDM controls and one CPL control."
+        }
       ],
       "residual": "Official posterior/reference reproduction, tracer-level residual authority and joint/cross-block covariance analysis remain open."
     },
@@ -52,8 +105,20 @@
       "current_tokens": ["TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"],
       "evidence_state": "REDUCED_RUNTIME_EVIDENCE_MATERIALIZED",
       "evidence": [
-        {"kind": "likelihood_materialization_reference_predicate", "run_id": 31238546026, "artifact_id": 9016264501, "artifact_sha256": "1bc55ce55bf28c152727eef9cf3194bb654538bbaed96f72ccfa4fd37bbaa367", "fact": "ACT DR6 CMB-only likelihood/reference predicate reproduced with effective CAMB authority"},
-        {"kind": "official_reference_chain_custody", "run_id": 31243689639, "artifact_id": 9017806330, "artifact_sha256": "f8f8d636f610972b687491a40e22e50c1a656858eff60e0b4f25a65b56fb1654", "fact": "NASA/LAMBDA actlite LCDM reference archive; four chains; 87,427 non-comment rows"}
+        {
+          "kind": "likelihood_materialization_reference_predicate",
+          "run_id": 31238546026,
+          "artifact_id": 9016264501,
+          "artifact_sha256": "1bc55ce55bf28c152727eef9cf3194bb654538bbaed96f72ccfa4fd37bbaa367",
+          "fact": "ACT DR6 CMB-only likelihood/reference predicate reproduced with effective CAMB authority."
+        },
+        {
+          "kind": "official_reference_chain_custody",
+          "run_id": 31243689639,
+          "artifact_id": 9017806330,
+          "artifact_sha256": "f8f8d636f610972b687491a40e22e50c1a656858eff60e0b4f25a65b56fb1654",
+          "fact": "NASA/LAMBDA actlite LCDM reference archive materialized: four chains and 87,427 non-comment rows."
+        }
       ],
       "residual": "A locally executed, converged LCDM posterior chain under the frozen official conventions is still absent."
     },
@@ -64,36 +129,52 @@
       "current_tokens": ["TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD"],
       "evidence_state": "OPEN_EXTERNAL_PARTIAL",
       "evidence": [],
-      "residual": "Official Y6 3x2pt results exist, but exact executable likelihood/covariance/nuisance/scale-cut custody is not materialized in RLL."
+      "residual": "Official DES Y6 3x2pt results and some products are public, but exact executable likelihood, covariance, nuisance and scale-cut custody are not materialized in RLL."
     },
     {
       "legacy_gate_id": "RLL-MOD-P1-CLASS-CAMB-PERTURBATIONS",
       "legacy_token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
       "relation": "SPLIT_CURRENT_OBLIGATIONS_WITH_NEGATIVE_CANDIDATE_EVIDENCE",
-      "current_tokens": ["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"],
+      "current_tokens": [
+        "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+        "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
+      ],
       "evidence_state": "REDUCED_NEGATIVE_AND_CONTROL_EVIDENCE",
       "evidence": [
-        {"kind": "standard_class_camb_control_and_rll_closure_falsifier", "run_id": 31243689585, "artifact_id": 9017823443, "artifact_sha256": "f90422a0d5000e39e19dbe01331669d24216828066144ea1706db2172da0d263", "fact": "LCDM/CPL backend control passes while minimal barotropic adiabatic RLL closure is falsified as global default in 0/9 accepted cases"}
+        {
+          "kind": "standard_class_camb_control_and_rll_closure_falsifier",
+          "run_id": 31243689585,
+          "artifact_id": 9017823443,
+          "artifact_sha256": "f90422a0d5000e39e19dbe01331669d24216828066144ea1706db2172da0d263",
+          "fact": "LCDM/CPL backend control passes while the minimal barotropic/adiabatic RLL closure is falsified as a global default: 0/9 declared cases passed."
+        }
       ],
       "residual": "A physically justified non-adiabatic/rest-frame or interacting closure is still required before independent RLL CLASS and CAMB implementations."
     },
     {
       "legacy_gate_id": "RLL-MOD-P1-H0-DISTANCE-LADDER",
       "legacy_token": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
-      "relation": "SPLIT_CURRENT_OBLIGATIONS",
-      "current_tokens": ["TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION", "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD"],
+      "relation": "NARROWED_TO_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "current_tokens": ["TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"],
       "evidence_state": "REDUCED_RUNTIME_EVIDENCE_MATERIALIZED",
       "evidence": [
-        {"kind": "selected_vector_direct_camb_rdrag_probe", "run_id": 31244102140, "artifact_id": 9018015111, "artifact_sha256": "4adada39cdc3cdd3a4d3ef9cefeaa0c66a9a6c3bacaa56e81899240c65c4c99d", "fact": "18 standard selected vectors evaluated with direct CAMB r_drag; six RLL vectors blocked pending early-time mapping; max former-vs-direct relative difference 0.009230142038376413"}
+        {
+          "kind": "selected_vector_direct_camb_rdrag_probe",
+          "run_id": 31244102140,
+          "artifact_id": 9018015111,
+          "artifact_sha256": "4adada39cdc3cdd3a4d3ef9cefeaa0c66a9a6c3bacaa56e81899240c65c4c99d",
+          "fact": "18 standard selected vectors evaluated with direct CAMB r_drag; six RLL vectors blocked pending early-time mapping; maximum former-vs-direct relative difference 0.009230142038376413."
+        }
       ],
-      "residual": "Full-Boltzmann integration inside optimization and the separate modern-SN full-covariance calibration likelihood remain open."
+      "residual": "Primary H0 numerical provenance and optimizer convergence are already closed in prior layers; full-Boltzmann r_d must still be integrated inside inference, and the RLL pre-recombination mapping remains a physical blocker."
     }
   ],
   "invariants": [
-    "All seven V1 modern-validation gates must appear exactly once in this mapping.",
-    "Every current target token must exist in the V5 canonical token view.",
+    "All seven V1 modern-validation gates appear exactly once in this mapping.",
+    "A legacy gate may have zero current OPEN targets only when its versioned successor chain is proven non-OPEN in the current V4 view.",
+    "Every non-empty current target token exists and remains OPEN in the V4 canonical token view.",
     "A runtime evidence receipt may reduce an open token but cannot make it terminal unless the canonical token state is terminal.",
     "Historical V1 receipt paths are not interpreted as current absence when a later scoped receipt supersedes that evidence layer.",
-    "The Modern SN gate is explicitly surfaced into V5 rather than disappearing during reconciliation."
+    "The Modern SN legacy gate is reconciled through its existing successor chain and is never duplicated or reopened by rename."
   ]
 }
