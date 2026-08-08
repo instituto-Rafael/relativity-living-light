@@ -50,6 +50,64 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+  external-settings-readonly:
+    name: External repository settings read-only authority
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.12"
+      - name: Test external settings probe
+        run: python -m unittest -v tests.test_github_external_settings_readonly_probe_v1
+      - name: Observe live rulesets and branch protection fail-closed
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p artifacts/github-external-settings-v1
+          python tools/github_external_settings_readonly_probe_v1.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --output artifacts/github-external-settings-v1/receipt.json
+          sha256sum artifacts/github-external-settings-v1/receipt.json \
+            > artifacts/github-external-settings-v1/receipt.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("artifacts/github-external-settings-v1/receipt.json").read_text(encoding="utf-8"))
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["publication_effect"] == "NONE"
+          assert d["authority"]["read_only"] is True
+          assert d["authority"]["secret_material_persisted"] is False
+          assert d["summary"]["branch_metadata_complete"] is True
+          print(json.dumps({"state": d["state"], **d["summary"], "claim_allowed": False}, sort_keys=True))
+          PY
+      - name: Upload sanitized external-settings receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: github-external-settings-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/github-external-settings-v1/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Fail closed above laboratory if authority is incomplete
+        if: always() && github.event_name == 'pull_request' && github.base_ref != 'rll/lab'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("artifacts/github-external-settings-v1/receipt.json").read_text(encoding="utf-8"))
+          if not d["summary"]["resolution_eligible"]:
+              raise SystemExit("external GitHub settings authority remains incomplete above laboratory maturity")
+          PY
+
   dependency-review:
     name: Dependency review fresh-state gate
     if: github.event_name == 'pull_request'
