@@ -41,10 +41,40 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
-UPLOAD_ARTIFACT_RE = re.compile(
-    r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
+_ACTION_LINE_RE = re.compile(
+    r"(?m)^\s*(?:-\s*)?uses:\s*actions/(?P<action>[A-Za-z0-9_.-]+)@(?P<ref>v\d+|[0-9a-fA-F]{40})\s*(?:#.*)?$"
 )
-CHECKOUT_RE = re.compile(r"actions/checkout@(?:v\d+|[0-9a-fA-F]{40})(?:\s|$)")
+
+
+def action_majors(text: str, action: str) -> list[int]:
+    """Return explicit major versions used for one first-party GitHub action."""
+    majors: list[int] = []
+    for match in _ACTION_LINE_RE.finditer(text):
+        if match.group("action") != action:
+            continue
+        ref = match.group("ref")
+        if ref.startswith("v"):
+            majors.append(int(ref[1:]))
+    return majors
+
+
+def _has_immutable_action_ref(text: str, action: str) -> bool:
+    for match in _ACTION_LINE_RE.finditer(text):
+        if match.group("action") == action and not match.group("ref").startswith("v"):
+            return True
+    return False
+
+
+def has_supported_upload_artifact(text: str) -> bool:
+    """Accept upload-artifact v4+ or a full immutable 40-hex SHA; reject v3."""
+    return any(major >= 4 for major in action_majors(text, "upload-artifact")) or _has_immutable_action_ref(
+        text, "upload-artifact"
+    )
+
+
+def has_checkout_action(text: str) -> bool:
+    """Detect an explicit checkout action independently of its supported major."""
+    return bool(action_majors(text, "checkout")) or _has_immutable_action_ref(text, "checkout")
 
 
 def workflow_text(path: Path) -> str:
@@ -73,12 +103,12 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if CHECKOUT_RE.search(text) and "persist-credentials: false" not in text:
+        if has_checkout_action(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
-        if not UPLOAD_ARTIFACT_RE.search(text):
+        if not has_supported_upload_artifact(text):
             errors.append(
-                f"{rel}: real workflow must upload artifacts with a supported explicit "
-                "actions/upload-artifact major (v4-v7) or full immutable SHA"
+                f"{rel}: real workflow must upload artifacts with actions/upload-artifact v4+ "
+                "or a full immutable SHA"
             )
         if "rll_real_data_write_checksums" not in text and (
             "CHECKSUMS.sha256" not in text or "sha256sum" not in text
