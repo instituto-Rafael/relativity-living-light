@@ -127,11 +127,34 @@ def scan_chains(chain_files: list[Path]) -> dict[str, Any]:
     }
 
 
+def normalize_json_config(value: Any) -> Any:
+    """Preserve YAML non-finite sentinels without emitting invalid JSON numbers.
+
+    Cobaya configuration may legitimately use YAML ``.inf``/``-.inf`` as
+    unbounded control values. JSON has no interoperable infinity literal and
+    this module intentionally serializes with ``allow_nan=False``. Encode only
+    configuration sentinels as explicit strings; observed chain values are
+    validated separately and must remain finite where promoted into the
+    contract.
+    """
+    if isinstance(value, float):
+        if math.isnan(value):
+            return "NaN"
+        if math.isinf(value):
+            return "Infinity" if value > 0 else "-Infinity"
+        return value
+    if isinstance(value, dict):
+        return {str(key): normalize_json_config(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [normalize_json_config(item) for item in value]
+    return value
+
+
 def normalize_parameter(value: Any) -> Any:
     if not isinstance(value, dict):
-        return value
+        return normalize_json_config(value)
     allowed = {"prior", "ref", "proposal", "value", "drop", "derived", "latex", "renames"}
-    return {key: value[key] for key in sorted(value) if key in allowed}
+    return normalize_json_config({key: value[key] for key in sorted(value) if key in allowed})
 
 
 def build(extracted: Path, source_url: str) -> dict[str, Any]:
@@ -179,7 +202,7 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
         "proposal_scale",
     }
     mcmc_contract = {
-        key: (mcmc_updated[key] if key in mcmc_updated else mcmc_input[key])
+        key: normalize_json_config(mcmc_updated[key] if key in mcmc_updated else mcmc_input[key])
         for key in sorted(mcmc_keys)
         if key in mcmc_updated or key in mcmc_input
     }
@@ -195,7 +218,12 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
     best_mapping = chain_scan.pop("best_mapping")
     mapped_sampled = [name for name in sampled_params if name in best_mapping]
     unmapped_sampled = [name for name in sampled_params if name not in best_mapping]
-    best_sampled = {name: float(best_mapping[name]) for name in mapped_sampled}
+    best_sampled: dict[str, float] = {}
+    for name in mapped_sampled:
+        value = float(best_mapping[name])
+        if not math.isfinite(value):
+            raise ValueError(f"official best reference sample has non-finite sampled parameter: {name}")
+        best_sampled[name] = value
 
     minimize_configs = sorted(
         path for path in extracted.rglob("*.yaml") if ".minimize." in path.name
@@ -209,6 +237,12 @@ def build(extracted: Path, source_url: str) -> dict[str, Any]:
         "claim_allowed": False,
         "publication_ready": False,
         "token": TOKEN,
+        "serialization_contract": {
+            "configuration_positive_infinity": "Infinity",
+            "configuration_negative_infinity": "-Infinity",
+            "configuration_nan": "NaN",
+            "observed_chain_values_must_be_finite_when_promoted": True,
+        },
         "authority": {
             "provider": "NASA/GSFC LAMBDA",
             "product": "ACT DR6.02 actlite LCDM CAMB chain",

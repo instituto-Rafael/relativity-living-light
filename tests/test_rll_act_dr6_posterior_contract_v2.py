@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -60,6 +61,29 @@ class ActPosteriorContractV2Tests(unittest.TestCase):
         self.assertEqual(len(payload["authority"]["auxiliary_minimize_configs"]), 2)
         self.assertFalse(payload["claim_allowed"])
         self.assertIsNone(payload["resolved_token"])
+
+    def test_nonfinite_yaml_sentinels_are_explicit_json_strings(self):
+        with tempfile.TemporaryDirectory() as td:
+            extracted = self.fixture(Path(td))
+            input_path = extracted / "actlite_lcdm_camb.input.yaml"
+            input_text = input_path.read_text(encoding="utf-8")
+            input_text = input_text.replace(
+                "prior: {min: 0.8, max: 1.2}",
+                "prior: {min: -.inf, max: .inf}",
+            ).replace(
+                "proposal_scale: 2.4",
+                "proposal_scale: 2.4\n    max_samples: .inf\n    max_tries: -.inf",
+            )
+            input_path.write_text(input_text, encoding="utf-8")
+            payload = build(extracted, "https://example.invalid/act.tar.gz")
+
+        ns_prior = payload["parameters"]["specifications"]["ns"]["prior"]
+        self.assertEqual(ns_prior["min"], "-Infinity")
+        self.assertEqual(ns_prior["max"], "Infinity")
+        self.assertEqual(payload["mcmc_contract"]["max_samples"], "Infinity")
+        self.assertEqual(payload["mcmc_contract"]["max_tries"], "-Infinity")
+        self.assertEqual(payload["serialization_contract"]["configuration_positive_infinity"], "Infinity")
+        json.dumps(payload, allow_nan=False)
 
     def test_non_dict_prior_is_still_sampled_if_non_null(self):
         with tempfile.TemporaryDirectory() as td:
