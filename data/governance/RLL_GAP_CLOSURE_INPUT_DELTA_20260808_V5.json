@@ -1,0 +1,12 @@
+{
+  "schema": "rll.gap_closure_input_delta.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Modern Validation V1 contains a still-valid P0 for Pantheon+/DES-Dovekie full-covariance calibration ablation that was never represented in the canonical TOKEN_VAZIO ledger. Add it explicitly instead of silently dropping it during token renaming/reconciliation.",
+  "tokens": [
+    {
+      "token": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+      "priority": "P0",
+      "domain": "modern supernova full-covariance likelihood and calibration ablation"
+    }
+  ]
+}
