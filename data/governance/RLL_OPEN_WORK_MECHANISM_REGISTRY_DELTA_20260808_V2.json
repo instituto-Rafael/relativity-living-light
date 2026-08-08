@@ -37,8 +37,8 @@
     {
       "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
       "mechanism_id": "M08_RLL_CLASS_CAMB_DUAL_IMPLEMENTATION",
-      "spec_path": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
-      "effect": "BLOCKER_EXPLICIT_CLOSURE_REQUIRED"
+      "spec_path": "data/science/perturbations/RLL_CLASS_CAMB_IMPLEMENTATION_CONTRACT_20260808_V1.json",
+      "effect": "CONTENT_SATURATED_BLOCKED_BY_CLOSURE"
     },
     {
       "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
