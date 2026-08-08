@@ -1,0 +1,55 @@
+name: Main Promotion Route Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  main-promotion-route:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Evaluate canonical release-to-main edge
+        id: route
+        shell: bash
+        run: |
+          set +e
+          python tools/main_promotion_route_gate.py \
+            --head-ref "${{ github.head_ref }}" \
+            --base-ref "${{ github.base_ref }}" \
+            --output artifacts/main-promotion-route/receipt.json
+          rc=$?
+          echo "route_rc=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Run route-gate unit tests
+        run: python -m unittest -v tests.test_main_promotion_route_gate
+
+      - name: Upload route receipt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: main-promotion-route-${{ github.run_id }}
+          path: artifacts/main-promotion-route/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Fail closed on noncanonical main promotion
+        if: always()
+        shell: bash
+        run: exit "${{ steps.route.outputs.route_rc || '1' }}"
