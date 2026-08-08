@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tomllib
@@ -22,6 +23,9 @@ TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integr
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
 STRUCTURED_SUFFIXES={".yml",".yaml",".json",".toml"}
 TRUE_STRINGS={"true","yes","on","1"}
+_CLAIM_ASSIGNMENT_RE = re.compile(
+    r'''(?im)^\s*(?:["']claim_allowed["']|claim_allowed)\s*(?::|=)\s*(?:true|yes|on|1)\s*(?:#.*)?$'''
+)
 
 
 def norm(ref:str)->str:
@@ -69,6 +73,21 @@ def _load_structured(path:Path)->Any:
     if suffix in {".yml",".yaml"}: return yaml.safe_load(text)
     if suffix==".toml": return tomllib.loads(text)
     raise ValueError(f"unsupported structured suffix: {suffix}")
+
+
+def contains_claim_true(text: str) -> bool:
+    """Legacy text helper: detect only explicit active assignments.
+
+    The maturity gate itself uses semantic parsing. This compatibility helper is
+    intentionally anchored to assignment lines so documentation such as
+    ``- "claim_allowed=true"`` does not become an active policy signal.
+    """
+    return bool(_CLAIM_ASSIGNMENT_RE.search(text))
+
+
+def file_has_claim_true(path: Path) -> bool:
+    """Return whether a structured file contains an active claim_allowed=true."""
+    return _claim_allowed_true(_load_structured(path))
 
 
 def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
