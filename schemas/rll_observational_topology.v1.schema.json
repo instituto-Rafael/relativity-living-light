@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/blob/main/schemas/rll_observational_topology.v1.schema.json",
   "title": "RLL observational topology — append-only fail-closed contract",
-  "description": "Schema for an auditable integration topology. It describes evidence readiness and gates; it never certifies a cosmological claim.",
+  "description": "Structural contract for an auditable RLL integration topology. It describes evidence readiness and gates; it never certifies a cosmological claim.",
   "type": "object",
   "additionalProperties": false,
   "required": [
