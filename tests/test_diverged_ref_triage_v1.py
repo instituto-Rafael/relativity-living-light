@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 import unittest
 from pathlib import Path
 
@@ -35,7 +34,7 @@ class DivergedRefTriageTests(unittest.TestCase):
         self.assertEqual(len(refs), 35)
         self.assertEqual(len(set(refs)), 35)
 
-    def test_only_two_frozen_refs_are_active_recovery_items(self):
+    def test_active_recovery_refs_map_to_exactly_two_prs(self):
         d = self.load_triage()
         active = {
             row["ref"]: row["next_action"]
@@ -50,7 +49,9 @@ class DivergedRefTriageTests(unittest.TestCase):
                 "fix/ref-census-postmerge-governance-20260808-v1": "REVIEW_PR_685",
             },
         )
-        self.assertEqual(d["summary"]["active_recovery_refs"], 2)
+        self.assertEqual(d["summary"]["active_recovery_refs"], 3)
+        self.assertEqual(d["summary"]["active_recovery_prs"], 2)
+        self.assertEqual(set(active.values()), {"REVIEW_PR_685", "REVIEW_PR_688"})
 
     def test_to_add_custody_has_nine_valid_sha256_and_no_destructive_authority(self):
         d = json.loads(CUSTODY.read_text(encoding="utf-8"))
