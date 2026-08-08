@@ -7,12 +7,14 @@ on:
       - "tests/test_all_git_refs_topology_census_v1.py"
       - "data/governance/RLL_DIVERGED_REF_COHORT_*.json"
       - "tools/audit_diverged_ref_patches_v1.py"
+      - "tools/audit_diverged_ref_pr_lineage_v1.py"
       - "tests/test_diverged_ref_patch_equivalence_v1.py"
       - ".github/workflows/all-ref-topology-census.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   census:
@@ -85,7 +87,33 @@ jobs:
           assert d['candidate_transition'] == 'REDUCED_PATCH_EQUIVALENCE_COMPLETE'
           print(json.dumps(s, sort_keys=True))
           PY
-      - name: Upload complete census and patch-equivalence receipts
+      - name: Audit exact merged PR head lineage
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python tools/audit_diverged_ref_pr_lineage_v1.py \
+            --patch-receipt artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json \
+            --repo "$GITHUB_REPOSITORY" \
+            --output artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json
+          sha256sum artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json \
+            > artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json').read_text())
+          s=d['summary']
+          assert d['claim_allowed'] is False
+          assert s['cohort_size'] == 35
+          assert (
+              s['patch_equivalent_to_main']
+              + s['exact_head_merged_direct_to_main']
+              + s['exact_head_merged_to_non_main_requires_chain_audit']
+              + s['unique_patch_no_exact_merged_pr_head']
+          ) == 35
+          assert s['remaining_semantic_or_chain_review'] <= 32
+          print(json.dumps(s, sort_keys=True))
+          PY
+      - name: Upload complete census, patch and PR-lineage receipts
         uses: actions/upload-artifact@v7
         with:
           name: all-ref-topology-census-${{ github.run_id }}
@@ -94,5 +122,7 @@ jobs:
             artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.sha256
             artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json
             artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
+            artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.json
+            artifacts/audit/DIVERGED_REF_PR_LINEAGE_CURRENT.sha256
           if-no-files-found: error
           retention-days: 30
