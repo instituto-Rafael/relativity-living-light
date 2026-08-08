@@ -140,7 +140,8 @@
     "exact_head_merged_direct_main": 17,
     "promotion_chain_recovered": 1,
     "semantically_classified": 14,
-    "active_recovery_refs": 2,
+    "active_recovery_refs": 3,
+    "active_recovery_prs": 2,
     "anonymous_remainder": 0,
     "unclassified_remainder": 0
   },
@@ -151,7 +152,7 @@
     "No ref is labeled progress merely because it is ahead or diverged."
   ],
   "F_gap": [
-    "PR #685 and PR #688 remain active review items; this triage does not merge or promote them.",
+    "PR #685 and PR #688 remain active recovery actions; this triage does not merge or promote them.",
     "External server-side GitHub settings, physical Termux execution and independent scientific replication remain outside this ref-triage scope."
   ],
   "F_next": [
