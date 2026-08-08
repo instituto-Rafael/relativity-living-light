@@ -63,8 +63,6 @@ def parameter_vector(model: str) -> dict[str, float]:
         "wa": 0.0,
     }
     if model == "cpl":
-        # Keep the baseline away from w=-1 crossing so this gate tests engine
-        # plumbing/numerics rather than crossing-regularization choices.
         common.update({"w0": -0.90, "wa": 0.20})
     elif model != "lcdm":
         raise ValueError(f"unsupported model {model}")
@@ -148,17 +146,12 @@ def run_class(model_name: str, z_values: Sequence[float], k_values: Sequence[flo
         "non linear": "none",
     }
     if model_name == "cpl":
-        params.update(
-            {
-                # CLASS requires one dark-energy density to be inferred. Setting
-                # Omega_Lambda=0 delegates flat closure to Omega_fld while the
-                # CPL equation of state is specified below.
-                "Omega_Lambda": 0.0,
-                "w0_fld": p["w0"],
-                "wa_fld": p["wa"],
-                "fluid_equation_of_state": "CLP",
-            }
-        )
+        params.update({
+            "Omega_Lambda": 0.0,
+            "w0_fld": p["w0"],
+            "wa_fld": p["wa"],
+            "fluid_equation_of_state": "CLP",
+        })
     cosmo = Class()
     try:
         cosmo.set(params)
@@ -205,27 +198,14 @@ def compare_model(model_name: str, z_values: Sequence[float], k_values: Sequence
             error = relative_error(a, b)
             passed = error <= tolerance
             all_pass = all_pass and passed
-            rows.append({
-                "point": key,
-                "CAMB": a,
-                "CLASS": b,
-                "relative_error": error,
-                "tolerance": tolerance,
-                "pass": passed,
-            })
+            rows.append({"point": key, "CAMB": a, "CLASS": b, "relative_error": error, "tolerance": tolerance, "pass": passed})
         metrics[family] = {
             "tolerance": tolerance,
             "max_relative_error": max(row["relative_error"] for row in rows),
             "pass": all(row["pass"] for row in rows),
             "points": rows,
         }
-    return {
-        "model": model_name,
-        "parameter_vector": parameter_vector(model_name),
-        "engines": {"CAMB": camb_result, "CLASS": class_result},
-        "metrics": metrics,
-        "pass": all_pass,
-    }
+    return {"model": model_name, "parameter_vector": parameter_vector(model_name), "engines": {"CAMB": camb_result, "CLASS": class_result}, "metrics": metrics, "pass": all_pass}
 
 
 def build(output: Path, *, lmax: int = 700) -> dict[str, Any]:
@@ -239,24 +219,12 @@ def build(output: Path, *, lmax: int = 700) -> dict[str, Any]:
         "claim_allowed": False,
         "publication_ready": False,
         "models": models,
-        "scope": {
-            "z_values": z_values,
-            "k_values_1_Mpc": k_values,
-            "ell_values": [30, 100, 300, 700],
-            "lmax": lmax,
-            "massive_neutrinos": "disabled in both engines for this baseline crosscheck",
-            "nonlinear": False,
-        },
+        "scope": {"z_values": z_values, "k_values_1_Mpc": k_values, "ell_values": [30, 100, 300, 700], "lmax": lmax, "massive_neutrinos": "disabled in both engines for this baseline crosscheck", "nonlinear": False},
         "scientific_boundary": "This receipt validates matched standard LCDM/CPL backend plumbing only. It does not define or validate RLL perturbations and cannot authorize RLL CMB/growth claims.",
         "resolves_token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK" if passed else None,
-        "F_ok": [
-            "Independent CLASS and CAMB engines receive the same standard-model parameter vectors.",
-            "Background, linear matter power and dimensionless unlensed TT spectra are compared pointwise with declared tolerances."
-        ],
+        "F_ok": ["Independent CLASS and CAMB engines receive the same standard-model parameter vectors.", "Background, linear matter power and dimensionless unlensed TT spectra are compared pointwise with declared tolerances."],
         "F_gap": [] if passed else ["TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK"],
-        "F_next": [
-            "Do not use this baseline receipt as evidence for RLL until RLL perturbation closure relations are explicit and implemented independently in both engines."
-        ],
+        "F_next": ["Do not use this baseline receipt as evidence for RLL until RLL perturbation closure relations are explicit and implemented independently in both engines."],
     }
     atomic_json(output, payload)
     return payload
@@ -273,7 +241,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         traceback.print_exc()
         print(f"ERROR: {type(exc).__name__}: {exc}")
         return 2
-    print(json.dumps({"state": payload["state"], "claim_allowed": False}, sort_keys=True))
+    worst = {}
+    for model, model_data in payload["models"].items():
+        worst[model] = {}
+        for family, metric in model_data["metrics"].items():
+            point = max(metric["points"], key=lambda row: row["relative_error"])
+            worst[model][family] = point
+    print(json.dumps({"state": payload["state"], "claim_allowed": False, "worst_points": worst}, sort_keys=True))
     return 0 if payload["state"] == "VERIFIED_BASELINE_ENGINE_CROSSCHECK" else 3
 
 
