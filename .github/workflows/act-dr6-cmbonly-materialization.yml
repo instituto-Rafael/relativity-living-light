@@ -40,20 +40,21 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install pinned scientific runtime
+      - name: Install upstream-date scientific runtime
         run: |
           set -euo pipefail
-          # The audited ACT commit declares sacc>=0.12. SACC 2.x requires
-          # NumPy>=2, while the independently verified CAMB 1.6.6 baseline in
-          # this repository uses NumPy 1.26.4. Keep one numerical regime at a
-          # time and use the compatible pre-2 SACC release for this receipt.
+          # Reconstruct the latest package line available when the audited ACT
+          # upstream commit was published (2025-03-28). The previous controlled
+          # 2026 stack executed the likelihood but missed the upstream reference
+          # values, so this experiment changes dependencies only. Data, ACT SHA,
+          # cosmological parameters and ±0.01 assertions remain unchanged.
           python -m pip install --disable-pip-version-check \
-            "numpy==1.26.4" \
-            "scipy==1.17.1" \
-            "camb==1.6.6" \
-            "sacc==1.0.2" \
-            "cobaya==3.6.2" \
-            "pytest==9.1.1"
+            "numpy==2.2.4" \
+            "scipy==1.15.2" \
+            "camb==1.5.9" \
+            "sacc==0.16" \
+            "cobaya==3.5.6" \
+            "pytest==8.3.5"
           python - <<'PY'
           import importlib.metadata as m
           for package in ("numpy", "scipy", "camb", "sacc", "cobaya", "pytest"):
