@@ -41,24 +41,21 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
-ACTION_MAJOR_RE = re.compile(r"actions/(?P<name>checkout|upload-artifact)@v(?P<major>\d+)\b")
+UPLOAD_ARTIFACT_VERSION = re.compile(r"actions/upload-artifact@v(?P<major>\d+)\b")
 
 
 def workflow_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def action_majors(text: str, action_name: str) -> list[int]:
-    return [int(m.group("major")) for m in ACTION_MAJOR_RE.finditer(text) if m.group("name") == action_name]
-
-
 def has_supported_upload_artifact(text: str) -> bool:
-    """Upload-artifact v4+ uses the non-deprecated artifact service contract."""
-    return any(major >= 4 for major in action_majors(text, "upload-artifact"))
+    """Require upload-artifact major v4 or newer.
 
-
-def has_checkout_action(text: str) -> bool:
-    return bool(action_majors(text, "checkout"))
+    The previous audit matched the literal string ``@v4`` and therefore treated
+    newer majors (for example v7) as if no artifact upload existed. The policy
+    is a minimum supported major, not a forced downgrade to one exact tag.
+    """
+    return any(int(match.group("major")) >= 4 for match in UPLOAD_ARTIFACT_VERSION.finditer(text))
 
 
 def is_real_data_workflow(path: Path, doc: dict, text: str) -> bool:

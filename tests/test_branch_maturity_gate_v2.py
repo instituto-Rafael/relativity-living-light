@@ -1,5 +1,5 @@
 from pathlib import Path
-from tools.branch_maturity_gate_v2 import contains_claim_true, evaluate, valid_transition
+from tools.branch_maturity_gate_v2 import evaluate, file_has_claim_true, valid_transition
 
 
 def test_topology():
@@ -100,6 +100,18 @@ def test_quoted_documentation_marker_is_not_assignment(tmp_path: Path):
     data=evaluate(tmp_path,"feature/x","rll/lab",[".github/workflow-contract.yml"])
     assert data["decision"]=="PASS"
     assert not any(x.startswith("CLAIM_ALLOWED_TRUE") for x in data["residuals"])
+
+
+def test_documented_claim_true_string_does_not_promote_claim(tmp_path: Path):
+    contract=tmp_path/"contract.yml"
+    contract.write_text('claim_allowed: false\nrequired_markers:\n  - "claim_allowed=true"\n',encoding="utf-8")
+    assert file_has_claim_true(contract) is False
+
+
+def test_nested_json_claim_true_still_blocks(tmp_path: Path):
+    policy=tmp_path/"state.json"
+    policy.write_text('{"outer":{"claim_allowed":true}}\n',encoding="utf-8")
+    assert file_has_claim_true(policy) is True
 
 
 def test_release_requires_evidence_or_gap(tmp_path: Path):
