@@ -26,6 +26,14 @@ class ActPosteriorContractTests(unittest.TestCase):
             "params: {}\n",
             encoding="utf-8",
         )
+        # The real LAMBDA archive also carries a separate minimize config. It is
+        # auxiliary custody, not the MCMC posterior authority.
+        (extracted / "actlite_lcdm_camb.minimize.input.yaml").write_text(
+            "sampler:\n  minimize: {}\nparams: {}\n", encoding="utf-8"
+        )
+        (extracted / "actlite_lcdm_camb.minimize.updated.yaml").write_text(
+            "sampler:\n  minimize: {}\nparams: {}\n", encoding="utf-8"
+        )
         (extracted / "actlite_lcdm_camb.covmat").write_text("1 0 0\n0 1 0\n0 0 1\n", encoding="utf-8")
         (extracted / "actlite_lcdm_camb.minimum").write_text("minimum\n", encoding="utf-8")
         (extracted / "actlite_lcdm_camb.progress").write_text("progress\n", encoding="utf-8")
@@ -51,6 +59,8 @@ class ActPosteriorContractTests(unittest.TestCase):
         self.assertEqual(payload["reference_chains"]["best_observed_sampled_parameters"]["H0"], 67.4)
         self.assertEqual(payload["mcmc_contract"]["Rminus1_stop"], 0.01)
         self.assertEqual(payload["mcmc_contract"]["Rminus1_cl_stop"], 0.2)
+        self.assertEqual(len(payload["authority"]["auxiliary_minimize_configs"]), 2)
+        self.assertTrue(payload["authority"]["input_yaml"]["path"].endswith("actlite_lcdm_camb.input.yaml"))
         self.assertFalse(payload["claim_allowed"])
         self.assertIsNone(payload["resolved_token"])
 
@@ -64,12 +74,12 @@ class ActPosteriorContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing sampled params"):
                 build(extracted, "https://example.invalid/act.tar.gz")
 
-    def test_duplicate_input_yaml_fails_closed(self):
+    def test_second_non_minimize_input_yaml_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             extracted = self.fixture(root)
             (extracted / "duplicate.input.yaml").write_text("params: {}\n", encoding="utf-8")
-            with self.assertRaisesRegex(ValueError, "exactly one"):
+            with self.assertRaisesRegex(ValueError, "non-minimize"):
                 build(extracted, "https://example.invalid/act.tar.gz")
 
 
