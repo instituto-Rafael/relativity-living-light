@@ -9,6 +9,7 @@ pipeline scripts can load them without making GitHub Actions parse them as jobs.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 from typing import Iterable
@@ -40,10 +41,24 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
+ACTION_MAJOR_RE = re.compile(r"actions/(?P<name>checkout|upload-artifact)@v(?P<major>\d+)\b")
 
 
 def workflow_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def action_majors(text: str, action_name: str) -> list[int]:
+    return [int(m.group("major")) for m in ACTION_MAJOR_RE.finditer(text) if m.group("name") == action_name]
+
+
+def has_supported_upload_artifact(text: str) -> bool:
+    """Upload-artifact v4+ uses the non-deprecated artifact service contract."""
+    return any(major >= 4 for major in action_majors(text, "upload-artifact"))
+
+
+def has_checkout_action(text: str) -> bool:
+    return bool(action_majors(text, "checkout"))
 
 
 def is_real_data_workflow(path: Path, doc: dict, text: str) -> bool:
@@ -77,10 +92,10 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if "actions/checkout@v4" in text and "persist-credentials: false" not in text:
+        if has_checkout_action(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
-        if "actions/upload-artifact@v4" not in text:
-            errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact@v4")
+        if not has_supported_upload_artifact(text):
+            errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact@v4 or newer")
         if "rll_real_data_write_checksums" not in text and (
             "CHECKSUMS.sha256" not in text or "sha256sum" not in text
         ):
