@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCANNER_PATH = ROOT / "tools" / "scan_rll_model_evidence.py"
+ABLATION_PATH = ROOT / "data" / "inputs" / "cosmology_joint" / "h0_rd_ablation_matrix.json"
 _spec = importlib.util.spec_from_file_location("scan_rll_model_evidence_restored", SCANNER_PATH)
 assert _spec and _spec.loader
 scanner = importlib.util.module_from_spec(_spec)
@@ -42,10 +43,12 @@ def run(tmp_path: Path, data: list[dict[str, str]]):
     return scanner.scan(write_csv(tmp_path / "rows.csv", data), write_registry(tmp_path / "registry.json"))
 
 
-def test_h0_all_equal_warning_references_ablation_matrix(tmp_path: Path) -> None:
+def test_h0_all_equal_warning_references_existing_ablation_matrix(tmp_path: Path) -> None:
     result = run(tmp_path, rows((60.0, 60.0, 60.0, 60.0)))
     assert result.H0_all_equal is True
-    assert any("h0_rd_ablation_matrix" in warning for warning in result.warnings)
+    expected = "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json"
+    assert any(expected in warning for warning in result.warnings)
+    assert ABLATION_PATH.is_file(), "scanner warning must not point to a missing ablation artifact"
 
 
 def test_h0_not_all_equal_emits_no_equal_warning(tmp_path: Path) -> None:
