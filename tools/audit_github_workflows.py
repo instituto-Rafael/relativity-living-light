@@ -41,33 +41,17 @@ REAL_DATA_IDENTITY_MARKERS = (
     "validacao_real",
     "validação real",
 )
-UPLOAD_ARTIFACT_VERSION = re.compile(r"actions/upload-artifact@v(?P<major>\d+)\b")
+UPLOAD_ARTIFACT_RE = re.compile(
+    r"actions/upload-artifact@(?:v(?:4|5|6|7)|[0-9a-fA-F]{40})(?:\s|$)"
+)
+CHECKOUT_RE = re.compile(r"actions/checkout@(?:v\d+|[0-9a-fA-F]{40})(?:\s|$)")
 
 
 def workflow_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def has_supported_upload_artifact(text: str) -> bool:
-    """Require upload-artifact major v4 or newer.
-
-    The previous audit matched the literal string ``@v4`` and therefore treated
-    newer majors (for example v7) as if no artifact upload existed. The policy
-    is a minimum supported major, not a forced downgrade to one exact tag.
-    """
-    return any(int(match.group("major")) >= 4 for match in UPLOAD_ARTIFACT_VERSION.finditer(text))
-
-
 def is_real_data_workflow(path: Path, doc: dict, text: str) -> bool:
-    """Classify by workflow identity, never by incidental words in step bodies.
-
-    The previous implementation searched the entire YAML text for broad markers.
-    A structural workflow mentioning a real-data policy in a step description was
-    therefore misclassified as a real-data execution workflow. Authority is now
-    derived from the repository path and workflow name only. ``text`` remains in
-    the signature for compatibility with callers and future explicit contracts.
-    """
-
     del text
     rel = path.relative_to(REPO).as_posix().lower()
     name = str(doc.get("name", "")).lower()
@@ -89,10 +73,13 @@ def audit_real_workflow_policy() -> list[str]:
         permissions = doc.get("permissions") or {}
         if not isinstance(permissions, dict) or permissions.get("contents") != "read":
             errors.append(f"{rel}: real workflow must declare top-level permissions.contents: read")
-        if has_checkout_action(text) and "persist-credentials: false" not in text:
+        if CHECKOUT_RE.search(text) and "persist-credentials: false" not in text:
             errors.append(f"{rel}: real workflow checkout must set persist-credentials: false")
-        if not has_supported_upload_artifact(text):
-            errors.append(f"{rel}: real workflow must upload artifacts with actions/upload-artifact@v4 or newer")
+        if not UPLOAD_ARTIFACT_RE.search(text):
+            errors.append(
+                f"{rel}: real workflow must upload artifacts with a supported explicit "
+                "actions/upload-artifact major (v4-v7) or full immutable SHA"
+            )
         if "rll_real_data_write_checksums" not in text and (
             "CHECKSUMS.sha256" not in text or "sha256sum" not in text
         ):
@@ -123,7 +110,6 @@ REQUIRED_VALIDATION_FILES = [
 
 
 def parse_yaml(path: Path) -> dict:
-    """Parse with BaseLoader so the GitHub Actions key `on` remains a string."""
     loaded = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
     if not isinstance(loaded, dict):
         raise ValueError("top-level YAML document must be a mapping")
@@ -140,7 +126,7 @@ def audit_workflow_contracts() -> list[str]:
     for path in iter_workflow_yaml():
         try:
             doc = parse_yaml(path)
-        except Exception as exc:  # noqa: BLE001 - report all parse/shape failures.
+        except Exception as exc:
             errors.append(f"{path.relative_to(REPO)}: YAML parse/shape error: {exc}")
             continue
 
@@ -183,7 +169,7 @@ def audit_validation_bundle() -> list[str]:
     for path in [p for p in REQUIRED_VALIDATION_FILES if p.suffix in {'.yml', '.yaml'} and p.exists()]:
         try:
             parse_yaml(path)
-        except Exception as exc:  # noqa: BLE001 - report all parse/shape failures.
+        except Exception as exc:
             errors.append(f"{path.relative_to(REPO)}: YAML parse/shape error: {exc}")
     return errors
 
