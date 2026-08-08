@@ -17,6 +17,16 @@ publication_ready   = false
 default             = TOKEN_VAZIO
 ~~~
 
+## Rota de integração do repositório
+
+Esta alteração entra como branch de trabalho em `rll/lab`, preservando a progressão canônica:
+
+~~~text
+feature/research -> rll/lab -> rll/integration -> rll/release -> main
+~~~
+
+O PR permanece em rascunho; a rota de repositório não altera `claim_allowed=false` nem promove resultado científico.
+
 ## Precedência de autoridade
 
 1. O reconciliador moderno V2 descreve o estado efetivo e prevalece sobre interpretações de arquivos isolados.
