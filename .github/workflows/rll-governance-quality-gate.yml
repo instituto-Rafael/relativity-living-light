@@ -59,28 +59,7 @@ jobs:
           python3 -m tools.rll_token_vazio_reconcile_v2 \
             --generated-at 2026-08-08T04:30:00Z \
             --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          p = Path('artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json')
-          d = json.loads(p.read_text(encoding='utf-8'))
-          assert d['claim_allowed'] is False
-          assert d['publication_ready'] is False
-          assert d['view'] == 'RLL_TOKEN_VAZIO_RECONCILIATION_V2_APPEND_ONLY'
-          assert d['summary']['input_tokens'] == 33
-          assert d['summary']['terminal_resolved'] == 10
-          assert d['summary']['reduced_generic'] == 9
-          assert d['summary']['open'] == 14
-          rows = {row['token']: row for row in d['results']}
-          assert rows['TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION']['state'] == 'RESOLVED'
-          assert rows['TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION']['state'] == 'OPEN_INTERNAL'
-          assert rows['TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION']['state'] == 'REDUCED'
-          assert rows['TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION']['state'] == 'OPEN_INTERNAL'
-          assert rows['TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS']['state'] == 'REDUCED'
-          assert rows['TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW']['state'] == 'OPEN_INTERNAL'
-          assert not any(row['state'] == 'OPEN_EVIDENCE_MISSING' for row in d['results'])
-          print(json.dumps(d['summary'], sort_keys=True))
-          PY
+          python3 -m unittest -v tests.test_rll_token_vazio_reconcile_v2
           sha256sum artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.json \
             > artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_V2_CURRENT.sha256
 
