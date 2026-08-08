@@ -56,9 +56,12 @@ jobs:
         id: engine_run
         run: |
           set +e
+          # Compute beyond the highest compared ell so ell=700 is not sampled
+          # exactly at the solver truncation boundary. Compared points and
+          # scientific tolerances remain unchanged.
           python scripts/crosscheck_class_camb_baselines.py \
             --output artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.json \
-            --lmax 700
+            --lmax 1000
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
