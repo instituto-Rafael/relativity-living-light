@@ -41,11 +41,23 @@ jobs:
       - name: Install repository, test dependencies and pinned CAMB probe backend
         run: |
           python -m pip install --disable-pip-version-check -r requirements.txt
-          python -m pip install --disable-pip-version-check "pytest>=8,<10" "camb==1.6.6"
+          # CAMB 1.6.6 is exercised in the repository's independent CLASS/CAMB
+          # crosscheck with NumPy 1.x. NumPy 2.5.1 caused CAMBparams.set_cosmology
+          # to fail before physics evaluation while assigning YHe, so keep the
+          # same already-proven compatibility envelope here.
+          python -m pip install --disable-pip-version-check --upgrade \
+            "numpy>=1.26,<2" \
+            "pytest>=8,<10" \
+            "camb==1.6.6"
           python - <<'PY'
           import importlib.metadata
-          print("camb", importlib.metadata.version("camb"))
-          assert importlib.metadata.version("camb") == "1.6.6"
+          from packaging.version import Version
+          numpy_version = importlib.metadata.version("numpy")
+          camb_version = importlib.metadata.version("camb")
+          print("numpy", numpy_version)
+          print("camb", camb_version)
+          assert Version("1.26") <= Version(numpy_version) < Version("2")
+          assert camb_version == "1.6.6"
           PY
 
       - name: Run H0/r_d policy and direct-Boltzmann probe tests
