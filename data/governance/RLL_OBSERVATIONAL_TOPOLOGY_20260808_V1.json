@@ -1,0 +1,797 @@
+{
+  "schema": "rll.observational_topology.v1",
+  "version": "20260808.v1",
+  "generated_at": "2026-08-08T22:45:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_main_commit": "13a8227bc28e337be09acf72635a963c3ea26365",
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_ready": false,
+  "authority_order": [
+    "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+    "data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_DELTA_20260808_V3.json",
+    "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md",
+    "results/structure_d/joint_real_likelihood_covariance_manifest.json"
+  ],
+  "state_machine": {
+    "fail_closed_default": "TOKEN_VAZIO",
+    "states": [
+      "MATERIALIZED",
+      "VERIFIED_LIMITED",
+      "OPEN_INTERNAL",
+      "OPEN_EXTERNAL",
+      "BLOCKED_DEPENDENCY",
+      "INVALIDATED",
+      "TOKEN_VAZIO"
+    ]
+  },
+  "invariants": [
+    "Ausência, ambiguidade, conflito de autoridade ou covariância incompleta resulta em TOKEN_VAZIO, BLOCKED_DEPENDENCY ou INVALIDATED; nunca em sucesso implícito.",
+    "ready_for_joint_inference permanece false para cada nó até que fontes, semântica, covariâncias, nuisances, backend e reprodução sejam demonstrados no mesmo contrato.",
+    "Nós de propagação (FRB, RM e B-modes magneto-ópticos) não entram na evidência cosmológica conjunta sem uma previsão física, seleção observacional e likelihood próprios.",
+    "A topologia é um overlay append-only: tokens UNBOUND_TOKEN_VAZIO não alteram a contagem, o denominador ou a precedência da fila V4 existente.",
+    "Uma contradição entre manifesto operacional e auditoria canônica invalida a promoção do nó até reprodução independente e reconciliação semântica."
+  ],
+  "nodes": [
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "kind": "mechanism",
+      "domain": "theory",
+      "observable": "Fechamento linear RLL: delta_s, theta_s, c_s^2, pressão não adiabática, anisotropic stress, Q_mu, gauge, condições iniciais e crossing regularization",
+      "state": "BLOCKED_DEPENDENCY",
+      "priority": "P0",
+      "observation_class": "theory",
+      "source_status": "O reconciliador identifica que não há fechamento físico de perturbações suficiente para CMB, crescimento e lenteamento RLL.",
+      "token_binding": {
+        "mode": "MULTI_SOURCE_GAP",
+        "tokens": [
+          "TOKEN_VAZIO_RLL_LINEAR_PERTURBATION_CLOSURE",
+          "TOKEN_VAZIO_CLASS_CAMB_RLL_IMPLEMENTATION"
+        ],
+        "queue_effect": "existing_queue"
+      },
+      "required_gates": [
+        "Especificar e implementar o setor perturbativo RLL em gauge declarado.",
+        "Validar estabilidade, conservação e condições iniciais contra backend Boltzmann.",
+        "Reproduzir observáveis de referência sem trocar o modelo por parametrização efetiva."
+      ],
+      "dependencies": [],
+      "claim_boundary": "Não há predição RLL completa para CMB, fσ8 ou lenteamento enquanto este nó estiver bloqueado.",
+      "next_action": "Publicar contrato de perturbações e testes unitários de conservação/estabilidade antes de conectar likelihoods."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "kind": "mechanism",
+      "domain": "theory",
+      "observable": "Contrato comum de vetor de dados, covariância, nuisance, prior, escala de corte, backend e recibo de reprodução",
+      "state": "TOKEN_VAZIO",
+      "priority": "P0",
+      "observation_class": "theory",
+      "source_status": "Não existe um contrato único que una todas as famílias de dados sem ocultar incompatibilidades de vetor, covariância ou nuisance.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_COMMON_LIKELIHOOD_CONTRACT"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Versionar o schema comum de data vector, covariância, nuisance e prior.",
+        "Registrar hashes e semântica de cada bloco antes de qualquer concatenação.",
+        "Executar reprodução independente do likelihood conjunto."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE"
+      ],
+      "claim_boundary": "Resultados de subconjuntos não equivalem a evidência conjunta.",
+      "next_action": "Criar o contrato de likelihood e um gate que recuse blocos sem proveniência verificável."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "results/structure_d/joint_real_likelihood_covariance_manifest.json",
+          "status": "conflicting_operational_manifest",
+          "note": "Declara official_full e pronto para claim."
+        },
+        {
+          "path": "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md",
+          "status": "canonical_audit",
+          "note": "Declara matriz em blocos/local, cross-block oficial não verificado e claim bloqueado."
+        },
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Mantém a reprodução oficial do cross-block como TOKEN_VAZIO aberto."
+        }
+      ],
+      "id": "OBS-BAO-DESI-DR2",
+      "kind": "observation",
+      "domain": "background",
+      "observable": "BAO DESI DR2: vetor 13D, blocos BGS/LRG/ELG/QSO/Lyα e pares 2D DM/rd, DH/rd",
+      "state": "INVALIDATED",
+      "priority": "P0",
+      "observation_class": "cosmology",
+      "source_status": "Há conflito entre um manifesto que declara covariância joint official_full e uma auditoria que limita o uso à matriz em blocos/local, com reprodução joint pendente.",
+      "token_binding": {
+        "mode": "BOUND_CURRENT_TOKEN",
+        "tokens": [
+          "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"
+        ],
+        "queue_effect": "existing_queue"
+      },
+      "required_gates": [
+        "Obter e congelar a fonte oficial do vetor e da covariância joint com semântica de linhas/colunas.",
+        "Reproduzir likelihood 13D e pares anisotrópicos com cross-blocks.",
+        "Resolver documentalmente a contradição entre manifesto e auditoria antes de qualquer promoção."
+      ],
+      "dependencies": [
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Nenhum resultado DESI joint, anisotrópico ou de comparação cosmológica pode ser declarado a partir deste nó.",
+      "next_action": "Executar a reprodução de referência e substituir o estado INVALIDATED apenas com recibos verificáveis.",
+      "contradiction": {
+        "conflicting_paths": [
+          "results/structure_d/joint_real_likelihood_covariance_manifest.json",
+          "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md"
+        ],
+        "resolution_gate": "Reprodução independente do vetor e covariância oficiais, seguida de reconciliação que preserve ambas as evidências anteriores.",
+        "safe_interpretation": "Há infraestrutura e blocos locais, mas a equivalência ao likelihood joint oficial não está demonstrada."
+      }
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-SN-PANTHEON-PLUS",
+      "kind": "observation",
+      "domain": "background",
+      "observable": "Pantheon+: supernovas Ia com covariância estatística e sistemática",
+      "state": "VERIFIED_LIMITED",
+      "priority": "P0",
+      "observation_class": "cosmology",
+      "source_status": "O reconciliador registra execução/materialização do caminho Pantheon+, mas não um resultado cosmológico conjunto promovível.",
+      "token_binding": {
+        "mode": "HISTORICAL_CHAIN_TERMINAL",
+        "tokens": [],
+        "queue_effect": "historical_only"
+      },
+      "required_gates": [
+        "Conservar o recibo da covariância e da convenção de magnitude/nuisance.",
+        "Verificar sobreposição e independência ao combinar com SH0ES.",
+        "Integrar somente pelo contrato comum de likelihood."
+      ],
+      "dependencies": [
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "A execução Pantheon+ isolada não resolve H0 nem testa o RLL em evidência conjunta.",
+      "next_action": "Adicionar metadados de nuisance e verificação de sobreposição ao contrato comum."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-H0-SHOES",
+      "kind": "observation",
+      "domain": "background",
+      "observable": "Escada de distância SH0ES: Cefeidas e SNe Ia",
+      "state": "OPEN_INTERNAL",
+      "priority": "P0",
+      "observation_class": "cosmology",
+      "source_status": "A fonte primária foi rastreada, mas a integração com inferência H0-rd de backend Boltzmann permanece aberta.",
+      "token_binding": {
+        "mode": "BOUND_CURRENT_TOKEN",
+        "tokens": [
+          "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"
+        ],
+        "queue_effect": "existing_queue"
+      },
+      "required_gates": [
+        "Executar inferência H0-rd com backend físico e posterior convergente.",
+        "Separar calibração, observação e prior para evitar dupla contagem com Pantheon+.",
+        "Emitir diagnóstico de tensão sem linguagem de resolução."
+      ],
+      "dependencies": [
+        "OBS-SN-PANTHEON-PLUS",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Não há resolução ou alívio demonstrado da tensão de Hubble.",
+      "next_action": "Completar a inferência H0-rd e a auditoria de correlações com Pantheon+."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-HZ-COSMIC-CHRONOMETERS",
+      "kind": "observation",
+      "domain": "background",
+      "observable": "Cronômetros cósmicos H(z) com covariância sistemática de idade diferencial",
+      "state": "TOKEN_VAZIO",
+      "priority": "P0",
+      "observation_class": "cosmology",
+      "source_status": "O pipeline não materializa uma covariância sistemática completa e sua semântica de SPS/metallicidade.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_HZ_SYSTEMATIC_COVARIANCE"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Versionar vetor H(z), covariância estatística+sistemática e metadados de SPS.",
+        "Implementar likelihood que recuse dados diagonais quando a correlação for requerida.",
+        "Reproduzir a análise de referência com os mesmos cortes."
+      ],
+      "dependencies": [
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Pontos H(z) independentes não podem ser tratados como um teste completo de expansão.",
+      "next_action": "Materializar a covariância sistemática e criar recibo de reprodução."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-GROWTH-FSIGMA8",
+      "kind": "observation",
+      "domain": "structure",
+      "observable": "Crescimento em baixo redshift: fσ8 com vetores, covariâncias e modelagem de RSD",
+      "state": "BLOCKED_DEPENDENCY",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "Há pontos reais e aproximação GR diagonal; faltam covariâncias completas e predição RLL linear fechada.",
+      "token_binding": {
+        "mode": "MULTI_SOURCE_GAP",
+        "tokens": [
+          "TOKEN_VAZIO_RLL_LINEAR_PERTURBATION_CLOSURE",
+          "TOKEN_VAZIO_CLASS_CAMB_RLL_IMPLEMENTATION",
+          "TOKEN_VAZIO_TOPOLOGY_FSIGMA8_FULL_COVARIANCE_LIKELIHOOD"
+        ],
+        "queue_effect": "mixed"
+      },
+      "required_gates": [
+        "Materializar vetores e covariâncias completas de SDSS/eBOSS/DESI com convenção de fiducial.",
+        "Implementar predição RLL de fσ8 no backend Boltzmann.",
+        "Validar nuisance/RSD, AP e escalas de corte comuns."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Um smoke test diagonal em GR não testa o crescimento RLL.",
+      "next_action": "Fechar perturbações RLL e só então conectar a likelihood de crescimento com covariância plena."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-LSS-DES-Y6-3X2PT",
+      "kind": "observation",
+      "domain": "lensing",
+      "observable": "DES Y6: lente fraca/3x2pt e teste de S8",
+      "state": "OPEN_EXTERNAL",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "O caminho de likelihood, covariâncias, nuisance e cortes da versão pública ainda não foi materializado formalmente.",
+      "token_binding": {
+        "mode": "BOUND_CURRENT_TOKEN",
+        "tokens": [
+          "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD"
+        ],
+        "queue_effect": "existing_queue"
+      },
+      "required_gates": [
+        "Congelar release pública, data vector, covariância, m-calibration, foto-z, IA e cortes de escala.",
+        "Implementar previsão RLL para crescimento e lenteamento.",
+        "Reproduzir baseline publicado antes de comparar modelos."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Não há teste RLL da tensão S8 neste estado.",
+      "next_action": "Materializar o likelihood oficial e o conjunto completo de nuisance/cortes."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-CMB-PLANCK-PR4-TTTEEE",
+      "kind": "observation",
+      "domain": "cmb",
+      "observable": "Planck PR4/NPIPE: espectros TT, TE e EE completos",
+      "state": "TOKEN_VAZIO",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "Distance priors comprimidos não substituem a likelihood espectral e o caminho PR4 TT/TE/EE não está integrado.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_PLANCK_PR4_FULL_SPECTRA"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Materializar likelihood, máscaras, nuisance, covariance/beam e convenções PR4/NPIPE.",
+        "Produzir espectros RLL pelo setor perturbativo fechado.",
+        "Reproduzir baseline ΛCDM antes de testar RLL."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Distance priors não constituem teste CMB completo do RLL.",
+      "next_action": "Definir a fonte/licença da likelihood e o recibo de baseline."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-CMB-ACT-DR6-TTTEEE",
+      "kind": "observation",
+      "domain": "cmb",
+      "observable": "ACT DR6: espectros TT, TE e EE e posterior local convergente",
+      "state": "OPEN_INTERNAL",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "A custódia/materialização avançou, porém falta posterior ΛCDM local convergente e a previsão RLL depende do fechamento perturbativo.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_ACT_DR6_LOCAL_POSTERIOR"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Executar posterior ΛCDM local convergente com recibo de versão e seed.",
+        "Congelar nuisance e cortes do likelihood DR6.",
+        "Somente depois conectar o setor RLL fisicamente fechado."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Disponibilidade de arquivos ou smoke test não é ajuste CMB RLL.",
+      "next_action": "Concluir baseline local e registrar diagnóstico de convergência."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-CMB-LENSING-ACT-PLANCK-SPT",
+      "kind": "observation",
+      "domain": "lensing",
+      "observable": "Reconstruções de lenteamento CMB Planck PR4, ACT DR6 e combinações ACT+SPT",
+      "state": "TOKEN_VAZIO",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "Não há integração formal das reconstruções, suas covariâncias cruzadas ou previsão RLL de potenciais gravitacionais.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_CMB_LENSING_ACT_PLANCK_SPT"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Materializar likelihoods e covariâncias sem assumir independência entre mapas/experimentos.",
+        "Implementar potenciais de lenteamento RLL consistentes com perturbações.",
+        "Reproduzir baseline e verificar cross-covariâncias."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Nenhuma conclusão sobre lenteamento RLL é permitida.",
+      "next_action": "Especificar o vetor de reconstrução e a política de sobreposição de céu."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-CMB-SPT3G-D1-TTTEEE",
+      "kind": "observation",
+      "domain": "cmb",
+      "observable": "SPT-3G D1: espectros TT, TE e EE de alta resolução",
+      "state": "OPEN_EXTERNAL",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "É uma extensão de estado da arte ainda sem fonte, likelihood e baseline materializados no pipeline.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_SPT3G_D1_TTTEEE"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Congelar release, likelihood, nuisance e cortes.",
+        "Executar baseline ΛCDM reprodutível.",
+        "Integrar apenas após o fechamento perturbativo RLL."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "A menção a SPT-3G não é uma integração de dados.",
+      "next_action": "Registrar a fonte primária, custódia e teste de baseline."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-DESI-DR2-LYA-FULLSHAPE",
+      "kind": "observation",
+      "domain": "structure",
+      "observable": "DESI DR2 Lyα full-shape, AP e correlações de alta-z",
+      "state": "OPEN_EXTERNAL",
+      "priority": "P1",
+      "observation_class": "cosmology",
+      "source_status": "Extensão de estado da arte ainda sem vetor/covariância/likelihood oficiais materializados no RLL.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_DESI_DR2_LYA_FULLSHAPE"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Materializar data vector, mocks, covariância e modelo de contaminantes.",
+        "Validar AP/full-shape em baseline antes de RLL.",
+        "Tratar correlações com BAO DESI e sobreposição de amostra."
+      ],
+      "dependencies": [
+        "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+        "MECH-COMMON-LIKELIHOOD-CONTRACT",
+        "OBS-BAO-DESI-DR2"
+      ],
+      "claim_boundary": "Lyα full-shape não pode ser incluído por analogia com BAO isotrópico.",
+      "next_action": "Abrir recibo de custódia e reprodução de referência."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-CMB-BMODES-MAGNETOOPTICAL",
+      "kind": "observation",
+      "domain": "propagation",
+      "observable": "B-modes e efeitos magneto-ópticos dependentes de frequência",
+      "state": "TOKEN_VAZIO",
+      "priority": "P2",
+      "observation_class": "propagation",
+      "source_status": "Não há previsão física RLL, seleção experimental ou likelihood de polarização materializados.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_BMODES_MAGNETOOPTICAL"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Definir previsão de polarização/frequência e parâmetro físico identificável.",
+        "Materializar dados, sistemáticos e likelihood de B-modes.",
+        "Testar nulls multifrequência antes de qualquer combinação."
+      ],
+      "dependencies": [],
+      "claim_boundary": "Este nó não entra na evidência cosmológica conjunta enquanto for uma hipótese de propagação não medida.",
+      "next_action": "Escrever o contrato de predição e o teste nulo multifrequência."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-ADVERSARY-FAIRNESS",
+      "kind": "observation",
+      "domain": "comparison",
+      "observable": "Comparação justa com ΛCDM, CPL, GEDE, Anton-Schmidt, EFT/MG e plasma padrão",
+      "state": "TOKEN_VAZIO",
+      "priority": "P2",
+      "observation_class": "comparison",
+      "source_status": "Há baselines parciais, mas não um desenho adversarial que imponha os mesmos dados, priors, nuisance, cortes e backend.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_ADVERSARY_FAIRNESS"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Fixar o mesmo vetor de dados, prior, nuisance, máscara e critério de evidência para todos os modelos.",
+        "Separar plasma padrão como classe de propagação, não como substituto automático de cosmologia.",
+        "Publicar tabela de comparabilidade e recibos por modelo."
+      ],
+      "dependencies": [
+        "MECH-COMMON-LIKELIHOOD-CONTRACT"
+      ],
+      "claim_boundary": "Comparações com likelihoods ou priors diferentes não suportam ranking científico.",
+      "next_action": "Criar matriz de modelos e contrato de paridade experimental."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-FRB-CHIME-CAT2",
+      "kind": "observation",
+      "domain": "propagation",
+      "observable": "CHIME/FRB: dispersão, resíduo nu^-2 e dependência de frequência",
+      "state": "TOKEN_VAZIO",
+      "priority": "P2",
+      "observation_class": "propagation",
+      "source_status": "Não há catálogo congelado, modelo de seleção, predição RLL de propagação ou likelihood de resíduos.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_FRB_CHIME_CAT2_NU_MINUS_2"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Congelar catálogo, calibração de DM e seleção de bursts.",
+        "Definir modelo de plasma/host/IGM e uma assinatura RLL distinguível.",
+        "Executar teste nulo multifrequência com likelihood de resíduos."
+      ],
+      "dependencies": [],
+      "claim_boundary": "FRB não pode ser anexado como evidência cosmológica sem o modelo de propagação e seleção.",
+      "next_action": "Produzir especificação de observável e recibo de custódia do catálogo."
+    },
+    {
+      "ready_for_joint_inference": false,
+      "current_evidence": [
+        {
+          "path": "data/governance/RLL_MODERN_VALIDATION_RECONCILIATION_20260808_V2.json",
+          "status": "authoritative_reconciliation",
+          "note": "Estado reconciliado; não é certificado científico."
+        }
+      ],
+      "id": "OBS-RM-POLARIZATION",
+      "kind": "observation",
+      "domain": "propagation",
+      "observable": "Catálogos de rotation measure e polarização",
+      "state": "TOKEN_VAZIO",
+      "priority": "P2",
+      "observation_class": "propagation",
+      "source_status": "Não há catálogo, modelo de foreground/ionosfera nem teste de rotação RLL com covariância.",
+      "token_binding": {
+        "mode": "UNBOUND_TOKEN_VAZIO",
+        "tokens": [
+          "TOKEN_VAZIO_TOPOLOGY_RM_POLARIZATION_CATALOG"
+        ],
+        "queue_effect": "topology_only"
+      },
+      "required_gates": [
+        "Congelar catálogo e calibração instrumental/ionosférica.",
+        "Modelar foregrounds, redshift e seleção de fonte.",
+        "Definir assinatura previsível distinta de plasma padrão."
+      ],
+      "dependencies": [],
+      "claim_boundary": "Rotation measures não são evidência de mecanismo RLL sem uma previsão falsificável.",
+      "next_action": "Definir o teste de rotação e a covariância de foreground."
+    }
+  ],
+  "topological_edges": [
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "relation": "must_precede",
+      "why": "A junção de CMB/crescimento/lenteamento precisa de predição física auditável."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-BAO-DESI-DR2",
+      "relation": "shares_likelihood_contract",
+      "why": "Vetor/covariância/semântica DESI devem ser congelados no contrato comum."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-SN-PANTHEON-PLUS",
+      "relation": "shares_likelihood_contract",
+      "why": "Nuisance e sobreposição entram na combinação somente de modo rastreável."
+    },
+    {
+      "from": "OBS-SN-PANTHEON-PLUS",
+      "to": "OBS-H0-SHOES",
+      "relation": "requires",
+      "why": "A combinação precisa de auditoria explícita de sobreposição da escada de distância."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-H0-SHOES",
+      "relation": "shares_likelihood_contract",
+      "why": "Priors e correlações H0-rd devem ser comuns e auditáveis."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-HZ-COSMIC-CHRONOMETERS",
+      "relation": "shares_likelihood_contract",
+      "why": "A covariância sistemática H(z) é parte do contrato, não um erro diagonal opcional."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-GROWTH-FSIGMA8",
+      "relation": "requires",
+      "why": "fσ8 exige evolução linear RLL fisicamente fechada."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-GROWTH-FSIGMA8",
+      "relation": "shares_likelihood_contract",
+      "why": "RSD, AP, fiducial e covariância precisam de semântica comum."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-LSS-DES-Y6-3X2PT",
+      "relation": "requires",
+      "why": "Lenteamento e crescimento exigem potenciais e perturbações RLL."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-LSS-DES-Y6-3X2PT",
+      "relation": "shares_likelihood_contract",
+      "why": "Cortes e nuisance de 3x2pt não podem ser implícitos."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-CMB-PLANCK-PR4-TTTEEE",
+      "relation": "requires",
+      "why": "TT/TE/EE requer transfer functions RLL."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-CMB-PLANCK-PR4-TTTEEE",
+      "relation": "shares_likelihood_contract",
+      "why": "Likelihood e nuisance espectrais precisam de contrato comum."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-CMB-ACT-DR6-TTTEEE",
+      "relation": "requires",
+      "why": "A previsão RLL CMB não é fornecida por distance priors."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-CMB-ACT-DR6-TTTEEE",
+      "relation": "shares_likelihood_contract",
+      "why": "Posterior e nuisance devem ser reproduzíveis."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-CMB-LENSING-ACT-PLANCK-SPT",
+      "relation": "requires",
+      "why": "Lenteamento CMB exige potenciais RLL."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-CMB-LENSING-ACT-PLANCK-SPT",
+      "relation": "shares_likelihood_contract",
+      "why": "Cross-covariâncias precisam de regra explícita."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-CMB-SPT3G-D1-TTTEEE",
+      "relation": "requires",
+      "why": "SPT-3G também requer transfer functions RLL."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-CMB-SPT3G-D1-TTTEEE",
+      "relation": "shares_likelihood_contract",
+      "why": "Cortes/nuisance devem ser fixados antes da comparação."
+    },
+    {
+      "from": "OBS-BAO-DESI-DR2",
+      "to": "OBS-DESI-DR2-LYA-FULLSHAPE",
+      "relation": "must_precede",
+      "why": "A semântica do BAO DESI e seus cross-blocks deve ser resolvida antes de combinar Lyα."
+    },
+    {
+      "from": "MECH-RLL-LINEAR-PERTURBATION-CLOSURE",
+      "to": "OBS-DESI-DR2-LYA-FULLSHAPE",
+      "relation": "requires",
+      "why": "Full-shape requer predição de crescimento e transferência."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-DESI-DR2-LYA-FULLSHAPE",
+      "relation": "shares_likelihood_contract",
+      "why": "Mocks, contaminantes e covariâncias requerem contrato explícito."
+    },
+    {
+      "from": "MECH-COMMON-LIKELIHOOD-CONTRACT",
+      "to": "OBS-ADVERSARY-FAIRNESS",
+      "relation": "requires",
+      "why": "Paridade de dados/prior/nuisance depende do contrato comum."
+    }
+  ],
+  "promotion_gate": {
+    "scientific_claim_allowed": false,
+    "required_conditions": [
+      "Todos os nós cosmológicos relevantes devem ter fonte, vetor, covariância, nuisance, prior, backend e recibo de reprodução validados.",
+      "O nó DESI DR2 deve sair de INVALIDATED por reconciliação independente das fontes conflitantes.",
+      "O setor linear de perturbações RLL deve estar fechado e testado em backend Boltzmann.",
+      "O likelihood conjunto deve publicar regra de sobreposição/cross-covariância e reprodução independente.",
+      "Comparações adversariais devem usar exatamente os mesmos dados, priors, nuisance, cortes e critério de evidência."
+    ],
+    "safe_current_conclusion": "A topologia organiza lacunas e dependências; ela não demonstra ajuste completo, preferência de modelo, resolução de H0/S8 nem efeito de plasma."
+  }
+}
