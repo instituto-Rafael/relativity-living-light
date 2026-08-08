@@ -1,6 +1,6 @@
 {
   "schema": "rll.open_work_mechanism_registry_delta.v1",
-  "generated_at": "2026-08-08T05:51:00Z",
+  "generated_at": "2026-08-08T05:58:00Z",
   "base_registry": "data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_20260808_V1.json",
   "source_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V3_APPEND_ONLY",
   "claim_allowed": false,
@@ -19,6 +19,20 @@
       "classification": "PRIMARY_PAPER_NUMERIC_PROVENANCE_AND_MATRIX_MAPPING_VERIFIED",
       "evidence_path": "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_20260808_V1.json",
       "closure_override_path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V3.json"
+    }
+  ],
+  "attention_overrides": [
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "attention_state": "ACTIVE_EXTERNAL_AVAILABLE",
+      "reason": "Official DESI DR2 cosmology products and the current released Cobaya BAO likelihood are publicly available; local immutable materialization/reference reproduction is still pending.",
+      "evidence_path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"
+    },
+    {
+      "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "attention_state": "ACTIVE_EXTERNAL_PARTIAL",
+      "reason": "Official DES Y6 3x2pt results and some Y6 cosmology products are public, while exact executable likelihood/covariance/nuisance custody remains to be materialized in RLL.",
+      "evidence_path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"
     }
   ],
   "mechanism_enrichments": [
@@ -50,8 +64,9 @@
   "invariants": [
     "The base 14-token mechanism registry remains immutable historical custody.",
     "Only tokens proven RESOLVED in the V3 reconciliation are removed from the effective open queue.",
+    "Attention may be sharpened by new evidence without pretending that an OPEN token is resolved.",
     "Mechanism enrichment does not change a token state from OPEN to RESOLVED.",
-    "Every spec_path must exist and remain claim_allowed=false.",
+    "Every evidence_path/spec_path must exist and preserve claim_allowed=false.",
     "No currently open token may disappear from the effective queue."
   ]
 }
