@@ -41,6 +41,40 @@ class OpenWorkMechanismGateV2Tests(unittest.TestCase):
             },
         )
 
+    def test_external_availability_sharpens_attention_without_closing_tokens(self):
+        result = validate(ROOT, DELTA)
+        self.assertEqual(
+            result.attention_overrides["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"],
+            "ACTIVE_EXTERNAL_AVAILABLE",
+        )
+        self.assertEqual(
+            result.attention_overrides["TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD"],
+            "ACTIVE_EXTERNAL_PARTIAL",
+        )
+        queue = {row["token"]: row for row in result.urgent_queue}
+        self.assertEqual(
+            queue["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]["attention_state"],
+            "ACTIVE_EXTERNAL_AVAILABLE",
+        )
+        self.assertEqual(
+            queue["TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD"]["attention_state"],
+            "ACTIVE_EXTERNAL_PARTIAL",
+        )
+
+    def test_invalid_attention_override_fails_closed(self):
+        payload = json.loads(json.dumps(self.base_delta))
+        payload["attention_overrides"][0]["attention_state"] = "IGNORED"
+        result = self.validate_mutation(payload)
+        self.assertEqual(result.decision, "BLOCKED")
+        self.assertTrue(any("unsupported attention override" in error for error in result.errors))
+
+    def test_attention_override_requires_evidence(self):
+        payload = json.loads(json.dumps(self.base_delta))
+        payload["attention_overrides"][0]["evidence_path"] = "artifacts/science/external/DOES_NOT_EXIST.json"
+        result = self.validate_mutation(payload)
+        self.assertEqual(result.decision, "BLOCKED")
+        self.assertTrue(any("attention evidence_path does not exist" in error for error in result.errors))
+
     def test_cannot_drop_an_open_token_by_listing_it_resolved(self):
         payload = json.loads(json.dumps(self.base_delta))
         payload["resolved_by_evidence"].append(
