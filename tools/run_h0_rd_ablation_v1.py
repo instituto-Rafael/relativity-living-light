@@ -32,7 +32,8 @@ if str(ROOT) not in sys.path:
 from data.pipelines.structure_d import joint_real_likelihood as joint  # noqa: E402
 
 MATRIX = ROOT / "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json"
-SCHEMA = "rll.h0_rd_ablation_execution.v1"
+SCHEMA = "rll.h0_rd_ablation_execution.v2"
+CONVERGED_OBJECTIVE_GAP_MAX = 5.0e-2
 
 CANONICAL_STARTS: dict[str, np.ndarray] = {
     joint.MODEL_LCDM: np.asarray([68.0, 0.30, 0.70, 0.0224, 0.80]),
@@ -190,6 +191,44 @@ def starts_for(model: str, spec: dict[str, Any]) -> list[np.ndarray]:
     return unique
 
 
+def _record_attempt(
+    method: str,
+    start_index: int,
+    result: Any,
+    model: str,
+    inputs: dict[str, Any],
+    spec: dict[str, Any],
+    runtime_seconds: float,
+) -> dict[str, Any]:
+    total, components = objective(model, np.asarray(result.x, dtype=float), inputs, spec)
+    return {
+        "method": method,
+        "start_index": int(start_index),
+        "success": bool(result.success),
+        "message": str(result.message),
+        "iterations": int(getattr(result, "nit", 0)),
+        "function_evaluations": int(getattr(result, "nfev", 0)),
+        "runtime_seconds": float(runtime_seconds),
+        "vector": [float(x) for x in result.x],
+        "objective_total": float(total),
+        "components": components,
+    }
+
+
+def select_best_attempt(attempts: Sequence[dict[str, Any]]) -> tuple[dict[str, Any], float, bool]:
+    finite = [row for row in attempts if math.isfinite(float(row["objective_total"]))]
+    if not finite:
+        raise RuntimeError("no finite optimization attempt")
+    best_any = min(finite, key=lambda row: float(row["objective_total"]))
+    converged = [row for row in finite if bool(row["success"])]
+    if not converged:
+        return best_any, math.inf, False
+    best_converged = min(converged, key=lambda row: float(row["objective_total"]))
+    gap = float(best_converged["objective_total"] - best_any["objective_total"])
+    accepted = gap <= CONVERGED_OBJECTIVE_GAP_MAX
+    return best_converged if accepted else best_any, gap, accepted
+
+
 def fit_model(
     model: str,
     inputs: dict[str, Any],
@@ -202,29 +241,35 @@ def fit_model(
     attempts: list[dict[str, Any]] = []
     for index, start in enumerate(starts_for(model, spec)):
         began = time.perf_counter()
-        result = minimize(
+        lbfgs = minimize(
             lambda values: objective(model, np.asarray(values, dtype=float), inputs, spec)[0],
             start,
             method="L-BFGS-B",
             bounds=bounds,
-            options={"maxiter": int(maxiter), "ftol": float(ftol), "maxls": 40},
+            options={"maxiter": int(maxiter), "ftol": float(ftol), "maxls": 60},
         )
-        total, components = objective(model, np.asarray(result.x, dtype=float), inputs, spec)
-        attempts.append({
-            "start_index": index,
-            "success": bool(result.success),
-            "message": str(result.message),
-            "iterations": int(result.nit),
-            "function_evaluations": int(result.nfev),
-            "runtime_seconds": float(time.perf_counter() - began),
-            "vector": [float(x) for x in result.x],
-            "objective_total": float(total),
-            "components": components,
-        })
-    finite = [row for row in attempts if math.isfinite(row["objective_total"])]
-    if not finite:
-        raise RuntimeError(f"no finite optimization result for {spec['run_id']} {model}")
-    best = min(finite, key=lambda row: row["objective_total"])
+        attempts.append(_record_attempt("L-BFGS-B", index, lbfgs, model, inputs, spec, time.perf_counter() - began))
+
+        if not lbfgs.success:
+            began = time.perf_counter()
+            powell = minimize(
+                lambda values: objective(model, np.asarray(values, dtype=float), inputs, spec)[0],
+                np.asarray(lbfgs.x, dtype=float),
+                method="Powell",
+                bounds=bounds,
+                options={
+                    "maxiter": max(400, int(maxiter) * 4),
+                    "xtol": 1.0e-5,
+                    "ftol": max(float(ftol), 1.0e-9),
+                },
+            )
+            attempts.append(_record_attempt("Powell_fallback", index, powell, model, inputs, spec, time.perf_counter() - began))
+
+    try:
+        best, convergence_gap, accepted = select_best_attempt(attempts)
+    except RuntimeError as exc:
+        raise RuntimeError(f"{spec['run_id']} {model}: {exc}") from exc
+
     vector = np.asarray(best["vector"], dtype=float)
     runtime = joint._model_runtime(model, vector)
     ob_h2 = float(runtime[3])
@@ -250,7 +295,9 @@ def fit_model(
         "chi2_H0_conditioning": float(best["components"]["H0_conditioning"]),
         "objective_total": float(best["objective_total"]),
         "boundary_hits": boundary_hits,
-        "best_attempt_success": bool(best["success"]),
+        "best_attempt_success": bool(accepted),
+        "selected_method": best["method"],
+        "converged_objective_gap": convergence_gap,
         "converged_attempts": sum(bool(row["success"]) for row in attempts),
         "attempt_count": len(attempts),
         "attempts": attempts,
@@ -296,13 +343,14 @@ def run_cell(
 
 
 def write_csvs(output_dir: Path, cells: list[dict[str, Any]], nobs: int) -> list[str]:
+    output_dir = output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     paths: list[str] = []
     fields = [
         "model", "chi2", "AIC", "AICc", "BIC", "N", "k", "dof",
         "H0_policy", "rd_policy", "H0", "rd", "Os0", "Delta_AICc_RLL_CPL",
         "Delta_BIC_RLL_CPL", "claim_status", "chi2_data", "chi2_H0_conditioning",
-        "information_criteria_authoritative",
+        "information_criteria_authoritative", "best_attempt_success", "selected_method",
     ]
     for cell in cells:
         path = output_dir / f"{cell['run_id']}.csv"
@@ -334,6 +382,8 @@ def write_csvs(output_dir: Path, cells: list[dict[str, Any]], nobs: int) -> list
                 "chi2_data": result["chi2_data"],
                 "chi2_H0_conditioning": result["chi2_H0_conditioning"],
                 "information_criteria_authoritative": cell["policy_role"]["information_criteria_authoritative"],
+                "best_attempt_success": result["best_attempt_success"],
+                "selected_method": result["selected_method"],
             })
         cpl = next(row for row in rows if row["model"] == joint.MODEL_CPL)
         rll = next(row for row in rows if row["model"] == joint.MODEL_RLL)
@@ -343,11 +393,11 @@ def write_csvs(output_dir: Path, cells: list[dict[str, Any]], nobs: int) -> list
             writer = csv.DictWriter(handle, fieldnames=fields)
             writer.writeheader()
             writer.writerows(rows)
-        paths.append(str(path.relative_to(ROOT)))
+        paths.append(str(path.resolve().relative_to(ROOT.resolve())))
     return paths
 
 
-def build(output: Path, output_dir: Path, *, maxiter: int = 60, ftol: float = 1.0e-8) -> dict[str, Any]:
+def build(output: Path, output_dir: Path, *, maxiter: int = 180, ftol: float = 1.0e-9) -> dict[str, Any]:
     matrix = load_matrix()
     inputs = joint.load_joint_inputs()
     began = time.perf_counter()
@@ -358,9 +408,24 @@ def build(output: Path, output_dir: Path, *, maxiter: int = 60, ftol: float = 1.
         math.isfinite(cell["models"][model]["objective_total"])
         for cell in cells for model in joint.MODEL_ORDER
     )
+    all_converged = all(
+        bool(cell["models"][model]["best_attempt_success"])
+        for cell in cells for model in joint.MODEL_ORDER
+    )
+    state = (
+        "VERIFIED_INTERNAL_H0_RD_SENSITIVITY"
+        if all_finite and all_converged
+        else "TOKEN_VAZIO_OPTIMIZATION_CONVERGENCE"
+    )
+    successors = [
+        "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+    ]
+    if not all_converged:
+        successors.insert(0, "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE")
     payload = {
         "schema": SCHEMA,
-        "state": "VERIFIED_INTERNAL_H0_RD_SENSITIVITY" if all_finite else "TOKEN_VAZIO_NUMERICAL_EXECUTION",
+        "state": state,
         "claim_allowed": False,
         "publication_ready": False,
         "matrix_path": str(MATRIX.relative_to(ROOT)),
@@ -374,26 +439,22 @@ def build(output: Path, output_dir: Path, *, maxiter: int = 60, ftol: float = 1.
         "interpretation": {
             "six_cells_executed": len(cells) == 6,
             "models_per_cell": len(joint.MODEL_ORDER),
+            "all_best_fits_converged": all_converged,
             "planck_h0_is_independent_of_planck_cmb_shift": False,
             "primary_external_h0_source_receipts_frozen": False,
             "derived_rd_is_full_boltzmann_recombination_solution": False,
         },
-        "scientific_boundary": "This closes only the internal six-cell sensitivity computation. Planck H0 conditioning overlaps the existing Planck CMB-shift term, external H0 primary-source receipts are not frozen here, and derived r_d uses the repository approximation rather than a full recombination/Boltzmann solver. No H0-tension-resolution or model-evidence claim is authorized.",
+        "scientific_boundary": "This closes only the internal six-cell sensitivity computation when all 24 best fits pass the convergence gate. Planck H0 conditioning overlaps the existing Planck CMB-shift term, external H0 primary-source receipts are not frozen here, and derived r_d uses the repository approximation rather than a full recombination/Boltzmann solver. No H0-tension-resolution or model-evidence claim is authorized.",
         "reduces_token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
-        "successor_tokens": [
-            "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
-            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
-        ],
+        "successor_tokens": successors,
         "F_ok": [
             "All six H0/r_d cells are evaluated under one model/data implementation.",
             "Data chi2 and H0-conditioning chi2 are stored separately.",
-            "Planck overlap and derived-r_d approximation are explicit."
+            "Each fit has L-BFGS-B plus Powell fallback when needed, and terminal state requires converged best fits consistent with the best finite objective."
         ],
-        "F_gap": [
-            "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
-            "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
-        ],
+        "F_gap": successors,
         "F_next": [
+            "If optimization convergence remains open, inspect the exact cell/model receipt rather than accepting finite-but-unconverged minima.",
             "Freeze/hash primary H0 source artifacts and classify correlated versus independent terms.",
             "Replace the calibrated r_d approximation with a pinned CLASS/CAMB recombination calculation before formal H0/r_d inference."
         ],
@@ -406,15 +467,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--maxiter", type=int, default=60)
-    parser.add_argument("--ftol", type=float, default=1.0e-8)
+    parser.add_argument("--maxiter", type=int, default=180)
+    parser.add_argument("--ftol", type=float, default=1.0e-9)
     args = parser.parse_args(argv)
     try:
         payload = build(args.output, args.output_dir, maxiter=args.maxiter, ftol=args.ftol)
     except Exception as exc:
         print(f"ERROR: {type(exc).__name__}: {exc}")
         return 2
-    print(json.dumps({"state": payload["state"], "cells": len(payload["cells"]), "claim_allowed": False}, sort_keys=True))
+    print(json.dumps({
+        "state": payload["state"],
+        "cells": len(payload["cells"]),
+        "all_best_fits_converged": payload["interpretation"]["all_best_fits_converged"],
+        "claim_allowed": False,
+    }, sort_keys=True))
     return 0 if payload["state"] == "VERIFIED_INTERNAL_H0_RD_SENSITIVITY" else 3
 
 
