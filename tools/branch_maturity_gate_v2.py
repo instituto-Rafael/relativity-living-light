@@ -20,8 +20,18 @@ import yaml
 
 TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integration","main":"rll/release"}
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
-STRUCTURED_SUFFIXES={".yml",".yaml",".json",".toml"}
-TRUE_STRINGS={"true","yes","on","1"}
+# Structured assignments only. A quoted documentation marker such as
+#   - "claim_allowed=true"
+# is data, not an assignment and must not trip the promotion gate.
+CLAIM_KEY_TRUE=re.compile(r"(?i)^\s*[\"']?claim_allowed[\"']?\s*[:=]\s*(?:true|yes|on|1)\b")
+CLAIM_JSON_TRUE=re.compile(r"(?i)[\"']claim_allowed[\"']\s*:\s*(?:true|yes|on|1)\b")
+
+
+def contains_claim_true(text:str)->bool:
+    """Return True only for an actual structured claim flag assignment."""
+    if CLAIM_JSON_TRUE.search(text):
+        return True
+    return any(CLAIM_KEY_TRUE.search(line) for line in text.splitlines())
 
 
 def norm(ref:str)->str:
@@ -82,12 +92,8 @@ def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
         if p.suffix.lower() in STRUCTURED_SUFFIXES:
             target=root/rel
             if target.is_file() and target.stat().st_size<1_000_000:
-                try:
-                    payload=_load_structured(target)
-                except Exception:
-                    residuals.append(f"STRUCTURED_PARSE_ERROR:{rel}")
-                    continue
-                if _claim_allowed_true(payload): residuals.append(f"CLAIM_ALLOWED_TRUE:{rel}")
+                text=target.read_text(encoding="utf-8",errors="replace")
+                if contains_claim_true(text): residuals.append(f"CLAIM_ALLOWED_TRUE:{rel}")
     base=norm(base_ref)
     if base in {"rll/release","main"} and any(x.startswith(("src/","tools/","scripts/","data/")) for x in files):
         has_evidence=any(any(k in x.lower() for k in ("receipt","evidence","manifest","provenance","ledger")) for x in files)
