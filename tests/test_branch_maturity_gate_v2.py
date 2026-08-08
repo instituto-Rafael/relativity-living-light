@@ -1,5 +1,5 @@
 from pathlib import Path
-from tools.branch_maturity_gate_v2 import evaluate, valid_transition
+from tools.branch_maturity_gate_v2 import contains_claim_true, evaluate, valid_transition
 
 
 def test_topology():
@@ -15,6 +15,22 @@ def test_claim_true_in_policy_blocks(tmp_path: Path):
     data=evaluate(tmp_path,"rll/integration","rll/release",["data/state.json","artifacts/receipt.json"])
     assert data["decision"]=="BLOCKED"
     assert any(x.startswith("CLAIM_ALLOWED_TRUE") for x in data["residuals"])
+
+
+def test_yaml_and_toml_claim_assignments_still_block():
+    assert contains_claim_true("claim_allowed: true\n")
+    assert contains_claim_true("claim_allowed = true\n")
+    assert contains_claim_true('x: 1\n"claim_allowed": true\n')
+
+
+def test_quoted_documentation_marker_is_not_assignment(tmp_path: Path):
+    (tmp_path/".github").mkdir()
+    path=tmp_path/".github/workflow-contract.yml"
+    path.write_text('required_markers:\n  file.md:\n    - "claim_allowed=true"\n', encoding="utf-8")
+    assert not contains_claim_true(path.read_text(encoding="utf-8"))
+    data=evaluate(tmp_path,"feature/x","rll/lab",[".github/workflow-contract.yml"])
+    assert data["decision"]=="PASS"
+    assert not any(x.startswith("CLAIM_ALLOWED_TRUE") for x in data["residuals"])
 
 
 def test_release_requires_evidence_or_gap(tmp_path: Path):
