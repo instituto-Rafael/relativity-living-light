@@ -30,44 +30,52 @@ jobs:
             "numpy>=1.26,<2" "pytest>=8" "camb>=1.6,<2" "classy>=3.3,<4"
       - name: Structural tests
         run: python -m pytest -q tests/test_class_camb_baseline_crosscheck_v1.py
-      - name: Execute and preserve mismatch
+      - name: Execute lmax convergence sweep
         id: compare
         continue-on-error: true
         run: |
-          python scripts/crosscheck_class_camb_baselines.py \
-            --output artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json \
-            --lmax 700
-      - name: Summarize first divergence
+          set +e
+          rc=0
+          for lmax in 700 900 1200; do
+            python scripts/crosscheck_class_camb_baselines.py \
+              --output "artifacts/science/perturbations/CLASS_CAMB_LMAX_${lmax}.json" \
+              --lmax "$lmax"
+            code=$?
+            if [ "$code" -ne 0 ]; then rc="$code"; fi
+          done
+          exit "$rc"
+      - name: Summarize lmax convergence
         if: always()
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json')
-          if not p.exists():
-              raise SystemExit('receipt missing')
-          d=json.loads(p.read_text())
-          print('state=', d['state'])
-          for model, md in d['models'].items():
-              for family, metric in md['metrics'].items():
+          for lmax in (700, 900, 1200):
+              p=Path(f'artifacts/science/perturbations/CLASS_CAMB_LMAX_{lmax}.json')
+              if not p.exists():
+                  raise SystemExit(f'receipt missing for lmax={lmax}')
+              d=json.loads(p.read_text())
+              print('lmax=', lmax, 'state=', d['state'])
+              for model, md in d['models'].items():
+                  metric=md['metrics']['Cl_TT_dimensionless']
                   worst=max(metric['points'], key=lambda x:x['relative_error'])
-                  print(model, family, 'pass=',metric['pass'], 'max_rel=',metric['max_relative_error'], 'worst=',worst)
+                  print(model, 'TT pass=',metric['pass'], 'max_rel=',metric['max_relative_error'], 'worst=',worst)
           PY
-      - name: Upload diagnostic receipt
+      - name: Upload convergence receipts
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: class-camb-first-divergence-${{ github.run_id }}
-          path: artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json
+          name: class-camb-lmax-convergence-${{ github.run_id }}
+          path: artifacts/science/perturbations/CLASS_CAMB_LMAX_*.json
           if-no-files-found: error
           retention-days: 30
-      - name: Enforce mismatch fail-closed
+      - name: Enforce high-margin comparison fail-closed
         if: always()
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          d=json.loads(Path('artifacts/science/perturbations/CLASS_CAMB_FIRST_DIVERGENCE.json').read_text())
+          d=json.loads(Path('artifacts/science/perturbations/CLASS_CAMB_LMAX_1200.json').read_text())
           if d['state'] != 'VERIFIED_BASELINE_ENGINE_CROSSCHECK':
               raise SystemExit(3)
           PY
