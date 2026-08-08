@@ -5,6 +5,9 @@ on:
     paths:
       - "tools/audit_all_git_refs_v1.py"
       - "tests/test_all_git_refs_topology_census_v1.py"
+      - "data/governance/RLL_DIVERGED_REF_COHORT_*.json"
+      - "tools/audit_diverged_ref_patches_v1.py"
+      - "tests/test_diverged_ref_patch_equivalence_v1.py"
       - ".github/workflows/all-ref-topology-census.yml"
   workflow_dispatch:
 
@@ -31,7 +34,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Structural unit tests
-        run: python -m unittest -v tests.test_all_git_refs_topology_census_v1
+        run: |
+          python -m unittest -v \
+            tests.test_all_git_refs_topology_census_v1 \
+            tests.test_diverged_ref_patch_equivalence_v1
       - name: Execute complete current census
         run: |
           python tools/audit_all_git_refs_v1.py \
@@ -59,12 +65,34 @@ jobs:
               'claim_allowed': False,
           }, sort_keys=True))
           PY
-      - name: Upload complete census receipt
+      - name: Audit frozen diverged cohort by patch equivalence
+        run: |
+          python tools/audit_diverged_ref_patches_v1.py \
+            --cohort data/governance/RLL_DIVERGED_REF_COHORT_20260808_V1.json \
+            --baseline refs/remotes/origin/main \
+            --output artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json
+          sha256sum artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json \
+            > artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json').read_text())
+          s=d['summary']
+          assert d['claim_allowed'] is False
+          assert s['cohort_size'] == 35
+          assert s['missing_or_non_commit_refs'] == 0
+          assert s['refs_with_unique_patches'] + s['refs_without_unique_patch_after_equivalence'] == 35
+          assert d['candidate_transition'] == 'REDUCED_PATCH_EQUIVALENCE_COMPLETE'
+          print(json.dumps(s, sort_keys=True))
+          PY
+      - name: Upload complete census and patch-equivalence receipts
         uses: actions/upload-artifact@v7
         with:
           name: all-ref-topology-census-${{ github.run_id }}
           path: |
             artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.json
             artifacts/audit/ALL_GIT_REFS_TOPOLOGY_CENSUS_CURRENT.sha256
+            artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.json
+            artifacts/audit/DIVERGED_REF_PATCH_EQUIVALENCE_CURRENT.sha256
           if-no-files-found: error
           retention-days: 30
