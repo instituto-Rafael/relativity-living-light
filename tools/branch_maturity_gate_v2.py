@@ -14,7 +14,12 @@ import sys
 
 TOPOLOGY={"rll/lab":"WORK","rll/integration":"rll/lab","rll/release":"rll/integration","main":"rll/release"}
 SENSITIVE={".env","rclone.conf","id_rsa","id_ed25519","credentials.json","service-account.json"}
-CLAIM_TRUE=re.compile(r"(?i)[\"']?claim_allowed[\"']?\s*[:=]\s*(?:true|yes|on|1)\b")
+# YAML/TOML scalar assignment only. Anchoring at the beginning of a logical line
+# prevents documentation strings such as '- "claim_allowed=true"' from being
+# mistaken for an executable governance field.
+CLAIM_TRUE_ASSIGNMENT=re.compile(
+    r"(?im)^\s*[\"']?claim_allowed[\"']?\s*[:=]\s*(?:true|yes|on|1)\s*(?:#.*)?$"
+)
 
 
 def norm(ref:str)->str:
@@ -34,6 +39,32 @@ def changed(base_sha:str,head_sha:str)->list[str]:
     return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
 
 
+def _json_has_claim_true(value:object)->bool:
+    if isinstance(value,dict):
+        for key,item in value.items():
+            if str(key).lower()=="claim_allowed" and item is True:
+                return True
+            if _json_has_claim_true(item):
+                return True
+    elif isinstance(value,list):
+        return any(_json_has_claim_true(item) for item in value)
+    return False
+
+
+def file_has_claim_true(path:Path)->bool:
+    """Detect actual claim_allowed=true fields, not quoted documentation text."""
+    text=path.read_text(encoding="utf-8",errors="replace")
+    suffix=path.suffix.lower()
+    if suffix==".json":
+        try:
+            return _json_has_claim_true(json.loads(text))
+        except json.JSONDecodeError:
+            # Invalid JSON is handled by other architecture/YAML gates; remain
+            # fail-closed here only if an explicit assignment is still visible.
+            return bool(CLAIM_TRUE_ASSIGNMENT.search(text))
+    return bool(CLAIM_TRUE_ASSIGNMENT.search(text))
+
+
 def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
     residuals=[]
     if not valid_transition(head_ref,base_ref): residuals.append("INVALID_BRANCH_TRANSITION")
@@ -44,9 +75,8 @@ def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
         if low.startswith(("tests/","docs/","fixtures/","examples/")): continue
         if p.suffix.lower() in {".yml",".yaml",".json",".toml"}:
             target=root/rel
-            if target.is_file() and target.stat().st_size<1_000_000:
-                text=target.read_text(encoding="utf-8",errors="replace")
-                if CLAIM_TRUE.search(text): residuals.append(f"CLAIM_ALLOWED_TRUE:{rel}")
+            if target.is_file() and target.stat().st_size<1_000_000 and file_has_claim_true(target):
+                residuals.append(f"CLAIM_ALLOWED_TRUE:{rel}")
     base=norm(base_ref)
     if base in {"rll/release","main"} and any(x.startswith(("src/","tools/","scripts/","data/")) for x in files):
         has_evidence=any(any(k in x.lower() for k in ("receipt","evidence","manifest","provenance","ledger")) for x in files)
