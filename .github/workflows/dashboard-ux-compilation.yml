@@ -1,3 +1,4 @@
+# Dashboard UX Compilation Pipeline - Automated build and validation
 name: 🚀 Dashboard UX Compilation Pipeline
 
 on:
@@ -153,7 +154,7 @@ jobs:
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
-        run: npm ci --prefer-offline --no-audit
+        run: npm install --legacy-peer-deps
 
       - name: 🧪 Run tests
         working-directory: apps/dashboard
@@ -184,7 +185,7 @@ jobs:
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
-        run: npm ci --prefer-offline --no-audit
+        run: npm install --legacy-peer-deps
 
       - name: "Gate 1: TypeScript Strict Mode"
         working-directory: apps/dashboard
