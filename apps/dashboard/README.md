@@ -198,3 +198,4 @@ Para problemas ou dúvidas, abra uma issue no repositório.
 ---
 
 **Desenvolvido com ❤️ para Relativity Living Light**
+# CI/CD Pipeline Active
