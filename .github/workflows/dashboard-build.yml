@@ -11,14 +11,13 @@ on:
     paths:
       - 'apps/dashboard/**'
 
-env:
-  WORKING_DIR: apps/dashboard
-
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    working-directory: ${{ env.WORKING_DIR }}
+    defaults:
+      run:
+        working-directory: apps/dashboard
 
     steps:
       - uses: actions/checkout@v4
