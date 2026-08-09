@@ -11,10 +11,14 @@ on:
     paths:
       - 'apps/dashboard/**'
 
+env:
+  WORKING_DIR: apps/dashboard
+
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    working-directory: ${{ env.WORKING_DIR }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,18 +28,14 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        working-directory: apps/dashboard
         run: npm install --legacy-peer-deps
 
       - name: Type check
-        working-directory: apps/dashboard
         run: npx tsc --noEmit
 
       - name: Build
-        working-directory: apps/dashboard
         run: npm run build
 
       - name: Verify build output
-        working-directory: apps/dashboard
         run: |
-          [ -f dist/index.html ] && echo "OK Build succeeded" || exit 1
+          [ -f dist/index.html ] && echo "Build succeeded" || exit 1
