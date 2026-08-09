@@ -1,0 +1,631 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔨 BUILD & UX COMPILATION PIPELINE - Dashboard Modern & Fluid
+# ═══════════════════════════════════════════════════════════════════════════════
+# Este arquivo YAML compila e otimiza a UX moderna com conceitos profissionais
+# de bundling, minificação, code-splitting e distribuição.
+
+build_pipeline:
+  name: "UX Compilation Pipeline - Dashboard Relativity"
+  version: "1.0.0"
+  description: "Compilação profissional da UX moderna, fluida e avançada"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 1: SETUP & VALIDAÇÃO - Preparação
+# ═══════════════════════════════════════════════════════════════════════════════
+setup:
+  name: "Setup & Environment Validation"
+  order: 1
+
+  environment:
+    NODE_VERSION: "20.11.0"
+    NPM_VERSION: "10.2.0"
+    VITE_VERSION: "5.0.0"
+    REACT_VERSION: "19.0.0"
+    TYPESCRIPT_VERSION: "5.3.0"
+
+  pre_build_checks:
+    - name: "Node.js Version"
+      command: "node --version"
+      expected: "v20.11.0"
+      critical: true
+
+    - name: "npm Version"
+      command: "npm --version"
+      expected: "10.2.0"
+      critical: true
+
+    - name: "Disk Space"
+      command: "df -h | grep -E '/$|/home'"
+      expected: "At least 2GB free"
+      critical: true
+
+    - name: "Memory Available"
+      command: "free -h"
+      expected: "At least 4GB RAM"
+      critical: true
+
+  setup_steps:
+    - step: "Clean previous build"
+      command: "rm -rf dist node_modules .vite"
+      cache_invalidate: true
+
+    - step: "Install dependencies"
+      command: "npm ci --prefer-offline --no-audit"
+      timeout_seconds: 600
+      retry_count: 3
+
+    - step: "List installed packages"
+      command: "npm list --depth=0"
+      verbose: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 2: VALIDAÇÃO - TypeScript & Integridade
+# ═══════════════════════════════════════════════════════════════════════════════
+validation:
+  name: "Pre-Build Validation"
+  order: 2
+  parallel: false
+
+  type_checking:
+    name: "TypeScript Type Checking"
+    command: "npx tsc --noEmit"
+    config: "tsconfig.json"
+    options:
+      - "--strict"
+      - "--noImplicitAny"
+      - "--strictNullChecks"
+      - "--strictFunctionTypes"
+      - "--noUnusedLocals"
+      - "--noUnusedParameters"
+      - "--noImplicitReturns"
+    timeout_seconds: 120
+    critical: true
+    output: "TypeScript validation report"
+
+  linting:
+    name: "ESLint Validation"
+    command: "npx eslint src --ext ts,tsx"
+    config: ".eslintrc.json"
+    severity: "warning"
+    output: "Linting report"
+    auto_fix: false
+
+  format_check:
+    name: "Code Format Check"
+    command: "npx prettier --check src/"
+    format: "prettier"
+    critical: false
+    output: "Format report"
+
+  dependency_audit:
+    name: "Security Audit"
+    command: "npm audit --audit-level=moderate"
+    output: "Audit report"
+    critical: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 3: COMPILATION - Vite Build Process
+# ═══════════════════════════════════════════════════════════════════════════════
+compilation:
+  name: "Vite Build Compilation"
+  order: 3
+  parallel: false
+
+  build_command: "npm run build"
+
+  vite_config:
+    file: "vite.config.ts"
+    target: "esnext"
+    format: "es"
+    module_resolution: "bundler"
+
+  optimization:
+    minify: "terser"
+    sourcemap: false
+    production: true
+
+    treeshaking:
+      enabled: true
+      moduleSideEffects: false
+      preset: "recommended"
+
+    code_splitting:
+      enabled: true
+      strategy: "auto"
+
+      chunks:
+        - name: "vendor"
+          test: "node_modules"
+          priority: 10
+
+        - name: "react-core"
+          test: "react|react-dom"
+          priority: 20
+
+        - name: "ui-components"
+          test: "components/ui"
+          priority: 15
+
+        - name: "charts"
+          test: "recharts"
+          priority: 12
+
+        - name: "i18n"
+          test: "i18n|i18next"
+          priority: 11
+
+        - name: "common"
+          test: "common|utils|types"
+          priority: 5
+
+    asset_optimization:
+      images:
+        - format: "webp"
+          quality: 80
+          width: [320, 640, 1280]
+
+        - format: "avif"
+          quality: 75
+          width: [320, 640, 1280]
+
+      fonts:
+        - subset: "latin"
+          weight: [400, 600, 700]
+
+      css:
+        - minify: true
+        - purge: true
+        - critical: true
+
+  output:
+    directory: "dist"
+    files:
+      - "index.html"
+      - "js/": "JavaScript bundles"
+      - "css/": "Stylesheets"
+      - "assets/": "Images & fonts"
+      - "manifest.json": "PWA manifest"
+
+  build_steps:
+    - step: 1
+      name: "Clean output directory"
+      command: "rm -rf dist"
+      timeout_seconds: 10
+
+    - step: 2
+      name: "Compile TypeScript"
+      command: "npx tsc --emitDeclarationOnly"
+      timeout_seconds: 60
+
+    - step: 3
+      name: "Bundle with Vite"
+      command: "npx vite build --mode production"
+      timeout_seconds: 300
+      critical: true
+      env:
+        NODE_ENV: "production"
+        VITE_DEFINE_PRODUCTION: true
+
+    - step: 4
+      name: "Generate source maps for analysis"
+      command: "npx vite build --mode production --sourcemap"
+      timeout_seconds: 300
+      optional: true
+
+    - step: 5
+      name: "Verify dist output"
+      command: "ls -lh dist/ && find dist -type f | wc -l"
+      timeout_seconds: 10
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 4: ANÁLISE & OTIMIZAÇÃO - Post-Build Analysis
+# ═══════════════════════════════════════════════════════════════════════════════
+analysis:
+  name: "Build Analysis & Optimization"
+  order: 4
+  parallel: true
+
+  bundle_analysis:
+    name: "Bundle Size Analysis"
+
+    measurements:
+      - name: "Total size"
+        command: "du -sh dist"
+
+      - name: "By format"
+        command: "find dist -type f | sort | xargs ls -lh"
+
+      - name: "Gzipped size"
+        command: "find dist -type f -exec gzip -c {} \\; | wc -c"
+
+      - name: "Brotli size"
+        command: "find dist -type f -exec brotli {} \\; | wc -c"
+
+    targets:
+      - metric: "total_size_kb"
+        max: 300  # 300 KB
+        warn: 280  # 280 KB
+        target: 250  # 250 KB (ideal)
+
+      - metric: "vendor_size_kb"
+        max: 150
+        target: 100
+
+      - metric: "app_size_kb"
+        max: 100
+        target: 50
+
+      - metric: "css_size_kb"
+        max: 50
+        target: 30
+
+    report_file: "bundle-analysis.json"
+
+  performance_audit:
+    name: "Performance Metrics"
+
+    metrics:
+      - name: "Build time"
+        unit: "seconds"
+        max: 300  # 5 minutos
+        target: 120  # 2 minutos
+
+      - name: "File count"
+        unit: "files"
+        max: 50
+
+      - name: "Chunk count"
+        unit: "chunks"
+        max: 10
+
+      - name: "CSS files"
+        unit: "files"
+        max: 3
+
+      - name: "JS files"
+        unit: "files"
+        max: 8
+
+  compression_analysis:
+    name: "Compression Ratios"
+
+    formats:
+      - format: "gzip"
+        level: 9
+        expected_ratio: "75%"  # 75% compression
+
+      - format: "brotli"
+        level: 11
+        expected_ratio: "72%"  # 72% compression
+
+      - format: "zstd"
+        level: 19
+        expected_ratio: "70%"  # 70% compression
+
+  lighthouse_audit:
+    name: "Lighthouse Audit"
+    disabled: true  # Requer servidor rodando
+
+    metrics:
+      - "Performance"
+      - "Accessibility"
+      - "Best Practices"
+      - "SEO"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 5: TESTES - Validação da Compilação
+# ═══════════════════════════════════════════════════════════════════════════════
+testing:
+  name: "Build Validation Tests"
+  order: 5
+  parallel: true
+
+  smoke_tests:
+    name: "Smoke Tests"
+
+    tests:
+      - name: "index.html exists"
+        command: "test -f dist/index.html"
+        critical: true
+
+      - name: "main.js exists"
+        command: "test -f dist/index.html && grep -q 'src=' dist/index.html"
+        critical: true
+
+      - name: "CSS compiled"
+        command: "find dist -name '*.css' | wc -l | grep -q [1-9]"
+        critical: true
+
+      - name: "No .map files in production"
+        command: "! find dist -name '*.map' | grep -q ."
+        critical: false
+
+  integration_tests:
+    name: "Integration Tests"
+    command: "npm run test"
+    timeout_seconds: 300
+    critical: false
+    coverage_min: 80
+
+  build_reproducibility:
+    name: "Build Reproducibility"
+    steps:
+      - "rm -rf dist"
+      - "npm run build"
+      - "find dist -type f -exec md5sum {} \\; > build1.txt"
+      - "rm -rf dist"
+      - "npm run build"
+      - "find dist -type f -exec md5sum {} \\; > build2.txt"
+      - "diff build1.txt build2.txt"
+    expected: "Identical builds"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 6: ARTEFATOS - Geração & Empacotamento
+# ═══════════════════════════════════════════════════════════════════════════════
+artifacts:
+  name: "Build Artifacts Generation"
+  order: 6
+  parallel: true
+
+  distribution_packages:
+    - name: "Standard Distribution"
+      source: "dist/"
+      format: "tar.gz"
+      compression: "gzip"
+      output: "dashboard-ux-latest.tar.gz"
+      retention_days: 30
+
+    - name: "Docker Distribution"
+      source: "dist/"
+      dockerfile: "Dockerfile.build"
+      image: "ghcr.io/instituto-rafael/dashboard-ux:latest"
+      tags:
+        - "latest"
+        - "v1.0.0"
+        - "{{ git_sha_short }}"
+      retention_days: 90
+
+    - name: "ZIP Archive"
+      source: "dist/"
+      format: "zip"
+      compression: "deflate"
+      output: "dashboard-ux-latest.zip"
+      retention_days: 30
+
+  manifest_generation:
+    - name: "Build Manifest"
+      output: "BUILD_MANIFEST.json"
+      content:
+        - build_id: "{{ BUILD_ID }}"
+        - timestamp: "{{ TIMESTAMP }}"
+        - commit: "{{ GIT_SHA }}"
+        - version: "1.0.0"
+        - files_count: "{{ FILE_COUNT }}"
+        - total_size_kb: "{{ TOTAL_SIZE }}"
+        - compression_ratio: "{{ COMPRESSION_RATIO }}"
+
+    - name: "Asset Manifest"
+      output: "ASSET_MANIFEST.json"
+      content:
+        - entrypoint: "index.html"
+        - chunks:
+            - "js/app-*.js"
+            - "js/vendor-*.js"
+            - "js/react-core-*.js"
+            - "js/charts-*.js"
+            - "js/i18n-*.js"
+        - styles:
+            - "css/main-*.css"
+        - assets:
+            - "assets/images/**"
+            - "assets/fonts/**"
+
+    - name: "Service Worker Manifest"
+      output: "sw-manifest.json"
+      for_pwa: true
+      content:
+        - precache: "Critical assets"
+        - runtime_cache: "Dynamic assets"
+        - network_first: "API calls"
+
+  security_artifacts:
+    - name: "SBOM (Software Bill of Materials)"
+      format: "cyclonedx"
+      output: "sbom.json"
+
+    - name: "Integrity Hashes"
+      output: "INTEGRITY_HASHES.txt"
+      algorithms:
+        - "sha256"
+        - "sha512"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 7: VALIDAÇÃO FINAL - Pre-Deployment Checks
+# ═══════════════════════════════════════════════════════════════════════════════
+final_validation:
+  name: "Final Validation Gates"
+  order: 7
+  parallel: false
+
+  gates:
+    - gate: "Bundle Size"
+      check: "dist_size_kb <= 300"
+      severity: "WARNING"
+      action: "Block if exceeded"
+
+    - gate: "File Integrity"
+      check: "all_files_present && no_corrupted_files"
+      severity: "CRITICAL"
+      action: "Block if failed"
+
+    - gate: "Security Audit"
+      check: "no_critical_vulnerabilities"
+      severity: "CRITICAL"
+      action: "Block if failed"
+
+    - gate: "Type Safety"
+      check: "typescript_no_errors"
+      severity: "CRITICAL"
+      action: "Block if failed"
+
+    - gate: "Performance"
+      check: "build_time_seconds <= 300"
+      severity: "WARNING"
+      action: "Warn if exceeded"
+
+    - gate: "Assets"
+      check: "all_critical_assets_present"
+      severity: "CRITICAL"
+      action: "Block if failed"
+
+  pre_deployment_checklist:
+    - "✅ dist/ directory exists"
+    - "✅ index.html is valid"
+    - "✅ All chunks are present"
+    - "✅ CSS files compiled"
+    - "✅ No source maps in production"
+    - "✅ All external URLs are HTTPS"
+    - "✅ CSP headers configured"
+    - "✅ Security headers present"
+    - "✅ PWA manifest valid"
+    - "✅ No console errors in build"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETAPA 8: DEPLOYMENT - Distribuição
+# ═══════════════════════════════════════════════════════════════════════════════
+deployment:
+  name: "Distribution & Deployment"
+  order: 8
+  parallel: false
+
+  targets:
+    - name: "Local Dev Server"
+      command: "npm run preview"
+      port: 4173
+      env: "development"
+      enabled: true
+
+    - name: "Staging"
+      command: "npm run upload:staging"
+      cdn: "staging-cdn.relativity.local"
+      cache_clear: true
+      env: "staging"
+      enabled: true
+
+    - name: "Production"
+      command: "npm run upload:production"
+      cdn: "cdn.relativity.cloud"
+      cache_clear: true
+      cache_invalidate_paths:
+        - "/"
+        - "/index.html"
+        - "/js/*"
+      env: "production"
+      enabled: false  # Requer aprovação manual
+
+  cdn_configuration:
+    provider: "CloudFlare"
+
+    cache_rules:
+      - path: "/index.html"
+        ttl: "5 minutes"
+        bypass_cache: true  # Always fresh
+
+      - path: "/js/*.js"
+        ttl: "30 days"
+        fingerprinting: true
+
+      - path: "/css/*.css"
+        ttl: "30 days"
+        fingerprinting: true
+
+      - path: "/assets/*"
+        ttl: "90 days"
+        fingerprinting: true
+
+    headers:
+      "X-Content-Type-Options": "nosniff"
+      "X-Frame-Options": "DENY"
+      "X-XSS-Protection": "1; mode=block"
+      "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+
+  rollback_plan:
+    - name: "Automated Rollback"
+      trigger: "HTTP 5xx errors > 1% OR Lighthouse score < 50"
+      action: "Revert to previous version"
+      notification: "Alert #operations"
+
+    - name: "Manual Rollback"
+      command: "npm run rollback:production"
+      confirmation: "required"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CONFIGURAÇÃO GLOBAL - Settings
+# ═══════════════════════════════════════════════════════════════════════════════
+global_config:
+  max_parallel_jobs: 4
+  retry_failed_steps: 3
+  timeout_global_seconds: 3600  # 1 hour max
+
+  environment_variables:
+    NODE_ENV: "production"
+    VITE_BUILD_DEFINE: true
+    REACT_ENV: "production"
+
+  logging:
+    level: "info"
+    format: "json"
+    output: "build.log"
+
+  notifications:
+    on_success: "Build completed successfully"
+    on_failure: "Build failed - check logs"
+    channels:
+      - "slack"
+      - "github"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMANDOS NPM - Executáveis
+# ═══════════════════════════════════════════════════════════════════════════════
+npm_scripts:
+  "build": "vite build --mode production"
+  "build:analyze": "vite build --mode production && npm run analyze"
+  "build:debug": "vite build --mode development --sourcemap"
+  "preview": "vite preview"
+  "analyze": "source-map-explorer 'dist/**/*.js'"
+  "validate": "tsc --noEmit && npm run lint"
+  "compile:ux": "npm run build && npm run analyze"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMO DA COMPILAÇÃO
+# ═══════════════════════════════════════════════════════════════════════════════
+summary:
+  total_steps: 8
+  parallel_enabled: true
+  estimated_duration_seconds: 360  # 6 minutos
+
+  deliverables:
+    - "dist/" - Distribuição pronta para produção
+    - "BUILD_MANIFEST.json" - Metadados do build
+    - "bundle-analysis.json" - Análise de bundle
+    - "sbom.json" - Bill of materials
+    - "dashboard-ux-latest.tar.gz" - Arquivo compactado
+    - "dashboard-ux-latest.zip" - Arquivo ZIP
+
+  quality_gates: 8
+  critical_gates: 5
+  warning_gates: 3
+
+  success_criteria:
+    - "Todas as 8 etapas completadas"
+    - "Bundle size <= 300 KB"
+    - "TypeScript sem erros"
+    - "Security audit passou"
+    - "Performance targets atingidos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIM DO PIPELINE DE COMPILAÇÃO
+# Este arquivo define como compilar a UX moderna com plenitude de conceitos
+# ═══════════════════════════════════════════════════════════════════════════════
