@@ -32,6 +32,9 @@ jobs:
     name: 🔨 Compile UX Modern Dashboard
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: read
 
     steps:
       - name: 📥 Checkout code
@@ -135,6 +138,8 @@ jobs:
     name: 🧪 Test UX Components
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
 
     steps:
       - name: 📥 Checkout code
@@ -164,6 +169,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [compile-ux, test-ux]
     if: always()
+    permissions:
+      contents: read
 
     steps:
       - name: 📥 Checkout code
@@ -179,46 +186,46 @@ jobs:
         working-directory: apps/dashboard
         run: npm ci --prefer-offline --no-audit
 
-      - name: 🎯 Gate 1: TypeScript Strict Mode
+      - name: "Gate 1: TypeScript Strict Mode"
         working-directory: apps/dashboard
         run: |
           echo "Checking TypeScript strict mode..."
-          npx tsc --noEmit && echo "✅ Gate 1 PASSED" || echo "❌ Gate 1 FAILED"
+          npx tsc --noEmit && echo "✓ Gate 1 PASSED" || echo "✗ Gate 1 FAILED"
 
-      - name: 🎯 Gate 2: Zero Tokens Vazios
+      - name: "Gate 2: Zero Tokens Vazios"
         run: |
           echo "Scanning for empty tokens..."
-          ! grep -r "TODO\|FIXME\|XXX\|HACK\|BUG" apps/dashboard/src --include="*.ts" --include="*.tsx" | grep -v node_modules && echo "✅ Gate 2 PASSED" || echo "⚠️ Gate 2: Issues found"
+          ! grep -r "TODO\|FIXME\|XXX\|HACK\|BUG" apps/dashboard/src --include="*.ts" --include="*.tsx" | grep -v node_modules && echo "✓ Gate 2 PASSED" || echo "⚠ Gate 2: Issues found"
 
-      - name: 🎯 Gate 3: Build Output
+      - name: "Gate 3: Build Output"
         working-directory: apps/dashboard
         run: |
           if [ -f dist/index.html ] && [ -d dist/assets ]; then
-            echo "✅ Gate 3 PASSED"
+            echo "✓ Gate 3 PASSED"
           else
-            echo "❌ Gate 3 FAILED"
+            echo "✗ Gate 3 FAILED"
             exit 1
           fi
 
-      - name: 🎯 Gate 4: Bundle Size
+      - name: "Gate 4: Bundle Size"
         working-directory: apps/dashboard
         run: |
           BUNDLE_KB=$(du -s dist | awk '{print $1}')
           MAX_KB=300000
           if [ $BUNDLE_KB -le $MAX_KB ]; then
-            echo "✅ Gate 4 PASSED - Bundle: $BUNDLE_KB KB (max: $MAX_KB KB)"
+            echo "✓ Gate 4 PASSED - Bundle: $BUNDLE_KB KB (max: $MAX_KB KB)"
           else
-            echo "❌ Gate 4 FAILED - Bundle too large: $BUNDLE_KB KB (max: $MAX_KB KB)"
+            echo "✗ Gate 4 FAILED - Bundle too large: $BUNDLE_KB KB (max: $MAX_KB KB)"
             exit 1
           fi
 
-      - name: 🎯 Gate 5: Security Audit
+      - name: "Gate 5: Security Audit"
         working-directory: apps/dashboard
         run: |
           if npm audit --audit-level=critical 2>/dev/null; then
-            echo "✅ Gate 5 PASSED - No critical vulnerabilities"
+            echo "✓ Gate 5 PASSED - No critical vulnerabilities"
           else
-            echo "⚠️ Gate 5: Vulnerabilities found (non-critical)"
+            echo "⚠ Gate 5: Vulnerabilities found (non-critical)"
           fi
 
   summary:
@@ -226,6 +233,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [compile-ux, test-ux, quality-gates]
     if: always()
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
 
     steps:
       - name: 📥 Checkout code
