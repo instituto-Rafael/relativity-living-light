@@ -51,7 +51,7 @@ jobs:
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
         run: |
-          npm ci --prefer-offline --no-audit
+          npm ci --prefer-offline --no-audit --legacy-peer-deps
           npm list --depth=0 | head -15
 
       - name: ✅ TypeScript validation
