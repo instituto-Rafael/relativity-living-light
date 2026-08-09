@@ -1,0 +1,42 @@
+name: Dashboard Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/dashboard/**'
+      - '.github/workflows/dashboard-build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/dashboard/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        working-directory: apps/dashboard
+        run: npm install --legacy-peer-deps
+
+      - name: Type check
+        working-directory: apps/dashboard
+        run: npx tsc --noEmit
+
+      - name: Build
+        working-directory: apps/dashboard
+        run: npm run build
+
+      - name: Verify build output
+        working-directory: apps/dashboard
+        run: |
+          [ -f dist/index.html ] && echo "OK Build succeeded" || exit 1
