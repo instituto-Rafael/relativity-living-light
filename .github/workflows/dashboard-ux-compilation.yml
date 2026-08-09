@@ -51,7 +51,7 @@ jobs:
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
         run: |
-          npm ci --prefer-offline --no-audit
+          npm install --legacy-peer-deps
           npm list --depth=0 | head -15
 
       - name: ✅ TypeScript validation
@@ -153,7 +153,7 @@ jobs:
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
-        run: npm ci --prefer-offline --no-audit
+        run: npm install --legacy-peer-deps
 
       - name: 🧪 Run tests
         working-directory: apps/dashboard
@@ -184,7 +184,7 @@ jobs:
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
-        run: npm ci --prefer-offline --no-audit
+        run: npm install --legacy-peer-deps
 
       - name: "Gate 1: TypeScript Strict Mode"
         working-directory: apps/dashboard
