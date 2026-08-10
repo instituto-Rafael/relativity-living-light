@@ -304,9 +304,48 @@ def audit_workflow(record: FileRecord, repo_root: Path, doc: Any, contract: dict
             finding(record, "HIGH" if managed else "MEDIUM", "JOB_TIMEOUT_MISSING", "runner job has no timeout-minutes", str(job_id))
 
         effective_permissions = mapping(job.get("permissions")) or permissions
+        always_allowed = mapping(class_policy.get("allowed_permissions"))
+        manual_allowed = mapping(class_policy.get("manual_write_permissions"))
+        security = mapping(contract.get("security"))
+        write_classes = {
+            str(value)
+            for value in list_value(
+                security.get("write_permissions_require_explicit_workflow_class")
+            )
+        }
+        job_condition = str(job.get("if", ""))
+        manual_dispatch_guarded = events == {"workflow_dispatch"} or (
+            re.search(
+                r"(?:github\.event_name\s*==\s*['\"]workflow_dispatch['\"]|"
+                r"['\"]workflow_dispatch['\"]\s*==\s*github\.event_name)",
+                job_condition,
+            )
+            is not None
+            and "||" not in job_condition
+        )
         for permission, level in effective_permissions.items():
-            if str(level).lower() == "write" and workflow_class not in {"orchestrator", "publishing"}:
-                finding(record, "ERROR" if managed else "HIGH", "JOB_WRITE_PERMISSION_UNGOVERNED", f"job grants {permission}: write outside orchestrator/publishing class", str(job_id))
+            if str(level).lower() != "write":
+                continue
+            permanently_allowed = str(always_allowed.get(permission, "none")).lower() == "write"
+            manually_allowed = str(manual_allowed.get(permission, "none")).lower() == "write"
+            class_is_explicit = workflow_class in write_classes
+            if not class_is_explicit or not (permanently_allowed or manually_allowed):
+                finding(
+                    record,
+                    "ERROR" if managed else "HIGH",
+                    "JOB_WRITE_PERMISSION_UNGOVERNED",
+                    f"job grants {permission}: write without an explicit class permission contract",
+                    str(job_id),
+                )
+                continue
+            if (manually_allowed or bool_text(class_policy.get("write_jobs_manual_dispatch_only"))) and not manual_dispatch_guarded:
+                finding(
+                    record,
+                    "ERROR" if managed else "HIGH",
+                    "WRITE_JOB_NOT_MANUAL_DISPATCH_ONLY",
+                    f"job grants {permission}: write but is not provably restricted to workflow_dispatch",
+                    str(job_id),
+                )
 
         steps = list_value(job.get("steps"))
         if not steps:
