@@ -9,6 +9,66 @@ from tools import deep_yaml_audit as mod
 
 
 class DeepYamlAuditTests(unittest.TestCase):
+    def audit_reconciliation_job(
+        self,
+        *,
+        job_if: str,
+        job_permissions: str = "      contents: write\n      pull-requests: write",
+    ) -> set[str]:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            path = root / ".github/workflows/reconcile.yml"
+            path.parent.mkdir(parents=True)
+            condition = f"    if: {job_if}\n" if job_if else ""
+            text = f"""\
+name: reconcile
+on: [pull_request, workflow_dispatch]
+permissions:
+  contents: read
+concurrency:
+  group: reconcile-${{{{ github.ref }}}}
+jobs:
+  propose:
+{condition}    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+{job_permissions}
+    steps:
+      - run: python tools/propose.py
+"""
+            path.write_text(text, encoding="utf-8")
+            record = mod.FileRecord(
+                path=".github/workflows/reconcile.yml",
+                category="github_workflow",
+                sha256="x",
+                bytes=len(text),
+                lines=len(text.splitlines()),
+            )
+            doc = mod.parse_documents(text, workflow=True)[0]
+            contract = {
+                "workflow_classes": {
+                    "reconciliation": {
+                        "default_permissions": {"contents": "read"},
+                        "manual_write_permissions": {
+                            "contents": "write",
+                            "pull-requests": "write",
+                        },
+                        "write_jobs_manual_dispatch_only": True,
+                    }
+                },
+                "managed_workflows": {
+                    record.path: {"class": "reconciliation", "require": []}
+                },
+                "security": {
+                    "write_permissions_require_explicit_workflow_class": [
+                        "orchestrator",
+                        "reconciliation",
+                    ]
+                },
+            }
+            mod.audit_workflow(record, root, doc, contract)
+            return {item.code for item in record.findings}
+
     def test_duplicate_key_fails_closed(self) -> None:
         with self.assertRaises(mod.DuplicateKeyError):
             mod.parse_documents("a: 1\na: 2\n", workflow=False)
@@ -91,6 +151,24 @@ jobs:
                 "SCIENTIFIC_RESULT_OR_PARAMETER_EMBEDDED",
                 "JOB_WRITE_PERMISSION_UNGOVERNED",
             }.issubset(codes))
+
+    def test_reconciliation_write_job_is_allowed_only_with_manual_guard(self) -> None:
+        codes = self.audit_reconciliation_job(
+            job_if="github.event_name == 'workflow_dispatch' && inputs.mode == 'propose'"
+        )
+        self.assertNotIn("JOB_WRITE_PERMISSION_UNGOVERNED", codes)
+        self.assertNotIn("WRITE_JOB_NOT_MANUAL_DISPATCH_ONLY", codes)
+
+    def test_reconciliation_write_job_without_manual_guard_fails_closed(self) -> None:
+        codes = self.audit_reconciliation_job(job_if="")
+        self.assertIn("WRITE_JOB_NOT_MANUAL_DISPATCH_ONLY", codes)
+
+    def test_reconciliation_write_job_rejects_undeclared_scope(self) -> None:
+        codes = self.audit_reconciliation_job(
+            job_if="github.event_name == 'workflow_dispatch'",
+            job_permissions="      actions: write",
+        )
+        self.assertIn("JOB_WRITE_PERMISSION_UNGOVERNED", codes)
 
     def test_inventory_drift_is_reported(self) -> None:
         with tempfile.TemporaryDirectory() as td:
