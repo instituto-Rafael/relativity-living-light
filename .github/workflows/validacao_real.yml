@@ -23,11 +23,11 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Set up Python
-      uses: actions/setup-python@v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
       with:
         python-version: '3.12'
     - name: Install minimal deps
@@ -36,7 +36,28 @@ jobs:
       working-directory: validacao_real
       run: python3 fetch_real_data.py
     - name: Check fallback provenance boundary
-      run: "set -euo pipefail\npython - <<'PY'\nimport json\nfrom pathlib import Path\nmanifest = json.loads(Path('validacao_real/fetched/manifest.json').read_text(encoding='utf-8'))\nboundary = manifest.get('claim_boundary', '')\nrequired = [\n    'does not validate RLL',\n    'does not prove superiority',\n    'does not replace a full likelihood',\n]\nmissing = [term for term in required if term not in boundary]\nif missing:\n    raise SystemExit(f'missing fallback claim-boundary terms: {missing}')\nfor row in manifest.get('sources', []):\n    if row.get('fallback_state') != 'committed_local_payload_not_fresh_remote_download':\n        raise SystemExit(f\"missing fallback_state for {row.get('source_id')}: {row.get('fallback_state')}\")\n    if 'claim_boundary' not in row:\n        raise SystemExit(f\"missing per-source claim boundary for {row.get('source_id')}\")\nprint('validacao_real fallback provenance boundary OK')\nPY\n"
+      run: |
+        set -euo pipefail
+        python - <<'PY'
+        import json
+        from pathlib import Path
+        manifest = json.loads(Path('validacao_real/fetched/manifest.json').read_text(encoding='utf-8'))
+        boundary = manifest.get('claim_boundary', '')
+        required = [
+            'does not validate RLL',
+            'does not prove superiority',
+            'does not replace a full likelihood',
+        ]
+        missing = [term for term in required if term not in boundary]
+        if missing:
+            raise SystemExit(f'missing fallback claim-boundary terms: {missing}')
+        for row in manifest.get('sources', []):
+            if row.get('fallback_state') != 'committed_local_payload_not_fresh_remote_download':
+                raise SystemExit(f"missing fallback_state for {row.get('source_id')}: {row.get('fallback_state')}")
+            if 'claim_boundary' not in row:
+                raise SystemExit(f"missing per-source claim boundary for {row.get('source_id')}")
+        print('validacao_real fallback provenance boundary OK')
+        PY
     - name: Compute validation (chi2 / AIC / BIC / falsifiability)
       working-directory: validacao_real
       run: python3 compute_validation.py
@@ -47,37 +68,29 @@ jobs:
       working-directory: validacao_real
       run: python3 render_report.py
     - name: Build artifact checksums
-      run: 'set -euo pipefail
-
+      run: |
+        set -euo pipefail
         find validacao_real/fetched validacao_real/results -type f -print0 | sort -z | xargs -0 -r sha256sum > validacao_real/results/CHECKSUMS.sha256
-
-        '
     - name: Upload artifacts
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: validacao-real-artifacts
-        path: 'validacao_real/fetched/
-
+        path: |
+          validacao_real/fetched/
           validacao_real/results/
-
-          '
+        retention-days: '30'
+        if-no-files-found: warn
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/validacao_real/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/validacao_real/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
@@ -90,36 +103,43 @@ jobs:
       contents: write
     steps:
     - name: Checkout for explicit opt-in commit
-      uses: actions/checkout@v7
-      with:
-        persist-credentials: false
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Download validation artifacts
-      uses: actions/download-artifact@v8
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
       with:
         name: validacao-real-artifacts
         path: validacao_real
     - name: Commit results back to repo only by explicit opt-in
-      run: "set -euo pipefail\ngit config user.name \"github-actions[bot]\"\ngit config user.email \"41898282+github-actions[bot]@users.noreply.github.com\"\ngit add validacao_real/fetched validacao_real/results\nif git diff --cached --quiet; then\n  echo \"nothing to commit\"\n  exit 0\nfi\ngit commit -m \"validacao_real: automated opt-in run ${{ github.run_number }}\"\ngit push\n"
+      run: |
+        set -euo pipefail
+        case "${GITHUB_REF_NAME}" in
+          main|rll/release)
+            echo "Direct commit to protected promotion branch is forbidden."
+            exit 1
+            ;;
+        esac
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add validacao_real/fetched validacao_real/results
+        if git diff --cached --quiet; then
+          echo "nothing to commit"
+          exit 0
+        fi
+        git commit -m "validacao_real: automated opt-in run ${GITHUB_RUN_NUMBER}"
+        git push
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/validacao_real/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/validacao_real/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: validacao_real-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/validacao_real/${{ github.job }}/

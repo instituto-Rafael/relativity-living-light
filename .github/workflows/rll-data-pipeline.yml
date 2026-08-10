@@ -41,31 +41,39 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:
+      RLL_DATASET_GROUP: ${{ inputs.dataset_group }}
+      RLL_PIPELINE_MODE: ${{ inputs.mode }}
+      RLL_FLUSH_ARTIFACT: ${{ inputs.flush_artifact }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: '3.11'
       - name: Prepare artifact directory
         run: |
-          if [ "${{ inputs.flush_artifact }}" = "true" ]; then rm -rf artifacts/rll-pipeline; fi
+          set -euo pipefail
+          if [ "$RLL_FLUSH_ARTIFACT" = "true" ]; then rm -rf artifacts/rll-pipeline; fi
           mkdir -p artifacts/rll-pipeline
       - name: Docs inventory
         run: |
+          set -euo pipefail
           python3 tools/docs_inventory.py
           python3 tools/docs_inventory.py --check
       - name: Execute RLL pipeline
         run: |
-          python3 scripts/rll_pipeline.py --dataset-group "${{ inputs.dataset_group }}" --mode "${{ inputs.mode }}" --output-dir artifacts/rll-pipeline
+          set -euo pipefail
+          python3 scripts/rll_pipeline.py --dataset-group "$RLL_DATASET_GROUP" --mode "$RLL_PIPELINE_MODE" --output-dir artifacts/rll-pipeline
       - name: Runtime metadata
         run: |
+          set -euo pipefail
           date -u +"%Y-%m-%dT%H:%M:%SZ" > artifacts/rll-pipeline/RUN_UTC.txt
           echo "${GITHUB_SHA}" > artifacts/rll-pipeline/COMMIT_SHA.txt
           printf '%s\n' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
           (cd artifacts/rll-pipeline && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > artifacts/rll-pipeline/CHECKSUMS.sha256
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline/
@@ -78,18 +86,27 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+    env:
+      RLL_DATASET_GROUP: ${{ inputs.dataset_group }}
+      RLL_PIPELINE_MODE: ${{ inputs.mode }}
     steps:
       - name: Checkout for explicit opt-in commit
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Download pipeline artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline
       - name: Commit lightweight artifacts
         run: |
           set -euo pipefail
-          RUN_DIR="results/pipeline-runs/${{ github.run_id }}"
+          case "${GITHUB_REF_NAME}" in
+            main|rll/release)
+              echo "Direct commit to protected promotion branch is forbidden."
+              exit 1
+              ;;
+          esac
+          RUN_DIR="results/pipeline-runs/${GITHUB_RUN_ID}"
           mkdir -p "$RUN_DIR"
           rsync -av --prune-empty-dirs \
             --include='*/' \
@@ -102,6 +119,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No lightweight artifact changes to commit."
           else
-            git commit -m "ci(rll): pipeline artifacts run ${{ github.run_id }} (${{ inputs.dataset_group }}/${{ inputs.mode }})"
+            git commit -m "ci(rll): pipeline artifacts run ${GITHUB_RUN_ID} (${RLL_DATASET_GROUP}/${RLL_PIPELINE_MODE})"
             git push
           fi
