@@ -125,7 +125,7 @@ jobs:
 
       - name: Upload immutable provenance artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rll-v1-tag-provenance-${{ github.run_id }}
           path: artifacts/rll-v1-tag-provenance/

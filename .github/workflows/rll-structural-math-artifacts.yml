@@ -174,7 +174,7 @@ jobs:
 
       - name: Upload structural mathematics artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rll-structural-math-${{ github.run_id }}
           path: artifacts/rll-structural-math/
