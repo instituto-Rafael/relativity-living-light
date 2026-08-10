@@ -1,6 +1,7 @@
 # RLL Transit Tower V1
 
-Status: `PROPOSED_FOR_RLL_LAB`  
+Status: `ACTIVE_IN_RLL_LAB`  
+Installed by: PR `#731` · merge commit `ce73eccf7d1c58b5ff7f45c363e6e2737443369e`  
 Claim boundary: `claim_allowed=false` · `publication_effect=NONE`
 
 ## Purpose
@@ -86,7 +87,8 @@ residual so it cannot disappear from the operating picture.
 2. Run `transit_refactor` with `dry_run=true` and inspect the inventory/plan receipt.
 3. Run with `dry_run=false` only after the dry-run receipt matches the intended SHA.
 4. If a stage is red, use its child artifact plus the parent residual to repair that
-   specialty; rerun from stage 5 rather than skipping the failed gate.
+   specialty; restart the complete Tower at stage 5 (the first stage) rather than
+   resuming downstream or skipping the failed gate.
 5. Promote only through `feature → rll/lab → rll/integration → rll/release → main`.
 
 ## Rollback
