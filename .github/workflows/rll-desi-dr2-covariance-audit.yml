@@ -94,7 +94,7 @@ jobs:
 
       - name: Upload covariance audit artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rll-desi-dr2-covariance-${{ github.run_id }}
           path: artifacts/desi-dr2-covariance-blocks/
