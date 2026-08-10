@@ -351,6 +351,7 @@ def audit_workflow(record: FileRecord, repo_root: Path, doc: Any, contract: dict
         if not steps:
             finding(record, "ERROR", "JOB_STEPS_EMPTY", "runner job has no steps", str(job_id))
             continue
+        codeql_action_refs: set[str] = set()
         for index, raw_step in enumerate(steps):
             step = mapping(raw_step)
             step_name = str(step.get("name", f"step-{index}"))
@@ -359,6 +360,8 @@ def audit_workflow(record: FileRecord, repo_root: Path, doc: Any, contract: dict
                 match = ACTION_RE.match(uses)
                 if match and not FULL_SHA_RE.fullmatch(match.group(2)):
                     finding(record, "HIGH", "MUTABLE_ACTION_REFERENCE", f"external action not pinned to full SHA: {uses}", str(job_id), step_name)
+                if match and uses.startswith("github/codeql-action/"):
+                    codeql_action_refs.add(match.group(2))
                 if uses.startswith("actions/checkout@"):
                     persist = mapping(step.get("with")).get("persist-credentials")
                     if persist is None:
@@ -391,6 +394,16 @@ def audit_workflow(record: FileRecord, repo_root: Path, doc: Any, contract: dict
                 finding(record, "HIGH", "SCIENTIFIC_RESULT_OR_PARAMETER_EMBEDDED", "scientific metric/parameter literal appears inside workflow code; move to versioned data/config and compute outputs", str(job_id), step_name)
             if step.get("continue-on-error") is not None:
                 finding(record, "MEDIUM", "CONTINUE_ON_ERROR", "continue-on-error requires an explicit residual receipt", str(job_id), step_name)
+
+        if len(codeql_action_refs) > 1:
+            finding(
+                record,
+                "ERROR",
+                "CODEQL_ACTION_REVISION_DRIFT",
+                "CodeQL init/analyze steps must use one identical reviewed commit SHA; "
+                f"found {sorted(codeql_action_refs)}",
+                str(job_id),
+            )
 
     if managed and "always_upload_receipt" in requirements:
         upload_steps = [
