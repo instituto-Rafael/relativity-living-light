@@ -207,6 +207,8 @@ managed_workflows:
     class: reconciliation
   .github/workflows/validacao_real.yml:
     class: reconciliation
+  .github/workflows/rll-validacao-cientifica-completa.yml:
+    class: reconciliation
 
 policy:
   errors:
