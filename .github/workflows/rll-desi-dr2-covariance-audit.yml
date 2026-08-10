@@ -42,7 +42,7 @@ jobs:
         no full joint covariance is claimed, and no model superiority claim is allowed.
     steps:
       - name: Checkout without persisted credentials
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
