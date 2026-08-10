@@ -1,28 +1,37 @@
-schema: rll.workflow_orchestrator.catalog.v2
-profiles:
-  full_session:
-    description: "Run the full cross-workflow session orchestration."
-    include_tags: [all]
-  quick_session:
-    description: "Run a compact interoperability session."
-    include_tags: [core, validation]
-  real_data_session:
-    description: "Run only real-data related workflows."
-    include_tags: [real_data, validation]
+schema: rll.workflow_orchestrator.catalog.v3
+status: ACTIVE_GOVERNED_TRANSIT
+claim_allowed: false
+publication_effect: NONE
 
-# One parent session owns execution. A stage must finish before the next stage
-# is dispatched, preventing the catalog from launching every workflow at once.
+profiles:
+  transit_refactor:
+    description: "Eight specialty gates in one sequential fail-closed transit."
+    include_tags: [tower]
+  full_session:
+    description: "Compatibility alias for the governed transit tower."
+    include_tags: [tower]
+  quick_session:
+    description: "Structural, contract, regression, and governance gates."
+    include_tags: [core]
+  real_data_session:
+    description: "Controlled real-data custody and audit workflows."
+    include_tags: [real_data]
+  science_shadow_session:
+    description: "Non-publishing deterministic and frontier shadow gates."
+    include_tags: [science_shadow]
+
 execution:
   mode: sequential
   stage_barrier: true
   max_in_flight: 1
+  wait_for_completion: true
+  fail_fast: true
 
-# The orchestrator discovers every executable workflow. The session workflow
-# itself is intentionally excluded by the loader to prevent recursive dispatch.
-workflow_files:
-  - ../workflows/*.yml
+# Inventory is exhaustive but execution is explicit. Event-driven and standalone
+# workflows remain visible in the receipt without being dispatched implicitly.
+workflow_inventory:
+  patterns:
+    - ../workflows/*.y*ml
 
 workflow_catalog_dirs:
-  - workflows/core
-  - workflows/real_data
-  - workflows/science
+  - workflows/tower
