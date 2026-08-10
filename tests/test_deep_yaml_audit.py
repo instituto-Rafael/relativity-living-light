@@ -170,6 +170,43 @@ jobs:
         )
         self.assertIn("JOB_WRITE_PERMISSION_UNGOVERNED", codes)
 
+    def test_codeql_init_and_analyze_revision_drift_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            template = """\
+name: codeql
+on: [pull_request]
+permissions:
+  contents: read
+concurrency:
+  group: codeql
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: github/codeql-action/init@{init_ref}
+      - uses: github/codeql-action/analyze@{analyze_ref}
+"""
+            reviewed = "a" * 40
+            for analyze_ref, expected in ((reviewed, False), ("b" * 40, True)):
+                with self.subTest(analyze_ref=analyze_ref):
+                    text = template.format(init_ref=reviewed, analyze_ref=analyze_ref)
+                    record = mod.FileRecord(
+                        path=".github/workflows/codeql.yml",
+                        category="github_workflow",
+                        sha256="x",
+                        bytes=len(text),
+                        lines=len(text.splitlines()),
+                    )
+                    doc = mod.parse_documents(text, workflow=True)[0]
+                    mod.audit_workflow(record, root, doc, {})
+                    codes = {item.code for item in record.findings}
+                    self.assertEqual(
+                        expected,
+                        "CODEQL_ACTION_REVISION_DRIFT" in codes,
+                    )
+
     def test_inventory_drift_is_reported(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
