@@ -1,76 +1,45 @@
 # Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
 name: START MANUAL HERE - YML Interoperability Orchestrator
-on:
+
+"on":
   workflow_dispatch:
     inputs:
       run_profile:
-        description: "Perfil de execu\xE7\xE3o para clareza operacional"
+        description: "Perfil de execução para clareza operacional"
         required: true
         default: full_validation
         type: choice
-        options:
-        - quick_yaml_only
-        - workflow_audit
-        - interoperability_only
-        - full_validation
+        options: [quick_yaml_only, workflow_audit, interoperability_only, full_validation]
       pipeline_scope:
-        description: "Escopo de pipeline para formalizar sele\xE7\xE3o de run"
+        description: "Escopo de pipeline para formalizar seleção de run"
         required: true
         default: all
         type: choice
-        options:
-        - rll
-        - iml
-        - formulas
-        - book
-        - real_validation
-        - validation_paths
-        - all
+        options: [rll, iml, formulas, book, real_validation, validation_paths, all]
       dataset_group:
-        description: "Grupo de dados principal para an\xE1lise"
+        description: "Grupo de dados principal para análise"
         required: true
         default: all
         type: choice
-        options:
-        - geomagnetic
-        - heliophysics
-        - cosmology
-        - all
+        options: [geomagnetic, heliophysics, cosmology, all]
       book_scope:
-        description: "Escopo do livro para o pipeline can\xF4nico"
+        description: "Escopo do livro para o pipeline canônico"
         required: true
         default: all
         type: choice
-        options:
-        - methodology
-        - real_data
-        - scripts
-        - observational_validation
-        - desi_boss
-        - amas_mcrp
-        - all
+        options: [methodology, real_data, scripts, observational_validation, desi_boss, amas_mcrp, all]
       mode:
-        description: "Modo de prepara\xE7\xE3o de dados/c\xE1lculo"
+        description: "Modo de preparação de dados/cálculo"
         required: true
         default: metadata_only
         type: choice
-        options:
-        - metadata_only
-        - dry_run
-        - fetch
-        - compute
-        - figures
-        - report
-        - full
+        options: [metadata_only, dry_run, fetch, compute, figures, report, full]
       real_data_source:
-        description: "Fonte dos dados reais n\xE3o sint\xE9ticos para c\xE1lculo"
+        description: "Fonte dos dados reais não sintéticos para cálculo"
         required: true
         default: auto
         type: choice
-        options:
-        - auto
-        - materialized
-        - repo
+        options: [auto, materialized, repo]
       validate_workflows:
         description: Validar todos os workflows executaveis em .github/workflows
         required: true
@@ -82,165 +51,266 @@ on:
         default: true
         type: boolean
       run_data_preparation_probe:
-        description: "Executar sonda de prepara\xE7\xE3o/orquestra\xE7\xE3o sem commit"
+        description: "Executar sonda de preparação/orquestração sem commit"
         required: true
         default: true
         type: boolean
       strict_mode:
-        description: "Falhar se encontrar inconsist\xEAncias de contrato"
+        description: "Falhar se encontrar inconsistências de contrato"
         required: true
         default: true
         type: boolean
+
 permissions:
   contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
+
 jobs:
   manual-start:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v7
-      with:
-        persist-credentials: false
-    - name: Setup Python
-      uses: actions/setup-python@v7
-      with:
-        python-version: '3.11'
-    - name: Install dependencies
-      run: 'python -m pip install --upgrade pip
-
-        pip install pyyaml numpy pandas scipy matplotlib requests astropy
-
-        '
-    - name: Build selected execution plan
-      run: 'mkdir -p artifacts/manual-start
-
-        cat > artifacts/manual-start/SELECTION_PLAN.md <<PLAN
-
-        # START MANUAL HERE - Selection Plan
-
-
-        - run_profile: ${{ inputs.run_profile }}
-
-        - pipeline_scope: ${{ inputs.pipeline_scope }}
-
-        - dataset_group: ${{ inputs.dataset_group }}
-
-        - book_scope: ${{ inputs.book_scope }}
-
-        - mode: ${{ inputs.mode }}
-
-        - real_data_source: ${{ inputs.real_data_source }}
-
-        - validate_workflows: ${{ inputs.validate_workflows }}
-
-        - validate_data_yml: ${{ inputs.validate_data_yml }}
-
-        - run_data_preparation_probe: ${{ inputs.run_data_preparation_probe }}
-
-        - strict_mode: ${{ inputs.strict_mode }}
-
-
-        ## Methodology Angle
-
-        1. Parse YAML syntax safety using a GitHub-aware loader for `on`.
-
-        2. Keep executable workflows isolated from data YML, scripts, images, PDFs and ZIPs.
-
-        3. Validate interoperability contracts and validation-path methodology.
-
-        4. Probe selected orchestration path without committing artifacts.
-
-        5. Persist summary for reproducible audit.
-
-        PLAN
-
-        '
-    - name: Validate YAML parse (workflows + data)
-      if: ${{ inputs.run_profile == 'quick_yaml_only' || inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
-      run: "python - <<'PY'\nimport glob\nimport yaml\n\nfiles = []\nworkflow_files = []\nif \"${{ inputs.validate_workflows }}\" == \"true\":\n    workflow_files = sorted(set(glob.glob('.github/workflows/*.yml') + glob.glob('.github/workflows/*.yaml')))\n    files.extend(workflow_files)\nif \"${{ inputs.validate_data_yml }}\" == \"true\":\n    files.extend([\n        'data/observational_sources.yml',\n        'data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml',\n        'data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml',\n        'validacao_real/sources.yml',\n        'validacao_real/data/desi_dr2_bao.yml',\n        'validacao_real/data/hz_cosmic_chronometers.yml',\n        'docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml',\n    ])\n\nfiles = sorted(set(files))\nif not files:\n    print('No files selected for validation.')\n    raise SystemExit(0)\n\nfor path in files:\n    with open(path, 'r', encoding='utf-8') as fh:\n        doc = yaml.load(fh, Loader=yaml.BaseLoader)\n\
-        \    if path in workflow_files:\n        missing = [key for key in ('name', 'on', 'jobs') if key not in (doc or {})]\n        if missing:\n            raise SystemExit(f'{path}: missing workflow keys {missing}')\n    print(f'OK YAML: {path}')\nPY\n"
-    - name: Validate workflow directory hygiene
-      if: ${{ inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
-      run: python3 tools/audit_github_workflows.py --strict
-    - name: Validate interoperability contracts
-      if: ${{ inputs.run_profile == 'interoperability_only' || inputs.run_profile == 'full_validation' }}
-      run: "python - <<'PY'\nimport yaml\nfrom pathlib import Path\n\nstrict = \"${{ inputs.strict_mode }}\" == \"true\"\n\ndef load(path):\n    with open(path, 'r', encoding='utf-8') as fh:\n        return yaml.safe_load(fh)\n\nsrc = load('data/observational_sources.yml')\nmatrix = load('data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml')\nmath = load('data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml')\n\nerrors = []\n\nfor name, doc in [('sources', src), ('matrix', matrix), ('math', math)]:\n    orch = doc.get('orchestration', {}) or {}\n    if orch.get('orchestrator') != 'rll_pipeline':\n        errors.append(f\"{name}: orchestrator must be 'rll_pipeline'\")\n\nfor name, doc in [('sources', src), ('matrix', matrix), ('math', math)]:\n    mapping = doc.get('mapping', {}) or {}\n    if not mapping:\n        errors.append(f'{name}: missing mapping block')\n    for k, v in mapping.items():\n        if not str(v).startswith('results/mapping_logs/'):\n            errors.append(f\"{name}: mapping\
-        \ '{k}' must point to results/mapping_logs/\")\n\ncandidates = [m.get('id') for m in (matrix.get('model_family', {}) or {}).get('candidate', []) if isinstance(m, dict)]\nfit_modes = (math.get('orchestration', {}) or {}).get('fit_modes', []) or []\nfor expected in ['RLL_1_transition_only', 'RLL_2_transition_plus_radiative_terms', 'LCDM']:\n    if expected not in fit_modes:\n        errors.append(f\"math: missing fit mode '{expected}'\")\nfor c in candidates:\n    if c and c not in fit_modes:\n        errors.append(f\"candidate '{c}' not represented in math fit_modes\")\n\nif not Path('results/mapping_logs').exists():\n    errors.append('missing directory results/mapping_logs')\n\nif errors:\n    print('Interoperability validation FAILED:')\n    for e in errors:\n        print('-', e)\n    if strict:\n        raise SystemExit(1)\nelse:\n    print('Interoperability validation OK.')\nPY\n"
-    - name: Data preparation probe for analysis formalization
-      if: ${{ inputs.run_data_preparation_probe }}
-      run: "mkdir -p artifacts/manual-start/probe\nif [ \"${{ inputs.pipeline_scope }}\" = \"real_validation\" ]; then\n  (cd validacao_real && python3 fetch_real_data.py)\n  if [ \"${{ inputs.mode }}\" = \"compute\" ] || [ \"${{ inputs.mode }}\" = \"figures\" ] || [ \"${{ inputs.mode }}\" = \"report\" ] || [ \"${{ inputs.mode }}\" = \"full\" ]; then\n    (cd validacao_real && python3 compute_validation.py)\n  fi\n  if [ \"${{ inputs.mode }}\" = \"figures\" ] || [ \"${{ inputs.mode }}\" = \"report\" ] || [ \"${{ inputs.mode }}\" = \"full\" ]; then\n    (cd validacao_real && python3 make_figures.py)\n  fi\n  if [ \"${{ inputs.mode }}\" = \"report\" ] || [ \"${{ inputs.mode }}\" = \"full\" ]; then\n    (cd validacao_real && python3 render_report.py)\n  fi\n  rsync -a validacao_real/fetched validacao_real/results artifacts/manual-start/probe/ 2>/dev/null || true\nelif [ \"${{ inputs.pipeline_scope }}\" = \"validation_paths\" ]; then\n  python3 -c \"import json, yaml; from pathlib import Path;\
-        \ doc=yaml.safe_load(Path('docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml').read_text(encoding='utf-8')); out=Path('artifacts/manual-start/probe/validation_paths_summary.json'); out.write_text(json.dumps({'schema': doc.get('meta', {}).get('schema'), 'count': len(doc.get('caminhos', [])), 'ids': [item.get('id') for item in doc.get('caminhos', [])]}, indent=2), encoding='utf-8'); print(out)\"\nelse\n  RLL_MODE=\"${{ inputs.mode }}\"\n  if [ \"$RLL_MODE\" = \"full\" ] || [ \"$RLL_MODE\" = \"figures\" ] || [ \"$RLL_MODE\" = \"report\" ]; then RLL_MODE=\"compute\"; fi\n  python3 scripts/rll_pipeline.py \\\n    --book-scope \"${{ inputs.book_scope }}\" \\\n    --dataset-group \"${{ inputs.dataset_group }}\" \\\n    --mode \"$RLL_MODE\" \\\n    --output-dir artifacts/manual-start/probe\nfi\n"
-    - name: Build methodology summary
-      run: 'cat > artifacts/manual-start/METHODOLOGY_SUMMARY.md <<EOF_SUM
-
-        # Methodology Summary
-
-
-        This run formalized YAML and pipeline selection with explicit controls:
-
-        - Scope: ${{ inputs.pipeline_scope }}
-
-        - Book scope: ${{ inputs.book_scope }}
-
-        - Dataset group: ${{ inputs.dataset_group }}
-
-        - Mode: ${{ inputs.mode }}
-
-        - Profile: ${{ inputs.run_profile }}
-
-
-        Output probe path:
-
-        - artifacts/manual-start/probe
-
-
-        Validation-path methodology file:
-
-        - docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml
-
-
-        Real-validation executable bundle:
-
-        - validacao_real/
-
-
-        This supports reproducibility and clearer run selection semantics.
-
-        EOF_SUM
-
-        '
-    - name: Upload manual-start audit artifact
-      uses: actions/upload-artifact@v7
-      with:
-        name: start-manual-here-${{ github.run_id }}
-        path: artifacts/manual-start/
-        retention-days: 14
-    - name: Final summary
-      run: 'echo "START_MANUAL_HERE.YML finished with validation + methodology formalization."
-
-        '
-    - name: Finalize canonical real-data policy checksums
-      if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/START_MANUAL_HERE/${{ github.job }}"
-
-        mkdir -p "$ARTIFACT_DIR"
-
-        . tools/ci/real_data_workflow_policy.sh
-
-        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
-        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
-        rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     env:
+      RUN_PROFILE: ${{ inputs.run_profile }}
+      PIPELINE_SCOPE: ${{ inputs.pipeline_scope }}
+      DATASET_GROUP: ${{ inputs.dataset_group }}
+      BOOK_SCOPE: ${{ inputs.book_scope }}
+      RLL_MODE_REQUESTED: ${{ inputs.mode }}
+      REAL_DATA_SOURCE: ${{ inputs.real_data_source }}
+      VALIDATE_WORKFLOWS: ${{ inputs.validate_workflows }}
+      VALIDATE_DATA_YML: ${{ inputs.validate_data_yml }}
+      RUN_DATA_PREPARATION_PROBE: ${{ inputs.run_data_preparation_probe }}
+      STRICT_MODE: ${{ inputs.strict_mode }}
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy pandas scipy matplotlib requests astropy
+
+      - name: Build selected execution plan
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/manual-start
+          cat > artifacts/manual-start/SELECTION_PLAN.md <<PLAN
+          # START MANUAL HERE - Selection Plan
+
+          - run_profile: $RUN_PROFILE
+          - pipeline_scope: $PIPELINE_SCOPE
+          - dataset_group: $DATASET_GROUP
+          - book_scope: $BOOK_SCOPE
+          - mode: $RLL_MODE_REQUESTED
+          - real_data_source: $REAL_DATA_SOURCE
+          - validate_workflows: $VALIDATE_WORKFLOWS
+          - validate_data_yml: $VALIDATE_DATA_YML
+          - run_data_preparation_probe: $RUN_DATA_PREPARATION_PROBE
+          - strict_mode: $STRICT_MODE
+
+          ## Methodology Angle
+
+          1. Parse YAML syntax safety using a GitHub-aware loader for on.
+          2. Keep executable workflows isolated from data YML, scripts, images, PDFs and ZIPs.
+          3. Validate interoperability contracts and validation-path methodology.
+          4. Probe selected orchestration path without committing artifacts.
+          5. Persist summary for reproducible audit.
+          PLAN
+
+      - name: Validate YAML parse (workflows + data)
+        if: ${{ inputs.run_profile == 'quick_yaml_only' || inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import glob
+          import os
+          import yaml
+
+          files = []
+          workflow_files = []
+          if os.environ["VALIDATE_WORKFLOWS"] == "true":
+              workflow_files = sorted(set(glob.glob('.github/workflows/*.yml') + glob.glob('.github/workflows/*.yaml')))
+              files.extend(workflow_files)
+          if os.environ["VALIDATE_DATA_YML"] == "true":
+              files.extend([
+                  'data/observational_sources.yml',
+                  'data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml',
+                  'data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml',
+                  'validacao_real/sources.yml',
+                  'validacao_real/data/desi_dr2_bao.yml',
+                  'validacao_real/data/hz_cosmic_chronometers.yml',
+                  'docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml',
+              ])
+
+          files = sorted(set(files))
+          if not files:
+              print('No files selected for validation.')
+              raise SystemExit(0)
+
+          for path in files:
+              with open(path, 'r', encoding='utf-8') as fh:
+                  doc = yaml.load(fh, Loader=yaml.BaseLoader)
+              if path in workflow_files:
+                  missing = [key for key in ('name', 'on', 'jobs') if key not in (doc or {})]
+                  if missing:
+                      raise SystemExit(f'{path}: missing workflow keys {missing}')
+              print(f'OK YAML: {path}')
+          PY
+
+      - name: Validate workflow directory hygiene
+        if: ${{ inputs.run_profile == 'workflow_audit' || inputs.run_profile == 'full_validation' }}
+        run: python3 tools/audit_github_workflows.py --strict
+
+      - name: Validate interoperability contracts
+        if: ${{ inputs.run_profile == 'interoperability_only' || inputs.run_profile == 'full_validation' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          import yaml
+          from pathlib import Path
+
+          strict = os.environ["STRICT_MODE"] == "true"
+
+          def load(path):
+              with open(path, 'r', encoding='utf-8') as fh:
+                  return yaml.safe_load(fh)
+
+          src = load('data/observational_sources.yml')
+          matrix = load('data/real/cosmology/RLL_COSMO_VALIDATION_MATRIX.yml')
+          math = load('data/real/cosmology/DESI_BAO_MATH_ARTIFACTS.yml')
+          errors = []
+
+          for name, doc in [('sources', src), ('matrix', matrix), ('math', math)]:
+              orch = doc.get('orchestration', {}) or {}
+              if orch.get('orchestrator') != 'rll_pipeline':
+                  errors.append(f"{name}: orchestrator must be 'rll_pipeline'")
+              mapping = doc.get('mapping', {}) or {}
+              if not mapping:
+                  errors.append(f'{name}: missing mapping block')
+              for key, value in mapping.items():
+                  if not str(value).startswith('results/mapping_logs/'):
+                      errors.append(f"{name}: mapping '{key}' must point to results/mapping_logs/")
+
+          candidates = [m.get('id') for m in (matrix.get('model_family', {}) or {}).get('candidate', []) if isinstance(m, dict)]
+          fit_modes = (math.get('orchestration', {}) or {}).get('fit_modes', []) or []
+          for expected in ['RLL_1_transition_only', 'RLL_2_transition_plus_radiative_terms', 'LCDM']:
+              if expected not in fit_modes:
+                  errors.append(f"math: missing fit mode '{expected}'")
+          for candidate in candidates:
+              if candidate and candidate not in fit_modes:
+                  errors.append(f"candidate '{candidate}' not represented in math fit_modes")
+          if not Path('results/mapping_logs').exists():
+              errors.append('missing directory results/mapping_logs')
+
+          if errors:
+              print('Interoperability validation FAILED:')
+              for error in errors:
+                  print('-', error)
+              if strict:
+                  raise SystemExit(1)
+          else:
+              print('Interoperability validation OK.')
+          PY
+
+      - name: Data preparation probe for analysis formalization
+        if: ${{ inputs.run_data_preparation_probe }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/manual-start/probe
+          if [ "$PIPELINE_SCOPE" = "real_validation" ]; then
+            (cd validacao_real && python3 fetch_real_data.py)
+            if [ "$RLL_MODE_REQUESTED" = "compute" ] || [ "$RLL_MODE_REQUESTED" = "figures" ] || [ "$RLL_MODE_REQUESTED" = "report" ] || [ "$RLL_MODE_REQUESTED" = "full" ]; then
+              (cd validacao_real && python3 compute_validation.py)
+            fi
+            if [ "$RLL_MODE_REQUESTED" = "figures" ] || [ "$RLL_MODE_REQUESTED" = "report" ] || [ "$RLL_MODE_REQUESTED" = "full" ]; then
+              (cd validacao_real && python3 make_figures.py)
+            fi
+            if [ "$RLL_MODE_REQUESTED" = "report" ] || [ "$RLL_MODE_REQUESTED" = "full" ]; then
+              (cd validacao_real && python3 render_report.py)
+            fi
+            for source_path in validacao_real/fetched validacao_real/results; do
+              if [ -e "$source_path" ]; then
+                rsync -a "$source_path" artifacts/manual-start/probe/
+              fi
+            done
+          elif [ "$PIPELINE_SCOPE" = "validation_paths" ]; then
+            python3 - <<'PY'
+          import json
+          import yaml
+          from pathlib import Path
+          doc = yaml.safe_load(Path('docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml').read_text(encoding='utf-8'))
+          out = Path('artifacts/manual-start/probe/validation_paths_summary.json')
+          out.write_text(json.dumps({
+              'schema': doc.get('meta', {}).get('schema'),
+              'count': len(doc.get('caminhos', [])),
+              'ids': [item.get('id') for item in doc.get('caminhos', [])],
+          }, indent=2), encoding='utf-8')
+          print(out)
+          PY
+          else
+            EFFECTIVE_MODE="$RLL_MODE_REQUESTED"
+            if [ "$EFFECTIVE_MODE" = "full" ] || [ "$EFFECTIVE_MODE" = "figures" ] || [ "$EFFECTIVE_MODE" = "report" ]; then
+              EFFECTIVE_MODE="compute"
+            fi
+            python3 scripts/rll_pipeline.py \
+              --book-scope "$BOOK_SCOPE" \
+              --dataset-group "$DATASET_GROUP" \
+              --mode "$EFFECTIVE_MODE" \
+              --output-dir artifacts/manual-start/probe
+          fi
+
+      - name: Build methodology summary
+        run: |
+          set -euo pipefail
+          cat > artifacts/manual-start/METHODOLOGY_SUMMARY.md <<SUMMARY
+          # Methodology Summary
+
+          - Scope: $PIPELINE_SCOPE
+          - Book scope: $BOOK_SCOPE
+          - Dataset group: $DATASET_GROUP
+          - Mode: $RLL_MODE_REQUESTED
+          - Profile: $RUN_PROFILE
+
+          Output probe path: artifacts/manual-start/probe
+          Validation-path methodology: docs/pipelines/validation_paths/CAMINHOS_VALIDACAO_NOVOS.yml
+          Real-validation executable bundle: validacao_real/
+          SUMMARY
+
+      - name: Upload manual-start audit artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: start-manual-here-${{ github.run_id }}
+          path: artifacts/manual-start/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Final summary
+        run: echo "START_MANUAL_HERE.YML finished with validation + methodology formalization."
+
+      - name: Finalize canonical real-data policy checksums
+        if: always()
+        run: |
+          set -euo pipefail
+          ARTIFACT_DIR="artifacts/workflow-policy/START_MANUAL_HERE/${GITHUB_JOB}"
+          mkdir -p "$ARTIFACT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+          rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+          rll_real_data_write_checksums "$ARTIFACT_DIR"
+
 x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
