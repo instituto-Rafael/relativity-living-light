@@ -44,7 +44,7 @@ jobs:
         and cannot support real-data, physical superiority, discovery or theorem-proof claims.
     steps:
       - name: Checkout without persisted credentials
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 

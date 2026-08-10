@@ -71,7 +71,7 @@ jobs:
       CLAIM_BOUNDARY: "Structural PASS is not observational confirmation or model superiority."
     steps:
       - name: Checkout without persisted credentials
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
