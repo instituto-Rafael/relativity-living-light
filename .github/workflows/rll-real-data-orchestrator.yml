@@ -1,6 +1,6 @@
 name: RLL Real Data Orchestrator
 
-on:
+"on":
   workflow_dispatch:
     inputs:
       pipeline_scope:
@@ -34,7 +34,6 @@ on:
         default: "14"
         options: ["7", "14", "30", "90"]
   schedule:
-    # GitHub Actions cron is UTC; this runs daily at 02:15 UTC.
     - cron: "15 2 * * *"
 
 permissions:
@@ -53,14 +52,19 @@ jobs:
   orchestrate:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      PIPELINE_SCOPE: ${{ github.event_name == 'schedule' && 'all' || inputs.pipeline_scope }}
+      DATASET_GROUP: ${{ github.event_name == 'schedule' && 'all' || inputs.dataset_group }}
+      RLL_MODE_REQUESTED: ${{ github.event_name == 'schedule' && 'full' || inputs.mode }}
+      REAL_DATA_SOURCE: ${{ github.event_name == 'schedule' && 'repo' || inputs.real_data_source }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: "3.11"
 
@@ -78,6 +82,9 @@ jobs:
           date -u +"%Y-%m-%dT%H:%M:%SZ" > "$RUN_DIR/RUN_UTC.txt"
           git rev-parse HEAD > "$RUN_DIR/COMMIT_SHA.txt"
           printf '%s\n' "$CLAIM_BOUNDARY" > "$RUN_DIR/CLAIM_BOUNDARY.md"
+          printf 'pipeline_scope=%s\ndataset_group=%s\nmode=%s\nreal_data_source=%s\n' \
+            "$PIPELINE_SCOPE" "$DATASET_GROUP" "$RLL_MODE_REQUESTED" "$REAL_DATA_SOURCE" \
+            > "$RUN_DIR/REQUESTED_ROUTE.txt"
 
       - name: Block placeholder inputs and record real-input hashes
         run: |
@@ -132,27 +139,23 @@ jobs:
 
           root = Path(".")
           output = Path("artifacts/rll-real-run/raw/REPOSITORY_CUSTODY.json")
-
           tracked = subprocess.run(
               ["git", "ls-files", "-z", "--", "data/real", "*.yml", "*.yaml"],
               check=True,
               capture_output=True,
           ).stdout.split(b"\0")
           paths = sorted({Path(item.decode("utf-8")) for item in tracked if item})
-
           records = []
           for path in paths:
               absolute = root / path
               if not absolute.is_file():
                   continue
-              digest = hashlib.sha256(absolute.read_bytes()).hexdigest()
               records.append({
                   "path": path.as_posix(),
                   "bytes": absolute.stat().st_size,
-                  "sha256": digest,
+                  "sha256": hashlib.sha256(absolute.read_bytes()).hexdigest(),
                   "category": "real_data" if path.as_posix().startswith("data/real/") else "yaml",
               })
-
           real_data = [item for item in records if item["category"] == "real_data"]
           yaml_files = [item for item in records if item["category"] == "yaml"]
           payload = {
@@ -161,10 +164,7 @@ jobs:
               "real_data_files": len(real_data),
               "yaml_files": len(yaml_files),
               "records": records,
-              "claim_boundary": (
-                  "Custody, provenance and reproducibility metadata only; "
-                  "file presence and hashes do not establish scientific validity."
-              ),
+              "claim_boundary": "Custody/provenance metadata only; file presence and hashes do not establish scientific validity.",
           }
           output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
           print(f"Recorded custody for {len(real_data)} real-data files and {len(yaml_files)} YAML files")
@@ -205,11 +205,9 @@ jobs:
         if: ${{ inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule' }}
         run: |
           set -euo pipefail
-          # Network fetches stay opt-in here; committed, hashed real inputs are the
-          # scheduled default until a source-specific fetch is explicitly enabled.
           python scripts/fetch_real_sources.py \
-            --dataset-group "${{ inputs.dataset_group || 'all' }}" \
-            --mode "${{ inputs.mode || 'full' }}" \
+            --dataset-group "$DATASET_GROUP" \
+            --mode "$RLL_MODE_REQUESTED" \
             --output-dir "$RUN_DIR" \
             --no-fetch-igrf14 --no-fetch-wmm2025 --no-fetch-omni --no-fetch-nmdb \
             --no-fetch-desi --no-fetch-pantheon --no-fetch-planck --no-fetch-spenvis-reference
@@ -220,7 +218,7 @@ jobs:
           set -euo pipefail
           python scripts/compute_rll_real_pipeline.py \
             --output-dir "$RUN_DIR" \
-            --data-source "${{ inputs.real_data_source || 'repo' }}"
+            --data-source "$REAL_DATA_SOURCE"
 
       - name: real_3_compute - independent blocks and grouped consolidation
         if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' || github.event_name == 'schedule' }}
@@ -234,7 +232,6 @@ jobs:
           from pathlib import Path
 
           root = Path("artifacts/rll-real-run")
-          raw = root / "raw"
           diagnostics = root / "diagnostics"
           reports = root / "reports"
           diagnostics.mkdir(parents=True, exist_ok=True)
@@ -248,10 +245,7 @@ jobs:
                   try:
                       values.append(float(row[field]))
                   except (KeyError, TypeError, ValueError) as exc:
-                      raise SystemExit(
-                          f"invalid numeric field {field!r} in {source}, "
-                          f"real_3 {block} block, row {index}: {exc}"
-                      ) from exc
+                      raise SystemExit(f"invalid numeric field {field!r} in {source}, real_3 {block} block, row {index}: {exc}") from exc
               if not values:
                   raise SystemExit(f"real_3 {block} block: no valid numeric values in {source}")
               return statistics.fmean(values)
@@ -259,31 +253,25 @@ jobs:
           def write_block(name, payload):
               payload["block"] = name
               payload["status"] = "pass"
-              (diagnostics / f"real_3_{name}.json").write_text(
-                  json.dumps(payload, indent=2) + "\n", encoding="utf-8"
-              )
+              (diagnostics / f"real_3_{name}.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
               return payload
 
           hz = Path("data/real/Hz_data_real.csv")
           with hz.open(encoding="utf-8", newline="") as handle:
               hz_rows = list(csv.DictReader(handle))
           block_hz = write_block("hz", {
-              "group": "cosmology",
-              "rows": len(hz_rows),
+              "group": "cosmology", "rows": len(hz_rows),
               "mean_H_obs": mean_csv_field(hz_rows, "H_obs", hz, "hz"),
               "sha256": hashlib.sha256(hz.read_bytes()).hexdigest(),
           })
-
           bao = Path("data/real/BAO_data_real.csv")
           with bao.open(encoding="utf-8", newline="") as handle:
               bao_rows = list(csv.DictReader(handle))
           block_bao = write_block("bao", {
-              "group": "cosmology",
-              "rows": len(bao_rows),
+              "group": "cosmology", "rows": len(bao_rows),
               "mean_DV_over_rs": mean_csv_field(bao_rows, "DV_over_rs", bao, "bao"),
               "sha256": hashlib.sha256(bao.read_bytes()).hexdigest(),
           })
-
           cmb = Path("data/real/CMB_shift_real.json")
           cmb_payload = json.loads(cmb.read_text(encoding="utf-8"))
           block_cmb = write_block("cmb", {
@@ -291,23 +279,12 @@ jobs:
               "keys": sorted(cmb_payload) if isinstance(cmb_payload, dict) else [],
               "sha256": hashlib.sha256(cmb.read_bytes()).hexdigest(),
           })
-
           summary = {
-              "schema": "rll.real_3_summary.v1",
-              "phase": "real_3_compute",
-              "status": "pass",
-              "groups": {
-                  "cosmology": {
-                      "status": "pass",
-                      "independent_blocks": [block_hz, block_bao, block_cmb],
-                      "consolidation": "all three independent real-input blocks passed",
-                  }
-              },
-              "claim_boundary": "Computed summaries are provenance and reproducibility artifacts; no automatic scientific endorsement.",
+              "schema": "rll.real_3_summary.v1", "phase": "real_3_compute", "status": "pass",
+              "groups": {"cosmology": {"status": "pass", "independent_blocks": [block_hz, block_bao, block_cmb], "consolidation": "all three independent real-input blocks passed"}},
+              "claim_boundary": "Computed summaries are provenance/reproducibility artifacts; no automatic scientific endorsement.",
           }
-          (reports / "real_3_summary.json").write_text(
-              json.dumps(summary, indent=2) + "\n", encoding="utf-8"
-          )
+          (reports / "real_3_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
           PY
 
       - name: Run selected IML pipeline
@@ -354,28 +331,25 @@ jobs:
           set -euo pipefail
           python scripts/rll_pipeline.py \
             --book-scope all \
-            --dataset-group "${{ inputs.dataset_group || 'all' }}" \
-            --mode "${{ inputs.mode || 'full' }}" \
+            --dataset-group "$DATASET_GROUP" \
+            --mode "$RLL_MODE_REQUESTED" \
             --output-dir "$RUN_DIR/book"
 
       - name: Finalize manifest and checksums
         if: always()
         run: |
           set -euo pipefail
-          python - <<'PY'
+          RUN_ID_VALUE="$GITHUB_RUN_ID" python - <<'PY'
           import json
+          import os
           from pathlib import Path
           root = Path("artifacts/rll-real-run")
           files = sorted(str(path.relative_to(root)) for path in root.rglob("**/*") if path.is_file())
           required_dirs = ["raw", "processed", "tables", "plots", "reports", "diagnostics", "book"]
           commit_sha = (root / "COMMIT_SHA.txt").read_text(encoding="utf-8").strip()
-          # v1 tracked generated files and a claim boundary; v2 additionally
-          # requires fixed directories, input hashes, and real_3 grouped summaries.
-          # The version tracks structural artifact-contract changes; v1 -> v2
-          # made the fixed layout, hashes, and real_3 summaries explicit.
           manifest = {
               "schema": "rll.real_data_orchestrator.v2",
-              "run_id": "${{ github.run_id }}",
+              "run_id": os.environ["RUN_ID_VALUE"],
               "commit_sha": commit_sha,
               "required_layout": required_dirs,
               "files": files,
@@ -390,7 +364,7 @@ jobs:
         if: always()
         run: |
           set -euo pipefail
-          policy_dir="artifacts/workflow-policy/rll-real-data-orchestrator/${{ github.job }}"
+          policy_dir="artifacts/workflow-policy/rll-real-data-orchestrator/${GITHUB_JOB}"
           mkdir -p "$policy_dir"
           . tools/ci/real_data_workflow_policy.sh
           rll_real_data_write_claim_boundary "$policy_dir"
@@ -399,20 +373,20 @@ jobs:
 
       - name: Upload versioned real-data artifact
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-real-run-${{ github.run_id }}
           path: artifacts/rll-real-run/
-          # fromJSON converts the 14-day fallback (used when no retention input is
-          # supplied, including schedules) to the integer expected by actions/upload-artifact@v4.
           retention-days: ${{ fromJSON(inputs.retention_days || '14') }}
+          if-no-files-found: warn
 
       - name: Upload policy artifact
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-real-policy-${{ github.run_id }}
           path: artifacts/workflow-policy/rll-real-data-orchestrator/${{ github.job }}/
           retention-days: ${{ fromJSON(inputs.retention_days || '14') }}
+          if-no-files-found: warn
 
 x-canonical-real-data-policy: Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
