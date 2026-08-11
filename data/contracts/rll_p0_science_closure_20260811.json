@@ -1,0 +1,113 @@
+{
+  "schema": "rll.p0_science_closure.v1",
+  "contract_id": "RLL-P0-SCIENCE-CLOSURE-20260811",
+  "created_at": "2026-08-11T04:42:00Z",
+  "base_commit": "755b766659f16043af1b45107ae15c3e51f162f3",
+  "claim_allowed": false,
+  "policy": {
+    "fail_closed": true,
+    "token_vazio_is_valid_state": true,
+    "no_placeholder_promotion": true,
+    "same_data_same_likelihood_same_priors_for_model_comparison": true,
+    "negative_results_must_be_preserved": true,
+    "independent_reproduction_required_for_promotion": true
+  },
+  "gates": [
+    {
+      "id": "P0-DESI-BAO-COV",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["versioned DESI BAO vector", "full covariance", "source URL or DOI", "license", "sha256", "dimension check"],
+      "evidence_path": "data/real/cosmology/desi_bao_manifest.json",
+      "acceptance": "observables and covariance dimensions match; covariance is symmetric; provenance and checksum are present",
+      "blocks": ["cosmology_background", "model_comparison"]
+    },
+    {
+      "id": "P0-BAO-2D-MAPPING",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["DM_over_rd entries", "DH_over_rd entries", "ordering map", "covariance index map"],
+      "evidence_path": "data/real/cosmology/bao_2d_mapping.json",
+      "acceptance": "every vector element maps deterministically to exactly one covariance row and column",
+      "blocks": ["covariance_aware_likelihood"]
+    },
+    {
+      "id": "P0-FSIGMA8",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["versioned f_sigma8 measurements", "uncertainties or covariance", "survey lineage", "license", "sha256"],
+      "evidence_path": "data/real/cosmology/fsigma8_manifest.json",
+      "acceptance": "no synthetic row enters the real-data likelihood and all measurements have traceable lineage",
+      "blocks": ["growth_joint_likelihood"]
+    },
+    {
+      "id": "P0-PANTHEON-PLUS",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["Pantheon+ release identifier", "data checksum", "covariance checksum", "nuisance treatment", "license"],
+      "evidence_path": "data/real/cosmology/pantheon_plus_manifest.json",
+      "acceptance": "data and covariance are version locked and nuisance assumptions are explicit",
+      "blocks": ["supernova_likelihood"]
+    },
+    {
+      "id": "P0-CMB-SCOPE",
+      "priority": "P0",
+      "state": "PARTIAL",
+      "required": ["claim-to-backend tier", "backend version", "input checksum", "execution receipt"],
+      "evidence_path": "data/contracts/cmb_claim_backend_tiers.json",
+      "acceptance": "requested claim scope never exceeds the executed CMB backend tier",
+      "blocks": ["cmb_dependent_claims"]
+    },
+    {
+      "id": "P0-LIKELIHOOD-CANON",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["one canonical likelihood entrypoint", "dataset manifest lock", "error model", "nuisance model", "deterministic config hash"],
+      "evidence_path": "data/contracts/rll_canonical_likelihood.json",
+      "acceptance": "LCDM, wCDM, CPL and RLL consume identical observational lineage where mathematically applicable",
+      "blocks": ["scientific_promotion"]
+    },
+    {
+      "id": "P0-PRIORS",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["explicit prior distributions", "bounds", "parameterization", "sensitivity variants", "pre-run hash"],
+      "evidence_path": "data/contracts/rll_priors_preregistered.json",
+      "acceptance": "model-comparison priors are frozen before promoted evidence is computed",
+      "blocks": ["bayes_evidence"]
+    },
+    {
+      "id": "P0-BAYES-EVIDENCE",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["log evidence per model", "numerical uncertainty", "sampler settings", "convergence diagnostics", "prior sensitivity", "receipt checksum"],
+      "evidence_path": "artifacts/cosmology/model_comparison_receipt.json",
+      "acceptance": "Bayes result is reproducible from frozen manifests and reports numerical uncertainty",
+      "blocks": ["superiority_claim"]
+    },
+    {
+      "id": "P0-INDEPENDENT-REPRO",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["clean checkout", "environment manifest", "dependency lock", "command transcript", "artifact checksums", "independent execution receipt"],
+      "evidence_path": "artifacts/reproduction/independent_reproduction.json",
+      "acceptance": "a fresh environment reproduces the promoted conclusion or records a bounded discrepancy",
+      "blocks": ["scientific_promotion"]
+    },
+    {
+      "id": "P0-RESULT-PROMOTION",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO",
+      "required": ["all blocking P0 gates closed", "delta_chi2", "AIC", "AICc", "BIC", "ln_B10 with uncertainty", "negative-result preservation"],
+      "evidence_path": "artifacts/cosmology/PROMOTION_DECISION.json",
+      "acceptance": "claim_allowed may change only through a machine-readable decision that cites immutable evidence checksums",
+      "blocks": ["claim_allowed_true"]
+    }
+  ],
+  "promotion_rule": {
+    "claim_allowed": false,
+    "reason": "P0 empirical and reproducibility gates are not yet closed",
+    "required_gate_states": ["PASS"],
+    "forbid_manual_override": true
+  }
+}
