@@ -32,12 +32,12 @@ jobs:
     timeout-minutes: 90
     steps:
       - name: Checkout RLL without persistent credentials
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
           cache: pip
@@ -120,7 +120,7 @@ jobs:
 
       - name: Upload upstream-test diagnostics before enforcement
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: act-dr6-upstream-test-diagnostics-${{ github.run_id }}
           path: |
@@ -198,7 +198,7 @@ jobs:
 
       - name: Upload reference-value diagnostics before enforcement
         if: always() && steps.upstream_tests.outputs.exit_code == '0'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: act-dr6-reference-diagnostics-${{ github.run_id }}
           path: |
@@ -290,7 +290,7 @@ jobs:
           assert d["data_custody"]["vendored_into_rll"] is False
           assert d["upstream_tests"]["failures"] == 0 and d["upstream_tests"]["errors"] == 0
           assert d["reference_likelihood"]["upstream_predicate_pass_ACT_TTTEEE"] is True
-          assert d["reference_likelihood"]["upstream_predicate_pass_ACT_PlanckActCut"] is True
+          assert d["reference_likelihood"]["upstream_predicate_pass_PlanckActCut"] is True
           assert d["reference_likelihood"]["authority"]["atol"] == 1e-2
           assert d["reference_likelihood"]["authority"]["rtol"] == 1e-5
           assert d["successor"] == "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
@@ -298,7 +298,7 @@ jobs:
 
       - name: Upload provenance-only ACT success receipts
         if: steps.upstream_tests.outputs.exit_code == '0' && steps.reference_values.outputs.exit_code == '0'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: act-dr6-cmbonly-${{ github.run_id }}
           path: |
