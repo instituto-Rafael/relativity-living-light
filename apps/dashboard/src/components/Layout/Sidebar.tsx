@@ -21,7 +21,7 @@ const menuItems = [
 
 export function Sidebar({ isOpen, onClose, activeItem, onItemClick }: SidebarProps) {
   const { t } = useTranslation()
-  const { sidebarOpen, toggleSidebar } = useAppStore()
+  const { toggleSidebar } = useAppStore()
 
   const handleItemClick = (id: string) => {
     onItemClick(id)
