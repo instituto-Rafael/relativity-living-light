@@ -23,32 +23,42 @@ jobs:
   build-iml-artifact:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      DAISE_INPUT_PATH: ${{ inputs.daise_input_path }}
+      IML_STEPS: ${{ inputs.steps }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: "3.11"
 
       - name: Ensure input exists
         run: |
+          set -euo pipefail
           mkdir -p data/iml
-          if [ ! -f "${{ github.event.inputs.daise_input_path }}" ]; then
+          if [ ! -f "$DAISE_INPUT_PATH" ]; then
             cp data/iml/daise_input.example.json data/iml/daise_input.json
           fi
 
       - name: Run IML pipeline
         run: |
+          set -euo pipefail
           python tools/iml/iml_pipeline.py \
-            --input "${{ github.event.inputs.daise_input_path }}" \
+            --input "$DAISE_INPUT_PATH" \
             --output "artifacts/iml/iml_artifact.json" \
-            --steps "${{ github.event.inputs.steps }}"
+            --steps "$IML_STEPS"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: iml-artifact
           path: artifacts/iml/iml_artifact.json
+          if-no-files-found: warn
+          retention-days: 30

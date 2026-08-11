@@ -1,6 +1,6 @@
 name: Real Data Complete Execution
 
-on:
+"on":
   workflow_dispatch:
     inputs:
       execution_mode:
@@ -8,11 +8,7 @@ on:
         required: true
         default: audit_only
         type: choice
-        options:
-          - audit_only
-          - materialize
-          - validate
-          - full
+        options: [audit_only, materialize, validate, full]
       materialize_pantheon:
         description: "Download Pantheon+SH0ES official files from the public DataRelease repository."
         required: true
@@ -38,11 +34,7 @@ on:
         required: true
         default: "30"
         type: choice
-        options:
-          - "7"
-          - "14"
-          - "30"
-          - "90"
+        options: ["7", "14", "30", "90"]
 
 permissions:
   contents: read
@@ -63,14 +55,20 @@ jobs:
       STRUCTURE_D_MAXITER_LCDM: "80"
       STRUCTURE_D_MAXITER_RLL: "120"
       STRUCTURE_D_TOL: "1e-5"
+      EXECUTION_MODE: ${{ inputs.execution_mode }}
+      MATERIALIZE_PANTHEON: ${{ inputs.materialize_pantheon }}
+      RUN_STRUCTURE_D: ${{ inputs.run_structure_d }}
+      RUN_PANTHEON_VALIDATION: ${{ inputs.run_pantheon_validation }}
+      STRICT_REAL_DATA: ${{ inputs.strict_real_data }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: "3.11"
 
@@ -87,11 +85,11 @@ jobs:
           cat > "$RUN_DIR/EXECUTION_PLAN.md" <<PLAN
           # Real Data Complete Execution
 
-          - execution_mode: ${{ inputs.execution_mode }}
-          - materialize_pantheon: ${{ inputs.materialize_pantheon }}
-          - run_structure_d: ${{ inputs.run_structure_d }}
-          - run_pantheon_validation: ${{ inputs.run_pantheon_validation }}
-          - strict_real_data: ${{ inputs.strict_real_data }}
+          - execution_mode: $EXECUTION_MODE
+          - materialize_pantheon: $MATERIALIZE_PANTHEON
+          - run_structure_d: $RUN_STRUCTURE_D
+          - run_pantheon_validation: $RUN_PANTHEON_VALIDATION
+          - strict_real_data: $STRICT_REAL_DATA
           - commit_policy: artifact_only_reviewed_pr_required
           - claim_boundary: $CLAIM_BOUNDARY
 
@@ -100,7 +98,7 @@ jobs:
           - Download only from documented public primary sources.
           - Write new run artifacts under $RUN_DIR first.
           - This workflow does not push to the repository. Commit artifacts through a reviewed PR.
-          - If a required real input is missing and strict mode is true, fail the workflow instead of fabricating data.
+          - If a required real input is missing and strict mode is true, fail instead of fabricating data.
           PLAN
           find . -maxdepth 5 -type f \
             -not -path './.git/*' \
@@ -113,7 +111,7 @@ jobs:
       - name: Validate real-data registry without rewriting committed data
         run: |
           set -euo pipefail
-          python - <<'PY' | tee "artifacts/real-data-complete/reports/real_data_policy_check.log"
+          python - <<'PY' | tee "$RUN_DIR/reports/real_data_policy_check.log"
           from pathlib import Path
           required = [
               Path('docs/real_data/REAL_DATA_REQUIRED_INPUTS.md'),
@@ -141,7 +139,7 @@ jobs:
         if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'full' }}
         run: |
           set -euo pipefail
-          if [ "${{ inputs.materialize_pantheon }}" = "true" ]; then
+          if [ "$MATERIALIZE_PANTHEON" = "true" ]; then
             bash scripts/download_real_cosmology_inputs.sh | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
           else
             echo "Pantheon+ materialization disabled by workflow input." | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
@@ -155,9 +153,10 @@ jobs:
             echo "Pantheon+ verification OK" | tee "$RUN_DIR/reports/pantheon_inputs.status"
           else
             echo "Pantheon+ verification failed or files are missing." | tee "$RUN_DIR/reports/pantheon_inputs.status"
-            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+            if [ "$STRICT_REAL_DATA" = "true" ]; then
               exit 2
             fi
+            printf '%s\n' 'TOKEN_VAZIO_PANTHEON_INPUTS_NON_STRICT' > "$RUN_DIR/reports/pantheon_inputs.residual"
           fi
 
       - name: Run real-source signature verification and materialization audit
@@ -165,9 +164,16 @@ jobs:
           set -euo pipefail
           python tools/verify_real_source_signatures.py | tee "$RUN_DIR/reports/real_source_signature_verification.log"
           python tools/real_data_materialization_audit.py | tee "$RUN_DIR/reports/real_data_materialization_audit.log"
-          cp results/audit/real_source_signature_verification.md "$RUN_DIR/reports/" || true
-          cp results/audit/real_data_materialization_audit.md "$RUN_DIR/reports/" || true
-          cp results/audit/real_data_materialization_audit.json "$RUN_DIR/reports/" || true
+          for source in \
+            results/audit/real_source_signature_verification.md \
+            results/audit/real_data_materialization_audit.md \
+            results/audit/real_data_materialization_audit.json; do
+            if [ -f "$source" ]; then
+              cp "$source" "$RUN_DIR/reports/"
+            else
+              printf 'TOKEN_VAZIO_OPTIONAL_REPORT %s\n' "$source" >> "$RUN_DIR/reports/materialization_optional_reports.residual"
+            fi
+          done
 
       - name: Package canonical real inputs for downstream pipelines
         if: always()
@@ -178,51 +184,43 @@ jobs:
           import json
           import shutil
           from pathlib import Path
-
           import yaml
 
-          root = Path(".")
-          artifact_root = Path("artifacts/real-data-complete/inputs")
-          contract = yaml.safe_load(
-              Path("data/real/cosmology/real_cosmology_inputs.yml").read_text(
-                  encoding="utf-8"
-              )
-          )
+          root = Path('.')
+          artifact_root = Path('artifacts/real-data-complete/inputs')
+          contract = yaml.safe_load(Path('data/real/cosmology/real_cosmology_inputs.yml').read_text(encoding='utf-8'))
           paths = {
-              "data/real/rll_real_sources_manifest_2026.yml",
-              "data/real/cosmology/real_cosmology_inputs.yml",
-              "data/real/cosmology/real_source_signatures.json",
+              'data/real/rll_real_sources_manifest_2026.yml',
+              'data/real/cosmology/real_cosmology_inputs.yml',
+              'data/real/cosmology/real_source_signatures.json',
           }
-          for entry in contract["inputs"]:
-              paths.add(entry["local_path"])
-              if entry.get("covariance_path"):
-                  paths.add(entry["covariance_path"])
+          for entry in contract['inputs']:
+              paths.add(entry['local_path'])
+              if entry.get('covariance_path'):
+                  paths.add(entry['covariance_path'])
 
           records = []
           for relative in sorted(paths):
               source = root / relative
               if not source.is_file():
-                  raise SystemExit(f"canonical real input missing: {relative}")
+                  raise SystemExit(f'canonical real input missing: {relative}')
               destination = artifact_root / relative
               destination.parent.mkdir(parents=True, exist_ok=True)
               shutil.copy2(source, destination)
-              records.append(
-                  {
-                      "path": relative,
-                      "artifact_path": str(destination.relative_to(Path("artifacts/real-data-complete"))),
-                      "sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
-                  }
-              )
+              records.append({
+                  'path': relative,
+                  'artifact_path': str(destination.relative_to(Path('artifacts/real-data-complete'))),
+                  'sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+              })
 
           manifest = {
-              "schema": "rll.canonical_real_input_artifacts.v1",
-              "contract": "data/real/cosmology/real_cosmology_inputs.yml",
-              "claim_boundary": "Input provenance only; no scientific endorsement.",
-              "records": records,
+              'schema': 'rll.canonical_real_input_artifacts.v1',
+              'contract': 'data/real/cosmology/real_cosmology_inputs.yml',
+              'claim_boundary': 'Input provenance only; no scientific endorsement.',
+              'records': records,
           }
-          (artifact_root / "REAL_INPUTS.json").write_text(
-              json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
-              encoding="utf-8",
+          (artifact_root / 'REAL_INPUTS.json').write_text(
+              json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
           )
           PY
 
@@ -231,10 +229,17 @@ jobs:
         run: |
           set -euo pipefail
           python -m data.pipelines.structure_d.run_all_real | tee "$RUN_DIR/reports/structure_d_real_validation.log"
-          cp results/structure_d/model_comparison_real.csv "$RUN_DIR/reports/" || true
-          cp results/structure_d/model_comparison_real_fit_metadata.json "$RUN_DIR/reports/" || true
-          cp results/structure_d/execution_timing_real.csv "$RUN_DIR/reports/" || true
-          cp results/structure_d/error_mode_usage.csv "$RUN_DIR/reports/" || true
+          for source in \
+            results/structure_d/model_comparison_real.csv \
+            results/structure_d/model_comparison_real_fit_metadata.json \
+            results/structure_d/execution_timing_real.csv \
+            results/structure_d/error_mode_usage.csv; do
+            if [ -f "$source" ]; then
+              cp "$source" "$RUN_DIR/reports/"
+            else
+              printf 'TOKEN_VAZIO_OPTIONAL_REPORT %s\n' "$source" >> "$RUN_DIR/reports/structure_d_optional_reports.residual"
+            fi
+          done
 
       - name: Run Pantheon+ real validation
         if: ${{ inputs.run_pantheon_validation && (inputs.execution_mode == 'validate' || inputs.execution_mode == 'full') }}
@@ -242,13 +247,18 @@ jobs:
           set -euo pipefail
           if python scripts/run_real_pantheon_validation.py > "$RUN_DIR/reports/run_real_pantheon_validation.log" 2>&1; then
             echo "Pantheon+ real validation OK" | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
-            cp data/results/model_comparison.json "$RUN_DIR/reports/" || true
+            if [ -f data/results/model_comparison.json ]; then
+              cp data/results/model_comparison.json "$RUN_DIR/reports/"
+            else
+              printf '%s\n' 'TOKEN_VAZIO_MODEL_COMPARISON_OUTPUT' > "$RUN_DIR/reports/run_real_pantheon_validation.residual"
+            fi
           else
             cat "$RUN_DIR/reports/run_real_pantheon_validation.log"
             echo "Pantheon+ real validation failed." | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
-            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+            if [ "$STRICT_REAL_DATA" = "true" ]; then
               exit 3
             fi
+            printf '%s\n' 'TOKEN_VAZIO_PANTHEON_VALIDATION_NON_STRICT' > "$RUN_DIR/reports/run_real_pantheon_validation.residual"
           fi
 
       - name: Build final report, checksums, and rollback manifest
@@ -277,20 +287,12 @@ jobs:
           }
           (root / 'MANIFEST.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
           lines = [
-              '# Real Data Complete Execution Report',
-              '',
+              '# Real Data Complete Execution Report', '',
               f"Claim boundary: `{payload['claim_boundary']}`",
-              f"Commit policy: `{payload['commit_policy']}`",
-              '',
-              '## Reports',
-              *[f'- `{item}`' for item in reports],
-              '',
-              '## Checks',
-              *[f'- `{item}`' for item in checks],
-              '',
-              '## Failsafe / failover / rollback',
-              *[f"- {item}" for item in payload['failsafe']],
-              '',
+              f"Commit policy: `{payload['commit_policy']}`", '',
+              '## Reports', *[f'- `{item}`' for item in reports], '',
+              '## Checks', *[f'- `{item}`' for item in checks], '',
+              '## Failsafe / failover / rollback', *[f"- {item}" for item in payload['failsafe']], '',
           ]
           (root / 'PIPELINE_REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
           PY
@@ -298,8 +300,9 @@ jobs:
 
       - name: Upload complete real-data artifact without committing
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: real-data-complete-${{ github.run_id }}
           path: artifacts/real-data-complete/
           retention-days: ${{ fromJSON(inputs.retention_days) }}
+          if-no-files-found: warn

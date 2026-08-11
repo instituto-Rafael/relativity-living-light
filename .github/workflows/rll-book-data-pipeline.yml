@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       book_scope:
-        description: "Bloco can\xF4nico do livro a processar"
+        description: "Bloco canônico do livro a processar"
         required: true
         default: all
         type: choice
@@ -37,17 +37,17 @@ on:
         - fetch
         - compute
       flush_artifact:
-        description: "Limpar artifacts/rll-pipeline antes da execu\xE7\xE3o"
+        description: "Limpar artifacts/rll-pipeline antes da execução"
         required: true
         default: true
         type: boolean
       commit_artifacts:
-        description: "Commitar apenas manifestos/resultados leves em results/pipeline-runs/<run_id> por opt-in expl\xEDcito"
+        description: "Commitar apenas manifestos/resultados leves em results/pipeline-runs/<run_id> por opt-in explícito"
         required: true
         default: false
         type: boolean
       retention_days:
-        description: "Reten\xE7\xE3o do artifact"
+        description: "Retenção do artifact"
         required: true
         default: '14'
         type: choice
@@ -65,61 +65,65 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    env:
+      RLL_BOOK_SCOPE: ${{ inputs.book_scope }}
+      RLL_DATASET_GROUP: ${{ inputs.dataset_group }}
+      RLL_PIPELINE_MODE: ${{ inputs.mode }}
+      RLL_FLUSH_ARTIFACT: ${{ inputs.flush_artifact }}
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
     steps:
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Setup Python 3.11
-      uses: actions/setup-python@v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
       with:
         python-version: '3.11'
     - name: Prepare artifact directory
-      run: "if [ \"${{ inputs.flush_artifact }}\" = \"true\" ]; then\n  rm -rf artifacts/rll-pipeline\nfi\nmkdir -p artifacts/rll-pipeline\n"
+      run: |
+        set -euo pipefail
+        if [ "$RLL_FLUSH_ARTIFACT" = "true" ]; then
+          rm -rf artifacts/rll-pipeline
+        fi
+        mkdir -p artifacts/rll-pipeline
     - name: Docs inventory
-      run: 'python3 tools/docs_inventory.py
-
+      run: |
+        set -euo pipefail
+        python3 tools/docs_inventory.py
         python3 tools/docs_inventory.py --check
-
-        '
     - name: Run canonical pipeline
-      run: "python3 scripts/rll_pipeline.py \\\n  --book-scope \"${{ inputs.book_scope }}\" \\\n  --dataset-group \"${{ inputs.dataset_group }}\" \\\n  --mode \"${{ inputs.mode }}\" \\\n  --output-dir artifacts/rll-pipeline\n"
+      run: |
+        set -euo pipefail
+        python3 scripts/rll_pipeline.py \
+          --book-scope "$RLL_BOOK_SCOPE" \
+          --dataset-group "$RLL_DATASET_GROUP" \
+          --mode "$RLL_PIPELINE_MODE" \
+          --output-dir artifacts/rll-pipeline
     - name: Runtime files + checksums
-      run: 'date -u +"%Y-%m-%dT%H:%M:%SZ" > artifacts/rll-pipeline/RUN_UTC.txt
-
+      run: |
+        set -euo pipefail
+        date -u +"%Y-%m-%dT%H:%M:%SZ" > artifacts/rll-pipeline/RUN_UTC.txt
         echo "${GITHUB_SHA}" > artifacts/rll-pipeline/COMMIT_SHA.txt
-
-        printf ''%s\n'' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
-
+        printf '%s\n' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
         (cd artifacts/rll-pipeline && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > artifacts/rll-pipeline/CHECKSUMS.sha256
-
-        '
     - name: Upload artifact
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline/
         retention-days: ${{ fromJSON(inputs.retention_days) }}
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/rll-book-data-pipeline/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
-    env:
-      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
-      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
   commit-lightweight-artifacts:
     needs: pipeline
     if: ${{ inputs.commit_artifacts }}
@@ -127,43 +131,60 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+    env:
+      RLL_BOOK_SCOPE: ${{ inputs.book_scope }}
+      RLL_DATASET_GROUP: ${{ inputs.dataset_group }}
+      RLL_PIPELINE_MODE: ${{ inputs.mode }}
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
     steps:
     - name: Checkout for explicit opt-in commit
-      uses: actions/checkout@v7
-      with:
-        persist-credentials: false
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Download book pipeline artifact
-      uses: actions/download-artifact@v8
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline
     - name: Commit lightweight artifacts
-      run: "set -euo pipefail\nRUN_DIR=\"results/pipeline-runs/${{ github.run_id }}\"\nmkdir -p \"${RUN_DIR}\"\nrsync -av --prune-empty-dirs \\\n  --include='*/' \\\n  --include='*.md' --include='*.json' --include='*.txt' --include='*.sha256' \\\n  --exclude='*' \\\n  artifacts/rll-pipeline/ \"${RUN_DIR}/\"\ngit config user.name \"github-actions[bot]\"\ngit config user.email \"41898282+github-actions[bot]@users.noreply.github.com\"\ngit add \"${RUN_DIR}\"\nif git diff --cached --quiet; then\n  echo \"No lightweight changes to commit.\"\n  exit 0\nfi\ngit commit -m \"ci(rll-book): artifacts run ${{ github.run_id }} (${{ inputs.book_scope }}/${{ inputs.dataset_group }}/${{ inputs.mode }})\"\ngit push\n"
+      run: |
+        set -euo pipefail
+        case "${GITHUB_REF_NAME}" in
+          main|rll/release)
+            echo "Direct commit to protected promotion branch is forbidden."
+            exit 1
+            ;;
+        esac
+        RUN_DIR="results/pipeline-runs/${GITHUB_RUN_ID}"
+        mkdir -p "$RUN_DIR"
+        rsync -av --prune-empty-dirs \
+          --include='*/' \
+          --include='*.md' --include='*.json' --include='*.txt' --include='*.sha256' \
+          --exclude='*' \
+          artifacts/rll-pipeline/ "$RUN_DIR/"
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add "$RUN_DIR"
+        if git diff --cached --quiet; then
+          echo "No lightweight changes to commit."
+          exit 0
+        fi
+        git commit -m "ci(rll-book): artifacts run ${GITHUB_RUN_ID} (${RLL_BOOK_SCOPE}/${RLL_DATASET_GROUP}/${RLL_PIPELINE_MODE})"
+        git push
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/rll-book-data-pipeline/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: rll-book-data-pipeline-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}/
         retention-days: '14'
-    env:
-      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
-      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
 x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

@@ -1,9 +1,20 @@
+# KNOWS_BY_ON_FIRST_LINE: exhaustive structural audit; no scientific promotion.
 name: YAML Deep Audit — every file
 
-on:
+"on":
   workflow_dispatch:
+    inputs:
+      fail_on:
+        description: "Severity that turns the exhaustive audit red"
+        required: true
+        default: error
+        type: choice
+        options:
+          - error
+          - high
+          - none
   pull_request:
-    paths:
+    paths: &yaml_audit_paths
       - "**/*.yml"
       - "**/*.yaml"
       - "tools/deep_yaml_audit.py"
@@ -11,12 +22,7 @@ on:
       - ".github/workflows/yaml-deep-audit.yml"
   push:
     branches: [main]
-    paths:
-      - "**/*.yml"
-      - "**/*.yaml"
-      - "tools/deep_yaml_audit.py"
-      - "tests/test_deep_yaml_audit.py"
-      - ".github/workflows/yaml-deep-audit.yml"
+    paths: *yaml_audit_paths
 
 permissions:
   contents: read
@@ -27,12 +33,17 @@ concurrency:
 
 env:
   RECEIPT_DIR: artifacts/yaml-deep-audit
+  AUDIT_FAIL_ON: ${{ github.event_name == 'workflow_dispatch' && inputs.fail_on || 'error' }}
+  CLAIM_ALLOWED: "false"
+  SCIENTIFIC_GATE: BLOCKED
+  PUBLICATION_READY: "false"
+  PUBLICATION_EFFECT: NONE
 
 jobs:
   yaml-deep-audit:
     name: Parse, cross-check, and receipt every YAML/YML
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout without persistent credentials
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -53,7 +64,7 @@ jobs:
           set -euo pipefail
           python tools/deep_yaml_audit.py \
             --output-dir "$RECEIPT_DIR" \
-            --fail-on none \
+            --fail-on "$AUDIT_FAIL_ON" \
             2>&1 | tee "$RECEIPT_DIR.console.log"
 
       - name: Run focused adversarial tests

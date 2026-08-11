@@ -34,61 +34,41 @@ jobs:
     timeout-minutes: 20
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Upload combined canonical artifact bundle
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: canonical-route-artifacts
-        path: 'data/real/bootstrap/canonical_route_checklist.yml
-
+        path: |
+          data/real/bootstrap/canonical_route_checklist.yml
           docs/science/CANONICAL_ROUTE_CHECKLIST.md
-
           docs/science/TACTICAL_ROUTE_ORCHESTRATOR.md
-
           docs/science/ROUTE_DEFIBRILLATION_POLICY.md
-
           docs/science/PEER_REVIEW_READINESS_STATUS.md
-
           docs/science/ROADMAP_NEXT_ACTIONS.md
-
           data/raw/RAW_DATA_MANIFEST.yml
-
           data/results/bootstrap/raw_data_manifest_status.json
-
           data/results/bootstrap/raw_data_manifest_status.tsv
-
           docs/science/RAW_DATA_MANIFEST_STATUS.md
-
           data/real/orbital_dynamics/orbital_shape_angular_momentum_seed_v1.csv
-
           data/raw/orbital_dynamics/ephemerides/jpl_horizons_mars_vectors_2006_sample.csv
-
           data/raw/orbital_dynamics/ephemerides/jpl_horizons_mars_vectors_2006_sample.meta.yml
-
           data/results/orbital_dynamics/orbital_state_vector_v2_validation.json
-
           docs/science/ORBITAL_STATE_VECTOR_V2_REPORT.md
-
-          '
+        retention-days: 30
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/canonical-route-artifacts/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/canonical-route-artifacts/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
@@ -98,78 +78,63 @@ jobs:
     timeout-minutes: 20
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Upload checklist artifact
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: route-artifact-checklist
-        path: 'data/real/bootstrap/canonical_route_checklist.yml
-
+        path: |
+          data/real/bootstrap/canonical_route_checklist.yml
           docs/science/CANONICAL_ROUTE_CHECKLIST.md
-
-          '
+        retention-days: 30
     - name: Upload raw custody artifact
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: route-artifact-raw-custody
-        path: 'data/raw/RAW_DATA_MANIFEST.yml
-
+        path: |
+          data/raw/RAW_DATA_MANIFEST.yml
           data/results/bootstrap/raw_data_manifest_status.json
-
           data/results/bootstrap/raw_data_manifest_status.tsv
-
           docs/science/RAW_DATA_MANIFEST_STATUS.md
-
           docs/science/RAW_DATA_MANIFEST_GUIDE.md
-
-          '
+        retention-days: 30
     - name: Upload orbital v2 artifact
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: route-artifact-orbital-v2
-        path: 'data/real/orbital_dynamics/orbital_shape_angular_momentum_seed_v1.csv
-
+        path: |
+          data/real/orbital_dynamics/orbital_shape_angular_momentum_seed_v1.csv
           data/raw/orbital_dynamics/ephemerides/jpl_horizons_mars_vectors_2006_sample.csv
-
           data/raw/orbital_dynamics/ephemerides/jpl_horizons_mars_vectors_2006_sample.meta.yml
-
           data/results/orbital_dynamics/orbital_state_vector_v2_validation.json
-
           docs/science/ORBITAL_STATE_VECTOR_V2_REPORT.md
-
-          '
+        retention-days: 30
     - name: Upload orchestration docs artifact
-      uses: actions/upload-artifact@v7
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: route-artifact-orchestration-docs
-        path: 'docs/science/TACTICAL_ROUTE_ORCHESTRATOR.md
-
+        path: |
+          docs/science/TACTICAL_ROUTE_ORCHESTRATOR.md
           docs/science/ROUTE_DEFIBRILLATION_POLICY.md
-
           docs/science/PEER_REVIEW_READINESS_STATUS.md
-
           docs/science/ROADMAP_NEXT_ACTIONS.md
-
-          '
+        retention-days: 30
     - name: Finalize canonical real-data policy checksums
       if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/canonical-route-artifacts/${{ github.job }}"
-
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/canonical-route-artifacts/${GITHUB_JOB}"
         mkdir -p "$ARTIFACT_DIR"
-
         . tools/ci/real_data_workflow_policy.sh
-
         rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
         rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
         rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.

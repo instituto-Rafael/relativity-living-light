@@ -201,6 +201,14 @@ managed_workflows:
       - always_upload_receipt
       - claim_boundary
       - externalized_algorithm
+  .github/workflows/rll-data-pipeline.yml:
+    class: reconciliation
+  .github/workflows/rll-book-data-pipeline.yml:
+    class: reconciliation
+  .github/workflows/validacao_real.yml:
+    class: reconciliation
+  .github/workflows/rll-validacao-cientifica-completa.yml:
+    class: reconciliation
 
 policy:
   errors:

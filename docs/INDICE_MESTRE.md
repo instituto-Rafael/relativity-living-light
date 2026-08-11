@@ -3,6 +3,7 @@
 
 **Atualizado em:** 2026-06-20
 **Atualizado em:** 2026-06-26
+**Atualizado em:** 2026-08-08
 **Regra:** secao principal lista apenas caminhos canonicos oficiais.
 
 ---
@@ -90,6 +91,7 @@ Encaminhamentos complementares:
 - [`docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md`](RLL_NEXT_WORK_DOCUMENTATION_PLAN.md) - plano operacional para inventario da tag, imagens, CSVs, estacoes de dados e non-post-hoc
 - [`docs/RLL_1234_CHUNK_TEXT_AUDIT.md`](RLL_1234_CHUNK_TEXT_AUDIT.md) - auditoria textual dos chunks do `1234.zip`
 - [`docs/governance/OPERATIONAL_EXCELLENCE_EXECUTION_FRAMEWORK.md`](governance/OPERATIONAL_EXCELLENCE_EXECUTION_FRAMEWORK.md) - framework de execucao para excelencia operacional, governanca continua, auditoria e pipelines
+- [`docs/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.md`](governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.md) - topologia append-only, fail-closed e de dependencias para dados cosmologicos/propagacao
 - [`docs/governance/RLL_VECTRAS_SQRT3_2_GOVERNANCE_MATRIX.md`](governance/RLL_VECTRAS_SQRT3_2_GOVERNANCE_MATRIX.md) - matriz de governanca RLL ↔ Vectras ↔ sqrt3_2: separacao de responsabilidades, fricoes, guardas epistemologicas e criterios de decisao para PRs
 - [`docs/CANONICAL_SOURCES.md`](CANONICAL_SOURCES.md)
 - [`docs/POLITICA_REPOSITORIO_TEXTO_E_ARTEFATOS.md`](POLITICA_REPOSITORIO_TEXTO_E_ARTEFATOS.md) **(fonte oficial para formatos no core e publicacao de artefatos externos)**
@@ -133,6 +135,7 @@ Encaminhamentos complementares:
 
 - [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md) - links de validacao cosmologica real: DESI, Pantheon, CMB, H(z), fσ8, ZML e workflows
 - [`docs/VALIDATION_DATA_MATRIX_RLL_MCRP.md`](VALIDATION_DATA_MATRIX_RLL_MCRP.md)
+- [`data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json`](../data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json) - registro executavel da topologia e dos gates de promocao
 - [`docs/cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md`](cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md)
 - [`docs/cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md`](cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md)
 - [`docs/cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md`](cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md)
