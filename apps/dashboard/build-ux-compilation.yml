@@ -243,9 +243,9 @@ analysis:
 
     targets:
       - metric: "total_size_kb"
-        max: 300  # 300 KB
-        warn: 280  # 280 KB
-        target: 250  # 250 KB (ideal)
+        max: 300
+        warn: 280
+        target: 250
 
       - metric: "vendor_size_kb"
         max: 150
@@ -267,8 +267,8 @@ analysis:
     metrics:
       - name: "Build time"
         unit: "seconds"
-        max: 300  # 5 minutos
-        target: 120  # 2 minutos
+        max: 300
+        target: 120
 
       - name: "File count"
         unit: "files"
@@ -292,19 +292,19 @@ analysis:
     formats:
       - format: "gzip"
         level: 9
-        expected_ratio: "75%"  # 75% compression
+        expected_ratio: "75%"
 
       - format: "brotli"
         level: 11
-        expected_ratio: "72%"  # 72% compression
+        expected_ratio: "72%"
 
       - format: "zstd"
         level: 19
-        expected_ratio: "70%"  # 70% compression
+        expected_ratio: "70%"
 
   lighthouse_audit:
     name: "Lighthouse Audit"
-    disabled: true  # Requer servidor rodando
+    disabled: true
 
     metrics:
       - "Performance"
@@ -521,7 +521,7 @@ deployment:
         - "/index.html"
         - "/js/*"
       env: "production"
-      enabled: false  # Requer aprovação manual
+      enabled: false
 
   cdn_configuration:
     provider: "CloudFlare"
@@ -529,7 +529,7 @@ deployment:
     cache_rules:
       - path: "/index.html"
         ttl: "5 minutes"
-        bypass_cache: true  # Always fresh
+        bypass_cache: true
 
       - path: "/js/*.js"
         ttl: "30 days"
@@ -567,7 +567,7 @@ deployment:
 global_config:
   max_parallel_jobs: 4
   retry_failed_steps: 3
-  timeout_global_seconds: 3600  # 1 hour max
+  timeout_global_seconds: 3600
 
   environment_variables:
     NODE_ENV: "production"
@@ -604,15 +604,21 @@ npm_scripts:
 summary:
   total_steps: 8
   parallel_enabled: true
-  estimated_duration_seconds: 360  # 6 minutos
+  estimated_duration_seconds: 360
 
   deliverables:
-    - "dist/" - Distribuição pronta para produção
-    - "BUILD_MANIFEST.json" - Metadados do build
-    - "bundle-analysis.json" - Análise de bundle
-    - "sbom.json" - Bill of materials
-    - "dashboard-ux-latest.tar.gz" - Arquivo compactado
-    - "dashboard-ux-latest.zip" - Arquivo ZIP
+    - artifact: "dist/"
+      description: "Distribuição pronta para produção"
+    - artifact: "BUILD_MANIFEST.json"
+      description: "Metadados do build"
+    - artifact: "bundle-analysis.json"
+      description: "Análise de bundle"
+    - artifact: "sbom.json"
+      description: "Bill of materials"
+    - artifact: "dashboard-ux-latest.tar.gz"
+      description: "Arquivo compactado"
+    - artifact: "dashboard-ux-latest.zip"
+      description: "Arquivo ZIP"
 
   quality_gates: 8
   critical_gates: 5
