@@ -1,0 +1,19 @@
+{
+  "schema": "rll.f_gap_p0_action_pinning.v1",
+  "cycle": 8,
+  "date": "2026-08-11",
+  "baseline_high": 95,
+  "baseline_mutable_action_reference": 79,
+  "targeted_mutable_action_reference": 58,
+  "targeted_workflows": 20,
+  "expected_high_after_audit_if_no_new_findings": 37,
+  "state": "OBSERVED_PENDING_CI",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "pins": {
+    "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "actions/setup-python": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+    "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+  },
+  "boundary": "Supply-chain pinning only. No scientific formula, dataset, parameter, threshold, result, claim boundary, or domain test is intentionally modified."
+}
