@@ -122,7 +122,8 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python tools/propose_workflow_contract_pr.py --base "${{ inputs.base }}"
+          BASE_REF: ${{ inputs.base }}
+        run: python tools/propose_workflow_contract_pr.py --base "$BASE_REF"
 
       - name: Upload proposal receipt
         if: always()
