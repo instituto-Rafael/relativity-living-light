@@ -22,8 +22,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "baseUrl": "."
+    "allowImportingTsExtensions": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
