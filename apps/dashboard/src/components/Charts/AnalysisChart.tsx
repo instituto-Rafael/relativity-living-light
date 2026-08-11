@@ -135,7 +135,7 @@ export function AnalysisChart({ data, config, colors = defaultColors }: Analysis
               fill="#8884d8"
               dataKey={config.dataKey}
             >
-              {(data as unknown[]).map((entry, index) => (
+              {(data as unknown[]).map((_, index) => (
                 <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
               ))}
             </Pie>
