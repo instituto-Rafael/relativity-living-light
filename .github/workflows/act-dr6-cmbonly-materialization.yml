@@ -290,7 +290,7 @@ jobs:
           assert d["data_custody"]["vendored_into_rll"] is False
           assert d["upstream_tests"]["failures"] == 0 and d["upstream_tests"]["errors"] == 0
           assert d["reference_likelihood"]["upstream_predicate_pass_ACT_TTTEEE"] is True
-          assert d["reference_likelihood"]["upstream_predicate_pass_PlanckActCut"] is True
+          assert d["reference_likelihood"]["upstream_predicate_pass_ACT_PlanckActCut"] is True
           assert d["reference_likelihood"]["authority"]["atol"] == 1e-2
           assert d["reference_likelihood"]["authority"]["rtol"] == 1e-5
           assert d["successor"] == "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
