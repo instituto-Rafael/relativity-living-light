@@ -56,6 +56,7 @@ export function ExportPanel({ data, onExport }: ExportPanelProps) {
             {exportFormats.map(({ format, label, icon, description }) => (
               <button
                 key={format}
+                aria-label={`${label} (${data.length} registros)`}
                 onClick={() => onExport({ format, includeMetadata: true })}
                 className="flex flex-col items-center gap-2 p-4 rounded-lg border border-gray-200 dark:border-slate-700 hover:border-primary-500 dark:hover:border-primary-400 hover:shadow-md transition-all bg-white dark:bg-slate-900"
               >
