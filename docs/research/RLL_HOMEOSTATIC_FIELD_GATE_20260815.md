@@ -150,7 +150,29 @@ T_{mirror/camera/observer}
 \frac{d\rho_{org}}{dt}
 ```
 
-## 7. Next gates
+## 7. PR route
+
+Canonical repository:
+
+```text
+instituto-Rafael/relativity-living-light
+```
+
+Canonical branch:
+
+```text
+audit/homeostatic-field-gate-20260815
+```
+
+Canonical PR:
+
+```text
+instituto-Rafael/relativity-living-light#749
+```
+
+The older `rafaelmeloreisnovo/relativity-living-light` fork route was closed as superseded and is not the canonical chain of custody for this gate.
+
+## 8. Next gates
 
 To become stronger, this must be repeated against:
 
@@ -161,7 +183,7 @@ To become stronger, this must be repeated against:
 5. documented provenance for each input dataset;
 6. real optical/cosmological photon-ledger rows for the observer/mirror gate.
 
-## 8. Invariants
+## 9. Invariants
 
 - `metaphor != measurement`
 - `proxy != cosmological evidence`
