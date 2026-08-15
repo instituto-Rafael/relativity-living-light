@@ -7,6 +7,15 @@
   "claim_allowed_dark_matter_unseen_matter_default": false,
   "status_expected_for_self_test": "FORTE_PROXY_ONLY_OR_NEUTRO_ALTO_PROXY_ONLY",
   "interpretation": "Governed observer/mirror/photon path-transform gate; not a physical dark-energy or dark-matter identity claim.",
+  "repo_cross_check": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "searched_terms": [
+      "photon mirror observer light redshift dark energy dark matter Olbers",
+      "energia escura matéria escura fóton luz observador espelho"
+    ],
+    "existing_named_gate_found": false,
+    "action_taken": "added as new governed layer cross-linked to stellar-light ledger and homeostatic-field gate"
+  },
   "self_test_expected": {
     "rows": 128,
     "criteria": "nonzero_observed_fraction >= 0.95 and mean_ledger_separation >= 0.95 for FORTE_PROXY_ONLY"
