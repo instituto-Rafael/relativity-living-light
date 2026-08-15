@@ -1,0 +1,38 @@
+name: RLL Observer Mirror Photon Gate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/rll_observer_mirror_photon_gate.py'
+      - 'docs/research/RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md'
+      - 'docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md'
+      - 'docs/research/RLL_HOMEOSTATIC_FIELD_GATE_20260815.md'
+      - 'data/evidence/rll_observer_mirror_photon_gate_20260815.json'
+      - 'data/evidence/rll_homeostatic_field_gate_20260815.json'
+      - '.github/workflows/rll-observer-mirror-photon-gate.yml'
+      - '.github/workflows/rll-homeostatic-field-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  observer-mirror-photon-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run deterministic self-test
+        run: |
+          python3 scripts/rll_observer_mirror_photon_gate.py --outdir artifacts/observer_mirror_photon_gate
+
+      - name: Show gate summary
+        run: |
+          cat artifacts/observer_mirror_photon_gate/rll_observer_mirror_photon_gate_results.json
+
+      - name: Upload gate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-observer-mirror-photon-gate
+          path: artifacts/observer_mirror_photon_gate/

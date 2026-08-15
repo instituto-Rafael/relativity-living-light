@@ -1,0 +1,32 @@
+{
+  "gate": "RLL_HOMEOSTATIC_FIELD_GATE",
+  "run_date": "2026-08-15",
+  "source": "RAFAELIA_cosmo_bio_timeseries_10y.csv mounted in session; proxy-only input, not committed as cosmological evidence",
+  "evidence_class": "proxy_time_series_only",
+  "claim_allowed_physical_gravity": false,
+  "status": "NEUTRO_ALTO_PROXY_ONLY",
+  "global": {
+    "planets": 12,
+    "residual_mean": 0.15826107829609484,
+    "improvement_vs_passive_mean": 0.6596893924309662,
+    "tail_occ_target_corr": 0.0
+  },
+  "criteria": {
+    "FORTE_PROXY_ONLY": "residual_mean <= 0.10 and improvement_vs_passive_mean >= 0.15",
+    "NEUTRO_ALTO_PROXY_ONLY": "residual_mean <= 0.18 and improvement_vs_passive_mean >= 0.05",
+    "physical_claim": "BLOCKED until cosmological/lab data and adversarial baselines pass"
+  },
+  "cross_links": {
+    "stellar_light_ledger": "docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md",
+    "observer_mirror_photon_gate": "docs/research/RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md",
+    "flux_route": "stellar ledger -> space/redshift/dilution -> mirror/camera/observer transform -> Phi_gamma usable -> homeostatic buffer gate",
+    "observer_workflow": ".github/workflows/rll-observer-mirror-photon-gate.yml"
+  },
+  "canonical_route": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "audit/homeostatic-field-gate-20260815",
+    "pr": 749,
+    "supersedes_fork_pr": "rafaelmeloreisnovo/relativity-living-light#23"
+  },
+  "interpretation": "Promising homeostatic-buffer proxy signature; not a physical gravity claim."
+}
