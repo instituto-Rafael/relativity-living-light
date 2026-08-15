@@ -19,7 +19,8 @@
   "cross_links": {
     "stellar_light_ledger": "docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md",
     "observer_mirror_photon_gate": "docs/research/RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md",
-    "flux_route": "stellar ledger -> space/redshift/dilution -> mirror/camera/observer transform -> Phi_gamma usable -> homeostatic buffer gate"
+    "flux_route": "stellar ledger -> space/redshift/dilution -> mirror/camera/observer transform -> Phi_gamma usable -> homeostatic buffer gate",
+    "observer_workflow": ".github/workflows/rll-observer-mirror-photon-gate.yml"
   },
   "interpretation": "Promising homeostatic-buffer proxy signature; not a physical gravity claim."
 }
