@@ -167,5 +167,6 @@ with `Phi_gamma(t)` explicitly defined as received/usable flux, not total emitte
 - `local conservation bookkeeping != simple global cosmological conservation`
 - `Olbers boundary must be explicit`
 - `observed_image != untransformed_photon_ledger`
+- `observed_light != emitted_light_at_source_time`
 - `TOKEN_VAZIO` preserves unobserved source/remnant paths
 - `claim_allowed_dark_energy_photon_literal=false`
