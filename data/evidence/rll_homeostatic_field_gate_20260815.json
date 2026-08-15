@@ -22,5 +22,11 @@
     "flux_route": "stellar ledger -> space/redshift/dilution -> mirror/camera/observer transform -> Phi_gamma usable -> homeostatic buffer gate",
     "observer_workflow": ".github/workflows/rll-observer-mirror-photon-gate.yml"
   },
+  "canonical_route": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "audit/homeostatic-field-gate-20260815",
+    "pr": 749,
+    "supersedes_fork_pr": "rafaelmeloreisnovo/relativity-living-light#23"
+  },
   "interpretation": "Promising homeostatic-buffer proxy signature; not a physical gravity claim."
 }
