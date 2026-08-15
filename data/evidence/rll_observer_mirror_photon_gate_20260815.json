@@ -7,6 +7,10 @@
   "claim_allowed_dark_matter_unseen_matter_default": false,
   "status_expected_for_self_test": "FORTE_PROXY_ONLY_OR_NEUTRO_ALTO_PROXY_ONLY",
   "interpretation": "Governed observer/mirror/photon path-transform gate; not a physical dark-energy or dark-matter identity claim.",
+  "self_test_expected": {
+    "rows": 128,
+    "criteria": "nonzero_observed_fraction >= 0.95 and mean_ledger_separation >= 0.95 for FORTE_PROXY_ONLY"
+  },
   "invariants": [
     "observed_light != emitted_light_at_source_time",
     "observed_image != untransformed_photon_ledger",
