@@ -151,7 +151,15 @@ The stellar-light ledger becomes an input to the homeostatic field gate:
 
 with `Phi_gamma(t)` explicitly defined as received/usable flux, not total emitted source energy.
 
-## 7. Next falsification gates
+## 7. Canonical PR route
+
+```text
+instituto-Rafael/relativity-living-light#749
+```
+
+This is the canonical Instituto Rafael route for the ledger/gate stack. The older personal fork route is superseded.
+
+## 8. Next falsification gates
 
 1. Build source/remnant ledgers for stellar populations.
 2. Separate received photons from emitted photons.
@@ -160,7 +168,7 @@ with `Phi_gamma(t)` explicitly defined as received/usable flux, not total emitte
 5. Only then test whether an RLL residual maps to dark-matter or dark-energy observables.
 6. Add observer/mirror/camera transformation data where the measurement path is nontrivial.
 
-## 8. Invariants
+## 9. Invariants
 
 - `photon != dark_energy_literal`
 - `unseen ordinary matter != dark_matter_by_default`
