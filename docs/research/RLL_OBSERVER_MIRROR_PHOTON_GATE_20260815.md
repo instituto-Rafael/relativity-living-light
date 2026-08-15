@@ -113,6 +113,8 @@ The script reports:
 - `NEUTRO_ALTO_PROXY_ONLY` for partial but coherent separation;
 - `FRACO_PROXY_ONLY` when the ledger does not support a path-dependent observation channel.
 
+Self-test evidence remains `proxy only`. A synthetic result can validate implementation behavior, but it cannot validate cosmology.
+
 ## 7. RLL cross-link stack
 
 ```math
