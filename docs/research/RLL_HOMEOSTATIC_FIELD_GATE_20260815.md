@@ -128,7 +128,29 @@ So the defensible route is:
 stellar\ ledger \to observer/mirror/camera\ transform \to usable\ photon\ flux \to homeostatic\ buffer\ gate
 ```
 
-## 6. Next gates
+## 6. Integrated gate stack
+
+The current PR implements three coupled layers:
+
+1. `RLL_HOMEOSTATIC_FIELD_GATE`: buffer/saturation/reorganization proxy.
+2. `RLL_STELLAR_LIGHT_LEDGER`: emitted light is not identical to observed light; Olbers boundary and remnant ledger are explicit.
+3. `RLL_OBSERVER_MIRROR_PHOTON_GATE`: emitted photon ledger becomes measured image only after path, mirror/camera and observer-frame transforms.
+
+Together:
+
+```math
+\mathcal{L}_\star(t)
+\to
+T_{space/redshift/dilution}
+\to
+T_{mirror/camera/observer}
+\to
+\Phi_\gamma(t)_{usable}
+\to
+\frac{d\rho_{org}}{dt}
+```
+
+## 7. Next gates
 
 To become stronger, this must be repeated against:
 
@@ -139,7 +161,7 @@ To become stronger, this must be repeated against:
 5. documented provenance for each input dataset;
 6. real optical/cosmological photon-ledger rows for the observer/mirror gate.
 
-## 7. Invariants
+## 8. Invariants
 
 - `metaphor != measurement`
 - `proxy != cosmological evidence`
@@ -147,4 +169,5 @@ To become stronger, this must be repeated against:
 - `claim_allowed_physical_gravity=false`
 - `photon != dark_energy_literal`
 - `observed_light != emitted_light_at_source_time`
+- `observed_image != untransformed_photon_ledger`
 - `TOKEN_VAZIO` is valid where source data or provenance are absent.
