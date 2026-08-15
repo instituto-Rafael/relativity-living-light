@@ -26,6 +26,12 @@
     "homeostatic_field_gate": "docs/research/RLL_HOMEOSTATIC_FIELD_GATE_20260815.md",
     "workflow": ".github/workflows/rll-observer-mirror-photon-gate.yml"
   },
+  "canonical_route": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "audit/homeostatic-field-gate-20260815",
+    "pr": 749,
+    "supersedes_fork_pr": "rafaelmeloreisnovo/relativity-living-light#23"
+  },
   "invariants": [
     "observed_light != emitted_light_at_source_time",
     "observed_image != untransformed_photon_ledger",
