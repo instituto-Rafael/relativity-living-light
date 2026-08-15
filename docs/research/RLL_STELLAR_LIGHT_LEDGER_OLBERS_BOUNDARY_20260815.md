@@ -106,7 +106,32 @@ M_{visible}(t)
 
 Only after gravitational inference and known-baryon accounting fail does a dark-matter-like residual become relevant.
 
-## 5. RLL projection
+## 5. Observer / mirror / photon cross-link
+
+The stellar ledger is not the final measurement. The next transform is now governed by:
+
+- `RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md`
+- `scripts/rll_observer_mirror_photon_gate.py`
+
+The cross-link is:
+
+```math
+L_{observed}
+=
+T_{observer}\circ T_{mirror}\circ T_{space}(L_{emitted})
+```
+
+and therefore:
+
+```math
+\Phi_\gamma(t)_{usable}
+=
+O_{frame}\left[R_{mirror}(\gamma_{source})\right]
+```
+
+This separates source emission, propagation, optical path, camera registration, and observer frame.
+
+## 6. RLL projection
 
 The stellar-light ledger becomes an input to the homeostatic field gate:
 
@@ -126,19 +151,21 @@ The stellar-light ledger becomes an input to the homeostatic field gate:
 
 with `Phi_gamma(t)` explicitly defined as received/usable flux, not total emitted source energy.
 
-## 6. Next falsification gates
+## 7. Next falsification gates
 
 1. Build source/remnant ledgers for stellar populations.
 2. Separate received photons from emitted photons.
 3. Include redshift and luminosity-distance dilution.
 4. Compare baryonic/remnant accounting against lensing and rotation residuals.
 5. Only then test whether an RLL residual maps to dark-matter or dark-energy observables.
+6. Add observer/mirror/camera transformation data where the measurement path is nontrivial.
 
-## 7. Invariants
+## 8. Invariants
 
 - `photon != dark_energy_literal`
 - `unseen ordinary matter != dark_matter_by_default`
 - `local conservation bookkeeping != simple global cosmological conservation`
 - `Olbers boundary must be explicit`
+- `observed_image != untransformed_photon_ledger`
 - `TOKEN_VAZIO` preserves unobserved source/remnant paths
 - `claim_allowed_dark_energy_photon_literal=false`
