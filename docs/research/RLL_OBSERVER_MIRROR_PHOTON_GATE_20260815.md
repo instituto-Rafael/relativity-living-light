@@ -131,7 +131,15 @@ homeostatic\ field\ gate
 
 This creates a controlled route from the user's photon/reflection intuition into the RLL buffer model.
 
-## 8. Invariants
+## 8. Canonical PR route
+
+```text
+instituto-Rafael/relativity-living-light#749
+```
+
+The older personal fork route is superseded.
+
+## 9. Invariants
 
 - `observed_light != emitted_light_at_source_time`
 - `observed_image != untransformed_photon_ledger`
@@ -140,7 +148,7 @@ This creates a controlled route from the user's photon/reflection intuition into
 - `camera_register != external_observer_frame`
 - `TOKEN_VAZIO` is mandatory for unobserved source/remnant paths
 
-## 9. Next falsification gates
+## 10. Next falsification gates
 
 1. Replace synthetic rows with real optical/astronomical ledger rows.
 2. Track emitted luminosity, received flux, redshift, distance, absorption and instrumental registration separately.
