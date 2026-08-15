@@ -1,0 +1,20 @@
+{
+  "gate": "RLL_HOMEOSTATIC_FIELD_GATE",
+  "run_date": "2026-08-15",
+  "source": "RAFAELIA_cosmo_bio_timeseries_10y.csv mounted in session; proxy-only input, not committed as cosmological evidence",
+  "evidence_class": "proxy_time_series_only",
+  "claim_allowed_physical_gravity": false,
+  "status": "NEUTRO_ALTO_PROXY_ONLY",
+  "global": {
+    "planets": 12,
+    "residual_mean": 0.15826107829609484,
+    "improvement_vs_passive_mean": 0.6596893924309662,
+    "tail_occ_target_corr": 0.0
+  },
+  "criteria": {
+    "FORTE_PROXY_ONLY": "residual_mean <= 0.10 and improvement_vs_passive_mean >= 0.15",
+    "NEUTRO_ALTO_PROXY_ONLY": "residual_mean <= 0.18 and improvement_vs_passive_mean >= 0.05",
+    "physical_claim": "BLOCKED until cosmological/lab data and adversarial baselines pass"
+  },
+  "interpretation": "Promising homeostatic-buffer proxy signature; not a physical gravity claim."
+}
