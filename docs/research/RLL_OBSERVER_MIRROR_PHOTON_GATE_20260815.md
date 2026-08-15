@@ -9,7 +9,16 @@ Claim boundary:
 
 This note cross-links the RLL stellar-light ledger with the session's observer/mirror/camera intuition.
 
-## 1. Session intuition preserved
+## 1. Repository cross-check
+
+A direct search in `instituto-Rafael/relativity-living-light` did not surface an existing named implementation for:
+
+- `photon mirror observer light redshift dark energy dark matter Olbers`
+- `energia escura matéria escura fóton luz observador espelho`
+
+Therefore this gate is added as a new governed layer, cross-linked to the already-added stellar-light ledger and homeostatic-field gate, rather than as a replacement of an existing named module.
+
+## 2. Session intuition preserved
 
 A photon emitted by a star is not identical to the final registered image.
 
@@ -42,7 +51,7 @@ Where:
 - `O_frame` is camera/observer registration;
 - `I_measured` is the observed image or signal.
 
-## 2. Difference between camera and external observer
+## 3. Difference between camera and external observer
 
 The camera is a local registration endpoint. The external observer is a frame that interprets the same event from another geometry.
 
@@ -52,7 +61,7 @@ I_{camera} \neq I_{external}
 
 This is not a contradiction. It means measurement depends on path, frame, and registration channel.
 
-## 3. Stellar ledger connection
+## 4. Stellar ledger connection
 
 This gate extends `RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md`.
 
@@ -78,7 +87,7 @@ T_{observer}\circ T_{mirror}\circ T_{space}\left(L_{emitted}\right)
 
 The relevant accounting is not only source luminosity; it is source luminosity after cosmological and local optical transformations.
 
-## 4. Gate equation
+## 5. Gate equation
 
 The proxy script uses:
 
@@ -96,7 +105,7 @@ I_{measured}=F_{received}\cdot T_{mirror}\cdot G_{camera}
 
 The gate checks whether measured/observed light is path-transformed and separated from emitted source luminosity, not whether photons literally are dark energy.
 
-## 5. Classification
+## 6. Classification
 
 The script reports:
 
@@ -104,7 +113,23 @@ The script reports:
 - `NEUTRO_ALTO_PROXY_ONLY` for partial but coherent separation;
 - `FRACO_PROXY_ONLY` when the ledger does not support a path-dependent observation channel.
 
-## 6. Invariants
+## 7. RLL cross-link stack
+
+```math
+stellar\ source\ ledger
+\to
+space/redshift/dilution
+\to
+mirror/camera/observer\ transform
+\to
+\Phi_\gamma(t)_{usable}
+\to
+homeostatic\ field\ gate
+```
+
+This creates a controlled route from the user's photon/reflection intuition into the RLL buffer model.
+
+## 8. Invariants
 
 - `observed_light != emitted_light_at_source_time`
 - `observed_image != untransformed_photon_ledger`
@@ -113,7 +138,7 @@ The script reports:
 - `camera_register != external_observer_frame`
 - `TOKEN_VAZIO` is mandatory for unobserved source/remnant paths
 
-## 7. Next falsification gates
+## 9. Next falsification gates
 
 1. Replace synthetic rows with real optical/astronomical ledger rows.
 2. Track emitted luminosity, received flux, redshift, distance, absorption and instrumental registration separately.
