@@ -18,7 +18,8 @@
   },
   "self_test_expected": {
     "rows": 128,
-    "criteria": "nonzero_observed_fraction >= 0.95 and mean_ledger_separation >= 0.95 for FORTE_PROXY_ONLY"
+    "criteria": "nonzero_observed_fraction >= 0.95 and mean_ledger_separation >= 0.95 for FORTE_PROXY_ONLY",
+    "meaning": "implementation behavior only; not cosmological evidence"
   },
   "invariants": [
     "observed_light != emitted_light_at_source_time",
