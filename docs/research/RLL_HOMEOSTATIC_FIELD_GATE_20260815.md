@@ -103,17 +103,18 @@ Interpretation:
 - therefore the correct status is `NEUTRO_ALTO_PROXY_ONLY`, not `FORTE`;
 - this is evidence of a promising homeostatic-buffer signature, not evidence of new gravity.
 
-## 5. Cross-link: stellar light and observer photon gates
+## 5. Cross-link: stellar light, observer photon and biophoton gates
 
-This homeostatic gate now receives its energy/flux driver from the governed stellar-light and observer/mirror/photon ledgers:
+This homeostatic gate now receives its energy/flux driver from governed stellar-light, observer/mirror/photon and biophoton/metabolic ledgers:
 
 - `RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md`
 - `RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md`
+- `RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE_20260815.md`
 
 The session cross-link is:
 
 ```math
-\Phi(t) \leftarrow \Phi_\gamma(t)_{received/registered}
+\Phi(t) \leftarrow \Phi_\gamma(t)_{received/registered} \oplus \Phi_{bio\gamma}(t)_{metabolic}
 ```
 
 not:
@@ -125,16 +126,21 @@ not:
 So the defensible route is:
 
 ```math
-stellar\ ledger \to observer/mirror/camera\ transform \to usable\ photon\ flux \to homeostatic\ buffer\ gate
+stellar\ ledger \to observer/mirror/camera\ transform \to usable\ photon\ flux
+\oplus
+biophoton/metabolic\ transduction
+\to
+homeostatic\ buffer\ gate
 ```
 
 ## 6. Integrated gate stack
 
-The current PR implements three coupled layers:
+The current PR implements four coupled layers:
 
 1. `RLL_HOMEOSTATIC_FIELD_GATE`: buffer/saturation/reorganization proxy.
 2. `RLL_STELLAR_LIGHT_LEDGER`: emitted light is not identical to observed light; Olbers boundary and remnant ledger are explicit.
 3. `RLL_OBSERVER_MIRROR_PHOTON_GATE`: emitted photon ledger becomes measured image only after path, mirror/camera and observer-frame transforms.
+4. `RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE`: metabolic, pigment, gas, nutrient, radiation and triboluminescence proxies are treated as transduction bookkeeping channels.
 
 Together:
 
@@ -146,6 +152,8 @@ T_{space/redshift/dilution}
 T_{mirror/camera/observer}
 \to
 \Phi_\gamma(t)_{usable}
+\oplus
+T_{bio}(t)
 \to
 \frac{d\rho_{org}}{dt}
 ```
@@ -181,7 +189,8 @@ To become stronger, this must be repeated against:
 3. RLL cosmological observables: `H(z)`, `E(a)`, BAO, lensing, `fσ8`;
 4. explicit plasma/magnetic terms with degeneracy checks against radiation-like components;
 5. documented provenance for each input dataset;
-6. real optical/cosmological photon-ledger rows for the observer/mirror gate.
+6. real optical/cosmological photon-ledger rows for the observer/mirror gate;
+7. measured UPE/metabolic/radiation rows for the biophoton gate.
 
 ## 9. Invariants
 
@@ -190,6 +199,8 @@ To become stronger, this must be repeated against:
 - `fit != causal proof`
 - `claim_allowed_physical_gravity=false`
 - `photon != dark_energy_literal`
+- `biophoton != dark_energy_literal`
+- `melanin != organelle_literal`
 - `observed_light != emitted_light_at_source_time`
 - `observed_image != untransformed_photon_ledger`
 - `TOKEN_VAZIO` is valid where source data or provenance are absent.
