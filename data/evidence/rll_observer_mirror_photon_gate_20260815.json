@@ -21,6 +21,11 @@
     "criteria": "nonzero_observed_fraction >= 0.95 and mean_ledger_separation >= 0.95 for FORTE_PROXY_ONLY",
     "meaning": "implementation behavior only; not cosmological evidence"
   },
+  "cross_links": {
+    "stellar_light_ledger": "docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md",
+    "homeostatic_field_gate": "docs/research/RLL_HOMEOSTATIC_FIELD_GATE_20260815.md",
+    "workflow": ".github/workflows/rll-observer-mirror-photon-gate.yml"
+  },
   "invariants": [
     "observed_light != emitted_light_at_source_time",
     "observed_image != untransformed_photon_ledger",
