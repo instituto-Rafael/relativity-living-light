@@ -5,8 +5,12 @@ on:
     paths:
       - 'scripts/rll_observer_mirror_photon_gate.py'
       - 'docs/research/RLL_OBSERVER_MIRROR_PHOTON_GATE_20260815.md'
+      - 'docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md'
+      - 'docs/research/RLL_HOMEOSTATIC_FIELD_GATE_20260815.md'
       - 'data/evidence/rll_observer_mirror_photon_gate_20260815.json'
+      - 'data/evidence/rll_homeostatic_field_gate_20260815.json'
       - '.github/workflows/rll-observer-mirror-photon-gate.yml'
+      - '.github/workflows/rll-homeostatic-field-gate.yml'
   workflow_dispatch:
 
 permissions:
