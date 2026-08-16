@@ -1,0 +1,100 @@
+{
+  "schema": "rll.operational_auto_hotfix_policy.v1",
+  "effective_date": "2026-08-16",
+  "state": "GOVERNED_REVIEW_REQUIRED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "principles": [
+    "observe_more_than_mutate",
+    "fail_closed_on_structural_drift",
+    "append_only_evidence",
+    "no_invented_token_closure",
+    "scientific_claims_require_independent_evidence",
+    "automation_is_not_epistemic_authority"
+  ],
+  "urgency": {
+    "P0": "CI integrity or deterministic contract drift that invalidates repository gates",
+    "P1": "security, provenance, missing dependency or reproducibility weakness requiring reviewed action",
+    "P2": "epistemic debt, TOKEN_VAZIO, documentation or research closure work"
+  },
+  "safe_auto_fix": {
+    "classes": [
+      "WORKFLOW_INVENTORY_DRIFT"
+    ],
+    "constraints": [
+      "repair must be deterministic from repository-local executable state",
+      "repair may only alter an explicitly whitelisted contract scalar",
+      "workspace mutation must be proposed by pull request",
+      "direct commit to main is forbidden",
+      "auto merge is forbidden",
+      "receipt must be produced before proposal"
+    ]
+  },
+  "review_only": {
+    "classes": [
+      "FLOATING_ACTION_REF",
+      "MISSING_LOCAL_WORKFLOW_DEPENDENCY",
+      "EPISTEMIC_TOKEN",
+      "UNCERTAINTY_TOKEN",
+      "MAINTENANCE_MARKER",
+      "RUNTIME_ZERO_JOB_FAILURE",
+      "EXTERNAL_PLATFORM_SETTING"
+    ]
+  },
+  "forbidden_auto_mutation_domains": [
+    "scientific_claim",
+    "scientific_result",
+    "scientific_dataset",
+    "likelihood",
+    "bayesian_evidence",
+    "physical_interpretation",
+    "secrets",
+    "branch_protection",
+    "repository_rulesets",
+    "licenses",
+    "publication_state"
+  ],
+  "observation_record_required_fields": [
+    "id",
+    "kind",
+    "urgency",
+    "state",
+    "source",
+    "evidence",
+    "auto_fixable",
+    "proposed_action",
+    "falsifier",
+    "provenance"
+  ],
+  "products": {
+    "runtime_artifacts": [
+      "observations.jsonl",
+      "state_vector.json",
+      "receipt.json",
+      "SUMMARY.md"
+    ],
+    "retention_days": 90,
+    "durable_repository_receipt": "only_when_a_reviewed_hotfix_changes_repository_state"
+  },
+  "evolution_vector": {
+    "definition": "V_next = VALIDATED(V_current) + explicit_delta",
+    "components": [
+      "F_ok",
+      "F_gap",
+      "F_next",
+      "TOKEN_VAZIO",
+      "INCERTEZA",
+      "urgency",
+      "provenance",
+      "falsifier"
+    ]
+  },
+  "main_hotfix_route": {
+    "allowed": true,
+    "scope": "structural CI/governance repair only",
+    "delivery": "draft pull request",
+    "direct_main_commit": false,
+    "auto_merge": false,
+    "scientific_promotion": false
+  }
+}
