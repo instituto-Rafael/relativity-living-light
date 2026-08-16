@@ -1,0 +1,97 @@
+{
+  "schema": "rll.b0_b1_artifact_flow_graph.v1",
+  "observed_at": "2026-08-16",
+  "state": "PARTIAL_VERIFIED_NO_INVENTED_CONSUMERS",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "source_refs": {
+    "main": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+    "rll/lab": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb"
+  },
+  "relation_semantics": {
+    "PRODUCES": "source code writes the artifact path",
+    "EXECUTES_PRODUCER": "workflow/script explicitly invokes the producer",
+    "READS_EXECUTABLY": "runtime code explicitly opens/cats/parses the artifact",
+    "UPLOADS_CUSTODY": "workflow uploads the artifact or containing directory; custody is not computational consumption",
+    "DOCUMENTED_AUTHORITY_REFERENCE": "contract/document lists the artifact as an authority/reference; not executable consumption"
+  },
+  "nodes": [
+    {"id":"N_DOC_VALIDATOR","kind":"producer","ref":"rll/lab","path":"tools/validate_workflow_docs.py"},
+    {"id":"N_YAML_GATE","kind":"carrier","ref":"rll/lab","path":".github/workflows/yml-syntax-validation.yml"},
+    {"id":"A_WORKFLOW_REGISTRY","kind":"artifact","path":"artifacts/workflow-docs/workflow_registry.json"},
+    {"id":"A_WORKFLOW_DOCS_REPORT","kind":"artifact","path":"artifacts/workflow-docs/WORKFLOW_DOCS_REPORT.md"},
+    {"id":"N_MAIN_CONTRACT","kind":"documented_authority","ref":"main","path":".github/workflow-contract.yml"},
+
+    {"id":"N_SYNC_TOOL","kind":"producer","ref":"rll/lab","path":"tools/workflow_contract_sync.py"},
+    {"id":"N_SYNC_WORKFLOW","kind":"carrier_consumer","ref":"rll/lab","path":".github/workflows/workflow-contract-sync.yml"},
+    {"id":"A_SYNC_RECEIPT","kind":"artifact","path":"artifacts/workflow-contract-sync/receipt.json"},
+    {"id":"A_SYNC_REPORT","kind":"artifact","path":"artifacts/workflow-contract-sync/REPORT.md"},
+
+    {"id":"N_AUTO_TOOL","kind":"producer","ref":"main","path":"tools/rll_auto_hotfix.py"},
+    {"id":"N_AUTO_WORKFLOW","kind":"carrier_consumer","ref":"main","path":".github/workflows/rll-operational-auto-hotfix.yml"},
+    {"id":"A_AUTO_OBSERVATIONS","kind":"artifact","path":"artifacts/operational-auto-hotfix/observations.jsonl"},
+    {"id":"A_AUTO_STATE","kind":"artifact","path":"artifacts/operational-auto-hotfix/state_vector.json"},
+    {"id":"A_AUTO_RECEIPT","kind":"artifact","path":"artifacts/operational-auto-hotfix/receipt.json"},
+    {"id":"A_AUTO_SUMMARY","kind":"artifact","path":"artifacts/operational-auto-hotfix/SUMMARY.md"}
+  ],
+  "edges": [
+    {"id":"AF01","from":"N_DOC_VALIDATOR","to":"A_WORKFLOW_REGISTRY","relation":"PRODUCES","evidence":"write_reports writes report_dir/workflow_registry.json"},
+    {"id":"AF02","from":"N_DOC_VALIDATOR","to":"A_WORKFLOW_DOCS_REPORT","relation":"PRODUCES","evidence":"write_reports writes report_dir/WORKFLOW_DOCS_REPORT.md"},
+    {"id":"AF03","from":"N_YAML_GATE","to":"N_DOC_VALIDATOR","relation":"EXECUTES_PRODUCER","evidence":"Validate workflow documentation contract invokes python3 tools/validate_workflow_docs.py --strict --write-report"},
+    {"id":"AF04","from":"N_YAML_GATE","to":"A_WORKFLOW_REGISTRY","relation":"UPLOADS_CUSTODY","evidence":"Upload consultable architecture receipts uploads artifacts/workflow-docs/"},
+    {"id":"AF05","from":"N_YAML_GATE","to":"A_WORKFLOW_DOCS_REPORT","relation":"UPLOADS_CUSTODY","evidence":"Upload consultable architecture receipts uploads artifacts/workflow-docs/"},
+    {"id":"AF06","from":"N_MAIN_CONTRACT","to":"A_WORKFLOW_REGISTRY","relation":"DOCUMENTED_AUTHORITY_REFERENCE","evidence":"documentation.authority_order lists artifacts/workflow-docs/workflow_registry.json"},
+
+    {"id":"AF07","from":"N_SYNC_TOOL","to":"A_SYNC_RECEIPT","relation":"PRODUCES","evidence":"write_reports writes output_dir/receipt.json"},
+    {"id":"AF08","from":"N_SYNC_TOOL","to":"A_SYNC_REPORT","relation":"PRODUCES","evidence":"write_reports writes output_dir/REPORT.md"},
+    {"id":"AF09","from":"N_SYNC_WORKFLOW","to":"N_SYNC_TOOL","relation":"EXECUTES_PRODUCER","evidence":"Compare executable inventory with contract invokes tools/workflow_contract_sync.py --write-report"},
+    {"id":"AF10","from":"N_SYNC_WORKFLOW","to":"A_SYNC_REPORT","relation":"READS_EXECUTABLY","evidence":"Publish reconciliation summary cats artifacts/workflow-contract-sync/REPORT.md into GITHUB_STEP_SUMMARY"},
+    {"id":"AF11","from":"N_SYNC_WORKFLOW","to":"A_SYNC_RECEIPT","relation":"UPLOADS_CUSTODY","evidence":"Upload reconciliation receipt uploads artifacts/workflow-contract-sync/"},
+    {"id":"AF12","from":"N_SYNC_WORKFLOW","to":"A_SYNC_REPORT","relation":"UPLOADS_CUSTODY","evidence":"Upload reconciliation receipt uploads artifacts/workflow-contract-sync/"},
+
+    {"id":"AF13","from":"N_AUTO_TOOL","to":"A_AUTO_OBSERVATIONS","relation":"PRODUCES","evidence":"write_products writes observations.jsonl"},
+    {"id":"AF14","from":"N_AUTO_TOOL","to":"A_AUTO_STATE","relation":"PRODUCES","evidence":"write_products writes state_vector.json"},
+    {"id":"AF15","from":"N_AUTO_TOOL","to":"A_AUTO_RECEIPT","relation":"PRODUCES","evidence":"write_products writes receipt.json"},
+    {"id":"AF16","from":"N_AUTO_TOOL","to":"A_AUTO_SUMMARY","relation":"PRODUCES","evidence":"write_products writes SUMMARY.md"},
+    {"id":"AF17","from":"N_AUTO_WORKFLOW","to":"N_AUTO_TOOL","relation":"EXECUTES_PRODUCER","evidence":"Observe and store operational products invokes tools/rll_auto_hotfix.py --write-products"},
+    {"id":"AF18","from":"N_AUTO_WORKFLOW","to":"A_AUTO_STATE","relation":"READS_EXECUTABLY","evidence":"Final fail-closed gate parses artifacts/operational-auto-hotfix/state_vector.json"},
+    {"id":"AF19","from":"N_AUTO_WORKFLOW","to":"A_AUTO_SUMMARY","relation":"READS_EXECUTABLY","evidence":"Publish state vector cats artifacts/operational-auto-hotfix/SUMMARY.md into GITHUB_STEP_SUMMARY"},
+    {"id":"AF20","from":"N_AUTO_WORKFLOW","to":"A_AUTO_OBSERVATIONS","relation":"UPLOADS_CUSTODY","evidence":"Upload operational products uploads artifacts/operational-auto-hotfix/"},
+    {"id":"AF21","from":"N_AUTO_WORKFLOW","to":"A_AUTO_STATE","relation":"UPLOADS_CUSTODY","evidence":"Upload operational products uploads artifacts/operational-auto-hotfix/"},
+    {"id":"AF22","from":"N_AUTO_WORKFLOW","to":"A_AUTO_RECEIPT","relation":"UPLOADS_CUSTODY","evidence":"Upload operational products uploads artifacts/operational-auto-hotfix/"},
+    {"id":"AF23","from":"N_AUTO_WORKFLOW","to":"A_AUTO_SUMMARY","relation":"UPLOADS_CUSTODY","evidence":"Upload operational products uploads artifacts/operational-auto-hotfix/"}
+  ],
+  "artifact_status": [
+    {"artifact":"A_WORKFLOW_REGISTRY","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"TOKEN_VAZIO_EXECUTABLE_CONSUMER","documented_authority_reference":"VERIFIED"},
+    {"artifact":"A_WORKFLOW_DOCS_REPORT","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"TOKEN_VAZIO_EXECUTABLE_CONSUMER","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_SYNC_RECEIPT","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"TOKEN_VAZIO_EXECUTABLE_CONSUMER","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_SYNC_REPORT","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"VERIFIED","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_AUTO_OBSERVATIONS","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"TOKEN_VAZIO_EXECUTABLE_CONSUMER","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_AUTO_STATE","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"VERIFIED","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_AUTO_RECEIPT","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"TOKEN_VAZIO_EXECUTABLE_CONSUMER","documented_authority_reference":"NONE_OBSERVED"},
+    {"artifact":"A_AUTO_SUMMARY","producer":"VERIFIED","custody":"VERIFIED","executable_consumer":"VERIFIED","documented_authority_reference":"NONE_OBSERVED"}
+  ],
+  "resolved_scope": {
+    "generated_artifacts_mapped": 8,
+    "producer_edges": 8,
+    "executable_consumer_edges": 3,
+    "custody_edges": 8,
+    "documented_authority_edges": 1
+  },
+  "residuals": [
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_WORKFLOW_REGISTRY",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_WORKFLOW_DOCS_REPORT",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_SYNC_RECEIPT",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_AUTO_OBSERVATIONS",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_AUTO_RECEIPT",
+    "TOKEN_VAZIO_ARTIFACT_FLOWS_OUTSIDE_B0_B1"
+  ],
+  "decision": "PARTIAL_CLOSURE_GENERATED_ARTIFACT_EDGES_VERIFIED_WITH_EXPLICIT_CONSUMER_GAPS",
+  "forbidden_inference": [
+    "UPLOADS_CUSTODY implies READS_EXECUTABLY",
+    "DOCUMENTED_AUTHORITY_REFERENCE implies READS_EXECUTABLY",
+    "artifact existence proves scientific claim",
+    "partial artifact-flow closure authorizes forward-port"
+  ]
+}
