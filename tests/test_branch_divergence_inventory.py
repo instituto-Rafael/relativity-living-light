@@ -1,5 +1,9 @@
+import subprocess
+from pathlib import Path
+
 from tools.branch_divergence_inventory import (
     domain_for,
+    inventory,
     parse_left_right_count,
     parse_name_status,
     summarize_domains,
@@ -37,3 +41,61 @@ def test_domains_are_deterministic_and_non_epistemic() -> None:
         "documentation": 1,
         "implementation": 2,
     }
+
+
+def _git(root: Path, *args: str) -> None:
+    subprocess.run(["git", *args], cwd=root, check=True, capture_output=True, text=True)
+
+
+def test_inventory_detects_real_two_sided_overlap_without_mutating_refs(tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    root.mkdir()
+    _git(root, "init", "-b", "base")
+    _git(root, "config", "user.name", "RLL Test")
+    _git(root, "config", "user.email", "rll-test@example.invalid")
+
+    shared = root / "shared.txt"
+    shared.write_text("base\n", encoding="utf-8")
+    (root / "base-only.txt").write_text("base\n", encoding="utf-8")
+    _git(root, "add", ".")
+    _git(root, "commit", "-m", "base")
+
+    _git(root, "switch", "-c", "left")
+    shared.write_text("left\n", encoding="utf-8")
+    (root / "left.txt").write_text("left\n", encoding="utf-8")
+    _git(root, "add", ".")
+    _git(root, "commit", "-m", "left")
+
+    _git(root, "switch", "base")
+    _git(root, "switch", "-c", "right")
+    shared.write_text("right\n", encoding="utf-8")
+    (root / "right.txt").write_text("right\n", encoding="utf-8")
+    _git(root, "add", ".")
+    _git(root, "commit", "-m", "right")
+
+    before_left = subprocess.run(
+        ["git", "rev-parse", "left"], cwd=root, check=True, capture_output=True, text=True
+    ).stdout.strip()
+    before_right = subprocess.run(
+        ["git", "rev-parse", "right"], cwd=root, check=True, capture_output=True, text=True
+    ).stdout.strip()
+
+    payload = inventory(root, "left", "right")
+
+    after_left = subprocess.run(
+        ["git", "rev-parse", "left"], cwd=root, check=True, capture_output=True, text=True
+    ).stdout.strip()
+    after_right = subprocess.run(
+        ["git", "rev-parse", "right"], cwd=root, check=True, capture_output=True, text=True
+    ).stdout.strip()
+
+    assert payload["status"] == "DIVERGED"
+    assert payload["left"]["unique_commits"] == 1
+    assert payload["right"]["unique_commits"] == 1
+    assert payload["overlap_paths"] == ["shared.txt"]
+    assert payload["overlap_path_count"] == 1
+    assert payload["decision"] == "AUDIT_ONLY_NO_MUTATION"
+    assert payload["claim_allowed"] is False
+    assert payload["history_reconciliation"] == "TOKEN_VAZIO_HISTORY_RECONCILIATION"
+    assert before_left == after_left
+    assert before_right == after_right
