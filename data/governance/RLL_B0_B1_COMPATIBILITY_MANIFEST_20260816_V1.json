@@ -29,6 +29,16 @@
     "token_vazio_edges": 0,
     "core_scc": "SCC_GOVERNANCE_CORE"
   },
+  "artifact_flow_graph": {
+    "path": "data/governance/RLL_B0_B1_ARTIFACT_FLOW_GRAPH_20260816_V1.json",
+    "state": "PARTIAL_VERIFIED_NO_INVENTED_CONSUMERS",
+    "artifacts_mapped": 8,
+    "producer_edges": 8,
+    "executable_consumer_edges": 3,
+    "custody_edges": 8,
+    "documented_authority_edges": 1,
+    "semantic_boundary": "UPLOADS_CUSTODY and DOCUMENTED_AUTHORITY_REFERENCE are never promoted to READS_EXECUTABLY without runtime source evidence"
+  },
   "compatibility_unit": {
     "strategy": "ATOMIC_COMPATIBILITY_GATE_NOT_ATOMIC_COMMIT",
     "reason": "The governance core is strongly connected; there is no evidence-backed linear file order that can prove compatibility one member at a time.",
@@ -65,6 +75,8 @@
   "required_acceptance_gates_before_forward_port": [
     "tools/validate_reconciliation_dependency_graph.py PASS",
     "tests/test_reconciliation_dependency_graph.py PASS",
+    "tools/validate_b0_b1_artifact_flow_graph.py PASS",
+    "tests/test_b0_b1_artifact_flow_graph.py PASS",
     "tests/test_branch_divergence_inventory.py PASS",
     "tests/test_workflow_contract_sync.py PASS after candidate materialization",
     "tests/test_validate_workflow_docs.py PASS after candidate materialization",
@@ -76,7 +88,12 @@
     "auto_merge=false preserved"
   ],
   "gaps": [
-    "TOKEN_VAZIO_GENERATED_ARTIFACT_PRODUCER_CONSUMER_EDGES",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_WORKFLOW_REGISTRY",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_WORKFLOW_DOCS_REPORT",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_SYNC_RECEIPT",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_AUTO_OBSERVATIONS",
+    "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_AUTO_RECEIPT",
+    "TOKEN_VAZIO_ARTIFACT_FLOWS_OUTSIDE_B0_B1",
     "TOKEN_VAZIO_SEMANTIC_DEPENDENCY_OUTSIDE_B0_B1",
     "TOKEN_VAZIO_PER_BATCH_MATERIALIZATION_RECEIPT",
     "TOKEN_VAZIO_MAIN_RLL_LAB_HISTORY_RECONCILIATION"
@@ -85,12 +102,13 @@
     "forward_port_authorized=false",
     "no B0/B1 content has been copied to the opposite branch",
     "history reconciliation remains TOKEN_VAZIO",
-    "SCC compatibility has not yet been executed on a materialized candidate tree"
+    "SCC compatibility has not yet been executed on a materialized candidate tree",
+    "artifact-flow closure is partial and explicitly does not invent missing executable consumers"
   ],
-  "falsifier": "Reject this manifest if source SHAs move without a successor receipt, graph validation fails, an SCC member is omitted, or any forward-port occurs before the required acceptance gates are evidenced.",
+  "falsifier": "Reject this manifest if source SHAs move without a successor receipt, graph validation fails, an SCC member is omitted, artifact custody/documentary reference is mislabeled as executable consumption, or any forward-port occurs before the required acceptance gates are evidenced.",
   "R3": {
-    "F_ok": "98/44 freeze + overlap=0 + audit->lab PASS + evidence-backed 11-node/25-edge graph + SCC core",
-    "F_gap": "materialized compatibility tree + generated-artifact edges + per-batch receipt",
-    "F_next": "validate manifest and graph; then create a disposable candidate tree for compatibility testing without merging"
+    "F_ok": "98/44 freeze + overlap=0 + audit->lab PASS + 11-node/25-edge dependency graph + SCC core + 8-artifact producer/custody map with 3 executable consumers",
+    "F_gap": "five named executable-consumer gaps + artifact flows outside B0/B1 + semantic dependency outside B0/B1 + materialization/history receipts",
+    "F_next": "validate artifact-flow semantics remotely; then map local import/script dependency edges before any disposable compatibility-tree materialization"
   }
 }
