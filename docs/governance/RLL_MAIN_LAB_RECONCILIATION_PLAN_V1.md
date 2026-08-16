@@ -130,3 +130,39 @@ F_ok   = exact two-sided SHAs + merge-base + 98/44 divergence + read-only invent
 F_gap  = overlap set not yet remotely materialized + per-batch dependency order + reviewed route
 F_next = execute tool in PR context, inspect overlap, freeze minimal B0/B1 batch before any content forward-port
 ```
+
+## 11. Append-only observation — textual overlap resolved
+
+Using the same frozen merge base for both directions, the path sets were materialized separately:
+
+```text
+merge-base -> main     : 98 commits, 71 changed paths
+merge-base -> rll/lab  : 44 commits, 50 changed paths
+intersection           : 0 paths
+```
+
+This closes only the textual path-overlap question:
+
+```text
+VERIFIED_ZERO_PATH_INTERSECTION
+```
+
+It does **not** close semantic dependency risk. Disjoint files may still communicate through workflow contracts, local action/script references, generated artifacts, import edges, trigger topology and governance assumptions. Therefore:
+
+```text
+TOKEN_VAZIO_SEMANTIC_DEPENDENCY
+```
+
+remains active until B0/B1 has a dependency graph. The machine-readable authority is:
+
+```text
+data/governance/RLL_MAIN_LAB_PATH_OVERLAP_20260816_V1.json
+```
+
+The reconciliation vector advances to:
+
+```text
+F_ok   = 98/44 divergence frozen + audit→lab maturity PASS + textual overlap 0 + read-only Git integration test
+F_gap  = semantic dependency graph + B0/B1 exact path manifests + per-batch receipts
+F_next = build B0/B1 dependency graph; do not bulk merge solely because path intersection is zero
+```
