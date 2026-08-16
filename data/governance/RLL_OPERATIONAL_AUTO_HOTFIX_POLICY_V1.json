@@ -24,7 +24,7 @@
     "constraints": [
       "repair must be deterministic from repository-local executable state",
       "repair may only alter an explicitly whitelisted contract scalar",
-      "workspace mutation must be proposed by pull request",
+      "workspace mutation must be proposed by pull request only after maturity route verification",
       "direct commit to main is forbidden",
       "auto merge is forbidden",
       "receipt must be produced before proposal"
@@ -41,7 +41,8 @@
       "RUNTIME_JOB_SNAPSHOT_MISSING",
       "RUNTIME_API_RECORD_INVALID",
       "RUNTIME_API_INGESTION_FAILURE",
-      "EXTERNAL_PLATFORM_SETTING"
+      "EXTERNAL_PLATFORM_SETTING",
+      "HOTFIX_ROUTE_VS_BRANCH_MATURITY_TOPOLOGY"
     ]
   },
   "runtime_api_ingestion": {
@@ -99,7 +100,8 @@
       "runtime_observations.jsonl",
       "runtime_state_vector.json",
       "runtime_receipt.json",
-      "RUNTIME_SUMMARY.md"
+      "RUNTIME_SUMMARY.md",
+      "proposal-receipt.json"
     ],
     "retention_days": 90,
     "durable_repository_receipt": "only_when_a_reviewed_hotfix_changes_repository_state"
@@ -118,9 +120,20 @@
     ]
   },
   "main_hotfix_route": {
-    "allowed": true,
+    "allowed": false,
+    "state": "TOKEN_VAZIO_MATURITY_ROUTE",
     "scope": "structural CI/governance repair only",
-    "delivery": "draft pull request",
+    "delivery": "receipt_and_reviewed_proposal_after_route_verification",
+    "verified_proposal_base": "TOKEN_VAZIO_MATURITY_ROUTE",
+    "required_topology": [
+      "non-protected work branch -> rll/lab",
+      "rll/lab -> rll/integration",
+      "rll/integration -> rll/release",
+      "rll/release -> main"
+    ],
+    "observed_conflict": "hotfix/runtime-zero-job-ingestion-20260816 -> main was blocked by Branch Maturity Gate V2 and Transit Tower maturity decision",
+    "proposed_action": "reconcile main/rll-lab divergence before authorizing an automated proposal base",
+    "falsifier": "a reviewed route names verified_proposal_base and passes tools/branch_maturity_gate.py without bypass",
     "direct_main_commit": false,
     "auto_merge": false,
     "scientific_promotion": false
