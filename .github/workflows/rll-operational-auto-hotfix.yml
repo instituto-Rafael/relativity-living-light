@@ -1,0 +1,154 @@
+name: RLL Operational Auto Hotfix
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+      - ".github/workflow-contract.yml"
+      - "tools/rll_auto_hotfix.py"
+      - "tools/propose_operational_hotfix_pr.py"
+      - "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json"
+      - "data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl"
+      - "docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md"
+      - "tests/test_rll_auto_hotfix.py"
+      - "tests/test_workflow_contract_sync.py"
+      - "tests/test_validate_workflow_docs.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+      - ".github/workflow-contract.yml"
+      - "tools/rll_auto_hotfix.py"
+      - "tools/propose_operational_hotfix_pr.py"
+      - "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json"
+      - "tests/test_rll_auto_hotfix.py"
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CLAIM_BOUNDARY: "Operational governance only; claim_allowed=false; publication_effect=NONE; auto_merge=false."
+
+concurrency:
+  group: rll-operational-auto-hotfix-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  observe:
+    name: Observe operational state and emit products
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Install focused test dependency
+        run: python -m pip install pytest==9.1.1
+
+      - name: Run auto-hotfix and existing reconciliation tests
+        run: |
+          set -euo pipefail
+          python -m pytest -q \
+            tests/test_rll_auto_hotfix.py \
+            tests/test_workflow_contract_sync.py \
+            tests/test_validate_workflow_docs.py
+
+      - name: Observe and store operational products
+        run: |
+          set -euo pipefail
+          python tools/rll_auto_hotfix.py \
+            --write-products \
+            --output-dir artifacts/operational-auto-hotfix
+          python tools/workflow_contract_sync.py \
+            --write-report \
+            --output-dir artifacts/workflow-contract-sync
+
+      - name: Publish state vector
+        if: always()
+        run: |
+          if [[ -f artifacts/operational-auto-hotfix/SUMMARY.md ]]; then
+            cat artifacts/operational-auto-hotfix/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload operational products
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-operational-auto-hotfix-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/operational-auto-hotfix/
+            artifacts/workflow-contract-sync/
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Fail closed only on unresolved P0 integrity drift
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('artifacts/operational-auto-hotfix/state_vector.json').read_text())
+          p0 = int(payload['p0'])
+          print(f"P0={p0}; P1={payload['p1']}; P2={payload['p2']}")
+          if p0:
+              raise SystemExit('unresolved P0 operational drift')
+          PY
+
+  propose-bounded-hotfix:
+    name: Propose bounded safe hotfix by draft PR
+    needs: observe
+    if: >-
+      always() &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout main without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Apply only policy-approved safe workspace fixes
+        run: |
+          set -euo pipefail
+          python tools/rll_auto_hotfix.py \
+            --apply-safe \
+            --write-products \
+            --output-dir artifacts/operational-auto-hotfix
+
+      - name: Open or refresh reviewed draft PR if a safe diff exists
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/propose_operational_hotfix_pr.py --base main
+
+      - name: Upload proposal products
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-operational-hotfix-proposal-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/operational-auto-hotfix/
+          retention-days: 90
+          if-no-files-found: error
