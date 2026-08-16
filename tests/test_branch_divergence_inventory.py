@@ -32,6 +32,9 @@ def test_parse_name_status_preserves_renames() -> None:
 
 def test_domains_are_deterministic_and_non_epistemic() -> None:
     assert domain_for(".github/workflows/x.yml") == "workflow"
+    assert domain_for("./.github/workflows/x.yml") == "workflow"
+    assert domain_for(".github/workflow-contract.yml") == "governance"
+    assert domain_for("./.github/workflow-contract.yml") == "governance"
     assert domain_for("data/governance/x.json") == "governance"
     assert domain_for("data/inputs/x.csv") == "data"
     assert domain_for("tools/x.py") == "implementation"
