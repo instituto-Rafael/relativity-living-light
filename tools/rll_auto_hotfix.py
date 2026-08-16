@@ -26,7 +26,12 @@ CONTRACT = Path(".github/workflow-contract.yml")
 WORKFLOWS = Path(".github/workflows")
 DEFAULT_OUTPUT = Path("artifacts/operational-auto-hotfix")
 ACTIVE_RE = re.compile(r"^(?P<indent>\s*)active_workflows:\s*(?P<count>\d+)\s*$", re.MULTILINE)
-FLOATING_ACTION_RE = re.compile(r"^\s*uses:\s*(actions/[A-Za-z0-9_.-]+)@(v\d+(?:\.\d+)*)\s*$", re.MULTILINE)
+# GitHub Actions steps are normally YAML list items (`- uses:`), but reusable
+# jobs can also contain a direct `uses:` scalar. Support both representations.
+FLOATING_ACTION_RE = re.compile(
+    r"^\s*(?:-\s*)?uses:\s*(actions/[A-Za-z0-9_.-]+)@(v\d+(?:\.\d+)*)\s*$",
+    re.MULTILINE,
+)
 PATH_LITERAL_RE = re.compile(r"['\"]((?:scripts|tools|tests|docs|data)/[^'\"]+)['\"]")
 TOKEN_PATTERNS = {
     "TOKEN_VAZIO": re.compile(r"\bTOKEN_VAZIO[A-Z0-9_:-]*\b"),
