@@ -68,13 +68,25 @@ workflow_contract_reconciliation:
 operational_auto_hotfix:
   workflow: .github/workflows/rll-operational-auto-hotfix.yml
   observer: tools/rll_auto_hotfix.py
+  runtime_ingester: tools/github_actions_runtime_ingest.py
   proposal_tool: tools/propose_operational_hotfix_pr.py
   policy: data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
   ledger: data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
   documentation: docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
-  tests: tests/test_rll_auto_hotfix.py
+  runtime_documentation: docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md
+  tests:
+    - tests/test_rll_auto_hotfix.py
+    - tests/test_github_actions_runtime_ingest.py
   cadence: [pull_request, push_main, schedule_6h, workflow_dispatch]
-  products: [observations.jsonl, state_vector.json, receipt.json, SUMMARY.md]
+  products:
+    - observations.jsonl
+    - state_vector.json
+    - receipt.json
+    - SUMMARY.md
+    - runtime_observations.jsonl
+    - runtime_state_vector.json
+    - runtime_receipt.json
+    - RUNTIME_SUMMARY.md
   safe_auto_fix_classes: [WORKFLOW_INVENTORY_DRIFT]
   review_only_classes:
     - FLOATING_ACTION_REF
@@ -83,7 +95,13 @@ operational_auto_hotfix:
     - UNCERTAINTY_TOKEN
     - MAINTENANCE_MARKER
     - RUNTIME_ZERO_JOB_FAILURE
+    - RUNTIME_JOB_SNAPSHOT_MISSING
+    - RUNTIME_API_RECORD_INVALID
+    - RUNTIME_API_INGESTION_FAILURE
     - EXTERNAL_PLATFORM_SETTING
+  runtime_zero_job_rule: "failure && total_jobs == 0 => TOKEN_VAZIO_ROOT_CAUSE"
+  root_cause_inference_from_zero_jobs: FORBIDDEN
+  runtime_api_permission: actions_read
   direct_main_commit: FORBIDDEN
   delivery: DRAFT_PULL_REQUEST
   auto_merge: false
@@ -164,7 +182,7 @@ documented_checks:
     - {context: CodeQL (python), workflow: .github/workflows/github-platform-assurance.yml, job_id: codeql, permissions: security_events_write, certification_claim: false, conformity_claim: false}
     - {context: Rare Events Evidence Gate, workflow: .github/workflows/rare-events-evidence-gate.yml, job_id: evidence-governance, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: Verify workflow contract inventory, workflow: .github/workflows/workflow-contract-sync.yml, job_id: verify-contract, permissions: contents_read, certification_claim: false, conformity_claim: false}
-    - {context: Observe operational state and emit products, workflow: .github/workflows/rll-operational-auto-hotfix.yml, job_id: observe, permissions: contents_read, certification_claim: false, conformity_claim: false}
+    - {context: Observe operational state and emit products, workflow: .github/workflows/rll-operational-auto-hotfix.yml, job_id: observe, permissions: contents_read_actions_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6 CMB-only materialization, workflow: .github/workflows/act-dr6-cmbonly-materialization.yml, job_id: materialize-reference, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6.02 official LCDM reference chain custody, workflow: .github/workflows/act-dr6-reference-chain-custody.yml, job_id: custody, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6 local posterior preflight V2, workflow: .github/workflows/act-dr6-posterior-preflight-v2.yml, job_id: freeze-contract, permissions: contents_read, certification_claim: false, conformity_claim: false}
@@ -184,6 +202,7 @@ documentation:
     - tools/workflow_contract_sync.py
     - tools/propose_workflow_contract_pr.py
     - tools/rll_auto_hotfix.py
+    - tools/github_actions_runtime_ingest.py
     - tools/propose_operational_hotfix_pr.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
@@ -191,6 +210,7 @@ documentation:
     - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
     - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
     - docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
+    - docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
       - "44 etapas lógicas"
