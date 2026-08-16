@@ -22,7 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Run deterministic self-test
         run: |
@@ -33,7 +35,7 @@ jobs:
           cat artifacts/homeostatic_field_gate/rll_homeostatic_field_gate_results.json
 
       - name: Upload gate artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: rll-homeostatic-field-gate
           path: artifacts/homeostatic_field_gate/
