@@ -4,6 +4,7 @@ from pathlib import Path
 
 MANIFEST = Path("data/governance/RLL_B0_B1_COMPATIBILITY_MANIFEST_20260816_V1.json")
 GRAPH = Path("data/governance/RLL_B0_B1_DEPENDENCY_GRAPH_20260816_V1.json")
+ARTIFACT_FLOW = Path("data/governance/RLL_B0_B1_ARTIFACT_FLOW_GRAPH_20260816_V1.json")
 
 
 def _load(path: Path) -> dict:
@@ -41,14 +42,29 @@ def test_manifest_core_matches_declared_graph_scc() -> None:
     assert manifest["compatibility_unit"]["strategy"] == "ATOMIC_COMPATIBILITY_GATE_NOT_ATOMIC_COMMIT"
 
 
+def test_manifest_artifact_flow_counts_match_authority() -> None:
+    manifest = _load(MANIFEST)
+    flow = _load(ARTIFACT_FLOW)
+    scope = flow["resolved_scope"]
+    assert manifest["artifact_flow_graph"]["path"] == ARTIFACT_FLOW.as_posix()
+    assert manifest["artifact_flow_graph"]["artifacts_mapped"] == scope["generated_artifacts_mapped"]
+    assert manifest["artifact_flow_graph"]["producer_edges"] == scope["producer_edges"]
+    assert manifest["artifact_flow_graph"]["executable_consumer_edges"] == scope["executable_consumer_edges"]
+    assert manifest["artifact_flow_graph"]["custody_edges"] == scope["custody_edges"]
+    assert manifest["artifact_flow_graph"]["documented_authority_edges"] == scope["documented_authority_edges"]
+
+
 def test_required_gates_cannot_be_empty() -> None:
     payload = _load(MANIFEST)
-    assert len(payload["required_acceptance_gates_before_forward_port"]) >= 8
+    assert len(payload["required_acceptance_gates_before_forward_port"]) >= 10
+    assert any("validate_b0_b1_artifact_flow_graph.py PASS" in gate for gate in payload["required_acceptance_gates_before_forward_port"])
     assert any("Branch Maturity Gate V2 PASS" in gate for gate in payload["required_acceptance_gates_before_forward_port"])
     assert any("full Python test suite PASS" in gate for gate in payload["required_acceptance_gates_before_forward_port"])
 
 
-def test_history_and_materialization_gaps_remain_explicit() -> None:
+def test_history_materialization_and_named_consumer_gaps_remain_explicit() -> None:
     payload = _load(MANIFEST)
     assert "TOKEN_VAZIO_MAIN_RLL_LAB_HISTORY_RECONCILIATION" in payload["gaps"]
     assert "TOKEN_VAZIO_PER_BATCH_MATERIALIZATION_RECEIPT" in payload["gaps"]
+    assert "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_WORKFLOW_REGISTRY" in payload["gaps"]
+    assert "TOKEN_VAZIO_EXECUTABLE_CONSUMER:A_AUTO_RECEIPT" in payload["gaps"]
