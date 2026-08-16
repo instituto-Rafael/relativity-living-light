@@ -55,18 +55,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install focused test dependency
-        run: python -m pip install pytest==9.1.1
+      - name: Install focused test dependencies
+        run: python -m pip install pytest==9.1.1 PyYAML==6.0.3
 
       - name: Run auto-hotfix and existing reconciliation tests
+        id: focused-tests
+        continue-on-error: true
         run: |
           set -euo pipefail
+          mkdir -p artifacts/operational-auto-hotfix
           python -m pytest -q \
+            --junitxml=artifacts/operational-auto-hotfix/focused-tests.junit.xml \
             tests/test_rll_auto_hotfix.py \
             tests/test_workflow_contract_sync.py \
-            tests/test_validate_workflow_docs.py
+            tests/test_validate_workflow_docs.py \
+            2>&1 | tee artifacts/operational-auto-hotfix/focused-tests.log
 
-      - name: Observe and store operational products
+      - name: Observe and store operational products even after negative tests
+        if: always()
         run: |
           set -euo pipefail
           python tools/rll_auto_hotfix.py \
@@ -74,7 +80,28 @@ jobs:
             --output-dir artifacts/operational-auto-hotfix
           python tools/workflow_contract_sync.py \
             --write-report \
-            --output-dir artifacts/workflow-contract-sync
+            --output-dir artifacts/workflow-contract-sync || true
+
+      - name: Record focused-test outcome in evidence products
+        if: always()
+        env:
+          FOCUSED_TESTS_OUTCOME: ${{ steps.focused-tests.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          out = Path('artifacts/operational-auto-hotfix')
+          out.mkdir(parents=True, exist_ok=True)
+          path = out / 'gate_outcome.json'
+          payload = {
+              'schema': 'rll.operational_auto_hotfix_gate_outcome.v1',
+              'focused_tests_outcome': os.environ.get('FOCUSED_TESTS_OUTCOME', 'TOKEN_VAZIO'),
+              'claim_allowed': False,
+              'publication_effect': 'NONE',
+              'negative_evidence_preserved': True,
+          }
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
 
       - name: Publish state vector
         if: always()
@@ -94,16 +121,22 @@ jobs:
           retention-days: 90
           if-no-files-found: error
 
-      - name: Fail closed only on unresolved P0 integrity drift
+      - name: Final fail-closed gate
+        if: always()
+        env:
+          FOCUSED_TESTS_OUTCOME: ${{ steps.focused-tests.outcome }}
         run: |
           python - <<'PY'
-          import json
+          import json, os
           from pathlib import Path
           payload = json.loads(Path('artifacts/operational-auto-hotfix/state_vector.json').read_text())
           p0 = int(payload['p0'])
-          print(f"P0={p0}; P1={payload['p1']}; P2={payload['p2']}")
+          tests = os.environ.get('FOCUSED_TESTS_OUTCOME', 'TOKEN_VAZIO')
+          print(f"focused_tests={tests}; P0={p0}; P1={payload['p1']}; P2={payload['p2']}")
+          if tests != 'success':
+              raise SystemExit('focused operational tests did not pass; evidence was preserved')
           if p0:
-              raise SystemExit('unresolved P0 operational drift')
+              raise SystemExit('unresolved P0 operational drift; evidence was preserved')
           PY
 
   propose-bounded-hotfix:
