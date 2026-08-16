@@ -77,6 +77,7 @@ operational_auto_hotfix:
   tests:
     - tests/test_rll_auto_hotfix.py
     - tests/test_github_actions_runtime_ingest.py
+    - tests/test_propose_operational_hotfix_pr.py
   cadence: [pull_request, push_main, schedule_6h, workflow_dispatch]
   products:
     - observations.jsonl
@@ -87,6 +88,7 @@ operational_auto_hotfix:
     - runtime_state_vector.json
     - runtime_receipt.json
     - RUNTIME_SUMMARY.md
+    - proposal-receipt.json
   safe_auto_fix_classes: [WORKFLOW_INVENTORY_DRIFT]
   review_only_classes:
     - FLOATING_ACTION_REF
@@ -99,11 +101,16 @@ operational_auto_hotfix:
     - RUNTIME_API_RECORD_INVALID
     - RUNTIME_API_INGESTION_FAILURE
     - EXTERNAL_PLATFORM_SETTING
+    - HOTFIX_ROUTE_VS_BRANCH_MATURITY_TOPOLOGY
   runtime_zero_job_rule: "failure && total_jobs == 0 => TOKEN_VAZIO_ROOT_CAUSE"
   root_cause_inference_from_zero_jobs: FORBIDDEN
   runtime_api_permission: actions_read
+  proposal_route_state: TOKEN_VAZIO_MATURITY_ROUTE
+  verified_proposal_base: TOKEN_VAZIO_MATURITY_ROUTE
+  proposal_behavior_without_verified_route: RECEIPT_ONLY_FAIL_CLOSED
+  canonical_topology_required: true
   direct_main_commit: FORBIDDEN
-  delivery: DRAFT_PULL_REQUEST
+  delivery: REVIEWED_PROPOSAL_AFTER_ROUTE_VERIFICATION
   auto_merge: false
   claim_allowed: false
   publication_effect: NONE
