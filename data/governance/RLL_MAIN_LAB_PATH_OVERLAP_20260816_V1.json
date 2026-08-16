@@ -1,0 +1,42 @@
+{
+  "schema": "rll.main_lab_path_overlap.v1",
+  "observed_at": "2026-08-16",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "merge_base": "73894b9a3bc574849bf488f6f74f42692b236121",
+  "main": {
+    "sha": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+    "unique_commits_from_merge_base": 98,
+    "changed_paths_from_merge_base": 71
+  },
+  "rll_lab": {
+    "sha": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb",
+    "unique_commits_from_merge_base": 44,
+    "changed_paths_from_merge_base": 50
+  },
+  "textual_path_overlap": {
+    "count": 0,
+    "paths": [],
+    "state": "VERIFIED_ZERO_PATH_INTERSECTION"
+  },
+  "interpretation_boundary": {
+    "textual_conflict_risk": "REDUCED_NOT_ZERO",
+    "semantic_dependency_risk": "TOKEN_VAZIO_SEMANTIC_DEPENDENCY",
+    "reason": "disjoint changed paths can still depend on common contracts, workflow invariants, generated registries, imports, trigger topology, and scientific governance semantics"
+  },
+  "safe_conclusion": "No path was modified on both sides relative to the frozen merge base. This is not proof that a bulk merge or forward-port is semantically safe.",
+  "required_next_evidence": [
+    "B0/B1 dependency graph",
+    "workflow-to-contract reference edges",
+    "generated-artifact producer/consumer edges",
+    "import and local-script dependency edges",
+    "per-batch tests and hash-bound receipts"
+  ],
+  "forbidden_inference": [
+    "zero path overlap means zero semantic conflict",
+    "zero path overlap authorizes bulk merge",
+    "zero path overlap authorizes bypass of branch maturity topology"
+  ],
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false
+}
