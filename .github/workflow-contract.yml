@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-11"
+updated_at: "2026-08-16"
 
 inventory:
-  active_workflows: 78
+  active_workflows: 82
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -62,6 +62,31 @@ workflow_contract_reconciliation:
   direct_main_commit: FORBIDDEN
   external_pr_permission_verified: false
   external_pr_permission_state: TOKEN_VAZIO_EXTERNAL_SETTING
+  claim_allowed: false
+  publication_effect: NONE
+
+operational_auto_hotfix:
+  workflow: .github/workflows/rll-operational-auto-hotfix.yml
+  observer: tools/rll_auto_hotfix.py
+  proposal_tool: tools/propose_operational_hotfix_pr.py
+  policy: data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
+  ledger: data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
+  documentation: docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
+  tests: tests/test_rll_auto_hotfix.py
+  cadence: [pull_request, push_main, schedule_6h, workflow_dispatch]
+  products: [observations.jsonl, state_vector.json, receipt.json, SUMMARY.md]
+  safe_auto_fix_classes: [WORKFLOW_INVENTORY_DRIFT]
+  review_only_classes:
+    - FLOATING_ACTION_REF
+    - MISSING_LOCAL_WORKFLOW_DEPENDENCY
+    - EPISTEMIC_TOKEN
+    - UNCERTAINTY_TOKEN
+    - MAINTENANCE_MARKER
+    - RUNTIME_ZERO_JOB_FAILURE
+    - EXTERNAL_PLATFORM_SETTING
+  direct_main_commit: FORBIDDEN
+  delivery: DRAFT_PULL_REQUEST
+  auto_merge: false
   claim_allowed: false
   publication_effect: NONE
 
@@ -139,6 +164,7 @@ documented_checks:
     - {context: CodeQL (python), workflow: .github/workflows/github-platform-assurance.yml, job_id: codeql, permissions: security_events_write, certification_claim: false, conformity_claim: false}
     - {context: Rare Events Evidence Gate, workflow: .github/workflows/rare-events-evidence-gate.yml, job_id: evidence-governance, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: Verify workflow contract inventory, workflow: .github/workflows/workflow-contract-sync.yml, job_id: verify-contract, permissions: contents_read, certification_claim: false, conformity_claim: false}
+    - {context: Observe operational state and emit products, workflow: .github/workflows/rll-operational-auto-hotfix.yml, job_id: observe, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6 CMB-only materialization, workflow: .github/workflows/act-dr6-cmbonly-materialization.yml, job_id: materialize-reference, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6.02 official LCDM reference chain custody, workflow: .github/workflows/act-dr6-reference-chain-custody.yml, job_id: custody, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: ACT DR6 local posterior preflight V2, workflow: .github/workflows/act-dr6-posterior-preflight-v2.yml, job_id: freeze-contract, permissions: contents_read, certification_claim: false, conformity_claim: false}
@@ -150,16 +176,21 @@ documentation:
     - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
     - data/governance/branch_advance_registry.v2.json
+    - data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
+    - data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
     - tools/github_actions_capability_gate.py
     - tools/workflow_contract_sync.py
     - tools/propose_workflow_contract_pr.py
+    - tools/rll_auto_hotfix.py
+    - tools/propose_operational_hotfix_pr.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
     - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
     - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
+    - docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
       - "44 etapas lógicas"
