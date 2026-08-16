@@ -15,6 +15,7 @@ on:
       - "docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md"
       - "tests/test_rll_auto_hotfix.py"
       - "tests/test_github_actions_runtime_ingest.py"
+      - "tests/test_propose_operational_hotfix_pr.py"
       - "tests/test_workflow_contract_sync.py"
       - "tests/test_validate_workflow_docs.py"
   push:
@@ -29,6 +30,7 @@ on:
       - "docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md"
       - "tests/test_rll_auto_hotfix.py"
       - "tests/test_github_actions_runtime_ingest.py"
+      - "tests/test_propose_operational_hotfix_pr.py"
   schedule:
     - cron: "23 */6 * * *"
   workflow_dispatch:
@@ -76,6 +78,7 @@ jobs:
             --junitxml=artifacts/operational-auto-hotfix/focused-tests.junit.xml \
             tests/test_rll_auto_hotfix.py \
             tests/test_github_actions_runtime_ingest.py \
+            tests/test_propose_operational_hotfix_pr.py \
             tests/test_workflow_contract_sync.py \
             tests/test_validate_workflow_docs.py \
             2>&1 | tee artifacts/operational-auto-hotfix/focused-tests.log
@@ -173,7 +176,7 @@ jobs:
           PY
 
   propose-bounded-hotfix:
-    name: Propose bounded safe hotfix by draft PR
+    name: Propose bounded safe hotfix by governed route
     needs: observe
     if: >-
       always() &&
@@ -205,7 +208,7 @@ jobs:
             --write-products \
             --output-dir artifacts/operational-auto-hotfix
 
-      - name: Open or refresh reviewed draft PR if a safe diff exists
+      - name: Emit reviewed proposal or maturity-route receipt
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python tools/propose_operational_hotfix_pr.py --base main
