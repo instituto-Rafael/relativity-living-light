@@ -53,7 +53,13 @@ def parse_name_status(text: str) -> list[dict[str, str]]:
 
 
 def domain_for(path: str) -> str:
-    p = path.lower().lstrip("./")
+    # Git paths may be expressed as either `.github/...` or `./.github/...`.
+    # Do not use lstrip("./"): lstrip removes a *set of characters* and would
+    # incorrectly erase the leading dot from `.github`, turning it into
+    # `github/...` and silently misclassifying workflow/governance paths.
+    p = path.lower()
+    if p.startswith("./"):
+        p = p[2:]
     if p.startswith(".github/workflows/"):
         return "workflow"
     if p.startswith((".github/", "governance/", "data/governance/")):
