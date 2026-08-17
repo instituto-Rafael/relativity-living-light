@@ -206,3 +206,75 @@ F_ok   = deterministic observer + bounded repair + artifacts + ledger + pinned n
 F_gap  = runtime API ingestion + external platform enforcement + independent replication
 F_next = execute PR CI, merge only after review, then re-observe main and append receipt
 ```
+
+---
+
+## 13. Append-only amendment — runtime ingestion verified
+
+The text above records the original V1 state and is intentionally preserved. A later cycle on 2026-08-16 implemented and remotely exercised the API-bound runtime observer.
+
+Run `31978075898` inspected 25 recent failed workflow runs and separated them as:
+
+```text
+24 = failure + zero jobs
+ 1 = failure + one-or-more jobs
+ 0 = missing jobs snapshot
+```
+
+The API returned successfully. The 24 zero-job cases are represented as:
+
+```text
+RUNTIME_ZERO_JOB_FAILURE
+state = TOKEN_VAZIO_ROOT_CAUSE
+auto_fixable = false
+```
+
+No common causal explanation is inferred from the shared `total_jobs=0` observable.
+
+The durable receipt is:
+
+```text
+artifacts/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_REMOTE_RECEIPT_20260816_RUN31978075898.json
+```
+
+Thus the old residual `RUNTIME_ZERO_JOB_FAILURE_API_INGESTION` is closed only with respect to **ingestion availability**. `TOKEN_VAZIO_ROOT_CAUSE_PER_ZERO_JOB_RUN` remains open.
+
+## 14. Append-only amendment — proposal route contradiction
+
+The same remote cycle exposed a governance contradiction. PR #754 targeted `main` from a non-protected `hotfix/*` branch, while the canonical maturity topology states:
+
+```text
+work branch -> rll/lab
+rll/lab -> rll/integration
+rll/integration -> rll/release
+rll/release -> main
+```
+
+Branch Maturity Gate V2 and Transit Tower therefore blocked the transition because `main` accepts only `rll/release`.
+
+This is **not** resolved by weakening the gate. It is represented as:
+
+```text
+HOTFIX_ROUTE_VS_BRANCH_MATURITY_TOPOLOGY
+state = TOKEN_VAZIO_MATURITY_ROUTE
+```
+
+A direct retarget to `rll/lab` is also not assumed safe because the observed histories are substantially diverged. Reconciliation is a separate governed operation.
+
+Therefore the operational proposal route is amended to fail closed:
+
+```text
+main_hotfix_route.allowed = false
+verified_proposal_base = TOKEN_VAZIO_MATURITY_ROUTE
+proposal without verified route => receipt only, no PR creation
+```
+
+The proposal tool may open a PR only after policy explicitly names an allowed `verified_proposal_base` that matches the requested base. Missing routing evidence is not permission.
+
+## 15. Current R3 successor
+
+```text
+F_ok   = runtime API ingestion verified + 82/82 + zero-job/jobbed separation + hash-bound receipts
+F_gap  = TOKEN_VAZIO_ROOT_CAUSE_PER_ZERO_JOB_RUN + TOKEN_VAZIO_MATURITY_ROUTE + main/lab divergence
+F_next = validate fail-closed proposal tests; audit branch divergence separately; never bypass maturity topology
+```

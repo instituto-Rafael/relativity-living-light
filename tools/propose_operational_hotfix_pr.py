@@ -3,6 +3,9 @@
 
 Only repository-local deterministic diffs already produced in the workspace are
 eligible. This tool never auto-merges and never edits scientific content.
+A proposal is emitted only when the governance policy names a verified base
+branch.  Missing/contradictory maturity routing is a valid TOKEN_VAZIO product,
+not permission to bypass the branch-maturity gate.
 """
 from __future__ import annotations
 
@@ -12,10 +15,11 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Sequence
+from typing import Any, Sequence
 
-SCHEMA = "rll.operational_hotfix_proposal.v1"
+SCHEMA = "rll.operational_hotfix_proposal.v2"
 DEFAULT_RECEIPT = Path("artifacts/operational-auto-hotfix/proposal-receipt.json")
+DEFAULT_POLICY = Path("data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json")
 APPROVED_PATHS = [".github/workflow-contract.yml"]
 
 
@@ -36,11 +40,35 @@ def write_receipt(path: Path, **payload: object) -> None:
     path.write_text(json.dumps(body, indent=2) + "\n", encoding="utf-8")
 
 
+def load_policy(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("operational hotfix policy must be a JSON object")
+    return payload
+
+
+def maturity_route_decision(policy: dict[str, Any], requested_base: str) -> tuple[bool, str, str]:
+    route = policy.get("main_hotfix_route", {})
+    if not isinstance(route, dict):
+        return False, "TOKEN_VAZIO_MATURITY_ROUTE", "HOTFIX_ROUTE_POLICY_INVALID"
+    allowed = route.get("allowed") is True
+    verified_base = route.get("verified_proposal_base")
+    state = str(route.get("state", "TOKEN_VAZIO_MATURITY_ROUTE"))
+    if not allowed:
+        return False, state, "HOTFIX_ROUTE_NOT_AUTHORIZED"
+    if not isinstance(verified_base, str) or not verified_base or verified_base.startswith("TOKEN_VAZIO"):
+        return False, "TOKEN_VAZIO_MATURITY_ROUTE", "VERIFIED_PROPOSAL_BASE_MISSING"
+    if requested_base != verified_base:
+        return False, "TOKEN_VAZIO_MATURITY_ROUTE", f"REQUESTED_BASE_{requested_base}_DIFFERS_FROM_VERIFIED_{verified_base}"
+    return True, state, "NONE"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", default="main")
     parser.add_argument("--branch", default="automation/operational-hotfix-main")
     parser.add_argument("--receipt", type=Path, default=DEFAULT_RECEIPT)
+    parser.add_argument("--policy", type=Path, default=DEFAULT_POLICY)
     args = parser.parse_args()
 
     token = os.environ.get("GITHUB_TOKEN", "")
@@ -48,11 +76,7 @@ def main() -> int:
     env = os.environ.copy()
     env["GH_TOKEN"] = token
 
-    if not token or not repository:
-        write_receipt(args.receipt, decision="TOKEN_VAZIO_EXTERNAL_SETTING", residual="GITHUB_TOKEN_OR_REPOSITORY_MISSING")
-        return 2
-
-    changed = []
+    changed: list[str] = []
     for path in APPROVED_PATHS:
         result = subprocess.run(["git", "diff", "--quiet", "--", path], check=False)
         if result.returncode != 0:
@@ -61,6 +85,50 @@ def main() -> int:
         write_receipt(args.receipt, decision="NO_CHANGE", base=args.base, branch=args.branch, changed_paths=[])
         print("No approved operational change to propose.")
         return 0
+
+    try:
+        policy = load_policy(args.policy)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        write_receipt(
+            args.receipt,
+            decision="TOKEN_VAZIO_MATURITY_ROUTE",
+            base=args.base,
+            branch=args.branch,
+            changed_paths=changed,
+            residual=f"POLICY_UNREADABLE:{type(exc).__name__}",
+        )
+        print("Maturity route policy unavailable; proposal blocked fail-closed.")
+        return 0
+
+    route_allowed, route_state, route_residual = maturity_route_decision(policy, args.base)
+    if not route_allowed:
+        write_receipt(
+            args.receipt,
+            decision="TOKEN_VAZIO_MATURITY_ROUTE",
+            maturity_route_state=route_state,
+            base=args.base,
+            branch=args.branch,
+            changed_paths=changed,
+            residual=route_residual,
+            proposed_action=(
+                "reconcile main/rll-lab divergence and approve an explicit proposal base through the branch-maturity contract"
+            ),
+            falsifier="policy names an allowed verified_proposal_base that passes branch_maturity_gate.py",
+        )
+        print(f"Operational hotfix proposal blocked by maturity route: {route_residual}")
+        return 0
+
+    if not token or not repository:
+        write_receipt(
+            args.receipt,
+            decision="TOKEN_VAZIO_EXTERNAL_SETTING",
+            maturity_route_state=route_state,
+            base=args.base,
+            branch=args.branch,
+            changed_paths=changed,
+            residual="GITHUB_TOKEN_OR_REPOSITORY_MISSING",
+        )
+        return 2
 
     try:
         run(["git", "config", "user.name", "github-actions[bot]"], env)
@@ -95,10 +163,27 @@ def main() -> int:
     except (subprocess.CalledProcessError, json.JSONDecodeError) as exc:
         detail = getattr(exc, "stderr", "") or getattr(exc, "stdout", "") or str(exc)
         print(detail, file=sys.stderr)
-        write_receipt(args.receipt, decision="TOKEN_VAZIO_EXTERNAL_SETTING", base=args.base, branch=args.branch, changed_paths=changed, residual="PR_CREATION_OR_WRITE_PERMISSION_UNAVAILABLE")
+        write_receipt(
+            args.receipt,
+            decision="TOKEN_VAZIO_EXTERNAL_SETTING",
+            maturity_route_state=route_state,
+            base=args.base,
+            branch=args.branch,
+            changed_paths=changed,
+            residual="PR_CREATION_OR_WRITE_PERMISSION_UNAVAILABLE",
+        )
         return 1
 
-    write_receipt(args.receipt, decision=decision, base=args.base, branch=args.branch, changed_paths=changed, pr_url=url, residual="NONE")
+    write_receipt(
+        args.receipt,
+        decision=decision,
+        maturity_route_state=route_state,
+        base=args.base,
+        branch=args.branch,
+        changed_paths=changed,
+        pr_url=url,
+        residual="NONE",
+    )
     print(url)
     return 0
 

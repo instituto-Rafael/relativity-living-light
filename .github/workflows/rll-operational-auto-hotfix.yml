@@ -7,11 +7,15 @@ on:
       - ".github/workflows/**"
       - ".github/workflow-contract.yml"
       - "tools/rll_auto_hotfix.py"
+      - "tools/github_actions_runtime_ingest.py"
       - "tools/propose_operational_hotfix_pr.py"
       - "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json"
       - "data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl"
       - "docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md"
+      - "docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md"
       - "tests/test_rll_auto_hotfix.py"
+      - "tests/test_github_actions_runtime_ingest.py"
+      - "tests/test_propose_operational_hotfix_pr.py"
       - "tests/test_workflow_contract_sync.py"
       - "tests/test_validate_workflow_docs.py"
   push:
@@ -20,15 +24,20 @@ on:
       - ".github/workflows/**"
       - ".github/workflow-contract.yml"
       - "tools/rll_auto_hotfix.py"
+      - "tools/github_actions_runtime_ingest.py"
       - "tools/propose_operational_hotfix_pr.py"
       - "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json"
+      - "docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md"
       - "tests/test_rll_auto_hotfix.py"
+      - "tests/test_github_actions_runtime_ingest.py"
+      - "tests/test_propose_operational_hotfix_pr.py"
   schedule:
     - cron: "23 */6 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 env:
   CLAIM_BOUNDARY: "Operational governance only; claim_allowed=false; publication_effect=NONE; auto_merge=false."
@@ -44,6 +53,7 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+      actions: read
     steps:
       - name: Checkout without persistent credentials
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -67,9 +77,24 @@ jobs:
           python -m pytest -q \
             --junitxml=artifacts/operational-auto-hotfix/focused-tests.junit.xml \
             tests/test_rll_auto_hotfix.py \
+            tests/test_github_actions_runtime_ingest.py \
+            tests/test_propose_operational_hotfix_pr.py \
             tests/test_workflow_contract_sync.py \
             tests/test_validate_workflow_docs.py \
             2>&1 | tee artifacts/operational-auto-hotfix/focused-tests.log
+
+      - name: Ingest GitHub Actions runtime failure evidence
+        id: runtime-ingest
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python tools/github_actions_runtime_ingest.py \
+            --live \
+            --repository "${GITHUB_REPOSITORY}" \
+            --max-runs 25 \
+            --output-dir artifacts/operational-runtime-ingest
 
       - name: Observe and store operational products even after negative tests
         if: always()
@@ -82,10 +107,11 @@ jobs:
             --write-report \
             --output-dir artifacts/workflow-contract-sync || true
 
-      - name: Record focused-test outcome in evidence products
+      - name: Record focused-test and runtime-ingest outcomes in evidence products
         if: always()
         env:
           FOCUSED_TESTS_OUTCOME: ${{ steps.focused-tests.outcome }}
+          RUNTIME_INGEST_OUTCOME: ${{ steps.runtime-ingest.outcome }}
         run: |
           python - <<'PY'
           import json, os
@@ -94,8 +120,9 @@ jobs:
           out.mkdir(parents=True, exist_ok=True)
           path = out / 'gate_outcome.json'
           payload = {
-              'schema': 'rll.operational_auto_hotfix_gate_outcome.v1',
+              'schema': 'rll.operational_auto_hotfix_gate_outcome.v2',
               'focused_tests_outcome': os.environ.get('FOCUSED_TESTS_OUTCOME', 'TOKEN_VAZIO'),
+              'runtime_ingest_outcome': os.environ.get('RUNTIME_INGEST_OUTCOME', 'TOKEN_VAZIO'),
               'claim_allowed': False,
               'publication_effect': 'NONE',
               'negative_evidence_preserved': True,
@@ -103,11 +130,15 @@ jobs:
           path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
           PY
 
-      - name: Publish state vector
+      - name: Publish state vectors
         if: always()
         run: |
           if [[ -f artifacts/operational-auto-hotfix/SUMMARY.md ]]; then
             cat artifacts/operational-auto-hotfix/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f artifacts/operational-runtime-ingest/RUNTIME_SUMMARY.md ]]; then
+            printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            cat artifacts/operational-runtime-ingest/RUNTIME_SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload operational products
@@ -117,6 +148,7 @@ jobs:
           name: rll-operational-auto-hotfix-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             artifacts/operational-auto-hotfix/
+            artifacts/operational-runtime-ingest/
             artifacts/workflow-contract-sync/
           retention-days: 90
           if-no-files-found: error
@@ -125,6 +157,7 @@ jobs:
         if: always()
         env:
           FOCUSED_TESTS_OUTCOME: ${{ steps.focused-tests.outcome }}
+          RUNTIME_INGEST_OUTCOME: ${{ steps.runtime-ingest.outcome }}
         run: |
           python - <<'PY'
           import json, os
@@ -132,15 +165,18 @@ jobs:
           payload = json.loads(Path('artifacts/operational-auto-hotfix/state_vector.json').read_text())
           p0 = int(payload['p0'])
           tests = os.environ.get('FOCUSED_TESTS_OUTCOME', 'TOKEN_VAZIO')
-          print(f"focused_tests={tests}; P0={p0}; P1={payload['p1']}; P2={payload['p2']}")
+          runtime = os.environ.get('RUNTIME_INGEST_OUTCOME', 'TOKEN_VAZIO')
+          print(f"focused_tests={tests}; runtime_ingest={runtime}; P0={p0}; P1={payload['p1']}; P2={payload['p2']}")
           if tests != 'success':
               raise SystemExit('focused operational tests did not pass; evidence was preserved')
+          if runtime != 'success':
+              raise SystemExit('runtime ingestion step crashed; external API uncertainty must be represented by a receipt, not a missing product')
           if p0:
               raise SystemExit('unresolved P0 operational drift; evidence was preserved')
           PY
 
   propose-bounded-hotfix:
-    name: Propose bounded safe hotfix by draft PR
+    name: Propose bounded safe hotfix by governed route
     needs: observe
     if: >-
       always() &&
@@ -172,7 +208,7 @@ jobs:
             --write-products \
             --output-dir artifacts/operational-auto-hotfix
 
-      - name: Open or refresh reviewed draft PR if a safe diff exists
+      - name: Emit reviewed proposal or maturity-route receipt
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python tools/propose_operational_hotfix_pr.py --base main
