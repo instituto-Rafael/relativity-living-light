@@ -1,0 +1,100 @@
+{
+  "module_id": "ethics-by-design-complex-networks",
+  "version": "1.0.0",
+  "title": "Ethics-by-Design Complex Networks — License Friction and Epistemic Boundaries",
+  "domains": [
+    "governance",
+    "ethics",
+    "licensing",
+    "complex-networks",
+    "anti-regression",
+    "provenance",
+    "didactics"
+  ],
+  "state": "IMPLEMENTED",
+  "scope": "Govern the relations among license surfaces, ethics-by-design, complex-network edges, TOKEN_VAZIO/INCERTEZA states, parable references, and anti-regression evidence without making legal or scientific claims.",
+  "epistemic_status": "EVIDENCIADO",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "evidence": {
+    "receipts": [],
+    "tests": ["tests/test_ethics_license_friction_contract.py"],
+    "sources": [
+      {"path": "LICENSE.md", "kind": "repository_authorial_license_surface"},
+      {"path": "pyproject.toml", "kind": "repository_packaging_metadata"},
+      {"path": "README.md", "kind": "repository_public_license_reference"},
+      {"external": "GOVERNANCE_SKILLS_SUMMARY.md", "kind": "file_library_governance_ethics_source", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH"},
+      {"external": "SCIENTIFIC_FOUNDATIONS_PARABLES_SKILLS.md", "kind": "file_library_parable_source", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH"},
+      {"external": "RAFAELIA_INVARIANT-5.txt", "kind": "file_library_license_precedent", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH"}
+    ],
+    "limitations": [
+      "No legal enforceability determination is made.",
+      "External File Library sources are not repository-hash-bound in this module.",
+      "Metaphor and parable are didactic layers and cannot satisfy evidence gates.",
+      "A machine-readable canonical license expression remains TOKEN_VAZIO pending explicit legal/editorial decision."
+    ]
+  },
+  "data_governance": {
+    "classification": "GOVERNANCE_METADATA_NON_SCIENTIFIC",
+    "required_metadata": ["id", "urgency", "state", "source", "provider", "use", "relation", "providencia", "falsifier", "provenance", "claim_allowed"],
+    "retention": "append-only successor records; negative evidence preserved",
+    "update_policy": "never overwrite historical uncertainty; close only with receipt-bound successor",
+    "legal_applicability": "TOKEN_VAZIO_LEGAL_REVIEW; this module classifies repository surfaces but does not decide enforceability"
+  },
+  "security": {
+    "least_privilege": true,
+    "secrets": "No secrets required; repository-local read-only validation.",
+    "integrity": ["unique urgency IDs", "explicit provenance", "closed states require receipt", "metaphor cannot promote evidence", "license mismatch cannot auto-fix"],
+    "incident_record": "Any attempted auto-promotion of legal/scientific state is recorded as anti-regression failure."
+  },
+  "quality": {
+    "metrics": ["open urgency count", "TOKEN_VAZIO count", "INCERTEZA count", "license-surface contradiction count", "unbound external-source count", "forbidden transition violations"],
+    "acceptance_criteria": [
+      "pyproject/LICENSE/README surfaces are represented explicitly",
+      "legal, symbolic, provenance and ethics layers remain distinct",
+      "every P0/P1 entry has providencia and falsifier",
+      "parables reference an operational subject without serving as evidence",
+      "claim_allowed remains false"
+    ],
+    "rejection_criteria": [
+      "MIT metadata is silently treated as equivalent to LICENSE.md",
+      "symbolic language is interpreted as executable legal sanction",
+      "TOKEN_VAZIO is closed without receipt",
+      "external source is represented as repository-hash-bound without a hash",
+      "promise is treated as proof or runtime guarantee"
+    ],
+    "change_control": "PR-reviewed, hash-bound, fail-closed; no automatic LICENSE rewrite."
+  },
+  "risks": [
+    {"id": "RISK_LICENSE_METADATA_CONTRADICTION", "state": "OPEN", "urgency": "P0"},
+    {"id": "RISK_LEGAL_SYMBOLIC_LAYER_COLLISION", "state": "OPEN", "urgency": "P1"},
+    {"id": "RISK_ETHICS_PROCEDURE_FORMALIZATION", "state": "OPEN", "urgency": "P1"},
+    {"id": "RISK_PARABLE_EVIDENCE_CONFUSION", "state": "CONTROLLED_BY_CONTRACT", "urgency": "P1"}
+  ],
+  "rollback": {
+    "trigger": "validator/test regression or any automatic legal/scientific promotion",
+    "procedure": "revert only the governance change that introduced the invalid transition; preserve negative receipt",
+    "verification": "full Python suite plus focused contract tests must pass with claim_allowed=false"
+  },
+  "f_ok": [
+    "repository exposes LICENSE.md and README license reference",
+    "packaging metadata is observable in pyproject.toml",
+    "module schema already supports PARABOLA and TOKEN_VAZIO epistemic states",
+    "anti-regression can be enforced by repository tests"
+  ],
+  "f_gap": [
+    "TOKEN_VAZIO_CANONICAL_LICENSE_EXPRESSION",
+    "TOKEN_VAZIO_LEGAL_REVIEW",
+    "TOKEN_VAZIO_EXTERNAL_GOVERNANCE_ETHICS_SOURCE_HASH",
+    "TOKEN_VAZIO_EXTERNAL_PARABLE_SOURCE_HASH",
+    "TOKEN_VAZIO_CONSENT_MANAGEMENT",
+    "TOKEN_VAZIO_PRIVACY_POLICY"
+  ],
+  "f_next": [
+    "record license-surface contradiction as an urgency with falsifier",
+    "validate typed transformation chain and forbidden promotions",
+    "materialize internal parable reference index",
+    "bind external source hashes if/when they are imported into the repository",
+    "select canonical machine-readable license metadata only after explicit legal/editorial review"
+  ]
+}
