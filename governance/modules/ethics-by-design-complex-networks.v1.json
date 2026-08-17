@@ -36,7 +36,27 @@
   },
   "data_governance": {
     "classification": "GOVERNANCE_METADATA_NON_SCIENTIFIC",
-    "required_metadata": ["id", "urgency", "state", "source", "provider", "use", "relation", "providencia", "falsifier", "provenance", "claim_allowed"],
+    "required_metadata": [
+      "collected_at",
+      "hash",
+      "license",
+      "origin",
+      "provenance",
+      "uncertainty",
+      "unit",
+      "update_policy",
+      "version",
+      "id",
+      "urgency",
+      "state",
+      "source",
+      "provider",
+      "use",
+      "relation",
+      "providencia",
+      "falsifier",
+      "claim_allowed"
+    ],
     "retention": "append-only successor records; negative evidence preserved",
     "update_policy": "never overwrite historical uncertainty; close only with receipt-bound successor",
     "legal_applicability": "TOKEN_VAZIO_LEGAL_REVIEW; this module classifies repository surfaces but does not decide enforceability"
