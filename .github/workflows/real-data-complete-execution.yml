@@ -1,6 +1,12 @@
 name: Real Data Complete Execution
 
 "on":
+  pull_request:
+    paths:
+      - "scripts/download_real_cosmology_inputs.sh"
+      - "scripts/verify_pantheon_inputs.py"
+      - "tests/test_pantheon_materialization_route_v3.py"
+      - ".github/workflows/real-data-complete-execution.yml"
   workflow_dispatch:
     inputs:
       execution_mode:
@@ -44,7 +50,60 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  pantheon-full-covariance-pr-gate:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Materialize pinned Pantheon+ full covariance
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/pantheon-full-covariance
+          bash scripts/download_real_cosmology_inputs.sh | tee artifacts/pantheon-full-covariance/materialize.log
+
+      - name: Re-run strict full-covariance verifier
+        run: |
+          set -euo pipefail
+          python3 scripts/verify_pantheon_inputs.py \
+            --require-full-covariance \
+            --json > artifacts/pantheon-full-covariance/readiness.json
+          cp data/real/pantheon_full_covariance_materialization_receipt.json \
+            artifacts/pantheon-full-covariance/materialization_receipt.json
+          cp data/real/pantheon_full_covariance_readiness.json \
+            artifacts/pantheon-full-covariance/readiness_from_materializer.json
+
+      - name: Assert G2 input boundary only
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          receipt = json.loads(Path('artifacts/pantheon-full-covariance/materialization_receipt.json').read_text())
+          readiness = json.loads(Path('artifacts/pantheon-full-covariance/readiness.json').read_text())
+          assert receipt['f_ok'] is True
+          assert receipt['claim_allowed'] is False
+          assert receipt['scientific_confirmation'] is False
+          assert readiness['full_covariance_likelihood_ready'] is True
+          assert readiness['claim_allowed'] is False
+          print('G2 Pantheon input materialization VERIFIED; no scientific claim promoted')
+          PY
+
+      - name: Upload Pantheon full-covariance receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pantheon-full-covariance-${{ github.run_id }}
+          path: artifacts/pantheon-full-covariance/
+          retention-days: 30
+          if-no-files-found: error
+
   real-data-complete:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -149,7 +208,11 @@ jobs:
         if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'validate' || inputs.execution_mode == 'full' }}
         run: |
           set -euo pipefail
-          if python scripts/verify_pantheon_inputs.py --json > "$RUN_DIR/reports/pantheon_inputs.json"; then
+          REQUIRE_MODE=""
+          if [ "$MATERIALIZE_PANTHEON" = "true" ]; then
+            REQUIRE_MODE="--require-full-covariance"
+          fi
+          if python scripts/verify_pantheon_inputs.py $REQUIRE_MODE --json > "$RUN_DIR/reports/pantheon_inputs.json"; then
             echo "Pantheon+ verification OK" | tee "$RUN_DIR/reports/pantheon_inputs.status"
           else
             echo "Pantheon+ verification failed or files are missing." | tee "$RUN_DIR/reports/pantheon_inputs.status"
@@ -237,7 +300,7 @@ jobs:
             if [ -f "$source" ]; then
               cp "$source" "$RUN_DIR/reports/"
             else
-              printf 'TOKEN_VAZIO_OPTIONAL_REPORT %s\n' "$source" >> "$RUN_DIR/reports/structure_d_optional_reports.residual"
+              printf '%s\n' "TOKEN_VAZIO_OPTIONAL_REPORT $source" >> "$RUN_DIR/reports/structure_d_optional_reports.residual"
             fi
           done
 
