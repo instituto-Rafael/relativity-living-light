@@ -10,7 +10,11 @@ def test_downloader_targets_same_canonical_directory_as_verifier():
     text = DOWNLOADER.read_text(encoding="utf-8")
     assert "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR" in text
     assert "--require-full-covariance" in text
-    assert "Pantheon+SH0ES_STAT+SYS.cov.sha256" not in text  # sidecar is derived from ${path}.sha256
+    # The authoritative canonical sidecar is derived from the exact verified
+    # covariance path.  A separately named legacy sidecar may exist only under
+    # LEGACY_PANTHEON_DIR for backward-compatible consumers.
+    assert 'printf \'%s  %s\\n\' "$actual_sha" "$(basename "$path")" > "${path}.sha256"' in text
+    assert '"$LEGACY_PANTHEON_DIR/Pantheon+SH0ES_STAT+SYS.cov.sha256"' in text
 
 
 def test_downloader_pins_primary_source_commit_blob_hash_and_sha256():
