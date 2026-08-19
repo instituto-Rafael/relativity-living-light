@@ -1,0 +1,72 @@
+{
+  "schema": "rll.g6_canonical_inference.v1",
+  "date": "2026-08-19",
+  "state": "PREREGISTERED_EXECUTABLE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "publication_effect": "NONE",
+  "scope": "LCDM_vs_RLL_on_exact_G5_background_likelihood",
+  "requires": ["READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD"],
+  "likelihood_policy": {
+    "executor": "tools/run_g4_background_tournament.py",
+    "data_covariance_selection": "must match G5 manifest hashes exactly",
+    "Pantheon_M_B": "analytically profiled; equivalent cosmological posterior to marginalization under a common flat nuisance measure; common evidence normalization cancels only in LCDM-vs-RLL Bayes-factor differences",
+    "absolute_logZ_boundary": "report sampler logZ and error, but interpret lnB10 differences rather than absolute evidence normalization"
+  },
+  "priors": {
+    "source": "G5 parameter registry / G4 bounds",
+    "type": "independent_uniform_within_frozen_bounds",
+    "LCDM": {"H0":[60.0,80.0],"Omega_m":[0.10,0.60],"omega_b_h2":[0.018,0.026]},
+    "RLL": {"H0":[60.0,80.0],"Omega_m":[0.10,0.60],"omega_b_h2":[0.018,0.026],"Omega_s0":[0.0,0.25],"z_t":[0.10,10.0],"w_t":[0.05,2.0]}
+  },
+  "mcmc": {
+    "engine": "emcee.EnsembleSampler",
+    "independent_ensembles": 4,
+    "walkers_per_ensemble": 16,
+    "steps": 800,
+    "burn": 300,
+    "initialization": "independent Gaussian clouds around the G4 best fit with sigma=0.02 of each prior width; clipped strictly inside bounds",
+    "seeds": [1103,2207,3301,4409],
+    "convergence": {"max_split_Rhat":1.10,"minimum_postburn_samples_per_ensemble":8000},
+    "note": "walkers are pooled within each independently seeded ensemble for between-ensemble Rhat; this is a convergence diagnostic, not proof of global mode discovery"
+  },
+  "nested": {
+    "engine": "dynesty.NestedSampler",
+    "models": ["LCDM","RLL"],
+    "nlive": 80,
+    "bound": "multi",
+    "sample": "rwalk",
+    "dlogz": 0.30,
+    "maxiter": 8000,
+    "seeds": [101,211,307],
+    "stability": {"max_lnB10_span":1.0,"require_finite_logzerr":true}
+  },
+  "prior_sensitivity": {
+    "RLL_narrow_variant": {"Omega_s0":[0.0,0.15],"z_t":[0.10,5.0],"w_t":[0.05,1.0]},
+    "nested_seed": 401,
+    "rule": "report delta lnB10 relative to base prior; do not select prior by which model wins"
+  },
+  "reconciliation": {
+    "historical_route": "scripts/rll_fase20_mcmc_bayes.py",
+    "rule": "historical outputs are comparison evidence only because their datasets/calibrations/priors differ from G5",
+    "bic_proxy": "compare sign and scale qualitatively; BIC is not Bayes evidence"
+  },
+  "pass_when": [
+    "G5 manifest hashes match local executor/contracts/input hashes",
+    "all MCMC ensembles produce finite posterior samples and max split-Rhat <= 1.10",
+    "three nested seeds per model return finite logZ and logZerr",
+    "lnB10 span across nested seed pairs <= 1.0",
+    "prior sensitivity is reported rather than hidden",
+    "posterior contact with Omega_s0=0 is explicitly recorded",
+    "negative lnB10 is preserved if observed"
+  ],
+  "stop_when": [
+    "G5 hash mismatch",
+    "nonconverged MCMC is used for claims",
+    "logZ reported without uncertainty",
+    "single-seed instability exceeds preregistered tolerance",
+    "prior variant is chosen post-hoc by preferred conclusion",
+    "claim_allowed becomes true"
+  ],
+  "boundary": "G6_PASS_LIMITED_CANONICAL_INFERENCE != independent replication != perturbation closure != physical confirmation"
+}
