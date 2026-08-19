@@ -5,7 +5,16 @@ name: Real Data Complete Execution
     paths:
       - "scripts/download_real_cosmology_inputs.sh"
       - "scripts/verify_pantheon_inputs.py"
+      - "tools/validate_scientific_validation_orchestrator_v3.py"
+      - "tools/run_g3_dataset_compatibility.py"
+      - "data/contracts/rll_g3_dataset_compatibility.v1.json"
+      - "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json"
       - "tests/test_pantheon_materialization_route_v3.py"
+      - "tests/test_scientific_validation_orchestrator_v3.py"
+      - "tests/test_g3_dataset_compatibility.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit_ascii.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit_three_model.py"
       - ".github/workflows/real-data-complete-execution.yml"
   workflow_dispatch:
     inputs:
@@ -53,12 +62,22 @@ jobs:
   pantheon-full-covariance-pr-gate:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+
+      - name: Setup deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+
+      - name: Install bounded scientific dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy scipy
 
       - name: Materialize pinned Pantheon+ full covariance
         run: |
@@ -77,27 +96,95 @@ jobs:
           cp data/real/pantheon_full_covariance_readiness.json \
             artifacts/pantheon-full-covariance/readiness_from_materializer.json
 
-      - name: Assert G2 input boundary only
+      - name: Assert G2 receipt-aware readiness
         run: |
           set -euo pipefail
+          python3 tools/validate_scientific_validation_orchestrator_v3.py \
+            --require-g2 --json > artifacts/pantheon-full-covariance/g2_readiness_v3.json
           python3 - <<'PY'
           import json
           from pathlib import Path
           receipt = json.loads(Path('artifacts/pantheon-full-covariance/materialization_receipt.json').read_text())
           readiness = json.loads(Path('artifacts/pantheon-full-covariance/readiness.json').read_text())
+          v3 = json.loads(Path('artifacts/pantheon-full-covariance/g2_readiness_v3.json').read_text())
           assert receipt['f_ok'] is True
           assert receipt['claim_allowed'] is False
           assert receipt['scientific_confirmation'] is False
           assert readiness['full_covariance_likelihood_ready'] is True
           assert readiness['claim_allowed'] is False
-          print('G2 Pantheon input materialization VERIFIED; no scientific claim promoted')
+          assert v3['g2_ready'] is True
+          assert v3['claim_allowed'] is False
+          assert v3['scientific_confirmation'] is False
+          print('G2 receipt-aware materialization VERIFIED; no scientific claim promoted')
           PY
 
-      - name: Upload Pantheon full-covariance receipt
+      - name: Execute G3 DESI plus Pantheon compatibility gate
+        run: |
+          set -euo pipefail
+          python3 tools/run_g3_dataset_compatibility.py \
+            --require-pass \
+            --output artifacts/pantheon-full-covariance/g3_compatibility.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          g3 = json.loads(Path('artifacts/pantheon-full-covariance/g3_compatibility.json').read_text())
+          assert g3['state'] == 'PASS_LIMITED_COMPATIBILITY_BRANCH'
+          assert g3['compatibility_decision']['allowed'] is True
+          assert g3['claim_allowed'] is False
+          assert 'TOKEN_VAZIO_INDEPENDENT_DESI_RECONSTRUCTION_ABLATION' in g3['F_gap']
+          assert 'TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX' in g3['F_gap']
+          print('G3 PASS_LIMITED_COMPATIBILITY_BRANCH with residuals preserved')
+          PY
+
+      - name: Execute G4 Pantheon full-covariance fairness subgate
+        env:
+          PYTHONPATH: products/rll-evidence-runner/src
+        run: |
+          set -euo pipefail
+          CATALOG='data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat'
+          COV='data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov'
+          OUT='artifacts/pantheon-full-covariance/g4_pantheon_lcdm_cpl_rll.json'
+          python -m rll_evidence.pantheon_fit_three_model \
+            --catalog "$CATALOG" \
+            --covariance "$COV" \
+            --output "$OUT" \
+            --seeds 11,23,37,53,71 \
+            --maxiter 250 \
+            --ftol 1e-10 \
+            --integration-points 4096 \
+            --z-min 0.01 | tee artifacts/pantheon-full-covariance/g4_pantheon_fit.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('artifacts/pantheon-full-covariance/g4_pantheon_lcdm_cpl_rll.json')
+          result = json.loads(p.read_text())
+          assert result['status'] == 'PASS_LIMITED'
+          assert set(result['models']) == {'LCDM_pantheon_full', 'CPL_pantheon_full', 'RLL_pantheon_full'}
+          assert result['comparison']['baseline'] == 'LCDM_pantheon_full'
+          receipt = {
+              'schema': 'rll.g4_pantheon_fairness_subgate.v1',
+              'state': 'PASS_LIMITED_PANTHEON_FULL_COVARIANCE_FAIRNESS',
+              'models': list(result['models']),
+              'comparison': result['comparison'],
+              'method': result['method'],
+              'scientific_boundary': result['scientific_boundary'],
+              'claim_allowed': False,
+              'scientific_confirmation': False,
+              'F_ok': result.get('F_ok', []),
+              'F_gap': result.get('F_gap', []) + ['G4 overall still requires reconciliation with the DESI/H(z)/growth/CMB fair tournament before G5.'],
+              'F_next': 'reconcile this Pantheon subgate with the existing four-model joint-real route under one G4 manifest',
+          }
+          Path('artifacts/pantheon-full-covariance/g4_pantheon_fairness_receipt.json').write_text(
+              json.dumps(receipt, indent=2, ensure_ascii=False) + '\n'
+          )
+          print('G4 Pantheon subgate PASS_LIMITED; overall G4 not yet promoted')
+          PY
+
+      - name: Upload G2 G3 G4 evidence bundle
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: pantheon-full-covariance-${{ github.run_id }}
+          name: pantheon-g2-g3-g4-${{ github.run_id }}
           path: artifacts/pantheon-full-covariance/
           retention-days: 30
           if-no-files-found: error
