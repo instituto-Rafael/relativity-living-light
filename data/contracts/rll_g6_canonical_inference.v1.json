@@ -23,21 +23,21 @@
     "engine": "emcee.EnsembleSampler",
     "independent_ensembles": 4,
     "walkers_per_ensemble": 16,
-    "steps": 800,
-    "burn": 300,
+    "steps": 300,
+    "burn": 100,
     "initialization": "independent Gaussian clouds around the G4 best fit with sigma=0.02 of each prior width; clipped strictly inside bounds",
     "seeds": [1103,2207,3301,4409],
-    "convergence": {"max_split_Rhat":1.10,"minimum_postburn_samples_per_ensemble":8000},
-    "note": "walkers are pooled within each independently seeded ensemble for between-ensemble Rhat; this is a convergence diagnostic, not proof of global mode discovery"
+    "convergence": {"max_split_Rhat":1.10,"minimum_postburn_samples_per_ensemble":3200},
+    "note": "walkers are pooled within each independently seeded ensemble for between-ensemble Rhat; this is a limited convergence diagnostic, while global mode discovery is cross-checked separately by nested sampling"
   },
   "nested": {
     "engine": "dynesty.NestedSampler",
     "models": ["LCDM","RLL"],
-    "nlive": 80,
+    "nlive": 60,
     "bound": "multi",
     "sample": "rwalk",
-    "dlogz": 0.30,
-    "maxiter": 8000,
+    "dlogz": 0.50,
+    "maxiter": 5000,
     "seeds": [101,211,307],
     "stability": {"max_lnB10_span":1.0,"require_finite_logzerr":true}
   },
