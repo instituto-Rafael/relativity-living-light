@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -11,9 +12,11 @@ CONTRACT_PATH = ROOT / "data/contracts/rll_g4_background_tournament.v1.json"
 
 
 def load_module():
-    spec = importlib.util.spec_from_file_location("g4bg", MODULE_PATH)
+    name = "g4bg"
+    spec = importlib.util.spec_from_file_location(name, MODULE_PATH)
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
+    sys.modules[name] = mod
     spec.loader.exec_module(mod)
     return mod
 
