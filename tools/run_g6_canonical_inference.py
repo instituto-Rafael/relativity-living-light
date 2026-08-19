@@ -46,6 +46,10 @@ def _module(name: str, path: Path) -> ModuleType:
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load {path}")
     module = importlib.util.module_from_spec(spec)
+    # Dataclasses with postponed annotations resolve their defining module via
+    # sys.modules during class decoration. Register before exec_module so a
+    # dynamically loaded scientific module behaves like a normal import.
+    sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
 
