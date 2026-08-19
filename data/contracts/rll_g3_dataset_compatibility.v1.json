@@ -1,0 +1,76 @@
+{
+  "schema": "rll.g3_dataset_compatibility.v1",
+  "date": "2026-08-19",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "purpose": "Prove that the materialized DESI DR2 BAO and Pantheon+ blocks are internally coherent enough to enter a declared joint-likelihood branch, without treating compatibility as model confirmation.",
+  "sources": {
+    "desi_dr2": {
+      "provider": "DESI Collaboration",
+      "arxiv": "2503.14738v3",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "journal": "Phys. Rev. D 112, 083515 (2025)",
+      "source_role": "primary_publication",
+      "method_facts": {
+        "galaxy_quasar_reconstruction": "IterativeFFT implemented in pyrecon using fiducial DR1 settings",
+        "bao_covariance": "RascalC semi-analytical covariance for galaxy/quasar correlation functions; reported distance constraints include systematic error budget",
+        "distance_basis": "DM_over_rd and DH_over_rd are a rotation-equivalent basis to DV_over_rd and DM_over_DH for consistency calculations",
+        "fiducial_cosmology_boundary": "reported final distance measurements and uncertainties are stated not to depend on fiducial cosmology when conversion is correctly performed",
+        "supernova_combination": "DESI publication performs cosmological fits with Pantheon+ as one of the external SN likelihoods"
+      },
+      "table4_primary_rows": [
+        {"tracer": "BGS", "z_eff": 0.295, "observable": "DV_over_rd", "value": 7.942, "sigma": 0.075},
+        {"tracer": "LRG1", "z_eff": 0.510, "dm_over_rd": 13.588, "dm_sigma": 0.167, "dh_over_rd": 21.863, "dh_sigma": 0.425, "dm_dh_ratio": 0.622, "dm_dh_sigma": 0.017, "correlation": -0.459},
+        {"tracer": "LRG2", "z_eff": 0.706, "dm_over_rd": 17.351, "dm_sigma": 0.177, "dh_over_rd": 19.455, "dh_sigma": 0.330, "dm_dh_ratio": 0.892, "dm_dh_sigma": 0.021, "correlation": -0.404},
+        {"tracer": "LRG3_PLUS_ELG1", "source_tracer_label": "LRG3+ELG1", "z_eff": 0.934, "dm_over_rd": 21.576, "dm_sigma": 0.152, "dh_over_rd": 17.641, "dh_sigma": 0.193, "dm_dh_ratio": 1.223, "dm_dh_sigma": 0.019, "correlation": -0.416},
+        {"tracer": "ELG2", "z_eff": 1.321, "dm_over_rd": 27.601, "dm_sigma": 0.318, "dh_over_rd": 14.176, "dh_sigma": 0.221, "dm_dh_ratio": 1.948, "dm_dh_sigma": 0.045, "correlation": -0.434},
+        {"tracer": "QSO", "z_eff": 1.484, "dm_over_rd": 30.512, "dm_sigma": 0.760, "dh_over_rd": 12.817, "dh_sigma": 0.516, "dm_dh_ratio": 2.386, "dm_dh_sigma": 0.136, "correlation": -0.500},
+        {"tracer": "Lya", "source_tracer_label": "Lya", "z_eff": 2.330, "dm_over_rd": 38.988, "dm_sigma": 0.531, "dh_over_rd": 8.632, "dh_sigma": 0.101, "dm_dh_ratio": 4.518, "dm_dh_sigma": 0.097, "correlation": -0.431}
+      ]
+    },
+    "pantheon_plus": {
+      "provider": "Pantheon+ Collaboration",
+      "arxiv_cosmology": "2202.04077",
+      "arxiv_dataset": "2112.03863",
+      "source_role": "primary_publications",
+      "expected_light_curves": 1701,
+      "expected_distinct_sne": 1550,
+      "published_redshift_span": [0.001, 2.26],
+      "covariance_policy": "statistical plus systematic covariance retained in cosmological fits"
+    }
+  },
+  "diagnostics": {
+    "eta_z": {
+      "definition": "number of canonical DESI BAO observables whose z_eff lies inside the materialized Pantheon+ zHD span divided by 13",
+      "role": "coverage diagnostic only; not a standard external cosmological statistic",
+      "branch_rule": "DESI points beyond the SN maximum redshift are an explicit high-z extension, not an incompatibility"
+    },
+    "f_ap": {
+      "definition": "F_AP_proxy = (DM/rd)/(DH/rd) = DM/DH for each anisotropic DESI tracer",
+      "pass_rule": "repo-local ratio must agree with the rounded primary-publication DM/DH ratio within one published sigma",
+      "role": "source-table transcription/order/observable consistency gate; not a new DESI reanalysis"
+    },
+    "sn_sample": {
+      "pass_rule": "materialized catalog must retain 1701 rows, 77 calibrator rows and 1624 non-calibrator/cosmology rows"
+    },
+    "reconstruction": {
+      "pass_rule": "primary-publication reconstruction and systematic treatment must be recorded before joint use",
+      "residual": "RLL does not independently rerun DESI catalog-level reconstruction in this gate"
+    }
+  },
+  "joint_branch": {
+    "name": "DESI_DR2_BAO_PLUS_PANTHEON_STAT_SYS",
+    "allowed_when": [
+      "G2 receipt-aware readiness passes",
+      "DESI Table 4 transcription/F_AP checks pass",
+      "Pantheon sample/covariance custody checks pass",
+      "reconstruction/systematics provenance is recorded"
+    ],
+    "residuals_allowed_but_visible": [
+      "TOKEN_VAZIO_INDEPENDENT_DESI_RECONSTRUCTION_ABLATION",
+      "TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX"
+    ],
+    "reason": "These residuals remain visible; the primary DESI cosmology publication itself evaluates DESI with Pantheon+ as an external SN likelihood, so they do not authorize a claim but do not make the data blocks unusable for a separately declared likelihood branch.",
+    "claim_allowed": false
+  }
+}
