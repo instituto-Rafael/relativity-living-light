@@ -124,6 +124,34 @@ def _split_rhat(chains: list[np.ndarray]) -> list[float]:
     return [float(x) for x in rhat]
 
 
+def _rng_state_fingerprint(state: tuple[Any, ...]) -> str:
+    """Hash a NumPy RandomState tuple so proposal seeding is receipt-visible."""
+    if len(state) != 5:
+        raise ValueError("unexpected NumPy RandomState tuple")
+    algorithm, keys, position, has_gauss, cached_gaussian = state
+    digest = hashlib.sha256()
+    digest.update(str(algorithm).encode("ascii"))
+    digest.update(np.asarray(keys, dtype=np.uint32).tobytes(order="C"))
+    digest.update(str(int(position)).encode("ascii"))
+    digest.update(str(int(has_gauss)).encode("ascii"))
+    digest.update(float(cached_gaussian).hex().encode("ascii"))
+    return digest.hexdigest()
+
+
+def _seed_emcee_sampler(sampler: Any, seed: int) -> str:
+    """Set emcee's internal proposal RNG and fail if its silent setter drifts."""
+    expected = np.random.RandomState(int(seed)).get_state()
+    expected_fingerprint = _rng_state_fingerprint(expected)
+    sampler.random_state = expected
+    observed_fingerprint = _rng_state_fingerprint(sampler.random_state)
+    if observed_fingerprint != expected_fingerprint:
+        raise RuntimeError(
+            f"emcee proposal RNG seed verification failed for seed={seed}: "
+            f"expected={expected_fingerprint} observed={observed_fingerprint}"
+        )
+    return observed_fingerprint
+
+
 def run_mcmc(
     g4: ModuleType,
     data: Any,
@@ -152,6 +180,7 @@ def run_mcmc(
         p0 = center + rng.normal(0.0, 0.02, size=(walkers, ndim)) * widths
         p0 = np.clip(p0, b[:, 0] + eps, b[:, 1] - eps)
         sampler = emcee.EnsembleSampler(walkers, ndim, log_prob)
+        proposal_rng_state_sha256 = _seed_emcee_sampler(sampler, int(seed))
         started = time.perf_counter()
         sampler.run_mcmc(p0, steps, progress=False, skip_initial_state_check=True)
         elapsed = time.perf_counter() - started
@@ -165,6 +194,8 @@ def run_mcmc(
         ensemble_records.append(
             {
                 "seed": int(seed),
+                "proposal_rng_policy": "explicit_verified_emcee_internal_random_state",
+                "proposal_rng_state_sha256": proposal_rng_state_sha256,
                 "postburn_samples": int(flat.shape[0]),
                 "mean_acceptance_fraction": acceptance,
                 "runtime_seconds": elapsed,
@@ -401,6 +432,7 @@ def build_report(g4_receipt_path: Path, g5_manifest_path: Path, root: Path = ROO
         "F_ok": [
             "MCMC and nested sampling consume the exact G5 hash-bound background likelihood",
             "multiple independent MCMC ensembles and nested seeds are recorded",
+            "emcee proposal RNG state is explicitly seeded, verified and receipt-bound for every MCMC ensemble",
             "prior sensitivity is computed without selecting the preferred prior post-hoc",
         ],
         "F_gap": [] if pass_all else [
