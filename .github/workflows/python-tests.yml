@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
@@ -35,6 +36,55 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pytest pyyaml jsonschema
+
+      - name: Validate formula-literature append-only history
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          current="data/science/rll_formula_literature_edges.v1.json"
+          previous="artifacts/python-tests/previous_formula_literature_edges.json"
+          mkdir -p artifacts/python-tests
+
+          source_sha=""
+          source_kind=""
+          if [[ "$EVENT_NAME" == "pull_request" ]] \
+             && [[ -n "${PR_BASE_SHA:-}" ]] \
+             && git cat-file -e "${PR_BASE_SHA}:${current}" 2>/dev/null; then
+            source_sha="$PR_BASE_SHA"
+            source_kind="pull_request_base"
+          elif [[ "$EVENT_NAME" == "push" ]] \
+             && [[ -n "${PUSH_BEFORE:-}" ]] \
+             && [[ ! "$PUSH_BEFORE" =~ ^0+$ ]] \
+             && git cat-file -e "${PUSH_BEFORE}:${current}" 2>/dev/null; then
+            source_sha="$PUSH_BEFORE"
+            source_kind="push_before"
+          else
+            history_tip="${PR_HEAD_SHA:-HEAD}"
+            source_sha="$(git log "$history_tip" --diff-filter=A --format=%H -- "$current" | tail -n 1)"
+            source_kind="introduction_commit_bootstrap"
+          fi
+
+          if [[ -z "$source_sha" ]] || ! git cat-file -e "${source_sha}:${current}" 2>/dev/null; then
+            echo "FAIL: no real predecessor/bootstrap snapshot found for ${current}" >&2
+            exit 2
+          fi
+
+          git show "${source_sha}:${current}" > "$previous"
+          {
+            echo "source_kind=${source_kind}"
+            echo "source_sha=${source_sha}"
+            echo "source_blob=$(git rev-parse "${source_sha}:${current}")"
+            echo "source_sha256=$(sha256sum "$previous" | awk '{print $1}')"
+          } | tee artifacts/python-tests/formula_literature_previous_snapshot.receipt
+
+          python tools/validate_formula_literature_edges.py \
+            "$current" \
+            --previous "$previous" \
+            | tee artifacts/python-tests/formula_literature_non_regression.log
 
       - name: Run tests with auditable receipt
         run: |
