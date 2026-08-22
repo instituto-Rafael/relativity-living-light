@@ -3,6 +3,8 @@ import json
 import sys
 from pathlib import Path
 
+import numpy as np
+
 
 ROOT = Path(__file__).resolve().parents[1]
 G4_MODULE_PATH = ROOT / "tools/run_g4_background_tournament.py"
@@ -133,6 +135,35 @@ def test_strict_json_preserves_failed_diagnostic_without_fake_zero():
     assert normalized == {"finite": 1.5, "bad": None, "nan": None}
     assert "Infinity" not in strict_json.dumps(normalized)
     assert "NaN" not in strict_json.dumps(normalized)
+
+
+def test_g6_emcee_proposal_rng_is_deterministic():
+    g6 = load_module("g6_rng_unit", G6_MODULE_PATH)
+    p0 = np.asarray([[-1.0], [-0.25], [0.25], [1.0]], dtype=float)
+
+    def sample(seed: int):
+        sampler = g6.emcee.EnsembleSampler(
+            4,
+            1,
+            lambda theta: -0.5 * float(np.asarray(theta, dtype=float)[0] ** 2),
+        )
+        fingerprint = g6._seed_emcee_sampler(sampler, seed)
+        sampler.run_mcmc(
+            p0,
+            12,
+            progress=False,
+            skip_initial_state_check=True,
+        )
+        return fingerprint, np.asarray(sampler.get_chain(), dtype=float)
+
+    fingerprint_a, chain_a = sample(12345)
+    fingerprint_b, chain_b = sample(12345)
+    fingerprint_c, chain_c = sample(54321)
+
+    assert fingerprint_a == fingerprint_b
+    assert np.array_equal(chain_a, chain_b)
+    assert fingerprint_c != fingerprint_a
+    assert not np.array_equal(chain_a, chain_c)
 
 
 def test_execute_g4_g5_g6_chain_and_emit_receipts(request):
