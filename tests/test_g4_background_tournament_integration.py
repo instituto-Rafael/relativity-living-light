@@ -14,6 +14,7 @@ PANTHEON_COVARIANCE = (
     / "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR"
     / "Pantheon+SH0ES_STAT+SYS.cov"
 )
+PANTHEON_COVARIANCE_SIDECAR = PANTHEON_COVARIANCE.with_name(PANTHEON_COVARIANCE.name + ".sha256")
 G4_OUT = ROOT / "artifacts/python-tests/g4_background_six_model_receipt.json"
 G5_OUT = ROOT / "artifacts/python-tests/g5_canonical_background_manifest.json"
 G6_OUT = ROOT / "artifacts/python-tests/g6_canonical_inference_receipt.json"
@@ -31,17 +32,15 @@ def load_module(name: str, path: Path):
     return mod
 
 
-def _ensure_pinned_pantheon_covariance() -> None:
+def _ensure_pinned_pantheon_covariance() -> bool:
     """Materialize the exact G2 input when a clean checkout does not contain it.
 
-    The covariance is intentionally not committed to Git.  The integration
-    chain therefore must re-establish its pinned source/hash/shape precondition
-    instead of assuming that evidence from an earlier workflow is present in a
-    fresh runner filesystem.  The materialization receipt is kept beside the
-    Python-test receipts so it is uploaded even when a downstream gate fails.
+    Returns True only when this test created the covariance.  The caller uses
+    that fact to restore the clean-checkout repository state after the test,
+    while preserving the materialization receipt in artifacts/python-tests.
     """
     if PANTHEON_COVARIANCE.exists():
-        return
+        return False
 
     materializer = load_module("pantheon_covariance_materializer_integration", PANTHEON_MATERIALIZER_PATH)
     receipt = materializer.materialize(
@@ -54,9 +53,10 @@ def _ensure_pinned_pantheon_covariance() -> None:
     assert receipt["artifact"]["dimension"] == materializer.EXPECTED_DIMENSION
     assert receipt["policy"]["full_covariance_likelihood_ready"] is True
     assert PANTHEON_COVARIANCE.exists()
+    return True
 
 
-def test_execute_g4_g5_g6_chain_and_emit_receipts():
+def test_execute_g4_g5_g6_chain_and_emit_receipts(request):
     """Execute the governed scientific chain without silently skipping a gate.
 
     The ordinary Python-test workflow uploads artifacts/python-tests even on
@@ -64,7 +64,10 @@ def test_execute_g4_g5_g6_chain_and_emit_receipts():
     convergence/evidence failure still preserves the upstream positive and
     negative evidence instead of erasing the run.
     """
-    _ensure_pinned_pantheon_covariance()
+    created_covariance = _ensure_pinned_pantheon_covariance()
+    if created_covariance:
+        request.addfinalizer(lambda: PANTHEON_COVARIANCE.unlink(missing_ok=True))
+        request.addfinalizer(lambda: PANTHEON_COVARIANCE_SIDECAR.unlink(missing_ok=True))
 
     g4 = load_module("g4bg_integration", G4_MODULE_PATH)
     report = g4.build_report(
