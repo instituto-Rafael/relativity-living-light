@@ -8,9 +8,19 @@ ROOT = Path(__file__).resolve().parents[1]
 G4_MODULE_PATH = ROOT / "tools/run_g4_background_tournament.py"
 G5_MODULE_PATH = ROOT / "tools/build_g5_canonical_background_manifest.py"
 G6_MODULE_PATH = ROOT / "tools/run_g6_canonical_inference.py"
+PANTHEON_MATERIALIZER_PATH = ROOT / "scripts/fetch_pantheon_covariance.py"
+PANTHEON_COVARIANCE = (
+    ROOT
+    / "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR"
+    / "Pantheon+SH0ES_STAT+SYS.cov"
+)
+PANTHEON_COVARIANCE_SIDECAR = PANTHEON_COVARIANCE.with_name(PANTHEON_COVARIANCE.name + ".sha256")
 G4_OUT = ROOT / "artifacts/python-tests/g4_background_six_model_receipt.json"
 G5_OUT = ROOT / "artifacts/python-tests/g5_canonical_background_manifest.json"
 G6_OUT = ROOT / "artifacts/python-tests/g6_canonical_inference_receipt.json"
+PANTHEON_MATERIALIZATION_OUT = (
+    ROOT / "artifacts/python-tests/pantheon_covariance_materialization.json"
+)
 
 
 def load_module(name: str, path: Path):
@@ -22,7 +32,31 @@ def load_module(name: str, path: Path):
     return mod
 
 
-def test_execute_g4_g5_g6_chain_and_emit_receipts():
+def _ensure_pinned_pantheon_covariance() -> bool:
+    """Materialize the exact G2 input when a clean checkout does not contain it.
+
+    Returns True only when this test created the covariance.  The caller uses
+    that fact to restore the clean-checkout repository state after the test,
+    while preserving the materialization receipt in artifacts/python-tests.
+    """
+    if PANTHEON_COVARIANCE.exists():
+        return False
+
+    materializer = load_module("pantheon_covariance_materializer_integration", PANTHEON_MATERIALIZER_PATH)
+    receipt = materializer.materialize(
+        PANTHEON_COVARIANCE.parent,
+        PANTHEON_MATERIALIZATION_OUT,
+    )
+    assert receipt["status"] == "PASS"
+    assert receipt["claim_allowed"] is False
+    assert receipt["artifact"]["sha256"] == materializer.EXPECTED_SHA256
+    assert receipt["artifact"]["dimension"] == materializer.EXPECTED_DIMENSION
+    assert receipt["policy"]["full_covariance_likelihood_ready"] is True
+    assert PANTHEON_COVARIANCE.exists()
+    return True
+
+
+def test_execute_g4_g5_g6_chain_and_emit_receipts(request):
     """Execute the governed scientific chain without silently skipping a gate.
 
     The ordinary Python-test workflow uploads artifacts/python-tests even on
@@ -30,6 +64,11 @@ def test_execute_g4_g5_g6_chain_and_emit_receipts():
     convergence/evidence failure still preserves the upstream positive and
     negative evidence instead of erasing the run.
     """
+    created_covariance = _ensure_pinned_pantheon_covariance()
+    if created_covariance:
+        request.addfinalizer(lambda: PANTHEON_COVARIANCE.unlink(missing_ok=True))
+        request.addfinalizer(lambda: PANTHEON_COVARIANCE_SIDECAR.unlink(missing_ok=True))
+
     g4 = load_module("g4bg_integration", G4_MODULE_PATH)
     report = g4.build_report(
         seeds=(11, 23, 37, 53, 71),
