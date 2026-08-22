@@ -202,9 +202,16 @@ def validate_graph(data: dict[str, Any], root: Path = ROOT) -> None:
     if not isinstance(rules, list) or len(rules) < 6:
         fail("non_regression_rules must be explicit")
     rule_text = "\n".join(str(item).lower() for item in rules)
-    for required in ("append-only", "parable", "licenseref", "truth scores", "operational limits"):
-        if required not in rule_text:
-            fail(f"non_regression_rules missing required boundary: {required}")
+    required_boundaries = {
+        "append-only": ("append-only",),
+        "parable": ("parable", "parabola", "parábola"),
+        "licenseref": ("licenseref",),
+        "truth scores": ("truth scores",),
+        "operational limits": ("operational limits",),
+    }
+    for label, aliases in required_boundaries.items():
+        if not any(alias in rule_text for alias in aliases):
+            fail(f"non_regression_rules missing required boundary: {label}")
 
 
 def assert_non_regression(old: dict[str, Any], new: dict[str, Any], root: Path = ROOT) -> None:
