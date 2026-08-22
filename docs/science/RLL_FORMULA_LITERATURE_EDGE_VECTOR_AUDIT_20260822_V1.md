@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-22  
 **Route:** `WORK -> rll/lab -> rll/integration -> rll/release -> main`  
-**State:** `IMPLEMENTED / CI_PENDING`  
+**State:** `IMPLEMENTED / CI_REVALIDATION`  
 **append_only:** `true`  
 **claim_allowed:** `false`  
 **publication_effect:** `NONE`
@@ -102,10 +102,46 @@ Tests in `tests/test_formula_literature_edges.py` include adversarial fixtures f
 - It does not erase H15/H21/H25 if successor formulas are introduced.
 - It does not change any prior negative scientific result.
 
+## Execution checkpoint — G4 -> G5 -> G6
+
+Append-only event: GitHub Actions run `32568668295`, artifact `9474792910`, artifact digest `sha256:39eaa9ba025bac35c448bac81870d18e0b0ff40a207c00340609b24541f5b0a2`.
+
+The run produced six uploaded files, including current G4, G5, G6 and Pantheon covariance receipts. Software-level infrastructure reached G6 without losing upstream evidence.
+
+Observed G6 state is **not PASS**:
+
+- `state = BLOCKED_G6_CONVERGENCE_OR_EVIDENCE`
+- `claim_allowed = false`
+- `scientific_confirmation = false`
+- `F_gap = [MCMC_CONVERGENCE]`
+- LambdaCDM `max_Rhat = 1.0102527461564457`
+- RLL `max_Rhat = 1.2428791680240134`
+- RLL `Rhat(Omega_s0) = 1.2428791680240134`
+- RLL `Rhat(z_t) = 1.1433443407756332`
+- nested evidence finite for all six nested runs and none hit maxiter
+- `lnB10_mean(RLL-LCDM) = -0.8153567290360115`
+- `lnB10_span = 0.6288161348702488`
+- narrow-prior sensitivity `lnB10 = -1.6987967377687028`
+- G4 BIC proxy and G6 nested mean have the same unfavorable sign for RLL
+
+This event closes the earlier `TOKEN_VAZIO_POST_G6_OBSERVABLE_RECEIPT` only as **observed execution evidence**. It does **not** close G6 scientifically because the preregistered MCMC convergence criterion failed.
+
+The Python integration test is therefore required to distinguish:
+
+`software execution valid + scientific state BLOCKED`
+
+from
+
+`software/infrastructure failure`.
+
+A BLOCKED receipt is accepted by software CI only when `pass_all=false`, `F_gap` exactly matches failed convergence/evidence components, claims remain blocked, and the receipt is strict JSON. It is never rewritten to PASS to make CI green.
+
+**Promotion rule:** G7 synthetic recovery and G10 clean-environment replication are not authorized from this G6 event. G8 perturbation closure may continue only as the already-declared parallel physical-closure route.
+
 ## F_ok / F_gap / F_next
 
-**F_ok**: literature now has machine-addressable references, independence groups, false-positive controls, immutable formula-reference edges, non-scalar evidence vectors, explicit falsifiers and append-only tests.
+**F_ok**: literature now has machine-addressable references, independence groups, false-positive controls, immutable formula-reference edges, non-scalar evidence vectors, explicit falsifiers and append-only tests. G4/G5 receipts are reproducible in CI, pre-existing Pantheon covariance is reverified rather than trusted by existence, and G6 now emits an auditable blocked receipt instead of disappearing behind a generic Python failure.
 
-**F_gap**: full 486-formula materialization, deterministic cross-source deduplication, remaining per-formula edges, exact H01/H03 likelihoods, and independent RLL implementation/replication remain open.
+**F_gap**: `MCMC_CONVERGENCE` in G6; full 486-formula materialization; deterministic cross-source deduplication; remaining per-formula edges; exact H01/H03 likelihoods; G8/G9 physical closure; and independent RLL implementation/replication remain open.
 
-**F_next**: run CI on this work branch; if green, merge only to `rll/lab`. Then materialize the full formulas artifact, compute deterministic dedup IDs, and expand edges by the highest-value falsifiable family. Promotion beyond lab must continue through `rll/integration -> rll/release -> main` with receipts.
+**F_next**: finish CI revalidation with execution-vs-science state separation. If software CI is green, merge only to `rll/lab` while preserving G6 as BLOCKED. Then design a preregistered G6 convergence follow-up rather than tuning chains post-hoc, and in parallel materialize the full formulas artifact and deterministic dedup IDs. Promotion beyond lab remains `rll/integration -> rll/release -> main` with receipts.
