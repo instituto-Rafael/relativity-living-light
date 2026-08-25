@@ -1,0 +1,253 @@
+{
+  "schema": "rll.recent_observations_crosswalk.v1",
+  "record_id": "RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825_V1",
+  "checked_at_utc": "2026-08-25T08:08:27Z",
+  "checked_at_brt": "2026-08-25T05:08:27-03:00",
+  "state": "PASS_PRIMARY_SOURCE_CROSSWALK_SCIENTIFIC_EXECUTION_OPEN",
+  "append_only": true,
+  "claim_allowed": false,
+  "predecessors": [
+    {
+      "path": "data/real_sources/rll_latent_theses_registry.yml",
+      "git_blob_sha1": "58ca448f1e837030be72fa049e77d08769bdd5da"
+    },
+    {
+      "path": "docs/science/RLL_LATENT_THESES_AND_RECENT_DATA_CROSSWALK.md",
+      "git_blob_sha1": "da07dc26d821f4ba84764e781a816af63f523921"
+    },
+    {
+      "path": "data/real_sources/rll_joint_cosmology_real_inputs.iml.yml",
+      "git_blob_sha1": "a63e8209069b7a06c6dc9d5926773ffc19eb61e2"
+    },
+    {
+      "path": "data/contracts/dataset_rights_reconciliation_20260822.v1.json",
+      "git_blob_sha1": "bee0ae62adcf592e78a778c310c8b07edf6eb5f3"
+    }
+  ],
+  "policy": {
+    "purpose": "bind each active cosmology thesis observation route to dated primary publications, repository materialization, rights state, likelihood requirement, adversary baseline and falsifier",
+    "recent_context_is_evidence": false,
+    "publication_alignment_is_confirmation": false,
+    "default_missing_state": "TOKEN_VAZIO",
+    "negative_results_preserved": true,
+    "raw_external_datasets_committed_by_this_record": false
+  },
+  "observations": [
+    {
+      "observation_id": "OBS-DESI-DR2-BAO-2025",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "collaboration": "DESI Collaboration",
+      "observable_family": "BAO_DISTANCE_REDSHIFT",
+      "primary_source": true,
+      "paper_url": "https://arxiv.org/abs/2503.14738",
+      "journal_doi_url": "https://doi.org/10.1103/tr6y-kpc6",
+      "data_url": "https://zenodo.org/records/16644577",
+      "submitted_at_utc": "2025-03-18T21:14:12Z",
+      "last_revision_at_utc": "2025-10-09T16:45:28Z",
+      "publication_state": "PUBLISHED_PHYSICAL_REVIEW_D_2025",
+      "repository_materialization": "MATERIALIZED_WITH_CHECKSUM_LIMITED_BAO_POINTS_AND_COVARIANCE_SUMMARY",
+      "repository_ref": "data/real_sources/rll_joint_cosmology_real_inputs.iml.yml#real_desi_dr2_bao",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_TERMS",
+      "likelihood_state": "PARTIAL_COVARIANCE_SUMMARY_FULL_EXTERNAL_SUPPLEMENT_SEPARATELY_AUDITED",
+      "safe_relation_to_rll": "TEST_INPUT_AND_CPL_ADVERSARY_CONTEXT_NOT_CONFIRMATION",
+      "claim_allowed": false
+    },
+    {
+      "observation_id": "OBS-DES-DOVEKIE-SN-2026",
+      "title": "The Dark Energy Survey Supernova Program: A Reanalysis Of Cosmology Results And Evidence For Evolving Dark Energy With An Updated Type Ia Supernova Calibration",
+      "collaboration": "DES Collaboration",
+      "observable_family": "TYPE_IA_SUPERNOVAE_DISTANCE_MODULUS",
+      "primary_source": true,
+      "paper_url": "https://arxiv.org/abs/2511.07517",
+      "journal_doi_url": "https://doi.org/10.1093/mnras/stag632",
+      "data_url": "https://github.com/des-science/DES-SN5YR",
+      "submitted_at_utc": "2025-11-10T19:00:01Z",
+      "last_revision_at_utc": "2026-03-27T10:44:06Z",
+      "publication_state": "PUBLISHED_MNRAS_2026",
+      "repository_materialization": "TOKEN_VAZIO_NOT_MATERIALIZED_IN_CANONICAL_JOINT_ROUTE",
+      "repository_ref": "data/contracts/dataset_rights_reconciliation_20260822.v1.json#DS-DES-SN5YR",
+      "rights_state": "BLOCKED_NEGATIVE_ROOT_LICENSE_EVIDENCE_AT_PINNED_COMMIT",
+      "likelihood_state": "TOKEN_VAZIO_DISTANCE_VECTOR_COVARIANCE_AND_LIKELIHOOD_BINDING",
+      "safe_relation_to_rll": "RECENT_SN_ADVERSARY_AND_CALIBRATION_SENSITIVITY_CONTEXT_NOT_CONFIRMATION",
+      "claim_allowed": false
+    },
+    {
+      "observation_id": "OBS-DES-Y6-3X2PT-2026",
+      "title": "Dark Energy Survey Year 6 Results: Cosmological Constraints from Galaxy Clustering and Weak Lensing",
+      "collaboration": "DES Collaboration",
+      "observable_family": "GALAXY_CLUSTERING_COSMIC_SHEAR_GALAXY_GALAXY_LENSING",
+      "primary_source": true,
+      "paper_url": "https://arxiv.org/abs/2601.14559",
+      "journal_doi_url": "TOKEN_VAZIO_JOURNAL_DOI_NOT_RECORDED",
+      "data_url": "https://www.darkenergysurvey.org/des-y6-cosmology-results-papers/",
+      "submitted_at_utc": "2026-01-21T00:58:35Z",
+      "last_revision_at_utc": "2026-01-29T10:22:47Z",
+      "publication_state": "PRIMARY_PREPRINT_V2_2026",
+      "repository_materialization": "TOKEN_VAZIO_Y6_DATA_VECTOR_COVARIANCE_AND_LIKELIHOOD_NOT_MATERIALIZED",
+      "repository_ref": "TOKEN_VAZIO_NO_CURRENT_RLL_DATA_CONTRACT",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_TERMS_NOT_REVIEWED",
+      "likelihood_state": "TOKEN_VAZIO_3X2PT_LIKELIHOOD_AND_SYSTEMATICS",
+      "safe_relation_to_rll": "GROWTH_AND_LENSING_DISCRIMINATOR_CONTEXT_NOT_CONFIRMATION",
+      "claim_allowed": false
+    },
+    {
+      "observation_id": "OBS-ACT-DR6-CMB-2025",
+      "title": "The Atacama Cosmology Telescope: DR6 Power Spectra, Likelihoods and LambdaCDM Parameters",
+      "collaboration": "ACT Collaboration",
+      "observable_family": "CMB_TT_TE_EE_POWER_SPECTRA",
+      "primary_source": true,
+      "paper_url": "https://arxiv.org/abs/2503.14452",
+      "journal_doi_url": "TOKEN_VAZIO_JOURNAL_DOI_NOT_RECORDED",
+      "data_url": "TOKEN_VAZIO_EXACT_ACT_DR6_LIKELIHOOD_RELEASE_URL_NOT_ARCHIVED",
+      "submitted_at_utc": "2025-03-18T17:30:16Z",
+      "last_revision_at_utc": "2025-06-24T16:02:02Z",
+      "publication_state": "ACCEPTED_JCAP_PRIMARY_PREPRINT_V2_2025",
+      "repository_materialization": "TOKEN_VAZIO_FULL_ACT_DR6_LIKELIHOOD_NOT_MATERIALIZED",
+      "repository_ref": "data/real_sources/rll_joint_cosmology_real_inputs.iml.yml#real_cmb_shift",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_TERMS_NOT_REVIEWED",
+      "likelihood_state": "TOKEN_VAZIO_FULL_ACT_LIKELIHOOD_COMPRESSED_PLANCK_SHIFT_IS_NOT_EQUIVALENT",
+      "safe_relation_to_rll": "EARLY_UNIVERSE_BASELINE_AND_CMB_ADVERSARY_CONTEXT_NOT_CONFIRMATION",
+      "claim_allowed": false
+    },
+    {
+      "observation_id": "OBS-PANTHEONPLUS-SN-2022",
+      "title": "The Pantheon+ Analysis: Cosmological Constraints",
+      "collaboration": "Pantheon+",
+      "observable_family": "TYPE_IA_SUPERNOVAE_DISTANCE_MODULUS",
+      "primary_source": true,
+      "paper_url": "https://arxiv.org/abs/2202.04077",
+      "journal_doi_url": "https://doi.org/10.3847/1538-4357/ac8e04",
+      "data_url": "https://pantheonplussh0es.github.io/",
+      "submitted_at_utc": "2022-02-08T19:00:00Z",
+      "last_revision_at_utc": "2022-11-14T21:28:25Z",
+      "publication_state": "PUBLISHED_ASTROPHYSICAL_JOURNAL_2022_BASELINE",
+      "repository_materialization": "TOKEN_VAZIO_FULL_STAT_SYS_IN_CANONICAL_JOINT_ROUTE",
+      "repository_ref": "data/contracts/dataset_rights_reconciliation_20260822.v1.json#DS-PANTHEON-PLUS",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_TERMS",
+      "likelihood_state": "TOKEN_VAZIO_CANONICAL_FULL_COVARIANCE_RECONCILIATION",
+      "safe_relation_to_rll": "SUPERNOVA_BASELINE_AND_REPRODUCIBILITY_ROUTE_NOT_CONFIRMATION",
+      "claim_allowed": false
+    }
+  ],
+  "thesis_crossings": [
+    {
+      "thesis_id": "LT-001",
+      "route": "cosmology_background",
+      "observation_ids": [
+        "OBS-DESI-DR2-BAO-2025",
+        "OBS-DES-DOVEKIE-SN-2026",
+        "OBS-DES-Y6-3X2PT-2026",
+        "OBS-ACT-DR6-CMB-2025",
+        "OBS-PANTHEONPLUS-SN-2022"
+      ],
+      "baselines": ["LCDM", "wCDM", "CPL_w0waCDM"],
+      "required_metric_set": ["chi2", "AIC", "AICc", "BIC", "posterior_diagnostics", "delta_against_CPL"],
+      "falsifier": "RLL remains inactive with Os0=0 or is noncompetitive with CPL under identical data, covariance, priors and robust multi-seed inference.",
+      "execution_state": "TOKEN_VAZIO_UNIFIED_ROBUST_LIKELIHOOD_RUN",
+      "claim_allowed": false
+    },
+    {
+      "thesis_id": "LT-002",
+      "route": "cosmology_growth",
+      "observation_ids": [
+        "OBS-DESI-DR2-BAO-2025",
+        "OBS-DES-Y6-3X2PT-2026",
+        "OBS-ACT-DR6-CMB-2025"
+      ],
+      "baselines": ["LCDM_growth", "CPL_growth", "interacting_dark_energy_or_equivalent"],
+      "required_metric_set": ["fsigma8_residuals", "S8_consistency", "growth_chi2", "growth_delta_AICc"],
+      "falsifier": "RLL fails to produce a stable perturbation/growth prediction or does not outperform adversaries under CLASS/CAMB-equivalent validation.",
+      "execution_state": "TOKEN_VAZIO_PERTURBATION_AND_GROWTH_BACKEND",
+      "claim_allowed": false
+    },
+    {
+      "thesis_id": "LT-003",
+      "route": "late_universe_sirens",
+      "observation_ids": [
+        "OBS-DESI-DR2-BAO-2025",
+        "OBS-DES-DOVEKIE-SN-2026",
+        "OBS-PANTHEONPLUS-SN-2022"
+      ],
+      "baselines": ["LCDM", "CPL_w0waCDM"],
+      "required_metric_set": ["H0_posterior_shift", "w0_wa_constraints", "RLL_delta_AICc_against_CPL"],
+      "falsifier": "A CMB-independent siren+BAO+SNe run prefers LCDM/CPL while RLL remains inactive or noncompetitive.",
+      "execution_state": "TOKEN_VAZIO_STANDARD_SIREN_DATA_AND_LIKELIHOOD",
+      "claim_allowed": false
+    },
+    {
+      "thesis_id": "LT-004_TO_LT-006",
+      "route": "non_cosmology_routes",
+      "observation_ids": [],
+      "baselines": [],
+      "required_metric_set": [],
+      "falsifier": "NOT_NEEDED_THIS_COSMOLOGY_CROSSWALK",
+      "execution_state": "NOT_NEEDED_SEPARATE_LVK_JWST_GAIA_CROSSWALKS",
+      "claim_allowed": false
+    }
+  ],
+  "execution_gates": [
+    {
+      "gate_id": "G0_SOURCE_RIGHTS_FREEZE",
+      "state": "PARTIAL_DESI_LOCAL_HASHES_OTHER_DATASETS_TOKEN_VAZIO",
+      "required_output": "exact URL/version/terms/SHA256/transformation receipt per consumed file"
+    },
+    {
+      "gate_id": "G1_OBSERVABLE_SCHEMA",
+      "state": "PARTIAL_DESI_BAO_ONLY",
+      "required_output": "units, ordering, covariance dimensions and semantics for every data vector"
+    },
+    {
+      "gate_id": "G2_FULL_COVARIANCE",
+      "state": "TOKEN_VAZIO_UNIFIED_SN_BAO_CMB_GROWTH_COVARIANCE_POLICY",
+      "required_output": "validated full covariance or explicitly justified block structure"
+    },
+    {
+      "gate_id": "G3_LIKELIHOOD_PARITY",
+      "state": "TOKEN_VAZIO",
+      "required_output": "same data, nuisance treatment and covariance for RLL and every adversary"
+    },
+    {
+      "gate_id": "G4_BASELINE_RECOVERY",
+      "state": "TOKEN_VAZIO_UNIFIED_RUN",
+      "required_output": "recover published LCDM/wCDM/CPL behavior within declared tolerance"
+    },
+    {
+      "gate_id": "G5_ROBUST_INFERENCE",
+      "state": "TOKEN_VAZIO_MAXITER_MULTISEED_POSTERIOR",
+      "required_output": "multi-seed convergence, posterior diagnostics and prior sensitivity"
+    },
+    {
+      "gate_id": "G6_GROWTH_PERTURBATIONS",
+      "state": "TOKEN_VAZIO_CLASS_CAMB_EQUIVALENT",
+      "required_output": "physical perturbation/growth prediction before DES Y6 or ACT growth claims"
+    },
+    {
+      "gate_id": "G7_CLAIM_DECISION",
+      "state": "BLOCKED_BY_G0_TO_G6",
+      "required_output": "claim_allowed decision with negative result preservation and falsifier outcome"
+    }
+  ],
+  "invariants": [
+    "PUBLICATION_ALIGNMENT_NE_OBSERVATIONAL_CONFIRMATION",
+    "PAPER_DATE_NE_DATA_CUSTODY",
+    "BACKGROUND_DISTANCE_FIT_NE_GROWTH_VALIDATION",
+    "COMPRESSED_CMB_SHIFT_NE_FULL_CMB_LIKELIHOOD",
+    "AIC_OR_BIC_PROXY_NE_BAYESIAN_EVIDENCE",
+    "SINGLE_DATASET_NE_INDEPENDENT_REPLICATION",
+    "METADATA_CROSSWALK_NE_SCIENTIFIC_EXECUTION",
+    "CLAIM_ALLOWED_FALSE_UNTIL_GATES_CLOSE"
+  ],
+  "F_ok": [
+    "five primary observational publication/data families are date-bound and mapped to active RLL cosmology theses",
+    "DESI DR2 limited local materialization is separated from full external likelihood custody",
+    "recent DES-Dovekie and DES Y6 results are registered as adversary/discriminator context rather than RLL confirmation"
+  ],
+  "F_gap": [
+    "canonical DES-Dovekie/Pantheon full SN vector and covariance",
+    "DES Y6 3x2pt data vector, covariance, nuisance model and likelihood",
+    "full ACT DR6 likelihood and exact release/rights receipt",
+    "unified parity run across LCDM, wCDM, CPL and RLL",
+    "CLASS/CAMB-equivalent perturbation and growth backend"
+  ],
+  "F_next": "freeze one rights-cleared full supernova likelihood, reconcile full covariance, then execute a multi-seed LCDM/wCDM/CPL/RLL parity run without overwriting the smoke baseline"
+}
