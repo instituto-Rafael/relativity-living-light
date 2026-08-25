@@ -1,0 +1,69 @@
+{
+  "schema": "rll.g5_canonical_background_likelihood.v1",
+  "date": "2026-08-19",
+  "state": "MANIFEST_BUILDER_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "publication_effect": "NONE",
+  "scope": "background_only_DESI_DR2_PantheonPlus_pure_cosmic_chronometers",
+  "requires": [
+    "G2 receipt-aware full-covariance readiness",
+    "G3 PASS_LIMITED_COMPATIBILITY_BRANCH",
+    "G4 PASS_LIMITED_G4_BACKGROUND_TOURNAMENT"
+  ],
+  "canonical_executor": "tools/run_g4_background_tournament.py",
+  "canonical_g4_contract": "data/contracts/rll_g4_background_tournament.v1.json",
+  "data_policy": {
+    "PantheonPlus": "full STAT+SYS covariance; selection (zHD>0.01) OR calibrator; M_B analytically profiled and counted",
+    "DESI_DR2": "13 primary BAO observables with committed verified 13x13 covariance and repo-local order binding",
+    "cosmic_chronometers": "only source labels beginning CC_ and excluding BAO",
+    "excluded": "f_sigma8 and CMB until G8/G9 perturbation/early-time closure"
+  },
+  "model_policy": {
+    "models": ["LCDM", "wCDM", "CPL", "GEDE", "IDE_QrhoLambda", "RLL"],
+    "same_observations": true,
+    "same_covariance_blocks": true,
+    "same_distance_integrator": true,
+    "same_sound_horizon_approximation": true,
+    "same_optimizer_family": true,
+    "negative_results_preserved": true
+  },
+  "required_manifest_fields": [
+    "event_id",
+    "g4_receipt_sha256",
+    "executor_sha256",
+    "g4_contract_sha256",
+    "g5_contract_sha256",
+    "input_sha256",
+    "models",
+    "parameter_registry",
+    "nuisance_registry",
+    "covariance_registry",
+    "selection_registry",
+    "best_fit_summary",
+    "negative_results_preserved",
+    "claim_allowed",
+    "scientific_confirmation",
+    "F_ok",
+    "F_gap",
+    "F_next"
+  ],
+  "ready_when": [
+    "G4 receipt state equals PASS_LIMITED_G4_BACKGROUND_TOURNAMENT",
+    "G4 receipt claim_allowed is false",
+    "all six mandatory models are present",
+    "all G4 input hashes are present and 64-hex",
+    "executor and contracts are locally hash-bound",
+    "G4 null-limit receipt passed",
+    "no growth/CMB proxy has been silently introduced"
+  ],
+  "stop_when": [
+    "G4 receipt missing or non-pass",
+    "input hash missing/malformed",
+    "mandatory model missing",
+    "G4 null limit failed",
+    "data/covariance/selection differs between models without declared domain reason",
+    "claim_allowed becomes true"
+  ],
+  "boundary": "READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD != Bayesian evidence != perturbation closure != physical confirmation"
+}

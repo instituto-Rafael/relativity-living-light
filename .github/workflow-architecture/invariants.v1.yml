@@ -112,6 +112,14 @@ workflow_classes:
       contents: read
     publication_effect: NONE
     claim_allowed: false
+  security_analysis:
+    allowed_permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    publication_effect: NONE
+    claim_allowed: false
   orchestrator:
     allowed_permissions:
       contents: read
@@ -161,6 +169,10 @@ managed_workflows:
       - checkout_without_persistent_credentials
       - always_upload_receipt
       - externalized_algorithm
+  .github/workflows/github-platform-assurance.yml:
+    class: security_analysis
+  .github/workflows/github-platform-assurance-v2.yml:
+    class: security_analysis
   .github/workflows/frontier-research-composition.yml:
     class: scientific_shadow
     require:
@@ -261,6 +273,7 @@ security:
   write_permissions_require_explicit_workflow_class:
     - orchestrator
     - reconciliation
+    - security_analysis
   pull_request_target_default: FORBIDDEN
   automated_pull_requests:
     review_required: true

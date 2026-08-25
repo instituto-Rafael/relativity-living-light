@@ -1,0 +1,38 @@
+{
+  "schema": "rll.f_gap_p0_failure_semantics.v1",
+  "cycle": 11,
+  "date": "2026-08-11",
+  "baseline_high": 12,
+  "targeted_high": 4,
+  "expected_high_after_audit_if_no_new_findings": 8,
+  "state": "OBSERVED_PENDING_CI",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "targets": [
+    {
+      "workflow": ".github/workflows/polymathic-concept-matrix.yml",
+      "code": "FAILURE_SWALLOWED",
+      "count": 3,
+      "resolution": "Replace shell short-circuit patterns with explicit fail-closed conditionals; remove sha256sum || true; model optional BLAKE3 as explicit availability/TOKEN_VAZIO branch."
+    },
+    {
+      "workflow": ".github/workflows/rare-events-evidence-gate.yml",
+      "code": "FAILURE_SWALLOWED",
+      "count": 1,
+      "resolution": "Preserve receipt decision=FAIL semantics using an explicit if block rather than shell || grouping."
+    }
+  ],
+  "boundary": "Failure semantics only. No scientific formula, dataset, parameter, fitted result, likelihood, posterior, or claim boundary is modified.",
+  "f_ok": [
+    "Cycle 10 merged to rll/lab with 12 HIGH and zero syntax failures.",
+    "Cycle 11 touches only polymathic and rare-events workflow failure handling plus this receipt."
+  ],
+  "f_gap": [
+    "Deep YAML Audit for cycle 11 has not yet executed.",
+    "Eight expected HIGH findings remain in inline scientific programs and scientific literals if this cycle passes."
+  ],
+  "f_next": [
+    "Run Deep YAML Audit and the affected polymathic/rare-events consumers.",
+    "Promote only if HIGH falls from 12 to 8 with no new syntax or failure-semantics findings."
+  ]
+}

@@ -28,12 +28,12 @@ jobs:
     timeout-minutes: 120
     steps:
       - name: Checkout pinned revision
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
           cache: pip
@@ -134,7 +134,7 @@ jobs:
             > artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
 
       - name: Upload compact H0/r_d and Boltzmann probe receipts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: h0-rd-ablation-${{ github.run_id }}
           path: |

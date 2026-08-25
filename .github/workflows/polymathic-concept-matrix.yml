@@ -49,12 +49,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.11"
 
@@ -67,10 +67,11 @@ jobs:
       - name: Verify equation registry exists
         run: |
           set -euo pipefail
-          test -f rll_equation_registry.yml && echo "REGISTRY: FOUND" || {
+          if [ ! -f rll_equation_registry.yml ]; then
             echo "TOKEN_VAZIO: rll_equation_registry.yml missing"
             exit 1
-          }
+          fi
+          echo "REGISTRY: FOUND"
           python -c "import yaml; d=yaml.safe_load(open('rll_equation_registry.yml')); \
             eqs=d.get('equations',[]); \
             print(f'REGISTRY: {len(eqs)} equations'); \
@@ -79,12 +80,13 @@ jobs:
       - name: Verify schema contract exists
         run: |
           set -euo pipefail
-          test -f schemas/concept-matrix.v1.schema.json && echo "SCHEMA: FOUND" || {
+          if [ ! -f schemas/concept-matrix.v1.schema.json ]; then
             echo "TOKEN_VAZIO: schemas/concept-matrix.v1.schema.json missing"
             exit 1
-          }
-          python -m json.tool schemas/concept-matrix.v1.schema.json > /dev/null && \
-            echo "SCHEMA: valid JSON"
+          fi
+          echo "SCHEMA: FOUND"
+          python -m json.tool schemas/concept-matrix.v1.schema.json > /dev/null
+          echo "SCHEMA: valid JSON"
 
       - name: Run concept matrix synthesis (dry-run)
         if: ${{ inputs.dry_run == true }}
@@ -103,7 +105,6 @@ jobs:
           python scripts/polymathic_concept_matrix.py \
             --registry rll_equation_registry.yml \
             --output-dir "$OUTPUT_DIR"
-          # Verify outputs exist and are non-empty
           MATRIX_FILE=$(ls "$OUTPUT_DIR"/*_concept_matrix.json | sort | tail -1)
           MANIFEST_FILE=$(ls "$OUTPUT_DIR"/*_manifest.json | sort | tail -1)
           test -s "$MATRIX_FILE" && echo "MATRIX: $(wc -c < "$MATRIX_FILE") bytes"
@@ -143,11 +144,14 @@ jobs:
           echo "" >> results/concept_matrix/CHECKSUMS.sha256
           sha256sum results/concept_matrix/*_concept_matrix.json \
                     results/concept_matrix/*_manifest.json \
-            >> results/concept_matrix/CHECKSUMS.sha256 || true
-          b3sum results/concept_matrix/*_concept_matrix.json \
-                results/concept_matrix/*_manifest.json \
-            >> results/concept_matrix/CHECKSUMS.sha256 2>/dev/null \
-            || echo "b3sum not available (TOKEN_VAZIO)" >> results/concept_matrix/CHECKSUMS.sha256
+            >> results/concept_matrix/CHECKSUMS.sha256
+          if command -v b3sum >/dev/null 2>&1; then
+            b3sum results/concept_matrix/*_concept_matrix.json \
+                  results/concept_matrix/*_manifest.json \
+              >> results/concept_matrix/CHECKSUMS.sha256
+          else
+            echo "b3sum not available (TOKEN_VAZIO)" >> results/concept_matrix/CHECKSUMS.sha256
+          fi
           cat results/concept_matrix/CHECKSUMS.sha256
 
       - name: Print mining queue summary
@@ -174,7 +178,7 @@ jobs:
 
       - name: Upload concept matrix artifacts
         if: always() && inputs.dry_run != true
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: polymathic-concept-matrix-${{ github.run_number }}
           path: results/concept_matrix/
