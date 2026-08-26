@@ -1,0 +1,53 @@
+{
+  "schema": "rll.primordial.negative_fixtures.v1",
+  "cases": [
+    {
+      "id": "REJECT_CLAIM_ALLOWED_TRUE",
+      "kind": "receipt",
+      "mutation": {"claim_allowed": true},
+      "expected_error": "claim_allowed must remain false"
+    },
+    {
+      "id": "REJECT_FULL_RLL_PASS_WITH_OPEN_GAPS",
+      "kind": "receipt",
+      "mutation": {"gates.full_RLL_primordial_verdict": "PASS"},
+      "expected_error": "full_RLL_primordial_verdict must remain TOKEN_VAZIO"
+    },
+    {
+      "id": "REJECT_BP_SIGN_ASSUMED",
+      "kind": "receipt",
+      "mutation": {"gates.Omega_B0_sign_authority": "ASSUMED_POSITIVE"},
+      "expected_error": "Omega_B0_sign_authority must remain TOKEN_VAZIO"
+    },
+    {
+      "id": "REJECT_SUPERSEDED_ACTIVE_USE",
+      "kind": "hotqcd",
+      "mutation": {"superseded_provenance.active_use": true},
+      "expected_error": "superseded HotQCD result cannot be active"
+    },
+    {
+      "id": "REJECT_CENSORSHIP_WITHOUT_PROVENANCE",
+      "kind": "attention",
+      "mutation": {"censorship.epistemic_status": "DOCUMENTED_CENSORSHIP", "censorship.provenance": null},
+      "expected_error": "censorship promotion requires provenance"
+    },
+    {
+      "id": "REJECT_BLUEPRINT_AS_AUTHORITY",
+      "kind": "evidence",
+      "mutation": {"RMR_BLUEPRINT_METADATA.kind": "CANONICAL_PRIOR"},
+      "expected_error": "RMR blueprint must not be promoted to authoritative prior"
+    },
+    {
+      "id": "REJECT_COLLIDER_AS_RLL_LIKELIHOOD",
+      "kind": "evidence",
+      "mutation": {"ALICE_LIGHT_ION_FLOW_2026.epistemic_type": "DIRECT_RLL_LIKELIHOOD"},
+      "expected_error": "collider QGP cannot be promoted to direct RLL likelihood"
+    },
+    {
+      "id": "REJECT_FIRST_ORDER_QCD_AS_DEFAULT",
+      "kind": "receipt",
+      "mutation": {"transition_contract.standard_cosmic_QCD": "FIRST_ORDER"},
+      "expected_error": "standard cosmic QCD contract must remain CROSSOVER"
+    }
+  ]
+}
