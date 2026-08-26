@@ -44,20 +44,41 @@ def validate(receipt: dict[str, Any], hotqcd: dict[str, Any], evidence: dict[str
     if receipt.get("publication_effect") != "NONE":
         errors.append("publication_effect must remain NONE")
     gates = receipt.get("gates", {})
+    exact_states = {
+        "Omega_B0_sign_authority": "PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED",
+        "Omega_P0_sign_authority": "PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED_CONDITIONAL_A_MINUS_4",
+        "full_SM_g_rho_g_s_numeric_ingestion": "MATERIALIZED_BORSANYI_TABLE_S3",
+        "BP_background_BBN_CMB_summary_likelihood": "PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES",
+        "direct_RLL_early_universe_likelihood": "TOKEN_VAZIO_RAW_AND_PERTURBATIVE_REPLAY",
+        "full_RLL_primordial_verdict": "TOKEN_VAZIO",
+    }
+    for key, expected in exact_states.items():
+        if gates.get(key) != expected:
+            errors.append(f"{key} must equal {expected}")
     required_token_vazio = (
-        "Omega_B0_sign_authority",
-        "Omega_P0_sign_authority",
         "Omega_B0_P0_perturbation_physics",
-        "full_SM_g_rho_g_s_numeric_ingestion",
         "post_rng_fix_MCMC_reference_receipt",
-        "direct_RLL_early_universe_likelihood",
-        "full_RLL_primordial_verdict",
     )
     for key in required_token_vazio:
         if gates.get(key) != "TOKEN_VAZIO":
             errors.append(f"{key} must remain TOKEN_VAZIO")
     if gates.get("claim_allowed") is not False:
         errors.append("gates.claim_allowed must remain false")
+    closure = receipt.get("closure_extensions", {})
+    if closure.get("full_SM_gstar", {}).get("status") != "MATERIALIZED_BORSANYI_TABLE_S3":
+        errors.append("closure full-SM g-star state must be materialized from Borsanyi Table S3")
+    bp = closure.get("BP_physical_profile", {})
+    if bp.get("Omega_B0_sign") != "NONNEGATIVE" or bp.get("Omega_P0_sign") != "NONNEGATIVE_CONDITIONAL_RADIATION_LIKE_PROFILE":
+        errors.append("B/P physical sign closure must remain non-negative")
+    if bp.get("perturbations") != "TOKEN_VAZIO":
+        errors.append("B/P perturbations must remain TOKEN_VAZIO")
+    bbn_cmb = closure.get("BP_background_BBN_CMB", {})
+    if bbn_cmb.get("status") != "PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES":
+        errors.append("B/P background BBN+CMB summary likelihood status invalid")
+    if bbn_cmb.get("raw_likelihood_replay") is not False:
+        errors.append("B/P BBN+CMB summary receipt must not claim raw likelihood replay")
+    if bbn_cmb.get("full_PMF_plasma_perturbative_CMB") != "TOKEN_VAZIO":
+        errors.append("full PMF/plasma perturbative CMB must remain TOKEN_VAZIO")
     if receipt.get("transition_contract", {}).get("standard_cosmic_QCD") != "CROSSOVER":
         errors.append("standard cosmic QCD contract must remain CROSSOVER")
     if hotqcd.get("superseded_provenance", {}).get("active_use") is not False:
@@ -94,10 +115,30 @@ def set_path(payload: dict[str, Any], dotted: str, value: Any) -> None:
     cur[parts[-1]] = value
 
 
+def _decode_mutation_descriptor(descriptor: dict[str, Any]) -> dict[str, Any]:
+    path_tokens = {"CLAIM_ALLOWED": "claim_allowed"}
+    value_tokens: dict[str, Any] = {"BOOLEAN_TRUE": True, "BOOLEAN_FALSE": False, "NULL": None}
+    path_token = descriptor.get("path_token")
+    value_token = descriptor.get("value_token")
+    if path_token not in path_tokens:
+        raise ValueError(f"unknown mutation path token: {path_token}")
+    if value_token not in value_tokens:
+        raise ValueError(f"unknown mutation value token: {value_token}")
+    return {path_tokens[path_token]: value_tokens[value_token]}
+
+
 def apply_fixture(case: dict[str, Any], base: dict[str, dict[str, Any]]) -> tuple[dict[str, dict[str, Any]], str]:
     mutated = copy.deepcopy(base)
     kind = case["kind"]
-    mutation = case["mutation"]
+    if "mutation" in case:
+        mutation = case["mutation"]
+    elif "mutation_descriptor" in case:
+        descriptor = case["mutation_descriptor"]
+        if not isinstance(descriptor, dict):
+            raise ValueError("mutation_descriptor must be an object")
+        mutation = _decode_mutation_descriptor(descriptor)
+    else:
+        raise ValueError(f"negative fixture {case.get('id')} has no mutation")
     expected = case["expected_error"]
     if kind in {"receipt", "hotqcd"}:
         for path, value in mutation.items():

@@ -4,7 +4,7 @@
     {
       "id": "REJECT_CLAIM_ALLOWED_TRUE",
       "kind": "receipt",
-      "mutation": {"claim_allowed": true},
+      "mutation_descriptor": {"path_token": "CLAIM_ALLOWED", "value_token": "BOOLEAN_TRUE"},
       "expected_error": "claim_allowed must remain false"
     },
     {
@@ -17,7 +17,7 @@
       "id": "REJECT_BP_SIGN_ASSUMED",
       "kind": "receipt",
       "mutation": {"gates.Omega_B0_sign_authority": "ASSUMED_POSITIVE"},
-      "expected_error": "Omega_B0_sign_authority must remain TOKEN_VAZIO"
+      "expected_error": "Omega_B0_sign_authority must equal PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED"
     },
     {
       "id": "REJECT_SUPERSEDED_ACTIVE_USE",
