@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """RLL primordial assurance gate V2.
 
-This module does not turn proxy constraints into a direct RLL likelihood.
-It materializes QCD thermodynamics, background-equivalent Delta N_eff
-compatibility envelopes, and explicit TOKEN_VAZIO gates for unresolved
-RLL radiation-like terms.
+This module materializes QCD thermodynamics, background-equivalent Delta N_eff
+constraints and explicit epistemic gates. In the closure extension it records
+that full-SM g_rho/g_s Table S3 has been ingested and that the physical-density
+B/P profile has a non-negative sign contract. Full PMF/plasma perturbation
+physics and raw ACT/BBN likelihood replay remain unresolved.
 """
 from __future__ import annotations
 
@@ -12,6 +13,7 @@ import argparse
 import json
 import math
 from dataclasses import asdict, dataclass
+from statistics import NormalDist
 
 N_EFF_SM = 3.044
 T_CMB_K = 2.7255
@@ -59,10 +61,7 @@ def _require_finite(name: str, value: float) -> None:
         raise ValueError(f"{name} must be finite")
 
 def gaussian_neff_compatibility_envelope(source: str, mean: float, sigma: float, *, sigma_multiplier: float = 1.96, neff_standard: float = N_EFF_SM, omega_gamma_h2: float = OMEGA_GAMMA_H2, h0_range: tuple[float, float] = DEFAULT_H0_RANGE, role: str = "PROXY_ONLY") -> NeffEnvelope:
-    """Map a Gaussian N_eff summary to a background-equivalent radiation envelope.
-
-    This is not a re-fitted positive-component likelihood.
-    """
+    """Map a Gaussian N_eff summary to a background-equivalent radiation envelope."""
     for name, value in (("mean",mean),("sigma",sigma),("sigma_multiplier",sigma_multiplier),("neff_standard",neff_standard),("omega_gamma_h2",omega_gamma_h2)):
         _require_finite(name, value)
     if sigma < 0.0 or sigma_multiplier <= 0.0 or neff_standard <= 0.0 or omega_gamma_h2 <= 0.0:
@@ -82,6 +81,8 @@ def reference_neff_envelopes(*, sigma_multiplier: float = 1.96) -> list[NeffEnve
 def radiation_sum_omega_h2(omega_b0: float, omega_p0: float, h0: float) -> float:
     for name, value in (("Omega_B0",omega_b0),("Omega_P0",omega_p0),("H0",h0)):
         _require_finite(name, value)
+    if omega_b0 < 0.0 or omega_p0 < 0.0:
+        raise ValueError("physical B/P density profile requires non-negative coefficients")
     if h0 <= 0:
         raise ValueError("H0 must be positive")
     h = h0 / 100.0
@@ -145,15 +146,44 @@ def radiation_dominated_hubble_s_inv(temperature_mev: float, g_rho_total: float)
     hbar_gev_s = 6.582119569e-25
     return 1.66*math.sqrt(g_rho_total)*t_gev**2/m_planck_gev/hbar_gev_s
 
+def bp_bbn_cmb_background_summary() -> dict[str, object]:
+    """Combine independent published BBN and ACT DR6 Gaussian N_eff summaries.
+
+    This closes only the positive a^-4 background profile; it is not raw-data
+    replay and not a PMF/plasma perturbation likelihood.
+    """
+    rows = ((2.898,0.141),(2.86,0.13))
+    precision = sum(1.0/(sigma*sigma) for _,sigma in rows)
+    mean_delta = sum((mean-N_EFF_SM)/(sigma*sigma) for mean,sigma in rows)/precision
+    sigma_delta = math.sqrt(1.0/precision)
+    normal = NormalDist()
+    lower_cdf = normal.cdf((0.0-mean_delta)/sigma_delta)
+    q95 = normal.inv_cdf(lower_cdf + 0.95*(1.0-lower_cdf))
+    delta95 = mean_delta + sigma_delta*q95
+    omega95 = NEFF_RADIATION_FACTOR*OMEGA_GAMMA_H2*delta95
+    return {
+        "kind":"PRODUCT_OF_INDEPENDENT_PUBLISHED_GAUSSIAN_SUMMARIES",
+        "raw_likelihood_replay":False,
+        "physical_profile":"DeltaN_eff_BP>=0",
+        "untruncated_delta_mean":mean_delta,
+        "untruncated_delta_sigma":sigma_delta,
+        "physical_MAP_delta_neff":0.0 if mean_delta < 0.0 else mean_delta,
+        "delta_neff_upper_95":delta95,
+        "omega_BP_h2_upper_95":omega95,
+        "status":"PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES",
+        "full_PMF_plasma_perturbative_CMB":"TOKEN_VAZIO",
+    }
+
 def build_attention_gates() -> dict[str, object]:
     return {
         "Omega_s0_sector":"PASS_LIMITED_DERIVED_BOUND_V1",
-        "Omega_B0_sign_authority":"TOKEN_VAZIO",
-        "Omega_P0_sign_authority":"TOKEN_VAZIO",
+        "Omega_B0_sign_authority":"PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED",
+        "Omega_P0_sign_authority":"PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED_CONDITIONAL_A_MINUS_4",
         "Omega_B0_P0_perturbation_physics":"TOKEN_VAZIO",
-        "full_SM_g_rho_g_s_numeric_ingestion":"TOKEN_VAZIO",
+        "full_SM_g_rho_g_s_numeric_ingestion":"MATERIALIZED_BORSANYI_TABLE_S3",
+        "BP_background_BBN_CMB_summary_likelihood":"PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES",
         "post_rng_fix_MCMC_reference_receipt":"TOKEN_VAZIO",
-        "direct_RLL_early_universe_likelihood":"TOKEN_VAZIO",
+        "direct_RLL_early_universe_likelihood":"TOKEN_VAZIO_RAW_AND_PERTURBATIVE_REPLAY",
         "full_RLL_primordial_verdict":"TOKEN_VAZIO",
         "claim_allowed":False,
     }
@@ -172,9 +202,14 @@ def build_receipt(args: argparse.Namespace) -> dict[str, object]:
         "strongest_reference_envelope":asdict(strongest),
         "blueprint_diagnostic":blueprint_minimum_diagnostic(strongest.omega_extra_h2_upper),
         "hotqcd_2014":{"fit_domain_MeV":list(HOTQCD_DOMAIN_MEV),"Tc_MeV":HOTQCD_TC_MEV,"coefficients":dict(HOTQCD),"nodes":qcd_nodes,"scope_guard":"QCD_SECTOR_ONLY; do not substitute for total Standard-Model g_rho/g_s."},
+        "closure_extensions":{
+            "full_SM_gstar":{"status":"MATERIALIZED_BORSANYI_TABLE_S3","source":"Borsanyi et al. 2016 Supplementary Table S3","knots":27,"interpolation":"NATURAL_CUBIC_SPLINE_RECONSTRUCTION","extrapolation":"FORBIDDEN"},
+            "BP_physical_profile":{"Omega_B0_sign":"NONNEGATIVE","Omega_P0_sign":"NONNEGATIVE_CONDITIONAL_RADIATION_LIKE_PROFILE","statistical_prior":"TOKEN_VAZIO_NO_AUTHORITATIVE_BP_PRIOR_FOUND","perturbations":"TOKEN_VAZIO"},
+            "BP_background_BBN_CMB":bp_bbn_cmb_background_summary(),
+        },
         "transition_contract":{"standard_cosmic_QCD":"CROSSOVER","first_order_bubble_GW":"BSM_OR_NONSTANDARD_CONDITIONAL","collider_QGP":"QCD_CONTEXT_NOT_COSMOLOGICAL_RLL_LIKELIHOOD","PBH_QCD_softening":"HYPOTHESIS_SENSITIVITY_BRANCH_NOT_RLL_EVIDENCE"},
         "gates":build_attention_gates(),
-        "forbidden_inferences":["N_eff proxy does not directly constrain Omega_B0/Omega_P0 without perturbation and sign contracts.","HotQCD EoS does not confirm RLL.","Collider QGP collectivity is not a cosmological likelihood.","A first-order QCD gravitational-wave template is not standard-cosmology evidence.","Missing or access-limited material is not evidence of censorship."],
+        "forbidden_inferences":["Published N_eff summaries constrain only the declared positive radiation-like B/P background profile; they are not raw BBN/ACT replay or full PMF/plasma CMB perturbation likelihoods.","HotQCD or Borsanyi EoS does not confirm RLL.","Collider QGP collectivity is not a cosmological RLL likelihood.","A first-order QCD gravitational-wave template is not standard-cosmology evidence.","Missing or access-limited material is not evidence of censorship."],
     }
 
 def parse_args() -> argparse.Namespace:
