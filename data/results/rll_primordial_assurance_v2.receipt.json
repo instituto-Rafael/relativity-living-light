@@ -1,0 +1,57 @@
+{
+  "blueprint_diagnostic": {
+    "H0_threshold_km_s_Mpc_where_minimum_equals_envelope": 41.589664621628444,
+    "blueprint_minimum_sum_Omega": 2e-06,
+    "blueprint_minimum_sum_omega_h2_at_H0_max": 1.62e-06,
+    "blueprint_minimum_sum_omega_h2_at_H0_min": 5e-07,
+    "classification": "ILLUSTRATIVE_BLUEPRINT_DIAGNOSTIC_ONLY",
+    "forbidden_inference": "This does not falsify RLL; RMR metadata is a blueprint/reference grid, not an authoritative fitted prior.",
+    "minimum_exceeds_envelope_for_entire_declared_H0_range": true
+  },
+  "claim_allowed": false,
+  "forbidden_inferences": [
+    "N_eff proxy does not directly constrain Omega_B0/Omega_P0 without perturbation and sign contracts.",
+    "HotQCD EoS does not confirm RLL.",
+    "Collider QGP collectivity is not a cosmological likelihood.",
+    "A first-order QCD gravitational-wave template is not standard-cosmology evidence.",
+    "Missing or access-limited material is not evidence of censorship."
+  ],
+  "gates": {
+    "Omega_B0_P0_perturbation_physics": "TOKEN_VAZIO",
+    "Omega_B0_sign_authority": "TOKEN_VAZIO",
+    "Omega_P0_sign_authority": "TOKEN_VAZIO",
+    "Omega_s0_sector": "PASS_LIMITED_DERIVED_BOUND_V1",
+    "claim_allowed": false,
+    "direct_RLL_early_universe_likelihood": "TOKEN_VAZIO",
+    "full_RLL_primordial_verdict": "TOKEN_VAZIO",
+    "full_SM_g_rho_g_s_numeric_ingestion": "TOKEN_VAZIO",
+    "post_rng_fix_MCMC_reference_receipt": "TOKEN_VAZIO"
+  },
+  "hotqcd_2014": {
+    "Tc_MeV": 154.0,
+    "coefficients": {"ad":-1.26,"an":-8.7704,"bd":0.8425,"bn":3.92,"cd":0.0,"cn":0.0,"ct":3.8706,"dd":-0.0475,"dn":0.3419,"t0":0.9761},
+    "fit_domain_MeV": [100.0,400.0],
+    "nodes": [
+      {"cs2":0.16073678406538575,"energy_over_T4":2.3447743420233627,"entropy_over_T3":2.7860915844709075,"g_rho_qcd":7.127259351239726,"g_s_qcd":6.351527184177344,"pressure_over_T4":0.441317242447545,"temperature_MeV":130.0,"trace_over_T4":1.0208226146807273},
+      {"cs2":0.14463952755074178,"energy_over_T4":3.552841829448309,"entropy_over_T3":4.142965963097146,"g_rho_qcd":10.799344183611343,"g_s_qcd":9.444829841345717,"pressure_over_T4":0.5901241336488369,"temperature_MeV":145.0,"trace_over_T4":1.7824694285017983},
+      {"cs2":0.144684923379645,"energy_over_T4":4.076370479440708,"entropy_over_T3":4.732352836645567,"g_rho_qcd":12.390680458248495,"g_s_qcd":10.78847079349733,"pressure_over_T4":0.6559823572048586,"temperature_MeV":150.0,"trace_over_T4":2.108423407826132},
+      {"cs2":0.1473071584155899,"energy_over_T4":4.640155758280618,"entropy_over_T3":5.370800893854637,"g_rho_qcd":14.104382211414048,"g_s_qcd":12.243957832635246,"pressure_over_T4":0.7306451355740191,"temperature_MeV":155.0,"trace_over_T4":2.4482203515585605},
+      {"cs2":0.21957608310353668,"energy_over_T4":8.914648064113837,"entropy_over_T3":10.537010795824976,"g_rho_qcd":27.097280808326673,"g_s_qcd":24.021504132414258,"pressure_over_T4":1.6223627317111387,"temperature_MeV":200.0,"trace_over_T4":4.0475598689804215},
+      {"cs2":0.282253915305986,"energy_over_T4":12.198467912471823,"entropy_over_T3":15.280373468058901,"g_rho_qcd":37.078896225441675,"g_s_qcd":34.83507434131579,"pressure_over_T4":3.0819055555870767,"temperature_MeV":300.0,"trace_over_T4":2.952751245710594},
+      {"cs2":0.30357605730379583,"energy_over_T4":13.369433924393409,"entropy_over_T3":17.159574504478027,"g_rho_qcd":40.63820609542696,"g_s_qcd":39.1191389908334,"pressure_over_T4":3.7901405800846164,"temperature_MeV":400.0,"trace_over_T4":1.9990121841395592}
+    ],
+    "scope_guard": "QCD_SECTOR_ONLY; do not substitute for total Standard-Model g_rho/g_s."
+  },
+  "neff_reference_envelopes": [
+    {"delta_neff_extra_upper":0.13036000000000003,"neff_mean":2.898,"neff_sigma":0.141,"neff_upper":3.17436,"omega_extra_h2_upper":7.320899951537076e-07,"omega_extra_upper_at_h0_max":9.038148088317378e-07,"omega_extra_upper_at_h0_min":2.9283599806148306e-06,"role":"BACKGROUND_EXPANSION_PROXY","sigma_multiplier":1.96,"source":"PDG_BBN_2024"},
+    {"delta_neff_extra_upper":0.27920000000000034,"neff_mean":2.99,"neff_sigma":0.17,"neff_upper":3.3232000000000004,"omega_extra_h2_upper":1.5679620025077891e-06,"omega_extra_upper_at_h0_max":1.935755558651591e-06,"omega_extra_upper_at_h0_min":6.2718480100311565e-06,"role":"FREE_STREAMING_RADIATION_PROXY","sigma_multiplier":1.96,"source":"PLANCK_BAO_2018"},
+    {"delta_neff_extra_upper":0.07079999999999975,"neff_mean":2.86,"neff_sigma":0.13,"neff_upper":3.1148,"omega_extra_h2_upper":3.9760641037804777e-07,"omega_extra_upper_at_h0_max":4.908721115778368e-07,"omega_extra_upper_at_h0_min":1.590425641512191e-06,"role":"FREE_STREAMING_RADIATION_PROXY","sigma_multiplier":1.96,"source":"ACT_DR6_2025"},
+    {"delta_neff_extra_upper":0.06159999999999988,"neff_mean":2.89,"neff_sigma":0.11,"neff_upper":3.1056,"omega_extra_h2_upper":3.459400406679065e-07,"omega_extra_upper_at_h0_max":4.270864699603784e-07,"omega_extra_upper_at_h0_min":1.383760162671626e-06,"role":"HYBRID_COMPATIBILITY_PROXY","sigma_multiplier":1.96,"source":"ACT_DR6_PLUS_BBN_2025"}
+  ],
+  "publication_effect": "NONE",
+  "schema": "rll.primordial_assurance.receipt.v2",
+  "scope": "RLL_PRIMORDIAL_ASSURANCE_MESH",
+  "statistical_contract": {"Omega_gamma_h2":2.4728e-05,"mapping":"GAUSSIAN_COMPATIBILITY_ENVELOPE_NOT_REFITTED_LIKELIHOOD","neff_standard":3.044,"rho_extra_over_rho_gamma_per_DeltaNeff":0.22710731766023898,"sigma_multiplier":1.96},
+  "strongest_reference_envelope": {"delta_neff_extra_upper":0.06159999999999988,"neff_mean":2.89,"neff_sigma":0.11,"neff_upper":3.1056,"omega_extra_h2_upper":3.459400406679065e-07,"omega_extra_upper_at_h0_max":4.270864699603784e-07,"omega_extra_upper_at_h0_min":1.383760162671626e-06,"role":"HYBRID_COMPATIBILITY_PROXY","sigma_multiplier":1.96,"source":"ACT_DR6_PLUS_BBN_2025"},
+  "transition_contract": {"PBH_QCD_softening":"HYPOTHESIS_SENSITIVITY_BRANCH_NOT_RLL_EVIDENCE","collider_QGP":"QCD_CONTEXT_NOT_COSMOLOGICAL_RLL_LIKELIHOOD","first_order_bubble_GW":"BSM_OR_NONSTANDARD_CONDITIONAL","standard_cosmic_QCD":"CROSSOVER"}
+}
