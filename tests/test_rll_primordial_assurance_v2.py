@@ -43,6 +43,14 @@ def test_radiation_sum_omega_h2():
     assert math.isclose(mod.radiation_sum_omega_h2(1e-6, 1e-6, 70.0), 9.8e-7, rel_tol=1e-15)
 
 
+def test_negative_physical_radiation_coefficients_fail_closed():
+    import pytest
+    with pytest.raises(ValueError):
+        mod.radiation_sum_omega_h2(-1e-6, 1e-6, 70.0)
+    with pytest.raises(ValueError):
+        mod.radiation_sum_omega_h2(1e-6, -1e-6, 70.0)
+
+
 def test_blueprint_minimum_sum_exceeds_strongest_envelope_across_h0_range():
     row = mod.gaussian_neff_compatibility_envelope("ACT+BBN", 2.89, 0.11)
     diag = mod.blueprint_minimum_diagnostic(row.omega_extra_h2_upper)
@@ -108,11 +116,20 @@ def test_full_rll_gate_remains_token_vazio():
     assert gates["claim_allowed"] is False
 
 
-def test_unresolved_sign_and_perturbation_physics_are_explicit():
+def test_physical_signs_and_full_sm_gstar_are_closed_but_perturbations_are_not():
     gates = mod.build_attention_gates()
-    assert gates["Omega_B0_sign_authority"] == "TOKEN_VAZIO"
-    assert gates["Omega_P0_sign_authority"] == "TOKEN_VAZIO"
+    assert gates["Omega_B0_sign_authority"] == "PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED"
+    assert gates["Omega_P0_sign_authority"] == "PHYSICAL_PROFILE_NONNEGATIVE_RESOLVED_CONDITIONAL_A_MINUS_4"
+    assert gates["full_SM_g_rho_g_s_numeric_ingestion"] == "MATERIALIZED_BORSANYI_TABLE_S3"
     assert gates["Omega_B0_P0_perturbation_physics"] == "TOKEN_VAZIO"
+
+
+def test_bp_background_bbn_cmb_summary_bound_is_reproducible():
+    row = mod.bp_bbn_cmb_background_summary()
+    assert row["status"] == "PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES"
+    assert math.isclose(row["delta_neff_upper_95"], 0.10801185284957185, rel_tol=0.0, abs_tol=1e-14)
+    assert math.isclose(row["omega_BP_h2_upper_95"], 6.06584817652547e-7, rel_tol=0.0, abs_tol=1e-18)
+    assert row["full_PMF_plasma_perturbative_CMB"] == "TOKEN_VAZIO"
 
 
 def test_receipt_forbids_censorship_inference_from_missing_material():
