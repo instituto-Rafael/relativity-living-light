@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rll.local/schemas/rll_primordial_assurance_v2.schema.json",
+  "title": "RLL Primordial Assurance Receipt V2",
+  "type": "object",
+  "required": ["schema", "scope", "claim_allowed", "publication_effect", "gates", "forbidden_inferences"],
+  "properties": {
+    "schema": {"const": "rll.primordial_assurance.receipt.v2"},
+    "scope": {"const": "RLL_PRIMORDIAL_ASSURANCE_MESH"},
+    "claim_allowed": {"const": false},
+    "publication_effect": {"const": "NONE"},
+    "gates": {
+      "type": "object",
+      "required": [
+        "Omega_s0_sector",
+        "Omega_B0_sign_authority",
+        "Omega_P0_sign_authority",
+        "Omega_B0_P0_perturbation_physics",
+        "full_SM_g_rho_g_s_numeric_ingestion",
+        "post_rng_fix_MCMC_reference_receipt",
+        "direct_RLL_early_universe_likelihood",
+        "full_RLL_primordial_verdict",
+        "claim_allowed"
+      ],
+      "properties": {
+        "Omega_s0_sector": {"const": "PASS_LIMITED_DERIVED_BOUND_V1"},
+        "Omega_B0_sign_authority": {"const": "TOKEN_VAZIO"},
+        "Omega_P0_sign_authority": {"const": "TOKEN_VAZIO"},
+        "Omega_B0_P0_perturbation_physics": {"const": "TOKEN_VAZIO"},
+        "full_SM_g_rho_g_s_numeric_ingestion": {"const": "TOKEN_VAZIO"},
+        "post_rng_fix_MCMC_reference_receipt": {"const": "TOKEN_VAZIO"},
+        "direct_RLL_early_universe_likelihood": {"const": "TOKEN_VAZIO"},
+        "full_RLL_primordial_verdict": {"const": "TOKEN_VAZIO"},
+        "claim_allowed": {"const": false}
+      },
+      "additionalProperties": true
+    },
+    "forbidden_inferences": {
+      "type": "array",
+      "minItems": 5,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": true
+}
