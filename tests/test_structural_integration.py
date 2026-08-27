@@ -104,6 +104,22 @@ def test_source_registry_keeps_legacy_sources_and_bounded_c11_sources():
     assert "TOKEN_VAZIO" in sources["EHT-2026-D01-01"]["safe_use"]
 
 
+def test_mpemba_source_crosswalk_resolves_local_and_canonical_ids():
+    contract = json.loads((ROOT / "data/contracts/mpemba_horizon_falsifier.v1.json").read_text())
+    registry = json.loads((ROOT / "data/registries/rll_recent_primary_sources_2026.json").read_text())
+    crosswalk = json.loads((ROOT / "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json").read_text())
+    local_ids = {item["id"] for item in contract["sources"]}
+    canonical_ids = {item["source_id"] for item in registry["sources"]}
+    assert crosswalk["claim_allowed"] is False
+    for mapping in crosswalk["mappings"]:
+        assert mapping["local_id"] in local_ids
+        assert mapping["canonical_id"] in canonical_ids
+    assert set(crosswalk["context_only_global_sources"]) <= canonical_ids
+    for internal in crosswalk["internal_only_sources"]:
+        assert internal["local_id"] in local_ids
+        assert internal["canonical_id"] is None
+
+
 def test_integration_registry_preserves_raw_data():
     payload = json.loads((ROOT / "data/registries/rll_operational_integration_registry.json").read_text())
     assert validate_integration_registry(payload) == []
