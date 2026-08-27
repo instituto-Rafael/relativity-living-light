@@ -115,7 +115,11 @@ def validate_protocol(protocol: dict[str, Any]) -> None:
     require("two or more physically comparable relaxation trajectories" in required, "matched relaxation trajectories are required")
     require("measurement uncertainties and calibration/systematics model" in required, "uncertainty model is required")
     require("immutable file-level custody with SHA256" in required, "SHA256 custody is required")
-    require("internal CI and same-author reruns are reproducibility only" in future.get("independent_replication_rule", ""), "independence boundary missing")
+    independence_rule = future.get("independent_replication_rule", "").lower()
+    require(
+        "internal ci and same-author reruns are reproducibility only" in independence_rule,
+        "independence boundary missing",
+    )
 
     decision = protocol.get("current_decision", {})
     require(decision.get("EHT_2026_D01_01_is_sufficient_for_BH_MP_06") is False, "2026-D01-01 must not be auto-promoted to Mpemba evidence")
