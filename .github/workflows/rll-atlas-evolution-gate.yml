@@ -1,0 +1,79 @@
+name: "RLL ATLAS Evolution Gate — fail closed"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/governance/RLL_ATLAS_EVOLUTION_GATE_*.json"
+      - "tools/rll_atlas_evolution_gate.py"
+      - "tests/test_rll_atlas_evolution_gate.py"
+      - "docs/governance/RLL_ATLAS_EVOLUTION_GATE_V1.md"
+      - ".github/workflows/rll-atlas-evolution-gate.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-atlas-evolution-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONHASHSEED: "0"
+  LC_ALL: "C.UTF-8"
+  LANG: "C.UTF-8"
+
+jobs:
+  atlas-evolution-gate:
+    name: "ATLAS G0-G7 anti-regression gate"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: "Checkout full predecessor history without credentials"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: "Run ATLAS unit tests"
+        run: python3 -m unittest -v tests.test_rll_atlas_evolution_gate
+
+      - name: "Validate current ATLAS record"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_atlas_evolution_gate \
+            --candidate data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json \
+            --output artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json
+          sha256sum artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.sha256
+
+      - name: "Compare predecessor when record already exists on base"
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          candidate="data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+          base="origin/${{ github.base_ref }}"
+          if git cat-file -e "${base}:${candidate}" 2>/dev/null; then
+            git show "${base}:${candidate}" > /tmp/rll-atlas-previous.json
+            python3 -m tools.rll_atlas_evolution_gate \
+              --previous /tmp/rll-atlas-previous.json \
+              --candidate "$candidate" \
+              --output artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_ANTI_REGRESSION_RECEIPT.json
+          else
+            printf '%s\n' \
+              '{"schema":"rll.atlas_evolution_gate.bootstrap.v1","state":"BOOTSTRAP_NO_PREDECESSOR","claim_allowed":false}' \
+              > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_ANTI_REGRESSION_RECEIPT.json
+          fi
+          sha256sum artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_ANTI_REGRESSION_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_ANTI_REGRESSION_RECEIPT.sha256
+
+      - name: "Upload bounded ATLAS receipts even after failure"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-atlas-evolution-${{ github.run_id }}
+          path: artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_*
+          if-no-files-found: warn
+          retention-days: 30
