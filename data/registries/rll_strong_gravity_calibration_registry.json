@@ -80,35 +80,44 @@
     {
       "id": "B10_black_hole_thermodynamics_mpemba_falsifier",
       "registered_at": "2026-08-27",
-      "status": "partial",
+      "status": "operational_closure_complete_external_evidence_open",
       "claim_allowed": false,
       "implementation": "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py",
       "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
       "source_crosswalk": "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json",
-      "tests": "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+      "closure_registry": "data/registries/rll_mpemba_horizon_closure_registry.v1.json",
+      "eht_custody_manifest": "data/real/strong_gravity/eht_2026_d01_01_manifest.json",
+      "observational_protocol": "data/contracts/eht_mpemba_observational_protocol.v1.json",
+      "closure_validator": "tools/validate_mpemba_horizon_closure.py",
+      "tests": [
+        "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+        "tests/strong_gravity/test_mpemba_horizon_closure.py"
+      ],
       "atlas": "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
       "falsifiability_protocol": "FALSIFIABILITY_PROTOCOL.md",
       "receipts": [
         "provenance/receipts/rll_mpemba_horizon_atlas_20260827.json",
-        "provenance/receipts/rll_mpemba_horizon_drive_crosswalk_20260827.json"
+        "provenance/receipts/rll_mpemba_horizon_drive_crosswalk_20260827.json",
+        "provenance/receipts/rll_mpemba_horizon_closure_20260827.json"
       ],
       "protected_gaps": [
         "direct astrophysical Hawking thermometry",
-        "checksum-verified matched astrophysical Mpemba trajectories",
-        "preregistered D(t) and epsilon on real data",
+        "official EHT 2026-D01-01 file-level byte custody and SHA256",
+        "matched astrophysical Mpemba relaxation trajectories toward one declared target",
         "covariance-aware matched inference",
-        "independent reproduction"
+        "independent external reproduction"
       ],
       "promotion_gate": [
-        "real time-resolved data ingested with file-level SHA256",
-        "observable and equilibrium target preregistered",
-        "distance functional and epsilon preregistered or robustness family fixed",
+        "real time-resolved matched relaxation data ingested with file-level SHA256",
+        "observable and equilibrium/stationary target locked before crossing inspection",
+        "distance functional and epsilon rule locked or robustness family fixed",
         "covariance and calibration uncertainty propagated",
         "ordinary GRMHD/turbulence/radiative-transfer nulls compared",
         "look-elsewhere and hold-out controls passed",
-        "independent reproduction"
+        "independent external reproduction"
       ],
-      "claim_boundary": "This successor is a bounded falsification route. It cannot promote synthetic witnesses, symbolic correspondences, EHT plasma observables, or theory precedents into astrophysical Hawking/Mpemba evidence."
+      "operational_closure_rule": "No B10/C11 gap identified in the 2026-08-27 pass may exist without urgency, provenance, owner class, mechanism, verification, falsifier and close_when. This is zero untracked gaps, not fabricated external evidence.",
+      "claim_boundary": "This successor is a bounded falsification route. It cannot promote synthetic witnesses, symbolic correspondences, EHT plasma observables, sparse variability epochs, or theory precedents into astrophysical Hawking/Mpemba evidence."
     }
   ]
 }
