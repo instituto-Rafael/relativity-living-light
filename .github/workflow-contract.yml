@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-08-08"
+updated_at: "2026-08-27"
 
 inventory:
-  active_workflows: 76
+  active_workflows: 77
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
