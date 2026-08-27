@@ -11,7 +11,7 @@
       "id": "REJECT_FULL_RLL_PASS_WITH_OPEN_GAPS",
       "kind": "receipt",
       "mutation": {"gates.full_RLL_primordial_verdict": "PASS"},
-      "expected_error": "full_RLL_primordial_verdict must remain TOKEN_VAZIO"
+      "expected_error": "full_RLL_primordial_verdict must equal TOKEN_VAZIO"
     },
     {
       "id": "REJECT_BP_SIGN_ASSUMED",
