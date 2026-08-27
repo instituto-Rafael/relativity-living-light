@@ -1,0 +1,56 @@
+{
+  "schema": "rll.arm32_superradiance_disassembly_custody.v1",
+  "observed_at": "2026-08-27T07:53:00Z",
+  "claim_allowed": false,
+  "source": {
+    "provider": "ChatGPT file library",
+    "provider_id": "file_00000000b1e0820e9de90829bafecd77",
+    "version_id": "1",
+    "name": "kernel_disasm.txt",
+    "bytes": 41415,
+    "sha256": "a81a74e451c334a562008bb94597e0d26b9404399ac201fe63097a423eb608f5"
+  },
+  "historical_expected_anchor": {
+    "sha256": "a81a74e451c334a562008bb94597e0d26b9404399ac201fe63097a423eb608f5",
+    "bytes": 41415,
+    "match": true
+  },
+  "observed_disassembly_surface": {
+    "architecture": "ARM32",
+    "symbols_observed": ["_start", "main", "kernel_tick", "get_coherence", "get_entropy", "get_tick"],
+    "neon_instruction_examples_observed": ["vst1.64"],
+    "classification": "EXACT_DISASSEMBLY_BYTES_REBOUND"
+  },
+  "not_proven_by_this_receipt": [
+    "current source bytes for superradiance_kernel_minimal.c",
+    "current source bytes for integration_examples_arm32.c",
+    "kernel_arm32.ld bytes",
+    "current object or ELF bytes",
+    "fresh build/link reproduction",
+    "nm -u undefined-symbol closure",
+    "QEMU runtime",
+    "physical ARM runtime",
+    "performance advantage",
+    "physical equivalence to Penrose/Zeldovich phenomena"
+  ],
+  "gap": {
+    "gap_id": "TV-RLL-ARM32-CANONICAL-REPRODUCTION-20260827",
+    "state": "TOKEN_VAZIO_SOURCE_LINKER_ELF_RUNTIME",
+    "source_pointer": "library:file_00000000b1e0820e9de90829bafecd77@1 + fork evidence blob 9887ec5fba4939bfe922ee92ef3a8174c992f210",
+    "missing_field": "source/linker/ELF bytes and fresh execution receipt",
+    "blocking_dependency": "recover exact source and linker bytes matching historical SHA anchors",
+    "evidence_needed": "source SHA match -> build -> link -> readelf/nm/objdump -> ELF hash -> runtime where available",
+    "falsifier": "source or disassembly digest mismatch, undefined symbols, incompatible ELF, or runtime failure",
+    "next_probe": "recover exact source/linker artifacts from persistent file surfaces; do not reconstruct them from prose",
+    "owner_authority": "RLL canonical evidence route",
+    "urgency": "P0",
+    "closure_gate": "fresh canonical build/link and exact artifact receipt; physical ARM remains independent gate",
+    "claim_allowed": false
+  },
+  "invariants": [
+    "disassembly custody != source custody",
+    "build receipt != runtime receipt",
+    "NEON emission != performance superiority",
+    "computational implementation != physical validation"
+  ]
+}
