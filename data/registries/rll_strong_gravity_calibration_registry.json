@@ -75,5 +75,39 @@
     "GRMHD or GRPIC baseline",
     "registered loss function and falsifier"
   ],
-  "committed_numeric_result": "results/strong_gravity_calibration/session_reference_sweep_20260717.json"
+  "committed_numeric_result": "results/strong_gravity_calibration/session_reference_sweep_20260717.json",
+  "successor_extensions": [
+    {
+      "id": "B10_black_hole_thermodynamics_mpemba_falsifier",
+      "registered_at": "2026-08-27",
+      "status": "partial",
+      "claim_allowed": false,
+      "implementation": "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py",
+      "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+      "tests": "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+      "atlas": "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
+      "falsifiability_protocol": "FALSIFIABILITY_PROTOCOL.md",
+      "receipts": [
+        "provenance/receipts/rll_mpemba_horizon_atlas_20260827.json",
+        "provenance/receipts/rll_mpemba_horizon_drive_crosswalk_20260827.json"
+      ],
+      "protected_gaps": [
+        "direct astrophysical Hawking thermometry",
+        "checksum-verified matched astrophysical Mpemba trajectories",
+        "preregistered D(t) and epsilon on real data",
+        "covariance-aware matched inference",
+        "independent reproduction"
+      ],
+      "promotion_gate": [
+        "real time-resolved data ingested with file-level SHA256",
+        "observable and equilibrium target preregistered",
+        "distance functional and epsilon preregistered or robustness family fixed",
+        "covariance and calibration uncertainty propagated",
+        "ordinary GRMHD/turbulence/radiative-transfer nulls compared",
+        "look-elsewhere and hold-out controls passed",
+        "independent reproduction"
+      ],
+      "claim_boundary": "This successor is a bounded falsification route. It cannot promote synthetic witnesses, symbolic correspondences, EHT plasma observables, or theory precedents into astrophysical Hawking/Mpemba evidence."
+    }
+  ]
 }
