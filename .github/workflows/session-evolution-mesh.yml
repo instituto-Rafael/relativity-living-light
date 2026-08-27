@@ -1,0 +1,49 @@
+name: Session Evolution Mesh
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [rll/lab]
+    paths:
+      - 'data/registries/rll_session_evolution_mesh.v1.json'
+      - 'data/registries/rll_session_interaction_ledger_20260827.v1.json'
+      - 'data/registries/rll_mpemba_horizon_closure_registry.v1.json'
+      - 'docs/RLL_SESSION_EVOLUTION_ATLAS_20260827.md'
+      - 'provenance/receipts/rll_session_evolution_mesh_20260827.json'
+      - 'tools/validate_session_evolution_mesh.py'
+      - '.github/workflows/session-evolution-mesh.yml'
+  push:
+    branches: [rll/lab]
+    paths:
+      - 'data/registries/rll_session_evolution_mesh.v1.json'
+      - 'data/registries/rll_session_interaction_ledger_20260827.v1.json'
+      - 'data/registries/rll_mpemba_horizon_closure_registry.v1.json'
+      - 'tools/validate_session_evolution_mesh.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-session-evolution:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+      - name: Validate fail-closed mesh
+        run: |
+          mkdir -p artifacts/session-evolution
+          python tools/validate_session_evolution_mesh.py | tee artifacts/session-evolution/runtime-receipt.json
+      - name: Upload runtime receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: session-evolution-${{ github.run_id }}
+          path: artifacts/session-evolution/
+          retention-days: 30
+          if-no-files-found: error
