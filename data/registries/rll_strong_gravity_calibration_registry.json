@@ -84,6 +84,7 @@
       "claim_allowed": false,
       "implementation": "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py",
       "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+      "source_crosswalk": "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json",
       "tests": "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
       "atlas": "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
       "falsifiability_protocol": "FALSIFIABILITY_PROTOCOL.md",
