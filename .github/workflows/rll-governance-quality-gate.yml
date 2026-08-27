@@ -22,6 +22,8 @@ on:
       - "tests/test_rll_open_work_mechanism_gate*.py"
       - "tools/rll_modern_validation_reconcile*.py"
       - "tests/test_rll_modern_validation_reconcile*.py"
+      - "tools/rll_atlas_evolution_gate.py"
+      - "tests/test_rll_atlas_evolution_gate.py"
       - "schemas/rll_observational_topology.v1.schema.json"
       - "tools/validate_rll_observational_topology.py"
       - "tests/test_rll_observational_topology.py"
@@ -127,6 +129,16 @@ jobs:
           python3 -m unittest -v tests.test_rll_observational_topology
           sha256sum artifacts/governance/RLL_OBSERVATIONAL_TOPOLOGY_VALIDATION.json \
             > artifacts/governance/RLL_OBSERVATIONAL_TOPOLOGY_VALIDATION.sha256
+
+      - name: "Validate ATLAS G0-G7 evolution and anti-regression contract"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_atlas_evolution_gate \
+            --candidate data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json \
+            --output artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json
+          python3 -m unittest -v tests.test_rll_atlas_evolution_gate
+          sha256sum artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.sha256
 
       - name: "Publish non-certification report to job summary"
         if: always()
