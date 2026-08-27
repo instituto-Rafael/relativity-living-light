@@ -71,6 +71,39 @@ def test_source_registry_is_claim_bounded():
     assert payload["claim_allowed"] is False
 
 
+def test_source_registry_keeps_legacy_sources_and_bounded_c11_sources():
+    payload = json.loads((ROOT / "data/registries/rll_recent_primary_sources_2026.json").read_text())
+    sources = {item["source_id"]: item for item in payload["sources"]}
+    legacy = {
+        "DESI-DR2-BAO-2025",
+        "GEDE-DESI-DR2-2025",
+        "BULK-VISCOSITY-DESI-2026",
+        "INTERACTING-DARK-SECTOR-2025",
+        "ANTON-SCHMIDT-DESI-2026",
+        "DESI-SN-DISTANCE-CROSSCHECK-2026",
+        "CDDR-PANTHEON-BAO-2026",
+        "FRB-GALAXY-CROSSCORRELATION-2025",
+        "FRB-COSMOLOGY-REVIEW-2026",
+        "ACT-DR6-BIREFRINGENCE-2025",
+        "BIREFRINGENCE-DM-DE-2026",
+    }
+    assert legacy <= set(sources)
+    c11 = {
+        "BH-THERMODYNAMICS-REVIEW-2026",
+        "MPEMBA-PRX-2026",
+        "MPEMBA-THERMOMAJORIZATION-2025",
+        "UNRUH-MPEMBA-2026",
+        "HOLOGRAPHIC-MPEMBA-2026",
+        "EHT-M87-VARIABILITY-2025",
+        "EHT-M87-JET-BASE-2026",
+        "EHT-2026-D01-01",
+    }
+    assert c11 <= set(sources)
+    assert sources["HOLOGRAPHIC-MPEMBA-2026"]["verification_status"] == "metadata_verified"
+    assert "preprint" in sources["HOLOGRAPHIC-MPEMBA-2026"]["safe_use"].lower()
+    assert "TOKEN_VAZIO" in sources["EHT-2026-D01-01"]["safe_use"]
+
+
 def test_integration_registry_preserves_raw_data():
     payload = json.loads((ROOT / "data/registries/rll_operational_integration_registry.json").read_text())
     assert validate_integration_registry(payload) == []
