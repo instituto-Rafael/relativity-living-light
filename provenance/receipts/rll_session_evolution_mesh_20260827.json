@@ -1,0 +1,28 @@
+{
+  "schema": "rll.receipt.session_evolution_mesh.v1",
+  "recorded_at": "2026-08-27T20:32:00-03:00",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "governance/session-evolution-mesh-v2-20260827",
+  "baseline_branch": "rll/lab",
+  "baseline_commit": "75323d72c9c8d0180c2a01dfb7c7601f5da735c5",
+  "predecessor_closure_commit": "30e4d2fd7af3d7b9db3096ba530b72d0275e37f2",
+  "concurrent_governance_consumed": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json",
+  "authorization_context": "User requested continuation of the reviewed/approved operational path with commits, non-regression, urgency, provenance, receipts, ATLAS, custody and Instituto Rafael deployment.",
+  "scope": ["interaction-level semantic ledger", "risk-reduction mapping", "six continuous-evolution fences", "G0-G7 bridge", "event-driven fail-closed validation", "federation handoff to instituto-Rafael/RAFAELIA_CORE"],
+  "artifacts": ["data/registries/rll_session_evolution_mesh.v1.json", "data/registries/rll_session_interaction_ledger_20260827.v1.json", "docs/RLL_SESSION_EVOLUTION_ATLAS_20260827.md", "tools/validate_session_evolution_mesh.py", ".github/workflows/session-evolution-mesh.yml"],
+  "custody": {
+    "source_baseline_sha_verified_from_github": true,
+    "predecessor_closure_sha_verified_from_github": true,
+    "raw_chat_transcript_materialized": false,
+    "raw_chat_transcript_sha256": "TOKEN_VAZIO",
+    "reason": "Normalized turn receipts are stored without fabricating byte custody over a private transcript that was not independently exported into the repository."
+  },
+  "claim_boundary": {
+    "scientific_claim_allowed": false,
+    "g0_g7_claim_allowed": false,
+    "independent_replication_self_closable": false,
+    "external_evidence_inventable": false
+  },
+  "rollback": "Revert reviewed branch/merge commits; no destructive rewrite or autonomous source mutation is part of this mesh.",
+  "expected_validation": "validator must pass while B10/C11 remains fail-closed, G7 remains blocked, and the independent-replication blocking token remains open."
+}
