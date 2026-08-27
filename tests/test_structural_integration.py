@@ -78,6 +78,44 @@ def test_integration_registry_preserves_raw_data():
     assert payload["claim_allowed"] is False
 
 
+def test_b10_mpemba_route_is_append_only_and_fail_closed():
+    payload = json.loads((ROOT / "data/registries/rll_operational_integration_registry.json").read_text())
+    branches = {branch["branch_id"]: branch for branch in payload["branches"]}
+    for index in range(10):
+        assert any(branch_id.startswith(f"B{index:02d}_") for branch_id in branches)
+    b10 = branches["B10_black_hole_thermodynamics_mpemba_falsifier"]
+    assert b10["status"] == EpistemicStatus.PARTIAL.value
+    assert "checksum_verified_real_time_series" in b10["required_artifacts"]
+    assert "independent_reproduction" in b10["required_artifacts"]
+    decision, missing = evaluate_branch_readiness(b10, ["mpemba_horizon_contract"])
+    assert decision is ExecutionDecision.BLOCKED
+    assert "checksum_verified_real_time_series" in missing
+
+
+def test_strong_gravity_successor_preserves_historical_calibration():
+    payload = json.loads((ROOT / "data/registries/rll_strong_gravity_calibration_registry.json").read_text())
+    assert payload["raw_data_policy"] == "immutable"
+    assert payload["claim_allowed"] is False
+    assert payload["generated_at"] == "2026-07-17"
+    assert payload["committed_numeric_result"] == "results/strong_gravity_calibration/session_reference_sweep_20260717.json"
+    assert [item["id"] for item in payload["heuristics"]] == [f"H{i}_{name}" for i, name in [
+        (1, "scale_separation"),
+        (2, "force_dominance"),
+        (3, "phase_ladder"),
+        (4, "self_gravity"),
+        (5, "transduction"),
+        (6, "radiative_threshold"),
+        (7, "recurrence"),
+        (8, "falsifier"),
+    ]]
+    extensions = {item["id"]: item for item in payload["successor_extensions"]}
+    b10 = extensions["B10_black_hole_thermodynamics_mpemba_falsifier"]
+    assert b10["claim_allowed"] is False
+    for key in ("implementation", "contract", "tests", "atlas", "falsifiability_protocol"):
+        assert (ROOT / b10[key]).exists(), key
+    assert "independent reproduction" in b10["protected_gaps"]
+
+
 def test_branch_readiness_reports_missing_artifacts():
     branch = {
         "status": EpistemicStatus.HYPOTHESIS.value,
