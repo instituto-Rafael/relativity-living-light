@@ -89,10 +89,8 @@
       "eht_custody_manifest": "data/real/strong_gravity/eht_2026_d01_01_manifest.json",
       "observational_protocol": "data/contracts/eht_mpemba_observational_protocol.v1.json",
       "closure_validator": "tools/validate_mpemba_horizon_closure.py",
-      "tests": [
-        "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
-        "tests/strong_gravity/test_mpemba_horizon_closure.py"
-      ],
+      "tests": "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+      "closure_tests": "tests/strong_gravity/test_mpemba_horizon_closure.py",
       "atlas": "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
       "falsifiability_protocol": "FALSIFIABILITY_PROTOCOL.md",
       "receipts": [
