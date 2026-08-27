@@ -1,0 +1,36 @@
+{
+  "schema": "rll.receipt.session_evolution_mesh.v1",
+  "recorded_at": "2026-08-27T20:32:00-03:00",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "governance/session-evolution-mesh-20260827",
+  "baseline_branch": "rll/lab",
+  "baseline_commit": "30e4d2fd7af3d7b9db3096ba530b72d0275e37f2",
+  "authorization_context": "User requested continuation of the already reviewed/approved operational path, with commits, non-regression, urgency, provenance, receipts, ATLAS, custody and Instituto Rafael deployment.",
+  "scope": [
+    "interaction-level semantic ledger",
+    "risk-reduction mapping",
+    "six continuous-evolution fences",
+    "event-driven fail-closed validation",
+    "federation handoff to instituto-Rafael/RAFAELIA_CORE"
+  ],
+  "artifacts": [
+    "data/registries/rll_session_evolution_mesh.v1.json",
+    "data/registries/rll_session_interaction_ledger_20260827.v1.json",
+    "docs/RLL_SESSION_EVOLUTION_ATLAS_20260827.md",
+    "tools/validate_session_evolution_mesh.py",
+    ".github/workflows/session-evolution-mesh.yml"
+  ],
+  "custody": {
+    "source_baseline_sha_verified_from_github": true,
+    "raw_chat_transcript_materialized": false,
+    "raw_chat_transcript_sha256": "TOKEN_VAZIO",
+    "reason": "The repository stores normalized turn receipts and does not fabricate byte custody over private chat transcript material that was not independently exported into the repository."
+  },
+  "claim_boundary": {
+    "scientific_claim_allowed": false,
+    "independent_replication_self_closable": false,
+    "external_evidence_inventable": false
+  },
+  "rollback": "Revert the branch/merge commits; no destructive rewrite or autonomous source mutation is part of this mesh.",
+  "expected_validation": "tools/validate_session_evolution_mesh.py must return PASS and the parent B10/C11 closure registry must remain fail-closed for scientific claims."
+}
