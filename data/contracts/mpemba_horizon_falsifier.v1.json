@@ -4,13 +4,16 @@
   "authority": "instituto-Rafael/relativity-living-light",
   "status": "IMPLEMENTED_BOUNDED_GATE",
   "global_scientific_claim_allowed": false,
-  "purpose": "Convert black-hole thermodynamics/Mpemba heuristics into separable analytic, theory, observation and falsification routes without promoting analogy to evidence.",
+  "purpose": "Convert black-hole thermodynamics/Mpemba heuristics and internal symbolic mappings into separable analytic, theory, observation and falsification routes without promoting analogy to evidence.",
   "epistemic_invariants": [
     "analytic identity != astrophysical observation",
     "holographic or Unruh Mpemba precedent != astrophysical black-hole Mpemba detection",
     "EHT synchrotron/plasma observables != Hawking thermometry",
     "static Tolman temperature != freely falling thermometer reading",
     "jet launching outside the horizon != matter escaping from inside the horizon",
+    "symbolic RAFAELIA/Exacordex entropy mapping != physical Bekenstein-Hawking equivalence",
+    "cyclic-time symbolism != covariant GR horizon dynamics",
+    "post-hoc unit adjustment is forbidden",
     "synthetic crossing != nature",
     "TOKEN_VAZIO != zero and != false",
     "failed descendants are quarantined, not deleted"
@@ -24,6 +27,18 @@
     "anti_post_hoc_rule": "epsilon, observable, preprocessing and covariance treatment must be preregistered for a real-data claim",
     "mode_probe": "compare overlap/amplitude of the slowest relaxation mode; suppression is a candidate mechanism, not a detection by itself"
   },
+  "symbolic_physical_bridge_gate": {
+    "required": [
+      "explicit map from symbolic variables to physical quantities with dimensions",
+      "recover Bekenstein-Hawking area scaling in a declared domain",
+      "recover Schwarzschild first-law relation dE = T_H dS in that domain",
+      "declare observer/covariance treatment",
+      "forbid post-hoc unit adjustment",
+      "produce an independent quantitative prediction before equivalence testing"
+    ],
+    "current_state": "TOKEN_VAZIO_DIMENSIONAL_COVARIANT_BRIDGE",
+    "physical_equivalence_claim_allowed": false
+  },
   "claim_ledger": [
     {"id": "BH-MP-01", "state": "SUPPORTED_ANALYTIC_SEMICLASSICAL", "claim": "For Schwarzschild, T_H is proportional to M^-1, S_BH to M^2 and C_BH is negative.", "descendant_use": "ALLOW_WITH_DOMAIN_LABEL"},
     {"id": "BH-MP-02", "state": "FALSIFIED_AS_EQUIVALENCE", "claim": "Static Tolman near-horizon temperature equals the freely falling local thermometer reading.", "descendant_use": "QUARANTINE"},
@@ -33,7 +48,9 @@
     {"id": "BH-MP-06", "state": "TOKEN_VAZIO", "claim": "An astrophysical black hole has a directly observed Mpemba relaxation.", "descendant_use": "HOLD"},
     {"id": "BH-MP-07", "state": "LITERATURE_SUPPORTED_THEORY", "claim": "Mpemba-like relaxation has relativistic-QFT and holographic precedents.", "descendant_use": "ALLOW_AS_THEORY_ONLY"},
     {"id": "BH-MP-08", "state": "TOKEN_VAZIO", "claim": "Hawking temperature has been directly measured for M87* or Sgr A*.", "descendant_use": "HOLD"},
-    {"id": "BH-MP-09", "state": "REJECT_OVERGENERALIZATION", "claim": "Generic curved spacetime always supplies one globally conserved scalar energy for the complete system.", "descendant_use": "USE_LOCAL_COVARIANT_CONSERVATION_INSTEAD"}
+    {"id": "BH-MP-09", "state": "REJECT_OVERGENERALIZATION", "claim": "Generic curved spacetime always supplies one globally conserved scalar energy for the complete system.", "descendant_use": "USE_LOCAL_COVARIANT_CONSERVATION_INSTEAD"},
+    {"id": "BH-MP-10", "state": "REJECT_UNCALIBRATED_EQUIVALENCE", "claim": "An internal RAFAELIA/Exacordex symbolic entropy expression is physically identical to Bekenstein-Hawking entropy without an explicit dimensional and covariant bridge.", "descendant_use": "HOLD_UNTIL_DIMENSIONAL_COVARIANT_GATE"},
+    {"id": "BH-MP-11", "state": "ANALOGY_ONLY_TOKEN_VAZIO_COVARIANT_DYNAMICS", "claim": "A symbolic cyclic-time or direct/inverse operator by itself proves GR horizon-time structure or cosmology.", "descendant_use": "PARABLE_OR_HYPOTHESIS_ONLY"}
   ],
   "falsifiers": [
     {"id": "F-BH-MP-01", "target": "BH-MP-01", "criterion": "dT_H/dM < 0; C_BH < 0; T_H(2M)/T_H(M)=1/2; S_BH(2M)/S_BH(M)=4 in Schwarzschild semiclassical domain"},
@@ -44,7 +61,9 @@
     {"id": "F-BH-MP-06B", "target": "BH-MP-06", "criterion": "effect survives covariance, uncertainty propagation, admissible monotone distances, hold-out and look-elsewhere controls"},
     {"id": "F-BH-MP-06C", "target": "BH-MP-06", "criterion": "mode suppression/ablation supports the mechanism where a mode decomposition is meaningful"},
     {"id": "F-BH-MP-07", "target": "BH-MP-07", "criterion": "holographic/Unruh/quantum evidence stays source-class labelled"},
-    {"id": "F-BH-MP-08", "target": "BH-MP-08", "criterion": "never use EHT synchrotron/plasma observables as Hawking-temperature measurement"}
+    {"id": "F-BH-MP-08", "target": "BH-MP-08", "criterion": "never use EHT synchrotron/plasma observables as Hawking-temperature measurement"},
+    {"id": "F-BH-MP-10", "target": "BH-MP-10", "criterion": "require explicit dimensions/units mapping, area-law recovery, Schwarzschild first-law recovery, covariance statement, no post-hoc unit adjustment and an independent quantitative prediction"},
+    {"id": "F-BH-MP-11", "target": "BH-MP-11", "criterion": "require explicit covariant dynamics/metric, operational observables and quantitative comparison against GR/cosmological nulls; symbolic periodicity or number matching alone fails"}
   ],
   "sources": [
     {"id": "SRC-BH-THERMO-REVIEW-2026", "kind": "peer_reviewed_review", "title": "Black-hole thermodynamics", "author": "Robert B. Mann", "journal": "Nature Reviews Physics 8, 425-436 (2026)", "doi": "10.1038/s42254-026-00942-9", "published": "2026-05-11", "supports": ["established black-hole temperature/entropy framework", "non-equilibrium open problems"], "does_not_support": ["direct astrophysical Hawking thermometry", "astrophysical Mpemba detection"]},
@@ -52,13 +71,16 @@
     {"id": "SRC-MPEMBA-THERMOMAJOR-2025", "kind": "peer_reviewed_theory", "title": "Thermomajorization Mpemba Effect", "authors": "Tan Van Vu; Hisao Hayakawa", "journal": "Physical Review Letters 134, 107101 (2025)", "doi": "10.1103/PhysRevLett.134.107101", "supports": ["distance-robust Mpemba formulation for Markovian dynamics"], "does_not_support": ["astrophysical detection"]},
     {"id": "SRC-UNRUH-MPEMBA-2026", "kind": "peer_reviewed_theory", "title": "Quantum Mpemba-like effect in Unruh thermalization", "journal": "Journal of High Energy Physics 2026, 183", "doi": "10.1007/JHEP06(2026)183", "arxiv": "2509.05756", "published": "2026-06-17", "supports": ["Mpemba-like anomalous relaxation in relativistic QFT detector thermalization"], "does_not_support": ["astrophysical black-hole detection"]},
     {"id": "SRC-HOLOGRAPHIC-MPEMBA-2026", "kind": "preprint_theory", "title": "Quantum Mpemba effect in holography", "authors": "Xian-Hui Ge; Shuta Ishigaki; Yu-Qi Lei; Yu Tian", "arxiv": "2607.20899", "submitted": "2026-07-23", "supports": ["holographic superfluid Mpemba effect", "shifted free energy from energy flux into a black-hole horizon as a monotonic distance", "quasinormal-mode competition"], "does_not_support": ["peer-reviewed status", "astrophysical observation"]},
-    {"id": "DATA-EHT-2026-D01-01", "kind": "public_observational_data_product", "title": "2018 and 2021 Calibrated polarimetric data", "organization": "Event Horizon Telescope Collaboration", "last_updated": "2026-06-29", "reference": "EHT Collaboration et al., A&A 704, A91", "ingested_into_rll": false, "checksum_verified_in_rll": false, "state": "TOKEN_VAZIO_NUMERIC_INGEST"}
+    {"id": "DATA-EHT-2026-D01-01", "kind": "public_observational_data_product", "title": "2018 and 2021 Calibrated polarimetric data", "organization": "Event Horizon Telescope Collaboration", "last_updated": "2026-06-29", "reference": "EHT Collaboration et al., A&A 704, A91", "ingested_into_rll": false, "checksum_verified_in_rll": false, "state": "TOKEN_VAZIO_NUMERIC_INGEST"},
+    {"id": "DRIVE-CRIPTTRES", "kind": "internal_symbolic_hypothesis", "title": "Cripttres.md", "drive_file_id": "1jAzmuoqVlqIPXUO73J33L09LahA5YyFD", "supports": ["existence of an internal Exacordex/Bekenstein-Hawking analogy to falsify"], "does_not_support": ["physical equivalence", "dimensional closure", "black-hole microstate identification"]},
+    {"id": "DRIVE-RAFAELIA-TREATISE", "kind": "internal_symbolic_hypothesis", "title": "file_00000000c3dc720e8355a09f4f857da0.dat", "drive_file_id": "14cgzAjiEkaPGUlRa--Hcvq948RCwG8WA", "supports": ["existence of internal symbolic physical mappings requiring audit"], "does_not_support": ["empirical validation", "covariant GR equivalence"]}
   ],
   "observational_routes": [
     {"route": "EHT M87* 2018/2021 polarimetric data", "state": "PUBLIC_DATA_IDENTIFIED_NOT_INGESTED", "next": "materialize licensed/open products, file-level SHA256 and immutable manifest; preregister D(t)"},
     {"route": "Hawking thermometry", "state": "TOKEN_VAZIO_DIRECT_ASTROPHYSICAL_MEASUREMENT", "next": "retain gap; no plasma proxy promotion"},
     {"route": "holographic horizon-flux relaxation", "state": "THEORY_PRECEDENT_PREPRINT", "next": "reproduce only as theory route; keep separate from EHT"},
-    {"route": "Unruh detector thermalization", "state": "PEER_REVIEWED_THEORY", "next": "use only as relativistic-QFT precedent"}
+    {"route": "Unruh detector thermalization", "state": "PEER_REVIEWED_THEORY", "next": "use only as relativistic-QFT precedent"},
+    {"route": "RAFAELIA/Exacordex symbolic BH mappings", "state": "INTERNAL_HYPOTHESIS_UNCALIBRATED", "next": "require dimensional/covariant bridge before any physical-equivalence claim"}
   ],
   "promotion_gate": {
     "required_for_astrophysical_mpemba_claim": [
