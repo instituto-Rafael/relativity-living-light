@@ -108,11 +108,12 @@ def evaluate(temperature_MeV: float, payload: dict | None = None) -> GStarPoint:
             f"T={temperature_MeV} MeV outside Borsanyi Table S3 domain "
             f"[{10**xs[0]}, {10**xs[-1]}] MeV; extrapolation forbidden"
         )
-    exact = next((i for i, knot in enumerate(xs) if x == knot), None)
+    exact = next((i for i, knot in enumerate(xs) if math.isclose(x, knot, rel_tol=0.0, abs_tol=1e-12)), None)
     if exact is not None:
         g_rho = g_rho_values[exact]
         ratio = ratios[exact]
         mode = "EXACT_SOURCE_KNOT"
+        x = xs[exact]
     else:
         g_rho = _spline_eval(xs, g_rho_values, _natural_second_derivatives(xs, g_rho_values), x)
         ratio = _spline_eval(xs, ratios, _natural_second_derivatives(xs, ratios), x)

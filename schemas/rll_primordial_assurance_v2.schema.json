@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://rll.local/schemas/rll_primordial_assurance_v2.schema.json",
   "title": "RLL Primordial Assurance Receipt V2",
+  "description": "Fail-closed structural contract for the RLL primordial assurance V2 receipt; schema validity does not promote scientific claims.",
   "type": "object",
   "required": ["schema", "scope", "claim_allowed", "publication_effect", "gates", "forbidden_inferences"],
   "properties": {

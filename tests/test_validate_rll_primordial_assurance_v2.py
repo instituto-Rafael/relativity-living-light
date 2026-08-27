@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -14,10 +15,10 @@ SPEC.loader.exec_module(mod)
 
 def test_current_artifacts_pass_fail_closed_validator():
     result = mod.run()
+    assert result["errors"] == [], json.dumps(result["errors"], ensure_ascii=False, indent=2)
     assert result["status"] == "PASS"
     assert result["claim_allowed"] is False
     assert result["negative_fixture_count"] == 8
-    assert result["errors"] == []
 
 
 def test_claim_promotion_is_rejected():
