@@ -14,7 +14,7 @@ SPEC.loader.exec_module(mod)
 
 def test_current_artifacts_pass_fail_closed_validator():
     result = mod.run()
-    assert result["status"] == "PASS"
+    assert result["status"] == "PASS", result
     assert result["claim_allowed"] is False
     assert result["negative_fixture_count"] == 8
     assert result["errors"] == []
