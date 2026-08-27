@@ -1,8 +1,9 @@
 """Bounded black-hole thermodynamics / Mpemba-horizon falsification bridge.
 
 Separates semiclassical analytic identities, supplied relaxation trajectories,
-literature provenance, real observations, and protected TOKEN_VAZIO gaps.
-It is not a GRMHD solver and does not claim an astrophysical Mpemba detection.
+literature provenance, real observations, symbolic/internal hypotheses, and
+protected TOKEN_VAZIO gaps. It is not a GRMHD solver and does not claim an
+astrophysical Mpemba detection.
 """
 from __future__ import annotations
 
@@ -62,13 +63,19 @@ def static_redshift_factor(mass_kg: float, radius_m: float) -> float:
     return math.sqrt(1.0 - rs / radius_m)
 
 
-def tolman_local_temperature_k(temperature_at_infinity_k: float, mass_kg: float, radius_m: float) -> float:
+def tolman_local_temperature_k(
+    temperature_at_infinity_k: float, mass_kg: float, radius_m: float
+) -> float:
     """Static-equilibrium Tolman temperature; not a free-fall thermometer."""
-    temperature_at_infinity_k = _finite_positive("temperature_at_infinity_k", temperature_at_infinity_k)
+    temperature_at_infinity_k = _finite_positive(
+        "temperature_at_infinity_k", temperature_at_infinity_k
+    )
     return temperature_at_infinity_k / static_redshift_factor(mass_kg, radius_m)
 
 
-def validate_relaxation_curve(times: Sequence[float], distances: Sequence[float]) -> None:
+def validate_relaxation_curve(
+    times: Sequence[float], distances: Sequence[float]
+) -> None:
     if len(times) != len(distances) or len(times) < 2:
         raise ValueError("times and distances must have equal length >= 2")
     if any(not math.isfinite(float(t)) for t in times):
@@ -79,7 +86,9 @@ def validate_relaxation_curve(times: Sequence[float], distances: Sequence[float]
         raise ValueError("times must be strictly increasing")
 
 
-def first_passage_time(times: Sequence[float], distances: Sequence[float], epsilon: float) -> float | None:
+def first_passage_time(
+    times: Sequence[float], distances: Sequence[float], epsilon: float
+) -> float | None:
     validate_relaxation_curve(times, distances)
     if not math.isfinite(epsilon) or epsilon < 0.0:
         raise ValueError("epsilon must be finite and non-negative")
@@ -102,26 +111,86 @@ class MpembaWitness:
         return asdict(self)
 
 
-def mpemba_witness(times: Sequence[float], far_distances: Sequence[float], near_distances: Sequence[float], epsilon: float) -> MpembaWitness:
+def mpemba_witness(
+    times: Sequence[float],
+    far_distances: Sequence[float],
+    near_distances: Sequence[float],
+    epsilon: float,
+) -> MpembaWitness:
     validate_relaxation_curve(times, far_distances)
     validate_relaxation_curve(times, near_distances)
     if len(far_distances) != len(near_distances):
         raise ValueError("far and near curves must have equal length")
     initial_farther = float(far_distances[0]) > float(near_distances[0])
-    crossing_observed = any(float(f) < float(n) for f, n in zip(far_distances[1:], near_distances[1:]))
+    crossing_observed = any(
+        float(f) < float(n)
+        for f, n in zip(far_distances[1:], near_distances[1:])
+    )
     tau_far = first_passage_time(times, far_distances, epsilon)
     tau_near = first_passage_time(times, near_distances, epsilon)
     faster = tau_far is not None and tau_near is not None and tau_far < tau_near
-    return MpembaWitness(initial_farther, crossing_observed, tau_far, tau_near, faster, initial_farther and crossing_observed and faster)
+    return MpembaWitness(
+        initial_farther,
+        crossing_observed,
+        tau_far,
+        tau_near,
+        faster,
+        initial_farther and crossing_observed and faster,
+    )
 
 
-def slow_mode_suppression_ratio(far_slowest_mode_amplitude: float, near_slowest_mode_amplitude: float) -> float:
-    if not all(math.isfinite(float(x)) for x in (far_slowest_mode_amplitude, near_slowest_mode_amplitude)):
+def slow_mode_suppression_ratio(
+    far_slowest_mode_amplitude: float, near_slowest_mode_amplitude: float
+) -> float:
+    if not all(
+        math.isfinite(float(x))
+        for x in (far_slowest_mode_amplitude, near_slowest_mode_amplitude)
+    ):
         raise ValueError("mode amplitudes must be finite")
     denom = abs(float(near_slowest_mode_amplitude))
     if denom == 0.0:
         raise ValueError("near slow-mode amplitude must be non-zero")
     return abs(float(far_slowest_mode_amplitude)) / denom
+
+
+@dataclass(frozen=True)
+class SymbolicBHBridgeGate:
+    dimensional_map_declared: bool
+    area_law_recovered: bool
+    schwarzschild_first_law_recovered: bool
+    observer_covariance_declared: bool
+    no_posthoc_unit_adjustment: bool
+    independent_prediction_declared: bool
+    eligible_for_physical_equivalence_test: bool
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+def symbolic_bh_bridge_gate(
+    *,
+    dimensional_map_declared: bool,
+    area_law_recovered: bool,
+    schwarzschild_first_law_recovered: bool,
+    observer_covariance_declared: bool,
+    no_posthoc_unit_adjustment: bool,
+    independent_prediction_declared: bool,
+) -> SymbolicBHBridgeGate:
+    """Gate symbolic/internal entropy/time mappings before physical equivalence.
+
+    A numerical resemblance or shared symbol is insufficient. All requirements
+    must be explicit before a RAFAELIA/Exacordex-like symbolic expression can be
+    compared as a candidate physical map to black-hole thermodynamics.
+    """
+    checks = (
+        bool(dimensional_map_declared),
+        bool(area_law_recovered),
+        bool(schwarzschild_first_law_recovered),
+        bool(observer_covariance_declared),
+        bool(no_posthoc_unit_adjustment),
+        bool(independent_prediction_declared),
+    )
+    return SymbolicBHBridgeGate(*checks, eligible_for_physical_equivalence_test=all(checks))
 
 
 def analytic_invariants(mass_kg: float) -> dict:
@@ -151,9 +220,15 @@ def analytic_invariants(mass_kg: float) -> dict:
 
 
 def claim_ledger(mpemba: MpembaWitness | None = None) -> list[dict]:
-    astro_reason = "No checksum-verified matched astrophysical relaxation trajectories with a preregistered distance functional and covariance are ingested by this module."
+    astro_reason = (
+        "No checksum-verified matched astrophysical relaxation trajectories with "
+        "a preregistered distance functional and covariance are ingested by this module."
+    )
     if mpemba is not None and mpemba.witness:
-        astro_reason += " A supplied trajectory can establish only a dataset-local witness; a synthetic/model trajectory is not an astrophysical detection."
+        astro_reason += (
+            " A supplied trajectory can establish only a dataset-local witness; "
+            "a synthetic/model trajectory is not an astrophysical detection."
+        )
     return [
         {"id": "BH-MP-01", "claim": "Schwarzschild Hawking temperature scales as M^-1 and heat capacity is negative.", "state": "SUPPORTED_ANALYTIC_SEMICLASSICAL", "claim_allowed": True},
         {"id": "BH-MP-02", "claim": "A static near-horizon Tolman temperature is equivalent to a freely falling thermometer reading.", "state": "FALSIFIED_AS_EQUIVALENCE", "claim_allowed": False},
@@ -164,6 +239,8 @@ def claim_ledger(mpemba: MpembaWitness | None = None) -> list[dict]:
         {"id": "BH-MP-07", "claim": "Mpemba-like anomalous relaxation has rigorous relativistic-QFT/holographic precedents.", "state": "LITERATURE_SUPPORTED_THEORY", "claim_allowed": True},
         {"id": "BH-MP-08", "claim": "Hawking temperature has been directly measured for M87* or Sgr A*.", "state": TOKEN_VAZIO, "reason": "No direct astrophysical Hawking thermometry is registered.", "claim_allowed": False},
         {"id": "BH-MP-09", "claim": "Generic curved spacetime guarantees a single globally conserved scalar energy for the full system.", "state": "REJECT_OVERGENERALIZATION", "reason": "Use local covariant conservation and symmetry-dependent conserved quantities.", "claim_allowed": False},
+        {"id": "BH-MP-10", "claim": "An internal RAFAELIA/Exacordex symbolic entropy expression is physically identical to Bekenstein-Hawking entropy without an explicit dimensional and covariant bridge.", "state": "REJECT_UNCALIBRATED_EQUIVALENCE", "reason": "Symbolic/numerical resemblance does not establish physical dimensions, the area law, the first law, covariance, or independent prediction.", "claim_allowed": False},
+        {"id": "BH-MP-11", "claim": "A symbolic cyclic-time or direct/inverse operator by itself proves general-relativistic horizon-time structure or cosmology.", "state": "ANALOGY_ONLY_TOKEN_VAZIO_COVARIANT_DYNAMICS", "reason": "Requires an explicit metric/dynamics, observer-independent observables and falsifiable predictions against GR/cosmological nulls.", "claim_allowed": False},
     ]
 
 
@@ -176,6 +253,8 @@ def falsifier_matrix() -> list[dict]:
         {"id": "F-BH-MP-06B", "target": "BH-MP-06", "test": "survive covariance, uncertainty, admissible distance-family, hold-out and look-elsewhere controls"},
         {"id": "F-BH-MP-07", "target": "BH-MP-07", "test": "holographic/Unruh/quantum sources remain theory-labelled"},
         {"id": "F-BH-MP-08", "target": "BH-MP-08", "test": "EHT synchrotron/plasma observables are never relabelled Hawking thermometry"},
+        {"id": "F-BH-MP-10", "target": "BH-MP-10", "test": "require an explicit units/dimensions map, recovery of S_BH proportional to area, Schwarzschild dE=T_H dS, observer/covariance statement, no post-hoc unit adjustment, and an independent prediction before physical-equivalence testing"},
+        {"id": "F-BH-MP-11", "target": "BH-MP-11", "test": "require explicit metric or covariant dynamics, operational observables, coordinate/observer treatment and quantitative comparison against GR/cosmological null models; numerology or cyclic symbolism alone fails"},
     ]
 
 
@@ -187,14 +266,34 @@ def baseline() -> dict:
     witness = mpemba_witness(times, far, near, epsilon=0.10)
     analytic = analytic_invariants(10.0 * SOLAR_MASS_KG)
     analytic_pass = all(analytic["checks"].values())
+    symbolic_gate = symbolic_bh_bridge_gate(
+        dimensional_map_declared=False,
+        area_law_recovered=False,
+        schwarzschild_first_law_recovered=False,
+        observer_covariance_declared=False,
+        no_posthoc_unit_adjustment=False,
+        independent_prediction_declared=False,
+    )
     return {
         "schema": "rll.strong_gravity.mpemba_horizon_falsifier.v1",
         "evidence_grade": "SYNTHETIC_GATE_FIXTURE_PLUS_ANALYTIC_IDENTITIES",
         "analytic": analytic,
-        "synthetic_relaxation": {"times": times, "far_distances": far, "near_distances": near, "epsilon": 0.10, "result": witness.to_dict(), "astrophysical_evidence": False},
+        "synthetic_relaxation": {
+            "times": times,
+            "far_distances": far,
+            "near_distances": near,
+            "epsilon": 0.10,
+            "result": witness.to_dict(),
+            "astrophysical_evidence": False,
+        },
+        "symbolic_drive_crosswalk": {
+            "gate": symbolic_gate.to_dict(),
+            "physical_equivalence_claim_allowed": False,
+            "boundary": "Internal symbolic hypotheses remain auditable but cannot inherit black-hole-thermodynamics evidence without closing the dimensional/covariant bridge.",
+        },
         "claim_ledger": claim_ledger(witness),
         "falsifiers": falsifier_matrix(),
-        "decision": "BOUNDED_PASS" if analytic_pass and witness.witness else "FAIL",
+        "decision": "BOUNDED_PASS" if analytic_pass and witness.witness and not symbolic_gate.eligible_for_physical_equivalence_test else "FAIL",
         "global_scientific_claim_allowed": False,
         "token_vazio": [
             "direct astrophysical Hawking temperature measurement",
@@ -202,13 +301,16 @@ def baseline() -> dict:
             "pre-registered astrophysical distance functional D[X(t),X_eq]",
             "checksum-verified EHT time-domain numeric ingest",
             "covariance-aware inference and independent reproduction",
+            "dimensionally and covariantly closed RAFAELIA/Exacordex-to-Bekenstein-Hawking physical map",
+            "covariant dynamical bridge from symbolic cyclic-time operators to GR/cosmological observables",
         ],
         "next": [
             "ingest public EHT time-resolved products with checksums/source metadata",
             "freeze observable/equilibrium/distance/epsilon before outcome inspection",
             "fit matched null and candidate relaxation models with covariance",
+            "run dimensional/covariant falsifiers on internal symbolic black-hole mappings",
             "run every registered falsifier and quarantine failed descendants",
-            "retain TOKEN_VAZIO until the observational promotion gate closes",
+            "retain TOKEN_VAZIO until the relevant promotion gate closes",
         ],
     }
 
