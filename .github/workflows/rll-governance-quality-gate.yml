@@ -24,6 +24,8 @@ on:
       - "tests/test_rll_modern_validation_reconcile*.py"
       - "tools/rll_atlas_evolution_gate.py"
       - "tests/test_rll_atlas_evolution_gate.py"
+      - "tools/rll_atlas_continuous_evolution_gate.py"
+      - "tests/test_rll_atlas_continuous_evolution_gate.py"
       - "schemas/rll_observational_topology.v1.schema.json"
       - "tools/validate_rll_observational_topology.py"
       - "tests/test_rll_observational_topology.py"
@@ -139,6 +141,18 @@ jobs:
           python3 -m unittest -v tests.test_rll_atlas_evolution_gate
           sha256sum artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json \
             > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.sha256
+
+      - name: "Validate ATLAS continuous evolution Ω6 envelope"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_atlas_continuous_evolution_gate \
+            --envelope data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V1.json \
+            --trace data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V1.jsonl \
+            --predecessor data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json \
+            --output artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json
+          python3 -m unittest -v tests.test_rll_atlas_continuous_evolution_gate
+          sha256sum artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.sha256
 
       - name: "Publish non-certification report to job summary"
         if: always()

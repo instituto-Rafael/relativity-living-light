@@ -1,0 +1,294 @@
+{
+  "F_gap": [
+    "G2 full covariance",
+    "G3 adversarial likelihood parity",
+    "G4 unified baseline recovery on target joint likelihood",
+    "joint multi-probe robust Bayes",
+    "independent replication",
+    "DESI official joint/cross-block reproduction",
+    "ACT DR6 LCDM posterior chain",
+    "DES Y6 exact executable 3x2pt custody/reproduction",
+    "RLL perturbation closure and independent CLASS/CAMB implementation"
+  ],
+  "F_next": [
+    "P0: freeze and reproduce the official DESI DR2 reference likelihood/cross-block products with hashes and LCDM/CPL controls.",
+    "P0: materialize a covariance/parity contract shared by LCDM/wCDM/CPL/RLL before joint evidence.",
+    "P0: prepare an independent-replication package with frozen code/data/prior/receipt hashes.",
+    "P1: reproduce ACT DR6 LCDM posterior chain without interpreting it as RLL validation.",
+    "P1: inventory and freeze DES Y6 3x2pt executable custody.",
+    "P1: define falsifiable RLL perturbation closure before CLASS/CAMB implementation."
+  ],
+  "F_ok": [
+    "PR#780 is merged into rll/lab with verified merge lineage.",
+    "Real prior-locked SN-only nested evidence exists with two internal seeds; the generic Bayes gap is narrowed.",
+    "ACT DR6 materialization/reference predicates are resolved to the posterior-chain successor.",
+    "LCDM/CPL CLASS-CAMB baseline is verified while RLL perturbation closure remains explicit.",
+    "Six continuous-evolution guardrails are materialized as fail-closed contracts."
+  ],
+  "append_only": true,
+  "atlas": {
+    "repository": "rafaelmeloreisnovo/Mapa",
+    "routes": [
+      "ATLAS:X",
+      "L:X",
+      "O:X",
+      "T:X",
+      "REL:X",
+      "SCALE:X",
+      "EVID:X",
+      "GAP:X",
+      "LEARN:X"
+    ],
+    "routing_index": "indices/RAFAELIA_ATLAS_ROUTING_INDEX_V1.md"
+  },
+  "atlas_gate_projection": [
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+          "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+        },
+        {
+          "git_blob_sha1": "5b57ce5487887d72fcd6793df3c45e6c1723bdd5",
+          "path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"
+        }
+      ],
+      "id": "G0_SOURCE_RIGHTS_FREEZE",
+      "maturity": 1,
+      "predecessor_maturity": 1,
+      "reason": "DESI local source identity exists but complete rights/hash custody for all consumed datasets is not closed.",
+      "status": "PARTIAL"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+          "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+        }
+      ],
+      "id": "G1_OBSERVABLE_SCHEMA",
+      "maturity": 1,
+      "predecessor_maturity": 1,
+      "reason": "DESI BAO structure exists; complete schema/covariance semantics across all joint probes remain incomplete.",
+      "status": "PARTIAL"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+          "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+        }
+      ],
+      "id": "G2_FULL_COVARIANCE",
+      "maturity": 0,
+      "predecessor_maturity": 0,
+      "reason": "Unified or explicitly justified cross-probe covariance policy is not closed.",
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+          "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+        }
+      ],
+      "id": "G3_LIKELIHOOD_PARITY",
+      "maturity": 0,
+      "predecessor_maturity": 0,
+      "reason": "No unified evidence yet proves identical data/covariance/nuisance/prior/stopping treatment across RLL and all adversaries.",
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "55272b773365c188630b8850165beec0dc5c981f",
+          "path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json"
+        }
+      ],
+      "id": "G4_BASELINE_RECOVERY",
+      "maturity": 0,
+      "predecessor_maturity": 0,
+      "reason": "Standard CLASS/CAMB plumbing is verified, but a single frozen unified LCDM/wCDM/CPL recovery gate over the target joint likelihood is not closed.",
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "0d220f12a9cd01fd6b2e1b8261e17470dd563cb0",
+          "path": "artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json"
+        }
+      ],
+      "id": "G5_ROBUST_INFERENCE",
+      "maturity": 1,
+      "predecessor_maturity": 0,
+      "reason": "Real prior-locked dynesty nested evidence with two seeds exists for the three-model Dovekie SN-only comparison; joint multi-probe and independent replication remain open.",
+      "status": "PARTIAL"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "e4429c06218a15bb5a97c16fecb19bb8b2a9dfc8",
+          "path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json"
+        },
+        {
+          "git_blob_sha1": "55272b773365c188630b8850165beec0dc5c981f",
+          "path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json"
+        }
+      ],
+      "id": "G6_GROWTH_PERTURBATIONS",
+      "maturity": 1,
+      "predecessor_maturity": 0,
+      "reason": "RLL background/internal matter-growth approximation exists and LCDM/CPL CLASS-CAMB crosscheck is verified; RLL perturbation closure and independent CLASS/CAMB implementation remain open.",
+      "status": "PARTIAL"
+    },
+    {
+      "evidence": [
+        {
+          "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+          "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json"
+        }
+      ],
+      "id": "G7_CLAIM_DECISION",
+      "maturity": 0,
+      "predecessor_maturity": 0,
+      "reason": "G0-G6 are below VERIFIED and independent replication remains unresolved.",
+      "status": "BLOCKED"
+    }
+  ],
+  "authority": {
+    "branch": "rll/lab",
+    "head_sha": "75323d72c9c8d0180c2a01dfb7c7601f5da735c5",
+    "promotion_merge_commit": "75323d72c9c8d0180c2a01dfb7c7601f5da735c5",
+    "promotion_pr": 780,
+    "repository": "instituto-Rafael/relativity-living-light",
+    "repository_id": 1046495816,
+    "tree_sha": "a5fc033d245226f319b74514bc0632adbfe7ebca"
+  },
+  "claim_allowed": false,
+  "continuous_execution": {
+    "allowed_autonomous_actions": [
+      "validate contracts",
+      "generate receipts",
+      "classify gaps without inventing closure",
+      "fail closed on regression",
+      "emit SHA-256 custody products"
+    ],
+    "auto_merge": false,
+    "claim_promotion": "FORBIDDEN_WITHOUT_G0_G6_VERIFIED_AND_G7_VERIFIED",
+    "executor": ".github/workflows/rll-governance-quality-gate.yml",
+    "forbidden_autonomous_actions": [
+      "automatic scientific claim promotion",
+      "force-moving protected maturity refs",
+      "deleting historical evidence",
+      "auto-merging unreviewed scientific changes"
+    ],
+    "triggers": [
+      "pull_request",
+      "workflow_dispatch",
+      "workflow_call"
+    ]
+  },
+  "created_at_utc": "2026-08-27T23:34:00Z",
+  "custody_graph": {
+    "edges": [
+      {"from": "N_PREDECESSOR", "relation": "superseded_by", "to": "N_ENVELOPE"},
+      {"from": "N_BAYES", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_ACT", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_EXTERNAL", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_PERT_BOUNDARY", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_PERT_BASELINE", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_OVERRIDES_V2", "relation": "evidenced_by", "to": "N_ENVELOPE"},
+      {"from": "N_TRACE", "relation": "source_of", "to": "N_ENVELOPE"},
+      {"from": "N_ENVELOPE", "relation": "tested_by", "to": "N_RECEIPT"}
+    ],
+    "nodes": [
+      {"git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c", "id": "N_PREDECESSOR", "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json", "type": "SOURCE"},
+      {"git_blob_sha1": "0d220f12a9cd01fd6b2e1b8261e17470dd563cb0", "id": "N_BAYES", "path": "artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json", "type": "EVIDENCE"},
+      {"git_blob_sha1": "d81362e16e0116794fabdddc53a0893a61be4daf", "id": "N_ACT", "path": "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json", "type": "EVIDENCE"},
+      {"git_blob_sha1": "5b57ce5487887d72fcd6793df3c45e6c1723bdd5", "id": "N_EXTERNAL", "path": "artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json", "type": "EVIDENCE"},
+      {"git_blob_sha1": "e4429c06218a15bb5a97c16fecb19bb8b2a9dfc8", "id": "N_PERT_BOUNDARY", "path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json", "type": "EVIDENCE"},
+      {"git_blob_sha1": "55272b773365c188630b8850165beec0dc5c981f", "id": "N_PERT_BASELINE", "path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json", "type": "EVIDENCE"},
+      {"git_blob_sha1": "6392788efa72db7ae0f90ebf8dbfc89fb666797a", "id": "N_OVERRIDES_V2", "path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V2.json", "type": "EVIDENCE"},
+      {"id": "N_TRACE", "path": "data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V1.jsonl", "sha256": "cbb7be4d9e1f5c9e020640704c062150d0e5ef8b7a33b71e5abe435289362f6c", "type": "GENERATED"},
+      {"id": "N_ENVELOPE", "path": "data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V1.json", "type": "GATE"},
+      {"id": "N_RECEIPT", "path": "artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json", "type": "RECEIPT"}
+    ]
+  },
+  "gap_reconciliation": [
+    {"classification": "HISTORICAL_SESSION_TOOL_BOUNDARY_CLOSED_BY_CANONICAL_MERGE", "evidence": ["PR#780", "merge_commit:75323d72c9c8d0180c2a01dfb7c7601f5da735c5"], "state": "RESOLVED", "token": "TOKEN_VAZIO_MERGE_TOOL_POLICY"},
+    {"classification": "REAL_PRIOR_LOCKED_SN_ONLY_NESTED_EVIDENCE_EXISTS", "evidence": ["artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json"], "state": "REDUCED", "successors": ["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE", "TOKEN_VAZIO_INDEPENDENT_REPLICATION"], "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE"},
+    {"claim_blocking": true, "classification": "INDEPENDENT_AUTHORITY_REQUIRED", "state": "OPEN", "token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION"},
+    {"classification": "LOCAL_13_OBSERVABLE_SETUP_EXISTS_OFFICIAL_JOINT_GATE_REMAINS", "state": "REDUCED", "successors": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"], "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION"},
+    {"claim_blocking": true, "classification": "PUBLIC_PRODUCTS_AVAILABLE_LOCAL_REFERENCE_REPRODUCTION_PENDING", "state": "OPEN_EXTERNAL", "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"},
+    {"classification": "PUBLIC_EXECUTABLE_LIKELIHOOD_AND_LOCAL_MATERIALIZATION_EXIST", "state": "REDUCED", "token": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD"},
+    {"classification": "PINNED_MATERIALIZATION_TESTS_REFERENCE_PREDICATES_VERIFIED", "evidence": ["artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json"], "state": "RESOLVED", "successors": ["TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"], "token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION"},
+    {"claim_blocking": true, "classification": "FROZEN_LCDM_POSTERIOR_CHAIN_REQUIRED", "state": "OPEN_INTERNAL", "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"},
+    {"claim_blocking": true, "classification": "EXACT_EXECUTABLE_3X2PT_CUSTODY_AND_REFERENCE_REPRODUCTION_PENDING", "evidence": ["artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"], "state": "OPEN_EXTERNAL", "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD"},
+    {"classification": "STANDARD_BASELINE_VERIFIED_RLL_CLOSURE_AND_IMPLEMENTATION_REMAIN", "state": "REDUCED", "successors": ["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"], "token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK"},
+    {"claim_blocking": true, "classification": "PHYSICAL_THEORY_CLOSURE_REQUIRED", "state": "OPEN_MIXED", "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"},
+    {"claim_blocking": true, "classification": "IMPLEMENTATION_BLOCKED_BY_THEORY_CLOSURE", "state": "OPEN_MIXED", "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"}
+  ],
+  "invariants": [
+    "VISÃO_NE_ARTEFATO_NE_EXECUÇÃO_NE_EVIDÊNCIA_NE_CLAIM",
+    "TOKEN_VAZIO_NE_PASS",
+    "REDUCED_NE_RESOLVED",
+    "AVAILABILITY_NE_MATERIALIZATION_NE_REPRODUCTION_NE_RLL_VALIDATION",
+    "INTERNAL_REPLAY_NE_INDEPENDENT_REPLICATION",
+    "URGENCY_CHANGES_ORDER_NOT_TRUTH",
+    "NEGATIVE_RESULT_IS_EVIDENCE_NOT_REGRESSION",
+    "NO_FORCE_REF_TO_BYPASS_MATURITY",
+    "NO_NEW_WORKFLOW_WHEN_EXISTING_GOVERNANCE_EXECUTOR_CAN_HOST_THE_GATE"
+  ],
+  "omega6_guardrails": [
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_PROVENANCE", "id": "OMEGA6_PROVENANCE_LOCK", "mode": "FAIL_CLOSED", "purpose": "Every promotion-relevant evidence item has immutable identity, rights/provenance decision and content digest.", "state": "ACTIVE"},
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_RECEIPT_CHAIN", "id": "OMEGA6_RECEIPT_CHAIN", "mode": "APPEND_ONLY", "purpose": "Every gate execution emits a deterministic receipt linked to a predecessor or explicit bootstrap boundary.", "state": "ACTIVE"},
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_CUSTODY", "id": "OMEGA6_CUSTODY_DAG", "mode": "FAIL_CLOSED", "purpose": "Sources, transformations, tests, gates and decisions form an acyclic custody graph with no orphan promotion nodes.", "state": "ACTIVE"},
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_PARITY", "id": "OMEGA6_ADVERSARIAL_PARITY", "mode": "FAIL_CLOSED", "purpose": "RLL and adversary baselines use identical frozen data/covariance/nuisance and declared comparison policy.", "state": "ACTIVE"},
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_REPRO_REPLAY", "id": "OMEGA6_REPRO_REPLAY", "mode": "FAIL_CLOSED", "purpose": "Inference promotion requires reproducible environment, seed policy, convergence diagnostics and replayable receipt.", "state": "ACTIVE"},
+    {"claim_blocking": true, "failure_action": "TOKEN_VAZIO_INDEPENDENT_REPLICATION", "id": "OMEGA6_INDEPENDENT_REPLICATION", "mode": "FAIL_CLOSED", "purpose": "Independent replication must be independently attributable and cannot be satisfied by repeated runs of the same implementation.", "state": "ACTIVE"}
+  ],
+  "predecessor": {
+    "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c",
+    "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json",
+    "record_id": "RLL_ATLAS_EVOLUTION_GATE_20260827_V1"
+  },
+  "publication_ready": false,
+  "receipt_chain": {
+    "append_only": true,
+    "current_receipt_path": "artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json",
+    "current_receipt_sha256_path": "artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.sha256",
+    "predecessor_receipt": {
+      "artifact_id": 9664918543,
+      "artifact_name": "rll-governance-receipt-33117071438",
+      "digest": "sha256:256bd9d8af9ad22f8a96eb0ae5a327e6733235da70a766eea26ec89be7f8891a",
+      "head_sha": "102c8d6b6c087035f3c616f9d34244ac46d7c06c",
+      "workflow_run_id": 33117071438
+    }
+  },
+  "record_id": "RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_20260827_V1",
+  "revision": 1,
+  "risk_register": [
+    {"control": "OMEGA6_INDEPENDENT_REPLICATION", "id": "RISK-P0-REPLICATION", "impact": "blocks G7 claim decision", "priority": "P0", "state": "OPEN"},
+    {"control": "OMEGA6_ADVERSARIAL_PARITY", "id": "RISK-P0-COVARIANCE", "impact": "blocks G2/G3 joint inference", "priority": "P0", "state": "OPEN"},
+    {"control": "OMEGA6_PROVENANCE_LOCK", "id": "RISK-P0-DESI", "impact": "official joint reference reproduction missing", "priority": "P0", "state": "OPEN_EXTERNAL"},
+    {"control": "OMEGA6_REPRO_REPLAY", "id": "RISK-P0-JOINT-BAYES", "impact": "SN-only evidence cannot be transplanted to joint probes", "priority": "P0", "state": "OPEN_MIXED"},
+    {"control": "OMEGA6_REPRO_REPLAY", "id": "RISK-P1-ACT-POSTERIOR", "impact": "ACT materialization is not posterior reproduction", "priority": "P1", "state": "OPEN_INTERNAL"},
+    {"control": "OMEGA6_PROVENANCE_LOCK", "id": "RISK-P1-DESY6", "impact": "complete executable Y6 3x2pt custody missing", "priority": "P1", "state": "OPEN_EXTERNAL"},
+    {"control": "OMEGA6_CUSTODY_DAG", "id": "RISK-P1-RLL-PERT", "impact": "CMB/transfer/P(k) claims remain blocked", "priority": "P1", "state": "OPEN_MIXED"}
+  ],
+  "schema": "rll.atlas_continuous_evolution_envelope.v1",
+  "session_trace": {
+    "boundary": "Only user-visible directives and externally observable actions/results are recorded; private reasoning is not provenance.",
+    "known_event_count": 4,
+    "known_prompt_count": 2,
+    "path": "data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V1.jsonl",
+    "sha256": "cbb7be4d9e1f5c9e020640704c062150d0e5ef8b7a33b71e5abe435289362f6c"
+  },
+  "urgency_policy": {
+    "evidence_threshold_mutable": false,
+    "mode": "PRIORITIZE_PROBES_NOT_TRUTH",
+    "priority_order": ["P0", "P1", "P2"],
+    "rule": "Urgency may reorder F_next but cannot lower provenance, parity, reproducibility, replication or claim gates.",
+    "truth_threshold_mutable": false
+  }
+}
