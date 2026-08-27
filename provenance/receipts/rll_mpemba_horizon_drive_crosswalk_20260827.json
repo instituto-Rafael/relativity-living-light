@@ -1,0 +1,62 @@
+{
+  "schema": "rll.provenance.receipt.mpemba_horizon_drive_crosswalk.v1",
+  "recorded_at": "2026-08-27T18:20:00Z",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_receipt": "provenance/receipts/rll_mpemba_horizon_atlas_20260827.json",
+  "source_scope": "Google Drive internal RAFAELIA/Exacordex material matched by Hawking/black-hole semantics",
+  "sources": [
+    {
+      "drive_file_id": "1jAzmuoqVlqIPXUO73J33L09LahA5YyFD",
+      "title": "Cripttres.md",
+      "observed_material": [
+        "Exacordex/loop-gravity-inspired Bekenstein-Hawking entropy analogy",
+        "42-attractor black-hole microstate suggestion",
+        "symbolic direct/inverse time-arrow and cyclic-cosmology suggestion",
+        "post-hoc style language around order-of-magnitude/unit adjustment in cosmological analogy"
+      ],
+      "epistemic_class": "INTERNAL_SYMBOLIC_HYPOTHESIS"
+    },
+    {
+      "drive_file_id": "14cgzAjiEkaPGUlRa--Hcvq948RCwG8WA",
+      "title": "file_00000000c3dc720e8355a09f4f857da0.dat",
+      "observed_material": [
+        "RAFAELIA technical treatise containing symbolic mathematical/physical mappings",
+        "Hawking/Bekenstein-related references and system analogies"
+      ],
+      "epistemic_class": "INTERNAL_SYMBOLIC_HYPOTHESIS"
+    }
+  ],
+  "new_claim_fragments": [
+    {
+      "id": "BH-MP-10",
+      "state": "REJECT_UNCALIBRATED_EQUIVALENCE",
+      "claim_allowed": false,
+      "reason": "A symbolic entropy mapping cannot inherit physical Bekenstein-Hawking status without dimensions, area-law and first-law recovery, covariance and independent prediction."
+    },
+    {
+      "id": "BH-MP-11",
+      "state": "ANALOGY_ONLY_TOKEN_VAZIO_COVARIANT_DYNAMICS",
+      "claim_allowed": false,
+      "reason": "A cyclic/direct-inverse symbolic operator is not a GR horizon-time or cosmological model without explicit covariant dynamics and operational predictions."
+    }
+  ],
+  "new_falsifiers": [
+    "dimensional consistency and explicit variable-to-physical-quantity map",
+    "Bekenstein-Hawking area-law recovery",
+    "Schwarzschild first-law recovery dE = T_H dS in the declared domain",
+    "observer/covariance treatment",
+    "no post-hoc unit adjustment",
+    "independent quantitative prediction before equivalence testing",
+    "explicit metric/covariant dynamics for cyclic-time claims",
+    "GR/cosmological null-model comparison"
+  ],
+  "code_gate": "symbolic_bh_bridge_gate",
+  "anti_regression_tests_added": 2,
+  "token_vazio": [
+    "dimensionally closed RAFAELIA/Exacordex-to-Bekenstein-Hawking map",
+    "covariant dynamics connecting symbolic cyclic-time operators to measurable GR observables",
+    "independent empirical prediction from the symbolic mapping"
+  ],
+  "scientific_claim_allowed": false,
+  "append_only": true
+}
