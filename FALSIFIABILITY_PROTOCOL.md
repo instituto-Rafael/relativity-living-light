@@ -47,6 +47,9 @@ Additional invariants:
 - Any relativistic-jet route requiring causal transport of matter or information from inside an event horizon to infinity is rejected.
 - EHT synchrotron, polarization and plasma observables must not be promoted to Hawking thermometry.
 - Holographic, Unruh or other quantum Mpemba results are theory precedents and must not be promoted to an astrophysical black-hole Mpemba detection.
+- Internal RAFAELIA/Exacordex entropy analogies remain symbolic hypotheses until an explicit units/dimensions map, Bekenstein-Hawking area-law recovery, Schwarzschild first-law recovery, observer/covariance treatment and independent prediction close the bridge.
+- Post-hoc unit adjustment or numerical/constant matching cannot close a physical-equivalence gate.
+- Symbolic cyclic-time/direct-inverse operators remain `ANALOGY_ONLY` unless a covariant dynamical model produces operational, quantitative predictions that survive GR/cosmological null comparisons.
 - A real-data Mpemba claim requires a predeclared state/observable, equilibrium target, distance functional or admissible family, far/near ordering, crossing rule, first-passage threshold, covariance/uncertainty treatment, null competitors, hold-out/look-elsewhere controls and independent reproduction.
 - Synthetic crossings demonstrate only the detector/gate logic; they do not constitute natural evidence.
 - Missing real trajectories, file-level checksums, covariance-aware inference or independent reproduction keeps the astrophysical claim at `TOKEN_VAZIO`.
