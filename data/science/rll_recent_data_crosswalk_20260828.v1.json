@@ -1,0 +1,215 @@
+{
+  "F_gap": [
+    "official executable Ly-alpha AP+BAO covariance/likelihood custody",
+    "H51 held-out/future confirmation",
+    "H03 equal-treatment exact likelihood",
+    "H53 exact growth/perturbation closure",
+    "G6 convergence and independent replication"
+  ],
+  "F_next": [
+    "materialize DESI DR2 Ly-alpha full-shape covariance/likelihood if authoritative public product exists",
+    "project H03 and H51 through the same frozen background likelihood",
+    "implement exact RLL growth before consuming DES Y6 3x2pt as a model test"
+  ],
+  "F_ok": [
+    "current external measurements are cross-indexed against H03/H51/H53/H54",
+    "H51 central values are computed without calling them evidence",
+    "DESI Ly-alpha anti-double-counting and excluded-growth boundaries are explicit"
+  ],
+  "atlas_effect": {
+    "G2": "PARTIAL_UNCHANGED_NEW_EXTERNAL_CUSTODY_GAP_IDENTIFIED",
+    "G3": "PARTIAL_UNCHANGED_NEW_HIGH_Z_COMPATIBILITY_TARGET",
+    "G4": "PARTIAL_UNCHANGED_H51_H03_ARE_NOT_BASELINE_RECOVERY",
+    "G5": "PARTIAL_UNCHANGED",
+    "G6": "BLOCKED_UNCHANGED",
+    "G7": "BLOCKED"
+  },
+  "authority": {
+    "hypothesis_packet_pr": 777,
+    "parent_pr": 789,
+    "repository": "instituto-Rafael/relativity-living-light",
+    "target_ref": "science/recent-data-crosswalk-20260828"
+  },
+  "claim_allowed": false,
+  "created_at_utc": "2026-08-28T11:10:00Z",
+  "cross_tests": {
+    "H03": {
+      "boundary": "H03 is not CPL; only an equal-treatment likelihood using H03 distances can falsify it",
+      "decision": "PHANTOM_ONLY_SHAPE_DIFFERS_FROM_CURRENT_CPL_CENTRAL_REGION_W0_GT_MINUS1_WA_LT0",
+      "formula": "w(z)=-1+(1+z)*ln(sqrt(3)/2)/3",
+      "status": "QUALITATIVE_TENSION_NOT_EXACT_TEST",
+      "w_at_z0": -1.047947012075297,
+      "w_at_z2p33": -1.1596635502107384
+    },
+    "H51": {
+      "central_value_projections": [
+        {
+          "central_residual_wa": 0.2,
+          "combination": "DES_Y6_ONLY",
+          "observed_cpl_crossing_z": 0.5714285714,
+          "wa_from_H51_w0": -0.64,
+          "wa_observed": -0.44
+        },
+        {
+          "central_residual_wa": 0.11,
+          "combination": "DES_Y6_PLUS_DESI_DR2",
+          "observed_cpl_crossing_z": 0.4324324324,
+          "wa_from_H51_w0": -0.64,
+          "wa_observed": -0.53
+        },
+        {
+          "central_residual_wa": 0.09,
+          "combination": "DES_Y6_PLUS_DESI_DR2_PLUS_PRIMARY_CMB",
+          "observed_cpl_crossing_z": 0.4,
+          "wa_from_H51_w0": -0.72,
+          "wa_observed": -0.63
+        }
+      ],
+      "decision": "CONSISTENT_QUADRANT_AND_NEAR_LINE_CENTRAL_VALUES_BUT_NOT_CONFIRMATORY",
+      "falsifier": "project an official future or held-out chain onto the fixed H51 line with full covariance/equal priors and reject if the one-dimensional line is excluded at the preregistered threshold",
+      "fixed_crossing": {
+        "a": 0.75,
+        "z": 0.3333333333333333
+      },
+      "formula": "wa=-4*(w0+1)",
+      "generated_after_sources": true,
+      "status": "RETROSPECTIVE_CONSISTENCY_ONLY"
+    },
+    "H53": {
+      "forbidden_proxy": "do not substitute DESI Ly-alpha f_sigma8 from the 2026 full-shape analysis because the collaboration excluded that growth measurement after mock-bias tests",
+      "reason": "DES Y6 3x2pt provides precise late-time growth information, but RLL exact perturbation/growth closure remains absent",
+      "status": "PRIORITY_INCREASED_TOKEN_VAZIO_EXACT_GROWTH"
+    },
+    "H54": {
+      "next_gate": "materialize an authoritative joint AP+BAO covariance/likelihood or a documented replacement of the overlapping Ly-alpha BAO block; never double count",
+      "reason": "DESI DR2 Ly-alpha full-shape/AP is now the tightest high-z expansion anchor in this route",
+      "status": "PRIORITY_INCREASED_TOKEN_VAZIO_JOINT_COVARIANCE"
+    }
+  },
+  "invariants": [
+    "RECENT_DATA_NE_CONFIRMATION",
+    "POST_HOC_NE_HELD_OUT",
+    "CENTRAL_VALUE_NE_COVARIANCE_TEST",
+    "OVERLAPPING_LYA_AP_BAO_NE_INDEPENDENT_BLOCKS",
+    "EXCLUDED_GROWTH_ESTIMATE_NE_RLL_GROWTH_EVIDENCE",
+    "PARTIAL_NE_VERIFIED",
+    "CLAIM_ALLOWED_FALSE_UNTIL_GATES_CLOSE"
+  ],
+  "mode": "APPEND_ONLY_FAIL_CLOSED",
+  "publication_ready": false,
+  "record_id": "RLL_RECENT_DATA_CROSSWALK_20260828_V1",
+  "schema": "rll.recent_data_crosswalk.v1",
+  "sources": [
+    {
+      "arxiv": "2607.27410",
+      "boundary": [
+        "full-shape/AP overlaps the Ly-alpha BAO spectra and must not be appended as an independent likelihood block",
+        "reported f_sigma8 from this full-shape analysis is not eligible for RLL growth validation when the collaboration excludes it after mock-bias tests",
+        "abstract-level numbers do not substitute for executable covariance/likelihood custody"
+      ],
+      "id": "DESI_DR2_LYA_FS_2026",
+      "kind": "PRIMARY_SURVEY_RESULT",
+      "model_level": {
+        "DESI_CMB_discrepancy_after_sigma": 2.2,
+        "DESI_CMB_discrepancy_before_sigma": 2.4,
+        "w0wa_preference_sigma_DESI_CMB": 2.7,
+        "w0wa_preference_sigma_DESI_CMB_SN": 3.2
+      },
+      "observables": {
+        "DH_over_rd": {
+          "sigma": 0.066,
+          "value": 8.6
+        },
+        "DM_over_rd": {
+          "sigma": 0.33,
+          "value": 39.32
+        },
+        "H0_LyaFS_BBN": {
+          "sigma": 1.3,
+          "value": 66.5
+        },
+        "Omega_m_LCDM": {
+          "sigma": 0.018,
+          "value": 0.325
+        },
+        "z_eff": 2.33
+      },
+      "release_date": "2026-07-30",
+      "revision_date": "2026-08-04"
+    },
+    {
+      "arxiv": "2601.14559",
+      "boundary": [
+        "growth information is a valid H53 target only after an exact RLL perturbation/growth completion exists",
+        "survey likelihood/covariance and nuisance treatment must be consumed under equal treatment before model ranking"
+      ],
+      "id": "DES_Y6_3X2PT_2026",
+      "kind": "PRIMARY_SURVEY_RESULT",
+      "observables": {
+        "Omega_m_LCDM": {
+          "sigma_minus": 0.028,
+          "sigma_plus": 0.023,
+          "value": 0.333
+        },
+        "S8_LCDM": {
+          "sigma_minus": 0.012,
+          "sigma_plus": 0.012,
+          "value": 0.789
+        },
+        "joint_all_w_wCDM": {
+          "sigma_minus": 0.022,
+          "sigma_plus": 0.021,
+          "value": -0.981
+        },
+        "w_wCDM": {
+          "sigma_minus": 0.2,
+          "sigma_plus": 0.26,
+          "value": -1.12
+        }
+      },
+      "release_date": "2026-01-21"
+    },
+    {
+      "arxiv": "2605.27221",
+      "boundary": [
+        "these measurements predate H51 and therefore can test retrospective consistency but cannot confirm H51",
+        "CPL central-value comparisons without published covariance do not define a line-distance significance"
+      ],
+      "cpl_constraints": [
+        {
+          "combination": "DES_Y6_ONLY",
+          "deviation_from_Lambda_sigma": 2.2,
+          "w0": -0.84,
+          "w0_sigma_minus": 0.1,
+          "w0_sigma_plus": 0.1,
+          "wa": -0.44,
+          "wa_sigma_minus": 0.55,
+          "wa_sigma_plus": 0.6
+        },
+        {
+          "combination": "DES_Y6_PLUS_DESI_DR2",
+          "deviation_from_Lambda_sigma": 2.3,
+          "w0": -0.84,
+          "w0_sigma_minus": 0.07,
+          "w0_sigma_plus": 0.06,
+          "wa": -0.53,
+          "wa_sigma_minus": 0.28,
+          "wa_sigma_plus": 0.33
+        },
+        {
+          "combination": "DES_Y6_PLUS_DESI_DR2_PLUS_PRIMARY_CMB",
+          "deviation_from_Lambda_sigma": 3.0,
+          "w0": -0.82,
+          "w0_sigma_minus": 0.05,
+          "w0_sigma_plus": 0.05,
+          "wa": -0.63,
+          "wa_sigma_minus": 0.18,
+          "wa_sigma_plus": 0.21
+        }
+      ],
+      "id": "DES_Y6_DDE_2026",
+      "kind": "PRIMARY_MULTI_PROBE_RESULT",
+      "release_date": "2026-05-26"
+    }
+  ]
+}
