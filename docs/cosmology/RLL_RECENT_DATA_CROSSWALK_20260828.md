@@ -79,7 +79,7 @@ DES Y6 materially raises the priority of H53 because it provides precise late-ti
 
 Do not use the DESI DR2 Lyα full-shape `fσ8` as a substitute: `arXiv:2607.27411` reports a significant mock bias and excludes that growth measurement from the final analysis.
 
-## H54 — high-z AP
+## H54 — high-z AP and executable custody
 
 H54 becomes the highest-value background-data upgrade. The new DESI Lyα full-shape/AP point is a ~1% high-redshift geometry anchor.
 
@@ -90,7 +90,18 @@ Lyα AP/full-shape + Lyα BAO overlap in spectra
 => never append them as statistically independent blocks
 ```
 
-Promotion requires authoritative joint covariance/likelihood custody or an explicit replacement of the overlapping Lyα BAO block.
+The public-custody audit adds an append-only successor classification:
+
+```text
+previous: PRIORITY_INCREASED_TOKEN_VAZIO_JOINT_COVARIANCE
+effective: OPEN_EXTERNAL_PUBLIC_CUSTODY_BLOCKER
+```
+
+DESI currently publishes the DR2 cosmology papers and BAO cosmology chains/posterior-maximization products, while its public documentation states that the underlying DR2 spectra/redshifts are not yet released. An official DESI Data Q&A additionally states that correlation functions and covariances are to be released with the full DR2 public release. Therefore this audit has **not** established public executable custody of the new Lyα full-shape AP+BAO correlation/covariance/likelihood bytes.
+
+This is recorded separately in `data/science/rll_recent_data_custody_status_20260828.v1.json` so the earlier crosswalk is not silently rewritten.
+
+H54 can close this custody blocker only after an authoritative release/supplement provides the exact inputs, followed by local hashing and official-reference replay.
 
 ## ATLAS effect
 
@@ -108,8 +119,8 @@ Recent evidence changes **priority and falsifier sharpness**, not truth status.
 
 ## R3
 
-`F_ok`: recent DESI/DES evidence cross-indexed against H03/H51/H53/H54; post-hoc boundary explicit; anti-double-counting explicit; DESI growth-validation exclusion pinned.
+`F_ok`: recent DESI/DES evidence cross-indexed against H03/H51/H53/H54; post-hoc boundary explicit; anti-double-counting explicit; DESI growth-validation exclusion pinned; H54 external-custody blocker classified.
 
-`F_gap`: executable Lyα AP+BAO covariance/likelihood; H51 held-out/future test; H03 exact likelihood; H53 perturbation/growth closure; G6 convergence; independent replication.
+`F_gap`: public executable Lyα AP+BAO covariance/likelihood custody; H51 held-out/future test; H03 exact likelihood; H53 perturbation/growth closure; G6 convergence; independent replication.
 
-`F_next`: materialize H54 likelihood custody first, then project H03/H51 through the same frozen background likelihood, then consume DES Y6 growth only after H53 closure.
+`F_next`: watch for authoritative H54 covariance/likelihood release; when available, hash/materialize/replay it, then project H03/H51 through the same frozen background likelihood, and consume DES Y6 growth only after H53 closure.
