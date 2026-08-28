@@ -1,0 +1,165 @@
+{
+  "schema": "rll.atlas_continuous_evolution_envelope.v1",
+  "record_id": "RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_20260827_V2",
+  "revision": 2,
+  "created_at_utc": "2026-08-27T23:55:00Z",
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_ready": false,
+  "predecessor": {
+    "record_id": "RLL_ATLAS_EVOLUTION_GATE_20260827_V1",
+    "path": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json",
+    "git_blob_sha1": "62d23aeb3a41c02a5d043de847648779ccb48f1c"
+  },
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "repository_id": 1046495816,
+    "branch": "rll/lab",
+    "base_head_sha": "b5ad6dc1afbddb930c7a526a152544665c2d36f2",
+    "base_tree_sha": "ac055f5d0fa185e64ab22d777c6015b5f3b8a2eb",
+    "atlas_merge_pr": 780,
+    "atlas_merge_commit": "75323d72c9c8d0180c2a01dfb7c7601f5da735c5",
+    "session_mesh_pr": 785,
+    "session_mesh_merge_commit": "7ade809036c255dcdfba39bee3a4be16485c0a56",
+    "workflow_inventory_reconcile_pr": 786,
+    "workflow_inventory_reconcile_commit": "b5ad6dc1afbddb930c7a526a152544665c2d36f2"
+  },
+  "session_mesh_authority": {
+    "path": "data/registries/rll_session_evolution_mesh.v1.json",
+    "git_blob_sha1": "fbe97ca44540b21e553c88fd7fa52b5be5cec8a7",
+    "status": "ACTIVE_FAIL_CLOSED",
+    "relationship": "CONSUMED_AS_AUTHORITY_OMEGA6_IS_ORTHOGONAL_COMPLEMENT",
+    "existing_fence_ids": [
+      "FENCE-01-AUTHORITY",
+      "FENCE-02-NONREGRESSION",
+      "FENCE-03-FALSIFIABILITY",
+      "FENCE-04-ROLLBACK",
+      "FENCE-05-DRIFT",
+      "FENCE-06-INDEPENDENCE"
+    ]
+  },
+  "workflow_inventory_authority": {
+    "path": ".github/workflow-contract.yml",
+    "git_blob_sha1": "f0926d130968d509e3e0a9bc1d63ac23c3f27e96",
+    "active_workflows": 77,
+    "source_pr": 786,
+    "relationship": "CONSUMED_AS_CURRENT_EXECUTABLE_INVENTORY_AUTHORITY"
+  },
+  "session_trace": {
+    "path": "data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V2.jsonl",
+    "sha256": "24facd362ed1335c9652f56c2c2e8ea60ebdd2de610a53b9cbd90775d387ad1f",
+    "known_prompt_count": 2,
+    "known_event_count": 6,
+    "boundary": "Only user-visible directives and externally observable actions/results are recorded; private reasoning is not provenance."
+  },
+  "urgency_policy": {
+    "mode": "PRIORITIZE_PROBES_NOT_TRUTH",
+    "priority_order": ["P0", "P1", "P2"],
+    "truth_threshold_mutable": false,
+    "evidence_threshold_mutable": false,
+    "rule": "Urgency may reorder F_next but cannot lower provenance, parity, reproducibility, replication or claim gates."
+  },
+  "continuous_execution": {
+    "executor": ".github/workflows/rll-governance-quality-gate.yml",
+    "triggers": ["pull_request", "workflow_dispatch", "workflow_call"],
+    "auto_merge": false,
+    "claim_promotion": "FORBIDDEN_WITHOUT_G0_G6_VERIFIED_AND_G7_VERIFIED",
+    "allowed_autonomous_actions": [
+      "validate contracts",
+      "generate receipts",
+      "classify gaps without inventing closure",
+      "fail closed on regression",
+      "emit SHA-256 custody products"
+    ],
+    "forbidden_autonomous_actions": [
+      "automatic scientific claim promotion",
+      "force-moving protected maturity refs",
+      "deleting historical evidence",
+      "auto-merging unreviewed scientific changes"
+    ]
+  },
+  "omega6_guardrails": [
+    {"id":"OMEGA6_PROVENANCE_LOCK","state":"ACTIVE","mode":"FAIL_CLOSED","claim_blocking":true,"failure_action":"TOKEN_VAZIO_PROVENANCE","purpose":"Immutable source/version/rights/digest before promotion."},
+    {"id":"OMEGA6_RECEIPT_CHAIN","state":"ACTIVE","mode":"APPEND_ONLY","claim_blocking":true,"failure_action":"TOKEN_VAZIO_RECEIPT_CHAIN","purpose":"Deterministic receipt linked to predecessor or explicit bootstrap boundary."},
+    {"id":"OMEGA6_CUSTODY_DAG","state":"ACTIVE","mode":"FAIL_CLOSED","claim_blocking":true,"failure_action":"TOKEN_VAZIO_CUSTODY","purpose":"Acyclic source-to-evidence-to-gate-to-receipt graph without orphan promotion nodes."},
+    {"id":"OMEGA6_ADVERSARIAL_PARITY","state":"ACTIVE","mode":"FAIL_CLOSED","claim_blocking":true,"failure_action":"TOKEN_VAZIO_PARITY","purpose":"RLL and adversary baselines share frozen data/covariance/nuisance comparison policy."},
+    {"id":"OMEGA6_REPRO_REPLAY","state":"ACTIVE","mode":"FAIL_CLOSED","claim_blocking":true,"failure_action":"TOKEN_VAZIO_REPRO_REPLAY","purpose":"Frozen environment, seed policy, convergence diagnostics and replayable receipts."},
+    {"id":"OMEGA6_INDEPENDENT_REPLICATION","state":"ACTIVE","mode":"FAIL_CLOSED","claim_blocking":true,"failure_action":"TOKEN_VAZIO_INDEPENDENT_REPLICATION","purpose":"Internal reruns cannot satisfy independent replication."}
+  ],
+  "receipt_chain": {
+    "append_only": true,
+    "predecessor_receipt": {
+      "workflow_run_id": 33117071438,
+      "artifact_id": 9664918543,
+      "artifact_name": "rll-governance-receipt-33117071438",
+      "digest": "sha256:256bd9d8af9ad22f8a96eb0ae5a327e6733235da70a766eea26ec89be7f8891a",
+      "head_sha": "102c8d6b6c087035f3c616f9d34244ac46d7c06c"
+    },
+    "current_receipt_path": "artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json",
+    "current_receipt_sha256_path": "artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.sha256"
+  },
+  "custody_graph": {
+    "nodes": [
+      {"id":"N_PREDECESSOR","type":"SOURCE","path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"},
+      {"id":"N_SESSION_MESH","type":"EVIDENCE","path":"data/registries/rll_session_evolution_mesh.v1.json","git_blob_sha1":"fbe97ca44540b21e553c88fd7fa52b5be5cec8a7"},
+      {"id":"N_WORKFLOW_CONTRACT","type":"EVIDENCE","path":".github/workflow-contract.yml","git_blob_sha1":"f0926d130968d509e3e0a9bc1d63ac23c3f27e96"},
+      {"id":"N_BAYES","type":"EVIDENCE","path":"artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json","git_blob_sha1":"0d220f12a9cd01fd6b2e1b8261e17470dd563cb0"},
+      {"id":"N_ACT","type":"EVIDENCE","path":"artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json","git_blob_sha1":"d81362e16e0116794fabdddc53a0893a61be4daf"},
+      {"id":"N_EXTERNAL","type":"EVIDENCE","path":"artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json","git_blob_sha1":"5b57ce5487887d72fcd6793df3c45e6c1723bdd5"},
+      {"id":"N_PERT_BOUNDARY","type":"EVIDENCE","path":"artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json","git_blob_sha1":"e4429c06218a15bb5a97c16fecb19bb8b2a9dfc8"},
+      {"id":"N_PERT_BASELINE","type":"EVIDENCE","path":"artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json","git_blob_sha1":"55272b773365c188630b8850165beec0dc5c981f"},
+      {"id":"N_OVERRIDES_V2","type":"EVIDENCE","path":"data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260808_V2.json","git_blob_sha1":"6392788efa72db7ae0f90ebf8dbfc89fb666797a"},
+      {"id":"N_TRACE","type":"GENERATED","path":"data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V2.jsonl","sha256":"24facd362ed1335c9652f56c2c2e8ea60ebdd2de610a53b9cbd90775d387ad1f"},
+      {"id":"N_ENVELOPE","type":"GATE","path":"data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V2.json"},
+      {"id":"N_RECEIPT","type":"RECEIPT","path":"artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json"}
+    ],
+    "edges": [
+      {"from":"N_PREDECESSOR","to":"N_ENVELOPE","relation":"superseded_by"},
+      {"from":"N_SESSION_MESH","to":"N_ENVELOPE","relation":"authority_for"},
+      {"from":"N_WORKFLOW_CONTRACT","to":"N_ENVELOPE","relation":"authority_for"},
+      {"from":"N_BAYES","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_ACT","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_EXTERNAL","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_PERT_BOUNDARY","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_PERT_BASELINE","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_OVERRIDES_V2","to":"N_ENVELOPE","relation":"evidenced_by"},
+      {"from":"N_TRACE","to":"N_ENVELOPE","relation":"source_of"},
+      {"from":"N_ENVELOPE","to":"N_RECEIPT","relation":"tested_by"}
+    ]
+  },
+  "atlas_gate_projection": [
+    {"id":"G0_SOURCE_RIGHTS_FREEZE","status":"PARTIAL","maturity":1,"predecessor_maturity":1,"reason":"Complete multi-probe source/rights/hash custody is not closed.","evidence":[{"path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"},{"path":"artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json","git_blob_sha1":"5b57ce5487887d72fcd6793df3c45e6c1723bdd5"}]},
+    {"id":"G1_OBSERVABLE_SCHEMA","status":"PARTIAL","maturity":1,"predecessor_maturity":1,"reason":"Joint observable and covariance semantics remain incomplete.","evidence":[{"path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"}]},
+    {"id":"G2_FULL_COVARIANCE","status":"TOKEN_VAZIO","maturity":0,"predecessor_maturity":0,"reason":"Unified or justified cross-probe covariance is not closed.","evidence":[{"path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"}]},
+    {"id":"G3_LIKELIHOOD_PARITY","status":"TOKEN_VAZIO","maturity":0,"predecessor_maturity":0,"reason":"Identical frozen data/covariance/nuisance/prior/stopping treatment is not yet proven across all adversaries.","evidence":[{"path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"}]},
+    {"id":"G4_BASELINE_RECOVERY","status":"TOKEN_VAZIO","maturity":0,"predecessor_maturity":0,"reason":"Standard backend recovery exists but the unified target-likelihood baseline gate remains open.","evidence":[{"path":"artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json","git_blob_sha1":"55272b773365c188630b8850165beec0dc5c981f"}]},
+    {"id":"G5_ROBUST_INFERENCE","status":"PARTIAL","maturity":1,"predecessor_maturity":0,"reason":"Prior-locked two-seed dynesty evidence exists for Dovekie SN-only; joint evidence and independent replication remain open.","evidence":[{"path":"artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json","git_blob_sha1":"0d220f12a9cd01fd6b2e1b8261e17470dd563cb0"}]},
+    {"id":"G6_GROWTH_PERTURBATIONS","status":"PARTIAL","maturity":1,"predecessor_maturity":0,"reason":"RLL background/internal growth approximation and LCDM/CPL baseline exist; RLL closure and independent engine implementation remain open.","evidence":[{"path":"artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json","git_blob_sha1":"e4429c06218a15bb5a97c16fecb19bb8b2a9dfc8"},{"path":"artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json","git_blob_sha1":"55272b773365c188630b8850165beec0dc5c981f"}]},
+    {"id":"G7_CLAIM_DECISION","status":"BLOCKED","maturity":0,"predecessor_maturity":0,"reason":"G0-G6 are below VERIFIED and independent replication is unresolved.","evidence":[{"path":"data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json","git_blob_sha1":"62d23aeb3a41c02a5d043de847648779ccb48f1c"}]}
+  ],
+  "gap_reconciliation": [
+    {"token":"TOKEN_VAZIO_MERGE_TOOL_POLICY","state":"RESOLVED","classification":"HISTORICAL_SESSION_TOOL_BOUNDARY_CLOSED_BY_CANONICAL_MERGE","evidence":["PR#780","merge_commit:75323d72c9c8d0180c2a01dfb7c7601f5da735c5"]},
+    {"token":"TOKEN_VAZIO_REAL_BAYES_INFERENCE","state":"REDUCED","classification":"REAL_PRIOR_LOCKED_SN_ONLY_NESTED_EVIDENCE_EXISTS","evidence":["artifacts/science/bayes/RLL_MODERN_DOVEKIE_3MODEL_BAYES_RECEIPT_20260807_RUN31226738703.json"],"successors":["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE","TOKEN_VAZIO_INDEPENDENT_REPLICATION"]},
+    {"token":"TOKEN_VAZIO_INDEPENDENT_REPLICATION","state":"OPEN","classification":"INDEPENDENT_AUTHORITY_REQUIRED","claim_blocking":true},
+    {"token":"TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION","state":"REDUCED","classification":"LOCAL_13_OBSERVABLE_SETUP_EXISTS_OFFICIAL_JOINT_GATE_REMAINS","successors":["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"]},
+    {"token":"TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION","state":"OPEN_EXTERNAL","classification":"PUBLIC_PRODUCTS_AVAILABLE_LOCAL_REFERENCE_REPRODUCTION_PENDING","claim_blocking":true},
+    {"token":"TOKEN_VAZIO_ACT_DR6_LIKELIHOOD","state":"REDUCED","classification":"PUBLIC_EXECUTABLE_LIKELIHOOD_AND_LOCAL_MATERIALIZATION_EXIST"},
+    {"token":"TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION","state":"RESOLVED","classification":"PINNED_MATERIALIZATION_TESTS_REFERENCE_PREDICATES_VERIFIED","evidence":["artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json"],"successors":["TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"]},
+    {"token":"TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION","state":"OPEN_INTERNAL","classification":"FROZEN_LCDM_POSTERIOR_CHAIN_REQUIRED","claim_blocking":true},
+    {"token":"TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD","state":"OPEN_EXTERNAL","classification":"EXACT_EXECUTABLE_3X2PT_CUSTODY_AND_REFERENCE_REPRODUCTION_PENDING","claim_blocking":true,"evidence":["artifacts/science/external/RLL_EXTERNAL_LIKELIHOOD_AVAILABILITY_20260808_V1.json"]},
+    {"token":"TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK","state":"REDUCED","classification":"STANDARD_BASELINE_VERIFIED_RLL_CLOSURE_AND_IMPLEMENTATION_REMAIN","successors":["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS","TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"]},
+    {"token":"TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS","state":"OPEN_MIXED","classification":"PHYSICAL_THEORY_CLOSURE_REQUIRED","claim_blocking":true},
+    {"token":"TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION","state":"OPEN_MIXED","classification":"IMPLEMENTATION_BLOCKED_BY_THEORY_CLOSURE","claim_blocking":true}
+  ],
+  "invariants": [
+    "VISÃO_NE_ARTEFATO_NE_EXECUÇÃO_NE_EVIDÊNCIA_NE_CLAIM",
+    "TOKEN_VAZIO_NE_PASS",
+    "REDUCED_NE_RESOLVED",
+    "AVAILABILITY_NE_MATERIALIZATION_NE_REPRODUCTION_NE_RLL_VALIDATION",
+    "INTERNAL_REPLAY_NE_INDEPENDENT_REPLICATION",
+    "URGENCY_CHANGES_ORDER_NOT_TRUTH",
+    "NEGATIVE_RESULT_IS_EVIDENCE_NOT_REGRESSION",
+    "NO_FORCE_REF_TO_BYPASS_MATURITY",
+    "NO_NEW_WORKFLOW_WHEN_EXISTING_GOVERNANCE_EXECUTOR_CAN_HOST_THE_GATE"
+  ]
+}
