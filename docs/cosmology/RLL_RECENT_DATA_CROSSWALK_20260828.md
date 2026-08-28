@@ -15,15 +15,20 @@ This overlay crosses the current RLL successor hypotheses with the newest primar
    - Lyα full-shape + BBN: `H0 = 66.5 ± 1.3 km s^-1 Mpc^-1`
    - evolving-DE preference: `2.7σ` for DESI+CMB and `3.2σ` with supernovae.
    - the new high-z anchor moves the DESI/CMB discrepancy from `2.4σ` to `2.2σ`.
-   - the Lyα growth estimate is **not** promoted here: the collaboration's validation reports a mock bias in `fσ8` and excludes it from the final analysis.
 
-2. **DES Y6 3×2pt** (`arXiv:2601.14559`)
+2. **DESI DR2 Lyα full-shape validation** (`arXiv:2607.27411`, v2 2026-08-04)
+   - BAO and AP parameters satisfy the declared validation requirements and remain stable across the tested analysis variants.
+   - mock studies identify a significant bias in the inferred `fσ8`.
+   - the collaboration therefore excludes that growth measurement from the final analysis.
+   - consequence for RLL: this release can sharpen H54 geometry tests but its excluded `fσ8` must not be promoted into H53 growth evidence.
+
+3. **DES Y6 3×2pt** (`arXiv:2601.14559`)
    - `S8 = 0.789 ± 0.012`
    - `Ωm = 0.333 +0.023/-0.028`
    - Y6 3×2pt `wCDM`: `w = -1.12 +0.26/-0.20`
    - combined Y6 3×2pt + CMB + low-z: `w = -0.981 +0.021/-0.022`, with no significant preference over ΛCDM in this one-parameter wCDM slice.
 
-3. **DES Y6 dynamical dark energy** (`arXiv:2605.27221`)
+4. **DES Y6 dynamical dark energy** (`arXiv:2605.27221`)
    - DES-only: `w0=-0.84±0.10`, `wa=-0.44 +0.60/-0.55`
    - + DESI DR2: `w0=-0.84 +0.06/-0.07`, `wa=-0.53 +0.33/-0.28`
    - + primary CMB: `w0=-0.82±0.05`, `wa=-0.63 +0.21/-0.18`
@@ -31,7 +36,7 @@ This overlay crosses the current RLL successor hypotheses with the newest primar
 
 ## H51 — fixed crossing
 
-H51 was registered on 2026-08-27 **after all three source releases above**. Therefore this is retrospective consistency only.
+H51 was registered on 2026-08-27 **after all source releases above**. Therefore this is retrospective consistency only.
 
 The exact H51 line is
 
@@ -72,11 +77,11 @@ H03 stays phantom for all `z>=0`, unlike the current CPL central region that has
 
 DES Y6 materially raises the priority of H53 because it provides precise late-time growth information. RLL still lacks the exact perturbation/growth completion needed to consume that information as an RLL test.
 
-Do not use the DESI DR2 Lyα full-shape `fσ8` as a substitute: the DESI validation identified mock bias and excluded that growth measurement.
+Do not use the DESI DR2 Lyα full-shape `fσ8` as a substitute: `arXiv:2607.27411` reports a significant mock bias and excludes that growth measurement from the final analysis.
 
 ## H54 — high-z AP
 
-H54 becomes the highest-value background-data upgrade. The new DESI Lyα full-shape/AP point is a 1% high-redshift geometry anchor.
+H54 becomes the highest-value background-data upgrade. The new DESI Lyα full-shape/AP point is a ~1% high-redshift geometry anchor.
 
 Critical rule:
 
@@ -103,7 +108,7 @@ Recent evidence changes **priority and falsifier sharpness**, not truth status.
 
 ## R3
 
-`F_ok`: recent DESI/DES evidence cross-indexed against H03/H51/H53/H54; post-hoc boundary explicit; anti-double-counting explicit.
+`F_ok`: recent DESI/DES evidence cross-indexed against H03/H51/H53/H54; post-hoc boundary explicit; anti-double-counting explicit; DESI growth-validation exclusion pinned.
 
 `F_gap`: executable Lyα AP+BAO covariance/likelihood; H51 held-out/future test; H03 exact likelihood; H53 perturbation/growth closure; G6 convergence; independent replication.
 
