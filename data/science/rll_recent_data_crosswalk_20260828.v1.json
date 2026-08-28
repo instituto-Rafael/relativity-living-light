@@ -210,6 +210,19 @@
       "id": "DES_Y6_DDE_2026",
       "kind": "PRIMARY_MULTI_PROBE_RESULT",
       "release_date": "2026-05-26"
+    },
+    {
+      "arxiv": "2607.27411",
+      "findings": [
+        "BAO and AP parameters satisfy validation requirements and are stable across tests",
+        "mock studies show significant bias in f_sigma8",
+        "f_sigma8 is excluded from the final analysis"
+      ],
+      "id": "DESI_DR2_LYA_FS_VALIDATION_2026",
+      "kind": "PRIMARY_VALIDATION_RESULT",
+      "relation": "VALIDATES_AP_AND_NEGATES_GROWTH_PROXY_FOR_H53",
+      "release_date": "2026-07-29",
+      "revision_date": "2026-08-04"
     }
   ]
 }
