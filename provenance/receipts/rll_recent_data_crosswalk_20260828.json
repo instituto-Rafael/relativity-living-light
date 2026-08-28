@@ -1,0 +1,40 @@
+{
+  "anti_double_counting": "DESI Ly-alpha full-shape/AP cannot be appended as independent of overlapping Ly-alpha BAO",
+  "claim_allowed": false,
+  "classification": {
+    "H03": "QUALITATIVE_TENSION_NOT_EXACT_TEST",
+    "H51": "RETROSPECTIVE_CONSISTENCY_ONLY",
+    "H53": "PRIORITY_INCREASED_TOKEN_VAZIO_EXACT_GROWTH",
+    "H54": "PRIORITY_INCREASED_TOKEN_VAZIO_JOINT_COVARIANCE"
+  },
+  "crosswalk_sha256": "794c426b38a89142f453cdecd1ebc62a8ba9821af2bda1fe46a07cb60b33dede",
+  "event_id": "RLL-RECENT-DATA-CROSSWALK-20260828",
+  "maturity_effect": "NONE_BEYOND_EXISTING_PARTIAL_G2_G3_G4",
+  "negative_or_limiting_evidence_preserved": [
+    "DESI Ly-alpha f_sigma8 excluded from final science use after mock-bias validation",
+    "H51 sources predate H51 registration; retrospective consistency is not confirmation",
+    "H03-vs-CPL comparison is qualitative until equal-treatment exact likelihood"
+  ],
+  "next_observable_step": "materialize authoritative DESI DR2 Ly-alpha AP+BAO covariance/likelihood or documented overlapping-block replacement",
+  "parent_pr": 789,
+  "publication_ready": false,
+  "schema": "rll.recent_data_crosswalk_receipt.v1",
+  "source_branch": "science/recent-data-crosswalk-20260828",
+  "sources": [
+    {
+      "arxiv": "2607.27410",
+      "id": "DESI_DR2_LYA_FS_2026",
+      "primary_release": "2026-07-30"
+    },
+    {
+      "arxiv": "2601.14559",
+      "id": "DES_Y6_3X2PT_2026",
+      "primary_release": "2026-01-21"
+    },
+    {
+      "arxiv": "2605.27221",
+      "id": "DES_Y6_DDE_2026",
+      "primary_release": "2026-05-26"
+    }
+  ]
+}
