@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CROSSWALK = ROOT / "data/science/rll_recent_data_crosswalk_20260828.v1.json"
+CUSTODY = ROOT / "data/science/rll_recent_data_custody_status_20260828.v1.json"
 RECEIPT = ROOT / "provenance/receipts/rll_recent_data_crosswalk_20260828.json"
 
 
@@ -29,6 +30,19 @@ def test_receipt_pins_exact_crosswalk_bytes():
     assert receipt["crosswalk_sha256"] == digest
     assert receipt["claim_allowed"] is False
     assert receipt["publication_ready"] is False
+
+
+def test_h54_external_custody_blocker_is_append_only_and_fail_closed():
+    c = json.loads(CUSTODY.read_text(encoding="utf-8"))
+    h54 = c["H54"]
+    assert c["mode"] == "APPEND_ONLY_SUCCESSOR"
+    assert c["claim_allowed"] is False
+    assert c["publication_ready"] is False
+    assert h54["previous_state"] == "PRIORITY_INCREASED_TOKEN_VAZIO_JOINT_COVARIANCE"
+    assert h54["effective_state"] == "OPEN_EXTERNAL_PUBLIC_CUSTODY_BLOCKER"
+    assert "covariance" in " ".join(h54["not_established_public_custody"]).lower()
+    assert c["atlas_effect"]["G2"] == "PARTIAL_UNCHANGED"
+    assert c["atlas_effect"]["G7"] == "BLOCKED"
 
 
 def test_h51_is_retrospective_not_confirmation():
