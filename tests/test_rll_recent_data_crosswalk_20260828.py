@@ -1,9 +1,11 @@
+import hashlib
 import json
 import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CROSSWALK = ROOT / "data/science/rll_recent_data_crosswalk_20260828.v1.json"
+RECEIPT = ROOT / "provenance/receipts/rll_recent_data_crosswalk_20260828.json"
 
 
 def load():
@@ -19,6 +21,14 @@ def test_recent_data_crosswalk_is_fail_closed():
     assert c["atlas_effect"]["G4"].startswith("PARTIAL_")
     assert c["atlas_effect"]["G6"] == "BLOCKED_UNCHANGED"
     assert c["atlas_effect"]["G7"] == "BLOCKED"
+
+
+def test_receipt_pins_exact_crosswalk_bytes():
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    digest = hashlib.sha256(CROSSWALK.read_bytes()).hexdigest()
+    assert receipt["crosswalk_sha256"] == digest
+    assert receipt["claim_allowed"] is False
+    assert receipt["publication_ready"] is False
 
 
 def test_h51_is_retrospective_not_confirmation():
