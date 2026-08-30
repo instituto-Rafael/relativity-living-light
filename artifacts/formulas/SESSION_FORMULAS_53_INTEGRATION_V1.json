@@ -1,0 +1,14 @@
+{
+  "schema":"rafaelia.session_formula_integration.v1",
+  "canonical_repo":"rafaelmeloreisnovo/Mapa",
+  "canonical_path":"data/formulas/SESSION_FORMULA_REGISTRY_53_V1.json",
+  "registry_id":"SESSION-FORMULAS-53-20260830-V1",
+  "exact_count":53,
+  "canonical_range":"F01..F53",
+  "local_repo":"instituto-Rafael/relativity-living-light",
+  "role":"SCIENTIFIC_FALSIFICATION_AND_PHYSICS",
+  "applicable_ids":["F01","F03","F35","F36","F38","F39","F40","F41","F53"],
+  "requirements":["units","domain","falsifier","independent_data","claim_gate"],
+  "non_applicable":"REFERENCE_CANONICAL_NO_DUPLICATION",
+  "claim_allowed":false
+}
