@@ -1,0 +1,70 @@
+{
+  "repository": "instituto-Rafael/relativity-living-light",
+  "product_id": "RLLT-001",
+  "layers": [
+    "Operational Ontology"
+  ],
+  "authority": {
+    "primary_owner": "instituto-Rafael",
+    "domain": "relativity and living light authority",
+    "responsibility_scope": "relativistic frameworks, light-based ontologies, physical-spiritual integration, transformation principles",
+    "authority_boundary": "documents relativity and living light frameworks; external physics peer review required for physical claims"
+  },
+  "epistemic_state": {
+    "state": "VERIFICATION_PENDING",
+    "control_plane_state": "VERIFICATION_PENDING",
+    "claim_allowed": false,
+    "merged_pr_count": 0,
+    "open_token_vazio_count": 2,
+    "closed_token_vazio_count": 0
+  },
+  "github_identity": {
+    "repo_url": "https://github.com/instituto-Rafael/relativity-living-light",
+    "refactoring_branch": "claude/refatoracao-documentacao-produtos-czeifu",
+    "visibility": "private"
+  },
+  "token_vazio_catalog": {
+    "tv_test": 1,
+    "tv_test_items": [
+      "Relativity-living light framework validation and falsification (Cycle 5)"
+    ],
+    "tv_boundary": 1,
+    "tv_boundary_items": [
+      "Physical vs. spiritual interpretation boundary definition (Cycle 4)"
+    ],
+    "total_open_gaps": 2
+  },
+  "closure_sequence": {
+    "cycle_4": {
+      "deadline": "2026-09-15",
+      "gates": [
+        "Define physical-spiritual interpretation boundaries",
+        "Establish framework scope and limitations"
+      ]
+    },
+    "cycle_5": {
+      "deadline": "2026-10-15",
+      "gates": [
+        "Implement falsification tests for living light framework"
+      ]
+    }
+  },
+  "next_gates": [
+    "Cycle 4: Define physical-spiritual interpretation boundaries",
+    "Cycle 5: Implement falsification tests"
+  ],
+  "quality_level": "Bom",
+  "quality_assessment": {
+    "technical_completeness": "Relativity framework documented; living light ontology structured",
+    "governance_discipline": "Fail-closed; physical-spiritual boundary explicit; falsification tests required before claims",
+    "cross_repo_coherence": "Relativity frameworks linked to physics and spiritual authority repos",
+    "evidence_binding": "Framework documentation; falsification testing TOKEN_VAZIO until Cycles 4-5"
+  },
+  "refactoring_status": "NOT_STARTED",
+  "refactoring_phase": 0,
+  "handoff": {
+    "f_ok": "RLLT-001 product card created; relativity and living light authority role established",
+    "f_gap": "Physical-spiritual boundary not yet defined (TV-BOUNDARY, Cycle 4); falsification tests not implemented (TV-TEST, Cycle 5)",
+    "f_next": "Define physical-spiritual interpretation boundaries; implement falsification tests; refactor README with navigation header"
+  }
+}
