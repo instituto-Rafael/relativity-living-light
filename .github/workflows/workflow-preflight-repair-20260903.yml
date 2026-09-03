@@ -1,28 +1,28 @@
 name: Workflow Preflight Repair 20260903
 
 on:
-  push:
+  pull_request:
+    types: [opened]
     branches:
-      - audit/rll-workflow-preflight-repair-20260903
-    paths:
-      - tools/repair_workflow_preflight_20260903.py
-      - .github/workflows/workflow-preflight-repair-20260903.yml
+      - main
 
 permissions:
   contents: write
 
 concurrency:
-  group: workflow-preflight-repair-20260903-${{ github.ref }}
+  group: workflow-preflight-repair-20260903-${{ github.head_ref }}
   cancel-in-progress: false
 
 jobs:
   repair-audit-branch:
+    if: github.head_ref == 'audit/rll-workflow-preflight-repair-20260903'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout audit branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: ${{ github.head_ref }}
           persist-credentials: true
           fetch-depth: 0
 
@@ -47,10 +47,10 @@ jobs:
       - name: Commit repair to this audit branch only
         run: |
           set -euo pipefail
-          test "$GITHUB_REF_NAME" = "audit/rll-workflow-preflight-repair-20260903"
+          test "$GITHUB_HEAD_REF" = "audit/rll-workflow-preflight-repair-20260903"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .github/workflows tests/test_workflow_preflight_static.py data/governance/rll_workflow_preflight_repair_20260903.v1.json
           git diff --cached --check
           git commit -m "ci: repair RLL workflow preflight validation"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_HEAD_REF}"
