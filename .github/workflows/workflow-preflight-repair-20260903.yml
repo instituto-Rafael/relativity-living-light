@@ -1,0 +1,56 @@
+name: Workflow Preflight Repair 20260903
+
+on:
+  push:
+    branches:
+      - audit/rll-workflow-preflight-repair-20260903
+    paths:
+      - tools/repair_workflow_preflight_20260903.py
+      - .github/workflows/workflow-preflight-repair-20260903.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: workflow-preflight-repair-20260903-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  repair-audit-branch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout audit branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Install focused test dependency
+        run: python -m pip install pytest
+
+      - name: Apply deterministic branch-only repair
+        run: python tools/repair_workflow_preflight_20260903.py
+
+      - name: Verify patch hygiene
+        run: |
+          set -euo pipefail
+          git diff --check
+          test -n "$(git status --porcelain)"
+          python -m pytest -q tests/test_workflow_preflight_static.py
+
+      - name: Commit repair to this audit branch only
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "audit/rll-workflow-preflight-repair-20260903"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows tests/test_workflow_preflight_static.py data/governance/rll_workflow_preflight_repair_20260903.v1.json
+          git diff --cached --check
+          git commit -m "ci: repair RLL workflow preflight validation"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
