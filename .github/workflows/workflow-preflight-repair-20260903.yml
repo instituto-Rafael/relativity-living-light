@@ -2,7 +2,7 @@ name: Workflow Preflight Repair 20260903
 
 on:
   pull_request:
-    types: [opened]
+    types: [reopened]
     branches:
       - main
 
@@ -34,6 +34,19 @@ jobs:
       - name: Install focused test dependency
         run: python -m pip install pytest
 
+      - name: Normalize repair-tool EOF handling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/repair_workflow_preflight_20260903.py')
+          text = path.read_text(encoding='utf-8')
+          old = '        new = "".join(line for line in lines if not line.startswith("x-canonical-real-data-policy:"))\n'
+          new = old + '        new = new.rstrip("\\n") + "\\n"\n'
+          if text.count(old) != 1:
+              raise SystemExit(f'expected one repair_x_canonical normalization anchor, found {text.count(old)}')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
       - name: Apply deterministic branch-only repair
         run: python tools/repair_workflow_preflight_20260903.py
 
@@ -50,7 +63,7 @@ jobs:
           test "$GITHUB_HEAD_REF" = "audit/rll-workflow-preflight-repair-20260903"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows tests/test_workflow_preflight_static.py data/governance/rll_workflow_preflight_repair_20260903.v1.json
+          git add tools/repair_workflow_preflight_20260903.py .github/workflows tests/test_workflow_preflight_static.py data/governance/rll_workflow_preflight_repair_20260903.v1.json
           git diff --cached --check
           git commit -m "ci: repair RLL workflow preflight validation"
           git push origin "HEAD:${GITHUB_HEAD_REF}"
