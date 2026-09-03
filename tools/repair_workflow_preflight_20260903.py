@@ -224,7 +224,7 @@ def main() -> None:
     static = validate_static()
     changed.append(write_receipt(changed, static))
     subprocess.run(["python", "-m", "pytest", "-q", "tests/test_workflow_preflight_static.py"], cwd=ROOT, check=True)
-    print(json.dumps({"status": "PASS_LOCAL_REPAIR", "changed": sorted(changed), "static": static}, indent=2))
+    print(json.dumps({"status": "PASS_LOCAL_REPAIR", "changed": sorted(changed)}, indent=2))
 
 
 if __name__ == "__main__":
