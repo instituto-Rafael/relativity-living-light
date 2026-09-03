@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout audit branch
+      - name: Checkout trusted base branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ${{ github.head_ref }}
-          persist-credentials: true
+          ref: main
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Setup Python
