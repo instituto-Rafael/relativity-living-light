@@ -1,0 +1,284 @@
+{
+  "schema": "rll.quantum_vacuum_birefringence_crosswalk.v1",
+  "record_id": "RLL_QUANTUM_VACUUM_BIREFRINGENCE_CROSSWALK_20260903_V1",
+  "checked_at_utc": "2026-09-03T02:54:33Z",
+  "state": "DOCUMENTED_PRIMARY_SOURCE_CROSSWALK_TEST_ROUTE_OPEN",
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "policy": {
+    "purpose": "Record a provenance-safe crosswalk between the 1E 1547.0-5408 vacuum-birefringence literature and RLL without converting a QED observation into a cosmological or RLL confirmation.",
+    "media_discovery_is_primary_evidence": false,
+    "external_paper_is_rll_confirmation": false,
+    "analogical_relation_is_physical_equivalence": false,
+    "repository_ci_may_write_repository": false,
+    "repository_ci_may_ingest_external_data": false,
+    "negative_results_preserved": true,
+    "default_missing_state": "TOKEN_VAZIO"
+  },
+  "sources": [
+    {
+      "source_id": "SRC-QED-VB-STEWARD-NATURE-2026",
+      "source_class": "PRIMARY_PEER_REVIEWED_PAPER",
+      "citation": "Stewart, R. E. et al. Vacuum birefringence and the polarized X-ray emission from a radio magnetar. Nature 656, 590-594 (2026).",
+      "doi": "10.1038/s41586-026-10859-z",
+      "url": "https://www.nature.com/articles/s41586-026-10859-z",
+      "publication_date_utc": "2026-08-05T00:00:00Z",
+      "observable": "phase- and energy-resolved X-ray polarization of radio magnetar 1E 1547.0-5408",
+      "direct_support_scope": "Strong magnetic fields can induce polarization-dependent vacuum refractive indices; the reported polarimetric pattern is evidence relevant to vacuum-birefringence propagation in the stated magnetar domain.",
+      "outside_scope": "No RLL parameter, cosmological background expansion, dark-energy identity, dark-matter identity, or RLL model preference is tested by this paper.",
+      "source_bytes_sha256": "TOKEN_VAZIO_PRIMARY_PAPER_BYTES_NOT_FROZEN_IN_REPOSITORY",
+      "rights_state": "TOKEN_VAZIO_SOURCE_TERMS_NOT_REVIEWED_FOR_DATA_INGESTION",
+      "claim_allowed": false
+    },
+    {
+      "source_id": "SRC-QED-VB-STEWARD-ARXIV-V5-2026",
+      "source_class": "PRIMARY_VERSIONED_PREPRINT",
+      "citation": "Stewart, R. E. et al., arXiv:2509.19446v5 (2026).",
+      "doi": "10.48550/arXiv.2509.19446",
+      "url": "https://arxiv.org/abs/2509.19446",
+      "version": "v5",
+      "version_date_utc": "2026-08-17T21:41:09Z",
+      "observable": "IXPE, NICER and Parkes/Murriyang coordinated polarization measurements of 1E 1547.0-5408",
+      "direct_support_scope": "The preprint states that vacuum-birefringence-governed magnetospheric propagation can explain the stated polarization signals and that standard non-refractive surface-emission models are challenged in this domain.",
+      "outside_scope": "The source is not a materialized RLL likelihood, does not define an RLL QED observable, and is not an independent RLL replication.",
+      "source_bytes_sha256": "TOKEN_VAZIO_ARXIV_V5_BYTES_NOT_FROZEN_IN_REPOSITORY",
+      "rights_state": "OPEN_PREPRINT_ACCESS_NOT_A_DATA_INGESTION_OR_RIGHTS_RECEIPT",
+      "claim_allowed": false
+    },
+    {
+      "source_id": "SRC-QED-VB-INOVACAO-20260901",
+      "source_class": "DISCOVERY_CONTEXT_NOT_PRIMARY_EVIDENCE",
+      "citation": "Espaço não é vazio e altera comportamento da luz, Inovação Tecnológica (2026-09-01).",
+      "url": "https://www.inovacaotecnologica.com.br/noticias/noticia.php?artigo=vacuo-altera-comportamento-luz&id=010130260901",
+      "role": "discovery pointer to the primary paper",
+      "direct_support_scope": "None beyond identifying the cited study and its topic.",
+      "outside_scope": "Not used as the scientific evidence source for this crosswalk.",
+      "source_bytes_sha256": "TOKEN_VAZIO_MEDIA_BYTES_NOT_FROZEN_IN_REPOSITORY",
+      "rights_state": "NOT_APPLICABLE_DISCOVERY_POINTER_ONLY",
+      "claim_allowed": false
+    }
+  ],
+  "rll_context": [
+    {
+      "context_id": "RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815",
+      "location": "data/evidence/rll_observer_mirror_photon_gate_20260815.json",
+      "evidence_class": "DOCUMENTED_SYNTHETIC_PROXY",
+      "directly_supported": "The existing RLL observer/mirror/photon gate explicitly classifies itself as a synthetic self-test until real optical or cosmological ledger rows are supplied.",
+      "safe_relation": "ANALOGOUS_ONLY: both concern propagation/observation language, but the RLL gate is not a physical magnetar or vacuum-birefringence model.",
+      "claim_allowed": false
+    },
+    {
+      "context_id": "RLL-CTX-DESI-DR2-BAO-2026",
+      "location": "data/results/desi_dr2_bao_model_comparison.json",
+      "evidence_class": "DOCUMENTED_LIMITED_REAL_DATA_COMPARISON",
+      "directly_supported": "The stored 13-observation DESI DR2 BAO setup labels LCDM as preferred over the fixed current RLL parameterization for that setup.",
+      "safe_relation": "SEPARATE_OBSERVABLE: BAO background-distance fitting neither tests nor is tested by the magnetar vacuum-birefringence observation.",
+      "claim_allowed": false
+    },
+    {
+      "context_id": "RLL-CTX-FORMULA-LITERATURE-GRAPH-20260822",
+      "location": "data/science/rll_formula_literature_edges.v1.json",
+      "evidence_class": "DOCUMENTED_EVIDENCE_GRAPH",
+      "directly_supported": "The formula-literature graph preserves the invariant CLASS_MATCH != SUPPORTS_EXACT and requires an exact typed formula before an exact-test edge can be promoted.",
+      "safe_relation": "TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA: no exact RLL formula has been defined that predicts the paper's phase- and energy-resolved polarimetry.",
+      "claim_allowed": false
+    },
+    {
+      "context_id": "RLL-CTX-DRIVE-EDITORIAL-CORPUS-20260903",
+      "location": "Google Drive editorial corpus, reviewed through authorized read-only access",
+      "evidence_class": "DOCUMENTED_EDITORIAL_CONTEXT",
+      "directly_supported": "The Drive operating contract requires source-to-index-to-claim-to-evidence-to-falsifier separation and preserves TOKEN_VAZIO when a source, model, or receipt is absent.",
+      "safe_relation": "EDITORIAL_GOVERNANCE_ONLY: private Drive identifiers and contents are intentionally not copied into this public repository.",
+      "claim_allowed": false
+    }
+  ],
+  "directly_supported": [
+    {
+      "claim_id": "QED-VB-DIRECT-001",
+      "text": "The cited magnetar study reports phase- and energy-resolved X-ray polarization observations in a strong-field QED regime and interprets them as evidence relevant to vacuum-birefringence propagation.",
+      "source_ids": [
+        "SRC-QED-VB-STEWARD-NATURE-2026",
+        "SRC-QED-VB-STEWARD-ARXIV-V5-2026"
+      ],
+      "evidence_class": "DOCUMENTED_PRIMARY_SOURCE",
+      "claim_allowed": false
+    },
+    {
+      "claim_id": "RLL-BOUNDARY-DIRECT-001",
+      "text": "The current RLL observer/mirror/photon gate is synthetic proxy logic, and the current DESI DR2 BAO comparison is a separate limited real-data comparison that prefers LCDM in its stored setup.",
+      "source_ids": [
+        "RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815",
+        "RLL-CTX-DESI-DR2-BAO-2026"
+      ],
+      "evidence_class": "DOCUMENTED_REPOSITORY_ARTIFACTS",
+      "claim_allowed": false
+    }
+  ],
+  "analogous_only": [
+    {
+      "relation_id": "ANALOGY-QED-VB-RLL-OBSERVER-001",
+      "text": "Polarization-dependent propagation near a magnetar can be used as a methodological analogy for separating emitted, propagated and observed signals in RLL documentation.",
+      "boundary": "An analogy about observation layers is not a derivation of an RLL physical term, nor evidence for dark matter, dark energy, cosmological refraction, or RLL preference.",
+      "claim_allowed": false
+    },
+    {
+      "relation_id": "ANALOGY-QED-VB-RLL-FALSIFICATION-001",
+      "text": "The paper's phase, energy, polarization-degree and polarization-angle structure is an example of a multi-observable falsification contract rather than a single narrative fit.",
+      "boundary": "This supplies a test-design pattern only; it does not create data or likelihood parity for RLL.",
+      "claim_allowed": false
+    }
+  ],
+  "testable_routes": [
+    {
+      "test_id": "TEST-QED-VB-REPRODUCE-POLARIMETRY",
+      "state": "TOKEN_VAZIO_RAW_EVENT_DATA_EPHEMERIS_AND_ANALYSIS_RECEIPT",
+      "target": "Reproduce the paper's published phase- and energy-resolved polarization summaries from rights-cleared IXPE event data, associated response files, radio ephemeris, and a frozen analysis command.",
+      "baselines": [
+        "published_QED_vacuum_birefringence_model",
+        "non_refractive_surface_emission_model",
+        "magnetospheric_plasma_or_geometry_alternatives"
+      ],
+      "metrics": [
+        "phase_energy_resolved_log_likelihood",
+        "posterior_predictive_check",
+        "polarization_degree_residuals",
+        "polarization_angle_residuals"
+      ],
+      "required_evidence": [
+        "rights_and_release_receipt",
+        "raw_or_calibrated_event_file_hashes",
+        "response_and_ephemeris_hashes",
+        "frozen_analysis_environment",
+        "published_summary_reproduction_receipt"
+      ],
+      "falsifier": "The frozen reproduction fails to recover the declared phase-energy polarization pattern within a preregistered tolerance, or a non-vacuum baseline explains the same data at least as well under equivalent nuisance treatment.",
+      "claim_allowed": false
+    },
+    {
+      "test_id": "TEST-RLL-QED-OBSERVABLE-MAP",
+      "state": "TOKEN_VAZIO_NO_TYPED_RLL_QED_FORWARD_MODEL",
+      "target": "Define one typed RLL forward model that predicts a named polarimetric observable without changing the historical RLL background-fit artifact.",
+      "baselines": [
+        "QED_vacuum_birefringence_baseline",
+        "no_additional_RLL_term",
+        "declared_astrophysical_nuisance_model"
+      ],
+      "metrics": [
+        "units_and_dimension_check",
+        "nested_model_limit_check",
+        "phase_energy_likelihood_delta",
+        "posterior_predictive_check"
+      ],
+      "required_evidence": [
+        "typed_equation_and_parameter_definitions",
+        "units_and_domain_contract",
+        "implementation_hash",
+        "same_data_covariance_priors_and_nuisance_policy",
+        "predeclared_falsifier"
+      ],
+      "falsifier": "The proposed RLL term is dimensionally invalid, fails its nested no-extra-term limit, or cannot improve or distinguish itself from the QED and astrophysical baselines under identical treatment.",
+      "claim_allowed": false
+    },
+    {
+      "test_id": "TEST-RLL-QED-COSMOLOGY-TRANSFER",
+      "state": "TOKEN_VAZIO_NO_DERIVATION_FROM_MAGNETAR_QED_TO_COSMOLOGY",
+      "target": "Only after the observable map passes its local contracts, derive and test a separate cosmological observable with a new identifier and an independent likelihood route.",
+      "baselines": [
+        "LCDM",
+        "wCDM",
+        "CPL_w0waCDM",
+        "QED_effect_confined_to_magnetar_domain"
+      ],
+      "metrics": [
+        "derivation_review",
+        "nested_limit",
+        "joint_likelihood_delta",
+        "posterior_convergence",
+        "independent_replication"
+      ],
+      "required_evidence": [
+        "explicit_domain_transfer_derivation",
+        "cosmological_observable_definition",
+        "data_and_covariance_receipt",
+        "baseline_parity_run",
+        "independent_replication_receipt"
+      ],
+      "falsifier": "No valid derivation exists, the effect remains confined to the magnetar strong-field regime, or an equal-treatment cosmology run does not distinguish the new model from the stated baselines.",
+      "claim_allowed": false
+    }
+  ],
+  "token_vazio": [
+    {
+      "id": "TV-QED-VB-SOURCE-BYTES-20260903",
+      "state": "TOKEN_VAZIO_PRIMARY_SOURCE_BYTES_AND_RIGHTS_RECEIPT",
+      "reason": "The repository records bibliographic pointers but does not contain frozen paper, supplement, data-release, or rights hashes.",
+      "next_verifiable_step": "Create a rights-cleared source manifest with exact release URLs, versions, terms, bytes and SHA-256 values without committing restricted material.",
+      "priority": "P1"
+    },
+    {
+      "id": "TV-QED-VB-REPRODUCTION-20260903",
+      "state": "TOKEN_VAZIO_INDEPENDENT_POLARIMETRY_REPRODUCTION",
+      "reason": "No independent RLL-side run reproducing the IXPE/NICER/Parkes analysis is present.",
+      "next_verifiable_step": "Bind one executable reproduction pipeline to frozen inputs and preserve both positive and negative receipts.",
+      "priority": "P1"
+    },
+    {
+      "id": "TV-RLL-QED-EXACT-FORMULA-20260903",
+      "state": "TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA",
+      "reason": "No typed RLL formula predicts the paper's phase-energy polarimetry, so no exact formula-literature edge can be added honestly.",
+      "next_verifiable_step": "Define a separately versioned equation, units, limiting case and falsifier before adding any exact-test edge.",
+      "priority": "P0"
+    },
+    {
+      "id": "TV-RLL-QED-COSMOLOGY-TRANSFER-20260903",
+      "state": "TOKEN_VAZIO_NO_MAGNETAR_TO_COSMOLOGY_DERIVATION",
+      "reason": "A strong-field local QED observation has no demonstrated transfer law to RLL background cosmology.",
+      "next_verifiable_step": "Keep the domains separated until a derivation, cosmological observable, parity likelihood and independent replication are all available.",
+      "priority": "P0"
+    }
+  ],
+  "index_destinations": [
+    {
+      "location": "data/real_sources/rll_quantum_vacuum_birefringence_crosswalk_20260903.v1.json",
+      "action": "NEW_APPEND_ONLY_INDEX_RECORD",
+      "state": "IMPLEMENTED_IN_THIS_CHANGE"
+    },
+    {
+      "location": "workflows/TOKEN_VAZIO_LEDGER_RAFAELIA.md",
+      "action": "APPEND_NEW_GAPS_ONLY",
+      "state": "IMPLEMENTED_IN_THIS_CHANGE"
+    },
+    {
+      "location": "data/science/rll_formula_literature_edges.v1.json",
+      "action": "NO_EDGE_ADDED_UNTIL_AN_EXACT_TYPED_RLL_FORMULA_EXISTS",
+      "state": "TOKEN_VAZIO_PRESERVED"
+    },
+    {
+      "location": "data/evidence/rll_observer_mirror_photon_gate_20260815.json",
+      "action": "HISTORICAL_SYNTHETIC_GATE_PRESERVED_UNCHANGED",
+      "state": "NO_HISTORICAL_REWRITE"
+    }
+  ],
+  "invariants": [
+    "QED_MAGNETAR_OBSERVATION_NE_RLL_CONFIRMATION",
+    "ANALOGY_NE_PHYSICAL_DERIVATION",
+    "CLASS_MATCH_NE_SUPPORTS_EXACT",
+    "SOURCE_POINTER_NE_FROZEN_BYTES_OR_RIGHTS_RECEIPT",
+    "CI_ARTIFACT_NE_REPOSITORY_WRITE",
+    "CI_PASS_NE_SCIENTIFIC_CONFIRMATION",
+    "HISTORICAL_SYNTHETIC_GATE_NE_REAL_OPTICAL_MEASUREMENT"
+  ],
+  "F_ok": [
+    "Primary and discovery sources are separated.",
+    "The QED observation, RLL synthetic proxy and DESI background comparison remain in distinct evidence lanes.",
+    "Three test routes have baselines, metrics, required evidence and falsifiers."
+  ],
+  "F_gap": [
+    "Frozen source bytes and rights receipt.",
+    "Independent polarimetry reproduction.",
+    "Typed RLL QED forward model.",
+    "Any derivation from magnetar strong-field QED to cosmology."
+  ],
+  "F_next": "Run the artifact-only crosswalk audit; only materialize a data-ingestion or exact-formula route after its source, model and falsifier contracts are explicit."
+}
