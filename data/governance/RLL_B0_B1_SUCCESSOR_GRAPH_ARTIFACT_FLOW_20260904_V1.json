@@ -1,0 +1,115 @@
+{
+  "schema": "rll.b0_b1_successor_graph_artifact_flow.v1",
+  "observed_at": "2026-09-04",
+  "mode": "AUDIT_ONLY",
+  "state": "CURRENT_HEAD_PARTIAL_VALIDATION",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "forward_port_authorized": false,
+  "lineage": {
+    "predecessor_cycle": "OMEGA-FED-20260904T0001Z-B0-B1-SUCCESSOR-CANDIDATE-46",
+    "successor_candidate_branch": "audit/b0-b1-successor-manifest-20260903",
+    "successor_candidate_parent": "1b9dd0311798fbf4790b61ec701f37af8a44cbb6",
+    "historical_graph": "data/governance/RLL_B0_B1_DEPENDENCY_GRAPH_20260816_V1.json"
+  },
+  "exact_refs": {
+    "main": "f6c8c1816f5c27e44b4747dac05b5475bcb5f000",
+    "rll/lab": "67aea0e7b7f38941bf62ac94f8b0e11d4f1e16fb",
+    "merge_base": "bf1364e42c844de1806e2a327df38a7ea71cd4ee",
+    "main_only_commits": 161,
+    "lab_only_commits": 133,
+    "divergence_state": "REPRODUCED_CURRENT_CYCLE"
+  },
+  "current_evidence": {
+    "main_contract": {
+      "path": ".github/workflow-contract.yml",
+      "blob": "63093369beb2e98c3c4f18d9e3a361486ac85de9",
+      "state": "OBSERVED_CURRENT_REF",
+      "inventory_declared": 84
+    },
+    "lab_contract_sync_workflow": {
+      "path": ".github/workflows/workflow-contract-sync.yml",
+      "blob": "bfe36d07cd8b72a1d9251048867f4ff676aa14ec",
+      "state": "OBSERVED_CURRENT_REF"
+    },
+    "main_operational_auto_hotfix_workflow": {
+      "path": ".github/workflows/rll-operational-auto-hotfix.yml",
+      "blob": "dd8d54af697eb28b8823228118a9715071e140c3",
+      "state": "OBSERVED_CURRENT_REF"
+    }
+  },
+  "artifact_flows": [
+    {
+      "id": "AF01_WORKFLOW_CONTRACT_SYNC",
+      "producer": "tools/workflow_contract_sync.py",
+      "carrier": ".github/workflows/workflow-contract-sync.yml",
+      "workspace_product": "artifacts/workflow-contract-sync/",
+      "provider_product": "workflow-contract-sync-${run_id}-${run_attempt}",
+      "upload_action_present": true,
+      "state": "OBSERVED_CURRENT_REF",
+      "downstream_consumer_outside_workflow": "TOKEN_VAZIO_NOT_OBSERVED"
+    },
+    {
+      "id": "AF02_OPERATIONAL_AUTO_HOTFIX",
+      "producer_set": [
+        "tools/rll_auto_hotfix.py",
+        "tools/github_actions_runtime_ingest.py",
+        "tools/workflow_contract_sync.py"
+      ],
+      "carrier": ".github/workflows/rll-operational-auto-hotfix.yml",
+      "workspace_products": [
+        "artifacts/operational-auto-hotfix/",
+        "artifacts/operational-runtime-ingest/",
+        "artifacts/workflow-contract-sync/"
+      ],
+      "provider_product": "rll-operational-auto-hotfix-${run_id}-${run_attempt}",
+      "upload_action_present": true,
+      "state": "OBSERVED_CURRENT_REF",
+      "downstream_consumer_outside_workflow": "TOKEN_VAZIO_NOT_OBSERVED"
+    }
+  ],
+  "targeted_tests": {
+    "lab_contract_sync": [
+      "tests/test_workflow_contract_sync.py"
+    ],
+    "main_operational_governance": [
+      "tests/test_rll_auto_hotfix.py",
+      "tests/test_github_actions_runtime_ingest.py",
+      "tests/test_propose_operational_hotfix_pr.py",
+      "tests/test_workflow_contract_sync.py",
+      "tests/test_validate_workflow_docs.py"
+    ],
+    "current_cycle_execution_state": "DOCUMENTED_NOT_EXECUTED_THIS_CYCLE"
+  },
+  "acceptance": {
+    "dependency_graph_current": "PARTIAL_DIRECT_EDGE_REVALIDATION",
+    "artifact_producer_upload_edges": "OBSERVED_CURRENT_REF",
+    "artifact_downstream_consumer_edges": "TOKEN_VAZIO",
+    "targeted_governance_tests": "TOKEN_VAZIO_EXECUTION_REQUIRED",
+    "extraneous_count": "TOKEN_VAZIO_DISPOSABLE_CANDIDATE_REQUIRED",
+    "exact_head_hash_bound_receipt": "TOKEN_VAZIO_REQUIRED"
+  },
+  "gap": {
+    "gap_id": "TV-RLL-B0-B1-SUCCESSOR-ACCEPTANCE-EXECUTION",
+    "state": "TOKEN_VAZIO_ACCEPTANCE_EVIDENCE_REQUIRED",
+    "source_pointer": "main@f6c8c1816f5c27e44b4747dac05b5475bcb5f000 + rll/lab@67aea0e7b7f38941bf62ac94f8b0e11d4f1e16fb + audit/b0-b1-successor-manifest-20260903",
+    "missing_field": "targeted test execution + downstream artifact consumer evidence + extraneous_count + exact-head hash-bound receipt",
+    "blocking_dependency": "disposable candidate execution and provider-bound receipt acquisition",
+    "evidence_needed": "targeted governance test results, producer-consumer trace, extraneous_count=0, receipt bound to exact candidate head",
+    "falsifier": "any targeted test failure, unexplained extra path, unbound artifact consumer, or exact-head mismatch",
+    "next_probe": "execute/read provider-bound targeted governance validation on disposable successor candidate; retrieve artifacts and bind receipt",
+    "owner_authority": "RLL operational/reviewer authority",
+    "urgency": "P0/P1",
+    "closure_gate": "hash-bound successor receipt with all acceptance fields resolved",
+    "claim_allowed": false,
+    "predecessor_lineage": "cycle45->cycle46->cycle47"
+  },
+  "invariants": [
+    "OBSERVED_ARTIFACT_UPLOAD != DOWNSTREAM_CONSUMPTION_PROVED",
+    "DOCUMENTED_TEST != EXECUTED_TEST",
+    "PARTIAL_EDGE_REVALIDATION != SEMANTIC_COMPATIBILITY",
+    "SUCCESSOR_CANDIDATE != SUCCESSOR_RECEIPT",
+    "NO_FORWARD_PORT_BEFORE_ACCEPTANCE_GATES"
+  ]
+}
