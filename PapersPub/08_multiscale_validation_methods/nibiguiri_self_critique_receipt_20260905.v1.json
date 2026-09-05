@@ -1,0 +1,53 @@
+{
+  "schema": "raf.rll.nibiguiri_self_critique_materialization_receipt.v1",
+  "date": "2026-09-05",
+  "append_only": true,
+  "claim_allowed": false,
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "research/session-theory-hashing-20260905",
+  "pull_request": 827,
+  "implementation": {
+    "yaml_driven": true,
+    "lenses": 12,
+    "antagonistic_pairs": 6,
+    "research_units": 48,
+    "explicit_matrix_cells": 576,
+    "seed_candidates": 12,
+    "candidate_types": {
+      "HYPOTHESIS_CANDIDATE": 8,
+      "LEMMA_CANDIDATE": 2,
+      "THESIS_PROGRAM_CANDIDATE": 2
+    },
+    "auto_promotion": false
+  },
+  "local_equivalent_authored_content_validation": {
+    "result": "PASS",
+    "unittest_count": 18,
+    "failures": 0,
+    "errors": 0,
+    "candidate_merkle_root": "3d65d11b30b7c54cb06bea030e6dbf771e2d863c66a56f91d4f477b1a88c0a03",
+    "expanded_matrix_sha256": "cc7a4a8deb2fcb2eb98e0f2bd9b6db08a9a6113d20531f6ee3fb5d181ee7aaa3"
+  },
+  "epistemic_gates": {
+    "semantic_576_cell_audit": "TOKEN_VAZIO_NOT_EXECUTED",
+    "prior_art_SC01_SC12": "TOKEN_VAZIO_PRIOR_ART",
+    "proofs_SC01_SC12": "TOKEN_VAZIO_PER_CANDIDATE",
+    "counterexample_search_SC01_SC12": "TOKEN_VAZIO_PER_CANDIDATE",
+    "provider_ci_for_successor": "TOKEN_VAZIO_NOT_OBSERVED"
+  },
+  "method_self_critique": {
+    "state": "TOKEN_VAZIO_METHOD_VALIDATION",
+    "questions": 8,
+    "anti_gaming_gates": 7
+  },
+  "boundaries": [
+    "structural PASS != mathematical proof",
+    "generated candidate != promoted hypothesis/thesis",
+    "candidate count != quality",
+    "hash != proof",
+    "TOKEN_VAZIO != numeric zero",
+    "same number != same object",
+    "same cardinality != isomorphism",
+    "30-degree spacing is an operational audit geometry, not a mathematical theorem"
+  ]
+}
