@@ -1,0 +1,44 @@
+{
+  "schema": "raf.rll.project_horto_relational_field_receipt.v5",
+  "date": "2026-09-05",
+  "project": "MaisDoIt",
+  "append_only": true,
+  "claim_allowed": false,
+  "complete": false,
+  "source_observed": {
+    "openai_projects_official_docs": true,
+    "projects_group_chats_files_instructions_context": true,
+    "project_memory_exists": true,
+    "same_project_chat_reference_supported_subject_to_settings": true,
+    "plus_pro_project_chats_files_prioritized": true,
+    "project_memory_mode_for_this_project": "TOKEN_VAZIO_PROVIDER_SETTING"
+  },
+  "materialized": {
+    "drive_append_v5": true,
+    "github_yaml_contract": true,
+    "github_human_registry": true,
+    "multiplex_graph_defined": true,
+    "cross_chat_edge_contract_defined": true,
+    "third_order_hyperedges_defined": true,
+    "coverage_dimensions": 22,
+    "nibiguiri_second_order_project": true
+  },
+  "boundaries": [
+    "PROJECT_CONTEXT_AVAILABLE != EXHAUSTIVE_PROJECT_CONTENT",
+    "PROJECT_MEMORY_REFERENCE != EXHAUSTIVE_TRANSCRIPT_READ",
+    "PROJECT_FILE_PRESENT != FILE_CONTENT_OBSERVED",
+    "SAME_PROJECT != SEMANTIC_RELATION",
+    "MEMORY != CANONICAL_AUTHORITY",
+    "WEB != PRIVATE_SOURCE",
+    "CONNECTOR_SEARCH != FULL_PROVIDER_CORPUS",
+    "CURRENT_CONTEXT != ENTIRE_ACCOUNT",
+    "WRITE_OR_MERGE != SCIENTIFIC_PROOF"
+  ],
+  "f_gap": [
+    "TOKEN_VAZIO_PROVIDER_SETTING: project memory mode",
+    "TOKEN_VAZIO_PROVIDER_CONTEXT: unretrieved project chats",
+    "complete chat×chat×object×relation×source_pointer matrix not materialized"
+  ],
+  "f_next": "PROJECT_INVENTORY→available chats→atomic extraction→source binding→L/O/T/C/P→cross-chat relations→hyperedges→NIBIGUIRI-2→evidence/falsifier→receipt/index/memory→C_HORTO",
+  "state": "IMPLEMENTED_GOVERNED_PARTIAL"
+}
