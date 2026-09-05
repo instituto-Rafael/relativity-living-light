@@ -28,12 +28,20 @@
     "candidate_merkle_root": "3d65d11b30b7c54cb06bea030e6dbf771e2d863c66a56f91d4f477b1a88c0a03",
     "expanded_matrix_sha256": "cc7a4a8deb2fcb2eb98e0f2bd9b6db08a9a6113d20531f6ee3fb5d181ee7aaa3"
   },
+  "provider_ci": {
+    "state": "IN_PROGRESS_OR_PENDING",
+    "head_sha_observed": "521c957803f0306cb70dadfc298263796be0bfb0",
+    "runs_observed": 11,
+    "python_tests": "IN_PROGRESS",
+    "yaml_deep_audit": "IN_PROGRESS",
+    "branch_maturity": "IN_PROGRESS",
+    "no_success_claim_until_conclusion": true
+  },
   "epistemic_gates": {
     "semantic_576_cell_audit": "TOKEN_VAZIO_NOT_EXECUTED",
     "prior_art_SC01_SC12": "TOKEN_VAZIO_PRIOR_ART",
     "proofs_SC01_SC12": "TOKEN_VAZIO_PER_CANDIDATE",
-    "counterexample_search_SC01_SC12": "TOKEN_VAZIO_PER_CANDIDATE",
-    "provider_ci_for_successor": "TOKEN_VAZIO_NOT_OBSERVED"
+    "counterexample_search_SC01_SC12": "TOKEN_VAZIO_PER_CANDIDATE"
   },
   "method_self_critique": {
     "state": "TOKEN_VAZIO_METHOD_VALIDATION",
