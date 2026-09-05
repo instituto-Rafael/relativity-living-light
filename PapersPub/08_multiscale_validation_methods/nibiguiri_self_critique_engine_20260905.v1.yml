@@ -1,0 +1,229 @@
+schema: raf.rll.nibiguiri_self_critique_discovery.v1
+date: '2026-09-05'
+append_only: true
+claim_allowed: false
+auto_promote_candidates: false
+canonical_context: From the Observed Void to Recurrence
+purpose: autocrítica adversarial do próprio método e descoberta controlada de novas hipóteses/teses
+inputs:
+  research_registry: ../math_research_program_48_20260905.v1.json
+  nibiguiri_human_registry: ../nibiguiri_12_isogonal_antagonistic_audit_20260905.md
+states:
+- PASS
+- FAIL
+- TOKEN_VAZIO
+- TOKEN_VAZIO_NOT_AUDITED
+- NOT_APPLICABLE_WITH_REASON
+lens_geometry:
+  count: 12
+  step_deg: 30
+  antagonistic_separation_deg: 180
+  pairs: 6
+global_rules:
+  candidate_state: CANDIDATE_UNPROMOTED
+  novelty_default: TOKEN_VAZIO_PRIOR_ART
+  proof_default: TOKEN_VAZIO_PROOF
+  counterexample_default: TOKEN_VAZIO_COUNTEREXAMPLE_SEARCH
+  require_falsifier: true
+  require_opposite_lens: true
+  require_prior_art_before_novelty: true
+  require_domain_units_assumptions: true
+  hash_is_provenance_not_proof: true
+  token_vazio_is_zero: false
+  same_number_implies_same_object: false
+  same_cardinality_implies_isomorphism: false
+self_critique_of_method:
+  audit_method_as_subject: true
+  questions:
+  - O conjunto de 12 lentes cria seus próprios pontos cegos?
+  - A escolha de espaçamento 30° é operacional ou está sendo tratada indevidamente como teorema?
+  - Os seis pares antagônicos cobrem perdas diferentes ou duplicam a mesma crítica com nomes distintos?
+  - Há viés de confirmação nos seed candidates?
+  - Uma lente está sempre gerando candidatos e portanto inflando artificialmente o espaço de hipóteses?
+  - Quais candidatos são duplicatas semânticas de T01..T16/H01..H32?
+  - Quais FAIL/TOKEN_VAZIO devem bloquear promoção em vez de apenas gerar documentação?
+  - O método encontra contraexemplos com a mesma prioridade que encontra extensões?
+  anti_gaming_gates:
+  - no_candidate_count_as_quality_metric
+  - no_auto_promotion
+  - no_hash_as_proof
+  - no_same_number_semantic_merge
+  - duplicate_semantic_check_required
+  - opposite_lens_must_be_evaluated
+  - negative_results_append_only
+lenses:
+- id: N01
+  angle_deg: 0
+  title: Escala preservada
+  opposite: N07
+  methodological_failure: redução/simplificação pode apagar escala, dimensão e magnitude
+  probe_template: 'Em {unit_id} — {title}: qual estado não reduzido, escala, unidade ou dimensão foi descartado?'
+  discovery_operator: lift_scale_state
+  seed_candidate:
+    id: SC01
+    candidate_type: LEMMA_CANDIDATE
+    title: Suficiência da decomposição primitivo × escala sob equivalência declarada
+    statement: Para uma classe declarada de objetos vetoriais inteiros, testar se vetor primitivo + gcd/escala + metadados de orientação/grupo são suficientes para reconstrução lossless do estado geométrico relevante.
+    falsifier: Exibir dois estados geometricamente distintos que compartilhem exatamente essa representação.
+- id: N02
+  angle_deg: 30
+  title: Orientação / transformações
+  opposite: N08
+  methodological_failure: igualdade numérica pode esconder quiralidade, sinal, origem ou ação de grupo
+  probe_template: 'Em {unit_id} — {title}: quais rotações, reflexões, translações, sinais e mudanças de base alteram ou preservam o objeto?'
+  discovery_operator: enumerate_group_actions
+  seed_candidate:
+    id: SC02
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Assinatura canônica de órbita sob grupo de equivalência
+    statement: Existe uma assinatura finita e computável que classifica sem duplicação as órbitas relevantes das construções desta sessão sob o grupo de transformações explicitamente permitido.
+    falsifier: Encontrar duas órbitas não equivalentes com a mesma assinatura proposta.
+- id: N03
+  angle_deg: 60
+  title: Local → global
+  opposite: N09
+  methodological_failure: identidade local pode ser promovida antes da incidência/topologia global
+  probe_template: 'Em {unit_id} — {title}: a relação local sobrevive a todas as órbitas, faces, arestas, vértices ou classes globais?'
+  discovery_operator: orbit_closure_scan
+  seed_candidate:
+    id: SC03
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Fechamento por órbitas das identidades locais icosaédricas
+    statement: As identidades exatas locais relevantes do midpoint/π–φ no refinamento f=2 podem ser classificadas por um conjunto finito de órbitas do grupo icosaédrico que cobre todas as 80 faces e 861 pares.
+    falsifier: Encontrar uma relação local exata fora das órbitas geradas pelo conjunto candidato.
+- id: N04
+  angle_deg: 90
+  title: Finito → assintótico
+  opposite: N10
+  methodological_failure: caso finito pode ser confundido com lei de família
+  probe_template: 'Em {unit_id} — {title}: qual extensão em f, m, n ou escala existe, qual taxa, qual limite e qual termo de erro?'
+  discovery_operator: finite_to_family
+  seed_candidate:
+    id: SC04
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Monotonicidade eventual dos erros geométricos de icosferas
+    statement: Existe f0 finito tal que, para f≥f0, erros normalizados de área cordal e excesso arco–corda decrescem monotonicamente com f e preservam a ordem assintótica O(f^-2).
+    falsifier: Encontrar infinitos f acima de qualquer limiar com aumento do erro normalizado.
+- id: N05
+  angle_deg: 120
+  title: Direto → inverso / fibras
+  opposite: N11
+  methodological_failure: mapas forward podem ocultar multiplicidade e perda de informação
+  probe_template: 'Em {unit_id} — {title}: qual é a fibra F^-1(y), sua cardinalidade e a condição exata de reconstrução?'
+  discovery_operator: fiber_analysis
+  seed_candidate:
+    id: SC05
+    candidate_type: LEMMA_CANDIDATE
+    title: Cardinalidade das fibras da dobra modular e composição CRT
+    statement: Caracterizar exatamente as fibras de q_m(r)=min(r,m-r), incluindo os pontos fixos 0 e m/2 quando m é par, e testar como as cardinalidades se combinam sob projeções CRT compatíveis.
+    falsifier: Exibir um resíduo cuja fibra contradiga a fórmula de cardinalidade derivada.
+- id: N06
+  angle_deg: 150
+  title: Interno → externo
+  opposite: N12
+  methodological_failure: coerência interna pode sobreviver apenas porque prior art/null model não foi aplicado
+  probe_template: 'Em {unit_id} — {title}: qual construção conhecida, null model ou mudança de variável simples poderia explicar o mesmo efeito?'
+  discovery_operator: prior_art_null_challenge
+  seed_candidate:
+    id: SC06
+    candidate_type: THESIS_PROGRAM_CANDIDATE
+    title: Equivalência e não-equivalência por prior art das famílias 7/42/420
+    statement: Construir um programa sistemático para decidir quais famílias 7/42/420 são apenas apresentações de estruturas clássicas conhecidas e quais conservam invariantes adicionais não eliminados por isomorfismo, quociente ou mudança de coordenada.
+    falsifier: Se todas as famílias propostas forem reduzidas a estruturas clássicas sem invariante residual, o programa perde conteúdo de novidade mas permanece como classificação.
+- id: N07
+  angle_deg: 180
+  title: Compressão / estatística suficiente
+  opposite: N01
+  methodological_failure: preservar tudo pode impedir descobrir a representação mínima necessária
+  probe_template: 'Em {unit_id} — {title}: qual menor representação permite reconstrução sem perda do objeto relevante?'
+  discovery_operator: minimal_sufficient_state
+  seed_candidate:
+    id: SC07
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Representação mínima lossless da geometria racional com escala
+    statement: Sob um grupo de equivalência fixado, existe uma representação mínima lossless de pares inteiros baseada em vetor primitivo, escala e um conjunto mínimo de metadados transformacionais; nenhum campo pode ser removido sem criar colisão geométrica.
+    falsifier: Remover um campo e ainda reconstruir univocamente todos os estados do domínio.
+- id: N08
+  angle_deg: 210
+  title: Quociente / artefato de coordenada
+  opposite: N02
+  methodological_failure: diferenças de coordenada podem ser contadas como novos objetos
+  probe_template: 'Em {unit_id} — {title}: o resultado vive no objeto intrínseco ou apenas na representação? Qual quociente remove duplicatas?'
+  discovery_operator: quotient_canonicalization
+  seed_candidate:
+    id: SC08
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Completude de uma forma canônica por quociente
+    statement: Para cada família finita estudada (modular, icosférica e grafo-42), uma forma canônica definida sobre o quociente pelo grupo admissível preserva todos os invariantes usados nas hipóteses atuais e elimina duplicatas de coordenada.
+    falsifier: Encontrar um invariante material às hipóteses que não possa ser recuperado da forma canônica.
+- id: N09
+  angle_deg: 240
+  title: Global → local / resíduo
+  opposite: N03
+  methodological_failure: médias, espectros e fechamentos globais podem esconder subclasses excepcionais
+  probe_template: 'Em {unit_id} — {title}: quais vértices, faces, resíduos, módulos ou classes concentram o erro e quebram o agregado?'
+  discovery_operator: residual_outlier_localization
+  seed_candidate:
+    id: SC09
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Localização dos resíduos globais por classe de incidência
+    statement: Na icosfera f=2, resíduos de aproximações globais selecionadas se decompõem sistematicamente segundo as classes de vértice grau-5/grau-6 e faces central/canto, em vez de se distribuírem uniformemente.
+    falsifier: Mostrar que os resíduos relevantes são estatisticamente/estruturalmente indistinguíveis entre essas classes sob a métrica declarada.
+- id: N10
+  angle_deg: 270
+  title: Assintótico → finito / exceções
+  opposite: N04
+  methodological_failure: uma lei assintótica pode ser inútil ou falsa nos primeiros níveis
+  probe_template: 'Em {unit_id} — {title}: qual o menor regime válido, quais exceções pequenas e qual erro máximo antes dele?'
+  discovery_operator: threshold_exception_catalog
+  seed_candidate:
+    id: SC10
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Limiar finito de validade para a aproximação assintótica f^-2
+    statement: Para cada métrica geométrica normalizada proposta com ordem O(f^-2), existe um menor limiar f0 e um catálogo finito de exceções abaixo dele que podem ser determinados computacionalmente e depois provados.
+    falsifier: Encontrar violações arbitrariamente grandes acima de todo f0 candidato.
+- id: N11
+  angle_deg: 300
+  title: Inverso → mecanismo
+  opposite: N05
+  methodological_failure: inversa algébrica pode ser confundida com causalidade, tempo reverso ou mecanismo físico
+  probe_template: 'Em {unit_id} — {title}: a inversa é apenas reconstrução matemática ou permanece dentro do domínio de uma dinâmica generativa admissível?'
+  discovery_operator: inverse_admissible_basin
+  seed_candidate:
+    id: SC11
+    candidate_type: HYPOTHESIS_CANDIDATE
+    title: Bacia admissível das iterações inversas do operador midpoint Möbius
+    statement: A iteração de T^-1(y)=(2y-1)/(3-2y) possui uma bacia admissível estrita quando restringida a produtos escalares de configurações esféricas realizáveis; fora dela a inversa deixa de representar refinamento geométrico válido.
+    falsifier: Provar que toda órbita inversa no domínio algébrico permanece geometricamente realizável.
+- id: N12
+  angle_deg: 330
+  title: Evidência → anti-evidência
+  opposite: N06
+  methodological_failure: custódia perfeita pode autenticar uma afirmação falsa
+  probe_template: 'Em {unit_id} — {title}: que evidência derrubaria o claim mesmo se todos os hashes, CI e receipts estivessem perfeitos?'
+  discovery_operator: falsifier_graph
+  seed_candidate:
+    id: SC12
+    candidate_type: THESIS_PROGRAM_CANDIDATE
+    title: Grafo dual claim–falsificador para custódia matemática
+    statement: Estender Theory Hashing para um DAG dual em que cada claim hashado aponta também para falsificadores, pressupostos e contraevidências independentes, permitindo distinguir integridade de custódia de suporte epistemológico.
+    falsifier: Se o DAG dual não acrescentar poder de detecção de claims mal suportados sobre um corpus de controle, a extensão metodológica é rejeitada.
+outputs:
+  audit_matrix_json: ../generated/nibiguiri_self_critique_matrix_20260905.v1.json
+  candidate_registry_json: ../generated/nibiguiri_self_critique_candidates_20260905.v1.json
+  receipt_json: ../generated/nibiguiri_self_critique_receipt_20260905.v1.json
+promotion_contract:
+  candidate_to_hypothesis:
+  - domain_declared
+  - statement_falsifiable
+  - counterexample_path
+  - prior_art_reviewed
+  - nonduplicate_or_difference_explicit
+  - material_lenses_resolved
+  candidate_to_thesis_program:
+  - contains_multiple_independent_research_questions
+  - methodological_or_mathematical_scope_declared
+  - evaluation_protocol
+  - prior_art_reviewed
+  - failure_condition
+  promotion_is_manual: true
