@@ -8,6 +8,7 @@ on:
     - docs/science/**
     - scripts/validation/**
     - tests/**
+    - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
   push:
     paths:
@@ -15,6 +16,7 @@ on:
     - docs/science/**
     - scripts/validation/**
     - tests/**
+    - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
 permissions:
   contents: read
