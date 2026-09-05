@@ -59,6 +59,7 @@ RLL v1.0.0 tag / 2025 formula
 | False positives | DECLARED_BY_AUTHOR / TOKEN_VAZIO | future `docs/RLL_FALSE_POSITIVE_LEDGER.md` | locate failed outputs/logs/rejected hypotheses |
 | Non-post-hoc formulation | PARTIALLY VERIFIED | future `docs/RLL_NON_POSTHOC_FORMULATION_AUDIT.md` | connect formula date → data date → result date |
 
+| Fibonacci modular, (T^7), icosaedro e malha 420 | DERIVED_MATHEMATICALLY / claim-gated | `docs/science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md` | manter fora das fórmulas físicas canônicas até existir mapa dimensional, dinâmica, observável, likelihood e baseline |
 ## 4. Required future files
 
 The following files are reserved as next documentation nodes:
