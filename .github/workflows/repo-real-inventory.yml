@@ -2,6 +2,14 @@
 name: repo-real-inventory
 on:
   workflow_dispatch: null
+  pull_request:
+    paths-ignore:
+    - docs/DOCUMENTATION_FULL_INVENTORY.md
+    - docs/REAL_NUMBERS_REPORT.md
+    - docs/YML_WORKFLOWS_INDEX.md
+    - data/results/repo_inventory.json
+    - data/results/repo_inventory.tsv
+    - data/results/repo_inventory_summary.json
   push:
     branches:
     - main
