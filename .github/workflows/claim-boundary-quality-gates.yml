@@ -41,6 +41,10 @@ jobs:
 
         python -m pip install pytest
 
+        python -m pip install dynesty
+
+        python -m pip install "jsonschema[format]"
+
         '
     - name: Compile validation scripts
       run: 'python -m py_compile scripts/validation/check_claim_boundary.py
