@@ -4,6 +4,7 @@
 **Atualizado em:** 2026-06-20
 **Atualizado em:** 2026-06-26
 **Atualizado em:** 2026-08-08
+**Atualizado em:** 2026-09-05
 **Regra:** secao principal lista apenas caminhos canonicos oficiais.
 
 ---
@@ -81,6 +82,11 @@ Encaminhamentos complementares:
 - [`docs/cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md`](cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md)
 - [`docs/cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md`](cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md)
 - [`docs/cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md`](cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md)
+
+## 1.2) Métodos matemáticos e pontes claim-gated
+
+- [`docs/science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md`](science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md) - Fibonacci modular, subgrupo discreto de (T^7), geometria icosaédrica e malha de fase 420; método formal sem promoção cosmológica.
+
 
 ## 2) Governanca, organizacao e auditoria
 
