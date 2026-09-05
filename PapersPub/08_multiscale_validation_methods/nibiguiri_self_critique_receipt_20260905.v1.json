@@ -30,7 +30,8 @@
   },
   "provider_ci": {
     "state": "IN_PROGRESS_OR_PENDING",
-    "head_sha_observed": "521c957803f0306cb70dadfc298263796be0bfb0",
+    "snapshot_commit": "521c957803f0306cb70dadfc298263796be0bfb0",
+    "note": "This CI snapshot is intentionally bound to the pre-receipt implementation commit; editing this receipt creates a successor commit and therefore cannot self-contain its own final CI conclusion.",
     "runs_observed": 11,
     "python_tests": "IN_PROGRESS",
     "yaml_deep_audit": "IN_PROGRESS",
