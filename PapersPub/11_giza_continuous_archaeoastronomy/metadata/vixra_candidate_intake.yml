@@ -1,0 +1,103 @@
+schema: rll.giza_vixra_candidate_intake.v1
+recorded_at: 2026-09-06
+status: CANDIDATE_PREPRINT_INTAKE
+claim_allowed: false
+peer_review_equivalent: false
+source: https://vixra.org/arch/
+source_observed_at: 2026-09-06
+boundary:
+  - viXra e-print != peer review
+  - topical overlap != validation
+  - preprint claim != archaeological fact
+  - citation != endorsement
+
+candidates:
+  - id: vixra:2607.0006
+    title: The Giza Pyramid Complex as an Analogy to the Voyager Mission
+    authors:
+      - Andrey V. Voron
+    submitted: 2026-07-02
+    category: Archaeology
+    relevance:
+      - four Khufu ducts/shafts
+      - stellar orientation hypotheses
+      - communication-device analogy
+    intake_state: PREPRINT_UNREFEREED
+    rll_route:
+      - G-H2-STELLAR-TARGET
+      - G-H4-PRECESSIONAL-TIMESTAMP
+    use_policy: >-
+      Treat only as a source hypothesis/candidate target assignment. Recompute all
+      geometry/astronomy from independent survey and astrometric sources before any
+      comparison. Claims of intended message or recipient remain blocked.
+
+  - id: vixra:2604.0032
+    title: The Geometry of the King’s Chamber in the Pyramid of Khufu and the Numerical Equality of Area and Perimeter in Right-angled Triangles
+    authors:
+      - Andrey V. Voron
+    submitted: 2026-04-11
+    category: Archaeology
+    relevance:
+      - King's Chamber dimensions
+      - right-triangle construction
+      - numerical area/perimeter equality
+    intake_state: PREPRINT_UNREFEREED
+    rll_route:
+      - G-H1-GEOMETRIC-GRID
+      - T01_SCALE_PRESERVING_GEOMETRY
+      - T12_TYPED_REPEATED_NUMBERS
+    use_policy: >-
+      Reproduce the stated construction from source-bound chamber measurements and
+      compare against dimensional/unit sensitivity. Numerical equality in meters must
+      not be treated as unit-invariant or evidence of historical intent without an
+      independently justified unit convention.
+
+  - id: vixra:2511.0102
+    title: The Great Pyramid: a 1:100,000-Scale Geodetic-Celestial Model of the Awash River System
+    authors:
+      - Diogo Sennfelt
+    submitted: 2025-11-20
+    category: Archaeology
+    relevance:
+      - chambers and shafts
+      - geodetic scaling
+      - precessional interpretation
+      - hydrological analogy
+    intake_state: PREPRINT_UNREFEREED
+    rll_route:
+      - G-H3-JOINT-GEOMETRY-ASTRONOMY
+      - G-H4-PRECESSIONAL-TIMESTAMP
+      - T12_TYPED_REPEATED_NUMBERS
+    use_policy: >-
+      Treat as a composite alternative hypothesis. Each claimed geodetic, hydrological,
+      astronomical and chronological edge must be decomposed and tested separately,
+      with look-elsewhere and scale-choice controls.
+
+  - id: vixra:2507.0212
+    title: Pyramids of the Giza Complex and Area Values Equal to Fibonacci Numbers in Two Length Measurement Systems
+    authors:
+      - Andrey V. Voron
+    submitted: 2025-07-29
+    category: Archaeology
+    relevance:
+      - Fibonacci-number proximity
+      - Giza area calculations
+      - unit-system sensitivity
+    intake_state: PREPRINT_UNREFEREED
+    rll_route:
+      - T10_FIBONACCI_RAFAELIANA
+      - T12_TYPED_REPEATED_NUMBERS
+    use_policy: >-
+      Use as an adversarial test of numerical-selection bias. Recompute under multiple
+      historically plausible units and require a predeclared tolerance/null model.
+
+priority_order:
+  - vixra:2604.0032
+  - vixra:2607.0006
+  - vixra:2511.0102
+  - vixra:2507.0212
+
+next_gate: >-
+  fetch exact preprint versions -> extract claims/equations -> bind every external
+  measurement citation -> reproduce calculations -> compare with peer-reviewed and
+  primary-survey literature -> record SUPPORT/CONTRADICTION/TOKEN_VAZIO per claim.
