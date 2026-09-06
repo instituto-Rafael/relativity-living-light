@@ -1,0 +1,110 @@
+name: RLL Hypothesis Instability Orchestrator
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/contracts/hypothesis_instability_barometer.v1.yml'
+      - 'tools/hypothesis_instability_barometer.c'
+      - 'data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv'
+      - '.github/workflows/hypothesis-instability-orchestrator.yml'
+  push:
+    paths:
+      - 'data/contracts/hypothesis_instability_barometer.v1.yml'
+      - 'tools/hypothesis_instability_barometer.c'
+      - 'data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv'
+      - '.github/workflows/hypothesis-instability-orchestrator.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hypothesis-instability-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  barometer:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.route.outputs.matrix }}
+      has_candidates: ${{ steps.route.outputs.has_candidates }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build fast C barometer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/hypothesis-instability results/hypothesis-instability
+          cc -O3 -std=c11 -Wall -Wextra -Werror \
+            tools/hypothesis_instability_barometer.c \
+            -o build/hypothesis-instability/barometer
+
+      - name: Run fail-closed topology triage
+        shell: bash
+        run: |
+          set -euo pipefail
+          build/hypothesis-instability/barometer \
+            data/contracts/hypothesis_instability_barometer.v1.yml \
+            results/hypothesis-instability/barometer.json \
+            results/hypothesis-instability/matrix.json \
+            results/hypothesis-instability/summary.md
+          cat results/hypothesis-instability/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Export generated execution matrix
+        id: route
+        shell: bash
+        run: |
+          set -euo pipefail
+          matrix="$(tr -d '\n' < results/hypothesis-instability/matrix.json)"
+          printf 'matrix=%s\n' "$matrix" >> "$GITHUB_OUTPUT"
+          if grep -q '"id"' results/hypothesis-instability/matrix.json; then
+            echo 'has_candidates=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'has_candidates=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload barometer receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypothesis-instability-barometer
+          path: |
+            results/hypothesis-instability/barometer.json
+            results/hypothesis-instability/matrix.json
+            results/hypothesis-instability/summary.md
+          if-no-files-found: error
+          retention-days: 30
+
+  generated-shadow-matrix:
+    needs: barometer
+    if: ${{ needs.barometer.outputs.has_candidates == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.barometer.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify routed hypothesis exists in governed intake
+        shell: bash
+        env:
+          HYPOTHESIS_ID: ${{ matrix.id }}
+          HYPOTHESIS_FAMILY: ${{ matrix.family }}
+          BAROMETER: ${{ matrix.barometer }}
+        run: |
+          set -euo pipefail
+          test -f data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv
+          grep -Fq "$HYPOTHESIS_ID" data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv
+          printf 'id=%s\nfamily=%s\nbarometer=%s\nclaim_allowed=false\n' \
+            "$HYPOTHESIS_ID" "$HYPOTHESIS_FAMILY" "$BAROMETER" \
+            > "route-${HYPOTHESIS_ID}.receipt"
+
+      - name: Upload generated route receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypothesis-route-${{ matrix.id }}
+          path: route-${{ matrix.id }}.receipt
+          if-no-files-found: error
+          retention-days: 30
