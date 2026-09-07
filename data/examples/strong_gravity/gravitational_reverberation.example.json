@@ -1,0 +1,28 @@
+{
+  "example_id": "GRAVITATIONAL_REVERBERATION_REFERENCE_V1",
+  "claim_allowed": false,
+  "config": {
+    "event_time_s": 0.0,
+    "direct_amplitude": 1.0,
+    "direct_width_s": 0.02,
+    "modes": [
+      {"amplitude": 0.40, "frequency_hz": 30.0, "damping_time_s": 0.20, "phase_rad": 0.0},
+      {"amplitude": 0.20, "frequency_hz": 47.0, "damping_time_s": 0.12, "phase_rad": 0.5}
+    ],
+    "tail_amplitude": 0.08,
+    "tail_scale_s": 0.30,
+    "tail_power": 2.0,
+    "memory_delta": 0.03,
+    "memory_rise_s": 0.10
+  },
+  "observer": {
+    "distance_m": 299792458.0,
+    "propagation_speed_m_s": 299792458.0
+  },
+  "sampling": {
+    "start_s": 0.0,
+    "stop_s": 2.0,
+    "step_s": 0.01
+  },
+  "boundary": "The numerical frequencies/amplitudes are synthetic reference values, not a fit to an astrophysical source."
+}
