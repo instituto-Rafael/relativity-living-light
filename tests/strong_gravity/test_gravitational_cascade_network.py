@@ -78,9 +78,9 @@ def test_dense_near_threshold_graph_has_larger_branching_potential():
     dense = CascadeNetwork(
         nodes,
         [
-            Edge("A", "B", 1.0, 1.0),
-            Edge("A", "C", 1.0, 1.0),
-            Edge("A", "D", 1.0, 1.0),
+            Edge("A", "B", 1.0, 0.30),
+            Edge("A", "C", 1.0, 0.30),
+            Edge("A", "D", 1.0, 0.30),
         ],
         attenuation_scale_m=1000.0,
     )
@@ -91,6 +91,37 @@ def test_dense_near_threshold_graph_has_larger_branching_potential():
     )
 
     assert branching_potential(dense)["A"] > branching_potential(sparse)["A"]
+
+
+def test_outgoing_coupling_budget_blocks_energy_duplication():
+    nodes = [
+        Node("A", 1.0, 10.0),
+        Node("B", 1.0, 1.0),
+        Node("C", 1.0, 1.0),
+    ]
+    try:
+        CascadeNetwork(
+            nodes,
+            [Edge("A", "B", 1.0, 0.7), Edge("A", "C", 1.0, 0.7)],
+            attenuation_scale_m=1000.0,
+        )
+    except ValueError as exc:
+        assert "coupling budget" in str(exc)
+    else:
+        raise AssertionError("fan-out must not duplicate released energy")
+
+
+def test_duplicate_node_ids_are_rejected():
+    try:
+        CascadeNetwork(
+            [Node("A", 1.0, 1.0), Node("A", 2.0, 2.0)],
+            [],
+            attenuation_scale_m=1.0,
+        )
+    except ValueError as exc:
+        assert "unique" in str(exc)
+    else:
+        raise AssertionError("duplicate node ids must fail closed")
 
 
 def test_input_guards_block_superluminal_or_unbounded_parameters():
