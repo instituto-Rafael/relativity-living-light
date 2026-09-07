@@ -1,14 +1,14 @@
 """Causal threshold-cascade laboratory for RLL strong-gravity hypotheses.
 
-This module is deliberately conservative.  It implements a generic network of
-pre-loaded reservoirs connected by finite-speed couplings.  A perturbation can
+This module is deliberately conservative. It implements a generic network of
+pre-loaded reservoirs connected by finite-speed couplings. A perturbation can
 unlock local stored energy when a threshold is crossed, which may in turn
-trigger neighbours.  This is the computational analogue of the user's
+trigger neighbours. This is the computational analogue of the user's
 mousetrap/ping-pong-ball or domino picture.
 
 It does *not* assert that the observed cosmic web undergoes such a chain
-reaction.  The scalar quantity used here is a reduced trigger variable, not a
-new fundamental scalar field.  Physical promotion requires a source model,
+reaction. The scalar quantity used here is a reduced trigger variable, not a
+new fundamental scalar field. Physical promotion requires a source model,
 stress-energy map, coupling derivation, observations and falsification.
 """
 
@@ -17,10 +17,11 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import heapq
 import math
-from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Dict, Iterable, List, Mapping, Tuple
 
 
 C_M_S = 299_792_458.0
+_COUPLING_EPS = 1.0e-12
 
 
 @dataclass(frozen=True)
@@ -109,6 +110,10 @@ class CascadeNetwork:
 
     It is finite at d=0 and can mimic different geometric/dissipative regimes.
     It must not be silently interpreted as a derived GR propagation law.
+
+    ``coupling`` is an energy-allocation fraction. For every source node the
+    outgoing fractions must sum to at most one, preventing graph fan-out from
+    duplicating a local energy release.
     """
 
     def __init__(
@@ -120,9 +125,12 @@ class CascadeNetwork:
         attenuation_exponent: float = 2.0,
         propagation_speed_m_s: float = C_M_S,
     ) -> None:
-        self.nodes: Dict[str, Node] = {n.node_id: n for n in nodes}
+        node_list = list(nodes)
+        self.nodes: Dict[str, Node] = {n.node_id: n for n in node_list}
         if not self.nodes:
             raise ValueError("network requires at least one node")
+        if len(self.nodes) != len(node_list):
+            raise ValueError("node_id values must be unique")
         if attenuation_scale_m <= 0.0:
             raise ValueError("attenuation_scale_m must be > 0")
         if attenuation_exponent < 0.0:
@@ -140,6 +148,13 @@ class CascadeNetwork:
                 raise ValueError("edge endpoint absent from node set")
             self.outgoing[edge.source].append(edge)
 
+        for source, source_edges in self.outgoing.items():
+            coupling_budget = sum(edge.coupling for edge in source_edges)
+            if coupling_budget > 1.0 + _COUPLING_EPS:
+                raise ValueError(
+                    f"outgoing coupling budget exceeds 1 for {source}: {coupling_budget}"
+                )
+
     def attenuation(self, distance_m: float) -> float:
         x = distance_m / self.attenuation_scale_m
         return 1.0 / (1.0 + x ** self.attenuation_exponent)
@@ -147,7 +162,7 @@ class CascadeNetwork:
     def run(self, seeds: Mapping[str, float]) -> CascadeResult:
         """Run one cascade.
 
-        A seed is an externally supplied perturbation.  Triggering a node does
+        A seed is an externally supplied perturbation. Triggering a node does
         not create energy: it unlocks that node's pre-existing ``reservoir_j``.
         This distinction is the key conservation boundary in the mousetrap
         analogy.
@@ -229,7 +244,7 @@ def branching_potential(network: CascadeNetwork) -> Dict[str, float]:
     """Return a dimensionless first-generation trigger potential for each node.
 
     For each outgoing edge this compares the pulse available from a full local
-    release with the target threshold.  Values > 1 are *not* proof of an
+    release with the target threshold. Values > 1 are *not* proof of an
     avalanche; geometry, duplicate paths, timing and later generations matter.
     """
 
