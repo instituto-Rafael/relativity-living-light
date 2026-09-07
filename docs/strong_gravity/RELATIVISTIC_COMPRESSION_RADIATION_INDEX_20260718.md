@@ -40,6 +40,19 @@ tests/strong_gravity/test_toroidal_sine_reference.py
 docs/strong_gravity/TOROIDAL_SINE_REFERENCE_ADAPTER.md
 ```
 
+### Causal gravitational cascade trigger network — 2026-09-07
+
+```text
+data/pipelines/strong_gravity/gravitational_cascade_network.py
+data/contracts/gravitational_cascade_trigger_network.v1.json
+data/examples/strong_gravity/gravitational_cascade_mousetrap.example.json
+scripts/strong_gravity/run_gravitational_cascade.py
+tests/strong_gravity/test_gravitational_cascade_network.py
+docs/strong_gravity/GRAVITATIONAL_CASCADE_TRIGGER_NETWORK.md
+```
+
+This extension is intentionally distinct from `session_multiscale_avalanche.py`. The older module contains Townsend/plasma avalanche and finite candidate permutations. The new module implements **network-level threshold propagation between pre-loaded reservoirs**.
+
 ### Shared formula inventory
 
 ```text
@@ -75,6 +88,14 @@ wrapped phase residual        = atan2(sin Delta_phi, cos Delta_phi)
 phase-lock score convention   = (1 + cos Delta_phi)/2
 normalized tracking error     = RMS(s_obs-s_ref)/A
 geometric path metric         = sum((||x_i-x_(i-1)||/R)^2)
+
+cascade accumulated trigger   = Q_i(t) = sum_k E_(k->i)(t)
+cascade activation            = Q_i >= Theta_i
+local release                 = E_release_i = eta_i E_reservoir_i
+network attenuation           = A(d) = 1/[1+(d/d0)^alpha]
+network transmission          = E_ij = E_release_i K_ij A(d_ij)
+causal delay                  = Delta_t_ij = d_ij/v_prop, 0 < v_prop <= c
+outgoing energy budget        = sum_j K_ij <= 1
 ```
 
 ## Semantic corrections
@@ -97,13 +118,19 @@ geometric path metric         = sum((||x_i-x_(i-1)||/R)^2)
 - a pure sine is a reference waveform, not a universal stabilizer;
 - a dimensionless path metric is not thermodynamic energy, jet power or stress-energy;
 - a tokamak stabilization result cannot be transferred directly to black-hole accretion;
-- local source physics does not modify the RLL cosmological background without an explicit covariant, population or propagation bridge.
+- local source physics does not modify the RLL cosmological background without an explicit covariant, population or propagation bridge;
+- a cosmic-web graph is a coarse-grained topology, not proof that the Universe is a neural network or a domino system;
+- the mousetrap analogy works because each node stores energy before the trigger; the seed does not create the released reservoir energy;
+- the nuclear-fission analogy is limited to chain-reaction topology; no gravitational microscopic multiplication process is claimed;
+- an effective inverse-square-like attenuation kernel is not a derived universal GR propagation equation;
+- finite-speed triggering is mandatory and the implementation rejects `v_prop > c`;
+- graph fan-out cannot duplicate a local energy release: outgoing coupling fractions must sum to at most one.
 
 ## Integration order
 
 ```text
 session_multiscale_avalanche.py
-  -> ordered flow, damping partition and finite phase permutations
+  -> ordered flow, damping partition, Townsend/plasma avalanche and finite phase permutations
 
 spiral_plasma_thermal_bridge.py
   -> AC conductivity, RF heating, Hall/Pedersen transport and Biermann source
@@ -118,6 +145,10 @@ magnetorotational_jet_bridge.py
 toroidal_sine_reference.py
   -> double-period geometry, bounded sine reference, phase error,
      closure residual and dimensionless path diagnostics
+
+gravitational_cascade_network.py
+  -> causal threshold graph, pre-loaded local reservoirs, finite-speed pulses,
+     attenuation, branching diagnostics and cascade receipts
 ```
 
 ## Validation boundary
@@ -126,6 +157,7 @@ toroidal_sine_reference.py
 compression/radiation focused tests = 15 PASS (recorded pre-commit execution)
 magnetorotational focused tests      = 21 PASS (recorded local execution)
 toroidal/sine focused tests          = 15 PASS (recorded local execution)
+gravitational cascade focused tests  = 7 WRITTEN; execution receipt TOKEN_VAZIO pending CI/local run
 
 GRMHD solution                       = false
 force-free global solution           = false
@@ -134,6 +166,7 @@ spin hydrodynamics solution          = false
 radiative-transfer solution          = false
 Einstein backreaction                = false
 nuclear network                      = false
+cosmic-web causal cascade            = false
 laboratory validation                = false
 astrophysical source fit             = false
 universal sine stabilization         = false
@@ -141,4 +174,4 @@ RLL cosmology validation             = false
 claim_allowed                        = false
 ```
 
-No new workflow YAML was introduced.
+No new workflow YAML was introduced by the cascade extension.
