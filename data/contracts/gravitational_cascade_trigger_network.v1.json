@@ -23,10 +23,13 @@
   "hard_invariants": [
     "0 < propagation_speed_m_s <= c",
     "0 <= coupling <= 1",
+    "sum(outgoing coupling for each source node) <= 1",
     "0 <= release_fraction <= 1",
     "threshold_j >= 0",
     "reservoir_j >= 0",
+    "node identifiers are unique",
     "released cascade energy is traced to local pre-existing reservoirs plus external seed",
+    "graph fan-out must never duplicate one local energy release",
     "TOKEN_VAZIO is not zero and is never promoted to evidence",
     "branching_potential > 1 is not a proof of a physical avalanche"
   ],
@@ -40,6 +43,7 @@
     "equation": "Q_i(t)=sum incoming pulses; activate if Q_i >= Theta_i",
     "release": "E_release_i = eta_i E_reservoir_i",
     "transmission": "E_ij = E_release_i K_ij A(d_ij)",
+    "coupling_budget": "sum_j K_ij <= 1 for each source i",
     "delay": "Delta t_ij = d_ij / v_prop"
   },
   "observables": [
