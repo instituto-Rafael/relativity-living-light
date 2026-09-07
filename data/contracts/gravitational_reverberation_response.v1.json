@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "RLL_GRAVITATIONAL_REVERBERATION_RESPONSE_V1",
+  "status": "SIGNAL_REFERENCE_IMPLEMENTED_CLAIM_BLOCKED",
+  "claim_allowed": false,
+  "decomposition": "h_obs = h_direct + h_ringdown + h_tail + h_memory",
+  "components": {
+    "direct": "causal Gaussian-like impulse reference",
+    "ringdown": "sum_n A_n exp(-dt/tau_n) cos(2 pi f_n dt + phi_n)",
+    "tail": "A_tail [1 + dt/tail_scale]^(-tail_power)",
+    "memory": "Delta_h [1 - exp(-dt/memory_rise)]"
+  },
+  "retarded_time": "t_ret = t_obs - d/v_prop",
+  "hard_invariants": [
+    "response is zero before the retarded event time",
+    "0 < v_prop <= c",
+    "damping times are finite and positive",
+    "tail scale and memory rise time are finite and positive",
+    "mode quality factor is a signal convention Q = pi f tau",
+    "amplitudes are strain-like references unless a source-specific derivation supplies units",
+    "strain-to-energy or strain-to-cascade-threshold mapping remains TOKEN_VAZIO",
+    "no numerical-relativity solution is claimed",
+    "no exotic gravitational echo is implied by the curvature-like tail term"
+  ],
+  "source_specific_requirements": [
+    "derive mode frequencies and damping times from a declared source model or validated numerical-relativity result",
+    "declare detector response and orientation",
+    "declare luminosity distance/redshift mapping",
+    "include source and propagation uncertainties",
+    "compare against GR baseline waveforms",
+    "separate memory, tail and instrumental/systematic residuals",
+    "obtain real-data or injection-recovery validation"
+  ],
+  "cascade_composition": {
+    "formal": "C_g = N_threshold o R_g",
+    "implemented_now": false,
+    "reason": "No universal conversion from strain-like response amplitude to Joule-valued cascade trigger is derived.",
+    "state": "TOKEN_VAZIO"
+  },
+  "claim_boundary": "This module implements a causal signal decomposition for experimentation. It is not a GR field solver and does not demonstrate a new gravitational reverberation phenomenon."
+}
