@@ -1,0 +1,30 @@
+{
+  "example_id": "MOUSETRAP_BOX_DENSE_NEAR_THRESHOLD_V1",
+  "claim_allowed": false,
+  "description": "Dimensionless topology benchmark translated into SI-labelled bookkeeping. Four pre-loaded nodes sit close to threshold. A small external seed releases node A, whose stored reservoir can trigger B, then C, then D.",
+  "network": {
+    "attenuation_scale_m": 1000.0,
+    "attenuation_exponent": 2.0,
+    "propagation_speed_m_s": 299792458.0
+  },
+  "nodes": [
+    {"node_id": "A", "threshold_j": 1.0, "reservoir_j": 10.0, "release_fraction": 1.0},
+    {"node_id": "B", "threshold_j": 2.0, "reservoir_j": 8.0, "release_fraction": 1.0},
+    {"node_id": "C", "threshold_j": 2.0, "reservoir_j": 6.0, "release_fraction": 1.0},
+    {"node_id": "D", "threshold_j": 2.0, "reservoir_j": 4.0, "release_fraction": 1.0}
+  ],
+  "edges": [
+    {"source": "A", "target": "B", "distance_m": 1.0, "coupling": 0.5},
+    {"source": "B", "target": "C", "distance_m": 1.0, "coupling": 0.5},
+    {"source": "C", "target": "D", "distance_m": 1.0, "coupling": 0.5}
+  ],
+  "seed": {"A": 1.0},
+  "expected_structural_result": {
+    "activation_order": ["A", "B", "C", "D"],
+    "avalanche_size": 4,
+    "max_depth": 3,
+    "total_seed_j": 1.0,
+    "total_local_reservoir_released_j": 28.0
+  },
+  "interpretation": "The apparent amplification 1 J -> 28 J is not energy creation. The 1 J seed unlocks 28 J that was already stored across the four local reservoirs."
+}
