@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "RLL_GRAVITATIONAL_CASCADE_TRIGGER_NETWORK_V1",
+  "status": "HYPOTHESIS_LAB_IMPLEMENTED_CLAIM_BLOCKED",
+  "claim_allowed": false,
+  "purpose": "Model a finite-speed threshold cascade on a coarse-grained network as a falsifiable laboratory for domino/mousetrap-style gravitational-structural triggering hypotheses.",
+  "analogy_boundary": {
+    "domino": "topology of sequential threshold crossing only",
+    "mousetrap_ping_pong": "a small seed can unlock pre-stored local reservoirs; the seed does not supply the total released energy",
+    "nuclear_fission": "chain-reaction topology analogy only; no claim that gravity has a fission-like self-reproducing microscopic reaction",
+    "cosmic_web": "may be represented as a graph of coarse-grained structures; graph topology is not proof of causal triggering"
+  },
+  "state_variables": [
+    "threshold_j",
+    "reservoir_j",
+    "release_fraction",
+    "distance_m",
+    "coupling",
+    "attenuation_scale_m",
+    "attenuation_exponent",
+    "propagation_speed_m_s"
+  ],
+  "hard_invariants": [
+    "0 < propagation_speed_m_s <= c",
+    "0 <= coupling <= 1",
+    "0 <= release_fraction <= 1",
+    "threshold_j >= 0",
+    "reservoir_j >= 0",
+    "released cascade energy is traced to local pre-existing reservoirs plus external seed",
+    "TOKEN_VAZIO is not zero and is never promoted to evidence",
+    "branching_potential > 1 is not a proof of a physical avalanche"
+  ],
+  "effective_attenuation": {
+    "equation": "A(d)=1/[1+(d/d0)^alpha]",
+    "default_alpha": 2.0,
+    "interpretation": "effective laboratory attenuation only",
+    "forbidden_interpretation": "derived universal GR propagation law"
+  },
+  "activation_rule": {
+    "equation": "Q_i(t)=sum incoming pulses; activate if Q_i >= Theta_i",
+    "release": "E_release_i = eta_i E_reservoir_i",
+    "transmission": "E_ij = E_release_i K_ij A(d_ij)",
+    "delay": "Delta t_ij = d_ij / v_prop"
+  },
+  "observables": [
+    "avalanche_size",
+    "active_fraction",
+    "max_depth",
+    "duration_s",
+    "total_seed_j",
+    "total_released_j",
+    "branching_potential"
+  ],
+  "promotion_requirements": [
+    "identify concrete astrophysical node class",
+    "derive threshold from a physical instability or transition",
+    "derive reservoir from a bounded physical energy budget",
+    "derive coupling from GR/MHD/radiative physics rather than fit it freely",
+    "map propagation channel and attenuation to a source-specific model",
+    "define at least one observable signature distinguishable from independent coincident events",
+    "run null models with randomized topology and event times",
+    "quantify selection effects and observational cadence",
+    "obtain independent replication"
+  ],
+  "claim_boundary": "This implementation demonstrates a causal threshold-cascade computation. It does not demonstrate that the Universe, the cosmic web, stars, black holes or gravitational fields undergo such an avalanche."
+}
