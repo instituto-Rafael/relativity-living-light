@@ -40,6 +40,25 @@ tests/strong_gravity/test_toroidal_sine_reference.py
 docs/strong_gravity/TOROIDAL_SINE_REFERENCE_ADAPTER.md
 ```
 
+### Gravitational reverberation response — 2026-09-07
+
+```text
+data/pipelines/strong_gravity/gravitational_reverberation_response.py
+data/contracts/gravitational_reverberation_response.v1.json
+data/examples/strong_gravity/gravitational_reverberation.example.json
+scripts/strong_gravity/run_gravitational_reverberation.py
+tests/strong_gravity/test_gravitational_reverberation_response.py
+docs/strong_gravity/GRAVITATIONAL_REVERBERATION_RESPONSE.md
+```
+
+This layer implements a bounded **signal reference**:
+
+```text
+direct pulse + damped modes/ringdown + power-law tail + persistent memory
+```
+
+It does not derive a numerical-relativity waveform, source mass/spin spectrum or strain-to-energy conversion.
+
 ### Causal gravitational cascade trigger network — 2026-09-07
 
 ```text
@@ -89,6 +108,13 @@ phase-lock score convention   = (1 + cos Delta_phi)/2
 normalized tracking error     = RMS(s_obs-s_ref)/A
 geometric path metric         = sum((||x_i-x_(i-1)||/R)^2)
 
+retarded response time        = t_ret = t_obs - d/v_prop
+reverberation decomposition   = h_direct + h_ringdown + h_tail + h_memory
+ringdown mode                 = A_n exp(-dt/tau_n) cos(2 pi f_n dt + phi_n)
+ringdown Q convention         = pi f_n tau_n
+tail reference                = A_t [1 + dt/tau_t]^(-p)
+memory reference              = Delta_h [1 - exp(-dt/tau_m)]
+
 cascade accumulated trigger   = Q_i(t) = sum_k E_(k->i)(t)
 cascade activation            = Q_i >= Theta_i
 local release                 = E_release_i = eta_i E_reservoir_i
@@ -119,6 +145,11 @@ outgoing energy budget        = sum_j K_ij <= 1
 - a dimensionless path metric is not thermodynamic energy, jet power or stress-energy;
 - a tokamak stabilization result cannot be transferred directly to black-hole accretion;
 - local source physics does not modify the RLL cosmological background without an explicit covariant, population or propagation bridge;
+- the reverberation module is a signal reference, not an Einstein-equation or numerical-relativity solution;
+- supplied damped-mode frequencies are not automatically black-hole quasinormal modes;
+- a power-law tail reference does not imply an exotic gravitational echo;
+- gravitational memory is represented as a persistent signal offset, not converted automatically into local available energy;
+- strain-like amplitude is not Joule-valued trigger energy; `strain_to_trigger_energy = TOKEN_VAZIO`;
 - a cosmic-web graph is a coarse-grained topology, not proof that the Universe is a neural network or a domino system;
 - the mousetrap analogy works because each node stores energy before the trigger; the seed does not create the released reservoir energy;
 - the nuclear-fission analogy is limited to chain-reaction topology; no gravitational microscopic multiplication process is claimed;
@@ -146,32 +177,42 @@ toroidal_sine_reference.py
   -> double-period geometry, bounded sine reference, phase error,
      closure residual and dimensionless path diagnostics
 
+gravitational_reverberation_response.py
+  -> causal direct pulse, damped modes, tail, memory and retarded observer response
+
 gravitational_cascade_network.py
   -> causal threshold graph, pre-loaded local reservoirs, finite-speed pulses,
      attenuation, branching diagnostics and cascade receipts
+
+future composition
+  -> C_g = N_threshold o R_g
+  -> blocked until a source-specific strain/response -> trigger-energy map is derived
 ```
 
 ## Validation boundary
 
 ```text
-compression/radiation focused tests = 15 PASS (recorded pre-commit execution)
-magnetorotational focused tests      = 21 PASS (recorded local execution)
-toroidal/sine focused tests          = 15 PASS (recorded local execution)
-gravitational cascade focused tests  = 7 WRITTEN; execution receipt TOKEN_VAZIO pending CI/local run
+compression/radiation focused tests   = 15 PASS (recorded pre-commit execution)
+magnetorotational focused tests        = 21 PASS (recorded local execution)
+toroidal/sine focused tests            = 15 PASS (recorded local execution)
+gravitational reverberation tests      = 5 WRITTEN; execution receipt TOKEN_VAZIO pending CI/local run
+gravitational cascade focused tests    = 7 WRITTEN; execution receipt TOKEN_VAZIO pending CI/local run
 
-GRMHD solution                       = false
-force-free global solution           = false
-quantum/PIC kinetic solution         = false
-spin hydrodynamics solution          = false
-radiative-transfer solution          = false
-Einstein backreaction                = false
-nuclear network                      = false
-cosmic-web causal cascade            = false
-laboratory validation                = false
-astrophysical source fit             = false
-universal sine stabilization         = false
-RLL cosmology validation             = false
-claim_allowed                        = false
+GRMHD solution                         = false
+force-free global solution             = false
+numerical-relativity waveform solution = false
+quantum/PIC kinetic solution           = false
+spin hydrodynamics solution            = false
+radiative-transfer solution            = false
+Einstein backreaction                  = false
+strain-to-trigger-energy bridge        = TOKEN_VAZIO
+nuclear network                        = false
+cosmic-web causal cascade              = false
+laboratory validation                  = false
+astrophysical source fit               = false
+universal sine stabilization           = false
+RLL cosmology validation               = false
+claim_allowed                          = false
 ```
 
-No new workflow YAML was introduced by the cascade extension.
+No new workflow YAML was introduced by the reverberation/cascade extensions.
