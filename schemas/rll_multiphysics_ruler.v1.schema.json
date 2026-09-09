@@ -26,7 +26,7 @@
   "properties": {
     "schema": {"const": "rll.multiphysics_ruler.inspection.v1"},
     "route_token": {"const": "ΩRULER-MP-V1"},
-    "claim_allowed": {"type": "boolean", "default": false},
+    "claim_allowed": {"const": false},
     "source": {
       "type": "object",
       "additionalProperties": false,
