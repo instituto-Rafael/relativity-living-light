@@ -1,0 +1,55 @@
+{
+  "schema": "rll.bp_physical_contract.v1",
+  "description": "Physical-profile interpretation of the canonical RLL magnetic (Omega_B0) and plasma (Omega_P0) radiation-like background terms. This resolves sign only when the terms are interpreted as physical energy densities; it does not invent missing perturbation microphysics or statistical priors.",
+  "claim_allowed": false,
+  "canonical_authority": {
+    "path": "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md",
+    "equation": "E^2(a)=Omega_r a^-4+Omega_m a^-3+Omega_Lambda+Omega_s0*g(a)+Omega_B0 a^-4+Omega_P0 a^-4",
+    "semantic_statement": "Omega_B0 and Omega_P0 represent magnetic and plasma sectors",
+    "authority_level": "CANONICAL_COMPLEMENTARY_MODEL"
+  },
+  "profiles": {
+    "Omega_B0": {
+      "physical_interpretation": "MAGNETIC_FIELD_ENERGY_DENSITY_TODAY",
+      "sign_contract": "NONNEGATIVE",
+      "sign_basis": "rho_B = B^2/(2 mu0) >= 0",
+      "background_scaling": "a^-4",
+      "scaling_basis": "flux-frozen homogeneous/rms magnetic energy with B proportional to a^-2",
+      "resolved_state": "PHYSICAL_SIGN_RESOLVED_NONNEGATIVE",
+      "perturbation_state": "TOKEN_VAZIO_PMF_SPECTRUM_HELICITY_ANISOTROPIC_STRESS"
+    },
+    "Omega_P0": {
+      "physical_interpretation": "PLASMA_ENERGY_DENSITY_TODAY_IN_CANONICAL_RADIATION_LIKE_PROFILE",
+      "sign_contract": "NONNEGATIVE",
+      "sign_basis": "physical energy density rho_P >= 0",
+      "background_scaling": "a^-4",
+      "continuity_implication_if_separately_conserved": "w_P = 1/3",
+      "guard": "ordinary nonrelativistic baryonic plasma scales matter-like and is NOT this profile; a^-4 requires a relativistic/effective radiation-like plasma sector",
+      "resolved_state": "PHYSICAL_SIGN_RESOLVED_NONNEGATIVE_CONDITIONAL_ON_RADIATION_LIKE_PROFILE",
+      "perturbation_state": "TOKEN_VAZIO_PLASMA_EOS_SOUND_SPEED_VISCOSITY_INTERACTIONS"
+    }
+  },
+  "statistical_prior_state": "TOKEN_VAZIO_NO_AUTHORITATIVE_BP_PRIOR_FOUND_IN_CANONICAL_IMPLEMENTATION",
+  "historical_blueprint_ranges": {
+    "path": "RMR/03_METADATA.json",
+    "Omega_B0": [1e-6, 1e-5],
+    "Omega_P0": [1e-6, 1e-5],
+    "authority": "BLUEPRINT_NOT_PRIOR"
+  },
+  "alternative_interpretation": {
+    "effective_signed_coefficient": "TOKEN_VAZIO_NOT_AUTHORIZED_AS_PHYSICAL_DENSITY_PROFILE",
+    "guard": "A signed phenomenological correction would be a distinct model profile and cannot inherit the physical-density semantics without an explicit canonical definition."
+  },
+  "background_likelihood_eligibility": {
+    "positive_decoupled_radiation_mapping": "ELIGIBLE_WITH_EXPLICIT_ASSUMPTIONS",
+    "cmb_perturbation_likelihood": "TOKEN_VAZIO_UNTIL_MICROPHYSICS_DEFINED"
+  },
+  "reference_roles": [
+    {
+      "id": "PLANCK_PMF_2015",
+      "citation": "Planck Collaboration XIX, Constraints on primordial magnetic fields, A&A 594 A19 (2016), arXiv:1502.01594",
+      "role": "PMF perturbation complexity: spectrum/helicity/anisotropic stress/Faraday/heating cannot be replaced by a single background Omega_B0"
+    }
+  ],
+  "publication_effect": "NONE"
+}

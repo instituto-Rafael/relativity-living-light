@@ -1,0 +1,51 @@
+{
+  "schema": "rll.session_interaction_ledger.v1",
+  "session_date": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "capture_mode": "SEMANTIC_TURN_RECEIPTS",
+  "verbatim_transcript_embedded": false,
+  "verbatim_boundary": "The repository stores normalized interaction receipts, not private raw chat transcript bytes. Exact prompt hashes remain TOKEN_VAZIO unless independently materialized into an approved custody bundle.",
+  "coverage": "Prompts materially used in the strong-gravity/Mpemba closure and this evolution pass.",
+  "interactions": [
+    {
+      "id": "SESSION-20260827-P01",
+      "prompt_role": "scientific_exploration",
+      "intent": "Relate Mpemba-like relaxation, black-hole thermodynamics, compression, plasma, redshift/time observations, jets and direct/inverse/derivative/antiderivative relations while separating paradox, anomaly and speculation.",
+      "response_contract": "Separate established GR/black-hole thermodynamics from analogy and hypothesis; identify negative heat capacity, redshift/frame dependence and a falsifiable gravitational-Mpemba route.",
+      "risk_before": ["jet-from-inside-horizon misconception", "molecule-to-singularity literalization", "analogy promoted to evidence", "coordinate-time interpreted as literal coexistence of all times"],
+      "risk_reduction": ["outside-horizon plasma/accretion boundary", "negative heat-capacity derivation", "observer/frame separation", "TOKEN_VAZIO for unobserved astrophysical Mpemba"],
+      "artifacts_or_evidence": ["docs/RLL_MPEMBA_HORIZON_ATLAS.md", "data/contracts/mpemba_horizon_falsifier.v1.json", "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json"],
+      "remaining_gap_ids": ["B10-CLOSE-P0-001", "B10-CLOSE-P0-002", "B10-CLOSE-P0-003", "B10-CLOSE-P0-005"],
+      "verbatim_prompt_sha256": "TOKEN_VAZIO"
+    },
+    {
+      "id": "SESSION-20260827-P02",
+      "prompt_role": "operational_closure",
+      "intent": "Finalize the situations raised in-session with no untracked gaps, urgency, provenance and operational closure without fabricating unavailable external evidence.",
+      "response_contract": "Materialize closure registry, EHT custody manifest, observational protocol, validator, adversarial tests, priority ledger and receipts; merge only after CI/non-regression gates pass.",
+      "risk_before": ["untracked external blockers", "invented file SHA256", "retrospective preregistration mislabeling", "same-author replication misclassified as independent"],
+      "risk_reduction": ["zero untracked B10/C11 gaps", "fail-closed EHT byte custody", "retrospective/prospective split", "independent-reproduction protected token", "11/11 workflow gate before merge"],
+      "artifacts_or_evidence": ["data/registries/rll_mpemba_horizon_closure_registry.v1.json", "data/real/strong_gravity/eht_2026_d01_01_manifest.json", "data/contracts/eht_mpemba_observational_protocol.v1.json", "tools/validate_mpemba_horizon_closure.py", "provenance/receipts/rll_mpemba_horizon_closure_20260827.json", "merge:30e4d2fd7af3d7b9db3096ba530b72d0275e37f2"],
+      "remaining_gap_ids": ["B10-CLOSE-P0-001", "B10-CLOSE-P0-002", "B10-CLOSE-P0-003", "B10-CLOSE-P0-005"],
+      "verbatim_prompt_sha256": "TOKEN_VAZIO"
+    },
+    {
+      "id": "SESSION-20260827-P03",
+      "prompt_role": "continuous_evolution_and_federation",
+      "intent": "Fill the session gaps with prompt-by-prompt interaction tracking, risk reduction, urgency, provenance, receipts, ATLAS, chain of custody, six additional continuous-evolution fences, non-regression, operational excellence and deployment into Instituto Rafael.",
+      "response_contract": "Consume the newer G0-G7 ATLAS gate instead of overwriting it; extend RLL append-only; install six fail-closed fences; create event-driven validation in RLL and a scheduled federation watchdog in RAFAELIA_CORE; preserve repository authority boundaries.",
+      "risk_before": ["session decisions not traceable to prompts", "governance duplication", "autonomous write loops", "cross-repository authority confusion", "stale TOKEN_VAZIO states", "regression over concurrent G0-G7 work"],
+      "risk_reduction": ["semantic turn ledger", "G0-G7 integration", "authority manifest", "read-only autonomous validation", "rollback fence", "drift watch", "federated control-plane in RAFAELIA_CORE"],
+      "artifacts_or_evidence": ["data/registries/rll_session_evolution_mesh.v1.json", "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json", "docs/RLL_SESSION_EVOLUTION_ATLAS_20260827.md", "provenance/receipts/rll_session_evolution_mesh_20260827.json", "instituto-Rafael/RAFAELIA_CORE"],
+      "remaining_gap_ids": ["EXTERNAL_EHT_BYTES", "MATCHED_RELAXATION_DATA", "COVARIANCE_AUTHORITY", "INDEPENDENT_EXTERNAL_REPLICATION"],
+      "verbatim_prompt_sha256": "TOKEN_VAZIO"
+    }
+  ],
+  "session_state": {
+    "untracked_material_prompts": 0,
+    "raw_transcript_custody": "TOKEN_VAZIO",
+    "scientific_claim_allowed": false,
+    "evolution_mode": "APPEND_ONLY_FAIL_CLOSED",
+    "concurrent_lab_evolution_consumed": "RLL_ATLAS_EVOLUTION_GATE_20260827_V1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "rll.multiphysics_ruler.binding.v1",
+  "route_token": "ΩRULER-MP-V1",
+  "date": "2026-09-09",
+  "claim_allowed": false,
+  "mode": "append-only/fail-closed",
+  "canonical_doc": "docs/science/RLL_MULTIPHYSICS_RULER_V1.md",
+  "inspection_schema": "schemas/rll_multiphysics_ruler.v1.schema.json",
+  "drive_canonical": {"title":"RAFAELIA — Ω-RULER MULTIPHYSICS — Protocolo Permanente de Inspeção Drive × GitHub — V1 — 2026-09-09","document_id":"1QHKHsbEmPY_GrZkL9fXuG-WpOFNJQToDgfS5DkhvBgw"},
+  "invariants": ["SOURCE!=MODEL","MODEL!=EXECUTION","EXECUTION!=EVIDENCE","EVIDENCE!=CLAIM","TOKEN_VAZIO!=0","geometric_circulation!=physical_vortex","analogy!=mechanism","real_gravitational_horizon!=analog_horizon"],
+  "channels": ["G","A","O","T","E","H"],
+  "binary_pair_count": 15,
+  "claim_gate": "G_D && G_F && G_E && G_H && G_S && G_R",
+  "scale_family": {"equation":"D_omega = alpha*c_s(T,p)/f","alpha_candidates":[0.25,0.5,1.0,2.0],"lambda_over_2_state":"HYPOTHESIS_TESTABLE_NOT_IDENTITY"},
+  "inherited_three_spiral_state": {"quarter_turn_circle":"PASS","sqrt3_radial_recurrence":"PASS","golden_quarter_turn_ratio_phi":"PASS","unpowered_flyby_relative_speed_invariant":"PASS","third_spiral_existing_identity":"TOKEN_VAZIO_NOT_ESTABLISHED","geometric_radius_equals_physical_periapsis":"TOKEN_VAZIO_NO_SCALE_BINDING","physical_measurement":"TOKEN_VAZIO_NOT_SUPPLIED"},
+  "routing_triggers": ["THREE-SPIRAL","CARDIAL-CIRCLE","MULTIPHYSICS","FREQUENCY","WAVE","ACOUSTIC-TRAP","OPTICAL-TWEEZER","THERMAL","EM-PLASMA","ANALOG-HORIZON","ENERGY-CLOSURE","JACOBIAN"],
+  "F_ok": ["canonical Drive protocol materialized","central Drive book, navigation, reconstruction, longitudinal and mathematical memories indexed","RLL documentation and machine-readable inspection schema materialized"],
+  "F_gap": ["physical scale remains TOKEN_VAZIO where not measured","cross-channel coupling measurements remain TOKEN_VAZIO where not observed","no gravitational event-horizon claim is licensed by analog-horizon models"],
+  "F_next": "apply Ω_INSPECTION to each next relevant retrieved artifact before cross-domain claim promotion"
+}

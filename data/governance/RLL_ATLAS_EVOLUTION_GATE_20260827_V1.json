@@ -1,0 +1,177 @@
+{
+  "schema": "rll.atlas_evolution_gate.v1",
+  "record_id": "RLL_ATLAS_EVOLUTION_GATE_20260827_V1",
+  "revision": 1,
+  "predecessor": null,
+  "created_at_utc": "2026-08-27T20:50:00Z",
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_ready": false,
+  "canonical_authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "repository_id": 1046495816,
+    "branch": "main",
+    "head_sha": "42617e021670c4e761dfd0db4ad40d236c5c10dc",
+    "tree_sha": "6a662fa9f397a47d2b2c3d7fe5cef05537fe2796"
+  },
+  "atlas_authority": {
+    "repository": "rafaelmeloreisnovo/Mapa",
+    "branch": "main",
+    "head_sha": "4072c1ac54a1c0f952e779810ffb8ce47f76e7bc",
+    "routing_index": "indices/RAFAELIA_ATLAS_ROUTING_INDEX_V1.md",
+    "source_checkpoint": "data/audits/SESSION_TOTAL_RLL_OMEGA_20260826T1816_0300_V1.md"
+  },
+  "atlas_routes": {
+    "ATLAS:X": "authority -> source -> literal -> theme -> L/O/T memory -> relations -> scale -> evidence -> gate -> delta -> index",
+    "NOVO:X": "NOT_APPLICABLE_TO_THIS_RLL_PROMOTION_GATE",
+    "L:X": "preserve predecessor records and negative results; corrections append successors",
+    "O:X": "separate authority, data custody, covariance, likelihood parity, baseline recovery, inference, perturbations and independent replication",
+    "T:X": "Mapa authority/index <-> RLL producer implementation <-> evidence artifacts",
+    "REL:X": ["authority_for", "source_of", "evidenced_by", "tested_by", "blocks", "unblocks", "supersedes", "indexed_by"],
+    "SCALE:X": "META program -> gate -> claim -> dataset/version -> file/blob/hash -> executable receipt",
+    "EVID:X": "promotion requires exact evidence pointers and gate-specific falsifiers",
+    "GAP:X": "missing evidence remains TOKEN_VAZIO or BLOCKED; absence is never coerced to PASS",
+    "LEARN:X": "append-only successor; gate maturity and evidence custody may not silently regress"
+  },
+  "status_maturity": {
+    "TOKEN_VAZIO": 0,
+    "BLOCKED": 0,
+    "PARTIAL": 1,
+    "VERIFIED_LIMITED": 2,
+    "VERIFIED": 3,
+    "REPLICATED": 4
+  },
+  "gates": [
+    {
+      "id": "G0_SOURCE_RIGHTS_FREEZE",
+      "status": "PARTIAL",
+      "maturity": 1,
+      "source_state": "PARTIAL_DESI_LOCAL_HASHES_OTHER_DATASETS_TOKEN_VAZIO",
+      "required_output": "exact URL/version/terms/SHA256/transformation receipt per consumed file",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "any consumed dataset lacks exact identity, rights decision, checksum, or transformation receipt"
+    },
+    {
+      "id": "G1_OBSERVABLE_SCHEMA",
+      "status": "PARTIAL",
+      "maturity": 1,
+      "source_state": "PARTIAL_DESI_BAO_ONLY",
+      "required_output": "units, ordering, covariance dimensions and semantics for every data vector",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "schema, units, ordering, or vector/covariance dimensions are ambiguous or inconsistent"
+    },
+    {
+      "id": "G2_FULL_COVARIANCE",
+      "status": "TOKEN_VAZIO",
+      "maturity": 0,
+      "source_state": "TOKEN_VAZIO_UNIFIED_SN_BAO_CMB_GROWTH_COVARIANCE_POLICY",
+      "required_output": "validated full covariance or explicitly justified block structure",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "covariance cannot be reproduced, is misordered, non-finite, dimensionally inconsistent, or omits required correlations"
+    },
+    {
+      "id": "G3_LIKELIHOOD_PARITY",
+      "status": "TOKEN_VAZIO",
+      "maturity": 0,
+      "source_state": "TOKEN_VAZIO",
+      "required_output": "same data, nuisance treatment and covariance for RLL and every adversary",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "RLL and baseline models are evaluated with unequal data, priors, nuisance policy, covariance, or stopping criteria"
+    },
+    {
+      "id": "G4_BASELINE_RECOVERY",
+      "status": "TOKEN_VAZIO",
+      "maturity": 0,
+      "source_state": "TOKEN_VAZIO_UNIFIED_RUN",
+      "required_output": "recover published LCDM/wCDM/CPL behavior within declared tolerance",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "reference baselines cannot be recovered under the frozen pipeline within preregistered tolerances"
+    },
+    {
+      "id": "G5_ROBUST_INFERENCE",
+      "status": "TOKEN_VAZIO",
+      "maturity": 0,
+      "source_state": "TOKEN_VAZIO_MAXITER_MULTISEED_POSTERIOR",
+      "required_output": "multi-seed convergence, posterior diagnostics, prior sensitivity and real Bayesian evidence",
+      "evidence": [
+        {"path": "results/ci/20260806/bayes_factor_result.json", "git_blob_sha1": "c4a2e81d83cd07bcc2dc0181d85291fb9272d821"},
+        {"path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_RULES_20260807_V1.json", "git_blob_sha1": "ceccb421370dfc1b5645283bf09aeb7cacd510d3"}
+      ],
+      "falsifier": "non-convergence, prior-dominated result, unstable seeds, or reliance on BIC/AIC proxy as Bayesian evidence"
+    },
+    {
+      "id": "G6_GROWTH_PERTURBATIONS",
+      "status": "TOKEN_VAZIO",
+      "maturity": 0,
+      "source_state": "TOKEN_VAZIO_CLASS_CAMB_EQUIVALENT",
+      "required_output": "physical perturbation/growth prediction with CLASS/CAMB-equivalent validation before growth/CMB claims",
+      "evidence": [
+        {"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"},
+        {"path": "data/governance/RLL_TOKEN_VAZIO_CLOSURE_RULES_20260807_V1.json", "git_blob_sha1": "ceccb421370dfc1b5645283bf09aeb7cacd510d3"}
+      ],
+      "falsifier": "no stable physical perturbation/growth solution or failure to recover baseline growth behavior"
+    },
+    {
+      "id": "G7_CLAIM_DECISION",
+      "status": "BLOCKED",
+      "maturity": 0,
+      "source_state": "BLOCKED_BY_G0_TO_G6",
+      "required_output": "explicit claim decision preserving negative results and independent falsifier outcome",
+      "evidence": [{"path": "docs/science/RLL_RECENT_OBSERVATIONS_CROSSWALK_20260825.md", "git_blob_sha1": "c56b5a36c3c7c186626c60b4e8f8f0adf722225e"}],
+      "falsifier": "any G0-G6 prerequisite is below VERIFIED or independent replication is unresolved"
+    }
+  ],
+  "blocking_tokens": [
+    {"token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE", "state": "OPEN", "required_for_claim": "RESOLVED"},
+    {"token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION", "state": "OPEN", "required_for_claim": "RESOLVED"},
+    {"token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION", "state": "OPEN", "required_for_claim": "RESOLVED"},
+    {"token": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD", "state": "OPEN", "required_for_claim": "RESOLVED"},
+    {"token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "state": "OPEN", "required_for_claim": "RESOLVED"},
+    {"token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK", "state": "OPEN", "required_for_claim": "RESOLVED"}
+  ],
+  "promotion_contract": {
+    "required_gate_ids": [
+      "G0_SOURCE_RIGHTS_FREEZE",
+      "G1_OBSERVABLE_SCHEMA",
+      "G2_FULL_COVARIANCE",
+      "G3_LIKELIHOOD_PARITY",
+      "G4_BASELINE_RECOVERY",
+      "G5_ROBUST_INFERENCE",
+      "G6_GROWTH_PERTURBATIONS"
+    ],
+    "minimum_maturity_for_claim": 3,
+    "g7_allowed_statuses_for_claim": ["VERIFIED", "REPLICATED"],
+    "blocking_tokens_must_match_required_state": true,
+    "no_regression": {
+      "gate_maturity_non_decreasing": true,
+      "evidence_set_no_shrink": true,
+      "atlas_invariants_no_shrink": true,
+      "historical_records_append_only": true,
+      "negative_results_preserved": true
+    }
+  },
+  "invariants": [
+    "VISÃO_NE_ARTEFATO_NE_EXECUÇÃO_NE_EVIDÊNCIA_NE_CLAIM",
+    "TOKEN_VAZIO_NE_PASS",
+    "METADATA_CROSSWALK_NE_SCIENTIFIC_EXECUTION",
+    "AIC_BIC_PROXY_NE_BAYESIAN_EVIDENCE",
+    "SINGLE_DATASET_NE_INDEPENDENT_REPLICATION",
+    "NEGATIVE_RESULT_IS_EVIDENCE_NOT_REGRESSION",
+    "URGENCY_CHANGES_PROBE_ORDER_NOT_TRUTH",
+    "MAPA_INDEX_NE_RLL_PRODUCER_AUTHORITY"
+  ],
+  "F_ok": [
+    "canonical RLL producer repository, branch, HEAD and tree are now pinned",
+    "G0-G7 source states are materialized into one machine-readable ATLAS promotion record",
+    "existing TOKEN_VAZIO closure ledger is consumed as blocker authority rather than replaced"
+  ],
+  "F_gap": [
+    "G2 full covariance",
+    "G3 likelihood parity",
+    "G4 baseline recovery",
+    "G5 robust inference and real Bayesian evidence",
+    "G6 perturbation/growth backend",
+    "independent replication"
+  ],
+  "F_next": "freeze one rights-cleared full likelihood and covariance, then run identical LCDM/wCDM/CPL/RLL baselines with robust multi-seed diagnostics; preserve the negative smoke baseline"
+}

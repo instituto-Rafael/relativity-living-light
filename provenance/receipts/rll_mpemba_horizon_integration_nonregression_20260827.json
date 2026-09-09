@@ -1,0 +1,50 @@
+{
+  "schema": "rll.provenance.mpemba_horizon_integration_nonregression.v1",
+  "recorded_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "branch": "science/mpemba-horizon-atlas-20260827",
+  "promotion_base": "rll/lab",
+  "pull_request": 778,
+  "parent_head_before_receipt": "b8c7f48ee3f8814e5ac9d98f7e93a328457380c4",
+  "previous_scientific_head_verified": {
+    "sha": "9cb2deddb9e1272ac472361f0405ffaa3c47270b",
+    "workflows_observed_success": [
+      "Branch Maturity Gate V2",
+      "formulas-artifacts",
+      "claim-allowed-gate",
+      "Convention Consistency Check",
+      "Transit Tower Ω",
+      "RLL Knowledge Matrix — Orquestração de Fórmulas e Conceitos",
+      "GitHub Platform Assurance",
+      "GitHub Platform Assurance V2",
+      "Python tests"
+    ],
+    "workflow_count_success": 9
+  },
+  "integration_delta": [
+    "append B10_black_hole_thermodynamics_mpemba_falsifier to operational integration registry",
+    "append B10 successor_extensions entry to historical strong-gravity calibration registry",
+    "federate bounded 2025-2026 Mpemba/black-hole/EHT sources into canonical recent-source registry",
+    "append B10 successor traceability to strong-gravity calibration index",
+    "bind legacy RLL_PARADOX_THERMODYNAMIC_LAYER Mpemba language to B10",
+    "append C11/B10 route to canonical falsifier roadmap",
+    "add structural tests for historical branch, heuristic, numeric-result and source preservation"
+  ],
+  "non_regression_contract": {
+    "raw_data_policy": "immutable",
+    "claim_allowed": false,
+    "preserve_operational_branches": "B00..B09",
+    "preserve_strong_gravity_heuristics": "H1..H8 in historical order",
+    "preserve_committed_numeric_result": "results/strong_gravity_calibration/session_reference_sweep_20260717.json",
+    "preserve_legacy_recent_sources": 11,
+    "new_branch": "B10_black_hole_thermodynamics_mpemba_falsifier",
+    "new_roadmap_route": "C11",
+    "astrophysical_mpemba_state": "TOKEN_VAZIO",
+    "direct_astrophysical_hawking_thermometry_state": "TOKEN_VAZIO",
+    "symbolic_to_physical_equivalence_without_dimensional_covariant_gate": "REJECT"
+  },
+  "new_head_ci_at_receipt_creation": "TOKEN_VAZIO_PENDING_GITHUB_ACTIONS",
+  "local_execution": "TOKEN_VAZIO_INFRA_CONTAINER_ENOENT",
+  "global_scientific_claim_allowed": false,
+  "next_verifiable_action": "Observe canonical GitHub Actions for the final receipt-containing HEAD; merge only through the declared maturity route if all required gates pass."
+}

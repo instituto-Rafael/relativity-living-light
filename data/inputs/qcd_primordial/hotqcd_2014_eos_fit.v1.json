@@ -1,0 +1,58 @@
+{
+  "schema": "rll.qcd.hotqcd_eos_fit.v1",
+  "source": {
+    "citation": "A. Bazavov et al. (HotQCD Collaboration), Phys. Rev. D 90, 094503 (2014)",
+    "doi": "10.1103/PhysRevD.90.094503",
+    "role": "QCD_SECTOR_EOS",
+    "fit_domain_MeV": [100.0, 400.0],
+    "lattice_table_domain_MeV": [130.0, 400.0]
+  },
+  "formula": {
+    "Tc_MeV": 154.0,
+    "p_id": "95*pi^2/180",
+    "expression": "p/T^4 = 0.5*(1+tanh(ct*(T/Tc-t0)))*(p_id+an/x+bn/x^2+cn/x^3+dn/x^4)/(1+ad/x+bd/x^2+cd/x^3+dd/x^4), x=T/Tc",
+    "thermodynamic_identities": [
+      "I/T^4 = T*d(p/T^4)/dT",
+      "epsilon/T^4 = I/T^4 + 3*p/T^4",
+      "s/T^3 = epsilon/T^4 + p/T^4",
+      "g_rho_QCD = 30*(epsilon/T^4)/pi^2",
+      "g_s_QCD = 45*(s/T^3)/(2*pi^2)"
+    ]
+  },
+  "coefficients": {
+    "ct": 3.8706,
+    "an": -8.7704,
+    "bn": 3.92,
+    "cn": 0.0,
+    "dn": 0.3419,
+    "t0": 0.9761,
+    "ad": -1.26,
+    "bd": 0.8425,
+    "cd": 0.0,
+    "dd": -0.0475
+  },
+  "published_table_central_selected": [
+    {"T_MeV":130,"I_T4":1.01,"p_T4":0.439,"eps_T4":2.33,"s_T3":2.77,"Cv_T3":16.5,"cs2":0.168},
+    {"T_MeV":145,"I_T4":1.76,"p_T4":0.586,"eps_T4":3.52,"s_T3":4.11,"Cv_T3":28.6,"cs2":0.144},
+    {"T_MeV":150,"I_T4":2.09,"p_T4":0.651,"eps_T4":4.05,"s_T3":4.70,"Cv_T3":32.6,"cs2":0.144},
+    {"T_MeV":155,"I_T4":2.43,"p_T4":0.726,"eps_T4":4.61,"s_T3":5.34,"Cv_T3":36.2,"cs2":0.148},
+    {"T_MeV":160,"I_T4":2.76,"p_T4":0.808,"eps_T4":5.19,"s_T3":6.00,"Cv_T3":39.3,"cs2":0.153},
+    {"T_MeV":170,"I_T4":3.34,"p_T4":0.994,"eps_T4":6.32,"s_T3":7.32,"Cv_T3":43.8,"cs2":0.167},
+    {"T_MeV":200,"I_T4":4.05,"p_T4":1.613,"eps_T4":8.89,"s_T3":10.50,"Cv_T3":48.1,"cs2":0.218},
+    {"T_MeV":250,"I_T4":3.57,"p_T4":2.476,"eps_T4":10.99,"s_T3":13.47,"Cv_T3":51.5,"cs2":0.261},
+    {"T_MeV":300,"I_T4":2.96,"p_T4":3.072,"eps_T4":12.18,"s_T3":15.25,"Cv_T3":54.2,"cs2":0.282},
+    {"T_MeV":350,"I_T4":2.43,"p_T4":3.487,"eps_T4":12.89,"s_T3":16.38,"Cv_T3":55.4,"cs2":0.296},
+    {"T_MeV":400,"I_T4":1.99,"p_T4":3.782,"eps_T4":13.34,"s_T3":17.12,"Cv_T3":56.2,"cs2":0.304}
+  ],
+  "scope_guard": [
+    "These are QCD-sector thermodynamics, not total Standard-Model cosmic g_rho/g_s.",
+    "Above roughly 300 MeV charm becomes relevant in cosmological EoS completion.",
+    "Use Borsanyi et al. full-SM completion before precision H(T) claims."
+  ],
+  "superseded_provenance": {
+    "state": "SUPERSEDED",
+    "item": "pre-2014 preliminary HISQ/tree EoS conference results",
+    "reason": "incorrect normalization of fermion contribution to trace anomaly; produced larger trace anomaly for T<300 MeV",
+    "active_use": false
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "rll.strong_gravity.eht_mpemba_observational_protocol.v1",
+  "locked_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "global_scientific_claim_allowed": false,
+  "purpose": "Prevent post-hoc conversion of EHT variability into an astrophysical Mpemba claim and define the minimum observational design for any future test.",
+  "existing_public_data_scope": {
+    "product": "EHT 2026-D01-01",
+    "epochs": [2018, 2021],
+    "reference_context_includes": [2017, 2018, 2021],
+    "analysis_class": "RETROSPECTIVE_BOUNDED_VARIABILITY_ONLY",
+    "prospective_preregistration": false,
+    "reason": "The outcomes were public before this protocol lock. The available epochs do not by themselves identify two matched relaxation trajectories toward one common equilibrium/attractor.",
+    "allowed_claims": [
+      "bounded statements about published horizon-scale variability and polarimetric evolution when sourced to the EHT paper/data",
+      "tests of ingestion, custody, preprocessing and statistical machinery",
+      "falsification of an attempted Mpemba interpretation when required trajectory conditions are absent"
+    ],
+    "forbidden_claims": [
+      "prospectively preregistered detection on already published outcomes",
+      "astrophysical Mpemba detection from sparse epoch ordering alone",
+      "Hawking-temperature measurement from synchrotron/polarimetric observables"
+    ]
+  },
+  "future_candidate_design": {
+    "analysis_class": "PROSPECTIVE_IF_LOCKED_BEFORE_OUTCOME_INSPECTION",
+    "required_data_properties": [
+      "two or more physically comparable relaxation trajectories",
+      "same declared target or stationary attractor under a justified matching regime",
+      "time cadence sufficient to resolve crossing and first-passage ordering",
+      "measurement uncertainties and calibration/systematics model",
+      "immutable file-level custody with SHA256",
+      "a holdout or genuinely future release when feasible"
+    ],
+    "state_vector_rule": "Use only observables present in both trajectories with a declared physical/statistical interpretation. The final vector and ordering must be frozen before the candidate crossing is inspected.",
+    "distance_primary_family": {
+      "name": "covariance_whitened_distance",
+      "definition": "D(x,mu)^2 = (x-mu)^T C^{-1} (x-mu) / k for k frozen observables when a valid covariance C exists",
+      "fallback": "If C is unavailable or singular, no primary covariance-aware Mpemba decision is allowed; a diagonal or pseudoinverse substitution requires a separately preregistered robustness analysis and cannot silently replace the primary test.",
+      "monotone_robustness_family": [
+        "normalized Euclidean distance on the same frozen observable vector",
+        "componentwise standardized L1 distance on the same frozen observable vector"
+      ]
+    },
+    "target_rule": "The equilibrium/stationary target must be physically justified and frozen independently of the later crossing; it may not be chosen because it maximizes the claimed effect.",
+    "far_near_rule": "At t0, the far trajectory must have D_far(0) > D_near(0). This ordering is determined before any later crossing test.",
+    "crossing_rule": "A crossing requires a time interval after t0 in which D_far becomes strictly less than D_near under the primary distance and remains so for the preregistered persistence criterion.",
+    "first_passage_rule": "tau(epsilon) is the first time at which D <= epsilon and the trajectory satisfies the preregistered persistence criterion. epsilon is dataset-specific but must be frozen before outcome inspection and justified from the measurement/noise scale rather than tuned to create a crossing.",
+    "uncertainty_rule": "Propagate the declared covariance/calibration uncertainty through D, crossing time and tau(epsilon); report posterior/bootstrap/ensemble uncertainty according to the frozen data model.",
+    "null_family_required": [
+      "stochastic/turbulent variability under standard accretion physics",
+      "GRMHD MAD/SANE-compatible variability where applicable",
+      "Faraday-screen/calibration alternatives for polarization changes",
+      "ordinary monotone relaxation without slow-mode suppression"
+    ],
+    "multiplicity_rule": "One primary observable vector, distance and epsilon rule is locked. Any additional observable/distance/epoch scan is secondary and requires declared multiplicity control.",
+    "holdout_rule": "A holdout epoch/release may not be used to tune preprocessing, target, distance, epsilon, null family or matching before final evaluation.",
+    "independent_replication_rule": "Internal CI and same-author reruns are reproducibility only. Promotion requires an independent operator or repository to reproduce from clean checkout and frozen inputs."
+  },
+  "promotion_checklist": [
+    "official bytes and file-level SHA256 verified",
+    "dataset/file license or terms recorded",
+    "matched relaxation trajectories established",
+    "common target independently justified",
+    "observable vector frozen before crossing inspection",
+    "covariance/uncertainty model validated",
+    "distance and epsilon rule locked",
+    "null family locked and evaluated",
+    "holdout/look-elsewhere policy passed",
+    "independent replication receipt obtained"
+  ],
+  "current_decision": {
+    "EHT_2026_D01_01_is_sufficient_for_BH_MP_06": false,
+    "BH_MP_06": "TOKEN_VAZIO",
+    "BH_MP_08": "TOKEN_VAZIO",
+    "reason": "The current public product is a valid strong-gravity observational source but does not by itself satisfy the operational design required for a direct astrophysical Mpemba or Hawking-thermometry claim."
+  }
+}

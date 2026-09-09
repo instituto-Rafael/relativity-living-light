@@ -1,0 +1,79 @@
+{
+  "schema": "rll.atlas_g234_evidence_reconciliation.v1",
+  "record_id": "RLL_ATLAS_G234_EVIDENCE_RECONCILIATION_20260828_V1",
+  "created_at_utc": "2026-08-28T07:13:49Z",
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_ready": false,
+  "predecessor": {
+    "record_id": "RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_20260827_V2",
+    "path": "data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V2.json",
+    "git_blob_sha1": "6affe719819ee52b0d1ced35b364c99e57b73617"
+  },
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "repository_id": 1046495816,
+    "target_branch": "rll/lab",
+    "base_head_sha": "e6e12097c1fb397a0f923daa84f3760739d4d9d3",
+    "base_tree_sha": "7158cb1a6a9e398b06f380cea1282661da39bd27",
+    "evidence_head_sha": "a99e5caff4be0dea2a368592c80e36445e45ef89",
+    "evidence_merged_into_base": true
+  },
+  "runtime_evidence": {
+    "workflow_name": "Python tests",
+    "run_id": 33150360583,
+    "conclusion": "success",
+    "artifact_id": 9677562132,
+    "artifact_name": "python-tests-33150360583",
+    "artifact_digest": "sha256:8bd1ca4aea1e53da2a8cd6da38965c12d66fb11457bb52dd474ed841327d2a97",
+    "head_sha": "a99e5caff4be0dea2a368592c80e36445e45ef89",
+    "files": [
+      {"path": "artifacts/python-tests/pantheon_covariance_materialization.json", "sha256": "dc86a3f2cf9a3edd6503e6e18f04a3321a9fc2b5ca3fea90ac886e6bf6f8f7e2"},
+      {"path": "artifacts/python-tests/g4_background_six_model_receipt.json", "sha256": "7535a570bbdc9992bacefe487782935766cf934d423b2e5b1c10c2023d109e48"},
+      {"path": "artifacts/python-tests/g5_canonical_background_manifest.json", "sha256": "2781e7c7cf8419ed4aa442288e470e5d33d0078bf2249c8854b7363c4866bcb4"},
+      {"path": "artifacts/python-tests/g6_canonical_inference_receipt.json", "sha256": "e800fb713d45ff6ce6567381412bb5be156733189199f76cec6ce0d5eb184b99"}
+    ]
+  },
+  "persistent_evidence": [
+    {"path": "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json", "git_blob_sha1": "e0f0a9c446aad0ee079cf32c7eab0e3c54d07a97", "role": "PANTHEON_FULL_STAT_SYS_COVARIANCE_CUSTODY"},
+    {"path": "artifacts/science/RLL_G3_DESI_PANTHEON_COMPATIBILITY_RECEIPT_20260819_RUN32286390824.json", "git_blob_sha1": "d25188a677e3900156892cc47216951b51dce5bf", "role": "DESI_PANTHEON_COMPATIBILITY_BRANCH"},
+    {"path": "artifacts/science/RLL_G4_PANTHEON_FAIRNESS_RECEIPT_20260819_RUN32286390824.json", "git_blob_sha1": "9609218c53597e7d431bded92e12c465fa5849bb", "role": "SINGLE_LIKELIHOOD_FULL_COVARIANCE_FAIRNESS_NEGATIVE_RESULT"},
+    {"path": "artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json", "git_blob_sha1": "55272b773365c188630b8850165beec0dc5c981f", "role": "STANDARD_LCDM_CPL_BACKEND_RECOVERY"}
+  ],
+  "frozen_background_inputs": {
+    "data/real/Hz_data_real.csv": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6",
+    "data/real/cosmology/desi_dr2_bao_primary_points.csv": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+    "data/real/desi_dr2_bao_covariance.csv": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658",
+    "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+    "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+    "data/contracts/rll_g4_background_tournament.v1.json": "6cb3be394e583b79450e075122058a054296b8be9a6f574f316f894fe6ead825"
+  },
+  "effective_projection": [
+    {
+      "id": "G2_FULL_COVARIANCE", "from_status": "TOKEN_VAZIO", "status": "PARTIAL", "maturity": 1,
+      "reason": "Hash-bound Pantheon+ full STAT+SYS covariance and the frozen DESI DR2 13x13 covariance are consumed by the successful six-model background route. Cross-survey covariance and broader multi-probe covariance remain open.",
+      "positive_evidence": ["Pantheon+ 1701x1701 full STAT+SYS covariance materialized and hash verified", "DESI DR2 covariance is frozen by SHA-256 in G4/G5", "G4 and G5 consumed the same frozen input hashes"],
+      "blockers": ["TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX", "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"]
+    },
+    {
+      "id": "G3_LIKELIHOOD_PARITY", "from_status": "TOKEN_VAZIO", "status": "PARTIAL", "maturity": 1,
+      "reason": "A six-model background tournament and a hash-bound G5 manifest establish same-route data/covariance/selection/nuisance treatment in the declared background scope. Full probe parity, official external likelihood reproduction and stable inference stopping remain open.",
+      "positive_evidence": ["six mandatory background comparators use one frozen data route", "G5 manifest binds the G4 receipt, executor and input hashes", "negative RLL and convergence outcomes are retained rather than normalized away"],
+      "blockers": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION", "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "MCMC_CONVERGENCE", "NESTED_SEED_STABILITY"]
+    },
+    {
+      "id": "G4_BASELINE_RECOVERY", "from_status": "TOKEN_VAZIO", "status": "PARTIAL", "maturity": 1,
+      "reason": "CLASS/CAMB LCDM-CPL backend crosscheck is verified and the G4 tournament recovers LCDM from GEDE, IDE and RLL null limits at 1e-12 tolerance. RLL perturbative completion, full-probe recovery and converged canonical inference remain open.",
+      "positive_evidence": ["CLASS/CAMB standard LCDM/CPL numerical baseline crosscheck verified", "GEDE Delta=0, IDE beta=0 and RLL Omega_s0=0 recover LCDM in the background tournament", "six-model G4 route is executable and preserves unfavorable RLL evidence"],
+      "blockers": ["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION", "MCMC_CONVERGENCE", "NESTED_SEED_STABILITY"]
+    }
+  ],
+  "negative_evidence": {
+    "g4_background": {"state": "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT", "rll_Omega_s0": 0.0, "rll_delta_chi2_vs_LCDM": 5.229594535194337e-12, "rll_delta_BIC_vs_LCDM": 22.311619100619055, "interpretation": "In this frozen background tournament RLL collapses to its null boundary and does not improve chi2 over LCDM; this is unfavorable evidence in scope, not universal falsification."},
+    "g6": {"state": "BLOCKED_G6_CONVERGENCE_OR_EVIDENCE", "rll_max_Rhat": 1.2741861598901691, "threshold_Rhat": 1.1, "convergence_pass_all": false, "F_gap": ["MCMC_CONVERGENCE", "NESTED_SEED_STABILITY"], "interpretation": "The canonical G6 route executed but cannot support inference promotion because RLL multichain convergence and nested-seed stability gates fail."}
+  },
+  "effective_maturity": {"predecessor_total": 4, "effective_total": 7, "denominator": 21, "fraction": 0.333333, "boundary": "Contract/evidence coverage only; not a probability that RLL is physically correct."},
+  "mandatory_open_blockers": ["TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX", "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION", "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION", "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS", "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION", "TOKEN_VAZIO_INDEPENDENT_REPLICATION", "MCMC_CONVERGENCE", "NESTED_SEED_STABILITY"],
+  "invariants": ["TOKEN_VAZIO_NE_PASS", "PARTIAL_NE_VERIFIED", "NEGATIVE_RESULT_IS_EVIDENCE_NOT_REGRESSION", "BACKGROUND_FAIRNESS_NE_FULL_PROBE_PARITY", "INTERNAL_CI_NE_INDEPENDENT_REPLICATION", "CLAIM_ALLOWED_REMAINS_FALSE"],
+  "F_next": ["materialize or justify cross-survey covariance semantics without assuming zero correlation", "reproduce official DESI joint/cross-block and ACT/DES likelihood baselines with immutable receipts", "repair G6 convergence and nested-seed stability without post-hoc threshold relaxation", "close RLL perturbation relations before independent CLASS/CAMB implementation", "obtain materially independent replication before any claim decision"]
+}

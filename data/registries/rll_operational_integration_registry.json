@@ -113,6 +113,20 @@
       "observables": ["ionization fraction", "current density", "internal energy", "radiation spectrum", "phase state", "time lags"],
       "required_artifacts": ["composition", "cross_sections", "ionization_rates", "observational_target", "covariance", "registered_loss"],
       "claim_boundary": "The recurrence is a transparent calibration operator, not a trained RNN or observational fit until data, targets and loss are declared."
+    },
+    {
+      "branch_id": "B10_black_hole_thermodynamics_mpemba_falsifier",
+      "name": "black-hole thermodynamics and anomalous-relaxation falsification",
+      "status": "partial",
+      "equations": [
+        "T_H=hbar*c^3/(8*pi*G*k_B*M)",
+        "S_BH=4*pi*k_B*G*M^2/(hbar*c)",
+        "D_far(0)>D_near(0)",
+        "tau_far(epsilon)<tau_near(epsilon)"
+      ],
+      "observables": ["mass", "radius", "Hawking temperature analytic value", "Bekenstein-Hawking entropy", "D(t)", "first-passage time", "slow-mode amplitudes", "time-resolved EHT observables"],
+      "required_artifacts": ["mpemba_horizon_contract", "checksum_verified_real_time_series", "preregistered_distance_and_threshold", "covariance_model", "null_relaxation_models", "independent_reproduction"],
+      "claim_boundary": "Analytic black-hole thermodynamics and synthetic Mpemba witnesses do not establish astrophysical Hawking thermometry or a black-hole Mpemba detection; missing real-data gates remain TOKEN_VAZIO."
     }
   ],
   "calibration_home": "src/rll/strong_gravity_calibration.py",

@@ -1,3 +1,4 @@
+
 # RLL — Quantum Vacuum Birefringence Crosswalk — 2026-09-03
 
 **State:** `DOCUMENTED_PRIMARY_SOURCE_CROSSWALK_TEST_ROUTE_OPEN`
@@ -24,7 +25,7 @@ the paper.
 | Layer | Directly supported | Only analogous | Boundary / gap |
 |---|---|---|---|
 | Strong-field QED | The source reports a polarimetric pattern consistent with vacuum-birefringence-governed propagation under the stated magnetar model. | A multi-observable test can guide how a future RLL claim is falsified. | It does not test RLL, cosmological expansion, dark matter, or dark energy. |
-| RLL observer/mirror/photon gate | The current repository artifact explicitly identifies itself as a synthetic proxy. | Both use emitted/propagated/observed distinctions. | `TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA`; no physical magnetar forward model exists in RLL. |
+| Canonical-main RLL observer/mirror/photon gate | The canonical `main` artifact explicitly identifies itself as a synthetic proxy; it is absent from the `rll/lab` baseline and is not copied by this crosswalk. | Both use emitted/propagated/observed distinctions. | `TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA`; no physical magnetar forward model exists in RLL. |
 | DESI DR2 BAO result | The committed 13-point setup labels LCDM preferred over the stored fixed RLL parameterization. | None needed. | This background-distance result is a separate observable, not evidence about magnetar vacuum birefringence. |
 | Formula-literature graph | `CLASS_MATCH != SUPPORTS_EXACT` is already an invariant. | The new paper can be a methodology reference after a formula exists. | No formula edge is added until an exact typed RLL prediction, units and falsifier exist. |
 | Drive editorial corpus | The operating contract requires source → index → claim → evidence → falsifier separation. | It guides editorial custody. | Private Drive identifiers/content are not copied into the public RLL repository. |
@@ -51,8 +52,8 @@ Intentionally not changed:
 
 - `data/science/rll_formula_literature_edges.v1.json`: adding an exact edge
   before an exact formula would violate its own contract.
-- `data/evidence/rll_observer_mirror_photon_gate_20260815.json`: historical
-  synthetic evidence must not be rewritten as a measurement.
+- Canonical `main` at `d500131fff841c6b26c8e3e2f353f23294b12423`:
+  `data/evidence/rll_observer_mirror_photon_gate_20260815.json` is historical synthetic evidence; it is absent from the `rll/lab` baseline and must not be copied or rewritten as a measurement.
 
 ## Adaptive CI policy
 
@@ -75,3 +76,4 @@ F_ok   = primary sources, repository boundaries and test routes are separated.
 F_gap  = source/data receipts, reproduction, an RLL QED model and a cosmology transfer derivation.
 F_next = merge only after CI evidence; then use the hourly workflow as a boundary audit, not as scientific proof.
 ```
+

@@ -1,0 +1,39 @@
+{
+  "schema": "rll.novoexport_formula_ingest_receipt.v1",
+  "operation": "hash-addressed formula census crosswalk ingest",
+  "source_census_sha256": "8e716c0961051a487ac9c74d1330897ef2ae67930f62c4529b3bab58ef8b6d56",
+  "crosswalk_file_sha256": "13f47cd9cd13a461f651548c7d4176bef27637494908146ed581815375c0890e",
+  "privacy_boundary": "no raw conversation text committed to public RLL",
+  "raw018_state": "TOKEN_VAZIO_PROVIDER_GAP",
+  "claim_allowed": false,
+  "non_regression": {
+    "canonical_rll_ids_expected": [
+      "RLL-F001",
+      "RLL-F002",
+      "RLL-F003",
+      "RLL-F004",
+      "RLL-F005",
+      "RLL-F006",
+      "RLL-F007",
+      "RLL-F008",
+      "RLL-F009",
+      "RLL-F010",
+      "RLL-F011",
+      "RLL-F012",
+      "RLL-F013",
+      "RLL-F014",
+      "RLL-F015",
+      "RLL-F016",
+      "RLL-F017",
+      "RLL-F018",
+      "RLL-F019",
+      "RLL-F020",
+      "RLL-F021",
+      "RLL-F022",
+      "RLL-F023"
+    ],
+    "canonical_registry_mutated": false
+  },
+  "rll_subset_candidate_index_sha256": "91adc91aedb869dbc06d87facaf1e58fa611dba468d16f92e0cf6d0a2c457e0c",
+  "full_index_publication": "WITHHELD_FROM_PUBLIC_REPO_PRIVACY_BOUNDARY"
+}

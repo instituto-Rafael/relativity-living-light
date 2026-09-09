@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """Fail-closed audit for the RLL quantum-vacuum birefringence crosswalk.
 
@@ -94,6 +95,11 @@ def validate(path: Path = PATH, profile: str = "light") -> dict[str, Any]:
     context = {item["context_id"]: item for item in data["rll_context"]}
     require("RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815" in context, "synthetic RLL boundary missing")
     require("SYNTHETIC" in context["RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815"]["evidence_class"], "synthetic boundary weakened")
+    require(
+        "DOCUMENTED_CANONICAL_MAIN_ARTIFACT"
+        in context["RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815"].get("branch_scope", ""),
+        "cross-branch synthetic provenance missing",
+    )
     require("SEPARATE_OBSERVABLE" in context["RLL-CTX-DESI-DR2-BAO-2026"]["safe_relation"], "DESI boundary weakened")
     require("TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA" in context["RLL-CTX-FORMULA-LITERATURE-GRAPH-20260822"]["safe_relation"], "exact-formula gap missing")
 
@@ -122,6 +128,7 @@ def validate(path: Path = PATH, profile: str = "light") -> dict[str, Any]:
         invariants = set(data["invariants"])
         require("QED_MAGNETAR_OBSERVATION_NE_RLL_CONFIRMATION" in invariants, "primary boundary missing")
         require("CI_ARTIFACT_NE_REPOSITORY_WRITE" in invariants, "CI write boundary missing")
+        require("CROSS_BRANCH_REFERENCE_NE_LOCAL_ARTIFACT" in invariants, "cross-branch boundary missing")
     elif profile != "light":
         raise ValueError(f"unknown profile: {profile}")
 

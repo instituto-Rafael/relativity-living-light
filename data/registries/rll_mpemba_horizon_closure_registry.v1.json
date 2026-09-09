@@ -1,0 +1,252 @@
+{
+  "schema": "rll.strong_gravity.mpemba_horizon_closure_registry.v1",
+  "updated_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "base_contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+  "status": "OPERATIONAL_CLOSURE_COMPLETE_SCIENTIFIC_CLAIMS_FAIL_CLOSED",
+  "no_untracked_gaps": true,
+  "global_scientific_claim_allowed": false,
+  "meaning_of_no_untracked_gaps": "Every B10/C11 gap identified in the 2026-08-27 closure pass has an explicit urgency, owner class, provenance, mechanism, deliverable, verification rule, falsifier and objective close condition. External or physically unavailable evidence is not relabelled as resolved.",
+  "invariants": [
+    "VISÃO != ARTEFATO != EXECUÇÃO != EVIDÊNCIA != CLAIM",
+    "TOKEN_VAZIO != zero and != false",
+    "external evidence cannot be closed by prose or same-author assertion",
+    "public dataset identity != file-level custody",
+    "sparse multi-epoch variability != controlled relaxation trajectory",
+    "covariance absent or undefined blocks quantitative promotion",
+    "retrospective protocol lock != prospective preregistration",
+    "internal CI reproduction != independent replication",
+    "EHT plasma/polarimetry != Hawking thermometry",
+    "global_scientific_claim_allowed remains false until the parent repository governance promotes it"
+  ],
+  "priority_summary": {
+    "P0": 5,
+    "P1": 2,
+    "P2": 1,
+    "untracked": 0
+  },
+  "items": [
+    {
+      "id": "B10-CLOSE-P0-001",
+      "priority": "P0",
+      "urgency": "URGENT_DATA_CUSTODY",
+      "domain": "EHT_2026_D01_01",
+      "state": "BLOCKED_EXTERNAL_BYTES",
+      "attention_state": "ACTIVE_EXTERNAL",
+      "owner_class": "UPSTREAM_DATA_PROVIDER_PLUS_RLL_INGESTOR",
+      "provenance": [
+        "https://eventhorizontelescope.org/for-astronomers/data",
+        "https://datacommons.cyverse.org/browse/iplant/home/ckc/EHTC_M87-2018%2B2021_Jul2026",
+        "DOI:10.1051/0004-6361/202555855"
+      ],
+      "known": "EHT product 2026-D01-01 is publicly catalogued as 2018 and 2021 calibrated polarimetric data, last updated 2026-06-29, referenced to A&A 704 A91.",
+      "blocker": "The current execution environment could resolve the official catalog and CyVerse browser location but could not materialize the raw file inventory/bytes through its container network path; therefore file-level SHA256 values are not available here.",
+      "mechanism": "Materialize the public files from the official CyVerse product, enumerate every data object, record size and immutable locator, calculate SHA256 locally, and bind the result to the custody manifest without renaming upstream files.",
+      "deliverable": "data/real/strong_gravity/eht_2026_d01_01_manifest.json with file_inventory populated and every sha256_verified=true",
+      "verification": "Every listed file must exist, its size must match the manifest, SHA256 must recompute, and the manifest must retain product code, retrieval date, upstream path and reference DOI.",
+      "falsifier": "Any missing object, mutable locator without snapshot/version, hash mismatch, or invented checksum keeps this item open.",
+      "close_when": [
+        "file inventory is materialized from the official product",
+        "all bytes used by RLL have SHA256",
+        "license/terms applicable to the data files are recorded",
+        "a clean rerun verifies every checksum"
+      ],
+      "claim_boundary": "Metadata verification may support source identity only; it cannot support a numeric EHT result inside RLL until byte custody closes."
+    },
+    {
+      "id": "B10-CLOSE-P0-002",
+      "priority": "P0",
+      "urgency": "URGENT_OBSERVATIONAL_DESIGN",
+      "domain": "astrophysical_mpemba",
+      "state": "BLOCKED_DATASET_SCOPE_MISMATCH",
+      "attention_state": "ACTIVE_SCIENTIFIC",
+      "owner_class": "RLL_SCIENCE_PROTOCOL",
+      "provenance": [
+        "data/contracts/mpemba_horizon_falsifier.v1.json",
+        "DOI:10.1051/0004-6361/202555855"
+      ],
+      "known": "The published 2017/2018/2021 EHT epochs establish horizon-scale variability and polarimetric evolution, not a controlled pair of relaxations initialized at different distances from one declared equilibrium.",
+      "blocker": "BH-MP-06 requires matched time-resolved trajectories, a common target/attractor, initial far/near ordering, a crossing and faster first-passage under a fixed distance. Sparse multi-year epochs do not establish those conditions by themselves.",
+      "mechanism": "Use 2026-D01-01 only for bounded plasma/variability tests. For an astrophysical Mpemba test, acquire a time-resolved perturbation/relaxation series or a future EHT release whose cadence and common target make the operational definition identifiable.",
+      "deliverable": "A checksum-bound observational bundle satisfying the protocol in data/contracts/eht_mpemba_observational_protocol.v1.json.",
+      "verification": "The validator must prove matched trajectories, common target, fixed preprocessing/distance/epsilon, independent initial ordering and sufficient cadence before running a crossing test.",
+      "falsifier": "If the target is chosen after observing a crossing, the trajectories are not comparable, or cadence cannot resolve first passage, BH-MP-06 stays TOKEN_VAZIO.",
+      "close_when": [
+        "a real matched relaxation dataset exists",
+        "common equilibrium/attractor definition is physically justified",
+        "cadence resolves the preregistered first-passage threshold",
+        "trajectory matching and initial ordering are independent of the later crossing"
+      ],
+      "claim_boundary": "EHT variability is not relabelled as an Mpemba detection."
+    },
+    {
+      "id": "B10-CLOSE-P0-003",
+      "priority": "P0",
+      "urgency": "URGENT_COVARIANCE_AND_SYSTEMATICS",
+      "domain": "observational_inference",
+      "state": "BLOCKED_UNTIL_MATCHED_DATA",
+      "attention_state": "ACTIVE_DEPENDENCY",
+      "owner_class": "RLL_STATISTICAL_INFERENCE",
+      "provenance": [
+        "data/contracts/mpemba_horizon_falsifier.v1.json",
+        "DOI:10.1051/0004-6361/202555855"
+      ],
+      "known": "The EHT analysis reports method-dependent imaging uncertainty, calibration/systematic tests and credible intervals; a valid RLL Mpemba statistic must propagate the covariance/noise model of the actual chosen observable bundle.",
+      "blocker": "There is no justified RLL covariance matrix for a matched Mpemba trajectory because the required trajectory bundle is not yet identified and ingested.",
+      "mechanism": "Require covariance or an explicitly justified uncertainty operator tied to the selected observable vector; validate dimensions, symmetry, finiteness and positive semidefiniteness; run robustness against calibration/systematic alternatives.",
+      "deliverable": "observational_bundle.covariance with provenance and validation receipt",
+      "verification": "Covariance dimension must equal the declared observable vector; eigenvalues may not violate the preregistered numerical tolerance; systematics variants must be reported separately.",
+      "falsifier": "Diagonalizing away known correlations, inventing covariance, or silently dropping calibration uncertainty keeps the gate closed.",
+      "close_when": [
+        "matched observable vector is frozen",
+        "covariance/uncertainty model is sourced and checksum-bound",
+        "matrix/operator passes numerical validation",
+        "systematic alternatives are propagated into the decision"
+      ],
+      "claim_boundary": "Published credible intervals alone are not silently converted into a joint covariance matrix."
+    },
+    {
+      "id": "B10-CLOSE-P0-004",
+      "priority": "P0",
+      "urgency": "URGENT_ANTI_POSTHOC_LOCK",
+      "domain": "preregistration",
+      "state": "RESOLVED_FOR_FUTURE_DATA_ONLY",
+      "attention_state": "CLOSED_WITH_BOUNDARY",
+      "owner_class": "RLL_GOVERNANCE",
+      "provenance": [
+        "data/contracts/eht_mpemba_observational_protocol.v1.json"
+      ],
+      "known": "The 2017/2018/2021 outcomes are already public, so a protocol written on 2026-08-27 cannot truthfully be called prospective preregistration for those epochs.",
+      "blocker": "Retrospective analyses remain vulnerable to post-selection unless treated as exploratory/falsification-only.",
+      "mechanism": "Freeze a retrospective protocol for existing data and a separate prospective lock for any later public release not yet inspected under this hypothesis.",
+      "deliverable": "data/contracts/eht_mpemba_observational_protocol.v1.json",
+      "verification": "The protocol must label existing-data analysis as retrospective and forbid promotion based on retrospective tuning; future-data promotion requires a lock digest created before outcome inspection.",
+      "falsifier": "Calling the 2026-08-27 lock a preregistration of already published 2017/2018/2021 outcomes reopens this item.",
+      "close_when": [
+        "retrospective and prospective scopes are explicitly separated",
+        "distance, epsilon, matching and null family are frozen for future data before outcome inspection"
+      ],
+      "claim_boundary": "Resolved means the governance ambiguity is closed, not that an Mpemba effect is observed."
+    },
+    {
+      "id": "B10-CLOSE-P0-005",
+      "priority": "P0",
+      "urgency": "URGENT_INDEPENDENT_REPLICATION",
+      "domain": "replication",
+      "state": "BLOCKED_EXTERNAL_INDEPENDENT_AUTHORITY",
+      "attention_state": "NEEDS_EXTERNAL_REPLICATOR",
+      "owner_class": "INDEPENDENT_OPERATOR_OR_REPOSITORY",
+      "provenance": [
+        "data/contracts/mpemba_horizon_falsifier.v1.json",
+        "data/governance/RLL_OPEN_WORK_MECHANISM_REGISTRY_20260808_V1.json"
+      ],
+      "known": "RLL CI and a same-author rerun are reproducibility evidence, not independent replication.",
+      "blocker": "This execution cannot manufacture an independent authority without violating the definition of independence.",
+      "mechanism": "Freeze code SHA, input manifest, environment, commands, expected primary metrics and tolerances; an independent operator must reproduce from a clean checkout without copied generated outputs.",
+      "deliverable": "external independent replication receipt bound to code/input hashes",
+      "verification": "Replicator identity/authority, environment, exact commands, input/output hashes and deviations from frozen metrics must be recorded.",
+      "falsifier": "Same-author execution, copied outputs, undocumented intervention or material disagreement outside tolerance keeps the item open.",
+      "close_when": [
+        "an independent operator/repository performs the run",
+        "clean-checkout execution is documented",
+        "hashes and environment are frozen",
+        "agreement/disagreement is preserved without post-hoc tolerance changes"
+      ],
+      "claim_boundary": "This item cannot be self-closed by the producing agent."
+    },
+    {
+      "id": "B10-CLOSE-P1-001",
+      "priority": "P1",
+      "urgency": "HIGH_NULL_MODEL_BASELINES",
+      "domain": "GRMHD_radiative_transfer",
+      "state": "READY_FOR_MATCHED_DATA",
+      "attention_state": "ACTIVE_DEPENDENCY",
+      "owner_class": "RLL_MODEL_COMPARISON",
+      "provenance": [
+        "DOI:10.1051/0004-6361/202555855",
+        "DOI:10.1051/0004-6361/202557022"
+      ],
+      "known": "Standard turbulent accretion, MAD/SANE, Faraday-screen and exterior jet-base mechanisms are live competitors for EHT variability/polarimetry.",
+      "blocker": "No Mpemba residual is meaningful until the selected observable bundle is compared with standard stochastic/GRMHD/radiative-transfer alternatives on equal footing.",
+      "mechanism": "Freeze a null-family registry and compare predictive residuals/first-passage statistics under matched preprocessing and uncertainty treatment.",
+      "deliverable": "null_model_comparison_receipt.json",
+      "verification": "Every null must declare model/version, parameter treatment, simulation/data mapping, likelihood or discrepancy metric and uncertainty.",
+      "falsifier": "A standard model explains the candidate crossing/relaxation within the preregistered decision rule.",
+      "close_when": [
+        "matched data exist",
+        "null family is frozen before final decision",
+        "all nulls are evaluated with the same observable and uncertainty contract"
+      ],
+      "claim_boundary": "Failure of one standard model is not proof of RLL."
+    },
+    {
+      "id": "B10-CLOSE-P1-002",
+      "priority": "P1",
+      "urgency": "HIGH_HOLDOUT_LOOK_ELSEWHERE",
+      "domain": "statistical_validation",
+      "state": "READY_FOR_MATCHED_DATA",
+      "attention_state": "ACTIVE_DEPENDENCY",
+      "owner_class": "RLL_STATISTICAL_GOVERNANCE",
+      "provenance": [
+        "data/contracts/eht_mpemba_observational_protocol.v1.json"
+      ],
+      "known": "Scanning many observables, distances, epsilon thresholds or epoch pairs can create false crossings by post-selection.",
+      "blocker": "No final dataset/split exists yet on which to execute the locked holdout and multiplicity policy.",
+      "mechanism": "Use one frozen primary observable/distance/epsilon plus declared robustness family; reserve a holdout epoch/release when possible and apply multiplicity control to secondary scans.",
+      "deliverable": "holdout_and_multiplicity_receipt.json",
+      "verification": "Receipt records the pre-outcome lock hash, primary test, secondary family, correction method and untouched holdout identity.",
+      "falsifier": "Primary significance disappears under the locked correction/holdout or depends on an unregistered scan.",
+      "close_when": [
+        "matched data and holdout are available",
+        "primary/secondary test families are frozen",
+        "multiplicity and holdout decisions execute without post-hoc modification"
+      ],
+      "claim_boundary": "Exploratory scans remain exploratory even if visually compelling."
+    },
+    {
+      "id": "B10-CLOSE-P2-001",
+      "priority": "P2",
+      "urgency": "MEDIUM_THEORY_REPRODUCTION",
+      "domain": "holographic_and_Unruh_precedents",
+      "state": "RESOLVED_SCOPE_SEPARATION",
+      "attention_state": "CLOSED_WITH_BOUNDARY",
+      "owner_class": "RLL_THEORY_CONTEXT",
+      "provenance": [
+        "DOI:10.1007/JHEP06(2026)183",
+        "arXiv:2607.20899",
+        "DOI:10.1103/rbt4-psfd",
+        "DOI:10.1103/PhysRevLett.134.107101"
+      ],
+      "known": "Relativistic-QFT, holographic, classical and quantum Mpemba results provide theory precedents but not an astrophysical M87*/Sgr A* detection.",
+      "blocker": null,
+      "mechanism": "Maintain strict source-class labels and require any reproduction to stay in the theory lane.",
+      "deliverable": "Existing B10 source registry plus source crosswalk.",
+      "verification": "No theory-precedent source may satisfy an observational promotion gate.",
+      "falsifier": "Any descendant treats a holographic/Unruh result as observed EHT Hawking/Mpemba evidence.",
+      "close_when": [
+        "scope separation remains enforced by tests"
+      ],
+      "claim_boundary": "Theory precedent only."
+    }
+  ],
+  "closure_state": {
+    "operational_tracking_complete": true,
+    "scientific_external_dependencies_remaining": [
+      "B10-CLOSE-P0-001",
+      "B10-CLOSE-P0-002",
+      "B10-CLOSE-P0-003",
+      "B10-CLOSE-P0-005"
+    ],
+    "resolved_governance_or_scope_items": [
+      "B10-CLOSE-P0-004",
+      "B10-CLOSE-P2-001"
+    ],
+    "dependency_ready_items": [
+      "B10-CLOSE-P1-001",
+      "B10-CLOSE-P1-002"
+    ],
+    "astrophysical_mpemba_claim_state": "TOKEN_VAZIO",
+    "hawking_thermometry_claim_state": "TOKEN_VAZIO",
+    "global_scientific_claim_allowed": false
+  }
+}

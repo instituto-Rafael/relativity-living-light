@@ -71,11 +71,98 @@ def test_source_registry_is_claim_bounded():
     assert payload["claim_allowed"] is False
 
 
+def test_source_registry_keeps_legacy_sources_and_bounded_c11_sources():
+    payload = json.loads((ROOT / "data/registries/rll_recent_primary_sources_2026.json").read_text())
+    sources = {item["source_id"]: item for item in payload["sources"]}
+    legacy = {
+        "DESI-DR2-BAO-2025",
+        "GEDE-DESI-DR2-2025",
+        "BULK-VISCOSITY-DESI-2026",
+        "INTERACTING-DARK-SECTOR-2025",
+        "ANTON-SCHMIDT-DESI-2026",
+        "DESI-SN-DISTANCE-CROSSCHECK-2026",
+        "CDDR-PANTHEON-BAO-2026",
+        "FRB-GALAXY-CROSSCORRELATION-2025",
+        "FRB-COSMOLOGY-REVIEW-2026",
+        "ACT-DR6-BIREFRINGENCE-2025",
+        "BIREFRINGENCE-DM-DE-2026",
+    }
+    assert legacy <= set(sources)
+    c11 = {
+        "BH-THERMODYNAMICS-REVIEW-2026",
+        "MPEMBA-PRX-2026",
+        "MPEMBA-THERMOMAJORIZATION-2025",
+        "UNRUH-MPEMBA-2026",
+        "HOLOGRAPHIC-MPEMBA-2026",
+        "EHT-M87-VARIABILITY-2025",
+        "EHT-M87-JET-BASE-2026",
+        "EHT-2026-D01-01",
+    }
+    assert c11 <= set(sources)
+    assert sources["HOLOGRAPHIC-MPEMBA-2026"]["verification_status"] == "metadata_verified"
+    assert "preprint" in sources["HOLOGRAPHIC-MPEMBA-2026"]["safe_use"].lower()
+    assert "TOKEN_VAZIO" in sources["EHT-2026-D01-01"]["safe_use"]
+
+
+def test_mpemba_source_crosswalk_resolves_local_and_canonical_ids():
+    contract = json.loads((ROOT / "data/contracts/mpemba_horizon_falsifier.v1.json").read_text())
+    registry = json.loads((ROOT / "data/registries/rll_recent_primary_sources_2026.json").read_text())
+    crosswalk = json.loads((ROOT / "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json").read_text())
+    local_ids = {item["id"] for item in contract["sources"]}
+    canonical_ids = {item["source_id"] for item in registry["sources"]}
+    assert crosswalk["claim_allowed"] is False
+    for mapping in crosswalk["mappings"]:
+        assert mapping["local_id"] in local_ids
+        assert mapping["canonical_id"] in canonical_ids
+    assert set(crosswalk["context_only_global_sources"]) <= canonical_ids
+    for internal in crosswalk["internal_only_sources"]:
+        assert internal["local_id"] in local_ids
+        assert internal["canonical_id"] is None
+
+
 def test_integration_registry_preserves_raw_data():
     payload = json.loads((ROOT / "data/registries/rll_operational_integration_registry.json").read_text())
     assert validate_integration_registry(payload) == []
     assert payload["raw_data_policy"] == "immutable"
     assert payload["claim_allowed"] is False
+
+
+def test_b10_mpemba_route_is_append_only_and_fail_closed():
+    payload = json.loads((ROOT / "data/registries/rll_operational_integration_registry.json").read_text())
+    branches = {branch["branch_id"]: branch for branch in payload["branches"]}
+    for index in range(10):
+        assert any(branch_id.startswith(f"B{index:02d}_") for branch_id in branches)
+    b10 = branches["B10_black_hole_thermodynamics_mpemba_falsifier"]
+    assert b10["status"] == EpistemicStatus.PARTIAL.value
+    assert "checksum_verified_real_time_series" in b10["required_artifacts"]
+    assert "independent_reproduction" in b10["required_artifacts"]
+    decision, missing = evaluate_branch_readiness(b10, ["mpemba_horizon_contract"])
+    assert decision is ExecutionDecision.BLOCKED
+    assert "checksum_verified_real_time_series" in missing
+
+
+def test_strong_gravity_successor_preserves_historical_calibration():
+    payload = json.loads((ROOT / "data/registries/rll_strong_gravity_calibration_registry.json").read_text())
+    assert payload["raw_data_policy"] == "immutable"
+    assert payload["claim_allowed"] is False
+    assert payload["generated_at"] == "2026-07-17"
+    assert payload["committed_numeric_result"] == "results/strong_gravity_calibration/session_reference_sweep_20260717.json"
+    assert [item["id"] for item in payload["heuristics"]] == [f"H{i}_{name}" for i, name in [
+        (1, "scale_separation"),
+        (2, "force_dominance"),
+        (3, "phase_ladder"),
+        (4, "self_gravity"),
+        (5, "transduction"),
+        (6, "radiative_threshold"),
+        (7, "recurrence"),
+        (8, "falsifier"),
+    ]]
+    extensions = {item["id"]: item for item in payload["successor_extensions"]}
+    b10 = extensions["B10_black_hole_thermodynamics_mpemba_falsifier"]
+    assert b10["claim_allowed"] is False
+    for key in ("implementation", "contract", "tests", "atlas", "falsifiability_protocol"):
+        assert (ROOT / b10[key]).exists(), key
+    assert "independent reproduction" in b10["protected_gaps"]
 
 
 def test_branch_readiness_reports_missing_artifacts():

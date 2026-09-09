@@ -1,0 +1,65 @@
+{
+  "schema": "rll.academic_math_truth_boundary.v1",
+  "date": "2026-09-06",
+  "claim_allowed": false,
+  "authority": {
+    "formal_math": "rafaelmeloreisnovo/Matem-tica-",
+    "executable_witness": "rafaelmeloreisnovo/ChipQuantum",
+    "publication_governance": "rafaelmeloreisnovo/papers",
+    "interdisciplinary_claim_boundary": "instituto-Rafael/relativity-living-light"
+  },
+  "states": [
+    "DEFINITION",
+    "EXACT_IDENTITY",
+    "LEMMA_OR_PROPOSITION",
+    "PROVED_THEOREM",
+    "FINITE_OR_COMPUTATIONAL_VERIFICATION",
+    "MODEL_EXACT_CONDITIONAL",
+    "EMPIRICAL_MEASUREMENT",
+    "STATISTICAL_INFERENCE",
+    "HYPOTHESIS",
+    "INDEPENDENT_REPRODUCTION",
+    "PUBLICATION_CANDIDATE",
+    "CLAIM_ALLOWED"
+  ],
+  "invariants": {
+    "MATH_EXACT_NE_EMPIRICAL_EXACT": true,
+    "MODEL_EXACT_CONDITIONAL_NE_MEASUREMENT": true,
+    "VERIFIED_CODE_NE_GENERAL_THEOREM": true,
+    "CORRELATION_NE_CAUSATION": true,
+    "TOKEN_VAZIO_NE_ZERO": true
+  },
+  "current_objects": {
+    "modular_base_identities": "EXACT_IDENTITY",
+    "isosceles_equilateral_gate": "PROVED_THEOREM",
+    "pythagoras_bhaskara_chord_bridge": "PROVED_THEOREM",
+    "icosphere_f2_counts": "PROVED_THEOREM",
+    "giza_41_21_82_integer_construction": "MODEL_EXACT_CONDITIONAL",
+    "giza_survey_values": "EMPIRICAL_MEASUREMENT",
+    "giza42_geodesic42_intent": "HYPOTHESIS",
+    "shaft_specific_star_intent": "HYPOTHESIS"
+  },
+  "required_empirical_fields": [
+    "source",
+    "unit",
+    "method",
+    "uncertainty_or_TOKEN_VAZIO",
+    "provenance"
+  ],
+  "required_hypothesis_fields": [
+    "statement",
+    "mechanism_or_TOKEN_VAZIO",
+    "falsifier",
+    "null_or_comparator",
+    "known_confounders",
+    "independent_evidence_state"
+  ],
+  "blocked_promotions": [
+    "EXACT_ARITHMETIC->HISTORICAL_INTENT",
+    "MODEL_EXACT_CONDITIONAL->EMPIRICAL_EXACT",
+    "FINITE_VERIFICATION->GENERAL_THEOREM_WITHOUT_PROOF",
+    "MISSING_UNCERTAINTY->ZERO_UNCERTAINTY",
+    "TOKEN_VAZIO->0",
+    "HYPOTHESIS->CLAIM_ALLOWED_WITHOUT_EVIDENCE_CHAIN"
+  ]
+}

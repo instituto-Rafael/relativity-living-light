@@ -1,0 +1,35 @@
+{
+  "schema": "rll.bp_bbn_cmb_background_likelihood.receipt.v1",
+  "scope": "RLL_BP_POSITIVE_BACKGROUND_A_MINUS_4_PROFILE",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "likelihood_kind": "PRODUCT_OF_INDEPENDENT_PUBLISHED_GAUSSIAN_SUMMARIES",
+  "raw_likelihood_replay": false,
+  "constraints": [
+    {"source": "PDG_BBN", "neff_mean": 2.898, "neff_sigma": 0.141, "role": "BBN_LIGHT_ELEMENT_SUMMARY"},
+    {"source": "ACT_DR6_CMB", "neff_mean": 2.86, "neff_sigma": 0.13, "role": "CMB_EXTENDED_MODEL_SUMMARY"}
+  ],
+  "model": "N_eff = 3.044 + DeltaN_eff_BP; DeltaN_eff_BP >= 0",
+  "combined_untruncated_delta_neff_mean": -0.16653989831706592,
+  "combined_untruncated_delta_neff_sigma": 0.09557640668436478,
+  "physical_MAP_delta_neff": 0.0,
+  "posterior_prior": "FLAT_DELTA_NEFF_GE_0",
+  "credible_level": 0.95,
+  "delta_neff_upper": 0.10801185284957185,
+  "omega_BP_h2_upper": 6.06584817652547e-7,
+  "Omega_BP_upper_examples": {
+    "H0_50": 2.426339270610188e-6,
+    "H0_67p4": 1.335278151723945e-6,
+    "H0_90": 7.48870145250058e-7
+  },
+  "combined_loglike_at_physical_MAP": 0.6235926120706441,
+  "combined_loglike_at_upper_limit": -1.9841748317479928,
+  "background_profile_verdict": "PASS_BOUND_DERIVED_FROM_PUBLISHED_BBN_CMB_SUMMARIES",
+  "full_PMF_plasma_perturbative_CMB_verdict": "TOKEN_VAZIO",
+  "guards": [
+    "BBN and ACT summary constraints are treated as independent Gaussian summaries.",
+    "This does not replay raw light-element abundances or ACT spectra.",
+    "This background mapping cannot substitute for PMF anisotropic stress/Faraday/heating or plasma perturbation microphysics.",
+    "No RLL model-preference or Bayes-factor claim is authorized."
+  ]
+}

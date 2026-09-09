@@ -1,3 +1,4 @@
+
 {
   "schema": "rll.quantum_vacuum_birefringence_crosswalk.v1",
   "record_id": "RLL_QUANTUM_VACUUM_BIREFRINGENCE_CROSSWALK_20260903_V1",
@@ -62,9 +63,10 @@
   "rll_context": [
     {
       "context_id": "RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815",
-      "location": "data/evidence/rll_observer_mirror_photon_gate_20260815.json",
-      "evidence_class": "DOCUMENTED_SYNTHETIC_PROXY",
-      "directly_supported": "The existing RLL observer/mirror/photon gate explicitly classifies itself as a synthetic self-test until real optical or cosmological ledger rows are supplied.",
+      "location": "canonical main commit d500131fff841c6b26c8e3e2f353f23294b12423: data/evidence/rll_observer_mirror_photon_gate_20260815.json",
+      "branch_scope": "DOCUMENTED_CANONICAL_MAIN_ARTIFACT; the path is absent from the rll/lab baseline and is not copied by this crosswalk.",
+      "evidence_class": "DOCUMENTED_SYNTHETIC_PROXY_IN_CANONICAL_MAIN",
+      "directly_supported": "The canonical main observer/mirror/photon gate explicitly classifies itself as a synthetic self-test until real optical or cosmological ledger rows are supplied.",
       "safe_relation": "ANALOGOUS_ONLY: both concern propagation/observation language, but the RLL gate is not a physical magnetar or vacuum-birefringence model.",
       "claim_allowed": false
     },
@@ -106,7 +108,7 @@
     },
     {
       "claim_id": "RLL-BOUNDARY-DIRECT-001",
-      "text": "The current RLL observer/mirror/photon gate is synthetic proxy logic, and the current DESI DR2 BAO comparison is a separate limited real-data comparison that prefers LCDM in its stored setup.",
+      "text": "The canonical-main RLL observer/mirror/photon gate is synthetic proxy logic (and remains absent from the rll/lab baseline), while the current DESI DR2 BAO comparison is a separate limited real-data comparison that prefers LCDM in its stored setup.",
       "source_ids": [
         "RLL-CTX-OBSERVER-MIRROR-PHOTON-GATE-20260815",
         "RLL-CTX-DESI-DR2-BAO-2026"
@@ -255,8 +257,8 @@
       "state": "TOKEN_VAZIO_PRESERVED"
     },
     {
-      "location": "data/evidence/rll_observer_mirror_photon_gate_20260815.json",
-      "action": "HISTORICAL_SYNTHETIC_GATE_PRESERVED_UNCHANGED",
+      "location": "canonical main commit d500131fff841c6b26c8e3e2f353f23294b12423: data/evidence/rll_observer_mirror_photon_gate_20260815.json",
+      "action": "HISTORICAL_SYNTHETIC_GATE_PRESERVED_UNCHANGED_NOT_COPIED_TO_RLL_LAB",
       "state": "NO_HISTORICAL_REWRITE"
     }
   ],
@@ -267,11 +269,12 @@
     "SOURCE_POINTER_NE_FROZEN_BYTES_OR_RIGHTS_RECEIPT",
     "CI_ARTIFACT_NE_REPOSITORY_WRITE",
     "CI_PASS_NE_SCIENTIFIC_CONFIRMATION",
-    "HISTORICAL_SYNTHETIC_GATE_NE_REAL_OPTICAL_MEASUREMENT"
+    "HISTORICAL_SYNTHETIC_GATE_NE_REAL_OPTICAL_MEASUREMENT",
+    "CROSS_BRANCH_REFERENCE_NE_LOCAL_ARTIFACT"
   ],
   "F_ok": [
     "Primary and discovery sources are separated.",
-    "The QED observation, RLL synthetic proxy and DESI background comparison remain in distinct evidence lanes.",
+    "The QED observation, the canonical-main RLL synthetic proxy and the DESI background comparison remain in distinct evidence lanes.",
     "Three test routes have baselines, metrics, required evidence and falsifiers."
   ],
   "F_gap": [
