@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rll.local/schemas/rigor_evidence.v2.schema.json",
+  "title": "RLL RIGOR Evidence V2",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["evidence_id","origin_type","origin_source","date_or_token_vazio","domain","claim_state","artifact_ref","limit","dimensions","reviewer_relation"],
+  "properties": {
+    "evidence_id": {"type":"string","minLength":1},
+    "origin_type": {"type":"string","minLength":1},
+    "origin_source": {"type":"string","minLength":1},
+    "date_or_token_vazio": {"type":"string","minLength":1},
+    "domain": {"type":"string","minLength":1},
+    "claim_state": {"enum":["RAW_ORAL","RAW_NOTE","METAFORA","PARABOLA_DIDATICA","HIPOTESE","REF_REQUIRED","TOKEN_VAZIO","SOURCE_LINKED","METHOD_DEFINED","EVIDENCE_LINKED","RESULT_REPRODUCED","PEER_OR_REVIEW_READY","CLAIM_ALLOWED","CLAIM_BLOCKED"]},
+    "artifact_ref": {"type":"string","minLength":1},
+    "limit": {"type":"string","minLength":1},
+    "dimensions": {"type":"array","items":{"type":"string","pattern":"^RG(0[1-9]|1[0-2])$"},"uniqueItems":true},
+    "reviewer_relation": {"enum":["SELF","SAME_TEAM","INDEPENDENT","EXTERNAL"]},
+    "severity": {"enum":["INFO","LOW","MEDIUM","HIGH","CRITICAL"]},
+    "resolved": {"type":"boolean"},
+    "negative_type": {"enum":["COUNTEREXAMPLE","FAILED_PROOF","FAILED_REPRODUCTION","BOUNDARY_FAILURE","CONTRADICTION"]}
+  }
+}

@@ -1,0 +1,161 @@
+schema: raf.rll.nibiguiri_full_method_8x12.v2
+date: '2026-09-05'
+append_only: true
+claim_allowed: false
+auto_promote: false
+canonical_context: From the Observed Void to Recurrence
+diagnosis:
+  previous_nibiguiri_12_is_one_layer_only: true
+  macro_families: 8
+  directions_per_family: 12
+  derived_lenses: 96
+  research_units: 48
+  base_audit_cells: 4608
+  AE_operator_count: 5
+  AE_permutations: 120
+  AE_order_cells: 5760
+  relation_operators: 12
+  relation_cells: 576
+  semantic_axis_slots: 34
+  semantic_axis_cells: 1632
+  staged_required_cells: 12576
+  full_cross_theoretical_cells: 225607680
+  eight_family_partition_state: V2_COVERAGE_ARCHITECTURE_NOT_UNIQUE_THEOREM
+  old_12_as_fraction_of_96: 12/96 = 1/8 within this V2 coverage architecture
+macro_families:
+- id: F01
+  title: Estado / representação / epistemologia
+  question: O que o objeto é antes de qualquer redução, transformação ou interpretação?
+  focus: [estado bruto e primitivo, escala/unidades/dimensão, orientação e sinal, coordenada vs objeto, precisão/quantização, zero vs TOKEN_VAZIO, simetria e quociente, reconstrutibilidade, encoding/canonicalização, identidade/hash, perda/compressão, fronteira epistemológica]
+- id: F02
+  title: Relation Calculus / transformação
+  question: Que relações e operadores ligam os objetos, e quais são invertíveis, composicionais ou apenas correlacionais?
+  focus: [direta, inversa/fibras, derivada, antiderivada, exclusiva, complementar, composição, correlação, invariante, equivariante, contrafactual, meta-relação]
+- id: F03
+  title: Geometria / topologia
+  question: Como métrica, incidência, curvatura, projeção e topologia mudam ou preservam o objeto?
+  focus: [local/global, intrínseca/extrínseca, plano/esfera/toro, corda/geodésica, interior/fronteira, incidência/grau, curvatura/defeito, dualidade, simetria, embedding/projeção, refinamento/escala, topologia vs métrica]
+- id: F04
+  title: Aritmética / modular / discreta
+  question: Que parte da estrutura vem de representação numérica, módulo, base, recorrência ou fatoração?
+  focus: [inteiro/racional, não reduzido/primitivo, módulo/dobra, primos/resíduos, CRT, período/ciclo, base/representação, recorrência, Fibonacci/Rafaeliana, grafo/circulante, 7/42/420 namespaces, finito/assintótico]
+- id: F05
+  title: Dinâmica / tempo / controle
+  question: Que propriedades pertencem à evolução, memória, estabilidade, causalidade ou controle?
+  focus: [estado/update, recorrência, memória/ledger, estabilidade, atrator, transiente, periodicidade, perturbação, feedback/controle, inversa vs mecanismo, multiescala temporal, tempo/unidades físicas]
+- id: F06
+  title: Empírico / estatístico / falsificação
+  question: Que evidência, nulo, erro e teste poderiam sustentar ou derrubar a afirmação?
+  focus: [fonte/dado real, baseline/nulo, unidades/calibração, erro/incerteza, covariância, testes múltiplos, permutação, ablação, validação externa, reprodução independente, contraexemplo/falsificador, prior art]
+- id: F07
+  title: Semântico / polimático / transdisciplinar
+  question: Que parte da conexão é semântica, analógica, ontológica ou realmente estrutural entre domínios?
+  focus: [namespace, colisão de símbolos, analogia vs equivalência, cross-domain map, ontologia, contextualização global, eco/ciclo semântico, anomalia, paradoxo, utopia, ruído/falso positivo, transformer-of-transformers]
+- id: F08
+  title: Governança / proveniência / meta-método
+  question: O método, a evidência e os gates resistem a uma auditoria adversarial do próprio processo?
+  focus: [claim boundary, source→artifact chain, hash/receipt, CI/runtime/evidência, fail-closed, rollback/append-only, autocrítica, anti-gaming, blind spots, lente oposta, promoção/rebaixamento, F_gap/F_next]
+antagonistic_directions:
+- {id: N01, angle_deg: 0, verb: preservar, opposite: N07}
+- {id: N02, angle_deg: 30, verb: transformar, opposite: N08}
+- {id: N03, angle_deg: 60, verb: local→global, opposite: N09}
+- {id: N04, angle_deg: 90, verb: finito→família, opposite: N10}
+- {id: N05, angle_deg: 120, verb: direto→inverso, opposite: N11}
+- {id: N06, angle_deg: 150, verb: interno→externo, opposite: N12}
+- {id: N07, angle_deg: 180, verb: comprimir, opposite: N01}
+- {id: N08, angle_deg: 210, verb: quotientar, opposite: N02}
+- {id: N09, angle_deg: 240, verb: global→local, opposite: N03}
+- {id: N10, angle_deg: 270, verb: assintótico→finito, opposite: N04}
+- {id: N11, angle_deg: 300, verb: inverso→mecanismo, opposite: N05}
+- {id: N12, angle_deg: 330, verb: evidência→anti-evidência, opposite: N06}
+heuristic_AE:
+  operators:
+  - {id: A, name: OBSERVE_SOURCE_CONTEXT}
+  - {id: B, name: MAP_RELATIONS}
+  - {id: C, name: TRANSFORM_CALCULATE}
+  - {id: D, name: CHALLENGE_FALSIFY}
+  - {id: E, name: SYNTHESIZE_GATE}
+  permutation_count: 120
+  all_permutations_required: true
+  operators_are_order_sensitive: true
+  promotion_requires_order_robustness_or_reason: true
+  historical_exact_label_semantics: TOKEN_VAZIO_SOURCE_BINDING
+  v2_operator_names_are_canonicalization: true
+relation_calculus:
+  operators: [DIRECT, INVERSE, DERIVATIVE, ANTIDERIVATIVE, EXCLUSIVE, COMPLEMENT, COMPOSITION, CORRELATION, INVARIANT, EQUIVARIANT, COUNTERFACTUAL, META_RELATION]
+  operator_count: 12
+  rules:
+  - DIRECT != CAUSAL by default
+  - INVERSE may be set-valued
+  - ANTIDERIVATIVE may encode a family plus constant/boundary data
+  - CORRELATION != EQUIVALENCE
+  - META_RELATION must declare its object-level dependencies
+semantic_dimensions:
+  declared_slots: 34
+  canonical_axis_names_state: TOKEN_VAZIO_CANONICAL_AXES
+  source_observation: Historical corpus uses 34D for a cognitive/multilayer feedback architecture, but a stable deduplicated enumeration of exactly 34 canonical coordinates was not recovered.
+  slots:
+  - {id: D01, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D02, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D03, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D04, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D05, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D06, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D07, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D08, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D09, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D10, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D11, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D12, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D13, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D14, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D15, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D16, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D17, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D18, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D19, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D20, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D21, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D22, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D23, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D24, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D25, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D26, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D27, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D28, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D29, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D30, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D31, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D32, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D33, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  - {id: D34, canonical_name: TOKEN_VAZIO_AXIS_NAME, source_binding_required: true}
+  no_invented_axis_names: true
+semantic_taxonomy: [STRUCTURAL_EQUIVALENCE, PARTIAL_MAP, ANALOGY, METAPHOR, CORRELATION, ANOMALY, PARADOX, UTOPIA, NOISE, FALSE_POSITIVE, CONFOUND, COINCIDENCE, DUPLICATE, CONTRADICTION, TOKEN_VAZIO]
+evidence_chain: [SOURCE, INDEX, TOKEN, CLAIM, EVIDENCE, FALSIFIER, DECISION, ARTIFACT]
+required_controls: [source, unit, mechanism, control, replication, null_model, permutation, ablation, multiple_testing, external_validation, falsifier, prior_art]
+promotion_gates: [domain_declared, units_declared_when_material, assumptions_explicit, equivalence_group_declared_when_material, prior_art_reviewed, falsifier_defined, counterexample_search_recorded, null_baseline_when_applicable, negative_results_append_only, semantic_namespace_bound, opposite_direction_checked, method_self_critique_checked]
+method_self_critique:
+  state: TOKEN_VAZIO_METHOD_VALIDATION
+  questions:
+  - Why exactly eight macro-families; what evidence would require a ninth?
+  - Do two macro-families encode the same audit under different names?
+  - Does applying the same 12 directions to all families create false symmetry?
+  - Are A-E labels stable across historical variants or merely one canonicalization?
+  - Do 120 A-E permutations produce distinct information or mostly duplicate outcomes?
+  - Are the 34D axis slots source-bound, or are names being hallucinated?
+  - Does Relation Calculus overcount relations that are algebraically dependent?
+  - Does the method prioritize counterexamples as strongly as expansions?
+  - Can a larger matrix create a false sense of completeness?
+  - Which cells are materially NOT_APPLICABLE and why?
+  - Can a compact covering design replace exhaustive Cartesian cross without losing a falsifier?
+  - What observation would falsify the claim that this methodology is more complete than NIBIGUIRI-12?
+  anti_gaming: [matrix_size_is_not_quality, candidate_count_is_not_quality, no_auto_promotion, no_hash_as_proof, no_CI_as_theorem, no_same_number_semantic_merge, no_unnamed_34D_axis_claim, NOT_APPLICABLE_requires_reason, negative_results_append_only]
+execution:
+  base_matrix: 48 x 8 x 12 = 4608
+  AE_permutation_matrix: 48 x 120 = 5760
+  relation_matrix: 48 x 12 = 576
+  semantic_axis_matrix: 48 x 34 = 1632
+  staged_total: '12576'
+  full_cross_index_space: 48 x 96 x 120 x 12 x 34 = 225607680
+  full_cross_materialization: LAZY_RANDOM_ACCESS_SHARDED
+  initial_state: TOKEN_VAZIO_NOT_AUDITED

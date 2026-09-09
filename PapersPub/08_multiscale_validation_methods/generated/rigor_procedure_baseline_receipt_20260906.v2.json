@@ -1,0 +1,30 @@
+{
+  "schema": "raf.rll.rigor_procedure_receipt.v2",
+  "date": "2026-09-06",
+  "execution_scope": "LOCAL_AUTHORED_CONTENT",
+  "provider_exact_bytes_verified": false,
+  "claim_allowed": false,
+  "tests": {
+    "p0_regression_suite": {"passed": 10, "failed": 0},
+    "engine_baseline": {"status":"PASS","units":48,"rigor_dimensions":12,"full_lenses":96,"adversarial_cells":55296},
+    "procedure": {"status":"PASS","steps":15,"next_action_bound":true}
+  },
+  "artifacts_sha256": {
+    "rigor_procedure_area_v2.md": "4d3f6be1534743d2cec598566ec6b03cecd35f3ca4c38f98d3fc0ff6cfe90abb",
+    "rigor_procedure_contract_v2.json": "2fb26d450fef22745bb97359d2e93dc1bbb856d23ce92e9c886f6507e6d5e26f",
+    "rigor_self_critique_matrix_v2.py": "89e86793288924ea084fc52907951216f9c4e0f2f3e896df92980266c23b4150",
+    "rigor_request_procedure_v2.py": "2d1c6bd85150f902ef336d99a7ddca8cff60033b1be416a5e6b2dfb5bfe2044f",
+    "rigor_request.v2.schema.json": "53d0c47f57cd440136df8e95fe903ccf455f5569ffff05c00b0fb790459bd99d",
+    "rigor_evidence.v2.schema.json": "9bb6b5bc9b63c8744f271833e55f83dcc89778ea77f564e36ba1f9926083dba4",
+    "REQ-RIGOR-ALL48-20260906.v1.json": "ec0ebb057a5ff802e527857f0b153fcd3a3aa2ca8e8f7fec01ce32e5ca84a9f6"
+  },
+  "boundaries": [
+    "structural PASS is not mathematical proof",
+    "matrix cardinality is not completed audit count",
+    "hash is custody/identity, not theorem proof",
+    "provider CI and exact provider-byte verification remain separate"
+  ],
+  "F_ok": ["canonical claim-state binding","hard gates block low scores","monotonic rigor classes","N/A with reason","rigor uncertainty interval","staleness detection","96-lens integration","P00..P14 procedure","next_action invariant"],
+  "F_gap": ["bind formal statements/evidence/falsifiers for 48 units","provider CI","independent review","per-unit prior-art where novelty is claimed"],
+  "F_next": "BEGIN_P05_P07_CONTENT_BINDING_FOR_48_UNITS"
+}

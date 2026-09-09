@@ -1,0 +1,49 @@
+{
+  "schema": "raf.rll.full_method_receipt.v2",
+  "date": "2026-09-05",
+  "claim_allowed": false,
+  "structural_validation": "PASS",
+  "checks": {
+    "eight_families": true,
+    "twelve_directions": true,
+    "isogonic_angles": true,
+    "opposites_involutive": true,
+    "ninety_six_lenses": true,
+    "five_AE_operators": true,
+    "one_hundred_twenty_permutations": true,
+    "twelve_relation_operators": true,
+    "thirty_four_slots": true,
+    "no_invented_34D_names": true,
+    "forty_eight_units": true,
+    "base_cells_4608": true,
+    "AE_cells_5760": true,
+    "relation_cells_576": true,
+    "semantic_cells_1632": true,
+    "staged_total_12576": true,
+    "full_cross_225607680": true,
+    "no_auto_promotion": true,
+    "method_self_audit_present": true
+  },
+  "local_equivalent_authored_content_validation": {
+    "tests": 26,
+    "failures": 0,
+    "errors": 0,
+    "result": "PASS"
+  },
+  "obligations_sha256": "0cab962d33e4c12acae90dd49938f0c2b4c9e11e24f6db9660a28be9cedc1085",
+  "method_state": "TOKEN_VAZIO_METHOD_VALIDATION",
+  "semantic_34D_axes": "TOKEN_VAZIO_CANONICAL_AXES",
+  "historical_AE_exact_semantics": "TOKEN_VAZIO_SOURCE_BINDING",
+  "prior_art": "TOKEN_VAZIO_PER_RESEARCH_UNIT",
+  "proofs": "TOKEN_VAZIO_PER_HYPOTHESIS",
+  "provider_ci": "TOKEN_VAZIO_NOT_OBSERVED_FOR_V2_HEAD",
+  "boundaries": [
+    "96 lenses are coverage structure, not 96 proofs",
+    "120 permutations are order probes, not 120 independent discoveries",
+    "34 slots are not named axes until source-bound",
+    "225607680 full-cross points are an index space, not a quality metric",
+    "12/96=1/8 is a V2 architecture statement, not a theorem of all possible methods",
+    "hash is provenance, not proof",
+    "TOKEN_VAZIO is not numeric zero"
+  ]
+}

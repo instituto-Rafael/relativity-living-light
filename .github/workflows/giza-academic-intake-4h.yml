@@ -1,0 +1,106 @@
+name: Giza Academic Intake 4h
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch: null
+  push:
+    paths:
+      - 'PapersPub/11_giza_continuous_archaeoastronomy/**'
+      - 'docs/research/GIZA_CONTINUOUS_ACADEMIC_INTAKE_20260906.md'
+      - 'scripts/validate_giza_academic_intake.py'
+      - '.github/workflows/giza-academic-intake-4h.yml'
+  pull_request:
+    paths:
+      - 'PapersPub/11_giza_continuous_archaeoastronomy/**'
+      - 'docs/research/GIZA_CONTINUOUS_ACADEMIC_INTAKE_20260906.md'
+      - 'scripts/validate_giza_academic_intake.py'
+      - '.github/workflows/giza-academic-intake-4h.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  academic-intake:
+    name: Academic bibliography and hypothesis cross-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: '3.11'
+
+      - name: Validate package and resolve bibliographic metadata
+        run: |
+          set -euo pipefail
+          python3 scripts/validate_giza_academic_intake.py \
+            --root . \
+            --output artifacts/giza-academic-intake/report.json \
+            --online-crossref
+
+      - name: Assert fail-closed claim boundary
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('artifacts/giza-academic-intake/report.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          assert data['claim_allowed'] is False
+          assert data['scientific_validation'] is False
+          assert data['status'] == 'PASS_GOVERNANCE'
+          print('PASS: academic intake governance only; no archaeological/scientific claim promoted.')
+          PY
+
+      - name: Write receipt and checksums
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/giza-academic-intake
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('artifacts/giza-academic-intake')
+          report = root / 'report.json'
+          receipt = {
+              'schema': 'rll.giza_academic_intake.receipt.v1',
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'sha': os.environ.get('GITHUB_SHA'),
+              'claim_allowed': False,
+              'scientific_validation': False,
+              'report_present': report.exists(),
+              'report_sha256': hashlib.sha256(report.read_bytes()).hexdigest() if report.exists() else None,
+              'boundary': 'scheduled bibliography/intake validation != peer review != archaeological proof',
+          }
+          (root / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          lines = []
+          for p in sorted(root.glob('*')):
+              if p.is_file():
+                  lines.append(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}")
+          (root / 'SHA256SUMS').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Upload academic intake receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: giza-academic-intake-${{ github.run_id }}
+          path: artifacts/giza-academic-intake/
+          retention-days: '30'
+
+      - name: Boundary reminder
+        if: always()
+        run: |
+          echo 'RLL academic intake runs every four hours.'
+          echo 'It inventories artifacts and checks DOI/citation/hypothesis governance.'
+          echo 'It does not auto-publish to viXra/arXiv/Zenodo, does not email authors, and does not promote scientific claims.'

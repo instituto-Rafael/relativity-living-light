@@ -1,0 +1,60 @@
+schema: rll.rafaelian_exact_ratio_geometry_map/v1
+created_at: 2026-08-29
+claim_allowed: false
+source_session: session_2026-08-29
+principles:
+  exact_before_decimal: true
+  preserve_unreduced_representation: true
+  preserve_reduced_value: true
+  decimal_is_derived_view: true
+  token_vazio_for_unverified_context: true
+objects:
+  - id: RXG-001
+    exact: "1/3"
+    arithmetic_class: rational
+    representation_notes: "Repeating in base 10; exact rational retained."
+  - id: RXG-002
+    exact: "sqrt(3)/2"
+    geometry: "equilateral triangle height/side"
+    recurrence: "r_n=(sqrt(3)/2)^n"
+  - id: RXG-003
+    exact: "pi"
+    geometry: "C/d for Euclidean circle"
+    arithmetic_class: irrational
+  - id: RXG-004
+    raw_ratio: "77/33"
+    reduced_ratio: "7/3"
+    exact_value_equal: true
+    representational_identity_equal: false
+    geometry_context: TOKEN_VAZIO
+  - id: RXG-005
+    formula: "theta_m(n)=2*pi*(n mod m)/m"
+    role: modular_phase_to_circle
+    moduli: [7, 14, 3, 10, 20, 6, 2, 1]
+    test_values: [70, 7, 56, 35, 50]
+  - id: RXG-006
+    formula: "P_m(n)=(cos(theta_m(n)),sin(theta_m(n)))"
+    role: unit_circle_embedding
+  - id: RXG-007
+    formula: "kappa=abs(y'')/(1+y'^2)^(3/2)"
+    role: planar_curve_curvature
+  - id: RXG-008
+    formula: "ds^2=4(dx^2+dy^2)/(1-r^2)^2"
+    role: poincare_disk_metric
+    boundary: "Euclidean contraction is not itself a hyperbolic geodesic proof."
+  - id: RXG-009
+    formula: "Area(A union B)=Area(A)+Area(B)-Area(A intersect B)"
+    role: area_decomposition_inclusion_exclusion
+  - id: RXG-010
+    formula: "x=(-b+-sqrt(b^2-4ac))/(2a)"
+    role: exact_quadratic_roots
+multi_base:
+  bases: [2, 8, 10, 18, 20, 42, 60]
+  invariant: "For reduced p/q in base b, expansion terminates iff each prime divisor of q divides b."
+historical_boundary:
+  maya: "primarily vigesimal; calendrical place-value has modified 18x20 step"
+  sexagesimal: "classically Mesopotamian/Babylonian; do not attribute generically to Maya without evidence"
+F_gap:
+  - empirical benefit of preserving unreduced representation for a specific physical model is unverified
+  - mapping to pre-existing RLL formula IDs requires repository search/reconciliation
+  - ChipQuantum runtime execution for these objects is not evidenced in this session

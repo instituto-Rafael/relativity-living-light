@@ -1,0 +1,30 @@
+{
+  "schema": "rll.scan_poc_coherence_registry.v1",
+  "append_only": true,
+  "claim_allowed": false,
+  "records": [
+    {
+      "id": "RLL-SCAN-POC-20260821-001",
+      "kind": "SCAN",
+      "recorded_at": "2026-08-21T00:00:00Z",
+      "scope": "governance and observational-validation gate paths",
+      "epistemic_state": "SOURCE_OBSERVED",
+      "claim_allowed": false,
+      "source": {
+        "repository": "instituto-Rafael/relativity-living-light",
+        "git_sha": "0fe2fb410b17ba357ef0c251abac68b1b2af8288"
+      },
+      "evidence": [
+        {
+          "kind": "repository_commit",
+          "reference": "0fe2fb410b17ba357ef0c251abac68b1b2af8288"
+        }
+      ],
+      "poc": {
+        "status": "NOT_RUN"
+      },
+      "token_vazio": "TOKEN_VAZIO_POC_NOT_EXECUTED",
+      "next_gate": "append a bounded POC record with command, environment, exit code, and output SHA-256"
+    }
+  ]
+}

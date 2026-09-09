@@ -1,0 +1,76 @@
+{
+  "schema": "rll.b0_b1_successor_manifest.v1",
+  "observed_at": "2026-09-03",
+  "mode": "AUDIT_ONLY",
+  "state": "CURRENT_HEAD_SUCCESSOR_CANDIDATE",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "forward_port_authorized": false,
+  "predecessor_manifest": "data/governance/RLL_B0_B1_COMPATIBILITY_MANIFEST_20260816_V1.json",
+  "source_freeze": {
+    "historical_main": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+    "historical_rll_lab": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb",
+    "current_main": "f6c8c1816f5c27e44b4747dac05b5475bcb5f000",
+    "current_rll_lab": "67aea0e7b7f38941bf62ac94f8b0e11d4f1e16fb",
+    "current_merge_base": "bf1364e42c844de1806e2a327df38a7ea71cd4ee"
+  },
+  "current_divergence": {
+    "status": "diverged",
+    "main_only_commits": 161,
+    "lab_only_commits": 133,
+    "measurement_state": "REPRODUCED_CURRENT_CYCLE"
+  },
+  "historical_to_current_compare": {
+    "main": {"ahead_by": 214, "behind_by": 0},
+    "rll_lab": {"ahead_by": 240, "behind_by": 0}
+  },
+  "b0_current_head_assessment": {
+    "state": "REPRODUCED_PATH_STABLE_4_OF_4",
+    "basis": "none of the four B0 paths appears in historical_rll_lab..current_rll_lab changed-file set",
+    "paths": [
+      ".github/workflow-architecture/invariants.v1.yml",
+      ".github/workflows/workflow-contract-sync.yml",
+      "tools/workflow_contract_sync.py",
+      "tools/propose_workflow_contract_pr.py"
+    ]
+  },
+  "b1_current_head_assessment": {
+    "state": "REPRODUCED_PATH_DRIFT_6_OF_7",
+    "changed_paths": [
+      ".github/workflow-contract.yml",
+      ".github/workflows/rll-operational-auto-hotfix.yml",
+      "tools/propose_operational_hotfix_pr.py",
+      "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json",
+      "data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl",
+      "docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md"
+    ],
+    "stable_path": "tools/rll_auto_hotfix.py"
+  },
+  "gap": {
+    "gap_id": "TV-RLL-B0-B1-SUCCESSOR-MANIFEST-CURRENT-HEADS",
+    "state": "TOKEN_VAZIO_SUCCESSOR_RECEIPT_REQUIRED",
+    "source_pointer": "main@f6c8c1816f5c27e44b4747dac05b5475bcb5f000 + rll/lab@67aea0e7b7f38941bf62ac94f8b0e11d4f1e16fb",
+    "missing_field": "validated current dependency/artifact-flow graph plus hash-bound compatibility receipt",
+    "blocking_dependency": "targeted governance tests and semantic dependency review on a disposable candidate tree",
+    "evidence_needed": "exact refs + dependency graph + artifact flow + targeted tests + extraneous_count=0 + receipt bound to exact target head",
+    "falsifier": "new dependency outside the declared graph, targeted test failure, extraneous path, or head movement without successor receipt",
+    "next_probe": "validate successor dependency/artifact-flow semantics; then materialize only a disposable compatibility candidate",
+    "owner_authority": "RLL operational/reviewer authority",
+    "urgency": "P0/P1",
+    "closure_gate": "hash-bound successor receipt with claim_allowed=false before any forward-port",
+    "claim_allowed": false,
+    "predecessor_lineage": "RLL_B0_B1_COMPATIBILITY_MANIFEST_20260816_V1 -> OMEGA cycle 45 -> cycle 46 successor candidate"
+  },
+  "invariants": [
+    "VISÃO != ARTEFATO != EXECUÇÃO != EVIDÊNCIA != CLAIM",
+    "PATH_STABILITY != HISTORY_RECONCILIATION",
+    "SUCCESSOR_CANDIDATE != SUCCESSOR_RECEIPT",
+    "NO_FORWARD_PORT_BEFORE_ACCEPTANCE_GATES"
+  ],
+  "R3": {
+    "F_ok": "current divergence reproduced; B0 4/4 path-stable; B1 drift 6/7 reproduced; successor candidate materialized on audit branch",
+    "F_gap": "semantic dependency/artifact-flow validation + targeted tests + hash-bound successor receipt + full main/rll-lab history reconciliation",
+    "F_next": "run current-head graph/artifact-flow validators on disposable candidate; emit receipt; only then propose minimal reviewed batches"
+  }
+}

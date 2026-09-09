@@ -1,0 +1,32 @@
+{
+  "gate": "RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE",
+  "run_date": "2026-08-15",
+  "source": "synthetic_self_test until measured UPE/metabolic/radiation ledger rows are provided",
+  "evidence_class": "synthetic_or_supplied_biometabolic_proxy",
+  "claim_allowed_biophoton_dark_energy_literal": false,
+  "claim_allowed_melanin_organelle_literal": false,
+  "claim_allowed_tribo_xray_biological_default": false,
+  "interpretation": "Governed metabolic/radiative transduction gate; not a physical dark-energy identity claim.",
+  "literature_boundary": {
+    "ultraweak_photon_emission": "known phenomenon linked to metabolism/oxidative processes; not proof of dark energy",
+    "triboluminescent_tape_xray": "specific physical vacuum/friction experiment; not default biological mechanism",
+    "melanized_fungi_radiation": "radiation interaction/growth observations; melanin treated as pigment analogue, not organelle"
+  },
+  "self_test_expected": {
+    "criteria": "transduction_mean >= 0.62 and improvement_vs_passive >= 0.04 and organelle_channel_corr >= 0.45 for FORTE_PROXY_ONLY",
+    "meaning": "implementation behavior only; not lab or cosmological evidence"
+  },
+  "canonical_route": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "audit/homeostatic-field-gate-20260815",
+    "pr": 749
+  },
+  "invariants": [
+    "biophoton != dark_energy_literal",
+    "melanin != organelle_literal",
+    "chloroplast/mitochondria/melanin are transduction analogues only",
+    "triboluminescent_xray != biological_default_mechanism",
+    "macronutrients/micronutrients/gases are bookkeeping channels, not proof of new physics",
+    "TOKEN_VAZIO is mandatory for unmeasured biochemical provenance"
+  ]
+}

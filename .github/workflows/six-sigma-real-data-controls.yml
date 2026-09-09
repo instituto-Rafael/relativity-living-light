@@ -6,14 +6,28 @@ on:
     - docs/operations/**
     - docs/real_data/**
     - docs/governance/**
+    - docs/DOCUMENTATION_FULL_INVENTORY.md
+    - docs/REAL_NUMBERS_REPORT.md
+    - docs/YML_WORKFLOWS_INDEX.md
+    - data/results/repo_inventory.json
+    - data/results/repo_inventory.tsv
+    - data/results/repo_inventory_summary.json
     - tools/validate_six_sigma_real_data_controls.py
+    - tools/docs_inventory.py
     - .github/workflows/six-sigma-real-data-controls.yml
   push:
     paths:
     - docs/operations/**
     - docs/real_data/**
     - docs/governance/**
+    - docs/DOCUMENTATION_FULL_INVENTORY.md
+    - docs/REAL_NUMBERS_REPORT.md
+    - docs/YML_WORKFLOWS_INDEX.md
+    - data/results/repo_inventory.json
+    - data/results/repo_inventory.tsv
+    - data/results/repo_inventory_summary.json
     - tools/validate_six_sigma_real_data_controls.py
+    - tools/docs_inventory.py
     - .github/workflows/six-sigma-real-data-controls.yml
   workflow_dispatch:
 permissions:
@@ -36,8 +50,29 @@ jobs:
         python-version: '3.11'
     - name: Validate Six Sigma real-data controls
       run: python tools/validate_six_sigma_real_data_controls.py
-    - name: Check documentation inventory
-      run: python3 tools/docs_inventory.py --check
+    - name: Materialize documentation inventory delta
+      run: |
+        python3 tools/docs_inventory.py
+        git diff --exit-code -- \
+          docs/DOCUMENTATION_FULL_INVENTORY.md \
+          docs/REAL_NUMBERS_REPORT.md \
+          docs/YML_WORKFLOWS_INDEX.md \
+          data/results/repo_inventory.json \
+          data/results/repo_inventory.tsv \
+          data/results/repo_inventory_summary.json
+    - name: Upload documentation inventory delta
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: six-sigma-documentation-inventory-${{ github.run_id }}-${{ github.job }}
+        path: |
+          docs/DOCUMENTATION_FULL_INVENTORY.md
+          docs/REAL_NUMBERS_REPORT.md
+          docs/YML_WORKFLOWS_INDEX.md
+          data/results/repo_inventory.json
+          data/results/repo_inventory.tsv
+          data/results/repo_inventory_summary.json
+        retention-days: '14'
     - name: Finalize canonical real-data policy checksums
       if: always()
       run: 'set -euo pipefail
@@ -65,4 +100,3 @@ jobs:
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

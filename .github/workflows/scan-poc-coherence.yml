@@ -1,0 +1,30 @@
+name: Scan and POC coherence
+
+on:
+  pull_request:
+    paths:
+      - "tools/validate_scan_poc_coherence.py"
+      - "tools/test_validate_scan_poc_coherence.py"
+      - "data/governance/RLL_SCAN_POC_COHERENCE_REGISTRY_V1.json"
+      - ".github/workflows/scan-poc-coherence.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/validate_scan_poc_coherence.py"
+      - "tools/test_validate_scan_poc_coherence.py"
+      - "data/governance/RLL_SCAN_POC_COHERENCE_REGISTRY_V1.json"
+      - ".github/workflows/scan-poc-coherence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Unit tests
+        run: python3 -m unittest -v tools/test_validate_scan_poc_coherence.py
+      - name: Validate append-only scan and POC registry
+        run: python3 tools/validate_scan_poc_coherence.py --registry data/governance/RLL_SCAN_POC_COHERENCE_REGISTRY_V1.json
