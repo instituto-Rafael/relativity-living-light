@@ -1,0 +1,72 @@
+{
+  "schema": "rafaelia.rll.workflow_contract_regression_receipt.v2",
+  "cycle_id": "RAFAELIA-FED-RLL-WF-REGRESSION-20260910-02",
+  "observed_at": "2026-09-10",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "authority": "GitHub provider state",
+  "source_path": ".github/workflow-contract.yml",
+  "predecessor_receipt": "provenance/receipts/RLL_WORKFLOW_CONTRACT_LINEAGE_85_88_20260910_V1.json",
+  "regression_commit": "508870f241ff771a1e735857b7576843c2df0b6d",
+  "regression_commit_message": "Merge branch 'main' into rll/lab",
+  "parents": [
+    {
+      "sha": "b3e83216a8111159c739a84670778f613db5175b",
+      "active_workflows": 78,
+      "workflow_contract_blob": "356a210419f0936d673b231d6f874799522cf5df",
+      "role": "first_parent"
+    },
+    {
+      "sha": "46c9a70e4f1291251dfec040f9e58dd2ba75e1e2",
+      "active_workflows": 85,
+      "workflow_contract_blob": "9c4f601074fd01c658b899759ea5c9d85cdc5ffe",
+      "role": "second_parent"
+    }
+  ],
+  "merge_result": {
+    "active_workflows": 78,
+    "interpretation": "The merge result retained the first-parent inventory scalar 78 while integrating additional workflow-contract content from the 85-valued parent. This is the exact observed transition that reintroduced stale count state into the merged lineage."
+  },
+  "evidence_state": "OBSERVED",
+  "claim_boundary": {
+    "scientific_claim_changed": false,
+    "claim_allowed": false,
+    "publication_effect": "NONE"
+  },
+  "resolved_gap": {
+    "gap_id": "TV-RLL-WORKFLOW-CONTRACT-COUNT-LINEAGE-REGRESSION",
+    "previous_token": "TOKEN_VAZIO_REGRESSION_INTRODUCING_COMMIT",
+    "state": "RESOLVED_OBSERVED",
+    "closure_evidence": "commit 508870f... + parent contract reads"
+  },
+  "remaining_gap": {
+    "gap_id": "TV-RLL-WORKFLOW-CONTRACT-CURRENT-RECONCILIATION",
+    "token": "TOKEN_VAZIO_REVIEWED_88_CONTRACT_DELTA",
+    "source_pointer": "main@c1aca8cff9987b16826fc53d98aa20f1b9a21b22:.github/workflow-contract.yml",
+    "missing_field": "reviewed and tested current contract reconciliation to observed executable workflow inventory",
+    "blocking_dependency": "prepare non-default-branch delta and run canonical sync/tests",
+    "evidence_needed": "workflow_contract_sync decision=MATCH and focused tests PASS on exact head",
+    "falsifier": "sync/test result does not equal observed executable inventory or exposes classification error",
+    "next_probe": "prepare 78→88 contract delta on audit branch; execute canonical sync/tests before any promotion",
+    "owner_authority": "instituto-Rafael/relativity-living-light",
+    "urgency": "P0",
+    "closure_gate": "reviewed branch delta + exact-head PASS receipt",
+    "claim_allowed": false,
+    "lineage": "85 checkpoint -> merge 508870f reintroduced 78 -> current 88 executable inventory"
+  },
+  "invariants": [
+    "SOURCE != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
+    "filename/title != identity",
+    "index != authority",
+    "zero-job failure != inferred root cause"
+  ],
+  "f_ok": [
+    "exact regression-introducing merge identified",
+    "both parent scalar states and blobs observed",
+    "previous TOKEN_VAZIO_REGRESSION_INTRODUCING_COMMIT closed"
+  ],
+  "f_gap": [
+    "TOKEN_VAZIO_REVIEWED_88_CONTRACT_DELTA",
+    "TOKEN_VAZIO_ROOT_CAUSE for zero-job failures remains open"
+  ],
+  "f_next": "prepare and test the 78→88 contract reconciliation on a non-default branch without merging"
+}
