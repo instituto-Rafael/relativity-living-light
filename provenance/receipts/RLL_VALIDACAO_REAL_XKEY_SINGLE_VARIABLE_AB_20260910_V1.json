@@ -1,0 +1,73 @@
+{
+  "cycle_id": "RAFAELIA-FED-RLL-ZEROJOB-XKEY-AB-EVIDENCE-20260910-11",
+  "predecessor": "RAFAELIA-FED-RLL-ZEROJOB-XKEY-AB-20260910-10",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "audit/zero-job-validacao-real-exact-control-20260910",
+  "authority": "GitHub Actions",
+  "method": "SOURCE->TRANSFORM->CLAIM->TEST/EVIDENCE->RECEIPT->INDEX->MEMORY",
+  "source": {
+    "workflow_path": ".github/workflows/validacao_real.yml",
+    "workflow_id": 288994902,
+    "a_head": "9da5e742809d7a03647d148fb04658440089b0f8",
+    "b_head": "54c419bafcd1fb09494da0b6d467396144bde00e",
+    "declared_delta": "single-line restoration of top-level x-canonical-real-data-policy; same audit push trigger retained"
+  },
+  "evidence": {
+    "a": {
+      "run_id": 34512791312,
+      "jobs_total": 2,
+      "validate_job": "success",
+      "commit_results_job": "skipped"
+    },
+    "b": {
+      "run_id": 34517946175,
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs_total": 0,
+      "jobs": []
+    }
+  },
+  "claim": {
+    "status": "STRONG_CAUSAL_CONTRAST_OBSERVED",
+    "allowed_scope": "Within this controlled A/B lineage, presence of the restored top-level x-canonical-real-data-policy line is sufficient to reproduce provider-side failure before job materialization, while its absence permits job materialization.",
+    "root_cause_global": "TOKEN_VAZIO_ROOT_CAUSE",
+    "claim_allowed": false,
+    "reason": "Do not generalize beyond this workflow/lineage or infer undocumented provider parser semantics without explicit provider diagnostic or independent reproduction."
+  },
+  "gaps": [
+    {
+      "gap_id": "TV-RLL-VALIDACAO-REAL-XKEY-PROVIDER-DIAGNOSTIC",
+      "token": "TOKEN_VAZIO_PROVIDER_DIAGNOSTIC",
+      "source_pointer": "workflow_id=288994902; b_run=34517946175; b_head=54c419bafcd1fb09494da0b6d467396144bde00e",
+      "missing_field": "explicit_provider_preflight_parser_diagnostic",
+      "blocking_dependency": "GitHub Actions provider diagnostic surface",
+      "evidence_needed": "explicit provider validation/preflight message identifying the unsupported top-level key or equivalent parser/schema cause",
+      "falsifier": "provider evidence showing another independent cause for run 34517946175",
+      "next_probe": "inspect run/check-suite annotations or provider validation surfaces for run 34517946175; do not alter protected/default branches",
+      "owner_authority": "GitHub Actions",
+      "urgency": "P0",
+      "closure_gate": "provider diagnostic or independent single-variable reproduction with equivalent result",
+      "claim_allowed": false,
+      "lineage": ["0bd7b779d1b000f2796f102d6ef8f16ddcd80b55", "2b5f555389b2c9824b8a8b46e8ad360802befe4d", "9da5e742809d7a03647d148fb04658440089b0f8", "54c419bafcd1fb09494da0b6d467396144bde00e"]
+    }
+  ],
+  "resolved": [
+    "TV-RLL-VALIDACAO-REAL-XKEY-CAUSAL-ISOLATION"
+  ],
+  "uncertainty": {
+    "before": "provider outcome for B unknown",
+    "after": "B observed failure+jobs=[]; exact provider diagnostic still TOKEN_VAZIO"
+  },
+  "coverage": {
+    "before": "A runtime 1/1, B runtime 0/1",
+    "after": "A runtime 1/1 and B runtime 1/1 with opposite job-materialization outcome"
+  },
+  "constraints": {
+    "default_branch_modified": false,
+    "protected_branch_modified": false,
+    "merge_performed": false,
+    "release_published": false,
+    "autoapproval": false
+  }
+}
