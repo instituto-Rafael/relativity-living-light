@@ -58,7 +58,7 @@ env:
 
 jobs:
   orchestrate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
       PIPELINE_SCOPE: ${{ github.event_name == 'schedule' && 'all' || inputs.pipeline_scope }}
