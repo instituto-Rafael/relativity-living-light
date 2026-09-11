@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import binascii
 import hashlib
 import json
 import os
@@ -63,7 +64,7 @@ def jwt_metadata(token: str, now: int | None = None) -> dict[str, Any]:
         payload_segment = token.split(".", 2)[1]
         payload_segment += "=" * (-len(payload_segment) % 4)
         payload = json.loads(base64.urlsafe_b64decode(payload_segment.encode("ascii")))
-    except (ValueError, UnicodeDecodeError, json.JSONDecodeError):
+    except (ValueError, UnicodeDecodeError, json.JSONDecodeError, binascii.Error):
         result["format"] = "jwt_unparseable_payload"
         return result
     exp = payload.get("exp") if isinstance(payload, dict) else None
@@ -141,7 +142,7 @@ def github_probe(token: str, repository: str) -> dict[str, Any]:
         status = "NETWORK_ERROR"
 
     scopes = github_scope_observation(_header(headers, "X-OAuth-Scopes"))
-    auth_state = "PASS_AUTHENTICATED_READ" if status == 200 else "FAIL_AUTHENTICATION_OR_AUTHORITY"
+    auth_state = "PASS_TOKEN_ACCEPTED_FOR_REPOSITORY_READ" if status == 200 else "FAIL_AUTHENTICATION_OR_AUTHORITY"
     return {
         "secret_present": True,
         "token_kind": token_kind(token),
