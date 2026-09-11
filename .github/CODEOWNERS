@@ -15,3 +15,7 @@
 /tests/test_rare_events_registry.py @rafaelmeloreisnovo
 /docs/governance/ @rafaelmeloreisnovo
 /docs/workflows/ @rafaelmeloreisnovo
+
+/tools/rll_secret_boundary_assurance.py @rafaelmeloreisnovo
+/tests/test_rll_secret_boundary_assurance.py @rafaelmeloreisnovo
+/SECURITY.md @rafaelmeloreisnovo
