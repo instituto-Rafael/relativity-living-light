@@ -1,0 +1,57 @@
+{
+  "schema": "rll.yaml_anomaly_fragment_distributor_preflight.v1",
+  "date": "2026-09-11",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "base": "rll/lab",
+  "branch": "ci/yaml-anomaly-fragments-20260911",
+  "state": "IMPLEMENTED_UNTESTED_REMOTE",
+  "claim_allowed": false,
+  "causal_claim_allowed": false,
+  "publication_effect": "NONE",
+  "observed_boundary": {
+    "historical_2026_09_03_zero_job_decomposition": {
+      "total": 22,
+      "unsupported_top_level_x_canonical": 20,
+      "android_direct_secrets_in_if": 1,
+      "dashboard_github_expression_js_ternary": 1,
+      "scope": "historical_observation_not_universal_current_cause"
+    },
+    "pr_855_head": "c5ea9a264d7504f27b80e139f97f2fc935300b6f",
+    "current_red_run": {
+      "run_id": 34559688910,
+      "workflow": "Six Sigma Real Data Controls",
+      "classification": "STEP_FAILURE_NOT_ZERO_JOB",
+      "failed_step": "Materialize documentation inventory delta"
+    }
+  },
+  "delta": {
+    "observer": ".github/workflows/yaml-deep-audit.yml",
+    "processor": "tools/yaml_anomaly_fragment_analysis.py",
+    "lenses": [
+      "startup_preflight",
+      "authority_security",
+      "runtime_operability",
+      "provenance_inventory",
+      "scientific_boundary",
+      "format_structure",
+      "unclassified"
+    ],
+    "action_executor": "fragment and distribute static anomalies",
+    "research_action": "compare explanatory lenses without promoting causality"
+  },
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TEMPORAL_IDENTITY != CAUSAL_EXPLANATION",
+    "STATIC_SIGNATURE != ZERO_JOB_CAUSE_PROVEN",
+    "TOKEN_VAZIO != PASS"
+  ],
+  "local_evidence": {
+    "focused_unit_tests": "5/5 PASS"
+  },
+  "remote_evidence": "TOKEN_VAZIO_REMOTE_CI",
+  "r3": {
+    "F_ok": "deterministic fragment routing, stable ids, two-stage execution/research boundary, local tests",
+    "F_gap": "provider/runtime causal linkage and fresh remote CI remain unobserved",
+    "F_next": "open draft PR against rll/lab and require fresh YAML/architecture gates"
+  }
+}
