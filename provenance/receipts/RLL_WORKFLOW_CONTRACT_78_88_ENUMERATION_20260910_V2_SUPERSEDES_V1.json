@@ -1,0 +1,72 @@
+{
+  "schema": "rll.workflow_contract_drift_enumeration_supersession_receipt.v1",
+  "cycle_id": "RAFAELIA-6S-RLL-WF78-88-SUPERSESSION-20260910-17",
+  "predecessor_cycle_id": "RAFAELIA-6S-RLL-WF78-88-ENUM-20260910-16",
+  "training_executed": false,
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "audit/omega-20260910-16-p5-workflow-drift-enumeration",
+  "privacy_class": "PUBLIC_REPOSITORY_METADATA",
+  "source_authority": "GitHub repository history plus canonical RAFAELIA Drive receipts",
+  "target_visibility": "PUBLIC_AUDIT_BRANCH",
+  "claim_allowed": false,
+  "supersedes": {
+    "path": "provenance/receipts/RLL_WORKFLOW_CONTRACT_78_88_ENUMERATION_20260910_V1.json",
+    "commit": "a49c9b08864d9ff73d640371219634e76c566119",
+    "reason": "The V1 interpretation treated ten paths as newly added relative to 78. Subsequent canonical lineage evidence showed the relevant reconciled baseline was already 85; the stale scalar regressed 85 to 78 at merge 508870f241ff771a1e735857b7576843c2df0b6d, and only three workflows were added after the 85 baseline to reach executable inventory 88. V1 remains historical evidence but is not current authority."
+  },
+  "corrected_state": {
+    "reconciled_baseline": 85,
+    "stale_scalar_after_merge": 78,
+    "executable_inventory": 88,
+    "post_85_additions": 3,
+    "post_85_workflows": [
+      ".github/workflows/giza-academic-intake-4h.yml",
+      ".github/workflows/hypothesis-instability-orchestrator.yml",
+      ".github/workflows/session-evolution-mesh.yml"
+    ],
+    "regression_introducing_merge": "508870f241ff771a1e735857b7576843c2df0b6d"
+  },
+  "dmaic": {
+    "define": "Close the provenance debt created by the contradicted V1 receipt without changing workflow contract or protected branches.",
+    "measure": "Baseline: one public audit receipt V1 contains a contradicted 78-to-88 interpretation; Drive successor already records corrected 85->78 stale merge and 85+3=88 state.",
+    "analyze": "The defect is receipt authority/provenance drift, not workflow-count drift requiring another scalar edit.",
+    "improve": "Append one successor receipt; preserve V1 immutably as superseded history.",
+    "control": "Read back successor by GitHub blob/commit; no workflow, contract, default branch, merge, release or claim promotion."
+  },
+  "ctq": ["provenance_integrity", "supersession_explicitness", "no_history_erasure", "no_contract_regression"],
+  "evidence": {
+    "v1_commit": "a49c9b08864d9ff73d640371219634e76c566119",
+    "v1_status": "CONTRADICTED_SUPERSEDED",
+    "corrected_lineage": "85 -> stale 78 at merge 508870f241ff771a1e735857b7576843c2df0b6d -> 88 via three post-85 additions"
+  },
+  "gaps": [
+    {
+      "gap_id": "TV-RLL-ZERO-JOB-ROOT-CAUSE",
+      "token": "TOKEN_VAZIO_ROOT_CAUSE",
+      "source_pointer": "runtime zero-job evidence lineage",
+      "missing_field": "provider-confirmed root cause",
+      "blocking_dependency": "provider diagnostic or controlled reproduction per failure class",
+      "evidence_needed": "run/jobs/steps plus explicit diagnostic or discriminant reproduction",
+      "falsifier": "controlled evidence contradicting the current candidate explanation",
+      "next_probe": "continue independently from workflow inventory reconciliation",
+      "owner_authority": "GitHub Actions provider evidence",
+      "urgency": "P0",
+      "closure_gate": "provider-confirmed or independently discriminant causal evidence",
+      "privacy_class": "PUBLIC_REPOSITORY_RUNTIME_METADATA",
+      "claim_allowed": false,
+      "lineage": ["RUNTIME_ZERO_JOB_FAILURE"]
+    }
+  ],
+  "learning": {
+    "technique": "append-only supersession after falsifier",
+    "hypothesis_tested": "a successor receipt can remove authority ambiguity without deleting contradicted history",
+    "expected_result": "V1 remains reconstructible while V2 becomes the explicit corrected authority bridge",
+    "method_decision": "KEEP; require successor receipts whenever a persisted interpretation is contradicted"
+  },
+  "rollback": "Revert only this audit-branch successor commit if malformed; do not delete V1.",
+  "r3": {
+    "F_ok": "GitHub successor receipt materialized for contradicted V1",
+    "F_gap": "TOKEN_VAZIO_ROOT_CAUSE for zero-job remains independent",
+    "F_next": "return to the highest-information zero-job discriminant after verifying this successor receipt"
+  }
+}
