@@ -1,7 +1,11 @@
 {
   "schema": "rll.noaa.trinity633.v1",
   "status": "ACTIVE_GOVERNED_DRAFT",
-  "cycle_hours": [6, 3, 3],
+  "cycle_hours": [
+    6,
+    3,
+    3
+  ],
   "cycle_total_hours": 12,
   "state_chain": [
     "TOKEN_VAZIO",
@@ -19,6 +23,7 @@
       "state_via": "VERBO",
       "state_to": "CHEIO",
       "actions": [
+        "enforce_zero_trust_privacy_gate",
         "fetch_declared_noaa_sources",
         "validate_source_domain_and_https",
         "hash_payloads",
@@ -31,6 +36,7 @@
       "state_from": "CHEIO",
       "state_to": "NOVO_VAZIO",
       "actions": [
+        "enforce_zero_trust_privacy_gate",
         "refresh_declared_noaa_sources",
         "measure_source_availability_by_domain_family",
         "preserve_numeric_residual_as_token_vazio_until_computed",
@@ -44,6 +50,7 @@
       "state_via": "RETROALIMENTAR",
       "state_to": "NOVOS_VAZIOS",
       "actions": [
+        "enforce_zero_trust_privacy_gate",
         "refresh_declared_noaa_sources",
         "derive_gap_ledger_from_observed_availability",
         "emit_f_ok_f_gap_f_next",
@@ -92,5 +99,6 @@
     "new_workflow_allowed": false,
     "direct_main_commit": false,
     "auto_merge": false
-  }
+  },
+  "governance_policy": "data/governance/rll_noaa_trinity633_data_governance.v1.json"
 }
