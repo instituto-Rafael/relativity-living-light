@@ -136,6 +136,25 @@ class NoaaTrinity633Tests(unittest.TestCase):
         }
         self.assertFalse(trinity.source_custody_ok(result, source, self.governance))
 
+    def test_runtime_receipt_exposes_infrastructure_egress_as_gap(self):
+        fake = {"mode": "DRY_RUN", "returncode": 0, "claim_allowed": False}
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
+            trinity, "run_fetch", return_value=fake
+        ):
+            receipt = trinity.build_receipt(
+                self.contract,
+                self.registry,
+                "VERBUM_3H",
+                Path(temp),
+                execute_network=False,
+                governance=self.governance,
+            )
+        self.assertFalse(receipt["zero_trust"]["infrastructure_egress_firewall_verified"])
+        self.assertEqual(
+            receipt["zero_trust"]["infrastructure_egress_state"],
+            "TOKEN_VAZIO_INFRA_EGRESS_POLICY",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
