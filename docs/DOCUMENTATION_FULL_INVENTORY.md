@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 2974 |
-| `cataloged_files` | 2963 |
+| `tracked_files_total` | 2973 |
+| `cataloged_files` | 2962 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 52483424 |
-| `total_text_lines` | 441008 |
+| `total_bytes` | 52481556 |
+| `total_text_lines` | 440965 |
 | `markdown_files` | 1000 |
-| `yml_yaml_files` | 208 |
-| `github_workflow_yml_files` | 90 |
+| `yml_yaml_files` | 207 |
+| `github_workflow_yml_files` | 89 |
 | `data_or_result_files` | 823 |
 
-**Total de arquivos catalogados:** 2963
+**Total de arquivos catalogados:** 2962
 
 ## Inventário completo
 
@@ -144,7 +144,6 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/scientific-cycle-closure.yml` | 1776 | `.yml` | `github_workflow_yml` | 49 | `e9d3a913667b4126984b6dba7b95414fb9eda41b7a9d53e45102ef002b2fadc4` | `token_vazio_declared` |
 | `.github/workflows/session-evolution-mesh.yml` | 1959 | `.yml` | `github_workflow_yml` | 51 | `1a95b4b6cc0de14c90e913e51f3847a92cfc99b52575f91263571a2010d454df` | `` |
 | `.github/workflows/six-sigma-real-data-controls.yml` | 3867 | `.yml` | `github_workflow_yml` | 102 | `91b7dec48619f5597df8b454ff201e958c519cf2fc82c5bbbb1c3451def892a2` | `mentions_synthetic,mentions_mock_or_placeholder` |
-| `.github/workflows/tmp-inventory-reconcile-20260911.yml` | 1868 | `.yml` | `github_workflow_yml` | 43 | `4d348616b79c06a91a4ded54b9d7d66e15367d92621a59fe367a5b053bd69271` | `` |
 | `.github/workflows/unified-geometry.yml` | 1006 | `.yml` | `github_workflow_yml` | 35 | `45e5f9a596a867b90c101217fad520c1c2f01d75fa0df8fd02487714fe5ab303` | `` |
 | `.github/workflows/unified-workflow-session-orchestrator.yml` | 11235 | `.yml` | `github_workflow_yml` | 293 | `16c190e12dab08a702a01d7a51491ad7fd1a3fc823abd3080584e26ea62975a8` | `token_vazio_declared` |
 | `.github/workflows/validacao_real.yml` | 6328 | `.yml` | `github_workflow_yml` | 149 | `b1407e5d13537a9561ad878e2d1b49009882aa63903eed822b963f00d0e020b2` | `mentions_synthetic,mentions_mock_or_placeholder` |

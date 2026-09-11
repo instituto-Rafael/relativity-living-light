@@ -1089,15 +1089,6 @@
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
-    "path": ".github/workflows/tmp-inventory-reconcile-20260911.yml",
-    "bytes": 1868,
-    "ext": ".yml",
-    "tipo": "github_workflow_yml",
-    "linhas": 43,
-    "sha256": "4d348616b79c06a91a4ded54b9d7d66e15367d92621a59fe367a5b053bd69271",
-    "flags": ""
-  },
-  {
     "path": ".github/workflows/unified-geometry.yml",
     "bytes": 1006,
     "ext": ".yml",
