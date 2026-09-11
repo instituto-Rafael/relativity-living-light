@@ -223,7 +223,6 @@ jobs:
       - name: Run NOAA Trinity633 observation/provenance action
         id: noaa-trinity633
         if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
-        continue-on-error: true
         env:
           NOAA_TRINITY_PHASE: ${{ inputs.noaa_trinity_phase || 'auto' }}
           NOAA_TRINITY_SCHEDULE: ${{ github.event.schedule || '' }}
