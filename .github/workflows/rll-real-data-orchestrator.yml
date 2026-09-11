@@ -388,3 +388,5 @@ jobs:
           path: artifacts/workflow-policy/rll-real-data-orchestrator/${{ github.job }}/
           retention-days: ${{ fromJSON(inputs.retention_days || '14') }}
           if-no-files-found: warn
+
+x-canonical-real-data-policy: Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
