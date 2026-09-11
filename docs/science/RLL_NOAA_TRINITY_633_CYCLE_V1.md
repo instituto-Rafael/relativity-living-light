@@ -119,3 +119,33 @@ The next allowed promotion is not "new physics". It is a typed numerical layer t
 8. emits ΔOBS/RESIDUAL only when the numerical gate passes.
 
 Until then, Trinity633 is an auditable observation-routing and provenance machine.
+
+
+## 7. Zero Trust, data governance and privacy
+
+The execution boundary is deny-by-default. Before any Trinity network action, the
+repository runs `scripts/validate_rll_noaa_trinity_governance.py` against the
+machine contract, source registry, governance contract and existing orchestrator.
+
+The bounded policy is:
+
+- exact five-source allowlist; no arbitrary URL input;
+- NOAA SWPC authority + exact declared hostname;
+- HTTPS only, platform CA validation and same-host redirects only;
+- no URL userinfo, custom ports, query parameters or fragments;
+- non-parameterized `PUBLIC_GET` sources only;
+- fixed 30 s timeout and 5 MB/source cap;
+- HTTP 200 + JSON content-type + non-empty payload + SHA-256 required for custody;
+- repository credentials are not used; checkout keeps `persist-credentials: false`;
+- workflow permission remains `contents: read`;
+- raw payloads are artifacts for custody/reproducibility and are not committed by this workflow;
+- data class is `PUBLIC_NON_PERSONAL_SCIENTIFIC_TELEMETRY`;
+- device/user identifiers, precise person location, audio/biometrics, profiling and secrets are forbidden by the Trinity policy.
+
+These are engineering controls, not an assertion of legal or standards certification:
+`compliance_claim=false`.
+
+A source outage remains an observed external state. A policy/contract violation
+fails closed. Therefore:
+
+`SOURCE_UNAVAILABLE != POLICY_VIOLATION != EXECUTOR_FAILURE`.

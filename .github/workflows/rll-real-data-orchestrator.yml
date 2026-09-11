@@ -58,7 +58,7 @@ env:
 
 jobs:
   orchestrate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
       PIPELINE_SCOPE: ${{ github.event_name == 'schedule' && 'all' || inputs.pipeline_scope }}
@@ -220,6 +220,14 @@ jobs:
             --no-fetch-igrf14 --no-fetch-wmm2025 --no-fetch-omni --no-fetch-nmdb \
             --no-fetch-desi --no-fetch-pantheon --no-fetch-planck --no-fetch-spenvis-reference
 
+      - name: Validate NOAA Trinity633 zero-trust/privacy contract
+        if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR/noaa-trinity633"
+          python scripts/validate_rll_noaa_trinity_governance.py \
+            --output "$RUN_DIR/noaa-trinity633/GOVERNANCE_RECEIPT.json"
+
       - name: Run NOAA Trinity633 observation/provenance action
         id: noaa-trinity633
         if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
@@ -229,6 +237,7 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/rll_noaa_trinity_cycle.py \
+            --governance data/governance/rll_noaa_trinity633_data_governance.v1.json \
             --phase "$NOAA_TRINITY_PHASE" \
             --schedule-expression "$NOAA_TRINITY_SCHEDULE" \
             --output-dir "$RUN_DIR/noaa-trinity633" \
