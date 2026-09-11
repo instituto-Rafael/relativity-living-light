@@ -20,7 +20,10 @@
     "certificate_pinning_reason": "Avoid brittle operational trust anchors; exact HTTPS hostname plus platform CA validation is the bounded transport control.",
     "repository_credentials_allowed": false,
     "github_checkout_persist_credentials": false,
-    "workflow_contents_permission": "read"
+    "workflow_contents_permission": "read",
+    "exact_path_allowlist_required": true,
+    "infrastructure_egress_firewall_verified": false,
+    "infrastructure_egress_state": "TOKEN_VAZIO_INFRA_EGRESS_POLICY"
   },
   "privacy": {
     "data_classification": "PUBLIC_NON_PERSONAL_SCIENTIFIC_TELEMETRY",
@@ -37,13 +40,20 @@
   "network": {
     "timeout_seconds": 30,
     "max_bytes_per_source": 5000000,
-    "accepted_http_status": [200],
+    "accepted_http_status": [
+      200
+    ],
     "required_content_type_contains": "json",
     "user_agent": "RLL-Climate-Custody/1.0"
   },
   "retention": {
     "github_artifact_default_days": 14,
-    "github_artifact_allowed_days": [7, 14, 30, 90],
+    "github_artifact_allowed_days": [
+      7,
+      14,
+      30,
+      90
+    ],
     "raw_payload_retention_follows_artifact_retention": true,
     "repository_persistence": "FORBIDDEN_BY_THIS_WORKFLOW"
   },
@@ -70,5 +80,19 @@
     "RESIDUAL != CAUSE",
     "TOKEN_VAZIO != 0"
   ],
-  "legal_boundary": "Privacy-by-design and zero-trust engineering controls only; this artifact does not certify LGPD, GDPR, NIST, ISO or other legal/standards compliance."
+  "legal_boundary": "Privacy-by-design and zero-trust engineering controls only; this artifact does not certify LGPD, GDPR, NIST, ISO or other legal/standards compliance.",
+  "allowed_routes": {
+    "noaa_swpc_realtime_solar_wind": "/json/rtsw/rtsw_wind_1m.json",
+    "noaa_swpc_realtime_imf": "/json/rtsw/rtsw_mag_1m.json",
+    "noaa_swpc_kp": "/json/planetary_k_index_1m.json",
+    "noaa_swpc_f107": "/json/f107_cm_flux.json",
+    "noaa_swpc_glotec": "/products/glotec/geojson_2d_urt.json"
+  },
+  "residual_gaps": [
+    "TOKEN_VAZIO_INFRA_EGRESS_POLICY",
+    "TOKEN_VAZIO_PAYLOAD_SCHEMA_VALIDATION",
+    "TOKEN_VAZIO_STATISTICAL_INDEPENDENCE",
+    "TOKEN_VAZIO_NUMERIC_RESIDUAL_ENGINE",
+    "TOKEN_VAZIO_CAUSA"
+  ]
 }
