@@ -1,0 +1,41 @@
+{
+  "schema": "rll.repository_pat_assurance_exception.v1",
+  "status": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "repository_secret_name": "GITPAT",
+  "purpose": "manual read-only authentication assurance for repository-scoped PAT",
+  "default_policy_relation": "EXPLICIT_REVIEWED_EXCEPTION_TO_PAT_ACTIONS_FORBIDDEN_BY_DEFAULT",
+  "allowed_event": "workflow_dispatch_only_for_secret_consumption",
+  "allowed_http_methods": ["GET"],
+  "allowed_endpoints": ["/user", "/repos/{owner}/{repo}"],
+  "workflow_permissions": {"contents": "read"},
+  "forbidden": [
+    "push",
+    "merge",
+    "delete",
+    "force_push",
+    "secret_mutation",
+    "variable_mutation",
+    "repository_settings_mutation",
+    "branch_protection_mutation",
+    "ruleset_mutation",
+    "secret_value_logging",
+    "secret_value_hashing",
+    "authorization_header_persistence"
+  ],
+  "runtime_success_means": [
+    "repository secret binding present",
+    "PAT accepted by GitHub for GET /user",
+    "PAT accepted for GET current repository"
+  ],
+  "runtime_success_does_not_mean": [
+    "write permission proven",
+    "delete absence proven",
+    "fine-grained permission set fully introspected",
+    "agent secret availability",
+    "scientific claim validation"
+  ],
+  "f_gap": "TOKEN_VAZIO_RUNTIME_UNTIL_MANUAL_DISPATCH",
+  "f_next": "after promotion to a dispatchable canonical ref, manually run the assurance and inspect only the sanitized receipt"
+}
