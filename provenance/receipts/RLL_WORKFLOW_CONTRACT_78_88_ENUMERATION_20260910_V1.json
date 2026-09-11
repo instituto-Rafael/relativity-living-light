@@ -1,0 +1,193 @@
+{
+  "schema": "rll.workflow_contract_drift_enumeration_receipt.v1",
+  "cycle_id": "RAFAELIA-6S-RLL-WF78-88-ENUM-20260910-16",
+  "predecessor": "RECEIPT-RLL-PREFLIGHT-OFFENDER-REDUCTION-20260910-15",
+  "timestamp": "2026-09-10T21:58:11-03:00",
+  "training_executed": false,
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_authority": "GitHub repository history and executable workflow files",
+  "privacy_class": "PUBLIC_REPOSITORY_METADATA_AND_WORKFLOW_SOURCE",
+  "target_visibility": "PUBLIC_AUDIT_BRANCH",
+  "claim_allowed": false,
+  "invariants": [
+    "SOURCE!=ARTEFATO!=EXECUCAO!=EVIDENCIA!=CLAIM",
+    "TOKEN_VAZIO!=0",
+    "IMPLEMENTED_UNTESTED!=PASS",
+    "absence_of_evidence!=evidence_of_absence",
+    "filename_title!=identity"
+  ],
+  "dmaic": {
+    "define": {
+      "intent": "Reconstruct and classify the ten executable workflows behind the observed 78-to-88 inventory drift without changing the count.",
+      "ctq": ["exact_workflow_identity", "historical_provenance", "classification", "no_root_cause_inference"],
+      "owner": "instituto-Rafael/relativity-living-light",
+      "boundary": "workflow inventory/governance only; no scientific promotion; no protected/default branch mutation",
+      "success": "10/10 additional workflow identities source-bound and classified",
+      "failure": "any identity inferred only from count, filename collision, or unsupported history"
+    },
+    "measure": {
+      "baseline_contract_snapshot": "9cdd4fe6eec64df1d4f292c21dd1518ef18880ae: active_workflows=78",
+      "intermediate_reconcile": "3201dec02f901d956b26aa252a661d3f2ca806d9: active_workflows 78->82",
+      "final_reconcile": "df052399aac55792315a6ce713f0bb242aa9d181: active_workflows 78->88",
+      "current_audit_ref": "42872cd4de3177dc82b7313a123e3a16c0671200",
+      "current_contract_blob": "69a3eff7d7d7d0d2152a05941305df634a338d7b",
+      "current_declared_active_workflows": 88,
+      "novoexport_cursor_before": "51/51 raw conversation shards structurally recounted at RECEIPT-NOVO-FULL-RECOUNT-000-050-20260907",
+      "novoexport_cursor_after": "UNCHANGED_THIS_CYCLE",
+      "novoexport_rescan": false
+    },
+    "analyze": {
+      "finding": "The +10 executable delta decomposes into four workflows added after the 78 snapshot and six further workflows added before the 88 reconcile. Contract-field history is non-monotonic because a prior 78->82 reconcile exists while the parent of the final reconcile again carried 78.",
+      "correlation_is_not_root_cause": true,
+      "zero_job_root_cause": "TOKEN_VAZIO_ROOT_CAUSE",
+      "falsifier": "A repository-tree comparison showing any listed workflow already present at the 78 snapshot, absent at the target, or an unlisted workflow added in the bounded delta invalidates this enumeration."
+    },
+    "improve": {
+      "change": "Append this provenance receipt only; do not alter .github/workflow-contract.yml.",
+      "reversible": true,
+      "rollback": "Delete/revert this audit-branch receipt commit only; source history remains untouched."
+    },
+    "control": {
+      "gate": "10 identities must be supported by bounded Git history/file evidence; final file is read back by blob SHA after commit.",
+      "contract_count_modified": false,
+      "protected_branch_modified": false,
+      "merge": false,
+      "release": false,
+      "autoapprove": false
+    }
+  },
+  "additional_workflows": [
+    {
+      "ordinal": 1,
+      "path": ".github/workflows/rll-biophoton-metabolic-transduction-gate.yml",
+      "blob_at_current_audit_ref": "1e39aad3c99c2ea942a706b20ddd0db6a7f1f7ee",
+      "wave": "78_to_82_executable_delta",
+      "class": "SCIENTIFIC_PROXY_EVIDENCE_GATE",
+      "source_pointer": "compare:9cdd4fe6eec64df1d4f292c21dd1518ef18880ae...08fadf432e04b5576927c5d0535512b066bccc42"
+    },
+    {
+      "ordinal": 2,
+      "path": ".github/workflows/rll-homeostatic-field-gate.yml",
+      "blob_at_current_audit_ref": "6f74e08e83780e1d895e5098d0e6e46e361dec03",
+      "wave": "78_to_82_executable_delta",
+      "class": "SCIENTIFIC_PROXY_EVIDENCE_GATE",
+      "source_pointer": "compare:9cdd4fe6eec64df1d4f292c21dd1518ef18880ae...08fadf432e04b5576927c5d0535512b066bccc42"
+    },
+    {
+      "ordinal": 3,
+      "path": ".github/workflows/rll-observer-mirror-photon-gate.yml",
+      "blob_at_current_audit_ref": "fe8f5b46a390a145f54c68c62fff2bb8a4ff6281",
+      "wave": "78_to_82_executable_delta",
+      "class": "SCIENTIFIC_PROXY_EVIDENCE_GATE",
+      "source_pointer": "compare:9cdd4fe6eec64df1d4f292c21dd1518ef18880ae...08fadf432e04b5576927c5d0535512b066bccc42"
+    },
+    {
+      "ordinal": 4,
+      "path": ".github/workflows/rll-operational-auto-hotfix.yml",
+      "blob_at_current_audit_ref": "dd8d54af697eb28b8823228118a9715071e140c3",
+      "wave": "78_to_82_executable_delta",
+      "class": "OPERATIONAL_GOVERNANCE_OBSERVER_PROPOSER",
+      "source_pointer": "compare:9cdd4fe6eec64df1d4f292c21dd1518ef18880ae...08fadf432e04b5576927c5d0535512b066bccc42"
+    },
+    {
+      "ordinal": 5,
+      "path": ".github/workflows/giza-academic-intake-4h.yml",
+      "blob_at_current_audit_ref": "07c2d9d57e0ddbfc1d605941dbc7045a1b389cbb",
+      "wave": "82_to_88_executable_delta",
+      "class": "ACADEMIC_BIBLIOGRAPHY_INTAKE_GOVERNANCE",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    },
+    {
+      "ordinal": 6,
+      "path": ".github/workflows/hypothesis-instability-orchestrator.yml",
+      "blob_at_current_audit_ref": "f9366983f0dedfd25b712a77c97f848ddd2293d3",
+      "wave": "82_to_88_executable_delta",
+      "class": "HYPOTHESIS_TRIAGE_ORCHESTRATOR",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    },
+    {
+      "ordinal": 7,
+      "path": ".github/workflows/rll-quantum-vacuum-birefringence-audit.yml",
+      "blob_at_current_audit_ref": "a48523a90899d6bfee8716da06402d0ab5c3077b",
+      "wave": "82_to_88_executable_delta",
+      "class": "SCIENTIFIC_PROVENANCE_FALSIFICATION_AUDIT",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    },
+    {
+      "ordinal": 8,
+      "path": ".github/workflows/scan-poc-coherence.yml",
+      "blob_at_current_audit_ref": "c16280c3d1f5537c3695c77d834302cee750d847",
+      "wave": "82_to_88_executable_delta",
+      "class": "POC_COHERENCE_GOVERNANCE_VALIDATION",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    },
+    {
+      "ordinal": 9,
+      "path": ".github/workflows/session-evolution-mesh.yml",
+      "blob_at_current_audit_ref": "b12e1ce82109319b20b91239e010a4ace0fbc14f",
+      "wave": "82_to_88_executable_delta",
+      "class": "SESSION_ATLAS_EVOLUTION_VALIDATION",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    },
+    {
+      "ordinal": 10,
+      "path": ".github/workflows/workflow-preflight-repair-20260903.yml",
+      "blob_at_current_audit_ref": "bb2738907e6945df862642e4aa6cc7bc6e2ac063",
+      "wave": "82_to_88_executable_delta",
+      "class": "WORKFLOW_PREFLIGHT_REPAIR_GOVERNANCE",
+      "source_pointer": "compare:08fadf432e04b5576927c5d0535512b066bccc42...df052399aac55792315a6ce713f0bb242aa9d181"
+    }
+  ],
+  "wave_counts": {
+    "78_to_82_executable_delta": 4,
+    "82_to_88_executable_delta": 6,
+    "total": 10
+  },
+  "gaps": [
+    {
+      "gap_id": "TV-RLL-WORKFLOW-CONTRACT-82-TO-78-REGRESSION-LINEAGE",
+      "token": "TOKEN_VAZIO_CONTRACT_SUPERSESSION_CAUSE",
+      "source_pointer": "3201dec02f901d956b26aa252a661d3f2ca806d9 -> 932c0cfec53d204cb2ba335c2d1049c27144ea7f -> df052399aac55792315a6ce713f0bb242aa9d181",
+      "missing_field": "exact_commit_or_merge_that_restored_active_workflows_to_78_after_82",
+      "blocking_dependency": "bounded workflow-contract path history between reconcile commits",
+      "evidence_needed": "introducing commit/merge diff plus ancestry",
+      "falsifier": "proof that the apparent 82 and later 78 belong to incomparable histories rather than a regression/supersession path",
+      "next_probe": "bisect .github/workflow-contract.yml history between 3201dec and df052 parent",
+      "owner_authority": "GitHub repository history",
+      "urgency": "P1",
+      "closure_gate": "exact transition bound to commit/merge ancestry",
+      "privacy_class": "PUBLIC_REPOSITORY_METADATA",
+      "claim_allowed": false,
+      "lineage": ["9cdd4fe:78", "3201dec:82", "932c0cf:78", "df05239:88"]
+    },
+    {
+      "gap_id": "TV-RLL-ZERO-JOB-ROOT-CAUSE",
+      "token": "TOKEN_VAZIO_ROOT_CAUSE",
+      "source_pointer": "runtime zero-job evidence lineage",
+      "missing_field": "provider-confirmed root cause",
+      "blocking_dependency": "provider diagnostic or controlled reproduction per failure class",
+      "evidence_needed": "run/jobs/steps plus explicit diagnostic or discriminant reproduction",
+      "falsifier": "controlled evidence contradicting the current candidate explanation",
+      "next_probe": "keep separate from workflow inventory reconciliation",
+      "owner_authority": "GitHub Actions provider evidence",
+      "urgency": "P0",
+      "closure_gate": "provider-confirmed or independently discriminant causal evidence",
+      "privacy_class": "PUBLIC_REPOSITORY_RUNTIME_METADATA",
+      "claim_allowed": false,
+      "lineage": ["RUNTIME_ZERO_JOB_FAILURE"]
+    }
+  ],
+  "learning": {
+    "technique": "bounded tree-diff decomposition around known synchronized inventory checkpoints",
+    "hypothesis_tested": "the observed +10 can be reconstructed as exact workflow identities rather than inferred from a scalar count",
+    "result": "SUPPORTED_SCOPED_10_IDENTITIES",
+    "uncertainty_reduced": "workflow identity/classification provenance",
+    "uncertainty_preserved": ["contract-field supersession cause", "zero-job provider root cause"],
+    "next_method": "retain bounded-history decomposition; investigate contract-field regression separately"
+  },
+  "r3": {
+    "F_ok": "10/10 additional workflows enumerated and classified without changing contract count",
+    "F_gap": "TOKEN_VAZIO_CONTRACT_SUPERSESSION_CAUSE; TOKEN_VAZIO_ROOT_CAUSE",
+    "F_next": "bind the exact 82->78 contract supersession commit/merge, then continue zero-job causal work independently"
+  }
+}
