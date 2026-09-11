@@ -48,6 +48,25 @@ github_platform_assurance:
   claim_allowed: false
   publication_effect: NONE
 
+credential_authority:
+  policy: data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+  validator: tools/validate_rll_credential_authority.py
+  tests: tests/test_rll_credential_authority.py
+  documentation: docs/governance/RLL_CREDENTIAL_AUTHORITY_V1.md
+  receipt: receipts/2026-09-11_RLL_CREDENTIAL_AUTHORITY_V1_PREFLIGHT.md
+  github_agent_pat:
+    default_actions_binding: FORBIDDEN
+    same_repo_actions_auth: GITHUB_TOKEN
+    administration_write: FORBIDDEN
+    agent_secrets_write: FORBIDDEN
+  climate_trial:
+    actions_secret: RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+    allowed_execution: workflow_dispatch_guarded_job
+    repository_write_authority: NONE
+  external_binding_state: TOKEN_VAZIO_EXTERNAL_SETTING
+  claim_allowed: false
+  publication_effect: NONE
+
 workflow_contract_reconciliation:
   workflow: .github/workflows/workflow-contract-sync.yml
   tool: tools/workflow_contract_sync.py
@@ -200,6 +219,9 @@ documentation:
     - .github/workflow-architecture/invariants.v1.yml
     - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
+    - data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+    - tools/validate_rll_credential_authority.py
+    - docs/governance/RLL_CREDENTIAL_AUTHORITY_V1.md
     - data/governance/branch_advance_registry.v2.json
     - data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
     - data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
