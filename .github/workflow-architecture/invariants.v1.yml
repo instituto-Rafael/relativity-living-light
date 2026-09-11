@@ -173,6 +173,15 @@ managed_workflows:
     class: security_analysis
   .github/workflows/github-platform-assurance-v2.yml:
     class: security_analysis
+  .github/workflows/rll-secret-boundary-assurance.yml:
+    class: security_analysis
+    require:
+      - permissions
+      - concurrency
+      - job_timeout
+      - checkout_without_persistent_credentials
+      - always_upload_receipt
+      - externalized_algorithm
   .github/workflows/frontier-research-composition.yml:
     class: scientific_shadow
     require:
