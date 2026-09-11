@@ -30,7 +30,7 @@ path	bytes	ext	tipo	linhas	sha256	flags
 .github/workflow-architecture/github-actions-capabilities.v1.yml	7197	.yml	config_yml	192	f264b79ca5362cb00e5cd6e62e5197f2d0da55f6587df994c753bb9c4269b203	token_vazio_declared
 .github/workflow-architecture/github-actions-capabilities.v2.yml	3495	.yml	config_yml	89	dfba1f7cbcb061dd792112b6e43a074caae69bd0128d98a84bd12c2784f1eb16	token_vazio_declared
 .github/workflow-architecture/invariants.v1.yml	9321	.yml	config_yml	306	fd70e8ec2bc1708200d308d869cb093d59a893b5d0dce74f46c93f32b3dac108	token_vazio_declared
-.github/workflow-contract.yml	13592	.yml	config_yml	265	8e2427224cac131719f64d835072b7c0b1071490fd931701a66d689cfb23fdc0	token_vazio_declared
+.github/workflow-contract.yml	13592	.yml	config_yml	265	22d7a8bd1fa1c01fde828530b9d7a8591cca96fd40e821b31b79f873bf9309b4	token_vazio_declared
 .github/workflow-orchestrator/BRANCH_MATURITY.md	4315	.md	documentation_md	137	d3d1de27a072bc1223e3747d124eb67e0f5e2d936d7cb6c4d9293ee11e51099e	token_vazio_declared
 .github/workflow-orchestrator/README.md	1414	.md	documentation_md	25	17aa78ac7a83916a934ae8c0c9ff52cdbf941e98e54940e3eeae9d2e4aef67c2	-
 .github/workflow-orchestrator/catalog.yml	2502	.yml	config_yml	96	d4ac5943ef247e38700068eefd20b73c2f10d25db3a7f634a6def55ab8c8a4a0	-

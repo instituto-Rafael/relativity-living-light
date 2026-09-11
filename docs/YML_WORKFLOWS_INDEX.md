@@ -18,7 +18,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflow-architecture/github-actions-capabilities.v1.yml` | `config_yml` | 7197 | 192 | `f264b79ca5362cb00e5cd6e62e5197f2d0da55f6587df994c753bb9c4269b203` |
 | `.github/workflow-architecture/github-actions-capabilities.v2.yml` | `config_yml` | 3495 | 89 | `dfba1f7cbcb061dd792112b6e43a074caae69bd0128d98a84bd12c2784f1eb16` |
 | `.github/workflow-architecture/invariants.v1.yml` | `config_yml` | 9321 | 306 | `fd70e8ec2bc1708200d308d869cb093d59a893b5d0dce74f46c93f32b3dac108` |
-| `.github/workflow-contract.yml` | `config_yml` | 13592 | 265 | `8e2427224cac131719f64d835072b7c0b1071490fd931701a66d689cfb23fdc0` |
+| `.github/workflow-contract.yml` | `config_yml` | 13592 | 265 | `22d7a8bd1fa1c01fde828530b9d7a8591cca96fd40e821b31b79f873bf9309b4` |
 | `.github/workflow-orchestrator/catalog.yml` | `config_yml` | 2502 | 96 | `d4ac5943ef247e38700068eefd20b73c2f10d25db3a7f634a6def55ab8c8a4a0` |
 | `.github/workflow-orchestrator/session.yml` | `config_yml` | 1127 | 37 | `6a5d243bfbb5950a14cb01fd26a864a7c93fb3630dd29cf268b5f19aca747058` |
 | `.github/workflow-orchestrator/workflows/core/10-yml-syntax-validation.yml` | `config_yml` | 220 | 8 | `91eb8d57e4bfa739191b0eb67005518ca6796532c0e48a0bcfee299a977ac36a` |
