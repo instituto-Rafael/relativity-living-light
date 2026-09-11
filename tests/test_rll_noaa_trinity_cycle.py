@@ -87,21 +87,27 @@ class NoaaTrinity633Tests(unittest.TestCase):
                     "sha256": "a" * 64,
                     "bytes": 2,
                     "content_type": "application/json",
+                    "saved_path": str(output_dir / f"{source_id}.json"),
                     "claim_allowed": False,
                 }
             return {"returncode": 2, "status": "FAIL", "claim_allowed": False}
 
-        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
-            trinity, "run_fetch", side_effect=fake_fetch
-        ):
-            receipt = trinity.build_receipt(
+        with tempfile.TemporaryDirectory() as temp:
+            temp_path = Path(temp) / "sources"
+            temp_path.mkdir(parents=True, exist_ok=True)
+            for source_id in {"noaa_swpc_realtime_solar_wind", "noaa_swpc_realtime_imf", "noaa_swpc_kp"}:
+                (temp_path / f"{source_id}.json").write_text(
+                    json.dumps([{"time_tag": "2026-09-11T00:00:00"}]), encoding="utf-8"
+                )
+            with mock.patch.object(trinity, "run_fetch", side_effect=fake_fetch):
+                receipt = trinity.build_receipt(
                 self.contract,
                 self.registry,
                 "SPIRITUM_3H",
                 Path(temp),
                 execute_network=True,
-                governance=self.governance,
-            )
+                    governance=self.governance,
+                )
         self.assertEqual(receipt["gate_status"], "SOURCE_CUSTODY_PARTIAL")
         self.assertTrue(receipt["cross_domain_readiness"])
         self.assertFalse(receipt["observed_cross_domain"])
@@ -115,6 +121,7 @@ class NoaaTrinity633Tests(unittest.TestCase):
             "sha256": "a" * 64,
             "bytes": 10,
             "content_type": "text/html",
+            "saved_path": "/does/not/matter.json",
         }
         self.assertFalse(trinity.source_custody_ok(result, source, self.governance))
 
@@ -133,6 +140,7 @@ class NoaaTrinity633Tests(unittest.TestCase):
             "sha256": "a" * 64,
             "bytes": 10,
             "content_type": "application/json",
+            "saved_path": "/does/not/matter.json",
         }
         self.assertFalse(trinity.source_custody_ok(result, source, self.governance))
 
@@ -154,6 +162,32 @@ class NoaaTrinity633Tests(unittest.TestCase):
             receipt["zero_trust"]["infrastructure_egress_state"],
             "TOKEN_VAZIO_INFRA_EGRESS_POLICY",
         )
+
+    def test_structural_payload_schema_accepts_list_with_time_tag(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "wind.json"
+            path.write_text(json.dumps([{"time_tag": "2026-09-11T00:00:00"}]), encoding="utf-8")
+            ok, state = trinity.validate_payload_shape(
+                path, "noaa_swpc_realtime_solar_wind", self.governance
+            )
+        self.assertTrue(ok)
+        self.assertEqual(state, "STRUCTURAL_SCHEMA_PASS")
+
+    def test_structural_payload_schema_rejects_missing_time_tag(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "kp.json"
+            path.write_text(json.dumps([{"kp_index": 3.0}]), encoding="utf-8")
+            ok, state = trinity.validate_payload_shape(path, "noaa_swpc_kp", self.governance)
+        self.assertFalse(ok)
+        self.assertEqual(state, "PAYLOAD_REQUIRED_KEY_MISSING")
+
+    def test_glotec_requires_feature_collection_shape(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "glotec.json"
+            path.write_text(json.dumps({"type": "FeatureCollection", "features": []}), encoding="utf-8")
+            ok, state = trinity.validate_payload_shape(path, "noaa_swpc_glotec", self.governance)
+        self.assertTrue(ok)
+        self.assertEqual(state, "STRUCTURAL_SCHEMA_PASS")
 
 
 if __name__ == "__main__":
