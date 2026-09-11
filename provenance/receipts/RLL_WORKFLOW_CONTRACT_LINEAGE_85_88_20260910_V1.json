@@ -1,0 +1,119 @@
+{
+  "schema": "rll.workflow_contract_lineage_receipt.v1",
+  "cycle_id": "RAFAELIA-FED-RLL-WF-LINEAGE-20260910-01",
+  "observed_at": "2026-09-10",
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "default_branch": "main",
+    "observed_head": "c1aca8cff9987b16826fc53d98aa20f1b9a21b22"
+  },
+  "contract": {
+    "path": ".github/workflow-contract.yml",
+    "current_blob": "d4d95657a2b448727a5c9eefd77234df02b4d331",
+    "current_declared_active_workflows": 78,
+    "source_of_truth": "executable_files",
+    "direct_main_commit": "FORBIDDEN"
+  },
+  "prior_reconciled_checkpoint": {
+    "commit": "4dda096f8d4c43b3525df76985c521046132e3f2",
+    "contract_blob": "9c4f601074fd01c658b899759ea5c9d85cdc5ffe",
+    "declared_active_workflows": 85,
+    "commit_message": "fix(governance): reconcile active workflow inventory to 85"
+  },
+  "tree_delta_from_85_checkpoint_to_current_head": {
+    "comparison": "4dda096f8d4c43b3525df76985c521046132e3f2...c1aca8cff9987b16826fc53d98aa20f1b9a21b22",
+    "relationship": "ahead",
+    "commits": 289,
+    "workflow_files_added": 3,
+    "workflow_files_deleted": 0,
+    "expected_executable_count_from_lineage": 88,
+    "classification_note": "The apparent 78->88 delta is not ten newly-added workflow objects. A reconciled 85-workflow checkpoint exists in the ancestry; only three workflow paths are added after that checkpoint. The remaining numeric difference is contract-count lineage regression/staleness, not seven distinct new workflow identities."
+  },
+  "added_workflows": [
+    {
+      "path": ".github/workflows/giza-academic-intake-4h.yml",
+      "blob": "07c2d9d57e0ddbfc1d605941dbc7045a1b389cbb",
+      "origin_commit": "d4f4ae1352d39fda72aa0a4785cabc178b5ef1f3",
+      "origin_message": "research: add governed Giza academic intake and 4h bibliography workflow",
+      "classification": "new_canonical_governed_workflow",
+      "scope": "scheduled academic bibliography/intake governance",
+      "claim_allowed": false
+    },
+    {
+      "path": ".github/workflows/hypothesis-instability-orchestrator.yml",
+      "blob": "f9366983f0dedfd25b712a77c97f848ddd2293d3",
+      "origin_commit": "39749f2b7338f20f381734ce57cb384779571ee0",
+      "origin_message": "ci(rll): add generated YAML+C hypothesis instability pipeline",
+      "classification": "new_canonical_executable_with_review_debt",
+      "scope": "hypothesis-instability barometer and generated shadow matrix",
+      "review_debt": [
+        "floating actions/checkout@v4",
+        "floating actions/upload-artifact@v4"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "path": ".github/workflows/session-evolution-mesh.yml",
+      "blob": "b12e1ce82109319b20b91239e010a4ace0fbc14f",
+      "origin_commit": "94d3790154d1119ca35020e13b0add3eb7568b9a",
+      "origin_message": "ci: enforce session mesh on current lab evolution",
+      "classification": "canonical_inventory_lab_scoped",
+      "scope": "rll/lab session-evolution validation and receipt",
+      "claim_allowed": false
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "TV-RLL-WORKFLOW-CONTRACT-COUNT-LINEAGE-REGRESSION",
+      "token": "TOKEN_VAZIO_REGRESSION_INTRODUCING_COMMIT",
+      "source_pointer": ".github/workflow-contract.yml history between 4dda096f8d4c43b3525df76985c521046132e3f2 and current main",
+      "missing_field": "exact merge/commit that reintroduced active_workflows=78 after the 85 checkpoint",
+      "blocking_dependency": "lineage pinpoint not required to establish current count, but required for full causal custody",
+      "evidence_needed": "first descendant commit/tree where contract content changes 85->78",
+      "falsifier": "evidence that 85 checkpoint is not ancestor of current main or that workflow deletions offset additions",
+      "next_probe": "binary/path history localization of first 85->78 contract transition",
+      "owner_authority": "GitHub commit/tree history",
+      "urgency": "P1",
+      "closure_gate": "exact introducing commit plus parent comparison",
+      "claim_allowed": false,
+      "predecessor_lineage": "4dda096f8d4c43b3525df76985c521046132e3f2 -> current main"
+    },
+    {
+      "gap_id": "TV-RLL-ACTIONS-ZERO-JOB-ROOT-CAUSE",
+      "token": "TOKEN_VAZIO_ROOT_CAUSE",
+      "source_pointer": "RLL Operational Auto Hotfix runtime ingestion",
+      "missing_field": "specific causes for zero-job failures",
+      "blocking_dependency": "per-run provider diagnostics/reproduction",
+      "evidence_needed": "run/check-suite/provider semantic evidence",
+      "falsifier": "job materialization under isolated candidate condition",
+      "next_probe": "cluster zero-job runs by workflow/blob/head and reproduce one class at a time",
+      "owner_authority": "GitHub Actions provider evidence",
+      "urgency": "P1",
+      "closure_gate": "reproducible cause; zero jobs alone never infer root cause",
+      "claim_allowed": false,
+      "predecessor_lineage": "runtime_zero_job_rule"
+    }
+  ],
+  "decision": {
+    "contract_count_change_applied": false,
+    "reason": "Evidence receipt first; contract correction remains a separate reviewed delta.",
+    "candidate_correct_count": 88,
+    "claim_allowed": false,
+    "publication_effect": "NONE"
+  },
+  "f_ok": [
+    "85-workflow reconciled ancestor recovered",
+    "current 88 count explained as 85 persistent baseline plus 3 added paths",
+    "three added workflow identities classified by path/blob/origin",
+    "apparent seven-object delta contradicted"
+  ],
+  "f_gap": [
+    "exact 85->78 regression-introducing commit remains TOKEN_VAZIO",
+    "zero-job root causes remain TOKEN_VAZIO_ROOT_CAUSE"
+  ],
+  "f_next": [
+    "pinpoint first 85->78 contract transition",
+    "prepare separate reviewed contract correction 78->88",
+    "run workflow-contract sync/tests on the correction branch before any promotion"
+  ]
+}

@@ -270,6 +270,21 @@ security:
   persist_credentials_default: false
   treat_github_event_text_as_untrusted: true
   secrets_must_not_be_echoed: true
+  credential_authority:
+    policy: data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+    agent_secrets_are_not_actions_secrets: true
+    same_repo_actions_auth: GITHUB_TOKEN
+    github_pat_actions_binding: FORBIDDEN_BY_DEFAULT
+    github_pat_administration_write: FORBIDDEN
+    github_pat_agent_secrets_write: FORBIDDEN
+    destructive_api_methods_with_external_credentials: FORBIDDEN
+    git_ref_delete_with_external_credentials: FORBIDDEN
+    contents_write_implies_no_delete: false
+    climate_trial:
+      actions_secret: RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+      allowed_consumer: workflow_dispatch_guarded_job_only
+      secret_value_in_receipts: FORBIDDEN
+      secret_hash_in_receipts: FORBIDDEN
   write_permissions_require_explicit_workflow_class:
     - orchestrator
     - reconciliation

@@ -1,0 +1,52 @@
+{
+  "schema": "rll.climate_engine_bridge.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "provider_registry": "data/climate/rll_external_compute_registry.v1.json",
+  "provider_id": "climate_engine",
+  "purpose": "Provide a zero-trust, auditable bridge from RLL to Climate Engine metadata, timeseries and map computations without promoting external computation or visualization into scientific evidence or causal claims.",
+  "supported_operations": [
+    "metadata_dates",
+    "metadata_variables",
+    "timeseries_coordinates",
+    "map_values"
+  ],
+  "network_policy": {
+    "default_mode": "DRY_RUN",
+    "https_only": true,
+    "allowed_host": "api.climateengine.org",
+    "timeout_seconds": 30,
+    "max_response_bytes": 8388608,
+    "redirect_host_must_remain_allowed": true
+  },
+  "secret_policy": {
+    "environment_variable": "CLIMATE_ENGINE_API_KEY",
+    "persist_secret": false,
+    "log_secret": false,
+    "emit_secret_hash": false,
+    "missing_secret_state": "TOKEN_VAZIO_CLIMATE_ENGINE_API_KEY"
+  },
+  "response_policy": {
+    "hash_sha256": true,
+    "persist_sanitized_json": true,
+    "redact_keys_matching": ["authorization", "api_key", "apikey", "token", "tile_fetcher"],
+    "ephemeral_tile_handle_state": "TOKEN_VAZIO_EPHEMERAL_TILE_HANDLE"
+  },
+  "epistemic_boundary": {
+    "source_primary_authority": "PRESERVE_UPSTREAM_DATASET_AUTHORITY",
+    "compute_provider": "CLIMATE_ENGINE",
+    "provider_output_state": "EXTERNAL_COMPUTE_PRODUCT",
+    "visualization_state": "DERIVED_VIEW",
+    "numeric_result_is_not_cause": true,
+    "cross_provider_agreement_is_not_statistical_independence": true,
+    "claim_allowed": false
+  },
+  "integration_route": [
+    "PRIMARY_SOURCE",
+    "EXTERNAL_COMPUTE_PROVIDER",
+    "HASHED_RESPONSE_RECEIPT",
+    "SANITIZED_DERIVED_PRODUCT",
+    "RLL_COMPARISON",
+    "TOKEN_VAZIO_DELTAOBS_UNTIL_SEPARATE_NUMERIC_GATE"
+  ],
+  "F_next": "Run dry-run request plans; when a user-owned API key is available, execute one metadata probe and one bounded timeseries/map probe, capture hashes and compare with an independently sourced RLL path before any ΔOBS promotion."
+}
