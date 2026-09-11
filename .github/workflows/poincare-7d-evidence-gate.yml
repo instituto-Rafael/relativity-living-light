@@ -1,0 +1,171 @@
+name: Poincare 7D Evidence Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'PapersPub/09_poincare_ball_7d_freestanding/**'
+      - '.github/workflows/poincare-7d-evidence-gate.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: poincare-7d-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  POINCARE_ROOT: PapersPub/09_poincare_ball_7d_freestanding
+  ARTIFACT_DIR: artifacts/poincare
+
+jobs:
+  evidence-gate:
+    name: Deterministic geometry and claim-boundary gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepare artifact directory
+        run: mkdir -p "$ARTIFACT_DIR"
+
+      - name: Execute existing Poincare 7D validator
+        id: geometry
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -uo pipefail
+          python "$POINCARE_ROOT/scripts/validate_poincare_7d_emergents.py" \
+            > "$ARTIFACT_DIR/geometry_receipt.json"
+
+      - name: Materialize evidence, gaps and falsifiers
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('artifacts/poincare')
+          receipt_path = root / 'geometry_receipt.json'
+
+          try:
+              receipt = json.loads(receipt_path.read_text(encoding='utf-8'))
+              parse_ok = True
+          except Exception as exc:
+              receipt = {
+                  'schema': 'rll.poincare_ball_7d.emergent_validation.v1',
+                  'status': 'FAIL',
+                  'parse_error': repr(exc),
+                  'states': {
+                      'claim_allowed': False,
+                      'cosmology': 'PROHIBITED_BY_SCOPE',
+                  },
+              }
+              parse_ok = False
+
+          states = receipt.get('states', {})
+          checks = receipt.get('checks', {})
+          metrics = receipt.get('metrics', {})
+
+          boundary = {
+              'schema': 'rll.poincare_ball_7d.evidence_gate.v1',
+              'source_validator': 'PapersPub/09_poincare_ball_7d_freestanding/scripts/validate_poincare_7d_emergents.py',
+              'source_status': receipt.get('status', 'FAIL'),
+              'parse_ok': parse_ok,
+              'claim_allowed': False,
+              'training_executed': False,
+              'invariants': [
+                  'SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM',
+                  'TOKEN_VAZIO != 0',
+                  'radius_lt_1 != physical_stability',
+                  'geometric_embedding != cosmological_validation',
+                  'synthetic_fixture != physical_measurement',
+              ],
+              'falsifiers': {
+                  'geometry_gate': 'FAIL if deterministic source validator is not PASS',
+                  'claim_boundary': 'FAIL if source receipt promotes claim_allowed=true',
+                  'cosmology_boundary': 'FAIL if cosmology is not PROHIBITED_BY_SCOPE',
+                  'spacelike_boundary': 'FAIL if raw input silently becomes strict Lorentz projection',
+                  'numerical_boundary': 'FAIL on NaN/Inf or violated metric identities',
+              },
+              'gaps': {
+                  'euclidean_matched_baseline': 'TOKEN_VAZIO_NOT_EXECUTED_BY_THIS_GATE',
+                  'native_termux_runtime': states.get('native_aarch64_runtime', 'TOKEN_VAZIO'),
+                  'physical_stability': states.get('physical_stability', 'TOKEN_VAZIO'),
+                  'independent_external_replication': 'TOKEN_VAZIO',
+              },
+              'source_states': states,
+              'source_metrics': metrics,
+          }
+
+          (root / 'metrics.json').write_text(
+              json.dumps({'metrics': metrics, 'checks': checks}, indent=2, sort_keys=True) + '\n',
+              encoding='utf-8',
+          )
+          (root / 'falsifiers.json').write_text(
+              json.dumps(boundary, indent=2, sort_keys=True) + '\n',
+              encoding='utf-8',
+          )
+
+          summary = f'''# Poincare 7D Evidence Gate\n\n- source status: `{receipt.get("status", "FAIL")}`\n- checks: `{receipt.get("checks_passed", 0)}/{receipt.get("checks_total", 0)}`\n- claim_allowed: `false`\n- training_executed: `false`\n- cosmology: `{states.get("cosmology", "TOKEN_VAZIO")}`\n- raw hyperboloid membership: `{states.get("raw_hyperboloid_membership", "TOKEN_VAZIO")}`\n- canonical lift: `{states.get("canonical_lift", "TOKEN_VAZIO")}`\n\n## Truth boundary\n\nThis workflow validates deterministic geometry and epistemic boundaries only. It does not convert a Poincare-ball embedding, radius test, Lorentz synthetic fixture or numerical PASS into a physical or cosmological claim.\n\n## F_gap\n\n- matched Euclidean baseline: `TOKEN_VAZIO_NOT_EXECUTED_BY_THIS_GATE`\n- native Termux/device receipt: `{states.get("native_aarch64_runtime", "TOKEN_VAZIO")}`\n- physical stability: `{states.get("physical_stability", "TOKEN_VAZIO")}`\n- independent external replication: `TOKEN_VAZIO`\n\n## F_next\n\nRun a separately reviewed matched-input Euclidean-vs-hyperbolic comparison before claiming any representational advantage.\n'''
+          (root / 'summary.md').write_text(summary, encoding='utf-8')
+
+          files = [
+              root / 'geometry_receipt.json',
+              root / 'metrics.json',
+              root / 'falsifiers.json',
+              root / 'summary.md',
+          ]
+          checksum_lines = []
+          for path in files:
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              checksum_lines.append(f'{digest}  {path.name}')
+          (root / 'CHECKSUMS.sha256').write_text('\n'.join(checksum_lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Enforce fail-closed truth boundary
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          receipt = json.loads(Path('artifacts/poincare/geometry_receipt.json').read_text(encoding='utf-8'))
+          states = receipt.get('states', {})
+
+          failures = []
+          if receipt.get('status') != 'PASS':
+              failures.append('deterministic geometry validator did not PASS')
+          if states.get('claim_allowed') is not False:
+              failures.append('claim_allowed must remain false')
+          if states.get('cosmology') != 'PROHIBITED_BY_SCOPE':
+              failures.append('cosmology boundary must remain PROHIBITED_BY_SCOPE')
+          if states.get('raw_hyperboloid_membership') != 'FAIL_PRECONDITION_SPACELIKE':
+              failures.append('raw spacelike precondition changed without explicit review')
+          if not receipt.get('checks', {}).get('no_nan_or_inf', False):
+              failures.append('NaN/Inf guard failed')
+
+          if failures:
+              for failure in failures:
+                  print(f'FAIL: {failure}')
+              raise SystemExit(1)
+
+          print('PASS: deterministic Poincare geometry and claim boundaries preserved')
+          PY
+
+      - name: Upload evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poincare-7d-evidence-${{ github.run_id }}
+          path: artifacts/poincare/
+          if-no-files-found: error
+          retention-days: 30
