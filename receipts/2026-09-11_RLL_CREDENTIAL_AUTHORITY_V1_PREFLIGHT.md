@@ -3,6 +3,9 @@
 - canonical_repository: `instituto-Rafael/relativity-living-light`
 - branch: `security/credential-authority-zero-trust-20260911`
 - review_target: `rll/lab`
+- pull_request: `#856`
+- initial_pr_head: `ac6c68188fe7b54b8e5200880a237cf37bcd461e`
+- ci_state_at_receipt_append: `QUEUED`
 - kind: `SECURITY_GOVERNANCE_DELTA`
 - claim_allowed: `false`
 - publication_effect: `NONE`
