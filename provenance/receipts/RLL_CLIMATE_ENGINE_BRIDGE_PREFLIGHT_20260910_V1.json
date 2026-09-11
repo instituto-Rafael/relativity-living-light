@@ -1,0 +1,61 @@
+{
+  "schema": "rll.climate_engine_bridge.preflight_receipt.v1",
+  "date": "2026-09-10",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "base_branch": "rll/lab",
+  "base_sha": "f158fd030400a406e9981dcc1368bbbd17d57eb3",
+  "branch": "work/climate-engine-bridge-v1-20260910",
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "define": {
+    "ctq": "Add Climate Engine as a bounded external compute/visualization path without misclassifying it as a primary sensor/source or causal authority."
+  },
+  "measure": {
+    "existing_climate_engine_reference_found_in_repo": false,
+    "external_api_documentation_observed": true,
+    "runtime_api_key": "TOKEN_VAZIO_CLIMATE_ENGINE_API_KEY"
+  },
+  "analyze": {
+    "minimum_safe_surface": [
+      "metadata_dates",
+      "metadata_variables",
+      "timeseries_coordinates",
+      "map_values"
+    ],
+    "primary_risk": "provider output or visualization being mistaken for independent physical evidence",
+    "secret_risk": "API credential leakage",
+    "topology_risk": "bypassing WORK -> rll/lab"
+  },
+  "improve": {
+    "network_default": "DRY_RUN",
+    "allowed_host": "api.climateengine.org",
+    "secret_env": "CLIMATE_ENGINE_API_KEY",
+    "raw_tile_handle_persisted": false,
+    "response_sha256_required_when_executed": true
+  },
+  "control": {
+    "focused_tests": "TOKEN_VAZIO_NOT_YET_EXECUTED",
+    "exact_head_ci": "TOKEN_VAZIO_NOT_YET_OBSERVED",
+    "live_external_request": "TOKEN_VAZIO_NOT_AUTHORIZED_WITH_USER_KEY"
+  },
+  "invariants": [
+    "SOURCE!=COMPUTE_PROVIDER",
+    "COMPUTE_PROVIDER!=EVIDENCE",
+    "VISUALIZATION!=EVIDENCE",
+    "RESIDUAL!=CAUSE",
+    "CROSS_PROVIDER_AGREEMENT!=STATISTICAL_INDEPENDENCE",
+    "TOKEN_VAZIO!=0"
+  ],
+  "F_ok": [
+    "bounded adapter contract materialized",
+    "zero-trust secret handling specified",
+    "host allowlist and response cap specified",
+    "response sanitization and hash receipt specified"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_CLIMATE_ENGINE_API_KEY",
+    "TOKEN_VAZIO_LIVE_CLIMATE_ENGINE_EXECUTION",
+    "TOKEN_VAZIO_PROVIDER_PATH_INDEPENDENCE"
+  ],
+  "F_next": "open draft PR to rll/lab and observe exact-head CI before any runtime credential use or ΔOBS integration"
+}
