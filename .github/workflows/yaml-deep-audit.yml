@@ -19,6 +19,8 @@ name: YAML Deep Audit — every file
       - "**/*.yaml"
       - "tools/deep_yaml_audit.py"
       - "tests/test_deep_yaml_audit.py"
+      - "tools/yaml_anomaly_fragment_analysis.py"
+      - "tests/test_yaml_anomaly_fragment_analysis.py"
       - ".github/workflows/yaml-deep-audit.yml"
   push:
     branches: [main]
@@ -88,5 +90,110 @@ jobs:
           path: |
             artifacts/yaml-deep-audit/
             artifacts/yaml-deep-audit.console.log
+          if-no-files-found: error
+          retention-days: 30
+
+  anomaly-fragments:
+    name: Explain anomaly fragment · ${{ matrix.lens }}
+    needs: yaml-deep-audit
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        lens:
+          - startup_preflight
+          - authority_security
+          - runtime_operability
+          - provenance_inventory
+          - scientific_boundary
+          - format_structure
+          - unclassified
+    env:
+      ANOMALY_LENS: ${{ matrix.lens }}
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+
+      - name: Download deep-audit receipt
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: yaml-deep-audit-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/yaml-deep-audit
+
+      - name: Process one explanatory lens
+        run: |
+          python tools/yaml_anomaly_fragment_analysis.py fragment \
+            --input artifacts/yaml-deep-audit/deep_yaml_audit.json \
+            --lens "$ANOMALY_LENS" \
+            --output-dir artifacts/yaml-anomaly-fragments
+
+      - name: Upload anomaly fragment
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: yaml-anomaly-fragment-${{ matrix.lens }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/yaml-anomaly-fragments/${{ matrix.lens }}.json
+          if-no-files-found: error
+          retention-days: 30
+
+  anomaly-explanatory-aggregate:
+    name: Aggregate distributed anomaly explanations
+    needs: anomaly-fragments
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+
+      - name: Download distributed anomaly fragments
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: yaml-anomaly-fragment-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/yaml-anomaly-fragments
+          merge-multiple: true
+
+      - name: Aggregate explanatory receipt
+        run: |
+          python tools/yaml_anomaly_fragment_analysis.py aggregate \
+            --input-dir artifacts/yaml-anomaly-fragments \
+            --output-dir artifacts/yaml-anomaly-explanatory \
+            --enforce-complete
+
+      - name: Run focused fragment-analysis tests
+        run: python -m unittest -v tests/test_yaml_anomaly_fragment_analysis.py
+
+      - name: Publish explanatory boundary
+        if: always()
+        run: |
+          report="artifacts/yaml-anomaly-explanatory/YAML_ANOMALY_EXPLANATORY_AGGREGATE.md"
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_YAML_ANOMALY_EXPLANATORY_REPORT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload explanatory aggregate receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: yaml-anomaly-explanatory-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/yaml-anomaly-explanatory/
           if-no-files-found: error
           retention-days: 30
