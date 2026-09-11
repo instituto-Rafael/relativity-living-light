@@ -90,9 +90,58 @@
   },
   "residual_gaps": [
     "TOKEN_VAZIO_INFRA_EGRESS_POLICY",
-    "TOKEN_VAZIO_PAYLOAD_SCHEMA_VALIDATION",
     "TOKEN_VAZIO_STATISTICAL_INDEPENDENCE",
     "TOKEN_VAZIO_NUMERIC_RESIDUAL_ENGINE",
-    "TOKEN_VAZIO_CAUSA"
-  ]
+    "TOKEN_VAZIO_CAUSA",
+    "TOKEN_VAZIO_PAYLOAD_SEMANTIC_FIELD_VALIDATION",
+    "TOKEN_VAZIO_DEPENDENCY_LOCK",
+    "TOKEN_VAZIO_DEPENDENCY_HASHES"
+  ],
+  "supply_chain": {
+    "runner_image": "ubuntu-24.04",
+    "runner_image_pinned": true,
+    "dependency_lock_verified": false,
+    "dependency_lock_state": "TOKEN_VAZIO_DEPENDENCY_LOCK",
+    "package_hashes_verified": false,
+    "package_hash_state": "TOKEN_VAZIO_DEPENDENCY_HASHES"
+  },
+  "payload_shapes": {
+    "noaa_swpc_realtime_solar_wind": {
+      "top_level": "list",
+      "record_type": "object",
+      "required_keys": [
+        "time_tag"
+      ]
+    },
+    "noaa_swpc_realtime_imf": {
+      "top_level": "list",
+      "record_type": "object",
+      "required_keys": [
+        "time_tag"
+      ]
+    },
+    "noaa_swpc_kp": {
+      "top_level": "list",
+      "record_type": "object",
+      "required_keys": [
+        "time_tag"
+      ]
+    },
+    "noaa_swpc_f107": {
+      "top_level": "list",
+      "record_type": "object",
+      "required_keys": [
+        "time_tag"
+      ]
+    },
+    "noaa_swpc_glotec": {
+      "top_level": "object",
+      "required_keys": [
+        "type",
+        "features"
+      ],
+      "type_value": "FeatureCollection",
+      "features_type": "list"
+    }
+  }
 }
