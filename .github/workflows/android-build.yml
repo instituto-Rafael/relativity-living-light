@@ -36,6 +36,7 @@ jobs:
       ANDROID_COMPILE_SDK: '35'
       ANDROID_NDK_VERSION: '27.2.12479018'
       ANDROID_CMAKE_VERSION: '3.22.1'
+      HAS_RELEASE_SIGNING: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -67,13 +68,13 @@ jobs:
         run: ./gradlew --no-daemon :app:assembleDebug :app:assembleValidationUnsigned
 
       - name: Decode release keystore
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.HAS_RELEASE_SIGNING == 'true' }}
         run: |
           mkdir -p "$RUNNER_TEMP/rll-signing"
           printf '%s' "${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/rll-signing/release.jks"
 
       - name: Build signed release APK and AAB
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.HAS_RELEASE_SIGNING == 'true' }}
         env:
           RLL_RELEASE_STORE_FILE: ${{ runner.temp }}/rll-signing/release.jks
           RLL_RELEASE_STORE_PASSWORD: ${{ secrets.RLL_RELEASE_STORE_PASSWORD }}
@@ -98,7 +99,7 @@ jobs:
           retention-days: 30
 
       - name: Upload signed release APK
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.HAS_RELEASE_SIGNING == 'true' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-release-apk-signed
@@ -107,7 +108,7 @@ jobs:
           retention-days: 30
 
       - name: Upload signed release AAB
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.HAS_RELEASE_SIGNING == 'true' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-release-aab-signed
