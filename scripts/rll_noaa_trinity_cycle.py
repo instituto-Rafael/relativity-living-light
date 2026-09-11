@@ -195,8 +195,10 @@ def main() -> int:
         receipt_path = output_dir / "TRINITY633_RECEIPT.json"
         receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps(receipt, indent=2, ensure_ascii=False))
-        if args.execute_network and receipt["gate_status"] == "SOURCE_CUSTODY_UNAVAILABLE":
-            return 2
+        # The action succeeds when an auditable receipt is produced, even when
+        # the external network/source is unavailable. Availability remains a
+        # typed gate_status/TOKEN_VAZIO, not a process crash. Contract or parser
+        # failures still return non-zero through the exception boundary below.
         return 0
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(json.dumps({
