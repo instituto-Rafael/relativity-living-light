@@ -106,6 +106,9 @@ def validate_source_bindings(
             raise ValueError(f"Trinity source query parameters are forbidden: {source_id}")
         if parsed.fragment:
             raise ValueError(f"Trinity source URL fragment is forbidden: {source_id}")
+        expected_path = governance.get("allowed_routes", {}).get(source_id)
+        if not expected_path or parsed.path != expected_path:
+            raise ValueError(f"Trinity source path is not exact-governance allowlisted: {source_id}")
 
         bound.append({
             "id": source_id,
@@ -233,6 +236,9 @@ def build_receipt(
             "query_parameters_forbidden": True,
             "repository_credentials_used": False,
             "arbitrary_url_input_allowed": False,
+            "exact_path_allowlist_enforced": True,
+            "infrastructure_egress_firewall_verified": False,
+            "infrastructure_egress_state": governance["zero_trust"]["infrastructure_egress_state"],
         },
         "privacy": {
             "data_classification": governance["privacy"]["data_classification"],
@@ -263,7 +269,7 @@ def build_receipt(
             if execute_network
             else "Trinity633 action plan resolved without network execution"
         ),
-        "F_gap": "physical ΔOBS, temporal correlation, statistical independence and numeric residual remain TOKEN_VAZIO",
+        "F_gap": "infrastructure egress enforcement, payload semantic schema, physical ΔOBS, temporal correlation, statistical independence and numeric residual remain TOKEN_VAZIO",
         "F_next": "hydrate timestamped NOAA variables into typed 6h baseline -> 3h challenge -> 3h feedback windows with preregistered uncertainty gates",
     }
 
