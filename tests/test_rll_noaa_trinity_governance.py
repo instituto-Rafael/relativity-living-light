@@ -57,6 +57,14 @@ class NoaaTrinityGovernanceTests(unittest.TestCase):
         self.assertEqual(receipt["status"], "FAIL")
         self.assertTrue(any("PUBLIC_GET" in item for item in receipt["errors"]))
 
+    def test_same_host_wrong_path_is_fail_closed(self):
+        registry = json.loads(json.dumps(self.registry))
+        source = next(item for item in registry["sources"] if item["id"] == "noaa_swpc_kp")
+        source["sample_url"] = "https://services.swpc.noaa.gov/json/unrelated.json"
+        receipt = validator.validate(self.contract, self.governance, registry, self.workflow)
+        self.assertEqual(receipt["status"], "FAIL")
+        self.assertTrue(any("exact allowlist" in item for item in receipt["errors"]))
+
 
 if __name__ == "__main__":
     unittest.main()
