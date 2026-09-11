@@ -1,0 +1,43 @@
+name: Temporary inventory reconciliation bootstrap
+
+on:
+  push:
+    branches:
+      - chore/reconcile-doc-inventory-20260911
+    paths:
+      - .github/workflows/tmp-inventory-reconcile-20260911.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-inventory-reconcile-20260911
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: github.ref == 'refs/heads/chore/reconcile-doc-inventory-20260911'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout reconciliation branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: chore/reconcile-doc-inventory-20260911
+          persist-credentials: true
+
+      - name: Materialize canonical inventory
+        run: |
+          set -euo pipefail
+          python3 tools/docs_inventory.py
+          git diff --             docs/DOCUMENTATION_FULL_INVENTORY.md             docs/REAL_NUMBERS_REPORT.md             docs/YML_WORKFLOWS_INDEX.md             data/results/repo_inventory.json             data/results/repo_inventory.tsv             data/results/repo_inventory_summary.json
+
+      - name: Commit generated inventory and remove bootstrap
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/tmp-inventory-reconcile-20260911.yml
+          git add             docs/DOCUMENTATION_FULL_INVENTORY.md             docs/REAL_NUMBERS_REPORT.md             docs/YML_WORKFLOWS_INDEX.md             data/results/repo_inventory.json             data/results/repo_inventory.tsv             data/results/repo_inventory_summary.json
+          git commit -m "chore: reconcile generated repository inventory"
+          git push origin HEAD:chore/reconcile-doc-inventory-20260911
