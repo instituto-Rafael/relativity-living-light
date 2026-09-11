@@ -86,6 +86,14 @@ def validate(
         errors.append("required content type marker must be json")
 
     allowlist = governance.get("allowed_sources", [])
+    payload_shapes = governance.get("payload_shapes", {})
+    if set(payload_shapes) != set(allowlist):
+        errors.append("payload_shapes must exactly cover the allowed source set")
+    supply_chain = governance.get("supply_chain", {})
+    if supply_chain.get("runner_image") != "ubuntu-24.04":
+        errors.append("runner image must be pinned to ubuntu-24.04")
+    if supply_chain.get("dependency_lock_verified") is not False:
+        errors.append("dependency_lock_verified must remain false until a reviewed lock exists")
     if len(allowlist) != len(set(allowlist)):
         errors.append("allowed_sources contains duplicates")
     contract_sources = [item["id"] for item in contract.get("sources", [])]
@@ -135,6 +143,7 @@ def validate(
         "persist-credentials: false",
         "scripts/rll_noaa_trinity_cycle.py",
         "scripts/validate_rll_noaa_trinity_governance.py",
+        "runs-on: ubuntu-24.04",
     ]
     for marker in required_workflow_markers:
         if marker not in workflow_text:
