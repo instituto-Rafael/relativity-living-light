@@ -25,6 +25,7 @@ class NoaaTrinity633Tests(unittest.TestCase):
     def setUp(self):
         self.contract = json.loads((ROOT / "data" / "contracts" / "rll_noaa_trinity_633.v1.json").read_text(encoding="utf-8"))
         self.registry = json.loads((ROOT / "data" / "climate" / "rll_climate_source_registry.v1.json").read_text(encoding="utf-8"))
+        self.governance = json.loads((ROOT / "data" / "governance" / "rll_noaa_trinity633_data_governance.v1.json").read_text(encoding="utf-8"))
 
     def test_cycle_is_exactly_6_3_3(self):
         self.assertEqual(self.contract["cycle_hours"], [6, 3, 3])
@@ -41,7 +42,7 @@ class NoaaTrinity633Tests(unittest.TestCase):
             self.assertEqual(trinity.resolve_phase("auto", schedule), phase)
 
     def test_all_bound_sources_are_declared_noaa_https(self):
-        bound = trinity.validate_source_bindings(self.contract, self.registry)
+        bound = trinity.validate_source_bindings(self.contract, self.registry, self.governance)
         self.assertEqual(len(bound), 5)
         self.assertEqual(len({item["measurement_family"] for item in bound}), 5)
         self.assertTrue(all(item["url"].startswith("https://") for item in bound))
@@ -55,17 +56,27 @@ class NoaaTrinity633Tests(unittest.TestCase):
                 "LUX_6H",
                 Path(temp),
                 execute_network=False,
+                governance=self.governance,
             )
         self.assertEqual(receipt["gate_status"], "DRY_RUN")
         self.assertFalse(receipt["observed_cross_domain"])
         self.assertFalse(receipt["statistical_independence_established"])
         self.assertFalse(receipt["claim_allowed"])
+        self.assertFalse(receipt["privacy"]["personal_data_expected"])
+        self.assertTrue(receipt["zero_trust"]["deny_by_default"])
         self.assertEqual(receipt["cause"], "TOKEN_VAZIO_CAUSA")
 
     def test_partial_custody_is_not_physical_correlation(self):
-        def fake_fetch(source_id, output_dir, execute_network):
+        def fake_fetch(source_id, output_dir, execute_network, timeout_seconds, max_bytes):
             if source_id in {"noaa_swpc_realtime_solar_wind", "noaa_swpc_realtime_imf", "noaa_swpc_kp"}:
-                return {"returncode": 0, "sha256": source_id * 2, "claim_allowed": False}
+                return {
+                    "returncode": 0,
+                    "status": 200,
+                    "sha256": "a" * 64,
+                    "bytes": 2,
+                    "content_type": "application/json",
+                    "claim_allowed": False,
+                }
             return {"returncode": 2, "status": "FAIL", "claim_allowed": False}
 
         with tempfile.TemporaryDirectory() as temp, mock.patch.object(trinity, "run_fetch", side_effect=fake_fetch):
@@ -75,6 +86,7 @@ class NoaaTrinity633Tests(unittest.TestCase):
                 "SPIRITUM_3H",
                 Path(temp),
                 execute_network=True,
+                governance=self.governance,
             )
         self.assertEqual(receipt["gate_status"], "SOURCE_CUSTODY_PARTIAL")
         self.assertTrue(receipt["cross_domain_readiness"])
@@ -84,3 +96,23 @@ class NoaaTrinity633Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_content_type_mismatch_does_not_create_custody(self):
+        source = {
+            "required_content_type_contains": "json",
+        }
+        result = {
+            "returncode": 0,
+            "status": 200,
+            "sha256": "a" * 64,
+            "bytes": 10,
+            "content_type": "text/html",
+        }
+        self.assertFalse(trinity.source_custody_ok(result, source, self.governance))
+
+    def test_query_parameter_binding_is_rejected(self):
+        registry = json.loads(json.dumps(self.registry))
+        source = next(item for item in registry["sources"] if item["id"] == "noaa_swpc_kp")
+        source["sample_url"] += "?device=abc"
+        with self.assertRaises(ValueError):
+            trinity.validate_source_bindings(self.contract, registry, self.governance)
