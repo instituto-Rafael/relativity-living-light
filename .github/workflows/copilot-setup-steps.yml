@@ -1,0 +1,102 @@
+name: RLL Copilot Secretary Setup
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/copilot-setup-steps.yml"
+      - ".github/agents/rll-secretary.agent.md"
+      - "tools/agent/rll_agent_authority.py"
+      - "data/governance/rll_agent_authority.v1.json"
+      - "tests/test_rll_agent_authority.py"
+  pull_request:
+    paths:
+      - ".github/workflows/copilot-setup-steps.yml"
+      - ".github/agents/rll-secretary.agent.md"
+      - "tools/agent/rll_agent_authority.py"
+      - "data/governance/rll_agent_authority.v1.json"
+      - "tests/test_rll_agent_authority.py"
+
+permissions:
+  contents: read
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Validate Secretary authority boundary
+        run: |
+          set -euo pipefail
+          python -m unittest -v tests.test_rll_agent_authority
+
+      - name: Observe Agent PAT authority without mutation
+        id: authority-probe
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifacts/rll-agent-authority
+          set +e
+          python tools/agent/rll_agent_authority.py probe \
+            --repository "${GITHUB_REPOSITORY}" \
+            --output artifacts/rll-agent-authority/authority-probe.json
+          rc=$?
+          set -e
+          printf 'probe_rc=%s\n' "$rc" >> "$GITHUB_OUTPUT"
+          # Missing/ambiguous PAT is evidence, not permission to guess.
+          exit 0
+
+      - name: Assert probe never contains token-shaped environment values
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("artifacts/rll-agent-authority/authority-probe.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          forbidden_keys = {
+              "token", "pat", "api_key", "authorization",
+              "secret_value", "credential_value"
+          }
+          for key in data:
+              if str(key).lower() in forbidden_keys:
+                  raise SystemExit(f"secret-like receipt key forbidden: {key}")
+          if data.get("claim_allowed") is not False:
+              raise SystemExit("claim_allowed must remain false")
+          print(
+              "authority_probe="
+              f"auth_present={data.get('auth_present')}; "
+              f"authenticated={data.get('authenticated')}; "
+              f"repo_access={data.get('repository_access_observed')}"
+          )
+          PY
+
+      - name: Publish bounded setup summary
+        if: always()
+        shell: bash
+        env:
+          PROBE_RC: ${{ steps.authority-probe.outputs.probe_rc }}
+        run: |
+          {
+            echo "## RLL Secretary Agent"
+            echo
+            echo "- setup tests: executed"
+            echo "- authority probe rc: ${PROBE_RC:-TOKEN_VAZIO}"
+            echo "- PAT values: never printed/persisted"
+            echo "- destructive capability probing: forbidden"
+            echo "- claim_allowed: false"
+          } >> "$GITHUB_STEP_SUMMARY"
