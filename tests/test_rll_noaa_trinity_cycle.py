@@ -23,9 +23,15 @@ trinity = load_module("rll_noaa_trinity_cycle", ROOT / "scripts" / "rll_noaa_tri
 
 class NoaaTrinity633Tests(unittest.TestCase):
     def setUp(self):
-        self.contract = json.loads((ROOT / "data" / "contracts" / "rll_noaa_trinity_633.v1.json").read_text(encoding="utf-8"))
-        self.registry = json.loads((ROOT / "data" / "climate" / "rll_climate_source_registry.v1.json").read_text(encoding="utf-8"))
-        self.governance = json.loads((ROOT / "data" / "governance" / "rll_noaa_trinity633_data_governance.v1.json").read_text(encoding="utf-8"))
+        self.contract = json.loads(
+            (ROOT / "data/contracts/rll_noaa_trinity_633.v1.json").read_text(encoding="utf-8")
+        )
+        self.registry = json.loads(
+            (ROOT / "data/climate/rll_climate_source_registry.v1.json").read_text(encoding="utf-8")
+        )
+        self.governance = json.loads(
+            (ROOT / "data/governance/rll_noaa_trinity633_data_governance.v1.json").read_text(encoding="utf-8")
+        )
 
     def test_cycle_is_exactly_6_3_3(self):
         self.assertEqual(self.contract["cycle_hours"], [6, 3, 3])
@@ -49,7 +55,9 @@ class NoaaTrinity633Tests(unittest.TestCase):
 
     def test_dry_run_never_promotes_cross_domain_or_claim(self):
         fake = {"mode": "DRY_RUN", "returncode": 0, "claim_allowed": False}
-        with tempfile.TemporaryDirectory() as temp, mock.patch.object(trinity, "run_fetch", return_value=fake):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
+            trinity, "run_fetch", return_value=fake
+        ):
             receipt = trinity.build_receipt(
                 self.contract,
                 self.registry,
@@ -68,7 +76,11 @@ class NoaaTrinity633Tests(unittest.TestCase):
 
     def test_partial_custody_is_not_physical_correlation(self):
         def fake_fetch(source_id, output_dir, execute_network, timeout_seconds, max_bytes):
-            if source_id in {"noaa_swpc_realtime_solar_wind", "noaa_swpc_realtime_imf", "noaa_swpc_kp"}:
+            if source_id in {
+                "noaa_swpc_realtime_solar_wind",
+                "noaa_swpc_realtime_imf",
+                "noaa_swpc_kp",
+            }:
                 return {
                     "returncode": 0,
                     "status": 200,
@@ -79,7 +91,9 @@ class NoaaTrinity633Tests(unittest.TestCase):
                 }
             return {"returncode": 2, "status": "FAIL", "claim_allowed": False}
 
-        with tempfile.TemporaryDirectory() as temp, mock.patch.object(trinity, "run_fetch", side_effect=fake_fetch):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(
+            trinity, "run_fetch", side_effect=fake_fetch
+        ):
             receipt = trinity.build_receipt(
                 self.contract,
                 self.registry,
@@ -93,14 +107,8 @@ class NoaaTrinity633Tests(unittest.TestCase):
         self.assertFalse(receipt["observed_cross_domain"])
         self.assertFalse(receipt["claim_allowed"])
 
-
-if __name__ == "__main__":
-    unittest.main()
-
     def test_content_type_mismatch_does_not_create_custody(self):
-        source = {
-            "required_content_type_contains": "json",
-        }
+        source = {"required_content_type_contains": "json"}
         result = {
             "returncode": 0,
             "status": 200,
@@ -116,3 +124,18 @@ if __name__ == "__main__":
         source["sample_url"] += "?device=abc"
         with self.assertRaises(ValueError):
             trinity.validate_source_bindings(self.contract, registry, self.governance)
+
+    def test_non_200_response_does_not_create_custody(self):
+        source = {"required_content_type_contains": "json"}
+        result = {
+            "returncode": 0,
+            "status": 503,
+            "sha256": "a" * 64,
+            "bytes": 10,
+            "content_type": "application/json",
+        }
+        self.assertFalse(trinity.source_custody_ok(result, source, self.governance))
+
+
+if __name__ == "__main__":
+    unittest.main()
