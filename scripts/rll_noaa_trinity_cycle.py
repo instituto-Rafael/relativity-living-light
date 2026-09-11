@@ -156,6 +156,43 @@ def run_fetch(
     return payload
 
 
+
+def validate_payload_shape(path: Path, source_id: str, governance: dict[str, Any]) -> tuple[bool, str]:
+    """Validate structural source shape only; no physical semantics are inferred."""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return False, "PAYLOAD_JSON_INVALID"
+
+    shape = governance.get("payload_shapes", {}).get(source_id)
+    if not shape:
+        return False, "TOKEN_VAZIO_PAYLOAD_SHAPE_CONTRACT"
+
+    if shape.get("top_level") == "list":
+        if not isinstance(payload, list) or not payload:
+            return False, "PAYLOAD_TOP_LEVEL_LIST_REQUIRED"
+        if shape.get("record_type") == "object" and not all(isinstance(item, dict) for item in payload):
+            return False, "PAYLOAD_RECORD_OBJECT_REQUIRED"
+        required = shape.get("required_keys", [])
+        if not all(all(key in item for key in required) for item in payload if isinstance(item, dict)):
+            return False, "PAYLOAD_REQUIRED_KEY_MISSING"
+        return True, "STRUCTURAL_SCHEMA_PASS"
+
+    if shape.get("top_level") == "object":
+        if not isinstance(payload, dict):
+            return False, "PAYLOAD_TOP_LEVEL_OBJECT_REQUIRED"
+        for key in shape.get("required_keys", []):
+            if key not in payload:
+                return False, "PAYLOAD_REQUIRED_KEY_MISSING"
+        if shape.get("type_value") is not None and payload.get("type") != shape["type_value"]:
+            return False, "PAYLOAD_TYPE_VALUE_MISMATCH"
+        if shape.get("features_type") == "list" and not isinstance(payload.get("features"), list):
+            return False, "PAYLOAD_FEATURES_LIST_REQUIRED"
+        return True, "STRUCTURAL_SCHEMA_PASS"
+
+    return False, "TOKEN_VAZIO_PAYLOAD_SHAPE_MODE"
+
+
 def source_custody_ok(result: dict[str, Any], source: dict[str, Any], governance: dict[str, Any]) -> bool:
     if result.get("returncode") != 0:
         return False
@@ -168,7 +205,11 @@ def source_custody_ok(result: dict[str, Any], source: dict[str, Any], governance
     marker = source["required_content_type_contains"]
     if marker not in str(result.get("content_type", "")).lower():
         return False
-    return True
+    saved_path = result.get("saved_path")
+    if not isinstance(saved_path, str) or not saved_path:
+        return False
+    schema_ok, _ = validate_payload_shape(Path(saved_path), source["id"], governance)
+    return schema_ok
 
 
 def build_receipt(
@@ -194,6 +235,10 @@ def build_receipt(
     success_families: set[str] = set()
     for source in bound_sources:
         result = run_fetch(source["id"], source_dir, execute_network, timeout_seconds, max_bytes)
+        schema_ok = False
+        schema_state = "DRY_RUN"
+        if execute_network and isinstance(result.get("saved_path"), str):
+            schema_ok, schema_state = validate_payload_shape(Path(result["saved_path"]), source["id"], governance)
         executed_ok = bool(execute_network and source_custody_ok(result, source, governance))
         if executed_ok:
             success_families.add(source["measurement_family"])
@@ -203,6 +248,8 @@ def build_receipt(
             "custody_observed": executed_ok,
             "personal_data_expected": False,
             "credential_required": False,
+            "payload_structural_schema_ok": schema_ok,
+            "payload_structural_schema_state": schema_state,
         })
 
     if not execute_network:
@@ -240,6 +287,13 @@ def build_receipt(
             "infrastructure_egress_firewall_verified": False,
             "infrastructure_egress_state": governance["zero_trust"]["infrastructure_egress_state"],
         },
+        "supply_chain": {
+            "runner_image": governance["supply_chain"]["runner_image"],
+            "dependency_lock_verified": False,
+            "dependency_lock_state": governance["supply_chain"]["dependency_lock_state"],
+            "package_hashes_verified": False,
+            "package_hash_state": governance["supply_chain"]["package_hash_state"],
+        },
         "privacy": {
             "data_classification": governance["privacy"]["data_classification"],
             "personal_data_expected": False,
@@ -269,7 +323,7 @@ def build_receipt(
             if execute_network
             else "Trinity633 action plan resolved without network execution"
         ),
-        "F_gap": "infrastructure egress enforcement, payload semantic schema, physical ΔOBS, temporal correlation, statistical independence and numeric residual remain TOKEN_VAZIO",
+        "F_gap": "infrastructure egress enforcement, dependency lock/hashes, payload semantic fields, physical ΔOBS, temporal correlation, statistical independence and numeric residual remain TOKEN_VAZIO",
         "F_next": "hydrate timestamped NOAA variables into typed 6h baseline -> 3h challenge -> 3h feedback windows with preregistered uncertainty gates",
     }
 
