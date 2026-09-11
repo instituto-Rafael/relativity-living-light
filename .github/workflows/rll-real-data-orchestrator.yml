@@ -33,8 +33,16 @@ name: RLL Real Data Orchestrator
         required: true
         default: "14"
         options: ["7", "14", "30", "90"]
+      noaa_trinity_phase:
+        description: NOAA Trinity633 phase for manual runs
+        type: choice
+        required: true
+        default: auto
+        options: [auto, LUX_6H, SPIRITUM_3H, VERBUM_3H]
   schedule:
-    - cron: "15 2 * * *"
+    - cron: "17 0,12 * * *"
+    - cron: "17 6,18 * * *"
+    - cron: "17 9,21 * * *"
 
 permissions:
   contents: read
@@ -211,6 +219,21 @@ jobs:
             --output-dir "$RUN_DIR" \
             --no-fetch-igrf14 --no-fetch-wmm2025 --no-fetch-omni --no-fetch-nmdb \
             --no-fetch-desi --no-fetch-pantheon --no-fetch-planck --no-fetch-spenvis-reference
+
+      - name: Run NOAA Trinity633 observation/provenance action
+        id: noaa-trinity633
+        if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
+        continue-on-error: true
+        env:
+          NOAA_TRINITY_PHASE: ${{ inputs.noaa_trinity_phase || 'auto' }}
+          NOAA_TRINITY_SCHEDULE: ${{ github.event.schedule || '' }}
+        run: |
+          set -euo pipefail
+          python scripts/rll_noaa_trinity_cycle.py \
+            --phase "$NOAA_TRINITY_PHASE" \
+            --schedule-expression "$NOAA_TRINITY_SCHEDULE" \
+            --output-dir "$RUN_DIR/noaa-trinity633" \
+            --execute-network
 
       - name: Compute RLL real pipeline
         if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' || github.event_name == 'schedule' }}
