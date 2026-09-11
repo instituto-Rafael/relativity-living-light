@@ -1,0 +1,74 @@
+{
+  "schema": "rll.noaa.trinity633.data_governance.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "compliance_claim": false,
+  "scope": "NOAA SWPC public global telemetry used only for RLL Trinity633 custody/observation routing",
+  "zero_trust": {
+    "deny_by_default": true,
+    "arbitrary_url_allowed": false,
+    "exact_source_id_allowlist_required": true,
+    "exact_hostname_match_required": true,
+    "https_required": true,
+    "url_userinfo_allowed": false,
+    "url_query_allowed": false,
+    "url_fragment_allowed": false,
+    "custom_port_allowed": false,
+    "redirect_cross_hostname_allowed": false,
+    "tls_policy": "SYSTEM_CA_STORE_HOSTNAME_VERIFICATION",
+    "certificate_pinning": false,
+    "certificate_pinning_reason": "Avoid brittle operational trust anchors; exact HTTPS hostname plus platform CA validation is the bounded transport control.",
+    "repository_credentials_allowed": false,
+    "github_checkout_persist_credentials": false,
+    "workflow_contents_permission": "read"
+  },
+  "privacy": {
+    "data_classification": "PUBLIC_NON_PERSONAL_SCIENTIFIC_TELEMETRY",
+    "personal_data_expected": false,
+    "user_or_device_identifiers_allowed": false,
+    "precise_person_location_allowed": false,
+    "audio_or_biometric_data_allowed": false,
+    "behavioral_profiling_allowed": false,
+    "secret_or_token_ingestion_allowed": false,
+    "source_urls_may_contain_user_parameters": false,
+    "raw_payload_purpose": "source custody and later reproducibility only",
+    "raw_payload_commit_to_repository": false
+  },
+  "network": {
+    "timeout_seconds": 30,
+    "max_bytes_per_source": 5000000,
+    "accepted_http_status": [200],
+    "required_content_type_contains": "json",
+    "user_agent": "RLL-Climate-Custody/1.0"
+  },
+  "retention": {
+    "github_artifact_default_days": 14,
+    "github_artifact_allowed_days": [7, 14, 30, 90],
+    "raw_payload_retention_follows_artifact_retention": true,
+    "repository_persistence": "FORBIDDEN_BY_THIS_WORKFLOW"
+  },
+  "allowed_sources": [
+    "noaa_swpc_realtime_solar_wind",
+    "noaa_swpc_realtime_imf",
+    "noaa_swpc_kp",
+    "noaa_swpc_f107",
+    "noaa_swpc_glotec"
+  ],
+  "receipt_required_fields": [
+    "source_id",
+    "status",
+    "content_type",
+    "bytes",
+    "sha256",
+    "fetched_at"
+  ],
+  "epistemic_boundary": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "SOURCE_AVAILABILITY != EVENT_CORRELATION",
+    "MEASUREMENT_FAMILY_DISTINCT != STATISTICAL_INDEPENDENCE",
+    "CROSS_DOMAIN_READINESS != OBSERVED_CROSS_DOMAIN",
+    "RESIDUAL != CAUSE",
+    "TOKEN_VAZIO != 0"
+  ],
+  "legal_boundary": "Privacy-by-design and zero-trust engineering controls only; this artifact does not certify LGPD, GDPR, NIST, ISO or other legal/standards compliance."
+}
