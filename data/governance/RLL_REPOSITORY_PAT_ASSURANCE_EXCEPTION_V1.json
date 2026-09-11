@@ -1,15 +1,22 @@
 {
   "schema": "rll.repository_pat_assurance_exception.v1",
-  "status": "IMPLEMENTED_UNTESTED",
+  "status": "IMPLEMENTED_UNTESTED_RUNTIME",
   "claim_allowed": false,
   "publication_effect": "NONE",
   "repository_secret_name": "GITPAT",
   "purpose": "manual read-only authentication assurance for repository-scoped PAT",
-  "default_policy_relation": "EXPLICIT_REVIEWED_EXCEPTION_TO_PAT_ACTIONS_FORBIDDEN_BY_DEFAULT",
+  "default_policy_relation": "CANONICAL_REPOSITORY_SECRET_WITH_SINGLE_REVIEWED_ASSURANCE_WORKFLOW",
   "allowed_event": "workflow_dispatch_only_for_secret_consumption",
-  "allowed_http_methods": ["GET"],
-  "allowed_endpoints": ["/user", "/repos/{owner}/{repo}"],
-  "workflow_permissions": {"contents": "read"},
+  "allowed_http_methods": [
+    "GET"
+  ],
+  "allowed_endpoints": [
+    "/user",
+    "/repos/{owner}/{repo}"
+  ],
+  "workflow_permissions": {
+    "contents": "read"
+  },
   "forbidden": [
     "push",
     "merge",
@@ -37,5 +44,7 @@
     "scientific claim validation"
   ],
   "f_gap": "TOKEN_VAZIO_RUNTIME_UNTIL_MANUAL_DISPATCH",
-  "f_next": "after promotion to a dispatchable canonical ref, manually run the assurance and inspect only the sanitized receipt"
+  "f_next": "manually dispatch the read-only assurance and inspect only the sanitized receipt",
+  "canonical_surface": "github_actions_repository_secret",
+  "agent_secret_relation": "NOT_AGENT_SECRET_NOT_DIRECTLY_ASSUMED_BY_SECRETARY"
 }
