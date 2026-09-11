@@ -54,7 +54,7 @@ def validate(
     for key in required_false:
         if zero.get(key) is not False:
             errors.append(f"zero_trust.{key} must be false")
-    for key in ["deny_by_default", "exact_source_id_allowlist_required", "exact_hostname_match_required", "https_required"]:
+    for key in ["deny_by_default", "exact_source_id_allowlist_required", "exact_hostname_match_required", "exact_path_allowlist_required", "https_required"]:
         if zero.get(key) is not True:
             errors.append(f"zero_trust.{key} must be true")
 
@@ -124,6 +124,11 @@ def validate(
             errors.append(f"query parameters forbidden in Trinity source: {source_id}")
         if parsed.fragment:
             errors.append(f"URL fragment forbidden: {source_id}")
+        expected_path = governance.get("allowed_routes", {}).get(source_id)
+        if not expected_path:
+            errors.append(f"exact route missing from governance allowlist: {source_id}")
+        elif parsed.path != expected_path:
+            errors.append(f"source path does not match exact allowlist: {source_id}")
 
     required_workflow_markers = [
         "permissions:\n  contents: read",
