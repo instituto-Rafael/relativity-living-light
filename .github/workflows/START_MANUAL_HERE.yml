@@ -312,5 +312,3 @@ jobs:
           rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
           rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
           rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
