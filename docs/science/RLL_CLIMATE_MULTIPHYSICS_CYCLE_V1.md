@@ -235,3 +235,21 @@ They are not discarded. They remain addressable for event-specific promotion wit
 `F_ok`: 64-cell climate contract, source custody, canonical lift, Fibonacci scheduler and offline tests are specified.  
 `F_gap`: no historical dataset has yet been hydrated and no forecast improvement has been demonstrated.  
 `F_next`: run one frozen event with uniform, conventional adaptive and RLL schedulers under the same budget.
+
+
+## 6.1 NOAA Trinity633 6h→3h→3h
+
+The NOAA bridge is now explicitly routed through the existing real-data
+orchestrator rather than a competing workflow. The machine contract is
+`data/contracts/rll_noaa_trinity_633.v1.json` and the executor is
+`scripts/rll_noaa_trinity_cycle.py`.
+
+The cycle is `LUX_6H → SPIRITUM_3H → VERBUM_3H`, corresponding to:
+
+`TOKEN_VAZIO → VERBO → CHEIO → NOVO_VAZIO → RETROALIMENTAR → NOVOS_VAZIOS`.
+
+NOAA SWPC RTSW plasma, RTSW IMF, Kp, F10.7 and GloTEC are custody inputs.
+Different source families do not establish statistical independence, and
+source availability does not establish a correlated physical event.
+`observed_cross_domain=false`, `TOKEN_VAZIO_CAUSA`, and
+`claim_allowed=false` remain forced until a numerical ΔOBS/residual gate exists.

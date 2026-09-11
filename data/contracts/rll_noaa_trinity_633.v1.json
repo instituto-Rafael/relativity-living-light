@@ -1,0 +1,96 @@
+{
+  "schema": "rll.noaa.trinity633.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "cycle_hours": [6, 3, 3],
+  "cycle_total_hours": 12,
+  "state_chain": [
+    "TOKEN_VAZIO",
+    "VERBO",
+    "CHEIO",
+    "NOVO_VAZIO",
+    "RETROALIMENTAR",
+    "NOVOS_VAZIOS"
+  ],
+  "phases": [
+    {
+      "id": "LUX_6H",
+      "after_hours": 6,
+      "state_from": "TOKEN_VAZIO",
+      "state_via": "VERBO",
+      "state_to": "CHEIO",
+      "actions": [
+        "fetch_declared_noaa_sources",
+        "validate_source_domain_and_https",
+        "hash_payloads",
+        "emit_source_custody_receipts"
+      ]
+    },
+    {
+      "id": "SPIRITUM_3H",
+      "after_hours": 3,
+      "state_from": "CHEIO",
+      "state_to": "NOVO_VAZIO",
+      "actions": [
+        "refresh_declared_noaa_sources",
+        "measure_source_availability_by_domain_family",
+        "preserve_numeric_residual_as_token_vazio_until_computed",
+        "emit_cross_domain_readiness_receipt"
+      ]
+    },
+    {
+      "id": "VERBUM_3H",
+      "after_hours": 3,
+      "state_from": "NOVO_VAZIO",
+      "state_via": "RETROALIMENTAR",
+      "state_to": "NOVOS_VAZIOS",
+      "actions": [
+        "refresh_declared_noaa_sources",
+        "derive_gap_ledger_from_observed_availability",
+        "emit_f_ok_f_gap_f_next",
+        "seal_cycle_receipt"
+      ]
+    }
+  ],
+  "schedule_utc": {
+    "LUX_6H": "17 0,12 * * *",
+    "SPIRITUM_3H": "17 6,18 * * *",
+    "VERBUM_3H": "17 9,21 * * *"
+  },
+  "sources": [
+    {
+      "id": "noaa_swpc_realtime_solar_wind",
+      "measurement_family": "HELIOSPHERIC_PLASMA"
+    },
+    {
+      "id": "noaa_swpc_realtime_imf",
+      "measurement_family": "HELIOSPHERIC_MAGNETIC"
+    },
+    {
+      "id": "noaa_swpc_kp",
+      "measurement_family": "GEOMAGNETIC_INDEX"
+    },
+    {
+      "id": "noaa_swpc_f107",
+      "measurement_family": "SOLAR_RADIO_FLUX"
+    },
+    {
+      "id": "noaa_swpc_glotec",
+      "measurement_family": "IONOSPHERIC_TEC"
+    }
+  ],
+  "epistemic_boundary": {
+    "measurement_family_distinct_is_not_statistical_independence": true,
+    "source_availability_is_not_event_correlation": true,
+    "cross_domain_readiness_is_not_observed_cross_domain": true,
+    "residual_is_not_cause": true,
+    "cause_default": "TOKEN_VAZIO_CAUSA",
+    "numeric_residual_default": "TOKEN_VAZIO_NUMERIC_RESIDUAL_ENGINE",
+    "claim_allowed": false
+  },
+  "delivery": {
+    "reuse_existing_workflow": ".github/workflows/rll-real-data-orchestrator.yml",
+    "new_workflow_allowed": false,
+    "direct_main_commit": false,
+    "auto_merge": false
+  }
+}
