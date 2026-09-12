@@ -41,7 +41,7 @@ jobs:
         run: python tools/rll_gap_retrofeedback_v2.py --output results/audit/rll_gap_retrofeedback_v2.json
 
       - name: Run safe-expansion tests
-        run: PYTHONPATH=src python -m pytest -q tests/test_rll_safe_expansion_gate.py tests/test_rll_gap_retrofeedback_v2.py tests/test_rll_cosmology_radiation.py tests/test_rll_cosmology_recombination.py
+        run: PYTHONPATH=src python -m pytest -q tests/test_rll_safe_expansion_gate.py tests/test_rll_gap_retrofeedback_v2.py tests/test_rll_perturbation_sound_speed_candidate_v1.py tests/test_rll_cosmology_radiation.py tests/test_rll_cosmology_recombination.py
 
       - name: Show fail-closed state
         run: |
