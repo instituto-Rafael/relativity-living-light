@@ -44,3 +44,11 @@ def test_logarithmic_priority_is_governance_only() -> None:
     policy = ledger["logarithmic_priority_policy"]
     assert policy["purpose"] == "operational triage only; never scientific evidence"
     assert ledger["multilevel_permutation_policy"]["blind_cartesian_product"] == "FORBIDDEN"
+
+def test_sound_speed_token_is_configured_but_not_effective() -> None:
+    ledger = retro.load(retro.LEDGER)
+    cs2 = next(row for row in ledger["items"] if row["id"] == "GROWTH-CS2-001")
+    assert cs2["state"] == "CONFIGURED_CANDIDATE_NOT_EFFECTIVE"
+    assert cs2["actionable_now"] is False
+    assert "CONFIG_ACCEPTED != CONFIG_EFFECTIVE" in cs2["evidence"]
+    assert "effective perturbation law" in cs2["exclusive_boundary"]
