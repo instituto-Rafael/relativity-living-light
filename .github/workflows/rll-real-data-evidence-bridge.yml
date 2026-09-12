@@ -1,0 +1,39 @@
+name: RLL Real Data Evidence Bridge
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/real/Hz_data_real.csv"
+      - "data/real/cosmology/Hz_cosmic_chronometers_independent.csv"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/desi_dr2_bao_covariance.csv"
+      - "data/real/cosmology/fsigma8_growth_real.csv"
+      - "data/real/CMB_shift_real.json"
+      - "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json"
+      - "data/governance/RLL_REAL_DATA_VALIDATION_CONTRACT_V2.json"
+      - "tools/rll_real_data_evidence_bridge.py"
+      - "tests/test_rll_real_data_evidence_bridge.py"
+      - ".github/workflows/rll-real-data-evidence-bridge.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install bounded dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Test evidence bridge
+        run: python -m pytest -q tests/test_rll_real_data_evidence_bridge.py
+      - name: Materialize validation receipt
+        run: python tools/rll_real_data_evidence_bridge.py --require-data-ready --output results/audit/rll_real_data_evidence_bridge.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rll-real-data-evidence-bridge
+          path: results/audit/rll_real_data_evidence_bridge.json
