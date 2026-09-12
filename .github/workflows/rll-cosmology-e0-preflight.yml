@@ -1,0 +1,50 @@
+name: RLL Cosmology E0 Preflight
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/pipelines/structure_d/joint_real_likelihood.py"
+      - "src/rll/cosmology_fairness.py"
+      - "tools/rll_cosmology_e0_preflight.py"
+      - "tests/test_rll_cosmology_e0_preflight.py"
+      - "data/governance/RLL_COSMOLOGY_E0_GATE_V1.json"
+      - ".github/workflows/rll-cosmology-e0-preflight.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  e0-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded test dependencies
+        run: python -m pip install --disable-pip-version-check numpy pandas scipy pytest
+
+      - name: Run E0 contract tests
+        run: python -m pytest -q tests/test_rll_cosmology_e0_preflight.py
+
+      - name: Materialize fail-closed preflight report
+        run: python tools/rll_cosmology_e0_preflight.py --output results/audit/rll_cosmology_e0_preflight.json
+
+      - name: Show scientific promotion state
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path("results/audit/rll_cosmology_e0_preflight.json").read_text())
+          print("status=", p["status"])
+          print("claim_allowed=", p["claim_allowed"])
+          PY
+
+      - name: Upload E0 report
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-cosmology-e0-preflight
+          path: results/audit/rll_cosmology_e0_preflight.json
