@@ -10,6 +10,8 @@ on:
     - tests/**
     - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
+    - tools/rll_real_data_evidence_bridge.py
+    - tools/rll_cosmology_e0_preflight.py
   push:
     paths:
     - data/**
@@ -18,6 +20,8 @@ on:
     - tests/**
     - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
+    - tools/rll_real_data_evidence_bridge.py
+    - tools/rll_cosmology_e0_preflight.py
 permissions:
   contents: read
 concurrency:
@@ -64,6 +68,18 @@ jobs:
         '
     - name: Run artifact contract checks
       run: 'python scripts/validation/check_seed_artifact_contracts.py
+
+        '
+    - name: Materialize deterministic audit prerequisites
+      run: 'set -euo pipefail
+
+        python tools/rll_real_data_evidence_bridge.py --output results/audit/rll_real_data_evidence_bridge.json --require-data-ready
+
+        python tools/rll_cosmology_e0_preflight.py --output results/audit/rll_cosmology_e0_preflight.json
+
+        test -s results/audit/rll_real_data_evidence_bridge.json
+
+        test -s results/audit/rll_cosmology_e0_preflight.json
 
         '
     - name: Run unit tests
