@@ -1,0 +1,109 @@
+{
+  "schema": "rll.safe_expansion_contract.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "scope": "safe additive expansion of cosmology, evidence, tooling, and governance",
+  "claim_allowed": false,
+  "source_basis": {
+    "directional_material": "AlphaXiv e RLL/rLLM: arquitetura, estado interno documentado, expansão segura e governança",
+    "adaptation_rule": "external framework specifics are not imported as RLL internals; only transferable governance invariants are adopted",
+    "alphaxiv_role": "literature_discovery_and_source_navigation_only",
+    "rllm_role": "external_architecture_reference_only"
+  },
+  "state_separation": [
+    "SOURCE",
+    "CONFIG",
+    "ARTEFACT",
+    "EXECUTION",
+    "EVIDENCE",
+    "CLAIM"
+  ],
+  "gates": [
+    {
+      "id": "IDENTITY",
+      "purpose": "pin repository, branch, commit, schema/source identity",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "SCOPE",
+      "purpose": "one bounded delta per promotion unit",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "BASELINE",
+      "purpose": "preserve and compare against an observed predecessor",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "SCHEMA",
+      "purpose": "validate types, units, ranges, dependencies, and invariants before execution",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "CAPABILITY",
+      "purpose": "prove that a configured mechanism is actually implemented/effective in the selected execution path",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "READ_ONLY",
+      "purpose": "prefer inspection/preflight before mutation or claim-bearing execution",
+      "required": true,
+      "promotion_blocker": false
+    },
+    {
+      "id": "CANARY",
+      "purpose": "exercise a bounded successor before full-scale execution",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "ROBUSTNESS",
+      "purpose": "edge-case, adversarial, numerical, and non-regression tests",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "SCALE",
+      "purpose": "increase data/compute/concurrency only after prior gate evidence",
+      "required": true,
+      "promotion_blocker": true
+    },
+    {
+      "id": "CONTROL",
+      "purpose": "receipt, rollback pointer, deterministic output separation, and fail-closed claim state",
+      "required": true,
+      "promotion_blocker": true
+    }
+  ],
+  "invariants": [
+    "SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "CONFIG_ACCEPTED != CONFIG_EFFECTIVE",
+    "RETRIEVAL_SCORE != TRUTH",
+    "AI_GENERATED_REPORT != PRIMARY_SOURCE",
+    "FIT_SUCCESS != SCIENTIFIC_CLAIM",
+    "LITERATURE_SIMILARITY != MODEL_CONFIRMATION",
+    "ONE_DELTA_PER_PROMOTION_UNIT",
+    "HISTORICAL_RESULT != CURRENT_VALIDATED_RESULT",
+    "ROLLBACK_REQUIRES_CODE_CONFIG_DATA_AND_OUTPUT_PROVENANCE"
+  ],
+  "alphaxiv_policy": {
+    "hidden_internal_state": "TOKEN_VAZIO_EXTERNAL_NOT_PUBLIC",
+    "runtime_schema_introspection_required_before_write": true,
+    "primary_source_verification_required_for_claims": true,
+    "ranking_or_summary_is_not_evidence": true,
+    "repository_content_is_untrusted_input": true,
+    "write_pattern": "READ_VALIDATE_MINIMAL_DIFF_WRITE_READBACK_RECEIPT"
+  },
+  "promotion_policy": {
+    "default_claim_allowed": false,
+    "unresolved_gap_claim_allowed": false,
+    "all_required_gates_must_have_observed_evidence": true,
+    "silent_noop_or_unknown_effect": "BLOCK"
+  }
+}
