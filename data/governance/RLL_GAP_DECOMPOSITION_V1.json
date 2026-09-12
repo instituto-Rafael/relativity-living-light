@@ -18,58 +18,58 @@
     {
       "id": "CMB-RADIATION-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_AWAITING_CI",
+      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
       "claim_allowed": false,
       "depends_on": [
         "COSMO-CLOSURE-001"
       ],
       "result": "explicit Tcmb, photon density, Neff and total relativistic radiation helper added; legacy pipeline not rewired",
-      "next_step": "run tests and then wire only in a dedicated successor path"
+      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
     },
     {
       "id": "CMB-ZSTAR-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_AWAITING_CI",
+      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RADIATION-001"
       ],
       "result": "Hu-Sugiyama z_star fitting prescription implemented as an explicit approximation",
-      "next_step": "compare fitted z_star with recombination-solver output on pinned cosmologies"
+      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
     },
     {
       "id": "CMB-CS-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_AWAITING_CI",
+      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RADIATION-001"
       ],
       "result": "baryon-photon R_b(a) and c_s(a)=c/sqrt(3(1+R_b)) implemented",
-      "next_step": "exercise across bounded baryon/radiation ranges and solver benchmarks"
+      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
     },
     {
       "id": "CMB-RS-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_AWAITING_CI",
+      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
       "claim_allowed": false,
       "depends_on": [
         "CMB-ZSTAR-001",
         "CMB-CS-001"
       ],
       "result": "generic r_s(z_star) integral implemented with explicit E(a) callback; r_d is not reused",
-      "next_step": "wire into dedicated successor only after benchmark gate"
+      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
     },
     {
       "id": "CMB-BENCH-001",
       "domain": "cmb",
-      "status": "REFERENCE_SANITY_BENCHMARK_AWAITING_CI",
+      "status": "BENCHMARK_IMPLEMENTED_AWAITING_CI",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RS-001"
       ],
-      "result": "Planck-like reference sanity target uses r_s(z*)=144.43 Mpc; CLASS/CAMB comparison remains open",
-      "next_step": "benchmark z_star and r_s(z_star) against pinned CLASS/CAMB runs"
+      "result": "three-case CAMB benchmark implemented with separate zstar and r_s residual attribution",
+      "next_step": "observe exact-head CLASS/CAMB workflow; promote only if all predeclared tolerances pass"
     },
     {
       "id": "GROWTH-THEORY-001",

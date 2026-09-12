@@ -6,6 +6,10 @@ on:
     paths:
       - "scripts/crosscheck_class_camb_baselines.py"
       - "tests/test_class_camb_baseline_crosscheck_v1.py"
+      - "tools/rll_cmb_rs_camb_benchmark.py"
+      - "tests/test_rll_cmb_rs_camb_benchmark.py"
+      - "src/rll/cosmology_radiation.py"
+      - "src/rll/cosmology_recombination.py"
       - "tools/rll_perturbation_barotropic_candidate_v1.py"
       - "tests/test_rll_perturbation_barotropic_candidate_v1.py"
       - ".github/workflows/class-camb-baseline-crosscheck.yml"
@@ -88,6 +92,49 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
 
+      - name: Execute RLL recombination vs CAMB benchmark
+        id: rs_benchmark
+        run: |
+          set +e
+          PYTHONPATH=src python tools/rll_cmb_rs_camb_benchmark.py \
+            --output artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Inspect RLL recombination benchmark and write checksum
+        if: always()
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json")
+          if not p.is_file():
+              raise SystemExit("RLL/CAMB recombination benchmark receipt missing")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] in {
+              "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+              "TOKEN_VAZIO_CMB_RS_CAMB_MISMATCH",
+          }
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert len(d["cases"]) == 3
+          print(json.dumps({
+              "state": d["state"],
+              "cases": {
+                  row["case"]["id"]: {
+                      name: metric["relative_error"]
+                      for name, metric in row["metrics"].items()
+                  }
+                  for row in d["cases"]
+              },
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json \
+            > artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.sha256
+
       - name: Inspect fail-closed receipt and write checksum
         if: always()
         run: |
@@ -127,6 +174,8 @@ jobs:
             artifacts/science/perturbations/CLASS_CAMB_BASELINE_CROSSCHECK_CURRENT.sha256
             artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json
             artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.sha256
+            artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json
+            artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.sha256
           if-no-files-found: error
           retention-days: 30
 
@@ -149,4 +198,12 @@ jobs:
                   raise SystemExit(5)
           if d["claim_allowed"] is not False or d["publication_ready"] is not False:
               raise SystemExit(6)
+
+          cmb = json.loads(Path("artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json").read_text(encoding="utf-8"))
+          if cmb["state"] != "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK":
+              raise SystemExit(7)
+          if not all(row["pass"] for row in cmb["cases"]):
+              raise SystemExit(8)
+          if cmb["claim_allowed"] is not False or cmb["publication_ready"] is not False:
+              raise SystemExit(9)
           PY
