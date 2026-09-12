@@ -108,3 +108,40 @@ After this gate passes, the next bounded scientific delta is:
 4. `CMB-BENCH-001` external benchmark.
 
 SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM.
+
+
+## DELTA 2 — CMB recombination children implemented, 2026-09-12
+
+Additional artefacts:
+- `src/rll/cosmology_recombination.py`;
+- `tests/test_rll_cosmology_recombination.py`.
+
+Implemented as bounded successor helpers:
+1. Hu-Sugiyama approximate `z_star(omega_b h^2, omega_m h^2)`;
+2. `R_b(a)=3 rho_b/(4 rho_gamma)`;
+3. `c_s(a)=c/sqrt(3(1+R_b))`;
+4. generic `r_s(z_star)` integral with caller-supplied `E(a)`;
+5. flat-LCDM reference sanity path only.
+
+External reference facts used for sanity:
+- Planck/PDG-like `H0=67.4 km s^-1 Mpc^-1`;
+- `Omega_m=0.315`;
+- `omega_b=0.02237`;
+- PDG `r_s(z_star)=144.43 Mpc`.
+
+The implementation deliberately keeps:
+- `class_camb_benchmark_complete=false`;
+- `claim_allowed=false`;
+- historical CMB path untouched;
+- `r_d(z_drag) != r_s(z_star)`.
+
+No code was copied from CAMB or the cited literature; equations were independently implemented from published formulae.
+
+### DELTA 2 state
+
+- CMB-ZSTAR-001: IMPLEMENTED_AWAITING_CI
+- CMB-CS-001: IMPLEMENTED_AWAITING_CI
+- CMB-RS-001: IMPLEMENTED_AWAITING_CI
+- CMB-BENCH-001: REFERENCE_SANITY_BENCHMARK_AWAITING_CI
+
+Full CLASS/CAMB equivalence remains TOKEN_VAZIO_BENCHMARK.
