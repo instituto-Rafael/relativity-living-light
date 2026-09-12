@@ -1,6 +1,6 @@
 {
   "schema": "rll.external_evidence_registry.v1",
-  "generated_utc": "2026-09-12T07:02:00Z",
+  "generated_utc": "2026-09-12T09:18:00Z",
   "policy": {
     "literature_is_not_confirmation": true,
     "external_benchmarks_are_fit_targets": false,
@@ -130,6 +130,73 @@
       "combination_policy": "MUTUALLY_EXCLUSIVE_WITH_LOCAL_LYA_BAO_UNLESS_JOINT_COVARIANCE_IS_EXPLICIT",
       "benchmark_semantics": "latest_context_only_not_fit_target",
       "claim_boundary": "Use to stress-test/update interpretation and future alternative likelihood construction. Do not add its chi2 to the existing Ly-alpha BAO-only chi2 without an explicit joint covariance."
+    },
+    {
+      "id": "DESI_DR1_FS_DR2_BAO_2026",
+      "role": "external_w0wa_joint_fullshape_bao_benchmark",
+      "title": "Cosmological constraints from a joint DESI DR1 Full-Shape and DR2 BAO analysis",
+      "arxiv": "2602.18761",
+      "arxiv_url": "https://arxiv.org/abs/2602.18761",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2602.18761",
+      "dataset_identity": "DESI_DR1_FULL_SHAPE_PLUS_DESI_DR2_BAO",
+      "published_context": {
+        "w0": {
+          "value": -0.49,
+          "sigma": 0.25
+        },
+        "wa": {
+          "value": -1.52,
+          "sigma": 0.77
+        },
+        "constraints_improvement_fraction_approx": 0.3,
+        "lcdm_discrepancy_sigma_context": 1.4
+      },
+      "benchmark_semantics": "context_only_not_fit_target",
+      "claim_boundary": "This is a model-dependent CPL posterior from a specific DR1 full-shape + DR2 BAO combination. Use the peer-reviewed JCAP 2026(06) 043 values; preserve the conflicting arXiv-abstract sign as a version discrepancy. It is not a direct observable, not the same object as DESI DR2 Results IV, and must not be treated as a universal DESI requirement.",
+      "doi": "10.1088/1475-7516/2026/06/043",
+      "publication": "Journal of Cosmology and Astroparticle Physics 2026(06) 043",
+      "publication_date": "2026-06-17",
+      "version_note": {
+        "published_version": "w0=-0.49 +/- 0.25; wa=-1.52 +/- 0.77",
+        "arxiv_abstract_indexed_value": "w0=+0.49 +/- 0.25; wa=-1.52 +/- 0.77",
+        "policy": "Use the peer-reviewed published JCAP value for the benchmark and preserve the arXiv abstract discrepancy as provenance rather than silently normalizing it."
+      }
+    },
+    {
+      "id": "TURYSHEV_DESI_DR2_REVIEW_2026",
+      "role": "review_systematics_context",
+      "title": "Dark Energy After DESI DR2: Observational Status, Reconstructions, and Physical Models",
+      "authors": "Slava G. Turyshev",
+      "arxiv": "2602.05368",
+      "arxiv_url": "https://arxiv.org/abs/2602.05368",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2602.05368",
+      "doi": "10.1103/dqxw-yp1j",
+      "publication_date": "2026-05-26",
+      "published_context": {
+        "evolving_dark_energy_preference_dataset_dependent": true,
+        "supernova_calibration_selection_residual_scale_mag": "few_x_1e-2",
+        "interpretation": "systematics-sensitive review context"
+      },
+      "benchmark_semantics": "review_context_only_not_fit_target",
+      "claim_boundary": "A review of the DESI DR2 landscape and systematics. It supports caution about dataset dependence; it is not an independent likelihood or confirmation of RLL."
+    },
+    {
+      "id": "DESI_DR1_FS_DR2_BAO_SUPPLEMENT_2026",
+      "role": "posterior_and_reproduction_material_source",
+      "title": "Supplementary data for: Cosmological constraints from a joint DESI DR1 Full-Shape and DR2 BAO",
+      "zenodo_record": "18629072",
+      "doi": "10.5281/zenodo.18629072",
+      "public_url": "https://zenodo.org/records/18629072",
+      "linked_science_source_id": "DESI_DR1_FS_DR2_BAO_2026",
+      "published_context": {
+        "aggregate_size_mb_approx": 305.7,
+        "primary_archive": "paper_data.tar.gz",
+        "primary_archive_md5": "ff5e5ec8c844a36ffa30b93216a5c740",
+        "auxiliary_covariance_files_present": true
+      },
+      "chain_materialization_status": "TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED",
+      "benchmark_semantics": "reproduction_source_not_fit_target",
+      "claim_boundary": "Public supplementary material exists, but availability is not equivalent to identifying the exact w0wa posterior chain. Do not compute posterior overlap until chain identity, weights, parameter columns, priors and dataset combination are verified."
     }
   ],
   "known_provenance_corrections": [
@@ -143,6 +210,18 @@
       "superseding_registry_id": "FSIGMA8_COMPILATION_MEHRABI_2015",
       "historical_artifact_mutated": false,
       "status": "SUPERSEDED_APPEND_ONLY"
+    },
+    {
+      "id": "DESI_2602_18761_W0_SIGN_VERSION_CORRECTION_20260912",
+      "source_id": "DESI_DR1_FS_DR2_BAO_2026",
+      "arxiv_abstract_value": "+0.49 +/- 0.25",
+      "peer_reviewed_published_value": "-0.49 +/- 0.25",
+      "preferred_authority": "JCAP 2026(06) 043, DOI 10.1088/1475-7516/2026/06/043",
+      "reason": "The earlier registry entry followed the currently indexed arXiv abstract. The peer-reviewed published version carries the negative sign and is used as the benchmark; the discrepancy remains explicitly recorded.",
+      "status": "CORRECTED_WITH_VERSION_PROVENANCE",
+      "historical_artifact_mutated": false,
+      "registry_current_entry_corrected": true,
+      "audit_note": "The live registry benchmark is corrected to the peer-reviewed value; the prior arXiv-derived value remains recorded in this correction object. No historical scientific result artifact was rewritten."
     }
   ]
 }
