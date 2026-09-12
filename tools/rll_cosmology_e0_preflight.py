@@ -14,12 +14,16 @@ import argparse
 import inspect
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 from data.pipelines.structure_d import joint_real_likelihood as joint
 
-BASE_DIR = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = BASE_DIR / "results" / "audit" / "rll_cosmology_e0_preflight.json"
 
 
