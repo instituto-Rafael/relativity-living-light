@@ -74,7 +74,9 @@ def test_external_2026_joint_fs_bao_uses_published_negative_w0_and_records_arxiv
     src = next(x for x in registry["sources"] if x["id"] == "DESI_DR1_FS_DR2_BAO_2026")
     assert src["published_context"]["w0"]["value"] == -0.49
     assert src["published_context"]["wa"]["value"] == -1.52
-    assert src["dataset_identity"] == "DESI_DR1_FULL_SHAPE_PLUS_DESI_DR2_BAO"\n    assert src["doi"] == "10.1088/1475-7516/2026/06/043"\n    assert src["version_note"]["arxiv_abstract_indexed_value"].startswith("w0=+0.49")
+    assert src["dataset_identity"] == "DESI_DR1_FULL_SHAPE_PLUS_DESI_DR2_BAO"
+    assert src["doi"] == "10.1088/1475-7516/2026/06/043"
+    assert src["version_note"]["arxiv_abstract_indexed_value"].startswith("w0=+0.49")
 
 
 def test_sign_tension_is_not_auto_promoted_to_falsified() -> None:
