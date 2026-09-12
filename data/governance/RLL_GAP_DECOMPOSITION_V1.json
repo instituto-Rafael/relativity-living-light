@@ -20,52 +20,65 @@
       "domain": "cmb",
       "status": "IMPLEMENTED_AWAITING_CI",
       "claim_allowed": false,
-      "depends_on": ["COSMO-CLOSURE-001"],
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
       "result": "explicit Tcmb, photon density, Neff and total relativistic radiation helper added; legacy pipeline not rewired",
       "next_step": "run tests and then wire only in a dedicated successor path"
     },
     {
       "id": "CMB-ZSTAR-001",
       "domain": "cmb",
-      "status": "TOKEN_VAZIO_SOURCE_CONTRACT",
+      "status": "IMPLEMENTED_AWAITING_CI",
       "claim_allowed": false,
-      "depends_on": ["CMB-RADIATION-001"],
-      "result": null,
-      "next_step": "choose and provenance-pin a z_star prescription or external solver result"
+      "depends_on": [
+        "CMB-RADIATION-001"
+      ],
+      "result": "Hu-Sugiyama z_star fitting prescription implemented as an explicit approximation",
+      "next_step": "compare fitted z_star with recombination-solver output on pinned cosmologies"
     },
     {
       "id": "CMB-CS-001",
       "domain": "cmb",
-      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "status": "IMPLEMENTED_AWAITING_CI",
       "claim_allowed": false,
-      "depends_on": ["CMB-RADIATION-001"],
-      "result": null,
-      "next_step": "implement baryon-photon sound speed with explicit omega_b and photon density contract"
+      "depends_on": [
+        "CMB-RADIATION-001"
+      ],
+      "result": "baryon-photon R_b(a) and c_s(a)=c/sqrt(3(1+R_b)) implemented",
+      "next_step": "exercise across bounded baryon/radiation ranges and solver benchmarks"
     },
     {
       "id": "CMB-RS-001",
       "domain": "cmb",
-      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "status": "IMPLEMENTED_AWAITING_CI",
       "claim_allowed": false,
-      "depends_on": ["CMB-ZSTAR-001", "CMB-CS-001"],
-      "result": null,
-      "next_step": "implement r_s(z_star) integral without reusing r_d(z_drag)"
+      "depends_on": [
+        "CMB-ZSTAR-001",
+        "CMB-CS-001"
+      ],
+      "result": "generic r_s(z_star) integral implemented with explicit E(a) callback; r_d is not reused",
+      "next_step": "wire into dedicated successor only after benchmark gate"
     },
     {
       "id": "CMB-BENCH-001",
       "domain": "cmb",
-      "status": "TOKEN_VAZIO_BENCHMARK",
+      "status": "REFERENCE_SANITY_BENCHMARK_AWAITING_CI",
       "claim_allowed": false,
-      "depends_on": ["CMB-RS-001"],
-      "result": null,
-      "next_step": "benchmark r_s(z_star) against CLASS or CAMB on pinned cosmologies"
+      "depends_on": [
+        "CMB-RS-001"
+      ],
+      "result": "Planck-like reference sanity target uses r_s(z*)=144.43 Mpc; CLASS/CAMB comparison remains open",
+      "next_step": "benchmark z_star and r_s(z_star) against pinned CLASS/CAMB runs"
     },
     {
       "id": "GROWTH-THEORY-001",
       "domain": "growth",
       "status": "TOKEN_VAZIO_THEORY",
       "claim_allowed": false,
-      "depends_on": ["COSMO-CLOSURE-001"],
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
       "result": null,
       "next_step": "state whether successor uses GR plus smooth dark-energy-like component or an RLL-specific perturbation model"
     },
@@ -74,7 +87,9 @@
       "domain": "growth",
       "status": "TOKEN_VAZIO_IMPLEMENTATION",
       "claim_allowed": false,
-      "depends_on": ["GROWTH-THEORY-001"],
+      "depends_on": [
+        "GROWTH-THEORY-001"
+      ],
       "result": null,
       "next_step": "solve and normalize D(z) under the selected perturbation contract"
     },
@@ -83,7 +98,9 @@
       "domain": "growth",
       "status": "TOKEN_VAZIO_IMPLEMENTATION",
       "claim_allowed": false,
-      "depends_on": ["GROWTH-D-001"],
+      "depends_on": [
+        "GROWTH-D-001"
+      ],
       "result": null,
       "next_step": "derive f=d ln D/d ln a and sigma8(z)=sigma8_0 D(z)/D(0)"
     },
@@ -92,7 +109,9 @@
       "domain": "growth",
       "status": "BLOCKED_BY_DEPENDENCY",
       "claim_allowed": false,
-      "depends_on": ["GROWTH-F-001"],
+      "depends_on": [
+        "GROWTH-F-001"
+      ],
       "result": null,
       "next_step": "replace gamma=0.55 proxy only in a successor path"
     },
@@ -101,7 +120,9 @@
       "domain": "growth",
       "status": "TOKEN_VAZIO_BENCHMARK",
       "claim_allowed": false,
-      "depends_on": ["GROWTH-FSIG8-001"],
+      "depends_on": [
+        "GROWTH-FSIG8-001"
+      ],
       "result": null,
       "next_step": "benchmark growth predictions against CLASS/CAMB where assumptions match"
     },
@@ -110,7 +131,10 @@
       "domain": "inference",
       "status": "BLOCKED_BY_DEPENDENCY",
       "claim_allowed": false,
-      "depends_on": ["CMB-BENCH-001", "GROWTH-BENCH-001"],
+      "depends_on": [
+        "CMB-BENCH-001",
+        "GROWTH-BENCH-001"
+      ],
       "result": null,
       "next_step": "run deterministic multi-seed optimization with bounded convergence diagnostics"
     },
@@ -119,7 +143,9 @@
       "domain": "inference",
       "status": "BLOCKED_BY_DEPENDENCY",
       "claim_allowed": false,
-      "depends_on": ["FIT-MULTISEED-001"],
+      "depends_on": [
+        "FIT-MULTISEED-001"
+      ],
       "result": null,
       "next_step": "add posterior/MCMC only after deterministic successor is reproducible"
     },
@@ -128,7 +154,9 @@
       "domain": "inference",
       "status": "BLOCKED_BY_DEPENDENCY",
       "claim_allowed": false,
-      "depends_on": ["FIT-POSTERIOR-001"],
+      "depends_on": [
+        "FIT-POSTERIOR-001"
+      ],
       "result": null,
       "next_step": "compute claim-bearing AIC/BIC/posterior comparisons only from coherent successor likelihoods"
     },
