@@ -1,0 +1,129 @@
+{
+  "schema": "rll.worldline_cascade_formula_router.v1",
+  "status": "CONTRACT_CANDIDATE",
+  "claim_allowed": false,
+  "invariants": [
+    "SOURCE != MODEL",
+    "MODEL != REGIME",
+    "REGIME != FORMULA",
+    "FORMULA != EXECUTION",
+    "EXECUTION != EVIDENCE",
+    "EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != ZERO",
+    "ANALOGY != MECHANISM",
+    "NUMERICAL_AGREEMENT != PHYSICAL_IDENTITY"
+  ],
+  "source_bridge": {
+    "rmrcti_primary": "rafaelmeloreisnovo/llamaRafaelia/rmrCti/gbs3_color.c",
+    "rmrcti_index": "rafaelmeloreisnovo/llamaRafaelia/rmrCti/INDEX.md",
+    "rll_delta_p_contract": "docs/canonicos/33_RMRCTI_OMEGA_DELTA_P_STABILITY.md",
+    "delta_p_state": "STABILITY_CANDIDATE",
+    "delta_p_value_target": 0.18,
+    "R": 2,
+    "r": 0.7,
+    "unresolved_index_around_70": "TOKEN_VAZIO_INDEX_AROUND_70"
+  },
+  "state_schema": [
+    "x_mu",
+    "u_mu",
+    "p_mu",
+    "proper_time",
+    "metric_context",
+    "em_field_context",
+    "density",
+    "temperature",
+    "magnetic_field",
+    "composition",
+    "provenance",
+    "uncertainty"
+  ],
+  "time_axes": [
+    "proper_time",
+    "coordinate_time",
+    "emission_time",
+    "arrival_time",
+    "observer_time"
+  ],
+  "regimes": [
+    "cosmological_background",
+    "weak_gravity",
+    "strong_gravity",
+    "plasma_mhd",
+    "grmhd",
+    "shock",
+    "collision",
+    "nuclear",
+    "vorticity",
+    "radiative_transfer"
+  ],
+  "cascade_types": {
+    "physical_causal": "event-to-event state change",
+    "observational": "one cause changes multiple observables",
+    "computational_sensitivity": "Jacobian-chain amplification/contraction diagnostic"
+  },
+  "multilevel_permutation": {
+    "mode": "SEEDED_STOCHASTIC_PRUNED",
+    "exhaustive_cartesian": false,
+    "levels": [
+      "observation_subsets",
+      "event_order",
+      "regime_combinations",
+      "frame_choices",
+      "formula_routes",
+      "parameter_perturbations",
+      "null_controls",
+      "evidence_states"
+    ],
+    "stop_rule": [
+      "all P0 branches have at least one falsifier",
+      "marginal evidence gain below next critical-path gap",
+      "budget boundary reached",
+      "fail-closed gate blocks descendants"
+    ]
+  },
+  "milky_way_scale_gate": {
+    "stellar_disk_order_light_years": ">100000",
+    "virial_halo_radius_order": "hundreds_of_kpc_model_dependent",
+    "note": "disk != halo != Local Group != cosmic web"
+  },
+  "formula_metadata": [
+    "FORMULA_ID",
+    "NAME",
+    "DOMAIN",
+    "REGIME",
+    "WHEN_USE",
+    "WHY_USE",
+    "INPUTS",
+    "OUTPUTS",
+    "UNITS",
+    "ASSUMPTIONS",
+    "BOUNDARY_CONDITIONS",
+    "DO_NOT_USE_WHEN",
+    "PRIMARY_SOURCE",
+    "IMPLEMENTATION",
+    "TEST",
+    "INVERSE_TEST",
+    "UNCERTAINTY",
+    "CONFOUNDERS",
+    "OBSERVABLE_MAP",
+    "RECEIPT",
+    "NEXT_FORMULA",
+    "CLAIM_ALLOWED"
+  ],
+  "F_ok": [
+    "RMRCTI identity and DeltaP semantics preserved",
+    "r=0.7 separated from unresolved index around 70",
+    "worldline propagation separated from event impulses",
+    "multi-time observation state defined",
+    "cascade types separated",
+    "bounded seeded permutation policy defined"
+  ],
+  "F_gap": [
+    "independent real RMRCTI trace package",
+    "exact index-around-70 identity",
+    "executed astrophysical event-chain fixture",
+    "benchmarked cascade sensitivity thresholds",
+    "causal RMRCTI-to-cosmology mapping"
+  ],
+  "F_next": "build one provenance-complete synthetic event-chain fixture and route residuals into RMRCTI without reinterpreting DeltaP physically"
+}
