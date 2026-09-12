@@ -207,6 +207,123 @@ def build_quadratic_projection_bridge() -> dict[str, Any]:
     }
 
 
+def build_mirrored_triangular_projection12(
+    directions: list[dict[str, Any]],
+    routes: list[dict[str, Any]],
+    residual: float,
+    poi_per_route: int,
+) -> dict[str, Any]:
+    """Overlay six +30-degree steps and their six mirrored -30-degree steps.
+
+    The Route56 axes remain the eight 45-degree compass directions.  Around
+    each source axis we add signed offsets ±n*30°, n=1..6.  This gives
+    12 signed local traversals per 45-degree axis.  Applied to all 56 ordered
+    base routes it yields 56*12=672 route projections.
+
+    Because gcd(45,30)=15, the union of all projected angles closes on a
+    24-direction global lattice at 15-degree spacing.
+
+    The scalar being projected is the quadratic-completion residual
+    d=sqrt(2)-1.  For signed angle phi:
+        parallel   = d*cos(phi)
+        transverse = d*sin(phi)
+    so the norm remains d.
+    """
+
+    signed_specs: list[dict[str, Any]] = []
+    for side, sign in (("CW", 1), ("CCW", -1)):
+        for step in range(1, 7):
+            signed_step = sign * step
+            offset_deg = signed_step * 30
+            phi = math.radians(offset_deg)
+            parallel = residual * math.cos(phi)
+            transverse = residual * math.sin(phi)
+            signed_specs.append({
+                "id": f"{side}{step}",
+                "side": side,
+                "step": step,
+                "signed_step": signed_step,
+                "offset_deg": offset_deg,
+                "parallel": parallel,
+                "transverse": transverse,
+                "norm_squared": parallel * parallel + transverse * transverse,
+                "residual_squared": residual * residual,
+                "coincident_antipodal_ray": step == 6,
+                "signed_route_distinct": True,
+            })
+
+    direction_projections: list[dict[str, Any]] = []
+    per_direction: dict[str, list[dict[str, Any]]] = {}
+    global_angles: set[int] = set()
+
+    for direction in directions:
+        local: list[dict[str, Any]] = []
+        base_angle = int(direction["angle_deg"])
+        for spec in signed_specs:
+            target_angle = (base_angle + int(spec["offset_deg"])) % 360
+            global_angles.add(target_angle)
+            item = {
+                **spec,
+                "base_direction": direction["id"],
+                "base_angle_deg": base_angle,
+                "target_angle_deg": target_angle,
+                "target_lattice_bin_15deg": target_angle // 15,
+                "vector_xy": [
+                    math.sin(math.radians(target_angle)),
+                    math.cos(math.radians(target_angle)),
+                ],
+            }
+            local.append(item)
+            direction_projections.append(item)
+        per_direction[direction["id"]] = local
+
+    route_projections: list[dict[str, Any]] = []
+    for route in routes:
+        source_id = route["from"]["id"]
+        for projection in per_direction[source_id]:
+            route_projections.append({
+                "id": f"{route['id']}::{projection['id']}",
+                "base_route_id": route["id"],
+                "base_route_state": route["route_state"],
+                "source_direction": source_id,
+                "destination_direction": route["to"]["id"],
+                "signed_projection_id": projection["id"],
+                "side": projection["side"],
+                "step": projection["step"],
+                "offset_deg": projection["offset_deg"],
+                "projected_angle_deg": projection["target_angle_deg"],
+                "parallel": projection["parallel"],
+                "transverse": projection["transverse"],
+                "norm_squared": projection["norm_squared"],
+                "scientific_weight": None,
+            })
+
+    unique_angles = sorted(global_angles)
+    mirror_pair_count = len(directions) * 6
+
+    return {
+        "base_direction_count": len(directions),
+        "signed_routes_per_base_direction": len(signed_specs),
+        "six_clockwise_offsets_deg": [30, 60, 90, 120, 150, 180],
+        "six_counterclockwise_offsets_deg": [-30, -60, -90, -120, -150, -180],
+        "signed_direction_projection_count": len(direction_projections),
+        "mirror_pair_count": mirror_pair_count,
+        "base_route_count": len(routes),
+        "signed_route_projection_count": len(route_projections),
+        "projected_control_cell_count": len(route_projections) * poi_per_route,
+        "global_unique_angle_count": len(unique_angles),
+        "global_unique_angles_deg": unique_angles,
+        "global_lattice_step_deg": 15,
+        "gcd_identity": "gcd(45,30)=15",
+        "residual": residual,
+        "signed_specs": signed_specs,
+        "direction_projections": direction_projections,
+        "route_projections": route_projections,
+        "evidence_weight": False,
+        "physical_claim": False,
+    }
+
+
 def route_state(a: str, b: str) -> str:
     statuses = {a, b}
     if "BLOCKED" in statuses:
@@ -313,6 +430,14 @@ def build_report(contract: dict[str, Any], evidence: dict[str, Any], e0: dict[st
             "radial_dot_tangent": radial[0] * tangent_clockwise[0] + radial[1] * tangent_clockwise[1],
         })
 
+    quadratic_bridge = build_quadratic_projection_bridge()
+    triangular_projection12 = build_mirrored_triangular_projection12(
+        directions,
+        routes,
+        quadratic_bridge["isosceles_45_leg_normalized"]["d_a"],
+        len(six_poi),
+    )
+
     graph_core = [{
         "id": r["id"],
         "rotation": r["rotation"],
@@ -337,7 +462,8 @@ def build_report(contract: dict[str, Any], evidence: dict[str, Any], e0: dict[st
             "semantic_boundary": contract["center_state_semantics"][center_state],
         },
         "geometry": contract["geometry"],
-        "quadratic_projection_bridge": build_quadratic_projection_bridge(),
+        "quadratic_projection_bridge": quadratic_bridge,
+        "mirrored_triangular_projection12": triangular_projection12,
         "routes": routes,
         "graph_contract_sha256": canonical_sha256(graph_core),
         "claim_allowed": False,
@@ -404,6 +530,25 @@ def validate_structure(report: dict[str, Any]) -> list[str]:
     if projection["evidence_weight"] is not False or projection["physical_claim"] is not False:
         errors.append("quadratic projection bridge must remain non-empirical")
 
+    tri = report["mirrored_triangular_projection12"]
+    if tri["signed_routes_per_base_direction"] != 12:
+        errors.append("triangular mirror must provide 12 signed routes per 45-degree base axis")
+    if tri["signed_direction_projection_count"] != 96:
+        errors.append("8 base directions x 12 signed projections must equal 96")
+    if tri["signed_route_projection_count"] != 672:
+        errors.append("56 base routes x 12 signed projections must equal 672")
+    if tri["projected_control_cell_count"] != 4032:
+        errors.append("672 projected routes x 6 POIs must equal 4032")
+    if tri["global_unique_angle_count"] != 24:
+        errors.append("45/30 composition must close on 24 global 15-degree directions")
+    if tri["global_unique_angles_deg"] != list(range(0, 360, 15)):
+        errors.append("global triangular/45 lattice must equal all 15-degree bins")
+    for spec in tri["signed_specs"]:
+        if not math.isclose(spec["norm_squared"], spec["residual_squared"], rel_tol=0.0, abs_tol=1e-12):
+            errors.append(f"{spec['id']} does not preserve residual norm")
+    if tri["evidence_weight"] is not False or tri["physical_claim"] is not False:
+        errors.append("mirrored triangular projection must remain non-empirical")
+
     if report["claim_allowed"] is not False:
         errors.append("route graph cannot promote scientific claim")
 
@@ -434,6 +579,9 @@ def main() -> int:
     print(json.dumps({
         "route_count": report["route_count"],
         "control_cell_count": report["control_cell_count"],
+        "projection12_count": report["mirrored_triangular_projection12"]["signed_route_projection_count"],
+        "projected_control_cell_count": report["mirrored_triangular_projection12"]["projected_control_cell_count"],
+        "global_unique_angle_count": report["mirrored_triangular_projection12"]["global_unique_angle_count"],
         "relation_counts": report["relation_counts"],
         "center_state": report["center"]["state"],
         "claim_allowed": report["claim_allowed"],
