@@ -30,6 +30,6 @@ CUSTOM_LICENSE != NON_FALSIFIABLE
 
 ## F_next
 
-Materialize a public DESI chain and compute posterior mass in the RLL-accessible local domain `wa>=0`, with dataset/priors/version pinned.
+Materialize a public DESI chain; use `P(wa>=0|D)` only as a coarse pre-gate, then compute 2D posterior/HPD overlap with the full RLL-accessible `(w0_eff,wa_eff)` domain under pinned dataset/priors/version.
 
 `claim_allowed=false`
