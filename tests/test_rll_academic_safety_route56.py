@@ -130,3 +130,66 @@ def test_45deg_catheti_are_equal_but_hypotenuse_residual_is_nonzero() -> None:
     assert math.isclose(iso["catheti_difference"], 0.0, abs_tol=1e-12)
     assert iso["d_a"] > 0.0
     assert math.isclose(iso["d_a"], iso["d_b"], abs_tol=1e-12)
+
+
+
+def test_mirrored_projection_has_six_routes_each_side_per_45_axis() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    assert tri["signed_routes_per_base_direction"] == 12
+    assert tri["six_clockwise_offsets_deg"] == [30, 60, 90, 120, 150, 180]
+    assert tri["six_counterclockwise_offsets_deg"] == [-30, -60, -90, -120, -150, -180]
+    assert tri["signed_direction_projection_count"] == 8 * 12 == 96
+
+
+def test_route56_times_projection12_is_672() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    assert tri["base_route_count"] == 56
+    assert tri["signed_route_projection_count"] == 56 * 12 == 672
+    assert tri["projected_control_cell_count"] == 56 * 12 * 6 == 4032
+
+
+def test_45_and_30_generate_complete_15_degree_lattice() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    assert tri["gcd_identity"] == "gcd(45,30)=15"
+    assert tri["global_lattice_step_deg"] == 15
+    assert tri["global_unique_angle_count"] == 24
+    assert tri["global_unique_angles_deg"] == list(range(0, 360, 15))
+
+
+def test_every_mirrored_projection_preserves_quadratic_residual_norm() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    for spec in tri["signed_specs"]:
+        assert math.isclose(
+            spec["norm_squared"],
+            spec["residual_squared"],
+            abs_tol=1e-12,
+        )
+
+
+def test_mirror_pairs_share_parallel_and_flip_transverse() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    by_id = {x["id"]: x for x in tri["signed_specs"]}
+    for step in range(1, 7):
+        cw = by_id[f"CW{step}"]
+        ccw = by_id[f"CCW{step}"]
+        assert math.isclose(cw["parallel"], ccw["parallel"], abs_tol=1e-12)
+        assert math.isclose(cw["transverse"], -ccw["transverse"], abs_tol=1e-12)
+
+
+def test_signed_180_routes_are_distinct_but_geometrically_coincident() -> None:
+    r = report()
+    tri = r["mirrored_triangular_projection12"]
+    for direction in r["directions"]:
+        local = [
+            x for x in tri["direction_projections"]
+            if x["base_direction"] == direction["id"] and x["step"] == 6
+        ]
+        assert len(local) == 2
+        assert {x["id"] for x in local} == {"CW6", "CCW6"}
+        assert local[0]["target_angle_deg"] == local[1]["target_angle_deg"]
+        assert all(x["signed_route_distinct"] is True for x in local)
