@@ -115,6 +115,8 @@ def build_report(
 
     orad = 9.0e-5
     samples: list[dict[str, float]] = []
+    min_w0 = float("inf")
+    max_w0 = float("-inf")
     min_wa = float("inf")
     max_wa = float("-inf")
     max_fd_error = 0.0
@@ -129,6 +131,8 @@ def build_report(
                     w0, wa = total_dark_local_cpl(omega_lambda, os0, zt, wt)
                     wa_fd = finite_difference_wa(omega_lambda, os0, zt, wt)
                     error = abs(wa - wa_fd)
+                    min_w0 = min(min_w0, w0)
+                    max_w0 = max(max_w0, w0)
                     min_wa = min(min_wa, wa)
                     max_wa = max(max_wa, wa)
                     max_fd_error = max(max_fd_error, error)
@@ -145,6 +149,7 @@ def build_report(
                     })
 
     sign_pass = bool(samples) and min_wa >= -1.0e-12
+    w0_domain_pass = bool(samples) and min_w0 >= -1.0 - 1.0e-12 and max_w0 < 0.0
     derivative_crosscheck_pass = max_fd_error < 1.0e-7
 
     fs_bao = source_by_id(registry, "DESI_DR1_FS_DR2_BAO_2026")
@@ -163,7 +168,11 @@ def build_report(
         "canonical_sign_theorem": {
             "pass": sign_pass,
             "wa_domain": "wa_eff >= 0",
+            "w0_domain": "-1 <= w0_eff < 0 under canonical positive bounds",
+            "w0_domain_pass": w0_domain_pass,
             "sample_count": len(samples),
+            "min_w0_eff": min_w0,
+            "max_w0_eff": max_w0,
             "min_wa_eff": min_wa,
             "max_wa_eff": max_wa,
             "max_analytic_vs_finite_difference_error": max_fd_error,
@@ -180,6 +189,8 @@ def build_report(
             "negative_wa_central_values_exist": True,
             "negative_wa_is_direct_observable": False,
             "central_value_sign_mismatch_is_falsification": False,
+            "coarse_1d_gate": "P(wa>=0 | D)",
+            "decisive_2d_gate": "posterior overlap/HPD distance to sampled or analytic RLL-accessible (w0_eff,wa_eff) domain",
             "required_decisive_test": gate["observational_gate"]["required_next_test"],
             "falsification_condition": gate["observational_gate"]["falsification_condition"],
         },
@@ -209,6 +220,7 @@ def main() -> int:
 
     math_ok = (
         report["canonical_sign_theorem"]["pass"]
+        and report["canonical_sign_theorem"]["w0_domain_pass"]
         and report["canonical_sign_theorem"]["derivative_crosscheck_pass"]
     )
     return 0 if (not args.require_math_pass or math_ok) else 2
