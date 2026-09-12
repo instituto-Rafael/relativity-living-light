@@ -1,6 +1,6 @@
 {
   "schema": "rll.external_evidence_registry.v1",
-  "generated_utc": "2026-09-12T09:14:00Z",
+  "generated_utc": "2026-09-12T09:18:00Z",
   "policy": {
     "literature_is_not_confirmation": true,
     "external_benchmarks_are_fit_targets": false,
@@ -179,6 +179,24 @@
       },
       "benchmark_semantics": "review_context_only_not_fit_target",
       "claim_boundary": "A review of the DESI DR2 landscape and systematics. It supports caution about dataset dependence; it is not an independent likelihood or confirmation of RLL."
+    },
+    {
+      "id": "DESI_DR1_FS_DR2_BAO_SUPPLEMENT_2026",
+      "role": "posterior_and_reproduction_material_source",
+      "title": "Supplementary data for: Cosmological constraints from a joint DESI DR1 Full-Shape and DR2 BAO",
+      "zenodo_record": "18629072",
+      "doi": "10.5281/zenodo.18629072",
+      "public_url": "https://zenodo.org/records/18629072",
+      "linked_science_source_id": "DESI_DR1_FS_DR2_BAO_2026",
+      "published_context": {
+        "aggregate_size_mb_approx": 305.7,
+        "primary_archive": "paper_data.tar.gz",
+        "primary_archive_md5": "ff5e5ec8c844a36ffa30b93216a5c740",
+        "auxiliary_covariance_files_present": true
+      },
+      "chain_materialization_status": "TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED",
+      "benchmark_semantics": "reproduction_source_not_fit_target",
+      "claim_boundary": "Public supplementary material exists, but availability is not equivalent to identifying the exact w0wa posterior chain. Do not compute posterior overlap until chain identity, weights, parameter columns, priors and dataset combination are verified."
     }
   ],
   "known_provenance_corrections": [
