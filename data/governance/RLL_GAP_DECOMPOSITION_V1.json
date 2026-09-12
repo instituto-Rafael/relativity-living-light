@@ -18,69 +18,214 @@
     {
       "id": "CMB-RADIATION-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
+      "status": "EVIDENCED_FOCUSED",
       "claim_allowed": false,
       "depends_on": [
         "COSMO-CLOSURE-001"
       ],
-      "result": "explicit Tcmb, photon density, Neff and total relativistic radiation helper added; legacy pipeline not rewired",
-      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
+      "result": "Tcmb/omega_gamma/Neff/omega_r helper is tested and exercised by the three-case CAMB recombination benchmark",
+      "next_step": "maintenance only; reopen if radiation-contract regression is observed or massive-neutrino treatment enters scope",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+        "max_relative_errors": {
+          "zstar": 0.0018749684301173745,
+          "rstar_at_rll_zstar": 0.0012887947018273345,
+          "rstar_at_camb_zstar": 0.000019301624644691983
+        }
+      }
     },
     {
       "id": "CMB-ZSTAR-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
+      "status": "EVIDENCED_FOCUSED",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RADIATION-001"
       ],
-      "result": "Hu-Sugiyama z_star fitting prescription implemented as an explicit approximation",
-      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
+      "result": "Hu-Sugiyama z_star approximation benchmarked against CAMB across three pinned backgrounds; max relative error 0.1875%",
+      "next_step": "retain as bounded approximation; use a recombination solver for precision paths requiring tighter than the observed residual",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+        "max_relative_errors": {
+          "zstar": 0.0018749684301173745,
+          "rstar_at_rll_zstar": 0.0012887947018273345,
+          "rstar_at_camb_zstar": 0.000019301624644691983
+        }
+      }
     },
     {
       "id": "CMB-CS-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
+      "status": "EVIDENCED_FOCUSED",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RADIATION-001"
       ],
-      "result": "baryon-photon R_b(a) and c_s(a)=c/sqrt(3(1+R_b)) implemented",
-      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
+      "result": "baryon-photon sound-speed chain is exercised through r_s(z_star); output benchmark passes, but c_s(a) is not independently pointwise certified",
+      "next_step": "no immediate action on the critical path; pointwise c_s benchmark only if a tighter diagnostic is later required",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+        "max_relative_errors": {
+          "zstar": 0.0018749684301173745,
+          "rstar_at_rll_zstar": 0.0012887947018273345,
+          "rstar_at_camb_zstar": 0.000019301624644691983
+        }
+      }
     },
     {
       "id": "CMB-RS-001",
       "domain": "cmb",
-      "status": "IMPLEMENTED_TESTED_AWAITING_CAMB_BENCHMARK",
+      "status": "EVIDENCED_FOCUSED",
       "claim_allowed": false,
       "depends_on": [
         "CMB-ZSTAR-001",
         "CMB-CS-001"
       ],
-      "result": "generic r_s(z_star) integral implemented with explicit E(a) callback; r_d is not reused",
-      "next_step": "observe exact-head CAMB benchmark receipt before promotion"
+      "result": "RLL r_s integral benchmarked against CAMB; max relative error 1.93e-05 when evaluated at CAMB z_star and 0.1289% with the RLL z_star fit",
+      "next_step": "keep r_d(z_drag) and r_s(z_star) separate; wire only through a successor likelihood with this receipt attached",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+        "max_relative_errors": {
+          "zstar": 0.0018749684301173745,
+          "rstar_at_rll_zstar": 0.0012887947018273345,
+          "rstar_at_camb_zstar": 0.000019301624644691983
+        }
+      }
     },
     {
       "id": "CMB-BENCH-001",
       "domain": "cmb",
-      "status": "BENCHMARK_IMPLEMENTED_AWAITING_CI",
+      "status": "EVIDENCED_FOCUSED",
       "claim_allowed": false,
       "depends_on": [
         "CMB-RS-001"
       ],
-      "result": "three-case CAMB benchmark implemented with separate zstar and r_s residual attribution",
-      "next_step": "observe exact-head CLASS/CAMB workflow; promote only if all predeclared tolerances pass"
+      "result": "three-case CAMB benchmark passed all predeclared tolerances and localized the dominant small residual to the z_star approximation",
+      "next_step": "critical scientific bottleneck moves to perturbation/growth theory",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK",
+        "max_relative_errors": {
+          "zstar": 0.0018749684301173745,
+          "rstar_at_rll_zstar": 0.0012887947018273345,
+          "rstar_at_camb_zstar": 0.000019301624644691983
+        }
+      }
     },
     {
-      "id": "GROWTH-THEORY-001",
+      "id": "GROWTH-CS2-001",
       "domain": "growth",
-      "status": "TOKEN_VAZIO_THEORY",
+      "status": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
       "claim_allowed": false,
       "depends_on": [
         "COSMO-CLOSURE-001"
       ],
       "result": null,
-      "next_step": "state whether successor uses GR plus smooth dark-energy-like component or an RLL-specific perturbation model"
+      "next_step": "choose and justify an independent rest-frame sound-speed/entropy prescription; do not silently set c_s^2=c_a^2"
+    },
+    {
+      "id": "GROWTH-GAUGE-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_GAUGE_POLICY",
+      "claim_allowed": false,
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
+      "result": null,
+      "next_step": "freeze gauge choice and define gauge-mapping checks before a perturbation solver implementation"
+    },
+    {
+      "id": "GROWTH-IC-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_SUPERHORIZON_INITIAL_CONDITIONS",
+      "claim_allowed": false,
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
+      "result": null,
+      "next_step": "freeze super-horizon initial conditions consistent with the selected perturbation variables"
+    },
+    {
+      "id": "GROWTH-QMU-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_INTERACTION_CURRENT_POLICY",
+      "claim_allowed": false,
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
+      "result": null,
+      "next_step": "freeze Q_mu policy consistently at background and perturbation level"
+    },
+    {
+      "id": "GROWTH-SIGMA-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_ANISOTROPIC_STRESS_POLICY",
+      "claim_allowed": false,
+      "depends_on": [
+        "COSMO-CLOSURE-001"
+      ],
+      "result": null,
+      "next_step": "freeze anisotropic-stress policy and its claim boundary"
+    },
+    {
+      "id": "GROWTH-CONSERVATION-001",
+      "domain": "growth",
+      "status": "BLOCKED_BY_PERTURBATION_POLICY",
+      "claim_allowed": false,
+      "depends_on": [
+        "GROWTH-CS2-001",
+        "GROWTH-GAUGE-001",
+        "GROWTH-IC-001",
+        "GROWTH-QMU-001",
+        "GROWTH-SIGMA-001"
+      ],
+      "result": null,
+      "next_step": "run conservation residual, transition regularity, gauge mapping and numerical-stability gates on the frozen policy"
+    },
+    {
+      "id": "GROWTH-THEORY-001",
+      "domain": "growth",
+      "status": "NEGATIVE_EVIDENCE_TOKEN_DECOMPOSED",
+      "claim_allowed": false,
+      "depends_on": [
+        "GROWTH-CS2-001",
+        "GROWTH-GAUGE-001",
+        "GROWTH-IC-001",
+        "GROWTH-QMU-001",
+        "GROWTH-SIGMA-001",
+        "GROWTH-CONSERVATION-001"
+      ],
+      "result": "minimal background-derived barotropic/adiabatic, Q_mu=0, shear-free closure was falsified as a global default: 0/9 swept cases passed the declared stability/causality gate",
+      "next_step": "close the six decomposed perturbation-policy children; do not derive D(z) from background alone",
+      "evidence": {
+        "run_id": 34709860843,
+        "run_number": 49,
+        "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+        "workflow": "CLASS CAMB Baseline Crosscheck",
+        "tool": "tools/rll_perturbation_barotropic_candidate_v1.py",
+        "state": "FALSIFIED_AS_GLOBAL_DEFAULT",
+        "cases": 9,
+        "passing_cases": 0
+      }
     },
     {
       "id": "GROWTH-D-001",
@@ -91,7 +236,7 @@
         "GROWTH-THEORY-001"
       ],
       "result": null,
-      "next_step": "solve and normalize D(z) under the selected perturbation contract"
+      "next_step": "solve and normalize D(z) only after the decomposed perturbation contract is evidence-backed"
     },
     {
       "id": "GROWTH-F-001",
