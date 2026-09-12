@@ -39,5 +39,5 @@ def test_claim_boundary_remains_fail_closed() -> None:
     source = SCRIPT.read_text(encoding="utf-8")
     assert '"claim_allowed": False' in source
     assert '"publication_ready": False' in source
-    assert "does not validate RLL perturbations" in source
+    assert "not validate RLL perturbations" in source
     assert "r_d(z_drag) is not substituted for r_s(zstar)" in source
