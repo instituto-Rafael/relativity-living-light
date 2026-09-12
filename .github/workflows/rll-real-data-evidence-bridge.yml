@@ -19,21 +19,56 @@ on:
 permissions:
   contents: read
 
+env:
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  CLAIM_BOUNDARY: "Evidence-bridge PASS validates provenance/data contracts only; it does not validate RLL or permit a scientific superiority claim."
+  DATA_BOUNDARY: "Real observational inputs only; synthetic/mock/fixture/placeholder/demo/example data cannot satisfy this workflow."
+
 jobs:
   evidence-bridge:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install bounded dependencies
         run: python -m pip install --disable-pip-version-check numpy pytest
+
       - name: Test evidence bridge
         run: python -m pytest -q tests/test_rll_real_data_evidence_bridge.py
+
       - name: Materialize validation receipt
-        run: python tools/rll_real_data_evidence_bridge.py --require-data-ready --output results/audit/rll_real_data_evidence_bridge.json
-      - uses: actions/upload-artifact@v4
+        run: |
+          set -euo pipefail
+          python tools/rll_real_data_evidence_bridge.py \
+            --require-data-ready \
+            --output results/audit/rll_real_data_evidence_bridge.json
+          printf '%s\n' "$CLAIM_BOUNDARY" > results/audit/CLAIM_BOUNDARY.txt
+          printf '%s\n' "$DATA_BOUNDARY" > results/audit/DATA_BOUNDARY.txt
+
+      - name: Build final checksums
+        run: |
+          set -euo pipefail
+          (
+            cd results/audit
+            sha256sum \
+              rll_real_data_evidence_bridge.json \
+              CLAIM_BOUNDARY.txt \
+              DATA_BOUNDARY.txt > CHECKSUMS.sha256
+          )
+
+      - name: Upload evidence bundle
+        uses: actions/upload-artifact@v4
         with:
           name: rll-real-data-evidence-bridge
-          path: results/audit/rll_real_data_evidence_bridge.json
+          path: |
+            results/audit/rll_real_data_evidence_bridge.json
+            results/audit/CLAIM_BOUNDARY.txt
+            results/audit/DATA_BOUNDARY.txt
+            results/audit/CHECKSUMS.sha256
