@@ -5815,11 +5815,11 @@
   },
   {
     "path": "data/governance/RLL_ACADEMIC_SAFETY_ROUTE56_V1.json",
-    "bytes": 6445,
+    "bytes": 8145,
     "ext": ".json",
     "tipo": "data_or_result",
-    "linhas": 188,
-    "sha256": "467f2e809ffa3c1b37bc235e2476e1829aec61271441575dfda0b2d342fc5f2c",
+    "linhas": 234,
+    "sha256": "cfcdeff753857c3faff36da3a2367639a46f23ce0f77f7512839b6819300e425",
     "flags": "token_vazio_declared"
   },
   {
@@ -12313,11 +12313,11 @@
   },
   {
     "path": "docs/governance/RLL_ACADEMIC_SAFETY_ROUTE56_PT_EN.md",
-    "bytes": 3219,
+    "bytes": 4160,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 80,
-    "sha256": "b83ccaaba484f0ffee653b92b6cbeb9fd675766de6cfc655b5bef0ebdefa32a0",
+    "linhas": 128,
+    "sha256": "e86aade1f6d200b02681547459f68d4a5955c32a4cc773d06f1d2de9b7bfd0e3",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -16485,6 +16485,15 @@
     "tipo": "documentation_md",
     "linhas": 31,
     "sha256": "981d404e6aad78549a836f2da8ba12dfcbcf22529e4ecc948b812dd036889ddb",
+    "flags": ""
+  },
+  {
+    "path": "receipts/2026-09-12_RLL_ROUTE56_QUADRATIC_PROJECTION_45_30_V1.md",
+    "bytes": 829,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 44,
+    "sha256": "efc17c4abf73ec1c3e025bdc2772e3a62a6a247ad511b111082a0db27eb1b280",
     "flags": ""
   },
   {
@@ -23653,11 +23662,11 @@
   },
   {
     "path": "tests/test_rll_academic_safety_route56.py",
-    "bytes": 3028,
+    "bytes": 4459,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 93,
-    "sha256": "891f27d674cfebb52dfad3a11456ec1d0ddabcf2457a96b76231ee622b33207d",
+    "linhas": 132,
+    "sha256": "d5b02ee512699d3ea9d0d43a503399f0fb9164d8517a5dcd7304c57f32a77584",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -25543,11 +25552,11 @@
   },
   {
     "path": "tools/rll_academic_safety_route56.py",
-    "bytes": 14146,
+    "bytes": 17904,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 351,
-    "sha256": "4c7bdd2ffbee3d37b43b908a0780da3732948d0cf6429885d7fdab6fb8428516",
+    "linhas": 450,
+    "sha256": "f5c0ab292285a713b4342404d8bf4089428d3a44b582f7ee14fbf3661c02162e",
     "flags": "token_vazio_declared"
   },
   {
