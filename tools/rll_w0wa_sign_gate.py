@@ -155,6 +155,7 @@ def build_report(
     fs_bao = source_by_id(registry, "DESI_DR1_FS_DR2_BAO_2026")
     lya = source_by_id(registry, "DESI_DR2_LYA_FULLSHAPE_2026")
     review = source_by_id(registry, "TURYSHEV_DESI_DR2_REVIEW_2026")
+    supplement = source_by_id(registry, "DESI_DR1_FS_DR2_BAO_SUPPLEMENT_2026")
 
     return {
         "schema": "rll.w0wa_sign_falsifiability.report.v1",
@@ -184,6 +185,12 @@ def build_report(
             "joint_DR1_fullshape_DR2_BAO_2026": fs_bao["published_context"],
             "latest_DR2_Lya_fullshape_2026": lya["published_context"],
             "DESI_DR2_review_systematics": review["published_context"],
+            "joint_analysis_supplement": {
+                "doi": supplement["doi"],
+                "primary_archive": supplement["published_context"]["primary_archive"],
+                "primary_archive_md5": supplement["published_context"]["primary_archive_md5"],
+                "chain_materialization_status": supplement["chain_materialization_status"],
+            },
         },
         "interpretation": {
             "negative_wa_central_values_exist": True,
@@ -191,6 +198,8 @@ def build_report(
             "central_value_sign_mismatch_is_falsification": False,
             "coarse_1d_gate": "P(wa>=0 | D)",
             "decisive_2d_gate": "posterior overlap/HPD distance to sampled or analytic RLL-accessible (w0_eff,wa_eff) domain",
+            "posterior_source_available": True,
+            "posterior_chain_identified": supplement["chain_materialization_status"] != "TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED",
             "required_decisive_test": gate["observational_gate"]["required_next_test"],
             "falsification_condition": gate["observational_gate"]["falsification_condition"],
         },
