@@ -636,6 +636,10 @@ cosmological causal validation       TOKEN_VAZIO
 
 ## 18. Provenance
 
+Drive append-only memory/index:
+- Google Doc ID: `1FcQJQzNC1WgBjJE5yDv31LpRyLzoomlB8_QIwnTyTIQ`
+- URL: https://docs.google.com/document/d/1FcQJQzNC1WgBjJE5yDv31LpRyLzoomlB8_QIwnTyTIQ/edit
+
 Repository primary sources:
 - rafaelmeloreisnovo/llamaRafaelia/rmrCti/gbs3_color.c
 - rafaelmeloreisnovo/llamaRafaelia/rmrCti/INDEX.md
