@@ -1,0 +1,98 @@
+{
+  "schema": "rll.external_evidence_registry.v1",
+  "generated_utc": "2026-09-12T06:58:00Z",
+  "policy": {
+    "literature_is_not_confirmation": true,
+    "external_benchmarks_are_fit_targets": false,
+    "source_not_equal_evidence_not_equal_claim": true,
+    "claim_allowed": false
+  },
+  "sources": [
+    {
+      "id": "DESI_DR2_BAO_2025",
+      "role": "primary_bao_source_and_external_benchmark",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "arxiv": "2503.14738",
+      "arxiv_url": "https://arxiv.org/abs/2503.14738",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2503.14738",
+      "local_artifact": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "local_sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+      "published_context": {
+        "flat_lcdm_Omega_m": {"value": 0.2975, "sigma": 0.0086},
+        "flat_lcdm_h_rd_Mpc": {"value": 101.54, "sigma": 0.73},
+        "w0wa_preference_sigma_DESI_plus_CMB": 3.1,
+        "w0wa_preference_sigma_with_SN_range": [2.8, 4.2]
+      },
+      "benchmark_semantics": "context_only_not_fit_target",
+      "claim_boundary": "Published DESI constraints are an external reproduction/consistency benchmark. They are not priors to tune RLL toward and are not numerically comparable to internal delta-AIC unless likelihoods and datasets are matched."
+    },
+    {
+      "id": "PANTHEON_PLUS_COSMOLOGY",
+      "role": "supernova_external_benchmark",
+      "title": "The Pantheon+ Analysis: Cosmological Constraints",
+      "arxiv": "2202.04077",
+      "arxiv_url": "https://arxiv.org/abs/2202.04077",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2202.04077",
+      "dataset_arxiv": "2112.03863",
+      "dataset_alphaxiv_url": "https://www.alphaxiv.org/abs/2112.03863",
+      "published_context": {
+        "light_curves": 1701,
+        "distinct_sne_ia": 1550,
+        "redshift_min": 0.001,
+        "redshift_max": 2.26
+      },
+      "benchmark_semantics": "context_only_not_fit_target",
+      "claim_boundary": "Sample-size and redshift-range checks validate dataset identity only; they do not validate an RLL fit."
+    },
+    {
+      "id": "PLANCK_2018_DISTANCE_PRIORS",
+      "role": "compressed_cmb_reference",
+      "title": "Distance Priors from Planck Final Release",
+      "arxiv": "1808.05724",
+      "arxiv_url": "https://arxiv.org/abs/1808.05724",
+      "doi": "10.1088/1475-7516/2019/02/028",
+      "local_artifact": "data/real/CMB_shift_real.json",
+      "local_sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979",
+      "required_parameter_order": ["R", "la", "ob_h2"],
+      "acoustic_scale_contract": "l_A uses the sound horizon at recombination r_s(z_star); r_d(z_drag) is not an interchangeable claim-bearing substitute.",
+      "benchmark_semantics": "formula_and_covariance_validation",
+      "claim_boundary": "Compressed priors are not the full Planck likelihood."
+    },
+    {
+      "id": "FSIGMA8_COMPILATION_MEHRABI_2015",
+      "role": "historical_growth_compilation_provenance",
+      "title": "How clustering dark energy affects matter perturbations",
+      "doi": "10.1093/mnras/stv1478",
+      "public_url": "https://academic.oup.com/mnras/article/452/3/2930/1750209",
+      "local_artifact": "data/real/cosmology/fsigma8_growth_real.csv",
+      "local_sha256": "3781a2fa7bce9ea600060f9feb6e74ba49f4baa4ce2e7344803295c912318211",
+      "table": "Table 2",
+      "benchmark_semantics": "provenance_anchor_not_independence_proof",
+      "claim_boundary": "The table is a historical compilation. Individual measurements have heterogeneous surveys/methods and require covariance/overlap treatment before paper-grade joint inference."
+    },
+    {
+      "id": "EBOSS_DR16_LRG_GROWTH_METHOD",
+      "role": "modern_growth_definition_and_covariance_reference",
+      "title": "The Completed SDSS-IV extended Baryon Oscillation Spectroscopic Survey: measurement of the BAO and growth rate of structure of the luminous red galaxy sample",
+      "arxiv": "2007.08993",
+      "arxiv_url": "https://arxiv.org/abs/2007.08993",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2007.08993",
+      "observable_contract": ["DM_over_rd", "DH_over_rd", "fsigma8"],
+      "benchmark_semantics": "method_reference",
+      "claim_boundary": "Method reference only; it does not retroactively provide covariance for the heterogeneous RLL growth compilation."
+    }
+  ],
+  "known_provenance_corrections": [
+    {
+      "id": "GROWTH_DOI_CORRECTION_20260912",
+      "historical_artifact": "data/results/model_comparison.json",
+      "historical_field": "inputs[3].doi_or_url",
+      "historical_value": "https://doi.org/10.1093/mnras/stw1614",
+      "problem": "stw1614 is a gravitational-lensing paper and is not the source of the fσ8 compilation.",
+      "superseding_source": "10.1093/mnras/stv1478",
+      "superseding_registry_id": "FSIGMA8_COMPILATION_MEHRABI_2015",
+      "historical_artifact_mutated": false,
+      "status": "SUPERSEDED_APPEND_ONLY"
+    }
+  ]
+}
