@@ -51,3 +51,27 @@ New-head CI after this commit: TOKEN_VAZIO_EXECUTION until observed.
 `claim_allowed=false`.
 
 SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM.
+
+
+## HOTFIX 2 — Claim Boundary deterministic prerequisites
+
+Observed on PR #886 / run `34707578765`:
+
+- claim-boundary gate itself: PASS;
+- artifact contract checks: PASS;
+- unit-test stage: FAIL;
+- 20 Route56 failures shared one root cause:
+  missing `results/audit/rll_real_data_evidence_bridge.json`;
+- 2 workflow-documentation tests also inherited the 94 -> 95 inventory drift.
+
+Repair:
+1. add `tools/rll_real_data_evidence_bridge.py` and `tools/rll_cosmology_e0_preflight.py` to the workflow path triggers;
+2. materialize both deterministic audit reports before the full unit-test step;
+3. assert both files are non-empty before `pytest`.
+
+Consequence:
+- claim semantics were not weakened;
+- no failed Route56 assertion was bypassed;
+- the workflow now owns its runtime prerequisites instead of depending on another job's filesystem state.
+
+Execution on repaired head remains `TOKEN_VAZIO_EXECUTION` until the follow-up PR runs.
