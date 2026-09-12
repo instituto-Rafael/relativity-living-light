@@ -12,8 +12,13 @@ on:
       - "data/real/CMB_shift_real.json"
       - "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json"
       - "data/governance/RLL_REAL_DATA_VALIDATION_CONTRACT_V2.json"
+      - "data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json"
+      - "data/contracts/cosmology_model_family_shadow.v1.json"
+      - "scripts/map_rll_to_w0wa_eff.py"
       - "tools/rll_real_data_evidence_bridge.py"
+      - "tools/rll_w0wa_sign_gate.py"
       - "tests/test_rll_real_data_evidence_bridge.py"
+      - "tests/test_rll_w0wa_sign_gate.py"
       - ".github/workflows/rll-real-data-evidence-bridge.yml"
 
 permissions:
@@ -40,8 +45,18 @@ jobs:
       - name: Install bounded dependencies
         run: python -m pip install --disable-pip-version-check numpy pytest
 
-      - name: Test evidence bridge
-        run: python -m pytest -q tests/test_rll_real_data_evidence_bridge.py
+      - name: Test evidence bridge and w0-wa sign gate
+        run: |
+          python -m pytest -q \
+            tests/test_rll_real_data_evidence_bridge.py \
+            tests/test_rll_w0wa_sign_gate.py
+
+      - name: Materialize w0-wa sign/falsifiability receipt
+        run: |
+          set -euo pipefail
+          python tools/rll_w0wa_sign_gate.py \
+            --require-math-pass \
+            --output results/audit/rll_w0wa_sign_falsifiability.json
 
       - name: Materialize validation receipt
         run: |
@@ -59,6 +74,7 @@ jobs:
             cd results/audit
             sha256sum \
               rll_real_data_evidence_bridge.json \
+              rll_w0wa_sign_falsifiability.json \
               CLAIM_BOUNDARY.txt \
               DATA_BOUNDARY.txt > CHECKSUMS.sha256
           )
@@ -69,6 +85,7 @@ jobs:
           name: rll-real-data-evidence-bridge
           path: |
             results/audit/rll_real_data_evidence_bridge.json
+            results/audit/rll_w0wa_sign_falsifiability.json
             results/audit/CLAIM_BOUNDARY.txt
             results/audit/DATA_BOUNDARY.txt
             results/audit/CHECKSUMS.sha256
