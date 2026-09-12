@@ -62,6 +62,9 @@ def test_current_rll_bounds_have_nonnegative_local_wa_domain() -> None:
     cfg = json.loads((ROOT / "data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json").read_text())
     report = gate.build_report(contract, registry, cfg)
     assert report["canonical_sign_theorem"]["pass"] is True
+    assert report["canonical_sign_theorem"]["w0_domain_pass"] is True
+    assert report["canonical_sign_theorem"]["min_w0_eff"] >= -1.0 - 1e-12
+    assert report["canonical_sign_theorem"]["max_w0_eff"] < 0.0
     assert report["canonical_sign_theorem"]["min_wa_eff"] >= -1e-12
     assert report["canonical_sign_theorem"]["derivative_crosscheck_pass"] is True
 
@@ -87,3 +90,12 @@ def test_custom_license_is_separate_from_scientific_falsifiability() -> None:
     assert boundary["repository_license_is_standard_spdx"] is False
     assert boundary["scientific_falsifiability_depends_on_license"] is False
     assert boundary["operational_reproducibility_may_be_affected"] is True
+
+
+
+def test_wa_halfplane_is_only_a_coarse_gate_not_full_rll_domain() -> None:
+    cfg = json.loads((ROOT / "data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json").read_text())
+    required = " ".join(cfg["observational_gate"]["required_next_test"]).lower()
+    assert "p(wa>=0" in required
+    assert "2d posterior overlap" in required
+    assert "P(wa>=0) != FULL_2D_RLL_DOMAIN_OVERLAP" in cfg["invariants"]
