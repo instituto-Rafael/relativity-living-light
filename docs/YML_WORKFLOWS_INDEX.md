@@ -18,7 +18,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflow-architecture/github-actions-capabilities.v1.yml` | `config_yml` | 7197 | 192 | `f264b79ca5362cb00e5cd6e62e5197f2d0da55f6587df994c753bb9c4269b203` |
 | `.github/workflow-architecture/github-actions-capabilities.v2.yml` | `config_yml` | 3495 | 89 | `dfba1f7cbcb061dd792112b6e43a074caae69bd0128d98a84bd12c2784f1eb16` |
 | `.github/workflow-architecture/invariants.v1.yml` | `config_yml` | 9321 | 306 | `fd70e8ec2bc1708200d308d869cb093d59a893b5d0dce74f46c93f32b3dac108` |
-| `.github/workflow-contract.yml` | `config_yml` | 13592 | 265 | `22d7a8bd1fa1c01fde828530b9d7a8591cca96fd40e821b31b79f873bf9309b4` |
+| `.github/workflow-contract.yml` | `config_yml` | 13974 | 271 | `4e9662df6afe1725a0accc26f85abc17e93a58966959fc8eb01ce58b1910b7fe` |
 | `.github/workflow-orchestrator/catalog.yml` | `config_yml` | 2502 | 96 | `d4ac5943ef247e38700068eefd20b73c2f10d25db3a7f634a6def55ab8c8a4a0` |
 | `.github/workflow-orchestrator/session.yml` | `config_yml` | 1127 | 37 | `6a5d243bfbb5950a14cb01fd26a864a7c93fb3630dd29cf268b5f19aca747058` |
 | `.github/workflow-orchestrator/workflows/core/10-yml-syntax-validation.yml` | `config_yml` | 220 | 8 | `91eb8d57e4bfa739191b0eb67005518ca6796532c0e48a0bcfee299a977ac36a` |
@@ -31,7 +31,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflow-orchestrator/workflows/tower/00-transit-tower.yml` | `config_yml` | 5726 | 188 | `1cb3b75aa024738ed3d8426a381e7af8d564d6fd626257b17a21e5c909228e54` |
 | `.github/workflows/RLL-CI.yml` | `github_workflow_yml` | 377 | 18 | `d5c969793f7774930b7616893b37efa663484756365396dc440c99dc619a049b` |
 | `.github/workflows/RLL_SCIENTIFIC.yml` | `github_workflow_yml` | 393 | 18 | `e8d24048df5acb17fe7fa1e62774ddd215cfb927e92e253d9255835faf1b9795` |
-| `.github/workflows/START_MANUAL_HERE.yml` | `github_workflow_yml` | 13531 | 316 | `c638c1daa28829338150bac2d69d692fb09dc11619bc2fca064809003e927c23` |
+| `.github/workflows/START_MANUAL_HERE.yml` | `github_workflow_yml` | 13292 | 314 | `1233ed399d2e7966b44d7473f11e5edc4e49a32a053ff94fec1193c36b7d53cd` |
 | `.github/workflows/academic-parameter-governance.yml` | `github_workflow_yml` | 5521 | 122 | `a39ba2ba8e60c47e2c6f3048dbe5b52d85c610a7ff512bb3bf329940f83c779a` |
 | `.github/workflows/act-dr6-cmbonly-materialization.yml` | `github_workflow_yml` | 18649 | 333 | `97ed6feaf90181b4d1fca22c3307403d7bdd01bd05601ada636aba5c3ce3c666` |
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | `github_workflow_yml` | 5056 | 106 | `42737997a975956d99ce2870bcb21c113d0c042b06b45e56315699ad41c6e5e3` |
@@ -80,10 +80,13 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/real-seed-ingestion-plan.yml` | `github_workflow_yml` | 3037 | 89 | `1038948e7f1b324950f3ababa3d8cd501590b19e6d57b1d49642a98729dbe436` |
 | `.github/workflows/real-seed-validation-v0.yml` | `github_workflow_yml` | 3536 | 107 | `fd65596175e2540dbe9e001394498e3209727dd44d6515081f41a4e8094f26ba` |
 | `.github/workflows/repo-real-inventory.yml` | `github_workflow_yml` | 3243 | 96 | `09d7e611ce135f794eb88461cb55e51fff1cb92444ad5ae93ae6b36c5d50bdf2` |
+| `.github/workflows/rll-academic-safety-route56.yml` | `github_workflow_yml` | 3339 | 89 | `7b64a34b00e6dfdd5a15bfebac2b87e4704b13f03d9d04a68d3884c6fba753a8` |
 | `.github/workflows/rll-balance-report.yml` | `github_workflow_yml` | 6744 | 180 | `aa57e79b2c170cd0d3ae3bb77f2afea9c4c2ac104b83b504ba072310da8e0a06` |
 | `.github/workflows/rll-biophoton-metabolic-transduction-gate.yml` | `github_workflow_yml` | 1263 | 36 | `719d84bd0ee1b6736d89218417aa9ffcd8ffb2b7cbd21e59ef1b9b27a6615b35` |
 | `.github/workflows/rll-book-data-pipeline.yml` | `github_workflow_yml` | 7673 | 190 | `b8b07467ba5be2527c48ef1c7faa724d31c17939e3c202f493fe51bc5a0af0ef` |
 | `.github/workflows/rll-claim-authority-export.yml` | `github_workflow_yml` | 1547 | 52 | `31d73d8a95e47ba8240d034de7e9dce6edec8bb6a35ea6b2cfce2f0757b04d5f` |
+| `.github/workflows/rll-climate-engine-trial-live.yml` | `github_workflow_yml` | 4870 | 140 | `1be3b36b892049fde871ce9092d88a71be5bae76afb0799972924c2c3900469a` |
+| `.github/workflows/rll-cosmology-e0-preflight.yml` | `github_workflow_yml` | 1564 | 50 | `4484b6ef4bf61a574d5741f3c84691dad857f247200c5e478f73f0d4f517e57b` |
 | `.github/workflows/rll-data-pipeline.yml` | `github_workflow_yml` | 4797 | 124 | `a4808f37b44186d2d828b0a09065b433b0ee9b3923282bd38478deb2e6e1d34c` |
 | `.github/workflows/rll-desi-dr2-covariance-audit.yml` | `github_workflow_yml` | 4060 | 101 | `f80ca06e0e8adec2cd4a0ce0333249d07ef8669dd169aab96125e63f4b5ed4b6` |
 | `.github/workflows/rll-governance-quality-gate.yml` | `github_workflow_yml` | 9990 | 211 | `1d70be37ac42d60ae513d57b129426b7301819dbec7a38092e7833ec1e966451` |
@@ -94,7 +97,9 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-operational-auto-hotfix.yml` | `github_workflow_yml` | 8623 | 223 | `08912ccfc627d72953ecbdac29ff5c7fe502c0871e0add6745cf5bb877f8dad5` |
 | `.github/workflows/rll-pipeline-linear-completo.yml` | `github_workflow_yml` | 6182 | 167 | `25c88c3eefffdbd5e2ab47c2d64a70724f43c934a24eaa9609005c0da7707ece` |
 | `.github/workflows/rll-quantum-vacuum-birefringence-audit.yml` | `github_workflow_yml` | 5096 | 127 | `ca68386dd66496bf96ccd035ad4a7aeefa1a95267d8c320038e0d2c9aef98925` |
-| `.github/workflows/rll-real-data-orchestrator.yml` | `github_workflow_yml` | 17587 | 392 | `21deeb538e26e67ba4e22348adeb310f7ddf6c2a7a24915b3f2384ef336e6c4a` |
+| `.github/workflows/rll-real-data-evidence-bridge.yml` | `github_workflow_yml` | 2671 | 74 | `58941a9b2dc9a7153fc419b1f37bcccf7af263f07fc67070922176f4366e9cbb` |
+| `.github/workflows/rll-real-data-orchestrator.yml` | `github_workflow_yml` | 17450 | 390 | `5d56023835e3c7f65c0da27aba5bd17d3160c910a20bfcce767a99f78029decd` |
+| `.github/workflows/rll-repository-pat-assurance.yml` | `github_workflow_yml` | 2259 | 67 | `88ca77317c4db1cda2daf016bbb5f10fd0ce5d4eb61d59e4596be6b23bb6f7d2` |
 | `.github/workflows/rll-scientific-navigation.yml` | `github_workflow_yml` | 7791 | 201 | `c729c2c4d336da4fb860a1ac978ab17f5de139528472002d6762c63bc54cceb4` |
 | `.github/workflows/rll-structural-integration.yml` | `github_workflow_yml` | 1940 | 55 | `39ce6ff7ce91de71e8d5a139808ff964181bce31623d7c4d3cda24ce9eae5037` |
 | `.github/workflows/rll-structural-math-artifacts.yml` | `github_workflow_yml` | 6556 | 182 | `27ff1b2ef2c92cd6b7e6c33c3b78eb30235fcc00fe60123728b5664bd6946676` |
