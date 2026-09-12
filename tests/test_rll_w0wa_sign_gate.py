@@ -69,12 +69,12 @@ def test_current_rll_bounds_have_nonnegative_local_wa_domain() -> None:
     assert report["canonical_sign_theorem"]["derivative_crosscheck_pass"] is True
 
 
-def test_external_2026_joint_fs_bao_w0_sign_is_positive_not_negative() -> None:
+def test_external_2026_joint_fs_bao_uses_published_negative_w0_and_records_arxiv_discrepancy() -> None:
     registry = json.loads((ROOT / "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json").read_text())
     src = next(x for x in registry["sources"] if x["id"] == "DESI_DR1_FS_DR2_BAO_2026")
-    assert src["published_context"]["w0"]["value"] == 0.49
+    assert src["published_context"]["w0"]["value"] == -0.49
     assert src["published_context"]["wa"]["value"] == -1.52
-    assert src["dataset_identity"] == "DESI_DR1_FULL_SHAPE_PLUS_DESI_DR2_BAO"
+    assert src["dataset_identity"] == "DESI_DR1_FULL_SHAPE_PLUS_DESI_DR2_BAO"\n    assert src["doi"] == "10.1088/1475-7516/2026/06/043"\n    assert src["version_note"]["arxiv_abstract_indexed_value"].startswith("w0=+0.49")
 
 
 def test_sign_tension_is_not_auto_promoted_to_falsified() -> None:
