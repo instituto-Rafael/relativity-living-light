@@ -127,6 +127,86 @@ def relation_class(min_turn_deg: int) -> str:
     }[min_turn_deg]
 
 
+def build_quadratic_projection_bridge() -> dict[str, Any]:
+    """Exact 45-degree residual geometry plus secondary sqrt(3)/2 projection.
+
+    Let a,b be the catheti, h=sqrt(a^2+b^2), and d_a=h-a.  Writing
+    h=a+d_a gives d_a^2+2*a*d_a=b^2.  This is the completing-square /
+    borrowed-area form of the same identity as (h-a)(h+a)=b^2.
+
+    For the 45-degree isosceles case a=b=1, d=sqrt(2)-1.  The pair
+    (sqrt(3)/2*d, 1/2*d) is a second-stage orthogonal decomposition of d,
+    because 3/4+1/4=1.  It is geometric metadata, never evidence weight.
+    """
+
+    a = 1.0
+    b = 1.0
+    h = math.sqrt(a * a + b * b)
+    d_a = h - a
+    d_b = h - b
+
+    borrowed_square = d_a * d_a
+    borrowed_rectangles = 2.0 * a * d_a
+    recovered_opposite_square = borrowed_square + borrowed_rectangles
+
+    factor_left = h - a
+    factor_right = h + a
+    factor_product = factor_left * factor_right
+
+    projection_30 = math.sqrt(3.0) / 2.0
+    projection_orth = 0.5
+    p = projection_30 * d_a
+    q = projection_orth * d_a
+
+    h_unit = 1.0
+    leg_h_unit = math.sqrt(2.0) / 2.0
+    residual_h_unit = h_unit - leg_h_unit
+
+    return {
+        "general_identities": {
+            "pythagoras": "h^2=a^2+b^2",
+            "residual_definition": "d_a=h-a",
+            "completing_square": "d_a^2+2*a*d_a=b^2",
+            "difference_of_squares": "(h-a)(h+a)=b^2",
+            "symmetric_difference_of_squares": "(h-b)(h+b)=a^2",
+            "catheti_difference": "(a-b)(a+b)=a^2-b^2",
+        },
+        "isosceles_45_leg_normalized": {
+            "a": a,
+            "b": b,
+            "h": h,
+            "d_a": d_a,
+            "d_b": d_b,
+            "catheti_difference": a - b,
+            "d_exact": "sqrt(2)-1",
+            "borrowed_square": borrowed_square,
+            "borrowed_rectangles_2ad": borrowed_rectangles,
+            "recovered_b_squared": recovered_opposite_square,
+            "factor_product": factor_product,
+            "factor_identity_exact": "(sqrt(2)-1)(sqrt(2)+1)=1",
+        },
+        "secondary_projection_sqrt3_over_2": {
+            "coefficient_parallel": projection_30,
+            "coefficient_orthogonal": projection_orth,
+            "projected_parallel": p,
+            "projected_orthogonal": q,
+            "projected_parallel_exact": "(sqrt(6)-sqrt(3))/2",
+            "projected_orthogonal_exact": "(sqrt(2)-1)/2",
+            "norm_reconstructed": p * p + q * q,
+            "residual_squared": d_a * d_a,
+            "evidence_weight": False,
+            "physical_claim": False,
+        },
+        "isosceles_45_hypotenuse_normalized": {
+            "h": h_unit,
+            "a": leg_h_unit,
+            "b": leg_h_unit,
+            "residual_h_minus_cathetus": residual_h_unit,
+            "residual_exact": "1-sqrt(2)/2",
+        },
+    }
+
+
 def route_state(a: str, b: str) -> str:
     statuses = {a, b}
     if "BLOCKED" in statuses:
@@ -257,6 +337,7 @@ def build_report(contract: dict[str, Any], evidence: dict[str, Any], e0: dict[st
             "semantic_boundary": contract["center_state_semantics"][center_state],
         },
         "geometry": contract["geometry"],
+        "quadratic_projection_bridge": build_quadratic_projection_bridge(),
         "routes": routes,
         "graph_contract_sha256": canonical_sha256(graph_core),
         "claim_allowed": False,
@@ -305,6 +386,24 @@ def validate_structure(report: dict[str, Any]) -> list[str]:
 
     if report["geometry"]["sqrt3_over_2"]["evidence_weight"] is not False:
         errors.append("sqrt3/2 must not be an evidence weight")
+
+    bridge = report["quadratic_projection_bridge"]
+    iso = bridge["isosceles_45_leg_normalized"]
+    projection = bridge["secondary_projection_sqrt3_over_2"]
+    if not math.isclose(iso["recovered_b_squared"], 1.0, rel_tol=0.0, abs_tol=1e-12):
+        errors.append("quadratic borrowed-area identity must recover b^2")
+    if not math.isclose(iso["factor_product"], 1.0, rel_tol=0.0, abs_tol=1e-12):
+        errors.append("difference-of-squares identity must recover b^2")
+    if not math.isclose(
+        projection["norm_reconstructed"],
+        projection["residual_squared"],
+        rel_tol=0.0,
+        abs_tol=1e-12,
+    ):
+        errors.append("sqrt3/2 secondary projection must preserve residual norm")
+    if projection["evidence_weight"] is not False or projection["physical_claim"] is not False:
+        errors.append("quadratic projection bridge must remain non-empirical")
+
     if report["claim_allowed"] is not False:
         errors.append("route graph cannot promote scientific claim")
 
