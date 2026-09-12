@@ -1,0 +1,52 @@
+name: RLL Safe Expansion Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/governance/RLL_SAFE_EXPANSION_CONTRACT_V1.json"
+      - "data/governance/RLL_GAP_DECOMPOSITION_V1.json"
+      - "src/rll/cosmology_radiation.py"
+      - "tools/rll_safe_expansion_gate.py"
+      - "tests/test_rll_safe_expansion_gate.py"
+      - "tests/test_rll_cosmology_radiation.py"
+      - ".github/workflows/rll-safe-expansion-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  safe-expansion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Validate safe-expansion graph
+        run: python tools/rll_safe_expansion_gate.py --output results/audit/rll_safe_expansion_gate.json
+
+      - name: Run safe-expansion tests
+        run: python -m pytest -q tests/test_rll_safe_expansion_gate.py tests/test_rll_cosmology_radiation.py
+
+      - name: Show fail-closed state
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path("results/audit/rll_safe_expansion_gate.json").read_text())
+          print("status=", p["status"])
+          print("claim_allowed=", p["claim_allowed"])
+          print("actionable_now=", p["actionable_now"])
+          PY
+
+      - name: Upload receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-safe-expansion-gate
+          path: results/audit/rll_safe_expansion_gate.json
