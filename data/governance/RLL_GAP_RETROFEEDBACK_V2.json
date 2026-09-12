@@ -58,7 +58,6 @@
   ],
   "stop_rule": "stop expanding a branch when marginal evidence gain is lower than the next unresolved critical-path gap",
   "critical_path": [
-    "GROWTH-CS2-001",
     "GROWTH-QMU-001",
     "GROWTH-SIGMA-001",
     "GROWTH-GAUGE-001",
@@ -74,57 +73,10 @@
     "FIT-MODELSEL-001"
   ],
   "best_next_step": {
-    "id": "GROWTH-CS2-001",
-    "rationale": "the minimal c_s^2=c_a^2 barotropic default is already falsified, so selecting a versioned rest-frame sound-speed/entropy candidate removes the largest immediate theory ambiguity with low implementation cost"
+    "id": "GROWTH-QMU-001",
+    "rationale": "the rest-frame sound-speed comparator is now frozen as CONFIGURED_CANDIDATE_NOT_EFFECTIVE; the next highest-impact low-effort ambiguity is the interaction-current policy, which cannot be inferred to Q_mu=0 solely from background notation"
   },
   "items": [
-    {
-      "claim_allowed": false,
-      "id": "GROWTH-CS2-001",
-      "domain": "growth",
-      "state": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
-      "token_or_gap": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
-      "urgency": "P0",
-      "priority_rank": 1,
-      "actionable_now": true,
-      "priority_factors": {
-        "impact": 8,
-        "uncertainty_reduction": 8,
-        "effort": 2,
-        "log2_priority_score": 5
-      },
-      "provenance": [
-        {
-          "type": "repository",
-          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
-          "meaning": "falsifiability test of minimal background-derived closure"
-        },
-        {
-          "type": "github_actions",
-          "workflow": "CLASS CAMB Baseline Crosscheck",
-          "run_id": 34709860843,
-          "run_number": 49,
-          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
-          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
-        }
-      ],
-      "evidence": [
-        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
-      ],
-      "gate": "candidate produces finite stable perturbations through transition",
-      "providencia": "choose an explicit rest-frame sound-speed/entropy candidate",
-      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
-      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
-      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
-      "forward_dependency": "GROWTH-CONSERVATION-001",
-      "direct": "choose an explicit rest-frame sound-speed/entropy candidate",
-      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
-      "inverse_falsifier": "reject candidate if stability/causality/conservation fails",
-      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
-      "exclusive_boundary": "a modeling choice is not derived from the background",
-      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
-      "next_step": "choose an explicit rest-frame sound-speed/entropy candidate"
-    },
     {
       "claim_allowed": false,
       "id": "GROWTH-QMU-001",
@@ -132,7 +84,7 @@
       "state": "TOKEN_VAZIO_INTERACTION_CURRENT_POLICY",
       "token_or_gap": "TOKEN_VAZIO_INTERACTION_CURRENT_POLICY",
       "urgency": "P0",
-      "priority_rank": 2,
+      "priority_rank": 1,
       "actionable_now": true,
       "priority_factors": {
         "impact": 8,
@@ -179,7 +131,7 @@
       "state": "TOKEN_VAZIO_ANISOTROPIC_STRESS_POLICY",
       "token_or_gap": "TOKEN_VAZIO_ANISOTROPIC_STRESS_POLICY",
       "urgency": "P0",
-      "priority_rank": 3,
+      "priority_rank": 2,
       "actionable_now": true,
       "priority_factors": {
         "impact": 8,
@@ -226,7 +178,7 @@
       "state": "TOKEN_VAZIO_GAUGE_POLICY",
       "token_or_gap": "TOKEN_VAZIO_GAUGE_POLICY",
       "urgency": "P0",
-      "priority_rank": 4,
+      "priority_rank": 3,
       "actionable_now": true,
       "priority_factors": {
         "impact": 8,
@@ -273,7 +225,7 @@
       "state": "TOKEN_VAZIO_SUPERHORIZON_INITIAL_CONDITIONS",
       "token_or_gap": "TOKEN_VAZIO_SUPERHORIZON_INITIAL_CONDITIONS",
       "urgency": "P0",
-      "priority_rank": 5,
+      "priority_rank": 4,
       "actionable_now": true,
       "priority_factors": {
         "impact": 8,
@@ -320,7 +272,7 @@
       "state": "BLOCKED_BY_PERTURBATION_POLICY",
       "token_or_gap": "conservation/transition/gauge validation",
       "urgency": "P0",
-      "priority_rank": 6,
+      "priority_rank": 5,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -367,7 +319,7 @@
       "state": "NEGATIVE_EVIDENCE_TOKEN_DECOMPOSED",
       "token_or_gap": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
       "urgency": "P0",
-      "priority_rank": 7,
+      "priority_rank": 6,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -414,7 +366,7 @@
       "state": "TOKEN_VAZIO_IMPLEMENTATION",
       "token_or_gap": "TOKEN_VAZIO_IMPLEMENTATION",
       "urgency": "P0",
-      "priority_rank": 8,
+      "priority_rank": 7,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -466,7 +418,7 @@
       "state": "TOKEN_VAZIO_IMPLEMENTATION",
       "token_or_gap": "TOKEN_VAZIO_IMPLEMENTATION",
       "urgency": "P0",
-      "priority_rank": 9,
+      "priority_rank": 8,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -518,7 +470,7 @@
       "state": "BLOCKED_BY_DEPENDENCY",
       "token_or_gap": "BLOCKED_BY_DEPENDENCY",
       "urgency": "P0",
-      "priority_rank": 10,
+      "priority_rank": 9,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -570,7 +522,7 @@
       "state": "TOKEN_VAZIO_BENCHMARK",
       "token_or_gap": "TOKEN_VAZIO_BENCHMARK",
       "urgency": "P1",
-      "priority_rank": 11,
+      "priority_rank": 10,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -622,7 +574,7 @@
       "state": "BLOCKED_BY_DEPENDENCY",
       "token_or_gap": "FIT-MULTISEED-001",
       "urgency": "P1",
-      "priority_rank": 12,
+      "priority_rank": 11,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -661,7 +613,7 @@
       "state": "BLOCKED_BY_DEPENDENCY",
       "token_or_gap": "FIT-POSTERIOR-001",
       "urgency": "P2",
-      "priority_rank": 13,
+      "priority_rank": 12,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -700,7 +652,7 @@
       "state": "BLOCKED_BY_DEPENDENCY",
       "token_or_gap": "FIT-MODELSEL-001",
       "urgency": "P2",
-      "priority_rank": 14,
+      "priority_rank": 13,
       "actionable_now": false,
       "priority_factors": {
         "impact": 8,
@@ -739,7 +691,7 @@
       "state": "TOKEN_VAZIO_INTERACTION_ENERGY",
       "token_or_gap": "TOKEN_VAZIO_INTERACTION_ENERGY",
       "urgency": "P2",
-      "priority_rank": 15,
+      "priority_rank": 14,
       "actionable_now": true,
       "priority_factors": {
         "impact": 4,
@@ -787,7 +739,7 @@
       "state": "TOKEN_VAZIO_STRESS_ENERGY_CONVENTION",
       "token_or_gap": "TOKEN_VAZIO_STRESS_ENERGY_CONVENTION",
       "urgency": "P2",
-      "priority_rank": 16,
+      "priority_rank": 15,
       "actionable_now": true,
       "priority_factors": {
         "impact": 4,
@@ -835,7 +787,7 @@
       "state": "TOKEN_VAZIO_GEOMETRIC_DEFINITION",
       "token_or_gap": "TOKEN_VAZIO_GEOMETRIC_DEFINITION",
       "urgency": "P2",
-      "priority_rank": 17,
+      "priority_rank": 16,
       "actionable_now": true,
       "priority_factors": {
         "impact": 4,
@@ -878,7 +830,7 @@
       "state": "TOKEN_VAZIO_OBSERVABLE_MAP",
       "token_or_gap": "TOKEN_VAZIO_OBSERVABLE_MAP",
       "urgency": "P2",
-      "priority_rank": 18,
+      "priority_rank": 17,
       "actionable_now": true,
       "priority_factors": {
         "impact": 4,
@@ -919,7 +871,7 @@
       "state": "TOKEN_VAZIO_COVARIANT_SCALEUP",
       "token_or_gap": "TOKEN_VAZIO_COVARIANT_SCALEUP",
       "urgency": "P2",
-      "priority_rank": 19,
+      "priority_rank": 18,
       "actionable_now": true,
       "priority_factors": {
         "impact": 4,
@@ -959,6 +911,62 @@
       "exclusive_boundary": "laboratory or analogy evidence is not cosmological validation",
       "recursive_feedback": "successful formalization creates observable-specific validation gaps",
       "next_step": "derive a covariant scale-up before laboratory-to-cosmology mapping"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-CS2-001",
+      "domain": "growth",
+      "state": "CONFIGURED_CANDIDATE_NOT_EFFECTIVE",
+      "token_or_gap": "CONFIGURED_CANDIDATE_NOT_EFFECTIVE",
+      "urgency": "P2",
+      "priority_rank": 19,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 1,
+        "effort": 8,
+        "log2_priority_score": 0
+      },
+      "provenance": [
+        {
+          "type": "repository_negative_evidence",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "minimal background-derived c_s^2=c_a^2 closure rejected as a global default"
+        },
+        {
+          "type": "repository_configuration",
+          "path": "data/governance/RLL_PERTURBATION_SOUND_SPEED_CANDIDATE_V1.json",
+          "meaning": "versioned c_s,rest^2=1 comparator; configured, not effective"
+        },
+        {
+          "type": "primary_literature",
+          "reference": "Wayne Hu, Structure Formation with Generalized Dark Matter, astro-ph/9801234",
+          "meaning": "perturbative stress properties need not be determined solely by the background equation of state"
+        },
+        {
+          "type": "primary_literature",
+          "reference": "Weller & Lewis, Large Scale Cosmic Microwave Background Anisotropies and Dark Energy, astro-ph/0307104",
+          "meaning": "independent dark-energy sound-speed parameterization precedent"
+        }
+      ],
+      "evidence": [
+        "configuration choice is explicit and versioned",
+        "c_s,rest^2=1 is a comparator only and is not derived from the RLL background",
+        "CONFIG_ACCEPTED != CONFIG_EFFECTIVE"
+      ],
+      "gate": "sound-speed candidate configuration validator PASS; effectiveness remains blocked by the full perturbation/conservation gate",
+      "providencia": "carry the comparator unchanged while freezing Q_mu, anisotropic stress, gauge and initial-condition policies",
+      "mitigation": "never infer physical validity from comparator configuration; keep effective=false until conservation/regularity execution",
+      "non_regression": "preserve the 0/9 negative barotropic result and do not alter background/CMB or growth likelihoods",
+      "receipt": "docs/audit/RLL_PERTURBATION_SOUND_SPEED_CANDIDATE_RECEIPT_20260912.md",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "provide one explicit smooth rest-frame sound-speed comparator to the future perturbation-policy composition",
+      "antiderivative_backtrace": "trace candidate to 0/9 negative barotropic evidence plus independent-fluid literature",
+      "inverse_falsifier": "reject or roll back if downstream conservation, transition regularity, gauge mapping or stability fails",
+      "reverse_rollback": "remove the candidate contract and restore TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY without touching background/CMB",
+      "exclusive_boundary": "configured comparator != effective perturbation law != RLL-derived property",
+      "recursive_feedback": "configuration closure moves the active P0 to Q_mu; effectiveness waits for all perturbation-policy children",
+      "next_step": "freeze GROWTH-QMU-001; do not execute D(z) yet"
     },
     {
       "claim_allowed": false,
@@ -1385,4 +1393,4 @@
       "next_step": "none unless regression is observed"
     }
   ]
-}
+}\n
