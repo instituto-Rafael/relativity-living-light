@@ -86,6 +86,45 @@
         "residual_exact": "1-sqrt(2)/2"
       },
       "boundary": "Exact algebraic/geometric bridge only; no empirical or physical significance follows without an independently defined model."
+    },
+    "mirrored_triangular_projection12": {
+      "status": "DEFINED_EXACT_GEOMETRY",
+      "base_mesh_deg": 45,
+      "triangular_step_deg": 30,
+      "half_turn_steps_per_side": 6,
+      "clockwise_offsets_deg": [
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "counterclockwise_offsets_deg": [
+        -30,
+        -60,
+        -90,
+        -120,
+        -150,
+        -180
+      ],
+      "signed_routes_per_base_direction": 12,
+      "base_direction_count": 8,
+      "signed_direction_projection_count": 96,
+      "base_route_count": 56,
+      "signed_route_projection_count": 672,
+      "poi_per_base_route": 6,
+      "projected_control_cell_count": 4032,
+      "generated_lattice_step_deg": 15,
+      "generated_unique_global_directions": 24,
+      "lattice_identity": "gcd(45,30)=15; <45,30> on Z_360 spans the 24 directions k*15 degrees",
+      "residual_source": "d=sqrt(2)-1 from the normalized 45-degree quadratic completion",
+      "component_rule": "for signed offset phi: parallel=d*cos(phi), transverse=d*sin(phi)",
+      "norm_rule": "parallel^2+transverse^2=d^2",
+      "mirror_rule": "phi and -phi share parallel component and have opposite transverse component",
+      "antipodal_boundary": "at +180 and -180 the geometric ray coincides but the signed traversal remains distinct",
+      "evidence_weight": false,
+      "physical_claim": false
     }
   },
   "directions": [

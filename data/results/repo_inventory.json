@@ -5815,11 +5815,11 @@
   },
   {
     "path": "data/governance/RLL_ACADEMIC_SAFETY_ROUTE56_V1.json",
-    "bytes": 8145,
+    "bytes": 9554,
     "ext": ".json",
     "tipo": "data_or_result",
-    "linhas": 234,
-    "sha256": "cfcdeff753857c3faff36da3a2367639a46f23ce0f77f7512839b6819300e425",
+    "linhas": 273,
+    "sha256": "07f4dd7d0b8dacfd483f3cec2397d3584146952293a5b15762d0814ac8dc01b9",
     "flags": "token_vazio_declared"
   },
   {
@@ -12313,11 +12313,11 @@
   },
   {
     "path": "docs/governance/RLL_ACADEMIC_SAFETY_ROUTE56_PT_EN.md",
-    "bytes": 4160,
+    "bytes": 5582,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 128,
-    "sha256": "e86aade1f6d200b02681547459f68d4a5955c32a4cc773d06f1d2de9b7bfd0e3",
+    "linhas": 194,
+    "sha256": "374995c76efcca544a7cebb48246cb564e31fd728efe86b7aa9e46105273b641",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -16485,6 +16485,15 @@
     "tipo": "documentation_md",
     "linhas": 31,
     "sha256": "981d404e6aad78549a836f2da8ba12dfcbcf22529e4ecc948b812dd036889ddb",
+    "flags": ""
+  },
+  {
+    "path": "receipts/2026-09-12_RLL_ROUTE56_MIRROR12_TRIANGULAR_PROJECTION_V1.md",
+    "bytes": 999,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 45,
+    "sha256": "da952f156249956c30000fffeee307b3f6c78db72781bd78d76aa5d04537997a",
     "flags": ""
   },
   {
@@ -23662,11 +23671,11 @@
   },
   {
     "path": "tests/test_rll_academic_safety_route56.py",
-    "bytes": 4459,
+    "bytes": 6878,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 132,
-    "sha256": "d5b02ee512699d3ea9d0d43a503399f0fb9164d8517a5dcd7304c57f32a77584",
+    "linhas": 195,
+    "sha256": "414c0e6f1728ac8f1d75f00fed368fd7c04424ee1cd55fa0f42feaaa89885158",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -25552,11 +25561,11 @@
   },
   {
     "path": "tools/rll_academic_safety_route56.py",
-    "bytes": 17904,
+    "bytes": 24641,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 450,
-    "sha256": "f5c0ab292285a713b4342404d8bf4089428d3a44b582f7ee14fbf3661c02162e",
+    "linhas": 598,
+    "sha256": "97f3924c6e8179fc63d74911a9c442acf2e047629fb1a5e7f1328c9908e3b8fb",
     "flags": "token_vazio_declared"
   },
   {
