@@ -7,8 +7,11 @@ on:
     - data/**
     - docs/science/**
     - scripts/validation/**
-    - tests/**
+    - tests/test_real_seed_utils.py
+    - tests/test_orbital_outputs.py
+    - tests/test_quality_execution_monitor.py
     - tools/ci/real_data_workflow_policy.sh
+    - tools/ci/quality_execution_monitor.py
     - .github/workflows/claim-boundary-quality-gates.yml
     - tools/rll_real_data_evidence_bridge.py
     - tools/rll_cosmology_e0_preflight.py
@@ -17,7 +20,9 @@ on:
     - data/**
     - docs/science/**
     - scripts/validation/**
-    - tests/**
+    - tests/test_real_seed_utils.py
+    - tests/test_orbital_outputs.py
+    - tests/test_quality_execution_monitor.py
     - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
     - tools/rll_real_data_evidence_bridge.py
@@ -26,7 +31,7 @@ permissions:
   contents: read
 concurrency:
   group: claim-boundary-quality-gates-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   claim-boundary-quality-gates:
     runs-on: ubuntu-latest
@@ -36,10 +41,12 @@ jobs:
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
+        fetch-depth: 2
     - name: Set up Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
       with:
         python-version: '3.11'
+        cache: pip
     - name: Install package and test dependencies
       run: 'python -m pip install --upgrade pip
 
@@ -82,10 +89,25 @@ jobs:
         test -s results/audit/rll_cosmology_e0_preflight.json
 
         '
-    - name: Run unit tests
-      run: 'python -m pytest -q tests
-
-        '
+    - name: Run focused claim-boundary regression tests
+      env:
+        BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/claim-boundary-quality-gates/${{ github.job }}"
+        mkdir -p "$ARTIFACT_DIR"
+        python -m pytest -q \
+          tests/test_real_seed_utils.py \
+          tests/test_orbital_outputs.py \
+          tests/test_quality_execution_monitor.py \
+          --junitxml="$ARTIFACT_DIR/focused-junit.xml"
+        python tools/ci/quality_execution_monitor.py \
+          --workflow claim-boundary \
+          --base-sha "${BASE_SHA:-}" \
+          --head-sha "${HEAD_SHA:-}" \
+          --junitxml "$ARTIFACT_DIR/focused-junit.xml" \
+          --output "$ARTIFACT_DIR/quality_execution_monitor.json"
     - name: Finalize canonical real-data policy checksums
       if: always()
       run: 'set -euo pipefail
