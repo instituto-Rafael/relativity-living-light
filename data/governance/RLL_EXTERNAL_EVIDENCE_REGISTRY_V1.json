@@ -1,6 +1,6 @@
 {
   "schema": "rll.external_evidence_registry.v1",
-  "generated_utc": "2026-09-12T06:58:00Z",
+  "generated_utc": "2026-09-12T07:02:00Z",
   "policy": {
     "literature_is_not_confirmation": true,
     "external_benchmarks_are_fit_targets": false,
@@ -18,10 +18,19 @@
       "local_artifact": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
       "local_sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
       "published_context": {
-        "flat_lcdm_Omega_m": {"value": 0.2975, "sigma": 0.0086},
-        "flat_lcdm_h_rd_Mpc": {"value": 101.54, "sigma": 0.73},
+        "flat_lcdm_Omega_m": {
+          "value": 0.2975,
+          "sigma": 0.0086
+        },
+        "flat_lcdm_h_rd_Mpc": {
+          "value": 101.54,
+          "sigma": 0.73
+        },
         "w0wa_preference_sigma_DESI_plus_CMB": 3.1,
-        "w0wa_preference_sigma_with_SN_range": [2.8, 4.2]
+        "w0wa_preference_sigma_with_SN_range": [
+          2.8,
+          4.2
+        ]
       },
       "benchmark_semantics": "context_only_not_fit_target",
       "claim_boundary": "Published DESI constraints are an external reproduction/consistency benchmark. They are not priors to tune RLL toward and are not numerically comparable to internal delta-AIC unless likelihoods and datasets are matched."
@@ -53,7 +62,11 @@
       "doi": "10.1088/1475-7516/2019/02/028",
       "local_artifact": "data/real/CMB_shift_real.json",
       "local_sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979",
-      "required_parameter_order": ["R", "la", "ob_h2"],
+      "required_parameter_order": [
+        "R",
+        "la",
+        "ob_h2"
+      ],
       "acoustic_scale_contract": "l_A uses the sound horizon at recombination r_s(z_star); r_d(z_drag) is not an interchangeable claim-bearing substitute.",
       "benchmark_semantics": "formula_and_covariance_validation",
       "claim_boundary": "Compressed priors are not the full Planck likelihood."
@@ -77,9 +90,46 @@
       "arxiv": "2007.08993",
       "arxiv_url": "https://arxiv.org/abs/2007.08993",
       "alphaxiv_url": "https://www.alphaxiv.org/abs/2007.08993",
-      "observable_contract": ["DM_over_rd", "DH_over_rd", "fsigma8"],
+      "observable_contract": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "fsigma8"
+      ],
       "benchmark_semantics": "method_reference",
       "claim_boundary": "Method reference only; it does not retroactively provide covariance for the heterogeneous RLL growth compilation."
+    },
+    {
+      "id": "DESI_DR2_LYA_FULLSHAPE_2026",
+      "role": "latest_high_z_external_update_benchmark",
+      "title": "DESI DR2 Results IV: Alcock-Paczynski Measurements from the Lyman Alpha Forest and Cosmological Constraints",
+      "arxiv": "2607.27410",
+      "arxiv_url": "https://arxiv.org/abs/2607.27410",
+      "alphaxiv_url": "https://www.alphaxiv.org/abs/2607.27410",
+      "published_context": {
+        "z_eff": 2.33,
+        "DH_over_rd": {
+          "value": 8.6,
+          "sigma": 0.066
+        },
+        "DM_over_rd": {
+          "value": 39.32,
+          "sigma": 0.33
+        },
+        "H0_km_s_Mpc": {
+          "value": 66.5,
+          "sigma": 1.3
+        },
+        "Omega_m": {
+          "value": 0.325,
+          "sigma": 0.018
+        },
+        "w0wa_preference_sigma_DESI_plus_CMB": 2.7,
+        "w0wa_preference_sigma_DESI_plus_CMB_plus_SN": 3.2
+      },
+      "relation_to_local_2025_Lya_BAO": "The local DESI DR2 Table-IV Ly-alpha rows are BAO-only measurements from the same DR2 data family; the 2026 full-shape AP+BAO result is an updated correlated analysis, not an independent extra likelihood.",
+      "combination_policy": "MUTUALLY_EXCLUSIVE_WITH_LOCAL_LYA_BAO_UNLESS_JOINT_COVARIANCE_IS_EXPLICIT",
+      "benchmark_semantics": "latest_context_only_not_fit_target",
+      "claim_boundary": "Use to stress-test/update interpretation and future alternative likelihood construction. Do not add its chi2 to the existing Ly-alpha BAO-only chi2 without an explicit joint covariance."
     }
   ],
   "known_provenance_corrections": [
