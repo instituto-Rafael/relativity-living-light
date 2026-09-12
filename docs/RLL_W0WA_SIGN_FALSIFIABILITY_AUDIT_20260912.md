@@ -152,7 +152,7 @@ TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_WA_DOMAIN
 
 Pergunta executável:
 
-> Qual é a massa posterior de uma análise DESI precisamente identificada dentro do domínio local acessível ao RLL, em particular `wa>=0`, depois de alinhar convenção CPL, priors e datasets?
+> Qual é a sobreposição posterior de uma análise DESI precisamente identificada com o domínio local 2D acessível ao RLL em `(w0_eff,wa_eff)`? `P(wa>=0|D)` é apenas um pré-gate 1D, não o teste decisivo.
 
 Esse teste é de maior informação que introduzir imediatamente um novo parâmetro para permitir `wa<0`.
 
@@ -189,7 +189,8 @@ A testabilidade matemática das equações e a interoperabilidade jurídica do c
 1. Fixar uma combinação externa, por exemplo DR1 Full-Shape + DR2 BAO ou DR2 BAO+CMB.
 2. Materializar cadeia posterior pública e sua proveniência.
 3. Calcular:
-   - `P(wa>=0 | D)`;
+   - pré-gate: `P(wa>=0 | D)`;
+   - gate decisivo: massa/HPD posterior que intersecta o domínio RLL 2D `(w0_eff,wa_eff)` amostrado sob os bounds canônicos;
    - massa HPD que intersecta o domínio RLL;
    - sensibilidade a SN on/off;
    - sensibilidade ao Ly-alpha full-shape 2026;
@@ -204,7 +205,7 @@ A testabilidade matemática das equações e a interoperabilidade jurídica do c
 
 ```text
 F_ok   = teorema de sinal identificado; formula corrigida; bounds atuais implicam wa_eff>=0.
-F_gap  = TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_WA_DOMAIN; mapeamento CPL e local, nao equivalencia global.
+F_gap  = TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_W0WA_DOMAIN; P(wa>=0) e apenas pre-gate; mapeamento CPL e local, nao equivalencia global.
 F_next = cadeia posterior publica DESI -> massa em wa>=0 -> ablacões SN/Ly-alpha -> decisao fail-closed.
 claim_allowed=false
 ```
