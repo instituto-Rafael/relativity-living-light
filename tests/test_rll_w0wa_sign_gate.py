@@ -101,3 +101,19 @@ def test_wa_halfplane_is_only_a_coarse_gate_not_full_rll_domain() -> None:
     assert "p(wa>=0" in required
     assert "2d posterior overlap" in required
     assert "P(wa>=0) != FULL_2D_RLL_DOMAIN_OVERLAP" in cfg["invariants"]
+
+
+
+def test_public_supplement_exists_but_chain_identity_remains_token_vazio() -> None:
+    registry = json.loads((ROOT / "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json").read_text())
+    src = next(x for x in registry["sources"] if x["id"] == "DESI_DR1_FS_DR2_BAO_SUPPLEMENT_2026")
+    assert src["doi"] == "10.5281/zenodo.18629072"
+    assert src["published_context"]["primary_archive"] == "paper_data.tar.gz"
+    assert src["published_context"]["primary_archive_md5"] == "ff5e5ec8c844a36ffa30b93216a5c740"
+    assert src["chain_materialization_status"] == "TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED"
+
+    contract = json.loads((ROOT / "data/contracts/cosmology_model_family_shadow.v1.json").read_text())
+    cfg = json.loads((ROOT / "data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json").read_text())
+    report = gate.build_report(contract, registry, cfg)
+    assert report["interpretation"]["posterior_source_available"] is True
+    assert report["interpretation"]["posterior_chain_identified"] is False
