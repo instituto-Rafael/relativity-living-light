@@ -1,7 +1,7 @@
 """Joint real-data likelihood for the RLL cosmology validation stack.
 
 This module intentionally keeps the current repository data local-first: it uses
-materialized H(z), DESI DR2 BAO primary points, the real fσ8 compilation, and the Planck
+materialized an independent cosmic-chronometer H(z) partition, DESI DR2 BAO primary points, the real fσ8 compilation, and the Planck
 CMB-shift summary already committed under ``data/``.  It does not download or
 invent missing data; when only a published covariance summary is present, the
 BAO covariance is built from the committed diagonal errors plus the committed
@@ -54,7 +54,7 @@ TEXTUAL_OUTPUTS = [
 BASE_DIR = Path(__file__).resolve().parents[3]
 RESULTS = BASE_DIR / "results" / "structure_d"
 
-HZ_PATH = BASE_DIR / "data" / "real" / "Hz_data_real.csv"
+HZ_PATH = BASE_DIR / "data" / "real" / "cosmology" / "Hz_cosmic_chronometers_independent.csv"
 DESI_POINTS_PATH = BASE_DIR / "data" / "real" / "cosmology" / "desi_dr2_bao_primary_points.csv"
 DESI_COV_SUMMARY_PATH = BASE_DIR / "data" / "real" / "cosmology" / "desi_dr2_bao_covariance_summary.csv"
 DESI_FULL_COV_PATH = BASE_DIR / "data" / "real" / "desi_dr2_bao_covariance.csv"
