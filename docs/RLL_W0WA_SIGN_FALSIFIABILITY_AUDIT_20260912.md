@@ -96,16 +96,20 @@ e `zt,wt` tornam-se inativos/não identificáveis no background.
 
 ### 3.1 O par 0.49, -1.52 tem identidade específica
 
-O resultado de 2026:
+A versão **peer-reviewed publicada** em JCAP 2026(06) 043, DOI `10.1088/1475-7516/2026/06/043`, reporta:
 
 ```text
-w0 = +0.49 +/- 0.25
+w0 = -0.49 +/- 0.25
 wa = -1.52 +/- 0.77
 ```
 
-é do estudo **DESI DR1 Full-Shape + DESI DR2 BAO**, arXiv:2602.18761. O sinal de `w0` no texto recebido estava invertido.
+para **DESI DR1 Full-Shape + DESI DR2 BAO**.
 
-Esse estudo relata melhoria de aproximadamente 30% nas restrições em relação à análise análoga anterior e uma discrepância com LambdaCDM reduzida a cerca de 1.4 sigma no contexto descrito pelo próprio trabalho. Ele não é o mesmo produto científico que o DESI DR2 Results IV.
+Há uma discrepância de versão que precisa permanecer auditável: o abstract arXiv atualmente indexado para arXiv:2602.18761 mostra `w0=+0.49`, enquanto a versão publicada mostra `w0=-0.49`. Para benchmark, o RLL passa a usar a versão publicada e registra explicitamente a divergência em vez de apagá-la.
+
+Portanto, nesse ponto específico, o texto recebido estava correto quanto ao sinal da versão publicada.
+
+O estudo relata melhoria de aproximadamente 30% nas restrições em relação à análise análoga anterior e uma discrepância com LambdaCDM reduzida a cerca de 1.4 sigma no contexto descrito pelo próprio trabalho. Ele não é o mesmo produto científico que o DESI DR2 Results IV.
 
 ### 3.2 Atualização Ly-alpha full-shape de 2026
 
@@ -204,7 +208,7 @@ A testabilidade matemática das equações e a interoperabilidade jurídica do c
 ## R3
 
 ```text
-F_ok   = teorema de sinal identificado; formula corrigida; bounds atuais implicam wa_eff>=0.
+F_ok   = teorema de sinal identificado; formula corrigida; bounds atuais implicam wa_eff>=0; divergencia arXiv/JCAP de w0 registrada e publicada priorizada.
 F_gap  = TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_W0WA_DOMAIN; P(wa>=0) e apenas pre-gate; mapeamento CPL e local, nao equivalencia global.
 F_next = cadeia posterior publica DESI -> massa em wa>=0 -> ablacões SN/Ly-alpha -> decisao fail-closed.
 claim_allowed=false
