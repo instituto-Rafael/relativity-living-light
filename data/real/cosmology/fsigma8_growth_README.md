@@ -1,30 +1,32 @@
-# fsigma8 growth sample
+# fσ8 growth sample
 
-Path: `data/real/cosmology/fsigma8_growth.csv`
+Path: `data/real/cosmology/fsigma8_growth_real.csv`
 
 Columns:
 
 ```text
-z,fsigma8,sigma,survey,reference,notes
+z,fs8,sigma,survey,method,reference,source_url,notes
 ```
 
-This is a minimal real growth-rate sample for the RLL `chi2_fsigma8` gate. The current run uses the diagonal `sigma` column only.
+This is a heterogeneous historical real-data compilation used only as an **exploratory growth surface** until covariance/overlap and physical growth-model gates pass.
 
-Included groups:
+## Provenance correction
 
-- 6dFGS: z=0.067
-- BOSS DR12 consensus: z=0.38, 0.51, 0.61
-- BOSS DR11 CMASS: z=0.57
-- eBOSS DR16 LRG/ELG Fourier: z=0.70, 0.845
+The rows that use the common Oxford source URL are anchored to the compilation published in:
 
-Boundary:
+- A. Mehrabi, S. Basilakos, F. Pace (2015), *How clustering dark energy affects matter perturbations*
+- MNRAS 452, 2930–2939
+- DOI: `10.1093/mnras/stv1478`
+- Table 2 contains the fσ8 points and the original per-measurement references.
 
-- full covariance is `TOKEN_VAZIO`
-- survey cross-covariances are not yet represented
-- for paper-grade runs, replace or augment with official covariance blocks
+A historical result artifact recorded `10.1093/mnras/stw1614`; that DOI is unrelated to this growth compilation and is superseded append-only in `data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json`. Historical result JSON is not rewritten.
 
-Command:
+## Boundary
 
-```bash
-python scripts/check_rll_growth.py --model all
-```
+- individual rows originate from different surveys and methods;
+- full heterogeneous covariance is `TOKEN_VAZIO`;
+- survey cross-covariances/overlap are not yet represented;
+- the current joint pipeline's growth-index expression is a proxy and remains claim-blocked by the E0 gate;
+- paper-grade inference requires validated D(z)/perturbations and a covariance/overlap policy.
+
+`SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM`
