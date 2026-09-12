@@ -105,6 +105,20 @@ jobs:
             --junitxml=artifacts/python-tests/junit.xml \
             2>&1 | tee artifacts/python-tests/pytest.log
 
+      - name: Write quality execution monitor receipt
+        if: always()
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python tools/ci/quality_execution_monitor.py \
+            --workflow python-tests \
+            --base-sha "${BASE_SHA:-}" \
+            --head-sha "${HEAD_SHA:-}" \
+            --junitxml artifacts/python-tests/junit.xml \
+            --output artifacts/python-tests/quality_execution_monitor.json
+
       - name: Upload test receipt
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
