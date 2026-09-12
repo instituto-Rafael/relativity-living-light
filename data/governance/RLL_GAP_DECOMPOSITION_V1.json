@@ -3,7 +3,8 @@
   "claim_allowed": false,
   "resolved_statuses": [
     "MERGED_EVIDENCED",
-    "EVIDENCED_FOCUSED"
+    "EVIDENCED_FOCUSED",
+    "CONFIGURED_CANDIDATE_NOT_EFFECTIVE"
   ],
   "items": [
     {
@@ -134,13 +135,20 @@
     {
       "id": "GROWTH-CS2-001",
       "domain": "growth",
-      "status": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
+      "status": "CONFIGURED_CANDIDATE_NOT_EFFECTIVE",
       "claim_allowed": false,
       "depends_on": [
         "COSMO-CLOSURE-001"
       ],
-      "result": null,
-      "next_step": "choose and justify an independent rest-frame sound-speed/entropy prescription; do not silently set c_s^2=c_a^2"
+      "result": "rest-frame c_s^2=1 smooth-fluid comparator selected as a versioned candidate; not derived from the RLL background and not effective in a perturbation solver",
+      "next_step": "preserve candidate as non-effective; freeze GROWTH-QMU-001 before conservation/regularity execution",
+      "evidence": {
+        "type": "CONFIGURATION_CONTRACT",
+        "contract": "data/governance/RLL_PERTURBATION_SOUND_SPEED_CANDIDATE_V1.json",
+        "state": "CONFIGURED_CANDIDATE_NOT_EFFECTIVE",
+        "claim_allowed": false,
+        "effective": false
+      }
     },
     {
       "id": "GROWTH-GAUGE-001",
@@ -378,4 +386,4 @@
       "next_step": "record paper/code/data provenance and reuse license independently for each imported artefact"
     }
   ]
-}
+}\n
