@@ -1,0 +1,67 @@
+{
+  "schema": "rll.perturbation_sound_speed_candidate.v1",
+  "id": "GROWTH-CS2-001",
+  "state": "CONFIGURED_CANDIDATE_NOT_EFFECTIVE",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "candidate": {
+    "name": "SMOOTH_REST_FRAME_CS2_ONE_COMPARATOR",
+    "rest_frame_cs2": 1.0,
+    "units": "dimensionless",
+    "constant": true,
+    "causal_interval": [0.0, 1.0],
+    "derived_from_rll_background": false,
+    "independent_of_ca2": true,
+    "role": "comparator_only_not_RLL_derived"
+  },
+  "semantics": {
+    "rest_frame": true,
+    "ca2_relation": "DO_NOT_SET_CS2_EQUAL_CA2",
+    "entropy_freedom_required_when_cs2_ne_ca2": true,
+    "gauge_pressure_mapping": "TOKEN_VAZIO_GAUGE_POLICY",
+    "effective_in_perturbation_solver": false
+  },
+  "provenance": [
+    {
+      "type": "repository_negative_evidence",
+      "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+      "meaning": "minimal background-derived c_s^2=c_a^2 closure was rejected as a global default in the declared sweep"
+    },
+    {
+      "type": "primary_literature",
+      "reference": "Wayne Hu, Structure Formation with Generalized Dark Matter, astro-ph/9801234",
+      "meaning": "perturbative stress properties need not be fixed solely by the background equation of state"
+    },
+    {
+      "type": "primary_literature",
+      "reference": "Weller & Lewis, Large Scale Cosmic Microwave Background Anisotropies and Dark Energy, astro-ph/0307104",
+      "meaning": "dark-energy perturbations can be parameterized with an independent constant sound speed"
+    },
+    {
+      "type": "comparison_precedent",
+      "reference": "Rapetti et al., astro-ph/0409574",
+      "meaning": "c_s^2=1 is used as a smooth-fluid comparison choice; this does not make it an RLL-derived property"
+    }
+  ],
+  "unresolved_dependencies": [
+    "GROWTH-QMU-001",
+    "GROWTH-SIGMA-001",
+    "GROWTH-GAUGE-001",
+    "GROWTH-IC-001",
+    "GROWTH-CONSERVATION-001"
+  ],
+  "falsifiers": [
+    "rest_frame_cs2 outside [0,1]",
+    "candidate is represented as derived from the RLL background",
+    "candidate is silently equated to c_a^2",
+    "candidate is marked effective before perturbation/conservation execution",
+    "downstream conservation, regularity, gauge-mapping or stability gate fails"
+  ],
+  "non_regression": [
+    "do not alter the validated background or CMB successor",
+    "preserve the 0/9 negative barotropic result",
+    "do not promote this configuration choice to a physical RLL claim",
+    "CONFIG_ACCEPTED != CONFIG_EFFECTIVE"
+  ],
+  "next_step": "freeze the interaction-current Q_mu policy; keep this sound-speed candidate non-effective until the full perturbation policy and conservation gate execute"
+}
