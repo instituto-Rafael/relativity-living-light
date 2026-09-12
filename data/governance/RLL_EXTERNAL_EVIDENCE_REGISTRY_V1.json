@@ -199,9 +199,11 @@
       "arxiv_abstract_value": "+0.49 +/- 0.25",
       "peer_reviewed_published_value": "-0.49 +/- 0.25",
       "preferred_authority": "JCAP 2026(06) 043, DOI 10.1088/1475-7516/2026/06/043",
-      "historical_registry_value_mutated": true,
       "reason": "The earlier registry entry followed the currently indexed arXiv abstract. The peer-reviewed published version carries the negative sign and is used as the benchmark; the discrepancy remains explicitly recorded.",
-      "status": "CORRECTED_WITH_VERSION_PROVENANCE"
+      "status": "CORRECTED_WITH_VERSION_PROVENANCE",
+      "historical_artifact_mutated": false,
+      "registry_current_entry_corrected": true,
+      "audit_note": "The live registry benchmark is corrected to the peer-reviewed value; the prior arXiv-derived value remains recorded in this correction object. No historical scientific result artifact was rewritten."
     }
   ]
 }
