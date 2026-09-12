@@ -53,3 +53,13 @@ def test_cmb_source_and_covariance_are_pinned() -> None:
     assert check["parameter_order"] == ["R", "la", "ob_h2"]
     assert check["source_matches_registry"] is True
     assert check["pass"] is True
+
+
+def test_latest_desi_lya_update_is_not_double_counted() -> None:
+    registry = json.loads((ROOT / "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json").read_text())
+    entry = next(x for x in registry["sources"] if x["id"] == "DESI_DR2_LYA_FULLSHAPE_2026")
+    assert entry["arxiv"] == "2607.27410"
+    assert entry["published_context"]["w0wa_preference_sigma_DESI_plus_CMB"] == 2.7
+    assert entry["combination_policy"].startswith("MUTUALLY_EXCLUSIVE")
+    report = bridge.build_report()
+    assert report["latest_external_update_policy"]["source_id"] == "DESI_DR2_LYA_FULLSHAPE_2026"
