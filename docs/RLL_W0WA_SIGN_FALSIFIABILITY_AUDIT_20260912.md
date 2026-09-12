@@ -191,16 +191,17 @@ A testabilidade matemática das equações e a interoperabilidade jurídica do c
 ## 8. Próximo experimento de maior informação
 
 1. Fixar uma combinação externa, por exemplo DR1 Full-Shape + DR2 BAO ou DR2 BAO+CMB.
-2. Materializar cadeia posterior pública e sua proveniência.
-3. Calcular:
+2. Para DR1 Full-Shape + DR2 BAO, usar como fonte de reprodução o suplemento público Zenodo DOI `10.5281/zenodo.18629072` (`paper_data.tar.gz`, MD5 `ff5e5ec8c844a36ffa30b93216a5c740`). A existência do pacote está confirmada; a identidade interna da chain `w0wa` continua `TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED` até inspeção.
+3. Materializar a chain posterior exata e sua proveniência.
+4. Calcular:
    - pré-gate: `P(wa>=0 | D)`;
    - gate decisivo: massa/HPD posterior que intersecta o domínio RLL 2D `(w0_eff,wa_eff)` amostrado sob os bounds canônicos;
    - massa HPD que intersecta o domínio RLL;
    - sensibilidade a SN on/off;
    - sensibilidade ao Ly-alpha full-shape 2026;
    - sensibilidade aos priors.
-4. Em paralelo, comparar globalmente `H(z), D_M, D_H, mu(z)`.
-5. Só depois decidir entre:
+5. Em paralelo, comparar globalmente `H(z), D_M, D_H, mu(z)`.
+6. Só depois decidir entre:
    - manter a logística canônica;
    - declarar a forma canônica falsificada naquele escopo;
    - propor uma extensão **pré-registrada**, penalizada por complexidade.
@@ -209,7 +210,7 @@ A testabilidade matemática das equações e a interoperabilidade jurídica do c
 
 ```text
 F_ok   = teorema de sinal identificado; formula corrigida; bounds atuais implicam wa_eff>=0; divergencia arXiv/JCAP de w0 registrada e publicada priorizada.
-F_gap  = TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_W0WA_DOMAIN; P(wa>=0) e apenas pre-gate; mapeamento CPL e local, nao equivalencia global.
+F_gap  = TOKEN_VAZIO_CHAIN_CONTENT_NOT_YET_INSPECTED + TOKEN_VAZIO_POSTERIOR_OVERLAP_RLL_W0WA_DOMAIN; P(wa>=0) e apenas pre-gate; mapeamento CPL e local, nao equivalencia global.
 F_next = cadeia posterior publica DESI -> massa em wa>=0 -> ablacões SN/Ly-alpha -> decisao fail-closed.
 claim_allowed=false
 ```
