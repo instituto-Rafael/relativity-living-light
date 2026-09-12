@@ -163,6 +163,7 @@ def build_report() -> dict[str, Any]:
     desi_entry = evidence_by_id(registry, "DESI_DR2_BAO_2025")
     cmb_entry = evidence_by_id(registry, "PLANCK_2018_DISTANCE_PRIORS")
     pantheon_entry = evidence_by_id(registry, "PANTHEON_PLUS_COSMOLOGY")
+    lya_2026_entry = evidence_by_id(registry, "DESI_DR2_LYA_FULLSHAPE_2026")
 
     checks = {
         "desi_local_hash": validate_hash(desi_entry),
@@ -187,6 +188,12 @@ def build_report() -> dict[str, Any]:
         "external_benchmarks": {
             "DESI_DR2": desi_entry["published_context"],
             "PantheonPlus": pantheon_entry["published_context"],
+            "DESI_DR2_Lya_fullshape_2026": lya_2026_entry["published_context"],
+        },
+        "latest_external_update_policy": {
+            "source_id": lya_2026_entry["id"],
+            "combination_policy": lya_2026_entry["combination_policy"],
+            "relation_to_local_2025_Lya_BAO": lya_2026_entry["relation_to_local_2025_Lya_BAO"],
         },
         "non_comparability_guard": contract["comparability_rule"],
         "remaining_model_gates": contract["promotion_gates"],
