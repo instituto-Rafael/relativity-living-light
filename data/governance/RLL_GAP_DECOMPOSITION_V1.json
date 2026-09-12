@@ -1,0 +1,208 @@
+{
+  "schema": "rll.gap_decomposition.v1",
+  "claim_allowed": false,
+  "resolved_statuses": [
+    "MERGED_EVIDENCED",
+    "EVIDENCED_FOCUSED"
+  ],
+  "items": [
+    {
+      "id": "COSMO-CLOSURE-001",
+      "domain": "background",
+      "status": "MERGED_EVIDENCED",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": "flat closure successor enforces E(0)=1 for the bounded closure contract",
+      "next_step": "do not reopen unless regression is observed"
+    },
+    {
+      "id": "CMB-RADIATION-001",
+      "domain": "cmb",
+      "status": "IMPLEMENTED_AWAITING_CI",
+      "claim_allowed": false,
+      "depends_on": ["COSMO-CLOSURE-001"],
+      "result": "explicit Tcmb, photon density, Neff and total relativistic radiation helper added; legacy pipeline not rewired",
+      "next_step": "run tests and then wire only in a dedicated successor path"
+    },
+    {
+      "id": "CMB-ZSTAR-001",
+      "domain": "cmb",
+      "status": "TOKEN_VAZIO_SOURCE_CONTRACT",
+      "claim_allowed": false,
+      "depends_on": ["CMB-RADIATION-001"],
+      "result": null,
+      "next_step": "choose and provenance-pin a z_star prescription or external solver result"
+    },
+    {
+      "id": "CMB-CS-001",
+      "domain": "cmb",
+      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "claim_allowed": false,
+      "depends_on": ["CMB-RADIATION-001"],
+      "result": null,
+      "next_step": "implement baryon-photon sound speed with explicit omega_b and photon density contract"
+    },
+    {
+      "id": "CMB-RS-001",
+      "domain": "cmb",
+      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "claim_allowed": false,
+      "depends_on": ["CMB-ZSTAR-001", "CMB-CS-001"],
+      "result": null,
+      "next_step": "implement r_s(z_star) integral without reusing r_d(z_drag)"
+    },
+    {
+      "id": "CMB-BENCH-001",
+      "domain": "cmb",
+      "status": "TOKEN_VAZIO_BENCHMARK",
+      "claim_allowed": false,
+      "depends_on": ["CMB-RS-001"],
+      "result": null,
+      "next_step": "benchmark r_s(z_star) against CLASS or CAMB on pinned cosmologies"
+    },
+    {
+      "id": "GROWTH-THEORY-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_THEORY",
+      "claim_allowed": false,
+      "depends_on": ["COSMO-CLOSURE-001"],
+      "result": null,
+      "next_step": "state whether successor uses GR plus smooth dark-energy-like component or an RLL-specific perturbation model"
+    },
+    {
+      "id": "GROWTH-D-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "claim_allowed": false,
+      "depends_on": ["GROWTH-THEORY-001"],
+      "result": null,
+      "next_step": "solve and normalize D(z) under the selected perturbation contract"
+    },
+    {
+      "id": "GROWTH-F-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_IMPLEMENTATION",
+      "claim_allowed": false,
+      "depends_on": ["GROWTH-D-001"],
+      "result": null,
+      "next_step": "derive f=d ln D/d ln a and sigma8(z)=sigma8_0 D(z)/D(0)"
+    },
+    {
+      "id": "GROWTH-FSIG8-001",
+      "domain": "growth",
+      "status": "BLOCKED_BY_DEPENDENCY",
+      "claim_allowed": false,
+      "depends_on": ["GROWTH-F-001"],
+      "result": null,
+      "next_step": "replace gamma=0.55 proxy only in a successor path"
+    },
+    {
+      "id": "GROWTH-BENCH-001",
+      "domain": "growth",
+      "status": "TOKEN_VAZIO_BENCHMARK",
+      "claim_allowed": false,
+      "depends_on": ["GROWTH-FSIG8-001"],
+      "result": null,
+      "next_step": "benchmark growth predictions against CLASS/CAMB where assumptions match"
+    },
+    {
+      "id": "FIT-MULTISEED-001",
+      "domain": "inference",
+      "status": "BLOCKED_BY_DEPENDENCY",
+      "claim_allowed": false,
+      "depends_on": ["CMB-BENCH-001", "GROWTH-BENCH-001"],
+      "result": null,
+      "next_step": "run deterministic multi-seed optimization with bounded convergence diagnostics"
+    },
+    {
+      "id": "FIT-POSTERIOR-001",
+      "domain": "inference",
+      "status": "BLOCKED_BY_DEPENDENCY",
+      "claim_allowed": false,
+      "depends_on": ["FIT-MULTISEED-001"],
+      "result": null,
+      "next_step": "add posterior/MCMC only after deterministic successor is reproducible"
+    },
+    {
+      "id": "FIT-MODELSEL-001",
+      "domain": "inference",
+      "status": "BLOCKED_BY_DEPENDENCY",
+      "claim_allowed": false,
+      "depends_on": ["FIT-POSTERIOR-001"],
+      "result": null,
+      "next_step": "compute claim-bearing AIC/BIC/posterior comparisons only from coherent successor likelihoods"
+    },
+    {
+      "id": "MAG-C09-001",
+      "domain": "magneto_plasma",
+      "status": "TOKEN_VAZIO_INTERACTION_ENERGY",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "separate magnetic background energy from modulation/coupling to prevent double counting"
+    },
+    {
+      "id": "MAG-C10-001",
+      "domain": "magneto_plasma",
+      "status": "TOKEN_VAZIO_STRESS_ENERGY_CONVENTION",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "define mass-equivalent versus energy density and cosmological scaling/averaging"
+    },
+    {
+      "id": "MAG-C11-001",
+      "domain": "magneto_plasma",
+      "status": "TOKEN_VAZIO_GEOMETRIC_DEFINITION",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "define the 1-form, integration surface/boundary, units and topology before using Stokes physically"
+    },
+    {
+      "id": "MAG-C12-001",
+      "domain": "magneto_plasma",
+      "status": "TOKEN_VAZIO_OBSERVABLE_MAP",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "separate H(z), growth, lensing, RM and rotation-curve observables with confounder controls"
+    },
+    {
+      "id": "MAG-C14-001",
+      "domain": "magneto_plasma",
+      "status": "TOKEN_VAZIO_COVARIANT_SCALEUP",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "provide a covariant scale-up model before mapping laboratory nonlocality to cosmology"
+    },
+    {
+      "id": "ALPHAXIV-SCHEMA-001",
+      "domain": "literature",
+      "status": "TOKEN_VAZIO_RUNTIME_SCHEMA",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "capture runtime MCP schema/version before any alphaXiv write integration"
+    },
+    {
+      "id": "ALPHAXIV-PRIMARY-001",
+      "domain": "literature",
+      "status": "POLICY_IMPLEMENTED",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": "ranking and AI-generated reports are discovery aids only",
+      "next_step": "verify decisive claims against primary paper pages/full text"
+    },
+    {
+      "id": "ALPHAXIV-LICENSE-001",
+      "domain": "literature",
+      "status": "TOKEN_VAZIO_PER_SOURCE",
+      "claim_allowed": false,
+      "depends_on": [],
+      "result": null,
+      "next_step": "record paper/code/data provenance and reuse license independently for each imported artefact"
+    }
+  ]
+}
