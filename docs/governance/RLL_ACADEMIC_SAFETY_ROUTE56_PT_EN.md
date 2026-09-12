@@ -112,6 +112,72 @@ Na normalização por hipotenusa `h=1`, os catetos são `√2/2` e o resíduo é
 
 Na circunferência unitária, os oito triângulos isocêntricos adjacentes continuam tendo ângulo central 45°, corda `√(2-√2)` e área `√2/4`.
 
+## Projeção espelhada 12 sobre cada eixo de 45°
+
+A ponte quadrática não termina no primeiro passo de 30°. O resíduo
+
+`d=√2-1`
+
+é projetado em **seis passos para um lado** e **seis passos para o lado espelhado**:
+
+`+30°, +60°, +90°, +120°, +150°, +180°`
+
+`-30°, -60°, -90°, -120°, -150°, -180°`.
+
+Para cada deslocamento assinado `φ`:
+
+`p_φ=d cosφ`
+
+`q_φ=d sinφ`
+
+e:
+
+`p_φ²+q_φ²=d²`.
+
+O primeiro passo recupera a ponte anterior:
+
+`cos30°=√3/2`, `sin30°=1/2`.
+
+O espelho preserva a componente paralela e troca o sinal da componente transversal:
+
+`p_{+φ}=p_{-φ}`
+
+`q_{+φ}=-q_{-φ}`.
+
+No passo `±180°`, os dois percursos assinados são diferentes como rota, embora coincidam no mesmo raio geométrico antipodal.
+
+### Contagens
+
+Por eixo-base de 45°:
+
+`6 + 6 = 12` rotas trianguladas assinadas.
+
+Para os oito eixos-base:
+
+`8 × 12 = 96` projeções direcionais locais.
+
+Aplicando a projeção aos 56 caminhos Route56:
+
+`56 × 12 = 672` projeções orientadas.
+
+Mantendo os 6 POIs acadêmicos:
+
+`56 × 12 × 6 = 4032` células de controle projetadas.
+
+### Fechamento angular
+
+A composição da malha de 45° com a malha de 30° gera:
+
+`gcd(45°,30°)=15°`.
+
+Portanto a união global fecha em:
+
+`360° / 15° = 24`
+
+direções geométricas únicas.
+
+Isto é uma consequência exata da combinação das duas grades angulares; não é um peso de evidência nem uma confirmação física.
+
 ## Fronteira de produção
 
 A execução estrutural do Route56 prova somente que:
