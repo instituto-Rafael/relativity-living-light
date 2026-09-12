@@ -91,3 +91,43 @@ Revert the focused Claim Boundary test step to the prior full-suite command.
 The Python tests authority is untouched, so rollback does not require reconstructing lost coverage.
 
 SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM.
+
+
+## Post-refactor exact-head observation
+
+Observed Claim Boundary execution after the focused refactor:
+
+- run: `34715409465`
+- job: `103611640446`
+- conclusion: `SUCCESS`
+- observed wall time: `34.583 s`
+- focused pytest result: `12 passed in 0.10 s`
+- direct validation-script compilation: PASS
+- direct claim-boundary gate: PASS
+- seed artifact contract checks: PASS
+- deterministic audit prerequisites: PASS
+- policy checksum finalization: PASS
+- artifact upload: PASS
+
+Baseline Claim Boundary wall time: `301.403 s`.
+
+Observed reduction:
+
+[
+1 - \frac{34.583}{301.403}
+\approx 0.8853
+]
+
+or approximately **88.5% lower wall time for this workflow run**.
+
+This is an execution-cost result only. It is not a scientific claim and does not
+change the canonical full-suite authority.
+
+State update:
+
+`TOKEN_VAZIO_POST_REFACTOR_TIMELAPSE`
+→
+`CLAIM_BOUNDARY_TIMELAPSE_OBSERVED`
+
+The remaining non-regression gate is the canonical `Python tests` full suite
+on the same refactored head.
