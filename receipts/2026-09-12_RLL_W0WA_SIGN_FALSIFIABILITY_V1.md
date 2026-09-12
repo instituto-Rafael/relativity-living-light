@@ -30,6 +30,6 @@ CUSTOM_LICENSE != NON_FALSIFIABLE
 
 ## F_next
 
-Materialize a public DESI chain; use `P(wa>=0|D)` only as a coarse pre-gate, then compute 2D posterior/HPD overlap with the full RLL-accessible `(w0_eff,wa_eff)` domain under pinned dataset/priors/version.
+Use the public supplement DOI `10.5281/zenodo.18629072` as the reproduction source; first identify and verify the exact w0wa chain inside `paper_data.tar.gz`, then use `P(wa>=0|D)` only as a coarse pre-gate and compute 2D posterior/HPD overlap with the full RLL-accessible `(w0_eff,wa_eff)` domain.
 
 `claim_allowed=false`
