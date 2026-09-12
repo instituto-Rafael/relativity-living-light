@@ -1,0 +1,250 @@
+{
+  "schema": "rll.sevenfold_independent_peer_audit.v1",
+  "status": "IMPLEMENTED_UNEXECUTED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "purpose": "Review one atomic RLL claim or gap at a time through seven isolated peer houses, each with a constructive and adversarial side, seven mandatory tests, a unique Ω namespace, and a distinct ‡ falsification operator.",
+  "source_basis": [
+    "RLL frontier research evidence-dependency pipeline",
+    "RLL multidimensional gap retrofeedback ledger",
+    "RAFAELIA seven orthogonal axes: provenance; identity/integrity; runtime; morphology/observable; semantics; science/claim; governance/navigation"
+  ],
+  "atomic_target_policy": {
+    "one_claim_or_gap_per_round": true,
+    "hidden_conjunctions_forbidden": true,
+    "cross_claim_compensation_forbidden": true,
+    "target_bundle_must_pin": [
+      "repository",
+      "commit_sha",
+      "claim_or_gap_id",
+      "source_files",
+      "input_hashes"
+    ],
+    "on_ambiguous_target": "TOKEN_VAZIO_ATOMIC_TARGET_BOUNDARY"
+  },
+  "independence_protocol": {
+    "identical_input_bundle": true,
+    "peer_verdict_visibility_before_seal": "FORBIDDEN",
+    "cross_peer_messages_before_seal": "FORBIDDEN",
+    "shared_conclusion_seed": "FORBIDDEN",
+    "peer_receipt_mutation_after_seal": "FORBIDDEN",
+    "aggregator_reads_only_sealed_receipts": true,
+    "majority_vote": "FORBIDDEN",
+    "averaging": "FORBIDDEN",
+    "token_vazio_compensation": "FORBIDDEN",
+    "disagreement_policy": "INCONCLUSIVE_NEEDS_ADJUDICATION"
+  },
+  "paired_review_protocol": {
+    "roles": [
+      "constructive_reconstructor",
+      "adversarial_falsifier"
+    ],
+    "order": [
+      "constructive_reconstructor",
+      "freeze_support_graph",
+      "adversarial_falsifier",
+      "seal_pair_receipt"
+    ],
+    "constructive_scope": "reconstruct the strongest bounded interpretation actually supported by the pinned sources",
+    "adversarial_scope": "attempt to falsify that frozen interpretation without rewriting the source or importing peer verdicts",
+    "unresolved_internal_disagreement": "INCONCLUSIVE"
+  },
+  "semantic_token_graph_policy": {
+    "externalized_graph_only": true,
+    "nodes": [
+      "source",
+      "claim",
+      "equation",
+      "assumption",
+      "observable",
+      "test",
+      "falsifier",
+      "gap",
+      "receipt"
+    ],
+    "edges": [
+      "supports",
+      "contradicts",
+      "depends_on",
+      "aliases",
+      "derived_from",
+      "falsified_by",
+      "bounded_by"
+    ],
+    "internal_hidden_tokens_or_chain_of_thought_claimed": false,
+    "reviewer_route_freedom": "independent bounded exploration is allowed within the house scope",
+    "literal_free_will_claim": false
+  },
+  "authorship_policy": {
+    "analytical_peer_role_is_legal_author": false,
+    "AI_or_tool_assistance_must_be_recorded_separately": true,
+    "human_or_project_authorship_requires_explicit_repository_or_document_declaration": true,
+    "hash_or_commit_proves_chronology_not_authorship": true,
+    "reviewer_may_not_rewrite_source_to_make_claim_pass": true
+  },
+  "receipt_requirements": [
+    "round_id",
+    "peer_id",
+    "omega_namespace",
+    "ddagger_operator",
+    "target_commit_sha",
+    "target_id",
+    "input_bundle_sha256",
+    "constructive_graph_sha256",
+    "adversarial_tests",
+    "verdict",
+    "token_vazio",
+    "contradictions",
+    "receipt_sha256",
+    "sealed_at",
+    "reviewer_instance_provenance",
+    "tool_assistance"
+  ],
+  "allowed_verdicts": [
+    "PASS_BOUNDED",
+    "FAIL_FALSIFIED",
+    "TOKEN_VAZIO",
+    "INCONCLUSIVE"
+  ],
+  "global_aggregation": {
+    "if_any": "FAIL_FALSIFIED",
+    "state": "REVIEW_BLOCKED_BY_FALSIFICATION",
+    "if_any_token_or_inconclusive": "NOT_PROMOTABLE_INCOMPLETE_REVIEW",
+    "if_all": "PASS_BOUNDED",
+    "all_pass_state": "SEVENFOLD_REVIEW_PASSED_NO_CLAIM_PROMOTION",
+    "claim_allowed_after_all_pass": false,
+    "replication_still_required": true
+  },
+  "peers": [
+    {
+      "peer_id": "P1_PROVENANCE",
+      "axis": "O1_PROVENIENCIA",
+      "omega_namespace": "Ω_SRC",
+      "ddagger_operator": "‡SOURCE_SCOPE_ABLATION",
+      "responsibility": "source origin, custody, scope, contradictory sources and rights",
+      "tests": [
+        "primary_source_or_explicit_secondary_status",
+        "source_locator_and_version_pinned",
+        "source_scope_matches_claim_scope",
+        "contradictory_source_search_recorded",
+        "source_hash_or_immutable_version_recorded",
+        "license_and_reuse_boundary_recorded",
+        "copy_alias_not_misclassified_as_independent_confirmation"
+      ]
+    },
+    {
+      "peer_id": "P2_IDENTITY",
+      "axis": "O2_IDENTIDADE_INTEGRIDADE",
+      "omega_namespace": "Ω_ID",
+      "ddagger_operator": "‡IDENTITY_COLLISION_ATTACK",
+      "responsibility": "artifact identity, schema, units, hashes and immutable raw inputs",
+      "tests": [
+        "exact_commit_or_blob_identity",
+        "input_hashes_complete",
+        "schema_version_explicit",
+        "units_and_coordinate_conventions_explicit",
+        "raw_observations_immutable",
+        "alias_homonym_collision_test",
+        "receipt_hash_chain_or_equivalent_integrity"
+      ]
+    },
+    {
+      "peer_id": "P3_RUNTIME",
+      "axis": "O3_CONTAINER_RUNTIME",
+      "omega_namespace": "Ω_RUN",
+      "ddagger_operator": "‡CLEAN_ROOM_REPLAY",
+      "responsibility": "independent execution and environment parity",
+      "tests": [
+        "deterministic_command_declared",
+        "dependency_versions_or_lock_recorded",
+        "seed_and_randomness_policy_recorded",
+        "hardware_os_abi_disclosed_when_material",
+        "clean_environment_replay_attempted",
+        "output_hashes_or_numeric_receipt_recorded",
+        "implementation_unexecuted_never_promoted_to_pass"
+      ]
+    },
+    {
+      "peer_id": "P4_OBSERVABLE",
+      "axis": "O4_MORFOLOGIA_OBSERVAVEL",
+      "omega_namespace": "Ω_OBS",
+      "ddagger_operator": "‡OBSERVABLE_BLIND_SPLIT",
+      "responsibility": "direct observables, dataset morphology, selection effects and out-of-sample behavior",
+      "tests": [
+        "observable_defined_independently_of_result",
+        "dataset_manifest_and_selection_function_recorded",
+        "covariance_or_error_model_present",
+        "missingness_token_vazio_not_zero_filled",
+        "units_redshift_time_mapping_checked",
+        "synthetic_injection_or_null_recovery",
+        "blind_or_out_of_sample_check_when_applicable"
+      ]
+    },
+    {
+      "peer_id": "P5_SEMANTIC",
+      "axis": "O5_SEMANTICA_SIMBOLO",
+      "omega_namespace": "Ω_SEM",
+      "ddagger_operator": "‡SEMANTIC_NEGATION_INVERSION",
+      "responsibility": "claim atomization, definitions, symbols, negations and metaphor boundaries",
+      "tests": [
+        "claim_is_atomic",
+        "all_symbols_and_terms_defined",
+        "negations_exceptions_and_conditions_preserved",
+        "metaphor_not_promoted_to_mechanism",
+        "confusable_symbols_and_unicode_disambiguated",
+        "claim_entailment_from_source_is_explicit",
+        "forbidden_inferences_listed"
+      ]
+    },
+    {
+      "peer_id": "P6_SCIENCE",
+      "axis": "O6_CIENCIA_CLAIM",
+      "omega_namespace": "Ω_SCI",
+      "ddagger_operator": "‡NULL_MODEL_AND_ABLATION",
+      "responsibility": "formal falsifiability, statistics, baselines and scientific decision rules",
+      "tests": [
+        "null_hypothesis_explicit",
+        "nested_or_adversarial_baseline_included",
+        "falsification_threshold_predeclared",
+        "ablation_or_component_off_switch",
+        "residual_and_failure_diagnostics",
+        "parameter_count_priors_and_likelihood_parity",
+        "negative_result_preserved_and_independent_replication_required"
+      ]
+    },
+    {
+      "peer_id": "P7_GOVERNANCE",
+      "axis": "O7_GOVERNANCA_NAVEGACAO",
+      "omega_namespace": "Ω_GOV",
+      "ddagger_operator": "‡PROMOTION_BOUNDARY_ATTACK",
+      "responsibility": "authority, receipt completeness, rollback, non-regression and promotion boundaries",
+      "tests": [
+        "canonical_authority_owner_identified",
+        "gate_dependencies_all_satisfied_or_token_vazio",
+        "reviewer_tool_assistance_and_conflicts_disclosed",
+        "rollback_is_smallest_reversible_delta",
+        "non_regression_contract_preserved",
+        "time_validity_and_supersession_checked",
+        "promotion_requires_all_seven_sealed_receipts_without_fail_or_gap"
+      ]
+    }
+  ],
+  "execution_order": {
+    "per_target": "all seven peers start from the same pinned bundle and remain isolated until their pair receipt is sealed",
+    "aggregation": "only after seven sealed receipts",
+    "next_round": "new claim/gap receives a fresh round_id and fresh receipts; prior verdicts are context, not votes"
+  },
+  "F_ok": [
+    "7 independent peer houses are defined",
+    "each house has a constructive and adversarial side",
+    "7 mandatory checks per house produce a 7x7 matrix of 49 checks",
+    "Ω namespaces and ‡ operators are unique",
+    "majority voting and compensatory averaging are forbidden"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_SEVENFOLD_EXECUTION_RECEIPTS",
+    "TOKEN_VAZIO_INDEPENDENT_REVIEWER_INSTANCES",
+    "TOKEN_VAZIO_FIRST_ATOMIC_TARGET_EXECUTION"
+  ],
+  "F_next": "Run the framework first on one atomic RLL target, preferably the current highest-priority perturbation gap, without exposing peer verdicts before sealing."
+}
