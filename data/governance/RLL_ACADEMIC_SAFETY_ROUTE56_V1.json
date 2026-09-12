@@ -38,8 +38,54 @@
       "exact": "sqrt(3)/2 = cos(30 degrees)",
       "native_to_45deg_mesh": false,
       "evidence_weight": false,
-      "relation_to_route56_scoring": "NONE",
-      "status": "TOKEN_VAZIO_SEPARATE_GEOMETRIC_CONTRACT"
+      "relation_to_route56_scoring": "NONE_GEOMETRIC_ONLY",
+      "status": "DEFINED_SECOND_STAGE_RESIDUAL_PROJECTION"
+    },
+    "quadratic_projection_bridge": {
+      "status": "DEFINED_EXACT_GEOMETRY",
+      "purpose": "Connect the 45-degree right-triangle residual to a secondary 30-degree projection without turning either coefficient into scientific evidence weight.",
+      "general_right_triangle": {
+        "variables": "a,b catheti; h=sqrt(a^2+b^2)",
+        "residuals": {
+          "d_a": "h-a",
+          "d_b": "h-b",
+          "d_ab": "a-b"
+        },
+        "completing_square": [
+          "(a+d_a)^2 = a^2+b^2",
+          "d_a^2 + 2*a*d_a = b^2",
+          "(b+d_b)^2 = a^2+b^2",
+          "d_b^2 + 2*b*d_b = a^2"
+        ],
+        "difference_of_squares": [
+          "(h-a)(h+a)=b^2",
+          "(h-b)(h+b)=a^2",
+          "(a-b)(a+b)=a^2-b^2"
+        ]
+      },
+      "isosceles_45_leg_normalized": {
+        "a": 1,
+        "b": 1,
+        "h_exact": "sqrt(2)",
+        "d_exact": "sqrt(2)-1",
+        "borrowed_area_identity": "(sqrt(2)-1)^2 + 2*(sqrt(2)-1) = 1",
+        "factor_identity": "(sqrt(2)-1)(sqrt(2)+1)=1",
+        "cathetus_difference": 0
+      },
+      "secondary_projection_30deg": {
+        "source_residual": "d=sqrt(2)-1 for unit cathetus",
+        "parallel_exact": "p=(sqrt(3)/2)d=(sqrt(6)-sqrt(3))/2",
+        "orthogonal_exact": "q=(1/2)d=(sqrt(2)-1)/2",
+        "norm_identity": "p^2+q^2=d^2",
+        "evidence_weight": false,
+        "physical_claim": false
+      },
+      "hypotenuse_normalized_45": {
+        "h": 1,
+        "cathetus_exact": "sqrt(2)/2",
+        "residual_exact": "1-sqrt(2)/2"
+      },
+      "boundary": "Exact algebraic/geometric bridge only; no empirical or physical significance follows without an independently defined model."
     }
   },
   "directions": [

@@ -71,7 +71,7 @@ def test_sqrt3_over_2_is_not_smuggled_in_as_evidence_weight() -> None:
     assert token["exact"] == "sqrt(3)/2 = cos(30 degrees)"
     assert token["native_to_45deg_mesh"] is False
     assert token["evidence_weight"] is False
-    assert token["status"].startswith("TOKEN_VAZIO")
+    assert token["status"] == "DEFINED_SECOND_STAGE_RESIDUAL_PROJECTION"
 
 
 def test_center_is_not_a_ninth_permutation_node() -> None:
@@ -91,3 +91,42 @@ def test_current_scientific_claim_remains_fail_closed() -> None:
 def test_route56_structure_validator_passes() -> None:
     r = report()
     assert route56.validate_structure(r) == []
+
+
+
+def test_45deg_borrowed_square_recovers_opposite_cathetus_area() -> None:
+    r = report()
+    iso = r["quadratic_projection_bridge"]["isosceles_45_leg_normalized"]
+    assert math.isclose(iso["recovered_b_squared"], 1.0, abs_tol=1e-12)
+    assert math.isclose(
+        iso["borrowed_square"] + iso["borrowed_rectangles_2ad"],
+        1.0,
+        abs_tol=1e-12,
+    )
+
+
+def test_difference_of_squares_matches_pythagoras() -> None:
+    r = report()
+    iso = r["quadratic_projection_bridge"]["isosceles_45_leg_normalized"]
+    assert math.isclose(iso["factor_product"], 1.0, abs_tol=1e-12)
+    assert iso["factor_identity_exact"] == "(sqrt(2)-1)(sqrt(2)+1)=1"
+
+
+def test_sqrt3_over_2_projects_the_45_residual_without_changing_norm() -> None:
+    r = report()
+    p = r["quadratic_projection_bridge"]["secondary_projection_sqrt3_over_2"]
+    assert math.isclose(
+        p["projected_parallel"] ** 2 + p["projected_orthogonal"] ** 2,
+        p["residual_squared"],
+        abs_tol=1e-12,
+    )
+    assert p["evidence_weight"] is False
+    assert p["physical_claim"] is False
+
+
+def test_45deg_catheti_are_equal_but_hypotenuse_residual_is_nonzero() -> None:
+    r = report()
+    iso = r["quadratic_projection_bridge"]["isosceles_45_leg_normalized"]
+    assert math.isclose(iso["catheti_difference"], 0.0, abs_tol=1e-12)
+    assert iso["d_a"] > 0.0
+    assert math.isclose(iso["d_a"], iso["d_b"], abs_tol=1e-12)

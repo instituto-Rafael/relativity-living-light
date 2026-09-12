@@ -54,15 +54,63 @@ Logo a malha possui `56 × 6 = 336` células de controle. Uma célula é um requ
 
 No estado atual do RLL, o centro esperado é `DOWN_BLOCKED` porque o E0 ainda bloqueia promoção metodológica.
 
-## √3/2
+## Ponte quadrática 45° → √3/2
 
-`√3/2 = cos(30°)`.
+Para um triângulo retângulo com catetos `a,b` e hipotenusa `h`:
 
-A malha Route56 usa passos de 45°. Portanto `√3/2` **não é coordenada nativa nem peso científico** desta malha. Ele permanece um token geométrico separado:
+`h²=a²+b²`.
 
-`TOKEN_VAZIO_SEPARATE_GEOMETRIC_CONTRACT`
+Defina o resíduo entre hipotenusa e um cateto:
 
-Na circunferência unitária, os oito triângulos isocêntricos adjacentes têm ângulo central 45°, corda `√(2-√2)` e área `√2/4`.
+`d=h-a`.
+
+Como `h=a+d`:
+
+`(a+d)²=a²+b²`
+
+e portanto:
+
+`d²+2ad=b²`.
+
+Esta é a forma de **completação quadrática / área auxiliar**: o quadrado residual `d²` mais duas áreas retangulares `ad` recompõem exatamente a área `b²`.
+
+A mesma identidade fatorada é:
+
+`(h-a)(h+a)=b²`.
+
+No caso isósceles de 45°, usando `a=b=1`:
+
+`h=√2`, `d=√2-1`
+
+e:
+
+`(√2-1)(√2+1)=1`.
+
+Assim a diferença entre cateto e hipotenusa não é descartada: ela vira um resíduo geométrico exato.
+
+Agora entra:
+
+`√3/2=cos(30°)`.
+
+Ela não é ângulo nativo da malha de 45°, mas pode atuar **sobre o resíduo** como segunda projeção:
+
+`p=(√3/2)d=(√6-√3)/2`
+
+`q=(1/2)d=(√2-1)/2`
+
+e:
+
+`p²+q²=d²`.
+
+Portanto a ponte correta é:
+
+`45° → resíduo d → projeção 30°/60° do resíduo`.
+
+Isso define uma relação geométrica exata sem usar `√3/2` como peso de evidência física ou científica.
+
+Na normalização por hipotenusa `h=1`, os catetos são `√2/2` e o resíduo é `1-√2/2`.
+
+Na circunferência unitária, os oito triângulos isocêntricos adjacentes continuam tendo ângulo central 45°, corda `√(2-√2)` e área `√2/4`.
 
 ## Fronteira de produção
 
