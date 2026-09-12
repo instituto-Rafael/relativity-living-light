@@ -1,0 +1,32 @@
+{
+  "schema": "rll.cosmology_variable_contract.v1",
+  "scope": "joint real-data cosmology successor",
+  "claim_allowed": false,
+  "variables": [
+    {"name":"H0","type":"free","unit":"km s^-1 Mpc^-1","bounds":[60.0,80.0],"status":"IMPLEMENTED","depends_on":["E(0)=1 for physical present-day interpretation"]},
+    {"name":"Omega_m","symbol":"Om","type":"free","unit":"dimensionless","bounds":[0.10,0.60],"status":"IMPLEMENTED"},
+    {"name":"Omega_r","symbol":"Or","type":"fixed_current_pipeline","unit":"dimensionless","value":0.00009,"status":"IMPLEMENTED_WITH_ASSUMPTION","risk":"early-universe consistency must be revisited for precision CMB"},
+    {"name":"Omega_Lambda","symbol":"OL","type":"derived_flat_closure","unit":"dimensionless","status":"IMPLEMENTED_SUCCESSOR","formula_standard":"1-Or-Om","formula_RLL":"1-Or-Om-Os0"},
+    {"name":"w","type":"free_wCDM","unit":"dimensionless","bounds":[-2.0,-0.3],"status":"IMPLEMENTED"},
+    {"name":"w0","type":"free_CPL","unit":"dimensionless","bounds":[-2.0,-0.3],"status":"IMPLEMENTED"},
+    {"name":"wa","type":"free_CPL","unit":"dimensionless","bounds":[-3.0,3.0],"status":"IMPLEMENTED"},
+    {"name":"Omega_s0","symbol":"Os0","type":"free_RLL","unit":"dimensionless","bounds":[0.0,0.25],"status":"IMPLEMENTED"},
+    {"name":"z_t","symbol":"zt","type":"free_RLL","unit":"dimensionless_redshift","bounds":[0.1,10.0],"status":"IMPLEMENTED"},
+    {"name":"w_t","symbol":"wt","type":"free_RLL_transition_width","unit":"dimensionless_redshift","bounds":[0.05,2.0],"status":"IMPLEMENTED"},
+    {"name":"omega_b","symbol":"Ob_h2","type":"free","unit":"dimensionless_physical_density","bounds":[0.018,0.026],"status":"IMPLEMENTED"},
+    {"name":"sigma8","type":"free_growth_amplitude","unit":"dimensionless","bounds":[0.50,1.10],"status":"IMPLEMENTED_BUT_GROWTH_CLAIM_BLOCKED"},
+    {"name":"r_d","type":"derived_approximation","unit":"Mpc","status":"IMPLEMENTED_FOR_BAO","risk":"power-law approximation is not r_s(z_star)"},
+    {"name":"r_s_zstar","symbol":"r_s(z*)","type":"derived_required_for_CMB_acoustic_scale","unit":"Mpc","status":"TOKEN_VAZIO_IMPLEMENTATION"},
+    {"name":"D_z","symbol":"D(z)","type":"derived_required_for_growth","unit":"dimensionless","status":"TOKEN_VAZIO_IMPLEMENTATION"},
+    {"name":"gamma_growth","symbol":"gamma","type":"proxy_constant","unit":"dimensionless","value":0.55,"status":"EXPLORATORY_PROXY_NOT_CLAIM_BEARING"},
+    {"name":"z_star","symbol":"z*","type":"fixed_current_pipeline","unit":"redshift","value":1089.92,"status":"IMPLEMENTED_WITH_ASSUMPTION"}
+  ],
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "derived parameter != fitted parameter",
+    "r_d(z_drag) != r_s(z_star)",
+    "growth-index proxy != validated perturbation growth"
+  ]
+}

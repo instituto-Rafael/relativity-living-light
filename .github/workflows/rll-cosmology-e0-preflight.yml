@@ -5,6 +5,11 @@ on:
   pull_request:
     paths:
       - "data/pipelines/structure_d/joint_real_likelihood.py"
+      - "data/pipelines/structure_d/joint_real_likelihood_flat.py"
+      - "tools/rll_cosmology_flat_closure_preflight.py"
+      - "tests/test_rll_cosmology_flat_closure_successor.py"
+      - "data/governance/RLL_COSMOLOGY_VARIABLE_CONTRACT_V1.json"
+      - "data/governance/RLL_FLAT_CLOSURE_SUCCESSOR_V1.json"
       - "src/rll/cosmology_fairness.py"
       - "tools/rll_cosmology_e0_preflight.py"
       - "tests/test_rll_cosmology_e0_preflight.py"
@@ -30,8 +35,14 @@ jobs:
       - name: Run E0 contract tests
         run: python -m pytest -q tests/test_rll_cosmology_e0_preflight.py
 
+      - name: Run flat-closure successor tests
+        run: python -m pytest -q tests/test_rll_cosmology_flat_closure_successor.py
+
       - name: Materialize fail-closed preflight report
         run: python tools/rll_cosmology_e0_preflight.py --output results/audit/rll_cosmology_e0_preflight.json
+
+      - name: Materialize flat-closure successor preflight
+        run: python tools/rll_cosmology_flat_closure_preflight.py --output results/audit/rll_cosmology_flat_closure_preflight.json
 
       - name: Show scientific promotion state
         run: |
@@ -41,10 +52,16 @@ jobs:
           p = json.loads(Path("results/audit/rll_cosmology_e0_preflight.json").read_text())
           print("status=", p["status"])
           print("claim_allowed=", p["claim_allowed"])
+          q = json.loads(Path("results/audit/rll_cosmology_flat_closure_preflight.json").read_text())
+          print("flat_status=", q["status"])
+          print("flat_closure_claim_allowed=", q["closure_claim_allowed"])
+          print("flat_model_selection_claim_allowed=", q["model_selection_claim_allowed"])
           PY
 
       - name: Upload E0 report
         uses: actions/upload-artifact@v4
         with:
           name: rll-cosmology-e0-preflight
-          path: results/audit/rll_cosmology_e0_preflight.json
+          path: |
+            results/audit/rll_cosmology_e0_preflight.json
+            results/audit/rll_cosmology_flat_closure_preflight.json

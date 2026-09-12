@@ -86,6 +86,17 @@ jobs:
             --previous "$previous" \
             | tee artifacts/python-tests/formula_literature_non_regression.log
 
+      - name: Materialize deterministic audit prerequisites
+        run: |
+          set -euo pipefail
+          python tools/rll_real_data_evidence_bridge.py \
+            --output results/audit/rll_real_data_evidence_bridge.json \
+            --require-data-ready
+          python tools/rll_cosmology_e0_preflight.py \
+            --output results/audit/rll_cosmology_e0_preflight.json
+          test -s results/audit/rll_real_data_evidence_bridge.json
+          test -s results/audit/rll_cosmology_e0_preflight.json
+
       - name: Run tests with auditable receipt
         run: |
           mkdir -p artifacts/python-tests
