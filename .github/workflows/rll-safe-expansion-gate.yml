@@ -7,9 +7,11 @@ on:
       - "data/governance/RLL_SAFE_EXPANSION_CONTRACT_V1.json"
       - "data/governance/RLL_GAP_DECOMPOSITION_V1.json"
       - "src/rll/cosmology_radiation.py"
+      - "src/rll/cosmology_recombination.py"
       - "tools/rll_safe_expansion_gate.py"
       - "tests/test_rll_safe_expansion_gate.py"
       - "tests/test_rll_cosmology_radiation.py"
+      - "tests/test_rll_cosmology_recombination.py"
       - ".github/workflows/rll-safe-expansion-gate.yml"
 
 permissions:
@@ -32,7 +34,7 @@ jobs:
         run: python tools/rll_safe_expansion_gate.py --output results/audit/rll_safe_expansion_gate.json
 
       - name: Run safe-expansion tests
-        run: python -m pytest -q tests/test_rll_safe_expansion_gate.py tests/test_rll_cosmology_radiation.py
+        run: PYTHONPATH=src python -m pytest -q tests/test_rll_safe_expansion_gate.py tests/test_rll_cosmology_radiation.py tests/test_rll_cosmology_recombination.py
 
       - name: Show fail-closed state
         run: |
