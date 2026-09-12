@@ -13,12 +13,12 @@ Claim allowed: **false**
   `wa_eff >= 0`.
 - Reclassified the issue from "model not falsifiable" to:
   `STRUCTURAL_SIGN_TENSION_POSTERIOR_OVERLAP_REQUIRED`.
-- Recorded that arXiv:2602.18761 reports `w0=+0.49 +/- 0.25`, not `-0.49 +/- 0.25`.
+- Recorded version discrepancy for 2602.18761: the currently indexed arXiv abstract shows `w0=+0.49 +/- 0.25`, while peer-reviewed JCAP 2026(06) 043 shows `w0=-0.49 +/- 0.25`; the published value is the active benchmark.
 - Separated custom-license interoperability from scientific falsifiability.
 
 ## Boundary
 
-A negative-`wa` best-fit point is not a direct observable and is not by itself a falsification of RLL.
+A negative-`wa` best-fit point, even paired with the published negative `w0`, is not a direct observable and is not by itself a falsification of RLL.
 
 The decisive gate is posterior overlap under a matched likelihood and validated local/global mapping.
 
