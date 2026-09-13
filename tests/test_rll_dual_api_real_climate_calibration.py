@@ -48,6 +48,22 @@ class DualApiCalibrationTests(unittest.TestCase):
         self.assertEqual(name, "MY_CLIMATE_SECRET")
         self.assertEqual(value, "opaque")
 
+    def test_github_installation_token_is_opaque_and_length_agnostic(self):
+        stateless = "ghs_" + ("A" * 180) + "." + ("B" * 170) + "." + ("C" * 170)
+        self.assertGreaterEqual(len(stateless), 520)
+        self.assertEqual(stateless.count("."), 2)
+        with patch.dict(os.environ, {
+            "RLL_AGENT_GITHUB_PAT_ENV": "GITHUB_TOKEN",
+            "GITHUB_TOKEN": stateless,
+        }, clear=True):
+            name, value = dualapi.resolve_secret(
+                "RLL_AGENT_GITHUB_PAT_ENV",
+                ("GITHUB_TOKEN",)
+            )
+        self.assertEqual(name, "GITHUB_TOKEN")
+        self.assertIs(value, stateless)
+        self.assertTrue(value.startswith("ghs_"))
+
     def test_ambiguous_aliases_fail_closed(self):
         with patch.dict(os.environ, {"A":"1","B":"2"}, clear=True):
             with self.assertRaises(dualapi.CalibrationError):
