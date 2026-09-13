@@ -1,0 +1,90 @@
+{
+  "schema": "rll.growth_semantics_abc.v1",
+  "generated_at": "2026-09-13",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_gate": "data/governance/RLL_GROWTH_CONTINUITY_SEMANTICS_GATE_V1.json",
+  "claim_allowed": false,
+  "selected_semantics": "TOKEN_VAZIO",
+  "comparison_rule": "same equations -> conservation/accounting -> falsifier -> uncertainty -> reproduction -> rollback",
+  "routes": {
+    "A": {
+      "id": "CONSERVED_EFFECTIVE_FLUID",
+      "status": "CANDIDATE_SURVIVES_MATH_GATE_PHYSICS_OPEN",
+      "equations": [
+        "p_cons=-rho_s-(1/3)d rho_s/dln(a)",
+        "w_cons=p_cons/rho_s"
+      ],
+      "evidence_supported": [
+        "separate-continuity residual closes algebraically for the versioned rho_s",
+        "existing RLL docs already implement the conserved-pressure diagnostic"
+      ],
+      "still_open": [
+        "rest-frame pressure perturbation closure",
+        "entropy policy",
+        "gauge and initial conditions",
+        "transition regularity",
+        "canonical-scalar interpretation and observational viability"
+      ],
+      "falsifiers": [
+        "nonzero continuity residual",
+        "robust w_cons<-1 if canonical-scalar subroute is asserted",
+        "singular/unstable perturbations",
+        "failed gauge/IC/conservation checks"
+      ],
+      "rollback": "restore selected_semantics=TOKEN_VAZIO and retain A test receipt"
+    },
+    "B": {
+      "id": "INTERACTING_SECTOR",
+      "status": "FORMAL_Q_PASS_PHYSICAL_IMPLEMENTATION_BLOCKED",
+      "equations": [
+        "Q_s/H=Omega_s0*rho_c0*f_prime*(1-a^-3)",
+        "nabla_mu T_c^{mu nu}=-Q^nu",
+        "nabla_mu T_s^{mu nu}=+Q^nu"
+      ],
+      "evidence_supported": [
+        "background continuity residual determines a formal scalar source function"
+      ],
+      "still_open": [
+        "recipient sector",
+        "covariant Q_mu",
+        "momentum transfer prescription",
+        "modified receiver background evolution",
+        "perturbation equations",
+        "growth/lensing confrontation"
+      ],
+      "falsifiers": [
+        "total stress-energy does not close",
+        "recipient sector missing or inconsistent",
+        "growth/lensing instability or observational inconsistency"
+      ],
+      "rollback": "remove interacting candidate and restore TOKEN_VAZIO without changing historical p_doc receipt"
+    },
+    "C": {
+      "id": "PHENOMENOLOGICAL_BACKGROUND",
+      "status": "SURVIVES_AS_BACKGROUND_ONLY",
+      "equations": [
+        "E2_RLL background remains a phenomenological H(z) mapping"
+      ],
+      "evidence_supported": [
+        "repository operational registry already classifies the logistic background as phenomenological with microphysical identity open"
+      ],
+      "still_open": [
+        "no claim-bearing new-sector perturbations",
+        "cs2 remains TOKEN_VAZIO",
+        "microphysical identity remains open"
+      ],
+      "falsifiers": [
+        "background model loses against adversarial baselines under a common likelihood",
+        "a downstream artifact improperly promotes background phenomenology into perturbation physics"
+      ],
+      "rollback": "no microphysical rollback needed; preserve background-only claim boundary"
+    }
+  },
+  "operational_order": [
+    "A_TEST_FIRST",
+    "B_IF_INTERACTION_IS_CHOSEN_OR_A_FAILS",
+    "C_SAFE_BACKGROUND_FALLBACK"
+  ],
+  "ordering_boundary": "Operational priority is based on current missing-structure cost and falsifiability, not evidence that A is physically true.",
+  "next": "version Route A as a bounded candidate and test regularity/pressure-perturbation/gauge/IC/conservation; keep B and C live as explicit fallback branches"
+}
