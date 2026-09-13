@@ -34,7 +34,7 @@ machine-readable across major domains without duplicating the full gap ledger.
 |---|---|---|
 | background | EVIDENCED_FOCUSED | preserve flat closure and historical path |
 | CMB | VERIFIED_LIMITED | keep bounded CAMB benchmark reproducible |
-| growth | NEGATIVE_EVIDENCE_DECOMPOSED | advance GROWTH-CS2-001 only |
+| growth | NEGATIVE_EVIDENCE_DECOMPOSED | resolve continuity semantics first; then GROWTH-CS2-001 |
 | real_data | VERIFIED_LIMITED | preserve provenance supersession and rerun successor later |
 | inference | BLOCKED_BY_DEPENDENCY | no MCMC/model-selection promotion yet |
 | magneto_plasma | TOKEN_VAZIO_FORMALIZATION | require equations, units, observable and falsifier |
