@@ -70,6 +70,20 @@ RLL_CLIMATE_ENGINE_TRIAL_TOKEN=${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
 
 This preserves the existing RLL credential policy.
 
+
+### GitHub App installation-token format compatibility
+
+GitHub announced a rollout from classic opaque installation tokens to stateless JWT-format installation tokens. The new form remains `ghs_`-prefixed, can be roughly 520 characters long, and contains two dots. RLL therefore treats GitHub credentials as opaque bearer strings:
+
+- no fixed token-length assumption;
+- no `ghs_` regex gate in runtime authority resolution;
+- no JWT decoding or claim introspection;
+- no token value, length, or hash persisted in receipts.
+
+The temporary request header `X-GitHub-Stateless-S2S-Token` applies only when creating a GitHub App installation access token through `POST /app/installations/:installation_id/access_tokens`. RLL's normal GitHub API calls do not create installation tokens, so this header is not added to ordinary repository/provenance requests.
+
+If RLL later owns a GitHub App token-minting path, compatibility testing must cover `enabled`, `disabled`, and absent-header behavior; production code should remove the temporary override after both formats are validated.
+
 ## Real calibration
 
 For one declared dataset, variable, geometry and two date windows, the runtime computes:
