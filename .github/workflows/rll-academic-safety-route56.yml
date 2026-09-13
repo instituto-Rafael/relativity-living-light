@@ -1,0 +1,89 @@
+name: RLL Academic Safety Route56
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/governance/RLL_ACADEMIC_SAFETY_ROUTE56_V1.json"
+      - "data/governance/RLL_EXTERNAL_EVIDENCE_REGISTRY_V1.json"
+      - "data/governance/RLL_REAL_DATA_VALIDATION_CONTRACT_V2.json"
+      - "data/governance/RLL_COSMOLOGY_E0_GATE_V1.json"
+      - "tools/rll_academic_safety_route56.py"
+      - "tools/rll_real_data_evidence_bridge.py"
+      - "tools/rll_cosmology_e0_preflight.py"
+      - "tests/test_rll_academic_safety_route56.py"
+      - "docs/governance/RLL_ACADEMIC_SAFETY_ROUTE56_PT_EN.md"
+      - ".github/workflows/rll-academic-safety-route56.yml"
+
+permissions:
+  contents: read
+
+env:
+  CLAIM_BOUNDARY: "Route56 validates cross-examination structure and evidence routing; it does not confirm RLL cosmology."
+  ROUTE_BOUNDARY: "56 routes are ordered navigation relations. Geometry and emoji addresses carry zero scientific evidence weight."
+
+jobs:
+  route56-academic-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded scientific dependencies
+        run: python -m pip install --disable-pip-version-check numpy pandas scipy pytest
+
+      - name: Materialize current evidence bridge
+        run: |
+          set -euo pipefail
+          python tools/rll_real_data_evidence_bridge.py \
+            --require-data-ready \
+            --output results/audit/rll_real_data_evidence_bridge.json
+
+      - name: Materialize current E0 state
+        run: |
+          set -euo pipefail
+          python tools/rll_cosmology_e0_preflight.py \
+            --output results/audit/rll_cosmology_e0_preflight.json
+
+      - name: Execute Route56 structural cross-examination
+        run: |
+          set -euo pipefail
+          python tools/rll_academic_safety_route56.py \
+            --require-structure \
+            --output results/audit/rll_academic_safety_route56.json
+
+      - name: Run focused Route56 tests
+        run: python -m pytest -q tests/test_rll_academic_safety_route56.py
+
+      - name: Materialize boundaries and checksums
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$CLAIM_BOUNDARY" > results/audit/ROUTE56_CLAIM_BOUNDARY.txt
+          printf '%s\n' "$ROUTE_BOUNDARY" > results/audit/ROUTE56_GEOMETRY_BOUNDARY.txt
+          (
+            cd results/audit
+            sha256sum \
+              rll_real_data_evidence_bridge.json \
+              rll_cosmology_e0_preflight.json \
+              rll_academic_safety_route56.json \
+              ROUTE56_CLAIM_BOUNDARY.txt \
+              ROUTE56_GEOMETRY_BOUNDARY.txt > ROUTE56_CHECKSUMS.sha256
+          )
+
+      - name: Upload Route56 evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-academic-safety-route56
+          path: |
+            results/audit/rll_real_data_evidence_bridge.json
+            results/audit/rll_cosmology_e0_preflight.json
+            results/audit/rll_academic_safety_route56.json
+            results/audit/ROUTE56_CLAIM_BOUNDARY.txt
+            results/audit/ROUTE56_GEOMETRY_BOUNDARY.txt
+            results/audit/ROUTE56_CHECKSUMS.sha256

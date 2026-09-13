@@ -1,6 +1,13 @@
-name: "RLL Dual API Real Climate Calibration — manual"
+name: "RLL Dual API Real Climate Calibration"
 
 on:
+  pull_request:
+    paths:
+      - "scripts/rll_dual_api_real_climate_calibration.py"
+      - "tests/test_rll_dual_api_real_climate_calibration.py"
+      - "data/contracts/rll_dual_api_real_climate_calibration.v1.json"
+      - "docs/science/RLL_DUAL_API_REAL_CALIBRATION_V1.md"
+      - ".github/workflows/rll-dual-api-real-calibration.yml"
   workflow_dispatch:
     inputs:
       dataset:
@@ -39,12 +46,30 @@ permissions:
   contents: read
 
 concurrency:
-  group: rll-dual-api-calibration-${{ github.run_id }}
-  cancel-in-progress: false
+  group: rll-dual-api-calibration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  static-validation:
+    name: "Static calibration contract tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: "Checkout immutable reviewed action"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "Run unit tests without external credentials"
+        run: python3 -m unittest -v tests.test_rll_dual_api_real_climate_calibration
+
   real-climate-calibration:
+    name: "Real dual-API calibration — manual only"
     if: github.event_name == 'workflow_dispatch'
+    needs: static-validation
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -70,9 +95,6 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 1
-
-      - name: "Static unit tests before network execution"
-        run: python3 -m unittest -v tests.test_rll_dual_api_real_climate_calibration
 
       - name: "Run real dual-API calibration with fail-closed receipt"
         id: calibration

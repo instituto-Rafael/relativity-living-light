@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Fail-closed credential-authority audit for RLL.
+"""Fail-closed credential-authority audit for RLL repository secrets.
 
-This module validates repository policy and workflow use of privileged
-credentials without reading, hashing, logging, or persisting secret values.
+Canonical repository secrets:
+- GITPAT: manual read-only GitHub authentication assurance only.
+- RLL_CLIMATE_ENGINE_TRIAL_TOKEN: manual Climate Engine provider-read jobs only.
+
+Secret values are never read by this static audit, persisted, hashed, or logged.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -21,10 +23,13 @@ import yaml
 SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
 WORKFLOW_ROOT = Path(".github/workflows")
+GITHUB_SECRET = "GITPAT"
 CLIMATE_SECRET = "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"
+GITHUB_ASSURANCE_WORKFLOW = ".github/workflows/rll-repository-pat-assurance.yml"
 
-PAT_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT)\b",
+GITHUB_SECRET_REF_RE = re.compile(rf"secrets\.{re.escape(GITHUB_SECRET)}\b", re.IGNORECASE)
+LEGACY_PAT_SECRET_REF_RE = re.compile(
+    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT)\b",
     re.IGNORECASE,
 )
 CLIMATE_SECRET_REF_RE = re.compile(
@@ -32,11 +37,11 @@ CLIMATE_SECRET_REF_RE = re.compile(
     re.IGNORECASE,
 )
 DESTRUCTIVE_RE = re.compile(
-    r"(?:\bcurl\b[^\n]*(?:-X|--request)\s*DELETE\b|"
-    r"\bgh\s+api\b[^\n]*(?:-X|--method)\s*DELETE\b|"
-    r"\bgit\s+push\b[^\n]*--delete\b|"
-    r"\bgit\s+push\b[^\n]*:\s*refs/(?:heads|tags)/|"
-    r"\brequests\.delete\s*\(|\bhttpx\.delete\s*\()",
+    r"(?:\bcurl\b[^\n]*(?:-X|--request)\s*(?:POST|PUT|PATCH|DELETE)\b|"
+    r"\bgh\s+api\b[^\n]*(?:-X|--method)\s*(?:POST|PUT|PATCH|DELETE)\b|"
+    r"\bgit\s+push\b|"
+    r"\brequests\.(?:post|put|patch|delete)\s*\(|"
+    r"\bhttpx\.(?:post|put|patch|delete)\s*\()",
     re.IGNORECASE,
 )
 SECRET_DUMP_RE = re.compile(
@@ -75,6 +80,45 @@ def _contains_manual_guard(job: dict[str, Any]) -> bool:
     return "github.event_name" in expr and "workflow_dispatch" in expr
 
 
+def _audit_secret_job(
+    findings: list[Finding],
+    rel: str,
+    doc: dict[str, Any],
+    secret_re: re.Pattern[str],
+    code_prefix: str,
+) -> None:
+    if "pull_request_target" in _triggers(doc):
+        findings.append(Finding(
+            "ERROR", "PULL_REQUEST_TARGET_SECRET", rel,
+            "credential-bearing workflow cannot use pull_request_target",
+        ))
+
+    for job_id, raw_job in (doc.get("jobs") or {}).items():
+        if not isinstance(raw_job, dict):
+            continue
+        job_text = json.dumps(raw_job, ensure_ascii=False)
+        if not secret_re.search(job_text):
+            continue
+        if not _contains_manual_guard(raw_job):
+            findings.append(Finding(
+                "ERROR", f"{code_prefix}_NON_MANUAL", rel,
+                "job consuming a repository secret must be guarded by workflow_dispatch",
+                str(job_id),
+            ))
+        if DESTRUCTIVE_RE.search(job_text):
+            findings.append(Finding(
+                "ERROR", "DESTRUCTIVE_OPERATION_WITH_SECRET", rel,
+                "mutating remote operations are forbidden in repository-secret probe jobs",
+                str(job_id),
+            ))
+        if SECRET_DUMP_RE.search(job_text):
+            findings.append(Finding(
+                "ERROR", "SECRET_DUMP_RISK", rel,
+                "shell tracing or environment dumping is forbidden in a credential-bearing job",
+                str(job_id),
+            ))
+
+
 def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Finding], dict[str, Any]]:
     findings: list[Finding] = []
     full_policy = repo_root / policy_path
@@ -94,78 +138,65 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
         findings.append(Finding("ERROR", "CLAIM_BOUNDARY", policy_path.as_posix(), "claim_allowed must remain false"))
     if policy.get("canonical_repository") != "instituto-Rafael/relativity-living-light":
         findings.append(Finding("ERROR", "CANONICAL_REPOSITORY", policy_path.as_posix(), "canonical repository mismatch"))
+    if policy.get("canonical_secret_surface") != "GITHUB_ACTIONS_REPOSITORY_SECRETS":
+        findings.append(Finding("ERROR", "SECRET_SURFACE", policy_path.as_posix(), "canonical secret surface must be repository secrets"))
 
-    groups = policy.get("authority_groups") or {}
-    github_pat = groups.get("github_agent_pat") or {}
-    climate = groups.get("climate_engine_trial") or {}
-    permissions = github_pat.get("fine_grained_permissions") or {}
-
-    if permissions.get("administration") != "none":
-        findings.append(Finding("ERROR", "PAT_ADMINISTRATION_FORBIDDEN", policy_path.as_posix(), "GitHub PAT Administration must be none"))
-    if permissions.get("agent_secrets") != "none":
-        findings.append(Finding("ERROR", "PAT_AGENT_SECRETS_WRITE_FORBIDDEN", policy_path.as_posix(), "runtime PAT must not manage Agent secrets"))
-    if github_pat.get("actions_secret_binding") != "FORBIDDEN_BY_DEFAULT":
-        findings.append(Finding("ERROR", "PAT_ACTIONS_BINDING", policy_path.as_posix(), "GitHub PAT must remain agent-only by default"))
-    if climate.get("actions_secret_name") != CLIMATE_SECRET:
-        findings.append(Finding("ERROR", "CLIMATE_SECRET_NAME", policy_path.as_posix(), f"Actions Climate secret must be {CLIMATE_SECRET}"))
+    secrets = policy.get("repository_secrets") or {}
+    github = secrets.get("github_pat") or {}
+    climate = secrets.get("climate_engine_trial") or {}
+    if github.get("secret_name") != GITHUB_SECRET:
+        findings.append(Finding("ERROR", "GITHUB_SECRET_NAME", policy_path.as_posix(), f"GitHub repository secret must be {GITHUB_SECRET}"))
+    if github.get("allowed_workflow") != GITHUB_ASSURANCE_WORKFLOW:
+        findings.append(Finding("ERROR", "GITHUB_ASSURANCE_WORKFLOW", policy_path.as_posix(), "GITPAT must be confined to the reviewed assurance workflow"))
+    if github.get("actions_allowed_event") != "workflow_dispatch_only":
+        findings.append(Finding("ERROR", "GITHUB_EVENT_BOUNDARY", policy_path.as_posix(), "GITPAT assurance must remain manual-only"))
+    if climate.get("secret_name") != CLIMATE_SECRET:
+        findings.append(Finding("ERROR", "CLIMATE_SECRET_NAME", policy_path.as_posix(), f"Climate repository secret must be {CLIMATE_SECRET}"))
     if climate.get("actions_allowed_event") != "workflow_dispatch_only":
-        findings.append(Finding("ERROR", "CLIMATE_EVENT_BOUNDARY", policy_path.as_posix(), "trial credential must remain manual-only"))
+        findings.append(Finding("ERROR", "CLIMATE_EVENT_BOUNDARY", policy_path.as_posix(), "Climate trial credential must remain manual-only"))
 
     credential_workflows: list[str] = []
     for workflow in sorted((repo_root / WORKFLOW_ROOT).glob("*.y*ml")):
         rel = workflow.relative_to(repo_root).as_posix()
         text = workflow.read_text(encoding="utf-8")
-        if PAT_SECRET_REF_RE.search(text):
+
+        if LEGACY_PAT_SECRET_REF_RE.search(text):
             findings.append(Finding(
-                "ERROR",
-                "GITHUB_PAT_IN_ACTIONS_FORBIDDEN",
-                rel,
-                "same-repository Actions must use GITHUB_TOKEN; PAT binding requires a separate reviewed exception",
+                "ERROR", "GITHUB_PAT_IN_ACTIONS_FORBIDDEN", rel,
+                "legacy/alternate PAT secret names are forbidden; canonical repository secret is GITPAT",
             ))
 
-        if not CLIMATE_SECRET_REF_RE.search(text):
-            continue
+        has_gitpat = bool(GITHUB_SECRET_REF_RE.search(text))
+        has_climate = bool(CLIMATE_SECRET_REF_RE.search(text))
+        if has_gitpat or has_climate:
+            credential_workflows.append(rel)
 
-        credential_workflows.append(rel)
-        try:
-            doc = _load_yaml(workflow)
-        except Exception as exc:  # noqa: BLE001
-            findings.append(Finding("ERROR", "WORKFLOW_PARSE", rel, str(exc)))
-            continue
+        if has_gitpat:
+            if rel != GITHUB_ASSURANCE_WORKFLOW:
+                findings.append(Finding(
+                    "ERROR", "GITPAT_OUTSIDE_ASSURANCE_WORKFLOW", rel,
+                    "GITPAT may only be consumed by the reviewed read-only assurance workflow",
+                ))
+            try:
+                doc = _load_yaml(workflow)
+            except Exception as exc:  # noqa: BLE001
+                findings.append(Finding("ERROR", "WORKFLOW_PARSE", rel, str(exc)))
+            else:
+                _audit_secret_job(findings, rel, doc, GITHUB_SECRET_REF_RE, "GITPAT")
 
-        if "pull_request_target" in _triggers(doc):
-            findings.append(Finding("ERROR", "PULL_REQUEST_TARGET_SECRET", rel, "trial credential cannot coexist with pull_request_target"))
+        if has_climate:
+            try:
+                doc = _load_yaml(workflow)
+            except Exception as exc:  # noqa: BLE001
+                findings.append(Finding("ERROR", "WORKFLOW_PARSE", rel, str(exc)))
+            else:
+                _audit_secret_job(findings, rel, doc, CLIMATE_SECRET_REF_RE, "CLIMATE_TRIAL")
 
-        for job_id, raw_job in (doc.get("jobs") or {}).items():
-            if not isinstance(raw_job, dict):
-                continue
-            job_text = json.dumps(raw_job, ensure_ascii=False)
-            if not CLIMATE_SECRET_REF_RE.search(job_text):
-                continue
-            if not _contains_manual_guard(raw_job):
-                findings.append(Finding(
-                    "ERROR",
-                    "CLIMATE_TRIAL_NON_MANUAL",
-                    rel,
-                    "job consuming the Climate trial secret must be guarded by workflow_dispatch",
-                    str(job_id),
-                ))
-            if DESTRUCTIVE_RE.search(job_text):
-                findings.append(Finding(
-                    "ERROR",
-                    "DESTRUCTIVE_OPERATION_WITH_SECRET",
-                    rel,
-                    "destructive remote operation is forbidden in a credential-bearing job",
-                    str(job_id),
-                ))
-            if SECRET_DUMP_RE.search(job_text):
-                findings.append(Finding(
-                    "ERROR",
-                    "SECRET_DUMP_RISK",
-                    rel,
-                    "shell tracing or environment dumping is forbidden in a credential-bearing job",
-                    str(job_id),
-                ))
+        if has_gitpat and has_climate:
+            findings.append(Finding(
+                "ERROR", "CROSS_CREDENTIAL_SAME_WORKFLOW", rel,
+                "GITPAT and Climate repository secret must not be consumed by the same workflow",
+            ))
 
     return findings, _payload(findings, False, False, credential_workflows)
 
@@ -187,11 +218,12 @@ def _payload(
         "decision": "FAIL" if errors or residuals else "PASS",
         "errors": len(errors),
         "runtime_binding_checked": runtime_checked,
+        "canonical_repository_secrets": [GITHUB_SECRET, CLIMATE_SECRET],
+        "gitpat_runtime_state": "TOKEN_VAZIO_UNTIL_GITPAT_ASSURANCE_DISPATCH",
         "climate_actions_secret_present": climate_actions_secret_present if runtime_checked else "TOKEN_VAZIO_EXTERNAL_SETTING",
-        "github_pat_actions_binding": "FORBIDDEN_BY_DEFAULT_USE_GITHUB_TOKEN",
         "secret_value_observed": False,
         "secret_value_hashed": False,
-        "credential_workflows": credential_workflows,
+        "credential_workflows": sorted(set(credential_workflows)),
         "residuals": residuals,
         "findings": [asdict(item) for item in findings],
     }
@@ -226,6 +258,7 @@ def main() -> int:
         "decision": payload["decision"],
         "errors": payload["errors"],
         "runtime_binding_checked": payload["runtime_binding_checked"],
+        "canonical_repository_secrets": payload["canonical_repository_secrets"],
         "climate_actions_secret_present": payload["climate_actions_secret_present"],
         "secret_value_observed": False,
         "residuals": payload["residuals"],

@@ -1,125 +1,72 @@
-# RLL Credential Authority V1 — Agent Secrets × Actions × Climate Trial
+# RLL Credential Authority V1 — Repository Secrets × Actions × Agent Boundary
 
 Status: `ACTIVE_GOVERNANCE`  
 Scientific effect: `NONE`  
 `claim_allowed=false`
 
-## Objective
+## Canonical authority
 
-Separate credential storage from execution authority so a temporary Climate
-Engine trial credential and a GitHub PAT cannot silently become repository-wide
-authority.
+The two credentials named by the repository owner are **GitHub Actions Repository Secrets**:
 
-```text
-SECRET ≠ AUTHORITY ≠ EXECUTION ≠ EVIDENCE ≠ CLAIM
-```
-
-## Authority split
-
-| credential | preferred surface | allowed purpose | repository write |
+| Repository Secret | Purpose | Runtime surface | Repository write |
 |---|---|---|---|
-| GitHub fine-grained PAT | GitHub Agent secret | agent feature-branch + reviewed PR only | only if explicitly required |
-| GitHub Actions same-repo auth | built-in `GITHUB_TOKEN` | bounded workflow operation | job-level only |
-| Climate Engine trial | Agent secret; optionally Actions secret | temporary provider read/query | none |
+| `GITPAT` | manual GitHub authentication/read assurance | `.github/workflows/rll-repository-pat-assurance.yml` | none in assurance workflow |
+| `RLL_CLIMATE_ENGINE_TRIAL_TOKEN` | temporary Climate Engine read/query execution | guarded manual Actions jobs | none |
 
-The GitHub PAT is **not** mirrored into Actions by default. A same-repository
-workflow uses `GITHUB_TOKEN` with the smallest job-level `permissions:` block.
-
-The temporary Climate credential may be mirrored into Actions under the canonical
-name `RLL_CLIMATE_ENGINE_TRIAL_TOKEN`, but while it is a trial credential it is
-restricted to a manually dispatched, reviewed job.
-
-## "No delete" boundary
-
-For a fine-grained PAT, removing repository `Administration: write` prevents the
-token from using the repository-delete endpoint. This is the hard repository
-boundary adopted here.
-
-There is a second boundary: GitHub's `Contents: write` permission also authorizes
-the REST endpoint that deletes a file, and ref write permissions can include ref
-deletion. Therefore **"write but cryptographically/API-incapable of every file or
-ref delete" is not representable by PAT Contents permission alone**.
-
-RLL therefore enforces no-delete operationally with:
-
-1. no `Administration: write`;
-2. no `Agent secrets: write`;
-3. no direct `main` commit;
-4. feature branch → reviewed PR;
-5. no force push;
-6. no DELETE HTTP calls in credential-bearing jobs;
-7. no Git ref deletion in credential-bearing jobs;
-8. branch/ruleset enforcement when externally configured.
-
-If `Contents: write` is unnecessary, set it to read-only. That is the strongest
-credential-level no-file-delete boundary.
-
-## Agent secret is not Actions secret
-
-Agent secrets and Actions secrets are separate GitHub control-plane stores.
-Presence in Agent secrets does not establish that an Actions workflow can read
-the same credential.
-
-This repository does not infer that configuration. Until a manual preflight
-observes the Actions binding:
+The Climate secret is bound inside the process as `CLIMATE_ENGINE_API_KEY`; that is an environment binding, not a third secret.
 
 ```text
-ACTIONS_CLIMATE_SECRET_BINDING = TOKEN_VAZIO_EXTERNAL_SETTING
+REPOSITORY_SECRET != AGENT_SECRET
+SECRET != AUTHORITY != EXECUTION != EVIDENCE != CLAIM
+TOKEN_VAZIO != 0
 ```
 
-No secret value, length or hash is written to a receipt.
+## GITPAT boundary
 
-## Trial-to-dataset transition
+`GITPAT` may be consumed only by the reviewed manual assurance workflow. The repository validator rejects:
 
-Current provider state:
+- alternate/legacy PAT secret names in Actions;
+- `GITPAT` outside the reviewed assurance workflow;
+- non-`workflow_dispatch` secret consumption;
+- mutating HTTP/API operations, git push, secret dumps, or shell tracing.
+
+The assurance uses only `GET /user` and `GET /repos/{owner}/{repo}`. A PASS proves authentication and current-repository read only. It does **not** prove write capability, absence of every possible destructive PAT permission, or Agent availability.
+
+## Climate boundary
+
+`RLL_CLIMATE_ENGINE_TRIAL_TOKEN` is a Repository Secret. A guarded job maps it to:
 
 ```text
-Climate Engine web/trial
-→ temporary credential
-→ adapter contract
-→ evidence/receipt
+CLIMATE_ENGINE_API_KEY
 ```
 
-Future state:
+only in process memory. The provider bridge remains HTTPS allowlisted, bounded, sanitizes outputs, hashes the provider response, and forbids secret value/length/hash in receipts.
 
 ```text
-dataset credential
-→ same adapter boundary
-→ new credential receipt
-→ trial credential revoked/removed
+EXTERNAL_COMPUTE_PRODUCT != PRIMARY_OBSERVATION
+RESIDUAL != CAUSE
+VISUALIZATION != EVIDENCE
 ```
 
-The provider credential may change without redefining RLL scientific claims.
+## Agent / Secretary
 
-## Manual control-plane step
+The Secretary/Agent is a **separate authority plane**. Repository Secrets are not treated as Agent secrets and direct Agent access to `GITPAT` or `RLL_CLIMATE_ENGINE_TRIAL_TOKEN` is not inferred.
 
-When Climate Engine execution from GitHub Actions is actually needed, create an
-**Actions** repository/environment secret named:
+Legacy Agent selector names remain non-canonical compatibility concepts only; they do not redefine the two repository credentials.
+
+## Runtime evidence
+
+Repository configuration is owner-declared, but runtime binding/authentication remains:
 
 ```text
-RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+GITPAT_RUNTIME = TOKEN_VAZIO_UNTIL_DISPATCH
+CLIMATE_RUNTIME = TOKEN_VAZIO_UNTIL_DISPATCH
 ```
 
-using the same current trial value already held privately. Do not paste the value
-into a workflow, issue, PR, artifact or receipt.
-
-Then manually dispatch `RLL Governance Quality Gate — non-certification`. The
-credential-binding preflight records only a boolean presence state and fails
-closed if the Actions binding is absent.
-
-## Sources
-
-- GitHub Docs — fine-grained PAT permissions:
-  https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens
-- GitHub Docs — repository contents API:
-  https://docs.github.com/en/rest/repos/contents
-- GitHub Docs — Actions secrets:
-  https://docs.github.com/en/actions/concepts/security/secrets
-- GitHub Docs — Agent secrets API:
-  https://docs.github.com/en/rest/agents/secrets
+until the corresponding manual workflows execute and emit sanitized receipts.
 
 ## R3
 
-- F_ok: authority is split; PAT remains agent-first; same-repo Actions route uses `GITHUB_TOKEN`.
-- F_gap: exact Agent-secret names and Actions binding are external control-plane state.
-- F_next: bind only `RLL_CLIMATE_ENGINE_TRIAL_TOKEN` in Actions when required and execute the manual preflight.
+- **F_ok:** two canonical Repository Secrets are unambiguous and separated.
+- **F_gap:** runtime presence/authentication and intrinsic PAT scope remain external until observed.
+- **F_next:** dispatch GITPAT assurance, then Climate metadata probe, then bounded timeseries/map comparison against an independently sourced RLL path.

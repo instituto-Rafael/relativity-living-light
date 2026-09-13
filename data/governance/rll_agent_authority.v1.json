@@ -4,24 +4,26 @@
   "claim_allowed": false,
   "publication_effect": "NONE",
   "authority": {
-    "runtime": "GITHUB_COPILOT_AGENTS_SECRETS_AND_VARIABLES",
-    "pat_selector_variable": "RLL_AGENT_GITHUB_PAT_ENV",
-    "pat_aliases": [
-      "RLL_AGENT_PAT",
-      "AGENT_GITHUB_PAT",
-      "AGENT_PAT",
-      "GH_PAT",
-      "GIT_PAT",
-      "PAT_GIT"
-    ],
+    "runtime": "SEPARATE_AGENT_SECRET_AUTHORITY_IF_EXPLICITLY_CONFIGURED",
+    "pat_selector_variable": "RLL_AGENT_GITHUB_PAT_ENV_LEGACY_OPTIONAL",
+    "pat_aliases": [],
     "secret_value_must_not_be_logged": true,
     "secret_value_must_not_be_persisted": true,
     "secret_value_must_not_be_hashed": true,
-    "token_scope_must_not_be_inferred_from_repository_collaborator_permission": true
+    "token_scope_must_not_be_inferred_from_repository_collaborator_permission": true,
+    "canonical_for_repository_secrets": false
   },
   "routing": {
-    "work_branch_prefixes": ["agent/", "work/"],
-    "protected_branches": ["main", "rll/release", "rll/integration", "rll/lab"],
+    "work_branch_prefixes": [
+      "agent/",
+      "work/"
+    ],
+    "protected_branches": [
+      "main",
+      "rll/release",
+      "rll/integration",
+      "rll/lab"
+    ],
     "review_target": "rll/lab",
     "direct_protected_branch_push": false,
     "force_push": false,
@@ -52,8 +54,8 @@
   "climate_engine": {
     "bridge_pr": 854,
     "bridge_merge_commit": "778ecaa779687aafdcc960dd849ca87a3ed974a6",
-    "credential_selector_variable": "RLL_AGENT_CLIMATE_KEY_ENV",
-    "credential_aliases": ["CLIMATE_ENGINE_API_KEY"],
+    "credential_selector_variable": "RLL_AGENT_CLIMATE_KEY_ENV_LEGACY_OPTIONAL",
+    "credential_aliases": [],
     "provider_result_state": "EXTERNAL_COMPUTE_PRODUCT",
     "claim_allowed": false
   },
@@ -61,6 +63,18 @@
     "probe_is_read_only": true,
     "write_capability_requires_observed_allowed_write": true,
     "destructive_capability_must_not_be_probed": true,
-    "missing_authority_state": "TOKEN_VAZIO_AGENT_GITHUB_PAT"
+    "missing_authority_state": "TOKEN_VAZIO_SEPARATE_AGENT_AUTHORITY"
+  },
+  "repository_secret_boundary": {
+    "canonical_repository_secrets": [
+      "GITPAT",
+      "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"
+    ],
+    "direct_agent_access": "NOT_ASSUMED",
+    "repository_secrets_are_not_agent_secrets": true,
+    "repository_secret_runtime_probes": [
+      ".github/workflows/rll-repository-pat-assurance.yml",
+      ".github/workflows/rll-climate-engine-trial-live.yml"
+    ]
   }
 }
