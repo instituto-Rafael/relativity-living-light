@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "verified_as_of": "2026-08-27",
+  "verified_as_of": "2026-09-13",
   "claim_allowed": false,
   "purpose": "Primary-source registry for recent literature that constrains or contextualizes RLL branches. Inclusion establishes relevance, not equivalence or validation.",
   "sources": [
@@ -193,6 +193,16 @@
       "verification_status": "metadata_verified",
       "domains": ["EHT", "M87", "polarimetry", "real_data"],
       "safe_use": "Dataset identity is registered, but file-level RLL ingest and SHA256 verification remain TOKEN_VAZIO until an immutable local manifest is produced."
+    },
+    {
+      "source_id": "UPE-LIVE-DEAD-MICE-2025",
+      "title": "Imaging Ultraweak Photon Emission from Living and Dead Mice and from Plants under Stress",
+      "year": 2025,
+      "locator": "DOI:10.1021/acs.jpclett.4c03546",
+      "kind": "peer_reviewed_primary_experiment",
+      "verification_status": "primary_verified",
+      "domains": ["biophoton", "oxidative_metabolism", "in_vivo_imaging", "postmortem_decay"],
+      "safe_use": "Primary experimental anchor for significant live-versus-dead mouse UPE contrast measured with EMCCD/CCD. The article defines UPE at roughly 10-10^3 photons cm^-2 s^-1 over 200-1000 nm. Do not infer consciousness, life-force, dedicated photon signaling, or direct electrostatic-to-light conversion; do not convert photon flux to lumens without spectral and photopic-response data."
     }
   ]
 }

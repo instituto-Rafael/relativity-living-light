@@ -125,3 +125,94 @@ This allows photon/organism/environment coupling to be tested without collapsing
 3. Add controls for dark current, thermal emission, detector noise and delayed luminescence.
 4. Compare against passive metabolic baselines and shuffled radiation channels.
 5. Only after lab-grade evidence consider RLL cosmology bridges.
+
+## 9. Live/dead mouse UPE benchmark — 2025 primary experiment
+
+Primary anchor:
+
+- V. Salari et al., *Imaging Ultraweak Photon Emission from Living and Dead Mice and from Plants under Stress*, J. Phys. Chem. Lett. 16 (2025) 4354–4362.
+- DOI: `10.1021/acs.jpclett.4c03546`.
+- The paper reports a significant contrast between ultraweak photon emission (UPE) from living and dead mice using EMCCD/CCD imaging.
+- The paper's abstract defines the measured UPE regime as approximately `10–10^3 photons cm^-2 s^-1` over `200–1000 nm`.
+
+An official NRC research summary additionally reports residual faint postmortem emission in some organs for up to about one hour. This is contextual/secondary evidence and does not replace the primary paper.
+
+### 9.1 Measurement boundary
+
+```text
+photon flux != lumen
+living > dead UPE contrast != instantaneous zero at death
+UPE != consciousness marker
+UPE != life-force measurement
+UPE != proof of dedicated photon communication
+```
+
+A conversion to lumens remains `TOKEN_VAZIO` unless the spectral distribution, collection geometry and photopic weighting are supplied.
+
+### 9.2 Mechanistic bridge allowed by current evidence
+
+The physically conservative route is:
+
+```math
+J_e^{mito}
+\to
+\mathrm{redox/ROS}
+\to
+E^*_{molecular}
+\to
+\gamma
+```
+
+with membrane lipid peroxidation as an additional photon-producing channel.
+
+This supports a measurable transduction layer:
+
+```math
+\mathbf{x}_{bio}(t)=
+[
+O_2,
+CO_2,
+pH,
+ATP,
+\Delta\mu_{Na},
+\Delta\mu_{K},
+\Delta\mu_{Ca},
+ROS,
+T
+]^\top
+```
+
+and:
+
+```math
+y_{\gamma}(t)=h_\gamma(\mathbf{x}_{bio}(t))+\epsilon_{det}(t)
+```
+
+where `y_gamma` is observed photon flux and `epsilon_det` includes detector/background terms.
+
+This is a candidate state-observation model, not a demonstrated causal decomposition of the mouse experiment.
+
+### 9.3 Controls required before promotion
+
+- body/tissue temperature trajectory;
+- detector dark current and read noise;
+- thermal radiation and spectral leakage;
+- delayed luminescence / prior illumination history;
+- tissue-specific postmortem kinetics;
+- ROS/redox markers;
+- oxygenation, pH and ATP measurements;
+- acquisition geometry and quantum efficiency;
+- blinded live/dead classification;
+- independent replication.
+
+### 9.4 RLL claim boundary
+
+```text
+claim_allowed_mouse_upe_as_metabolic_state_observable = exploratory_only
+claim_allowed_upe_as_neural_communication = false
+claim_allowed_upe_as_consciousness_signal = false
+claim_allowed_upe_as_cosmological_bridge = false
+```
+
+The productive next experiment is not to ask whether the organism "has light", but whether a preregistered multivariate model predicts the temporal UPE decay from independently measured redox, oxygenation, ATP, pH and temperature without overfitting.
+
