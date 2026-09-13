@@ -181,7 +181,7 @@
         "anchor": "background/CMB successor remains unchanged; each perturbation policy is additive",
         "procedure": "remove only the failing candidate policy and restore its TOKEN_VAZIO state; preserve negative evidence"
       },
-      "next_step": "implement only GROWTH-CS2-001 as a versioned rest-frame sound-speed/entropy candidate with explicit falsifiers"
+      "next_step": "resolve the continuity-semantics prerequisite in PR #901; only then instantiate GROWTH-CS2-001 as a versioned rest-frame sound-speed/entropy candidate with explicit falsifiers"
     },
     {
       "id": "RLL-EVOL-REALDATA-001",
