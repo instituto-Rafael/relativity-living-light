@@ -29,7 +29,7 @@ GITHUB_ASSURANCE_WORKFLOW = ".github/workflows/rll-repository-pat-assurance.yml"
 
 GITHUB_SECRET_REF_RE = re.compile(rf"secrets\.{re.escape(GITHUB_SECRET)}\b", re.IGNORECASE)
 LEGACY_PAT_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT)\b",
+    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT|PATGITHUB|GIT)\b",
     re.IGNORECASE,
 )
 LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
