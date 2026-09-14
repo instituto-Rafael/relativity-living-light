@@ -173,6 +173,16 @@ def _has_force_flag(args: Sequence[str]) -> bool:
     return any(arg in force_flags or arg.startswith("--force=") for arg in args)
 
 
+def _option_value(args: Sequence[str], name: str) -> str | None:
+    for i, arg in enumerate(args):
+        if arg == name and i + 1 < len(args):
+            return args[i + 1]
+        prefix = f"{name}="
+        if arg.startswith(prefix):
+            return arg[len(prefix):]
+    return None
+
+
 def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bool, str]:
     if not argv:
         return False, "EMPTY_COMMAND"
@@ -240,7 +250,20 @@ def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bo
     if area == "pr":
         if sub == "merge":
             return False, "PR_MERGE_FORBIDDEN"
-        allowed = {"create", "edit", "comment", "view", "list", "checks", "diff", "status", "ready"}
+        if sub == "create":
+            br = branch or current_branch()
+            if br in PROTECTED_BRANCHES or not br.startswith(WORK_PREFIXES):
+                return False, "PR_CREATE_REQUIRES_WORK_BRANCH"
+            base = _option_value(rest, "--base")
+            if not base:
+                return False, "PR_CREATE_REQUIRES_EXPLICIT_RLL_LAB_BASE"
+            if base != "rll/lab":
+                return False, "PR_CREATE_BASE_FORBIDDEN"
+            head = _option_value(rest, "--head")
+            if head and head.split(":")[-1] != br:
+                return False, "PR_CREATE_HEAD_MUST_MATCH_CURRENT_WORK_BRANCH"
+            return True, "ALLOW_PR_CREATE_TO_RLL_LAB"
+        allowed = {"edit", "comment", "view", "list", "checks", "diff", "status", "ready"}
         return (
             (True, "ALLOW_PR_OPERATION")
             if sub in allowed
