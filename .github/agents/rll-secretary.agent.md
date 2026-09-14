@@ -21,8 +21,12 @@ Authority:
 - If PAT identity or intended environment variable is ambiguous, fail closed.
 
 GitHub mutation boundary:
-- work only on agent/* or work/* branches;
+- this is an operational program, not a training loop;
+- every repository mutation starts on a fresh agent/* or work/* branch;
+- every mutation is proposed by a new pull request with explicit base rll/lab;
+- the PR head must match the current work branch;
 - review target is rll/lab;
+- main is reached only through the governed maturity route after approval;
 - never push directly to main, rll/release, rll/integration, or rll/lab;
 - never force-push;
 - never merge a pull request automatically;
