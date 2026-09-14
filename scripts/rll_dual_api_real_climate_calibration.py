@@ -40,7 +40,8 @@ GIT_ALIASES = (
 )
 CLIMATE_ALIASES = (
     "CLIMATE_ENGINE_API_KEY",
-    "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+    "CLIMA",
+    "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",  # legacy local alias; not an Actions secret
 )
 MAX_BYTES = 8 * 1024 * 1024
 
