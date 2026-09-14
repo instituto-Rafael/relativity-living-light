@@ -61,7 +61,7 @@ class DualApiCalibrationTests(unittest.TestCase):
                 ("GITHUB_TOKEN",)
             )
         self.assertEqual(name, "GITHUB_TOKEN")
-        self.assertIs(value, stateless)
+        self.assertEqual(value, stateless)
         self.assertTrue(value.startswith("ghs_"))
 
     def test_ambiguous_aliases_fail_closed(self):
