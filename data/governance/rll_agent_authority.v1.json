@@ -29,7 +29,10 @@
     "review_target": "rll/lab",
     "direct_protected_branch_push": false,
     "force_push": false,
-    "auto_merge": false
+    "auto_merge": false,
+    "fresh_branch_per_mutation": true,
+    "explicit_pr_base": "rll/lab",
+    "pr_head_matches_work_branch": true
   },
   "allowed_operations": [
     "github_read",
@@ -79,16 +82,14 @@
       ".github/workflows/rll-climate-engine-trial-live.yml"
     ]
   },
-  "agent_secret_surface": {
-    "state": "DECLARED_BY_OWNER_NOT_RUNTIME_VERIFIED",
-    "repository_secrets": [
-      "GIT"
-    ],
-    "organization_secrets": [
-      "CLIMATE",
-      "PATGITHUB"
-    ],
-    "secret_values_observed": false,
-    "runtime_evidence": "TOKEN_VAZIO_AGENT_RUNTIME"
+  "program_mode": {
+    "kind": "OPERATIONAL_PROGRAM_NOT_TRAINING",
+    "mutation_unit": "ONE_REVERSIBLE_DELTA_PER_BRANCH_AND_PR",
+    "fresh_work_branch_required": true,
+    "explicit_pr_base_required": "rll/lab",
+    "pr_head_must_match_current_work_branch": true,
+    "main_route": "agent_or_work_branch -> rll/lab -> rll/integration -> rll/release -> main",
+    "approval_required": true,
+    "auto_merge": false
   }
 }
