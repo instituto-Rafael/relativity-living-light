@@ -8,6 +8,7 @@ on:
       - ".github/agents/rll-secretary.agent.md"
       - "tools/agent/rll_agent_authority.py"
       - "data/governance/rll_agent_authority.v1.json"
+      - "data/governance/rll_agent_secret_roles.v1.json"
       - "tests/test_rll_agent_authority.py"
   pull_request:
     paths:
@@ -15,6 +16,7 @@ on:
       - ".github/agents/rll-secretary.agent.md"
       - "tools/agent/rll_agent_authority.py"
       - "data/governance/rll_agent_authority.v1.json"
+      - "data/governance/rll_agent_secret_roles.v1.json"
       - "tests/test_rll_agent_authority.py"
 
 permissions:
