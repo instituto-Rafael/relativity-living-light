@@ -21,7 +21,7 @@ class ClimateEngineLiveProbeTests(unittest.TestCase):
         self.assertTrue(data["cross_credential_invariants"]["same_job_consumption_forbidden"])
         self.assertEqual(
             data["probes"]["climate_engine_trial"]["actions_secret_name"],
-            "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+            "CLIMA",
         )
         self.assertEqual(data["probes"]["github_repository_pat"]["actions_secret_name"], "GITPAT")
 
@@ -29,7 +29,7 @@ class ClimateEngineLiveProbeTests(unittest.TestCase):
         text = WORKFLOW_PATH.read_text(encoding="utf-8")
         self.assertIn("workflow_dispatch:", text)
         self.assertIn("if: github.event_name == 'workflow_dispatch'", text)
-        self.assertIn("CLIMATE_ENGINE_API_KEY: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}", text)
+        self.assertIn("CLIMATE_ENGINE_API_KEY: ${{ secrets.CLIMA }}", text)
         self.assertNotIn("pull_request_target:", text)
         self.assertIn("permissions:\n  contents: read", text)
         self.assertIn("persist-credentials: false", text)
