@@ -1,19 +1,13 @@
 {
   "schema": "rll.agent_authority.v1",
-  "status": "IMPLEMENTED_UNTESTED",
+  "status": "IMPLEMENTED_UNTESTED_RUNTIME",
   "claim_allowed": false,
   "publication_effect": "NONE",
   "authority": {
-    "runtime": "GITHUB_AGENTS_SECRETS",
-    "pat_selector_variable": "RLL_AGENT_GITHUB_PAT_ENV",
+    "runtime": "COPILOT_CLOUD_AGENT_SECRET_AUTHORITY_DECLARED_BY_OWNER",
+    "pat_selector_variable": "PATGITHUB",
     "pat_aliases": [
-      "PATGITHUB",
-      "RLL_AGENT_PAT",
-      "AGENT_GITHUB_PAT",
-      "AGENT_PAT",
-      "GH_PAT",
-      "GIT_PAT",
-      "PAT_GIT"
+      "GIT"
     ],
     "secret_value_must_not_be_logged": true,
     "secret_value_must_not_be_persisted": true,
@@ -62,11 +56,8 @@
   "climate_engine": {
     "bridge_pr": 854,
     "bridge_merge_commit": "778ecaa779687aafdcc960dd849ca87a3ed974a6",
-    "credential_selector_variable": "RLL_AGENT_CLIMATE_KEY_ENV",
-    "credential_aliases": [
-      "CLIMATE",
-      "CLIMATE_ENGINE_API_KEY"
-    ],
+    "credential_selector_variable": "CLIMATE",
+    "credential_aliases": [],
     "provider_result_state": "EXTERNAL_COMPUTE_PRODUCT",
     "claim_allowed": false
   },
@@ -81,26 +72,23 @@
       "GITPAT",
       "CLIMA"
     ],
-    "direct_agent_access": "NOT_ASSUMED",
+    "direct_agent_access": "NOT_APPLICABLE_SEPARATE_AGENT_SURFACE",
     "repository_secrets_are_not_agent_secrets": true,
     "repository_secret_runtime_probes": [
       ".github/workflows/rll-repository-pat-assurance.yml",
       ".github/workflows/rll-climate-engine-trial-live.yml"
     ]
   },
-  "binding_provenance": {
-    "state": "OWNER_REPORTED_RUNTIME_UNVERIFIED",
-    "date": "2026-09-14",
-    "unassigned_names": {
-      "GIT": "TOKEN_VAZIO_ROLE"
-    },
-    "role_mapping": "PROPOSED_FROM_NAMES_AND_EXISTING_PROVIDER_CONTRACT"
-  },
-  "seven_guards": {
-    "runner": "tools/agent/rll_agent_seven_guards.py",
-    "matrix": "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json",
-    "rollback_anchor": "2a6e80ad0efa182217aa76c55665a4c98a4e5523",
-    "receipt_mode": "APPEND_ONLY_CREATE_EXCLUSIVE",
-    "claim_allowed": false
+  "agent_secret_surface": {
+    "state": "DECLARED_BY_OWNER_NOT_RUNTIME_VERIFIED",
+    "repository_secrets": [
+      "GIT"
+    ],
+    "organization_secrets": [
+      "CLIMATE",
+      "PATGITHUB"
+    ],
+    "secret_values_observed": false,
+    "runtime_evidence": "TOKEN_VAZIO_AGENT_RUNTIME"
   }
 }

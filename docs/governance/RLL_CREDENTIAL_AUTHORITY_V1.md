@@ -48,6 +48,10 @@ RESIDUAL != CAUSE
 VISUALIZATION != EVIDENCE
 ```
 
+## Agent secret surface declared by owner
+
+Copilot cloud-agent secrets are a separate authority plane: repository `GIT`; organization `CLIMATE` and `PATGITHUB`. Their names may be recorded for routing, but their values are never read, persisted, or hashed. Actions must not consume these Agent secret names. Runtime use remains `TOKEN_VAZIO_AGENT_RUNTIME` until an Agent execution receipt is observed.
+
 ## Agent / Secretary
 
 The Secretary/Agent is a **separate authority plane**. Repository Secrets are not treated as Agent secrets and direct Agent access to `GITPAT` or `CLIMA` is not inferred.

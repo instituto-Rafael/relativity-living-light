@@ -64,8 +64,8 @@ The manual workflow deliberately does **not** mirror the GitHub PAT into Actions
 RLL_AGENT_GITHUB_PAT_ENV=GITHUB_TOKEN
 GITHUB_TOKEN=${{ github.token }}
 
-RLL_AGENT_CLIMATE_KEY_ENV=CLIMA
-CLIMA=${{ secrets.CLIMA }}
+RLL_AGENT_CLIMATE_KEY_ENV=CLIMATE_ENGINE_API_KEY
+CLIMATE_ENGINE_API_KEY=${{ secrets.CLIMA }}
 ```
 
 This preserves the existing RLL credential policy.

@@ -76,9 +76,9 @@ jobs:
       contents: read
     env:
       RLL_AGENT_GITHUB_PAT_ENV: GITHUB_TOKEN
-      RLL_AGENT_CLIMATE_KEY_ENV: CLIMA
+      RLL_AGENT_CLIMATE_KEY_ENV: CLIMATE_ENGINE_API_KEY
       GITHUB_TOKEN: ${{ github.token }}
-      CLIMA: ${{ secrets.CLIMA }}
+      CLIMATE_ENGINE_API_KEY: ${{ secrets.CLIMA }}
       RLL_DATASET: ${{ inputs.dataset }}
       RLL_VARIABLE: ${{ inputs.variable }}
       RLL_COORDINATES: ${{ inputs.coordinates }}
