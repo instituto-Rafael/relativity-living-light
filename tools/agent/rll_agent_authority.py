@@ -25,6 +25,7 @@ API = "https://api.github.com"
 ENV_NAME_RE = re.compile(r"^[A-Z_][A-Z0-9_]*$")
 PAT_SELECTOR = "RLL_AGENT_GITHUB_PAT_ENV"
 PAT_ALIASES = (
+    "PATGITHUB",
     "RLL_AGENT_PAT",
     "AGENT_GITHUB_PAT",
     "AGENT_PAT",
@@ -173,6 +174,16 @@ def _has_force_flag(args: Sequence[str]) -> bool:
     return any(arg in force_flags or arg.startswith("--force=") for arg in args)
 
 
+def _option_value(args: Sequence[str], name: str) -> str | None:
+    for i, arg in enumerate(args):
+        if arg == name and i + 1 < len(args):
+            return args[i + 1]
+        prefix = f"{name}="
+        if arg.startswith(prefix):
+            return arg[len(prefix):]
+    return None
+
+
 def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bool, str]:
     if not argv:
         return False, "EMPTY_COMMAND"
@@ -189,12 +200,18 @@ def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bo
         br = branch or current_branch()
         if br in PROTECTED_BRANCHES or not br.startswith(WORK_PREFIXES):
             return False, "PUSH_REQUIRES_AGENT_OR_WORK_BRANCH"
-        joined = " ".join(rest)
-        if any(
-            f"refs/heads/{protected}" in joined or f":{protected}" in joined
-            for protected in PROTECTED_BRANCHES
-        ):
-            return False, "PROTECTED_BRANCH_PUSH_FORBIDDEN"
+        # Accept only an explicit, same-work-branch push to origin.
+        # Reject deletion refspecs, tags, mirror/prune, force variants and
+        # option/remote overrides instead of trying to enumerate every spelling.
+        positional = [arg for arg in rest if arg not in {"-u", "--set-upstream"}]
+        destinations = {br, f"refs/heads/{br}"}
+        allowed_refs = {"HEAD", br, f"refs/heads/{br}"}
+        allowed_refs.update(f"HEAD:{dest}" for dest in destinations)
+        allowed_refs.update(f"{br}:{dest}" for dest in destinations)
+        if len(positional) != 2 or positional[0] != "origin":
+            return False, "PUSH_ARGUMENTS_NOT_ALLOWLISTED"
+        if positional[1] not in allowed_refs:
+            return False, "PUSH_REFSPEC_NOT_ALLOWLISTED"
         return True, "ALLOW_WORK_BRANCH_PUSH"
 
     if root != "gh":
@@ -209,14 +226,34 @@ def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bo
         return False, "SECRET_OR_VARIABLE_MUTATION_FORBIDDEN"
 
     if area == "api":
-        method = "GET"
-        for i, arg in enumerate(rest):
-            if arg in {"-X", "--method"} and i + 1 < len(rest):
-                method = rest[i + 1].upper()
-            elif arg.startswith("--method="):
-                method = arg.split("=", 1)[1].upper()
-        if method != "GET":
-            return False, "MUTATING_GH_API_FORBIDDEN"
+        # gh -f/-F/--input can imply POST; -XDELETE is a valid compact flag.
+        # Only these explicit GET forms and a bounded relative endpoint pass.
+        paths = []
+        i = 0
+        while i < len(rest):
+            arg = rest[i]
+            if arg in {"-X", "--method"}:
+                i += 1
+                if i >= len(rest) or rest[i] != "GET":
+                    return False, "MUTATING_GH_API_FORBIDDEN"
+            elif arg in {"-XGET", "--method=GET", "--paginate"}:
+                pass
+            elif arg.startswith("-"):
+                return False, "API_ARGUMENT_NOT_ALLOWLISTED"
+            else:
+                paths.append(arg)
+            i += 1
+        if len(paths) != 1:
+            return False, "API_ENDPOINT_REQUIRED"
+        endpoint = paths[0].lstrip("/")
+        permitted = re.fullmatch(
+            r"(?:user|repos/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
+            r"(?:/(?:commits|branches|pulls|issues|actions/runs)"
+            r"(?:/[A-Za-z0-9_./-]+)?)?)",
+            endpoint,
+        )
+        if not permitted or ".." in endpoint or paths[0].startswith("//"):
+            return False, "API_ENDPOINT_NOT_ALLOWLISTED"
         return True, "ALLOW_READONLY_GH_API"
 
     if not rest:
@@ -226,7 +263,7 @@ def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bo
     if area == "auth":
         return (
             (True, "ALLOW_AUTH_STATUS")
-            if sub == "status"
+            if rest == ["status"]
             else (False, "AUTH_MUTATION_FORBIDDEN")
         )
 
@@ -240,7 +277,20 @@ def classify_command(argv: Sequence[str], branch: str | None = None) -> tuple[bo
     if area == "pr":
         if sub == "merge":
             return False, "PR_MERGE_FORBIDDEN"
-        allowed = {"create", "edit", "comment", "view", "list", "checks", "diff", "status", "ready"}
+        if sub == "create":
+            br = branch or current_branch()
+            if br in PROTECTED_BRANCHES or not br.startswith(WORK_PREFIXES):
+                return False, "PR_CREATE_REQUIRES_WORK_BRANCH"
+            base = _option_value(rest, "--base")
+            if not base:
+                return False, "PR_CREATE_REQUIRES_EXPLICIT_RLL_LAB_BASE"
+            if base != "rll/lab":
+                return False, "PR_CREATE_BASE_FORBIDDEN"
+            head = _option_value(rest, "--head")
+            if head and head.split(":")[-1] != br:
+                return False, "PR_CREATE_HEAD_MUST_MATCH_CURRENT_WORK_BRANCH"
+            return True, "ALLOW_PR_CREATE_TO_RLL_LAB"
+        allowed = {"edit", "comment", "view", "list", "checks", "diff", "status", "ready"}
         return (
             (True, "ALLOW_PR_OPERATION")
             if sub in allowed

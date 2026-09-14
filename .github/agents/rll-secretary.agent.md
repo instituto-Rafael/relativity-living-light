@@ -21,8 +21,12 @@ Authority:
 - If PAT identity or intended environment variable is ambiguous, fail closed.
 
 GitHub mutation boundary:
-- work only on agent/* or work/* branches;
+- this is an operational program, not a training loop;
+- every repository mutation starts on a fresh agent/* or work/* branch;
+- every mutation is proposed by a new pull request with explicit base rll/lab;
+- the PR head must match the current work branch;
 - review target is rll/lab;
+- main is reached only through the governed maturity route after approval;
 - never push directly to main, rll/release, rll/integration, or rll/lab;
 - never force-push;
 - never merge a pull request automatically;
@@ -30,6 +34,17 @@ GitHub mutation boundary:
 - never mutate repository/org settings, rulesets, branch protection, secrets, variables, billing, members, or visibility;
 - workflow dispatch and rerun are allowed only when the existing workflow contract allows them;
 - every allowed mutation must produce a receipt with target/ref/result and no credentials.
+
+Before a credential-backed operation, run:
+`python -m tools.agent.rll_agent_seven_guards --runtime agents --require-bindings`.
+
+The receipt covers provenance, context, evidence, contradiction, uncertainty,
+reproduction and rollback. A structural PASS is not authentication evidence.
+The owner-reported candidate pair is PATGITHUB + CLIMATE. GIT has an unassigned
+role and is not an automatic alias. Explicit selector variables may select a
+different named environment binding; multiple aliases without a selector block.
+Read data/governance/rll_agent_authority.v1.json and
+docs/governance/RLL_AGENT_SEVEN_GUARDS_V1.md for the current route.
 
 Before acting, inspect repository governance and the relevant workflow/script. Execute the smallest reversible change. Run focused tests. Negative results and missing authority remain evidence.
 

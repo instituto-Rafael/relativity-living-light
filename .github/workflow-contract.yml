@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-09-10"
+updated_at: "2026-09-14"
 
 inventory:
-  active_workflows: 96
+  active_workflows: 97
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -62,13 +62,17 @@ credential_authority:
       repository_write_authority: NONE_IN_ASSURANCE_WORKFLOW
       runtime_state: TOKEN_VAZIO_UNTIL_DISPATCH
     climate_trial:
-      secret: RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+      secret: CLIMA
       process_binding: CLIMATE_ENGINE_API_KEY
       workflow: .github/workflows/rll-climate-engine-trial-live.yml
       allowed_execution: workflow_dispatch_guarded_provider_read
       repository_write_authority: NONE
       runtime_state: TOKEN_VAZIO_UNTIL_DISPATCH
-  agent_secret_relation: SEPARATE_NOT_CANONICAL_FOR_THESE_REPOSITORY_SECRETS
+  agent_secret_relation: SEPARATE_AUTHORITY_PLANE
+  agent_secrets_declared_by_owner:
+    repository: [GIT]
+    organization: [CLIMATE, PATGITHUB]
+    runtime_state: TOKEN_VAZIO_AGENT_RUNTIME
   external_binding_state: TOKEN_VAZIO_RUNTIME_UNTIL_DISPATCH
   claim_allowed: false
   publication_effect: NONE

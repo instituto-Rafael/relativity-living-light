@@ -1,0 +1,27 @@
+{
+  "schema": "rll.agent_microstep_receipt.v1",
+  "microstep": "AGENT-PR-ROUTE-001",
+  "timestamp_utc": "2026-09-14T17:20:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "base": "rll/lab",
+  "branch": "agent/microstep-01-pr-route-20260914",
+  "kind": "OPERATIONAL_PROGRAM_NOT_TRAINING",
+  "delta": "Require fresh agent/work branch and explicit PR base rll/lab; PR head must match current work branch; no protected-branch direct push or auto-merge.",
+  "source_not_execution": true,
+  "execution_not_evidence": true,
+  "claim_allowed": false,
+  "provenance": {
+    "policy": "data/governance/rll_agent_authority.v1.json",
+    "guard": "tools/agent/rll_agent_authority.py",
+    "tests": "tests/test_rll_agent_authority.py"
+  },
+  "evidence": "IMPLEMENTED_UNTESTED_CI",
+  "contradiction": "NONE_KNOWN",
+  "uncertainty": [
+    "CI_NOT_YET_OBSERVED_FOR_THIS_BRANCH",
+    "AGENT_RUNTIME_CREDENTIAL_USE_SEPARATE_MICROSTEP"
+  ],
+  "reproduction": "python -m unittest -v tests.test_rll_agent_authority",
+  "rollback": "revert this PR only; preserve earlier Agent authority receipts",
+  "next": "open PR to rll/lab; after CI, create separate credential-routing microstep"
+}

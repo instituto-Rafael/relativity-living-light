@@ -3,7 +3,7 @@
 
 Canonical repository secrets:
 - GITPAT: manual read-only GitHub authentication assurance only.
-- RLL_CLIMATE_ENGINE_TRIAL_TOKEN: manual Climate Engine provider-read jobs only.
+- CLIMA: manual Climate Engine provider-read jobs only.
 
 Secret values are never read by this static audit, persisted, hashed, or logged.
 """
@@ -24,16 +24,24 @@ SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
 WORKFLOW_ROOT = Path(".github/workflows")
 GITHUB_SECRET = "GITPAT"
-CLIMATE_SECRET = "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"
+CLIMATE_SECRET = "CLIMA"
 GITHUB_ASSURANCE_WORKFLOW = ".github/workflows/rll-repository-pat-assurance.yml"
 
 GITHUB_SECRET_REF_RE = re.compile(rf"secrets\.{re.escape(GITHUB_SECRET)}\b", re.IGNORECASE)
 LEGACY_PAT_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT)\b",
+    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT|PATGITHUB|GIT)\b",
+    re.IGNORECASE,
+)
+LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
+    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
     re.IGNORECASE,
 )
 CLIMATE_SECRET_REF_RE = re.compile(
     rf"secrets\.{re.escape(CLIMATE_SECRET)}\b",
+    re.IGNORECASE,
+)
+LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
+    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
     re.IGNORECASE,
 )
 DESTRUCTIVE_RE = re.compile(
@@ -155,6 +163,16 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
     if climate.get("actions_allowed_event") != "workflow_dispatch_only":
         findings.append(Finding("ERROR", "CLIMATE_EVENT_BOUNDARY", policy_path.as_posix(), "Climate trial credential must remain manual-only"))
 
+    agent_surface = policy.get("agent_secret_surface") or {}
+    if agent_surface.get("surface") != "COPILOT_CLOUD_AGENT_SECRETS":
+        findings.append(Finding("ERROR", "AGENT_SECRET_SURFACE", policy_path.as_posix(), "Copilot agent secret surface must be explicit"))
+    if agent_surface.get("repository_secrets_declared_by_owner") != ["GIT"]:
+        findings.append(Finding("ERROR", "AGENT_REPOSITORY_SECRET_NAMES", policy_path.as_posix(), "owner-declared Agent repository secret set must be [GIT]"))
+    if agent_surface.get("organization_secrets_declared_by_owner") != ["CLIMATE", "PATGITHUB"]:
+        findings.append(Finding("ERROR", "AGENT_ORG_SECRET_NAMES", policy_path.as_posix(), "owner-declared Agent organization secret set must be [CLIMATE, PATGITHUB]"))
+    if agent_surface.get("actions_repository_secrets_are_distinct") is not True:
+        findings.append(Finding("ERROR", "AGENT_ACTIONS_SURFACE_COLLISION", policy_path.as_posix(), "Agent and Actions secret surfaces must remain distinct"))
+
     credential_workflows: list[str] = []
     for workflow in sorted((repo_root / WORKFLOW_ROOT).glob("*.y*ml")):
         rel = workflow.relative_to(repo_root).as_posix()
@@ -164,6 +182,17 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
             findings.append(Finding(
                 "ERROR", "GITHUB_PAT_IN_ACTIONS_FORBIDDEN", rel,
                 "legacy/alternate PAT secret names are forbidden; canonical repository secret is GITPAT",
+            ))
+        if LEGACY_CLIMATE_SECRET_REF_RE.search(text):
+            findings.append(Finding(
+                "ERROR", "CLIMATE_SECRET_IN_ACTIONS_FORBIDDEN", rel,
+                "legacy/Agent Climate secret names are forbidden in Actions; canonical Actions secret is CLIMA",
+            ))
+
+        if LEGACY_CLIMATE_SECRET_REF_RE.search(text):
+            findings.append(Finding(
+                "ERROR", "CLIMATE_SECRET_SURFACE_OR_NAME", rel,
+                "Actions uses CLIMA; Agents CLIMATE and the historical Actions name are not implicit fallbacks",
             ))
 
         has_gitpat = bool(GITHUB_SECRET_REF_RE.search(text))
@@ -211,6 +240,24 @@ def _payload(
     residuals: list[str] = []
     if runtime_checked and not climate_actions_secret_present:
         residuals.append("TOKEN_VAZIO_ACTIONS_CLIMATE_SECRET_BINDING")
+    guard_names = [
+        "provenance",
+        "context",
+        "evidence",
+        "contradiction",
+        "uncertainty",
+        "reproduction",
+        "rollback",
+    ]
+    finding_codes = [item.code for item in findings]
+    runtime_state = "OBSERVED_BOOLEAN_ONLY" if runtime_checked else "TOKEN_VAZIO_RUNTIME"
+    uncertainty_items = list(residuals)
+    if not runtime_checked:
+        uncertainty_items.extend([
+            "TOKEN_VAZIO_ACTIONS_RUNTIME_BINDING",
+            "TOKEN_VAZIO_AGENT_RUNTIME",
+            "TOKEN_VAZIO_ORGANIZATION_SECRET_INHERITANCE_SCOPE",
+        ])
     return {
         "schema": SCHEMA,
         "claim_allowed": False,
@@ -219,11 +266,49 @@ def _payload(
         "errors": len(errors),
         "runtime_binding_checked": runtime_checked,
         "canonical_repository_secrets": [GITHUB_SECRET, CLIMATE_SECRET],
+        "agent_secret_surface": {
+            "repository": ["GIT"],
+            "organization": ["CLIMATE", "PATGITHUB"],
+            "runtime_state": "TOKEN_VAZIO_AGENT_RUNTIME",
+        },
         "gitpat_runtime_state": "TOKEN_VAZIO_UNTIL_GITPAT_ASSURANCE_DISPATCH",
         "climate_actions_secret_present": climate_actions_secret_present if runtime_checked else "TOKEN_VAZIO_EXTERNAL_SETTING",
         "secret_value_observed": False,
         "secret_value_hashed": False,
         "credential_workflows": sorted(set(credential_workflows)),
+        "guards": guard_names,
+        "provenance": {
+            "authority": "instituto-Rafael/relativity-living-light",
+            "policy": DEFAULT_POLICY.as_posix(),
+            "credential_workflows": sorted(set(credential_workflows)),
+        },
+        "context": {
+            "scope": "Copilot Agent and GitHub Actions credential authority separation",
+            "boundary": "secret presence/authentication is not repository authority, scientific evidence, or claim promotion",
+        },
+        "evidence": {
+            "state": runtime_state,
+            "runtime_binding_checked": runtime_checked,
+            "actions_climate_binding_present_boolean": climate_actions_secret_present if runtime_checked else "TOKEN_VAZIO",
+            "secret_material_persisted": False,
+        },
+        "contradiction": {
+            "state": "OPEN" if finding_codes else "NONE_DETECTED_STATIC",
+            "finding_codes": finding_codes,
+        },
+        "uncertainty": {
+            "state": "OPEN" if uncertainty_items else "BOUNDED_FOR_THIS_CHECK",
+            "open_items": uncertainty_items,
+        },
+        "reproduction": {
+            "state": "READY",
+            "procedure": "python3 tools/validate_rll_credential_authority.py --strict --write-report",
+        },
+        "rollback": {
+            "state": "READY",
+            "anchor": os.environ.get("GITHUB_SHA", "TOKEN_VAZIO_GIT_ANCHOR"),
+            "procedure": "revert only the credential-surface mapping change; preserve all prior receipts and findings",
+        },
         "residuals": residuals,
         "findings": [asdict(item) for item in findings],
     }

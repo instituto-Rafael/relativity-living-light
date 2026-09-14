@@ -113,6 +113,56 @@ class RLLAgentAuthorityTests(unittest.TestCase):
         self.assertFalse(allowed)
         self.assertEqual(reason, "PR_MERGE_FORBIDDEN")
 
+    def test_pr_create_requires_explicit_rll_lab_base(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--title", "x"],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_REQUIRES_EXPLICIT_RLL_LAB_BASE")
+
+    def test_pr_create_rejects_main_base(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--base", "main", "--title", "x"],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_BASE_FORBIDDEN")
+
+    def test_pr_create_requires_work_branch(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--base", "rll/lab", "--title", "x"],
+            branch="rll/lab",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_REQUIRES_WORK_BRANCH")
+
+    def test_pr_create_allowed_from_work_branch_to_rll_lab(self):
+        allowed, reason = authority.classify_command(
+            [
+                "gh", "pr", "create",
+                "--base", "rll/lab",
+                "--head", "agent/test",
+                "--title", "x",
+            ],
+            branch="agent/test",
+        )
+        self.assertTrue(allowed)
+        self.assertEqual(reason, "ALLOW_PR_CREATE_TO_RLL_LAB")
+
+    def test_pr_create_rejects_mismatched_head(self):
+        allowed, reason = authority.classify_command(
+            [
+                "gh", "pr", "create",
+                "--base", "rll/lab",
+                "--head", "agent/other",
+                "--title", "x",
+            ],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_HEAD_MUST_MATCH_CURRENT_WORK_BRANCH")
+
     def test_secret_mutation_denied(self):
         allowed, reason = authority.classify_command(
             ["gh", "secret", "set", "SOME_SECRET"]
@@ -148,6 +198,65 @@ class RLLAgentAuthorityTests(unittest.TestCase):
         self.assertEqual(rc, 126)
         self.assertNotIn("top-secret", text)
         self.assertIn("PR_MERGE_FORBIDDEN", text)
+
+    def test_delete_force_and_remote_override_push_forms_are_denied(self):
+        cases = [
+            ["git", "push", "--delete", "origin", "work/x"],
+            ["git", "push", "-d", "origin", "work/x"],
+            ["git", "push", "origin", ":refs/heads/work/x"],
+            ["git", "push", "origin", "+HEAD:refs/heads/work/x"],
+            ["git", "push", "--mirror", "origin"],
+            ["git", "push", "--prune", "origin", "HEAD"],
+            ["git", "push", "--force-with-lease=refs/heads/work/x:abc", "origin", "HEAD"],
+            ["git", "push", "origin", "HEAD:rll/release"],
+            ["git", "push", "origin", "refs/tags/x"],
+            ["git", "push", "--receive-pack=other-command", "origin", "HEAD"],
+            ["git", "push", "https://example.invalid/repo", "HEAD"],
+        ]
+        for argv in cases:
+            with self.subTest(argv=argv):
+                self.assertFalse(authority.classify_command(argv, branch="work/x")[0])
+
+    def test_same_branch_explicit_refspec_is_allowed(self):
+        for argv in (
+            ["git", "push", "-u", "origin", "HEAD:refs/heads/work/x"],
+            ["git", "push", "origin", "work/x:work/x"],
+        ):
+            with self.subTest(argv=argv):
+                self.assertTrue(authority.classify_command(argv, branch="work/x")[0])
+
+    def test_implicit_post_compact_delete_and_auth_overrides_are_denied(self):
+        cases = [
+            ["gh", "api", "/repos/o/r", "-f", "name=x"],
+            ["gh", "api", "/repos/o/r", "-Fname=x"],
+            ["gh", "api", "/repos/o/r", "--input=body.json"],
+            ["gh", "api", "/repos/o/r", "-XDELETE"],
+            ["gh", "api", "/repos/o/r", "--method=PATCH"],
+            ["gh", "api", "/repos/o/r", "--hostname=example.invalid"],
+            ["gh", "api", "https://example.invalid/api"],
+            ["gh", "api", "/repos/o/r", "-HAuthorization: other"],
+            ["gh", "api", "/repos/o/r/actions/secrets"],
+            ["gh", "auth", "status", "--show-token"],
+        ]
+        for argv in cases:
+            with self.subTest(argv=argv):
+                self.assertFalse(authority.classify_command(argv)[0])
+
+    def test_explicit_readonly_api_is_allowed(self):
+        for argv in (
+            ["gh", "api", "/user"],
+            ["gh", "api", "/repos/o/r/commits", "--method", "GET"],
+            ["gh", "api", "/repos/o/r/branches", "-XGET", "--paginate"],
+        ):
+            with self.subTest(argv=argv):
+                self.assertTrue(authority.classify_command(argv)[0])
+
+    def test_owner_reported_pat_alias_and_unassigned_git(self):
+        with mock.patch.dict(os.environ, {"PATGITHUB": "fixture-value", "GIT": "unassigned"}, clear=True):
+            name, _ = authority.resolve_pat()
+        self.assertEqual(name, "PATGITHUB")
+        with mock.patch.dict(os.environ, {"GIT": "unassigned"}, clear=True):
+            self.assertEqual(authority.resolve_pat(), (None, None))
 
 
 if __name__ == "__main__":
