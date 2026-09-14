@@ -26,7 +26,10 @@ class CredentialAuthorityTests(unittest.TestCase):
         self.assertEqual("PASS", payload["decision"])
         self.assertEqual([GITHUB_SECRET, CLIMATE_SECRET], payload["canonical_repository_secrets"])
         self.assertFalse(payload["claim_allowed"])
-        self.assertEqual(\n            ["provenance", "context", "evidence", "contradiction", "uncertainty", "reproduction", "rollback"],\n            payload["guards"],\n        )
+        self.assertEqual(
+            ["provenance", "context", "evidence", "contradiction", "uncertainty", "reproduction", "rollback"],
+            payload["guards"],
+        )
         self.assertEqual(["GIT"], payload["agent_secret_surface"]["repository"])
         self.assertEqual(["CLIMATE", "PATGITHUB"], payload["agent_secret_surface"]["organization"])
         self.assertFalse(payload["secret_value_observed"])
