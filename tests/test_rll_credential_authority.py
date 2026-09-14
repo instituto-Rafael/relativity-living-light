@@ -26,6 +26,9 @@ class CredentialAuthorityTests(unittest.TestCase):
         self.assertEqual("PASS", payload["decision"])
         self.assertEqual([GITHUB_SECRET, CLIMATE_SECRET], payload["canonical_repository_secrets"])
         self.assertFalse(payload["claim_allowed"])
+        self.assertEqual(\n            ["provenance", "context", "evidence", "contradiction", "uncertainty", "reproduction", "rollback"],\n            payload["guards"],\n        )
+        self.assertEqual(["GIT"], payload["agent_secret_surface"]["repository"])
+        self.assertEqual(["CLIMATE", "PATGITHUB"], payload["agent_secret_surface"]["organization"])
         self.assertFalse(payload["secret_value_observed"])
 
     def _repo(self, workflow: str, path: str = ".github/workflows/test.yml") -> Path:
@@ -109,7 +112,7 @@ jobs:
   x:
     runs-on: ubuntu-latest
     env:
-      RLL_CLIMATE_ENGINE_TRIAL_TOKEN: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+      CLIMA: ${{ secrets.CLIMA }}
     steps:
       - run: echo safe
 """)
@@ -127,7 +130,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
-      RLL_CLIMATE_ENGINE_TRIAL_TOKEN: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+      CLIMA: ${{ secrets.CLIMA }}
     steps:
       - run: curl -X DELETE https://example.invalid/resource
 """)
@@ -146,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITPAT: ${{ secrets.GITPAT }}
-      CLIMATE: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+      CLIMATE: ${{ secrets.CLIMA }}
     steps:
       - run: echo safe
 """, GITHUB_ASSURANCE_WORKFLOW)
