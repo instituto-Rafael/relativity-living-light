@@ -121,6 +121,21 @@ class DualApiCalibrationTests(unittest.TestCase):
         encoded = json.dumps(receipt)
         self.assertNotIn(secret, encoded)
 
+    def test_owner_agent_pair_is_resolved_and_git_is_not_guessed(self):
+        with patch.dict(os.environ, {
+            "PATGITHUB": "fixture-github", "CLIMATE": "fixture-climate", "GIT": "unknown-role",
+        }, clear=True):
+            github_name, _ = dualapi.resolve_secret(dualapi.GIT_SELECTOR, dualapi.GIT_ALIASES)
+            climate_name, _ = dualapi.resolve_secret(dualapi.CLIMATE_SELECTOR, dualapi.CLIMATE_ALIASES)
+        self.assertEqual((github_name, climate_name), ("PATGITHUB", "CLIMATE"))
+
+    def test_actions_clima_selector_resolves_explicitly(self):
+        with patch.dict(os.environ, {
+            dualapi.CLIMATE_SELECTOR: "CLIMA", "CLIMA": "fixture-value",
+        }, clear=True):
+            name, _ = dualapi.resolve_secret(dualapi.CLIMATE_SELECTOR, dualapi.CLIMATE_ALIASES)
+        self.assertEqual(name, "CLIMA")
+
 
 if __name__ == "__main__":
     unittest.main()

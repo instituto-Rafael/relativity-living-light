@@ -9,6 +9,7 @@
   },
   "agent_aliases": {
     "github": [
+      "PATGITHUB",
       "RLL_AGENT_PAT",
       "AGENT_GITHUB_PAT",
       "AGENT_PAT",
@@ -17,14 +18,15 @@
       "PAT_GIT"
     ],
     "climate": [
+      "CLIMATE",
       "CLIMATE_ENGINE_API_KEY"
     ]
   },
   "actions_bindings": {
     "github_selector_value": "GITHUB_TOKEN",
     "github_secret_source": "github.token",
-    "climate_selector_value": "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
-    "climate_secret_source": "secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+    "climate_selector_value": "CLIMA",
+    "climate_secret_source": "secrets.CLIMA",
     "manual_only": true
   },
   "scientific_roles": {

@@ -4,9 +4,17 @@
   "claim_allowed": false,
   "publication_effect": "NONE",
   "authority": {
-    "runtime": "SEPARATE_AGENT_SECRET_AUTHORITY_IF_EXPLICITLY_CONFIGURED",
-    "pat_selector_variable": "RLL_AGENT_GITHUB_PAT_ENV_LEGACY_OPTIONAL",
-    "pat_aliases": [],
+    "runtime": "GITHUB_AGENTS_SECRETS",
+    "pat_selector_variable": "RLL_AGENT_GITHUB_PAT_ENV",
+    "pat_aliases": [
+      "PATGITHUB",
+      "RLL_AGENT_PAT",
+      "AGENT_GITHUB_PAT",
+      "AGENT_PAT",
+      "GH_PAT",
+      "GIT_PAT",
+      "PAT_GIT"
+    ],
     "secret_value_must_not_be_logged": true,
     "secret_value_must_not_be_persisted": true,
     "secret_value_must_not_be_hashed": true,
@@ -54,8 +62,11 @@
   "climate_engine": {
     "bridge_pr": 854,
     "bridge_merge_commit": "778ecaa779687aafdcc960dd849ca87a3ed974a6",
-    "credential_selector_variable": "RLL_AGENT_CLIMATE_KEY_ENV_LEGACY_OPTIONAL",
-    "credential_aliases": [],
+    "credential_selector_variable": "RLL_AGENT_CLIMATE_KEY_ENV",
+    "credential_aliases": [
+      "CLIMATE",
+      "CLIMATE_ENGINE_API_KEY"
+    ],
     "provider_result_state": "EXTERNAL_COMPUTE_PRODUCT",
     "claim_allowed": false
   },
@@ -68,7 +79,7 @@
   "repository_secret_boundary": {
     "canonical_repository_secrets": [
       "GITPAT",
-      "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"
+      "CLIMA"
     ],
     "direct_agent_access": "NOT_ASSUMED",
     "repository_secrets_are_not_agent_secrets": true,
@@ -76,5 +87,20 @@
       ".github/workflows/rll-repository-pat-assurance.yml",
       ".github/workflows/rll-climate-engine-trial-live.yml"
     ]
+  },
+  "binding_provenance": {
+    "state": "OWNER_REPORTED_RUNTIME_UNVERIFIED",
+    "date": "2026-09-14",
+    "unassigned_names": {
+      "GIT": "TOKEN_VAZIO_ROLE"
+    },
+    "role_mapping": "PROPOSED_FROM_NAMES_AND_EXISTING_PROVIDER_CONTRACT"
+  },
+  "seven_guards": {
+    "runner": "tools/agent/rll_agent_seven_guards.py",
+    "matrix": "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json",
+    "rollback_anchor": "2a6e80ad0efa182217aa76c55665a4c98a4e5523",
+    "receipt_mode": "APPEND_ONLY_CREATE_EXCLUSIVE",
+    "claim_allowed": false
   }
 }
