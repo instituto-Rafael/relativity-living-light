@@ -114,8 +114,8 @@ class DualApiCalibrationTests(unittest.TestCase):
         with patch.dict(os.environ, {
             "RLL_AGENT_GITHUB_PAT_ENV": "GITHUB_TOKEN",
             "GITHUB_TOKEN": secret,
-            "RLL_AGENT_CLIMATE_KEY_ENV": "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
-            "RLL_CLIMATE_ENGINE_TRIAL_TOKEN": secret,
+            "RLL_AGENT_CLIMATE_KEY_ENV": "CLIMA",
+            "CLIMA": secret,
         }, clear=True):
             receipt, _ = dualapi.run(ns(execute=False))
         encoded = json.dumps(receipt)
