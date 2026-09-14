@@ -1,0 +1,10 @@
+{
+  "schema": "rll.missing_placeholder_stub_scan.v1",
+  "claim_allowed": false,
+  "total_findings": 0,
+  "by_kind": {},
+  "by_severity": {},
+  "top_files": {},
+  "findings": [],
+  "safe_conclusion": "Findings are gap markers, not automatic failures. Claim-relevant findings must remain blocked until resolved by artifacts."
+}

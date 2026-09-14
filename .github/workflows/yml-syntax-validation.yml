@@ -1,142 +1,112 @@
-name: YAML Syntax Validation Gate
+# KNOWS_BY_ON_FIRST_LINE: structural gate; no scientific promotion.
+name: YAML and Workflow Architecture Gate
+run-name: Workflow architecture Ω · ${{ github.event_name }} · ${{ github.ref_name }}
 
-on:
+"on":
   pull_request:
-    paths:
-      - '**/*.yml'
-      - '**/*.yaml'
+    paths: &workflow_architecture_paths
+      - "**/*.yml"
+      - "**/*.yaml"
+      - ".github/GUIA_WORKFLOWS.md"
+      - ".github/workflow-architecture/**"
+      - "docs/workflows/**"
+      - "tools/audit_github_workflows.py"
+      - "tools/workflow_architecture.py"
+      - "tools/validate_workflow_docs.py"
+      - "tests/test_workflow_architecture.py"
+      - "tests/test_validate_workflow_docs.py"
   push:
-    branches: [ main ]
-    paths:
-      - '**/*.yml'
-      - '**/*.yaml'
+    branches: [main]
+    paths: *workflow_architecture_paths
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: workflow-architecture-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  PYTHON_VERSION: "3.11"
+  RECEIPT_DIR: artifacts/yml-syntax-validation
+
 jobs:
-  validate-yaml:
+  validate-workflow-architecture:
+    name: Parse, govern, test, and receipt workflows
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5 resolved 2026-07-30
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
 
-      - name: Install PyYAML
-        run: python -m pip install --upgrade pip pyyaml
-
-      - name: Validate every YAML file with a real parser
+      - name: Install deterministic validation dependencies
         run: |
-          mkdir -p artifacts/yml-syntax-validation
-          python - <<'PY'
-          from pathlib import Path
-          import json
-          import yaml
-          import sys
-          import hashlib
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml pytest
 
-          out_dir = Path('artifacts/yml-syntax-validation')
-          out_dir.mkdir(parents=True, exist_ok=True)
-          files = sorted(
-              p for p in [*Path('.').rglob('*.yml'), *Path('.').rglob('*.yaml')]
-              if '.git/' not in str(p)
-          )
-          rows = []
-          failed = 0
-          for p in files:
-              raw = p.read_bytes()
-              sha = hashlib.sha256(raw).hexdigest()
-              status = 'OK'
-              error = ''
-              documents = 0
-              try:
-                  documents = len(list(yaml.safe_load_all(raw.decode('utf-8'))))
-                  print(f'OK   {sha[:12]}  {p}')
-              except Exception as exc:
-                  failed += 1
-                  status = 'FAIL'
-                  error = str(exc).replace('\n', ' ')
-                  print(f'FAIL {sha[:12]}  {p}  {error}')
-              rows.append({
-                  'path': str(p),
-                  'sha256': sha,
-                  'sha256_12': sha[:12],
-                  'documents': documents,
-                  'status': status,
-                  'error': error,
-              })
-
-          summary = {
-              'schema': 'rll.yml_syntax_validation_artifacts.v1',
-              'total_yaml_files': len(files),
-              'failed_yaml_files': failed,
-              'passed_yaml_files': len(files) - failed,
-              'claim_boundary': 'YAML parseability is structural evidence only; it does not validate scientific claims.',
-              'artifact_policy': 'Upload TSV/JSON/Markdown reports so the YAML gate can be consulted after the workflow run.',
-          }
-          (out_dir / 'yaml_parse_summary.json').write_text(
-              json.dumps(summary, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
-          )
-          with (out_dir / 'yaml_parse_report.tsv').open('w', encoding='utf-8') as fh:
-              fh.write('path\tstatus\tdocuments\tsha256\terror\n')
-              for row in rows:
-                  fh.write(
-                      f"{row['path']}\t{row['status']}\t{row['documents']}\t{row['sha256']}\t{row['error']}\n"
-                  )
-          md = [
-              '# YAML Syntax Validation Report',
-              '',
-              f"- total_yaml_files: `{summary['total_yaml_files']}`",
-              f"- passed_yaml_files: `{summary['passed_yaml_files']}`",
-              f"- failed_yaml_files: `{summary['failed_yaml_files']}`",
-              f"- claim_boundary: `{summary['claim_boundary']}`",
-              '',
-              '| status | sha256_12 | path | error |',
-              '|---|---|---|---|',
-          ]
-          for row in rows:
-              md.append(f"| {row['status']} | `{row['sha256_12']}` | `{row['path']}` | {row['error']} |")
-          (out_dir / 'YAML_PARSE_REPORT.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
-          print(f'\nTOTAL={len(files)} FAILED={failed}')
-          sys.exit(1 if failed else 0)
-          PY
-
-      - name: Validate workflow isolation (repo audit tool)
-        shell: bash
+      - name: Parse all YAML and enforce architecture invariants
         run: |
-          mkdir -p artifacts/yml-syntax-validation
-          set +e
-          python3 tools/audit_github_workflows.py --strict | tee artifacts/yml-syntax-validation/workflow_audit.log
-          status=${PIPESTATUS[0]}
-          python - <<PY
-          import json
-          from pathlib import Path
-          payload = {
-              'schema': 'rll.workflow_audit_status.v1',
-              'status_code': int(${status}),
-              'passed': int(${status}) == 0,
-              'claim_boundary': 'Workflow hygiene audit confirms structure/isolation only; it does not validate scientific claims.',
-          }
-          Path('artifacts/yml-syntax-validation/workflow_audit_status.json').write_text(
-              json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
-          )
-          PY
-          exit "$status"
+          set -euo pipefail
+          mkdir -p "$RECEIPT_DIR"
+          python3 tools/workflow_architecture.py \
+            --contract .github/workflow-architecture/invariants.v1.yml \
+            --output-dir "$RECEIPT_DIR" \
+            --strict \
+            2>&1 | tee "$RECEIPT_DIR/workflow_architecture.log"
 
-      - name: Upload consultable YAML validation artifacts
-        uses: actions/upload-artifact@v4
+      - name: Preserve legacy isolation and real-data policy gates
+        run: |
+          set -euo pipefail
+          python3 tools/audit_github_workflows.py --strict \
+            2>&1 | tee "$RECEIPT_DIR/workflow_audit.log"
+
+      - name: Validate workflow documentation contract
+        run: |
+          set -euo pipefail
+          python3 tools/validate_workflow_docs.py --strict --write-report \
+            2>&1 | tee "$RECEIPT_DIR/workflow_docs_contract.log"
+
+      - name: Run focused adversarial tests
+        run: |
+          set -euo pipefail
+          pytest -q \
+            tests/test_workflow_architecture.py \
+            tests/test_validate_workflow_docs.py \
+            --junitxml="$RECEIPT_DIR/junit.xml" \
+            2>&1 | tee "$RECEIPT_DIR/pytest.log"
+
+      - name: Publish human-readable Ω summary
         if: always()
+        run: |
+          set -euo pipefail
+          report="$RECEIPT_DIR/WORKFLOW_ARCHITECTURE_REPORT.md"
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_WORKFLOW_ARCHITECTURE_REPORT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload consultable architecture receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4 resolved 2026-07-30
         with:
-          name: yml-syntax-validation-${{ github.run_id }}
-          path: artifacts/yml-syntax-validation/
-          retention-days: 14
+          name: workflow-architecture-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/yml-syntax-validation/
+            artifacts/workflow-docs/
+          retention-days: 30
+          if-no-files-found: error

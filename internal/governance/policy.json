@@ -1,0 +1,19 @@
+{
+  "schema": "rafaelia.policy.v1",
+  "default_capability_decision": "blocked",
+  "allowlist": [
+    "git.read",
+    "git.diff",
+    "filesystem.read",
+    "termux.command.safe"
+  ],
+  "command_policy": {
+    "free_text_shell": "blocked",
+    "compiled_plan_required": true,
+    "allowed_readonly_commands": [
+      ["git", "status"],
+      ["git", "diff", "--stat"]
+    ]
+  },
+  "gate_precedence": ["blocked", "human_review", "sandbox_only", "allow"]
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "rll.strong_gravity.eht_data_manifest.v1",
+  "manifest_id": "EHT-2026-D01-01-RLL-CUSTODY-20260827",
+  "created_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "product": {
+    "code": "2026-D01-01",
+    "title": "2018 and 2021 Calibrated polarimetric data",
+    "publisher": "Event Horizon Telescope Collaboration",
+    "official_catalog_url": "https://eventhorizontelescope.org/for-astronomers/data",
+    "official_last_updated": "2026-06-29",
+    "distribution_browser_url": "https://datacommons.cyverse.org/browse/iplant/home/ckc/EHTC_M87-2018%2B2021_Jul2026",
+    "reference": "The Event Horizon Telescope Collaboration et al. 2025, Astronomy & Astrophysics 704, A91",
+    "reference_doi": "10.1051/0004-6361/202555855"
+  },
+  "source_verification": {
+    "catalog_metadata_verified": true,
+    "distribution_browser_location_verified": true,
+    "reference_doi_verified": true,
+    "verified_as_of": "2026-08-27",
+    "verification_scope": "metadata_and_public_locator_only"
+  },
+  "custody": {
+    "bytes_materialized_into_rll_execution_environment": false,
+    "file_inventory_verified": false,
+    "sha256_verified": false,
+    "dataset_file_license_verified": false,
+    "state": "BLOCKED_EXTERNAL_BYTE_ACCESS",
+    "reason": "The official EHT catalog and CyVerse browser location were resolved, but the current execution environment did not obtain a raw directory/file byte stream from the CyVerse distribution path. No file names, sizes, licenses or SHA256 values are inferred or fabricated.",
+    "file_inventory": [],
+    "token_vazio_fields": [
+      "file_inventory",
+      "file_size_bytes",
+      "sha256",
+      "dataset_file_license_or_terms",
+      "immutable_per_file_locator"
+    ]
+  },
+  "allowed_use_now": [
+    "verify that EHT 2026-D01-01 exists",
+    "verify its public title, update date, distribution location and paper reference",
+    "route future RLL ingestion to the official product"
+  ],
+  "forbidden_use_now": [
+    "numeric likelihood evaluation from unmaterialized files",
+    "claim that RLL has ingested or checksum-verified the dataset",
+    "invent file-level covariance or SHA256",
+    "treat the product as Hawking thermometry",
+    "treat sparse multi-epoch variability as an astrophysical Mpemba detection"
+  ],
+  "materialization_contract": {
+    "required_steps": [
+      "list the complete official product directory",
+      "download only from the official product or an authority-declared mirror",
+      "preserve upstream filenames",
+      "record file size and immutable locator for every used object",
+      "compute SHA256 over exact downloaded bytes",
+      "rerun SHA256 verification from a clean environment",
+      "record dataset file license/terms without borrowing the paper license unless the dataset explicitly adopts it"
+    ],
+    "promotion_state_after_success": "INGESTED_CHECKSUM_VERIFIED",
+    "promotion_allowed_without_success": false
+  },
+  "claim_allowed": false
+}

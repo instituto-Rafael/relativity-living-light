@@ -1,0 +1,19 @@
+{
+  "schema": "rll.to_add_migration_validation.v1",
+  "claim_allowed": false,
+  "ok": true,
+  "missing_canonical": [],
+  "invalid_legacy_wrappers": [],
+  "historical_wrappers_present": [
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/__init__.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/cosmo.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/feedback_agn.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/growth.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/likelihood.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/models.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/run_all.py",
+    "to_Add/RAFAELIA_COSMO_STRUCTURE_D/rll_pipeline/make_example_data.py"
+  ],
+  "historical_wrappers_invalid": [],
+  "safe_conclusion": "to_Add migration validates as controlled legacy intake."
+}

@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_environmental_signal_manifest.schema.json",
+  "title": "RLL Environmental Signal Manifest",
+  "description": "Structural claim-bounded contract for ordered environmental, aerosol, shower, acoustic and detector-specific signal custody. Structural validity is not scientific validation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "claim_allowed",
+    "orchestration_policy",
+    "modules",
+    "physical_facts",
+    "decision_policy",
+    "references",
+    "next_gate"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "manifest_id": {"type": "string", "pattern": "^rll-envsig-[a-z0-9._-]+$"},
+    "claim_allowed": {"const": false},
+    "orchestration_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["yaml_role", "shell_role", "semantic_authority", "no_new_workflow_required"],
+      "properties": {
+        "yaml_role": {"const": "ORDER_ONLY"},
+        "shell_role": {"const": "TYPED_MODULE_INVOCATION"},
+        "semantic_authority": {"const": "MANIFEST_AND_MODULE_CONTRACTS"},
+        "no_new_workflow_required": {"const": true}
+      }
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "order",
+          "id",
+          "responsibility",
+          "inputs",
+          "outputs",
+          "epistemic_state",
+          "mechanism_status",
+          "reproduction_status",
+          "claim_allowed"
+        ],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1, "maximum": 12},
+          "id": {"type": "string", "minLength": 3},
+          "responsibility": {"type": "string", "minLength": 10},
+          "inputs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "outputs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "epistemic_state": {"enum": ["EVIDENCED_EXTERNALLY", "TESTABLE", "TOKEN_VAZIO_LOCAL", "BLOCKED"]},
+          "mechanism_status": {"enum": ["KNOWN", "PARTIAL", "CANDIDATE", "TOKEN_VAZIO"]},
+          "reproduction_status": {"enum": ["LOCAL_PASS", "EXTERNAL_REFERENCE", "NOT_ATTEMPTED", "TOKEN_VAZIO"]},
+          "claim_allowed": {"const": false}
+        }
+      }
+    },
+    "physical_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["diesel_exhaust", "electric_shower", "singing_context", "icecube_background"],
+      "properties": {
+        "diesel_exhaust": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["phase_model", "solid_carbonaceous_core", "solid_only", "components", "evidence_state"],
+          "properties": {
+            "phase_model": {"const": "MIXED_PHASE_AEROSOL"},
+            "solid_carbonaceous_core": {"const": true},
+            "solid_only": {"const": false},
+            "components": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+            "evidence_state": {"const": "EVIDENCED_EXTERNALLY"}
+          }
+        },
+        "electric_shower": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary_heating_mechanism", "resistance_directly_ionizes_surroundings", "spray_electrification_candidate", "local_ion_measurement_state"],
+          "properties": {
+            "primary_heating_mechanism": {"const": "JOULE_HEATING"},
+            "resistance_directly_ionizes_surroundings": {"const": false},
+            "spray_electrification_candidate": {"const": true},
+            "local_ion_measurement_state": {"const": "TOKEN_VAZIO_LOCAL_MEASUREMENT"}
+          }
+        },
+        "singing_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ionization_causes_singing", "supported_route", "psychological_context_state"],
+          "properties": {
+            "ionization_causes_singing": {"const": false},
+            "supported_route": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+            "psychological_context_state": {"enum": ["CONTEXT_DEPENDENT", "TOKEN_VAZIO"]}
+          }
+        },
+        "icecube_background": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["atmospheric_backgrounds", "detection_medium", "optical_refraction_equivalent"],
+          "properties": {
+            "atmospheric_backgrounds": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+            "detection_medium": {"const": "ANTARCTIC_ICE_CHERENKOV"},
+            "optical_refraction_equivalent": {"const": false}
+          }
+        }
+      }
+    },
+    "decision_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_gates", "allowed_terminal_states", "promotion_allowed", "current_state"],
+      "properties": {
+        "required_gates": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"enum": ["SEMANTIC_MEANING", "REPRODUCTION", "MECHANISM"]}
+        },
+        "allowed_terminal_states": {
+          "type": "array",
+          "items": {"enum": ["DISCARDED_WITH_REASON", "CORRECTED_WITH_RECEIPT", "PROMOTED_TO_SIGNAL"]}
+        },
+        "promotion_allowed": {"const": false},
+        "current_state": {"const": "BLOCKED_PENDING_REPRODUCTION_AND_MECHANISM"}
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "source_type", "locator"],
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "source_type": {"enum": ["OFFICIAL", "PEER_REVIEWED"]},
+          "locator": {"type": "string", "minLength": 8}
+        }
+      }
+    },
+    "next_gate": {"type": "string", "minLength": 20}
+  }
+}

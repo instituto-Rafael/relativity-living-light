@@ -1,0 +1,21 @@
+{
+  "schema": "rll.relativistic_compression_radiation.validation_receipt.v1",
+  "model": "data/pipelines/strong_gravity/relativistic_compression_radiation_bridge.py",
+  "contract": "data/contracts/relativistic_compression_radiation_bridge.v1.json",
+  "baseline": "data/results/strong_gravity/relativistic_compression_radiation_baseline.json",
+  "tests": "tests/strong_gravity/test_relativistic_compression_radiation_bridge.py",
+  "focused_local_validation": {
+    "tests": 15,
+    "status": "PASS",
+    "py_compile": "PASS"
+  },
+  "identities_checked": [
+    "compression_work=-p*Theta",
+    "magnetic_pressure=B^2/(2*mu0)",
+    "photon_thrust=coupling*power/c",
+    "a_rad/a_grav=L/L_Edd under shared spherical-opacity assumptions",
+    "P_degeneracy proportional to electron_density^(5/3) in the non-relativistic reference"
+  ],
+  "remote_validation": "PENDING_PR_WORKFLOWS",
+  "claim_allowed": false
+}

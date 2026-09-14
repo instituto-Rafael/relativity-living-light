@@ -57,3 +57,80 @@ Build/teste focal:
 ```bash
 pytest -q tests/test_sqrt3_2_freestanding_kernel.py
 ```
+
+
+## Região canônica de acoplamento freestanding
+- `include/rll_canonical_coupling.h` — tipos, unidades, estados e políticas de região.
+- `c/rll_canonical_coupling.c` — acoplamento Q16.16 sem heap/libc entre observações, modelos, incertezas, proveniência e recibos.
+- separa evidência cosmológica, contexto geofísico local, operadores geométricos exatos, referências de gravidade forte, dados sintéticos e `TOKEN_VAZIO`;
+- nunca promove geofísica local, geometria exata ou fixture sintética a evidência cosmológica;
+- acumula contribuição `chi²` apenas para observações cosmológicas tipadas com unidade, incerteza, calibração, hash e modelo registrado;
+- gera recibo determinístico FNV-1a/CRC32 com `claim_allowed=0`;
+- valida objetos host, ARMv7 e AArch64.
+
+Comando canônico de validação da fronteira:
+```bash
+python3 tools/validate_rll_canonical_freestanding.py --write-report
+```
+
+## Kernel canônico executável RLL v1
+
+A fronteira acima decide **o que pode entrar**. Este kernel complementar executa **o modelo físico sobre o que entrou**:
+
+- `include/rll_canonical_freestanding.h` — ABI independente, tipos e recibo canônico;
+- `c/rll_canonical_freestanding.c` — H(z), RLL/ΛCDM, χ², Q16.16, raiz inteira, exponencial e divisão software;
+- `c/rll_canonical_hz_data.c` — 33 linhas reais de `data/real/Hz_data_real.csv` materializadas bit a bit;
+- `c/rll_canonical_entry.c` — `_start` e syscalls diretas para x86_64, AArch64, ARMv7/EABI e RISC-V 64;
+- `results/rll_canonical_freestanding_receipt.json` — cadeia de custódia da compilação e do resultado.
+
+Não há substituição entre os dois módulos:
+
+```text
+rll_canonical_coupling  = classificação, unidades, proveniência e gate
+rll_canonical_freestanding = execução cosmológica determinística e recibo
+```
+
+Execução única do ELF:
+```bash
+./scripts/build_rll_canonical_freestanding.sh
+```
+
+Validação focal:
+```bash
+pytest -q tests/test_rll_canonical_model_kernel.py
+```
+
+Contrato completo: [`docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md`](../../docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md).
+
+## Ingestão freestanding dos quatro blocos reais
+
+O núcleo executável recebe uma camada única de entrada para todos os blocos
+cosmológicos reais versionados:
+
+- `include/rll_canonical_real_inputs.h` — ABI de buffers, callback de modelo e recibo;
+- `c/rll_canonical_real_inputs.c` — SHA-256 interno, parsers CSV/JSON streaming e Q16.16;
+- `include/rll_canonical_real_models.h` / `c/rll_canonical_real_models.c` — bridge para os avaliadores ΛCDM/RLL já existentes;
+- 33 H(z) + 13 DESI DR2 BAO + 16 fσ8/RSD + 3 CMB = **65 observações**;
+- `DV/r_d`, `DM/r_d`, `DH/r_d` e os três parâmetros CMB permanecem tipados separadamente;
+- a matriz CMB 3×3 é usada somente quando as três previsões do modelo existem;
+- os perfis históricos V1 continuam ligando somente H(z), preservando seus receipts;
+- os perfis conjuntos V2 ligam as **65/65 observações** a H(z), BAO, fσ8 e CMB, com `model_token_vazio_rows=0`;
+- nenhuma rota libera claim: `claim_allowed=0`.
+
+Receipts conjuntos V2:
+
+```text
+ΛCDM chi2_q16 = 4641555
+RLL  chi2_q16 = 4261420
+delta          = -380135
+```
+
+Validação focal:
+```bash
+pytest -q tests/test_rll_canonical_real_inputs.py
+```
+
+Contratos:
+
+- [`docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md`](../../docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md) — fronteira de entrada e comportamento histórico;
+- [`docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md`](../../docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md) — ligação executável conjunta das 65 observações.

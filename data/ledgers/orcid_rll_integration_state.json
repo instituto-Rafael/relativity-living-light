@@ -1,0 +1,30 @@
+{
+  "schema": "rll.orcid_integration_state.v1",
+  "recorded_at": "2026-07-26T00:00:00Z",
+  "claim_allowed": false,
+  "identity": {
+    "canonical_orcid": "TOKEN_VAZIO_ORCID_ID",
+    "state": "TOKEN_VAZIO_IDENTITY_RESOLUTION",
+    "reason": "No authenticated real ORCID iD was available in the inspected RLL and Drive sources.",
+    "prohibited_value_detected": "0000-0002-XXXX-YYYY",
+    "corrective_action": "Remove the syntactically invalid placeholder from CITATION.cff; add a real iD only after checksum validation and owner confirmation."
+  },
+  "implementation": {
+    "public_orcid_read_sync": "IMPLEMENTED",
+    "datacite_enrichment": "IMPLEMENTED",
+    "crossref_enrichment": "IMPLEMENTED",
+    "openalex_enrichment": "IMPLEMENTED",
+    "ncbi_biomedical_adapter": "ROADMAP",
+    "sqlite_append_only_vector_store": "IMPLEMENTED",
+    "vector_dimensions": 32,
+    "event_hash_chain": "IMPLEMENTED",
+    "offline_tests": "PASS_11_OF_11"
+  },
+  "external_execution": {
+    "live_orcid_sync": "TOKEN_VAZIO_REAL_ID_AND_PUBLIC_API_CREDENTIALS",
+    "orcid_write_back": "TOKEN_VAZIO_MEMBER_API_OR_MANUAL_REVIEW",
+    "independent_scientific_validation": "TOKEN_VAZIO_PER_ARTIFACT"
+  },
+  "invariant": "Bibliographic identity and metadata validation never promote a scientific claim.",
+  "next_gate": "Supply the authenticated ORCID iD through a protected runtime secret or manual operator input, execute read-only sync, inspect conflicts, then export reviewed work candidates for manual ORCID update or Member API authorization."
+}

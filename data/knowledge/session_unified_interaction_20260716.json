@@ -1,0 +1,165 @@
+{
+  "schema": "rll.session_unified_interaction.v1",
+  "operation_id": "SESSION-UNIFIED-20260716-001",
+  "title": "Sessão unificada — workflow, geometria, repositórios e auditoria",
+  "date": "2026-07-16",
+  "claim_allowed": false,
+  "session_unit_policy": "As interações desta sessão são tratadas como perspectivas de uma única unidade epistêmica. A origem de cada perspectiva é preservada; nenhuma conversa é promovida isoladamente a prova.",
+  "invariant": {
+    "name": "coerencia_verificavel",
+    "expression": "simbolo_preservado + prova_registrada + execucao_auditavel",
+    "cycle": ["intencao", "observacao", "ruido", "transmutacao", "memoria", "fechamento_provisorio", "nova_intencao"]
+  },
+  "source_lenses": [
+    {
+      "id": "LENS-WORKFLOW",
+      "label": "analise_de_sessoes_workflow",
+      "role": "mapear RAFAELIA, RLL, Omega, Termux, Vectras, ChipQuantum e corpus como módulos contratuais",
+      "content_mode": "session_context_pointer",
+      "private_content_copied": false
+    },
+    {
+      "id": "LENS-GEOMETRY",
+      "label": "geometria_e_projecoes",
+      "role": "formalizar medianas, projeções, déficit quadrático e √3/2 no repositório matemático proprietário",
+      "content_mode": "cross_repo_public_or_private_pointer",
+      "private_content_copied": false
+    },
+    {
+      "id": "LENS-REPOSITORIES",
+      "label": "analise_de_repositorios_github",
+      "role": "operar revisão longitudinal por delta de commits, evidências, contradições e estados",
+      "content_mode": "repository_evidence",
+      "private_content_copied": false
+    },
+    {
+      "id": "LENS-AUDIT",
+      "label": "auditoria_session_knowledge_os",
+      "role": "usar artefatos de CI somente como evidência lateral, nunca como substituto do estado dos repositórios",
+      "content_mode": "workflow_artifact_evidence",
+      "private_content_copied": false
+    }
+  ],
+  "epistemic_layers": [
+    {"level": 1, "name": "EVIDENCE", "members": ["commit", "code", "test", "log", "dataset", "hash", "result"]},
+    {"level": 2, "name": "METHOD", "members": ["algorithm", "schema", "architecture", "operational_equation"]},
+    {"level": 3, "name": "HYPOTHESIS", "members": ["proposed_relation", "prediction", "generalization_candidate"]},
+    {"level": 4, "name": "SYMBOL_OR_METAPHOR", "members": ["exploratory_language", "conceptual_compression"]}
+  ],
+  "repository_routes": [
+    {
+      "repository": "instituto-Rafael/relativity-living-light",
+      "ownership": "public_scientific_governance_and_session_graph",
+      "write_state": "IMPLEMENTED_IN_BRANCH",
+      "destination": "docs/architecture + data/knowledge + results/session_grafo_fase17_20",
+      "claim_boundary": "Mantém evidência científica negativa, snapshots históricos e estados atuais sem afirmar superioridade RLL."
+    },
+    {
+      "repository": "rafaelmeloreisnovo/ChipQuantum",
+      "ownership": "private_mathematical_formalization_and_experiments",
+      "write_state": "IMPLEMENTED_IN_BRANCH",
+      "destination": "papers/technical + experiments/paper6_quadratic_deficit_geometry + docs",
+      "claim_boundary": "Geometria formal, hipóteses e metáforas permanecem separadas por ledger e experimento."
+    },
+    {
+      "repository": "rafaelmeloreisnovo/papers",
+      "ownership": "private_research_bodies",
+      "write_state": "POINTER_ONLY",
+      "destination": "TOKEN_VAZIO",
+      "claim_boundary": "Nenhum corpo privado ou fórmula privada é copiado para o RLL público."
+    },
+    {
+      "repository": "rafaelmeloreisnovo/termux-app-rafacodephi",
+      "ownership": "android_runtime",
+      "write_state": "NO_WRITE_THIS_OPERATION",
+      "destination": "future_runtime_contract",
+      "claim_boundary": "A sessão unificada não promove documentação a execução real no dispositivo."
+    },
+    {
+      "repository": "rafaelmeloreisnovo/Vectras-VM-Android",
+      "ownership": "vm_qemu_execution",
+      "write_state": "NO_WRITE_THIS_OPERATION",
+      "destination": "future_vm_gate",
+      "claim_boundary": "Boot, QEMU, rootfs e console continuam dependentes de prova operacional própria."
+    }
+  ],
+  "relations": [
+    {"from": "LENS-WORKFLOW", "type": "DEFINES_SYSTEM_MAP", "to": "SESSION-UNIFIED-20260716-001"},
+    {"from": "LENS-GEOMETRY", "type": "MATERIALIZES_IN", "to": "rafaelmeloreisnovo/ChipQuantum"},
+    {"from": "LENS-REPOSITORIES", "type": "REQUIRES_DELTA_AUDIT", "to": "SESSION-UNIFIED-20260716-001"},
+    {"from": "LENS-AUDIT", "type": "EVIDENCE_FOR_NOT_TARGET", "to": "instituto-Rafael/relativity-living-light"},
+    {"from": "SESSION_FASE17_20_2026-07-14_15", "type": "SNAPSHOT_SUPERSEDED_BY_PHASE", "to": "FASE22"},
+    {"from": "G4_TOKEN_VAZIO_AT_PHASE20", "type": "QUANTIFIED_AS", "to": "G4_VERIFIED_LIMITED_AT_PHASE22"}
+  ],
+  "claims": [
+    {
+      "id": "SU-001",
+      "state": "VERIFIED",
+      "statement": "As interações da sessão podem ser representadas como uma unidade com lentes de origem preservadas.",
+      "gate": "manifesto máquina-legível e validador estrutural"
+    },
+    {
+      "id": "SU-002",
+      "state": "VERIFIED_LIMITED",
+      "statement": "RLL possui governança, CI e grafo epistêmico, mas isso não prova integração executável entre todos os repositórios.",
+      "gate": "provas cross-repo por commit, teste e artefato em cada repositório dono"
+    },
+    {
+      "id": "SU-003",
+      "state": "VERIFIED_LIMITED",
+      "statement": "G4 foi quantificado na FASE 22 com erro sistemático de 0.7214 Mpc no ponto posterior.",
+      "gate": "CAMB/RECFAST dentro do MCMC e repetição do nested sampling"
+    },
+    {
+      "id": "SU-004",
+      "state": "VERIFIED_LIMITED",
+      "statement": "A evidência analisada atualmente favorece ΛCDM sobre RLL.",
+      "gate": "reprodução independente e revisão por pares"
+    },
+    {
+      "id": "SU-005",
+      "state": "PARTIAL",
+      "statement": "A geometria de déficit quadrático possui formalização e experimentos no ChipQuantum, mas generalizações físicas permanecem bloqueadas.",
+      "gate": "provas formais adicionais, testes de casos inválidos e domínio de aplicação"
+    },
+    {
+      "id": "SU-006",
+      "state": "TOKEN_VAZIO",
+      "statement": "Integração operacional completa RLL–ChipQuantum–Termux–Vectras.",
+      "gate": "ABI, build, runtime log, checksum, rollback e reprodução cross-repo"
+    }
+  ],
+  "contradictions_resolved": [
+    {
+      "id": "SU-CONTRADICTION-001",
+      "before": "O ZIP de auditoria foi tratado como alvo principal da solicitação.",
+      "after": "O ZIP é somente evidência lateral; o alvo é o estado e a articulação dos repositórios.",
+      "resolution": "SESSION_TARGET_REPOSITORIES"
+    },
+    {
+      "id": "SU-CONTRADICTION-002",
+      "before": "G4 aparecia simultaneamente aberto no snapshot FASE 20 e fechado na FASE 22 sem marcador temporal.",
+      "after": "TOKEN_VAZIO é preservado como estado histórico; o estado corrente é VERIFIED_LIMITED, com sistemático quantificado e não eliminado.",
+      "resolution": "TEMPORAL_STATE_SPLIT"
+    }
+  ],
+  "mandatory_invariants": {
+    "private_content_copied": false,
+    "automatic_cross_repo_write": false,
+    "automatic_merge": false,
+    "destructive_actions": false,
+    "metaphor_validates_physics": false,
+    "hash_proves_scientific_truth": false,
+    "negative_results_preserved": true,
+    "token_vazio_can_be_inferred": false
+  },
+  "artifacts": [
+    "docs/architecture/SESSION_UNIFIED_INTERACTION_20260716.md",
+    "data/knowledge/session_unified_interaction_20260716.json",
+    "tools/validate_session_unified_interaction.py",
+    "tests/test_session_unified_interaction.py",
+    "results/session_grafo_fase17_20/session_manifest.json",
+    "results/session_grafo_fase17_20/gaps.jsonl"
+  ],
+  "next_gate": "Validar esta unidade no CI existente, integrar os PRs dos repositórios donos e só depois abrir gates operacionais específicos para Termux e Vectras."
+}

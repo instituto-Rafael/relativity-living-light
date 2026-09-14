@@ -1,0 +1,62 @@
+{
+  "schema": "rll.canonical-real-freestanding-receipt.v1",
+  "generated_utc": "2026-07-27T05:00:00Z",
+  "status": "PASS_LOCAL_FREESTANDING",
+  "claim_allowed": false,
+  "runtime": {
+    "language": "C11",
+    "freestanding": true,
+    "libc": false,
+    "malloc": false,
+    "heap": false,
+    "gc": false,
+    "nostdlib_static_elf": true,
+    "undefined_symbols": 0,
+    "text_bytes": 15354,
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "elf_sha256_local": "385cb002b1192c4abb21421dc95d72aa1bb8d45d502b6cd9cac75252cbf708d1"
+  },
+  "sources": {
+    "header_sha256": "e0777b8dd6932452a5dec09c45586de4467e6e8fe7bbb33fcba312128e5e8ae2",
+    "core_sha256": "e8c0a1ec7debc4f85aec6e99628cdf8ce468506a05329672ce03cecfff188242",
+    "data_sha256": "95b725b2ead97bb780bf6b597319dec1fda63554a4b576dd5e5e0ce9a852ee98",
+    "selftest_sha256": "427e926d066b6d53420ccb5e6eec0d70dac60e6d64e6ef83ca16e4b18fe40204"
+  },
+  "datasets": {
+    "real_hz": {"n": 33, "sha256": "1194fe2066dc3d92b4870cfb03d2cdbe2a316deae2e1355943f7f2ccca6d52b6", "covariance": "DIAGONAL"},
+    "real_fsigma8": {"n": 16, "sha256": "3781a2fa7bce9ea600060f9feb6e74ba49f4baa4ce2e7344803295c912318211", "covariance": "DIAGONAL_LIMITED"},
+    "desi_dr2_bao": {"n": 13, "sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69", "covariance": "CORRELATED_2X2_BLOCKS"},
+    "planck_cmb_prior": {"n": 3, "sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979", "covariance": "FULL_3X3_LDLT"}
+  },
+  "rll_fase18e_map": {
+    "chi2_hz": 23.969658191726,
+    "chi2_growth": 21.355840908744,
+    "chi2_desi_dr2": 21.787983337656,
+    "chi2_cmb": 0.761677264076,
+    "chi2_embedded_total": 67.875159702203,
+    "status_flags": 0
+  },
+  "lcdm_fase18e_map": {
+    "chi2_hz": 23.000260135316,
+    "chi2_growth": 19.322031079662,
+    "chi2_desi_dr2": 38.700515834517,
+    "chi2_cmb": 0.503009332537,
+    "chi2_embedded_total": 81.525816382031,
+    "status_flags": 0
+  },
+  "crosscheck": {
+    "fase18e_hz_abs_error": 0.000023735006,
+    "fase18e_desi_abs_error": 0.000080941356,
+    "fase18e_cmb_abs_error": 0.000009968668,
+    "tolerance": 0.0002,
+    "status": "PASS"
+  },
+  "boundaries": {
+    "pantheon_full_array_embedded": false,
+    "pantheon_external_full_covariance_api": true,
+    "complete_planck_likelihood": false,
+    "posterior_is_physical_truth": false,
+    "synthetic_promoted_to_observational": false
+  }
+}

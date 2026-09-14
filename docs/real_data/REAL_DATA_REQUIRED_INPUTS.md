@@ -49,15 +49,18 @@ python scripts/run_real_pantheon_validation.py
 
 **Status:** seed real inicial já materializado.
 
-**Arquivo atual:** `data/real/cosmology_observational_seed_2026.csv`
+**Arquivo atual recomendado para importação auditável:** `data/real/Hz_data_real.csv`
 
-**Pontos reais já registrados:**
+**Colunas esperadas:** `z,H_obs,sigma_H,source`.
 
-| fonte | z | H(z) |
-|---|---:|---:|
-| `arXiv:2110.04304` | 0.75 | `98.8 ± 33.6 km/s/Mpc` |
-| `arXiv:2205.05701` | 0.80 | `113.1 km/s/Mpc` com erro assimétrico |
-| `arXiv:2512.02109` | 0.542 | `66.0 km/s/Mpc` com erro amplo |
+**Exemplo de linhas materializadas:**
+
+| z | H_obs | sigma_H | source |
+|---:|---:|---:|---|
+| 0.07 | 69.0 | 19.6 | `CC_Moresco2022` |
+| 0.09 | 69.0 | 12.0 | `CC_Moresco2022` |
+| 0.12 | 68.6 | 26.2 | `CC_Moresco2022` |
+| 0.17 | 83.0 | 8.0 | `CC_Moresco2022` |
 
 **Necessário para virar compilação forte:** coletar tabela completa de cronômetros cósmicos com referência por linha, método, erro estatístico/sistemático e política de covariância.
 
@@ -107,7 +110,41 @@ python tools/validate_real_data_addition_registry.py
 
 Esse registro aumenta a cobertura de fontes reais, mas mantém `CLAIM_BLOCKED` até haver arquivo local, checksum, schema, covariância/erro, baseline e métrica.
 
-## 7. Ordem operacional correta
+## 7. URLs públicas para importação guardada
+
+O workflow auxiliar abaixo aceita uma URL HTTPS pública CSV/JSON e gera artifact temporário de auditoria, sem commit automático de dado bruto:
+
+```text
+.github/workflows/import-data.yml
+```
+
+O arquivo abaixo registra URLs `raw.githubusercontent.com` já prontas para esse workflow:
+
+```text
+data/real/cosmology/import_data_public_real_urls_2026_07_09.json
+```
+
+Correção importante: `RLL_ALL_REAL_DATA_MASTER.csv` é **governança/ledger**, não dado observacional. Ele pode ser auditado como mapa, mas não deve ser usado como default de importação observacional.
+
+URL padrão configurada no workflow:
+
+```text
+https://raw.githubusercontent.com/instituto-Rafael/relativity-living-light/main/data/real/Hz_data_real.csv
+```
+
+Exemplos de artifacts recomendados:
+
+| bloco | URL registrada | artifact sugerido | estado |
+|---|---|---|---|
+| H(z) cronômetros cósmicos | `data/real/Hz_data_real.csv` | `rll-hz-real-audit` | observacional materializado |
+| DESI DR2 BAO primary points | `data/real/cosmology/desi_dr2_bao_primary_points.csv` | `rll-desi-dr2-bao-audit` | observacional limitado; covariance gate |
+| Planck 2018 compressed CMB prior | `data/real/CMB_shift_real.json` | `rll-cmb-shift-real-audit` | prior comprimido; não full likelihood |
+| fσ8 growth compilation | `data/real/cosmology/fsigma8_growth_real.csv` | `rll-fsigma8-real-audit` | observacional limitado; covariance/independence gate |
+| Master registry RLL | `data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv` | `rll-real-master-governance-audit` | governança, não observação |
+
+Fronteira: importar essas URLs prova apenas que o artefato foi baixado, normalizado para JSON e hasheado. Validação científica continua bloqueada até passar por loader, schema, erro/covariância, baseline e métrica.
+
+## 8. Ordem operacional correta
 
 ```bash
 # 1. Baixar Pantheon+ oficial
@@ -119,16 +156,3 @@ python scripts/run_real_pantheon_validation.py
 # 3. Conferir artefato final
 cat data/results/model_comparison.json
 ```
-
-## 8. Forma correta de resposta científica
-
-Uma resposta correta deve dizer:
-
-1. qual arquivo real foi usado;
-2. de qual fonte primária veio;
-3. qual checksum foi calculado;
-4. qual métrica foi gerada;
-5. qual conclusão é permitida;
-6. qual conclusão ainda é proibida.
-
-Sem isso, é só narrativa, não validação científica.

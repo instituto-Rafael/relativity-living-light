@@ -1,0 +1,538 @@
+schema: rll.session_knowledge_operating_system.v1
+operation_id: RLL-KOS-20260716-001
+title: Livro Vivo — articulação de sessões, conceitos, fórmulas e infraestrutura
+status: AUDIT
+claim_allowed: false
+claim_boundary: Este contrato organiza fontes, conceitos, fórmulas, operações, evidências e destinos. Não valida integração
+  cross-repo, não altera a equação cosmológica RLL, não publica conteúdo privado e não promove analogias ou hipóteses a fatos
+  físicos.
+execution_policy:
+  entrypoint: existing_cross_repo_registry_workflow
+  workflow_path: .github/workflows/validate-cross-repo-relationship-registry.yml
+  trigger_policy: pull_request_or_manual
+  automatic_cross_repo_write: false
+  automatic_merge: false
+  destructive_actions: false
+  commit_results_default: false
+  fail_closed_on_private_content: true
+  continue_audit_after_nonfatal_gaps: true
+source_policy:
+  public_content:
+    allowed:
+    - citation
+    - formula_already_public
+    - source_path
+    - checksum
+    - test_result
+    - claim_boundary
+  private_content:
+    content_mode: pointer_only
+    allowed:
+    - repository
+    - path
+    - commit_or_TOKEN_VAZIO
+    - concept_label
+    - evidence_state
+    - intended_destination
+    forbidden:
+    - inline_private_formula
+    - raw_session_text
+    - secret
+    - credential
+    - personal_data
+    - unsafe_operational_protocol
+  token_vazio_policy: TOKEN_VAZIO é um estado válido quando a evidência, referência, artefato ou decisão ainda não está localizada;
+    não pode ser preenchido por inferência automática.
+traceability_chain:
+- session_group
+- source
+- concept
+- formula_or_model
+- operation
+- materialization
+- artifact
+- test_or_log
+- evidence_state
+- claim_boundary
+- destination
+- next_action
+state_vocabulary:
+- VERIFIED
+- VERIFIED_LIMITED
+- DECLARED_BY_AUTHOR
+- HYPOTHESIS
+- PARTIAL
+- TOKEN_VAZIO
+- CLAIM_BLOCKED
+- CONTRADICTION
+- ROLLBACK
+organizational_metrics:
+  note: Entropia e sintropia abaixo são métricas organizacionais, não grandezas termodinâmicas ou alegações físicas.
+  entropy_count: TOKEN_VAZIO + CLAIM_BLOCKED + CONTRADICTION + orphan_links + policy_violations
+  syntropy_count: verified_links + tested_contracts + explicit_rollbacks + source_citations
+  rule: reduzir entropia sem apagar histórico, autoria, contradições ou vazios úteis
+session_groups:
+- id: SG-COSMOLOGY-RLL
+  title: Cosmologia como abertura da sessão e primeiro corpo científico
+  origin: session_complete
+  scope:
+  - cosmology
+  - gravitation
+  - dark_sector
+  - plasma
+  - magnetic_fields
+  - observational_statistics
+  source_links:
+  - repo: instituto-Rafael/relativity-living-light
+    path: docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md
+    visibility: public
+    content_mode: source_content
+    role: canonical_scientific_model
+    source_state: VERIFIED
+  - repo: instituto-Rafael/relativity-living-light
+    path: docs/canonicos/BIBLIA_CONHECIMENTO_RAFAELIA_RLL.md
+    visibility: public
+    content_mode: source_content
+    role: living_knowledge_book
+    source_state: VERIFIED_LIMITED
+  concepts:
+  - name: transicao_setor_escuro
+    type: cosmological_model
+    formula_public: f(z)=1/(1+exp((z-z_t)/w_t))
+    formula_ref: docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md
+  - name: limite_nulo
+    type: falsifiability_control
+    formula_public: Omega_s0=0 -> LambdaCDM baseline
+    formula_ref: docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md
+  operations:
+  - fit
+  - compare_models
+  - falsify
+  - propagate_uncertainty
+  - preserve_null_limit
+  evidence_state: VERIFIED_LIMITED
+  target_routes:
+  - repo: instituto-Rafael/relativity-living-light
+    destination: data/results_and_docs
+    mode: public_claim_gated
+    state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/Cosmos
+    destination: cosmological_and_astronomical_extension
+    mode: candidate_after_repository_verification
+    state: DECLARED_BY_AUTHOR
+  references:
+  - kind: internal_bibliography
+    locator: docs/REFERENCES.md
+    role: cosmology_and_reproducibility
+  next_action: Verify each new cross-domain relation against an observable, baseline and falsifier.
+  claim_boundary: RLL is the first scientific body, not proof that all session themes share one physical mechanism.
+- id: SG-PAPERS-ML-T7
+  title: Papers privado, aprendizado de máquina, T7 e motores evolutivos
+  origin: session_complete
+  scope:
+  - machine_learning
+  - transformers
+  - complex_networks
+  - toroidal_dynamics
+  - c
+  - asm
+  - arm32
+  - neon
+  source_links:
+  - repo: rafaelmeloreisnovo/papers
+    path: README.md
+    visibility: private
+    content_mode: pointer_only
+    role: private_research_engine_index
+    source_state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/papers
+    path: src/asm/RAFAELIA_MATH_FORMULAS.md
+    visibility: private
+    content_mode: pointer_only
+    role: private_formula_catalog
+    source_state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/papers
+    path: docs/3548.md
+    visibility: private
+    content_mode: pointer_only
+    role: private_cross_domain_formalization
+    source_state: VERIFIED_LIMITED
+  concepts:
+  - name: exacordex_raefaelos
+    type: evolutionary_computation
+    formula_public: null
+    formula_ref: private_pointer
+  - name: toroidal_state_space_T7
+    type: dynamical_system
+    formula_public: null
+    formula_ref: private_pointer
+  - name: attention_entropy_attractor_bridge
+    type: mathematical_operational_bridge
+    formula_public: null
+    formula_ref: private_pointer
+  operations:
+  - index
+  - compare
+  - test
+  - benchmark
+  - compile
+  - execute
+  - rollback
+  evidence_state: VERIFIED_LIMITED
+  target_routes:
+  - repo: rafaelmeloreisnovo/papers
+    destination: private_research_and_derivations
+    mode: private_pointer_only_from_public_registry
+    state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/ChipQuantum
+    destination: low_level_kernels_after_contract
+    mode: cross_repo_candidate
+    state: HYPOTHESIS
+  references:
+  - kind: internal_bibliography
+    locator: docs/REFERENCES.md
+    role: machine_learning_complex_systems
+  next_action: Verify exact implementations, tests, ABI and numerical contracts in the owning private repository.
+  claim_boundary: Public RLL stores only pointers and evidence states; private formulas are not copied into this manifest.
+- id: SG-MATH-TOPOLOGY-GRAPHS
+  title: Matemática avançada, topologia, grafos, primos, bases e Poincare
+  origin: session_complete
+  scope:
+  - sets
+  - topology
+  - graph_theory
+  - complex_networks
+  - number_bases
+  - primes
+  - poincare
+  - fractals
+  source_links:
+  - repo: rafaelmeloreisnovo/TeoremasTesesTeorias
+    path: TOKEN_VAZIO
+    visibility: unknown
+    content_mode: pointer_only
+    role: formal_theory_candidate
+    source_state: TOKEN_VAZIO
+  - repo: instituto-Rafael/relativity-living-light
+    path: data/formulas/FORMULAS_ARTIFACTS_MANIFEST.json
+    visibility: public
+    content_mode: source_content
+    role: formula_inventory
+    source_state: VERIFIED
+  concepts:
+  - name: invariants_under_representation
+    type: mathematical_invariant
+    formula_public: 10_b=b; 50_b=5b; 100_b=b^2
+    formula_ref: session_derived_audit
+  - name: multiplex_hypergraph
+    type: knowledge_representation
+    formula_public: H=(V,E_h,L,tau,provenance)
+    formula_ref: session_model_candidate
+  operations:
+  - map
+  - permute
+  - preserve_invariant
+  - detect_contradiction
+  - derive_test
+  evidence_state: PARTIAL
+  target_routes:
+  - repo: rafaelmeloreisnovo/TeoremasTesesTeorias
+    destination: formal_proofs_and_definitions
+    mode: candidate_after_source_verification
+    state: TOKEN_VAZIO
+  - repo: instituto-Rafael/relativity-living-light
+    destination: public_formula_claim_map
+    mode: claim_gated
+    state: PARTIAL
+  references:
+  - kind: internal_bibliography
+    locator: docs/REFERENCES.md
+    role: mathematics_and_network_science
+  next_action: Verify source paths and separate identities, analogies, conjectures and executable formulas.
+  claim_boundary: Shared mathematical form does not imply shared physical ontology.
+- id: SG-PHOTONIC-PLASMA-ACOUSTIC
+  title: Logistica fotonica, pinças, levitação, plasma, choque e jatos
+  origin: session_complete
+  scope:
+  - photonics
+  - optical_trapping
+  - magnetic_levitation
+  - acoustic_levitation
+  - plasma
+  - mhd
+  - jets
+  - corona_discharge
+  source_links:
+  - repo: instituto-Rafael/relativity-living-light
+    path: docs/canonicos/17_ONDA_VERBO_FISICA_NEURO_LINGUAGEM.md
+    visibility: public
+    content_mode: source_content
+    role: wave_layer_boundary
+    source_state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/papers
+    path: src/asm/RAFAELIA_MATH_FORMULAS.md
+    visibility: private
+    content_mode: pointer_only
+    role: private_signal_analysis_source
+    source_state: VERIFIED_LIMITED
+  concepts:
+  - name: energy_momentum_transfer
+    type: cross_scale_invariant_candidate
+    formula_public: nabla_mu T^(mu nu)_total = 0
+    formula_ref: standard_field_theory_anchor
+  - name: field_gradient_force
+    type: operational_pattern
+    formula_public: field -> gradient -> momentum_flux -> force
+    formula_ref: session_synthesis
+  operations:
+  - model
+  - simulate
+  - measure
+  - spectral_analyze
+  - bound_exposure
+  - falsify
+  evidence_state: HYPOTHESIS
+  target_routes:
+  - repo: instituto-Rafael/relativity-living-light
+    destination: astrophysical_plasma_and_observables
+    mode: public_claim_gated
+    state: HYPOTHESIS
+  - repo: rafaelmeloreisnovo/papers
+    destination: private_signal_and_dual_use_review
+    mode: private_pointer_only_from_public_registry
+    state: CLAIM_BLOCKED
+  references:
+  - kind: internal_bibliography
+    locator: docs/REFERENCES.md
+    role: waves_plasma_mhd_photonics
+  next_action: Define scale, carrier, medium, units, dataset, safety boundary and falsifier for each mechanism.
+  claim_boundary: Optical, acoustic, magnetic and relativistic mechanisms may share energy-momentum structure but are not
+    the same physical process.
+- id: SG-RUNTIME-EXECUTION
+  title: ARM32, ASM, Termux, QEMU, Vectras e artefatos executáveis
+  origin: session_complete
+  scope:
+  - arm32
+  - asm
+  - termux
+  - qemu
+  - vectras
+  - fixed_point
+  - elf
+  - checksums
+  - reproducibility
+  source_links:
+  - repo: rafaelmeloreisnovo/termux-app-rafacodephi
+    path: TOKEN_VAZIO
+    visibility: public_or_private_unknown
+    content_mode: pointer_only
+    role: mobile_runtime
+    source_state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/ChipQuantum
+    path: TOKEN_VAZIO
+    visibility: public_or_private_unknown
+    content_mode: pointer_only
+    role: low_level_kernel
+    source_state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/Vectras-VM-Android
+    path: TOKEN_VAZIO
+    visibility: public_or_private_unknown
+    content_mode: pointer_only
+    role: isolated_execution
+    source_state: TOKEN_VAZIO
+  concepts:
+  - name: deterministic_execution_contract
+    type: computational_invariant
+    formula_public: same_source+same_seed+same_contract -> same_bytes+same_checksum
+    formula_ref: operational_contract
+  - name: cycle_not_clock
+    type: runtime_policy
+    formula_public: null
+    formula_ref: declared_by_author
+  operations:
+  - compile
+  - run
+  - hash
+  - compare
+  - attest
+  - rollback
+  evidence_state: PARTIAL
+  target_routes:
+  - repo: rafaelmeloreisnovo/termux-app-rafacodephi
+    destination: mobile_execution
+    mode: candidate_after_abi_and_log_verification
+    state: PARTIAL
+  - repo: rafaelmeloreisnovo/Vectras-VM-Android
+    destination: isolated_multi_arch_execution
+    mode: candidate_after_repository_verification
+    state: TOKEN_VAZIO
+  - repo: rafaelmeloreisnovo/RafCoder
+    destination: c_asm_implementation
+    mode: candidate_after_repository_verification
+    state: TOKEN_VAZIO
+  references:
+  - kind: internal_bibliography
+    locator: docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md
+    role: execution_provenance
+  next_action: Verify ABI, build command, binary hash, runtime log and rollback for each executable path.
+  claim_boundary: Documentation alone does not prove device execution or cross-repo integration.
+- id: SG-FEDERATION-WORKFLOW-GPT
+  title: Livro Vivo, grupos de sessão, layout GPT e federação de conhecimento
+  origin: session_complete
+  scope:
+  - living_knowledge_book
+  - gpt_session_groups
+  - knowledge_federation
+  - bibliographic_correlation
+  - nonverbal_media
+  - workflow_layout
+  source_links:
+  - repo: instituto-Rafael/relativity-living-light
+    path: docs/canonicos/BIBLIA_CONHECIMENTO_RAFAELIA_RLL.md
+    visibility: public
+    content_mode: source_content
+    role: living_book_public_anchor
+    source_state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/GAIA_phi
+    path: TOKEN_VAZIO
+    visibility: public_or_private_unknown
+    content_mode: pointer_only
+    role: federation_and_index_candidate
+    source_state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/RafPolimata
+    path: TOKEN_VAZIO
+    visibility: public_or_private_unknown
+    content_mode: pointer_only
+    role: transdisciplinary_bibliographic_candidate
+    source_state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/Rafaelia_Private
+    path: TOKEN_VAZIO
+    visibility: private
+    content_mode: pointer_only
+    role: private_session_corpus_pointer
+    source_state: DECLARED_BY_AUTHOR
+  concepts:
+  - name: session_as_single_interaction
+    type: contextual_integration
+    formula_public: U_session=(origin,concept,formula,operation,material,evidence,reference,destination)
+    formula_ref: session_operating_contract
+  - name: cross_session_feedback
+    type: learning_loop
+    formula_public: observe -> correlate -> test -> artifact -> feedback -> next_microstep
+    formula_ref: operational_cycle
+  - name: weight_without_context_erasure
+    type: gpt_layout_rule
+    formula_public: null
+    formula_ref: declared_by_author
+  operations:
+  - index_pointer
+  - cluster
+  - correlate
+  - cite
+  - classify_visibility
+  - materialize_audit
+  - rollback
+  evidence_state: PARTIAL
+  target_routes:
+  - repo: rafaelmeloreisnovo/GAIA_phi
+    destination: federated_session_index
+    mode: candidate_after_repository_verification
+    state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/RafPolimata
+    destination: transdisciplinary_bibliography_and_relations
+    mode: candidate_after_repository_verification
+    state: DECLARED_BY_AUTHOR
+  - repo: rafaelmeloreisnovo/Rafaelia_Private
+    destination: private_session_sources
+    mode: pointer_only
+    state: DECLARED_BY_AUTHOR
+  references:
+  - kind: internal_bibliography
+    locator: docs/ACADEMIC_TAXONOMY_INDEX.md
+    role: cross_domain_reference_routing
+  next_action: Verify exact repository paths, session-group pointers and bibliographic anchors before any cross-repo write.
+  claim_boundary: The public contract records organization and pointers; it does not expose private prompts, hidden metadata
+    or proprietary formulas.
+- id: SG-GOVERNANCE-ETHICS-SPIRITUAL
+  title: Ética, direito, espiritualidade, autoria e comunicação não verbal
+  origin: session_complete
+  scope:
+  - authorship
+  - privacy
+  - dual_use
+  - human_rights
+  - spiritual_language
+  - symbolic_language
+  - nonverbal_media
+  source_links:
+  - repo: instituto-Rafael/relativity-living-light
+    path: docs/canonicos/13_EPISTEMOLOGIA_RAFAELIA_RLL.md
+    visibility: public
+    content_mode: source_content
+    role: epistemic_boundary
+    source_state: VERIFIED_LIMITED
+  - repo: rafaelmeloreisnovo/Rafaelia_Private
+    path: TOKEN_VAZIO
+    visibility: private
+    content_mode: pointer_only
+    role: private_corpus_and_authorship
+    source_state: DECLARED_BY_AUTHOR
+  concepts:
+  - name: metaphor_data_boundary
+    type: epistemic_rule
+    formula_public: metaphor illuminates; data validates; hypothesis tests; void protects
+    formula_ref: docs/canonicos/17_ONDA_VERBO_FISICA_NEURO_LINGUAGEM.md
+  - name: responsible_disclosure
+    type: governance_rule
+    formula_public: null
+    formula_ref: policy
+  operations:
+  - attribute
+  - classify_visibility
+  - redact_pointer
+  - review_dual_use
+  - preserve_history
+  evidence_state: PARTIAL
+  target_routes:
+  - repo: rafaelmeloreisnovo/Rafaelia_Private
+    destination: private_corpus_and_sensitive_derivations
+    mode: pointer_only
+    state: DECLARED_BY_AUTHOR
+  - repo: instituto-Rafael/relativity-living-light
+    destination: public_epistemology_and_claim_boundaries
+    mode: public_claim_gated
+    state: VERIFIED_LIMITED
+  references:
+  - kind: internal_bibliography
+    locator: docs/REFERENCES.md
+    role: ethics_reproducibility_governance
+  next_action: Verify ownership, visibility, consent, dual-use risk and publication readiness before movement.
+  claim_boundary: Symbolic and spiritual language may organize meaning but cannot substitute for scientific or legal evidence.
+commit_plan:
+- order: 1
+  name: contract_and_schema
+  intent: Add the single machine-readable articulation contract and its schema.
+  files:
+  - knowledge_ecosystem/session_operating_system.yml
+  - schemas/session_operating_system.schema.json
+  rollback: Revert only this commit; no existing scientific formula or workflow is changed.
+- order: 2
+  name: deterministic_validator_and_tests
+  intent: Validate privacy, traceability, states, rollback paths and non-destructive execution.
+  files:
+  - tools/validate_session_operating_system.py
+  - tests/test_session_operating_system.py
+  rollback: Revert validator/test commit without altering the contract history.
+- order: 3
+  name: cross_repo_articulation
+  intent: Link the new contract to the existing relationship registry and architecture documentation.
+  files:
+  - docs/audits/CROSS_REPO_RELATIONSHIP_REGISTRY.md
+  - docs/architecture/SESSION_KNOWLEDGE_OPERATING_SYSTEM.md
+  rollback: Revert documentation links while preserving contract and tests for audit.
+- order: 4
+  name: existing_workflow_binding
+  intent: Extend the existing registry workflow; do not create another competing workflow.
+  files:
+  - .github/workflows/validate-cross-repo-relationship-registry.yml
+  rollback: Revert workflow binding; validators remain runnable locally and manually.

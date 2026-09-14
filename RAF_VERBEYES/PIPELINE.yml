@@ -1,0 +1,82 @@
+# RAF_VERBEYES — Pipeline de Absorção
+# Camada de captação, análise de caminhos e contextualização de arquivos YML
+# em evolução geométrica espiral.
+#
+# Fluxo: IN -> PROCESSO -> DONE
+# Núcleo conceitual permanente: ESPIRAL
+#
+# Claim policy: YAML organiza execução e custódia; não prova afirmações científicas.
+
+schema: raf_verbeyes.pipeline.v1
+claim_allowed: false
+version: "1.0"
+name: RAF_VERBEYES
+
+type: absorption_pipeline
+description: |
+  Pipeline de absorção para condições estruturais em evolução geométrica.
+  Antes de executar, o scanner analisa todos os caminhos YML nos quatro
+  estágios e produz um relatório de estado do pipeline.
+  Arquivos YML fluem: IN -> PROCESSO -> DONE.
+  O estágio ESPIRAL é um repositório permanente de conceitos semente
+  em evolução espiral — carrega mais do que aparenta.
+
+stages:
+  - id: IN
+    path: RAF_VERBEYES/IN
+    index: 0
+    role: "Entrada: observações brutas e condições estruturais iniciais"
+    accepts: "*.yml"
+    exit_to: PROCESSO
+
+  - id: PROCESSO
+    path: RAF_VERBEYES/PROCESSO
+    index: 1
+    role: "Absorção ativa: contextualização no pipeline"
+    accepts: "*.yml"
+    exit_to: DONE
+
+  - id: DONE
+    path: RAF_VERBEYES/DONE
+    index: 2
+    role: "Concluído: condições absorvidas e auditadas"
+    accepts: "*.yml"
+    exit_to: null
+
+  - id: ESPIRAL
+    path: RAF_VERBEYES/ESPIRAL
+    index: 3
+    role: "Núcleo conceitual: condições estruturais em evolução geométrica espiral"
+    accepts: "*.yml"
+    exit_to: null
+    note: "Estágio permanente — não drena. Cada observação adiciona uma camada."
+
+scanner:
+  binary: native/raf_verbeyes/raf_verbeyes_scanner
+  build_script: native/raf_verbeyes/build_raf_verbeyes.sh
+  source_files:
+    - native/raf_verbeyes/raf_verbeyes.h
+    - native/raf_verbeyes/raf_scanner.c
+    - native/raf_verbeyes/main.c
+  arch: x86_64
+  type: freestanding
+  constraints:
+    no_libc: true
+    no_malloc: true
+    no_heap: true
+    no_gc: true
+    no_external_deps: true
+    no_internal_deps: true
+    syscalls_only: true
+    branchless_arithmetic: true
+    entry_point: _start
+
+policy:
+  yml_paths_analyzed_before_exec: true
+  no_claim: true
+  claim_allowed: false
+  geometric_spiral_evolution: true
+
+level: E2
+human_name: "Pipeline de absorção RAF_VERBEYES"
+next_safe_action: "Execute build_raf_verbeyes.sh a partir do diretório native/raf_verbeyes/ para compilar e validar o scanner."

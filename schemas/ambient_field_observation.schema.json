@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/ambient_field_observation.schema.json",
+  "title": "RAFAELIA AmbientFieldObservation",
+  "description": "Structural contract for a governed heterogeneous phone-node environmental observation. It separates raw measurement, device context, physical reference, residual, uncertainty and operational policy. It does not authorize person identification or autonomous public weather alerts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "observation_id",
+    "node_id",
+    "timestamp",
+    "location",
+    "device_state",
+    "capabilities",
+    "channels",
+    "epistemic_status",
+    "quality",
+    "use_policy"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "pattern": "^AFO-[A-Z0-9_-]{4,48}$"
+    },
+    "node_id": {
+      "type": "string",
+      "pattern": "^NODE-[A-Z0-9_-]{4,48}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latitude", "longitude", "horizontal_accuracy_m", "altitude_state"],
+      "properties": {
+        "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+        "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+        "horizontal_accuracy_m": {"type": "number", "minimum": 0},
+        "altitude_m": {"type": ["number", "null"]},
+        "vertical_accuracy_m": {"type": ["number", "null"], "minimum": 0},
+        "altitude_reference": {
+          "type": "string",
+          "enum": ["WGS84_ELLIPSOID", "MSL", "BAROMETRIC_RELATIVE", "FLOOR_RELATIVE", "UNKNOWN"]
+        },
+        "altitude_state": {
+          "type": "string",
+          "enum": ["measured", "estimated", "absent", "unknown_mixture"]
+        },
+        "indoor_probability": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "device_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device_profile_id", "motion_state", "orientation_state", "charging_state"],
+      "properties": {
+        "device_profile_id": {"type": "string", "minLength": 1},
+        "motion_state": {
+          "type": "string",
+          "enum": ["stationary", "walking", "vehicle", "elevator", "rotating", "unknown"]
+        },
+        "orientation_state": {
+          "type": "string",
+          "enum": ["known", "estimated", "unknown"]
+        },
+        "orientation_quaternion": {
+          "type": ["array", "null"],
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {"type": "number"}
+        },
+        "battery_temperature_c": {"type": ["number", "null"], "minimum": -40, "maximum": 120},
+        "charging_state": {
+          "type": "string",
+          "enum": ["charging", "discharging", "full", "not_charging", "unknown"]
+        },
+        "screen_state": {
+          "type": "string",
+          "enum": ["on", "off", "unknown"]
+        },
+        "thermal_state_note": {"type": "string"}
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "magnetometer",
+        "barometer",
+        "ambient_temperature",
+        "relative_humidity",
+        "gnss_raw",
+        "wifi_metrics",
+        "bluetooth_metrics",
+        "cell_metrics",
+        "acoustic_probe",
+        "imu"
+      ],
+      "properties": {
+        "magnetometer": {"type": "boolean"},
+        "barometer": {"type": "boolean"},
+        "ambient_temperature": {"type": "boolean"},
+        "relative_humidity": {"type": "boolean"},
+        "gnss_raw": {"type": "boolean"},
+        "wifi_metrics": {"type": "boolean"},
+        "bluetooth_metrics": {"type": "boolean"},
+        "cell_metrics": {"type": "boolean"},
+        "acoustic_probe": {"type": "boolean"},
+        "imu": {"type": "boolean"}
+      }
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel_id",
+          "modality",
+          "metric",
+          "value_state",
+          "raw_value",
+          "unit",
+          "reference",
+          "residual",
+          "uncertainty",
+          "quality_flags"
+        ],
+        "properties": {
+          "channel_id": {"type": "string", "minLength": 1},
+          "modality": {
+            "type": "string",
+            "enum": [
+              "magnetic",
+              "pressure",
+              "ambient_temperature",
+              "battery_temperature",
+              "humidity",
+              "light",
+              "gnss",
+              "wifi",
+              "bluetooth",
+              "cellular",
+              "acoustic",
+              "imu"
+            ]
+          },
+          "metric": {"type": "string", "minLength": 1},
+          "value_state": {
+            "type": "string",
+            "enum": ["measured", "estimated", "absent", "unknown", "blocked"]
+          },
+          "raw_value": {
+            "oneOf": [
+              {"type": "number"},
+              {"type": "string"},
+              {"type": "null"},
+              {
+                "type": "array",
+                "items": {"type": "number"}
+              }
+            ]
+          },
+          "unit": {"type": "string"},
+          "reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["reference_type", "reference_state"],
+            "properties": {
+              "reference_type": {
+                "type": "string",
+                "enum": [
+                  "WMM2025",
+                  "GNSS_EPHEMERIS",
+                  "REFERENCE_STATION",
+                  "DEVICE_BASELINE",
+                  "SPATIAL_CONSENSUS",
+                  "NONE",
+                  "UNKNOWN"
+                ]
+              },
+              "reference_state": {
+                "type": "string",
+                "enum": ["validated", "partial", "absent", "unknown"]
+              },
+              "expected_value": {
+                "oneOf": [
+                  {"type": "number"},
+                  {"type": "null"},
+                  {"type": "array", "items": {"type": "number"}}
+                ]
+              },
+              "source_ref": {"type": "string"}
+            }
+          },
+          "residual": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "value"],
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": ["computed", "not_computable", "unknown"]
+              },
+              "value": {
+                "oneOf": [
+                  {"type": "number"},
+                  {"type": "null"},
+                  {"type": "array", "items": {"type": "number"}}
+                ]
+              },
+              "interpretation": {"type": "string"}
+            }
+          },
+          "uncertainty": {"type": "number", "minimum": 0, "maximum": 1},
+          "quality_flags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "calibrated",
+                "uncalibrated",
+                "orientation_known",
+                "orientation_unknown",
+                "thermal_confounded",
+                "altitude_confounded",
+                "indoor_confounded",
+                "multipath_risk",
+                "interference_risk",
+                "reference_available",
+                "reference_missing",
+                "synthetic_fixture"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "network_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "neighbor_count": {"type": "integer", "minimum": 0},
+        "spatial_consensus": {"type": "number", "minimum": 0, "maximum": 1},
+        "reference_station_distance_km": {"type": ["number", "null"], "minimum": 0},
+        "aggregation_cell": {"type": "string"}
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "probability", "status", "support", "contradictions"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "probability": {"type": "number", "minimum": 0, "maximum": 1},
+          "status": {
+            "type": "string",
+            "enum": ["hypothesis", "supported", "contradicted", "token_vazio"]
+          },
+          "support": {"type": "array", "items": {"type": "string"}},
+          "contradictions": {"type": "array", "items": {"type": "string"}},
+          "falsifiers": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "epistemic_status": {
+      "type": "string",
+      "enum": ["raw_observation", "calibrated_observation", "hypothesis", "supported", "contradicted", "token_vazio", "operational"]
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sensor_quality", "calibration_quality", "context_quality", "time_quality", "overall"],
+      "properties": {
+        "sensor_quality": {"type": "number", "minimum": 0, "maximum": 1},
+        "calibration_quality": {"type": "number", "minimum": 0, "maximum": 1},
+        "context_quality": {"type": "number", "minimum": 0, "maximum": 1},
+        "time_quality": {"type": "number", "minimum": 0, "maximum": 1},
+        "overall": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "use_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["privacy", "identity_inference", "payload_collection", "training_eligibility", "retention", "purpose", "operational_gate"],
+      "properties": {
+        "privacy": {
+          "type": "string",
+          "enum": ["public_aggregate", "private", "sensitive", "unknown"]
+        },
+        "identity_inference": {
+          "type": "string",
+          "enum": ["blocked", "not_requested"]
+        },
+        "payload_collection": {
+          "type": "string",
+          "enum": ["blocked", "none"]
+        },
+        "training_eligibility": {
+          "type": "string",
+          "enum": ["no", "yes_explicit", "unknown"]
+        },
+        "retention": {
+          "type": "string",
+          "enum": ["ephemeral", "session", "research_window", "archive_aggregate", "unknown"]
+        },
+        "purpose": {
+          "type": "string",
+          "enum": ["calibration", "research", "environmental_mapping", "accessibility", "weather_assimilation", "unknown"]
+        },
+        "operational_gate": {
+          "type": "string",
+          "enum": ["research_only", "human_review", "validated_local_use", "blocked"]
+        }
+      }
+    }
+  }
+}

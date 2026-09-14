@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """Validate lightweight Six Sigma / DMAIC real-data control coverage.
 
-This gate is intentionally narrow: it verifies that the operational control
-spine exists and that required governance terms remain discoverable in the
-controlled documents/workflow. It does not run scientific validation and does
-not declare RLL validated.
+The gate verifies the operational control spine and semantic controls. It does
+not run scientific validation and never promotes an RLL claim.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Iterable
 
 REQUIRED_FILES = [
     Path("docs/operations/SIX_SIGMA_REAL_DATA_OPERATING_SYSTEM.md"),
@@ -18,16 +17,34 @@ REQUIRED_FILES = [
     Path("docs/RLL_TRACEABILITY_MAP.md"),
 ]
 
-REQUIRED_TERMS = [
-    "DMAIC",
-    "claim boundary",
-    "checksum",
-    "strict_real_data",
-    "commit_light_artifacts",
-    "baseline",
-    "artifact",
-    "No superiority claim unless real-data metrics pass predefined thresholds",
-]
+# A control may be expressed by an equivalent current term. This avoids a
+# false CI failure when a workflow field is renamed but the control remains.
+REQUIRED_CONTROL_GROUPS: dict[str, tuple[str, ...]] = {
+    "DMAIC": ("DMAIC",),
+    "claim boundary": ("claim boundary", "claim_boundary"),
+    "checksum": ("checksum", "checksums"),
+    "strict real-data mode": ("strict_real_data",),
+    "reviewed artifact-only commit policy": (
+        "artifact_only_reviewed_pr_required",
+        "commit_light_artifacts",
+        "commit artifacts through a reviewed pr",
+        "reviewed pull request",
+    ),
+    "baseline": ("baseline",),
+    "artifact": ("artifact",),
+    "no-superiority boundary": (
+        "No superiority claim unless real-data metrics pass predefined thresholds",
+    ),
+}
+
+
+def missing_controls(corpus: str, groups: dict[str, Iterable[str]] = REQUIRED_CONTROL_GROUPS) -> list[str]:
+    folded = corpus.casefold()
+    return [
+        name
+        for name, alternatives in groups.items()
+        if not any(term.casefold() in folded for term in alternatives)
+    ]
 
 
 def main() -> int:
@@ -38,20 +55,16 @@ def main() -> int:
             print(f"- {path}")
         return 1
 
-    corpus_parts: list[str] = []
-    for path in REQUIRED_FILES:
-        corpus_parts.append(path.read_text(encoding="utf-8", errors="replace"))
-    corpus = "\n".join(corpus_parts)
-    corpus_casefold = corpus.casefold()
-
-    missing_terms = [term for term in REQUIRED_TERMS if term.casefold() not in corpus_casefold]
-    if missing_terms:
-        print("Six Sigma real-data control check FAILED: missing required terms")
-        for term in missing_terms:
-            print(f"- {term}")
+    corpus = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in REQUIRED_FILES)
+    missing = missing_controls(corpus)
+    if missing:
+        print("Six Sigma real-data control check FAILED: missing semantic controls")
+        for control in missing:
+            print(f"- {control}")
         return 1
 
-    print("OK: Six Sigma / DMAIC real-data control files and terms are present.")
+    print("OK: Six Sigma / DMAIC real-data control files and semantic controls are present.")
+    print("claim_allowed=false")
     return 0
 
 

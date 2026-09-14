@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/docs/contracts/execution_result.schema.json",
+  "title": "Execution Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "intent_id",
+    "executed_command",
+    "args",
+    "working_directory",
+    "started_at",
+    "ended_at",
+    "exit_code",
+    "stdout_truncated",
+    "stderr_truncated",
+    "stdout_sha256",
+    "stderr_sha256",
+    "artifacts",
+    "final_state",
+    "rollback_available",
+    "source_chunk_refs"
+  ],
+  "properties": {
+    "schema": {"const": "rafaelia.execution_result.v1"},
+    "intent_id": {"type": "string", "minLength": 1},
+    "executed_command": {"type": "string", "minLength": 1},
+    "args": {"type": "array", "items": {"type": "string"}},
+    "working_directory": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "exit_code": {"type": "integer"},
+    "stdout_truncated": {"type": "string"},
+    "stderr_truncated": {"type": "string"},
+    "stdout_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "stderr_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "args", "exit_code", "stdout_sha256", "stderr_sha256"],
+        "properties": {
+          "command": {"type": "string", "minLength": 1},
+          "args": {"type": "array", "items": {"type": "string"}},
+          "exit_code": {"type": "integer"},
+          "stdout_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "stderr_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "final_state": {"type": "string", "enum": ["success", "failed", "blocked"]},
+    "rollback_available": {"type": "boolean"},
+    "source_chunk_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

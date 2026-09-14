@@ -1,0 +1,47 @@
+{
+  "schema": "rll.token_vazio_closure_overrides.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Apply only evidence observed after the V2 ledger: complete frozen-ref semantic disposition already present in the canonical triage artifact, plus primary-paper numeric provenance for every non-broad H0 prior used by the six-cell matrix. V1 and V2 remain reproducible and unchanged.",
+  "overrides": [
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "priority": "P2",
+      "target_state": "RESOLVED",
+      "classification": "FROZEN_35_REF_SEMANTIC_DISPOSITION_COMPLETE",
+      "evidence_path": "data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json",
+      "assertions": [
+        {"path": "summary.frozen_cohort_size", "op": "eq", "value": 35},
+        {"path": "summary.patch_equivalent_no_action", "op": "eq", "value": 3},
+        {"path": "summary.exact_head_merged_direct_main", "op": "eq", "value": 17},
+        {"path": "summary.promotion_chain_recovered", "op": "eq", "value": 1},
+        {"path": "summary.semantically_classified", "op": "eq", "value": 14},
+        {"path": "summary.anonymous_remainder", "op": "eq", "value": 0},
+        {"path": "summary.unclassified_remainder", "op": "eq", "value": 0},
+        {"path": "claim_allowed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The frozen 35-ref cohort has a machine-readable disposition for all 35 refs: 3 patch-equivalent/no-action, 17 exact heads already merged to main, 1 recovered promotion chain, and 14 explicit semantic classifications, with zero anonymous and zero unclassified remainder. Historical notes about recovery PRs do not reopen the semantic-review token; those PRs were subsequently merged through the canonical lab repair chain.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "PRIMARY_PAPER_NUMERIC_PROVENANCE_AND_MATRIX_MAPPING_VERIFIED",
+      "evidence_path": "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_20260808_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PRIMARY_SOURCE_NUMERIC_PROVENANCE"},
+        {"path": "sources.Planck2018.reported_H0_km_s_Mpc", "op": "eq", "value": 67.4},
+        {"path": "sources.Planck2018.reported_sigma_km_s_Mpc", "op": "eq", "value": 0.5},
+        {"path": "sources.SH0ES_local_distance_ladder.reported_H0_km_s_Mpc", "op": "eq", "value": 73.04},
+        {"path": "sources.SH0ES_local_distance_ladder.reported_sigma_km_s_Mpc", "op": "eq", "value": 1.04},
+        {"path": "boundaries.primary_source_identifiers_frozen", "op": "eq", "value": true},
+        {"path": "boundaries.matrix_numeric_mapping_verified", "op": "eq", "value": true},
+        {"path": "boundaries.planck_H0_is_independent_of_existing_planck_shift_term", "op": "eq", "value": false},
+        {"path": "boundaries.shoes_value_is_used_as_compressed_gaussian_not_full_likelihood", "op": "eq", "value": true},
+        {"path": "claim_allowed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The exact Planck2018 67.4 +/- 0.5 and SH0ES 73.04 +/- 1.04 values used by the H0/r_d matrix now trace to their primary papers and exact run mappings. This closes primary numeric provenance only; Planck overlap and SH0ES Gaussian compression remain claim boundaries, not hidden assumptions.",
+      "successors": []
+    }
+  ]
+}

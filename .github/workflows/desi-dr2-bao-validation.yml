@@ -18,15 +18,19 @@ on:
     - .github/workflows/desi-dr2-bao-validation.yml
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 defaults:
   run:
     shell: bash
 jobs:
   desi-dr2-bao:
     runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       with:
         persist-credentials: false
     - name: Verify ARM64 runner
@@ -34,7 +38,7 @@ jobs:
 
         '
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
       with:
         python-version: '3.12'
     - name: Install DESI DR2 BAO test dependencies
@@ -52,7 +56,7 @@ jobs:
     - name: Show DESI DR2 BAO result
       run: cat results/desi_dr2_bao_covariance_chi2.json
     - name: Upload DESI DR2 BAO result
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
       with:
         name: desi-dr2-bao-covariance-chi2
         path: results/desi_dr2_bao_covariance_chi2.json
@@ -76,4 +80,3 @@ jobs:
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

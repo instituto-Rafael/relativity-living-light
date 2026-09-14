@@ -1,66 +1,131 @@
+name: "Importar dados reais — guarded audit"
 # Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
-name: "Importar dados reais \u2014 guarded audit"
+
 on:
   workflow_dispatch:
     inputs:
       real_data_url:
-        description: "URL p\xFAblica expl\xEDcita para auditoria de importa\xE7\xE3o; obrigat\xF3rio"
+        description: "URL HTTPS pública CSV/JSON de dado observacional materializado; padrão usa H(z) real do RLL"
         required: true
+        default: "https://raw.githubusercontent.com/instituto-Rafael/relativity-living-light/main/data/real/Hz_data_real.csv"
       output_name:
-        description: Nome do artifact gerado
+        description: "Nome do artifact gerado"
         required: false
-        default: raw-data-audit-sample
+        default: rll-hz-real-audit
+
 permissions:
   contents: read
+
 defaults:
   run:
     shell: bash
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   import-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - name: Install requirements
-      run: python -m pip install --upgrade pip && pip install requests pandas
-    - name: Run synthetic detector as report-only guard
-      run: "if [ -f scripts/detect_synthetic.py ]; then\n  python scripts/detect_synthetic.py --report-only\nelse\n  echo \"scripts/detect_synthetic.py not found; skipping report-only guard\"\nfi\n"
-    - name: Import explicit public data URL into audit workspace
-      run: "set -euo pipefail\nmkdir -p _audit/raw\npython scripts/import_data.py --out _audit/raw/data.json --url \"${{ github.event.inputs.real_data_url }}\"\npython - <<'PY'\nfrom pathlib import Path\nimport hashlib, json\np = Path('_audit/raw/data.json')\npayload = {\n    'schema': 'rll.import_data_audit_manifest.v1',\n    'source_url': '${{ github.event.inputs.real_data_url }}',\n    'artifact_path': str(p),\n    'sha256': hashlib.sha256(p.read_bytes()).hexdigest(),\n    'bytes': p.stat().st_size,\n    'claim_boundary': 'Imported audit artifact only. This workflow does not commit data and does not validate RLL, dark matter, dark energy, or cosmology claims.'\n}\nPath('_audit/raw/import_manifest.json').write_text(json.dumps(payload, indent=2) + '\\n', encoding='utf-8')\nPY\n"
-    - name: Upload audit artifact without committing
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ github.event.inputs.output_name }}
-        path: _audit/raw/
-        if-no-files-found: error
-    - name: Finalize canonical real-data policy checksums
-      if: always()
-      run: 'set -euo pipefail
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
-        ARTIFACT_DIR="artifacts/workflow-policy/import-data/${{ github.job }}"
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
 
-        mkdir -p "$ARTIFACT_DIR"
+      - name: Install requirements
+        run: python -m pip install --upgrade pip && pip install requests pandas
 
-        . tools/ci/real_data_workflow_policy.sh
+      - name: Validate artifact name
+        env:
+          OUTPUT_NAME: ${{ github.event.inputs.output_name }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          import re
+          import sys
 
-        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+          name = os.environ.get("OUTPUT_NAME", "")
+          if not re.fullmatch(r"[A-Za-z0-9._-]{1,128}", name):
+              print(
+                  "ERRO: output_name deve conter apenas letras, números, '.', '_' ou '-' "
+                  "e ter no máximo 128 caracteres.",
+                  file=sys.stderr,
+              )
+              sys.exit(2)
+          print(f"Artifact name validado: {name}")
+          PY
 
-        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+      - name: Run synthetic detector as report-only guard
+        run: |
+          if [ -f scripts/detect_synthetic.py ]; then
+            python scripts/detect_synthetic.py --report-only
+          else
+            echo "scripts/detect_synthetic.py not found; skipping report-only guard"
+          fi
 
-        rll_real_data_write_checksums "$ARTIFACT_DIR"
+      - name: Import explicit public data URL into audit workspace
+        env:
+          REAL_DATA_URL: ${{ github.event.inputs.real_data_url }}
+        run: |
+          set -euo pipefail
+          mkdir -p _audit/raw
 
-        '
-    env:
-      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
-      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
+          python scripts/import_data.py \
+            --out _audit/raw/data.json \
+            --url "$REAL_DATA_URL"
+
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+          import os
+
+          p = Path("_audit/raw/data.json")
+          payload = {
+              "schema": "rll.import_data_audit_manifest.v1",
+              "source_url": os.environ["REAL_DATA_URL"],
+              "artifact_path": str(p),
+              "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+              "bytes": p.stat().st_size,
+              "claim_boundary": (
+                  "Imported audit artifact only. This workflow does not commit data "
+                  "and does not validate RLL, dark matter, dark energy, or cosmology claims."
+              ),
+          }
+          Path("_audit/raw/import_manifest.json").write_text(
+              json.dumps(payload, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload audit artifact without committing
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: ${{ github.event.inputs.output_name }}
+          path: _audit/raw/
+          if-no-files-found: error
+
+      - name: Finalize canonical real-data policy checksums
+        if: always()
+        env:
+          CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+          CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
+        run: |
+          set -euo pipefail
+          ARTIFACT_DIR="artifacts/workflow-policy/import-data/${{ github.job }}"
+          mkdir -p "$ARTIFACT_DIR"
+
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+          rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+          rll_real_data_write_checksums "$ARTIFACT_DIR"
+
 x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

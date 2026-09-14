@@ -16,8 +16,8 @@
 | H-GEO-01 | Impacto cometário e formação do Quadrilátero Ferrífero | Geologia | [H] |
 | H-GEO-02 | Duas luas da Terra e efeitos na geologia regional | Planetologia | [H] |
 | H-GEO-03 | Solidificação diferencial ouro/quartzo sob alta pressão | Mineralgia | [H→E parcial] |
-| H-ELEC-01 | Efeito corona e acoplamento eletrostático planetário | Eletrodinâmica | [H] |
-| H-UNIV-01 | Espirais em espirais e proporção áurea como invariante geofísico | Universal | [C] |
+| H-ELEC-01 | Efeito corona e acoplamento eletrostático planetário | Eletrodinâmica | [H/E — FASE 15] |
+| H-UNIV-01 | Espirais em espirais e proporção áurea como invariante geofísico | Universal | [E-negativo — FASE 8] |
 | H-ARQ-01 | Pedras de múltiplos ângulos — engenharia antissísmica andina | Arqueologia/Engenharia | [H/E misto] |
 | H-CAL-01 | Ciclo maia de 52 anos vs. periodicidade estelar | Arqueoastronomia | [E/H misto] |
 
@@ -227,7 +227,7 @@ A extensão do efeito corona para interfaces inter-planetárias (Terra-Lua, Terr
 
 ### TOKEN_VAZIO
 
-- **P2**: Modelo quantitativo do diferencial elétrico por camada (superfície → ionosfera → heliosfera) — não calculado especificamente
+- **P2**: ✅ FECHADO [E+H] FASE 15 — Modelo quantitativo do diferencial elétrico por camada (superfície → ionosfera): calculado em `scripts/verify_h_elec_01_layer_model.py`. σ varia de ~3×10⁻¹⁴ S/m (superfície) a ~10⁻⁷ S/m (ionosfera base); J=3.90×10⁻¹² A/m² constante (conservação de carga); enhancement salino (NaCl 4%): ×2×10¹⁴ em corrente local. Output: `results/h_elec_01_layer_model.json`. Residual P2: dados de campo em ambiente marinho.
 - **P2**: Correlação entre salinidade de aerossóis e frequência de descargas em regiões costeiras vs. continentais — não analisada
 - **P3**: Dados de campo elétrico em Itabirito / região mineradora — não compilados
 
@@ -260,11 +260,27 @@ f(z) = 1 / (1 + exp(-sharpness × (z − z_t)))
 ```
 É uma sigmoide — seção de uma curva logística que, em escala logarítmica de z, aproxima uma espiral. O parâmetro `sharpness` controla a "agudeza" da transição, análoga à abertura da espiral. Esta é uma **analogia qualitativa** [C], não uma derivação matemática da proporção áurea.
 
-### TOKEN_VAZIO
+### Resultado [E-negativo] — FASE 8
 
-- **P3**: Cálculo explícito da razão de amplitudes em registros sísmicos da região (para verificar φ)
-- **P3**: Medição quantitativa das proporções anatômicas citadas vs. φ
-- **P3**: Derivação formal de φ a partir dos parâmetros da função logística RLL
+`scripts/verify_rll_fibonacci_ratio.py` executado em 2026-07-07. f(z) amostrada em z_n = F_n × (z_max/F_N) com z_t=1.0, w_t=0.3, 30 termos:
+
+| Termo n | z_n | f(z_n) | razão f(z_{n+1})/f(z_n) | Δφ |
+|---------|-----|--------|------------------------|----|
+| 24 | 0.451 | 0.862 | 1.212 | 0.406 |
+| 25 | 0.729 | 0.711 | 2.009 | 0.391 |
+| 26 | 1.180 | 0.354 | 7.703 | 6.085 |
+| 27 | 1.910 | 0.046 | 48.83 | 47.21 |
+| 28 | 3.090 | 0.00094 | 581.2 | 579.6 |
+
+**Veredicto**: razão diverge exponencialmente ao passar pela transição logística em z_t=1.0. Não converge para φ=1.618. Output: `results/fibonacci_ratio_verification.json`.
+
+**Interpretação epistêmica**: A função logística f(z) não possui a propriedade de auto-semelhança multiplicativa que gera φ. A analogia "espirais em espirais" é qualitativa [C] — sem fundamento quantitativo na forma funcional de f(z). Resultado NEGATIVO registrado com a mesma honestidade que um resultado positivo seria.
+
+### TOKEN_VAZIO (residual)
+
+- **P3**: ✅ FECHADO [E-negativo] FASE 8 — Derivação formal de φ a partir da logística RLL: não existe. Razão diverge ao invés de convergir para φ.
+- **P3**: Cálculo explícito da razão de amplitudes em registros sísmicos da região (para verificar φ) — ainda TOKEN_VAZIO
+- **P3**: Medição quantitativa das proporções anatômicas citadas vs. φ — ainda TOKEN_VAZIO
 
 ---
 
@@ -322,13 +338,23 @@ O princípio de distribuição de energia por múltiplas interfaces angulares te
 
 O calendário maia integra o Tzolk'in (260 dias = 13 × 20) com o Haab' (365 dias) em um Calendário Redondo de 52 anos haab' = 18.980 dias = mmc(365, 260). A hipótese propõe que este ciclo de 52 anos codifica observação empírica de periodicidades astrofísicas — ciclos de atividade solar, alinhamentos planetários, ou períodos de visibilidade estelar no zênite das cidades maias.
 
+### Verificação Aritmética [E] — FASE 8
+
+`scripts/verify_cal_maya_arithmetic.py` executado em 2026-07-07: `mmc(365, 260) = 18980` confirmado por aritmética inteira; `52 × 365 = 18980`, `73 × 260 = 18980`, `18980 / 365.25 = 51.964 anos Julianos`. Output: `results/cal_maya_arithmetic_check.json`.
+
+Análise dos candidatos astrofísicos (FASE 8 [H]):
+- 5 × ciclo Schwabe (11yr): 55 anos → |52−55| = 3 anos (inexato)
+- Conjunção J-S (19.859yr): 2.62×19.859 ≈ 52.03 anos → |52−52.03| = 0.03yr (algebraicamente próximo, mas 2.62 é irracional — não é múltiplo inteiro)
+- Ciclo de Hale (22yr): 52/22 = 2.36 (irracional — sem correspondência)
+- Vênus (583.92d): 5 sínodos = 8 Haab' [E] — sincronia documentada no Códice de Dresden
+
 ### Evidência estabelecida [E]
 
 | Elemento | Valor | Referência |
 |---------|-------|------------|
 | Ciclo Tzolk'in | 260 dias (13 × 20) | [E] Aveni 1980; Thompson 1950 |
 | Ciclo Haab' | 365 dias (18 × 20 + 5 wayeb') | [E] padrão calendárica maia |
-| Calendário Redondo | mmc(365, 260) = 18.980 dias = 52 × 365 = 73 × 260 | [E] aritmética exata |
+| Calendário Redondo | mmc(365, 260) = 18.980 dias = 52 × 365 = 73 × 260 | [E] aritmética exata — confirmado FASE 8 |
 | Ciclo solar de Schwabe | ~11 anos (oscila 9–14 anos) | [E] Schwabe 1844; SIDC Brussels |
 | Ciclo de Hale | ~22 anos (~2 × Schwabe), campo magnético solar | [E] Hale et al. 1919 |
 | Conjunção sinódica de Vênus | 583.92 dias → 8 anos ≈ 5 ciclos (99.96%) | [E] Aveni 1980; astronomia de posição |
@@ -443,18 +469,17 @@ Densidade plasmática ionosférica: `~10⁻¹⁰ kg/m³` → razão com ρ_crit:
 
 **Status**: [H especulativo] — acoplamento proposto como analogia de estrutura (plasma como "setor extra de matéria"), não como derivação de primeiros princípios. Contribuição numérica do plasma terrestre a Ωs cosmológico é [VAZIO] e fisicamente imperceptível.
 
-#### H-UNIV-01 ↔ f(z) como Limite de Fibonacci [C → verificar]
+#### H-UNIV-01 ↔ f(z) como Limite de Fibonacci [E-negativo — FASE 8]
 
-A razão entre valores consecutivos da logística em redshifts de Fibonacci poderia convergir para φ:
+A razão entre valores consecutivos da logística em redshifts de Fibonacci foi calculada em `scripts/verify_rll_fibonacci_ratio.py` (FASE 8, 2026-07-07):
 
 ```
-Se z_n = F_n · z_unit (série de Fibonacci escalada),
-então f(z_{n+1}) / f(z_n) → φ no limite n→∞?
+z_n = F_n × (z_max/F_N), z_t=1.0, w_t=0.3, 30 termos
+Resultado: razão diverge (1.0 → 581.2) ao passar por z_t
+           Não converge para φ=1.618 em nenhuma configuração testada
 ```
 
-**Predição calculável**: com z_t = 0.8, w_t = 0.3, calcular f(z_n) para z_n = {0.1, 0.2, 0.3, 0.5, 0.8, 1.3, 2.1} (primeiros Fibonacci ×0.1). A convergência para φ requer demonstração — não é propriedade geral da logística, depende da escolha de z_n.
-
-**Status**: [C] — verificação numérica pendente; executável com scripts Python já no repositório.
+**Status**: [E-negativo] — verificação executada. A logística f(z) não possui auto-semelhança multiplicativa que gera φ. A analogia é qualitativa [C], sem fundamento na forma funcional. Saída: `results/fibonacci_ratio_verification.json`.
 
 #### H-CAL-01 ↔ Modulação Periódica em H(z) [VAZIO]
 
@@ -484,10 +509,10 @@ As conexões acima são **analógicas** [C] ou **especulativas** [H/VAZIO], não
 | H-GEO-02 | Simulação campo gravitacional colisão Lua-B | Software N-corpos (REBOUND, código aberto) | P1 | TOKEN_VAZIO |
 | H-GEO-02 | Dados sísmicos históricos da região MG | RSBR / USGS Seismic Catalog | P2 | TOKEN_VAZIO |
 | H-GEO-03 | Dados de inclusões fluidas, Ouro Preto | Literatura CPRM / UFOP | P3 | TOKEN_VAZIO |
-| H-ELEC-01 | Modelo quantitativo circuito atmosférico + camada salina | Física atmosférica padrão | P2 | TOKEN_VAZIO |
+| H-ELEC-01 | Modelo quantitativo circuito atmosférico + camada salina | Física atmosférica padrão | P2 | ✅ FECHADO [E+H] FASE 15 — `results/h_elec_01_layer_model.json` |
 | H-ELEC-01 | Correlação salinidade aerossóis × descargas | AERONET + ENTLN / GLD360 | P2 | TOKEN_VAZIO |
 | H-UNIV-01 | Razão amplitudes em sismograma RSBR | RSBR (acesso livre) | P3 | TOKEN_VAZIO |
-| H-UNIV-01 | Verificação numérica f(z)/φ (série Fibonacci) | Scripts Python já no repositório | P3 | TOKEN_VAZIO |
+| H-UNIV-01 | Verificação numérica f(z)/φ (série Fibonacci) | Scripts Python já no repositório | P3 | ✅ FECHADO [E-negativo] FASE 8 — razão diverge, sem convergência para φ |
 | H-ARQ-01 | Estudo comparativo colapsos coloniais vs. pré-colombianos | Literatura histórica (Silgado Ferro 1978; IGP) | P1 | TOKEN_VAZIO |
 | H-ARQ-01 | Simulação FEM estrutura poligonal vs. ortogonal | OpenSees / Abaqus | P2 | TOKEN_VAZIO |
 | H-CAL-01 | Efemérides Jupiter-Saturno-Vênus (janela 52 anos) | NASA JPL Horizons (acesso livre) | P1 | TOKEN_VAZIO |

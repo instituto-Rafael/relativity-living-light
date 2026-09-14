@@ -1,0 +1,45 @@
+{
+  "schema": "rll.h0_rd_boundary_audit.v1",
+  "audited_at": "2026-08-07T23:42:00Z",
+  "state": "VERIFIED_POLICY_MATRIX_NOT_EXECUTED_FORMAL_LIKELIHOOD",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "existing_contract": {
+    "path": "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json",
+    "blob_sha": "9bd0056adaec2529cb0a456df29349a99555b4c6",
+    "schema": "rll.h0_rd_ablation_matrix.v1",
+    "declared_runs": 6,
+    "models_required": ["LCDM", "wCDM", "CPL", "RLL"],
+    "h0_policies": [
+      "broad_free",
+      "Planck2018 Gaussian 67.4 +/- 0.5",
+      "SH0ES local-distance-ladder Gaussian 73.04 +/- 1.04"
+    ],
+    "rd_policies": ["fixed_for_all at 147.78 Mpc", "derived_for_all"],
+    "covariance_policy": "same_vector_same_covariance_for_all_models"
+  },
+  "boundary": {
+    "formal_policy_grid_exists": true,
+    "six_policy_execution_receipts_exist": false,
+    "external_prior_source_artifacts_hashed_in_ablation_receipt": false,
+    "derived_rd_early_universe_policy_fully_reproduced": false,
+    "h0_relief_or_tension_claim_allowed": false
+  },
+  "classification": {
+    "generic_token": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+    "action": "REDUCE_TO_EXECUTION_AND_PROVENANCE_SUCCESSOR",
+    "successor_token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"
+  },
+  "scientific_boundary": "The repository already defines a fair six-cell H0/r_d sensitivity matrix, so the methodological design is not empty. What is missing is execution with frozen source provenance, equal likelihood components across models, and a derived-r_d route whose early-universe assumptions are reproducible. Declared Gaussian numbers alone are not a modern likelihood receipt.",
+  "F_ok": [
+    "Broad, Planck-prior and local-distance-ladder H0 policies are explicitly separated.",
+    "Each H0 policy is paired with fixed-rd and derived-rd routes.",
+    "LCDM, wCDM, CPL and RLL are required under the same vector/covariance policy."
+  ],
+  "F_gap": ["TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE"],
+  "F_next": [
+    "Pin/hash the external H0 prior provenance used by each Gaussian prior case.",
+    "Execute all six H0/r_d cells for the four model baselines with identical applicable data/covariance.",
+    "For derived r_d, version the baryon/radiation/neutrino assumptions and solver before interpreting H0 shifts."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "run_id": "29684533863",
+  "commit": "c7ec1684",
+  "run_date": "20260719",
+  "timestamp_utc": "2026-07-19T11:12:07.824790+00:00",
+  "modo": "completo",
+  "pantheon_delta_aic": null,
+  "desi_chi2_nominal": 93.81,
+  "bayes_ln_b10": null,
+  "p0_joint_mcmc_closed": true,
+  "p0_bayes_factor_closed": false,
+  "falsifiers_pass": 1,
+  "falsifiers_fail": 0
+}

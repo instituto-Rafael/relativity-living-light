@@ -1,0 +1,141 @@
+{
+  "schema": "rll.operational_auto_hotfix_policy.v1",
+  "effective_date": "2026-08-16",
+  "state": "GOVERNED_REVIEW_REQUIRED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "principles": [
+    "observe_more_than_mutate",
+    "fail_closed_on_structural_drift",
+    "append_only_evidence",
+    "no_invented_token_closure",
+    "scientific_claims_require_independent_evidence",
+    "automation_is_not_epistemic_authority"
+  ],
+  "urgency": {
+    "P0": "CI integrity or deterministic contract drift that invalidates repository gates",
+    "P1": "security, provenance, missing dependency or reproducibility weakness requiring reviewed action",
+    "P2": "epistemic debt, TOKEN_VAZIO, documentation or research closure work"
+  },
+  "safe_auto_fix": {
+    "classes": [
+      "WORKFLOW_INVENTORY_DRIFT"
+    ],
+    "constraints": [
+      "repair must be deterministic from repository-local executable state",
+      "repair may only alter an explicitly whitelisted contract scalar",
+      "workspace mutation must be proposed by pull request only after maturity route verification",
+      "direct commit to main is forbidden",
+      "auto merge is forbidden",
+      "receipt must be produced before proposal"
+    ]
+  },
+  "review_only": {
+    "classes": [
+      "FLOATING_ACTION_REF",
+      "MISSING_LOCAL_WORKFLOW_DEPENDENCY",
+      "EPISTEMIC_TOKEN",
+      "UNCERTAINTY_TOKEN",
+      "MAINTENANCE_MARKER",
+      "RUNTIME_ZERO_JOB_FAILURE",
+      "RUNTIME_JOB_SNAPSHOT_MISSING",
+      "RUNTIME_API_RECORD_INVALID",
+      "RUNTIME_API_INGESTION_FAILURE",
+      "EXTERNAL_PLATFORM_SETTING",
+      "HOTFIX_ROUTE_VS_BRANCH_MATURITY_TOPOLOGY"
+    ]
+  },
+  "runtime_api_ingestion": {
+    "tool": "tools/github_actions_runtime_ingest.py",
+    "permission": "actions:read",
+    "max_recent_failure_runs": 25,
+    "required_endpoints": [
+      "actions/runs?status=failure",
+      "actions/runs/{run_id}/jobs"
+    ],
+    "zero_job_rule": "failure && total_jobs == 0 => TOKEN_VAZIO_ROOT_CAUSE",
+    "root_cause_inference_from_zero_jobs": "FORBIDDEN",
+    "external_api_unavailable_state": "TOKEN_VAZIO_EXTERNAL_API",
+    "auto_fixable": false,
+    "required_products": [
+      "runtime_observations.jsonl",
+      "runtime_state_vector.json",
+      "runtime_receipt.json",
+      "RUNTIME_SUMMARY.md",
+      "raw/runs.json",
+      "raw/jobs_{run_id}.json"
+    ]
+  },
+  "forbidden_auto_mutation_domains": [
+    "scientific_claim",
+    "scientific_result",
+    "scientific_dataset",
+    "likelihood",
+    "bayesian_evidence",
+    "physical_interpretation",
+    "secrets",
+    "branch_protection",
+    "repository_rulesets",
+    "licenses",
+    "publication_state"
+  ],
+  "observation_record_required_fields": [
+    "id",
+    "kind",
+    "urgency",
+    "state",
+    "source",
+    "evidence",
+    "auto_fixable",
+    "proposed_action",
+    "falsifier",
+    "provenance"
+  ],
+  "products": {
+    "runtime_artifacts": [
+      "observations.jsonl",
+      "state_vector.json",
+      "receipt.json",
+      "SUMMARY.md",
+      "runtime_observations.jsonl",
+      "runtime_state_vector.json",
+      "runtime_receipt.json",
+      "RUNTIME_SUMMARY.md",
+      "proposal-receipt.json"
+    ],
+    "retention_days": 90,
+    "durable_repository_receipt": "only_when_a_reviewed_hotfix_changes_repository_state"
+  },
+  "evolution_vector": {
+    "definition": "V_next = VALIDATED(V_current) + explicit_delta",
+    "components": [
+      "F_ok",
+      "F_gap",
+      "F_next",
+      "TOKEN_VAZIO",
+      "INCERTEZA",
+      "urgency",
+      "provenance",
+      "falsifier"
+    ]
+  },
+  "main_hotfix_route": {
+    "allowed": false,
+    "state": "TOKEN_VAZIO_MATURITY_ROUTE",
+    "scope": "structural CI/governance repair only",
+    "delivery": "receipt_and_reviewed_proposal_after_route_verification",
+    "verified_proposal_base": "TOKEN_VAZIO_MATURITY_ROUTE",
+    "required_topology": [
+      "non-protected work branch -> rll/lab",
+      "rll/lab -> rll/integration",
+      "rll/integration -> rll/release",
+      "rll/release -> main"
+    ],
+    "observed_conflict": "hotfix/runtime-zero-job-ingestion-20260816 -> main was blocked by Branch Maturity Gate V2 and Transit Tower maturity decision",
+    "proposed_action": "reconcile main/rll-lab divergence before authorizing an automated proposal base",
+    "falsifier": "a reviewed route names verified_proposal_base and passes tools/branch_maturity_gate.py without bypass",
+    "direct_main_commit": false,
+    "auto_merge": false,
+    "scientific_promotion": false
+  }
+}

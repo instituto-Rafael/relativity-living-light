@@ -1,0 +1,46 @@
+name: Branch Maturity Gate V2
+
+on:
+  pull_request:
+    branches: [rll/lab, rll/integration, rll/release, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: branch-maturity-v2-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  branch-maturity-gate-v2:
+    name: Branch maturity gate V2
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout full comparison history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Evaluate promotion topology and policy
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.base_ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python tools/branch_maturity_gate_v2.py \
+            --head-ref "$HEAD_REF" --base-ref "$BASE_REF" \
+            --base-sha "$BASE_SHA" --head-sha "$HEAD_SHA"
+      - name: Upload maturity receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: branch-maturity-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/branch-maturity-v2/
+          retention-days: 30
+          if-no-files-found: warn

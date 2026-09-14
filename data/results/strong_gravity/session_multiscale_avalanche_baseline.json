@@ -1,0 +1,43 @@
+{
+  "avalanche_examples": {
+    "above_threshold": 2.718281828459045,
+    "below_threshold": 1.0
+  },
+  "boundaries": {
+    "astrophysical_validation": false,
+    "carbon_eos_solution": false,
+    "claim_allowed": false,
+    "grmhd_solution": false,
+    "laboratory_validation": false,
+    "plasma_kinetic_solution": false,
+    "rll_cosmology_validation": false
+  },
+  "damping_partition": {
+    "coherent_remaining_j_m3": 6.703200460356394,
+    "conservation_error_j_m3": 0.0,
+    "heat_j_m3": 2.142919700768344,
+    "radiated_j_m3": 0.4945199309465409,
+    "transported_j_m3": 0.6593599079287213
+  },
+  "frequency_pair_hz": [144000.0, 288000.0],
+  "light_matter_modes_hz": {
+    "3.2": 773756557640.0217,
+    "5.1": 1233174513738.7844
+  },
+  "permutation_report": {
+    "candidates_admissible": 144,
+    "candidates_blocked": 144,
+    "candidates_total": 288,
+    "digest_sha256": "4cd989d5dfeeb1bb78a8bc473cbb02b2bb8a29c6a0247dd7758590cd29cb2d45"
+  },
+  "photon_energy_ev": {
+    "144_khz": 5.95536148224e-10,
+    "288_khz": 1.191072296448e-09
+  },
+  "schema": "rll.session_multiscale_avalanche.baseline.v1",
+  "spiral": {
+    "delta_phi_rad": 1.0471975511965976,
+    "shrink": 0.8660254037844386,
+    "step_from_1m": [0.8660254037844386, 1.0471975511965976]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "bundle_encoding": "base64-prefix+binary-tail(gzip(jsonl:utf-8))",
+  "bundle_gzip_sha256": "61092ab3e15a164dcf5140c9db3fe5c21b1eaa37763cb4fbf14e25feab728d34",
+  "bundle_gzip_size_bytes": 48027,
+  "bundle_logical_sha256": "73508cb515ef5416b7b06acfbc63c3802317d33a6c59a9afbaf39c6dce1e99af",
+  "bundle_root": "data/project_sources/seed_v1",
+  "bundle_transport_sha256": "34a0ea70355a79bdacdf1206a60efef8ba42dbd0f641c51d32243361e2ab3f6c",
+  "claim_allowed": false,
+  "execution_state": "READY_FOR_DETERMINISTIC_BOOTSTRAP",
+  "expected_chunks": 202,
+  "hash_mismatch": 0,
+  "manifest": "configs/project_sources_seed.v1.json",
+  "missing": 0,
+  "observed_at": "2026-07-31T14:04:00Z",
+  "private_pointer_only": 1,
+  "public_source_bytes": 123646,
+  "public_source_lines": 4483,
+  "schema": "rll.project_sources_seed_receipt.v1",
+  "search_network_state": "TOKEN_VAZIO_NEXT_PHASE",
+  "source_count": 14,
+  "transport_parts": 8,
+  "verified_committed_bodies": 13
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schemas/rll_universal_taxonomy_416.schema.json",
+  "registry_id": "RLL-UNIVERSAL-TAXONOMY-416-V1",
+  "title": "Índice Taxonômico Universal da sessão — 30 macrotemas + 386 módulos",
+  "source_provenance": {
+    "source_type": "USER_SUPPLIED_SESSION_TAXONOMY",
+    "received_date": "2026-07-28",
+    "baseline_macrothemes": 30,
+    "module_count": 386,
+    "claimed_total": 416,
+    "claim_allowed": false
+  },
+  "count_audit": {
+    "formula": "30 + 386 = 416",
+    "module_count_computed": 386,
+    "cluster_counts_computed": {"I": 48, "II": 48, "III": 48, "IV": 48, "V": 48, "VI": 48, "VII": 47, "VIII": 51},
+    "declared_cluster_counts": {"I": 48, "II": 48, "III": 48, "IV": 48, "V": 48, "VI": 48, "VII": 48, "VIII": 50},
+    "discrepancies": [
+      {"cluster_id": "VII", "declared": 48, "computed": 47, "state": "TOKEN_VAZIO_COUNT_LABEL_MISMATCH"},
+      {"cluster_id": "VIII", "declared": 50, "computed": 51, "state": "TOKEN_VAZIO_COUNT_LABEL_MISMATCH"}
+    ],
+    "global_count_consistent": true
+  },
+  "invariants": {
+    "source_order_preserved": true,
+    "no_missing_index": true,
+    "claim_allowed": false,
+    "analogy_is_not_mechanism": true,
+    "open_problem_is_not_solved": true,
+    "token_vazio_is_not_zero": true,
+    "taxonomy_count_is_not_knowledge_matrix_count": true
+  },
+  "completion_profiles": {
+    "REFERENCE_TECHNICAL": {"description": "Conceito técnico conhecido; falta ligá-lo ao componente, ISA ou receipt local específico do RLL.", "required_fields": ["authoritative_source", "target_architecture_or_component", "rll_path", "implementation_status", "local_receipt", "acceptance_test"]},
+    "REFERENCE_FORMAL": {"description": "Objeto matemático conhecido; falta fixar definição, hipóteses, convenções e uso exato no RLL.", "required_fields": ["canonical_definition", "assumptions", "notation_scope", "rll_equation_or_operator", "proof_reference", "testable_invariant"]},
+    "CURRENT_OBSERVATIONAL": {"description": "Conceito físico/cosmológico potencialmente dependente de release; exige fonte datada, unidade, covariância e avaliador.", "required_fields": ["authoritative_source_and_date", "dataset_release", "observable_and_units", "covariance_or_uncertainty", "rll_evaluator", "negative_control"]},
+    "REFERENCE_IMPLEMENTATION": {"description": "Conceito de ML/Transformer; falta versão, arquitetura-alvo, baseline e implementação local verificável.", "required_fields": ["canonical_reference", "implementation_version", "model_scope", "baseline", "rll_path", "benchmark_receipt"]},
+    "OPEN_PROBLEM": {"description": "Entrada de problema/conjectura; o status histórico e a ponte proposta precisam de auditoria separada.", "required_fields": ["canonical_statement", "current_mathematical_status", "known_partial_results", "proposed_rll_bridge", "non_equivalence_boundary", "falsifier_or_proof_obligation"]},
+    "ANALOGICAL_SYMBOLIC": {"description": "Parábola ou mapeamento filosófico/espiritual; precisa declarar fonte, camada e limites de não-equivalência.", "required_fields": ["tradition_or_author_source", "literal_layer", "symbolic_mapping", "technical_analogy", "non_equivalence_boundary", "ethical_review"]},
+    "ARTISTIC_MAPPING": {"description": "Mapeamento artístico; falta um encoding reproduzível, inversa/limites e artefato de saída.", "required_fields": ["artistic_domain", "encoding_rule", "input_domain", "output_domain", "inverse_or_loss_metric", "rendered_artifact_and_receipt"]},
+    "EXPLICIT_GAP": {"description": "Lacuna explicitamente registrada; não pode ser preenchida sem dependência, teste e receipt.", "required_fields": ["intended_claim_or_object", "blocking_dependency", "minimal_experiment_or_derivation", "acceptance_criterion", "failure_criterion", "evidence_receipt"]}
+  },
+  "clusters": [
+    {"cluster_id": "I", "title": "Arquitetura do Silício e Micro-operações", "declared_count": 48, "computed_count": 48, "completion_profile": "REFERENCE_TECHNICAL", "epistemic_state": "REFERENCE_CONCEPT_PENDING_LOCAL_LINK", "knowledge_role": "module"},
+    {"cluster_id": "II", "title": "Matemática Pura e Álgebra Avançada", "declared_count": 48, "computed_count": 48, "completion_profile": "REFERENCE_FORMAL", "epistemic_state": "REFERENCE_CONCEPT_PENDING_SOURCE", "knowledge_role": "module"},
+    {"cluster_id": "III", "title": "Física Teórica e Cosmologia", "declared_count": 48, "computed_count": 48, "completion_profile": "CURRENT_OBSERVATIONAL", "epistemic_state": "REFERENCE_CURRENT_SOURCE_REQUIRED", "knowledge_role": "module"},
+    {"cluster_id": "IV", "title": "Aprendizado Profundo e Transformers", "declared_count": 48, "computed_count": 48, "completion_profile": "REFERENCE_IMPLEMENTATION", "epistemic_state": "REFERENCE_IMPLEMENTATION_SCOPE_REQUIRED", "knowledge_role": "module"},
+    {"cluster_id": "V", "title": "Problemas em Aberto e Conjecturas", "declared_count": 48, "computed_count": 48, "completion_profile": "OPEN_PROBLEM", "epistemic_state": "TOKEN_VAZIO_STATUS_AND_BRIDGE_AUDIT", "knowledge_role": "gap"},
+    {"cluster_id": "VI", "title": "Ciências Humanas, Filosofia e Ontologia", "declared_count": 48, "computed_count": 48, "completion_profile": "ANALOGICAL_SYMBOLIC", "epistemic_state": "MODEL_ANALOGICO_PENDING_LAYER_BOUNDARY", "knowledge_role": "module"},
+    {"cluster_id": "VII", "title": "Artes, Música, Estética e Poética", "declared_count": 48, "computed_count": 47, "completion_profile": "ARTISTIC_MAPPING", "epistemic_state": "MODEL_ANALOGICO_PENDING_ENCODING", "knowledge_role": "module"},
+    {"cluster_id": "VIII", "title": "Podas, Cortes, Latentes, Implícitos e Desvios", "declared_count": 50, "computed_count": 51, "completion_profile": "EXPLICIT_GAP", "epistemic_state": "TOKEN_VAZIO_EXPLICIT", "knowledge_role": "gap"}
+  ],
+  "module_loading": "relative_to_manifest",
+  "module_overrides": {
+    "115": {"flags": ["CURRENT_VALUE_REQUIRES_DATED_SOURCE"]},
+    "124": {"flags": ["APPROXIMATION_REQUIRES_CONTEXT"]},
+    "185": {"epistemic_state": "HYPOTHESIS_IMPLEMENTATION_PENDING"},
+    "217": {"flags": ["GENERALIZATION_WORDING_REQUIRES_AUDIT"]},
+    "221": {"flags": ["CANONICAL_PROBLEM_NAME_REQUIRES_AUDIT"]},
+    "222": {"flags": ["CANONICAL_PROBLEM_NAME_REQUIRES_AUDIT"]},
+    "231": {"flags": ["AMBIGUOUS_NAME_REQUIRES_CANONICAL_DEFINITION"]},
+    "233": {"flags": ["HISTORICAL_STATUS_REQUIRES_AUDIT"]},
+    "234": {"flags": ["HISTORICAL_STATUS_REQUIRES_AUDIT"]},
+    "239": {"relations": [{"type": "DUPLICATE_OF", "target": "UTM-194"}]}
+  },
+  "module_blob_parts": [
+    "rll_universal_taxonomy_416.modules.part1.b64",
+    "rll_universal_taxonomy_416.modules.part2.b64",
+    "rll_universal_taxonomy_416.modules.part3.b64",
+    "rll_universal_taxonomy_416.modules.part4.b64"
+  ],
+  "module_encoding": "base64(gzip(utf8(json-array)))"
+}

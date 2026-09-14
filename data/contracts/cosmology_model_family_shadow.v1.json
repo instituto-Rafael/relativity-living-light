@@ -1,0 +1,963 @@
+{
+  "schema": "rll.cosmology_model_family_shadow.v1",
+  "status": "EXPERIMENTAL_SHADOW",
+  "claim_allowed": false,
+  "canonical_outputs_modified": false,
+  "objective": "Compare structurally distinct cosmological backgrounds without adapting observations, errors, covariances, bounds, or parameter counts to favor any model.",
+  "scientific_boundary": {
+    "included_terms": [
+      "H(z)",
+      "DESI_DR2_BAO"
+    ],
+    "excluded_terms": {
+      "CMB_shift": "TOKEN_VAZIO_RS_STAR_BACKEND: l_A requires an explicit sound horizon at photon decoupling rather than reusing r_d.",
+      "fsigma8": "TOKEN_VAZIO_MODEL_SPECIFIC_GROWTH: the gamma=0.55 proxy is not a fair perturbation backend for every model.",
+      "PantheonPlus": "TOKEN_VAZIO_MATERIALIZATION_OR_LIKELIHOOD"
+    },
+    "comparison_scope": "background_expansion_only",
+    "publication_effect": "NONE"
+  },
+  "closure_policy": {
+    "flat_models": "Omega_de0 = 1 - Omega_m0 - Omega_r0 - sum(extra_sector_fractions)",
+    "curved_models": "Omega_de0 = 1 - Omega_m0 - Omega_r0 - Omega_k0",
+    "free_Omega_Lambda_for_flat_models": false,
+    "distance_geometry_must_match_Omega_k": true
+  },
+  "execution_policy": {
+    "optimizer": "scipy.optimize.differential_evolution",
+    "same_objective_for_all_models": true,
+    "same_data_for_all_models": true,
+    "same_covariance_for_all_models": true,
+    "bounds_frozen_before_execution": true,
+    "post_hoc_bound_changes_forbidden": true,
+    "predeclared_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "robust_ranking_requires_all_predeclared_seeds": true,
+    "default_maxiter": 120,
+    "default_tol": 1e-06
+  },
+  "common_parameter_bounds": {
+    "H0": [
+      60.0,
+      80.0
+    ],
+    "Om": [
+      0.1,
+      0.6
+    ],
+    "Ob_h2": [
+      0.018,
+      0.026
+    ]
+  },
+  "models": [
+    {
+      "id": "FLCDM",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "lcdm",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "CPL_CP2001"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "oLCDM",
+      "kind": "core",
+      "geometry": "curved",
+      "kernel": "lcdm",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Ok",
+          "bounds": [
+            -0.3,
+            0.3
+          ],
+          "role": "curvature_fraction"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "CPL_CP2001"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "wCDM",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "wcdm",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "w",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "constant_dark_energy_eos"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "CPL_LINDER2003"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "CPL",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "cpl",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "present_dark_energy_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "dark_energy_eos_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "CPL_CP2001",
+        "CPL_LINDER2003"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "JBP",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "jbp",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "present_dark_energy_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "dark_energy_eos_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "JBP2005"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "BA",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "ba",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "present_dark_energy_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "dark_energy_eos_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "BA2008"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "PEDE",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "pede",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "PEDE2019"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "FSLL1",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "fsll1",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "present_dark_energy_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "dark_energy_eos_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "FSLL2012"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "GCG",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "gcg",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "As",
+          "bounds": [
+            0.01,
+            0.99
+          ],
+          "role": "chaplygin_asymptotic_fraction"
+        },
+        {
+          "name": "alpha",
+          "bounds": [
+            -0.9,
+            1.0
+          ],
+          "role": "chaplygin_index"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "GCG"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL",
+      "kind": "core",
+      "geometry": "flat",
+      "kernel": "rll_lambda",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL_wCDM",
+      "kind": "composition",
+      "geometry": "flat",
+      "kernel": "rll_wcdm",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "w",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "companion_constant_eos"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL",
+        "CPL_LINDER2003"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL_CPL",
+      "kind": "composition",
+      "geometry": "flat",
+      "kernel": "rll_cpl",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "companion_present_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "companion_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL",
+        "CPL_CP2001",
+        "CPL_LINDER2003"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL_JBP",
+      "kind": "composition",
+      "geometry": "flat",
+      "kernel": "rll_jbp",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "companion_present_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "companion_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL",
+        "JBP2005"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL_BA",
+      "kind": "composition",
+      "geometry": "flat",
+      "kernel": "rll_ba",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "w0",
+          "bounds": [
+            -2,
+            -0.3
+          ],
+          "role": "companion_present_eos"
+        },
+        {
+          "name": "wa",
+          "bounds": [
+            -3,
+            3
+          ],
+          "role": "companion_evolution"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL",
+        "BA2008"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "id": "RLL_PEDE",
+      "kind": "composition",
+      "geometry": "flat",
+      "kernel": "rll_pede",
+      "parameters": [
+        {
+          "name": "H0",
+          "bounds": [
+            60,
+            80
+          ],
+          "role": "background_scale"
+        },
+        {
+          "name": "Om",
+          "bounds": [
+            0.1,
+            0.6
+          ],
+          "role": "matter_fraction"
+        },
+        {
+          "name": "Os0",
+          "bounds": [
+            0,
+            0.25
+          ],
+          "role": "rll_fraction"
+        },
+        {
+          "name": "zt",
+          "bounds": [
+            0.1,
+            10
+          ],
+          "role": "rll_transition_redshift"
+        },
+        {
+          "name": "wt",
+          "bounds": [
+            0.05,
+            2
+          ],
+          "role": "rll_transition_width"
+        },
+        {
+          "name": "Ob_h2",
+          "bounds": [
+            0.018,
+            0.026
+          ],
+          "role": "baryon_drag_scale"
+        }
+      ],
+      "sources": [
+        "RLL_INTERNAL",
+        "PEDE2019"
+      ],
+      "claim_allowed": false
+    }
+  ],
+  "composition_policy": {
+    "maximum_nonstandard_sectors": 2,
+    "allowed_anchor": "RLL",
+    "allowed_companions": [
+      "wCDM",
+      "CPL",
+      "JBP",
+      "BA",
+      "PEDE"
+    ],
+    "blocked_pair_classes": [
+      "dynamic_dark_energy_plus_dynamic_dark_energy_without_RLL_anchor",
+      "duplicate_parameterizations_of_the_same_dark_energy_sector",
+      "RLL_plus_EDE_until_early_time_identifiability_and_a_consistent_early_time_backend_are_demonstrated",
+      "RLL_plus_GCG_until_density_sector degeneracy is quantified"
+    ],
+    "promotion_gate": "TOKEN_VAZIO_IDENTIFIABILITY until Fisher/posterior correlation and multi-seed stability are materialized"
+  },
+  "sources": [
+    {
+      "id": "CPL_CP2001",
+      "reference": "Chevallier & Polarski (2001)",
+      "doi": "10.1142/S0218271801000822"
+    },
+    {
+      "id": "CPL_LINDER2003",
+      "reference": "Linder (2003)",
+      "doi": "10.1103/PhysRevLett.90.091301"
+    },
+    {
+      "id": "JBP2005",
+      "reference": "Jassal, Bagla & Padmanabhan (2005)",
+      "doi": "10.1111/j.1745-3933.2005.08577.x"
+    },
+    {
+      "id": "BA2008",
+      "reference": "Barboza & Alcaniz (2008)",
+      "doi": "10.1016/j.physletb.2008.08.012"
+    },
+    {
+      "id": "PEDE2019",
+      "reference": "Li & Shafieloo (2019)",
+      "arxiv": "1906.08275"
+    },
+    {
+      "id": "FSLL2012",
+      "reference": "Feng, Shen, Li & Li (2012)",
+      "arxiv": "1206.0063"
+    },
+    {
+      "id": "GCG",
+      "reference": "Generalized Chaplygin gas family",
+      "arxiv": "astro-ph/0304325"
+    },
+    {
+      "id": "RLL_INTERNAL",
+      "reference": "RLL logistic transition already implemented in this repository",
+      "status": "internal_model"
+    }
+  ]
+}

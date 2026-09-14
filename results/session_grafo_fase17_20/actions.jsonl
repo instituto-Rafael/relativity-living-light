@@ -1,0 +1,7 @@
+{"action_id": "A-01", "action": "IMPLEMENTA_FASE18E", "time": "2026-07-14", "actor": "scripts/rll_fase18e_calibrado.py", "output": "results/rll_fase18e_calibrado.json", "pr": "#551", "status": "CONCLUIDA"}
+{"action_id": "A-02", "action": "IMPLEMENTA_FASE19", "time": "2026-07-14", "actor": "scripts/rll_fase19_rd_calibrado.py", "output": "results/rll_fase19_rd_calibrado.json", "pr": "#553", "status": "CONCLUIDA", "gap_fechado": "G2"}
+{"action_id": "A-03", "action": "IMPLEMENTA_FASE20", "time": "2026-07-15", "actor": "scripts/rll_fase20_mcmc_bayes.py", "output": "results/rll_fase20_mcmc_bayes.json", "pr": "#554", "status": "CONCLUIDA", "gaps_fechados": ["G1", "G3"]}
+{"action_id": "A-04", "action": "MERGED_PR_551", "time": "2026-07-14", "actor": "rafaelmeloreisnovo", "pr": "#551", "branch": "claude/rll-cronologia-auditoria-qyvn83", "status": "CONCLUIDA"}
+{"action_id": "A-05", "action": "MERGED_PR_553", "time": "2026-07-14", "actor": "rafaelmeloreisnovo", "pr": "#553", "branch": "claude/rll-cronologia-auditoria-qyvn83", "status": "CONCLUIDA"}
+{"action_id": "A-06", "action": "MERGED_PR_554", "time": "2026-07-15", "actor": "rafaelmeloreisnovo", "pr": "#554", "branch": "claude/rll-cronologia-auditoria-qyvn83", "status": "CONCLUIDA"}
+{"action_id": "A-07", "action": "CRIA_GRAFO_SESSAO", "time": "2026-07-16", "actor": "scripts/build_session_grafo_fase17_20.py", "output": "results/session_grafo_fase17_20/", "status": "CONCLUIDA", "fase": "21"}

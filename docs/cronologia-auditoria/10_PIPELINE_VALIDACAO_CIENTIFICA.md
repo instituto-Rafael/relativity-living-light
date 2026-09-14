@@ -186,18 +186,51 @@ O pipeline passou em todos os 9 checks CI, incluindo `validate-yaml` (auditor de
 
 ---
 
-## Próximo Passo
+## Adendo FASE 20 (2026-07-15)
 
-```bash
-# Disparar no GitHub Actions:
-# Actions → RLL Validação Científica Completa → Run workflow
-# modo: completo | commit_resultados: true
-#
-# Após conclusão (~75 min):
-# - Revisar RELATORIO_COMPLETO_*.md
-# - Verificar se F-COS-04 (ln B₁₀) é > −5 (Jeffreys: não desfavorável)
-# - Atualizar este documento com resultados reais
+A seção "Próximo Passo" acima e as 4 linhas `[VAZIO P0]` na tabela de Estado Epistêmico estão **superadas**. Os jobs P0 foram executados via scripts locais (equivalente funcional ao pipeline) e os resultados estão commitados:
+
+### Estado Epistêmico — Atualizado
+
+| Item | Estado anterior | Estado final | Evidência |
+|------|----------------|-------------|-----------|
+| Primeiro run concluído | ⚠️ [VAZIO P0] | ✅ [E] | FASE 20 (2026-07-15) |
+| χ² otimizado DESI | ⚠️ [VAZIO P0] | ✅ [E] | χ²_joint=749.228 (FASE 16); calibração rd=−3.614 Mpc (FASE 19) |
+| ln(B₁₀) RLL/ΛCDM | ⚠️ [VAZIO P0] | ✅ [E] − FAIL | ln(B₁₀)=−6.190±0.691 (dynesty nlive=150) |
+| CONTRATO atualizado | ⚠️ [VAZIO P0] | ✅ [E] | `CONTRATO_FALSIFICADORES_RLL.md` — 2/5 PASS · 2/5 FAIL · 0/5 TOKEN_VAZIO |
+
+### Resultado do job `joint_mcmc_p0`
+
+```json
+{
+  "method": "emcee",
+  "n_walkers": 32,
+  "n_steps": 1500,
+  "burn": 400,
+  "n_datasets": 5,
+  "N_total": 1677,
+  "Omega_s0_UL95": 0.00178,
+  "tau_max": 99.5,
+  "N_over_tau": 11.1
+}
 ```
+
+Arquivo: `results/rll_fase20_mcmc_bayes.json`
+
+### Resultado do job `bayes_factor_p0`
+
+```json
+{
+  "method": "dynesty",
+  "nlive": 150,
+  "dlogz": 0.5,
+  "ln_B10": -6.190,
+  "ln_B10_err": 0.691,
+  "jeffreys_scale": "very_strong_for_LCDM"
+}
+```
+
+`claim_allowed = false` — por resultado empírico (FAIL), não por lacuna (TOKEN_VAZIO = 0).
 
 ---
 

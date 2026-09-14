@@ -40,6 +40,69 @@
       "sha256": "28a2dd26158c84d61c23109733cabfa91d360909549920dbdcedd90d1f9e8ddb",
       "claim_allowed": false,
       "claim_boundary": "Curated formula supplement. Defines equations and operating layers only; does not validate physics, cosmology, neuroscience or quantum hardware."
+    },
+    "SPIRAL_PLASMA_THERMAL_BRIDGE.md": {
+      "path": "docs/strong_gravity/SPIRAL_PLASMA_THERMAL_BRIDGE.md",
+      "kind": "curated_physics_bridge",
+      "status": "implemented_bounded_bridge / claim_boundary",
+      "bytes": 7143,
+      "sha256": "b8f119b179aa51e8454e640c302aa5e32452fab8fb3a56dbd6415e3bfb73a8b5",
+      "claim_allowed": false,
+      "claim_boundary": "Connects spiral geometry, AC plasma conductivity, thermal balance, magnetized transport, Biermann source and carbon phase boundaries. It does not validate laboratory, astrophysical, exoplanetary or cosmological claims."
+    },
+    "SESSION_MULTISCALE_AVALANCHE.md": {
+      "path": "docs/strong_gravity/SESSION_MULTISCALE_AVALANCHE.md",
+      "kind": "curated_multiscale_session_bridge",
+      "status": "implemented_finite_permutation_bridge / claim_boundary",
+      "bytes": 1406,
+      "sha256": "488bd6d5054b948ea7317f1e11b14d3a35f044b070f0876abf925ec8f5630b6e",
+      "claim_allowed": false,
+      "claim_boundary": "Separates ordered mean inflow from microscopic dissipation, physical avalanche from computational fan-out, and carbon recondensation from fully ionized plasma. It does not validate a source, compact-remnant composition or RLL cosmology."
+    },
+    "RELATIVISTIC_COMPRESSION_RADIATION_BRIDGE.md": {
+      "path": "docs/strong_gravity/RELATIVISTIC_COMPRESSION_RADIATION_BRIDGE.md",
+      "kind": "curated_relativistic_compression_bridge",
+      "status": "implemented_scalar_diagnostics / claim_boundary",
+      "claim_allowed": false,
+      "claim_boundary": "Separates compression, scattering, degeneracy, spin boundaries, electromagnetic stress-energy and photon momentum transfer. It is not a GRMHD, quantum-kinetic, nuclear or Einstein-backreaction solution."
+    }
+  },
+  "implemented_bridges": {
+    "spiral_plasma_thermal_bridge_v1": {
+      "model": "data/pipelines/strong_gravity/spiral_plasma_thermal_bridge.py",
+      "contract": "data/contracts/spiral_plasma_thermal_bridge.v1.json",
+      "baseline": "data/results/strong_gravity/spiral_plasma_thermal_bridge_baseline.json",
+      "tests": "tests/strong_gravity/test_spiral_plasma_thermal_bridge.py",
+      "local_tests": {
+        "status": "PASS",
+        "count": 12
+      },
+      "claim_allowed": false
+    },
+    "session_multiscale_avalanche_v1": {
+      "model": "data/pipelines/strong_gravity/session_multiscale_avalanche.py",
+      "contract": "data/contracts/session_multiscale_avalanche.v1.json",
+      "baseline": "data/results/strong_gravity/session_multiscale_avalanche_baseline.json",
+      "tests": "tests/strong_gravity/test_session_multiscale_avalanche.py",
+      "local_tests": {
+        "status": "PASS",
+        "count": 14
+      },
+      "finite_permutations": 288,
+      "admissible": 144,
+      "blocked": 144,
+      "claim_allowed": false
+    },
+    "relativistic_compression_radiation_bridge_v1": {
+      "model": "data/pipelines/strong_gravity/relativistic_compression_radiation_bridge.py",
+      "contract": "data/contracts/relativistic_compression_radiation_bridge.v1.json",
+      "baseline": "data/results/strong_gravity/relativistic_compression_radiation_baseline.json",
+      "tests": "tests/strong_gravity/test_relativistic_compression_radiation_bridge.py",
+      "local_tests": {
+        "status": "PASS",
+        "count": 15
+      },
+      "claim_allowed": false
     }
   },
   "claim_boundary": "Formula extraction, categorization and curated formula supplements do not promote scientific claims without data, loader, covariance, test and CI gate.",
@@ -48,6 +111,9 @@
     "validate schema in CI",
     "map each formula to claim_gate and source",
     "link formula ids to scripts/results where available",
-    "implement and test RAFAELIA formal core before any scientific claim promotion"
+    "implement and test RAFAELIA formal core before any scientific claim promotion",
+    "measure voltage/current phase, plasma state and magnetic response before promoting the 144/288 kHz bridge",
+    "supply source-specific GRMHD, kinetic-plasma and carbon-EOS inputs before promoting any multiscale candidate",
+    "supply a metric, radiation-transfer model, species cross sections and spin/quantum closure before promoting compression-radiation claims"
   ]
 }

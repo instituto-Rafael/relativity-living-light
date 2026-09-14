@@ -1,0 +1,41 @@
+{
+  "schema": "rll.auto_shadow_intake.v1",
+  "status": "ACTIVE_GOVERNED",
+  "scope": "RLL research intake and shadow tests",
+  "trigger_rule": "When a newly observed mathematical, structural, statistical, geometric, biological, computational, or cross-domain relation admits a falsifiable mapping, diagnostic, null test, synthetic recovery, stability test, residual test, or observable-facing comparison relevant to RLL, register it automatically as a shadow candidate/test artifact.",
+  "automatic_actions": [
+    "register candidate with provenance",
+    "preserve exact source expression separately from any repaired test expression",
+    "assign explicit test role",
+    "bind only existing adequate graph references; otherwise TOKEN_VAZIO_NO_CANONICAL_GRAPH",
+    "record missing raw data, mapping, covariance, edge-list, units, likelihood, or observable as TOKEN_VAZIO",
+    "define falsifier or promotion gate when possible",
+    "keep claim_allowed=false",
+    "keep direct_model_integration_allowed=false",
+    "keep affects_cosmology_evidence=false until independent empirical evidence exists"
+  ],
+  "forbidden_automatic_actions": [
+    "modify canonical cosmology equations",
+    "modify canonical likelihoods",
+    "promote analogy into physical mechanism",
+    "treat visualization as measured evidence",
+    "fill missing evidence by inference",
+    "merge a pull request",
+    "set claim_allowed=true"
+  ],
+  "protected_target_prefixes": [
+    "src/rll/cosmology.py",
+    "src/rll/model.py",
+    "src/rll/likelihood.py",
+    "scripts/joint_mcmc.py",
+    "scripts/bayes_analysis.py",
+    "scripts/compute_bayes_factor_bic_proxy.py",
+    "results/ci/",
+    "data/real/cosmology/"
+  ],
+  "epistemic_chain": "IDEA != FORMULA != IMPLEMENTATION != EXECUTION != EVIDENCE != CLAIM",
+  "missing_state": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "direct_model_integration_allowed": false,
+  "promotion_allowed": false
+}

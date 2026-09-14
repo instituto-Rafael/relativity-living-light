@@ -1,0 +1,51 @@
+{
+  "manifest_id": "RLL-COSMO-MATTER-SYNTHETIC-001",
+  "evidence_state": "SYNTHETIC",
+  "target": {
+    "name": "SYNTHETIC_ULTRAHOT_PLANET",
+    "class": "synthetic_exoplanet"
+  },
+  "target_layer": "atmosphere",
+  "probe_family": "electromagnetic_remote",
+  "method": "transmission_spectroscopy",
+  "spectral_coordinate": {
+    "kind": "wavelength",
+    "unit": "nm",
+    "min": 350.0,
+    "max": 2500.0
+  },
+  "instrument": {
+    "name": "SYNTHETIC_SPECTROGRAPH",
+    "response_declared": true,
+    "resolution_declared": true
+  },
+  "calibration": {
+    "version": "synthetic-v1",
+    "units_declared": true,
+    "background_declared": true
+  },
+  "uncertainty": {
+    "statistical_declared": true,
+    "systematics_declared": true,
+    "covariance_state": "DECLARED"
+  },
+  "provenance": {
+    "source": "generated_test_fixture",
+    "license": "CC0-1.0",
+    "hash": "SYNTHETIC_HASH_NOT_A_SCIENTIFIC_RECEIPT",
+    "private_data_included": false
+  },
+  "retrieval": {
+    "model": "synthetic_radiative_transfer_fixture",
+    "line_or_reference_database": "synthetic_line_list_v1",
+    "priors_declared": true,
+    "alternatives_tested": true,
+    "falsifier": "reject species when the feature disappears after instrument convolution and stellar-contamination control"
+  },
+  "epistemic_boundary": {
+    "composition_is_inference": true,
+    "phase_claim_state": "MODEL_DEPENDENT",
+    "dark_sector_claim_state": "NOT_CLAIMED"
+  },
+  "claim_allowed": false
+}

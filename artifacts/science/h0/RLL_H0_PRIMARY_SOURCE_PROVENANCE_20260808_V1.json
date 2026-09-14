@@ -1,0 +1,92 @@
+{
+  "schema": "rll.h0_primary_source_provenance.v1",
+  "state": "VERIFIED_PRIMARY_SOURCE_NUMERIC_PROVENANCE",
+  "generated_at": "2026-08-08T05:44:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "scope": "Primary-source provenance for the two non-broad H0 Gaussian sensitivity inputs already declared in data/inputs/cosmology_joint/h0_rd_ablation_matrix.json. This receipt does not reproduce the full Planck or SH0ES likelihoods.",
+  "sources": {
+    "Planck2018": {
+      "title": "Planck 2018 results. VI. Cosmological parameters",
+      "authority": "Planck Collaboration",
+      "arxiv": "1807.06209",
+      "arxiv_version_used_for_bibliographic_identity": "v4",
+      "journal": "Astronomy & Astrophysics 641, A6 (2020)",
+      "doi": "10.1051/0004-6361/201833910",
+      "reported_H0_km_s_Mpc": 67.4,
+      "reported_sigma_km_s_Mpc": 0.5,
+      "confidence_context": "68 percent confidence region as reported with the abstract parameter summary",
+      "model_condition": "base spatially-flat six-parameter LambdaCDM",
+      "repository_use": "conditioning_sensitivity_correlated_with_existing_Planck_CMB_shift",
+      "full_likelihood_reproduced_by_this_receipt": false
+    },
+    "SH0ES_local_distance_ladder": {
+      "title": "A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km/s/Mpc Uncertainty from the Hubble Space Telescope and the SH0ES Team",
+      "authority": "Riess et al. / SH0ES Team",
+      "arxiv": "2112.04510",
+      "arxiv_version_used_for_bibliographic_identity": "v3",
+      "journal": "Astrophysical Journal Letters 934, L7 (2022)",
+      "doi": "10.3847/2041-8213/ac5c5b",
+      "reported_H0_km_s_Mpc": 73.04,
+      "reported_sigma_km_s_Mpc": 1.04,
+      "confidence_context": "baseline Cepheid-SN result including systematics",
+      "model_condition": "local distance-ladder baseline measurement",
+      "repository_use": "Gaussian compressed sensitivity prior; not a reproduced full distance-ladder likelihood",
+      "full_likelihood_reproduced_by_this_receipt": false
+    }
+  },
+  "matrix_mapping": [
+    {
+      "run_id": "h0_planck_prior__rd_fixed_for_all",
+      "source": "Planck2018",
+      "matrix_mean": 67.4,
+      "matrix_sigma": 0.5,
+      "exact_numeric_match": true
+    },
+    {
+      "run_id": "h0_planck_prior__rd_derived_for_all",
+      "source": "Planck2018",
+      "matrix_mean": 67.4,
+      "matrix_sigma": 0.5,
+      "exact_numeric_match": true
+    },
+    {
+      "run_id": "h0_shoes_local_prior__rd_fixed_for_all",
+      "source": "SH0ES_local_distance_ladder",
+      "matrix_mean": 73.04,
+      "matrix_sigma": 1.04,
+      "exact_numeric_match": true
+    },
+    {
+      "run_id": "h0_shoes_local_prior__rd_derived_for_all",
+      "source": "SH0ES_local_distance_ladder",
+      "matrix_mean": 73.04,
+      "matrix_sigma": 1.04,
+      "exact_numeric_match": true
+    }
+  ],
+  "boundaries": {
+    "primary_source_identifiers_frozen": true,
+    "matrix_numeric_mapping_verified": true,
+    "planck_H0_is_model_conditioned": true,
+    "planck_H0_is_independent_of_existing_planck_shift_term": false,
+    "shoes_value_is_used_as_compressed_gaussian_not_full_likelihood": true,
+    "full_primary_likelihood_artifacts_vendored": false,
+    "h0_tension_claim_allowed": false
+  },
+  "resolves": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+  "resolved_fact": "The Planck2018 67.4 +/- 0.5 and SH0ES 73.04 +/- 1.04 numerical inputs used by the six-cell H0/r_d sensitivity matrix are now mapped to their primary papers with DOI/arXiv authority and exact run-level numeric matching. This resolves numeric primary-source provenance only; it does not turn either Gaussian into an independently reproduced full likelihood.",
+  "F_ok": [
+    "Both non-broad H0 Gaussian inputs have primary-paper identifiers and exact numerical mapping.",
+    "Planck model-conditioning and overlap with the existing Planck CMB-shift term remain explicit.",
+    "SH0ES Gaussian compression is not mislabeled as a reproduced full distance-ladder likelihood."
+  ],
+  "F_gap": [
+    "Full external likelihood reproduction is outside this provenance receipt.",
+    "Full-Boltzmann r_d integration remains a separate open token."
+  ],
+  "F_next": [
+    "Use this receipt as the authority for H0 prior provenance in the append-only TOKEN_VAZIO reconciliation.",
+    "Do not promote H0-tension claims from the 6x4 sensitivity matrix."
+  ]
+}

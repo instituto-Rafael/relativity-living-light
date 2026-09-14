@@ -1,0 +1,85 @@
+{
+  "schema": "rll.token_vazio_closure_overrides.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Preserve the 2026-08-07 V1 override ledger and apply only newer evidence from merged ACT DR6 materialization, merged CLASS/CAMB r_drag crosscheck, and the complete 599-ref topology census stacked on the post-merge governance hotfix.",
+  "overrides": [
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
+      "priority": "P1",
+      "target_state": "RESOLVED",
+      "classification": "PINNED_ACT_DR6_MATERIALIZATION_AND_REFERENCE_PREDICATE_VERIFIED",
+      "evidence_path": "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_PINNED_UPSTREAM_REFERENCE_PREDICATE"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "upstream_tests.tests", "op": "eq", "value": 5},
+        {"path": "upstream_tests.failures", "op": "eq", "value": 0},
+        {"path": "reference_likelihood.upstream_predicate_pass_ACT_TTTEEE", "op": "eq", "value": true},
+        {"path": "reference_likelihood.upstream_predicate_pass_ACT_PlanckActCut", "op": "eq", "value": true},
+        {"path": "boundary.posterior_chain_reproduced", "op": "eq", "value": false},
+        {"path": "boundary.rll_cmb_validated", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "Pinned ACT DR6 CMB-only data/code materialization, exact effective historical CAMB authority, five upstream tests, and the two executable upstream reference predicates were reproduced. The ACT+Planck strict absolute-only 0.01 residual remains visible; posterior-chain and RLL CMB claims remain unverified.",
+      "successors": ["TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+      "priority": "P1",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "PINNED_ACT_DR6_LCDM_POSTERIOR_CHAIN_REQUIRED",
+      "next_action": "Run a frozen LCDM posterior-chain reproduction with the verified ACT DR6 likelihood/runtime, explicit priors, sampler/version/seed policy, convergence diagnostics and posterior summary. Do not reinterpret this as an RLL CMB test."
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION",
+      "priority": "P1",
+      "target_state": "REDUCED",
+      "classification": "CLASS_CAMB_RDRAG_VERIFIED_INFERENCE_INTEGRATION_REMAINS",
+      "evidence_path": "artifacts/science/h0/RLL_H0_RD_BOLTZMANN_RECONCILIATION_20260808_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_BASELINE_RDRAG_CROSSCHECK_INFERENCE_NOT_INTEGRATED"},
+        {"path": "source_workflows.0.conclusion", "op": "eq", "value": "success"},
+        {"path": "source_workflows.1.conclusion", "op": "eq", "value": "success"},
+        {"path": "cross_engine.lcdm.pass", "op": "eq", "value": true},
+        {"path": "cross_engine.cpl.pass", "op": "eq", "value": true},
+        {"path": "boundary.class_camb_rdrag_crosscheck_verified", "op": "eq", "value": true},
+        {"path": "boundary.formal_h0_rd_inference_uses_full_boltzmann_rdrag", "op": "eq", "value": false},
+        {"path": "boundary.rll_perturbations_validated", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "CLASS and CAMB agree on standard-model r_drag at about 3.4e-5 relative error for the declared LCDM/CPL vectors. The repository lightweight r_d approximation is about 0.596-0.599% high at those tested vectors. Full-Boltzmann r_drag is therefore cross-checked, but the formal H0/r_d inference route still uses the approximation.",
+      "successors": ["TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "priority": "P1",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "FULL_BOLTZMANN_RDRAG_INFERENCE_PATH_REQUIRED",
+      "next_action": "Integrate a validated CLASS/CAMB-backed or prevalidated grid/cache r_drag route into the formal 6x4 H0/r_d inference, record interpolation/direct-solver error and compute cost policy, then rerun all 24 cells with identical optimization/convergence gates."
+    },
+    {
+      "token": "TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS",
+      "priority": "P2",
+      "target_state": "REDUCED",
+      "classification": "CURRENT_599_REF_TOPOLOGY_COMPLETE_35_SEMANTIC_REVIEWS_REMAIN",
+      "evidence_path": "artifacts/audit/RLL_ALL_REFS_TOPOLOGY_RECONCILIATION_20260808_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_CURRENT_REF_TOPOLOGY_CENSUS"},
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "census.current_observed_ref_count", "op": "eq", "value": 599},
+        {"path": "census.historical_denominator_matches_current", "op": "eq", "value": false},
+        {"path": "census.topology_classified_count", "op": "eq", "value": 599},
+        {"path": "census.anonymous_remainder", "op": "eq", "value": 0},
+        {"path": "census.semantic_review_required_count", "op": "eq", "value": 35},
+        {"path": "boundary.semantic_value_of_diverged_refs_classified", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The historical label '582 refs' is stale: the fresh census observed 599 refs and topologically classified 599/599 with zero anonymous remainder. 563 are ancestors of main with ahead=0, one is identical, and 35 are diverged. Only those 35 require semantic/patch review; divergence is not itself technical progress.",
+      "successors": ["TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW"]
+    },
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "priority": "P2",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "THIRTY_FIVE_DIVERGED_REFS_REQUIRE_PATCH_SEMANTIC_REVIEW",
+      "next_action": "For the 35 diverged refs, compute merge-base, git cherry/patch-equivalence, unique patch counts and changed-file categories; only truly unique patches proceed to manual technical-value review or forward-port."
+    }
+  ]
+}

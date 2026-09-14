@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "cycle_id": "rll-infinity-cycle-20260717-001",
+  "infinity_classes": [
+    "infinity_math",
+    "infinity_potential",
+    "infinity_computational",
+    "infinity_evolutionary",
+    "TOKEN_VAZIO"
+  ],
+  "execution_scope": {
+    "mode": "finite_budgeted",
+    "max_iterations": 100,
+    "timeout_seconds": 60.0,
+    "convergence_tolerance": 0.000001,
+    "novelty_floor": 0.001,
+    "evidence_floor": 0.5,
+    "max_duplication_ratio": 0.95,
+    "max_unresolved_contradictions": 0
+  },
+  "observations": [
+    {
+      "iteration": 0,
+      "state_digest": "8e0cc045a59d4a25176d7c1c4bd306c78dded4d9f5c6d3f3c2c6e608680bf367",
+      "novelty": 0.74,
+      "evidence_strength": 0.62,
+      "duplication_ratio": 0.08,
+      "unresolved_contradictions": 0,
+      "elapsed_seconds": 0.8,
+      "objective_value": 1.0
+    },
+    {
+      "iteration": 1,
+      "state_digest": "d52c6b6004c441a5ec1a0c6005f41ec1d37d1d5d70a75c3fa30130c55a42a918",
+      "novelty": 0.31,
+      "evidence_strength": 0.71,
+      "duplication_ratio": 0.14,
+      "unresolved_contradictions": 0,
+      "elapsed_seconds": 1.6,
+      "objective_value": 0.83
+    }
+  ],
+  "decision": "continue",
+  "claim_allowed": false,
+  "claim_boundary": "This artifact proves only that a finite guarded cycle was recorded. It does not prove an infinite physical universe, unlimited computation, open-ended intelligence or RLL cosmological validity.",
+  "blocked_claims": [
+    "A finite iteration proves that the physical universe is infinite.",
+    "Recursion without termination proves scientific evolution.",
+    "Internal novelty scores establish external scientific truth.",
+    "TOKEN_VAZIO is evidence for the missing hypothesis."
+  ],
+  "next_gate": "Run independent scientific validation against versioned data, baselines and falsifiers; preserve TOKEN_VAZIO for any unmeasured physical claim."
+}

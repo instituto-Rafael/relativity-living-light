@@ -1,0 +1,66 @@
+{
+  "schema": "rll.h0_rd_convergence_receipt.v1",
+  "state": "VERIFIED_ALL_24_BEST_FITS_CONVERGED",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_workflow": {
+    "name": "H0 rd Ablation Gate",
+    "run_id": 31229739077,
+    "job_id": 93031061066,
+    "conclusion": "success",
+    "head_sha": "d5d0d94412fc8fc9b1d44cfd22593f71abc8aa62"
+  },
+  "artifact": {
+    "id": 9013479443,
+    "name": "h0-rd-ablation-31229739077",
+    "digest": "sha256:df443ada1efb22a21778148f5d942e9f2cf4ece28527c16f3f8a32e8a1586e7c",
+    "retention_until": "2026-09-07T00:27:26Z"
+  },
+  "execution": {
+    "cells": 6,
+    "models_per_cell": 4,
+    "total_best_fits": 24,
+    "converged_best_fits": 24,
+    "all_best_fits_converged": true,
+    "runner_maxiter": 180,
+    "runner_ftol": 1e-9,
+    "source_json_sha256": "5f612b79fbb1813de48272fc60f47de935c7980630ed426cc6a7634dbd4de747"
+  },
+  "rll_minus_cpl_objective_delta": {
+    "h0_broad_free__rd_fixed_for_all": 22.69545107780087,
+    "h0_broad_free__rd_derived_for_all": 31.83103205142975,
+    "h0_planck_prior__rd_fixed_for_all": 22.513619036060334,
+    "h0_planck_prior__rd_derived_for_all": 33.11462532997594,
+    "h0_shoes_local_prior__rd_fixed_for_all": 23.8424072021336,
+    "h0_shoes_local_prior__rd_derived_for_all": 34.78922603526921,
+    "minimum": 22.513619036060334,
+    "maximum": 34.78922603526921
+  },
+  "epistemic_boundary": {
+    "optimization_convergence_closed": true,
+    "planck_h0_independent_of_existing_planck_cmb_shift": false,
+    "primary_external_h0_source_receipts_frozen": false,
+    "derived_rd_is_full_boltzmann_recombination_solution": false,
+    "h0_tension_resolution_claim_allowed": false,
+    "model_evidence_claim_allowed_from_this_receipt": false
+  },
+  "resolves_token": "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+  "remaining_successors": [
+    "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+    "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+  ],
+  "F_ok": [
+    "All 6 H0/r_d policy cells were executed.",
+    "All 24 selected best fits report formal optimizer convergence.",
+    "The gate remained claim_allowed=false and publication_ready=false.",
+    "RLL-minus-CPL objective deltas are positive in all six sensitivity cells."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+    "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+  ],
+  "F_next": [
+    "Freeze/hash primary Planck 2018 and SH0ES/Riess 2022 source authority for the exact H0 conditioning values.",
+    "Replace the approximate derived r_d route with a pinned full Boltzmann/recombination calculation before formal H0/r_d inference."
+  ]
+}

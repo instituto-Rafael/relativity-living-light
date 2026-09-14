@@ -94,7 +94,16 @@ tol = valor padrão ou registrado explicitamente
 modelos = LCDM, wCDM, CPL/w0waCDM, RLL
 ```
 
-Modelo de execução:
+Modelo de execução via wrapper seguro (recomendado):
+
+```bash
+python scripts/run_structure_d_robust_fit_matrix.py \
+  --seeds 1,2,3,4,5,6,7,8,9,10 \
+  --maxiter 100 \
+  --existing-output-policy fail
+```
+
+Ou via variável de ambiente (pipeline direto):
 
 ```bash
 for seed in 1 2 3 4 5 6 7 8 9 10; do
@@ -105,7 +114,7 @@ for seed in 1 2 3 4 5 6 7 8 9 10; do
 done
 ```
 
-> Se o script ainda não suportar `STRUCTURE_D_JOINT_OUTPUT_STEM`, criar wrapper ou ajustar o pipeline em PR separado. Não sobrescrever o JSON canônico.
+> O suporte a `STRUCTURE_D_JOINT_OUTPUT_STEM` está implementado em `data/pipelines/structure_d/joint_real_likelihood.py` e `scripts/run_structure_d_joint_likelihood.py`. Stems canônicos são bloqueados pelo plan validator.
 
 ---
 
@@ -217,7 +226,7 @@ claim_allowed = false
 ## 10. R3
 
 ```text
-F_ok   = checklist robust fit definido; métricas e gates explícitos.
-F_gap  = execução robusta ainda não materializada; suporte a output_stem precisa ser verificado no script.
-F_next = criar ledger de claim gate para consolidar permissões/proibições científicas.
+F_ok   = checklist robust fit definido; métricas e gates explícitos; suporte a output_stem verificado.
+F_gap  = execução robusta ainda não materializada; bateria seeds 1..10 ainda pendente.
+F_next = executar bateria seeds 1..10 com stems versionados usando scripts/run_structure_d_robust_fit_matrix.py.
 ```

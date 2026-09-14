@@ -1,0 +1,40 @@
+{
+  "schema": "rll.publication_boundary.v1",
+  "claim_allowed": false,
+  "authority": {
+    "raw_private_corpus": "PRIVATE_DRIVE_AUTHORITY",
+    "public_repository": "CURATED_EXECUTABLE_MIRROR"
+  },
+  "allow_categories": [
+    "source_code_without_embedded_credentials",
+    "schemas",
+    "tests_and_synthetic_fixtures_marked_as_synthetic",
+    "documentation",
+    "hash_only_receipts",
+    "claim_bounded_scientific_results"
+  ],
+  "deny_globs": [
+    "*.jks",
+    "*.keystore",
+    "*.p12",
+    "*.pfx",
+    "*.pem",
+    "*.key",
+    ".env",
+    ".env.*",
+    "**/conversations*.json",
+    "**/*PRIVATE_CORPUS*",
+    "**/*raw_longitudinal_memory*"
+  ],
+  "observed_repository_search": {
+    "debug_keystore": "NOT_OBSERVED",
+    "release_key_jks": "NOT_OBSERVED",
+    "scope": "GitHub indexed repository search on 2026-08-06",
+    "not_a_permanent_guarantee": true
+  },
+  "invariants": [
+    "absence_in_search_is_not_proof_of_permanent_absence",
+    "secret_bytes_must_never_be_replaced_by_placeholders_in_history",
+    "public_mirror_never_becomes_raw_private_authority"
+  ]
+}

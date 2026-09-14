@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.example/schemas/rll-evidence-receipt-v1.json",
+  "title": "RLL Evidence Receipt V1",
+  "type": "object",
+  "required": ["schema", "experiment_id", "experiment_sha256", "inputs", "steps", "decision", "semantic_sha256", "receipt_sha256", "claim_allowed"],
+  "properties": {
+    "schema": {"const": "rll_evidence_receipt_v1"},
+    "experiment_id": {"type": "string"},
+    "experiment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semantic_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "claim_allowed": {"const": false},
+    "decision": {
+      "type": "object",
+      "required": ["state", "claim_allowed", "publication_effect"],
+      "properties": {
+        "state": {"enum": ["VERIFIED_LIMITED", "TOKEN_VAZIO_REQUIRED_INPUT", "TOKEN_VAZIO_RESULT", "BLOCKED_EXECUTION"]},
+        "claim_allowed": {"const": false},
+        "publication_effect": {"const": "NONE"}
+      }
+    }
+  }
+}

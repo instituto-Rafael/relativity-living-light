@@ -1,0 +1,49 @@
+name: Scientific Cycle Closure
+
+on:
+  pull_request:
+    paths:
+      - "scripts/close_scientific_cycle.py"
+      - "tests/test_close_scientific_cycle.py"
+      - ".github/workflows/scientific-cycle-closure.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  closure-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+      - name: Contract tests
+        run: python -m pytest -q tests/test_close_scientific_cycle.py
+      - name: Materialize expected blocked receipt
+        shell: bash
+        run: |
+          mkdir -p artifacts/scientific-cycle
+          set +e
+          python scripts/close_scientific_cycle.py \
+            --bayes-status artifacts/scientific-cycle/missing-bayes.json \
+            --replication-receipt artifacts/scientific-cycle/missing-replication.json \
+            --output artifacts/scientific-cycle/closure-receipt.json
+          rc=$?
+          set -e
+          test "$rc" -eq 3
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          value = json.loads(Path('artifacts/scientific-cycle/closure-receipt.json').read_text())
+          assert value['scientific_gate'] == 'BLOCKED'
+          assert value['claim_allowed'] is False
+          assert len(value['token_vazio']) == 2
+          PY
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: scientific-cycle-closure-receipt
+          path: artifacts/scientific-cycle/closure-receipt.json

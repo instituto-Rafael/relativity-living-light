@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "script": "compute_moresco_hz_chi2.py",
+    "dataset": "/workspace/rll-work/data/real/Hz_data_real.csv",
+    "n_points": 33,
+    "gap_closed": "Moresco H(z) 2023 — TOKEN_VAZIO P2 em 08_ARVORE_CONCEITUAL_RLL.md Nível 3",
+    "params": {
+      "H0": 67.4,
+      "Omega_m": 0.315,
+      "Omega_s0_rll": 0.02,
+      "z_t": 1.0,
+      "w_t": 0.3,
+      "note": "parâmetros nominais não otimizados para H(z); resultado comparativo, não MCMC"
+    }
+  },
+  "rll": {
+    "chi2": 27.4651,
+    "k_params": 5,
+    "dof": 28,
+    "chi2_red": 0.9809,
+    "aic": 37.4651
+  },
+  "lcdm": {
+    "chi2": 22.7641,
+    "k_params": 2,
+    "dof": 31,
+    "chi2_red": 0.7343,
+    "aic": 26.7641
+  },
+  "comparison": {
+    "delta_chi2_rll_minus_lcdm": 4.7009,
+    "delta_aic_rll_minus_lcdm": 10.7009,
+    "interpretation": "ΔAIC > 0: RLL penalizado por 3 parâmetros extras sem ganho em χ² com parâmetros nominais. Otimização de (H0, Om, Os0, zt, wt) sobre H(z) pode melhorar — aguarda MCMC joint G1."
+  },
+  "epistemic_status": "[E] resultado com parâmetros nominais Planck — gap P2 fechado (resultado disponível). [C] otimização livre pendente (MCMC G1).",
+  "residuals": [
+    {
+      "z": 0.07,
+      "H_obs": 69.0,
+      "sigma": 19.6,
+      "H_rll": 69.754,
+      "H_lcdm": 69.748,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.09,
+      "H_obs": 69.0,
+      "sigma": 12.0,
+      "H_rll": 70.471,
+      "H_lcdm": 70.462,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.12,
+      "H_obs": 68.6,
+      "sigma": 26.2,
+      "H_rll": 71.583,
+      "H_lcdm": 71.57,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.17,
+      "H_obs": 83.0,
+      "sigma": 8.0,
+      "H_rll": 73.532,
+      "H_lcdm": 73.51,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.179,
+      "H_obs": 75.0,
+      "sigma": 4.0,
+      "H_rll": 73.895,
+      "H_lcdm": 73.871,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.199,
+      "H_obs": 75.0,
+      "sigma": 5.0,
+      "H_rll": 74.717,
+      "H_lcdm": 74.688,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.2,
+      "H_obs": 72.9,
+      "sigma": 29.6,
+      "H_rll": 74.758,
+      "H_lcdm": 74.73,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.27,
+      "H_obs": 77.0,
+      "sigma": 14.0,
+      "H_rll": 77.786,
+      "H_lcdm": 77.737,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.28,
+      "H_obs": 88.8,
+      "sigma": 36.6,
+      "H_rll": 78.237,
+      "H_lcdm": 78.184,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.352,
+      "H_obs": 83.0,
+      "sigma": 14.0,
+      "H_rll": 81.621,
+      "H_lcdm": 81.536,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.38,
+      "H_obs": 83.0,
+      "sigma": 13.5,
+      "H_rll": 83.001,
+      "H_lcdm": 82.9,
+      "source": "CC+BAO_BOSS"
+    },
+    {
+      "z": 0.4,
+      "H_obs": 95.0,
+      "sigma": 17.0,
+      "H_rll": 84.007,
+      "H_lcdm": 83.895,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.44,
+      "H_obs": 82.6,
+      "sigma": 7.8,
+      "H_rll": 86.074,
+      "H_lcdm": 85.934,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.48,
+      "H_obs": 97.0,
+      "sigma": 62.0,
+      "H_rll": 88.212,
+      "H_lcdm": 88.038,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.51,
+      "H_obs": 90.4,
+      "sigma": 1.9,
+      "H_rll": 89.86,
+      "H_lcdm": 89.658,
+      "source": "CC+BAO_BOSS"
+    },
+    {
+      "z": 0.57,
+      "H_obs": 96.8,
+      "sigma": 3.4,
+      "H_rll": 93.272,
+      "H_lcdm": 93.003,
+      "source": "CC+BAO_BOSS"
+    },
+    {
+      "z": 0.593,
+      "H_obs": 104.0,
+      "sigma": 13.0,
+      "H_rll": 94.621,
+      "H_lcdm": 94.321,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.6,
+      "H_obs": 87.9,
+      "sigma": 6.1,
+      "H_rll": 95.035,
+      "H_lcdm": 94.726,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.61,
+      "H_obs": 97.3,
+      "sigma": 2.1,
+      "H_rll": 95.631,
+      "H_lcdm": 95.308,
+      "source": "CC+BAO_BOSS"
+    },
+    {
+      "z": 0.68,
+      "H_obs": 92.0,
+      "sigma": 8.0,
+      "H_rll": 99.92,
+      "H_lcdm": 99.483,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.73,
+      "H_obs": 97.3,
+      "sigma": 7.0,
+      "H_rll": 103.105,
+      "H_lcdm": 102.572,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.781,
+      "H_obs": 105.0,
+      "sigma": 12.0,
+      "H_rll": 106.457,
+      "H_lcdm": 105.81,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.875,
+      "H_obs": 125.0,
+      "sigma": 17.0,
+      "H_rll": 112.9,
+      "H_lcdm": 112.002,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.88,
+      "H_obs": 90.0,
+      "sigma": 40.0,
+      "H_rll": 113.252,
+      "H_lcdm": 112.339,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 0.9,
+      "H_obs": 117.0,
+      "sigma": 23.0,
+      "H_rll": 114.669,
+      "H_lcdm": 113.696,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.037,
+      "H_obs": 154.0,
+      "sigma": 20.0,
+      "H_rll": 124.764,
+      "H_lcdm": 123.316,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.3,
+      "H_obs": 168.0,
+      "sigma": 17.0,
+      "H_rll": 145.822,
+      "H_lcdm": 143.256,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.363,
+      "H_obs": 160.0,
+      "sigma": 33.6,
+      "H_rll": 151.149,
+      "H_lcdm": 148.299,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.43,
+      "H_obs": 177.0,
+      "sigma": 18.0,
+      "H_rll": 156.92,
+      "H_lcdm": 153.768,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.53,
+      "H_obs": 140.0,
+      "sigma": 14.0,
+      "H_rll": 165.724,
+      "H_lcdm": 162.127,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.75,
+      "H_obs": 202.0,
+      "sigma": 40.0,
+      "H_rll": 185.832,
+      "H_lcdm": 181.305,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 1.965,
+      "H_obs": 186.5,
+      "sigma": 50.4,
+      "H_rll": 206.4,
+      "H_lcdm": 201.026,
+      "source": "CC_Moresco2022"
+    },
+    {
+      "z": 2.34,
+      "H_obs": 222.0,
+      "sigma": 7.0,
+      "H_rll": 244.308,
+      "H_lcdm": 237.548,
+      "source": "BAO_Lya"
+    }
+  ]
+}

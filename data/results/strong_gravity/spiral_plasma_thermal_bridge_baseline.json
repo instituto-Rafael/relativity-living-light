@@ -1,0 +1,74 @@
+{
+  "article_reference_conversions": {
+    "144_khz_photon_energy_ev": 5.95536148224e-10,
+    "288_khz_photon_energy_ev": 1.191072296448e-09,
+    "3.2_meV_hz": 773756557640.0217,
+    "5.1_meV_hz": 1233174513738.7844
+  },
+  "claim_allowed": false,
+  "input_kind": "synthetic_deterministic_benchmark",
+  "inputs": {
+    "fundamental": {
+      "electric_field_v_m": 120.0,
+      "frequency_hz": 144000.0,
+      "phase_rad": 0.0
+    },
+    "grad_density_m4": [
+      1e+20,
+      0.0,
+      0.0
+    ],
+    "grad_temperature_k_m": [
+      0.0,
+      1000.0,
+      0.0
+    ],
+    "phi_rad": 1.0471975511965976,
+    "radius0_m": 2.0,
+    "second_harmonic": {
+      "electric_field_v_m": 60.0,
+      "frequency_hz": 288000.0,
+      "phase_rad": 0.7853981633974483
+    },
+    "state": {
+      "effective_collision_hz": 2000000.0,
+      "electron_density_m3": 1e+18,
+      "electron_temperature_k": 20000.0,
+      "ionization_fraction": 0.35,
+      "magnetic_field_t": 0.002
+    },
+    "thermal_budget": {
+      "compression_w_m3": 75.0,
+      "cooling_w_m3": 30.0,
+      "gravity_w_m3": 0.0,
+      "heat_capacity_j_m3_k": 20.0,
+      "nonlinear_mixing_w_m3": 0.0,
+      "outflow_w_m3": 5.0,
+      "radiation_absorption_w_m3": 10.0,
+      "reconnection_w_m3": 25.0
+    }
+  },
+  "result": {
+    "biermann_source_t_s": 8.617333262145177,
+    "claim_allowed": false,
+    "claim_boundary": "Deterministic model output only; no laboratory, astrophysical, exoplanetary or cosmological claim is promoted.",
+    "conductivity_tensor": {
+      "hall_s_m": 80.10624215440075,
+      "magnetization_beta": 175.8820010772163,
+      "parallel_s_m": 14089.701623353938,
+      "pedersen_s_m": 0.4554544618765864
+    },
+    "q_rf_144_w_m3": 84211461.07030866,
+    "q_rf_288_w_m3": 13945409.498246867,
+    "sigma_real_144_s_m": 11696.036259765091,
+    "sigma_real_288_s_m": 7747.449721248259,
+    "spiral_radius_m": 1.7320508075688772,
+    "temperature_rate_k_s": 4907847.278427776
+  },
+  "schema": "rll.strong_gravity.spiral_plasma_thermal_bridge.baseline.v1",
+  "tests_local": {
+    "command": "python tests/strong_gravity/test_spiral_plasma_thermal_bridge.py",
+    "count": 12,
+    "status": "PASS"
+  }
+}

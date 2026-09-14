@@ -1,0 +1,54 @@
+{
+  "schema": "rll.mathematics-registry-adapter-emulation.v1",
+  "generated_at": "2026-07-27T04:26:51.107503Z",
+  "mode": "LOCAL_DETERMINISTIC_EMULATION",
+  "status": "PASS_EMULATED",
+  "producer": {
+    "repository": "rafaelmeloreisnovo/Matem-tica-",
+    "commit": "34b7c638bd17997572b1fd6736b54c91b6d076f2",
+    "registry_blob_sha": "3063fb66016b54081f202f3b8b6e0df212f7f269",
+    "pull_request": 7
+  },
+  "consumer": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "module": "src/rll/mathematics_registry_adapter.py"
+  },
+  "summary": {
+    "status": "PASS_EMULATED_CONTRACT",
+    "artifact_count": 4,
+    "classification_counts": {
+      "CONTEXT_ONLY_TOKEN_VAZIO": 1,
+      "MATHEMATICAL_ONLY": 1,
+      "MODEL_OR_DETERMINISTIC_ONLY": 1,
+      "OBSERVATIONAL_INFERENCE_READY": 1
+    },
+    "vector_state_counts": {
+      "COUPLED_POSTERIOR_MEAN_VECTOR": 1,
+      "TOKEN_VAZIO_UNCOUPLED_VECTOR": 3
+    },
+    "registry_sha256": "d0ed02e4c325fe75205ff0290df746d50108217928ca11176f4f1e511a83f7ac",
+    "claim_allowed": false,
+    "physical_promotion_performed": false
+  },
+  "errors": [],
+  "negative_controls": {
+    "zero_as_unknown_blocked": true,
+    "synthetic_as_observational_blocked": true,
+    "coupled_vector_without_source_blocked": true,
+    "claim_allowed_true_blocked": true,
+    "wrong_commit_pin_blocked": true
+  },
+  "boundaries": {
+    "real_datasets_downloaded_in_emulation": false,
+    "mcmc_reexecuted": false,
+    "laboratory_measurement_ingested": false,
+    "physical_claim_promoted": false,
+    "claim_allowed": false
+  },
+  "remaining_states": {
+    "omega_cube_physical": "TOKEN_VAZIO",
+    "dha_experimental": "TOKEN_VAZIO",
+    "t7_physical_mapping": "TOKEN_VAZIO",
+    "plasma_144_288khz_laboratory": "TOKEN_VAZIO"
+  }
+}

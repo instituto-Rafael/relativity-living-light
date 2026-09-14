@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/governance/rll-module-contract.schema.json",
+  "title": "RLL Governed Module Contract",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "module_id", "version", "title", "domains", "state", "scope",
+    "epistemic_status", "claim_allowed", "certification_claim", "evidence",
+    "data_governance", "security", "quality", "risks", "rollback",
+    "f_ok", "f_gap", "f_next"
+  ],
+  "properties": {
+    "module_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+    "version": {"type": "string"},
+    "title": {"type": "string", "minLength": 3},
+    "domains": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "state": {"enum": ["DESIGN", "ARCHITECTURE_READY", "IMPLEMENTED", "VALIDATED", "OPERATIONAL", "SUSPENDED", "DEPRECATED"]},
+    "scope": {"type": "string", "minLength": 10},
+    "epistemic_status": {"enum": ["PROVADO", "EVIDENCIADO", "HIPOTESE", "MODELO_ANALOGICO", "PARABOLA", "REFUTADO_COMO_ESCRITO", "TOKEN_VAZIO"]},
+    "claim_allowed": {"type": "boolean"},
+    "certification_claim": {"const": false},
+    "evidence": {
+      "type": "object",
+      "required": ["receipts", "tests", "sources", "limitations"],
+      "properties": {
+        "receipts": {"type": "array"},
+        "tests": {"type": "array"},
+        "sources": {"type": "array"},
+        "limitations": {"type": "array", "minItems": 1}
+      }
+    },
+    "data_governance": {
+      "type": "object",
+      "required": ["classification", "required_metadata", "retention", "update_policy", "legal_applicability"],
+      "properties": {
+        "classification": {"type": "string"},
+        "required_metadata": {"type": "array", "minItems": 9, "uniqueItems": true},
+        "retention": {"type": "string"},
+        "update_policy": {"type": "string"},
+        "legal_applicability": {"type": "string"}
+      }
+    },
+    "security": {
+      "type": "object",
+      "required": ["least_privilege", "secrets", "integrity", "incident_record"],
+      "properties": {
+        "least_privilege": {"type": "boolean"},
+        "secrets": {"type": "string"},
+        "integrity": {"type": "array", "minItems": 1},
+        "incident_record": {"type": "string"}
+      }
+    },
+    "quality": {
+      "type": "object",
+      "required": ["metrics", "acceptance_criteria", "rejection_criteria", "change_control"],
+      "properties": {
+        "metrics": {"type": "array", "minItems": 1},
+        "acceptance_criteria": {"type": "array", "minItems": 1},
+        "rejection_criteria": {"type": "array", "minItems": 1},
+        "change_control": {"type": "string"}
+      }
+    },
+    "risks": {"type": "array", "minItems": 1},
+    "rollback": {"type": "object", "required": ["trigger", "procedure", "verification"]},
+    "f_ok": {"type": "array"},
+    "f_gap": {"type": "array"},
+    "f_next": {"type": "array", "minItems": 1}
+  }
+}

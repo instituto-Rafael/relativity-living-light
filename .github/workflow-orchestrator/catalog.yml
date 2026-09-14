@@ -1,0 +1,96 @@
+schema: rll.workflow_orchestrator.catalog.v1
+profiles:
+  full_session:
+    description: "Run the full cross-workflow session orchestration."
+    include_tags: [core, validation, real_data, science, artifacts]
+  quick_session:
+    description: "Run a compact interoperability session."
+    include_tags: [core, validation]
+  real_data_session:
+    description: "Run only real-data related workflows."
+    include_tags: [real_data, validation]
+
+workflows:
+  - id: yml_syntax_validation
+    file: yml-syntax-validation.yml
+    stage: 10
+    enabled: true
+    tags: [core, validation]
+    wait_for_completion: true
+    timeout_minutes: 20
+
+  - id: start_manual_interop
+    file: START_MANUAL_HERE.yml
+    stage: 20
+    enabled: true
+    tags: [core, validation]
+    wait_for_completion: true
+    timeout_minutes: 45
+    inputs:
+      run_profile: full_validation
+      pipeline_scope: all
+      dataset_group: all
+      book_scope: all
+      mode: metadata_only
+      real_data_source: auto
+      validate_workflows: true
+      validate_data_yml: true
+      run_data_preparation_probe: true
+      strict_mode: true
+
+  - id: real_data_complete_execution
+    file: real-data-complete-execution.yml
+    stage: 30
+    enabled: true
+    tags: [real_data, validation]
+    wait_for_completion: true
+    timeout_minutes: 60
+    inputs:
+      execution_mode: audit_only
+      materialize_pantheon: false
+      run_structure_d: false
+      run_pantheon_validation: false
+      strict_real_data: true
+      retention_days: "14"
+
+  - id: rll_real_data_orchestrator
+    file: rll-real-data-orchestrator.yml
+    stage: 40
+    enabled: true
+    tags: [real_data, science]
+    wait_for_completion: true
+    timeout_minutes: 60
+    inputs:
+      pipeline_scope: all
+      dataset_group: all
+      mode: metadata_only
+      real_data_source: auto
+      book_scope: all
+      retention_days: "14"
+      fetch_igrf14: false
+      fetch_wmm2025: false
+      fetch_omni: false
+      fetch_nmdb: false
+      fetch_desi: false
+      fetch_pantheon: false
+      fetch_planck: false
+      fetch_spenvis_reference: false
+      run_iml: true
+      run_formulas: true
+      run_plots: false
+
+  - id: formulas_artifacts
+    file: formulas-artifacts.yml
+    stage: 50
+    enabled: true
+    tags: [science, artifacts]
+    wait_for_completion: true
+    timeout_minutes: 30
+
+  - id: iml_artifact
+    file: iml_artifact.yml
+    stage: 60
+    enabled: true
+    tags: [science, artifacts]
+    wait_for_completion: true
+    timeout_minutes: 30

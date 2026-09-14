@@ -1,0 +1,40 @@
+{
+  "fixture": true,
+  "fixture_notice": "Synthetic ORCID-format record for offline tests only; it is not a claim about a real person.",
+  "orcid-identifier": {
+    "path": "0000-0000-0000-001X",
+    "uri": "https://orcid.org/0000-0000-0000-001X"
+  },
+  "activities-summary": {
+    "works": {
+      "group": [
+        {
+          "work-summary": [
+            {
+              "put-code": 42,
+              "title": {"title": {"value": "Relativity Living Light: cosmological model with dynamic dark energy"}},
+              "publication-date": {"year": {"value": "2025"}},
+              "type": "journal-article",
+              "journal-title": {"value": "RLL Research Artifacts"},
+              "external-ids": {"external-id": [{"external-id-type": "doi", "external-id-value": "10.5281/zenodo.17188137", "external-id-relationship": "self"}]},
+              "url": {"value": "https://doi.org/10.5281/zenodo.17188137"},
+              "source": {"source-name": {"value": "Synthetic Fixture"}}
+            }
+          ]
+        },
+        {
+          "work-summary": [
+            {
+              "put-code": 43,
+              "title": {"title": {"value": "Quantum tensor geometry and biological signal physiology"}},
+              "publication-date": {"year": {"value": "2026"}},
+              "type": "preprint",
+              "external-ids": {"external-id": []},
+              "source": {"source-name": {"value": "Synthetic Fixture"}}
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

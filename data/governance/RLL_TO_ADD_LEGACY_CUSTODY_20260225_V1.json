@@ -1,0 +1,58 @@
+{
+  "schema": "rll.to_add_legacy_custody.v1",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "historical_date": "2026-02-25",
+  "source_branches": [
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory",
+      "head": "30bd119113370b453041daf7f99580267a3f1c02",
+      "pr": 58,
+      "pr_state": "CLOSED_UNMERGED",
+      "hash_manifest_present": true
+    },
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory-gbea3l",
+      "head": "b7e02c815529939082ded34ce62112d36bf2c8b1",
+      "pr": 57,
+      "pr_state": "CLOSED_UNMERGED",
+      "hash_manifest_present": true
+    },
+    {
+      "ref": "codex/create-mapping-table-for-to_add-directory-l6eilf",
+      "head": "eb1609fbf2ec72db2512329ec7e19e2a3efe9ca3",
+      "pr": 55,
+      "pr_state": "CLOSED_UNMERGED",
+      "hash_manifest_present": false
+    }
+  ],
+  "observed_hashes": [
+    {"artifact": "to_Add/ESQUEMA_DE_MAPEAMENTO_COMPILADOR_RLL_OMEGA.md", "sha256": "9a4d5713153b0e63099d7974ca97709e46647e36714048261370710ed371a54f"},
+    {"artifact": "to_Add/INTEGRACAO_RLL_KERNELS.md", "sha256": "0fb6a90c117b08da9b128a80670346492434796fcd3dc063a8180eb5e4f74dac"},
+    {"artifact": "to_Add/MANIFESTO_DO_COMPILADOR_RLL_OMEGA.md", "sha256": "1331cce1fbd49e1923d7c79fbe6de0951231d5acc97e53b952280479f872527e"},
+    {"artifact": "to_Add/README.md", "sha256": "a6a09f0335901ab2072cc1bfa63bd1988931a0767c3465e49af1d8af2f15392e"},
+    {"artifact": "to_Add/RLL_OMEGA_COMPILER_SPEC.md", "sha256": "62db74aa908a1b463b77e0a70f230be159d0e60d52fc892c4ae96ed05031a411"},
+    {"artifact": "to_Add/RLL_OMEGA_MEMORY_MODEL.md", "sha256": "b6817ba874cf1ca797fb4af7844013946187177ab493f688beb469ebda6ebd5e"},
+    {"artifact": "to_Add/RLL_OMEGA_SAFETY_MODEL.md", "sha256": "35c8e4b38441032b372a89152ebd380607a11435280a796914e4e2d08d6b1217"},
+    {"artifact": "to_Add/RLL_OMEGA_SCHEDULER.md", "sha256": "a7872f8c34ed6b3a9a1696257a4522401788e24280647911036272673f77fd15"},
+    {"artifact": "to_Add/RLL_OMEGA_THREADS.md", "sha256": "6e09d990f18953b858934542883a8d7e9c56851141474a14ae811eaf0b92f909"}
+  ],
+  "comparison": {
+    "branch_58_and_57_hash_sets_identical": true,
+    "branch_55_adds_no_hash_authority": true,
+    "destructive_reorganization_authorized": false,
+    "reason": "All three historical PRs were closed without merge and proposed large deletions/reorganization. Only the non-destructive custody information is preserved here."
+  },
+  "state": "LEGACY_CUSTODY_PRESERVED_DESTRUCTIVE_MERGE_REJECTED",
+  "F_ok": [
+    "Nine historical SHA-256 values are preserved in the current audit chain.",
+    "Two independent branch variants carried the same hash set.",
+    "No historical deletion or directory rewrite is applied."
+  ],
+  "F_gap": [
+    "The original historical bytes are not re-hashed by this custody record; these are preserved historical observations from the closed PR branches."
+  ],
+  "F_next": [
+    "If original bytes are required for a future claim, materialize those bytes and independently recompute the hashes before promotion."
+  ]
+}

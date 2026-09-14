@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.invalid/schemas/rll_execution_queue_effective_v1.schema.json",
+  "title": "RLL Effective Execution Queue V1",
+  "description": "Structural contract for an append-only projection of the immutable RLL execution queue after strictly matching successor receipts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_from",
+    "repository",
+    "claim_allowed",
+    "invariants",
+    "applied_receipts",
+    "resolved",
+    "active_queue",
+    "next_ready",
+    "closure"
+  ],
+  "properties": {
+    "schema": {"const": "rll.execution_queue.effective.v1"},
+    "generated_from": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_queue_schema",
+        "source_queue_generated_at",
+        "source_main_commit",
+        "source_queue_sha256",
+        "latest_receipt_at"
+      ],
+      "properties": {
+        "source_queue_schema": {"const": "rll.execution_queue.v1"},
+        "source_queue_generated_at": {"type": "string", "format": "date-time"},
+        "source_main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "source_queue_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "latest_receipt_at": {
+          "anyOf": [
+            {"type": "string", "format": "date-time"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "repository": {"const": "instituto-Rafael/relativity-living-light"},
+    "claim_allowed": {"const": false},
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 5}
+    },
+    "applied_receipts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/applied_receipt"}
+    },
+    "resolved": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/resolved_item"}
+    },
+    "active_queue": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/active_item"}
+    },
+    "next_ready": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"}
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["F_ok", "F_gap", "F_next"],
+      "properties": {
+        "F_ok": {"type": "array", "items": {"type": "string", "minLength": 3}},
+        "F_gap": {"type": "array", "items": {"type": "string", "minLength": 3}},
+        "F_next": {"type": "string", "minLength": 5}
+      }
+    }
+  },
+  "$defs": {
+    "evidence_class": {"type": "string", "enum": ["E", "C", "H", "P"]},
+    "applied_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "schema", "generated_at", "sha256"],
+      "properties": {
+        "target_id": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"},
+        "schema": {"type": "string", "pattern": "^rll\\.[a-z0-9_]+_receipt\\.v1$"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "resolved_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "previous_state",
+        "previous_evidence_class",
+        "state",
+        "evidence_class",
+        "receipt_schema",
+        "receipt_generated_at",
+        "receipt_sha256",
+        "next_gate"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"},
+        "previous_state": {"type": "string", "minLength": 3},
+        "previous_evidence_class": {"$ref": "#/$defs/evidence_class"},
+        "state": {"type": "string", "minLength": 3},
+        "evidence_class": {"type": "string", "enum": ["E", "C"]},
+        "receipt_schema": {"type": "string", "pattern": "^rll\\.[a-z0-9_]+_receipt\\.v1$"},
+        "receipt_generated_at": {"type": "string", "format": "date-time"},
+        "receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "next_gate": {
+          "anyOf": [
+            {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "active_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "urgency",
+        "state",
+        "evidence_class",
+        "authority",
+        "depends_on",
+        "facts",
+        "gap",
+        "next_action",
+        "acceptance",
+        "must_not",
+        "original_depends_on",
+        "satisfied_dependencies",
+        "blocked_by",
+        "ready"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"},
+        "urgency": {"type": "string", "enum": ["P0", "P1", "P2"]},
+        "state": {"type": "string", "minLength": 5},
+        "evidence_class": {"$ref": "#/$defs/evidence_class"},
+        "authority": {"type": "string", "minLength": 3},
+        "depends_on": {"$ref": "#/$defs/dependency_array"},
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 10}
+        },
+        "gap": {"type": "string", "minLength": 10},
+        "next_action": {"type": "string", "minLength": 10},
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 5}
+        },
+        "must_not": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 5}
+        },
+        "original_depends_on": {"$ref": "#/$defs/dependency_array"},
+        "satisfied_dependencies": {"$ref": "#/$defs/dependency_array"},
+        "blocked_by": {"$ref": "#/$defs/dependency_array"},
+        "ready": {"type": "boolean"}
+      }
+    },
+    "dependency_array": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"}
+    }
+  }
+}

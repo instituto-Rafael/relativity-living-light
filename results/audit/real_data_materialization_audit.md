@@ -8,7 +8,7 @@ It does not rename synthetic fixtures as real data; it records an explicit route
 - Real replacements ready: 5
 - Real replacements missing: 0
 - Configured datasets without route: 0
-- Inventory-only filesystem markers: 15
+- Inventory-only filesystem markers: 20
 
 ## Failsafe / failover / rollback
 
@@ -22,7 +22,7 @@ It does not rename synthetic fixtures as real data; it records an explicit route
 | dataset_id | status | synthetic_path | real_replacement_id | real_path |
 | --- | --- | --- | --- | --- |
 | fsigma8 | real_replacement_ready | data/inputs/structure_d/fsigma8.csv | real_fsigma8 | data/real/cosmology/fsigma8_growth_real.csv |
-| fsigma8_cov_synth | real_replacement_ready | data/inputs/structure_d/fsigma8_cov.csv | real_fsigma8 | data/real/cosmology/fsigma8_growth_real.csv |
+| fsigma8_cov_synth | real_replacement_ready | data/synthetic/structure_d/fsigma8_cov.csv | real_fsigma8 | data/real/cosmology/fsigma8_growth_real.csv |
 | hz | real_replacement_ready | data/inputs/structure_d/Hz.csv | real_hz | data/real/Hz_data_real.csv |
-| hz_cov_synth | real_replacement_ready | data/inputs/structure_d/Hz_cov.csv | real_hz | data/real/Hz_data_real.csv |
+| hz_cov_synth | real_replacement_ready | data/synthetic/structure_d/Hz_cov.csv | real_hz | data/real/Hz_data_real.csv |
 | real_bao | real_replacement_ready | data/real/BAO_data_real.csv | real_desi_dr2_bao | data/real/cosmology/desi_dr2_bao_primary_points.csv |

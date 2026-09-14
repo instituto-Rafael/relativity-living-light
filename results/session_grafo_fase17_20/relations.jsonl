@@ -1,0 +1,46 @@
+{"from": "planck_2018_vi", "to": "rd_calibration", "edge_type": "SUPPORTS", "note": "rd=147.09 Mpc, Planck 2018 VI Tabela 2"}
+{"from": "planck_2018_vi", "to": "rs_star_calib", "edge_type": "SUPPORTS", "note": "rs*(z*)=144.511 Mpc; chi²_CMB parâmetros de calibração"}
+{"from": "eisenstein_hu_1998", "to": "eh_bias", "edge_type": "DERIVED_FROM", "note": "Fórmula Eq.4 para z_drag causa viés de +3.61 Mpc em rd"}
+{"from": "eh_bias", "to": "planck_2018_vi", "edge_type": "CONTRADICTS", "note": "z_drag_EH=1021 vs z_drag_Planck=1059; Δrd=+3.614 Mpc"}
+{"from": "chen_2019", "to": "rs_star_calib", "edge_type": "SUPPORTS", "note": "l_A=π×D_M(z*)/rs*(z*); fórmula correta para CMB shift parameter"}
+{"from": "cooke_2018", "to": "C-F18-01", "edge_type": "SUPPORTS", "note": "Prior BBN Ωb·h²=0.02236±0.00015 ancorando calibração"}
+{"from": "rll_fase18e_py", "to": "rs_star_calib", "edge_type": "IMPLEMENTS", "note": "_RS_STAR_CALIB_MPC aditivo em compute_sound_horizons"}
+{"from": "rll_fase19_py", "to": "rd_calibration", "edge_type": "IMPLEMENTS", "note": "_RD_CALIB_MPC=RD_PLANCK2018−rd_numerical_planck"}
+{"from": "rll_fase19_py", "to": "rs_star_calib", "edge_type": "IMPLEMENTS", "note": "Herda calibração de FASE 18-E"}
+{"from": "rll_fase20_py", "to": "rd_calibration", "edge_type": "USES_METHOD", "note": "Herda ambas as calibrações de FASE 19"}
+{"from": "rll_fase18e_py", "to": "rll_fase18e_json", "edge_type": "PRODUCES"}
+{"from": "rll_fase19_py", "to": "rll_fase19_json", "edge_type": "PRODUCES"}
+{"from": "rll_fase20_py", "to": "rll_fase20_json", "edge_type": "PRODUCES"}
+{"from": "rll_fase18e_json", "to": "C-F17-01", "edge_type": "SUPPORTS", "note": "Ωs0=0.012 observado em FASE 18-E — ponto de partida do diagnóstico"}
+{"from": "rll_fase19_json", "to": "C-F17-01", "edge_type": "SUPPORTS", "note": "Ωs0→0 após correção confirma diagnóstico de artefato"}
+{"from": "planck_2018_vi", "to": "C-F18-02", "edge_type": "SUPPORTS", "note": "rd=147.09 Mpc (Planck) é o padrão de referência para o bias Δrd"}
+{"from": "eisenstein_hu_1998", "to": "C-F18-02", "edge_type": "SUPPORTS", "note": "Fórmula E&H 1998 z_drag produz rd_EH=150.704 Mpc — valor medido do bias"}
+{"from": "rll_fase19_json", "to": "C-F19-01", "edge_type": "SUPPORTS"}
+{"from": "rll_fase19_json", "to": "C-F19-02", "edge_type": "SUPPORTS"}
+{"from": "rll_fase19_json", "to": "C-F19-03", "edge_type": "SUPPORTS"}
+{"from": "rll_fase20_json", "to": "C-F20-01", "edge_type": "SUPPORTS"}
+{"from": "rll_fase20_json", "to": "C-F20-02", "edge_type": "SUPPORTS"}
+{"from": "rll_fase20_json", "to": "C-F20-03", "edge_type": "SUPPORTS"}
+{"from": "rll_fase19_json", "to": "rll_fase18e_json", "edge_type": "SUPERSEDES", "note": "Ωs0=0.012 → Ωs0≈0; rd viés removido na FASE 19"}
+{"from": "rll_fase19_py", "to": "G2", "edge_type": "CLOSES"}
+{"from": "rll_fase20_py", "to": "G1", "edge_type": "CLOSES"}
+{"from": "rll_fase20_py", "to": "G3", "edge_type": "CLOSES"}
+{"from": "foreman_mackey_2013", "to": "rll_fase20_py", "edge_type": "USED_IN", "note": "emcee EnsembleSampler 32×1500"}
+{"from": "speagle_2020", "to": "rll_fase20_py", "edge_type": "USED_IN", "note": "dynesty NestedSampler nlive=150"}
+{"from": "desi_dr2_2025", "to": "rll_fase20_py", "edge_type": "TESTS", "note": "13 pontos BAO; contribuição chi²_DESI=28.48"}
+{"from": "moresco_2022", "to": "rll_fase20_py", "edge_type": "TESTS", "note": "33 pontos H(z); contribuição chi²_Hz=23.31"}
+{"from": "pantheon_shoes_2022", "to": "rll_fase20_py", "edge_type": "TESTS", "note": "1624 SNe Ia; contribuição chi²_SN=713.81"}
+{"from": "jeffreys_1961", "to": "C-F20-03", "edge_type": "SUPPORTS", "note": "Escala: |ln(B₁₀)|>5 = muito forte"}
+{"from": "C-F17-01", "to": "G4", "edge_type": "DERIVED_FROM", "note": "G4 identificado como limitação residual da calibração aditiva"}
+{"from": "C-F17-01", "to": "rll_superiority_claim", "edge_type": "NOT_EVIDENCE_FOR", "note": "Diagnóstico de artefato ≠ validação do modelo RLL; identificar viés não sustenta superioridade de RLL sobre ΛCDM"}
+{"from": "C-F19-01", "to": "C-F19-02", "edge_type": "SUPPORTS", "note": "Correção rd → colapso Ωs0"}
+{"from": "C-F19-02", "to": "C-F19-03", "edge_type": "SUPPORTS"}
+{"from": "C-F19-01", "to": "C-F20-01", "edge_type": "SUPPORTS", "note": "Calibração rd herdada em FASE 20"}
+{"from": "C-F20-02", "to": "C-F20-03", "edge_type": "SUPPORTS"}
+{"from": "rll_fase18e_py", "to": "PR_551", "edge_type": "MERGED_IN"}
+{"from": "rll_fase19_py", "to": "PR_553", "edge_type": "MERGED_IN"}
+{"from": "rll_fase20_py", "to": "PR_554", "edge_type": "MERGED_IN"}
+{"from": "rll_fase19_py", "to": "doc18", "edge_type": "DOCUMENTED_IN"}
+{"from": "rll_fase20_py", "to": "doc19", "edge_type": "DOCUMENTED_IN"}
+{"from": "rll_fase18e_json", "to": "CONTRADICTION-01", "edge_type": "PART_OF"}
+{"from": "rll_fase19_json", "to": "CONTRADICTION-01", "edge_type": "RESOLVES"}

@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/omega_operational_invariant.schema.json",
+  "title": "RLL Omega Seven-Direction Operational Invariant",
+  "description": "Structural contract for a seven-direction RAFAELIA Omega operational assessment. It preserves hard invariants, geometric routing metrics, urgent conditions, evidence boundaries and fail-closed decisions; it does not validate scientific or physical claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "assessment_id",
+    "subject",
+    "generated_at",
+    "source_commit",
+    "semantic_matrix_ref",
+    "invariant_definition",
+    "hard_invariants",
+    "directions",
+    "omega_metrics",
+    "urgent_conditions",
+    "state",
+    "claim_allowed",
+    "next_gate"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.omega7_operational_assessment.v1"
+    },
+    "assessment_id": {
+      "type": "string",
+      "pattern": "^OMEGA7-[A-Z0-9._-]+$"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "scope"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "repository",
+            "pipeline",
+            "run",
+            "dataset",
+            "model",
+            "document",
+            "system"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "semantic_matrix_ref": {
+      "const": "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md"
+    },
+    "invariant_definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantic_class",
+        "equation",
+        "interpretation",
+        "operator_boundary"
+      ],
+      "properties": {
+        "semantic_class": {
+          "const": "[C]"
+        },
+        "equation": {
+          "const": "Omega = Identity tensor Relation tensor Provenance tensor Measure tensor Rights tensor State tensor Evidence"
+        },
+        "interpretation": {
+          "type": "string",
+          "minLength": 20
+        },
+        "operator_boundary": {
+          "const": "tensor denotes architectural articulation, not physical multiplication"
+        }
+      }
+    },
+    "hard_invariants": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "invariant_id",
+          "statement",
+          "status",
+          "evidence_refs",
+          "next_action"
+        ],
+        "properties": {
+          "invariant_id": {
+            "enum": [
+              "I1",
+              "I2",
+              "I3",
+              "I4",
+              "I5",
+              "I6",
+              "I7"
+            ]
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 10
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "BLOCKED",
+              "TOKEN_VAZIO"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "next_action": {
+            "type": "string",
+            "minLength": 5
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "PASS"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "evidence_refs": {
+                  "minItems": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "directions": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "direction_id",
+          "dimension",
+          "question",
+          "score",
+          "normalized_score",
+          "status",
+          "evidence_refs",
+          "gap",
+          "urgent_action",
+          "gate_artifact"
+        ],
+        "properties": {
+          "direction_id": {
+            "enum": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7"
+            ]
+          },
+          "dimension": {
+            "enum": [
+              "origin_provenance",
+              "semantic_coherence",
+              "geometric_dimensional_integrity",
+              "runtime_execution",
+              "temporal_state_memory",
+              "rights_security",
+              "evidence_falsification"
+            ]
+          },
+          "question": {
+            "type": "string",
+            "minLength": 10
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "normalized_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "status": {
+            "enum": [
+              "BLOCKED",
+              "TOKEN_VAZIO",
+              "PARTIAL",
+              "READY_FOR_TEST",
+              "VERIFIED"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "gap": {
+            "type": "string",
+            "minLength": 5
+          },
+          "urgent_action": {
+            "type": "string",
+            "minLength": 5
+          },
+          "gate_artifact": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "omega_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formula_class",
+        "geometric_formula",
+        "minimum_formula",
+        "omega_g",
+        "omega_min",
+        "weakest_directions",
+        "hard_gate_open",
+        "decision",
+        "metric_boundary"
+      ],
+      "properties": {
+        "formula_class": {
+          "const": "[C]"
+        },
+        "geometric_formula": {
+          "const": "Omega_G = (product(d_i))^(1/7)"
+        },
+        "minimum_formula": {
+          "const": "Omega_min = min(d_i)"
+        },
+        "omega_g": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "omega_min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "weakest_directions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "hard_gate_open": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "I1",
+              "I2",
+              "I3",
+              "I4",
+              "I5",
+              "I6",
+              "I7"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "decision": {
+          "enum": [
+            "BLOCKED",
+            "READY_FOR_TEST",
+            "AUDITABLE",
+            "COHERENT"
+          ]
+        },
+        "metric_boundary": {
+          "const": "routing convention; not physical geometry, probability, evidence or scientific validation"
+        }
+      }
+    },
+    "urgent_conditions": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "condition_id",
+          "direction_id",
+          "priority",
+          "statement",
+          "required_artifact",
+          "exit_criteria",
+          "status"
+        ],
+        "properties": {
+          "condition_id": {
+            "enum": [
+              "U1",
+              "U2",
+              "U3",
+              "U4",
+              "U5",
+              "U6",
+              "U7"
+            ]
+          },
+          "direction_id": {
+            "enum": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7"
+            ]
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2"
+            ]
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 10
+          },
+          "required_artifact": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exit_criteria": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "status": {
+            "enum": [
+              "OPEN",
+              "READY_FOR_TEST",
+              "RESOLVED"
+            ]
+          }
+        }
+      }
+    },
+    "state": {
+      "enum": [
+        "BLOCKED",
+        "READY_FOR_TEST",
+        "AUDITABLE",
+        "COHERENT"
+      ]
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "next_gate": {
+      "type": "string",
+      "minLength": 10
+    }
+  }
+}

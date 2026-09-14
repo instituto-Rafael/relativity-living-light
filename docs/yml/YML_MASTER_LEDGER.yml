@@ -218,6 +218,40 @@ entries:
     role: "PASS means metadata/CSV structure is valid; claims remain blocked."
     claim_allowed: false
 
+  - path: RAF_VERBEYES/PIPELINE.yml
+    type: absorption_pipeline_descriptor
+    level: E2
+    runs_alone: false
+    human_name: "Pipeline de absorção RAF_VERBEYES"
+    role: >
+      Define os quatro estágios do pipeline de absorção YML (IN, PROCESSO,
+      DONE, ESPIRAL) e aponta para o scanner freestanding x86_64 que analisa
+      todos os caminhos YML antes de executar.
+    companion_scanner: native/raf_verbeyes/build_raf_verbeyes.sh
+    claim_allowed: false
+
+  - path: native/raf_verbeyes/build_raf_verbeyes.sh
+    type: freestanding_build_script
+    level: E3
+    runs_alone: true
+    human_name: "Build RAF_VERBEYES scanner (freestanding x86_64)"
+    role: >
+      Gera e compila um ELF64 freestanding sem libc, sem malloc, sem heap,
+      sem GC, sem dependencias. Apenas syscalls Linux diretos (write, openat,
+      getdents64, close, exit). Aritmetica branchless para comparacao de
+      sufixo .yml. Valida contrato ELF loaderless e executa o scanner.
+    source_files:
+      - native/raf_verbeyes/raf_verbeyes.h
+      - native/raf_verbeyes/raf_scanner.c
+      - native/raf_verbeyes/main.c
+    expected_outputs:
+      - native/raf_verbeyes/raf_verbeyes_scanner
+      - native/raf_verbeyes/raf_verbeyes_scanner.manifest
+    claim_allowed: false
+    next_safe_action: >
+      Execute a partir de native/raf_verbeyes/; o binario deve ser invocado
+      a partir da raiz do repositorio para encontrar RAF_VERBEYES/.
+
 syslog_template:
   ok: "[OK] Route found and artifact generated."
   parcial: "[PARCIAL] Metadata exists, but raw data or baseline is missing."
@@ -225,4 +259,8 @@ syslog_template:
   token_vazio: "[TOKEN_VAZIO] Known gap; do not infer."
   proximo: "[PROXIMO] Execute the smallest safe step that produces an artifact."
 
-safe_conclusion: "The repository now has a master YAML navigation layer, artifact gap ledger, placeholder scanner, to_Add migration validator and frontier-science bridge. This improves orchestration usability but does not change any scientific claim boundary."
+safe_conclusion: >
+  The repository now has a master YAML navigation layer, artifact gap ledger,
+  placeholder scanner, to_Add migration validator, frontier-science bridge,
+  and the RAF_VERBEYES freestanding absorption pipeline scanner.
+  None of these change any scientific claim boundary.

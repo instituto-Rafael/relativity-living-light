@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>RAFAELIA Tail Protocol Example</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      max-width: 860px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .raf-block {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .raf-visible {
+      font-weight: 600;
+    }
+    .raf-note {
+      font-size: 0.92rem;
+      opacity: 0.78;
+    }
+    .raf-nerd-grid {
+      margin-top: 0.75rem;
+    }
+    .raf-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.35rem 0.75rem;
+      border: 1px dashed #bbb;
+      border-radius: 10px;
+      padding: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+    .raf-grid dt {
+      font-weight: 700;
+    }
+    .raf-grid dd {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>RAFAELIA Tail Protocol — HTML visible object</h1>
+
+  <p>
+    Este exemplo mostra a regra: começo humano limpo, metadado de máquina
+    no final ou em atributos HTML. HTML oculto não é segurança; é apenas
+    organização visual.
+  </p>
+
+  <section class="raf-block"
+           data-raf="v1"
+           data-raf-id="MAIL-0007"
+           data-raf-fam="email"
+           data-raf-st="rev"
+           data-raf-dt="20260710"
+           data-raf-link="DRV-0001,CAL-0002,GIT-0093"
+           data-raf-grid="nerd"
+           data-raf-dbg="1">
+    <div class="raf-visible">Revisar navegação semântica do Drive</div>
+    <p class="raf-note">
+      Humano lê este título. Parser lê os atributos <code>data-raf-*</code>.
+    </p>
+    <details class="raf-nerd-grid">
+      <summary>Dados para nerds</summary>
+      <dl class="raf-grid">
+        <dt>raf</dt><dd>v1</dd>
+        <dt>id</dt><dd>MAIL-0007</dd>
+        <dt>fam</dt><dd>email</dd>
+        <dt>st</dt><dd>rev</dd>
+        <dt>dt</dt><dd>20260710</dd>
+        <dt>links</dt><dd>DRV-0001, CAL-0002, GIT-0093</dd>
+        <dt>grid</dt><dd>nerd</dd>
+        <dt>dbg</dt><dd>1</dd>
+      </dl>
+    </details>
+  </section>
+
+  <section class="raf-block">
+    <div class="raf-visible">
+      Validar ponte NanoGPT + RMR-CTI com Drive
+    </div>
+    <span class="raf-tail" hidden aria-hidden="true">raf:v1;id=LLM-0003;fam=llm;st=hyp;dt=20260710;link=DRV-0001,GIT-0093;grid=nerd;dbg=1</span>
+    <p class="raf-note">
+      Aqui a cauda está em elemento oculto. Isso ajuda visualmente, mas não
+      deve ser tratado como autenticação ou proteção.
+    </p>
+    <details class="raf-nerd-grid">
+      <summary>Dados para nerds</summary>
+      <dl class="raf-grid">
+        <dt>tail</dt><dd>raf:v1;id=LLM-0003;fam=llm;st=hyp;dt=20260710;link=DRV-0001,GIT-0093;grid=nerd;dbg=1</dd>
+        <dt>parser</dt><dd>ler span.raf-tail ou textContent depois do último delimitador</dd>
+        <dt>visibilidade</dt><dd>recolhido por padrão</dd>
+      </dl>
+    </details>
+  </section>
+
+  <section class="raf-block">
+    <div>
+      Registrar prova de socket C14 || raf:v1;id=SOCK-0004;fam=socket;st=ev;dt=20260710;link=DRV-0040;hash=ab12cd34;grid=nerd;dbg=1
+    </div>
+    <p class="raf-note">
+      Forma textual compatível com e-mail, calendário, Markdown e texto puro.
+      Parser recomendado: procurar o último delimitador <code> || </code>.
+    </p>
+    <details class="raf-nerd-grid">
+      <summary>Dados para nerds</summary>
+      <dl class="raf-grid">
+        <dt>id</dt><dd>SOCK-0004</dd>
+        <dt>fam</dt><dd>socket</dd>
+        <dt>status</dt><dd>ev</dd>
+        <dt>hash</dt><dd>ab12cd34</dd>
+        <dt>cadeia</dt><dd>SOCK-0004 → DRV-0040 → GIT-commit → REPORT</dd>
+        <dt>atenção</dt><dd>hash curto é inspeção; hash completo deve ficar em ledger</dd>
+      </dl>
+    </details>
+  </section>
+</body>
+</html>

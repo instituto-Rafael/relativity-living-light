@@ -1,0 +1,113 @@
+name: ORCID RLL Vector Gate
+
+on:
+  pull_request:
+    paths:
+      - "src/rll/orcid_vector*.py"
+      - "src/rll/project_sources.py"
+      - "src/rll/project_source_seed.py"
+      - "tests/test_orcid_vector.py"
+      - "tests/test_project_sources.py"
+      - "tests/test_project_source_seed.py"
+      - "schemas/orcid_vector_artifact.schema.json"
+      - "schemas/project_source_manifest.schema.json"
+      - "schemas/project_source_seed.schema.json"
+      - "configs/orcid_rll_sources.yml"
+      - "configs/project_sources_manifest.v1.json"
+      - "configs/project_sources_seed.v1.json"
+      - "data/examples/*synthetic.json"
+      - "data/project_sources/seed_v1/**"
+      - "data/ledgers/orcid_rll_integration_state.json"
+      - "data/ledgers/project_sources_integration_state.json"
+      - "data/ledgers/REAL_SEED_RECEIPT_20260731.json"
+      - "pyproject.toml"
+      - ".github/workflows/orcid-rll-vector-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/rll/orcid_vector*.py"
+      - "src/rll/project_sources.py"
+      - "src/rll/project_source_seed.py"
+      - "tests/test_orcid_vector.py"
+      - "tests/test_project_sources.py"
+      - "tests/test_project_source_seed.py"
+      - "schemas/orcid_vector_artifact.schema.json"
+      - "schemas/project_source_manifest.schema.json"
+      - "schemas/project_source_seed.schema.json"
+      - "configs/orcid_rll_sources.yml"
+      - "configs/project_sources_manifest.v1.json"
+      - "configs/project_sources_seed.v1.json"
+      - "data/examples/*synthetic.json"
+      - "data/project_sources/seed_v1/**"
+      - "data/ledgers/orcid_rll_integration_state.json"
+      - "data/ledgers/project_sources_integration_state.json"
+      - "data/ledgers/REAL_SEED_RECEIPT_20260731.json"
+      - "pyproject.toml"
+      - ".github/workflows/orcid-rll-vector-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-deterministic-gate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip pytest jsonschema
+      - name: Compile implementation
+        run: python -m py_compile src/rll/orcid_vector*.py src/rll/project_sources.py src/rll/project_source_seed.py
+      - name: Run vector and corpus tests
+        env:
+          PYTHONPATH: src
+        run: pytest -q tests/test_orcid_vector.py tests/test_project_sources.py tests/test_project_source_seed.py
+      - name: Validate JSON Schema syntax
+        run: |
+          python - <<'PY'
+          import json
+          from jsonschema import Draft202012Validator
+          for path in (
+              "schemas/orcid_vector_artifact.schema.json",
+              "schemas/project_source_manifest.schema.json",
+              "schemas/project_source_seed.schema.json",
+          ):
+              Draft202012Validator.check_schema(json.load(open(path)))
+          PY
+      - name: Validate committed project manifest boundary
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from rll.project_sources import load_manifest
+          manifest = load_manifest(Path("configs/project_sources_manifest.v1.json"))
+          assert manifest["source_count"] == 14
+          assert manifest["raw_bodies_committed"] is False
+          assert all(item["claim_allowed"] is False for item in manifest["sources"])
+          assert sum(item["visibility"] == "PRIVATE_POINTER_ONLY" for item in manifest["sources"]) == 1
+          PY
+      - name: Verify and bootstrap committed real seed
+        env:
+          PYTHONPATH: src
+        run: |
+          SEED_DB="${RUNNER_TEMP}/project-sources-seed.sqlite3"
+          python -m rll.project_source_seed verify
+          python -m rll.project_source_seed bootstrap --db "$SEED_DB"
+          python -m rll.project_source_seed status --db "$SEED_DB"
+          python -m rll.project_source_seed search "ORCID vetores proveniência" --db "$SEED_DB"
+      - name: Run offline CLI receipt
+        env:
+          PYTHONPATH: src
+        run: |
+          DB="${RUNNER_TEMP}/orcid-rll.sqlite3"
+          python -m rll.orcid_vector --db "$DB" init
+          python -m rll.orcid_vector --db "$DB" ingest-file data/examples/orcid_record_synthetic.json --orcid 0000-0000-0000-001X
+          python -m rll.orcid_vector --db "$DB" verify-chain
+          python -m rll.orcid_vector --db "$DB" search "quantum tensor physiology" --discipline physics.quantum
+          python -m rll.project_sources --db "$DB" status

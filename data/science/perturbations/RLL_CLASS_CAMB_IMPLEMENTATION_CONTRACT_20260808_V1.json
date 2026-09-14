@@ -1,0 +1,62 @@
+{
+  "schema": "rll.class_camb_implementation_contract.v1",
+  "state": "IMPLEMENTATION_CONTRACT_READY_BLOCKED_BY_CLOSURE",
+  "generated_at": "2026-08-08T05:53:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+  "hard_dependency": {
+    "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+    "contract": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
+    "required_state_before_implementation": "VERSIONED_PHYSICAL_CLOSURE_WITH_LIMITING_TESTS_PASS",
+    "current_state": "SPECIFICATION_SATURATED_PHYSICAL_CHOICES_PENDING"
+  },
+  "independent_engine_paths": {
+    "CLASS": {
+      "implementation_rule": "Implement the frozen RLL perturbation closure in CLASS conventions directly from the closure contract.",
+      "must_not_use": ["CAMB-generated perturbation outputs as implementation inputs", "the internal RK4 growth kernel as a substitute for the Boltzmann hierarchy"],
+      "required_receipt": "engine version/commit, build/runtime, parameter vector, precision settings, outputs and checksums"
+    },
+    "CAMB": {
+      "implementation_rule": "Implement the same frozen RLL perturbation closure independently in CAMB conventions directly from the closure contract.",
+      "must_not_use": ["CLASS-generated perturbation outputs as implementation inputs", "the internal RK4 growth kernel as a substitute for the Boltzmann hierarchy"],
+      "required_receipt": "engine version/commit, build/runtime, parameter vector, precision settings, outputs and checksums"
+    }
+  },
+  "required_cross_engine_observables": [
+    "background H(a) consistency",
+    "linear density/growth transfer functions",
+    "CMB TT/TE/EE Cl where the closure permits a well-posed calculation",
+    "linear matter P(k)",
+    "growth/f_sigma8 derived outputs"
+  ],
+  "precision_and_convergence_protocol": [
+    "Predeclare identical cosmological/RLL vectors and convention mapping.",
+    "Run at least a baseline precision and a stricter precision configuration for each engine.",
+    "Demonstrate numerical convergence within each engine before cross-engine comparison.",
+    "Predeclare cross-engine tolerance per observable before interpreting the result.",
+    "Record lmax/kmax/grid/cutoff settings so cutoff artifacts cannot masquerade as physics."
+  ],
+  "required_limiting_cases": [
+    "declared zero-RLL or background limiting case",
+    "standard LCDM engine baseline already covered by the existing CLASS/CAMB baseline authority",
+    "any additional limit explicitly implied by the final RLL closure contract"
+  ],
+  "falsifiers": [
+    "implementation begins while any C01-C08 closure slot remains an unassigned physical assumption",
+    "CLASS and CAMB use inequivalent physical closures or initial conditions",
+    "one engine fails its own precision-convergence test",
+    "cross-engine difference exceeds a predeclared tolerance",
+    "observable depends materially on arbitrary numerical regularization",
+    "RLL CMB or P(k) output is produced by the existing matter-growth approximation and labeled full Boltzmann"
+  ],
+  "close_when": [
+    "the closure dependency is versioned and passes its required tests",
+    "independent CLASS and CAMB RLL implementations execute",
+    "each engine demonstrates internal numerical convergence",
+    "cross-engine comparisons for required observables pass predeclared tolerances or disagreements are preserved as negative evidence",
+    "all configs, outputs, hashes and convention mappings are persisted"
+  ],
+  "claim_boundary": "Independent solver agreement is implementation verification. Observational validation requires separate likelihood/data evidence and remains subject to claim_allowed=false until its own gates close.",
+  "token_resolution": "NOT_RESOLVED"
+}

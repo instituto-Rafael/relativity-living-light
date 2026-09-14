@@ -1,0 +1,39 @@
+{
+  "schema": "rll.all_refs_topology_reconciliation.v1",
+  "state": "VERIFIED_CURRENT_REF_TOPOLOGY_CENSUS",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_pr": 685,
+  "source_pr_state": "OPEN_DRAFT_AT_RECEIPT_CREATION",
+  "source_head": "8a7b3d04ead49e77b6e1aca1532558d735e83734",
+  "source_workflow": {
+    "run_id": 31239167007,
+    "conclusion": "success"
+  },
+  "source_artifact": {
+    "id": 9016432221,
+    "name": "all-ref-topology-census-31239167007",
+    "digest": "sha256:29f2532d8e2a3aba7d789be9cf9cefdc1414bc27f04c3af979bf45e124acf351"
+  },
+  "census": {
+    "historical_label_denominator": 582,
+    "current_observed_ref_count": 599,
+    "historical_denominator_matches_current": false,
+    "topology_classified_count": 599,
+    "anonymous_remainder": 0,
+    "class_counts": {
+      "ANCESTOR_OF_BASELINE_AHEAD_ZERO": 563,
+      "IDENTICAL_TO_BASELINE": 1,
+      "DIVERGED_FROM_BASELINE": 35
+    },
+    "semantic_review_required_count": 35
+  },
+  "boundary": {
+    "topological_classification_complete_for_observed_refs": true,
+    "semantic_value_of_diverged_refs_classified": false,
+    "ahead_or_diverged_implies_technical_progress": false,
+    "source_hotfix_merged_into_rll_lab_at_receipt_creation": false
+  },
+  "reduces": "TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS",
+  "successor": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW"
+}

@@ -1,0 +1,273 @@
+{
+  "schema": "rll.modern_validation_gap_registry.v1",
+  "generated_at": "2026-08-07T19:55:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_main_commit": "139640d77871f51b5b05681ee6ab324b43fc06ee",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "policy": {
+    "token_vazio_is_auditable_state": true,
+    "paper_is_context_not_materialized_evidence": true,
+    "bic_proxy_is_not_bayesian_evidence": true,
+    "backend_import_is_not_perturbation_validation": true,
+    "dataset_name_is_not_likelihood_provenance": true,
+    "all_models_must_share_data_priors_and_nuisance_policy": true,
+    "negative_results_must_be_preserved": true
+  },
+  "references": [
+    {
+      "id": "DESI_DR2_RESULTS_II",
+      "tier": "official_collaboration",
+      "date": "2025-03-18",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "url": "https://arxiv.org/abs/2503.14738",
+      "operational_relevance": "Canonical DR2 BAO/CMB/SN benchmark; motivates exact likelihood and tracer-level residual reproduction."
+    },
+    {
+      "id": "DESI_DR2_DATA_PORTAL",
+      "tier": "official_data_portal",
+      "date": "2025-03-19",
+      "title": "DESI DR2 Publications and cosmology-chain products",
+      "url": "https://data.desi.lbl.gov/doc/papers/dr2/",
+      "operational_relevance": "Primary provenance target for chains, posterior maximization products and supporting validation papers."
+    },
+    {
+      "id": "DES_DOVEKIE_MNRAS_2026",
+      "tier": "peer_reviewed_collaboration",
+      "date": "2026-06-01",
+      "title": "The Dark Energy Survey supernova program: a reanalysis of cosmology results and evidence for evolving dark energy with an updated Type Ia supernova calibration",
+      "url": "https://academic.oup.com/mnras/article/548/4/stag632/8653925",
+      "operational_relevance": "Updated SN calibration changes the inferred matter density and weakens the dynamical-dark-energy preference relative to DES-SN5YR; requires a calibration-ablation gate."
+    },
+    {
+      "id": "DOVEKIE_CALIBRATION",
+      "tier": "primary_method_preprint",
+      "date": "2025-06-05",
+      "title": "A Reassessment of the Pantheon+ and DES 5YR Calibration Uncertainties: Dovekie",
+      "url": "https://arxiv.org/abs/2506.05471",
+      "operational_relevance": "Cross-calibration provenance and zero-point/filter systematics for modern SN validation."
+    },
+    {
+      "id": "ACT_DR6_LIKELIHOODS",
+      "tier": "official_collaboration",
+      "date": "2025-03-18",
+      "title": "The Atacama Cosmology Telescope: DR6 Power Spectra, Likelihoods and LambdaCDM Parameters",
+      "url": "https://arxiv.org/abs/2503.14452",
+      "operational_relevance": "Independent high-precision TT/TE/EE likelihood target beyond Planck-only compressed summaries."
+    },
+    {
+      "id": "DES_Y6_3X2PT",
+      "tier": "official_collaboration",
+      "date": "2026-01-21",
+      "title": "Dark Energy Survey Year 6 Results: Cosmological Constraints from Galaxy Clustering and Weak Lensing",
+      "url": "https://arxiv.org/abs/2601.14559",
+      "operational_relevance": "Modern S8/growth and low-redshift structure likelihood target; directly closes the weak-lensing TOKEN_VAZIO when materialized."
+    },
+    {
+      "id": "BAYESIAN_VIEW_DESI_DR2_2026",
+      "tier": "independent_analysis_preprint",
+      "date": "2026-03-05",
+      "title": "The Bayesian view of DESI DR2: Evidence and tension in a combined analysis with CMB and supernovae across cosmological models",
+      "url": "https://arxiv.org/abs/2603.05472",
+      "operational_relevance": "Shows why nested-sampling evidence and dataset-tension diagnostics must be separate from Delta-chi2/AIC/BIC."
+    },
+    {
+      "id": "SN_MODEL_INDEPENDENT_2026",
+      "tier": "independent_analysis_preprint",
+      "date": "2026-04-13",
+      "title": "Model-Independent Analysis of Type Ia Supernova Datasets and Implications for Dark Energy",
+      "url": "https://arxiv.org/abs/2604.11883",
+      "operational_relevance": "Motivates redshift-resolved and Omega_m-consistency diagnostics instead of a single global SN score."
+    },
+    {
+      "id": "CAMB_V2_2026",
+      "tier": "primary_code_paper",
+      "date": "2026-07-16",
+      "title": "CAMB v2: cosmological power spectra for high-precision surveys",
+      "url": "https://arxiv.org/abs/2607.14854",
+      "operational_relevance": "Modern perturbation reference with stabilized PPF dark-energy evolution and explicit numerical-convergence targets."
+    },
+    {
+      "id": "CLASS_3_3_4",
+      "tier": "primary_code_release",
+      "date": "2025-11-24",
+      "title": "CLASS v3.3.4",
+      "url": "https://class-code.net/",
+      "operational_relevance": "Independent Boltzmann backend required to separate RLL physics differences from backend/configuration differences."
+    }
+  ],
+  "gates": [
+    {
+      "id": "RLL-MOD-P0-SN-CALIBRATION-COVARIANCE",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+      "token_vazio": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+      "scope": "Pantheon+ plus DES-Dovekie calibration/covariance ablation under one nuisance policy",
+      "why_now": "Modern SN re-calibration materially shifts Omega_m and the apparent preference for evolving dark energy; a legacy diagonal SN fit is no longer an adequate validation endpoint.",
+      "required_artifacts": [
+        {
+          "id": "modern_sn_full_likelihood_receipt",
+          "path": "artifacts/science/sn_modern/full_likelihood_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "covariance_sha256", "n_supernovae", "nuisance_policy", "calibration_variant", "chi2_full_covariance"]
+        }
+      ],
+      "acceptance": [
+        "Pantheon+ and DES-Dovekie are evaluated as separate named calibration variants",
+        "raw/vector and covariance provenance are hashed",
+        "full covariance dimensions match the fitted SN vector",
+        "same nuisance and absolute-magnitude treatment is used across LCDM, CPL and RLL",
+        "redshift-binned residual and Delta-chi2 diagnostics are emitted",
+        "diagonal-only output remains labeled exploratory"
+      ],
+      "reference_ids": ["DES_DOVEKIE_MNRAS_2026", "DOVEKIE_CALIBRATION", "SN_MODEL_INDEPENDENT_2026"]
+    },
+    {
+      "id": "RLL-MOD-P0-REAL-BAYES",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "token_vazio": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "scope": "Nested-sampling evidence for LCDM, CPL and RLL with identical likelihood data and versioned priors",
+      "why_now": "Current literature demonstrates that frequentist Delta-chi2 and Bayesian model preference can move in different directions after the Ockham penalty and dataset-tension accounting.",
+      "required_artifacts": [
+        {
+          "id": "real_bayes_nested_sampling_receipt",
+          "path": "artifacts/science/bayes/nested_sampling_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "sampler", "sampler_version", "models", "priors_sha256", "logz", "logz_error", "stopping_criterion", "independent_replication"]
+        }
+      ],
+      "acceptance": [
+        "real nested sampling is executed; BIC proxy is not accepted",
+        "LCDM, CPL and RLL use the same materialized likelihood components",
+        "prior transforms and parameter ranges are versioned and hashed",
+        "logZ and numerical uncertainty are stored per model",
+        "Bayes factors are computed from stored logZ values",
+        "independent replication is recorded before scientific promotion"
+      ],
+      "reference_ids": ["BAYESIAN_VIEW_DESI_DR2_2026", "DESI_DR2_RESULTS_II"]
+    },
+    {
+      "id": "RLL-MOD-P0-DESI-DR2-REPRODUCTION",
+      "priority": "P0",
+      "state": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "token_vazio": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "scope": "Reproduce official DESI DR2 benchmark products and tracer-level residuals before interpreting RLL deltas",
+      "why_now": "The repository has a tested 13x13 block construction, but that is not equivalent to the full official joint/cross-block likelihood or official chain reproduction.",
+      "required_artifacts": [
+        {
+          "id": "desi_dr2_official_reproduction_receipt",
+          "path": "artifacts/science/desi/dr2_official_reproduction_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "official_product_ids", "observable_order", "rd_policy", "likelihood_mode", "lcdm_reference", "cpl_reference", "per_tracer_residuals"]
+        }
+      ],
+      "acceptance": [
+        "official DESI DR2 source products are identified by immutable hashes or provider identifiers",
+        "13 observable order and units are machine-checked",
+        "rd convention is explicit",
+        "LCDM and CPL reference results are reproduced within declared tolerance",
+        "per-tracer contributions expose whether LRG or Ly-alpha bins dominate a delta",
+        "block-diagonal fallback is never labeled official joint covariance"
+      ],
+      "reference_ids": ["DESI_DR2_RESULTS_II", "DESI_DR2_DATA_PORTAL"]
+    },
+    {
+      "id": "RLL-MOD-P1-CMB-ACT-DR6",
+      "priority": "P1",
+      "state": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+      "token_vazio": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+      "scope": "ACT DR6 TT/TE/EE likelihood or explicitly documented compressed equivalent",
+      "why_now": "ACT DR6 supplies an independent CMB likelihood with high-precision polarization and provides a stronger cross-check than a Planck-only compressed shift vector.",
+      "required_artifacts": [
+        {
+          "id": "act_dr6_likelihood_receipt",
+          "path": "artifacts/science/cmb/act_dr6_likelihood_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "likelihood_release", "spectra", "foreground_policy", "backend", "lcdm_reference"]
+        }
+      ],
+      "acceptance": [
+        "likelihood release and spectra are versioned",
+        "foreground/nuisance treatment is explicit",
+        "LCDM reference parameters are reproduced within tolerance",
+        "same CMB treatment is used for CPL and RLL",
+        "compressed likelihood, if used, is labeled compressed rather than full"
+      ],
+      "reference_ids": ["ACT_DR6_LIKELIHOODS"]
+    },
+    {
+      "id": "RLL-MOD-P1-DES-Y6-WEAK-LENSING",
+      "priority": "P1",
+      "state": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "token_vazio": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "scope": "DES Y6 3x2pt growth/weak-lensing likelihood and S8 comparison",
+      "why_now": "DES Y6 is a current low-redshift structure benchmark and directly tests the growth sector that a background-only RLL fit cannot validate.",
+      "required_artifacts": [
+        {
+          "id": "des_y6_3x2pt_likelihood_receipt",
+          "path": "artifacts/science/lss/des_y6_3x2pt_likelihood_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "likelihood_release", "scale_cuts", "nuisance_policy", "s8", "omega_m", "covariance_status"]
+        }
+      ],
+      "acceptance": [
+        "DES Y6 source release and likelihood are versioned",
+        "scale cuts and nuisance parameters are recorded",
+        "S8 is derived from the same perturbation backend used by the model fit",
+        "LCDM reference is reproduced before RLL comparison",
+        "a point estimate without covariance is insufficient"
+      ],
+      "reference_ids": ["DES_Y6_3X2PT"]
+    },
+    {
+      "id": "RLL-MOD-P1-CLASS-CAMB-PERTURBATIONS",
+      "priority": "P1",
+      "state": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "token_vazio": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "scope": "Cross-backend perturbation benchmark for LCDM/CPL plus an explicit RLL perturbation contract",
+      "why_now": "CAMB v2 raises the numerical reference standard and stabilized PPF dark-energy evolution; CLASS remains an independent cross-check. Importability alone is not evidence.",
+      "required_artifacts": [
+        {
+          "id": "class_camb_perturbation_benchmark_receipt",
+          "path": "artifacts/science/boltzmann/class_camb_benchmark_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "class_version", "camb_version", "parameter_point_sha256", "cmb_residual_max", "pk_residual_max", "fsigma8_residual_max", "rll_perturbation_contract"]
+        }
+      ],
+      "acceptance": [
+        "CLASS and CAMB versions and compile/runtime configuration are recorded",
+        "LCDM and CPL agree across backends within declared numerical tolerance",
+        "H(z), D+(z), f*sigma8, P(k,z) and applicable CMB spectra are compared",
+        "RLL perturbation equations, sound speed/anisotropic stress or PPF mapping are explicit",
+        "ghost/gradient or equivalent stability assumptions are documented",
+        "background agreement alone cannot close this gate"
+      ],
+      "reference_ids": ["CAMB_V2_2026", "CLASS_3_3_4"]
+    },
+    {
+      "id": "RLL-MOD-P1-H0-DISTANCE-LADDER",
+      "priority": "P1",
+      "state": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "token_vazio": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "scope": "Formal H0 likelihood with modern SN calibration and explicit early/late-time separation",
+      "why_now": "A single fitted H0 value does not establish tension relief; the distance-ladder and CMB inferences depend on distinct assumptions and must be compared through versioned likelihoods.",
+      "required_artifacts": [
+        {
+          "id": "modern_h0_likelihood_receipt",
+          "path": "artifacts/science/h0/distance_ladder_receipt.json",
+          "expected_state": "VERIFIED",
+          "required_keys": ["source_sha256", "late_time_likelihood", "early_time_likelihood", "rd_policy", "delta_h0_sigma", "model_results"]
+        }
+      ],
+      "acceptance": [
+        "late-time and early-time likelihood sources are separately versioned",
+        "rd and calibration assumptions are explicit",
+        "Delta H0/sigma is computed under a declared model and covariance treatment",
+        "LCDM, CPL and RLL are compared under identical external likelihood choices",
+        "no resolution claim is made from a point estimate alone"
+      ],
+      "reference_ids": ["ACT_DR6_LIKELIHOODS", "DES_DOVEKIE_MNRAS_2026"]
+    }
+  ]
+}

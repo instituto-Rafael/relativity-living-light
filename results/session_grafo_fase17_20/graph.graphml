@@ -1,0 +1,386 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/graphml">
+  <key id="node_type" for="node" attr.name="node_type" attr.type="string" />
+  <key id="node_label" for="node" attr.name="label" attr.type="string" />
+  <key id="epistemic_status" for="node" attr.name="epistemic_status" attr.type="string" />
+  <key id="confidence" for="node" attr.name="confidence" attr.type="double" />
+  <key id="edge_type" for="edge" attr.name="edge_type" attr.type="string" />
+  <key id="edge_note" for="edge" attr.name="note" attr.type="string" />
+  <graph id="SESSION_FASE17_20" edgedefault="directed">
+    <node id="planck_2018_vi">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Planck 2018 VI</data>
+    </node>
+    <node id="eisenstein_hu_1998">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Eisenstein &amp; Hu 1998</data>
+    </node>
+    <node id="chen_2019">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Chen+ 2019</data>
+    </node>
+    <node id="cooke_2018">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Cooke+ 2018</data>
+    </node>
+    <node id="foreman_mackey_2013">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Foreman-Mackey+ 2013 (emcee)</data>
+    </node>
+    <node id="speagle_2020">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Speagle 2020 (dynesty)</data>
+    </node>
+    <node id="jeffreys_1961">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Jeffreys 1961</data>
+    </node>
+    <node id="desi_dr2_2025">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">DESI DR2 BAO 2025</data>
+    </node>
+    <node id="moresco_2022">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Moresco+ 2022</data>
+    </node>
+    <node id="pantheon_shoes_2022">
+      <data key="node_type">PAPER</data>
+      <data key="node_label">Pantheon+SH0ES 2022</data>
+    </node>
+    <node id="rll_fase18e_py">
+      <data key="node_type">CODE</data>
+      <data key="node_label">scripts/rll_fase18e_calibrado.py</data>
+    </node>
+    <node id="rll_fase19_py">
+      <data key="node_type">CODE</data>
+      <data key="node_label">scripts/rll_fase19_rd_calibrado.py</data>
+    </node>
+    <node id="rll_fase20_py">
+      <data key="node_type">CODE</data>
+      <data key="node_label">scripts/rll_fase20_mcmc_bayes.py</data>
+    </node>
+    <node id="rll_fase18e_json">
+      <data key="node_type">RESULT</data>
+      <data key="node_label">results/rll_fase18e_calibrado.json</data>
+      <data key="epistemic_status">SUPERSEDED</data>
+    </node>
+    <node id="rll_fase19_json">
+      <data key="node_type">RESULT</data>
+      <data key="node_label">results/rll_fase19_rd_calibrado.json</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+    </node>
+    <node id="rll_fase20_json">
+      <data key="node_type">RESULT</data>
+      <data key="node_label">results/rll_fase20_mcmc_bayes.json</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+    </node>
+    <node id="rs_star_calib">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Calibração rs_star (+0.1988 Mpc)</data>
+    </node>
+    <node id="rd_calibration">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Calibração rd (−3.614 Mpc)</data>
+    </node>
+    <node id="eh_bias">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Viés E&amp;H 1998 em z_drag</data>
+    </node>
+    <node id="mcmc_convergence">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Convergência MCMC</data>
+    </node>
+    <node id="jeffreys_scale">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Escala de Jeffreys</data>
+    </node>
+    <node id="rll_superiority_claim">
+      <data key="node_type">CONCEPT</data>
+      <data key="node_label">Afirmação de superioridade do RLL sobre ΛCDM</data>
+    </node>
+    <node id="G1">
+      <data key="node_type">GAP</data>
+      <data key="node_label">G1: MCMC joint posterior de Ωs0</data>
+      <data key="epistemic_status">FECHADO</data>
+    </node>
+    <node id="G2">
+      <data key="node_type">GAP</data>
+      <data key="node_label">G2: rd numérico (remove bias E&amp;H)</data>
+      <data key="epistemic_status">FECHADO</data>
+    </node>
+    <node id="G3">
+      <data key="node_type">GAP</data>
+      <data key="node_label">G3: Bayes Factor formal ln(B₁₀)</data>
+      <data key="epistemic_status">FECHADO</data>
+    </node>
+    <node id="G4">
+      <data key="node_type">GAP</data>
+      <data key="node_label">G4: Mapeamento bias E&amp;H em (Ωm·h², Ωb·h²)</data>
+      <data key="epistemic_status">TOKEN_VAZIO</data>
+    </node>
+    <node id="dec_additive_calib">
+      <data key="node_type">DECISION</data>
+      <data key="node_label">Calibração aditiva (não paramétrica)</data>
+    </node>
+    <node id="dec_mcmc_config">
+      <data key="node_type">DECISION</data>
+      <data key="node_label">emcee 32 walkers × 1500 steps</data>
+    </node>
+    <node id="dec_dynesty_config">
+      <data key="node_type">DECISION</data>
+      <data key="node_label">dynesty nlive=150, dlogz=0.5</data>
+    </node>
+    <node id="doc17">
+      <data key="node_type">AUDIT_DOC</data>
+      <data key="node_label">Doc 17: FASE 18 horizonte sonoro</data>
+    </node>
+    <node id="doc18">
+      <data key="node_type">AUDIT_DOC</data>
+      <data key="node_label">Doc 18: FASE 19 rd calibrado</data>
+    </node>
+    <node id="doc19">
+      <data key="node_type">AUDIT_DOC</data>
+      <data key="node_label">Doc 19: FASE 20 MCMC + Bayes Factor</data>
+    </node>
+    <node id="C-F17-01">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">Ωs0=0.012 era artefato E&amp;H</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.97</data>
+    </node>
+    <node id="C-F18-01">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">rs_star calib +0.1988 Mpc → chi²_CMB≈0</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.99</data>
+    </node>
+    <node id="C-F18-02">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">Bias E&amp;H: Δrd=+3.614 Mpc</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.99</data>
+    </node>
+    <node id="C-F19-01">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">rd calib −3.614 Mpc corrige viés</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.99</data>
+    </node>
+    <node id="C-F19-02">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">Com rd correto, Ωs0→0</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.98</data>
+    </node>
+    <node id="C-F19-03">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">ΔBIC=+22.27 → ΛCDM forte</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.95</data>
+    </node>
+    <node id="C-F20-01">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">Ωs0 UL95=0.00178 (MCMC)</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.93</data>
+    </node>
+    <node id="C-F20-02">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">ln(B₁₀)=−6.190±0.691 (dynesty)</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.96</data>
+    </node>
+    <node id="C-F20-03">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">Evidência muito forte para ΛCDM (Jeffreys)</data>
+      <data key="epistemic_status">VERIFICADO_NA_FONTE</data>
+      <data key="confidence">0.95</data>
+    </node>
+    <node id="C-F20-04">
+      <data key="node_type">CLAIM</data>
+      <data key="node_label">G4: bias E&amp;H varia em param space</data>
+      <data key="epistemic_status">TOKEN_VAZIO</data>
+      <data key="confidence">0.7</data>
+    </node>
+    <node id="CONTRADICTION-01">
+      <data key="node_type">CONTRADICTION</data>
+      <data key="node_label">Ωs0=0.012 (FASE18-E) vs Ωs0≈0 (FASE19-20)</data>
+      <data key="epistemic_status">RESOLVIDA</data>
+    </node>
+    <node id="PR_551">
+      <data key="node_type">PR</data>
+      <data key="node_label">PR #551 (FASE 18, merged 2026-07-14)</data>
+    </node>
+    <node id="PR_553">
+      <data key="node_type">PR</data>
+      <data key="node_label">PR #553 (FASE 19, merged 2026-07-14)</data>
+    </node>
+    <node id="PR_554">
+      <data key="node_type">PR</data>
+      <data key="node_label">PR #554 (FASE 20, merged 2026-07-15)</data>
+    </node>
+    <edge id="e0" source="planck_2018_vi" target="rd_calibration">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">rd=147.09 Mpc, Planck 2018 VI Tabela 2</data>
+    </edge>
+    <edge id="e1" source="planck_2018_vi" target="rs_star_calib">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">rs*(z*)=144.511 Mpc; chi²_CMB parâmetros de calibração</data>
+    </edge>
+    <edge id="e2" source="eisenstein_hu_1998" target="eh_bias">
+      <data key="edge_type">DERIVED_FROM</data>
+      <data key="edge_note">Fórmula Eq.4 para z_drag causa viés de +3.61 Mpc em rd</data>
+    </edge>
+    <edge id="e3" source="eh_bias" target="planck_2018_vi">
+      <data key="edge_type">CONTRADICTS</data>
+      <data key="edge_note">z_drag_EH=1021 vs z_drag_Planck=1059; Δrd=+3.614 Mpc</data>
+    </edge>
+    <edge id="e4" source="chen_2019" target="rs_star_calib">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">l_A=π×D_M(z*)/rs*(z*); fórmula correta para CMB shift parameter</data>
+    </edge>
+    <edge id="e5" source="cooke_2018" target="C-F18-01">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Prior BBN Ωb·h²=0.02236±0.00015 ancorando calibração</data>
+    </edge>
+    <edge id="e6" source="rll_fase18e_py" target="rs_star_calib">
+      <data key="edge_type">IMPLEMENTS</data>
+      <data key="edge_note">_RS_STAR_CALIB_MPC aditivo em compute_sound_horizons</data>
+    </edge>
+    <edge id="e7" source="rll_fase19_py" target="rd_calibration">
+      <data key="edge_type">IMPLEMENTS</data>
+      <data key="edge_note">_RD_CALIB_MPC=RD_PLANCK2018−rd_numerical_planck</data>
+    </edge>
+    <edge id="e8" source="rll_fase19_py" target="rs_star_calib">
+      <data key="edge_type">IMPLEMENTS</data>
+      <data key="edge_note">Herda calibração de FASE 18-E</data>
+    </edge>
+    <edge id="e9" source="rll_fase20_py" target="rd_calibration">
+      <data key="edge_type">USES_METHOD</data>
+      <data key="edge_note">Herda ambas as calibrações de FASE 19</data>
+    </edge>
+    <edge id="e10" source="rll_fase18e_py" target="rll_fase18e_json">
+      <data key="edge_type">PRODUCES</data>
+    </edge>
+    <edge id="e11" source="rll_fase19_py" target="rll_fase19_json">
+      <data key="edge_type">PRODUCES</data>
+    </edge>
+    <edge id="e12" source="rll_fase20_py" target="rll_fase20_json">
+      <data key="edge_type">PRODUCES</data>
+    </edge>
+    <edge id="e13" source="rll_fase18e_json" target="C-F17-01">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Ωs0=0.012 observado em FASE 18-E — ponto de partida do diagnóstico</data>
+    </edge>
+    <edge id="e14" source="rll_fase19_json" target="C-F17-01">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Ωs0→0 após correção confirma diagnóstico de artefato</data>
+    </edge>
+    <edge id="e15" source="planck_2018_vi" target="C-F18-02">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">rd=147.09 Mpc (Planck) é o padrão de referência para o bias Δrd</data>
+    </edge>
+    <edge id="e16" source="eisenstein_hu_1998" target="C-F18-02">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Fórmula E&amp;H 1998 z_drag produz rd_EH=150.704 Mpc — valor medido do bias</data>
+    </edge>
+    <edge id="e17" source="rll_fase19_json" target="C-F19-01">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e18" source="rll_fase19_json" target="C-F19-02">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e19" source="rll_fase19_json" target="C-F19-03">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e20" source="rll_fase20_json" target="C-F20-01">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e21" source="rll_fase20_json" target="C-F20-02">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e22" source="rll_fase20_json" target="C-F20-03">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e23" source="rll_fase19_json" target="rll_fase18e_json">
+      <data key="edge_type">SUPERSEDES</data>
+      <data key="edge_note">Ωs0=0.012 → Ωs0≈0; rd viés removido na FASE 19</data>
+    </edge>
+    <edge id="e24" source="rll_fase19_py" target="G2">
+      <data key="edge_type">CLOSES</data>
+    </edge>
+    <edge id="e25" source="rll_fase20_py" target="G1">
+      <data key="edge_type">CLOSES</data>
+    </edge>
+    <edge id="e26" source="rll_fase20_py" target="G3">
+      <data key="edge_type">CLOSES</data>
+    </edge>
+    <edge id="e27" source="foreman_mackey_2013" target="rll_fase20_py">
+      <data key="edge_type">USED_IN</data>
+      <data key="edge_note">emcee EnsembleSampler 32×1500</data>
+    </edge>
+    <edge id="e28" source="speagle_2020" target="rll_fase20_py">
+      <data key="edge_type">USED_IN</data>
+      <data key="edge_note">dynesty NestedSampler nlive=150</data>
+    </edge>
+    <edge id="e29" source="desi_dr2_2025" target="rll_fase20_py">
+      <data key="edge_type">TESTS</data>
+      <data key="edge_note">13 pontos BAO; contribuição chi²_DESI=28.48</data>
+    </edge>
+    <edge id="e30" source="moresco_2022" target="rll_fase20_py">
+      <data key="edge_type">TESTS</data>
+      <data key="edge_note">33 pontos H(z); contribuição chi²_Hz=23.31</data>
+    </edge>
+    <edge id="e31" source="pantheon_shoes_2022" target="rll_fase20_py">
+      <data key="edge_type">TESTS</data>
+      <data key="edge_note">1624 SNe Ia; contribuição chi²_SN=713.81</data>
+    </edge>
+    <edge id="e32" source="jeffreys_1961" target="C-F20-03">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Escala: |ln(B₁₀)|&gt;5 = muito forte</data>
+    </edge>
+    <edge id="e33" source="C-F17-01" target="G4">
+      <data key="edge_type">DERIVED_FROM</data>
+      <data key="edge_note">G4 identificado como limitação residual da calibração aditiva</data>
+    </edge>
+    <edge id="e34" source="C-F17-01" target="rll_superiority_claim">
+      <data key="edge_type">NOT_EVIDENCE_FOR</data>
+      <data key="edge_note">Diagnóstico de artefato ≠ validação do modelo RLL; identificar viés não sustenta superioridade de RLL sobre ΛCDM</data>
+    </edge>
+    <edge id="e35" source="C-F19-01" target="C-F19-02">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Correção rd → colapso Ωs0</data>
+    </edge>
+    <edge id="e36" source="C-F19-02" target="C-F19-03">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e37" source="C-F19-01" target="C-F20-01">
+      <data key="edge_type">SUPPORTS</data>
+      <data key="edge_note">Calibração rd herdada em FASE 20</data>
+    </edge>
+    <edge id="e38" source="C-F20-02" target="C-F20-03">
+      <data key="edge_type">SUPPORTS</data>
+    </edge>
+    <edge id="e39" source="rll_fase18e_py" target="PR_551">
+      <data key="edge_type">MERGED_IN</data>
+    </edge>
+    <edge id="e40" source="rll_fase19_py" target="PR_553">
+      <data key="edge_type">MERGED_IN</data>
+    </edge>
+    <edge id="e41" source="rll_fase20_py" target="PR_554">
+      <data key="edge_type">MERGED_IN</data>
+    </edge>
+    <edge id="e42" source="rll_fase19_py" target="doc18">
+      <data key="edge_type">DOCUMENTED_IN</data>
+    </edge>
+    <edge id="e43" source="rll_fase20_py" target="doc19">
+      <data key="edge_type">DOCUMENTED_IN</data>
+    </edge>
+    <edge id="e44" source="rll_fase18e_json" target="CONTRADICTION-01">
+      <data key="edge_type">PART_OF</data>
+    </edge>
+    <edge id="e45" source="rll_fase19_json" target="CONTRADICTION-01">
+      <data key="edge_type">RESOLVES</data>
+    </edge>
+  </graph>
+</graphml>

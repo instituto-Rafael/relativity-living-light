@@ -1,0 +1,208 @@
+{
+  "schema": "rll.cross_repo_entrelace_registry.v2",
+  "generated_utc": "2026-07-16T21:00:00Z",
+  "owner_repository": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "policies": {
+    "no_automatic_cross_repo_write": true,
+    "no_automatic_merge": true,
+    "no_claim_promotion_from_documentation": true,
+    "private_content_pointer_only": true,
+    "token_vazio_is_valid": true,
+    "fail_closed_on_missing_artifact": true
+  },
+  "relationships": [
+    {
+      "id": "RLL-RP-FORMAL-001",
+      "relation_type": "METHOD_BRIDGE",
+      "state": "VERIFIED_LIMITED",
+      "source": {
+        "repo": "instituto-Rafael/relativity-living-light",
+        "ref": "main",
+        "path": "docs/canonicos/24_PONTE_FORMAL_FISICA_RAFPOLIMATA.md",
+        "blob_sha": "0b6058571a42cc56937244ed292f6bf0d05c6de4"
+      },
+      "target": {
+        "repo": "rafaelmeloreisnovo/RafPolimata",
+        "ref": "main",
+        "path": "docs/ORQUESTRADOR_FORMAL_CIENTIFICO.md",
+        "blob_sha": "631cfb9dfee94c92767421cc2f5049f3c0b15887"
+      },
+      "proven": [
+        "Both repositories define the same evidence-gate direction: formal definition -> units -> model -> data -> uncertainty -> falsifier -> bounded claim.",
+        "RLL assigns cosmology/observables to itself and formal equations/gates to RafPolimata."
+      ],
+      "not_proven": [
+        "No shared package or executable API is proven.",
+        "No independent replication is implied.",
+        "METHOD_DEFINED does not mean physical confirmation."
+      ],
+      "required_artifact": {
+        "schema": "rll.formal_experiment_manifest.v1",
+        "status": "TOKEN_VAZIO",
+        "expected_path": "results/cross_repo/formal_experiment_manifest.json"
+      },
+      "next_action": "Emit one RLL experiment manifest using stable equation IDs and validate it in both repositories.",
+      "rollback": "Revert only the bridge registry entry; keep both canonical documents unchanged."
+    },
+    {
+      "id": "RLL-CQ-RUNTIME-001",
+      "relation_type": "RUNTIME_EVIDENCE_CONTRACT",
+      "state": "VERIFIED_LIMITED",
+      "source": {
+        "repo": "instituto-Rafael/relativity-living-light",
+        "ref": "main",
+        "path": "docs/canonicos/24_PONTE_FORMAL_FISICA_RAFPOLIMATA.md",
+        "blob_sha": "0b6058571a42cc56937244ed292f6bf0d05c6de4"
+      },
+      "target": {
+        "repo": "rafaelmeloreisnovo/ChipQuantum",
+        "ref": "main",
+        "path": "docs/FORMAL_SCIENCE_RUNTIME_CONFORMANCE.md",
+        "blob_sha": "a11162d3b707453447ba8ac91bb0f2da14365cbc"
+      },
+      "proven": [
+        "ChipQuantum defines a runtime evidence manifest with source hash, binary hash, compiler, flags, architecture, equation IDs and claim state.",
+        "RLL defines runtime, dataset, uncertainty, artifact-hash and verdict fields for experiment evidence."
+      ],
+      "not_proven": [
+        "No ChipQuantum runtime artifact has been imported into RLL.",
+        "No ARM32/ARM64/x86_64 cross-architecture equivalence is proven by this registry.",
+        "Code compilation or determinism would not validate RLL physics."
+      ],
+      "required_artifact": {
+        "schema": "chipquantum.runtime_evidence.v1",
+        "status": "TOKEN_VAZIO",
+        "expected_path": "results/cross_repo/chipquantum_runtime_evidence.json"
+      },
+      "next_action": "Generate one bounded float64 reference run and one fixed-point run, then compare hashes, tolerances and overflow counters.",
+      "rollback": "Remove the candidate import record; do not delete runtime evidence or negative results."
+    },
+    {
+      "id": "RLL-GAIA-LEDGER-001",
+      "relation_type": "LEDGER_COMPATIBILITY",
+      "state": "VERIFIED_LIMITED",
+      "source": {
+        "repo": "instituto-Rafael/relativity-living-light",
+        "ref": "main",
+        "path": "knowledge_ecosystem/session_operating_system.yml",
+        "blob_sha": "eb3e7a393430af8c96dc349b89985b4e786dbb97"
+      },
+      "target": {
+        "repo": "rafaelmeloreisnovo/GAIA_phi",
+        "ref": "main",
+        "path": "docs/CODEX_CONTINUA_CLAIM_LEDGER.md",
+        "blob_sha": "993833ec8d6b9c918f2e5b0f040c921374c80f9e"
+      },
+      "proven": [
+        "Both repositories model claim -> repository -> path -> evidence -> test -> state -> next action.",
+        "Both preserve TOKEN_VAZIO and CONTRADICTION as valid states."
+      ],
+      "not_proven": [
+        "No automatic GAIA ingestion of RLL artifacts is proven.",
+        "No shared canonical schema version is proven.",
+        "Hashing a record does not validate the scientific meaning of the record."
+      ],
+      "required_artifact": {
+        "schema": "gaia.claim_ledger.import_receipt.v1",
+        "status": "TOKEN_VAZIO",
+        "expected_path": "results/cross_repo/gaia_import_receipt.json"
+      },
+      "next_action": "Define a one-way pointer-only import receipt for an RLL claim and reject payload mutation.",
+      "rollback": "Delete only the import pointer after preserving the original RLL artifact and audit record."
+    },
+    {
+      "id": "RLL-VECTRAS-DEVICE-001",
+      "relation_type": "DOCUMENTATION_BRIDGE",
+      "state": "BLOCKED",
+      "source": {
+        "repo": "instituto-Rafael/relativity-living-light",
+        "ref": "main",
+        "path": "docs/canonicos/24_PONTE_FORMAL_FISICA_RAFPOLIMATA.md",
+        "blob_sha": "0b6058571a42cc56937244ed292f6bf0d05c6de4"
+      },
+      "target": {
+        "repo": "rafaelmeloreisnovo/Vectras-VM-Android",
+        "ref": "master",
+        "path": "docs/RAFAELIA_LAMA_RAFAEL_IA_INTEGRATION_MAP.md",
+        "blob_sha": "4b14319b66a5143b91accb84baca948decbb5343"
+      },
+      "proven": [
+        "The architecture documents assign device/QEMU execution to Vectras and scientific interpretation to RLL.",
+        "Vectras explicitly marks the safe current stage as documentation-only and BETA_BLOCKED."
+      ],
+      "not_proven": [
+        "No current APK hash, real-device smoke, QEMU boot evidence or RLL run inside Vectras is proven.",
+        "No performance gain is proven.",
+        "A documentation bridge is not a runtime bridge."
+      ],
+      "required_artifact": {
+        "schema": "vectras.device_runtime_smoke.v1",
+        "status": "BLOCKED",
+        "expected_path": "reports/device_runtime_smoke.json"
+      },
+      "next_action": "Produce current APK manifest and real-device smoke evidence before importing any Vectras result into RLL.",
+      "rollback": "Keep Vectras stopped and images immutable; remove only the RLL pointer if evidence is invalid."
+    },
+    {
+      "id": "RLL-TERMUX-PROVENANCE-001",
+      "relation_type": "PROVENANCE_BRIDGE",
+      "state": "PARTIAL",
+      "source": {
+        "repo": "instituto-Rafael/relativity-living-light",
+        "ref": "main",
+        "path": "docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md",
+        "blob_sha": "3e7a7650f889e9b30328e8155c8a819f6789733b"
+      },
+      "target": {
+        "repo": "rafaelmeloreisnovo/termux-app-rafacodephi",
+        "ref": "master",
+        "path": "scripts/validate_rafcodephi_packages_source.sh",
+        "blob_sha": "0f518f3ed376d609f1b52188b6fe35c58a8f1162"
+      },
+      "proven": [
+        "The Termux fork has a pinned source-contract validator and explicit ARM ABI manifest fields.",
+        "RLL has a provenance ledger defining acceptable command, environment, input and output hash evidence."
+      ],
+      "not_proven": [
+        "The current Termux fork does not prove that early RLL calculations ran on the author's phone.",
+        "No historical shell log or original mobile artifact chain is located.",
+        "A current source contract cannot retroactively establish historical provenance."
+      ],
+      "required_artifact": {
+        "schema": "rll.mobile_provenance.v1",
+        "status": "TOKEN_VAZIO",
+        "expected_path": "data/provenance/rll_v1_mobile_execution_manifest.json"
+      },
+      "next_action": "Locate one original figure or CSV and link command, environment, input hash, output hash and timestamp without rewriting history.",
+      "rollback": "Revert any unsupported provenance promotion to DECLARED_BY_AUTHOR or TOKEN_VAZIO."
+    }
+  ],
+  "urgent_gaps": [
+    {
+      "id": "URG-G4-SNAPSHOT-SYNC",
+      "state": "RESOLVED_BY_OVERLAY",
+      "problem": "The FASE17-20 snapshot records G4 as TOKEN_VAZIO while FASE22 later quantifies and closes it.",
+      "resolution": "Preserve the historical snapshot status and attach a current-state overlay through FASE22.",
+      "evidence": [
+        "results/session_grafo_fase17_20/gaps.jsonl",
+        "docs/cronologia-auditoria/21_FASE22_G4_EH_BIAS_GRID.md",
+        "results/rll_fase22_g4_eh_bias_grid.json"
+      ]
+    },
+    {
+      "id": "URG-CROSS-REPO-RUNTIME-EVIDENCE",
+      "state": "TOKEN_VAZIO",
+      "problem": "No external runtime manifest has yet been imported into the RLL evidence graph.",
+      "resolution": "Import exactly one bounded, hashed runtime artifact before adding further runtime relationships.",
+      "evidence": []
+    },
+    {
+      "id": "URG-MOBILE-HISTORICAL-PROVENANCE",
+      "state": "TOKEN_VAZIO",
+      "problem": "Historical mobile/Termux provenance is declared but lacks an original artifact chain.",
+      "resolution": "Locate one original artifact and produce a non-retroactive provenance manifest.",
+      "evidence": []
+    }
+  ]
+}

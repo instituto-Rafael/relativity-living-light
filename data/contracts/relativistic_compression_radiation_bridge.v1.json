@@ -1,0 +1,45 @@
+{
+  "schema": "rll.relativistic_compression_radiation.contract.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "scope": [
+    "compression work -p*Theta",
+    "magnetic pressure B^2/(2*mu0)",
+    "radiation momentum flux and photon thrust",
+    "Eddington acceleration benchmark",
+    "non-relativistic electron degeneracy pressure reference",
+    "electromagnetic and radiation energy equivalent mass-density proxy",
+    "configurable microphysics threshold ledger"
+  ],
+  "semantic_boundaries": {
+    "particles_do_not_touch": "INCOMPLETE_CLASSICAL_METAPHOR",
+    "corrected_interaction": "particles and fields scatter/interact; wavefunctions may overlap; identical fermions cannot share one quantum state",
+    "compression_automatically_creates_subparticles": false,
+    "threshold_reached_equals_process_occurs": false,
+    "electron_spin_automatically_generates_macroscopic_field": false,
+    "magnetic_field_lines_are_material_strings": false,
+    "magnetism_is_separate_gravity": false,
+    "stress_energy_includes_matter_em_and_radiation": true,
+    "photon_momentum_transfer_supported": true,
+    "radiation_can_oppose_inflow": true
+  },
+  "required_for_physical_promotion": [
+    "source mass and spin",
+    "metric and GRMHD solution",
+    "radiation transfer and opacity model",
+    "particle distribution functions",
+    "species-specific cross sections",
+    "quantum kinetic or spin-hydrodynamic closure when spin is claimed",
+    "nuclear reaction network when nuclear transformation is claimed",
+    "observations with uncertainty and covariance"
+  ],
+  "reference_thresholds_are_not_universal_cross_sections": true,
+  "grmhd_solution": false,
+  "quantum_kinetic_solution": false,
+  "spin_hydrodynamics_solution": false,
+  "einstein_backreaction_solution": false,
+  "nuclear_network_solution": false,
+  "laboratory_validation": false,
+  "astrophysical_validation": false,
+  "rll_cosmology_validation": false,
+  "claim_allowed": false
+}

@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.example/schemas/cosmological_matter_observation.v1.schema.json",
+  "title": "Cosmological Matter Observation Manifest V1",
+  "description": "Public-safe structural contract for cosmological and planetary matter spectroscopy; schema validation is not scientific validation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "evidence_state",
+    "target",
+    "target_layer",
+    "probe_family",
+    "method",
+    "spectral_coordinate",
+    "instrument",
+    "calibration",
+    "uncertainty",
+    "provenance",
+    "retrieval",
+    "epistemic_boundary",
+    "claim_allowed"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_state": {
+      "enum": [
+        "SYNTHETIC",
+        "OBSERVATIONAL",
+        "IN_SITU",
+        "TOKEN_VAZIO"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "class"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "class": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "target_layer": {
+      "enum": [
+        "atmosphere",
+        "surface",
+        "plasma_magnetosphere",
+        "interior",
+        "line_of_sight_medium"
+      ]
+    },
+    "probe_family": {
+      "enum": [
+        "electromagnetic_remote",
+        "electromagnetic_active",
+        "particle_and_nuclear",
+        "field_structure_interior"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "spectral_coordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "unit",
+        "min",
+        "max"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "wavelength",
+            "frequency",
+            "energy",
+            "mass_to_charge",
+            "channel",
+            "not_applicable"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "min": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "max": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "response_declared",
+        "resolution_declared"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "response_declared": {
+          "type": "boolean"
+        },
+        "resolution_declared": {
+          "type": "boolean"
+        }
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "units_declared",
+        "background_declared"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "units_declared": {
+          "type": "boolean"
+        },
+        "background_declared": {
+          "type": "boolean"
+        }
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statistical_declared",
+        "systematics_declared",
+        "covariance_state"
+      ],
+      "properties": {
+        "statistical_declared": {
+          "type": "boolean"
+        },
+        "systematics_declared": {
+          "type": "boolean"
+        },
+        "covariance_state": {
+          "enum": [
+            "DECLARED",
+            "DIAGONAL_ONLY",
+            "TOKEN_VAZIO",
+            "NOT_APPLICABLE"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "license",
+        "hash",
+        "private_data_included"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "private_data_included": {
+          "const": false
+        }
+      }
+    },
+    "retrieval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "line_or_reference_database",
+        "priors_declared",
+        "alternatives_tested",
+        "falsifier"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line_or_reference_database": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priors_declared": {
+          "type": "boolean"
+        },
+        "alternatives_tested": {
+          "type": "boolean"
+        },
+        "falsifier": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "epistemic_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "composition_is_inference",
+        "phase_claim_state",
+        "dark_sector_claim_state"
+      ],
+      "properties": {
+        "composition_is_inference": {
+          "const": true
+        },
+        "phase_claim_state": {
+          "enum": [
+            "NOT_CLAIMED",
+            "MODEL_DEPENDENT",
+            "EVIDENCE_SUPPORTED",
+            "TOKEN_VAZIO"
+          ]
+        },
+        "dark_sector_claim_state": {
+          "enum": [
+            "NOT_CLAIMED",
+            "HYPOTHESIS",
+            "TOKEN_VAZIO"
+          ]
+        }
+      }
+    },
+    "claim_allowed": {
+      "const": false
+    }
+  }
+}

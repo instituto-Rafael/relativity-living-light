@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.5281/zenodo.17188137",
+    "title": ["Relativity Living Light: cosmological model with dynamic dark energy"],
+    "abstract": "A synthetic metadata fixture describing cosmology, gravity, relativity, mathematics and observational validation boundaries.",
+    "type": "posted-content",
+    "container-title": ["RLL Research Artifacts"],
+    "published": {"date-parts": [[2025, 9, 24]]},
+    "author": [{"given": "Fixture", "family": "Author", "ORCID": "https://orcid.org/0000-0000-0000-001X"}],
+    "URL": "https://doi.org/10.5281/zenodo.17188137"
+  }
+}

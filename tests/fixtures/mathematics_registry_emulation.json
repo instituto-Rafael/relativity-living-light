@@ -1,0 +1,112 @@
+{
+  "schema": "rafaelia.mathematics-papers-theorems-registry.v1",
+  "generated_at": "2026-07-27",
+  "claim_allowed": false,
+  "vector_rule": {
+    "uncoupled_vector_value": null,
+    "uncoupled_vector_state": "TOKEN_VAZIO_UNCOUPLED_VECTOR",
+    "zero_is_not_unknown": true
+  },
+  "artifacts": [
+    {
+      "id": "MATH-FN123",
+      "authority": {
+        "repository": "rafaelmeloreisnovo/Matem-tica-",
+        "document": "papers/2026-05-23_teorema_forma_normal_123.md",
+        "implementation": "src/verify_123.py",
+        "result": null
+      },
+      "implementation_state": "IMPLEMENTED",
+      "data": {
+        "kind": "DETERMINISTIC_GENERATED_DOMAIN",
+        "real_world_observation": false
+      },
+      "vector": {
+        "value": null,
+        "state": "TOKEN_VAZIO_UNCOUPLED_VECTOR"
+      },
+      "physical_adapter": {
+        "state": "NOT_APPLICABLE"
+      },
+      "evidence_class": ["EXACT_PROOF", "FINITE_COMPUTATION"],
+      "claim_state": "MATHEMATICAL_ONLY"
+    },
+    {
+      "id": "MATH-OMEGA-CUBE-42",
+      "authority": {
+        "repository": "rafaelmeloreisnovo/Matem-tica-",
+        "document": "papers/2026-07-17_omega_cube42_invariante_geometrica.md",
+        "implementation": "src/verify_omega_cube42.py",
+        "result": "results/omega_cube42_verification.json"
+      },
+      "implementation_state": "IMPLEMENTED",
+      "data": {
+        "kind": "DETERMINISTIC_ENUMERATION",
+        "real_world_observation": false,
+        "candidate_count": 42
+      },
+      "vector": {
+        "value": null,
+        "state": "TOKEN_VAZIO_UNCOUPLED_VECTOR"
+      },
+      "physical_adapter": {
+        "state": "TOKEN_VAZIO_PHYSICAL_COUPLING",
+        "falsifier": "No stable basin advantage versus 36, 48 and 64 candidates."
+      },
+      "evidence_class": ["FINITE_COMPUTATION", "HYPOTHESIS"],
+      "claim_state": "EXACT_CARDINALITY_PHYSICAL_CLAIM_BLOCKED"
+    },
+    {
+      "id": "BRIDGE-SPIRAL-PLASMA-THERMAL",
+      "authority": {
+        "repository": "instituto-Rafael/relativity-living-light",
+        "document": "docs/strong_gravity/SPIRAL_PLASMA_THERMAL_BRIDGE.md",
+        "implementation": null,
+        "result": "data/results/strong_gravity/spiral_plasma_thermal_bridge_baseline.json"
+      },
+      "implementation_state": "IMPLEMENTED_BOUNDED_BRIDGE",
+      "data": {
+        "kind": "MODEL_BASELINE",
+        "real_world_observation": false,
+        "frequencies_hz": [144000, 288000]
+      },
+      "vector": {
+        "value": null,
+        "state": "TOKEN_VAZIO_UNCOUPLED_VECTOR"
+      },
+      "physical_adapter": {
+        "state": "IMPLEMENTED_MODEL_UNVALIDATED_EXPERIMENTALLY",
+        "falsifier": "Units, controls, uncertainty or reproducibility fail."
+      },
+      "evidence_class": ["EXECUTABLE_MODEL", "SYNTHETIC_DATA", "HYPOTHESIS"],
+      "claim_state": "LAB_AND_ASTROPHYSICAL_VALIDATION_FALSE"
+    },
+    {
+      "id": "MODEL-RLL-COSMOLOGY",
+      "authority": {
+        "repository": "instituto-Rafael/relativity-living-light",
+        "document": "docs/science/PEER_REVIEW_READINESS_STATUS.md",
+        "implementation": "data/pipelines/structure_d/models.py",
+        "result": "results/rll_fase20_mcmc_bayes.json"
+      },
+      "implementation_state": "IMPLEMENTED",
+      "data": {
+        "kind": "REAL_OBSERVATIONAL_DATA_PIPELINE",
+        "real_world_observation": true,
+        "sample_count": 1677
+      },
+      "vector": {
+        "value": [66.89662043032884, 0.3143746952449269, 0.049798276368180995, 0.0005722653892687908, 11.100703006674221, 1.0177609039997741],
+        "labels": ["H0", "Omega_m", "Omega_b", "Omega_s0", "z_t", "w_t"],
+        "state": "COUPLED_POSTERIOR_MEAN_VECTOR",
+        "source": "results/rll_fase20_mcmc_bayes.json"
+      },
+      "physical_adapter": {
+        "state": "DIRECT_PHYSICAL_MODEL",
+        "falsifier": "Bayesian evidence or information criteria favor the reference model."
+      },
+      "evidence_class": ["REAL_OBSERVATIONAL_DATA", "EXECUTABLE_MODEL"],
+      "claim_state": "CURRENT_PARAMETRIZATION_DISFAVORED_VS_LCDM"
+    }
+  ]
+}

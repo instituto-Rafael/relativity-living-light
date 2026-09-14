@@ -1,0 +1,43 @@
+{
+  "artifact_id": "20260709-132833-utc-rll-balance",
+  "artifact_directory": "artifacts/rll_balance/20260709-132833-utc/",
+  "source_upload": {
+    "file": "rll-balance-report.zip",
+    "sha256": "81808ae76e956e9e817e9b42b0eae46c2a9988d325c517bfd163cd07a2e5dc63",
+    "size_bytes": 2316
+  },
+  "files": [
+    {
+      "path": "artifacts/rll_balance/20260709-132833-utc/input.json",
+      "source_name": "input.json",
+      "sha256": "61a1b3ec3edf41a66e67098add8a7efe6ca0ea407d3090d3bc187a0379b624f8",
+      "size_bytes": 258
+    },
+    {
+      "path": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.json",
+      "source_name": "rll_balance_report.json",
+      "sha256_original_upload": "2fdadef53ca3c4d63ce16ad716ffa5660ef870f7602933fce8fe3086436a438c",
+      "note": "O arquivo foi adaptado no repositório para alinhar paths à pasta datada e incluir metadados de coerência operacional."
+    },
+    {
+      "path": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.md",
+      "source_name": "rll_balance_report.md",
+      "sha256_original_upload": "cda6fc3813119bbdc422a33a7456b30d255fadd62c7b2f9a65ab09e12b1de5ca",
+      "note": "O arquivo foi adaptado no repositório para alinhar paths à pasta datada, declarar artefatos irmãos e registrar a parábola operacional."
+    }
+  ],
+  "decision": {
+    "state": "RLL_PERDE",
+    "winner": "CPL",
+    "metric": "bic",
+    "reason": "Baseline 'CPL' superou RLL em 'bic'."
+  },
+  "operational_coherence": {
+    "path_alignment": true,
+    "dated_directory": true,
+    "input_report_manifest_linked": true,
+    "status": "ADAPTADO"
+  },
+  "status_epistemologico": "RESULTADO_COMPUTACIONAL",
+  "next_step": "Usar este artefato como amostra real do workflow rll-balance-report.yml e publicar o relatório como artifact oficial do CI."
+}

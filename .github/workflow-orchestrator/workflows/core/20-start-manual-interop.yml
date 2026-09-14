@@ -1,0 +1,19 @@
+id: start_manual_interop
+description: "Run manual interoperability orchestrator checks and probes."
+file: START_MANUAL_HERE.yml
+stage: 20
+enabled: true
+tags: [all, core, validation]
+wait_for_completion: true
+timeout_minutes: 45
+inputs:
+  run_profile: full_validation
+  pipeline_scope: all
+  dataset_group: all
+  book_scope: all
+  mode: metadata_only
+  real_data_source: auto
+  validate_workflows: true
+  validate_data_yml: true
+  run_data_preparation_probe: true
+  strict_mode: true

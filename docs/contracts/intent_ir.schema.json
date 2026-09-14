@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/docs/contracts/intent_ir.schema.json",
+  "title": "Intent IR",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "intent_id",
+    "action",
+    "target",
+    "inputs",
+    "constraints",
+    "evidence_refs",
+    "requested_capabilities",
+    "risk",
+    "execution_gate"
+  ],
+  "properties": {
+    "schema": {"const": "rafaelia.intent.v1"},
+    "intent_id": {"type": "string", "minLength": 1},
+    "action": {"type": "string", "minLength": 1},
+    "target": {"type": "object"},
+    "inputs": {"type": "array", "items": {}},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "requested_capabilities": {"type": "array", "items": {"type": "string"}},
+    "risk": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+    "execution_gate": {"type": "string", "enum": ["allow", "sandbox_only", "human_review", "blocked"]}
+  }
+}

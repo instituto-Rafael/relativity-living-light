@@ -26,6 +26,8 @@ completed_v2_metric_routes: orbital_shape_angular_momentum
 strongest immediate route: compact_remnant_boundary
 strongest transdisciplinary route: orbital_shape_angular_momentum
 highest product route: claim governance engine
+environmental_signal_route: canonical manifest + validator + 7 local tests
+workflow_change_for_environmental_route: none
 claim_allowed: false
 ```
 
@@ -41,6 +43,7 @@ claim_allowed: false
 5. Physical module separation by route
 6. FAIR-style workflow behavior
 7. Explicit claim boundary until baseline and uncertainty exist
+8. Noise cannot be discarded, corrected or promoted before meaning, reproduction and mechanism are recorded
 ```
 
 ---
@@ -49,6 +52,7 @@ claim_allowed: false
 
 | Route | Urgency | Need | Proof of capacity | Next data | Gate |
 |---|---|---|---|---|---|
+| `environmental_signal_custody` | P0 | stop semantic collapse across atmosphere, aerosol, electricity, detector and noise | ordered 12-module manifest + strict validator + 7 local tests | instrumented atmosphere/shower/aerosol receipts | semantic meaning + reproduction + mechanism |
 | `orbital_shape_angular_momentum` | P0 | lock real vector route | Mars `h_vector` v2 exists | 30-day Mars vectors | residual tolerance + baseline note |
 | `compact_remnant_boundary` | P0 | strongest academic route | seed + custody slots exist | GW190814/GW230529 posterior | mass-gap overlap probability |
 | `raw_data_custody_governance` | P0 | all routes depend on custody | 2 local raw files with SHA | manifest validator v2 | no SHA/source, no metric |
@@ -64,17 +68,20 @@ claim_allowed: false
 
 ```text
 1. raw_data_custody_governance
-2. orbital_shape_angular_momentum
-3. compact_remnant_boundary
-4. publication_and_product_packaging
-5. high_z_smbh_seeds
-6. wandering_dark_compact_mass
-7. historical_impulse_slingshot
-8. residual_gravity_structures
+2. environmental_signal_custody
+3. orbital_shape_angular_momentum
+4. compact_remnant_boundary
+5. publication_and_product_packaging
+6. high_z_smbh_seeds
+7. wandering_dark_compact_mass
+8. historical_impulse_slingshot
+9. residual_gravity_structures
 ```
+
+The environmental route does not add a workflow. Existing orchestration may call the validator as one typed command after the manifest and data are available.
 
 ---
 
 ## Safe conclusion
 
-The system should feed more data, but each path must keep custody, module separation, falsifiability gate and negative-result behavior. The next best move is to lock orbital v2 with tests and then feed compact-remnant posterior data.
+The system should feed more data, but each path must keep custody, module separation, falsifiability gate and negative-result behavior. Environmental anomalies remain blocked until meaning, reproduction and mechanism are recorded; only then may they be discarded with reason, corrected with a receipt or promoted to signal.

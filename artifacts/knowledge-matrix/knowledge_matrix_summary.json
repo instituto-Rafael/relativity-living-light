@@ -1,0 +1,28 @@
+{
+  "total_items": 443,
+  "by_kind": {
+    "formula": 359,
+    "concept": 17,
+    "gap": 14,
+    "thesis": 23,
+    "observation": 19,
+    "validation": 5,
+    "bridge": 6
+  },
+  "by_maturity": {
+    "verified": 385,
+    "partial": 14,
+    "void": 10,
+    "latent": 27,
+    "seed": 7
+  },
+  "by_queue_state": {
+    "executed": 385,
+    "in_queue": 17,
+    "void": 10,
+    "latent": 31
+  },
+  "hypothesis_count": 3,
+  "claim_allowed": false,
+  "generated_at": "2026-07-28T00:25:01.053123+00:00"
+}

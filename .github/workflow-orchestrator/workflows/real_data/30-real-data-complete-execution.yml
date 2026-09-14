@@ -1,0 +1,15 @@
+id: real_data_complete_execution
+description: "Execute canonical real-data workflow in controlled audit mode."
+file: real-data-complete-execution.yml
+stage: 30
+enabled: true
+tags: [all, real_data, validation]
+wait_for_completion: true
+timeout_minutes: 60
+inputs:
+  execution_mode: audit_only
+  materialize_pantheon: false
+  run_structure_d: false
+  run_pantheon_validation: false
+  strict_real_data: true
+  retention_days: "14"

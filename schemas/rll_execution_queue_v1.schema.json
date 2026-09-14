@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.invalid/schemas/rll_execution_queue_v1.schema.json",
+  "title": "RLL Execution Queue V1",
+  "description": "Structural contract for a claim-bounded, dependency-ordered RLL execution queue that preserves TOKEN_VAZIO and forbids duplication of already implemented architecture.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_at",
+    "repository",
+    "source_main_commit",
+    "merged_prs",
+    "claim_allowed",
+    "invariants",
+    "already_present",
+    "queue",
+    "closure"
+  ],
+  "properties": {
+    "schema": {"const": "rll.execution_queue.v1"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "repository": {"const": "instituto-Rafael/relativity-living-light"},
+    "source_main_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "merged_prs": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+    },
+    "claim_allowed": {"const": false},
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 5}
+    },
+    "already_present": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/existing_item"}
+    },
+    "queue": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/queue_item"}
+    },
+    "closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["F_ok", "F_gap", "F_next"],
+      "properties": {
+        "F_ok": {"type": "array", "items": {"type": "string", "minLength": 3}},
+        "F_gap": {"type": "array", "items": {"type": "string", "minLength": 3}},
+        "F_next": {"type": "string", "minLength": 10}
+      }
+    }
+  },
+  "$defs": {
+    "evidence_class": {"type": "string", "enum": ["E", "C", "H", "P"]},
+    "existing_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "state", "evidence_class", "summary", "source_refs"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RLL-[A-Z0-9-]+$"},
+        "state": {"type": "string", "minLength": 3},
+        "evidence_class": {"$ref": "#/$defs/evidence_class"},
+        "summary": {"type": "string", "minLength": 10},
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 3}
+        }
+      }
+    },
+    "queue_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "urgency",
+        "state",
+        "evidence_class",
+        "authority",
+        "depends_on",
+        "facts",
+        "gap",
+        "next_action",
+        "acceptance",
+        "must_not"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"},
+        "urgency": {"type": "string", "enum": ["P0", "P1", "P2"]},
+        "state": {"type": "string", "minLength": 5},
+        "evidence_class": {"$ref": "#/$defs/evidence_class"},
+        "authority": {"type": "string", "minLength": 3},
+        "depends_on": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^RLL-P[0-2]-[A-Z0-9-]+$"}
+        },
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 10}
+        },
+        "gap": {"type": "string", "minLength": 10},
+        "next_action": {"type": "string", "minLength": 10},
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 5}
+        },
+        "must_not": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 5}
+        }
+      }
+    }
+  }
+}

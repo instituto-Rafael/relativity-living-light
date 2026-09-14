@@ -1,0 +1,31 @@
+{
+  "schema": "rll.project_sources_integration_state.v1",
+  "recorded_at": "2026-07-26T00:00:00Z",
+  "source_count": 14,
+  "raw_bodies_committed": false,
+  "claim_allowed": false,
+  "implementation": {
+    "manifest": "IMPLEMENTED",
+    "hash_verification": "IMPLEMENTED",
+    "chunking": "IMPLEMENTED",
+    "vector_search": "IMPLEMENTED",
+    "private_pointer_only": "IMPLEMENTED",
+    "event_chain": "IMPLEMENTED",
+    "local_tests": "PASS_5_OF_5"
+  },
+  "observed_local_execution": {
+    "state": "PASS_LOCAL_HASHED_SOURCE_SET",
+    "verified_local_hash_count": 12,
+    "metadata_only_count": 1,
+    "private_pointer_only_count": 1,
+    "chunk_count": 198,
+    "missing_count": 0,
+    "hash_mismatch_count": 0,
+    "receipt": "data/receipts/project_sources_local_receipt_20260726.json"
+  },
+  "external_execution": {
+    "independent_scientific_validation": "TOKEN_VAZIO_PER_CLAIM",
+    "persistent_production_index": "TOKEN_VAZIO_OPERATOR_DECISION"
+  },
+  "next_gate": "Review retrieved chunks by authority route, connect accepted RLL-direct items to claim and experiment ledgers, and keep all scientific promotions blocked until their own evidence gates pass."
+}

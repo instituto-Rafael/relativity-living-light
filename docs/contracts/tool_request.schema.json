@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/docs/contracts/tool_request.schema.json",
+  "title": "Tool Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "request_id", "intent_id", "capability", "compiled"],
+  "properties": {
+    "schema": {"const": "rafaelia.tool_request.v1"},
+    "request_id": {"type": "string", "minLength": 1},
+    "intent_id": {"type": "string", "minLength": 1},
+    "capability": {"type": "string", "minLength": 1},
+    "compiled": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "args"],
+      "properties": {
+        "command": {"type": "string", "enum": ["git"]},
+        "args": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

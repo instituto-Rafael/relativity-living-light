@@ -1,0 +1,11 @@
+{
+  "manifest_id": "rll-envsig-canonical-v1",
+  "modules": 12,
+  "references": 7,
+  "claim_allowed": false,
+  "promotion_allowed": false,
+  "status": "PASS",
+  "strict": true,
+  "local_tests": "7/7 PASS",
+  "remote_ci": "TOKEN_VAZIO_NOT_RUN"
+}

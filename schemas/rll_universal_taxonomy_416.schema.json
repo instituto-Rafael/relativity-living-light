@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rll_universal_taxonomy_416.schema.json",
+  "title": "RLL Universal Taxonomy 416 Manifest",
+  "description": "Structural contract for the user-supplied 30+386 taxonomy manifest and lossless module shards. Structural validity does not validate novelty, truth, implementation, patentability, or scientific claims; claim_allowed=false.",
+  "type": "object",
+  "required": [
+    "registry_id",
+    "source_provenance",
+    "count_audit",
+    "invariants",
+    "completion_profiles",
+    "clusters",
+    "module_blob_parts",
+    "module_encoding"
+  ],
+  "properties": {
+    "registry_id": {"const": "RLL-UNIVERSAL-TAXONOMY-416-V1"},
+    "source_provenance": {
+      "type": "object",
+      "required": ["baseline_macrothemes", "module_count", "claimed_total", "claim_allowed"],
+      "properties": {
+        "baseline_macrothemes": {"const": 30},
+        "module_count": {"const": 386},
+        "claimed_total": {"const": 416},
+        "claim_allowed": {"const": false}
+      }
+    },
+    "module_blob_parts": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "pattern": "^rll_universal_taxonomy_416\\.modules\\.part[1-4]\\.b64$"
+      }
+    },
+    "module_encoding": {"const": "base64(gzip(utf8(json-array)))"},
+    "clusters": {"type": "array", "minItems": 8, "maxItems": 8}
+  },
+  "additionalProperties": true
+}

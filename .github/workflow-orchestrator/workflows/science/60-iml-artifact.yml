@@ -1,0 +1,8 @@
+id: iml_artifact
+description: "Generate IML artifact outputs for session packaging."
+file: iml_artifact.yml
+stage: 60
+enabled: true
+tags: [all, science, artifacts]
+wait_for_completion: true
+timeout_minutes: 30

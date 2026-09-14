@@ -1,0 +1,47 @@
+{
+  "canonical_lift_columns": 8,
+  "checks": {
+    "all_ball_radii_are_strictly_inside": true,
+    "canonical_lift_covers_all_columns": true,
+    "column_interpretation_is_1_plus_7": true,
+    "hex_receipt_matches_reference": true,
+    "matrix_anchor_c00": true,
+    "matrix_anchor_c77": true,
+    "matrix_shape_8x8": true,
+    "raw_columns_are_not_future_timelike": true
+  },
+  "checks_failed": 0,
+  "checks_passed": 8,
+  "checks_total": 8,
+  "guards": [
+    "eight matrix columns define eight candidate 1+7 vectors; flattening rows 1..7 creates 56 spatial coordinates, not H^7",
+    "the raw C columns are spacelike under T^2-||V||^2 and cannot be called points of the unit hyperboloid",
+    "canonical lift is an explicit embedding after declared scaling; it does not retroactively validate the raw matrix as Lorentzian data",
+    "radius < 1 proves membership in the chosen Poincare-ball model only, not physical or cosmological stability",
+    "Poincare ball, Poincare section/return map, recurrence theorem and Poincare conjecture are distinct objects"
+  ],
+  "matrix_scale": 3472.0,
+  "points": [
+    {"column": 0, "line": "P7:0:L:3CE28D543D11A3FF3E11959C", "minkowski_delta": -995680.0, "mode": "L", "p1": 0.027655281126499176, "p2": 0.03555678948760033, "radius": 0.14217227697372437},
+    {"column": 1, "line": "P7:1:L:3D3631ED3D6FF6D43E773FE6", "minkowski_delta": -3119872.0, "mode": "L", "p1": 0.04448120668530464, "p2": 0.05858500301837921, "radius": 0.24145469069480896},
+    {"column": 2, "line": "P7:2:L:3D721F113DA110373EA800FC", "minkowski_delta": -6425440.0, "mode": "L", "p1": 0.05911165848374367, "p2": 0.07864420861005783, "radius": 0.3281325101852417},
+    {"column": 3, "line": "P7:3:L:3D926B753DC3E2C93ECDB0C5", "minkowski_delta": -10912384.0, "mode": "L", "p1": 0.07149402052164078, "p2": 0.0956474021077156, "radius": 0.4017392694950104},
+    {"column": 4, "line": "P7:4:L:3DA7A6573DE113A73EED548C", "minkowski_delta": -16580704.0, "mode": "L", "p1": 0.08186023682355881, "p2": 0.10990076512098312, "radius": 0.4635356664657593},
+    {"column": 5, "line": "P7:5:L:3DB968E73DF986003F03EE41", "minkowski_delta": -23430400.0, "mode": "L", "p1": 0.09053211659193039, "p2": 0.12183761596679688, "radius": 0.5153542160987854},
+    {"column": 6, "line": "P7:6:L:3DC8568D3E070BB43F0F1A78", "minkowski_delta": -31461472.0, "mode": "L", "p1": 0.09782133251428604, "p2": 0.13188058137893677, "radius": 0.558997631072998},
+    {"column": 7, "line": "P7:7:L:3DD4FACA3E0FC2E23F1894A1", "minkowski_delta": -40673920.0, "mode": "L", "p1": 0.1039939671754837, "p2": 0.14039185643196106, "radius": 0.5960178971290588}
+  ],
+  "schema": "rll.poincare_ball_7d.validation.v1",
+  "states": {
+    "canonical_hyperboloid_lift": "PASS_COMPUTATIONAL_EMBEDDING",
+    "claim_allowed": false,
+    "cosmological_interpretation": "PROHIBITED_BY_SCOPE",
+    "finite_matrix_multiplication": "PASS",
+    "physical_stability": "TOKEN_VAZIO",
+    "poincare_ball_membership": "PASS",
+    "raw_hyperboloid_membership": "FAIL_PRECONDITION_SPACELIKE",
+    "strict_projection_output": "TOKEN_VAZIO_INPUT_NOT_TIMELIKE"
+  },
+  "status": "PASS",
+  "strict_timelike_columns": 0
+}

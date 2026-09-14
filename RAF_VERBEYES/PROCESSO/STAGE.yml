@@ -1,0 +1,31 @@
+# RAF_VERBEYES/PROCESSO — Estágio de Processamento Ativo
+# Arquivos em absorção ativa. Condições estruturais sendo
+# contextualizadas e integradas ao pipeline.
+
+schema: raf_verbeyes.stage.v1
+claim_allowed: false
+
+stage: PROCESSO
+index: 1
+pipeline: RAF_VERBEYES
+
+role: |
+  Diretório de processamento ativo. Arquivos movidos para aqui
+  estão em fase de absorção: sendo lidos, contextualizados e
+  integrados às estruturas do pipeline. Cada arquivo representa
+  uma condição estrutural em evolução.
+
+accepts: "*.yml"
+exit_condition: "Absorção completa — artifact gerado ou condição registrada."
+prev_stage: IN
+next_stage: DONE
+
+policy:
+  in_flight: true
+  no_claim: true
+  structured_conditions: true
+  evolution_tracked: true
+
+note: |
+  Um arquivo em PROCESSO está sendo observado e integrado.
+  Não remova manualmente — deixe o pipeline concluir a absorção.

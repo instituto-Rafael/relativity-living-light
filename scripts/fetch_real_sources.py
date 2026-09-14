@@ -13,6 +13,23 @@ import requests
 DEFAULT_OUTPUT_DIR = "artifacts/rll-real-run"
 LATENTES_OUTPUT_DIR = "artifacts/rll_latentes"
 
+# These are the committed real inputs consumed by the joint cosmology route.
+# Keep observables separate: IML receives H(z) only, while Structure-D consumes
+# the complete set through data/real/cosmology/real_cosmology_inputs.yml.
+CURATED_LOCAL_REAL: dict[str, Path] = {
+    "Hz_data_real.csv": Path("data/real/Hz_data_real.csv"),
+    "desi_dr2_bao_primary_points.csv": Path(
+        "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+    ),
+    "desi_dr2_bao_covariance_summary.csv": Path(
+        "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
+    ),
+    "fsigma8_growth_real.csv": Path(
+        "data/real/cosmology/fsigma8_growth_real.csv"
+    ),
+    "CMB_shift_real.json": Path("data/real/CMB_shift_real.json"),
+}
+
 SOURCES: dict[str, dict[str, Any]] = {
     "igrf14": {
         "group": "geomagnetic",
@@ -268,12 +285,7 @@ def main(argv: list[str] | None = None) -> int:
             curated.append(item)
 
         # mirror current repo-ready real data into artifact to unify YAML outputs
-        local_real = {
-            "Hz_data_real.csv": Path("data/real/Hz_data_real.csv"),
-            "BAO_data_real.csv": Path("data/real/BAO_data_real.csv"),
-            "CMB_shift_real.json": Path("data/real/CMB_shift_real.json"),
-        }
-        for fname, src in local_real.items():
+        for fname, src in CURATED_LOCAL_REAL.items():
             if src.exists():
                 dst = curated_dir / fname
                 dst.write_bytes(src.read_bytes())

@@ -1,0 +1,57 @@
+{
+  "module_id": "rll.climate.multiphysics",
+  "version": "1.0.0",
+  "title": "RLL Climate Multiphysics Registry and Scheduler",
+  "domains": ["climatology", "meteorology", "oceanography", "geophysics", "environmental_engineering"],
+  "state": "IMPLEMENTED",
+  "scope": "Govern the existing 8x8 climate registry, source catalog, deterministic scheduler and receipts without claiming validated forecasting skill.",
+  "epistemic_status": "EVIDENCIADO",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "evidence": {
+    "receipts": ["auditoria/RLL_CLIMATE_MULTIPHYSICS_LOCAL_RECEIPT_20260729.json"],
+    "tests": ["tests/test_rll_climate_multiphysics.py"],
+    "sources": ["data/climate/rll_climate_source_registry.v1.json", "data/climate/rll_climate_multiphysics_registry.v1.json"],
+    "limitations": [
+      "The recorded local receipt predates final hardening commits and is not a final-tree receipt.",
+      "Raw source hydration, parsing and normalization into operational tiles are incomplete.",
+      "Predictive skill and superiority over reference models have not been demonstrated."
+    ]
+  },
+  "data_governance": {
+    "classification": "PUBLIC_ENVIRONMENTAL_DATA_WITH_SOURCE_SPECIFIC_LICENSES",
+    "required_metadata": ["origin", "license", "hash", "version", "collected_at", "unit", "uncertainty", "provenance", "update_policy"],
+    "retention": "Append-only receipts; raw payload retention follows source license and storage policy.",
+    "update_policy": "Each source adapter must declare cadence, semantic mapping, transformation and failure mode.",
+    "legal_applicability": "TOKEN_VAZIO_PENDING_SOURCE_BY_SOURCE_LICENSE_REVIEW"
+  },
+  "security": {
+    "least_privilege": true,
+    "secrets": "Not required by default; authenticated sources require explicit review.",
+    "integrity": ["HTTPS", "redirect-domain validation", "SHA-256 receipt", "size limits", "DRY_RUN default"],
+    "incident_record": "Record source, revision, failure class, payload hash if available and containment action."
+  },
+  "quality": {
+    "metrics": [
+      {"id": "source_semantic_match_rate", "definition": "Fraction of source variables with explicit raw-to-canonical mapping", "unit": "ratio", "target": "TOKEN_VAZIO_PENDING_BASELINE"},
+      {"id": "normalized_tile_completeness", "definition": "Valid canonical cells divided by expected cells", "unit": "ratio", "target": "TOKEN_VAZIO_PENDING_BASELINE"},
+      {"id": "historical_skill_delta", "definition": "Skill difference against a declared reference model on identical data", "unit": "metric_specific", "target": "TOKEN_VAZIO_PENDING_BENCHMARK"}
+    ],
+    "acceptance_criteria": ["Schema validation passes", "Source semantics are explicit", "Receipt revision matches evaluated tree", "No forecast claim is promoted without benchmark evidence"],
+    "rejection_criteria": ["Source endpoint does not provide declared variable", "Unit or transformation is implicit", "Receipt references another tree", "claim_allowed becomes true without evidence gate"],
+    "change_control": "Pull request with objective, evidence, risks, regression analysis, rollback and updated receipt."
+  },
+  "risks": [
+    {"id": "R-CLIMATE-001", "severity": "high", "description": "Semantic mismatch between endpoint payload and canonical variable", "treatment": "Fail closed until adapter mapping is tested"},
+    {"id": "R-CLIMATE-002", "severity": "high", "description": "Missing values collapse into valid normalized zero", "treatment": "Preserve mask in geometric representation"},
+    {"id": "R-CLIMATE-003", "severity": "critical", "description": "Research prototype interpreted as operational warning system", "treatment": "forecast_generated=false and explicit communication boundary"}
+  ],
+  "rollback": {
+    "trigger": "Schema regression, source semantic failure, integrity failure or unsupported claim promotion.",
+    "procedure": "Revert the responsible commit or disable the affected source/module while preserving receipts.",
+    "verification": "Re-run deterministic tests and compare registry and receipt hashes."
+  },
+  "f_ok": ["8x8 structural registry", "56 declared variables", "source custody controls", "deterministic scheduler", "tests and CI"],
+  "f_gap": ["automatic hydration pipeline", "unit-enforced normalization", "final-tree receipt", "historical benchmark", "validated predictive skill"],
+  "f_next": ["Implement one end-to-end source adapter with explicit semantics and units", "Generate a synchronized final-tree receipt", "Run historical benchmark against declared baselines"]
+}

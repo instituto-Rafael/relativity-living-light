@@ -1,0 +1,90 @@
+{
+  "artifacts": {
+    "input_json": "artifacts/rll_balance/20260709-132833-utc/input.json",
+    "manifest": "artifacts/rll_balance/20260709-132833-utc/manifest.json",
+    "report_json": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.json",
+    "report_md": "artifacts/rll_balance/20260709-132833-utc/rll_balance_report.md"
+  },
+  "decision": {
+    "reason": "Baseline 'CPL' superou RLL em 'bic'.",
+    "state": "RLL_PERDE",
+    "winner": "CPL"
+  },
+  "input": "artifacts/rll_balance/20260709-132833-utc/input.json",
+  "limitations": [
+    "Este relatório compara somente métricas presentes no JSON de entrada.",
+    "Vitória local em métrica não equivale a prova científica universal.",
+    "Bayes factor/evidência dependem dos priors e do método de integração usados.",
+    "Se o JSON de entrada mistura dados reais e sintéticos, a decisão deve declarar essa limitação."
+  ],
+  "metric": "bic",
+  "metric_direction": "lower",
+  "models": [
+    {
+      "metrics": {
+        "aic": null,
+        "aicc": 103.1006,
+        "bayes_factor": null,
+        "bic": 117.7535,
+        "chi2": 84.4824,
+        "evidence": null
+      },
+      "name": "RLL",
+      "params": {},
+      "role": "RLL"
+    },
+    {
+      "metrics": {
+        "aic": null,
+        "aicc": 95.5169,
+        "bayes_factor": null,
+        "bic": 105.2768,
+        "chi2": 84.4824,
+        "evidence": null
+      },
+      "name": "LCDM",
+      "params": {},
+      "role": "BASELINE"
+    },
+    {
+      "metrics": {
+        "aic": null,
+        "aicc": 97.1841,
+        "bayes_factor": null,
+        "bic": 108.6637,
+        "chi2": 83.7104,
+        "evidence": null
+      },
+      "name": "wCDM",
+      "params": {},
+      "role": "BASELINE"
+    },
+    {
+      "metrics": {
+        "aic": null,
+        "aicc": 78.0717,
+        "bayes_factor": null,
+        "bic": 91.1839,
+        "chi2": 62.0717,
+        "evidence": null
+      },
+      "name": "CPL",
+      "params": {},
+      "role": "BASELINE"
+    }
+  ],
+  "next_test": "Repetir com dados, priors, seeds e tolerâncias declarados; gerar artefatos versionados.",
+  "operational_coherence": {
+    "artifact_directory": "artifacts/rll_balance/20260709-132833-utc/",
+    "path_alignment": "input/report/manifest apontam para a mesma pasta datada",
+    "status": "ADAPTADO"
+  },
+  "report_id": "20260709-132833-utc-rll-balance",
+  "source_upload": {
+    "file": "rll-balance-report.zip",
+    "sha256": "81808ae76e956e9e817e9b42b0eae46c2a9988d325c517bfd163cd07a2e5dc63",
+    "size_bytes": 2316
+  },
+  "status_epistemologico": "RESULTADO_COMPUTACIONAL",
+  "tolerance": 1e-09
+}

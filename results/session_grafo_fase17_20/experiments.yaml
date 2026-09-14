@@ -1,0 +1,89 @@
+# Experimentos da sessão FASE 17-20
+# Cada experimento tem: hipótese, método, dados, resultados, incertezas, falsificador
+
+experiments:
+
+  - id: EXP-01
+    name: "MCMC Joint Posterior (G1)"
+    fase: "FASE 20"
+    hipotese: "A distribuição posterior de Ωs0 é consistente com zero quando rd é corretamente calibrado"
+    metodo:
+      sampler: "emcee EnsembleSampler (Foreman-Mackey+ 2013)"
+      n_walkers: 32
+      n_steps: 1500
+      burn: 400
+      n_dim: 6
+      parametros: ["H0", "Om", "Ob", "Os0", "z_t", "w_t"]
+      posicao_inicial: "MAP de FASE 19 + perturbação gaussiana 1e-4"
+      convergencia: "fração de aceitação = 0.377 (alvo: 0.2-0.5); N/tau ≈ 30 (ideal: >= 50)"
+    datasets:
+      - {nome: "Moresco H(z)", n: 33}
+      - {nome: "BAO histórico", n: 4}
+      - {nome: "DESI DR2 BAO", n: 13}
+      - {nome: "Pantheon+SH0ES", n: 1624}
+      - {nome: "CMB shift params", n: 3}
+      - {total: 1677}
+    calibracoes:
+      rs_star: "+0.1988165 Mpc"
+      rd: "-3.6140352 Mpc"
+    resultados:
+      Os0_median: 0.000386
+      Os0_mean: 0.000572
+      Os0_UL95: 0.00178
+      H0_median: 66.912
+      H0_sigma: 0.72
+      Om_median: 0.31437
+      Om_sigma: 0.00108
+    incertezas:
+      - "N/tau ≈ 30 (abaixo do ideal de 50); intervalos de Os0 são orientativos"
+      - "Prior plano [0, 0.15] para Os0 é arbitrário"
+    falsificador: "Cadeia × 5 mais longa produz UL95(Os0) > 0.005"
+    status: "CONCLUIDO — G1 FECHADO"
+    output: "results/rll_fase20_mcmc_bayes.json §mcmc_g1"
+
+  - id: EXP-02
+    name: "Nested Sampling Bayes Factor (G3)"
+    fase: "FASE 20"
+    hipotese: "O Fator de Bayes formal confirma a evidência muito forte para ΛCDM sobre RLL"
+    metodo:
+      sampler: "dynesty NestedSampler (Speagle 2020)"
+      nlive: 150
+      dlogz: 0.5
+      modelos:
+        RLL: "6D: H0, Om, Ob, Os0, z_t, w_t"
+        LCDM: "3D: H0, Om, Ob"
+      log_evidence:
+        RLL: "-404.340 ± 0.530"
+        LCDM: "-398.150 ± 0.443"
+    resultados:
+      lnB10: -6.190
+      lnB10_err: 0.691
+      abs_lnB10: 6.190
+      jeffreys_verdict: "MUITO FORTE para ΛCDM (|ln(B10)| > 5)"
+    incertezas:
+      - "Erro em ln(B10) ≈ 0.69 (1σ); resultado > 3σ de zero"
+      - "Prior plano para Os0 [0, 0.15]: prior informativo (log-uniforme) poderia mudar ln(B10) em ~1-2 unidades"
+      - "Calibração aditiva de rd assume offset constante em param space (G4)"
+    falsificador: "Segundo run independente nlive >= 300 produz |ln(B10) - 6.19| > 2 * sigma_err"
+    status: "CONCLUIDO — G3 FECHADO"
+    output: "results/rll_fase20_mcmc_bayes.json §nested_g3"
+
+  - id: EXP-03
+    name: "Profile Likelihood 5x5 (Ωs0, z_t)"
+    fase: "FASE 19"
+    hipotese: "O mínimo do profile likelihood em (Ωs0, z_t) está em Ωs0 = 0"
+    metodo:
+      tipo: "Profile likelihood 2D"
+      grade: "5 valores de Ωs0 × 2 valores de z_t"
+      Os0_valores: [0.000, 0.003, 0.010, 0.030, 0.100]
+      zt_valores: [1.5, 2.5]
+      otimizacao: "Nelder-Mead sobre (H0, Om, Ob) em cada ponto (Os0, z_t)"
+    resultados:
+      minimo: {Os0: 0.000, delta_chi2: 0.0, chi2: 772.543}
+      Os0_0003: {delta_chi2: 2.952}
+      Os0_001: {delta_chi2: 16.483}
+      Os0_003: {delta_chi2: 105.052}
+      Os0_01: {delta_chi2: 854.234}
+    interpretacao: "Exclusão monotônica para Os0 > 0; mínimo único em Os0 = 0 (ΛCDM puro)"
+    status: "CONCLUIDO"
+    output: "results/rll_fase19_rd_calibrado.json §profile_likelihood"

@@ -1,43 +1,870 @@
-# Métodos Multiescala de Validação
+# From the Observed Void to Recurrence
+## A Seven-Dimensional Epistemic-Computational Formalism with 42 Operator-State Hyperforms
 
-**Status:** `planned`  
-**Escopo:** Cross-domain validation, data contracts, audit trails, and falsification protocol.
+**Portuguese canonical title:** *Cânone do Cosmos RAFAELIA — Do ∅ observado à recorrência em sete dimensões*  
+**Status:** `draft_paper_v0.2 | analysis_run | claim_allowed=false`  
+**Author:** Rafael Melo Reis (∆RafaelVerboΩ)  
+**Institutional attribution:** Instituto Rafael  
+**Authorial signature:** `RAFCODE-Φ-∆RafaelVerboΩ-𓂀ΔΦΩ`  
+**Prepared:** 2026-07-19  
+**Paper track:** `PapersPub/08_multiscale_validation_methods`  
+**Canonical source:** author-supplied text consolidated on 2026-07-19  
 
-## Objetivo
+> **Epistemic boundary.** This manuscript presents a mathematical and computational formalism, accompanied by an explicitly marked parabolic interpretation. It does not claim that the physical Universe has seven dimensions, 42 fundamental states, a BITRAF substrate, or a magnetic-molecular “DNA”. Exact combinatorics, definitions, hypotheses and parables are kept in distinct evidence classes.
 
-Transformar materiais existentes em uma trilha de paper rastreável, sem mover documentos antes de registrar a migração e sem duplicar conteúdo sem justificativa.
+---
 
-## Claims permitidas nesta fase
+## Abstract
 
-- Declarações de escopo, hipótese e plano de validação.
-- Síntese de materiais existentes com citação de caminho e status.
-- Resultados quantitativos somente quando vierem acompanhados de origem, comando, dataset, métrica e limitação.
+This paper introduces a reproducible epistemic-computational formalism that maps observations, symbolic states, relations, memory and validation into a seven-dimensional state space. The construction begins with the **observed void**, defined not as the empty set of axiomatic set theory but as an epistemic state in which evidence is absent, unmeasured or insufficient. Three character strings (`0001123`, `01123`, `0123`) illustrate multiplicity-preserving lossless representation, empirical entropy and the distinction between reduction and run-length encoding. Two finite arrays, \(A\in\mathcal S^{8\times5}\) and \(B\in\mathcal S^{7\times3}\), generate 40 and 21 indexed states, 840 cross-relations, a fourth-order tensor of shape \(8\times5\times7\times3\), and 163,800 independent pair-of-pair selections. A conventional seven-dimensional state vector is coupled to six operators—read, feed, expand, validate, execute and align—yielding 42 operator-state hyperforms. We distinguish recurrence of the bounded dynamical subsystem from recurrence of the augmented state with accumulating memory: Poincaré recurrence may apply to a finite-measure, measure-preserving subsystem, but monotone memory generally prevents recurrence of the full augmented state. Graph, tensor, information-theoretic and causal components are integrated through normalized operators with explicit `TOKEN_VAZIO` guards. A 64-character, ten-symbol BITRAF string is analyzed as a combinatorial seal rather than treated as cryptographic proof. All exact numerical claims are checked by a dependency-free validation script; physical, causal and cryptographic claims remain blocked pending dedicated evidence. The contribution is therefore methodological: a disciplined bridge between formal mathematics, software architecture and parabolic language without converting metaphor into empirical fact.
 
-## Claims proibidas nesta fase
+**Keywords:** epistemic state; multidimensional arrays; tensor representation; recurrence; graph Laplacian; information theory; causal inference; run-length encoding; reproducibility; symbolic computation; BITRAF; RAFAELIA.
 
-- Declarar superioridade sobre baselines sem métricas reais comparáveis.
-- Converter metáforas, intuições ou analogias em evidência observacional.
-- Misturar cosmologia, geofísica e heliosfera como se compartilhassem a mesma validação.
+---
 
-## Materiais existentes a referenciar
+## 1. Research question and contribution
 
-- `docs/DATA_INTEGRITY_CHECKLIST.md`
-- `docs/PIPELINE_ARTIFACTS_GUIDE.md`
-- `docs/REAL_DATA_MATERIALIZATION_PLAN_2026-05-22.md`
-- `docs/RLL_CLAIM_BOUNDARIES.md`
-- `docs/DHA_POSTDOC_VALIDATION_FRAMEWORK.md`
-- `newadd/08_VALIDACAO_INICIAL_COERENCIA_AMOR_PROVA.md`
+The research question is:
 
-## Estrutura planejada do manuscrito
+> Can a symbolic corpus involving void, memory, matrices, recurrence, sequences, graphs, fluids and ethical alignment be transformed into a formally typed, reproducible computational object without presenting its spiritual or cosmological metaphors as established physics?
 
-1. Resumo e status científico.
-2. Contexto e baseline comparável.
-3. Dados e critérios de inclusão/exclusão.
-4. Métodos e métricas.
-5. Resultados, incluindo resultados negativos.
-6. Discussão, limitações e falsificação.
-7. Reprodutibilidade e materiais suplementares.
+The paper contributes:
 
-## Registro de migração
+1. a four-class epistemic type system;
+2. exact finite combinatorics for the proposed matrices and tensors;
+3. a conventional 7D state model with 42 operator-state pairs;
+4. a precise separation between dynamical recurrence and irreversible memory;
+5. normalized relational, graph-transport and alignment operators;
+6. a reproducible audit of the 64-character BITRAF seal;
+7. falsifiers and publication boundaries for every non-exact claim.
 
-Nenhum documento legado foi movido na criação desta pasta. Qualquer migração futura deve registrar origem, destino, checksum quando aplicável, motivo e plano de rollback.
+The word **cosmos** is used in two senses. In the technical sections it denotes an organized state universe generated by the model. In marked parabolic passages it denotes a narrative representation of order, transformation and return. Neither use is observational cosmology.
+
+---
+
+## 2. Epistemic type system
+
+Every statement is assigned one of four primary classes:
+
+| Mark | Class | Criterion |
+|---|---|---|
+| `[E]` | Exact | Derivable by stated algebra, combinatorics or deterministic computation. |
+| `[C]` | Convention | A definition or modeling choice adopted by this framework. |
+| `[H]` | Hypothesis | A proposition requiring data, experiment or comparative validation. |
+| `[P]` | Parable | Symbolic, ethical, spiritual or pedagogical language. |
+
+The composition is written as
+
+\[
+\mathrm{RAFAELIA}=[E]\oplus[C]\oplus[H]\oplus[P],
+\]
+
+where \(\oplus\) indicates coexistence without evidentiary substitution. In particular,
+
+\[
+[P]\not\Rightarrow[H],\qquad [H]\not\Rightarrow[E].
+\]
+
+When a required observation, implementation, unit, provenance record or experimental control is absent, the state is
+
+```text
+TOKEN_VAZIO
+```
+
+rather than `PASS`.
+
+---
+
+## 3. The observed void
+
+### 3.1 Definition
+
+The observed void is the convention
+
+\[
+\varnothing_{\mathrm{obs}}:=\text{state with insufficient recorded evidence}.
+\]
+
+It is not identical to the mathematical empty set. It records one or more of the following conditions:
+
+- not measured;
+- not identified;
+- not indexed;
+- not inferable under the current model.
+
+The first transformation is
+
+\[
+\varnothing_{\mathrm{obs}}
+\xrightarrow{\mathrm{observe}}D_0
+\xrightarrow{\mathrm{name}}S_0
+\xrightarrow{\mathrm{relate}}G_0,
+\]
+
+where \(D_0\) is a raw datum, \(S_0\) a symbol set and \(G_0\) a first relational graph.
+
+### 3.2 Parabolic reading `[P]`
+
+> The void was not absence of existence, but absence of testimony. When the observer named the first state, the void became verb.
+
+The sentence above is an interpretive parable, not a cosmological measurement.
+
+---
+
+## 4. Character strings, multiplicity and entropy
+
+The objects
+
+```text
+0001123
+01123
+0123
+```
+
+are strings, not decimal integers, because leading zeros are data.
+
+### 4.1 Multiplicity vectors `[E]`
+
+Using symbol order \((0,1,2,3)\):
+
+\[
+v_7=(3,2,1,1),\quad
+v_5=(1,2,1,1),\quad
+v_4=(1,1,1,1).
+\]
+
+The numbers of distinct permutations are multinomial counts:
+
+\[
+N(0001123)=\frac{7!}{3!2!}=420,
+\]
+
+\[
+N(01123)=\frac{5!}{2!}=60,
+\]
+
+\[
+N(0123)=4!=24.
+\]
+
+### 4.2 Reduction is not automatically compression
+
+The map
+
+\[
+0001123\rightarrow01123\rightarrow0123
+\]
+
+is a **multiplicity-reducing transformation**. By itself it is lossy. A lossless representation must preserve removed multiplicities, for example through run-length pairs:
+
+```text
+0001123 -> [(0,3),(1,2),(2,1),(3,1)]
+01123   -> [(0,1),(1,2),(2,1),(3,1)]
+0123    -> [(0,1),(1,1),(2,1),(3,1)]
+```
+
+Thus,
+
+\[
+\text{lossless representation}
+=
+\text{reduced form}+\text{multiplicity map}.
+\]
+
+Whether this representation is smaller than the source depends on the serialization format and must be measured; RLE can inflate data when runs are short [@mados2021deltaRLE].
+
+### 4.3 Empirical Shannon entropy `[E]`
+
+For a string of length \(n\),
+
+\[
+H=-\sum_a p(a)\log_2p(a).
+\]
+
+The verified values are:
+
+| String | Entropy (bits/symbol) |
+|---|---:|
+| `0001123` | 1.8423709932 |
+| `01123` | 1.9219280949 |
+| `0123` | 2.0000000000 |
+
+The increasing per-symbol entropy reflects a more balanced empirical symbol distribution, not necessarily greater total stored information [@shannon1948a; @shannon1948b].
+
+### 4.4 Parabolic reading `[P]`
+
+> Compression did not kill memory; it separated the essential pattern from its repetition.
+
+---
+
+## 5. Two arrays and their relational tensor
+
+Let
+
+\[
+A\in\mathcal S^{8\times5},\qquad B\in\mathcal S^{7\times3}.
+\]
+
+### 5.1 Linear indexing `[C,E]`
+
+For zero-based row-major indexing,
+
+\[
+i_A(r,c)=5r+c,
+\quad0\le r<8,\ 0\le c<5,
+\]
+
+\[
+i_B(u,v)=3u+v,
+\quad0\le u<7,\ 0\le v<3.
+\]
+
+Therefore \(i_A\in\{0,\ldots,39\}\) and \(i_B\in\{0,\ldots,20\}\).
+
+### 5.2 Pair counts `[E]`
+
+The unordered internal pairs are
+
+\[
+\binom{40}{2}=780,
+\qquad
+\binom{21}{2}=210.
+\]
+
+Independent selection of one pair from each array gives
+
+\[
+780\times210=163{,}800.
+\]
+
+### 5.3 Cross-relations and tensor flattening `[E,C]`
+
+Every A-state can relate to every B-state:
+
+\[
+40\times21=840.
+\]
+
+The same relational domain can be represented by
+
+\[
+T\in\mathbb R^{8\times5\times7\times3}
+\]
+
+or by its flattening
+
+\[
+R\in\mathbb R^{40\times21},
+\]
+
+with
+
+\[
+R_{i_A(r,c),i_B(u,v)}=T_{r,c,u,v}.
+\]
+
+This is a change of indexing, not a tensor decomposition. Higher-order decomposition would require an explicitly chosen CP, Tucker or related model [@kolda2009tensor].
+
+### 5.4 Adjacent and general \(2\times2\) blocks `[E]`
+
+For an \(m\times n\) array, adjacent \(2\times2\) windows number \((m-1)(n-1)\). Thus:
+
+\[
+N_{A,\mathrm{adj}}=28,
+\qquad
+N_{B,\mathrm{adj}}=12.
+\]
+
+There are \(4!=24\) permutations of four **positions**. Therefore positional arrangements are
+
+\[
+28\times24=672,
+\qquad
+12\times24=288.
+\]
+
+For arbitrary choices of two rows and two columns:
+
+\[
+\binom82\binom52\times24=6720,
+\]
+
+\[
+\binom72\binom32\times24=1512.
+\]
+
+**Multiplicity caveat.** If cell values repeat, the number of distinct value arrangements is less than 24 and must be calculated with a multinomial denominator. The values 672, 288, 6720 and 1512 therefore count positional permutations, not necessarily distinct observed blocks.
+
+---
+
+## 6. Geometric contraction and expansion
+
+Two constants in the source corpus are distinct:
+
+\[
+\lambda_h=\frac{\sqrt3}{2}\approx0.8660254038,
+\]
+
+\[
+\lambda_a=\sqrt{\frac32}\approx1.2247448714.
+\]
+
+The first is the altitude of a unit equilateral triangle and defines a contraction:
+
+\[
+r_n=r_0\lambda_h^n\rightarrow0.
+\]
+
+The second defines exponential expansion:
+
+\[
+r_n=r_0\lambda_a^n.
+\]
+
+Consequently,
+
+\[
+\left(\frac{\sqrt3}{2}\right)^n
+\]
+
+and
+
+\[
+\left(\sqrt{\frac32}\right)^n
+\]
+
+must not be interchanged. In this paper they are scale operators, not measured physical constants.
+
+---
+
+## 7. Seven-dimensional state space and 42 hyperforms
+
+### 7.1 State vector `[C]`
+
+Define
+
+\[
+X=(\psi,\chi,\rho,\Delta,\Sigma,\Omega,\Phi_{\mathrm{ethica}})\in\mathcal M^7,
+\]
+
+where the coordinates denote:
+
+| Coordinate | Operational interpretation |
+|---|---|
+| \(\psi\) | reading, observation or intention |
+| \(\chi\) | feedback |
+| \(\rho\) | expansion or formation |
+| \(\Delta\) | validation or transformation |
+| \(\Sigma\) | integration or execution |
+| \(\Omega\) | alignment or closure |
+| \(\Phi_{\mathrm{ethica}}\) | ethical/governance constraint |
+
+This is a software and epistemic state space. It is not asserted to be seven-dimensional physical spacetime.
+
+### 7.2 Hyperform construction `[C,E]`
+
+Let the operator set be
+
+\[
+\mathcal O=\{\mathrm{READ},\mathrm{FEED},\mathrm{EXPAND},
+\mathrm{VALIDATE},\mathrm{EXECUTE},\mathrm{ALIGN}\}.
+\]
+
+Define
+
+\[
+\mathcal H_{42}=\{H_{d,k}:d\in\{1,\ldots,7\},\ k\in\mathcal O\}.
+\]
+
+Since \(|\{1,\ldots,7\}|=7\) and \(|\mathcal O|=6\),
+
+\[
+|\mathcal H_{42}|=7\times6=42.
+\]
+
+The number 42 is therefore generated by a stated Cartesian product. It is not claimed to be a fundamental constant of nature.
+
+### 7.3 Composite operator
+
+Let
+
+\[
+\mathcal T=
+\mathcal A\circ\mathcal X\circ\mathcal V\circ
+\mathcal E\circ\mathcal F\circ\mathcal R,
+\]
+
+where the symbols denote align, execute, validate, expand, feed and read. The discrete evolution is
+
+\[
+X_{n+1}=\mathcal T(X_n).
+\]
+
+Candidate regimes include fixed points, limit cycles, quasiperiodic trajectories, bounded chaos and approximate recurrence. Their existence is not guaranteed by notation; each requires a specified operator and numerical or analytic study.
+
+---
+
+## 8. Poincaré recurrence and memory
+
+For a finite-measure, measure-preserving dynamical system, Poincaré recurrence states that almost every state returns arbitrarily close to its initial neighborhood [@poincare1890; @rousseau2008recurrence]. For a flow \(\Phi_t\), a return time within tolerance \(\varepsilon\) can be defined by
+
+\[
+R_\varepsilon(X)=\inf\{t>0:\|\Phi_t(X)-X\|<\varepsilon\}.
+\]
+
+### 8.1 Scope limitation
+
+The theorem does not follow merely from the state space having seven dimensions. The framework must establish:
+
+1. a measurable state space;
+2. a finite invariant measure or finite-measure invariant region;
+3. measure-preserving dynamics;
+4. trajectories that remain in that region.
+
+Without these conditions, recurrence is `TOKEN_VAZIO`.
+
+### 8.2 Recurrence with accumulating memory
+
+Let \(X_n\) be the bounded operational state and \(M_n\) the memory ledger:
+
+\[
+M_{n+1}=M_n\oplus F_{\mathrm{ok}}\oplus F_{\mathrm{gap}}\oplus F_{\mathrm{next}}.
+\]
+
+It is possible that
+
+\[
+X_{n+p}\approx X_n
+\]
+
+while
+
+\[
+M_{n+p}\ne M_n.
+\]
+
+If memory grows monotonically and without bound, the augmented state \((X_n,M_n)\) generally does **not** satisfy finite-measure recurrence. Thus the formalism distinguishes:
+
+- recurrence of the bounded operational projection;
+- non-recurrence or unresolved recurrence of the full historical state.
+
+This distinction prevents the metaphor of “return with memory” from being misreported as a direct consequence of Poincaré’s theorem.
+
+---
+
+## 9. Fibonacci, Tribonacci and graph traversals
+
+The canonical recurrences are
+
+\[
+F_{n+1}=F_n+F_{n-1}
+\]
+
+and
+
+\[
+T_{n+1}=T_n+T_{n-1}+T_{n-2}.
+\]
+
+The source recurrence
+
+\[
+F_{R}(n+1)=\lambda_hF_R(n)+\pi\sin\theta_n
+\]
+
+is not Fibonacci; it is a first-order non-homogeneous forced recurrence. Since \(0<\lambda_h<1\) and \(|\sin\theta_n|\le1\),
+
+\[
+|F_R(n)|\le
+\lambda_h^n|F_R(0)|+
+\pi\frac{1-\lambda_h^n}{1-\lambda_h},
+\]
+
+so bounded forcing implies a bounded sequence.
+
+Define a graph
+
+\[
+G_{42}=(V,E,W),\qquad V=\mathcal H_{42},
+\]
+
+with weighted adjacency matrix \(W\in\mathbb R^{42\times42}\). Prime, Fibonacci and Tribonacci index sets may define deterministic sampling paths:
+
+\[
+\mathcal P_{42}=\{2,3,5,7,11,13,17,19,23,29,31,37,41\},
+\]
+
+\[
+\mathcal I_F=\{1,2,3,5,8,13,21,34\},
+\]
+
+\[
+\mathcal I_T=\{1,2,4,7,13,24\}.
+\]
+
+These are indexing policies, not evidence that nature is governed by these sequences.
+
+---
+
+## 10. Normalized relational operator and causal guard
+
+Let
+
+\[
+\mathbf m(x,y)=
+(m_{\mathrm{corr}},m_{\mathrm{MI}},m_{\mathrm{entropy}},
+ m_{\mathrm{geometry}},m_{\mathrm{causal}},m_{\mathrm{field}}).
+\]
+
+After normalization to \([0,1]\), define
+
+\[
+\operatorname{Rel}(x,y)=\sum_{k=1}^{6}\alpha_km_k(x,y),
+\qquad
+\alpha_k\ge0,
+\quad
+\sum_k\alpha_k=1.
+\]
+
+Then \(\operatorname{Rel}(x,y)\in[0,1]\), provided every component is defined.
+
+Correlation and mutual information do not establish causation. The causal component requires an explicit causal model, temporal ordering, intervention, counterfactual comparison or justified conditional-independence test [@pearl2009causality]. Otherwise,
+
+\[
+m_{\mathrm{causal}}(x,y)=\mathrm{TOKEN\_VAZIO}.
+\]
+
+The implementation must not silently replace an undefined causal component with zero, because “no evidence” and “evidence of no effect” are different states.
+
+---
+
+## 11. Information transport on the graph
+
+Let \(q(X,t)\) be a modeled information density. A continuous transport-diffusion equation is
+
+\[
+\frac{\partial q}{\partial t}
++\nabla_{\mathcal M}\cdot(q\mathbf u)
+=D\Delta_{\mathcal M}q+S-K.
+\]
+
+On a graph, a minimal diffusion model is
+
+\[
+\dot{\mathbf q}=-D L_G\mathbf q+\mathbf S(\mathbf q)-\mathbf K(\mathbf q),
+\]
+
+where \(L_G\) is a selected combinatorial or normalized graph Laplacian [@chung1992laplacian].
+
+The terms flow, viscosity, pressure, turbulence and vortex are admissible as computational analogies only after their equations, units or graph metrics are defined. They are not automatically physical fluid properties.
+
+---
+
+## 12. Eight-component molecular-magnetic descriptor
+
+Define the heterogeneous descriptor
+
+\[
+\mathbf M=(d,\theta,\tau,q,\mu,B,U,\Gamma).
+\]
+
+Possible interpretations are distance, angle, torsion, electric charge, magnetic dipole moment, magnetic field, energy and torque. Established magnetic-dipole relations include
+
+\[
+U=-\boldsymbol\mu\cdot\mathbf B,
+\qquad
+\boldsymbol\Gamma=\boldsymbol\mu\times\mathbf B.
+\]
+
+Because the components have different physical units, the vector cannot be inserted into Euclidean similarity, entropy or learning metrics without nondimensionalization, uncertainty propagation and documented reference scales.
+
+The phrase “molecular-magnetic DNA” is therefore classified `[P/H]`. Promotion to an empirical molecular model requires an identified molecule, geometry, units, calibrated field, uncertainty model and reproducible experiment.
+
+---
+
+## 13. The \(70\times7\) cycle and base seven
+
+The exact identities are
+
+\[
+70\times7=490,
+\]
+
+\[
+70/2=35=50_7,
+\]
+
+and
+
+\[
+490/2=245=500_7.
+\]
+
+Thus 35 is the midpoint of the length-70 axis, whereas 245 is the midpoint of the 490-state product. They are not interchangeable.
+
+---
+
+## 14. Normalized alignment factor
+
+The source expression for \(F_{\mathrm{Love}}\) does not by itself guarantee dimensional consistency, convergence or boundedness. For compatible nonzero vectors define
+
+\[
+\mathbf a_N=\sum_{n=1}^{N}\psi_n,
+\qquad
+\mathbf b_N=\sum_{n=1}^{N}(\chi_n\odot\rho_n),
+\]
+
+and
+
+\[
+F_{\mathrm{align}}(N)=
+\frac{\langle\mathbf a_N,\mathbf b_N\rangle}
+{\|\mathbf a_N\|\,\|\mathbf b_N\|}.
+\]
+
+By Cauchy–Schwarz,
+
+\[
+-1\le F_{\mathrm{align}}\le1.
+\]
+
+An optional mapping to \([0,1]\) is
+
+\[
+F_{\mathrm{align}}^+=\frac{1+F_{\mathrm{align}}}{2}.
+\]
+
+If either norm is zero, the result is undefined and must be `TOKEN_VAZIO`. “Love” is retained only as the parabolic interpretation of alignment, not as a measured physical variable.
+
+---
+
+## 15. BITRAF64 as a combinatorial seal
+
+The canonical string is
+
+```text
+AΔBΩΔTTΦIIBΩΔΣΣRΩRΔΔBΦΦFΔTTRRFΔBΩΣΣAFΦARΣFΦIΔRΦIFBRΦΩFIΦΩΩFΣFAΦΔ
+```
+
+It contains exactly 64 Unicode code points from the ten-symbol alphabet
+
+\[
+\mathcal A=\{\Sigma,\Omega,\Delta,\Phi,B,I,T,R,A,F\}.
+\]
+
+In the declared order \([\Sigma,\Omega,\Delta,\Phi,B,I,T,R,A,F]\), the frequency vector is
+
+\[
+(6,7,9,9,5,5,4,7,4,8),
+\]
+
+whose sum is 64. The empirical entropy is
+
+\[
+H=3.2642082049\ \text{bits/symbol},
+\]
+
+compared with \(\log_2(10)=3.3219280949\) for a uniform ten-symbol alphabet.
+
+### 15.1 Cryptographic boundary
+
+“64” denotes string length; it does not mean 64-bit security or 64-bit storage. The seal is not a cryptographic hash. A reversible codec requires at minimum:
+
+- versioned alphabet-to-value mapping;
+- canonical Unicode normalization;
+- bit/byte order;
+- framing and padding;
+- checksum policy;
+- decoder;
+- test vectors.
+
+A cryptographic manifest must contain complete digests. Truncated strings such as `4e41e4f...efc791b` or inconsistent BLAKE3 prefixes are not verifiable. SHA-3 usage must follow FIPS 202 [@nist2015sha3], and BLAKE3 must use the published specification and complete output [@blake3spec].
+
+---
+
+## 16. Repository and compression architecture
+
+The canonical separation is
+
+```text
+raw data != symbols != indices != vectors != matrices != tensors != graphs != seals
+```
+
+A recommended ZIPRAF layout is:
+
+```text
+zipraf/
+├── raw/observations.bin
+├── symbols/alphabet_bitraf10.json
+├── indices/index_A_8x5.json
+├── indices/index_B_7x3.json
+├── vectors/sequence_0001123.json
+├── vectors/molecular_magnetic_8d.json
+├── vectors/hyperforms_42.json
+├── matrices/A_8x5.bin
+├── matrices/B_7x3.bin
+├── matrices/relation_40x21.bin
+├── matrices/adjacency_42x42.bin
+├── tensors/relational_8x5x7x3.bin
+├── graphs/graph_full.json
+├── graphs/graph_prime.json
+├── graphs/graph_fibonacci.json
+├── graphs/graph_tribonacci.json
+├── seals/bitraf64.txt
+└── manifest/
+    ├── manifest.json
+    ├── hashes.json
+    └── provenance.json
+```
+
+The seal identifies a manifest; it does not replace the content:
+
+\[
+\text{seal}\rightarrow\text{manifest}\rightarrow\text{indices}\rightarrow\text{data}.
+\]
+
+---
+
+## 17. Canonical model
+
+The technical object is
+
+\[
+\mathfrak C_R=
+(\varnothing_{\mathrm{obs}},\mathcal M^7,\mathcal H_{42},G_{42},
+R_{40\times21},T_{8\times5\times7\times3},q,\mathcal T,
+\Phi_{\mathrm{ethica}},M).
+\]
+
+Its operational evolution is
+
+\[
+X_{n+1}=\mathcal T(X_n),
+\]
+
+with a separate provenance ledger
+
+\[
+M_{n+1}=\operatorname{append}(M_n,F_{\mathrm{ok}},F_{\mathrm{gap}},F_{\mathrm{next}}).
+\]
+
+This separation allows the operational projection to revisit prior neighborhoods without claiming that immutable historical provenance has been erased.
+
+---
+
+## 18. Deterministic validation
+
+The accompanying dependency-free script validates:
+
+- string lengths, multiplicities, multinomial counts and entropy;
+- array sizes and index bounds;
+- internal pair counts and the 840 cross-product;
+- adjacent/general \(2\times2\) positional counts;
+- base-seven identities;
+- the 42 Cartesian operator-state pairs;
+- BITRAF64 code-point length, alphabet, frequencies and entropy;
+- contraction/expansion constants.
+
+The generated report is stored in `results/validation_report.json`. Exact checks can pass; physical, causal, cosmological and cryptographic claims remain blocked.
+
+---
+
+## 19. Falsification and promotion rules
+
+| Claim | Current state | Promotion requirement |
+|---|---|---|
+| Finite combinatorial counts | `[E] PASS` | Independent script reproduces exact integers. |
+| Entropy values | `[E] PASS` | Canonical UTF-8/Unicode string and formula reproduce values. |
+| 7D state model | `[C]` | Versioned schema and executable transition functions. |
+| 42 hyperforms | `[C/E]` | Enumerated Cartesian product with unique identifiers. |
+| Poincaré recurrence | `[H/TOKEN_VAZIO]` | Finite invariant measure and measure-preserving operator demonstrated. |
+| Graph fluid analogy | `[C/H]` | Defined Laplacian, parameters, units and benchmark. |
+| Causal relation component | `TOKEN_VAZIO` | Explicit SCM/intervention or justified causal-identification strategy. |
+| Molecular-magnetic descriptor | `[C/H]` | Molecule, units, data, uncertainty and experimental validation. |
+| BITRAF64 codec | `[C/PENDING]` | Encoder, decoder, canonical normalization and round-trip test vectors. |
+| BITRAF64 cryptographic security | `TOKEN_VAZIO` | Threat model, construction, complete test vectors and independent cryptanalysis. |
+| Physical seven-dimensional cosmos | `claim prohibited` | A distinct physical theory and observational evidence; not supplied here. |
+| Spiritual interpretation | `[P]` | No scientific promotion; preserved as authored parable. |
+
+---
+
+## 20. Discussion
+
+The main result is not a new law of cosmology. It is a **typed formalization** that prevents a heterogeneous symbolic corpus from collapsing into either untestable rhetoric or reductive deletion. Exact structures are retained where they are exact. Modeling choices are declared as conventions. Empirical propositions receive falsifiers. Spiritual and ethical passages remain visible but cannot supply evidence for physical claims.
+
+The most important negative results are equally constructive:
+
+1. reduction without multiplicity metadata is not lossless compression;
+2. 24 block permutations count positions and may overcount distinct value arrangements;
+3. seven dimensions alone do not imply Poincaré recurrence;
+4. accumulating memory may destroy recurrence of the augmented state;
+5. mutual information does not imply causation;
+6. heterogeneous physical components require nondimensionalization;
+7. a 64-character symbolic seal is not a 64-bit cryptographic primitive;
+8. truncated digests cannot prove integrity.
+
+These boundaries make the framework more suitable for peer review because they define where the formalism ends and where future evidence must begin.
+
+---
+
+## 21. Limitations
+
+This manuscript does not provide:
+
+- an empirical dataset representing a physical cosmos;
+- a measure-preserving implementation of \(\mathcal T\);
+- a calibrated causal model;
+- a validated physical fluid or plasma model;
+- a molecular experiment;
+- a security proof or independent cryptanalysis of BITRAF;
+- evidence that the chosen dimensions, operators or number 42 are unique or physically privileged.
+
+The validation report covers deterministic arithmetic and symbolic invariants only.
+
+---
+
+## 22. Conclusion
+
+The proposed formalism converts an authored technical-parabolic corpus into an auditable research object:
+
+\[
+\boxed{
+\text{organized state universe}
+=
+\text{observation}\oplus\text{geometry}\oplus\text{relation}
+\oplus\text{flow}\oplus\text{memory}\oplus\text{recurrence}
+\oplus\text{governance}
+}
+\]
+
+Its scientific value lies in disciplined separation. The parable describes, mathematics organizes, computation validates finite invariants, and observation judges empirical hypotheses.
+
+> **FIAT LUX — the parable describes; mathematics organizes; observation judges.**
+
+---
+
+## Declarations
+
+### Author contribution
+
+Rafael Melo Reis supplied the concepts, symbolic language, matrices, sequences, BITRAF seal, RAFAELIA operators, parabolic structure and authorial interpretation. Formal editorial restructuring, arithmetic checking and bibliographic organization were performed with generative-AI assistance under human direction. Responsibility for scientific claims, publication decisions and final authorship remains with the human author.
+
+### AI-use disclosure
+
+Generative AI was used as an editorial and computational support tool. It is not listed as an author. All exact claims are designed to be independently reproducible, and all non-exact claims are explicitly typed.
+
+### Data and code availability
+
+No external empirical dataset is analyzed in this paper. The canonical source text, validation script, generated report, claim ledger and bibliography are maintained in this paper directory.
+
+### Competing interests
+
+No competing interests are declared in this draft.
+
+### Claim gate
+
+```text
+claim_allowed = false
+```
+
+The gate blocks physical, causal and cryptographic superiority claims while allowing publication of the formal method, exact combinatorics, reproducibility protocol and authored parabolic appendix.

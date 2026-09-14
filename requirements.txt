@@ -7,3 +7,6 @@ emcee>=3.1.6
 corner>=2.2
 jupyter
 PyYAML>=6.0
+jsonschema>=4.0
+blake3>=0.3
+dynesty>=3.0,<4

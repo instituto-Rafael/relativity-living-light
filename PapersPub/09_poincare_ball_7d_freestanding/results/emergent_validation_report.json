@@ -1,0 +1,69 @@
+{
+  "checks": {
+    "all_points_inside_ball": true,
+    "ball_hyperboloid_roundtrip": true,
+    "boosted_point_remains_inside_ball": true,
+    "canonical_lift_hyperboloid_identity": true,
+    "canonical_lift_radius_identity": true,
+    "distance_diagonal_zero": true,
+    "distance_symmetry": true,
+    "lorentz_boost_preserves_minkowski_norm": true,
+    "matrix_anchors": true,
+    "matrix_shape_8x8": true,
+    "no_nan_or_inf": true,
+    "pairwise_distances_finite_nonnegative": true,
+    "radial_distance_identity": true,
+    "raw_columns_all_spacelike": true,
+    "strict_timelike_fixture_activates_projection": true,
+    "strict_timelike_roundtrip": true,
+    "token_vazio_mask_is_explicit": true,
+    "triangle_inequality": true,
+    "zero_vector_remains_valid_when_unmasked": true
+  },
+  "checks_failed": 0,
+  "checks_passed": 19,
+  "checks_total": 19,
+  "lateral_emergents": [
+    "zero vector is a valid geometric point and cannot encode TOKEN_VAZIO by itself",
+    "strict negative result and canonical lift must remain separate evidence states",
+    "H7-to-B7 roundtrip is a stronger validator than radius-only membership",
+    "pairwise geodesic distance is the valid bridge from embedding to geometric attention",
+    "Lorentz invariance can be tested with synthetic timelike fixtures without claiming physical measurement",
+    "hardware ordering, physical stability and cosmology require independent receipts and cannot be inferred from geometry"
+  ],
+  "metrics": {
+    "boost_norm_residual": 4.440892098500626e-16,
+    "boosted_fixture_radius": 0.5079774328978961,
+    "max_distance_diagonal_residual": 0.0,
+    "max_distance_symmetry_residual": 0.0,
+    "max_hyperboloid_residual": 1.3322676295501878e-15,
+    "max_radial_distance_residual": 2.7755575615628914e-16,
+    "max_radius_identity_residual": 1.6653345369377348e-16,
+    "max_roundtrip_residual": 4.440892098500626e-16,
+    "max_triangle_violation": 0.0,
+    "radius_max": 0.5960179316443394,
+    "radius_min": 0.14217226962706142,
+    "scale": 3472.0,
+    "timelike_fixture_radius": 0.35835739835078595
+  },
+  "schema": "rll.poincare_ball_7d.emergent_validation.v1",
+  "states": {
+    "canonical_lift": "PASS_COMPUTATIONAL_EMBEDDING",
+    "claim_allowed": false,
+    "cosmology": "PROHIBITED_BY_SCOPE",
+    "explicit_token_vazio_mask": "PASS_SEMANTIC_CONTRACT",
+    "hardware_cache_dmb": "TOKEN_VAZIO_ENVIRONMENT",
+    "hyperbolic_metric": "PASS_DETERMINISTIC_VALIDATION",
+    "lorentz_fixture": "PASS_SYNTHETIC_FIXTURE",
+    "native_aarch64_runtime": "TOKEN_VAZIO",
+    "physical_stability": "TOKEN_VAZIO",
+    "raw_hyperboloid_membership": "FAIL_PRECONDITION_SPACELIKE"
+  },
+  "status": "PASS",
+  "receipts": {
+    "validator_sha256": "8849c93860bffa5e525f453a38e2b950a13d751963154488e909ecd4cede78b7",
+    "report_sha256": "dd4f9d415671e247442d2b39b66078fde22a09983a0392c83121b237fc717065",
+    "execution_environment": "local Python stdlib validator",
+    "native_aarch64_execution": "TOKEN_VAZIO"
+  }
+}

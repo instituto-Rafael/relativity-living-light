@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_cross_repo_entrelace.schema.json",
+  "title": "RLL Cross-Repository Entrelace Registry v2",
+  "description": "Structural contract for evidence-bounded cross-repository relationships; schema validation does not constitute scientific validation or claim promotion.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_utc",
+    "owner_repository",
+    "claim_allowed",
+    "policies",
+    "relationships",
+    "urgent_gaps"
+  ],
+  "properties": {
+    "schema": {"const": "rll.cross_repo_entrelace_registry.v2"},
+    "generated_utc": {"type": "string", "format": "date-time"},
+    "owner_repository": {"const": "instituto-Rafael/relativity-living-light"},
+    "claim_allowed": {"const": false},
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_automatic_cross_repo_write",
+        "no_automatic_merge",
+        "no_claim_promotion_from_documentation",
+        "private_content_pointer_only",
+        "token_vazio_is_valid",
+        "fail_closed_on_missing_artifact"
+      ],
+      "properties": {
+        "no_automatic_cross_repo_write": {"const": true},
+        "no_automatic_merge": {"const": true},
+        "no_claim_promotion_from_documentation": {"const": true},
+        "private_content_pointer_only": {"const": true},
+        "token_vazio_is_valid": {"const": true},
+        "fail_closed_on_missing_artifact": {"const": true}
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "relation_type", "state", "source", "target", "proven",
+          "not_proven", "required_artifact", "next_action", "rollback"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+          "relation_type": {
+            "enum": [
+              "METHOD_BRIDGE",
+              "RUNTIME_EVIDENCE_CONTRACT",
+              "LEDGER_COMPATIBILITY",
+              "DOCUMENTATION_BRIDGE",
+              "PROVENANCE_BRIDGE"
+            ]
+          },
+          "state": {
+            "enum": [
+              "VERIFIED_LIMITED", "PARTIAL", "BLOCKED", "TOKEN_VAZIO", "CONTRADICTION"
+            ]
+          },
+          "source": {"$ref": "#/$defs/endpoint"},
+          "target": {"$ref": "#/$defs/endpoint"},
+          "proven": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "not_proven": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "required_artifact": {"$ref": "#/$defs/artifact"},
+          "next_action": {"type": "string", "minLength": 10},
+          "rollback": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "urgent_gaps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "state", "problem", "resolution", "evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^URG-[A-Z0-9-]+$"},
+          "state": {
+            "enum": [
+              "RESOLVED_BY_OVERLAY", "TOKEN_VAZIO", "BLOCKED", "PARTIAL", "CONTRADICTION"
+            ]
+          },
+          "problem": {"type": "string", "minLength": 10},
+          "resolution": {"type": "string", "minLength": 10},
+          "evidence": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo", "ref", "path", "blob_sha"],
+      "properties": {
+        "repo": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+        "ref": {"type": "string", "minLength": 1},
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "not": {"const": "TOKEN_VAZIO"}
+        },
+        "blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "expected_path"],
+      "properties": {
+        "schema": {"type": "string", "minLength": 3},
+        "status": {
+          "enum": [
+            "VERIFIED", "VERIFIED_LIMITED", "PARTIAL", "BLOCKED", "TOKEN_VAZIO", "CONTRADICTION"
+          ]
+        },
+        "expected_path": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "observation_id": "AFO-SYNTHETIC_0001",
+  "node_id": "NODE-ROTATING_0001",
+  "timestamp": "2026-07-10T12:00:00-03:00",
+  "location": {
+    "latitude": -23.5505,
+    "longitude": -46.6333,
+    "horizontal_accuracy_m": 8.0,
+    "altitude_m": 760.0,
+    "vertical_accuracy_m": 14.0,
+    "altitude_reference": "MSL",
+    "altitude_state": "estimated",
+    "indoor_probability": 0.18
+  },
+  "device_state": {
+    "device_profile_id": "SYNTHETIC-ANDROID-PROFILE-01",
+    "motion_state": "stationary",
+    "orientation_state": "known",
+    "orientation_quaternion": [1.0, 0.0, 0.0, 0.0],
+    "battery_temperature_c": 34.7,
+    "charging_state": "discharging",
+    "screen_state": "off",
+    "thermal_state_note": "Synthetic fixture; battery temperature is not ambient temperature."
+  },
+  "capabilities": {
+    "magnetometer": true,
+    "barometer": true,
+    "ambient_temperature": false,
+    "relative_humidity": false,
+    "gnss_raw": true,
+    "wifi_metrics": true,
+    "bluetooth_metrics": true,
+    "cell_metrics": true,
+    "acoustic_probe": false,
+    "imu": true
+  },
+  "channels": [
+    {
+      "channel_id": "MAG-FXYZ",
+      "modality": "magnetic",
+      "metric": "field_vector_xyz",
+      "value_state": "measured",
+      "raw_value": [18.4, -7.1, -22.6],
+      "unit": "uT",
+      "reference": {
+        "reference_type": "WMM2025",
+        "reference_state": "validated",
+        "expected_value": [19.0, -6.8, -23.1],
+        "source_ref": "https://www.ncei.noaa.gov/products/world-magnetic-model"
+      },
+      "residual": {
+        "state": "computed",
+        "value": [-0.6, -0.3, 0.5],
+        "interpretation": "Small synthetic residual; cause not inferred."
+      },
+      "uncertainty": 0.18,
+      "quality_flags": [
+        "calibrated",
+        "orientation_known",
+        "reference_available",
+        "synthetic_fixture"
+      ]
+    },
+    {
+      "channel_id": "PRES-HPA",
+      "modality": "pressure",
+      "metric": "ambient_pressure",
+      "value_state": "measured",
+      "raw_value": 927.42,
+      "unit": "hPa",
+      "reference": {
+        "reference_type": "REFERENCE_STATION",
+        "reference_state": "partial",
+        "expected_value": 927.60,
+        "source_ref": "synthetic-reference-station"
+      },
+      "residual": {
+        "state": "computed",
+        "value": -0.18,
+        "interpretation": "Synthetic residual after altitude normalization."
+      },
+      "uncertainty": 0.22,
+      "quality_flags": [
+        "calibrated",
+        "altitude_confounded",
+        "reference_available",
+        "synthetic_fixture"
+      ]
+    },
+    {
+      "channel_id": "BAT-TEMP",
+      "modality": "battery_temperature",
+      "metric": "battery_temperature",
+      "value_state": "measured",
+      "raw_value": 34.7,
+      "unit": "degC",
+      "reference": {
+        "reference_type": "DEVICE_BASELINE",
+        "reference_state": "partial",
+        "expected_value": 33.9,
+        "source_ref": "synthetic-device-baseline"
+      },
+      "residual": {
+        "state": "computed",
+        "value": 0.8,
+        "interpretation": "Used only as device thermal context."
+      },
+      "uncertainty": 0.35,
+      "quality_flags": [
+        "thermal_confounded",
+        "reference_available",
+        "synthetic_fixture"
+      ]
+    },
+    {
+      "channel_id": "AMB-TEMP",
+      "modality": "ambient_temperature",
+      "metric": "ambient_air_temperature",
+      "value_state": "absent",
+      "raw_value": null,
+      "unit": "degC",
+      "reference": {
+        "reference_type": "NONE",
+        "reference_state": "absent",
+        "expected_value": null,
+        "source_ref": ""
+      },
+      "residual": {
+        "state": "not_computable",
+        "value": null,
+        "interpretation": "TOKEN_VAZIO: device has no ambient temperature sensor."
+      },
+      "uncertainty": 1.0,
+      "quality_flags": [
+        "reference_missing",
+        "synthetic_fixture"
+      ]
+    },
+    {
+      "channel_id": "GNSS-CN0-G01",
+      "modality": "gnss",
+      "metric": "carrier_to_noise_density",
+      "value_state": "measured",
+      "raw_value": 37.6,
+      "unit": "dB-Hz",
+      "reference": {
+        "reference_type": "GNSS_EPHEMERIS",
+        "reference_state": "partial",
+        "expected_value": 39.1,
+        "source_ref": "synthetic-ephemeris-snapshot"
+      },
+      "residual": {
+        "state": "computed",
+        "value": -1.5,
+        "interpretation": "Possible antenna, orientation, multipath or obstruction effect; weather cause not inferred."
+      },
+      "uncertainty": 0.41,
+      "quality_flags": [
+        "orientation_known",
+        "multipath_risk",
+        "reference_available",
+        "synthetic_fixture"
+      ]
+    },
+    {
+      "channel_id": "WIFI-RSSI-01",
+      "modality": "wifi",
+      "metric": "rssi",
+      "value_state": "measured",
+      "raw_value": -61.0,
+      "unit": "dBm",
+      "reference": {
+        "reference_type": "DEVICE_BASELINE",
+        "reference_state": "partial",
+        "expected_value": -59.5,
+        "source_ref": "synthetic-local-baseline"
+      },
+      "residual": {
+        "state": "computed",
+        "value": -1.5,
+        "interpretation": "Small attenuation; no precipitation or occupancy cause inferred."
+      },
+      "uncertainty": 0.48,
+      "quality_flags": [
+        "interference_risk",
+        "indoor_confounded",
+        "reference_available",
+        "synthetic_fixture"
+      ]
+    }
+  ],
+  "network_context": {
+    "neighbor_count": 12,
+    "spatial_consensus": 0.67,
+    "reference_station_distance_km": 3.2,
+    "aggregation_cell": "SYNTHETIC-GRID-23S-01"
+  },
+  "hypotheses": [
+    {
+      "name": "regional_pressure_drop",
+      "probability": 0.44,
+      "status": "hypothesis",
+      "support": [
+        "pressure residual is negative",
+        "network consensus is moderate"
+      ],
+      "contradictions": [
+        "single synthetic timestamp",
+        "altitude reference is estimated",
+        "no official weather assimilation"
+      ],
+      "falsifiers": [
+        "reference stations show stable pressure",
+        "residual disappears after altitude correction",
+        "neighbor nodes do not reproduce the trend"
+      ]
+    },
+    {
+      "name": "hurricane_lead_time_gain",
+      "probability": 0.0,
+      "status": "token_vazio",
+      "support": [],
+      "contradictions": [
+        "no tropical cyclone dataset",
+        "no ocean observations",
+        "no benchmark against official forecasts"
+      ],
+      "falsifiers": [
+        "no out-of-sample lead-time improvement",
+        "false alarm rate exceeds operational threshold"
+      ]
+    }
+  ],
+  "epistemic_status": "hypothesis",
+  "quality": {
+    "sensor_quality": 0.74,
+    "calibration_quality": 0.61,
+    "context_quality": 0.68,
+    "time_quality": 0.95,
+    "overall": 0.70
+  },
+  "use_policy": {
+    "privacy": "public_aggregate",
+    "identity_inference": "blocked",
+    "payload_collection": "none",
+    "training_eligibility": "no",
+    "retention": "research_window",
+    "purpose": "research",
+    "operational_gate": "research_only"
+  }
+}

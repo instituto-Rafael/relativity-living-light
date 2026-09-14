@@ -1,0 +1,21 @@
+# Repository-local ownership. Enforcement requires a GitHub ruleset or branch rule.
+* @rafaelmeloreisnovo
+
+/.github/ @rafaelmeloreisnovo
+/.github/workflows/ @rafaelmeloreisnovo
+/.github/workflow-architecture/ @rafaelmeloreisnovo
+/.githooks/ @rafaelmeloreisnovo
+/tools/*workflow* @rafaelmeloreisnovo
+/tools/github_actions_capability_gate.py @rafaelmeloreisnovo
+/tools/propose_workflow_contract_pr.py @rafaelmeloreisnovo
+/scripts/install_repo_hooks.sh @rafaelmeloreisnovo
+/scripts/validate_rare_events_registry.py @rafaelmeloreisnovo
+/tests/test_github_actions_capability_gate.py @rafaelmeloreisnovo
+/tests/test_workflow_contract_sync.py @rafaelmeloreisnovo
+/tests/test_rare_events_registry.py @rafaelmeloreisnovo
+/docs/governance/ @rafaelmeloreisnovo
+/docs/workflows/ @rafaelmeloreisnovo
+/data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json @rafaelmeloreisnovo
+/tools/validate_rll_credential_authority.py @rafaelmeloreisnovo
+/tests/test_rll_credential_authority.py @rafaelmeloreisnovo
+/receipts/2026-09-11_RLL_CREDENTIAL_AUTHORITY_V1_PREFLIGHT.md @rafaelmeloreisnovo

@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0",
+  "matrix_id": "rll-multiphysics-filament-canonical-v1",
+  "claim_allowed": false,
+  "stdlib_only_validation": true,
+  "new_workflow_required": false,
+  "purpose": "Scan coupled environmental, electrical, thermal, chemical, acoustic and physiological filaments without collapsing distinct mechanisms.",
+  "coupling_policy": {
+    "parallel_filaments": true,
+    "typed_cross_filament_edges": true,
+    "shared_state_without_semantic_collapse": true,
+    "coupling_does_not_imply_causality": true,
+    "external_evidence_is_not_local_measurement": true,
+    "subjective_state_is_not_instrument_measurement": true,
+    "numeric_frequency_match_is_not_mechanism_identity": true
+  },
+  "filaments": [
+    {
+      "order": 1,
+      "id": "electrical_source_coil_ac",
+      "domain": "ELECTROMAGNETIC_SOURCE",
+      "inputs": ["voltage_rms_V", "current_rms_A", "frequency_Hz", "coil_current_A", "geometry"],
+      "outputs": ["electric_field_V_per_m", "magnetic_flux_density_T", "power_W"],
+      "mechanism": "MAXWELL_AND_JOULE",
+      "evidence_state": "MEASURABLE",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "APPLIANCE_HAS_COIL_THEREFORE_BRAIN_EFFECT",
+        "NUMERIC_FREQUENCY_MATCH_THEREFORE_SAME_MECHANISM"
+      ]
+    },
+    {
+      "order": 2,
+      "id": "water_spray_charge_ions",
+      "domain": "SPRAY_ELECTRIFICATION",
+      "inputs": ["droplet_size_distribution_m", "spray_velocity_m_per_s", "water_conductivity_S_per_m", "water_pH", "air_state"],
+      "outputs": ["droplet_charge_C", "ion_number_density_per_m3", "local_electric_field_V_per_m"],
+      "mechanism": "LENARD_EFFECT_AND_INTERFACIAL_CHARGE_SEPARATION",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "HEATER_RESISTANCE_DIRECTLY_CAUSES_IONIZATION",
+        "AIR_IONS_DIRECTLY_BECOME_NEURAL_ION_CURRENTS"
+      ]
+    },
+    {
+      "order": 3,
+      "id": "thermal_mass_phase_transfer",
+      "domain": "THERMODYNAMICS",
+      "inputs": ["water_temperature_C", "air_temperature_C", "skin_temperature_C", "relative_humidity_percent", "air_pressure_Pa", "body_mass_kg"],
+      "outputs": ["heat_flux_W_per_m2", "evaporation_rate_kg_per_m2_s", "vapor_pressure_Pa", "thermal_comfort_state"],
+      "mechanism": "HEAT_AND_MASS_TRANSFER",
+      "evidence_state": "MEASURABLE",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "WARMTH_ALWAYS_MEANS_RELAXATION",
+        "VAPORIZATION_IS_IONIZATION"
+      ]
+    },
+    {
+      "order": 4,
+      "id": "skin_sweat_contact_electricity",
+      "domain": "BIOIMPEDANCE_AND_SUDOMOTOR",
+      "inputs": ["skin_temperature_C", "sweat_rate_kg_per_m2_s", "skin_hydration", "contact_area_m2"],
+      "outputs": ["skin_conductance_S", "skin_impedance_ohm", "electrodermal_activity_S"],
+      "mechanism": "IONIC_CONDUCTION_THROUGH_SKIN_AND_SWEAT_PATHS",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "SWEAT_PROTECTS_FROM_ELECTRIC_SHOCK",
+        "SKIN_CONDUCTANCE_IS_DIRECT_MEASURE_OF_EMOTION_CONTENT"
+      ]
+    },
+    {
+      "order": 5,
+      "id": "neuroionic_autonomic_state",
+      "domain": "NEUROPHYSIOLOGY",
+      "inputs": ["neural_ion_gradients", "membrane_potential_V", "autonomic_context"],
+      "outputs": ["action_potential_state", "autonomic_response_state"],
+      "mechanism": "ELECTROCHEMICAL_MEMBRANE_SIGNALING",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "NOT_APPLICABLE_WITHOUT_NEUROINSTRUMENTATION",
+      "blocked_inferences": [
+        "AMBIENT_ION_COUNT_EQUALS_BRAIN_ION_SIGNALING",
+        "EXTERNAL_STATIC_CHARGE_ENCODES_EMOTION"
+      ]
+    },
+    {
+      "order": 6,
+      "id": "cardiac_electric_magnetic_pressure",
+      "domain": "CARDIOVASCULAR_BIOMAGNETISM",
+      "inputs": ["heart_rate_bpm", "arterial_pressure_Pa", "ecg_state"],
+      "outputs": ["cardiac_electric_state", "magnetocardiographic_field_T", "hemodynamic_state"],
+      "mechanism": "CARDIAC_IONIC_CURRENTS_AND_BIOMAGNETIC_FIELD",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "HEART_MAGNETIC_FIELD_TRANSMITS_SEMANTIC_EMOTION",
+        "DETECTABLE_FIELD_IMPLIES_DOMINANT_CAUSAL_PATH"
+      ]
+    },
+    {
+      "order": 7,
+      "id": "respiration_co2_acid_base",
+      "domain": "RESPIRATORY_ACID_BASE",
+      "inputs": ["respiration_rate_per_min", "tidal_volume_L", "end_tidal_CO2_Pa"],
+      "outputs": ["arterial_CO2_candidate_Pa", "blood_pH_measurement", "respiratory_state"],
+      "mechanism": "VENTILATION_CO2_ACID_BASE_COUPLING",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "EMOTION_HAS_AN_INTRINSIC_PH",
+        "SELF_REPORTED_MOOD_IS_A_BLOOD_PH_MEASUREMENT"
+      ]
+    },
+    {
+      "order": 8,
+      "id": "voice_acoustics_joy_relaxation",
+      "domain": "ACOUSTICS_AND_BEHAVIOR",
+      "inputs": ["reverberation_time_s", "vocal_support_dB", "privacy_context", "thermal_comfort_state"],
+      "outputs": ["singing_behavior_observed", "self_reported_joy", "self_reported_relaxation", "voice_acoustic_state"],
+      "mechanism": "ROOM_RESPONSE_PLUS_BEHAVIORAL_AND_AFFECTIVE_CONTEXT",
+      "evidence_state": "PARTIAL_EXTERNAL",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "IONIZATION_CAUSES_SINGING",
+        "JOY_OR_RELAXATION_CAN_BE_INFERRED_WITHOUT_REPORT_OR_VALIDATED_MEASURE"
+      ]
+    },
+    {
+      "order": 9,
+      "id": "hair_static_point_geometry",
+      "domain": "ELECTROSTATIC_PERCEPTION",
+      "inputs": ["electric_field_V_per_m", "hair_geometry", "surface_charge_C_per_m2", "humidity_state"],
+      "outputs": ["hair_displacement_m", "cutaneous_field_perception_state", "field_enhancement_candidate"],
+      "mechanism": "ELECTROSTATIC_FORCE_AND_GEOMETRIC_FIELD_ENHANCEMENT",
+      "evidence_state": "EVIDENCED_EXTERNALLY",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "HAIR_MOVEMENT_PROVES_INTERNAL_PHYSIOLOGICAL_EFFECT",
+        "HUMAN_BODY_IS_A_SAFE_LIGHTNING_ROD"
+      ]
+    },
+    {
+      "order": 10,
+      "id": "electrical_fault_lightning_safety",
+      "domain": "SAFETY",
+      "inputs": ["grounding_state", "leakage_current_A", "touch_voltage_V", "plumbing_state", "thunderstorm_state"],
+      "outputs": ["electrical_hazard_state", "fault_receipt", "shutdown_or_avoidance_action"],
+      "mechanism": "FAULT_CURRENT_CONTACT_CURRENT_AND_LIGHTNING_COUPLING",
+      "evidence_state": "OFFICIAL_SAFETY_GUIDANCE",
+      "local_measurement_state": "TOKEN_VAZIO_LOCAL",
+      "blocked_inferences": [
+        "WET_SKIN_IS_PROTECTIVE",
+        "SHOWER_IS_SAFE_DURING_THUNDERSTORM",
+        "POINT_EFFECT_IS_A_BENEFICIAL_HUMAN_ADAPTATION"
+      ]
+    }
+  ],
+  "cross_filament_edges": [
+    {"from": "electrical_source_coil_ac", "to": "water_spray_charge_ions", "type": "CANDIDATE_COUPLING", "state": "TOKEN_VAZIO_LOCAL"},
+    {"from": "thermal_mass_phase_transfer", "to": "skin_sweat_contact_electricity", "type": "MECHANISTIC", "state": "EVIDENCED_EXTERNALLY"},
+    {"from": "skin_sweat_contact_electricity", "to": "electrical_fault_lightning_safety", "type": "SAFETY_RELEVANT", "state": "EVIDENCED_EXTERNALLY"},
+    {"from": "voice_acoustics_joy_relaxation", "to": "respiration_co2_acid_base", "type": "POSSIBLE_MEDIATED", "state": "TOKEN_VAZIO_LOCAL"},
+    {"from": "respiration_co2_acid_base", "to": "cardiac_electric_magnetic_pressure", "type": "PHYSIOLOGICAL_MEDIATED", "state": "EVIDENCED_EXTERNALLY"},
+    {"from": "hair_static_point_geometry", "to": "electrical_fault_lightning_safety", "type": "WARNING_CONTEXT", "state": "OFFICIAL_SAFETY_GUIDANCE"},
+    {"from": "water_spray_charge_ions", "to": "voice_acoustics_joy_relaxation", "type": "CORRELATION_CANDIDATE_ONLY", "state": "TOKEN_VAZIO_CAUSAL"}
+  ],
+  "conservation_and_units": {
+    "frequency_requires_unit": "Hz",
+    "magnetic_flux_density_requires_unit": "T",
+    "electric_field_requires_unit": "V/m",
+    "charge_requires_unit": "C",
+    "conductivity_requires_unit": "S/m",
+    "temperature_requires_unit": "degC_or_K_with_conversion",
+    "pressure_requires_unit": "Pa",
+    "mass_requires_unit": "kg",
+    "pH_is_dimensionless_but_requires_sample_and_method": true,
+    "energy_mass_charge_accounting_required": true
+  },
+  "promotion_gates": [
+    "SOURCE_AND_TIMESTAMP",
+    "UNITS_AND_CALIBRATION",
+    "LOCAL_MEASUREMENT_OR_EXPLICIT_NOT_APPLICABLE",
+    "CONFOUNDERS",
+    "MECHANISM_WITH_ALTERNATIVES",
+    "REPRODUCTION",
+    "SAFETY_REVIEW",
+    "FALSIFIER"
+  ],
+  "references": [
+    {"id": "XIA_2024", "title": "Visualization of the Charging of Water Droplets Sprayed into Air", "locator": "doi:10.1021/acs.jpca.4c02981", "supports": ["water_spray_charge_ions"]},
+    {"id": "TRONSTAD_2013", "title": "Improved estimation of sweating based on electrical properties of skin", "locator": "doi:10.1007/s10439-013-0743-4", "supports": ["skin_sweat_contact_electricity"]},
+    {"id": "REDMAN_2023", "title": "Singing in different performance spaces: The effect of room acoustics on singers' perception", "locator": "doi:10.1121/10.0021331", "supports": ["voice_acoustics_joy_relaxation"]},
+    {"id": "MCG_OPM_2017", "title": "Magnetocardiography measurements with 4He vector optically pumped magnetometers at room temperature", "locator": "doi:10.1088/1361-6560/aa6459", "supports": ["cardiac_electric_magnetic_pressure"]},
+    {"id": "BRAIN_PH_CO2_1988", "title": "In vivo measurement of intracellular pH in human brain during different tensions of carbon dioxide in arterial blood", "locator": "pmid:3147578", "supports": ["respiration_co2_acid_base"]},
+    {"id": "JANKOWIAK_2026", "title": "The importance of hair in human perception of electric fields", "locator": "doi:10.1038/s41598-026-52898-6", "supports": ["hair_static_point_geometry"]},
+    {"id": "CDC_LIGHTNING_2024", "title": "Lightning safety: avoid shower, plumbing and water during thunderstorms", "locator": "https://www.cdc.gov/lightning/faq/index.html", "supports": ["electrical_fault_lightning_safety"]},
+    {"id": "OSHA_POTENTIAL", "title": "Protection from hazardous differences in electric potential", "locator": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.269AppC", "supports": ["skin_sweat_contact_electricity", "electrical_fault_lightning_safety"]}
+  ],
+  "current_state": "BLOCKED_PENDING_LOCAL_MULTIPHYSICS_RECEIPT",
+  "next_gate": "Acquire synchronized local electrical, thermal, humidity, spray-charge, acoustic, skin-conductance and safety measurements with isolated sensors and one shared timestamp."
+}

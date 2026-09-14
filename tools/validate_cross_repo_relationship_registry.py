@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the cross-repo relationship registry.
 
-Structural audit only. This validator checks that beta relationship rows keep
+Structural audit only. This validator checks that beta/v2 relationship rows keep
 evidence states, blocked claims, and next-verification actions. It does not
 validate cross-repository integration or promote any scientific/hardware claim.
 """
@@ -27,6 +27,24 @@ FORBIDDEN_PROMOTION_PHRASES = [
     "scientific proof",
     "hardware validated",
 ]
+STATUS_MARKERS = [
+    "beta_relationship_registry / evidence_gated / no_claim_promotion",
+    "v2_measured_entrelace / evidence_gated / no_claim_promotion / fail_closed",
+]
+WARNING_MARKERS = [
+    "Do not treat this registry as proof of working integration.",
+    "Do not treat the registry as proof of working integration.",
+]
+CHAIN_MARKERS = [
+    "relationship -> evidence state -> verification -> small fix -> test -> artifact -> claim gate",
+    "exact source + exact target + blob identity",
+    "exact ref/path/blob SHA",
+]
+NEXT_ACTION_VERBS = (
+    "Verify", "Define", "Check", "Keep", "Compare", "Resolve", "Use",
+    "Validate", "Produce", "Locate", "Generate", "Import", "Recompute", "Emit",
+    "Require", "Link",
+)
 
 
 def _split_row(line: str) -> list[str]:
@@ -84,19 +102,21 @@ def validate_rows(rows: list[dict[str, str]]) -> None:
                 raise ValueError(f"{row_id}: forbidden promotion phrase: {phrase}")
         if row["State"] != "VERIFIED" and not row["Blocked claim"].strip():
             raise ValueError(f"{row_id}: non-verified relationship must keep a blocked claim")
-        if "Verify" not in row["Next verification"] and "Define" not in row["Next verification"] and "Check" not in row["Next verification"] and "Keep" not in row["Next verification"]:
-            raise ValueError(f"{row_id}: next verification must name a verification action")
+        action = row["Next verification"]
+        if not any(verb in action for verb in NEXT_ACTION_VERBS):
+            raise ValueError(
+                f"{row_id}: next verification must name an explicit audit action; "
+                f"expected one of {NEXT_ACTION_VERBS}"
+            )
 
 
 def validate_text(text: str) -> None:
-    required_markers = [
-        "beta_relationship_registry / evidence_gated / no_claim_promotion",
-        "Do not treat this registry as proof of working integration.",
-        "relationship -> evidence state -> verification -> small fix -> test -> artifact -> claim gate",
-    ]
-    for marker in required_markers:
-        if marker not in text:
-            raise ValueError(f"missing required marker: {marker}")
+    if not any(marker in text for marker in STATUS_MARKERS):
+        raise ValueError(f"missing registry status marker; expected one of: {STATUS_MARKERS}")
+    if not any(marker in text for marker in WARNING_MARKERS):
+        raise ValueError(f"missing no-promotion warning; expected one of: {WARNING_MARKERS}")
+    if not any(marker in text for marker in CHAIN_MARKERS):
+        raise ValueError(f"missing traceability-chain marker; expected one of: {CHAIN_MARKERS}")
     validate_rows(extract_relationship_rows(text))
 
 

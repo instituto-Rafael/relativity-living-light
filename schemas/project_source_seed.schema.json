@@ -1,0 +1,63 @@
+{
+  "$id": "https://example.invalid/rll/project_source_seed.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Structural contract for an executable committed seed. Public-safe source bodies are hash-gated; personal/private bodies remain pointer-only. Schema conformance does not validate scientific claims.",
+  "properties": {
+    "base64_prefix_decoded_bytes": {"const": 30000, "type": "integer"},
+    "base64_prefix_parts": {"items": {"$ref": "#/$defs/textPart"}, "minItems": 5, "maxItems": 5, "type": "array"},
+    "binary_tail_parts": {"items": {"$ref": "#/$defs/binaryPart"}, "minItems": 3, "maxItems": 3, "type": "array"},
+    "bundle_encoding": {"const": "base64-prefix+binary-tail(gzip(jsonl:utf-8))"},
+    "bundle_gzip_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
+    "bundle_gzip_size_bytes": {"const": 48027, "type": "integer"},
+    "bundle_record_count": {"const": 13, "type": "integer"},
+    "bundle_root": {"const": "data/project_sources/seed_v1"},
+    "bundle_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
+    "bundle_transport_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
+    "claim_allowed": {"const": false},
+    "committed_body_count": {"const": 13, "type": "integer"},
+    "execution_ready": {"const": true},
+    "pointer_only_count": {"const": 1, "type": "integer"},
+    "private_bodies_committed": {"const": false},
+    "public_body_scope": {"const": "PUBLIC_SAFE_ONLY"},
+    "schema": {"const": "rll.project_sources_seed.v1"},
+    "source_count": {"const": 14, "type": "integer"},
+    "sources": {
+      "items": {
+        "properties": {
+          "bundle_record_id": {"type": ["string", "null"]},
+          "claim_allowed": {"const": false},
+          "content_sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"},
+          "display_name": {"minLength": 1, "type": "string"},
+          "ingestion_policy": {"enum": ["ingest", "pointer_only"]},
+          "line_count": {"minimum": 0, "type": "integer"},
+          "not_evidence_for": {"items": {"type": "string"}, "type": "array"},
+          "size_bytes": {"minimum": 0, "type": "integer"},
+          "source_id": {"minLength": 1, "type": "string"},
+          "visibility": {"enum": ["PUBLIC_SAFE_COMMITTED_BODY", "PRIVATE_POINTER_ONLY"]}
+        },
+        "required": ["source_id", "display_name", "bundle_record_id", "content_sha256", "size_bytes", "line_count", "temporal_state", "rll_relation", "visibility", "ingestion_policy", "claim_allowed", "summary", "not_evidence_for", "next_gate"],
+        "type": "object"
+      },
+      "maxItems": 14,
+      "minItems": 14,
+      "type": "array"
+    },
+    "total_public_bytes": {"const": 123646, "type": "integer"},
+    "total_public_lines": {"const": 4483, "type": "integer"}
+  },
+  "required": ["schema", "created_at", "claim_allowed", "execution_ready", "public_body_scope", "private_bodies_committed", "bundle_root", "bundle_sha256", "bundle_record_count", "source_count", "committed_body_count", "pointer_only_count", "total_public_bytes", "total_public_lines", "sources", "bundle_encoding", "bundle_transport_sha256", "bundle_gzip_sha256", "bundle_gzip_size_bytes", "base64_prefix_decoded_bytes", "base64_prefix_parts", "binary_tail_parts"],
+  "$defs": {
+    "textPart": {
+      "type": "object",
+      "required": ["name", "sha256", "size_bytes"],
+      "properties": {"name": {"type": "string"}, "sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"}, "size_bytes": {"minimum": 1, "type": "integer"}}
+    },
+    "binaryPart": {
+      "type": "object",
+      "required": ["name", "sha256", "git_blob_sha", "size_bytes"],
+      "properties": {"name": {"type": "string"}, "sha256": {"pattern": "^[a-f0-9]{64}$", "type": "string"}, "git_blob_sha": {"pattern": "^[a-f0-9]{40}$", "type": "string"}, "size_bytes": {"minimum": 1, "type": "integer"}}
+    }
+  },
+  "title": "RLL Real Project Source Seed",
+  "type": "object"
+}

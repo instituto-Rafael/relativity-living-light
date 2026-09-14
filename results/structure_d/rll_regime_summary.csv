@@ -1,6 +1,6 @@
 z_min,z_max,R_mean,dominant_regime,top_parameters,notes
 0.1,0.41666666666666663,0.019186894415480424,expansion_dominated,Om;Ol;beta,inverse-threshold classification
-0.41666666666666663,0.7333333333333333,0.014426595917839923,expansion_dominated,Om;Ol;beta,inverse-threshold classification
-0.7333333333333333,1.05,0.010716566936042421,expansion_dominated,Om;Ol;beta,inverse-threshold classification
+0.41666666666666663,0.7333333333333333,0.014426595917837796,expansion_dominated,Om;Ol;beta,inverse-threshold classification
+0.7333333333333333,1.05,0.010716566936045224,expansion_dominated,Om;Ol;beta,inverse-threshold classification
 1.3666666666666667,1.6833333333333333,0.00716020719140239,expansion_dominated,Om;Ol;beta,inverse-threshold classification
 1.6833333333333333,2.0,0.005423273830095865,expansion_dominated,Om;Ol;beta,inverse-threshold classification

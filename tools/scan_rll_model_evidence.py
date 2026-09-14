@@ -216,7 +216,12 @@ def scan(input_csv: Path, registry: Path) -> EvidenceScan:
     if cpl_row is None:
         blocking.append("CPL/w0waCDM baseline absent; RLL cannot be interpreted against the DESI-era standard dynamic-DE baseline")
     if h0_all_equal is True:
-        warnings.append("H0 is identical across all model rows; check for fixed prior, hard clamp or optimizer boundary")
+        warnings.append(
+            "H0_all_equal=True: H0 is identical across all model rows — "
+            "check for fixed prior, hard clamp or optimizer boundary. "
+            "This is an operational warning that prevents strong claims until H0/r_d ablation "
+            "is executed (see data/inputs/cosmology_joint/h0_rd_ablation_matrix.json)."
+        )
 
     model_scans: list[ModelScan] = []
     rll_scan: ModelScan | None = None
@@ -273,6 +278,10 @@ def scan(input_csv: Path, registry: Path) -> EvidenceScan:
 
     if any(ms.dof_consistent is False for ms in model_scans):
         blocking.append("at least one model row has inconsistent N-k-dof")
+
+    claim_status = "CLAIM_BLOCKED"
+    summary = "Blocking metadata/gate failure prevents a positive RLL claim."
+
     if rll_scan is None:
         blocking.append("RLL row absent")
     elif rll_scan.delta_AICc_CPL is not None and rll_scan.delta_BIC_CPL is not None:

@@ -111,6 +111,45 @@ def test_cmb_chi2_falls_back_to_diagonal_without_committed_covariance() -> None:
     assert chi2 >= 0.0
 
 
+def test_k_is_derived_from_registry() -> None:
+    """Verify k_from_registry produces correct k for each model using the committed registry."""
+    registry = joint.load_parameter_registry()
+
+    for model, param_names in joint.MODEL_PARAM_NAMES.items():
+        expected_k = len(param_names)
+        derived_k = joint.k_from_registry(param_names, registry)
+        assert derived_k == expected_k, (
+            f"k_from_registry mismatch for {model}: "
+            f"expected {expected_k}, got {derived_k}"
+        )
+
+
+def test_model_row_includes_registry_schema_and_commit_sha() -> None:
+    """Verify _model_row embeds registry_schema and commit_sha when registry is provided."""
+    inputs = joint.load_joint_inputs()
+    registry = inputs["parameter_registry"]
+    vector = np.array([67.7, 0.31, 0.69, 0.0224, 0.8], dtype=float)
+    components = {"total": 10.0, "Hz": 2.0, "DESI_DR2_BAO": 3.0, "fsigma8": 2.5, "CMB_shift": 2.5}
+
+    row = joint._model_row(joint.MODEL_LCDM, vector, components, 50, registry=registry, commit_sha="abc123")
+
+    assert row["registry_schema"] == registry["schema"]
+    assert row["commit_sha"] == "abc123"
+    assert row["k"] == len(joint.MODEL_PARAM_NAMES[joint.MODEL_LCDM])
+
+
+def test_model_row_without_registry_falls_back_to_len_param_names() -> None:
+    """Verify _model_row falls back to len(param_names) when registry is None."""
+    vector = np.array([67.7, 0.31, 0.69, 0.0224, 0.8], dtype=float)
+    components = {"total": 10.0, "Hz": 2.0, "DESI_DR2_BAO": 3.0, "fsigma8": 2.5, "CMB_shift": 2.5}
+
+    row = joint._model_row(joint.MODEL_LCDM, vector, components, 50)
+
+    assert row["k"] == len(joint.MODEL_PARAM_NAMES[joint.MODEL_LCDM])
+    assert row["registry_schema"] is None
+    assert row["commit_sha"] is None
+
+
 def test_committed_joint_real_json_exposes_dataset_type_claim_boundary_and_fnext() -> None:
     import json
     from pathlib import Path

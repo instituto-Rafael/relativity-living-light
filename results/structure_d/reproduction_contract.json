@@ -1,16 +1,20 @@
 {
   "command": "python -m data.pipelines.structure_d.run_all",
   "execution_path": "classic",
-  "profile": "structure_d_default",
+  "profile": "structure_d_partial_real",
+  "git_commit": "8a89d4d96496873dee9fbc933d9a23d294e94a20",
+  "dirty_worktree": true,
   "covariance_policy": "prefer_full",
   "covariance_policy_supported": [
     "prefer_full",
     "diagonal_only",
     "full_required"
   ],
+  "mock_data_contract": "data/synthetic/structure_d/mock_data_contract.json",
   "required_outputs": [
     "model_comparison.csv",
     "covariance_usage.csv",
+    "error_mode_usage.csv",
     "rll_regime_summary.csv",
     "reproduction_contract.json"
   ],
@@ -33,54 +37,24 @@
   ],
   "bayes_enabled": false,
   "bayes_mode": null,
+  "bayes_inference_hyperparameters": null,
   "covariance_usage_non_empty": true,
-  "bayes_factor_interpretation_contract": {
-    "table_version": "2026-03-04",
-    "classification_rule": "row interval where lnB_min <= lnB < lnB_max",
-    "rows": [
-      {
-        "lnB_min": "-inf",
-        "lnB_max": -5.0,
-        "classification": "very_strong_against_model_1",
-        "notes": "Jeffreys/Trotta: evidence strongly favors model_0 over model_1."
-      },
-      {
-        "lnB_min": -5.0,
-        "lnB_max": -2.5,
-        "classification": "moderate_against_model_1",
-        "notes": "Jeffreys/Trotta: moderate evidence against model_1."
-      },
-      {
-        "lnB_min": -2.5,
-        "lnB_max": -1.0,
-        "classification": "weak_against_model_1",
-        "notes": "Jeffreys/Trotta: weak evidence against model_1."
-      },
-      {
-        "lnB_min": -1.0,
-        "lnB_max": 1.0,
-        "classification": "inconclusive",
-        "notes": "Jeffreys/Trotta: inconclusive or not worth more than a bare mention."
-      },
-      {
-        "lnB_min": 1.0,
-        "lnB_max": 2.5,
-        "classification": "weak_for_model_1",
-        "notes": "Jeffreys/Trotta: weak evidence supporting model_1."
-      },
-      {
-        "lnB_min": 2.5,
-        "lnB_max": 5.0,
-        "classification": "moderate_for_model_1",
-        "notes": "Jeffreys/Trotta: moderate evidence supporting model_1."
-      },
-      {
-        "lnB_min": 5.0,
-        "lnB_max": "inf",
-        "classification": "very_strong_for_model_1",
-        "notes": "Jeffreys/Trotta: strong to very strong evidence supporting model_1."
-      }
-    ],
-    "table_sha256": "b916fd98c09223b8a30794bd7392e3746656b6951973ed79aa0b7bc14fd940f0"
-  }
+  "datasets": [
+    {
+      "dataset_id": "real_hz",
+      "path_abs": null,
+      "timestamp_utc": null,
+      "sha256": null
+    },
+    {
+      "dataset_id": "real_bao",
+      "path_abs": null,
+      "timestamp_utc": null,
+      "sha256": null
+    }
+  ],
+  "execution_timing_outputs": [
+    "execution_timing.csv",
+    "execution_timing.json"
+  ]
 }

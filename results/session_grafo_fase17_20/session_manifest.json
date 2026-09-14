@@ -1,0 +1,56 @@
+{
+  "schema": "rll.session_grafo.v1",
+  "session_id": "SESSION_FASE17_20_2026-07-14_15",
+  "description": "Grafo epistêmico da sessão FASE 17-20: calibração dupla Planck 2018, MCMC joint e Bayes Factor formal.",
+  "periodo": {
+    "inicio": "2026-07-14",
+    "fim": "2026-07-15"
+  },
+  "snapshot": {
+    "through_phase": 20,
+    "meaning": "Estado histórico ao fim da FASE 20; não deve ser interpretado como estado corrente após a FASE 22.",
+    "g4_status_at_snapshot": "TOKEN_VAZIO"
+  },
+  "superseded_by": {
+    "phase": 22,
+    "document": "docs/cronologia-auditoria/21_FASE22_G4_EH_BIAS_GRID.md",
+    "artifact": "results/rll_fase22_g4_eh_bias_grid.json",
+    "g4_current_status": "VERIFIED_LIMITED",
+    "g4_resolution": "Viés E&H quantificado; erro sistemático de 0.7214 Mpc no ponto posterior. Lacuna desconhecida fechada, sistemático não eliminado.",
+    "precision_next_gate": "Recalcular r_d com CAMB/RECFAST em cada passo do MCMC e repetir a evidência Bayesiana."
+  },
+  "current_state_overlay": "current_state_overlay.json",
+  "branch": "claude/rll-cronologia-auditoria-qyvn83",
+  "prs_merged": [
+    "#551 (FASE 18)",
+    "#553 (FASE 19)",
+    "#554 (FASE 20)",
+    "#556 (FASES 21-22)"
+  ],
+  "gaps_fechados": [
+    "G1 (MCMC joint)",
+    "G2 (rd calibrado)",
+    "G3 (Bayes Factor formal)",
+    "G4 (viés E&H quantificado na FASE 22; fechamento limitado)"
+  ],
+  "gaps_abertos": [],
+  "claim_allowed": false,
+  "boundary": "Grafo registra relações candidatas entre afirmações, fontes, código e artefatos. Não constitui prova de superioridade do modelo RLL. O fechamento de G4 é limitado à quantificação do sistemático e não substitui CAMB/RECFAST dentro do MCMC.",
+  "generated_utc": "2026-07-16T00:00:00Z",
+  "generator": "scripts/build_session_grafo_fase17_20.py",
+  "artifacts": [
+    "session_manifest.json",
+    "current_state_overlay.json",
+    "claims.jsonl",
+    "sources.bib",
+    "entities.jsonl",
+    "relations.jsonl",
+    "contradictions.jsonl",
+    "gaps.jsonl",
+    "actions.jsonl",
+    "formulas.yaml",
+    "experiments.yaml",
+    "graph.graphml",
+    "report.md"
+  ]
+}

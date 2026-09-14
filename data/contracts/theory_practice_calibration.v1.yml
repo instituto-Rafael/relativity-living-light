@@ -1,0 +1,182 @@
+schema: rll.theory_practice_calibration.v1
+status: EXPERIMENTAL_SHADOW
+claim_allowed: false
+publication_effect: NONE
+documentation: docs/science/RLL_THEORY_PRACTICE_CALIBRATION_OMEGA_PI_INFINITY_20260729.md
+purpose: >-
+  Maintain an auditable working relation between theoretical artifacts and
+  practical artifacts without converting proximity, fit, elegance, or
+  implementation readiness into probability of truth.
+
+symbolic_language:
+  working_relation: "theory ~= practice"
+  approximation_operator: "[~=]"
+  residual_operator: "Delta(theory, practice)"
+  signed_direction: "+/- records the direction of a measured residual only"
+  scope_marker: "section_sign"
+  verification_marker: "check_mark"
+  provenance_marker: "paragraph_mark"
+  omega: "iterative return through calibration cycles"
+  pi: "composition of independently declared dimensions, never an opaque average"
+  infinity: "open-ended evolution potential, never infinite execution or universal truth"
+  boundary: >-
+    The symbols are methodological notation. They do not define a new physical
+    constant, field, particle, cosmological law, or authorization of claim.
+
+knowledge_invariant:
+  id: OMEGA_PI_INFINITY_DATA_INVARIANT
+  statement: >-
+    Every datum used by a calibration remains addressable through source,
+    transformation, scope, residual, decision, and receipt. New evidence may
+    refine or refute a relation, but no state transition may silently erase a
+    contradiction, negative result, missing datum, or prior receipt.
+  append_only_transitions: true
+  token_vazio_is_data: true
+  silent_deletion_forbidden: true
+
+calibration_loop:
+  - theory_anchor
+  - operational_mapping
+  - executable_shadow
+  - practical_observation
+  - signed_residual
+  - falsifier_decision
+  - receipt
+  - next_bridge
+  - repeat
+
+relation_states:
+  - id: APPROX_WORKING
+    meaning: theory and practice are linked, but one or more mandatory residuals remain unresolved
+  - id: APPROX_BOUNDED
+    meaning: a preregistered comparison produced a receipt inside its declared tolerance and scope
+  - id: NOT_EQUAL_OBSERVED
+    meaning: an observed residual crossed a preregistered falsifier or tolerance boundary
+  - id: TOKEN_VAZIO_UNDEFINED
+    meaning: the comparison is not yet defined because a mandatory anchor, observable, or receipt is absent
+
+calibration_states:
+  - {id: C5_INDEPENDENTLY_REPRODUCED, rank: 5}
+  - {id: C4_ROBUST_REPEATED, rank: 4}
+  - {id: C3_RECEIPTED_COMPARISON, rank: 3}
+  - {id: C2_EXECUTABLE_SHADOW, rank: 2}
+  - {id: C1_LINKED, rank: 1}
+  - {id: C0_TOKEN_VAZIO_UNCALIBRATED, rank: 0}
+
+mandatory_delta_axes:
+  - theory_scope_to_specific_model
+  - equation_or_algorithm_to_code
+  - observable_to_measurement
+  - parameter_to_configuration
+  - prediction_to_receipt
+  - falsifier_to_decision
+
+delta_states:
+  - EVIDENCED
+  - PARTIAL
+  - TOKEN_VAZIO
+
+rules:
+  - calibration_state is independent from scientific promotion state and exploration tier
+  - APPROX_BOUNDED requires a preregistered tolerance, scope marker, receipt, and falsifier decision
+  - a signed residual is not a moral score, truth score, or probability
+  - no weighted average may hide a TOKEN_VAZIO mandatory delta axis
+  - PARTIAL must name both what exists and what remains missing
+  - TOKEN_VAZIO must name reason, next action, and exit criterion
+  - NOT_EQUAL_OBSERVED must be preserved as knowledge and must not be renamed as success
+  - every profile must retain source, scope, verification, and provenance markers
+
+profiles:
+  - calibration_id: CAL-RLL-BACKGROUND-001
+    fragment_id: FRAG-RLL-BACKGROUND-001
+    exploration_tier: P5_NEAR_OPERATIONAL
+    promotion_state: TESTED_SYNTHETIC
+    calibration_state: C2_EXECUTABLE_SHADOW
+    relation_state: APPROX_WORKING
+    scope_marker: background_expansion_Hz_DESI_DR2_BAO_shadow
+    theory_anchors:
+      - data/contracts/cosmology_model_family_shadow.v1.json
+      - data/pipelines/structure_d/model_family_shadow.py
+    practice_anchors:
+      - tests/test_model_family_shadow.py
+      - data/inputs/cosmology_joint/frontier_research_queue.v1.yml
+    delta_vector:
+      theory_scope_to_specific_model: {state: EVIDENCED, evidence: [data/contracts/cosmology_model_family_shadow.v1.json]}
+      equation_or_algorithm_to_code: {state: EVIDENCED, evidence: [data/pipelines/structure_d/model_family_shadow.py]}
+      observable_to_measurement: {state: PARTIAL, evidence: [DESI_DR2_BAO, H_z], missing: perturbation_and_additional_likelihood_backends}
+      parameter_to_configuration: {state: EVIDENCED, evidence: [frozen_bounds, predeclared_seeds]}
+      prediction_to_receipt: {state: TOKEN_VAZIO, reason: robust multi-seed receipt absent, next_action: execute all preregistered seeds, exit_criterion: receipt contains per-seed objectives residuals convergence and stability}
+      falsifier_to_decision: {state: PARTIAL, evidence: [background_shadow_tests], missing: independent adversarial decision receipt}
+    next_execution: execute preregistered multi-seed shadow comparison and preserve signed residuals
+
+  - calibration_id: CAL-IDE-001
+    fragment_id: FRAG-IDE-001
+    exploration_tier: P4_FORMALIZABLE_NEAR
+    promotion_state: TOKEN_VAZIO_COUPLED_BACKGROUND_PERTURBATIONS
+    calibration_state: C1_LINKED
+    relation_state: TOKEN_VAZIO_UNDEFINED
+    scope_marker: interacting_dark_sector_candidate
+    theory_anchors: [arXiv:2503.21652]
+    practice_anchors: []
+    delta_vector:
+      theory_scope_to_specific_model: {state: TOKEN_VAZIO, reason: covariant interaction term not selected, next_action: select one Q_mu family, exit_criterion: action or conservation equations and nested limit are frozen}
+      equation_or_algorithm_to_code: {state: TOKEN_VAZIO, reason: coupled backend absent, next_action: implement background and perturbations, exit_criterion: solver passes limits and conservation tests}
+      observable_to_measurement: {state: PARTIAL, evidence: [background_expansion, growth_of_structure], missing: model_specific_likelihood_mapping}
+      parameter_to_configuration: {state: TOKEN_VAZIO, reason: parameterization not frozen, next_action: preregister priors and bounds, exit_criterion: immutable configuration artifact exists}
+      prediction_to_receipt: {state: TOKEN_VAZIO, reason: no execution, next_action: run synthetic injection after backend completion, exit_criterion: auditable receipt exists}
+      falsifier_to_decision: {state: PARTIAL, evidence: [nested_limit_requirement], missing: numerical decision rule}
+    next_execution: select one covariant Q_mu and materialize a conservation-tested shadow backend
+
+  - calibration_id: CAL-NONPARAM-001
+    fragment_id: FRAG-NONPARAM-001
+    exploration_tier: P4_FORMALIZABLE_NEAR
+    promotion_state: TOKEN_VAZIO_REGULARIZATION_AND_COVERAGE
+    calibration_state: C1_LINKED
+    relation_state: TOKEN_VAZIO_UNDEFINED
+    scope_marker: nonparametric_adversarial_lens
+    theory_anchors: [arXiv:2506.22953, arXiv:2503.14743]
+    practice_anchors: []
+    delta_vector:
+      theory_scope_to_specific_model: {state: PARTIAL, evidence: [nonparametric_reconstruction_family], missing: frozen_basis_or_kernel}
+      equation_or_algorithm_to_code: {state: TOKEN_VAZIO, reason: implementation policy not frozen, next_action: choose basis kernel and regularizer, exit_criterion: deterministic implementation and configuration exist}
+      observable_to_measurement: {state: EVIDENCED, evidence: [DESI_DR2_BAO, H_z]}
+      parameter_to_configuration: {state: TOKEN_VAZIO, reason: hyperparameters and regularization unknown, next_action: preregister selection policy, exit_criterion: hyperparameter policy is immutable before data ranking}
+      prediction_to_receipt: {state: TOKEN_VAZIO, reason: mock coverage absent, next_action: run injected-recovery ensemble, exit_criterion: coverage calibration receipt exists}
+      falsifier_to_decision: {state: PARTIAL, evidence: [coverage_and_recovery_requirement], missing: threshold and decision artifact}
+    next_execution: freeze the reconstruction family before observing comparative rankings
+
+  - calibration_id: CAL-STRONG-GRAVITY-BRIDGE-001
+    fragment_id: FRAG-STRONG-GRAVITY-001
+    exploration_tier: P2_BRIDGE_CANDIDATE
+    promotion_state: ROUTED_SEPARATE_AUTHORITY
+    calibration_state: C1_LINKED
+    relation_state: TOKEN_VAZIO_UNDEFINED
+    scope_marker: source_specific_strong_gravity_to_cosmology_bridge
+    theory_anchors: [data/pipelines/strong_gravity]
+    practice_anchors: []
+    delta_vector:
+      theory_scope_to_specific_model: {state: PARTIAL, evidence: [strong_gravity_mechanism_ledger], missing: cosmological_bridge_model}
+      equation_or_algorithm_to_code: {state: PARTIAL, evidence: [data/pipelines/strong_gravity], missing: bridge_operator_backend}
+      observable_to_measurement: {state: TOKEN_VAZIO, reason: no source-independent signature, next_action: derive one discriminating observable, exit_criterion: observable is not reducible to source tuning}
+      parameter_to_configuration: {state: TOKEN_VAZIO, reason: bridge parameters undefined, next_action: define stress-energy or propagation operator parameters, exit_criterion: dimensions bounds and limits are frozen}
+      prediction_to_receipt: {state: TOKEN_VAZIO, reason: no bridge execution, next_action: run synthetic null and injected bridge tests, exit_criterion: signed residual receipt exists}
+      falsifier_to_decision: {state: TOKEN_VAZIO, reason: unique falsifier absent, next_action: define baseline and exclusion criterion, exit_criterion: adversarial decision rule exists}
+    next_execution: derive T_mu_nu bridge or propagation operator before cosmological fitting
+
+  - calibration_id: CAL-EINSTEIN-EXT-001
+    fragment_id: FRAG-EINSTEIN-EXT-001
+    exploration_tier: P1_SPECULATIVE_SEED
+    promotion_state: TOKEN_VAZIO_PERTURBATION_AND_STABILITY_BACKEND
+    calibration_state: C0_TOKEN_VAZIO_UNCALIBRATED
+    relation_state: TOKEN_VAZIO_UNDEFINED
+    scope_marker: generic_modified_gravity_family_not_yet_selected
+    theory_anchors: [historical_primary_source, DESI_DR2_publications]
+    practice_anchors: []
+    delta_vector:
+      theory_scope_to_specific_model: {state: TOKEN_VAZIO, reason: generic family is too broad, next_action: select f_R scalar_tensor Horndeski or Einstein_Cartan family, exit_criterion: one action or field-equation family is fixed}
+      equation_or_algorithm_to_code: {state: TOKEN_VAZIO, reason: no selected equations, next_action: derive background and perturbation equations, exit_criterion: executable equations exist}
+      observable_to_measurement: {state: PARTIAL, evidence: [expansion, growth, gravitational_wave_propagation], missing: model_specific_signature}
+      parameter_to_configuration: {state: TOKEN_VAZIO, reason: no model parameters, next_action: define dimensions priors and nested limit, exit_criterion: preregistered configuration exists}
+      prediction_to_receipt: {state: TOKEN_VAZIO, reason: comparison undefined, next_action: implement synthetic limit tests after model selection, exit_criterion: receipt exists}
+      falsifier_to_decision: {state: TOKEN_VAZIO, reason: no specific falsifier, next_action: define stability GW and observational falsifiers, exit_criterion: decision rules are machine-readable}
+    next_execution: select exactly one modified-gravity family before any ranking or fit

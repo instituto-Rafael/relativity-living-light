@@ -1,0 +1,399 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/information_evolution_trace.schema.json",
+  "title": "Information Evolution Trace",
+  "description": "Structural contract for claim-bounded internal custody records that document information states, transformations, tests, gaps and epistemic gates. Structural validation does not establish scientific truth, historical origin, consciousness or external validity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_id",
+    "schema_version",
+    "artifact_type",
+    "origin_status",
+    "first_observable_state",
+    "current_state",
+    "transformations",
+    "epistemic_status",
+    "claim_allowed",
+    "next_gate"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for the custody trace."
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "artifact_type": {
+      "type": "string",
+      "enum": [
+        "observation",
+        "hypothesis",
+        "testimony",
+        "derivation",
+        "metaphor",
+        "procedure",
+        "dataset",
+        "model",
+        "mixed"
+      ]
+    },
+    "origin_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "partial",
+        "inferred",
+        "TOKEN_VAZIO"
+      ],
+      "description": "Status of provenance before or at the first observable state. TOKEN_VAZIO must be used when origin is unknown."
+    },
+    "origin_evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/reference"
+      },
+      "default": []
+    },
+    "first_observable_state": {
+      "$ref": "#/$defs/information_state"
+    },
+    "current_state": {
+      "$ref": "#/$defs/information_state"
+    },
+    "transformations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/transformation"
+      },
+      "description": "Ordered transformation history from the first observable state to the current state."
+    },
+    "epistemic_status": {
+      "type": "string",
+      "enum": [
+        "vestige",
+        "internally_traceable",
+        "systemically_consistent",
+        "procedurally_reproducible",
+        "externally_confronted",
+        "independently_replicated",
+        "rejected",
+        "rolled_back"
+      ]
+    },
+    "claim_allowed": {
+      "const": false,
+      "description": "This structural trace cannot by itself authorize a scientific, historical, legal, institutional or physical claim."
+    },
+    "blocked_claims": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "next_gate": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Next review, evidence, reproducibility or comparison gate required."
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity_record"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "locator"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "doi",
+            "arxiv",
+            "isbn",
+            "url",
+            "repository_path",
+            "commit",
+            "hash",
+            "dataset_id",
+            "oral_record",
+            "other"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verified": {
+          "type": "boolean",
+          "default": false
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "information_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_id",
+        "timestamp",
+        "content_summary",
+        "content_status",
+        "claim_boundary"
+      ],
+      "properties": {
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "content_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_status": {
+          "type": "string",
+          "enum": [
+            "observed",
+            "hypothesized",
+            "derived",
+            "contextual",
+            "metaphorical",
+            "tested",
+            "rejected",
+            "TOKEN_VAZIO"
+          ]
+        },
+        "coherence_score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "predictive_score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "reproducibility_score": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "default": []
+        },
+        "claim_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "test_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "test_id",
+        "method",
+        "result",
+        "reproducible",
+        "external_baseline"
+      ],
+      "properties": {
+        "test_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "passed",
+            "failed",
+            "inconclusive",
+            "not_run"
+          ]
+        },
+        "reproducible": {
+          "type": "boolean"
+        },
+        "external_baseline": {
+          "type": "boolean",
+          "description": "True only when comparison is not generated solely by the same internal mechanism."
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference"
+          },
+          "default": []
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "transformation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transformation_id",
+        "from_state",
+        "to_state",
+        "timestamp",
+        "procedure",
+        "procedure_version",
+        "inputs",
+        "context",
+        "observed_noise",
+        "tests",
+        "decision",
+        "decision_reason"
+      ],
+      "properties": {
+        "transformation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "procedure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "procedure_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "context": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observed_noise": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/test_record"
+          }
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "retain",
+            "revise",
+            "reject",
+            "rollback"
+          ]
+        },
+        "decision_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{7,40}$"
+        }
+      }
+    },
+    "integrity_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "digest",
+        "generated_at"
+      ],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "sha256",
+            "sha3-256",
+            "blake3",
+            "git"
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "minLength": 7
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

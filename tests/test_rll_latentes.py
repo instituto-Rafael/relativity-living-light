@@ -42,6 +42,22 @@ def test_score_latent_rejects_invalid_domain() -> None:
         latentes.score_latent(C=1.0, I=1.0, P=1.0, E=1.0, Rc=1.0, Ru=-0.1, Am=0.0, Vb=0.0)
 
 
+def test_build_semantic_token_unit_preserves_ucase_and_seven_directions() -> None:
+    unit = latentes.build_semantic_token_unit("força disponível: prova?")
+
+    assert unit["raw_span"] == "FORÇA DISPONÍVEL: PROVA?"
+    assert tuple(unit["views_7d"]) == latentes.SEMANTIC_DIRECTIONS
+    assert unit["views_7d"]["d5_causal_temporal"]["forward_paths"] == []
+    assert unit["views_7d"]["d5_causal_temporal"]["backward_paths"] == []
+    assert unit["views_7d"]["d6_epistemic_gap"]["token_vazio"] is True
+    assert unit["views_7d"]["d7_operational_governance"]["execution_gate"] == "human_review"
+
+
+def test_ucase_prompt_rejects_empty_input() -> None:
+    with pytest.raises(ValueError, match="must not be empty"):
+        latentes.ucase_prompt(" \n\t")
+
+
 def test_entropy_hash_and_toroidal_map_are_deterministic() -> None:
     data = b"RLL-LATENTES"
     entropy = latentes.entropy_milli(data)

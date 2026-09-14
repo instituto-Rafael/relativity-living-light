@@ -1,0 +1,67 @@
+name: RLL Repository PAT Assurance
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/rll-repository-pat-assurance.yml"
+      - "data/governance/RLL_REPOSITORY_PAT_ASSURANCE_EXCEPTION_V1.json"
+      - "tools/validate_rll_repository_pat_assurance.py"
+      - "tests/test_rll_repository_pat_assurance.py"
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Validate reviewed exception and tests
+        run: |
+          set -euo pipefail
+          python tools/validate_rll_repository_pat_assurance.py
+          python -m unittest -v tests.test_rll_repository_pat_assurance
+
+  repository-pat-assurance:
+    if: github.event_name == 'workflow_dispatch'
+    needs: static-contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Read-only PAT authentication probe
+        env:
+          GITPAT: ${{ secrets.GITPAT }}
+        run: |
+          set -euo pipefail
+          python tools/validate_rll_repository_pat_assurance.py \
+            --runtime \
+            --repository "${GITHUB_REPOSITORY}"
+      - name: Upload sanitized assurance receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-repository-pat-assurance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/governance/RLL_REPOSITORY_PAT_ASSURANCE_RECEIPT.json
+          if-no-files-found: warn
+          retention-days: 14

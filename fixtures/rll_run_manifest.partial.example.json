@@ -1,0 +1,36 @@
+{
+  "schema": "rll.scientific_run_manifest.v1",
+  "run_id": "synthetic-example-partial-0001",
+  "commit_sha": "0000000000000000000000000000000000000000",
+  "run_date": "2026-07-20T00:00:00Z",
+  "execution_mode": "apenas_ciencia",
+  "completeness": "partial",
+  "lineage_id": "SYNTHETIC_EXAMPLE_DO_NOT_CITE",
+  "parent_run_id": null,
+  "dataset_lineage": {
+    "pantheon_plus": "TOKEN_VAZIO",
+    "desi_dr2": "TOKEN_VAZIO"
+  },
+  "environment": {
+    "python": "3.11",
+    "platform": "synthetic-fixture",
+    "dependency_lock_sha256": "TOKEN_VAZIO",
+    "random_seed": "TOKEN_VAZIO"
+  },
+  "results": [
+    {
+      "result_id": "F-COS-04",
+      "value": null,
+      "uncertainty": null,
+      "unit": "dimensionless",
+      "status": "TOKEN_VAZIO",
+      "method": "dynesty-not-executed",
+      "artifact_path": "artifacts/bayes_factor/bayes_factor_result.json",
+      "artifact_sha256": "TOKEN_VAZIO",
+      "supersedes_result_id": null,
+      "invalidation_reason": null
+    }
+  ],
+  "claim_allowed": false,
+  "claim_boundary": "SYNTHETIC FIXTURE. It demonstrates schema shape only and is not scientific evidence."
+}

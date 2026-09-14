@@ -1,0 +1,75 @@
+{
+  "schema": "rll.dual_api_real_climate_calibration.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "purpose": "Execute a bounded real-data climate calibration using Climate Engine while using GitHub API only for control-plane provenance and repository/commit custody.",
+  "agent_selectors": {
+    "github": "RLL_AGENT_GITHUB_PAT_ENV",
+    "climate": "RLL_AGENT_CLIMATE_KEY_ENV"
+  },
+  "agent_aliases": {
+    "github": [
+      "RLL_AGENT_PAT",
+      "AGENT_GITHUB_PAT",
+      "AGENT_PAT",
+      "GH_PAT",
+      "GIT_PAT",
+      "PAT_GIT"
+    ],
+    "climate": [
+      "CLIMATE_ENGINE_API_KEY"
+    ]
+  },
+  "actions_bindings": {
+    "github_selector_value": "GITHUB_TOKEN",
+    "github_secret_source": "github.token",
+    "climate_selector_value": "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+    "climate_secret_source": "secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+    "manual_only": true
+  },
+  "scientific_roles": {
+    "github_api": "CONTROL_PLANE_PROVENANCE_NOT_SCIENTIFIC_CALIBRATION",
+    "climate_engine_api": "EXTERNAL_COMPUTE_PRODUCT_FOR_CALIBRATION",
+    "primary_source_authority": "PRESERVE_UPSTREAM_DATASET_AUTHORITY"
+  },
+  "climate_engine": {
+    "base_url": "https://api.climateengine.org",
+    "metadata_methods": {
+      "dataset_dates": "GET",
+      "dataset_variables": "GET"
+    },
+    "timeseries_method": "POST",
+    "timeseries_endpoint": "/timeseries/native/coordinates",
+    "response_byte_cap": 8388608
+  },
+  "calibration": {
+    "baseline_window_required": true,
+    "target_window_required": true,
+    "statistics": [
+      "n",
+      "mean",
+      "std_population",
+      "min",
+      "max",
+      "delta_mean",
+      "z_shift_vs_baseline",
+      "ratio_target_to_baseline"
+    ],
+    "provider_missing_sentinel": -9999,
+    "coordinates_in_receipt": "SHA256_ONLY"
+  },
+  "gates": [
+    "both selector-resolved credentials present",
+    "GitHub repository and commit GET succeed",
+    "Climate Engine metadata requests succeed",
+    "baseline and target Climate Engine timeseries succeed",
+    "numeric samples observed in both windows"
+  ],
+  "boundaries": [
+    "GitHub API does not calibrate climate variables",
+    "Climate Engine is not the primary sensor/source authority",
+    "provider response agreement does not establish independence",
+    "calibration residual does not establish cause",
+    "claim_allowed remains false"
+  ]
+}

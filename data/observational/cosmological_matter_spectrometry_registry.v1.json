@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "registry_id": "RLL-COSMOLOGICAL-MATTER-SPECTROMETRY-V1",
+  "version": "1.0.0",
+  "date": "2026-07-30",
+  "status": "PUBLIC_SAFE_STRUCTURAL_REGISTRY",
+  "claim_allowed": false,
+  "wavelength_examples": [
+    {
+      "value": 350,
+      "unit": "nm",
+      "wavelength_m": 3.5e-07,
+      "classification": "near_ultraviolet"
+    },
+    {
+      "value": 450,
+      "unit": "nm",
+      "wavelength_m": 4.5e-07,
+      "classification": "visible_blue"
+    },
+    {
+      "value": 350,
+      "unit": "um",
+      "wavelength_m": 0.00035,
+      "classification": "far_infrared_submillimeter"
+    }
+  ],
+  "probe_families": [
+    {
+      "id": "electromagnetic_remote",
+      "messenger": "photon",
+      "methods": [
+        "photometry",
+        "spectroscopy",
+        "spectropolarimetry",
+        "interferometry",
+        "hyperspectral_imaging"
+      ],
+      "domains": [
+        "radio",
+        "microwave_submillimeter",
+        "infrared",
+        "visible",
+        "ultraviolet",
+        "x_ray",
+        "gamma_ray"
+      ]
+    },
+    {
+      "id": "electromagnetic_active",
+      "messenger": "photon",
+      "methods": [
+        "radar",
+        "lidar",
+        "LIBS",
+        "Raman",
+        "x_ray_fluorescence"
+      ]
+    },
+    {
+      "id": "particle_and_nuclear",
+      "messenger": "particle_or_nuclear_radiation",
+      "methods": [
+        "mass_spectrometry",
+        "plasma_analysis",
+        "dust_analysis",
+        "gamma_neutron_spectrometry",
+        "energetic_particle_detection"
+      ]
+    },
+    {
+      "id": "field_structure_interior",
+      "messenger": "field_or_dynamics",
+      "methods": [
+        "gravity",
+        "seismology",
+        "magnetometry",
+        "orbital_dynamics",
+        "mass_radius_inference"
+      ],
+      "direct_chemical_composition": false
+    }
+  ],
+  "target_layers": [
+    {
+      "id": "atmosphere",
+      "retrievable": [
+        "species",
+        "abundance",
+        "isotopes",
+        "temperature",
+        "pressure",
+        "winds",
+        "ionization",
+        "clouds_aerosols"
+      ]
+    },
+    {
+      "id": "surface",
+      "retrievable": [
+        "minerals",
+        "elements",
+        "ice",
+        "hydration",
+        "roughness",
+        "thermal_inertia"
+      ]
+    },
+    {
+      "id": "plasma_magnetosphere",
+      "retrievable": [
+        "electron_density",
+        "ion_composition",
+        "particle_energy",
+        "magnetic_field"
+      ]
+    },
+    {
+      "id": "interior",
+      "retrievable": [
+        "density_structure",
+        "layering",
+        "core_constraints",
+        "thermal_state"
+      ],
+      "non_unique": true
+    }
+  ],
+  "interaction_modes": [
+    {
+      "id": "rotational",
+      "typical_domain": "radio_microwave_submillimeter"
+    },
+    {
+      "id": "vibrational",
+      "typical_domain": "infrared"
+    },
+    {
+      "id": "electronic",
+      "typical_domain": "visible_ultraviolet"
+    },
+    {
+      "id": "inner_shell_ionization",
+      "typical_domain": "x_ray"
+    },
+    {
+      "id": "nuclear",
+      "typical_domain": "gamma_ray"
+    },
+    {
+      "id": "scattering",
+      "typical_domain": "multi_band"
+    },
+    {
+      "id": "doppler",
+      "typical_domain": "multi_band"
+    },
+    {
+      "id": "zeeman_faraday",
+      "typical_domain": "radio_optical"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# RAF_VERBEYES/IN — Estágio de Entrada
+# Ponto de entrada do pipeline de absorção.
+# Arquivos YML com observações e condições estruturais brutas entram aqui.
+
+schema: raf_verbeyes.stage.v1
+claim_allowed: false
+
+stage: IN
+index: 0
+pipeline: RAF_VERBEYES
+
+role: |
+  Diretório de entrada. Arquivos YML com observações brutas,
+  condições estruturais iniciais e dados a serem absorvidos
+  entram por este estágio. Nenhuma transformação ocorre aqui.
+
+accepts: "*.yml"
+exit_condition: "Arquivo selecionado para absorção ativa no pipeline."
+next_stage: PROCESSO
+
+policy:
+  raw_only: true
+  no_transform: true
+  no_claim: true
+  structured_conditions: true
+
+note: |
+  Deposite aqui qualquer arquivo YML que represente uma observação
+  nova ou condição estrutural a ser processada pelo pipeline de absorção.

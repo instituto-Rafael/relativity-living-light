@@ -1,0 +1,44 @@
+{
+  "schema": "rll.cross-repo-academic-roles.v1",
+  "created_at": "2026-07-26T00:00:00Z",
+  "claim_allowed": false,
+  "scientific_authority": "instituto-Rafael/relativity-living-light",
+  "reference_doi": "10.5281/zenodo.17188137",
+  "canonical_orcid": "TOKEN_VAZIO_ORCID_ID",
+  "repositories": [
+    {
+      "repository": "rafaelmeloreisnovo/GAIA_phi",
+      "base_commit": "224608448158c901fe00341cf26c68a1ce3f8a7c",
+      "proposed_head": "109f69c6f95c273078d005734d7d634441ae21c6",
+      "pull_request": "https://github.com/rafaelmeloreisnovo/GAIA_phi/pull/49",
+      "role": "ACADEMIC_INDEX_VECTOR_FOREST",
+      "allowed_outputs": ["PUBLIC_METADATA", "BIBLIOGRAPHY_RECORDS", "TOKEN_RECORDS", "DETERMINISTIC_RETRIEVAL_PROJECTIONS", "CUSTODY_RECEIPTS"],
+      "prohibited_claims": ["SCIENTIFIC_VALIDATION", "AUTHORSHIP_CONFIRMATION_WITHOUT_ORCID_AUTH", "SEMANTIC_UNDERSTANDING_FROM_HASH_PROJECTION"]
+    },
+    {
+      "repository": "rafaelmeloreisnovo/ZIPRAF_OMEGA_FULL",
+      "base_commit": "088a5fa5f363ff512e3a2874d577fce8739b72bd",
+      "proposed_head": "44bdeacd6a5fab391bb4f5c07050f774da76d67e",
+      "pull_request": "https://github.com/rafaelmeloreisnovo/ZIPRAF_OMEGA_FULL/pull/33",
+      "role": "HISTORICAL_PROTOTYPE_FORMAT_AND_HASHCHAIN_LAB",
+      "allowed_outputs": ["FORMAT_SPECIFICATION", "PROTOTYPE_CODE", "LOCAL_BENCHMARK_CANDIDATE", "HASHCHAIN_RECEIPT"],
+      "prohibited_claims": ["BLOCKCHAIN_WITHOUT_CONSENSUS", "TRL_WITHOUT_EVIDENCE", "PERFORMANCE_WITHOUT_PINNED_BASELINE", "PHYSICAL_OR_BIOLOGICAL_LAW"]
+    },
+    {
+      "repository": "rafaelmeloreisnovo/Rafaelia_Private",
+      "base_commit": "abb3d5b5d69c949a93c95d697e3dd2f2e46a3134",
+      "proposed_head": "031d89ac4249f79aaf55ae84bdbc6d54993431ae",
+      "pull_request": "https://github.com/rafaelmeloreisnovo/Rafaelia_Private/pull/192",
+      "role": "PRIVATE_PROVENANCE_POINTER_AND_KEY_GOVERNANCE_VAULT",
+      "allowed_outputs": ["OPAQUE_POINTER", "DIGESTS", "PUBLIC_KEY_FINGERPRINT", "CONSENT_AND_RETENTION_STATE"],
+      "prohibited_claims": ["PUBLICATION_OF_PRIVATE_BODY", "PRIVATE_KEY_IN_GIT", "LLM_KEY_CUSTODY", "SCIENTIFIC_VALIDATION"]
+    }
+  ],
+  "promotion_gate": ["identity_verified", "source_provenance", "bibliography_deduplicated", "hypothesis_explicit", "units_and_domain", "falsifier", "dataset_and_code_hashes", "execution_receipt", "statistical_diagnostics", "independent_reproduction", "human_review"],
+  "ledger_boundary": {
+    "hash_chain": true,
+    "blockchain_consensus": false,
+    "digital_signature": "TOKEN_VAZIO_CROSS_REPO_SIGNING_POLICY",
+    "triple_digest_profiles": ["SHA-256", "SHA3-512", "BLAKE2b-256"]
+  }
+}

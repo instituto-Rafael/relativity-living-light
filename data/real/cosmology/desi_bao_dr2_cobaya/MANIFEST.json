@@ -1,0 +1,190 @@
+{
+  "schema": "rll.real_data.desi_dr2_cobaya_manifest.v2",
+  "generated_utc": "2026-08-07T21:05:00Z",
+  "promotion": {
+    "source_pr": 385,
+    "source_branch": "codex/refactor-yml-workflow-and-directory-structure-zes1e1",
+    "source_head_sha": "2c065f3b182cc3142aea2ec658dff25433193d20",
+    "target_base_sha": "ef250a0d03f8834a40624027a36cec2f128d3075",
+    "mode": "additive_safe_extraction_only",
+    "workflow_overwrite": false,
+    "directory_moves": false,
+    "deletions": false
+  },
+  "claim_boundary": {
+    "real_public_data": true,
+    "full_joint_model_validation": false,
+    "claim_allowed": false,
+    "note": "Materialization and custody are evidence of data availability/integrity, not evidence that RLL is scientifically preferred."
+  },
+  "sources": {
+    "primary_paper": "https://arxiv.org/abs/2503.14738",
+    "official_desi_papers_page": "https://data.desi.lbl.gov/doc/papers/dr2/",
+    "cobaya_data_tree": "https://github.com/CobayaSampler/bao_data/tree/master/desi_bao_dr2",
+    "zenodo_record": "https://zenodo.org/records/16644577",
+    "zenodo_heavy_archive_materialized": false,
+    "zenodo_heavy_archive_state": "TOKEN_VAZIO_HEAVY_ARCHIVE_NOT_REQUIRED_FOR_COMMITTED_SMALL_LIKELIHOOD"
+  },
+  "files": [
+    {
+      "subset": "ALL",
+      "upstream_file": "desi_gaussian_bao_ALL_GCcomb_mean.txt",
+      "upstream_bytes": 472,
+      "upstream_sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_mean.tsv",
+      "local_bytes": 459,
+      "local_sha256": "138f09ca5d08506c1a45c4a1c50773f98b257e6b8981d95546e1fd5fbfee4ebc",
+      "normalized_local_tsv": true
+    },
+    {
+      "subset": "ALL",
+      "upstream_file": "desi_gaussian_bao_ALL_GCcomb_cov.txt",
+      "upstream_bytes": 2547,
+      "upstream_sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_cov.tsv",
+      "local_bytes": 2547,
+      "local_sha256": "1d40b03d7ded75b609e2c1a38aacfa1b5eeff4795f2e8600b13e73fa2b1bee73",
+      "normalized_local_tsv": true
+    },
+    {
+      "subset": "BGS_BRIGHT-21.35",
+      "upstream_file": "desi_gaussian_bao_BGS_BRIGHT-21.35_GCcomb_mean.txt",
+      "upstream_bytes": 63,
+      "upstream_sha256": "06fc72ca4f4b4a03973c514bf7568c856716ff76a8c05df02e42b93aca769d59",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_BGS_BRIGHT-21.35_GCcomb_mean.txt",
+      "local_bytes": 63,
+      "local_sha256": "06fc72ca4f4b4a03973c514bf7568c856716ff76a8c05df02e42b93aca769d59",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "BGS_BRIGHT-21.35",
+      "upstream_file": "desi_gaussian_bao_BGS_BRIGHT-21.35_GCcomb_cov.txt",
+      "upstream_bytes": 15,
+      "upstream_sha256": "06d7260009fa0030171753fe2f8ece92c5e167da5fdf57f3a98aa2dfe9dc142f",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_BGS_BRIGHT-21.35_GCcomb_cov.txt",
+      "local_bytes": 15,
+      "local_sha256": "06d7260009fa0030171753fe2f8ece92c5e167da5fdf57f3a98aa2dfe9dc142f",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG_z0.4-0.6",
+      "upstream_file": "desi_gaussian_bao_LRG_GCcomb_z0.4-0.6_mean.txt",
+      "upstream_bytes": 98,
+      "upstream_sha256": "86336445497058eee24ecf255e8a7486d8b46d709daa7a919566a58818dbed0c",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG_GCcomb_z0.4-0.6_mean.txt",
+      "local_bytes": 98,
+      "local_sha256": "86336445497058eee24ecf255e8a7486d8b46d709daa7a919566a58818dbed0c",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG_z0.4-0.6",
+      "upstream_file": "desi_gaussian_bao_LRG_GCcomb_z0.4-0.6_cov.txt",
+      "upstream_bytes": 62,
+      "upstream_sha256": "1fc0b21fd34a0e194f3fce2601ea3d1f411b03c7c1006c5b865b9f66991b8740",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG_GCcomb_z0.4-0.6_cov.txt",
+      "local_bytes": 62,
+      "local_sha256": "1fc0b21fd34a0e194f3fce2601ea3d1f411b03c7c1006c5b865b9f66991b8740",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG_z0.6-0.8",
+      "upstream_file": "desi_gaussian_bao_LRG_GCcomb_z0.6-0.8_mean.txt",
+      "upstream_bytes": 98,
+      "upstream_sha256": "6d2f38d0727b2aefcd82fdd5a1c6df5a7d34ad8459437c195d575b5ad0c6ab32",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG_GCcomb_z0.6-0.8_mean.txt",
+      "local_bytes": 98,
+      "local_sha256": "6d2f38d0727b2aefcd82fdd5a1c6df5a7d34ad8459437c195d575b5ad0c6ab32",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG_z0.6-0.8",
+      "upstream_file": "desi_gaussian_bao_LRG_GCcomb_z0.6-0.8_cov.txt",
+      "upstream_bytes": 62,
+      "upstream_sha256": "16fa8c323f54139ef1249a24f8f9c8663dbac7890d5a6d9c3b97e84ee89847ae",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG_GCcomb_z0.6-0.8_cov.txt",
+      "local_bytes": 62,
+      "local_sha256": "16fa8c323f54139ef1249a24f8f9c8663dbac7890d5a6d9c3b97e84ee89847ae",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG+ELG",
+      "upstream_file": "desi_gaussian_bao_LRG+ELG_LOPnotqso_GCcomb_mean.txt",
+      "upstream_bytes": 98,
+      "upstream_sha256": "c34585b9afdb683e68c2522e9715950fd24b63435ceb8a94ae52acd5d2626f4a",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG+ELG_LOPnotqso_GCcomb_mean.txt",
+      "local_bytes": 98,
+      "local_sha256": "c34585b9afdb683e68c2522e9715950fd24b63435ceb8a94ae52acd5d2626f4a",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "LRG+ELG",
+      "upstream_file": "desi_gaussian_bao_LRG+ELG_LOPnotqso_GCcomb_cov.txt",
+      "upstream_bytes": 62,
+      "upstream_sha256": "8c8f5270dc3db24cbecd9aee1e463819a93e4fbfb0805fdf18357c39e5a8e95a",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_LRG+ELG_LOPnotqso_GCcomb_cov.txt",
+      "local_bytes": 62,
+      "local_sha256": "8c8f5270dc3db24cbecd9aee1e463819a93e4fbfb0805fdf18357c39e5a8e95a",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "ELG_z1.1-1.6",
+      "upstream_file": "desi_gaussian_bao_ELG_LOPnotqso_GCcomb_z1.1-1.6_mean.txt",
+      "upstream_bytes": 98,
+      "upstream_sha256": "75d2dd246d2f17145f202fccf80da0bd723a67270a76f83b5be204161e204794",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ELG_LOPnotqso_GCcomb_z1.1-1.6_mean.txt",
+      "local_bytes": 98,
+      "local_sha256": "75d2dd246d2f17145f202fccf80da0bd723a67270a76f83b5be204161e204794",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "ELG_z1.1-1.6",
+      "upstream_file": "desi_gaussian_bao_ELG_LOPnotqso_GCcomb_z1.1-1.6_cov.txt",
+      "upstream_bytes": 62,
+      "upstream_sha256": "8d1afedca817a80f44c9dd492101d6653f1f353a59da6f24a6bcb0f0d80ad6bc",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ELG_LOPnotqso_GCcomb_z1.1-1.6_cov.txt",
+      "local_bytes": 62,
+      "local_sha256": "8d1afedca817a80f44c9dd492101d6653f1f353a59da6f24a6bcb0f0d80ad6bc",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "QSO",
+      "upstream_file": "desi_gaussian_bao_QSO_GCcomb_mean.txt",
+      "upstream_bytes": 98,
+      "upstream_sha256": "9bffdd0bf27615ab5225e5232fcdf53e16318bf9d06b031a2756d6e89368dadd",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_QSO_GCcomb_mean.txt",
+      "local_bytes": 98,
+      "local_sha256": "9bffdd0bf27615ab5225e5232fcdf53e16318bf9d06b031a2756d6e89368dadd",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "QSO",
+      "upstream_file": "desi_gaussian_bao_QSO_GCcomb_cov.txt",
+      "upstream_bytes": 62,
+      "upstream_sha256": "7445c6bca01e2732b15ff29e832cc7b682c27d096f3b3ae8a171b63b20e8f6da",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_QSO_GCcomb_cov.txt",
+      "local_bytes": 62,
+      "local_sha256": "7445c6bca01e2732b15ff29e832cc7b682c27d096f3b3ae8a171b63b20e8f6da",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "Lya",
+      "upstream_file": "desi_gaussian_bao_Lya_GCcomb_mean.txt",
+      "upstream_bytes": 99,
+      "upstream_sha256": "9b4ab92080d038d0a0a5d76b9abead4e3919d7227e343d1e7feab7103e1f30cb",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_Lya_GCcomb_mean.txt",
+      "local_bytes": 99,
+      "local_sha256": "9b4ab92080d038d0a0a5d76b9abead4e3919d7227e343d1e7feab7103e1f30cb",
+      "normalized_local_tsv": false
+    },
+    {
+      "subset": "Lya",
+      "upstream_file": "desi_gaussian_bao_Lya_GCcomb_cov.txt",
+      "upstream_bytes": 102,
+      "upstream_sha256": "02a049dbf3a1cd391189948516378a694abfd8d5b5cba1a15e97c6c5cf972357",
+      "local_file": "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_Lya_GCcomb_cov.txt",
+      "local_bytes": 102,
+      "local_sha256": "02a049dbf3a1cd391189948516378a694abfd8d5b5cba1a15e97c6c5cf972357",
+      "normalized_local_tsv": false
+    }
+  ]
+}

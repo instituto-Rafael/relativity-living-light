@@ -1,0 +1,34 @@
+schema: rll_evidence_experiment_v1
+experiment_id: RLL-EVIDENCE-PANTHEON-001
+title: Pantheon Plus full-covariance readiness gate
+repository_root: ../../..
+claim_allowed: false
+publication_effect: NONE
+execution:
+  timeout_seconds: 1800
+inputs:
+  - id: pantheon-catalog
+    path: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat
+    required: true
+    expected_bytes: 579283
+    expected_sha256: 1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8
+  - id: pantheon-stat-sys-covariance
+    path: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov
+    required: true
+    sha256_sidecar: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov.sha256
+steps:
+  - id: verify-pantheon-full-covariance
+    argv: [python, scripts/verify_pantheon_inputs.py, --json, --require-full-covariance]
+    required: true
+    expected_exit_codes: [0]
+receipt:
+  path: artifacts/evidence/RLL-EVIDENCE-PANTHEON-001/receipt.json
+F_ok:
+  - Official catalog identity is pinned by bytes and SHA-256.
+  - Full covariance must possess a matching SHA-256 sidecar and expected 1701 by 1701 shape.
+F_gap:
+  - Readiness is not a Pantheon likelihood evaluation.
+  - No LCDM versus RLL fit is promoted by this gate.
+F_next:
+  - Implement a model-bound full-covariance Pantheon likelihood adapter.
+  - Run robust multi-seed LCDM and RLL fits without overwriting historical results.

@@ -1,0 +1,57 @@
+{
+  "schema": "rll.strong_gravity.spiral_plasma_thermal_bridge.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "status": "implemented_bounded_bridge",
+  "claim_allowed": false,
+  "frequencies_hz": {
+    "fundamental": 144000.0,
+    "second_harmonic": 288000.0,
+    "relation": "f2 = 2 * f1",
+    "interpretation": "external AC drive only"
+  },
+  "required_inputs_si": [
+    "electron_density_m3",
+    "electron_temperature_k",
+    "effective_collision_hz",
+    "magnetic_field_t",
+    "ionization_fraction",
+    "electric_field_v_m",
+    "heat_capacity_j_m3_k",
+    "thermal_power_terms_w_m3",
+    "radius0_m",
+    "phi_rad",
+    "grad_density_m4",
+    "grad_temperature_k_m"
+  ],
+  "outputs": [
+    "sigma_real_144_s_m",
+    "sigma_real_288_s_m",
+    "q_rf_144_w_m3",
+    "q_rf_288_w_m3",
+    "temperature_rate_k_s",
+    "spiral_radius_m",
+    "biermann_source_t_s",
+    "conductivity_tensor"
+  ],
+  "boundaries": {
+    "144_288_atomic_transition": false,
+    "automatic_second_harmonic_generation": false,
+    "scalar_resistance_for_magnetized_plasma": false,
+    "geometric_energy_equals_heat": false,
+    "diamond_survives_fully_ionized_plasma": false,
+    "diamond_planet_composition_confirmed": false,
+    "black_hole_equivalence": false,
+    "RLL_cosmology_validation": false
+  },
+  "promotion_requires": [
+    "measured voltage and current spectra",
+    "phase-resolved impedance",
+    "electron and ion temperature diagnostics",
+    "electron density and ionization diagnostics",
+    "magnetic-field diagnostics",
+    "controls without drive",
+    "power-scaling study",
+    "uncertainty propagation",
+    "independent reproduction"
+  ]
+}

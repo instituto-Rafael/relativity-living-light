@@ -1,0 +1,58 @@
+name: RLL Knowledge Matrix — Orquestração de Fórmulas e Conceitos
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CLAIM_BOUNDARY: "claim_allowed=false; training_allowed=false"
+
+jobs:
+  build-knowledge-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies and test runner
+        run: python -m pip install -r requirements.txt pytest
+
+      - name: Build Knowledge Matrix
+        run: |
+          python tools/build_knowledge_matrix.py \
+            --root . \
+            --outdir artifacts/knowledge-matrix
+
+      - name: Run Knowledge Matrix tests with receipt
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q tests/test_knowledge_matrix.py \
+            2>&1 | tee artifacts/knowledge-matrix/pytest.log
+
+      - name: Upload Knowledge Matrix artifact and test receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: knowledge-matrix-${{ github.run_id }}
+          path: artifacts/knowledge-matrix/
+          if-no-files-found: error
+          retention-days: 30

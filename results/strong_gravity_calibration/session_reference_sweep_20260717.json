@@ -1,0 +1,143 @@
+{
+  "TOKEN_VAZIO": [
+    "physical ionization rates for a specified source",
+    "GRMHD/GRPIC fields and covariances",
+    "observational target and loss function",
+    "RNN training corpus if a neural network is intended"
+  ],
+  "claim_allowed": false,
+  "force_scale_reference": {
+    "electron_proton_coulomb_to_gravity_ratio": 2.2686614330327056e+39,
+    "interpretation": "local atomic coupling is electromagnetic; collective mass still gravitates"
+  },
+  "generated_at": "2026-07-17",
+  "photon_energy_ladder": [
+    {
+      "channel": "collective_or_rotational_heating",
+      "energy_ev": 1.0132385857463455e-05,
+      "frequency_hz": 2450000000.0,
+      "name": "microwave_2_45_GHz"
+    },
+    {
+      "channel": "vibrational_or_electronic_heating",
+      "energy_ev": 0.12407003090771576,
+      "frequency_hz": 30000000000000.0,
+      "name": "infrared_30_THz"
+    },
+    {
+      "channel": "photoionization_and_secondary_electrons",
+      "energy_ev": 12.407003090771576,
+      "frequency_hz": 3000000000000000.0,
+      "name": "ultraviolet_3_PHz"
+    },
+    {
+      "channel": "photoionization_and_secondary_electrons",
+      "energy_ev": 9999.998998817226,
+      "frequency_hz": 2.417989e+18,
+      "name": "xray_10_keV_approx"
+    },
+    {
+      "channel": "high_energy_compton_nuclear_thresholds_possible",
+      "energy_ev": 999999.8998817223,
+      "frequency_hz": 2.417989e+20,
+      "name": "gamma_1_MeV_approx"
+    }
+  ],
+  "raw_data_policy": "immutable",
+  "recurrent_state_smoke_test": {
+    "dt": 0.1,
+    "final": {
+      "current_density": 1.2830281551829155,
+      "density": 1.4859473959783545,
+      "internal_energy_density": 1.6599999999999984,
+      "ionization_fraction": 0.49612800288678427
+    },
+    "initial": {
+      "current_density": 0.0,
+      "density": 1.0,
+      "internal_energy_density": 1.0,
+      "ionization_fraction": 0.05
+    },
+    "scope": "synthetic dimensionless algorithm test; not observational calibration",
+    "steps": 20
+  },
+  "schema_version": "1.0.0",
+  "stellar_black_hole_sweep": {
+    "central_mass_solar": 10.0,
+    "claim_allowed": false,
+    "model_scope": "Newtonian reference ring; not a relativistic disk solution",
+    "orbital_angular_frequency_rad_s": 226.9824860970111,
+    "orbital_period_s": 0.02768136614951951,
+    "radius_m": 295333.93820668786,
+    "radius_rg": 20.0,
+    "rows": [
+      {
+        "disk_mass_ratio": 0.001,
+        "self_gravity_regime": "self_gravity_subdominant",
+        "surface_density_kg_m2": 7.256754939197826e+16,
+        "toomre_q_reference": 223.60679774997894
+      },
+      {
+        "disk_mass_ratio": 0.01,
+        "self_gravity_regime": "self_gravity_subdominant",
+        "surface_density_kg_m2": 7.256754939197825e+17,
+        "toomre_q_reference": 22.360679774997898
+      },
+      {
+        "disk_mass_ratio": 0.1,
+        "self_gravity_regime": "disk_backreaction_relevant",
+        "surface_density_kg_m2": 7.256754939197825e+18,
+        "toomre_q_reference": 2.23606797749979
+      },
+      {
+        "disk_mass_ratio": 0.25,
+        "self_gravity_regime": "self_gravity_instability_candidate",
+        "surface_density_kg_m2": 1.8141887347994563e+19,
+        "toomre_q_reference": 0.8944271909999159
+      }
+    ],
+    "sound_speed_fraction_c": 0.05
+  },
+  "supermassive_black_hole_sweep": {
+    "central_mass_solar": 4300000.0,
+    "claim_allowed": false,
+    "model_scope": "Newtonian reference ring; not a relativistic disk solution",
+    "orbital_angular_frequency_rad_s": 0.0005278662467372352,
+    "orbital_period_s": 11902.987444293387,
+    "radius_m": 126993593428.87576,
+    "radius_rg": 20.0,
+    "rows": [
+      {
+        "disk_mass_ratio": 0.001,
+        "self_gravity_regime": "self_gravity_subdominant",
+        "surface_density_kg_m2": 168761742772.04248,
+        "toomre_q_reference": 223.606797749979
+      },
+      {
+        "disk_mass_ratio": 0.01,
+        "self_gravity_regime": "self_gravity_subdominant",
+        "surface_density_kg_m2": 1687617427720.4248,
+        "toomre_q_reference": 22.360679774997898
+      },
+      {
+        "disk_mass_ratio": 0.1,
+        "self_gravity_regime": "disk_backreaction_relevant",
+        "surface_density_kg_m2": 16876174277204.248,
+        "toomre_q_reference": 2.23606797749979
+      },
+      {
+        "disk_mass_ratio": 0.25,
+        "self_gravity_regime": "self_gravity_instability_candidate",
+        "surface_density_kg_m2": 42190435693010.62,
+        "toomre_q_reference": 0.894427190999916
+      }
+    ],
+    "sound_speed_fraction_c": 0.05
+  },
+  "water_reference": {
+    "expansion_ratio_to_1_litre": 1699.6519706110646,
+    "ideal_gas_steam_volume_m3_at_373_15K_1atm": 1.6996519706110647,
+    "input_liquid_water_litre_approx": 1.0,
+    "scope": "ideal-gas reference; saturated-steam tables differ slightly"
+  }
+}

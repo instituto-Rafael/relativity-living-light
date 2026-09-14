@@ -1,8 +1,0 @@
-lnB_min,lnB_max,classification,notes
--inf,-5.0,very_strong_against_model_1,Jeffreys/Trotta: evidence strongly favors model_0 over model_1.
--5.0,-2.5,moderate_against_model_1,Jeffreys/Trotta: moderate evidence against model_1.
--2.5,-1.0,weak_against_model_1,Jeffreys/Trotta: weak evidence against model_1.
--1.0,1.0,inconclusive,Jeffreys/Trotta: inconclusive or not worth more than a bare mention.
-1.0,2.5,weak_for_model_1,Jeffreys/Trotta: weak evidence supporting model_1.
-2.5,5.0,moderate_for_model_1,Jeffreys/Trotta: moderate evidence supporting model_1.
-5.0,inf,very_strong_for_model_1,Jeffreys/Trotta: strong to very strong evidence supporting model_1.

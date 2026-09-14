@@ -1,0 +1,76 @@
+{
+  "schema": "rll.class_camb_baseline_receipt.v1",
+  "state": "VERIFIED_BASELINE_ENGINE_CROSSCHECK",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_workflow": {
+    "name": "CLASS CAMB Baseline Crosscheck",
+    "run_id": 31231315944,
+    "job_id": 93035599784,
+    "conclusion": "success",
+    "head_sha": "ad96d37a3dcb44189f4bbb3013f7b73379bf5c87"
+  },
+  "artifact": {
+    "id": 9013916781,
+    "name": "class-camb-baseline-31231315944",
+    "digest": "sha256:9eab4466e60649e1c9799a51c371247296d5b7251c135a69911ac34d4ab5a420",
+    "source_json_sha256": "7c4e4db7862ca88bfd35a4776aae23c721ed64779556819bd38df4ed2dc3783a"
+  },
+  "engines": {
+    "CAMB": "1.6.6",
+    "CLASS_classy": "3.3.4.0",
+    "numpy": "1.26.4"
+  },
+  "scope": {
+    "models": ["LCDM", "CPL"],
+    "computed_lmax": 1000,
+    "compared_ell": [30, 100, 300, 700],
+    "z": [0.0, 0.5, 1.0, 2.0],
+    "k_1_Mpc": [0.01, 0.05, 0.1],
+    "nonlinear": false,
+    "massive_neutrinos": "disabled in both engines for this baseline crosscheck"
+  },
+  "tolerances": {
+    "H_km_s_Mpc": 0.005,
+    "D_A_Mpc": 0.005,
+    "Pk_Mpc3": 0.08,
+    "Cl_TT_dimensionless": 0.08
+  },
+  "max_relative_errors": {
+    "LCDM": {
+      "H_km_s_Mpc": 6.400715295265123e-10,
+      "D_A_Mpc": 9.140405616261891e-10,
+      "Pk_Mpc3": 0.00018690194267133035,
+      "Cl_TT_dimensionless": 0.00997107964104779
+    },
+    "CPL": {
+      "H_km_s_Mpc": 2.3849094880740946e-09,
+      "D_A_Mpc": 1.647010871795759e-09,
+      "Pk_Mpc3": 0.00016669684771076956,
+      "Cl_TT_dimensionless": 0.008861994883696035
+    }
+  },
+  "cutoff_diagnostic": {
+    "previous_computed_lmax": 700,
+    "previous_only_failing_point": "LCDM Cl_TT at ell=700",
+    "previous_relative_error": 0.08656798592924228,
+    "same_point_error_with_computed_lmax_1000": 0.00997107964104779,
+    "tolerance_unchanged": 0.08,
+    "interpretation": "The earlier mismatch was a solver-cutoff boundary artifact: ell=700 had been evaluated exactly at the requested lmax. Computing beyond the comparison point removed the mismatch without changing physical parameters or tolerances."
+  },
+  "resolves_token": "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+  "scientific_boundary": "This validates standard LCDM/CPL backend plumbing and numerical agreement only. It does not define RLL perturbation degrees of freedom and provides no RLL CMB, transfer-function, growth or matter-power validation.",
+  "F_ok": [
+    "LCDM and CPL pass all declared CLASS/CAMB baseline tolerances.",
+    "No scientific tolerance was relaxed to obtain PASS.",
+    "The previous mismatch was preserved and diagnosed before correction."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+    "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
+  ],
+  "F_next": [
+    "Keep RLL perturbation claims blocked until closure relations are explicit.",
+    "After theory closure, implement the RLL sector independently in CLASS and CAMB and repeat the same cross-engine discipline."
+  ]
+}

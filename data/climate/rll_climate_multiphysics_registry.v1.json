@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "rll-climate-multiphysics-8x8-v1",
+  "claim_allowed": false,
+  "matrix_contract": {
+    "shape": [8, 8],
+    "column_semantics": "Each column is one sector represented as one temporal/evidence gate plus seven normalized physical coordinates.",
+    "row_0_role": "sector_transition_or_evidence_gate",
+    "rows_1_7_role": "physical_coordinates_for_declared_canonical_lift_H7_to_B7",
+    "strict_lorentz_projection_default": false,
+    "canonical_lift_required": true,
+    "absence_policy": "VALIDITY_MASK_AND_TYPED_TOKEN_VAZIO"
+  },
+  "scheduler": {
+    "sequence": [1, 2, 3, 5, 8, 13, 21, 34],
+    "policy": "High priority selects a smaller multiplier; low priority selects a larger multiplier. Native source cadence and safety caps remain authoritative.",
+    "default_native_cadence_minutes": 60,
+    "default_max_cadence_minutes": 360,
+    "continuous_cycle": true
+  },
+  "sectors": [
+    {
+      "column": 0,
+      "id": "celestial_tidal_geodetic",
+      "temporal_gate": {
+        "id": "tidal_stress_transition_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of change of the combined solid-Earth tide, ocean loading and local gravity residual; not a general earthquake predictor."
+      },
+      "variables": [
+        {"row": 1, "id": "moon_earth_distance", "unit": "km", "role": "OBSERVED_OR_EPHEMERIS", "warning_z": 3.0},
+        {"row": 2, "id": "lunar_declination", "unit": "degree", "role": "EPHEMERIS", "warning_z": 3.0},
+        {"row": 3, "id": "sun_moon_elongation", "unit": "degree", "role": "EPHEMERIS", "warning_z": 3.0},
+        {"row": 4, "id": "solid_earth_tide_vertical_displacement", "unit": "mm", "role": "MODELED_OR_OBSERVED", "warning_z": 3.0},
+        {"row": 5, "id": "ocean_tide_residual", "unit": "m", "role": "OBSERVED_MINUS_ASTRONOMICAL_PREDICTION", "warning_z": 3.0},
+        {"row": 6, "id": "ocean_loading_stress", "unit": "Pa", "role": "DERIVED", "warning_z": 3.0},
+        {"row": 7, "id": "local_gravity_tidal_anomaly", "unit": "microgal", "role": "MODELED_OR_GRAVIMETER", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 6,
+      "max_cadence_minutes": 372,
+      "claim_boundary": "Blue moon is calendrical and blood moon is an eclipse; neither adds a special tidal force beyond the actual Sun-Moon-Earth geometry and distance."
+    },
+    {
+      "column": 1,
+      "id": "atmospheric_thermodynamics_barometric",
+      "temporal_gate": {
+        "id": "barometric_tide_phase_residual",
+        "unit": "hPa",
+        "role": "DERIVED_GATE",
+        "meaning": "Observed pressure after separating synoptic tendency from diurnal and semidiurnal atmospheric tides."
+      },
+      "variables": [
+        {"row": 1, "id": "air_temperature_2m", "unit": "degC", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 2, "id": "dew_point_temperature_2m", "unit": "degC", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 3, "id": "relative_humidity_2m", "unit": "percent", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 4, "id": "mean_sea_level_pressure", "unit": "hPa", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 5, "id": "precipitable_water", "unit": "kg_m-2", "role": "SOUNDING_OR_SATELLITE", "warning_z": 3.0},
+        {"row": 6, "id": "lifting_condensation_level", "unit": "m_AGL", "role": "DERIVED_FROM_SOUNDING", "warning_z": 3.0},
+        {"row": 7, "id": "evaporative_demand", "unit": "mm_day-1", "role": "DERIVED", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 60,
+      "max_cadence_minutes": 360,
+      "claim_boundary": "The standard-atmosphere lapse rate near 2 degC per 1000 ft is not the cloud-base formula. LCL must preferably come from a sounding; the temperature-dew-point spread is only an approximation."
+    },
+    {
+      "column": 2,
+      "id": "atmospheric_dynamics_clouds_vortices",
+      "temporal_gate": {
+        "id": "synoptic_regime_transition_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of change in circulation regime, separating generic vorticity from closed cyclone or anticyclone pressure systems."
+      },
+      "variables": [
+        {"row": 1, "id": "zonal_wind_10m", "unit": "m_s-1", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 2, "id": "meridional_wind_10m", "unit": "m_s-1", "role": "OBSERVED_OR_ANALYSIS", "warning_z": 3.0},
+        {"row": 3, "id": "relative_vorticity_850hpa", "unit": "s-1", "role": "DERIVED_FROM_WIND_FIELD", "warning_z": 3.0},
+        {"row": 4, "id": "divergence_200hpa", "unit": "s-1", "role": "DERIVED_FROM_WIND_FIELD", "warning_z": 3.0},
+        {"row": 5, "id": "convective_available_potential_energy", "unit": "J_kg-1", "role": "SOUNDING_OR_MODEL", "warning_z": 3.0},
+        {"row": 6, "id": "convective_inhibition", "unit": "J_kg-1", "role": "SOUNDING_OR_MODEL", "warning_z": 3.0},
+        {"row": 7, "id": "cloud_top_temperature", "unit": "degC", "role": "SATELLITE_OR_MODEL", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 10,
+      "max_cadence_minutes": 360,
+      "claim_boundary": "Vortex is a generic rotating-flow object. Cyclone and anticyclone additionally require organized low- and high-pressure circulation at a declared scale."
+    },
+    {
+      "column": 3,
+      "id": "ocean_hydrology_heat_waves",
+      "temporal_gate": {
+        "id": "water_heat_storage_transition_rate",
+        "unit": "W_m-2_or_normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of change of heat stored in ocean, lake or estuary water columns, including depth and salinity metadata."
+      },
+      "variables": [
+        {"row": 1, "id": "sea_or_lake_surface_temperature", "unit": "degC", "role": "BUOY_SATELLITE_OR_IN_SITU", "warning_z": 3.0},
+        {"row": 2, "id": "mixed_layer_or_effective_water_depth", "unit": "m", "role": "OBSERVED_OR_MODELED", "warning_z": 3.0},
+        {"row": 3, "id": "water_column_heat_content", "unit": "J_m-2", "role": "DERIVED_Q_RHO_CP_H_DT", "warning_z": 3.0},
+        {"row": 4, "id": "salinity", "unit": "psu", "role": "OBSERVED_OR_MODELED", "warning_z": 3.0},
+        {"row": 5, "id": "river_or_lake_stage_anomaly", "unit": "m", "role": "GAUGE_OR_SATELLITE", "warning_z": 3.0},
+        {"row": 6, "id": "significant_wave_height", "unit": "m", "role": "BUOY_SATELLITE_OR_WAVE_MODEL", "warning_z": 3.0},
+        {"row": 7, "id": "maximum_to_significant_wave_ratio", "unit": "ratio", "role": "DERIVED_EXTREME_WAVE_DIAGNOSTIC", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 30,
+      "max_cadence_minutes": 360,
+      "claim_boundary": "A rogue-wave diagnostic is not a deterministic rogue-wave forecast. Directional spectrum, currents and measurement quality remain required."
+    },
+    {
+      "column": 4,
+      "id": "land_drought_fire_desertification",
+      "temporal_gate": {
+        "id": "land_surface_state_transition_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of coupled drying, vegetation stress and fire-weather escalation."
+      },
+      "variables": [
+        {"row": 1, "id": "root_zone_soil_moisture", "unit": "m3_m-3", "role": "SATELLITE_MODEL_OR_IN_SITU", "warning_z": 3.0},
+        {"row": 2, "id": "actual_evapotranspiration", "unit": "mm_day-1", "role": "DERIVED_OR_REMOTE_SENSING", "warning_z": 3.0},
+        {"row": 3, "id": "evaporative_demand_drought_index", "unit": "standardized", "role": "DROUGHT_INDEX", "warning_z": 2.0},
+        {"row": 4, "id": "standardized_precipitation_evapotranspiration_index", "unit": "standardized", "role": "DROUGHT_INDEX", "warning_z": 2.0},
+        {"row": 5, "id": "normalized_difference_vegetation_index", "unit": "ratio", "role": "REMOTE_SENSING", "warning_z": 3.0},
+        {"row": 6, "id": "vapor_pressure_deficit", "unit": "kPa", "role": "DERIVED", "warning_z": 3.0},
+        {"row": 7, "id": "fire_weather_index", "unit": "index", "role": "DERIVED_HAZARD_INDEX", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 180,
+      "max_cadence_minutes": 1440,
+      "claim_boundary": "Desertification is a long-term land-degradation process and must not be inferred from a single hot or dry episode."
+    },
+    {
+      "column": 5,
+      "id": "biosphere_ecology_migration",
+      "temporal_gate": {
+        "id": "ecological_migration_pressure_transition_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of habitat-pressure change; not proof that a species movement has one climatic cause."
+      },
+      "variables": [
+        {"row": 1, "id": "chlorophyll_a", "unit": "mg_m-3", "role": "SATELLITE_OR_IN_SITU", "warning_z": 3.0},
+        {"row": 2, "id": "dissolved_oxygen", "unit": "mg_L-1", "role": "IN_SITU_OR_MODEL", "warning_z": 3.0},
+        {"row": 3, "id": "thermal_habitat_anomaly", "unit": "degC", "role": "DERIVED_SPECIES_SPECIFIC", "warning_z": 3.0},
+        {"row": 4, "id": "species_occurrence_centroid_shift", "unit": "km", "role": "DERIVED_FROM_OCCURRENCE_DATA", "warning_z": 3.0},
+        {"row": 5, "id": "fish_mortality_event_count", "unit": "count", "role": "EVENT_OBSERVATION", "warning_z": 3.0},
+        {"row": 6, "id": "aquatic_mammal_heat_exposure", "unit": "degree_hours", "role": "DERIVED_WITH_SPECIES_THRESHOLD", "warning_z": 3.0},
+        {"row": 7, "id": "phenology_anomaly", "unit": "day", "role": "REMOTE_SENSING_OR_FIELD_OBSERVATION", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 360,
+      "max_cadence_minutes": 10080,
+      "claim_boundary": "Migration and mortality require species-specific physiology, food-web, disease, contamination and human-pressure alternatives."
+    },
+    {
+      "column": 6,
+      "id": "heliophysics_ionosphere_magnetosphere",
+      "temporal_gate": {
+        "id": "auroral_ionization_transition_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Rate of change of solar-wind coupling and upper-atmosphere ionization."
+      },
+      "variables": [
+        {"row": 1, "id": "solar_wind_speed", "unit": "km_s-1", "role": "SPACECRAFT_OBSERVATION", "warning_z": 3.0},
+        {"row": 2, "id": "interplanetary_magnetic_field_bz", "unit": "nT", "role": "SPACECRAFT_OBSERVATION", "warning_z": 3.0},
+        {"row": 3, "id": "solar_wind_proton_density", "unit": "cm-3", "role": "SPACECRAFT_OBSERVATION", "warning_z": 3.0},
+        {"row": 4, "id": "planetary_k_index", "unit": "Kp", "role": "GEOMAGNETIC_INDEX", "warning_z": 2.0},
+        {"row": 5, "id": "solar_radio_flux_f107", "unit": "sfu", "role": "SOLAR_INDEX", "warning_z": 3.0},
+        {"row": 6, "id": "vertical_total_electron_content", "unit": "TECU", "role": "GNSS_OR_IONOSPHERIC_MODEL", "warning_z": 3.0},
+        {"row": 7, "id": "local_geomagnetic_field_intensity", "unit": "nT", "role": "FIELD_MODEL_OR_MAGNETOMETER", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 1,
+      "max_cadence_minutes": 180,
+      "claim_boundary": "These variables strongly affect the ionosphere, satellites, GNSS and aurora. A direct lower-atmosphere weather effect must remain separate and unpromoted without a demonstrated mechanism and effect size."
+    },
+    {
+      "column": 7,
+      "id": "extremes_forecast_exposure_verification",
+      "temporal_gate": {
+        "id": "forecast_error_growth_rate",
+        "unit": "normalized_rate",
+        "role": "DERIVED_GATE",
+        "meaning": "Growth of ensemble spread and forecast error relative to the event horizon and observation density."
+      },
+      "variables": [
+        {"row": 1, "id": "tropical_cyclone_genesis_probability", "unit": "percent", "role": "OFFICIAL_FORECAST_OR_MODEL", "warning_z": 3.0},
+        {"row": 2, "id": "tropical_cyclone_track_spread", "unit": "km", "role": "ENSEMBLE_DIAGNOSTIC", "warning_z": 3.0},
+        {"row": 3, "id": "rapid_intensification_probability", "unit": "percent", "role": "OFFICIAL_GUIDANCE_OR_MODEL", "warning_z": 3.0},
+        {"row": 4, "id": "storm_surge_residual", "unit": "m", "role": "OBSERVED_MINUS_ASTRONOMICAL_TIDE", "warning_z": 3.0},
+        {"row": 5, "id": "extreme_precipitation_return_level_ratio", "unit": "ratio", "role": "DERIVED_EXTREME_INDEX", "warning_z": 3.0},
+        {"row": 6, "id": "flash_flood_guidance_exceedance", "unit": "ratio", "role": "DERIVED_HAZARD_INDEX", "warning_z": 3.0},
+        {"row": 7, "id": "population_and_infrastructure_exposure", "unit": "index", "role": "EXPOSURE_NOT_PHYSICAL_FORCING", "warning_z": 3.0}
+      ],
+      "native_cadence_minutes": 10,
+      "max_cadence_minutes": 360,
+      "claim_boundary": "Detection, track forecast, intensity forecast and last-mile warning are distinct lead-time problems. Thirty minutes is a short-fuse warning scale, not the normal horizon for detecting a hurricane."
+    }
+  ],
+  "lateral_candidates": [
+    "madden_julian_oscillation",
+    "quasi_biennial_oscillation",
+    "north_atlantic_oscillation",
+    "southern_annular_mode",
+    "pacific_decadal_oscillation",
+    "atlantic_multidecadal_variability",
+    "intertropical_convergence_zone_position",
+    "atmospheric_river_transport",
+    "stratospheric_ozone",
+    "stratospheric_water_vapor",
+    "aerosol_optical_depth",
+    "black_carbon",
+    "mineral_dust",
+    "volcanic_aerosol",
+    "lightning_flash_rate",
+    "snow_water_equivalent",
+    "sea_ice_concentration",
+    "groundwater_storage",
+    "land_subsidence",
+    "deforestation_rate",
+    "surface_albedo",
+    "urban_heat_island",
+    "wave_directional_spread",
+    "opposing_current_wave_interaction"
+  ],
+  "next_gate": "Freeze one historical region and event, hydrate only sources with auditable provenance, compare uniform cadence against the Fibonacci scheduler, and report forecast error, latency, energy proxy and false-alarm cost."
+}

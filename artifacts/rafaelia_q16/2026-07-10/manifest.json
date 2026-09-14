@@ -1,0 +1,91 @@
+{
+  "schema": "rafaelia.q16.reproducibility-manifest.v1",
+  "author": "Rafael Melo Reis",
+  "signature": "RAFCODE-PHI / DeltaRafaelVerboOmega",
+  "experiment_id": "RAFAELIA-Q16-ARM32-20260710",
+  "executed_at": "2026-07-10",
+  "epistemic_status": "NUMERICALLY_OBSERVED",
+  "runtime": {
+    "machine": "armv7l",
+    "elf_class": "ELF32",
+    "endianness": "little",
+    "machine_type": "ARM",
+    "abi": "EABI5",
+    "elf_type": "DYN",
+    "entrypoint_hex": "0x5c0",
+    "interpreter": "/system/bin/linker",
+    "execution_class": "ring-3-freestanding-kernel-mediated",
+    "libc_used": false,
+    "crt_used": false,
+    "direct_arm32_syscalls": true
+  },
+  "artifact": {
+    "name": "rafaelia_node",
+    "size_bytes": 5608,
+    "sha256": "9cb04542b7385081310c31e276f17e336e99e639a4367b5774282a6a5c8b8030",
+    "stripped": false,
+    "exit_status": 0
+  },
+  "map": {
+    "domain": "signed-integer-Q16",
+    "formula": "F(x)=floor((56756*x)/65536)+203333",
+    "initial_state": 0,
+    "initial_state_name": "TOKEN_VAZIO",
+    "q_shift": 16,
+    "q_scale": 65536,
+    "geometric_coefficient_q16": 56756,
+    "force_q16": 203333,
+    "target_q16": 1517675,
+    "tolerance_q16": 64,
+    "scan_radius_q16": 256
+  },
+  "observations": {
+    "result_iteration_48_q16": 1516200,
+    "result_iteration_48_decimal": 23.135376,
+    "result_iteration_96_q16": 1517719,
+    "result_iteration_96_decimal": 23.158554,
+    "target_decimal": 23.157883,
+    "absolute_error_q16": 44,
+    "absolute_error_decimal": 0.000671,
+    "fixed_count": 7,
+    "fixed_min_q16": 1517719,
+    "fixed_max_q16": 1517725,
+    "first_fixed_iteration": 90,
+    "reached_fixed_q16": 1517719
+  },
+  "acceptance_contract": {
+    "result_iteration_48_q16": 1516200,
+    "result_iteration_96_q16": 1517719,
+    "absolute_error_q16": 44,
+    "maximum_error_q16": 64,
+    "fixed_count": 7,
+    "fixed_min_q16": 1517719,
+    "fixed_max_q16": 1517725,
+    "first_fixed_iteration": 90,
+    "reached_fixed_q16": 1517719,
+    "required_exit_status": 0
+  },
+  "claims": {
+    "supported": [
+      "The declared integer Q16 map has seven fixed points in the scanned window.",
+      "The trajectory starting at zero reaches 1517719 at iteration 90.",
+      "The iteration-96 result is within the declared tolerance of the conceptual target."
+    ],
+    "not_supported": [
+      "The value 23.158 is a universal physical constant.",
+      "The executable is physical bare metal without an operating system.",
+      "The observed fixed band is independent of numeric representation."
+    ]
+  },
+  "falsifiers": [
+    "A semantically equivalent implementation returns a different iteration-48 value.",
+    "A semantically equivalent implementation returns a different iteration-96 value.",
+    "The fixed-state enumeration does not return exactly 1517719 through 1517725.",
+    "The zero-seeded trajectory does not first reach a fixed state at iteration 90."
+  ],
+  "next_experiments": [
+    "Reproduce under qemu-arm using a static Linux ARM EABI image.",
+    "Repeat using Q24 and Q32 to measure quantization-band scaling.",
+    "Archive readelf, disassembly, output and stripped artifact hashes."
+  ]
+}

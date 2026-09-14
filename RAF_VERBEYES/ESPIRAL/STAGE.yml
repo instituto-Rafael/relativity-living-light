@@ -1,0 +1,50 @@
+# RAF_VERBEYES/ESPIRAL — Núcleo Conceitual em Evolução Geométrica
+# Repositório permanente de condições estruturais que crescem
+# com cada observação. Evolução espiral: cada camada adiciona
+# coerência geométrica ao conjunto.
+
+schema: raf_verbeyes.stage.v1
+claim_allowed: false
+
+stage: ESPIRAL
+index: 3
+pipeline: RAF_VERBEYES
+
+role: |
+  Diretório de conceitos em evolução espiral. Diferente dos outros
+  estágios (que drenam), ESPIRAL é cumulativo: cada arquivo adicionado
+  representa uma volta na espiral de aprendizado estrutural.
+  Condições estruturais aqui estão em evolução geométrica coerente —
+  cada observação nova é uma camada sobre as anteriores.
+  Este estágio carrega mais do que parece: é o núcleo semântico
+  do pipeline, onde o aprendizado se acumula e se organiza.
+
+accepts: "*.yml"
+exit_condition: null
+prev_stage: null
+next_stage: null
+
+density: high
+evolution_model: geometric_spiral
+accumulation: additive_per_observation
+
+policy:
+  permanent: true
+  cumulative: true
+  no_claim: true
+  no_drain: true
+  spiral_evolution: true
+  geometric_coherence: true
+  structural_seed: true
+
+spiral_semantics:
+  model: "A cada nova observação, uma camada é adicionada."
+  geometry: "Espiral crescente: raio aumenta com cada iteração."
+  coherence: "Layers sucessivas são geometricamente coerentes entre si."
+  learning: "Aprendizado estrutural acumulado — não descartável."
+
+note: |
+  ESPIRAL não é um estágio de trânsito. É o repositório de
+  conceitos que fundamentam e evoluem com o pipeline.
+  Arquivos aqui representam condições estruturais de alta densidade
+  semântica que crescem a cada observação do sistema.

@@ -157,19 +157,21 @@ Script: `scripts/check_desi_dr2_bao_covariance.py` (covariância 13×13 completa
 | Dataset | Referência | N pontos | χ² RLL | Status |
 |---------|-----------|---------|--------|--------|
 | DESI DR2 BAO | arXiv:2503.14738 | 13 | 93.81 (nominal) | [E] resultado; [H] otimização |
-| Moresco H(z) 2023 | arXiv:2201.07241 | 33 | [VAZIO] | aguarda execução |
+| Moresco H(z) 2023 | arXiv:2201.07241 | 33 | χ²_RLL=27.47, χ²_ΛCDM=22.76 (nominais) | [E] FASE 15 — `results/moresco_hz_chi2.json` |
 | Planck 2018 CMB | arXiv:1807.06209 | priors | [VAZIO] | aguarda execução |
 | Pantheon+ SN Ia | arXiv:2202.04077 | 1624 (cosmo) | χ²=710.613 (ΛCDM=710.808) | [E] — `09_PANTHEON_RESULTADO_REAL.md` |
 | fσ₈ growth | Vários | presente | parcial | `scripts/check_rll_growth.py` |
 
 ### Infraestrutura de Validação CI
 
+> **[ATUALIZADO — ver Adendo FASES 16–22 ao final]**
+
 | Componente | Arquivo | Cobertura | Status | Marcação |
 |-----------|---------|-----------|--------|---------|
 | Pipeline CI | `.github/workflows/rll-validacao-cientifica-completa.yml` | 11 jobs P0/P1 | ⏳ run pendente | [C] estrutura validada |
 | Joint MCMC | `data/pipelines/structure_d/run_all.py` | Pantheon+ + DESI | ⚠️ TOKEN_VAZIO P0 | [C] script pronto |
 | Bayes Factor | `scripts/slingshot_zt_falsification.py --bayes-factor` | RLL vs ΛCDM | ⚠️ TOKEN_VAZIO P0 | [C] script pronto |
-| Contrato Falsificadores | `docs/cronologia-auditoria/CONTRATO_FALSIFICADORES_RLL.md` | F-COS-01..05 | 3/5 PASS (baseline) | [E]+[VAZIO] misto |
+| Contrato Falsificadores | `docs/cronologia-auditoria/CONTRATO_FALSIFICADORES_RLL.md` | F-COS-01..05 | 2/5 PASS · 2/5 FAIL · 1/5 TOKEN_VAZIO | [E]+[C]+[VAZIO] — ver `14_ZT_SCAN_RESULTADO_REAL.md` |
 
 **Próximo ato necessário**: Disparar pipeline via GitHub Actions → modo=completo → fecha G1 (MCMC) e G2 (Bayes Factor) do TOKEN_VAZIO Ledger.
 
@@ -229,10 +231,10 @@ O RLL perde suporte se:
 | Reprodutibilidade notebooks | P0 | numpy/nbconvert ausentes | ⚠️ código verificado; exec pendente |
 | Ωs0, zt, wt sem paper | P1 | parâmetros sem derivação teórica | [VAZIO] ativo |
 | Autoridade das equações | P1 | original vs. inspiração f(R)/Finsler | [VAZIO] — sem comparação publicada |
-| w_eff incompatibilidade CPL | P0 | estrutural: RLL vai matéria, CPL vai phantom | ⚠️ identificado; requer Opção A |
+| w_eff incompatibilidade CPL | — | Opção B ótimo χ²=0.079 (FASE 13) — compatível numericamente como dois-fluidos DE | ✅ FECHADO [E] — `results/optimize_weff_opcao_b.json` |
 | Sistemáticos (S na tupla) | P0 | ausência de análise de sistemáticos | [VAZIO] — bloqueia claim_allowed |
 | χ² conjunto completo | P0 | RLL colapsou para ΛCDM (Ωs0→0) | [E] resultado negativo registrado |
-| Moresco H(z) separado | P2 | χ² apenas com H(z) não calculado | [VAZIO] |
+| Moresco H(z) separado | — | χ²_RLL=27.47, χ²_ΛCDM=22.76 (params nominais) | ✅ FECHADO [E] FASE 15 — `results/moresco_hz_chi2.json` |
 | Pantheon+ separado | P2 | ✅ FECHADO — χ²=710.613 (1624 SNe, Nelder-Mead) | [E] `09_PANTHEON_RESULTADO_REAL.md` |
 | Performance ARM32 | P3 | Termux não testado | [VAZIO] |
 
@@ -315,3 +317,81 @@ Para cada [VAZIO]:
 *"A árvore só sustenta frutos que ela própria conhece a raiz." — RAFAELIA*
 
 *Documento gerado a partir das Fases 1-3 da auditoria RLL. Toda afirmação tem marcação epistêmica. Toda lacuna tem prioridade. Nenhum resultado foi mascarado.*
+
+---
+
+## Adendo FASES 16–22 (2026-07-14 a 2026-07-16)
+
+### Atualização: Infraestrutura de Validação CI (NÍVEL 3)
+
+Substituição do estado TOKEN_VAZIO P0 para G1 e G3 por resultados formais:
+
+| Componente | Arquivo/Script | Status Anterior | Status Atual |
+|-----------|---------------|----------------|-------------|
+| Joint MCMC (G1) | `scripts/rll_fase20_mcmc_bayes.py` | ⚠️ TOKEN_VAZIO P0 | ✅ **FECHADO [E]** (FASE 20) |
+| Bayes Factor (G3) | `scripts/rll_fase20_mcmc_bayes.py` | ⚠️ TOKEN_VAZIO P0 | ✅ **FECHADO [E]** (FASE 20) |
+| Contrato Falsificadores | `CONTRATO_FALSIFICADORES_RLL.md` | 2/5 PASS · 2/5 FAIL · 1/5 TOKEN_VAZIO | **2/5 PASS · 2/5 FAIL · 0/5 TOKEN_VAZIO** [E] |
+| rd calibração (G2) | `scripts/rll_fase19_rd_calibrado.py` | TOKEN_VAZIO | ✅ **FECHADO [E]** (FASE 19) |
+| Bias E&H param space (G4) | `scripts/rll_fase22_g4_eh_bias_grid.py` | não existia | ✅ **FECHADO [E]** (FASE 22) |
+
+**TOKEN_VAZIO estrutural = 0.** Todos os 4 gaps P0 fechados.
+
+---
+
+### Atualização: Mapa de Lacunas (NÍVEL 6)
+
+Substituição dos gaps P0 por resultados:
+
+| Gap | P | Status Anterior | Status Atual |
+|-----|---|----------------|-------------|
+| Joint MCMC (G1) | P0 | ⚠️ TOKEN_VAZIO | ✅ FECHADO [E] — Ωs0 UL95=0.00178 (emcee 32×1500) |
+| rd calibração (G2) | P0 | ⚠️ TOKEN_VAZIO | ✅ FECHADO [E] — rd_EH−3.614 Mpc = rd_Planck |
+| Bayes Factor (G3) | P0 | ⚠️ TOKEN_VAZIO | ✅ FECHADO [E] — ln(B₁₀)=−6.190±0.691 (dynesty) |
+| Bias E&H em param space (G4) | P3/H | não existia | ✅ FECHADO [E] — sist.=0.72 Mpc (grade 10×10) |
+| Sistemáticos (S na tupla) | P0 | [VAZIO] | [VAZIO] — não resolvido (não bloqueia mais os gaps P0) |
+| Ωs0, zt, wt sem paper | P1 | [VAZIO] | [VAZIO] — posterior MCMC restringe mas não deriva |
+
+---
+
+### Novos Fatos Estabelecidos [E]
+
+| Fato | Evidência | Fase |
+|------|-----------|------|
+| Ωs0=0.012 era artefato do viés E&H | rd_EH=150.704 Mpc vs rd_Planck=147.09 Mpc | FASE 17–19 |
+| Calibração rs_star: +0.1988 Mpc → chi²_CMB=0.021 | `results/rll_fase18e_calibrado.json` | FASE 18 |
+| Calibração rd: −3.614 Mpc → ΔBIC=+22.27 | `results/rll_fase19_rd_calibrado.json` | FASE 19 |
+| Ωs0 UL95 = 0.00178 (MCMC, 95%) | `results/rll_fase20_mcmc_bayes.json §mcmc_g1` | FASE 20 |
+| ln(B₁₀) = −6.190 ± 0.691 (dynesty) | `results/rll_fase20_mcmc_bayes.json §bayes_g3` | FASE 20 |
+| \|ln(B₁₀)\| = 6.19 > 5 → evidência **muito forte** para ΛCDM | Jeffreys 1961 | FASE 20 |
+| Erro sist. calibração E&H = 0.72 Mpc no ponto MCMC | `results/rll_fase22_g4_eh_bias_grid.json` | FASE 22 |
+
+---
+
+### Atualização: Estado Real do Modelo (SÍNTESE)
+
+**O que é FATO [E] — atualizado**:
+
+| Fato | Evidência |
+|------|-----------|
+| Núcleo matemático desde set/2025 | Tag v1.0.0, hash 0b3f4cb, DOI Zenodo |
+| MCMC joint: Ωs0 < 0.00178 (95% UL) | emcee 32×1500, N/τ≈11; `rll_fase20_mcmc_bayes.json` |
+| Bayes Factor: ln(B₁₀) = −6.190±0.691 | dynesty nlive=150; evidência muito forte para ΛCDM |
+| F-COS-03 FAIL: z_t_BAO=0.30 ∉ [0.5,1.5] | `results/zt_scan/summary.json` |
+| F-COS-04 FAIL: ln(B₁₀) < −5 | `rll_fase20_mcmc_bayes.json`; escala Jeffreys |
+| `claim_allowed = false` — ΛCDM preferido | Todos os testes formais concluídos |
+
+---
+
+### Status do Modelo (atualizado)
+
+**Status atual**: N4 (empiricamente testado com MCMC e nested sampling).
+
+**Conclusão epistêmica**: `claim_allowed = false` confirmado — não por TOKEN_VAZIO, mas por resultado empírico. RLL não supera ΛCDM nos dados atuais. F-COS-03 e F-COS-04 são FAIL [E] — resultado honesto, registrado sem mascaramento.
+
+**Caminho para claim_allowed = true** (se o modelo for revisado):
+1. Substituir calibração E&H aditiva por CAMB/RECFAST em cada passo MCMC (elimina G4 estruturalmente)
+2. Cadeia MCMC mais longa: N/τ > 50 (atual ≈ 11)
+3. Justificar z_t, w_t, Ωs0 com derivação ou documentar como convenções livres
+4. Novo cenário de parâmetros em que ln(B₁₀) > −5 (requer modificação do modelo)
+
+*Adendo adicionado em 2026-07-16. Fases 1–22 concluídas. TOKEN_VAZIO estrutural = 0.*

@@ -113,3 +113,25 @@ def test_plan_output_uses_rollback_backup_when_replacing(tmp_path) -> None:
     assert payload["mode"] == "dry_run"
     assert payload["failsafe"]["atomic_plan_output"] is True
     assert payload["watchdog"]["overall_status"] == "pass"
+
+
+def test_planned_output_paths_are_versioned(tmp_path) -> None:
+    stem = "joint_real_likelihood_seed_1_maxiter_100"
+    paths = matrix.planned_output_paths(stem, tmp_path)
+    filenames = [p.name for p in paths]
+    assert f"{stem}.csv" in filenames
+    assert f"{stem}.json" in filenames
+    assert f"{stem}_covariance_manifest.json" in filenames
+    assert all(p.parent == tmp_path for p in paths)
+
+
+def test_versioned_output_paths_are_disjoint_from_canonical(tmp_path) -> None:
+    versioned_stem = "joint_real_likelihood_seed_1_maxiter_100"
+    canonical_stem = matrix.CANONICAL_STEM
+
+    versioned_paths = {p.name for p in matrix.planned_output_paths(versioned_stem, tmp_path)}
+    canonical_paths = {p.name for p in matrix.planned_output_paths(canonical_stem, tmp_path)}
+
+    assert versioned_paths.isdisjoint(canonical_paths), (
+        "Versioned output paths must not overlap with canonical output paths"
+    )

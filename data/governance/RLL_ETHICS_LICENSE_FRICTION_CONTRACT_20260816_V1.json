@@ -1,0 +1,72 @@
+{
+  "schema": "rll.ethics_license_friction_contract.v1",
+  "version": "1.0.0",
+  "observed_at": "2026-08-16",
+  "state": "GOVERNED_OPEN_GAPS",
+  "mode": "EVIDENCE_FIRST_FAIL_CLOSED",
+  "module": "governance/modules/ethics-by-design-complex-networks.v1.json",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "auto_merge": false,
+  "auto_license_rewrite": false,
+  "license_surfaces": {
+    "LICENSE_AUTHORIAL": {"path": "LICENSE.md", "classification": "AUTHORIAL_LICENSE_SURFACE"},
+    "PACKAGE_METADATA": {"path": "pyproject.toml", "field": "project.license.text", "observed_value": "MIT", "classification": "PACKAGE_METADATA"},
+    "PUBLIC_REFERENCE": {"path": "README.md", "observed_value": "LICENSE.md", "classification": "PUBLIC_LICENSE_REFERENCE"}
+  },
+  "license_coherence": {
+    "state": "CONTRADICTION",
+    "reason": "pyproject.toml declares MIT while README.md points readers and the license badge to the materially different authorial LICENSE.md surface.",
+    "canonical_machine_readable_expression": "TOKEN_VAZIO_CANONICAL_LICENSE_EXPRESSION",
+    "legal_enforceability": "TOKEN_VAZIO_LEGAL_REVIEW",
+    "automatic_resolution": "FORBIDDEN",
+    "providencia": "Preserve all current surfaces; obtain explicit legal/editorial decision before changing package metadata or LICENSE.md, then bind the successor decision to a receipt."
+  },
+  "layer_classes": {
+    "LEGAL_TEXT": "Terms intended as legal/licensing language; machine validators classify presence and consistency only.",
+    "TECHNICAL_PROVENANCE": "Hashes, commits, DOI/custody references, artifact lineage, version history.",
+    "ETHICS_POLICY": "Privacy, fairness, human review, rights, responsible disclosure, supply-chain ethics.",
+    "SYMBOLIC_NARRATIVE": "Parables, spiritual/fractal/Verbo Vivo/Omega language used for meaning, navigation or pedagogy.",
+    "SCIENTIFIC_EVIDENCE": "Data, method, statistic, computation, result and falsifier with provenance."
+  },
+  "forbidden_promotions": [
+    "SYMBOLIC_NARRATIVE->LEGAL_TEXT",
+    "SYMBOLIC_NARRATIVE->SCIENTIFIC_EVIDENCE",
+    "PROMISE->PROOF",
+    "TOKEN_VAZIO->VERIFIED_WITHOUT_RECEIPT",
+    "INCERTEZA->CLOSED_WITHOUT_FALSIFIER",
+    "EXTERNAL_SOURCE->REPO_HASH_BOUND_WITHOUT_HASH"
+  ],
+  "transformation_chain": [
+    {"stage": "STATISTICS", "role": "measured summary", "evidence_capable": true, "boundary": "requires source, method, sample/context and uncertainty"},
+    {"stage": "TOKENS", "role": "typed semantic/governance units", "evidence_capable": false, "boundary": "token labels evidence; token is not evidence by itself"},
+    {"stage": "METAPHORS", "role": "meaning and analogy", "evidence_capable": false, "boundary": "cannot satisfy scientific or legal gates"},
+    {"stage": "WORD_VECTORS", "role": "relations/embeddings/structured semantic coordinates", "evidence_capable": false, "boundary": "representation is not validation"},
+    {"stage": "PROMISE", "role": "declared intent, requirement or contract objective", "evidence_capable": false, "boundary": "never a proof, guarantee or observed runtime fact"},
+    {"stage": "EXECUTABLE_VERB", "role": "executed code path", "evidence_capable": true, "boundary": "requires executable input, output, test outcome and receipt"},
+    {"stage": "OMEGA_N", "role": "versioned finite iteration/generation index", "evidence_capable": false, "boundary": "not an infinity claim and not evidence of unbounded capability"}
+  ],
+  "symbolic_boundary": {
+    "phrase": "NENHUM_LIMITE_E_REAL",
+    "classification": "SYMBOLIC_NARRATIVE",
+    "runtime_counter_invariant": "EVERY_OBSERVED_LIMIT_MUST_BE_EXPLICIT_TESTABLE_AND_RECEIPT_BOUND"
+  },
+  "relations": {
+    "urgency_ledger": "data/governance/RLL_ETHICS_LICENSE_FRICTION_LEDGER_20260816_V1.jsonl",
+    "parable_index": "data/governance/RLL_PARABLE_INTERNAL_REFERENCE_INDEX_20260816_V1.json"
+  },
+  "anti_regression": [
+    "P0/P1 records require source, use, relation, providencia, falsifier and provenance.",
+    "Closed/verified/resolved urgency states require a non-empty receipt.",
+    "License contradiction cannot be auto-resolved.",
+    "Parable/metaphor cannot be used as evidence or legal authority.",
+    "External File Library sources remain TOKEN_VAZIO repo-hash until imported/hash-bound.",
+    "Negative evidence and superseded uncertainty are preserved by successor records.",
+    "claim_allowed, certification_claim, auto_merge and auto_license_rewrite remain false."
+  ],
+  "R3": {
+    "F_ok": "license surfaces are explicit; ethics/parables have typed boundaries; urgency contract is anti-regression testable",
+    "F_gap": "canonical license expression + legal review + external-source hashes + formalized ethics/privacy procedures",
+    "F_next": "validate contract and urgency ledger, then reduce only evidence-backed TOKEN_VAZIO entries through successor receipts"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "template": {
+    "amplitude": 0.02,
+    "damping_k": 0.2,
+    "beta": -1.0,
+    "z_ref": 0.0
+  },
+  "power_points": [
+    {"k": 0.05, "z": 0.1, "baseline_power": 1000.0},
+    {"k": 0.10, "z": 0.5, "baseline_power": 800.0},
+    {"k": 0.20, "z": 1.0, "baseline_power": 500.0}
+  ],
+  "bao_wiggles": [
+    {"k": 0.08, "wiggle": 0.04, "sigma_c": 2.0},
+    {"k": 0.16, "wiggle": -0.03, "sigma_c": 2.0}
+  ],
+  "peculiar_velocity_points": [
+    {"z_cosmological": 0.02, "v_parallel_m_s": 250000.0},
+    {"z_cosmological": 0.10, "v_parallel_m_s": -180000.0}
+  ]
+}

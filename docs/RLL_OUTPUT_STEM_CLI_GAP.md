@@ -1,6 +1,6 @@
 # RLL — Output Stem CLI Gap
 
-**Status:** lacuna operacional identificada antes de executar robust fit.  
+**Status:** fechado — mitigado por wrapper seguro, suporte a env/CLI no pipeline e testes.  
 **Escopo:** impedir sobrescrita acidental dos artefatos canônicos em `results/structure_d/`.
 
 ---
@@ -114,37 +114,53 @@ Responsável por:
 
 ## 5. Regra de bloqueio
 
-Enquanto o output stem versionado não estiver implementado ou garantido por wrapper:
+~~Enquanto o output stem versionado não estiver implementado ou garantido por wrapper:~~
+
+A lacuna foi fechada. O output stem versionado está implementado em dois caminhos operacionais:
+
+1. `scripts/run_structure_d_joint_likelihood.py` — wrapper seguro com `STRUCTURE_D_JOINT_OUTPUT_STEM` e `--output-stem`.
+2. `data/pipelines/structure_d/joint_real_likelihood.py` — `main()` lê `STRUCTURE_D_JOINT_OUTPUT_STEM` via `_resolve_main_output_stem()`.
+
+Para execuções que não devem sobrescrever o canônico:
 
 ```text
-robust_fit_execution_allowed = false
+robust_fit_execution_allowed = condicionado a uso do stem versionado
 ```
-
-Permitido apenas:
-
-- documentação;
-- plano de execução;
-- checklist;
-- dry-run conceitual;
-- criação de issue/PR de correção.
 
 ---
 
 ## 6. Critério de aceite
 
-A lacuna é fechada quando houver pelo menos um caminho operacional comprovado para gerar arquivos como:
+**Cumprido.** A lacuna está fechada com dois caminhos operacionais comprovados:
+
+```bash
+# Caminho 1 — wrapper seguro
+STRUCTURE_D_JOINT_OUTPUT_STEM="joint_real_likelihood_seed_1_maxiter_100" \
+STRUCTURE_D_JOINT_SEED=1 \
+STRUCTURE_D_JOINT_MAXITER=100 \
+python scripts/run_structure_d_joint_likelihood.py
+
+# Caminho 2 — pipeline direto via env
+STRUCTURE_D_JOINT_OUTPUT_STEM="joint_real_likelihood_seed_1_maxiter_100" \
+STRUCTURE_D_JOINT_SEED=1 \
+STRUCTURE_D_JOINT_MAXITER=100 \
+python data/pipelines/structure_d/joint_real_likelihood.py
+```
+
+Ambos geram:
 
 ```text
 results/structure_d/joint_real_likelihood_seed_1_maxiter_100.json
-results/structure_d/joint_real_likelihood_seed_2_maxiter_100.json
-...
-results/structure_d/joint_real_likelihood_seed_10_maxiter_100.json
+results/structure_d/joint_real_likelihood_seed_1_maxiter_100.csv
+results/structure_d/joint_real_likelihood_seed_1_maxiter_100_covariance_manifest.json
 ```
 
 sem alterar o canônico:
 
 ```text
 results/structure_d/joint_real_likelihood.json
+results/structure_d/joint_real_likelihood.csv
+results/structure_d/joint_real_likelihood_covariance_manifest.json
 ```
 
 ---
@@ -152,7 +168,7 @@ results/structure_d/joint_real_likelihood.json
 ## 7. R3
 
 ```text
-F_ok   = lacuna de output_stem identificada antes de qualquer robust fit.
-F_gap  = ainda falta PR/código/wrapper para output versionado.
-F_next = criar matriz de ablação e manifesto de figuras/tabelas para preparar o paper sem executar fit.
+F_ok   = lacuna de output_stem fechada; wrapper seguro, suporte a env/CLI no pipeline e testes.
+F_gap  = nenhum gap pendente para output stem; robust fit pode usar stems versionados.
+F_next = executar bateria robusta (seeds 1..10, maxiter 100) com stems versionados e registrar resultados.
 ```

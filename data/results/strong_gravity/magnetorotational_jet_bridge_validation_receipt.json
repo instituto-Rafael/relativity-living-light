@@ -1,0 +1,25 @@
+{
+  "schema": "rll.strong_gravity.magnetorotational_jet_bridge.validation_receipt.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "recorded_at": "2026-07-20",
+  "command": "python3 tests/strong_gravity/test_magnetorotational_jet_bridge.py",
+  "result": {
+    "tests_run": 21,
+    "passed": 21,
+    "failed": 0,
+    "errors": 0,
+    "state": "PASS"
+  },
+  "environment": {
+    "implementation": "Python standard library only",
+    "external_dependencies": 0
+  },
+  "boundaries": {
+    "local_focused_validation": true,
+    "github_actions_observed": false,
+    "grmhd_validation": false,
+    "observational_validation": false,
+    "cosmological_validation": false,
+    "claim_allowed": false
+  }
+}

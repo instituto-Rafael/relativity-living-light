@@ -1,0 +1,37 @@
+schema: rll.workflow_orchestrator.catalog.v3
+status: ACTIVE_GOVERNED_TRANSIT
+claim_allowed: false
+publication_effect: NONE
+
+profiles:
+  transit_refactor:
+    description: "Eight specialty gates in one sequential fail-closed transit."
+    include_tags: [tower]
+  full_session:
+    description: "Compatibility alias for the governed transit tower."
+    include_tags: [tower]
+  quick_session:
+    description: "Structural, contract, regression, and governance gates."
+    include_tags: [core]
+  real_data_session:
+    description: "Controlled real-data custody and audit workflows."
+    include_tags: [real_data]
+  science_shadow_session:
+    description: "Non-publishing deterministic and frontier shadow gates."
+    include_tags: [science_shadow]
+
+execution:
+  mode: sequential
+  stage_barrier: true
+  max_in_flight: 1
+  wait_for_completion: true
+  fail_fast: true
+
+# Inventory is exhaustive but execution is explicit. Event-driven and standalone
+# workflows remain visible in the receipt without being dispatched implicitly.
+workflow_inventory:
+  patterns:
+    - ../workflows/*.y*ml
+
+workflow_catalog_dirs:
+  - workflows/tower

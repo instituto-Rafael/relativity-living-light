@@ -1,0 +1,36 @@
+name: RLL Biophoton Metabolic Transduction Gate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/rll_biophoton_metabolic_transduction_gate.py'
+      - 'docs/research/RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE_20260815.md'
+      - 'data/evidence/rll_biophoton_metabolic_transduction_gate_20260815.json'
+      - '.github/workflows/rll-biophoton-metabolic-transduction-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  biophoton-metabolic-transduction-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Run deterministic self-test
+        run: |
+          python3 scripts/rll_biophoton_metabolic_transduction_gate.py --outdir artifacts/biophoton_metabolic_transduction_gate
+
+      - name: Show gate summary
+        run: |
+          cat artifacts/biophoton_metabolic_transduction_gate/rll_biophoton_metabolic_transduction_gate_results.json
+
+      - name: Upload gate artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-biophoton-metabolic-transduction-gate
+          path: artifacts/biophoton_metabolic_transduction_gate/

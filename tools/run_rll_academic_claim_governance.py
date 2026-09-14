@@ -78,6 +78,29 @@ def write_gate_report(scan: dict[str, Any], output: Path) -> None:
     lines.append(f"- H0_all_equal: `{fmt(scan.get('H0_all_equal'))}`")
     lines.append("")
 
+    if scan.get("H0_all_equal") is True:
+        lines.append("## H0/r_d ablation advisory")
+        lines.append("")
+        lines.append(
+            "> **WARNING — operational**: `H0_all_equal=True` was detected. "
+            "This means H0 is identical across all model rows in the current result table. "
+            "Until H0/r_d ablation runs are executed and scanned, strong RLL claims are not permitted."
+        )
+        lines.append("")
+        lines.append("Required ablation runs (see `data/inputs/cosmology_joint/h0_rd_ablation_matrix.json`):")
+        lines.append("")
+        lines.append("- H0 broad/free with r_d fixed")
+        lines.append("- H0 broad/free with r_d derived")
+        lines.append("- H0 Planck prior with r_d fixed")
+        lines.append("- H0 Planck prior with r_d derived")
+        lines.append("- H0 SH0ES/local prior with r_d fixed")
+        lines.append("- H0 SH0ES/local prior with r_d derived")
+        lines.append("")
+        lines.append("After each ablation CSV is produced, run:")
+        lines.append("```bash")
+        lines.append("python3 tools/run_rll_academic_claim_governance.py --input results/structure_d/ablation/<run_id>.csv")
+        lines.append("```")
+        lines.append("")
     lines.append("## RLL vs CPL")
     lines.append("")
     if rll is None:

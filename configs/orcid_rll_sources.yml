@@ -1,0 +1,74 @@
+schema: rll.orcid_sources.v1
+claim_allowed: false
+identity:
+  canonical_orcid: TOKEN_VAZIO_ORCID_ID
+  resolution_gate: authenticated_orcid_checksum_and_owner_confirmation
+  prohibited_placeholders:
+    - 0000-0000-0000-0000
+    - 0000-0002-XXXX-YYYY
+sources:
+  - id: orcid-public
+    role: author_registry
+    endpoint: https://pub.orcid.org/v3.0
+    access: oauth_read_public
+    credential_env: ORCID_ACCESS_TOKEN
+    writes: false
+    validation_weight: 0.30
+  - id: datacite
+    role: doi_metadata_for_zenodo_and_research_objects
+    endpoint: https://api.datacite.org/dois
+    access: public
+    writes: false
+    validation_weight: 0.25
+  - id: crossref
+    role: doi_metadata
+    endpoint: https://api.crossref.org/works
+    access: public_polite_pool
+    contact_env: RLL_CROSSREF_MAILTO
+    writes: false
+    validation_weight: 0.15
+  - id: openalex
+    role: scholarly_graph
+    endpoint: https://api.openalex.org
+    access: public_or_api_key
+    credential_env: OPENALEX_API_KEY
+    writes: false
+    validation_weight: 0.20
+  - id: ncbi-eutils
+    role: biomedical_validation_target
+    endpoint: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
+    access: public_or_api_key
+    credential_env: NCBI_API_KEY
+    writes: false
+    validation_weight: 0.10
+validation:
+  metadata_verified_threshold: 0.78
+  partial_match_threshold: 0.50
+  scientific_claim_promotion: prohibited
+  required_for_scientific_promotion:
+    - explicit_hypothesis
+    - dimensional_consistency
+    - falsifier
+    - dataset_provenance
+    - independent_reproduction
+    - statistical_diagnostics
+    - artifact_hashes
+disciplines:
+  - mathematics
+  - physics
+  - physics.classical
+  - physics.quantum
+  - chemistry
+  - biology
+  - physiology
+vector_store:
+  backend: sqlite3
+  vector_model: rll-hash32-v1
+  dimensions: 32
+  revision_policy: append_only
+  event_ledger: sha256_hash_chain
+  default_path: artifacts/orcid_rll/orcid_rll.sqlite3
+security:
+  persist_access_tokens: false
+  commit_database: false
+  public_metadata_only: true

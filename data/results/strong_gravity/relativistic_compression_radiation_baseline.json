@@ -1,0 +1,45 @@
+{
+  "available_energy_ev": 2000000.0,
+  "boundaries": {
+    "claim_allowed": false,
+    "compression_automatically_creates_subparticles": false,
+    "einstein_backreaction_solved": false,
+    "grmhd_solved": false,
+    "nuclear_network_solved": false,
+    "particles_touch_classically": false,
+    "spin_hydrodynamics_solved": false,
+    "wavefunctions_and_scattering_interact": true
+  },
+  "input": {
+    "central_mass_kg": 1.98847e+31,
+    "electron_density_m3": 1e+35,
+    "expansion_scalar_s_inv": -2.0,
+    "luminosity_w": 1e+31,
+    "magnetic_field_t": 10.0,
+    "opacity_m2_kg": 0.04,
+    "photon_coupling": 1.0,
+    "pressure_pa": 1000000000000.0,
+    "radius_m": 10000000.0
+  },
+  "result": {
+    "acceleration_ratio": 0.08000270246034774,
+    "claim_allowed": false,
+    "claim_boundary": "Scalar diagnostics only. No GRMHD, quantum-kinetic, nuclear, subnuclear, laboratory, astrophysical or cosmological validation.",
+    "compression_work_w_m3": 2000000000000.0,
+    "eddington_luminosity_w": 1.2499577754834428e+32,
+    "eddington_ratio": 0.08000270246034773,
+    "electron_degeneracy_pressure_pa": 5.0347045305939545e+20,
+    "field_energy_equivalent_mass_density_kg_m3": 7.380533054499239e-10,
+    "gravity_acceleration_m_s2": 13271645.320999999,
+    "magnetic_pressure_pa": 39788735.75131381,
+    "photon_thrust_n": 3.3356409519815206e+22,
+    "radiation_flux_w_m2": 7957747154594767.0,
+    "radiation_pressure_pa": 26544187.294380724,
+    "radiative_acceleration_m_s2": 1061767.491775229,
+    "reached_reference_thresholds": [
+      "hydrogen_ionization_reference",
+      "electron_positron_rest_pair_reference"
+    ]
+  },
+  "schema": "rll.relativistic_compression_radiation.baseline.v1"
+}

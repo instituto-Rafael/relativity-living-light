@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-17",
+  "raw_data_policy": "immutable",
+  "claim_allowed": false,
+  "execution_home": "src/rll/structural_integration.py",
+  "source_registry": "data/registries/rll_recent_primary_sources_2026.json",
+  "branches": [
+    {
+      "branch_id": "B00_governance",
+      "name": "epistemic governance and provenance",
+      "status": "implemented",
+      "equations": ["state -> evidence -> test -> decision"],
+      "observables": ["hashes", "claim gates", "TOKEN_VAZIO", "dataset manifests"],
+      "required_artifacts": ["source_registry", "claim_boundary"],
+      "claim_boundary": "Structural integrity does not establish physical validity."
+    },
+    {
+      "branch_id": "B01_background_transition",
+      "name": "RLL logistic background transition",
+      "status": "partial",
+      "equations": [
+        "f(z)=1/[1+exp((z-z_t)/w_t)]",
+        "rho_s(z)/rho_c0=Omega_s0[f(z)+(1-f(z))(1+z)^3]",
+        "w_eff(z)=-1+(1+z)/3*d ln rho_s/dz"
+      ],
+      "observables": ["H(z)", "D_M/r_d", "D_H/r_d", "D_L", "w_eff(z)"],
+      "required_artifacts": ["transition_parameters", "background_likelihood", "baseline_models"],
+      "claim_boundary": "Implemented as phenomenological background; microphysical identity remains open."
+    },
+    {
+      "branch_id": "B02_dataset_compatibility",
+      "name": "BAO-supernova distance compatibility",
+      "status": "partial",
+      "equations": ["eta(z)=D_L/[(1+z)^2 D_A]", "F_AP(z)=D_M/D_H"],
+      "observables": ["eta(z)", "F_AP(z)", "calibration residuals", "method sensitivity"],
+      "required_artifacts": ["BAO_distances", "SN_distances", "full_covariance", "calibration_registry"],
+      "claim_boundary": "A compatibility anomaly must be distinguished from calibration, reconstruction bias and new physics."
+    },
+    {
+      "branch_id": "B03_interacting_dark_sector",
+      "name": "interacting dark-sector branch",
+      "status": "hypothesis",
+      "equations": [
+        "dot(rho_s)+3H(1+w_s)rho_s=Q",
+        "dot(rho_c)+3H rho_c=-Q",
+        "Q=beta H rho_ref"
+      ],
+      "observables": ["H(z)", "f_sigma8(z)", "S8", "CMB", "growth stability"],
+      "required_artifacts": ["interaction_choice", "perturbation_equations", "stability_test", "joint_likelihood"],
+      "claim_boundary": "No interaction is inferred until Q is specified and confronted at background and perturbation levels."
+    },
+    {
+      "branch_id": "B04_bulk_viscosity",
+      "name": "dissipative effective-fluid branch",
+      "status": "hypothesis",
+      "equations": ["p_eff=p-3H xi"],
+      "observables": ["H(z)", "w_eff(z)", "entropy production", "perturbation stability"],
+      "required_artifacts": ["xi_model", "thermodynamic_units", "stability_test", "joint_likelihood"],
+      "claim_boundary": "Cosmological bulk viscosity is a comparator; photonic viscosity requires a separate microscopic derivation."
+    },
+    {
+      "branch_id": "B05_modified_gravity_eft",
+      "name": "modified-gravity/EFT mapping branch",
+      "status": "reference_only",
+      "equations": ["S=int sqrt(-g)[M_*^2(t)R/2-Lambda(t)-c(t)g^00+...] d4x"],
+      "observables": ["H(z)", "mu(k,a)", "Sigma(k,a)", "GW propagation", "CMB", "lensing"],
+      "required_artifacts": ["covariant_action", "degrees_of_freedom", "stability_test", "Boltzmann_backend"],
+      "claim_boundary": "Background similarity cannot identify modified gravity without perturbative and covariant closure."
+    },
+    {
+      "branch_id": "B06_photon_plasma_propagation",
+      "name": "FRB/plasma propagation branch",
+      "status": "hypothesis",
+      "equations": [
+        "Delta_t_std=K DM nu^-2",
+        "Delta_t_res=Delta_t_obs-Delta_t_std",
+        "Delta_t_RLL=A(1+z)^p B_parallel^q nu^-n"
+      ],
+      "observables": ["DM", "RM", "frequency exponent", "polarization", "host/IGM residuals"],
+      "required_artifacts": ["localized_FRB_catalog", "electron_model", "magnetic_environment", "null_model", "full_covariance"],
+      "claim_boundary": "A plasma correlation is not RLL evidence unless a preregistered residual differs from standard dispersion."
+    },
+    {
+      "branch_id": "B07_magneto_optical",
+      "name": "photon-field/magneto-optical branch",
+      "status": "hypothesis",
+      "equations": ["Delta_theta_pol=Delta_theta_Faraday+Delta_theta_field+Delta_theta_systematic"],
+      "observables": ["EB", "TB", "RM", "V-mode", "frequency dependence"],
+      "required_artifacts": ["polarization_data", "instrument_angle_model", "Faraday_null", "field_coupling_model"],
+      "claim_boundary": "Birefringence or polarization rotation must be separated from calibration, Faraday rotation and known field couplings."
+    },
+    {
+      "branch_id": "B08_strong_gravity_magnetokinetic",
+      "name": "strong-gravity magnetokinetic conversion",
+      "status": "partial",
+      "equations": [
+        "r_g=GM/c^2",
+        "Q_T=c_s*kappa/(pi G Sigma)",
+        "Q_comp=-p Theta",
+        "R_GT=(P_th+P_B+P_rad)/(rho|Phi_eff|)",
+        "G_ME=P_electric/(P_compressive+epsilon)"
+      ],
+      "observables": ["disk mass ratio", "Toomre Q", "orbital period", "QPO/oscillation", "polarization", "X/gamma luminosity", "outflow power"],
+      "required_artifacts": ["source_manifest", "disk_profile", "field_topology", "radiation_model", "GRMHD_or_GRPIC_baseline"],
+      "claim_boundary": "Reference operators and scale sweeps do not establish a new coupling or replace self-gravitating GRMHD/GRPIC."
+    },
+    {
+      "branch_id": "B09_gravitational_electrodissociative_recurrence",
+      "name": "gravitational-electrodissociative recurrent calibration",
+      "status": "hypothesis",
+      "equations": ["X=(rho,x_e,J,u)", "X_(t+1)=F(X_t;rates,dt)", "E_gamma=h nu", "Delta_a_tidal=2GM L/r^3"],
+      "observables": ["ionization fraction", "current density", "internal energy", "radiation spectrum", "phase state", "time lags"],
+      "required_artifacts": ["composition", "cross_sections", "ionization_rates", "observational_target", "covariance", "registered_loss"],
+      "claim_boundary": "The recurrence is a transparent calibration operator, not a trained RNN or observational fit until data, targets and loss are declared."
+    },
+    {
+      "branch_id": "B10_black_hole_thermodynamics_mpemba_falsifier",
+      "name": "black-hole thermodynamics and anomalous-relaxation falsification",
+      "status": "partial",
+      "equations": [
+        "T_H=hbar*c^3/(8*pi*G*k_B*M)",
+        "S_BH=4*pi*k_B*G*M^2/(hbar*c)",
+        "D_far(0)>D_near(0)",
+        "tau_far(epsilon)<tau_near(epsilon)"
+      ],
+      "observables": ["mass", "radius", "Hawking temperature analytic value", "Bekenstein-Hawking entropy", "D(t)", "first-passage time", "slow-mode amplitudes", "time-resolved EHT observables"],
+      "required_artifacts": ["mpemba_horizon_contract", "checksum_verified_real_time_series", "preregistered_distance_and_threshold", "covariance_model", "null_relaxation_models", "independent_reproduction"],
+      "claim_boundary": "Analytic black-hole thermodynamics and synthetic Mpemba witnesses do not establish astrophysical Hawking thermometry or a black-hole Mpemba detection; missing real-data gates remain TOKEN_VAZIO."
+    }
+  ],
+  "calibration_home": "src/rll/strong_gravity_calibration.py",
+  "calibration_registry": "data/registries/rll_strong_gravity_calibration_registry.json"
+}

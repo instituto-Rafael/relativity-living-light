@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-17",
+  "domain": "B08_strong_gravity_magnetokinetic",
+  "raw_data_policy": "immutable",
+  "claim_allowed": false,
+  "rnn_resolution": {
+    "session_interpretation": "RLL recurrent state calibration X_(t+1)=F(X_t)",
+    "neural_network_trained": false,
+    "reason": "No training corpus, labels, target observable or loss function was specified in the session.",
+    "neural_network_state": "TOKEN_VAZIO"
+  },
+  "heuristics": [
+    {
+      "id": "H1_scale_separation",
+      "rule": "Separate atomic, material, plasma, disk and spacetime scales before assigning a mechanism.",
+      "gate": "No force dominance claim without a scale and unit declaration."
+    },
+    {
+      "id": "H2_force_dominance",
+      "rule": "Use electromagnetic/pressure coupling locally and collective gravity for bulk mass distributions.",
+      "gate": "Do not describe gravity between atoms as the dominant molecular restoring force."
+    },
+    {
+      "id": "H3_phase_ladder",
+      "rule": "Track molecular, dissociated, atomic, ionized, relativistic-plasma and pair-plasma regimes separately.",
+      "gate": "Solid-state fatigue and electrolysis analogies stop being literal after lattice/molecular destruction."
+    },
+    {
+      "id": "H4_self_gravity",
+      "rule": "Calibrate both disk mass ratio mu_d=M_d/M_BH and Toomre Q=c_s*kappa/(pi*G*Sigma).",
+      "gate": "Q<=1 is an instability candidate; mu_d>=0.1 flags possible backreaction, not automatic fragmentation."
+    },
+    {
+      "id": "H5_transduction",
+      "rule": "Represent compression-to-electric conversion with generalized Ohm/Hall/pressure/inertia channels.",
+      "gate": "Piezoelectric/electrolysis language remains analogy unless a material lattice/electrolyte and electrodes exist."
+    },
+    {
+      "id": "H6_radiative_threshold",
+      "rule": "Use E_gamma=h*nu and material cross sections to separate heating, dissociation, ionization and pair channels.",
+      "gate": "Microwave heating is not direct single-photon ionization."
+    },
+    {
+      "id": "H7_recurrence",
+      "rule": "Evolve X=(rho,x_e,J,u) with explicit rates, timestep, convergence and bounded ionization fraction.",
+      "gate": "Synthetic recurrence verifies code only; it is not an observational fit."
+    },
+    {
+      "id": "H8_falsifier",
+      "rule": "Compare against self-gravitating GRMHD, radiation, chemistry, photoionization and kinetic-plasma baselines.",
+      "gate": "No RLL-specific claim unless a preregistered residual survives standard models and uncertainty propagation."
+    }
+  ],
+  "operators": [
+    "r_g=GM/c^2",
+    "Omega_K=sqrt(GM/r^3)",
+    "Q_T=c_s*kappa/(pi*G*Sigma)",
+    "Q_comp=-p*Theta",
+    "R_GT=(P_th+P_B+P_rad)/(rho*|Phi_eff|)",
+    "G_ME=P_electric/(P_compressive+epsilon)",
+    "Q_osc=omega_0/(2*gamma)",
+    "Delta_a_tidal=2GM L/r^3",
+    "E_gamma=h*nu",
+    "X_(t+1)=F(X_t; rates,dt)"
+  ],
+  "required_artifacts_for_physical_calibration": [
+    "source mass and spin",
+    "disk mass/radial density profile",
+    "magnetic field topology",
+    "electron and ion temperatures",
+    "radiation spectrum and transfer model",
+    "chemical/ionization cross sections",
+    "observational target with covariance",
+    "GRMHD or GRPIC baseline",
+    "registered loss function and falsifier"
+  ],
+  "committed_numeric_result": "results/strong_gravity_calibration/session_reference_sweep_20260717.json",
+  "successor_extensions": [
+    {
+      "id": "B10_black_hole_thermodynamics_mpemba_falsifier",
+      "registered_at": "2026-08-27",
+      "status": "operational_closure_complete_external_evidence_open",
+      "claim_allowed": false,
+      "implementation": "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py",
+      "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+      "source_crosswalk": "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json",
+      "closure_registry": "data/registries/rll_mpemba_horizon_closure_registry.v1.json",
+      "eht_custody_manifest": "data/real/strong_gravity/eht_2026_d01_01_manifest.json",
+      "observational_protocol": "data/contracts/eht_mpemba_observational_protocol.v1.json",
+      "closure_validator": "tools/validate_mpemba_horizon_closure.py",
+      "tests": "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+      "closure_tests": "tests/strong_gravity/test_mpemba_horizon_closure.py",
+      "atlas": "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
+      "falsifiability_protocol": "FALSIFIABILITY_PROTOCOL.md",
+      "receipts": [
+        "provenance/receipts/rll_mpemba_horizon_atlas_20260827.json",
+        "provenance/receipts/rll_mpemba_horizon_drive_crosswalk_20260827.json",
+        "provenance/receipts/rll_mpemba_horizon_closure_20260827.json"
+      ],
+      "protected_gaps": [
+        "direct astrophysical Hawking thermometry",
+        "official EHT 2026-D01-01 file-level byte custody and SHA256",
+        "matched astrophysical Mpemba relaxation trajectories toward one declared target",
+        "covariance-aware matched inference",
+        "independent reproduction"
+      ],
+      "promotion_gate": [
+        "real time-resolved matched relaxation data ingested with file-level SHA256",
+        "observable and equilibrium/stationary target locked before crossing inspection",
+        "distance functional and epsilon rule locked or robustness family fixed",
+        "covariance and calibration uncertainty propagated",
+        "ordinary GRMHD/turbulence/radiative-transfer nulls compared",
+        "look-elsewhere and hold-out controls passed",
+        "independent external reproduction"
+      ],
+      "operational_closure_rule": "No B10/C11 gap identified in the 2026-08-27 pass may exist without urgency, provenance, owner class, mechanism, verification, falsifier and close_when. This is zero untracked gaps, not fabricated external evidence.",
+      "claim_boundary": "This successor is a bounded falsification route. It cannot promote synthetic witnesses, symbolic correspondences, EHT plasma observables, sparse variability epochs, or theory precedents into astrophysical Hawking/Mpemba evidence."
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_cross_domain_equation_intake.schema.json",
+  "title": "RLL Cross-Domain Equation Intake",
+  "description": "Fail-closed structural contract and quarantine for equations originating outside the validated RLL cosmology pipeline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "registry_id",
+    "updated_at",
+    "registry_role",
+    "aggregation_rule",
+    "claim_allowed",
+    "direct_model_integration_allowed",
+    "protected_target_prefixes",
+    "records",
+    "next_gate"
+  ],
+  "properties": {
+    "schema": {"const": "rll.cross_domain_equation_intake.v1"},
+    "registry_id": {"type": "string", "pattern": "^CDI-[A-Z0-9-]+$"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "registry_role": {"const": "REFERENCE_QUARANTINE"},
+    "aggregation_rule": {"const": "NON_COMPENSATORY"},
+    "claim_allowed": {"const": false},
+    "direct_model_integration_allowed": {"const": false},
+    "protected_target_prefixes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(?!/)(?!.*\\.\\.).+$"}
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/record"}
+    },
+    "next_gate": {"type": "string", "minLength": 20}
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "domain",
+        "epistemic_class",
+        "equation_tex",
+        "role",
+        "assumptions",
+        "limitations",
+        "variables",
+        "dimensional_note",
+        "epistemic_boundary",
+        "safe_use",
+        "forbidden_inferences",
+        "rll_relevance",
+        "integration_state",
+        "integration_targets",
+        "direct_model_integration_allowed",
+        "affects_cosmology_evidence",
+        "claim_allowed",
+        "source_status",
+        "source_refs",
+        "source_gap",
+        "falsifier",
+        "predicted_observation",
+        "promotion_gate"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^EQ-[A-Z0-9-]+$"},
+        "name": {"type": "string", "minLength": 3},
+        "domain": {
+          "enum": [
+            "bioelectricity",
+            "electromagnetism",
+            "hemodynamics",
+            "acoustics",
+            "network_synchronization",
+            "signal_processing",
+            "geometry",
+            "fractal_mathematics",
+            "machine_learning",
+            "cosmology"
+          ]
+        },
+        "epistemic_class": {"enum": ["E", "M", "H", "P"]},
+        "equation_tex": {"type": "string", "minLength": 3},
+        "role": {
+          "enum": [
+            "mathematical_identity",
+            "physical_relation",
+            "biophysical_model",
+            "computational_operator",
+            "testable_hypothesis",
+            "analogy"
+          ]
+        },
+        "assumptions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 5}
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 5}
+        },
+        "variables": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "string", "minLength": 2}
+        },
+        "dimensional_note": {"type": "string", "minLength": 8},
+        "epistemic_boundary": {"type": "string", "minLength": 20},
+        "safe_use": {"type": "string", "minLength": 15},
+        "forbidden_inferences": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 10}
+        },
+        "rll_relevance": {
+          "enum": ["REFERENCE_ONLY", "CANDIDATE_FOR_ISOLATED_TEST", "OUT_OF_SCOPE"]
+        },
+        "integration_state": {"enum": ["QUARANTINED", "BLOCKED", "READY_FOR_TEST"]},
+        "integration_targets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^(?!/)(?!.*\\.\\.).+$"}
+        },
+        "direct_model_integration_allowed": {"const": false},
+        "affects_cosmology_evidence": {"const": false},
+        "claim_allowed": {"const": false},
+        "source_status": {"enum": ["VERIFIED", "REVIEWED", "TOKEN_VAZIO"]},
+        "source_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 3}
+        },
+        "source_gap": {"type": ["string", "null"]},
+        "falsifier": {"type": ["string", "null"]},
+        "predicted_observation": {"type": ["string", "null"]},
+        "promotion_gate": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"epistemic_class": {"const": "H"}}, "required": ["epistemic_class"]},
+          "then": {
+            "properties": {
+              "role": {"const": "testable_hypothesis"},
+              "falsifier": {"type": "string", "minLength": 12},
+              "predicted_observation": {"type": "string", "minLength": 12},
+              "promotion_gate": {"type": "string", "minLength": 12}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"epistemic_class": {"const": "P"}}, "required": ["epistemic_class"]},
+          "then": {
+            "properties": {
+              "role": {"const": "analogy"},
+              "rll_relevance": {"const": "OUT_OF_SCOPE"},
+              "integration_state": {"const": "BLOCKED"},
+              "integration_targets": {"maxItems": 0},
+              "falsifier": {"type": "null"},
+              "predicted_observation": {"type": "null"},
+              "promotion_gate": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"source_status": {"const": "TOKEN_VAZIO"}}, "required": ["source_status"]},
+          "then": {
+            "properties": {
+              "source_refs": {"maxItems": 0},
+              "source_gap": {"type": "string", "minLength": 12}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"source_status": {"enum": ["VERIFIED", "REVIEWED"]}}, "required": ["source_status"]},
+          "then": {
+            "properties": {
+              "source_refs": {"minItems": 1},
+              "source_gap": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"integration_state": {"const": "READY_FOR_TEST"}}, "required": ["integration_state"]},
+          "then": {
+            "properties": {
+              "rll_relevance": {"const": "CANDIDATE_FOR_ISOLATED_TEST"},
+              "integration_targets": {"minItems": 1}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

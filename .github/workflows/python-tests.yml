@@ -2,34 +2,128 @@ name: Python tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main, rll/lab]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  group: python-tests-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
-          python-version: '3.11'
+          python-version: "3.11"
+          cache: pip
 
       - name: Install package and test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt pytest pyyaml
+          python -m pip install -r requirements.txt pytest pyyaml jsonschema
 
-      - name: Run tests
-        run: pytest -q
+      - name: Validate formula-literature append-only history
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          current="data/science/rll_formula_literature_edges.v1.json"
+          previous="artifacts/python-tests/previous_formula_literature_edges.json"
+          mkdir -p artifacts/python-tests
+
+          source_sha=""
+          source_kind=""
+          if [[ "$EVENT_NAME" == "pull_request" ]] \
+             && [[ -n "${PR_BASE_SHA:-}" ]] \
+             && git cat-file -e "${PR_BASE_SHA}:${current}" 2>/dev/null; then
+            source_sha="$PR_BASE_SHA"
+            source_kind="pull_request_base"
+          elif [[ "$EVENT_NAME" == "push" ]] \
+             && [[ -n "${PUSH_BEFORE:-}" ]] \
+             && [[ ! "$PUSH_BEFORE" =~ ^0+$ ]] \
+             && git cat-file -e "${PUSH_BEFORE}:${current}" 2>/dev/null; then
+            source_sha="$PUSH_BEFORE"
+            source_kind="push_before"
+          else
+            history_tip="${PR_HEAD_SHA:-HEAD}"
+            source_sha="$(git log "$history_tip" --diff-filter=A --format=%H -- "$current" | tail -n 1)"
+            source_kind="introduction_commit_bootstrap"
+          fi
+
+          if [[ -z "$source_sha" ]] || ! git cat-file -e "${source_sha}:${current}" 2>/dev/null; then
+            echo "FAIL: no real predecessor/bootstrap snapshot found for ${current}" >&2
+            exit 2
+          fi
+
+          git show "${source_sha}:${current}" > "$previous"
+          {
+            echo "source_kind=${source_kind}"
+            echo "source_sha=${source_sha}"
+            echo "source_blob=$(git rev-parse "${source_sha}:${current}")"
+            echo "source_sha256=$(sha256sum "$previous" | awk '{print $1}')"
+          } | tee artifacts/python-tests/formula_literature_previous_snapshot.receipt
+
+          python tools/validate_formula_literature_edges.py \
+            "$current" \
+            --previous "$previous" \
+            | tee artifacts/python-tests/formula_literature_non_regression.log
+
+      - name: Materialize deterministic audit prerequisites
+        run: |
+          set -euo pipefail
+          python tools/rll_real_data_evidence_bridge.py \
+            --output results/audit/rll_real_data_evidence_bridge.json \
+            --require-data-ready
+          python tools/rll_cosmology_e0_preflight.py \
+            --output results/audit/rll_cosmology_e0_preflight.json
+          test -s results/audit/rll_real_data_evidence_bridge.json
+          test -s results/audit/rll_cosmology_e0_preflight.json
+
+      - name: Run tests with auditable receipt
+        run: |
+          mkdir -p artifacts/python-tests
+          set -o pipefail
+          pytest -q \
+            --junitxml=artifacts/python-tests/junit.xml \
+            2>&1 | tee artifacts/python-tests/pytest.log
+
+      - name: Write quality execution monitor receipt
+        if: always()
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python tools/ci/quality_execution_monitor.py \
+            --workflow python-tests \
+            --base-sha "${BASE_SHA:-}" \
+            --head-sha "${HEAD_SHA:-}" \
+            --junitxml artifacts/python-tests/junit.xml \
+            --output artifacts/python-tests/quality_execution_monitor.json
+
+      - name: Upload test receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: python-tests-${{ github.run_id }}
+          path: artifacts/python-tests/
+          retention-days: 30
+          if-no-files-found: error

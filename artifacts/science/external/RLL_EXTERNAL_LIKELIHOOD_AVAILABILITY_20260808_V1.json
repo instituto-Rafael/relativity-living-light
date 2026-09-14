@@ -1,0 +1,44 @@
+{
+  "schema": "rll.external_likelihood_availability.v1",
+  "observed_at": "2026-08-08T05:58:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "scope": "Availability/provenance observation only. No external likelihood is considered reproduced until RLL materializes immutable inputs and reproduces an official reference execution.",
+  "DESI_DR2": {
+    "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+    "availability_state": "PUBLIC_PRODUCTS_AVAILABLE_LOCAL_REPRODUCTION_PENDING",
+    "official_sources": [
+      "https://data.desi.lbl.gov/doc/papers/dr2/",
+      "https://www.desi.lbl.gov/2025/10/06/desi-dr2-cosmology-chains-and-data-products-released/",
+      "https://help.desi.lbl.gov/index.php?qa=182&qa_1=provenance-external-cobaya-likelihood-public-cosmology-chains"
+    ],
+    "observed_facts": [
+      "DESI publishes DR2 cosmology chains and posterior-maximization products for the March 2025 cosmology results.",
+      "An official DESI Data Q&A states that the historical desi_y3_cosmo_bindings desi_bao_all likelihood is identical to the released Cobaya bao.desi_dr2.desi_bao_all likelihood and that the measurement/covariance files are byte-identical.",
+      "This observation removes 'product unavailable' as a generic blocker for the BAO likelihood path but does not prove that RLL has materialized, hashed or reproduced the official likelihood."
+    ],
+    "required_next_action": "Materialize the current official Cobaya DESI DR2 BAO likelihood/data in a clean pinned environment, freeze package/data hashes and reproduce official LCDM/CPL reference values before any RLL comparison.",
+    "token_resolution": "NOT_RESOLVED"
+  },
+  "DES_Y6_3X2PT": {
+    "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+    "availability_state": "OFFICIAL_RESULTS_PUBLIC_SOME_PRODUCTS_PUBLIC_EXACT_EXECUTABLE_LIKELIHOOD_CUSTODY_PENDING",
+    "official_sources": [
+      "https://www.darkenergysurvey.org/des-y6-cosmology-results-papers/",
+      "https://des.ncsa.illinois.edu/releases/y6a2/"
+    ],
+    "observed_facts": [
+      "DES publishes the Y6 3x2pt cosmology result and analysis-methodology papers.",
+      "The official DES page states that some Y6 cosmology data products have been released and more are forthcoming.",
+      "This audit has not yet established an immutable RLL-local custody path for the complete executable 3x2pt likelihood, covariance, nuisance priors and scale-cut configuration needed for reference reproduction."
+    ],
+    "required_next_action": "Inventory the official Y6A2 release and associated analysis repository/package, identify the exact executable 3x2pt likelihood/data/covariance/nuisance configuration used by the published result, then materialize and reproduce its reference cosmology.",
+    "token_resolution": "NOT_RESOLVED"
+  },
+  "invariants": [
+    "availability != materialization",
+    "materialization != reference reproduction",
+    "reference reproduction != RLL validation",
+    "no external token is closed by website discovery alone"
+  ]
+}

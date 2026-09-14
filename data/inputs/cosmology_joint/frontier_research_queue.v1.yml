@@ -1,0 +1,64 @@
+schema: rll.frontier_research_queue.v1
+claim_allowed: false
+items:
+  - fragment_id: FRAG-RLL-BACKGROUND-001
+    title: RLL logistic transition as a bounded background component
+    current_stage: S5_SYNTHETIC_VALIDATION
+    state: TESTED_SYNTHETIC
+    references:
+      - {source_id: RLL_INTERNAL_FORMALISM, type: repository_primary, locator: data/pipelines/structure_d/model_family_shadow.py}
+      - {source_id: DESI_DR2_RESULTS_II, type: observational_primary, locator: arXiv:2503.14738}
+    composes_with: [FLCDM, wCDM, CPL, JBP, BA, PEDE]
+    evidence:
+      - tests/test_model_family_shadow.py
+      - data/contracts/cosmology_model_family_shadow.v1.json
+    gaps:
+      - TOKEN_VAZIO_ROBUST_MULTI_SEED_RECEIPT
+      - TOKEN_VAZIO_PERTURBATION_BACKEND
+      - TOKEN_VAZIO_INDEPENDENT_REPLICATION
+  - fragment_id: FRAG-EINSTEIN-EXT-001
+    title: Einstein-equation extensions and modified-gravity candidates
+    current_stage: S2_HYPOTHESIS
+    state: TOKEN_VAZIO_PERTURBATION_AND_STABILITY_BACKEND
+    references:
+      - {source_id: EINSTEIN_FIELD_EQUATIONS, type: foundational_primary, locator: historical_primary_source}
+      - {source_id: DESI_DR2_GRAVITY_CONTEXT, type: observational_context, locator: DESI_DR2_publications}
+    composes_with: []
+    evidence: []
+    gaps:
+      - TOKEN_VAZIO_ACTION_OR_FIELD_EQUATIONS_SELECTED
+      - TOKEN_VAZIO_GHOST_GRADIENT_STABILITY
+      - TOKEN_VAZIO_GW_PROPAGATION_CONSTRAINT
+  - fragment_id: FRAG-IDE-001
+    title: Interacting dark-sector route
+    current_stage: S2_HYPOTHESIS
+    state: TOKEN_VAZIO_COUPLED_BACKGROUND_PERTURBATIONS
+    references:
+      - {source_id: IDE_DESI_DR2_2025, type: research_primary, locator: arXiv:2503.21652}
+    composes_with: []
+    evidence: []
+    gaps:
+      - TOKEN_VAZIO_COVARIANT_Q_MU
+      - TOKEN_VAZIO_PERTURBATION_IMPLEMENTATION
+  - fragment_id: FRAG-NONPARAM-001
+    title: Nonparametric reconstruction as an adversarial lens
+    current_stage: S2_HYPOTHESIS
+    state: TOKEN_VAZIO_REGULARIZATION_AND_COVERAGE
+    references:
+      - {source_id: DESI_EXTENDED_DE, type: collaboration_primary, locator: arXiv:2503.14743}
+      - {source_id: NONPARAM_DESI_DR2_2025, type: research_primary, locator: arXiv:2506.22953}
+    composes_with: []
+    evidence: []
+    gaps:
+      - TOKEN_VAZIO_KERNEL_OR_BASIS_FREEZE
+      - TOKEN_VAZIO_MOCK_COVERAGE
+  - fragment_id: FRAG-STRONG-GRAVITY-001
+    title: Strong-gravity plasma mechanisms remain source-specific
+    current_stage: S1_REFERENCE
+    state: ROUTED_SEPARATE_AUTHORITY
+    references:
+      - {source_id: RLL_STRONG_GRAVITY_LEDGER, type: repository_primary, locator: data/pipelines/strong_gravity}
+    composes_with: []
+    evidence: []
+    gaps:
+      - TOKEN_VAZIO_STRESS_ENERGY_BRIDGE_TO_COSMOLOGY

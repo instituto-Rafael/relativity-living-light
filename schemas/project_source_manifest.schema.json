@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/rll/project_source_manifest.schema.json",
+  "title": "RLL Project Source Manifest",
+  "description": "Structural contract for project-source metadata, local hash-gated ingestion, privacy routing, and claim-bounded vector indexing. Schema conformance does not validate scientific claims.",
+  "type": "object",
+  "required": ["schema", "claim_allowed", "raw_bodies_committed", "source_count", "sources"],
+  "properties": {
+    "schema": {"const": "rll.project_sources_manifest.v1"},
+    "claim_allowed": {"const": false},
+    "raw_bodies_committed": {"const": false},
+    "source_count": {"type": "integer", "minimum": 1},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "display_name", "content_sha256", "size_bytes", "line_count", "temporal_state", "rll_relation", "visibility", "ingestion_policy", "claim_allowed", "summary"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "display_name": {"type": "string", "minLength": 1},
+          "local_filename": {"type": ["string", "null"]},
+          "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "line_count": {"type": "integer", "minimum": 0},
+          "claim_allowed": {"const": false},
+          "visibility": {"enum": ["PUBLIC_SAFE_METADATA_AND_LOCAL_BODY", "PUBLIC_SAFE_METADATA_ONLY", "PRIVATE_POINTER_ONLY"]},
+          "ingestion_policy": {"enum": ["ingest", "metadata_only", "pointer_only"]}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+schema: rll_evidence_experiment_v1
+experiment_id: RLL-EVIDENCE-JOINT-REAL-001
+title: Joint real-data LCDM versus RLL evidence replay
+repository_root: ../../..
+claim_allowed: false
+publication_effect: NONE
+execution:
+  timeout_seconds: 1800
+inputs:
+  - id: joint-real-result
+    path: results/structure_d/joint_real_likelihood.json
+    required: true
+  - id: hz-real
+    path: data/real/Hz_data_real.csv
+    required: true
+  - id: desi-primary
+    path: data/real/cosmology/desi_dr2_bao_primary_points.csv
+    required: true
+  - id: growth-real
+    path: data/real/cosmology/fsigma8_growth_real.csv
+    required: true
+  - id: cmb-shift
+    path: data/real/CMB_shift_real.json
+    required: true
+steps:
+  - id: validate-existing-result-json
+    argv: [python, -c, "import json, pathlib; p=pathlib.Path('results/structure_d/joint_real_likelihood.json'); d=json.loads(p.read_text()); assert d['claim_allowed'] is False; assert len(d['rows']) >= 2"]
+    required: true
+    expected_exit_codes: [0]
+    outputs:
+      - path: results/structure_d/joint_real_likelihood.json
+        required: true
+        media_type: application/json
+result_extractors:
+  - id: joint-real-model-rows
+    path: results/structure_d/joint_real_likelihood.json
+    rows_path: [rows]
+    model_key: model
+    include_models: [LCDM_joint_real, RLL_joint_real]
+    metrics: [chi2, AIC, AICc, BIC, N, k, dof]
+comparisons:
+  - baseline: LCDM_joint_real
+    candidate: RLL_joint_real
+    metrics: [chi2, AIC, AICc, BIC]
+receipt:
+  path: artifacts/evidence/RLL-EVIDENCE-JOINT-REAL-001/receipt.json
+F_ok:
+  - Real-data result artifact is structurally checked and hashed.
+  - LCDM and RLL metrics are extracted under the same receipt.
+F_gap:
+  - This profile replays the existing joint result; it does not perform a fresh fit.
+  - Pantheon+ full covariance is not part of this historical 64-point artifact.
+F_next:
+  - Bind the full Pantheon+ covariance likelihood to the same experiment contract.
+  - Obtain independent reproduction by a researcher outside the author workflow.

@@ -1,0 +1,31 @@
+# RAF_VERBEYES/DONE — Estágio Concluído
+# Arquivos com absorção completa. Condições estruturais
+# processadas, auditadas e registradas.
+
+schema: raf_verbeyes.stage.v1
+claim_allowed: false
+
+stage: DONE
+index: 2
+pipeline: RAF_VERBEYES
+
+role: |
+  Diretório de conclusão. Arquivos aqui tiveram absorção completa:
+  condições estruturais foram contextualizadas, artifacts gerados
+  e custódia auditada. Estado final do fluxo IN -> PROCESSO -> DONE.
+
+accepts: "*.yml"
+exit_condition: null
+prev_stage: PROCESSO
+next_stage: null
+
+policy:
+  archived: true
+  no_claim: true
+  structured_conditions: true
+  immutable: true
+
+note: |
+  Arquivos em DONE não devem ser modificados. Representam
+  o estado final auditado de uma condição estrutural absorvida.
+  Para reprocessar, copie para IN — nunca mova de volta diretamente.

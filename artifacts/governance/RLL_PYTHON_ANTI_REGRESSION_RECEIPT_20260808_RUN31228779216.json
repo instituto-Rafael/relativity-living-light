@@ -1,0 +1,31 @@
+{
+  "schema": "rll.python_anti_regression_receipt.v1",
+  "observed_at": "2026-08-08T00:00:24Z",
+  "state": "VERIFIED_TEST_SUITE_PASS",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "source_workflow": {
+    "name": "Python tests",
+    "run_id": 31228779216,
+    "conclusion": "success",
+    "head_branch": "audit/token-vazio-closure-reconciler-20260807-v1",
+    "head_sha": "a7d6542a05960cc9961c5064e9a5ce6d0c3f7332"
+  },
+  "test_result": {
+    "pytest_passed": 1044,
+    "subtests_passed": 3,
+    "failed": 0,
+    "duration_seconds": 54.41
+  },
+  "artifact": {
+    "id": 9013033268,
+    "name": "python-tests-31228779216",
+    "size_in_bytes": 21605,
+    "digest": "sha256:ded169494e46a7139a054c4de2d035dc0a20559e7f55dd0db37560439821f56b",
+    "expired": false
+  },
+  "boundary": "This receipt establishes software anti-regression for the tested head. It is not scientific validation and does not close external, physical-device, independent-replication, or theory-definition gaps.",
+  "F_ok": "The repository-wide Python suite passed without test failures on the recorded head.",
+  "F_gap": "Later commits require fresh CI; a past green receipt is not inherited automatically.",
+  "F_next": "Require a fresh green Python test run on the final promotion head."
+}

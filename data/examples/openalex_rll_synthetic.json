@@ -1,0 +1,31 @@
+{
+  "id": "https://openalex.org/W-SYNTHETIC-RLL",
+  "ids": {"doi": "https://doi.org/10.5281/zenodo.17188137"},
+  "title": "Relativity Living Light: cosmological model with dynamic dark energy",
+  "publication_year": 2025,
+  "type": "preprint",
+  "is_retracted": false,
+  "authorships": [
+    {
+      "author": {
+        "id": "https://openalex.org/A-SYNTHETIC",
+        "display_name": "Fixture Author",
+        "orcid": "https://orcid.org/0000-0000-0000-001X"
+      }
+    }
+  ],
+  "abstract_inverted_index": {
+    "Synthetic": [0],
+    "OpenAlex": [1],
+    "fixture": [2],
+    "for": [3],
+    "RLL": [4],
+    "cosmology": [5],
+    "and": [6],
+    "physics": [7]
+  },
+  "primary_location": {
+    "landing_page_url": "https://doi.org/10.5281/zenodo.17188137",
+    "source": {"display_name": "RLL Research Artifacts"}
+  }
+}

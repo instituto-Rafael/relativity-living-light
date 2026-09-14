@@ -1,0 +1,170 @@
+schema: rll.frontier_research_composition.v1
+status: EXPERIMENTAL_SHADOW
+claim_allowed: false
+canonical_outputs_modified: false
+objective: >-
+  Compose referenced research fragments by evidential dependency rather than by
+  apparent size, elegance, popularity, or post-hoc fit quality.
+ordering:
+  mode: evidence_dependency_not_size
+  forbidden:
+    - smallest_to_largest
+    - largest_to_smallest
+    - best_fit_to_worst_fit
+    - preferred_theory_first
+  invariant: every promotion follows source -> hypothesis -> formalization -> implementation -> test -> falsifier -> evidence
+source_authority:
+  drive_memory:
+    title: RAFAELIA — Implementação Latentes e Papers — Drive GitHub V1
+    document_id: 1g3eVD3zLMuwk0jevAwVL3wSmxhEMkKsAUPFQh2wEn88
+    status: EVIDENCE_READ
+    claim_effect: NONE
+  repository:
+    full_name: instituto-Rafael/relativity-living-light
+    branch: feat/model-family-shadow-no-number-fitting-20260729
+    pull_request: 609
+state_policy:
+  token_vazio_prefix: TOKEN_VAZIO
+  no_implicit_promotion: true
+  no_average_compensation: true
+  absence_is_not_zero: true
+  evidence_states:
+    - FRAGMENT
+    - REFERENCED
+    - HYPOTHESIS
+    - FORMAL_MODEL
+    - IMPLEMENTED
+    - TESTED_SYNTHETIC
+    - TESTED_REAL
+    - FALSIFIED
+    - NOT_FALSIFIED
+    - INCONCLUSIVE
+    - REPLICATED
+    - THEORY_CANDIDATE
+stages:
+  - id: S0_FRAGMENT
+    order: 0
+    produces: FRAGMENT
+    mandatory_fields: [fragment_id, text_or_equation, origin, scope]
+    gate: preserve the smallest semantically complete fragment without interpreting it as fact
+    on_missing: TOKEN_VAZIO_FRAGMENT_BOUNDARY
+  - id: S1_REFERENCE
+    order: 1
+    consumes: [FRAGMENT]
+    produces: REFERENCED
+    mandatory_fields: [source_id, primary_or_secondary, locator, source_scope, source_hash_or_version]
+    gate: bind each claim-bearing fragment to a traceable source and record what the source does not support
+    on_missing: TOKEN_VAZIO_SOURCE_BINDING
+  - id: S2_HYPOTHESIS
+    order: 2
+    consumes: [REFERENCED]
+    produces: HYPOTHESIS
+    mandatory_fields: [claim, assumptions, observable, falsifier, null_hypothesis]
+    gate: express one falsifiable claim without silently joining independent mechanisms
+    on_missing: TOKEN_VAZIO_FALSIFIABLE_HYPOTHESIS
+  - id: S3_FORMALIZATION
+    order: 3
+    consumes: [HYPOTHESIS]
+    produces: FORMAL_MODEL
+    mandatory_fields: [equations, dimensions, closure, limiting_cases, parameter_origins, identifiability_plan]
+    gate: require dimensional consistency, closure, nested limits, and distinguishable parameters
+    on_missing: TOKEN_VAZIO_FORMAL_CLOSURE
+  - id: S4_IMPLEMENTATION
+    order: 4
+    consumes: [FORMAL_MODEL]
+    produces: IMPLEMENTED
+    mandatory_fields: [module_path, interface, deterministic_command, version_or_commit, raw_inputs_immutable]
+    gate: implementation must match the declared equations and preserve raw observations
+    on_missing: TOKEN_VAZIO_IMPLEMENTATION_PARITY
+  - id: S5_SYNTHETIC_VALIDATION
+    order: 5
+    consumes: [IMPLEMENTED]
+    produces: TESTED_SYNTHETIC
+    mandatory_fields: [unit_tests, limiting_case_tests, regression_tests, synthetic_receipt]
+    gate: verify algebra, nesting, numerical stability, and recovery of injected truth
+    on_missing: TOKEN_VAZIO_SYNTHETIC_RECEIPT
+  - id: S6_OBSERVATIONAL_VALIDATION
+    order: 6
+    consumes: [TESTED_SYNTHETIC]
+    produces: TESTED_REAL
+    mandatory_fields: [dataset_manifest, covariance, likelihood, frozen_bounds, preregistered_seeds, observational_receipt]
+    gate: use the same observations, errors, covariance, objective, and parameter accounting across competitors
+    on_missing: TOKEN_VAZIO_OBSERVATIONAL_PARITY
+  - id: S7_FALSIFICATION
+    order: 7
+    consumes: [TESTED_REAL]
+    produces: INCONCLUSIVE
+    alternative_outputs: [FALSIFIED, NOT_FALSIFIED]
+    mandatory_fields: [thresholds, adversarial_baselines, ablations, residual_tests, decision_rule]
+    gate: negative results remain negative and weak tests cannot promote a strong claim
+    on_missing: TOKEN_VAZIO_FALSIFICATION_GATE
+  - id: S8_REPLICATION
+    order: 8
+    consumes: [NOT_FALSIFIED, INCONCLUSIVE]
+    produces: REPLICATED
+    mandatory_fields: [independent_environment, command, input_hashes, output_hashes, logs, signer]
+    gate: replication must be independent enough to expose hidden environment and analyst choices
+    on_missing: TOKEN_VAZIO_INDEPENDENT_REPLICATION
+  - id: S9_SYNTHESIS
+    order: 9
+    consumes: [REPLICATED]
+    produces: THEORY_CANDIDATE
+    mandatory_fields: [scope_of_validity, relation_to_existing_theories, unresolved_contradictions, predictions, paper_claim_ledger]
+    gate: a theory candidate is a bounded synthesis, not a collection of compatible metaphors
+    on_missing: TOKEN_VAZIO_THEORY_SYNTHESIS
+prompt_evolution:
+  stop_condition: fixed_point_or_all_remaining_gaps_token_vazio
+  passes:
+    - {id: P0_ATOMIZE, checks: [semantic_atoms, no_hidden_conjunctions], on_failure: TOKEN_VAZIO_SEMANTIC_ATOM}
+    - {id: P1_SOURCE, checks: [primary_source, scope, contradiction], on_failure: TOKEN_VAZIO_SOURCE}
+    - {id: P2_FORMAL, checks: [equations, dimensions, definitions], on_failure: TOKEN_VAZIO_FORMALISM}
+    - {id: P3_LIMITS, checks: [closure, limiting_cases, nested_recovery], on_failure: TOKEN_VAZIO_LIMITS}
+    - {id: P4_IMPLEMENT, checks: [code_equation_parity, deterministic_interface], on_failure: TOKEN_VAZIO_IMPLEMENTATION}
+    - {id: P5_STATISTICS, checks: [likelihood_parity, covariance, frozen_bounds, parameter_count], on_failure: TOKEN_VAZIO_STATISTICAL_PARITY}
+    - {id: P6_FALSIFY, checks: [falsifier, ablation, residuals, negative_result_preserved], on_failure: TOKEN_VAZIO_FALSIFIER}
+    - {id: P7_REPLICATE, checks: [independent_receipt, hashes, logs], on_failure: TOKEN_VAZIO_REPLICATION}
+    - {id: P8_SYNTHESIZE, checks: [scope, predictions, contradictions, claim_ledger], on_failure: TOKEN_VAZIO_SYNTHESIS}
+composition_policy:
+  required_gates:
+    - distinct_physical_sector
+    - shared_background_convention
+    - no_double_counting
+    - dimensional_compatibility
+    - identifiable_parameters
+    - nested_component_off_switch
+    - common_likelihood
+    - frozen_pre_execution_contract
+  forbidden:
+    - combine_parametrizations_of_same_sector_without_model_selection_reason
+    - add_parameters_only_after_residual_inspection
+    - average_token_vazio_with_known_evidence
+    - promote_background_fit_to_fundamental_theory
+frontier_tracks:
+  - id: BACKGROUND_PHENOMENOLOGY
+    state: IMPLEMENTED
+    authority: data/pipelines/structure_d/model_family_shadow.py
+    current_scope: H(z)+DESI_DR2_BAO
+    blockers: []
+  - id: MODIFIED_GRAVITY_EINSTEIN_EXTENSIONS
+    state: TOKEN_VAZIO_PERTURBATION_AND_STABILITY_BACKEND
+    required_artifacts: [action_or_field_equations, background_solver, perturbation_solver, stability_conditions, gravitational_wave_constraints]
+  - id: INTERACTING_DARK_SECTOR
+    state: TOKEN_VAZIO_COUPLED_BACKGROUND_PERTURBATIONS
+    required_artifacts: [covariant_interaction_term, energy_momentum_conservation, perturbations, coupling_prior, stability_tests]
+  - id: NONPARAMETRIC_RECONSTRUCTION
+    state: TOKEN_VAZIO_REGULARIZATION_AND_COVERAGE
+    required_artifacts: [basis_or_kernel, hyperparameter_policy, cross_validation, uncertainty_bands, mock_recovery]
+  - id: EARLY_UNIVERSE_AND_NEUTRINOS
+    state: TOKEN_VAZIO_BOLTZMANN_BACKEND
+    required_artifacts: [sound_horizon_at_recombination, neutrino_hierarchy, recombination, CMB_spectra]
+  - id: STRONG_GRAVITY_PLASMA
+    state: ROUTED_SEPARATE_AUTHORITY
+    required_artifacts: [stress_energy_tensor, GRMHD_or_GRPIC_backend, source_specific_observables]
+  - id: GLOBAL_TOPOLOGY
+    state: TOKEN_VAZIO_TOPOLOGICAL_OBSERVABLE
+    required_artifacts: [manifold_class, geodesics, CMB_or_lensing_signature, degeneracy_test]
+workflow_policy:
+  automatic_pull_request_jobs: [contract_validation, queue_validation, unit_tests, dry_import]
+  manual_only_jobs: [numeric_smoke, robust_multiseed, external_replication]
+  robust_seed_set: [11, 23, 37, 53, 71]
+  publication_effect: NONE

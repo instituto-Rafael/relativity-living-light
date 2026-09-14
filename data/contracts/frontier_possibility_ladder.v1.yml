@@ -1,0 +1,102 @@
+schema: rll.frontier_possibility_ladder.v1
+status: EXPERIMENTAL_SHADOW
+claim_allowed: false
+publication_effect: NONE
+documentation: docs/science/RLL_GRADED_POSSIBILITY_LADDER_20260729.md
+calibration_contract: data/contracts/theory_practice_calibration.v1.yml
+purpose: >-
+  Rank research possibilities by current theory-practice proximity and
+  tractability. The tier is not a probability of truth, a publication claim,
+  or a substitute for evidential promotion.
+
+separation_of_orders:
+  promotion_order: evidence_dependency
+  exploration_order: theory_practice_proximity_descending
+  calibration_order: theory_execution_residual_decision_receipt
+  invariant: a possibility may be explored before replication, but its claim language must remain proportional to its evidence
+
+method:
+  name: categorical_bottleneck_then_pareto
+  dimensions:
+    - source_proximity
+    - theoretical_closure
+    - observable_accessibility
+    - implementation_readiness
+    - falsifier_clarity
+    - independent_reproduction
+  forbidden:
+    - numeric_truth_probability_without_calibration
+    - weighted_average_hiding_mandatory_gap
+    - tier_as_confirmation
+    - tier_as_refutation
+    - token_vazio_as_zero
+  comparison_rule: >-
+    First assign the highest tier whose minimum basis is fully present. Within
+    the same tier compare explicit dimension profiles by Pareto dominance and
+    list the bottleneck; do not collapse them into an opaque scalar.
+
+tiers:
+  - id: P5_NEAR_OPERATIONAL
+    rank: 5
+    meaning: equations, observable, falsifier, and executable route exist; remaining work is mainly robustness, replication, or bounded extension
+    minimum_basis: [specific_model, equations_or_algorithm, observable, falsifier, executable_route]
+  - id: P4_FORMALIZABLE_NEAR
+    rank: 4
+    meaning: a referenced model family and discriminating observable exist with a direct implementation plan, but no complete backend or receipt
+    minimum_basis: [referenced_model_family, formalization_route, observable, implementation_plan]
+  - id: P3_TESTABLE_HYPOTHESIS
+    rank: 3
+    meaning: the claim is source-bound and falsifiable, but closure, identifiability, or implementation remains incomplete
+    minimum_basis: [source_binding, explicit_claim, observable, falsifier]
+  - id: P2_BRIDGE_CANDIDATE
+    rank: 2
+    meaning: mechanisms are physically meaningful in their own domains, but the cross-domain bridge or unique signature is incomplete
+    minimum_basis: [source_bound_mechanisms, bridge_statement, missing_unique_observable_recorded]
+  - id: P1_SPECULATIVE_SEED
+    rank: 1
+    meaning: a coherent seed has related sources, but no selected formal model or discriminating observable yet
+    minimum_basis: [semantic_fragment, related_source_family, unresolved_formal_choice]
+  - id: P0_UNRANKABLE_TOKEN_VAZIO
+    rank: 0
+    meaning: identity, scope, or minimum reference is insufficient even to assign an honest exploration tier
+    minimum_basis: [token_vazio_reason, next_action, exit_criterion]
+
+rules:
+  - promotion_state and exploration_tier are independent
+  - calibration_state is independently validated by the linked calibration contract
+  - a lower tier is not a refutation and a higher tier is not confirmation
+  - missing mandatory information lowers the tier or yields P0; it is never averaged away
+  - every tier must name the next bridge capable of moving it one level closer to practice
+  - evidence may justify exploration without authorizing a universal or fundamental claim
+
+portfolio:
+  - fragment_id: FRAG-RLL-BACKGROUND-001
+    exploration_tier: P5_NEAR_OPERATIONAL
+    calibration_profile: CAL-RLL-BACKGROUND-001
+    current_promotion_state: TESTED_SYNTHETIC
+    bottleneck: TOKEN_VAZIO_ROBUST_MULTI_SEED_RECEIPT
+    next_bridge: execute preregistered multi-seed background comparison and preserve residuals and stability receipts
+  - fragment_id: FRAG-IDE-001
+    exploration_tier: P4_FORMALIZABLE_NEAR
+    calibration_profile: CAL-IDE-001
+    current_promotion_state: TOKEN_VAZIO_COUPLED_BACKGROUND_PERTURBATIONS
+    bottleneck: TOKEN_VAZIO_PERTURBATION_IMPLEMENTATION
+    next_bridge: select one covariant interaction term and implement background plus perturbations under frozen priors
+  - fragment_id: FRAG-NONPARAM-001
+    exploration_tier: P4_FORMALIZABLE_NEAR
+    calibration_profile: CAL-NONPARAM-001
+    current_promotion_state: TOKEN_VAZIO_REGULARIZATION_AND_COVERAGE
+    bottleneck: TOKEN_VAZIO_KERNEL_OR_BASIS_FREEZE
+    next_bridge: freeze basis, hyperparameter policy, and mock-coverage protocol before observing rankings
+  - fragment_id: FRAG-STRONG-GRAVITY-001
+    exploration_tier: P2_BRIDGE_CANDIDATE
+    calibration_profile: CAL-STRONG-GRAVITY-BRIDGE-001
+    current_promotion_state: ROUTED_SEPARATE_AUTHORITY
+    bottleneck: TOKEN_VAZIO_STRESS_ENERGY_BRIDGE_TO_COSMOLOGY
+    next_bridge: derive an explicit stress-energy or propagation operator and one source-independent discriminating observable
+  - fragment_id: FRAG-EINSTEIN-EXT-001
+    exploration_tier: P1_SPECULATIVE_SEED
+    calibration_profile: CAL-EINSTEIN-EXT-001
+    current_promotion_state: TOKEN_VAZIO_PERTURBATION_AND_STABILITY_BACKEND
+    bottleneck: TOKEN_VAZIO_ACTION_OR_FIELD_EQUATIONS_SELECTED
+    next_bridge: choose one specific modified-gravity family instead of treating all Einstein-equation extensions as one model

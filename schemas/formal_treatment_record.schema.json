@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/formal_treatment_record.schema.json",
+  "title": "RAFAELIA FormalTreatmentRecord",
+  "description": "Structural contract for an operational record that classifies an artifact before it is integrated, executed, indexed or used for model-related processing.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_id", "name", "family", "artifact_type", "nature", "status", "origin", "evidence", "risk", "relations", "next_action", "execution_gate", "created_at", "updated_at"],
+  "properties": {
+    "record_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,20}-[0-9]{4,12}$"},
+    "name": {"type": "string", "minLength": 1},
+    "family": {"type": "string", "minLength": 1},
+    "artifact_type": {"type": "string", "enum": ["symbol", "parable", "hypothesis", "raw_data", "document", "log", "code", "sensitive_script", "dataset", "token", "embedding", "model_weight", "model", "ai_output", "commit", "issue_pr", "email_block", "calendar_event", "drive_file", "socket_runtime", "hardware_edge", "token_vazio"]},
+    "nature": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["symbolic", "hypothesis", "evidence", "validated", "sensitive", "operational", "deprecated", "gap", "blocked", "audit_required"]},
+    "origin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_type", "source_ref", "captured_at"],
+      "properties": {
+        "source_type": {"type": "string", "enum": ["chat", "github", "drive", "email", "calendar", "runtime", "sensor", "manual", "external"]},
+        "source_ref": {"type": "string", "minLength": 1},
+        "author": {"type": "string"},
+        "captured_at": {"type": "string", "format": "date-time"},
+        "hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{6,128}$"}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["evidence_id", "level", "source_ref"],
+        "properties": {
+          "evidence_id": {"type": "string", "minLength": 1},
+          "level": {"type": "string", "enum": ["none", "declared", "indexed", "documented", "tested", "reproduced"]},
+          "source_ref": {"type": "string", "minLength": 1},
+          "hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{6,128}$"}
+        }
+      }
+    },
+    "risk": {
+      "type": "object", "additionalProperties": false,
+      "required": ["level", "description"],
+      "properties": {
+        "level": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+        "description": {"type": "string", "minLength": 1},
+        "controls": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["target_id", "relation_type"],
+        "properties": {
+          "target_id": {"type": "string", "minLength": 1},
+          "relation_type": {"type": "string", "enum": ["supports", "depends_on", "contradicts", "derives_from", "supersedes", "mirrors", "requires_review"]},
+          "weight": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "next_action": {"type": "string", "minLength": 1},
+    "execution_gate": {"type": "string", "enum": ["allow", "sandbox_only", "blocked", "human_review"]},
+    "token_vazio_reason": {"type": "string"},
+    "use_policy": {"$ref": "semantic_token_unit.schema.json#/properties/use_policy"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [{
+    "if": {"properties": {"artifact_type": {"const": "token_vazio"}}},
+    "then": {"required": ["token_vazio_reason"], "properties": {"status": {"const": "gap"}, "execution_gate": {"enum": ["blocked", "human_review"]}}}
+  }]
+}

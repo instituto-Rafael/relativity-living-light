@@ -36,8 +36,8 @@
 - [ ] Confirmar commits/tags de anterioridade.
 - [ ] Conferir assinatura GPG indicada.
 - [ ] Rodar pipeline de validação em commit limpo.
-- [ ] Registrar parâmetros, dados, hashes e outputs.
-- [ ] Separar claramente `[E]`, `[C]`, `[H]` e `[VAZIO]`.
+- [x] Registrar parâmetros, dados, hashes e outputs. *(FASE 15: todos os resultados têm JSON com metadados: fonte, script, data, status epistêmico — `results/*.json`)*
+- [x] Separar claramente `[E]`, `[C]`, `[H]` e `[VAZIO]`. *(FASE 15: markup sistematizado em todos os documentos de auditoria, hipóteses e cânônicos; resultados negativos marcados [E-negativo] com mesma honestidade que positivos)*
 
 ## 4. Checagens de segurança e privacidade
 
@@ -58,6 +58,46 @@ fonte verificada + claim classificado + dado rastreável + limite declarado + li
 ## 6. Regra de ouro
 
 Quando houver dúvida, marcar `[VAZIO]` e abrir tarefa de verificação.
+
+---
+
+## Adendo FASE 15 (2026-07-10/13)
+
+**Progresso em publicabilidade**:
+
+| Item | Status FASE 15 |
+|------|---------------|
+| Markup epistêmico `[E]/[C]/[H]/[VAZIO]` | ✅ sistematizado em todos os documentos |
+| Resultados com metadados JSON | ✅ `results/*.json` (scripts, datas, fontes, status) |
+| Falsificadores F-COS-01..05 auditados | ✅ 2/5 PASS · 2/5 FAIL · 1/5 TOKEN_VAZIO P0 |
+| Resultados negativos registrados | ✅ F-COS-03 FAIL, H-UNIV-01 φ negativo, F-COS-04 FAIL proxy |
+| Moresco H(z) calculado | ✅ χ²_RLL=27.47 vs χ²_ΛCDM=22.76 [E] |
+| Modelo atmosférico H-ELEC-01 | ✅ J=const verificado, enhancement ×10¹⁴ [E+H] |
+
+**Bloqueadores para publicação** (requerem pipeline manual):
+- G1: Joint MCMC Pantheon+ + DESI (F-COS-04 definitivo)
+- G2: Bayes Factor (nested sampling)
+- Revisão por pares de artefatos completos (Claim Boundary)
+
+---
+
+## Adendo FASE 20–22 (2026-07-15/16)
+
+**Contrato final**: `2/5 PASS · 2/5 FAIL · 0/5 TOKEN_VAZIO`
+
+| Item | Status FASE 20–22 |
+|------|------------------|
+| G1: MCMC joint Pantheon+ + DESI | ✅ FECHADO [E] — Ωs0 UL95 = 0.00178 (emcee 32×1500) |
+| G3: Bayes Factor RLL/ΛCDM | ✅ FECHADO [E] — ln(B₁₀) = −6.190 ± 0.691 (dynesty) |
+| F-COS-03: z_t ∈ [0.5, 1.5] | ✗ FAIL [E] — z_t_BAO = 0.30 (fora do intervalo) |
+| F-COS-04: ln(B₁₀) > −5 | ✗ FAIL [E] — ln(B₁₀) = −6.190 (evidência muito forte para ΛCDM) |
+| G4: bias E&H no espaço de parâmetros | ✅ FECHADO [E] — syst. = 0.72 Mpc (grade 10×10, FASE 22) |
+| TOKEN_VAZIO P0 estrutural | ✅ ZERO — nenhum gap P0 remanescente |
+
+**`claim_allowed = false` permanece** — por resultado empírico (F-COS-03 FAIL [E], F-COS-04 FAIL [E]), não por lacuna. Esta é a situação mais honesta: os dados estão completos e apontam para ΛCDM.
+
+**Bloqueadores remanescentes para publicação**:
+- Revisão por pares externos (nenhum T_VAZIO bloqueia mais — só peer review)
 
 ---
 

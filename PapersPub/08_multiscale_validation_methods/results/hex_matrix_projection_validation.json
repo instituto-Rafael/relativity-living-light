@@ -1,0 +1,38 @@
+{
+  "checks": {
+    "basis_determinant": true,
+    "equilateral_cell": true,
+    "icosphere_euler": true,
+    "matrix_A_40": true,
+    "matrix_B_21": true,
+    "meridian_triangle": true,
+    "metric": true,
+    "poincare_half_turn": true,
+    "six_unit_neighbors": true,
+    "square_common_radius": true,
+    "square_swept_radius": true,
+    "tensor_840": true,
+    "thirty_degree_tangency": true,
+    "torus_radial_inner": true,
+    "torus_radial_outer": true
+  },
+  "checks_failed": 0,
+  "checks_passed": 15,
+  "checks_total": 15,
+  "claim_allowed": false,
+  "exact_geometry_state": "PASS",
+  "guards": [
+    "upper/lower meridian branches are semicircles, not parabolas",
+    "R-r and R+r are Euclidean radial bounds, not torus geodesic distances",
+    "30 degrees is an imposed tangent condition",
+    "Poincare map is for declared linear T^2 flow, not the Poincare conjecture",
+    "physical vortex, Venturi and cosmology remain outside validated scope"
+  ],
+  "physical_claims_state": "TOKEN_VAZIO",
+  "schema": "rll.appendix.hex_matrix_projection.v1",
+  "status": "PASS",
+  "runtime_evidence": {
+    "command": "python3 PapersPub/08_multiscale_validation_methods/scripts/validate_hex_matrix_projection.py",
+    "execution_scope": "local pre-commit validation"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "id": "EV-ONTOLOGY-FACTOR11-001",
+  "state": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "foundation": {
+    "typed_empty_class": "An empty class is tagged by logical type; distinct types may have equal cardinality zero without being the same typed object.",
+    "cardinality_zero": "Zero is the cardinality assigned to an empty finite class, not the class object itself.",
+    "unit_class": "A singleton has cardinality one; two tagged singleton occurrences have disjoint-union cardinality two.",
+    "word_11": "The word '11' preserves two ordered occurrences of symbol '1'; it is not identical to arithmetic 2 or decimal 11 as a typed object."
+  },
+  "exact_claims": [
+    {
+      "id": "F11-E-01",
+      "state": "PASS_EXACT",
+      "statement": "77/33 and 7/3 are the same rational value.",
+      "test": "FractionPresentation(77, 33).value == FractionPresentation(7, 3).value"
+    },
+    {
+      "id": "F11-E-02",
+      "state": "PASS_EXACT",
+      "statement": "The greatest common divisor of 77 and 33 is 11.",
+      "test": "FractionPresentation(77, 33).common_scale == 11"
+    },
+    {
+      "id": "F11-E-03",
+      "state": "PASS_EXACT",
+      "statement": "Reduction preserves rational value but discards the common-scale provenance unless it is recorded separately.",
+      "test": "FractionPresentation(77, 33).provenance_record() preserves reduced_pair and common_scale"
+    },
+    {
+      "id": "F11-E-04",
+      "state": "PASS_EXACT",
+      "statement": "The word '11' has length two and multiplicity two for symbol '1'.",
+      "test": "DiscreteWord.from_text('11').length == 2"
+    }
+  ],
+  "physical_bridge": {
+    "state": "TOKEN_VAZIO",
+    "question": "Does presentation scale 11 induce a dimensionally defined, independently measurable RLL observable distinct from the reduced baseline?",
+    "known": [
+      "The current RLL background implementation is parameterized by Omega_s0, z_t and w_t.",
+      "The factor 11 is recoverable as provenance of 77/33.",
+      "Rational-value observables are invariant under 77/33 -> 7/3."
+    ],
+    "unknowns": [
+      "No typed morphism from the word or presentation scale 11 to an RLL parameter has been derived.",
+      "No physical unit has been assigned to the proposed bridge.",
+      "No non-zero predicted observable delta with uncertainty has been registered.",
+      "No independent dataset or implementation has tested such a delta."
+    ],
+    "prohibited_claims": [
+      "DESI measured the factor 11.",
+      "Omega_s0 equals zero because fractions reduce.",
+      "The factor 11 is physically irreducible without an observable.",
+      "Whitehead and Russell imply the RLL cosmology."
+    ],
+    "next_gate": "Define O_11 with a typed domain, codomain, units, null baseline, uncertainty model, falsifier, dataset, independent implementation and artifact hash."
+  },
+  "exit_conditions": [
+    {
+      "evidence_required": "Typed morphism from discrete representation to RLL parameter space",
+      "acceptance_criterion": "Domain, codomain, totality/partiality and invariance assumptions are explicit and machine-readable."
+    },
+    {
+      "evidence_required": "Dimensional analysis",
+      "acceptance_criterion": "Every mapped quantity has units or is explicitly dimensionless; equations pass a dimensional consistency review."
+    },
+    {
+      "evidence_required": "Predicted observable difference",
+      "acceptance_criterion": "A preregistered function Delta O_11(z) differs from the null baseline on a stated domain."
+    },
+    {
+      "evidence_required": "Falsifier",
+      "acceptance_criterion": "A quantitative outcome that rejects or bounds the factor-11 coupling is declared before fitting."
+    },
+    {
+      "evidence_required": "Real data and covariance",
+      "acceptance_criterion": "Dataset provenance, covariance, masks and likelihood are committed with checksums."
+    },
+    {
+      "evidence_required": "Independent reproduction",
+      "acceptance_criterion": "A second implementation reproduces the prediction and inference within declared tolerance."
+    },
+    {
+      "evidence_required": "Auditable artifact",
+      "acceptance_criterion": "The run emits parameters, residuals, diagnostics, environment metadata and SHA-256 checksums."
+    }
+  ]
+}

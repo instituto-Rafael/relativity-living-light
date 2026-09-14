@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/docs/contracts/conversation_chunk.schema.json",
+  "title": "Conversation Chunk",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "chunk_id", "conversation_id", "content", "source", "created_at"],
+  "properties": {
+    "schema": {"const": "rafaelia.conversation_chunk.v1"},
+    "chunk_id": {"type": "string", "minLength": 1},
+    "conversation_id": {"type": "string", "minLength": 1},
+    "content": {"type": "string", "minLength": 1},
+    "source": {"type": "string", "enum": ["user", "assistant", "system", "tool"]},
+    "metadata": {"type": "object"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

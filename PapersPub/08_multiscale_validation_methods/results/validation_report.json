@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "paper": "from_observed_void_to_recurrence_7d_42_hyperforms",
+  "claim_allowed": false,
+  "validation_scope": "exact finite arithmetic and symbolic invariants only",
+  "runtime": {
+    "python": "3.13.5",
+    "implementation": "CPython",
+    "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+    "unicode_version": "15.1.0"
+  },
+  "results": {
+    "sequences": {
+      "0001123": {
+        "length": 7,
+        "multiplicity_0_1_2_3": [3, 2, 1, 1],
+        "distinct_permutations": 420,
+        "entropy_bits_per_symbol": 1.8423709931771084
+      },
+      "01123": {
+        "length": 5,
+        "multiplicity_0_1_2_3": [1, 2, 1, 1],
+        "distinct_permutations": 60,
+        "entropy_bits_per_symbol": 1.9219280948873623
+      },
+      "0123": {
+        "length": 4,
+        "multiplicity_0_1_2_3": [1, 1, 1, 1],
+        "distinct_permutations": 24,
+        "entropy_bits_per_symbol": 2.0
+      }
+    },
+    "matrices_and_tensor": {
+      "A_states": 40,
+      "B_states": 21,
+      "pairs_A": 780,
+      "pairs_B": 210,
+      "cross_A_B": 840,
+      "pairs_of_pairs": 163800,
+      "A_adjacent_2x2": 28,
+      "B_adjacent_2x2": 12,
+      "positional_permutations_per_2x2": 24,
+      "A_adjacent_positional_arrangements": 672,
+      "B_adjacent_positional_arrangements": 288,
+      "A_general_positional_arrangements": 6720,
+      "B_general_positional_arrangements": 1512,
+      "tensor_elements": 840
+    },
+    "hyperforms_count": 42,
+    "base7": {
+      "70_times_7": 490,
+      "half_axis_70": 35,
+      "half_axis_70_base7": "50",
+      "half_product_490": 245,
+      "half_product_490_base7": "500"
+    },
+    "bitraf64": {
+      "unicode_normalization": "NFC",
+      "codepoint_length": 64,
+      "alphabet_order": ["Σ", "Ω", "Δ", "Φ", "B", "I", "T", "R", "A", "F"],
+      "frequency_vector": [6, 7, 9, 9, 5, 5, 4, 7, 4, 8],
+      "alphabet_exact": true,
+      "entropy_bits_per_symbol": 3.26420820487549,
+      "uniform_10_symbol_max_entropy": 3.321928094887362
+    },
+    "geometry": {
+      "sqrt3_over_2": 0.8660254037844386,
+      "sqrt_3_over_2": 1.224744871391589,
+      "first_is_contractive": true,
+      "second_is_expansive": true
+    }
+  },
+  "summary": {
+    "checks_total": 44,
+    "checks_passed": 44,
+    "checks_failed": 0,
+    "exact_invariants_status": "PASS",
+    "poincare_recurrence": "TOKEN_VAZIO: invariant finite measure and measure preservation not demonstrated",
+    "causal_component": "TOKEN_VAZIO: no structural causal model or intervention",
+    "physical_cosmos_claim": "PROHIBITED_BY_SCOPE",
+    "magnetic_molecular_claim": "TOKEN_VAZIO: no molecule, units, dataset or experiment",
+    "bitraf_cryptographic_security": "TOKEN_VAZIO: symbolic seal is not a security proof"
+  }
+}

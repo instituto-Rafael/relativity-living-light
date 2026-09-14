@@ -1,0 +1,165 @@
+{
+  "schema": "rll.strong_gravity.magnetorotational_jet_bridge.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "status": "implemented_bounded_bridge",
+  "claim_allowed": false,
+  "session_scope": {
+    "date": "2026-07-20",
+    "source_windows": [
+      "current session: rotating N55 parable and black-hole entry",
+      "previous: one and ten cubic metre similar-body scaling",
+      "previous: electroaerodynamic lifter and field deflection",
+      "previous: relativistic compression and radiation",
+      "previous: spiral plasma thermal bridge",
+      "previous: toroidal light-plasma-carbon regimes",
+      "previous: environmental and geophysical boundary"
+    ],
+    "rule": "Correlate mechanisms without equating distinct scales."
+  },
+  "epistemic_classes": {
+    "E": "established equation or exact scaling used as a bounded diagnostic",
+    "C": "convention adopted by this bridge",
+    "H": "testable RLL hypothesis",
+    "P": "parable preserving intuition without physical promotion"
+  },
+  "equations": [
+    {"id": "E-MRJ-01", "class": "E", "expression": "tau = mu x B", "meaning": "magnetic torque on a dipole"},
+    {"id": "E-MRJ-02", "class": "E", "expression": "G_rot = |mu B|/(I omega_s Omega_F)", "meaning": "rotational response diagnostic"},
+    {"id": "E-MRJ-03", "class": "E", "expression": "f_EM = rho_q E + J x B", "meaning": "electromagnetic force density"},
+    {"id": "E-MRJ-04", "class": "E", "expression": "S = E x B / mu0", "meaning": "Poynting flux"},
+    {"id": "E-MRJ-05", "class": "E", "expression": "p_B = B^2/(2 mu0)", "meaning": "magnetic pressure"},
+    {"id": "E-MRJ-06", "class": "C", "expression": "A_B = p_B/(rho v_r^2 + p_th)", "meaning": "MAD-candidate scalar diagnostic"},
+    {"id": "E-MRJ-07", "class": "E", "expression": "sigma = B^2/(mu0 rho h c^2)", "meaning": "relativistic magnetization"},
+    {"id": "E-MRJ-08", "class": "E", "expression": "Omega_H = a_* c^3/[2GM(1+sqrt(1-a_*^2))]", "meaning": "Kerr horizon angular frequency"},
+    {"id": "E-MRJ-09", "class": "E", "expression": "r_LC = c/Omega_F", "meaning": "light-cylinder radius"},
+    {"id": "E-MRJ-10", "class": "C", "expression": "P_BZ,proxy = kappa Phi_B^2 Omega_H^2/(mu0 c)", "meaning": "SI dimensional BZ scaling proxy"},
+    {"id": "E-MRJ-11", "class": "E", "expression": "mu ~ V; I ~ V^(5/3); response ~ V^(-2/3)", "meaning": "similar-body scaling"},
+    {"id": "H-MRJ-01", "class": "H", "expression": "field asymmetry + rotation + plasma -> deflection/arrest/ejection", "meaning": "multiscale RLL invariant requiring tests"},
+    {"id": "P-MRJ-01", "class": "P", "expression": "N55 cosmico", "meaning": "rotating coherent dipole image; not literal black-hole material"}
+  ],
+  "regime_conventions": {
+    "rotational_lock_parameter": {
+      "less_than_0_1": "angular_inertia_dominated",
+      "0_1_to_10": "phase_lock_transition",
+      "greater_than_10": "field_torque_dominated",
+      "boundary": "thresholds are conventions, not universal phase transitions"
+    },
+    "arrest_parameter": {
+      "less_than_0_1": "magnetically_subdominant",
+      "0_1_to_1": "magnetic_transition",
+      "greater_or_equal_1": "mad_candidate",
+      "boundary": "A_B >= 1 is not GRMHD or observational confirmation of MAD"
+    },
+    "magnetization_sigma": {
+      "less_than_0_1": "matter_energy_dominated",
+      "0_1_to_1": "mixed_conversion",
+      "greater_or_equal_1": "poynting_dominated_candidate",
+      "boundary": "sigma >= 1 is not proof of terminal Lorentz factor"
+    }
+  },
+  "modern_cosmology_and_astrophysics_sources": [
+    {
+      "id": "SRC-BZ-1977",
+      "title": "Electromagnetic extraction of energy from Kerr black holes",
+      "doi": "10.1093/mnras/179.3.433",
+      "supports": ["rotation-plus-magnetic-flux jet-power scaling"],
+      "does_not_support": ["RLL cosmological background modification"]
+    },
+    {
+      "id": "SRC-MAD-2003",
+      "title": "Magnetically Arrested Disk: an Energetically Efficient Accretion Flow",
+      "doi": "10.1093/pasj/55.6.L69",
+      "supports": ["accumulated poloidal flux can disrupt axisymmetric accretion"],
+      "does_not_support": ["unbounded magnetic-field growth"]
+    },
+    {
+      "id": "SRC-MAD-JET-2011",
+      "title": "Efficient generation of jets from magnetically arrested accretion on a rapidly spinning black hole",
+      "doi": "10.1111/j.1745-3933.2011.01147.x",
+      "supports": ["spin and saturated magnetic flux control jet efficiency"],
+      "does_not_support": ["every magnetized accretion flow is MAD"]
+    },
+    {
+      "id": "SRC-EHT-M87-VII-2021",
+      "title": "First M87 Event Horizon Telescope Results. VII. Polarization of the Ring",
+      "doi": "10.3847/2041-8213/abe71d",
+      "supports": ["polarization constrains horizon-scale magnetic structure"],
+      "does_not_support": ["direct imaging of material magnetic field lines"]
+    },
+    {
+      "id": "SRC-EHT-M87-VIII-2021",
+      "title": "First M87 Event Horizon Telescope Results. VIII. Magnetic Field Structure near the Event Horizon",
+      "doi": "10.3847/2041-8213/abe4de",
+      "supports": ["GRMHD/MAD models can be confronted with polarized observations"],
+      "does_not_support": ["unique model identification without degeneracy"]
+    }
+  ],
+  "required_inputs_si": [
+    "dipole volume, density, magnetization, radius and inertia coefficient",
+    "dipole spin and field angular frequencies",
+    "central mass and dimensionless Kerr spin",
+    "magnetic field, flux, density, enthalpy, radial speed and thermal pressure",
+    "charge density, electric field and current density vectors"
+  ],
+  "outputs": [
+    "rotational lock parameter and regime",
+    "electromagnetic force-density vector",
+    "Poynting-flux vector",
+    "gravitational radius and horizon angular frequency",
+    "light-cylinder radius",
+    "magnetic and ram pressures",
+    "MAD-candidate arrest parameter",
+    "magnetization sigma and conversion regime",
+    "Blandford-Znajek power scaling proxy"
+  ],
+  "observational_routes": [
+    {
+      "route": "EHT/VLBI polarimetry",
+      "observables": ["linear/circular polarization", "EVPA", "Faraday rotation"],
+      "state": "SOURCE_SPECIFIC_DATA_TOKEN_VAZIO"
+    },
+    {
+      "route": "jet energetics",
+      "observables": ["jet power", "opening angle", "collimation", "Lorentz factor"],
+      "state": "SOURCE_SPECIFIC_DATA_TOKEN_VAZIO"
+    },
+    {
+      "route": "high-energy timing",
+      "observables": ["X/gamma variability", "QPOs", "flare lags", "spectral transitions"],
+      "state": "SOURCE_SPECIFIC_DATA_TOKEN_VAZIO"
+    },
+    {
+      "route": "gravitational and disk asymmetry",
+      "observables": ["non-axisymmetric modes", "disk self-gravity", "GW residuals"],
+      "state": "MODEL_AND_DATA_TOKEN_VAZIO"
+    },
+    {
+      "route": "cosmological background",
+      "observables": ["H(z)", "BAO", "CMB", "growth"],
+      "state": "NOT_CONNECTED_BY_THIS_BRIDGE"
+    }
+  ],
+  "boundaries": {
+    "electroaerodynamic_lifter_equals_black_hole_jet": false,
+    "n55_survives_near_horizon": false,
+    "larger_magnet_has_automatically_larger_surface_field": false,
+    "mad_candidate_equals_mad_confirmation": false,
+    "sigma_gt_1_equals_observed_relativistic_jet": false,
+    "poynting_flux_equals_particle_terminal_energy": false,
+    "local_strong_gravity_effect_modifies_friedmann_background": false,
+    "new_force_discovered": false,
+    "claim_allowed": false
+  },
+  "promotion_requires": [
+    "source mass and spin posterior",
+    "accretion rate and mass-loading model",
+    "field topology and magnetic-flux estimate",
+    "GRMHD or force-free baseline with resolution study",
+    "non-ideal or kinetic model where E dot B is relevant",
+    "radiative-transfer forward model",
+    "polarimetric and spectral likelihood with covariance",
+    "standard-model competitors and ablations",
+    "uncertainty propagation",
+    "independent reproduction"
+  ]
+}

@@ -1,0 +1,7 @@
+# Frozen CI environment for frontier research structural and shadow validation.
+# Update only through an explicit dependency-review commit with a green receipt.
+numpy==1.26.4
+pandas==2.2.3
+PyYAML==6.0.2
+pytest==8.3.5
+scipy==1.13.1

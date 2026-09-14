@@ -1,199 +1,421 @@
-# Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
 name: RLL Real Data Orchestrator
-on:
+
+"on":
   workflow_dispatch:
     inputs:
       pipeline_scope:
+        description: Domain to process
         type: choice
         required: true
         default: all
-        options:
-        - rll
-        - iml
-        - formulas
-        - book
-        - all
+        options: [rll, iml, formulas, book, all]
       dataset_group:
+        description: Real-data group to process
         type: choice
         required: true
         default: all
-        options:
-        - geomagnetic
-        - heliophysics
-        - cosmology
-        - all
+        options: [geomagnetic, heliophysics, cosmology, all]
       mode:
+        description: Processing mode
         type: choice
         required: true
-        default: metadata_only
-        options:
-        - metadata_only
-        - fetch
-        - compute
-        - plots
-        - full
+        default: full
+        options: [metadata_only, fetch, compute, plots, full]
       real_data_source:
+        description: Source for real inputs
         type: choice
         required: true
         default: repo
-        options:
-        - auto
-        - materialized
-        - repo
-      book_scope:
-        type: choice
-        required: true
-        default: all
-        options:
-        - methodology
-        - real_data
-        - scripts
-        - observational_validation
-        - desi_boss
-        - amas_mcrp
-        - all
+        options: [materialized, repo]
       retention_days:
+        description: Artifact retention days
         type: choice
         required: true
-        default: '14'
-        options:
-        - '7'
-        - '14'
-        - '30'
-        - '90'
-      fetch_igrf14:
-        type: boolean
+        default: "14"
+        options: ["7", "14", "30", "90"]
+      noaa_trinity_phase:
+        description: NOAA Trinity633 phase for manual runs
+        type: choice
         required: true
-        default: false
-      fetch_wmm2025:
-        type: boolean
-        required: true
-        default: false
-      fetch_omni:
-        type: boolean
-        required: true
-        default: false
-      fetch_nmdb:
-        type: boolean
-        required: true
-        default: false
-      fetch_desi:
-        type: boolean
-        required: true
-        default: false
-      fetch_pantheon:
-        type: boolean
-        required: true
-        default: false
-      fetch_planck:
-        type: boolean
-        required: true
-        default: false
-      fetch_spenvis_reference:
-        type: boolean
-        required: true
-        default: false
-      run_iml:
-        type: boolean
-        required: true
-        default: true
-      run_formulas:
-        type: boolean
-        required: true
-        default: true
-      run_plots:
-        type: boolean
-        required: true
-        default: false
+        default: auto
+        options: [auto, LUX_6H, SPIRITUM_3H, VERBUM_3H]
+  schedule:
+    - cron: "17 0,12 * * *"
+    - cron: "17 6,18 * * *"
+    - cron: "17 9,21 * * *"
+
 permissions:
   contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
+
+env:
+  RUN_DIR: artifacts/rll-real-run
+  CLAIM_BOUNDARY: "Provenance and reproducibility only; no automatic scientific endorsement or superiority claim."
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+
 jobs:
   orchestrate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - run: 'python -m pip install --upgrade pip
-
-        pip install numpy pandas scipy matplotlib requests astropy pyyaml
-
-        '
-    - run: mkdir -p artifacts/rll-real-run/{raw,processed,plots,tables,book,iml,formulas,diagnostics,reports}
-    - name: Refresh and validate repository inventory
-      run: 'set -euo pipefail
-
-        python3 tools/docs_inventory.py | tee artifacts/rll-real-run/docs_inventory_refresh.log
-
-        python3 tools/docs_inventory.py --check | tee artifacts/rll-real-run/docs_inventory_check.log
-
-        '
-    - name: Fetch declared sources only when explicitly enabled
-      run: "python3 scripts/fetch_real_sources.py \\\n  --dataset-group \"${{ inputs.dataset_group }}\" \\\n  --mode \"${{ inputs.mode }}\" \\\n  --output-dir artifacts/rll-real-run \\\n  ${{ inputs.fetch_igrf14 && '--fetch-igrf14' || '--no-fetch-igrf14' }} \\\n  ${{ inputs.fetch_wmm2025 && '--fetch-wmm2025' || '--no-fetch-wmm2025' }} \\\n  ${{ inputs.fetch_omni && '--fetch-omni' || '--no-fetch-omni' }} \\\n  ${{ inputs.fetch_nmdb && '--fetch-nmdb' || '--no-fetch-nmdb' }} \\\n  ${{ inputs.fetch_desi && '--fetch-desi' || '--no-fetch-desi' }} \\\n  ${{ inputs.fetch_pantheon && '--fetch-pantheon' || '--no-fetch-pantheon' }} \\\n  ${{ inputs.fetch_planck && '--fetch-planck' || '--no-fetch-planck' }} \\\n  ${{ inputs.fetch_spenvis_reference && '--fetch-spenvis-reference' || '--no-fetch-spenvis-reference' }}\n"
-    - if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' }}
-      run: python3 scripts/compute_rll_real_pipeline.py --output-dir artifacts/rll-real-run --data-source "${{ inputs.real_data_source }}"
-    - name: Run gap scan and RLL diagnostic artifacts
-      if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' }}
-      run: "set -euo pipefail\nmkdir -p artifacts/rll-real-run/diagnostics artifacts/rll-real-run/tables artifacts/rll-real-run/reports\n\npython3 tools/scan_missing_placeholders.py \\\n  --out-json artifacts/rll-real-run/diagnostics/missing_placeholder_stub_scan.json \\\n  --out-csv artifacts/rll-real-run/tables/missing_placeholder_stub_scan.csv \\\n  --out-md artifacts/rll-real-run/reports/MISSING_PLACEHOLDER_STUB_SCAN.md \\\n  | tee artifacts/rll-real-run/reports/missing_placeholder_stub_scan.log\necho \"[OK] Missing placeholder/stub scan generated.\" | tee artifacts/rll-real-run/reports/missing_placeholder_stub_scan.status\n\nif python3 tools/validate_to_add_migration.py > artifacts/rll-real-run/reports/to_add_migration_validation.log 2>&1; then\n  cp data/results/to_add_migration_validation.json artifacts/rll-real-run/diagnostics/to_add_migration_validation.json\n  cp docs/TO_ADD_MIGRATION_STATUS.md artifacts/rll-real-run/reports/TO_ADD_MIGRATION_STATUS.md\n  echo \"[OK] to_Add migration\
-        \ validates.\" | tee artifacts/rll-real-run/reports/to_add_migration_validation.status\nelse\n  cat artifacts/rll-real-run/reports/to_add_migration_validation.log\n  echo \"[BLOQUEADO] to_Add migration validation failed; claim remains blocked.\" | tee artifacts/rll-real-run/reports/to_add_migration_validation.status\nfi\n\nif python3 scripts/run_h0_grid_expansion.py \\\n  --out-json artifacts/rll-real-run/diagnostics/h0_grid_expansion_summary.json \\\n  --out-csv artifacts/rll-real-run/tables/h0_grid_expansion_scan.csv \\\n  > artifacts/rll-real-run/reports/h0_grid_expansion.log 2>&1; then\n  echo \"[OK] H0 grid expansion generated.\" | tee artifacts/rll-real-run/reports/h0_grid_expansion.status\nelse\n  cat artifacts/rll-real-run/reports/h0_grid_expansion.log\n  echo \"[BLOQUEADO] H0 grid expansion failed; claim remains blocked.\" | tee artifacts/rll-real-run/reports/h0_grid_expansion.status\nfi\n\nif python3 scripts/map_rll_to_w0wa_eff.py \\\n  --out-json artifacts/rll-real-run/diagnostics/rll_w0wa_eff_map.json\
-        \ \\\n  --out-csv artifacts/rll-real-run/tables/rll_w0wa_eff_map.csv \\\n  > artifacts/rll-real-run/reports/rll_w0wa_eff_map.log 2>&1; then\n  echo \"[OK] RLL to w0wa mapper generated.\" | tee artifacts/rll-real-run/reports/rll_w0wa_eff_map.status\nelse\n  cat artifacts/rll-real-run/reports/rll_w0wa_eff_map.log\n  echo \"[BLOQUEADO] RLL to w0wa mapper failed; claim remains blocked.\" | tee artifacts/rll-real-run/reports/rll_w0wa_eff_map.status\nfi\n"
-    - if: ${{ inputs.run_plots && (inputs.mode == 'plots' || inputs.mode == 'full' || inputs.mode == 'compute') }}
-      run: python3 scripts/generate_rll_plots.py
-    - if: ${{ inputs.pipeline_scope == 'book' || inputs.pipeline_scope == 'all' || inputs.pipeline_scope == 'rll' }}
-      run: python3 scripts/rll_pipeline.py --book-scope "${{ inputs.book_scope }}" --dataset-group "${{ inputs.dataset_group }}" --mode "${{ inputs.mode == 'full' && 'compute' || inputs.mode }}" --output-dir artifacts/rll-real-run
-    - if: ${{ inputs.run_iml && (inputs.pipeline_scope == 'iml' || inputs.pipeline_scope == 'all') }}
-      run: 'printf ''{"dados":[1,2,3,4],"coerencia_in":0.7,"coerencia0":0.5,"entropia0":0.5,"estado":"ACTIVE"}\n'' > artifacts/rll-real-run/iml/input.json
-
-        python3 tools/iml/iml_pipeline.py --input artifacts/rll-real-run/iml/input.json --output artifacts/rll-real-run/iml/output.json
-
-        '
-    - if: ${{ inputs.run_formulas && (inputs.pipeline_scope == 'formulas' || inputs.pipeline_scope == 'all') }}
-      run: python3 tools/formula_artifact_builder.py --outdir artifacts/rll-real-run/formulas
-    - run: 'date -u +"%Y-%m-%dT%H:%M:%SZ" > artifacts/rll-real-run/RUN_UTC.txt
-
-        git rev-parse HEAD > artifacts/rll-real-run/COMMIT_SHA.txt
-
-        printf ''%s\n'' "This orchestrator is artifact-only. Commit artifacts through a reviewed PR, not an automatic push." > artifacts/rll-real-run/COMMIT_POLICY.txt
-
-        test -f artifacts/rll-real-run/MANIFEST.json || echo ''{}'' > artifacts/rll-real-run/MANIFEST.json
-
-        test -f artifacts/rll-real-run/COMPUTE_REPORT.md || echo ''# COMPUTE_REPORT'' > artifacts/rll-real-run/COMPUTE_REPORT.md
-
-        test -f artifacts/rll-real-run/CLAIM_REFERENCE_AUDIT.md || echo ''# CLAIM_REFERENCE_AUDIT'' > artifacts/rll-real-run/CLAIM_REFERENCE_AUDIT.md
-
-        find artifacts/rll-real-run -type f ! -path ''*/CHECKSUMS.sha256'' -print0 | sort -z | xargs -0 sha256sum > artifacts/rll-real-run/CHECKSUMS.sha256
-
-        '
-    - uses: actions/upload-artifact@v4
-      with:
-        name: rll-real-run-${{ github.run_id }}
-        path: artifacts/rll-real-run/
-        retention-days: ${{ fromJSON(inputs.retention_days) }}
-    - name: Finalize canonical real-data policy checksums
-      if: always()
-      run: 'set -euo pipefail
-
-        ARTIFACT_DIR="artifacts/workflow-policy/rll-real-data-orchestrator/${{ github.job }}"
-
-        mkdir -p "$ARTIFACT_DIR"
-
-        . tools/ci/real_data_workflow_policy.sh
-
-        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
-
-        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
-
-        rll_real_data_write_checksums "$ARTIFACT_DIR"
-
-        '
     env:
-      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
-      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
+      PIPELINE_SCOPE: ${{ github.event_name == 'schedule' && 'all' || inputs.pipeline_scope }}
+      DATASET_GROUP: ${{ github.event_name == 'schedule' && 'all' || inputs.dataset_group }}
+      RLL_MODE_REQUESTED: ${{ github.event_name == 'schedule' && 'full' || inputs.mode }}
+      REAL_DATA_SOURCE: ${{ github.event_name == 'schedule' && 'repo' || inputs.real_data_source }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+
+      - name: Install runtime dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy matplotlib requests astropy pyyaml
+
+      - name: Prepare fixed artifact layout
+        run: |
+          set -euo pipefail
+          rm -rf "$RUN_DIR"
+          mkdir -p "$RUN_DIR"/{raw,processed,tables,plots,reports,diagnostics,book}
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > "$RUN_DIR/RUN_UTC.txt"
+          git rev-parse HEAD > "$RUN_DIR/COMMIT_SHA.txt"
+          printf '%s\n' "$CLAIM_BOUNDARY" > "$RUN_DIR/CLAIM_BOUNDARY.md"
+          printf 'pipeline_scope=%s\ndataset_group=%s\nmode=%s\nreal_data_source=%s\n' \
+            "$PIPELINE_SCOPE" "$DATASET_GROUP" "$RLL_MODE_REQUESTED" "$REAL_DATA_SOURCE" \
+            > "$RUN_DIR/REQUESTED_ROUTE.txt"
+
+      - name: Block placeholder inputs and record real-input hashes
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import re
+          from pathlib import Path
+
+          candidates = [
+              Path("data/real/Hz_data_real.csv"),
+              Path("data/real/BAO_data_real.csv"),
+              Path("data/real/CMB_shift_real.json"),
+          ]
+          forbidden = re.compile(r"mock|synthetic|fixture|demo|example|placeholder", re.I)
+          records = []
+          for path in candidates:
+              if not path.is_file() or path.stat().st_size == 0:
+                  raise SystemExit(f"required real input missing or empty: {path}")
+              text = path.read_text(encoding="utf-8", errors="replace")
+              if forbidden.search(str(path)) or forbidden.search(text):
+                  raise SystemExit(f"placeholder-like content rejected: {path}")
+              records.append({
+                  "path": str(path),
+                  "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                  "bytes": path.stat().st_size,
+              })
+          output = Path("artifacts/rll-real-run/raw/REAL_INPUTS.json")
+          output.write_text(json.dumps({
+              "schema": "rll.real_inputs.v1",
+              "source": "committed repository real-data inputs",
+              "records": records,
+              "claim_boundary": "Input provenance only; no scientific endorsement.",
+          }, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Refresh and validate repository inventory
+        run: |
+          set -euo pipefail
+          python tools/docs_inventory.py | tee "$RUN_DIR/diagnostics/docs_inventory_refresh.log"
+          python tools/docs_inventory.py --check | tee "$RUN_DIR/diagnostics/docs_inventory_check.log"
+
+      - name: Record complete real-data and YAML custody
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import subprocess
+          from pathlib import Path
+
+          root = Path(".")
+          output = Path("artifacts/rll-real-run/raw/REPOSITORY_CUSTODY.json")
+          tracked = subprocess.run(
+              ["git", "ls-files", "-z", "--", "data/real", "*.yml", "*.yaml"],
+              check=True,
+              capture_output=True,
+          ).stdout.split(b"\0")
+          paths = sorted({Path(item.decode("utf-8")) for item in tracked if item})
+          records = []
+          for path in paths:
+              absolute = root / path
+              if not absolute.is_file():
+                  continue
+              records.append({
+                  "path": path.as_posix(),
+                  "bytes": absolute.stat().st_size,
+                  "sha256": hashlib.sha256(absolute.read_bytes()).hexdigest(),
+                  "category": "real_data" if path.as_posix().startswith("data/real/") else "yaml",
+              })
+          real_data = [item for item in records if item["category"] == "real_data"]
+          yaml_files = [item for item in records if item["category"] == "yaml"]
+          payload = {
+              "schema": "rll.repository_custody.v1",
+              "commit_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+              "real_data_files": len(real_data),
+              "yaml_files": len(yaml_files),
+              "records": records,
+              "claim_boundary": "Custody/provenance metadata only; file presence and hashes do not establish scientific validity.",
+          }
+          output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"Recorded custody for {len(real_data)} real-data files and {len(yaml_files)} YAML files")
+          PY
+
+      - name: Hotfix gate - rll
+        if: ${{ inputs.pipeline_scope == 'rll' || inputs.pipeline_scope == 'all' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          test -s data/real/Hz_data_real.csv
+          test -s data/real/BAO_data_real.csv
+          printf '%s\n' "rll hotfix: real H(z) and BAO inputs present and non-empty" > "$RUN_DIR/diagnostics/hotfix_rll.status"
+
+      - name: Hotfix gate - iml
+        if: ${{ inputs.pipeline_scope == 'iml' || inputs.pipeline_scope == 'all' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          test -s data/real/Hz_data_real.csv
+          printf '%s\n' "iml hotfix: real H(z) input present and non-empty" > "$RUN_DIR/diagnostics/hotfix_iml.status"
+
+      - name: Hotfix gate - formulas
+        if: ${{ inputs.pipeline_scope == 'formulas' || inputs.pipeline_scope == 'all' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          test -s data/real/Hz_data_real.csv
+          python tools/formula_artifact_builder.py --outdir "$RUN_DIR/processed/formulas"
+          printf '%s\n' "formulas hotfix: formula artifact generation passed" > "$RUN_DIR/diagnostics/hotfix_formulas.status"
+
+      - name: Hotfix gate - book
+        if: ${{ inputs.pipeline_scope == 'book' || inputs.pipeline_scope == 'all' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          test -d docs
+          test -s "$RUN_DIR/CLAIM_BOUNDARY.md"
+          printf '%s\n' "book hotfix: documentation and claim boundary present" > "$RUN_DIR/diagnostics/hotfix_book.status"
+
+      - name: Fetch declared real sources
+        if: ${{ inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          python scripts/fetch_real_sources.py \
+            --dataset-group "$DATASET_GROUP" \
+            --mode "$RLL_MODE_REQUESTED" \
+            --output-dir "$RUN_DIR" \
+            --no-fetch-igrf14 --no-fetch-wmm2025 --no-fetch-omni --no-fetch-nmdb \
+            --no-fetch-desi --no-fetch-pantheon --no-fetch-planck --no-fetch-spenvis-reference
+
+      - name: Validate NOAA Trinity633 zero-trust/privacy contract
+        if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUN_DIR/noaa-trinity633"
+          python scripts/validate_rll_noaa_trinity_governance.py \
+            --output "$RUN_DIR/noaa-trinity633/GOVERNANCE_RECEIPT.json"
+
+      - name: Run NOAA Trinity633 observation/provenance action
+        id: noaa-trinity633
+        if: ${{ (inputs.dataset_group == 'heliophysics' || inputs.dataset_group == 'all' || github.event_name == 'schedule') && (inputs.mode == 'fetch' || inputs.mode == 'full' || github.event_name == 'schedule') }}
+        env:
+          NOAA_TRINITY_PHASE: ${{ inputs.noaa_trinity_phase || 'auto' }}
+          NOAA_TRINITY_SCHEDULE: ${{ github.event.schedule || '' }}
+        run: |
+          set -euo pipefail
+          python scripts/rll_noaa_trinity_cycle.py \
+            --governance data/governance/rll_noaa_trinity633_data_governance.v1.json \
+            --phase "$NOAA_TRINITY_PHASE" \
+            --schedule-expression "$NOAA_TRINITY_SCHEDULE" \
+            --output-dir "$RUN_DIR/noaa-trinity633" \
+            --execute-network
+
+      - name: Compute RLL real pipeline
+        if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          python scripts/compute_rll_real_pipeline.py \
+            --output-dir "$RUN_DIR" \
+            --data-source "$REAL_DATA_SOURCE"
+
+      - name: real_3_compute - independent blocks and grouped consolidation
+        if: ${{ inputs.mode == 'compute' || inputs.mode == 'full' || github.event_name == 'schedule' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import csv
+          import hashlib
+          import json
+          import statistics
+          from pathlib import Path
+
+          root = Path("artifacts/rll-real-run")
+          diagnostics = root / "diagnostics"
+          reports = root / "reports"
+          diagnostics.mkdir(parents=True, exist_ok=True)
+          reports.mkdir(parents=True, exist_ok=True)
+
+          def mean_csv_field(rows, field, source, block):
+              if not rows:
+                  raise SystemExit(f"real_3 {block} block: real input has no rows: {source}")
+              values = []
+              for index, row in enumerate(rows, start=2):
+                  try:
+                      values.append(float(row[field]))
+                  except (KeyError, TypeError, ValueError) as exc:
+                      raise SystemExit(f"invalid numeric field {field!r} in {source}, real_3 {block} block, row {index}: {exc}") from exc
+              if not values:
+                  raise SystemExit(f"real_3 {block} block: no valid numeric values in {source}")
+              return statistics.fmean(values)
+
+          def write_block(name, payload):
+              payload["block"] = name
+              payload["status"] = "pass"
+              (diagnostics / f"real_3_{name}.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+              return payload
+
+          hz = Path("data/real/Hz_data_real.csv")
+          with hz.open(encoding="utf-8", newline="") as handle:
+              hz_rows = list(csv.DictReader(handle))
+          block_hz = write_block("hz", {
+              "group": "cosmology", "rows": len(hz_rows),
+              "mean_H_obs": mean_csv_field(hz_rows, "H_obs", hz, "hz"),
+              "sha256": hashlib.sha256(hz.read_bytes()).hexdigest(),
+          })
+          bao = Path("data/real/BAO_data_real.csv")
+          with bao.open(encoding="utf-8", newline="") as handle:
+              bao_rows = list(csv.DictReader(handle))
+          block_bao = write_block("bao", {
+              "group": "cosmology", "rows": len(bao_rows),
+              "mean_DV_over_rs": mean_csv_field(bao_rows, "DV_over_rs", bao, "bao"),
+              "sha256": hashlib.sha256(bao.read_bytes()).hexdigest(),
+          })
+          cmb = Path("data/real/CMB_shift_real.json")
+          cmb_payload = json.loads(cmb.read_text(encoding="utf-8"))
+          block_cmb = write_block("cmb", {
+              "group": "cosmology",
+              "keys": sorted(cmb_payload) if isinstance(cmb_payload, dict) else [],
+              "sha256": hashlib.sha256(cmb.read_bytes()).hexdigest(),
+          })
+          summary = {
+              "schema": "rll.real_3_summary.v1", "phase": "real_3_compute", "status": "pass",
+              "groups": {"cosmology": {"status": "pass", "independent_blocks": [block_hz, block_bao, block_cmb], "consolidation": "all three independent real-input blocks passed"}},
+              "claim_boundary": "Computed summaries are provenance/reproducibility artifacts; no automatic scientific endorsement.",
+          }
+          (reports / "real_3_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Run selected IML pipeline
+        if: ${{ (inputs.pipeline_scope == 'iml' || inputs.pipeline_scope == 'all') && (inputs.mode == 'compute' || inputs.mode == 'full') }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import csv
+          import hashlib
+          import json
+          from pathlib import Path
+          source = Path("data/real/Hz_data_real.csv")
+          rows = list(csv.DictReader(source.open(encoding="utf-8", newline="")))
+          if not rows:
+              raise SystemExit(f"real H(z) source is empty: {source}")
+          try:
+              values = [round(float(row["H_obs"]) * 10) for row in rows]
+              redshifts = [round(float(row["z"]) * 1000) for row in rows]
+          except (KeyError, TypeError, ValueError) as exc:
+              raise SystemExit(f"invalid H(z) row in {source}: {exc}") from exc
+          payload = {
+              "dados": values,
+              "redshift_milli": redshifts,
+              "coerencia_in": 0.7,
+              "coerencia0": 0.5,
+              "entropia0": 0.5,
+              "estado": "ACTIVE",
+              "data_source": str(source),
+              "data_source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+              "data_encoding": "H_obs*10 rounded; z*1000 rounded",
+              "claim_boundary": "Input provenance only; no scientific endorsement.",
+          }
+          output = Path("artifacts/rll-real-run/processed/iml/input.json")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+          python tools/iml/iml_pipeline.py \
+            --input "$RUN_DIR/processed/iml/input.json" \
+            --output "$RUN_DIR/processed/iml/output.json"
+
+      - name: Run selected book pipeline
+        if: ${{ inputs.pipeline_scope == 'book' || inputs.pipeline_scope == 'all' }}
+        run: |
+          set -euo pipefail
+          python scripts/rll_pipeline.py \
+            --book-scope all \
+            --dataset-group "$DATASET_GROUP" \
+            --mode "$RLL_MODE_REQUESTED" \
+            --output-dir "$RUN_DIR/book"
+
+      - name: Finalize manifest and checksums
+        if: always()
+        run: |
+          set -euo pipefail
+          RUN_ID_VALUE="$GITHUB_RUN_ID" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          root = Path("artifacts/rll-real-run")
+          files = sorted(str(path.relative_to(root)) for path in root.rglob("**/*") if path.is_file())
+          required_dirs = ["raw", "processed", "tables", "plots", "reports", "diagnostics", "book"]
+          commit_sha = (root / "COMMIT_SHA.txt").read_text(encoding="utf-8").strip()
+          manifest = {
+              "schema": "rll.real_data_orchestrator.v2",
+              "run_id": os.environ["RUN_ID_VALUE"],
+              "commit_sha": commit_sha,
+              "required_layout": required_dirs,
+              "files": files,
+              "claim_boundary": "Provenance and reproducibility only; no automatic scientific endorsement or superiority claim.",
+              "promotion": "blocked when any critical hotfix or real-input gate fails",
+          }
+          (root / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+          PY
+          find "$RUN_DIR" -type f ! -path '*/CHECKSUMS.sha256' -print0 | sort -z | xargs -0 sha256sum > "$RUN_DIR/CHECKSUMS.sha256"
+
+      - name: Finalize canonical policy checksum
+        if: always()
+        run: |
+          set -euo pipefail
+          policy_dir="artifacts/workflow-policy/rll-real-data-orchestrator/${GITHUB_JOB}"
+          mkdir -p "$policy_dir"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$policy_dir"
+          rll_real_data_assert_boundary_file "$policy_dir/CLAIM_BOUNDARY.md"
+          rll_real_data_write_checksums "$policy_dir"
+
+      - name: Upload versioned real-data artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-real-run-${{ github.run_id }}
+          path: artifacts/rll-real-run/
+          retention-days: ${{ fromJSON(inputs.retention_days || '14') }}
+          if-no-files-found: warn
+
+      - name: Upload policy artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-real-policy-${{ github.run_id }}
+          path: artifacts/workflow-policy/rll-real-data-orchestrator/${{ github.job }}/
+          retention-days: ${{ fromJSON(inputs.retention_days || '14') }}
+          if-no-files-found: warn

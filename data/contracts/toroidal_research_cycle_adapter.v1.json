@@ -1,0 +1,126 @@
+{
+  "schema": "rll.strong_gravity.toroidal_research_cycle_adapter.v1",
+  "version": "1.0.0",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "status": "implemented_bounded_scientific_adapter",
+  "claim_allowed": false,
+  "canonical_governance": {
+    "repository": "rafaelmeloreisnovo/RafGitTools",
+    "commit": "bed562a2a38218bc001d44484effcbdee7eafdbc",
+    "path": "configs/toroidal_research_cycle_contract.json",
+    "schema": "rafaelia.toroidal-research-cycle-contract.v1"
+  },
+  "map_registry": {
+    "repository": "rafaelmeloreisnovo/Mapa",
+    "path": "indices/TOROIDAL_RESEARCH_FEDERATION.json",
+    "state": "PR_33_PENDING_AT_ADAPTER_CREATION"
+  },
+  "declared_scope": "Synthetic toroidal geometry, phase, closure and sine-reference diagnostics connected to the existing bounded magnetorotational bridge.",
+  "epistemic_classes": {
+    "E": "exact geometry, trigonometry or deterministic numerical diagnostic",
+    "C": "convention adopted for this adapter",
+    "H": "source-specific hypothesis requiring physical data and a governing model",
+    "P": "parable or geometric intuition that must not be promoted to mechanism"
+  },
+  "equations": [
+    {"id": "E-TRC-01", "class": "E", "expression": "x=(R+r cos(theta)) cos(phi)", "meaning": "toroidal Cartesian coordinate"},
+    {"id": "E-TRC-02", "class": "E", "expression": "y=(R+r cos(theta)) sin(phi)", "meaning": "toroidal Cartesian coordinate"},
+    {"id": "E-TRC-03", "class": "E", "expression": "z=r sin(theta)", "meaning": "toroidal Cartesian coordinate"},
+    {"id": "E-TRC-04", "class": "E", "expression": "s(t)=A sin(2 pi f t + phi0)", "meaning": "bounded reference waveform"},
+    {"id": "E-TRC-05", "class": "E", "expression": "Delta_phi=atan2(sin(phi_obs-phi_ref),cos(phi_obs-phi_ref))", "meaning": "wrapped phase residual"},
+    {"id": "C-TRC-01", "class": "C", "expression": "L_phi=(1+cos(Delta_phi))/2", "meaning": "phase-lock score convention in [0,1]"},
+    {"id": "E-TRC-06", "class": "E", "expression": "e_RMS=sqrt(mean((s_obs-s_ref)^2))", "meaning": "signal tracking error"},
+    {"id": "C-TRC-02", "class": "C", "expression": "e_N=e_RMS/A", "meaning": "amplitude-normalized tracking error"},
+    {"id": "C-TRC-03", "class": "C", "expression": "G_path=sum((||x_i-x_(i-1)||/R)^2)", "meaning": "dimensionless geometric path metric; not thermodynamic energy"},
+    {"id": "H-TRC-01", "class": "H", "expression": "phase-matched bounded forcing may improve a source-specific stability observable", "meaning": "requires source-specific feedback model and data"},
+    {"id": "P-TRC-01", "class": "P", "expression": "toroidal return produces a new void rather than an identical return", "meaning": "research-cycle parable"}
+  ],
+  "primary_sources": [
+    {
+      "id": "SRC-ASDEX-MOD-ECCD-2007",
+      "title": "Enhancement of the Stabilization Efficiency of a Neoclassical Magnetic Island by Modulated Electron Cyclotron Current Drive in the ASDEX Upgrade Tokamak",
+      "doi": "10.1103/PhysRevLett.98.025005",
+      "supports": ["phase-synchronized modulation can improve stabilization efficiency for a specific rotating magnetic island"],
+      "does_not_support": ["a pure sine universally stabilizes arbitrary systems", "direct equivalence to black-hole accretion"]
+    },
+    {
+      "id": "SRC-ITER-MAGNETS",
+      "title": "Magnets — ITER official system description",
+      "locator": "ITER official documentation",
+      "supports": ["toroidal field coils confine plasma", "poloidal field coils shape plasma and contribute to stability"],
+      "does_not_support": ["toroidal field alone is sufficient for universal confinement"]
+    },
+    {
+      "id": "SRC-FAST-ION-2025",
+      "title": "Full orbit fast ion transport in perturbed magnetic fields",
+      "doi": "10.1063/5.0266608",
+      "supports": ["rotation frequency and particle frequencies can create source-specific resonant transport"],
+      "does_not_support": ["all frequency matching is stabilizing"]
+    },
+    {
+      "id": "SRC-SURFACE-ROBUSTNESS-2026",
+      "title": "A Diophantine approach to evaluating the robustness of magnetic surfaces",
+      "doi": "10.1063/5.0317052",
+      "supports": ["rotational transform and rational structure matter for magnetic-surface robustness"],
+      "does_not_support": ["geometric torus alone guarantees ideal-MHD stability"]
+    },
+    {
+      "id": "SRC-RLL-MRJ-2026",
+      "title": "RLL bounded magnetorotational MAD and jet bridge",
+      "repository_path": "data/contracts/magnetorotational_jet_bridge.v1.json",
+      "supports": ["bounded link to rotational phase, Poynting flux, MAD-candidate and Kerr diagnostics"],
+      "does_not_support": ["GRMHD solution", "source fit", "cosmological background modification"]
+    }
+  ],
+  "inputs": [
+    "major and minor radii with 0 < r < R",
+    "inner and outer frequencies",
+    "reference amplitude, frequency and phase",
+    "observed phase offset or measured waveform",
+    "duration, sample count and closure tolerance",
+    "source-specific physical model before interpreting geometry as plasma dynamics"
+  ],
+  "outputs": [
+    "toroidal coordinate samples",
+    "wrapped phase residual",
+    "phase-lock score convention",
+    "absolute and normalized RMS signal error",
+    "spatial closure residual",
+    "maximum torus-surface residual",
+    "dimensionless geometric path metric"
+  ],
+  "boundaries": {
+    "pure_sine_universal_stabilizer": false,
+    "toroidal_geometry_proves_physical_torus": false,
+    "tokamak_result_equals_black_hole_accretion": false,
+    "dimensionless_path_metric_is_thermodynamic_energy": false,
+    "synthetic_phase_lock_is_plasma_confinement": false,
+    "mad_or_jet_confirmed_for_source": false,
+    "local_adapter_modifies_friedmann_background": false,
+    "new_force_discovered": false,
+    "claim_allowed": false
+  },
+  "promotion_requires": [
+    "source-specific state variables and units",
+    "governing plasma, GRMHD, control or dynamical equations",
+    "measured waveform and uncertainty",
+    "feedback and actuator transfer function",
+    "damping, saturation and delay model",
+    "baseline without phase-matched modulation",
+    "falsifier and ablation",
+    "independent execution receipt",
+    "observational or laboratory likelihood where applicable"
+  ],
+  "cycle_mapping": [
+    {"phase": "VOID", "rll_object": "source-specific unknown or missing data"},
+    {"phase": "QUERY", "rll_object": "bounded scientific question"},
+    {"phase": "SOURCE", "rll_object": "primary paper, official dataset or existing RLL contract"},
+    {"phase": "CLAIM", "rll_object": "scoped E/C/H/P statement"},
+    {"phase": "FORMULA", "rll_object": "unit-declared equation or diagnostic"},
+    {"phase": "TEST", "rll_object": "deterministic or source-specific falsifier"},
+    {"phase": "EVIDENCE", "rll_object": "receipt, data, covariance and result"},
+    {"phase": "RESIDUAL", "rll_object": "error, contradiction or missing mechanism"},
+    {"phase": "NEW_VOID", "rll_object": "new TOKEN_VAZIO generated by the result"},
+    {"phase": "FEEDBACK", "rll_object": "next bounded experiment without automatic promotion"}
+  ]
+}

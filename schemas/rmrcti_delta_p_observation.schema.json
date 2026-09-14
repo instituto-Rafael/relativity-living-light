@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rmrcti_delta_p_observation.schema.json",
+  "title": "RAFAELIA RMRCTI Delta-P Observation",
+  "description": "Structural contract for a claim-bounded RMRCTI Delta-P observation. It preserves source provenance, conditional-proportion counts, uncertainty, repeated-run dispersion and epistemic gates. It does not authorize a universal constant, causal mechanism, semantic-accuracy claim, cosmological inference or dynamical-attractor claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "observation_id",
+    "source",
+    "metric",
+    "runs",
+    "aggregate",
+    "claim_boundary",
+    "use_policy"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "pattern": "^RMRCTI-DP-[A-Z0-9_-]{4,48}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "code_path", "code_state", "spoken_alias_state"],
+      "properties": {
+        "repository": {"const": "rafaelmeloreisnovo/llamaRafaelia"},
+        "code_path": {"const": "rmrCti/gbs3_color.c"},
+        "code_ref": {"type": "string"},
+        "code_state": {
+          "type": "string",
+          "enum": ["documented", "measured", "synthetic_fixture"]
+        },
+        "spoken_alias": {"type": "string"},
+        "spoken_alias_state": {
+          "type": "string",
+          "enum": ["resolved", "token_vazio", "not_applicable"]
+        }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "formula", "peak_definition", "expected_delta_p", "tolerance"],
+      "properties": {
+        "name": {"const": "delta_p_stability_enrichment"},
+        "formula": {
+          "const": "P(stable_any=1|peak)-P(stable_any=1|nonpeak)"
+        },
+        "peak_definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["preferred_column", "fallback_gates"],
+          "properties": {
+            "preferred_column": {"const": "gate_in_peaks"},
+            "fallback_gates": {
+              "type": "array",
+              "prefixItems": [
+                {"const": 3},
+                {"const": 4},
+                {"const": 8}
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          }
+        },
+        "expected_delta_p": {"type": "number", "minimum": -1, "maximum": 1},
+        "expected_state": {
+          "type": "string",
+          "enum": ["author_observation", "pre_registered_target", "not_applicable"]
+        },
+        "tolerance": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+      }
+    },
+    "runs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "run_id",
+          "source_state",
+          "counts",
+          "p_stable_given_peaks",
+          "p_stable_given_nonpeaks",
+          "delta_p"
+        ],
+        "properties": {
+          "run_id": {"type": "string", "minLength": 1},
+          "source_state": {
+            "type": "string",
+            "enum": ["real_trace", "synthetic_fixture", "unknown"]
+          },
+          "trace_path": {"type": "string"},
+          "trace_sha256": {
+            "type": ["string", "null"],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["peaks_total", "peaks_stable", "nonpeaks_total", "nonpeaks_stable"],
+            "properties": {
+              "peaks_total": {"type": "integer", "minimum": 1},
+              "peaks_stable": {"type": "integer", "minimum": 0},
+              "nonpeaks_total": {"type": "integer", "minimum": 1},
+              "nonpeaks_stable": {"type": "integer", "minimum": 0}
+            }
+          },
+          "p_stable_given_peaks": {"type": "number", "minimum": 0, "maximum": 1},
+          "p_stable_given_nonpeaks": {"type": "number", "minimum": 0, "maximum": 1},
+          "delta_p": {"type": "number", "minimum": -1, "maximum": 1},
+          "interval_95": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["lower", "upper", "method"],
+            "properties": {
+              "lower": {"type": "number", "minimum": -1, "maximum": 1},
+              "upper": {"type": "number", "minimum": -1, "maximum": 1},
+              "method": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_count",
+        "delta_p_mean",
+        "delta_p_median",
+        "delta_p_min",
+        "delta_p_max",
+        "delta_p_sample_stdev",
+        "delta_p_mad",
+        "replicated_stability_candidate"
+      ],
+      "properties": {
+        "run_count": {"type": "integer", "minimum": 1},
+        "delta_p_mean": {"type": "number", "minimum": -1, "maximum": 1},
+        "delta_p_median": {"type": "number", "minimum": -1, "maximum": 1},
+        "delta_p_min": {"type": "number", "minimum": -1, "maximum": 1},
+        "delta_p_max": {"type": "number", "minimum": -1, "maximum": 1},
+        "delta_p_sample_stdev": {"type": "number", "minimum": 0},
+        "delta_p_mad": {"type": "number", "minimum": 0},
+        "replicated_stability_candidate": {"type": "boolean"},
+        "claim_state": {
+          "type": "string",
+          "enum": [
+            "DOCUMENTED_METRIC",
+            "MEASURED_ASSOCIATION",
+            "REPLICATED_STABILITY_CANDIDATE",
+            "PARAMETER_BASIN_SUPPORTED",
+            "CROSS_DOMAIN_REPLICATED"
+          ]
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attractor_claim",
+        "universal_constant_claim",
+        "causal_mechanism_claim",
+        "cosmological_inference",
+        "fractal_claim"
+      ],
+      "properties": {
+        "attractor_claim": {"const": "TOKEN_VAZIO"},
+        "universal_constant_claim": {"const": "NOT_ESTABLISHED"},
+        "causal_mechanism_claim": {"const": "NOT_ESTABLISHED"},
+        "cosmological_inference": {"const": "BLOCKED"},
+        "fractal_claim": {"const": "NOT_ESTABLISHED"},
+        "missing_evidence": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "use_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data_class", "training_eligibility", "purpose", "operational_gate"],
+      "properties": {
+        "data_class": {
+          "type": "string",
+          "enum": ["synthetic", "public_aggregate", "private_trace", "unknown"]
+        },
+        "training_eligibility": {
+          "type": "string",
+          "enum": ["no", "yes_explicit", "unknown"]
+        },
+        "purpose": {
+          "type": "string",
+          "enum": ["research", "validation", "documentation", "unknown"]
+        },
+        "operational_gate": {
+          "type": "string",
+          "enum": ["research_only", "human_review", "validated_local_use", "blocked"]
+        }
+      }
+    }
+  }
+}

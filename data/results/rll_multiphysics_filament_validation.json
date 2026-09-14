@@ -1,0 +1,13 @@
+{
+  "matrix_id": "rll-multiphysics-filament-canonical-v1",
+  "filaments": 10,
+  "edges": 7,
+  "references": 8,
+  "claim_allowed": false,
+  "new_workflow_required": false,
+  "status": "PASS",
+  "strict": true,
+  "local_validator": "PASS",
+  "local_tests": "12/12 PASS",
+  "remote_ci": "TOKEN_VAZIO_PENDING_NEW_HEAD"
+}

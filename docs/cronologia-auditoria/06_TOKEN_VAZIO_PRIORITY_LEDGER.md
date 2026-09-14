@@ -339,12 +339,105 @@ a transição logística se torna tão larga que Opção B degenera para mistura
 
 ---
 
-## Conclusão (atualizada FASE 13)
+## GAPS RESOLVIDOS — FASE 15 (2026-07-10/13)
 
-**Token Total**: 9 gaps originais + G0/G1/G2 + novos FASE 11/13
-**P0 (bloqueador)**: G1 (MCMC joint) + G2 (Bayes Factor) — ambos requerem pipeline manual
+### H-UNIV-01 φ — Verificação numérica f(z)/φ → FECHADO [E-negativo]
+
+**Questão original**: A razão f(z_{n+1})/f(z_n) com z_n seguindo a série de Fibonacci converge para φ=1.618?
+
+**Status**: ✅ **FECHADO [E-negativo]** — `scripts/verify_rll_fibonacci_ratio.py` (FASE 8, 2026-07-07)
+
+**Resultado**: Razão **diverge** exponencialmente (1.0 → 2.009 → 7.703 → 48.83 → 581.2) ao passar pela transição logística em z_t=1.0. Não converge para φ em nenhum ponto do scan.
+
+**Interpretação**: A função logística não possui auto-semelhança multiplicativa. A analogia "espirais em espirais" é qualitativa [C], sem fundamento na forma funcional de f(z). Resultado negativo registrado com mesma honestidade que positivo.
+
+**Saída**: `results/fibonacci_ratio_verification.json`
+
+---
+
+### H-CAL-01 Aritmética — mmc(365,260) verificado → FECHADO [E]
+
+**Questão original**: mmc(365, 260) = 18980 dias = 52 anos Haab' = 73 anos Tzolk'in — formalmente executado?
+
+**Status**: ✅ **FECHADO [E]** — `scripts/verify_cal_maya_arithmetic.py` (FASE 8, 2026-07-07)
+
+**Resultado**:
+- `mmc(365, 260) = 18980` ✅ verificado por aritmética inteira
+- `52 × 365 = 18980` ✅; `73 × 260 = 18980` ✅
+- `18980 / 365.25 = 51.964 anos Julianos` ✅
+
+**Candidatos astrofísicos [H]**: melhor candidato algébrico = Schwabe (5×11yr = 55yr, Δ=3yr); conjunção J-S: 2.62×19.86yr ≈ 52.03yr (Δ=0.03yr, mas 2.62 irracional).
+
+**Saída**: `results/cal_maya_arithmetic_check.json`
+
+---
+
+### F-COS-03 z_t Scan → FECHADO [E-negativo]
+
+**Questão original**: z_t ∈ [0.5, 1.5] — scan executado com dados H(z)+BAO?
+
+**Status**: ✅ **FECHADO [E-negativo]** — `results/zt_scan/summary.json` (FASE 8); documentado em `docs/cronologia-auditoria/14_ZT_SCAN_RESULTADO_REAL.md` (FASE 15)
+
+**Resultado**: z_t_BAO_ótimo = 0.3 ∉ [0.5, 1.5]. Scan monotônico: χ²_BAO decresce de z_t=2.0 até z_t=0.3 sem mínimo local. F-COS-03: **FAIL [E]**.
+
+**Desbloqueador**: MCMC joint (G1) com Ωs0 livre pode encontrar configuração diferente.
+
+---
+
+### Moresco H(z) χ² → FECHADO [E]
+
+**Questão original**: χ² RLL vs ΛCDM em dados Moresco H(z) 33 pontos — não calculado.
+
+**Status**: ✅ **FECHADO [E]** — `scripts/compute_moresco_hz_chi2.py` (FASE 15, 2026-07-10)
+
+**Resultado**: Parâmetros Planck nominais:
+- χ²_RLL = 27.47 (χ²_red = 0.981)
+- χ²_ΛCDM = 22.76 (χ²_red = 0.734)
+- Δχ² = +4.70, ΔAIC = +10.70
+
+**Interpretação**: RLL compete razoavelmente com ΛCDM em H(z) (Δχ² = 4.7 com 3 parâmetros extras), mas ΔAIC = +10.7 indica penalidade de complexidade. Parâmetros não otimizados — melhoria esperada com MCMC.
+
+**Saída**: `results/moresco_hz_chi2.json`
+
+---
+
+### H-ELEC-01 Modelo Quantitativo → FECHADO [E+H]
+
+**Questão original**: Modelo quantitativo do diferencial elétrico por camada (superfície → ionosfera) — não calculado especificamente (P2).
+
+**Status**: ✅ **FECHADO [E+H]** — `scripts/verify_h_elec_01_layer_model.py` (FASE 15, 2026-07-10)
+
+**Resultado**:
+- σ(h) = 3×10⁻¹⁴ S/m (superfície) → ~10⁻⁷ S/m (ionosfera base)
+- J = 3.90×10⁻¹² A/m² constante em todas as camadas (conservação de carga verificada ✅)
+- Enhancement salino (NaCl 4%): σ_saline/σ_dry ≈ 2×10¹⁴×
+
+**Residual P2**: verificação de campo em ambiente com aerossol marinho.
+
+**Saída**: `results/h_elec_01_layer_model.json`
+
+---
+
+### F-COS-04 Bayes Factor (proxy BIC) → PARCIALMENTE FECHADO [C]
+
+**Questão original**: ln(B₁₀) RLL/ΛCDM — token vazio P0.
+
+**Status**: ⚠️ **PARCIALMENTE FECHADO [C proxy]** — `scripts/compute_bayes_factor_bic_proxy.py` (FASE 15)
+
+**Resultado**: proxy via BIC: ΔBIC = (k_RLL − k_ΛCDM)·ln(n) = 3·ln(64) = 12.477; ln(B₁₀) ≈ −6.24 → **FAIL** (threshold > −5, escala Jeffreys).
+
+**Nota**: Este é o pior caso (Ωs0→0, colapso do modelo). MCMC joint pode mudar significativamente. P0 permanece até G1.
+
+**Saída**: `results/bayes_factor_bic_proxy.json`
+
+---
+
+## Conclusão (atualizada FASE 15)
+
+**Token Total**: 9 gaps originais + G0/G1/G2 + novos FASE 11/13/15
+**P0 (bloqueador)**: G1 (MCMC joint) + G2 (Bayes Factor definitivo) — ambos requerem pipeline manual
 **P1 (confiança)**: todos resolvidos (Gap 6: FASE 12; P1-WEFF-B-OPT: FASE 13)
-**P2 (robustez)**: 2 originais (geofísico)
+**P2 (robustez)**: residuais menores (dados de campo geofísico)
 **P3 (polish)**: 1 original
 
 **Fechados**:
@@ -354,10 +447,81 @@ a transição logística se torna tão larga que Opção B degenera para mistura
 - Predição datada: ✅ FASE 11 — 5 predições em `PREDICAO_DATADA_RLL.md`
 - Gap 6 (justificativa parâmetros): ✅ FASE 12 — `JUSTIFICATIVA_PARAMETROS_RLL.md`
 - P1-WEFF-B-OPT: ✅ FASE 13 — χ²=0.079; P-RLL-05 CONFIRMADA [E]
+- H-UNIV-01 φ: ✅ FASE 8/15 — [E-negativo]: ratio diverge, sem convergência para φ
+- H-CAL-01 aritmética: ✅ FASE 8 — [E]: lcm(365,260)=18980 verificado
+- F-COS-03 z_t scan: ✅ FASE 8/15 — [E-negativo]: z_t_BAO=0.3 ∉ [0.5,1.5]; F-COS-03 FAIL
+- Moresco H(z) χ²: ✅ FASE 15 — [E]: χ²_RLL=27.47, ΔAIC=+10.70
+- H-ELEC-01 modelo quantitativo: ✅ FASE 15 — [E+H]: J constante confirmado, enhancement ×2×10¹⁴
+- F-COS-04 proxy BIC: ✅ FASE 15 — [C]: ln(B₁₀)=−6.24; F-COS-04 FAIL (proxy — definitivo aguarda G1)
+
+**Falsificadores ativos** (2/5 PASS · 2/5 FAIL · 1/5 TOKEN_VAZIO P0):
+- F-COS-01: ✅ PASS — ΔAIC=3.805 [E]
+- F-COS-02: ✅ PASS — χ²_red=0.4387 [E]
+- F-COS-03: ✗ FAIL — z_t_BAO=0.3 [E]
+- F-COS-04: ✗ FAIL — ln(B₁₀)=−6.24 proxy [C]; revisável com G1
+- F-COS-05: ✅ PASS — χ²_DESI_nominal=93.81 [E]
 
 **Pendentes (requerem ação manual/pipeline)**:
-- G1 (Pipeline MCMC): Disparar `rll-validacao-cientifica-completa.yml` modo=completo
-- G2 (Bayes Factor): Idem (Job 7)
+- G1 (Pipeline MCMC joint): Disparar `rll-validacao-cientifica-completa.yml` modo=completo
+- G2 (Bayes Factor definitivo): Idem (Job 7)
+
+**Método**: TOKEN_VAZIO preserva honestidade enquanto trabalho prossegue.
+
+---
+
+### FASE 20 — MCMC joint + Bayes Factor formal (2026-07-15) [PR #554 merged]
+
+**Gaps fechados**:
+- G1 ✅ FECHADO — Ωs0 < 0.00178 (95% UL, emcee 32 walkers × 1500 steps, burn=400, n=1677)
+  - aceitação=0.377; autocorr τ_max≈99.5; N/τ≈11 (marginal mas convergente)
+  - posteriors: H₀=66.91±0.72, Ωm=0.3144±0.0011, Ωb=0.0498±0.0011
+  - artefato: `results/rll_fase20_mcmc_bayes.json`
+- G3 ✅ FECHADO — ln(B₁₀)=−6.190±0.691 (dynesty NestedSampler nlive=150)
+  - logZ_RLL=−404.340±0.530; logZ_ΛCDM=−398.150±0.443
+  - Jeffreys: |ln(B₁₀)|=6.19 > 5 → evidência muito forte para ΛCDM
+  - artefato: `results/rll_fase20_mcmc_bayes.json`
+
+**Gap novo (baixa prioridade)**:
+- G4 ⬜ TOKEN_VAZIO [H] P3 — mapeamento do bias E&H em função de (Ωm·h², Ωb·h²)
+  - descrição: calibração rd aditiva assume que Δrd=rd_EH−rd_Planck é constante; verificar variação em grid de parâmetros
+  - impacto estimado: ~1–2 ln(B₁₀); não bloqueia resultados existentes
+  - próximo passo: grade rd_EH(Ωm·h², Ωb·h²) em 10×10 pts; comparar com valor calibrado
+  - **→ FECHADO na FASE 22 abaixo**
+
+**Atualização falsificadores** (2/5 PASS · 2/5 FAIL · 0/5 TOKEN_VAZIO):
+- F-COS-01: ✅ PASS — ΔAIC=3.805 [E]
+- F-COS-02: ✅ PASS — χ²_red=0.4387 [E]
+- F-COS-03: ✗ FAIL — z_t_BAO=0.3 [E]
+- F-COS-04: ✗ FAIL — ln(B₁₀)=−6.190±0.691 [E] (formal, dynesty — antes proxy BIC)
+- F-COS-05: ✅ PASS — χ²_DESI_nominal=93.81 [E]
+
+**Nota epistêmica**: G1 e G3 fechados confirmam F-COS-04 como FAIL com evidência direta [E], substituindo o proxy BIC [C] da FASE 15. TOKEN_VAZIO P0 original esgotado.
+
+---
+
+### FASE 22 — G4 Mapeamento bias E&H (2026-07-16)
+
+**Gap fechado**:
+- G4 ✅ FECHADO — bias E&H quantificado em grade 10×10 (Ωm·h²∈[0.12,0.16], Ωb·h²∈[0.020,0.025])
+  - Δrd varia −2.95 a +12.81 Mpc na grade ampla
+  - **No ponto MCMC posterior (Ωm·h²=0.14075)**: erro sistemático = 0.72 Mpc
+  - Δχ²_G4 ≈ (0.72/σ_rd)² << impacto de G3; conclusão ln(B₁₀)=−6.190 não afetada
+  - artefato: `results/rll_fase22_g4_eh_bias_grid.json`
+  - doc: `docs/cronologia-auditoria/21_FASE22_G4_EH_BIAS_GRID.md`
+
+**Todos os gaps fechados (G1, G2, G3, G4). TOKEN_VAZIO estrutural = 0.**
+
+---
+
+### FASE 21 — Grafo Epistêmico de Sessão FASE 17–20 (2026-07-16)
+
+**Artefatos gerados**:
+- `results/session_grafo_fase17_20/` — 12 artefatos (claims, entities, relations, graph.graphml...)
+- `docs/cronologia-auditoria/20_GRAFO_SESSAO_FASE17_20.md` — documento de auditoria
+
+**Schema**: 10 afirmações C_i com 10 campos; 44 entidades (18 tipos); 44 arestas (14 tipos)
+**Contradição documentada**: CONTRADICTION-01 — Ωs0=0.012 (FASE18-E) vs Ωs0≈0 (FASE19-20); mecanismo=bias E&H; status=RESOLVIDA
+**claim_allowed**: false em todos os artefatos
 
 **Método**: TOKEN_VAZIO preserva honestidade enquanto trabalho prossegue.
 

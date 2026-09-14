@@ -1,0 +1,35 @@
+{
+  "observed": [10.0, 12.0, 14.0],
+  "predicted": [9.0, 10.0, 13.0],
+  "sigma_observed": [1.0, 1.0, 1.0],
+  "sigma_model": [0.5, 0.5, 0.5],
+  "threshold": 2.0,
+  "checks": {
+    "provenance_complete": true,
+    "uncertainty_known": true,
+    "in_domain": true,
+    "numerical_check_passed": true,
+    "calibration_check_passed": true,
+    "instrument_check_passed": true,
+    "transport_check_passed": true,
+    "matter_field_check_passed": true,
+    "physics_candidate": false
+  },
+  "support_weight": 1.0,
+  "refutation_weight": 1.0,
+  "scope_overlap": 0.8,
+  "evidence_complete": true,
+  "photonic_state": {
+    "intensity": 1.0,
+    "q": 0.2,
+    "u": 0.2,
+    "v": 0.2
+  },
+  "provenance": {
+    "dataset": "synthetic fixture only",
+    "commit": "TOKEN_VAZIO_UNTIL_CI",
+    "operator_chain": ["identity", "synthetic_offset"],
+    "instrument": null,
+    "domain": "dimensionless demonstration"
+  }
+}

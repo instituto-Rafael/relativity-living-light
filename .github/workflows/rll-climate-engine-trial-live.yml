@@ -1,0 +1,140 @@
+name: RLL Climate Engine Trial Live Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Bounded Climate Engine operation
+        required: true
+        type: choice
+        default: metadata_dates
+        options:
+          - metadata_dates
+          - metadata_variables
+          - timeseries_coordinates
+          - map_values
+      dataset:
+        description: Provider dataset identifier
+        required: true
+        type: string
+      variable:
+        description: Dataset variable when required
+        required: false
+        type: string
+      start_date:
+        description: YYYY-MM-DD when required
+        required: false
+        type: string
+      end_date:
+        description: YYYY-MM-DD when required
+        required: false
+        type: string
+      coordinates:
+        description: JSON coordinate list for timeseries_coordinates
+        required: false
+        default: "[]"
+        type: string
+      area_reducer:
+        required: false
+        type: choice
+        default: mean
+        options: [mean, median, min, max]
+      temporal_statistic:
+        required: false
+        type: choice
+        default: mean
+        options: [mean, median, max, min, total]
+  pull_request:
+    paths:
+      - ".github/workflows/rll-climate-engine-trial-live.yml"
+      - "tools/run_rll_climate_engine_live_probe.py"
+      - "tests/test_rll_climate_engine_live_probe.py"
+      - "data/governance/RLL_RUNTIME_SECRET_PROBES_V1.json"
+      - "scripts/rll_climate_engine_bridge.py"
+      - "data/contracts/rll_climate_engine_bridge.v1.json"
+      - "data/climate/rll_external_compute_registry.v1.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-climate-engine-trial-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Validate bridge and secret boundary
+        run: |
+          set -euo pipefail
+          python -m unittest -v tests.test_rll_climate_engine_bridge tests.test_rll_climate_engine_live_probe
+
+  live-probe:
+    if: github.event_name == 'workflow_dispatch'
+    needs: static-contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      CLIMATE_ENGINE_API_KEY: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+      RLL_CLIMATE_OPERATION: ${{ inputs.operation }}
+      RLL_CLIMATE_DATASET: ${{ inputs.dataset }}
+      RLL_CLIMATE_VARIABLE: ${{ inputs.variable }}
+      RLL_CLIMATE_START_DATE: ${{ inputs.start_date }}
+      RLL_CLIMATE_END_DATE: ${{ inputs.end_date }}
+      RLL_CLIMATE_COORDINATES: ${{ inputs.coordinates }}
+      RLL_CLIMATE_AREA_REDUCER: ${{ inputs.area_reducer }}
+      RLL_CLIMATE_TEMPORAL_STATISTIC: ${{ inputs.temporal_statistic }}
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Execute bounded Climate Engine probe
+        run: |
+          set -euo pipefail
+          python tools/run_rll_climate_engine_live_probe.py
+      - name: Publish bounded summary
+        if: always()
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          p = Path("artifacts/rll-climate-engine/RLL_CLIMATE_ENGINE_LIVE_CONTROL_RECEIPT.json")
+          print("## RLL Climate Engine runtime")
+          if not p.exists():
+              print("- control receipt: TOKEN_VAZIO")
+          else:
+              d = json.loads(p.read_text(encoding="utf-8"))
+              print(f"- decision: {d.get('decision')}")
+              print(f"- operation: {d.get('operation')}")
+              print(f"- secret binding present: {d.get('secret_binding_present_boolean')}")
+              print(f"- bridge gate: {d.get('bridge_gate_status')}")
+              print("- secret value/hash/length: forbidden")
+              print("- claim_allowed: false")
+          PY
+      - name: Upload sanitized runtime evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-climate-engine-live-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/rll-climate-engine/
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,215 @@
+schema: raf.rll.project_horto_relational_field.v5
+date: '2026-09-05'
+append_only: true
+claim_allowed: false
+complete: false
+project_name: MaisDoIt
+purpose: >-
+  Expand N55 relational analysis from one chat/session to a project-level multiplex field
+  connecting chats, turns, files, project instructions, provider-available memory,
+  connected sources, repositories, web prior art, evidence, gaps, receipts and hyperedges.
+source_observed:
+  openai_projects:
+    status: SOURCE_OBSERVED_OFFICIAL_DOCS_20260905
+    facts:
+      - Projects group chats, files, instructions and related context in one workspace.
+      - Projects have built-in memory behavior governed by project/account settings.
+      - Project chats may reference other conversations within the same project.
+      - For Plus/Pro, project chats and files can be prioritized when answering inside a project.
+    boundaries:
+      - provider_can_reference_project_chats != exhaustive_transcript_materialization
+      - project_context_available != all_project_content
+      - project_memory_mode: TOKEN_VAZIO_PROVIDER_SETTING
+      - ChatGPT_Project != Custom_GPT
+metaphor_horto:
+  metaphor_is_not_mechanism: true
+  soil: [project_files, indices, instructions, source_material]
+  roots: [authority, provenance, lineage, contracts, longitudinal_memory]
+  stems: [chats, conversations]
+  branches: [turns, occurrences, claims, formulas, decisions, artifacts]
+  pollination: [cross_chat_relations, transversal_bridges, third_order_hyperedges]
+  flowers: [knowledge_objects_with_declared_evidence_state]
+  seeds: [F_next, hypothesis_candidates, TOKEN_VAZIO_with_next_probe]
+  compost: [negative_results, failures, contradictions, superseded_states]
+graph:
+  notation: H_P=(V,E,H3,T,S,A,Pv)
+  node_types:
+    - PROJECT
+    - CHAT
+    - TURN
+    - OCCURRENCE
+    - FILE
+    - SOURCE
+    - INDEX
+    - MEMORY_NODE
+    - REPO
+    - BRANCH
+    - COMMIT
+    - PR
+    - WORKFLOW
+    - ARTIFACT
+    - CLAIM
+    - FORMULA
+    - HYPOTHESIS
+    - EVIDENCE
+    - FALSIFIER
+    - GAP
+    - TOKEN_VAZIO
+    - RECEIPT
+    - KNOWLEDGE_OBJECT
+  edge_types_source: N55_V4_R01_R120
+  hyperedges: third_order_or_higher_when_binary_relation_loses_context
+  dimensions:
+    T: [time, predecessor, successor, drift, supersession, recurrence]
+    S: epistemic_state
+    A: authority_and_provider_boundary
+    Pv: provenance_and_custody
+chat_object:
+  representation: C_i=(turns,occurrences,objects,sources,formulas,hypotheses,controls,decisions,artifacts,gaps,relations,lineage,coverage_vector)
+  cross_chat_promotion_rule: >-
+    A relation between chats requires source pointers, shared governed objects or an explicit
+    demonstrable relation. Co-location in one project is insufficient.
+  invariants:
+    - SAME_PROJECT != SAME_TOPIC
+    - SAME_TOPIC != SAME_OBJECT
+    - SAME_OBJECT != SAME_CLAIM
+layers:
+  L0: TURN
+  L1: CHAT
+  L2: CONVERSATION_OBJECTS
+  L3: PROJECT
+  L4: PROJECT_SOURCES
+  L5: CONNECTED_SOURCES
+  L6: EXTERNAL_WEB
+  L7: EVIDENCE_CUSTODY
+  L8: HORTO_RELATIONAL_FIELD
+context_operator:
+  notation: Γ_P(q,t)=SELECT_AVAILABLE(project_instructions,project_chats,project_files,project_memory_if_enabled,connected_sources,web_when_required,current_turn|q,t,provider_policy)
+  status: ENGINEERING_ABSTRACTION_NOT_PROVIDER_ALGORITHM_CLAIM
+  response_record:
+    context_observed:
+      - current_chat
+      - project_context_refs_if_available
+      - file_refs
+      - connector_refs
+      - web_refs
+      - memory_refs_if_material
+    context_not_observed:
+      - unretrieved_project_chats
+      - inaccessible_files
+      - provider_hidden_ranking_or_state
+    claim_boundary: AVAILABLE_CONTEXT_ONLY
+cross_chat_matrix_probes:
+  - shared_knowledge_objects
+  - equivalent_or_contradictory_formulas
+  - hypothesis_to_test_across_chats
+  - gap_closed_in_later_chat
+  - F_next_originated_in_prior_chat
+  - supersedes_contradicts_precedes_succeeds
+  - shared_source_repo_file
+  - methodology_change
+  - epistemic_state_change
+  - artifact_or_receipt_in_another_chat
+  - analogy_without_identity
+  - transversal_TOKEN_VAZIO
+cross_chat_edge_contract:
+  required:
+    - relation_type
+    - source_chat_i
+    - source_chat_j
+    - source_pointer_i
+    - source_pointer_j
+    - object_ids
+    - confidence_state
+    - evidence_state
+    - falsifier_or_next_probe
+  unresolved_state: TOKEN_VAZIO_RELATION
+hyperedge_examples:
+  - H3(CHAT_i,FILE_j,PR_k)=hypothesis_born_in_chat_formalized_in_file_implemented_or_tested_in_PR
+  - H3(CHAT_i,CHAT_j,EVID_k)=proposal_then_contradiction_then_evidence_resolution_or_paradox
+nibiguiri_second_order_project:
+  questions:
+    - Which element, if removed, makes the relation disappear?
+    - Which earlier chat contradicts this relation?
+    - Which external source reduces the novelty claim?
+    - Which representation creates a false positive?
+    - Which provider boundary prevents reconstruction?
+    - Which F_gap survives an apparent closure?
+    - Which inverse/opposite relation exists?
+    - Which temporal derivative/context drift changes the relation?
+    - Which historical antiderivative reconstructs how it emerged?
+    - Which third-order hyperedge is required to avoid a false binary relation?
+coverage:
+  vector_name: C_HORTO
+  dimensions:
+    - C_turn
+    - C_chat
+    - C_cross_chat
+    - C_object
+    - C_relation
+    - C_hyperedge
+    - C_transform
+    - C_falsifier
+    - C_provenance
+    - C_context
+    - C_temporal
+    - C_opposition
+    - C_anomaly
+    - C_reconstruction
+    - C_project_file
+    - C_instruction
+    - C_memory_available
+    - C_connector
+    - C_repo
+    - C_web_prior_art
+    - C_receipt
+    - C_gap_closure
+  scalar_rule: optional_only_with_explicit_weights_and_mandatory_gate_floor
+  no_compensation_rule: mandatory_TOKEN_VAZIO_dimension_cannot_be_hidden_by_average
+routing:
+  ATLAS: locate_nodes_relations_and_choose_route
+  NOVO: NOVOexport_JSON_first_when_raw_corpus_is_authority
+  L: longitudinal_evolution
+  O: orthogonal_axes
+  T: transversal_cross_chat_bridges
+  REL: relations_and_hyperedges
+  SCALE: META_to_project_to_chat_to_turn_to_object_to_token_or_yocto
+  EVID: evidence_proof_gates_falsifiers_receipts
+  GAP: TOKEN_VAZIO_and_closure_gates
+  LEARN: append_only_delta_supersession_no_predecessor_erasure
+anti_regression:
+  - PROJECT_MEMORY_REFERENCE != EXHAUSTIVE_TRANSCRIPT_READ
+  - PROJECT_FILE_PRESENT != FILE_CONTENT_OBSERVED
+  - SAME_PROJECT != SEMANTIC_RELATION
+  - CROSS_CHAT_SIMILARITY != CAUSALITY
+  - MEMORY != CANONICAL_AUTHORITY
+  - WEB != PRIVATE_SOURCE
+  - CONNECTOR_SEARCH != FULL_PROVIDER_CORPUS
+  - CURRENT_CONTEXT != ENTIRE_ACCOUNT
+  - PROJECT_CONTEXT != CROSS_PROJECT_CONTEXT_UNLESS_PROVIDER_SETTING_AND_CONTEXT_SUPPORT_IT
+  - WRITE_OR_MERGE != SCIENTIFIC_PROOF
+R3:
+  F_ok:
+    - project_field_formalized
+    - horto_metaphor_mapped_to_multiplex_graph
+    - chats_files_instructions_memory_connectors_web_repos_separated_as_node_classes
+    - cross_chat_edges_and_third_order_hyperedges_defined
+    - 22_dimension_project_coverage_vector_defined
+    - product_boundary_preserved
+  F_gap:
+    - atomic_inventory_of_all_MaisDoIt_chats_not_materialized
+    - PROJECT_MEMORY_MODE=TOKEN_VAZIO_PROVIDER_SETTING
+    - complete_chat_x_chat_x_object_x_relation_matrix_not_materialized
+    - unretrieved_chats=TOKEN_VAZIO_PROVIDER_CONTEXT
+  F_next:
+    - PROJECT_INVENTORY
+    - enumerate_available_chats
+    - atomic_extraction_per_chat
+    - bind_files_and_sources
+    - project_L_O_T_C_P
+    - cross_chat_relations
+    - third_order_hyperedges
+    - NIBIGUIRI_second_order
+    - evidence_and_falsifier
+    - receipt_index_memory
+    - recalculate_C_HORTO

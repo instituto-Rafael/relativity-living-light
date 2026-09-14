@@ -1,0 +1,114 @@
+{
+  "schema": "rll.modern_dovekie_3model_bayes_receipt.v1",
+  "observed_at": "2026-08-07T23:22:29Z",
+  "state": "VERIFIED_INTERNAL_NUMERICAL_REPLICATION",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "independent_replication": false,
+  "source_workflow": {
+    "name": "Pantheon Covariance Materialization",
+    "run_id": 31226738703,
+    "run_number": 61,
+    "conclusion": "success",
+    "head_branch": "audit/token-vazio-closure-reconciler-20260807-v1",
+    "head_sha": "ff08fcdc0b370a9f1c36dce7bbf42cdf1bfdb5cb"
+  },
+  "artifact": {
+    "id": 9012409180,
+    "name": "modern-sn-fit-receipt-31226738703",
+    "size_in_bytes": 42930,
+    "digest": "sha256:30902158a5b3293503c70da5c0a5681563f804b73433a9635fc86825ee55091f",
+    "expired": false
+  },
+  "source_files": {
+    "nested_result_path": "artifacts/science/bayes/DOVEKIE_3MODEL_NESTED_EVIDENCE_CURRENT.json",
+    "nested_result_sha256": "11797706ccfdd34e0b160383332b756115897daf9667762883443dd9e1d11eb8",
+    "prior_registry_path": "data/governance/RLL_MODERN_BAYES_PRIORS_DOVEKIE_20260807_V1.json",
+    "prior_registry_sha256": "d1edf91e74651aa403086e2947e07f4ab3afa34295640060c9641696defc7065"
+  },
+  "sampler": {
+    "name": "dynesty.NestedSampler",
+    "version": "3.1.0",
+    "nlive_per_run": 160,
+    "dlogz": 0.15,
+    "seeds": [20260807, 20260808],
+    "bound": "multi",
+    "sample": "rwalk"
+  },
+  "likelihood": {
+    "dataset": "DES-Dovekie SN-only",
+    "n_supernovae": 1820,
+    "hubble_diagram_sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+    "precision_sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+    "matrix_semantics": "inverse_covariance_precision",
+    "full_gaussian_normalization": true,
+    "H0_reference": 70.0,
+    "H0_inferred": false,
+    "magnitude_offset": "sampled proper shared nuisance",
+    "prior_set": "DOVEKIE_3MODEL_BROAD_V1"
+  },
+  "models": {
+    "LCDM_dovekie": {
+      "logZ": 246.63466911820663,
+      "logZ_error": 0.1963855122353294,
+      "niter": 3211,
+      "ncall": 57668,
+      "internal_consistency_z": 0.3801883936081313,
+      "prior_boundary_alerts": []
+    },
+    "CPL_dovekie": {
+      "logZ": 246.52395462741543,
+      "logZ_error": 0.22543150776364884,
+      "niter": 4535,
+      "ncall": 85754,
+      "internal_consistency_z": 0.04057554597736148,
+      "prior_boundary_alerts": [],
+      "wa_posterior_q05_q50_q95": [-10.126711334235873, -6.1735292091664205, -1.3070944045594106]
+    },
+    "RLL_dovekie": {
+      "logZ": 246.4082724076016,
+      "logZ_error": 0.1876292006011406,
+      "niter": 3421,
+      "ncall": 69060,
+      "internal_consistency_z": 0.6723105348324416,
+      "prior_boundary_alerts": [],
+      "Omega_s0_posterior_q05_q50_q95": [0.01033495264681724, 0.11485768921113011, 0.23660424130031552]
+    }
+  },
+  "bayes_factors": {
+    "CPL_vs_LCDM": {
+      "lnB": -0.11071449079119589,
+      "approx_error": 0.29897597580495455
+    },
+    "RLL_vs_LCDM": {
+      "lnB": -0.2263967106050302,
+      "approx_error": 0.27160998938580255
+    }
+  },
+  "interpretation": {
+    "modern_three_model_prior_locked_evidence_executed": true,
+    "sn_only_decisively_discriminates_models": false,
+    "independent_replication_completed": false,
+    "joint_multi_probe_evidence_completed": false,
+    "statement": "Under the declared broad proper priors and the normalized Dovekie SN-only likelihood, the three model evidences are close; this run does not provide strong SN-only Bayesian discrimination between LCDM, CPL and RLL. This result must not be transplanted to a future DESI/CMB/LSS joint likelihood."
+  },
+  "resolves_token": "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+  "successor_tokens": [
+    "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+  ],
+  "F_ok": [
+    "A proper shared magnitude-offset nuisance prior was sampled rather than profiled away.",
+    "The prior registry was hashed before interpretation.",
+    "Two independent RNG seeds inside the same implementation were numerically consistent for all three models.",
+    "Stored logZ/logZ_error values are available for LCDM, CPL and RLL."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+  ],
+  "F_next": [
+    "Build joint multi-probe evidence only from likelihood components whose own provenance/reproduction gates are closed.",
+    "Obtain genuinely independent replication using frozen likelihood and prior receipts."
+  ]
+}

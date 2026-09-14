@@ -1,0 +1,14 @@
+id: frontier_research_omega
+first_line: KNOWS_BY_ON_FIRST_LINE
+description: "Validate frontier contracts and optionally execute bounded or full multi-seed shadow receipts."
+file: frontier-research-composition.yml
+stage: 55
+enabled: true
+tags: [all, science, validation, frontier]
+wait_for_completion: true
+timeout_minutes: 190
+inputs:
+  run_shadow_smoke: false
+  run_multiseed_receipt: false
+claim_allowed: false
+publication_effect: NONE

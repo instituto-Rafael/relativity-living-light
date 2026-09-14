@@ -1,0 +1,42 @@
+{
+  "schema": "rll.mathematics-papers-theorems-consumer.v1",
+  "version": "1.0.0",
+  "status": "IMPLEMENTED_EMULATED_CONSUMER",
+  "claim_allowed": false,
+  "producer": {
+    "repository": "rafaelmeloreisnovo/Matem-tica-",
+    "branch": "feat/mathematics-papers-theorems-registry",
+    "commit": "34b7c638bd17997572b1fd6736b54c91b6d076f2",
+    "pull_request": 7,
+    "registry_path": "data/registries/MATHEMATICS_PAPERS_THEOREMS_REGISTRY.json",
+    "registry_blob_sha": "3063fb66016b54081f202f3b8b6e0df212f7f269"
+  },
+  "consumer": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "module": "src/rll/mathematics_registry_adapter.py",
+    "tests": "tests/test_mathematics_registry_adapter.py",
+    "emulator": "tools/emulate_mathematics_registry_adapter.py",
+    "receipt": "results/mathematics_registry_adapter_emulation.json"
+  },
+  "rules": {
+    "zero_is_not_unknown": true,
+    "uncoupled_vector_value": null,
+    "uncoupled_vector_state": "TOKEN_VAZIO_UNCOUPLED_VECTOR",
+    "synthetic_data_is_observational_evidence": false,
+    "mathematical_proof_is_physical_validation": false,
+    "cross_scale_promotion_allowed": false
+  },
+  "allowed_use": [
+    "MATHEMATICAL_ONLY",
+    "MODEL_OR_DETERMINISTIC_ONLY",
+    "CONTEXT_ONLY_TOKEN_VAZIO",
+    "OBSERVATIONAL_INFERENCE_READY"
+  ],
+  "blocked_use": [
+    "automatic promotion of 42 finite candidates to physical attractors",
+    "automatic mapping of T7 coordinates to physical dimensions",
+    "automatic promotion of 144/288 kHz baselines to a special mechanism",
+    "replacement of missing vectors with zero vectors",
+    "physical truth claim from posterior inference alone"
+  ]
+}

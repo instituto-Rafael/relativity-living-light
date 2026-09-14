@@ -1,0 +1,46 @@
+{"id": "planck_2018_vi", "kind": "PAPER", "label": "Planck 2018 VI", "arxiv": "1807.06209", "doi": "10.1051/0004-6361/201833910", "year": 2020}
+{"id": "eisenstein_hu_1998", "kind": "PAPER", "label": "Eisenstein & Hu 1998", "doi": "10.1086/305424", "year": 1998}
+{"id": "chen_2019", "kind": "PAPER", "label": "Chen+ 2019", "arxiv": "1808.05724", "doi": "10.1088/1475-7516/2019/02/028", "year": 2019}
+{"id": "cooke_2018", "kind": "PAPER", "label": "Cooke+ 2018", "arxiv": "1710.11129", "doi": "10.3847/1538-4357/aaab53", "year": 2018}
+{"id": "foreman_mackey_2013", "kind": "PAPER", "label": "Foreman-Mackey+ 2013 (emcee)", "arxiv": "1202.3665", "doi": "10.1086/670067", "year": 2013}
+{"id": "speagle_2020", "kind": "PAPER", "label": "Speagle 2020 (dynesty)", "arxiv": "1904.02180", "doi": "10.1093/mnras/staa278", "year": 2020}
+{"id": "jeffreys_1961", "kind": "PAPER", "label": "Jeffreys 1961", "year": 1961}
+{"id": "desi_dr2_2025", "kind": "PAPER", "label": "DESI DR2 BAO 2025", "arxiv": "2503.14738", "year": 2025}
+{"id": "moresco_2022", "kind": "PAPER", "label": "Moresco+ 2022", "doi": "10.1007/s41114-022-00040-z", "year": 2022}
+{"id": "pantheon_shoes_2022", "kind": "PAPER", "label": "Pantheon+SH0ES 2022", "arxiv": "2202.04077", "doi": "10.3847/1538-4357/ac8b7a", "year": 2022}
+{"id": "rll_fase18e_py", "kind": "CODE", "label": "scripts/rll_fase18e_calibrado.py", "path": "scripts/rll_fase18e_calibrado.py", "fase": "18-E", "pr": "#551"}
+{"id": "rll_fase19_py", "kind": "CODE", "label": "scripts/rll_fase19_rd_calibrado.py", "path": "scripts/rll_fase19_rd_calibrado.py", "fase": "19", "pr": "#553"}
+{"id": "rll_fase20_py", "kind": "CODE", "label": "scripts/rll_fase20_mcmc_bayes.py", "path": "scripts/rll_fase20_mcmc_bayes.py", "fase": "20", "pr": "#554"}
+{"id": "rll_fase18e_json", "kind": "RESULT", "label": "results/rll_fase18e_calibrado.json", "path": "results/rll_fase18e_calibrado.json", "epistemic_status": "SUPERSEDED"}
+{"id": "rll_fase19_json", "kind": "RESULT", "label": "results/rll_fase19_rd_calibrado.json", "path": "results/rll_fase19_rd_calibrado.json", "epistemic_status": "VERIFICADO_NA_FONTE"}
+{"id": "rll_fase20_json", "kind": "RESULT", "label": "results/rll_fase20_mcmc_bayes.json", "path": "results/rll_fase20_mcmc_bayes.json", "epistemic_status": "VERIFICADO_NA_FONTE"}
+{"id": "rs_star_calib", "kind": "CONCEPT", "label": "Calibração rs_star (+0.1988 Mpc)", "description": "Offset aditivo aplicado a r_s(z_*) numérico para chi²_CMB(Planck)≈0"}
+{"id": "rd_calibration", "kind": "CONCEPT", "label": "Calibração rd (−3.614 Mpc)", "description": "Offset aditivo aplicado a r_d numérico E&H para rd(Planck)=147.09 Mpc"}
+{"id": "eh_bias", "kind": "CONCEPT", "label": "Viés E&H 1998 em z_drag", "description": "z_drag_EH≈1021 vs z_drag_Planck≈1059; causa excesso de +3.61 Mpc em rd"}
+{"id": "mcmc_convergence", "kind": "CONCEPT", "label": "Convergência MCMC", "description": "N/τ≈11 (abaixo do ideal de 50); fração de aceitação=0.377 (dentro de 0.2–0.5)"}
+{"id": "jeffreys_scale", "kind": "CONCEPT", "label": "Escala de Jeffreys", "description": "|ln(B₁₀)|>5 = muito forte; 2.5–5 = forte; 1–2.5 = positiva; <1 = não vale menção"}
+{"id": "rll_superiority_claim", "kind": "CONCEPT", "label": "Afirmação de superioridade do RLL sobre ΛCDM", "description": "Hipótese de que RLL explica dados observacionais melhor que ΛCDM; requer Bayes Factor ln(B₁₀)>+5; NÃO sustentada pelos dados atuais"}
+{"id": "G1", "kind": "GAP", "label": "G1: MCMC joint posterior de Ωs0", "status": "FECHADO", "fechado_por": "rll_fase20_py", "resultado": "Ωs0 UL95=0.00178"}
+{"id": "G2", "kind": "GAP", "label": "G2: rd numérico (remove bias E&H)", "status": "FECHADO", "fechado_por": "rll_fase19_py", "resultado": "calibração −3.614 Mpc"}
+{"id": "G3", "kind": "GAP", "label": "G3: Bayes Factor formal ln(B₁₀)", "status": "FECHADO", "fechado_por": "rll_fase20_py", "resultado": "ln(B₁₀)=−6.190±0.691"}
+{"id": "G4", "kind": "GAP", "label": "G4: Mapeamento bias E&H em (Ωm·h², Ωb·h²)", "status": "TOKEN_VAZIO", "priority": "P3/H", "impacto_estimado": "~1-2 unidades em ln(B₁₀)"}
+{"id": "dec_additive_calib", "kind": "DECISION", "label": "Calibração aditiva (não paramétrica)", "rationale": "Análoga à calibração rs_star de FASE 18-E; preserva estrutura do código"}
+{"id": "dec_mcmc_config", "kind": "DECISION", "label": "emcee 32 walkers × 1500 steps", "rationale": "Fração de aceitação target 0.2–0.5; MAP de FASE 19 como posição inicial"}
+{"id": "dec_dynesty_config", "kind": "DECISION", "label": "dynesty nlive=150, dlogz=0.5", "rationale": "Balanço entre precisão (~0.5 unidades em log Z) e tempo de execução"}
+{"id": "doc17", "kind": "AUDIT_DOC", "label": "Doc 17: FASE 18 horizonte sonoro", "path": "docs/cronologia-auditoria/17_FASE18_HORIZONTE_SONORO_CORRIGIDO.md"}
+{"id": "doc18", "kind": "AUDIT_DOC", "label": "Doc 18: FASE 19 rd calibrado", "path": "docs/cronologia-auditoria/18_FASE19_RD_CALIBRADO.md"}
+{"id": "doc19", "kind": "AUDIT_DOC", "label": "Doc 19: FASE 20 MCMC + Bayes Factor", "path": "docs/cronologia-auditoria/19_FASE20_MCMC_BAYES_FACTOR.md"}
+{"id": "C-F17-01", "kind": "CLAIM", "label": "Ωs0=0.012 era artefato E&H", "status": "VERIFICADO_NA_FONTE", "confidence": 0.97}
+{"id": "C-F18-01", "kind": "CLAIM", "label": "rs_star calib +0.1988 Mpc → chi²_CMB≈0", "status": "VERIFICADO_NA_FONTE", "confidence": 0.99}
+{"id": "C-F18-02", "kind": "CLAIM", "label": "Bias E&H: Δrd=+3.614 Mpc", "status": "VERIFICADO_NA_FONTE", "confidence": 0.99}
+{"id": "C-F19-01", "kind": "CLAIM", "label": "rd calib −3.614 Mpc corrige viés", "status": "VERIFICADO_NA_FONTE", "confidence": 0.99}
+{"id": "C-F19-02", "kind": "CLAIM", "label": "Com rd correto, Ωs0→0", "status": "VERIFICADO_NA_FONTE", "confidence": 0.98}
+{"id": "C-F19-03", "kind": "CLAIM", "label": "ΔBIC=+22.27 → ΛCDM forte", "status": "VERIFICADO_NA_FONTE", "confidence": 0.95}
+{"id": "C-F20-01", "kind": "CLAIM", "label": "Ωs0 UL95=0.00178 (MCMC)", "status": "VERIFICADO_NA_FONTE", "confidence": 0.93}
+{"id": "C-F20-02", "kind": "CLAIM", "label": "ln(B₁₀)=−6.190±0.691 (dynesty)", "status": "VERIFICADO_NA_FONTE", "confidence": 0.96}
+{"id": "C-F20-03", "kind": "CLAIM", "label": "Evidência muito forte para ΛCDM (Jeffreys)", "status": "VERIFICADO_NA_FONTE", "confidence": 0.95}
+{"id": "C-F20-04", "kind": "CLAIM", "label": "G4: bias E&H varia em param space", "status": "TOKEN_VAZIO", "confidence": 0.7}
+{"id": "CONTRADICTION-01", "kind": "CONTRADICTION", "label": "Ωs0=0.012 (FASE18-E) vs Ωs0≈0 (FASE19-20)", "status": "RESOLVIDA", "resolucao": "FASE18-E valor era artefato do viés E&H; FASE19-20 correto"}
+{"id": "PR_551", "kind": "PR", "label": "PR #551 (FASE 18, merged 2026-07-14)", "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/551"}
+{"id": "PR_553", "kind": "PR", "label": "PR #553 (FASE 19, merged 2026-07-14)", "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/553"}
+{"id": "PR_554", "kind": "PR", "label": "PR #554 (FASE 20, merged 2026-07-15)", "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/554"}

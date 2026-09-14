@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-19",
+  "parent_branch": "B10_environmental_planetary_context",
+  "raw_data_policy": "immutable",
+  "claim_allowed": false,
+  "execution_status": "documentation_and_registry_only",
+  "subbranches": [
+    {
+      "id": "B10_G01_solid_mechanics",
+      "name": "stress strain fracture and seismic waves",
+      "status": "reference_only",
+      "state_variables": ["stress_tensor", "strain_tensor", "displacement", "velocity", "temperature"],
+      "equations": ["M q_ddot + C q_dot + K q = F(t)"],
+      "observables": ["strain", "acceleration", "waveform", "spectral_Q", "fracture_events"],
+      "baselines": ["linear_elasticity", "viscoelasticity", "fracture_mechanics"],
+      "claim_boundary": "Mechanical similarity across scales does not establish identical material or cosmological physics."
+    },
+    {
+      "id": "B10_G02_quartz_piezoelectric",
+      "name": "quartz piezoelectric transduction",
+      "status": "reference_only",
+      "equations": ["D_i=d_ijk sigma_jk+epsilon_ij E_j"],
+      "observables": ["electric_potential", "current_density", "crystal_orientation", "stress", "charge_relaxation"],
+      "baselines": ["non_piezoelectric_control", "orientation_control", "leakage_model", "electrokinetic_model", "defect_charge_model"],
+      "claim_boundary": "Quartz piezoelectricity is real; universal earthquake prediction or attribution remains blocked."
+    },
+    {
+      "id": "B10_G03_piezo_geochemistry",
+      "name": "piezoelectric electrochemical mineral deposition",
+      "status": "supported_specific_reference",
+      "equations": ["stress -> potential -> electrochemical deposition"],
+      "observables": ["gold_deposition_rate", "nanoparticle_density", "fluid_chemistry", "potential", "existing_gold_seed"],
+      "baselines": ["unstressed_quartz", "non_quartz_control", "no_gold_solution", "orientation_control"],
+      "claim_boundary": "The documented mechanism concerns deposition from gold-bearing fluids, not elemental transmutation."
+    },
+    {
+      "id": "B10_G04_triboluminescence",
+      "name": "fracture contact and peeling radiation",
+      "status": "supported_specific_reference",
+      "equations": ["mechanical_work -> charge_separation -> discharge -> photon_emission"],
+      "observables": ["peeling_force", "stick_slip_timing", "pressure", "radio", "visible", "xray_counts"],
+      "baselines": ["atmospheric_pressure", "material_control", "no_peel", "detector_background"],
+      "claim_boundary": "X-ray emission from tape was observed under moderate vacuum and cannot be generalized to ordinary peeling conditions."
+    },
+    {
+      "id": "B10_G05_radiation_taxonomy",
+      "name": "particle and photon radiation classes",
+      "status": "implemented_taxonomy",
+      "equations": ["E_gamma=h nu"],
+      "observables": ["particle_track", "photon_energy", "spectrum", "source_process", "shielding_response"],
+      "baselines": ["NRC_radiation_taxonomy", "NASA_EM_spectrum"],
+      "claim_boundary": "Alpha and beta are particles; UVC, X-rays and gamma rays are photons."
+    },
+    {
+      "id": "B10_G06_damping_resistance",
+      "name": "multi-domain dissipation and relaxation",
+      "status": "hypothesis_framework",
+      "equations": ["q_ddot+2 gamma q_dot+omega_0^2 q=f(t)", "dE/dt=P_in-sum(P_loss)"],
+      "observables": ["decay_time", "quality_factor", "resistivity", "cooling_time", "reaction_time", "optical_depth"],
+      "baselines": ["mechanical_damping", "ohmic_loss", "thermal_transport", "radiative_transfer", "chemical_kinetics"],
+      "claim_boundary": "A single damping parameter is not transferable across mechanisms without derivation."
+    },
+    {
+      "id": "B10_G07_observer_transfer",
+      "name": "time instrument observer and inference chain",
+      "status": "implemented_taxonomy",
+      "equations": ["O_obs=T_observer o T_instrument o T_medium o T_source + N"],
+      "observables": ["clock", "sampling_rate", "bandwidth", "calibration", "orientation", "compression", "uncertainty"],
+      "baselines": ["instrument_transfer_function", "blind_analysis", "independent_detector"],
+      "claim_boundary": "Observer and instrument affect the record and inference, not the prior physical event."
+    },
+    {
+      "id": "B10_G08_collective_scaling",
+      "name": "microphysics to macroscopic and cosmological observables",
+      "status": "reference_only",
+      "equations": ["particle_ensemble -> distribution_function -> stress_energy/current -> observable"],
+      "observables": ["density", "pressure", "current", "opacity", "polarization", "reaction_history"],
+      "baselines": ["kinetic_theory", "MHD", "radiative_transfer", "standard_cosmology"],
+      "claim_boundary": "Elementary particles do not become intrinsically gigantic; collective fields and correlation scales become macroscopic."
+    }
+  ],
+  "promotion_requirements": [
+    "carrier",
+    "medium",
+    "scale",
+    "state_and_phase",
+    "units",
+    "free_energy_source",
+    "coupling_operator",
+    "conservation_laws",
+    "rate_or_timescale",
+    "damping_or_loss",
+    "observable",
+    "instrument_transfer",
+    "uncertainty",
+    "baseline",
+    "falsifier",
+    "reproduction_artifact"
+  ],
+  "blocked_promotions": [
+    "local_geophysical_signal_implies_RLL_background",
+    "quartz_is_universal_earthquake_predictor",
+    "alpha_beta_are_EM_frequency_bands",
+    "elementary_particle_intrinsic_volume_becomes_cosmological",
+    "triboluminescence_implies_general_xray_generation"
+  ],
+  "exclusive_rll_prediction": "TOKEN_VAZIO"
+}

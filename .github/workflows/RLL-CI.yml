@@ -1,75 +1,18 @@
-name: RLL Scientific CI Hardened
+name: "RLL Scientific CI — entrada manual canônica"
 
 on:
-  push:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-ci-manual-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  rll:
-    runs-on: ubuntu-latest
-
-    steps:
-      # ============================
-      # CHECKOUT PRIMEIRO (CRÍTICO)
-      # ============================
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      # ============================
-      # SETUP PYTHON
-      # ============================
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      # ============================
-      # DEPENDÊNCIAS
-      # ============================
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install numpy pandas scipy emcee
-
-      # ============================
-      # AMBIENTE LIMPO
-      # ============================
-      - name: Prepare filesystem
-        run: |
-          mkdir -p validation_outputs
-          mkdir -p data
-
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=." >> $GITHUB_ENV
-
-      # ============================
-      # BAYESIAN CALIBRATION LAYER
-      # ============================
-      - name: Run Bayesian calibration
-        run: |
-          python -m validation.bayes_rll
-          python -m validation.bayes_compare
-
-      # ============================
-      # SCIENTIFIC CORE PIPELINE
-      # ============================
-      - name: Run LCDM baseline
-        run: python -m validation.run_lcdm
-
-      - name: Run RLL model
-        run: python -m validation.run_rll
-
-      - name: Compare models
-        run: python -m validation.compare_models
-
-      - name: Falsification test
-        run: python -m validation.check_falsification
-
-      # ============================
-      # ARTIFACT OUTPUT
-      # ============================
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: rll-scientific-results
-          path: validation_outputs/
+  canonical-science:
+    name: "Delegar ao gate determinístico FASE 24.1"
+    uses: ./.github/workflows/rll-pipeline-linear-completo.yml
+    with:
+      modo: apenas_ciencia

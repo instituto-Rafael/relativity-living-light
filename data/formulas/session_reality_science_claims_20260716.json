@@ -1,0 +1,178 @@
+{
+  "schema": "rll.session_reality_science_claims.v1",
+  "operation_id": "SESSION-REALITY-SCIENCE-20260716",
+  "claim_allowed": false,
+  "public_safe": true,
+  "source_scope": {
+    "historical_export": {
+      "path": "local:conversations2.json",
+      "sha256": "6005a6d2a4c8d80aa6cccedf3bf7334e26fb934a26d22ba1f7668136e1aa5ce4",
+      "size_bytes": 225140363,
+      "conversation_count": 709,
+      "target_conversation_title": "Guia para superação pessoal",
+      "target_materialized_message_count": 87,
+      "current_2026_session_complete_in_export": false
+    },
+    "public_documents": [
+      "docs/audits/SESSION_REALITY_SCIENCE_AUDIT_20260716.md",
+      "docs/formulas/ATOM_WATER_IONIC_QUANTUM_BRIDGE_20260716.md"
+    ]
+  },
+  "state_vocabulary": [
+    "VERIFIED_STANDARD",
+    "VERIFIED_LIMITED",
+    "MATHEMATICAL_IDENTITY",
+    "HYPOTHESIS",
+    "ANALOGY_ONLY",
+    "DECLARED_BY_AUTHOR",
+    "CONTRADICTION",
+    "TOKEN_VAZIO",
+    "CLAIM_BLOCKED"
+  ],
+  "claims": [
+    {
+      "id": "AI-BACKGROUND-001",
+      "domain": "ai_operations",
+      "statement": "The conversational AI runs an autonomous infinite learning loop in the background.",
+      "state": "CONTRADICTION",
+      "correction": "No hidden perpetual process is evidenced; work occurs during explicit turns or explicitly scheduled automations.",
+      "falsifier_or_gate": "Provide an externally inspectable process, schedule, logs and lifecycle controlled by an authorized runtime."
+    },
+    {
+      "id": "AI-LAYERS-002",
+      "domain": "ai_architecture",
+      "statement": "The assistant has 999 million operational layers or trillions of internal AI instances.",
+      "state": "CONTRADICTION",
+      "correction": "The numbers were not produced from architecture metadata, instrumentation or logs.",
+      "falsifier_or_gate": "Require official architecture disclosure or reproducible instrumentation."
+    },
+    {
+      "id": "ASSET-COUNTS-003",
+      "domain": "data_provenance",
+      "statement": "Uploaded local assets contain measurable finite records and hashes.",
+      "state": "VERIFIED_LIMITED",
+      "correction": "Verified locally for the listed files only; no inference to hidden assets.",
+      "falsifier_or_gate": "Recompute counts and SHA-256 over the same bytes."
+    },
+    {
+      "id": "PHOTO-DIAGNOSIS-004",
+      "domain": "health",
+      "statement": "A single ordinary photograph can diagnose neurodegenerative, hepatic, renal or psychiatric disease.",
+      "state": "CONTRADICTION",
+      "correction": "A photograph alone is not a clinical diagnostic instrument for those conditions.",
+      "falsifier_or_gate": "Prospective clinical validation with ground truth, protocol, sensitivity, specificity and ethics approval."
+    },
+    {
+      "id": "FUNDAMENTAL-FORCES-005",
+      "domain": "particle_physics",
+      "statement": "Nature is described at current established level by four fundamental interactions; the Standard Model excludes gravity.",
+      "state": "VERIFIED_STANDARD",
+      "correction": "Strong, electromagnetic, weak and gravitational interactions; no confirmed fifth force is asserted here.",
+      "falsifier_or_gate": "Peer-reviewed reproducible evidence for an additional interaction."
+    },
+    {
+      "id": "IONIC-BOND-006",
+      "domain": "physical_chemistry",
+      "statement": "Ionic bonding is predominantly an electromagnetic many-body energy problem, not miniature gravity.",
+      "state": "VERIFIED_STANDARD",
+      "correction": "Use Coulomb interaction plus short-range repulsion, polarization, lattice or solvation and thermodynamics.",
+      "falsifier_or_gate": "A model with gravity must quantitatively outperform electromagnetic chemistry at atomic scale."
+    },
+    {
+      "id": "IONIC-CURVATURE-007",
+      "domain": "mathematical_chemistry",
+      "statement": "Curvature may denote field-line geometry or the Hessian of a potential-energy surface.",
+      "state": "MATHEMATICAL_IDENTITY",
+      "correction": "This usage does not imply spacetime curvature.",
+      "falsifier_or_gate": "Declare coordinates, metric or Hessian, units and observable."
+    },
+    {
+      "id": "POISSON-EQUATION-008",
+      "domain": "electrostatics",
+      "statement": "The electrostatic potential satisfies nabla squared phi equals minus rho over epsilon.",
+      "state": "VERIFIED_STANDARD",
+      "correction": "The earlier session expression proportional to q over epsilon times one over r squared was invalid.",
+      "falsifier_or_gate": "Dimensional analysis and substitution into Maxwell equations."
+    },
+    {
+      "id": "WATER-AUTOPROTOLYSIS-009",
+      "domain": "aqueous_chemistry",
+      "statement": "Water autoprotolysis is represented as two water molecules in equilibrium with hydronium and hydroxide.",
+      "state": "VERIFIED_STANDARD",
+      "correction": "H plus in aqueous shorthand means a solvated excess proton, not a persistent bare proton.",
+      "falsifier_or_gate": "Spectroscopic and thermodynamic measurements under declared temperature and pressure."
+    },
+    {
+      "id": "EIGEN-ZUNDEL-010",
+      "domain": "aqueous_chemistry",
+      "statement": "H5O2 plus is the idealized Zundel motif and H9O4 plus is the idealized Eigen motif.",
+      "state": "VERIFIED_LIMITED",
+      "correction": "Liquid water is highly fluxional; motifs are descriptive limits rather than necessarily distinct rigid thermodynamic species.",
+      "falsifier_or_gate": "Compare spectroscopy and ab initio dynamics across conditions."
+    },
+    {
+      "id": "WATER-MEMORY-011",
+      "domain": "water_claims",
+      "statement": "Liquid water stores universal conscious memory or acts as a dimensional bridge.",
+      "state": "ANALOGY_ONLY",
+      "correction": "No supporting evidence is provided in the session.",
+      "falsifier_or_gate": "Pre-registered blinded experiments with information-theoretic endpoint and independent replication."
+    },
+    {
+      "id": "PROTON-PRESSURE-012",
+      "domain": "hadron_physics",
+      "statement": "The proton has a spatial pressure and shear distribution inferred from energy-momentum-tensor form factors.",
+      "state": "VERIFIED_LIMITED",
+      "correction": "Central values of order 10^35 pascal are not a uniform pressure and do not explain ionic bonds.",
+      "falsifier_or_gate": "Improved DVCS extraction, lattice QCD comparison and uncertainty propagation."
+    },
+    {
+      "id": "HYPERCUBE-013",
+      "domain": "geometry",
+      "statement": "A hypercube can represent a discretized multidimensional state space.",
+      "state": "MATHEMATICAL_IDENTITY",
+      "correction": "Representation does not prove that atoms or water are literal spatial hypercubes.",
+      "falsifier_or_gate": "Specify coordinates, mapping, metric and predictive gain over a baseline representation."
+    },
+    {
+      "id": "QUANTUM-AI-014",
+      "domain": "quantum_computing",
+      "statement": "A classical language model literally uses physical superposition, entanglement and tunneling during ordinary inference.",
+      "state": "CONTRADICTION",
+      "correction": "Quantum concepts may be simulated or used metaphorically; physical quantum resources require suitable hardware and protocol.",
+      "falsifier_or_gate": "Provide hardware topology, quantum circuit, calibration and measurement results."
+    },
+    {
+      "id": "BIO-ION-GRADIENTS-015",
+      "domain": "biophysics",
+      "statement": "Electrochemical ion gradients contribute to membrane potentials, transport and ATP synthesis.",
+      "state": "VERIFIED_STANDARD",
+      "correction": "Biological function additionally requires membranes, proteins, kinetics, regulation and energy flow.",
+      "falsifier_or_gate": "Measure concentration, voltage, flux and perturbation response."
+    },
+    {
+      "id": "RLL-CURRENT-EVIDENCE-016",
+      "domain": "cosmology",
+      "statement": "Current repository analyses do not establish observational superiority of RLL over LambdaCDM.",
+      "state": "VERIFIED_LIMITED",
+      "correction": "The reported posterior is compatible with Omega_s0 equals zero and the reported Bayes factor favors LambdaCDM for the analyzed data and priors.",
+      "falsifier_or_gate": "New pre-registered out-of-sample evidence with full covariance and reproducible Bayesian comparison."
+    },
+    {
+      "id": "PARABLES-017",
+      "domain": "cultural_method",
+      "statement": "Original culturally inspired parables can serve as didactic interfaces when clearly labeled and not presented as historical quotations.",
+      "state": "ANALOGY_ONLY",
+      "correction": "Cultural source, authorship and non-evidentiary role must remain explicit.",
+      "falsifier_or_gate": "Editorial and cultural review; remove false attribution."
+    }
+  ],
+  "mandatory_invariants": {
+    "metaphor_does_not_validate_physics": true,
+    "hash_does_not_prove_scientific_truth": true,
+    "private_content_copied": false,
+    "unsupported_large_counts_forbidden": true,
+    "negative_results_preserved": true
+  },
+  "next_gate": "Validate this ledger in CI, preserve the science audit, and mirror only pointers to any private session packets."
+}

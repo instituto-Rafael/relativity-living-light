@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "analysis": "Analyse",
+    "data": "Daten",
+    "settings": "Einstellungen",
+    "export": "Exportieren"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "language": "Sprache"
+  },
+  "dashboard": {
+    "title": "Echtzeit-Berichte",
+    "subtitle": "Erweiterte Datenanalyse mit intuitiven Visualisierungen",
+    "overview": "Übersicht",
+    "metrics": "Metriken",
+    "performance": "Leistung",
+    "trends": "Trends"
+  },
+  "analysis": {
+    "title": "Analyse-Tools",
+    "advanced": "Erweiterte Analyse",
+    "comparative": "Vergleichende Analyse",
+    "predictive": "Prädiktive Analyse",
+    "statistical": "Statistiken"
+  },
+  "export": {
+    "title": "Daten Exportieren",
+    "formats": "Formate",
+    "pdf": "PDF",
+    "csv": "CSV",
+    "json": "JSON",
+    "excel": "Excel",
+    "selectFormat": "Exportformat auswählen"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "theme": "Design",
+    "language": "Sprache",
+    "notifications": "Benachrichtigungen",
+    "privacy": "Datenschutz",
+    "dark": "Dunkel",
+    "light": "Hell",
+    "auto": "Automatisch"
+  }
+}

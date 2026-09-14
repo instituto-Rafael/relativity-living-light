@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "rll_knowledge_matrix.schema.json",
+  "title": "RLL Knowledge Matrix Item",
+  "description": "Structural contract for a single item in the RLL Knowledge Matrix — FASE 30. Structural validation does not authorize scientific claims; claim_allowed=false globally.",
+  "type": "object",
+  "required": [
+    "item_id",
+    "kind",
+    "maturity_class",
+    "velocidade",
+    "D_vector",
+    "ecosystem_role",
+    "queue_state",
+    "sha256",
+    "blake3",
+    "academic_timestamp",
+    "retroalimentacao",
+    "claim_allowed"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "pattern": "^KMIT-[0-9A-F]{12}$",
+      "description": "Canonical ID: KMIT-{sha256(kind+newline+content)[:12].upper()}"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "formula",
+        "concept",
+        "thesis",
+        "gap",
+        "observation",
+        "validation",
+        "result",
+        "bridge"
+      ]
+    },
+    "maturity_class": {
+      "type": "string",
+      "enum": [
+        "immortal_verified",
+        "verified",
+        "partial",
+        "candidate",
+        "seed",
+        "latent",
+        "void"
+      ]
+    },
+    "velocidade": {
+      "type": "string",
+      "enum": ["medusa", "equilibrado", "tartaruga"]
+    },
+    "D_vector": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 7,
+      "maxItems": 7,
+      "description": "7-dimensional direction vector [d1..d7]"
+    },
+    "ecosystem_role": {
+      "type": "string",
+      "enum": [
+        "apex_validator",
+        "base_concept",
+        "buffer",
+        "accumulator",
+        "propagator",
+        "catalyst",
+        "encoder"
+      ]
+    },
+    "queue_state": {
+      "type": "string",
+      "enum": ["executed", "in_queue", "latent", "forgotten_protected", "void"]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "blake3": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "academic_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601+Z academic timestamp in chain"
+    },
+    "retroalimentacao": {
+      "type": "object",
+      "required": ["feeds_into", "fed_by"],
+      "properties": {
+        "feeds_into": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "fed_by": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim_allowed": {
+      "type": "boolean",
+      "const": false,
+      "description": "Must always be false — boundary enforced structurally"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label or expression"
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin file or artifact"
+    },
+    "origin_gap": {
+      "type": "string",
+      "description": "For hypothesis items: the gap that originated this thesis"
+    },
+    "predicted_observation": {
+      "type": "string"
+    },
+    "falsifier": {
+      "type": "string"
+    }
+  }
+}

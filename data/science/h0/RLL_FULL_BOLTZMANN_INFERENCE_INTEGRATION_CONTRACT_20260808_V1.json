@@ -1,0 +1,78 @@
+{
+  "schema": "rll.h0_rd_full_boltzmann_inference_contract.v1",
+  "state": "INTEGRATION_CONTRACT_READY_IMPLEMENTATION_PENDING",
+  "generated_at": "2026-08-08T05:50:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+  "authority": {
+    "cross_engine_receipt": "artifacts/science/h0/RLL_H0_RD_BOLTZMANN_RECONCILIATION_20260808_V1.json",
+    "baseline_cross_engine_relative_error_lcdm": 0.00003443293087739714,
+    "baseline_cross_engine_relative_error_cpl": 0.00003466772785888373,
+    "current_lightweight_approximation": "data/pipelines/structure_d/joint_real_likelihood.py::rd_drag_mpc",
+    "current_tested_relative_error_vs_CAMB_range": [0.005989556312473543, 0.005989573643628819],
+    "current_tested_relative_error_vs_CLASS_range": [0.005955112365984809, 0.005955328441008707],
+    "error_scope": "only the declared baseline vectors; not a universal bound"
+  },
+  "accepted_backend_modes": [
+    {
+      "mode": "DIRECT_CAMB",
+      "requirement": "compute r_drag from a pinned CAMB authority at every required unique parameter vector"
+    },
+    {
+      "mode": "DIRECT_CLASS",
+      "requirement": "compute rs_drag from a pinned CLASS authority at every required unique parameter vector"
+    },
+    {
+      "mode": "VALIDATED_CACHE_OR_INTERPOLATOR",
+      "requirement": "build from pinned full-Boltzmann evaluations and predeclare domain, sampling design, interpolation method and held-out/direct-solver error criterion before using it in optimization"
+    }
+  ],
+  "forbidden_modes": [
+    "silent fallback to the current lightweight approximation",
+    "one baseline r_drag value reused for all variable parameter vectors",
+    "cache/interpolator without direct held-out solver validation",
+    "different r_drag backend/fairness policy across LCDM wCDM CPL and RLL within the same comparison cell"
+  ],
+  "integration_interface": {
+    "consumer": "tools/run_h0_rd_ablation_v1.py",
+    "current_hook": "data.pipelines.structure_d.joint_real_likelihood.rd_drag_mpc",
+    "required_change": "make the derived-r_d route explicitly backend-selectable and receipt-producing rather than implicitly bound to the lightweight approximation",
+    "six_cell_matrix": "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json",
+    "models_per_cell": 4,
+    "total_selected_best_fits": 24
+  },
+  "required_preexecution_decisions": [
+    "pin exact full-Boltzmann engine version/commit",
+    "choose DIRECT_CAMB, DIRECT_CLASS or VALIDATED_CACHE_OR_INTERPOLATOR",
+    "if cached: predeclare grid/domain/interpolator and held-out error threshold before optimization",
+    "declare behavior for RLL parameter vectors whose early/background mapping is not justified by the standard r_drag parameterization",
+    "freeze optimizer settings identical to the existing 24-cell convergence authority"
+  ],
+  "required_outputs": [
+    "backend/version/config receipt",
+    "unique parameter vectors evaluated by the full-Boltzmann authority or cache source",
+    "direct-vs-cache validation table if caching is used",
+    "24-cell H0/r_d rerun with convergence receipts",
+    "cell-by-cell delta from the former lightweight approximation",
+    "runtime/compute-cost report",
+    "explicit RLL mapping boundary and any rejected parameter regions"
+  ],
+  "falsifiers": [
+    "full-Boltzmann backend is not actually used by the formal derived-r_d route",
+    "cache error exceeds the predeclared threshold",
+    "optimizer fairness changes between models",
+    "one or more selected best fits fail the existing convergence policy",
+    "RLL early-time/baryon mapping is assumed without an explicit model contract",
+    "CLASS/CAMB disagreement exceeds the declared cross-engine acceptance policy"
+  ],
+  "close_when": [
+    "the formal derived-r_d route is backend-selectable and defaults are explicit",
+    "full-Boltzmann or validated-cache execution is evidenced",
+    "all 24 selected best fits pass unchanged convergence/fairness gates",
+    "approximation deltas and compute policy are persisted",
+    "RLL mapping assumptions are explicit rather than silently inherited"
+  ],
+  "claim_boundary": "This mechanism removes or measures the r_drag numerical approximation in the H0/r_d sensitivity path. It cannot substitute for RLL perturbation closure or an observational H0-tension claim.",
+  "token_resolution": "NOT_RESOLVED"
+}

@@ -5,17 +5,77 @@ on:
     branches: [main]
     paths:
       - docs/audits/CROSS_REPO_RELATIONSHIP_REGISTRY.md
+      - docs/audits/RLL_CROSS_REPO_ENTRELACE_SURGERY_20260716.md
       - docs/audits/MASTER_UNIFIED_DOCUMENTATION_COHERENCE_REVIEW.md
+      - docs/audits/LIVRO_VIVO_PACKET_CHAIN_FINAL_TRACEABILITY_20260716.md
+      - docs/audits/SESSION_REALITY_SCIENCE_AUDIT_20260716.md
+      - docs/audits/SESSION_REALITY_SCIENCE_FINAL_TRACEABILITY_20260716.md
+      - docs/architecture/SESSION_KNOWLEDGE_OPERATING_SYSTEM.md
+      - docs/architecture/SESSION_UNIFIED_INTERACTION_20260716.md
+      - docs/formulas/SESSION_CROSS_DOMAIN_FORMULA_BRIDGE_20260716.md
+      - docs/formulas/ATOM_WATER_IONIC_QUANTUM_BRIDGE_20260716.md
+      - data/formulas/session_packet_public_mirror_20260716.json
+      - data/formulas/session_reality_science_claims_20260716.json
+      - data/knowledge/session_unified_interaction_20260716.json
+      - knowledge_ecosystem/session_operating_system.yml
+      - knowledge_ecosystem/rll_cross_repo_entrelaces_v2.json
+      - schemas/session_operating_system.schema.json
+      - schemas/rll_cross_repo_entrelace.schema.json
       - tools/validate_cross_repo_relationship_registry.py
+      - tools/validate_session_operating_system.py
+      - tools/validate_rll_cross_repo_entrelaces.py
+      - tools/validate_session_packet_public_mirror.py
+      - tools/validate_session_reality_science_claims.py
+      - tools/validate_session_unified_interaction.py
+      - scripts/build_session_grafo_current_state_overlay.py
+      - results/session_grafo_fase17_20/session_manifest.json
+      - results/session_grafo_fase17_20/current_state_overlay.json
+      - results/session_grafo_fase17_20/gaps.jsonl
+      - results/session_grafo_fase17_20/report.md
       - tests/test_cross_repo_relationship_registry.py
+      - tests/test_session_operating_system.py
+      - tests/test_rll_cross_repo_entrelaces.py
+      - tests/test_session_packet_public_mirror.py
+      - tests/test_session_reality_science_claims.py
+      - tests/test_session_unified_interaction.py
       - .github/workflows/validate-cross-repo-relationship-registry.yml
   push:
     branches: [main]
     paths:
       - docs/audits/CROSS_REPO_RELATIONSHIP_REGISTRY.md
+      - docs/audits/RLL_CROSS_REPO_ENTRELACE_SURGERY_20260716.md
       - docs/audits/MASTER_UNIFIED_DOCUMENTATION_COHERENCE_REVIEW.md
+      - docs/audits/LIVRO_VIVO_PACKET_CHAIN_FINAL_TRACEABILITY_20260716.md
+      - docs/audits/SESSION_REALITY_SCIENCE_AUDIT_20260716.md
+      - docs/audits/SESSION_REALITY_SCIENCE_FINAL_TRACEABILITY_20260716.md
+      - docs/architecture/SESSION_KNOWLEDGE_OPERATING_SYSTEM.md
+      - docs/architecture/SESSION_UNIFIED_INTERACTION_20260716.md
+      - docs/formulas/SESSION_CROSS_DOMAIN_FORMULA_BRIDGE_20260716.md
+      - docs/formulas/ATOM_WATER_IONIC_QUANTUM_BRIDGE_20260716.md
+      - data/formulas/session_packet_public_mirror_20260716.json
+      - data/formulas/session_reality_science_claims_20260716.json
+      - data/knowledge/session_unified_interaction_20260716.json
+      - knowledge_ecosystem/session_operating_system.yml
+      - knowledge_ecosystem/rll_cross_repo_entrelaces_v2.json
+      - schemas/session_operating_system.schema.json
+      - schemas/rll_cross_repo_entrelace.schema.json
       - tools/validate_cross_repo_relationship_registry.py
+      - tools/validate_session_operating_system.py
+      - tools/validate_rll_cross_repo_entrelaces.py
+      - tools/validate_session_packet_public_mirror.py
+      - tools/validate_session_reality_science_claims.py
+      - tools/validate_session_unified_interaction.py
+      - scripts/build_session_grafo_current_state_overlay.py
+      - results/session_grafo_fase17_20/session_manifest.json
+      - results/session_grafo_fase17_20/current_state_overlay.json
+      - results/session_grafo_fase17_20/gaps.jsonl
+      - results/session_grafo_fase17_20/report.md
       - tests/test_cross_repo_relationship_registry.py
+      - tests/test_session_operating_system.py
+      - tests/test_rll_cross_repo_entrelaces.py
+      - tests/test_session_packet_public_mirror.py
+      - tests/test_session_reality_science_claims.py
+      - tests/test_session_unified_interaction.py
       - .github/workflows/validate-cross-repo-relationship-registry.yml
   workflow_dispatch:
 
@@ -29,23 +89,128 @@ concurrency:
 jobs:
   validate-cross-repo-relationship-registry:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 7
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.11'
 
-      - name: Install test dependencies
-        run: pip install pytest
+      - name: Install validation dependencies
+        run: pip install pytest PyYAML jsonschema
 
-      - name: Validate registry
+      - name: Validate Markdown relationship registry
         run: python tools/validate_cross_repo_relationship_registry.py
 
-      - name: Run registry tests
-        run: python -m pytest -q tests/test_cross_repo_relationship_registry.py
+      - name: Validate Session Knowledge Operating System
+        run: |
+          mkdir -p artifacts/session-knowledge-os
+          python tools/validate_session_operating_system.py \
+            --report artifacts/session-knowledge-os/report.json
+          sha256sum \
+            knowledge_ecosystem/session_operating_system.yml \
+            schemas/session_operating_system.schema.json \
+            artifacts/session-knowledge-os/report.json \
+            > artifacts/session-knowledge-os/CHECKSUMS.sha256
+          printf '%s\n' \
+            'CLAIM_ALLOWED=false' \
+            'CROSS_REPO_WRITE=false' \
+            'DESTRUCTIVE_ACTIONS=false' \
+            'PRIVATE_CONTENT=POINTER_ONLY' \
+            > artifacts/session-knowledge-os/CLAIM_BOUNDARY.txt
+
+      - name: Validate measured RLL entrelaces and temporal overlay
+        run: |
+          python scripts/build_session_grafo_current_state_overlay.py --check
+          python tools/validate_rll_cross_repo_entrelaces.py \
+            --report artifacts/session-knowledge-os/cross_repo_entrelaces_report.json
+          sha256sum \
+            knowledge_ecosystem/rll_cross_repo_entrelaces_v2.json \
+            schemas/rll_cross_repo_entrelace.schema.json \
+            results/session_grafo_fase17_20/current_state_overlay.json \
+            results/session_grafo_fase17_20/gaps.jsonl \
+            docs/audits/RLL_CROSS_REPO_ENTRELACE_SURGERY_20260716.md \
+            artifacts/session-knowledge-os/cross_repo_entrelaces_report.json \
+            > artifacts/session-knowledge-os/CROSS_REPO_ENTRELACES.sha256
+          printf '%s\n' \
+            'EXTERNAL_RUNTIME_ARTIFACT_IMPORTED=false' \
+            'HISTORICAL_MOBILE_PROVENANCE_VERIFIED=false' \
+            'G4_SNAPSHOT_PRESERVED=true' \
+            'G4_CURRENT_STATE=VERIFIED_LIMITED' \
+            'G4_RESIDUAL_CAMB_RECFAST=TOKEN_VAZIO' \
+            >> artifacts/session-knowledge-os/CLAIM_BOUNDARY.txt
+
+      - name: Validate public mirror of private packet chain
+        run: |
+          python tools/validate_session_packet_public_mirror.py \
+            --report artifacts/session-knowledge-os/public_mirror_report.json
+          sha256sum \
+            docs/formulas/SESSION_CROSS_DOMAIN_FORMULA_BRIDGE_20260716.md \
+            data/formulas/session_packet_public_mirror_20260716.json \
+            tools/validate_session_packet_public_mirror.py \
+            tests/test_session_packet_public_mirror.py \
+            > artifacts/session-knowledge-os/PUBLIC_MIRROR.sha256
+          printf '%s\n' \
+            'PRIVATE_VALIDATOR_EXECUTION_PROVEN=false' \
+            'PRIVATE_CI=STARTUP_FAILURE_OR_INFRASTRUCTURE_FAILURE' \
+            'PRIVATE_CONTENT_COPIED=false' \
+            >> artifacts/session-knowledge-os/CLAIM_BOUNDARY.txt
+
+      - name: Validate session reality and science correction ledger
+        run: |
+          python tools/validate_session_reality_science_claims.py \
+            --report artifacts/session-knowledge-os/session_reality_science_report.json
+          sha256sum \
+            docs/audits/SESSION_REALITY_SCIENCE_AUDIT_20260716.md \
+            docs/formulas/ATOM_WATER_IONIC_QUANTUM_BRIDGE_20260716.md \
+            data/formulas/session_reality_science_claims_20260716.json \
+            tools/validate_session_reality_science_claims.py \
+            tests/test_session_reality_science_claims.py \
+            > artifacts/session-knowledge-os/SESSION_REALITY_SCIENCE.sha256
+          printf '%s\n' \
+            'SESSION_COMPLETE_EXPORT=false' \
+            'METAPHOR_VALIDATES_PHYSICS=false' \
+            'UNSUPPORTED_LARGE_COUNTS=false' \
+            'NEGATIVE_RESULTS_PRESERVED=true' \
+            >> artifacts/session-knowledge-os/CLAIM_BOUNDARY.txt
+
+      - name: Validate unified session repository contract
+        run: |
+          python tools/validate_session_unified_interaction.py \
+            --report artifacts/session-knowledge-os/session_unified_interaction_report.json
+          sha256sum \
+            docs/architecture/SESSION_UNIFIED_INTERACTION_20260716.md \
+            data/knowledge/session_unified_interaction_20260716.json \
+            results/session_grafo_fase17_20/session_manifest.json \
+            results/session_grafo_fase17_20/gaps.jsonl \
+            tools/validate_session_unified_interaction.py \
+            tests/test_session_unified_interaction.py \
+            > artifacts/session-knowledge-os/SESSION_UNIFIED_INTERACTION.sha256
+          printf '%s\n' \
+            'SESSION_UNIT=ONE_MULTI_LENS_INTERACTION' \
+            'SESSION_TARGET=REPOSITORIES' \
+            'WORKFLOW_ARTIFACT=EVIDENCE_ONLY' \
+            'G4_TEMPORAL_STATE_SPLIT=true' \
+            >> artifacts/session-knowledge-os/CLAIM_BOUNDARY.txt
+
+      - name: Run focused traceability tests
+        run: |
+          python -m pytest -q \
+            tests/test_cross_repo_relationship_registry.py \
+            tests/test_session_operating_system.py \
+            tests/test_rll_cross_repo_entrelaces.py \
+            tests/test_session_packet_public_mirror.py \
+            tests/test_session_reality_science_claims.py \
+            tests/test_session_unified_interaction.py
+
+      - name: Upload traceability artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: session-knowledge-os-audit-v2
+          path: artifacts/session-knowledge-os/
+          retention-days: 30

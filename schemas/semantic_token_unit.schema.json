@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/semantic_token_unit.schema.json",
+  "title": "RAFAELIA SemanticTokenUnit 7D",
+  "description": "Structural contract for a governed semantic token unit analyzed through exactly seven complementary directions. It preserves lexical form, semantic variables, relations, counterforces, causal paths, epistemic gaps and operational governance. It does not claim that language-model tokenizers natively expose these fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["unit_id", "raw_span", "lexical_tokens", "views_7d", "evidence_refs", "uncertainty", "epistemic_status", "use_policy", "created_at"],
+  "properties": {
+    "unit_id": {"type": "string", "pattern": "^STU-[A-Z0-9_]{2,24}-[0-9]{4,12}$"},
+    "raw_span": {"type": "string", "minLength": 1},
+    "language": {"type": "string", "minLength": 2, "default": "pt-BR"},
+    "lexical_tokens": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["surface", "index"],
+        "properties": {
+          "surface": {"type": "string"},
+          "normalized": {"type": "string"},
+          "index": {"type": "integer", "minimum": 0},
+          "token_id": {"type": ["integer", "string"]}
+        }
+      }
+    },
+    "views_7d": {
+      "type": "object", "additionalProperties": false,
+      "required": ["d1_lexical_structure", "d2_entity_domain", "d3_relational_isogonic", "d4_antagonic_constraints", "d5_causal_temporal", "d6_epistemic_gap", "d7_operational_governance"],
+      "properties": {
+        "d1_lexical_structure": {
+          "type": "object", "additionalProperties": false,
+          "required": ["normalized_form", "syntactic_roles"],
+          "properties": {
+            "normalized_form": {"type": "string", "minLength": 1},
+            "syntactic_roles": {"type": "array", "items": {"type": "string"}},
+            "ambiguities": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "d2_entity_domain": {
+          "type": "object", "additionalProperties": false,
+          "required": ["domains", "entities", "domain_variables"],
+          "properties": {
+            "domains": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "entities": {"type": "array", "items": {"type": "string"}},
+            "domain_variables": {"type": "array", "items": {"type": "string"}},
+            "units": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "d3_relational_isogonic": {
+          "type": "object", "additionalProperties": false,
+          "required": ["isogonic_links", "dependencies"],
+          "properties": {
+            "isogonic_links": {"type": "array", "items": {"type": "string"}},
+            "dependencies": {"type": "array", "items": {"type": "string"}},
+            "analogical_links": {"type": "array", "items": {"type": "string"}},
+            "invariants": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "d4_antagonic_constraints": {
+          "type": "object", "additionalProperties": false,
+          "required": ["antagonic_links", "constraints"],
+          "properties": {
+            "antagonic_links": {"type": "array", "items": {"type": "string"}},
+            "constraints": {"type": "array", "items": {"type": "string"}},
+            "contradictions": {"type": "array", "items": {"type": "string"}},
+            "failure_modes": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "d5_causal_temporal": {
+          "type": "object", "additionalProperties": false,
+          "required": ["causes", "effects", "forward_paths", "backward_paths"],
+          "properties": {
+            "causes": {"type": "array", "items": {"type": "string"}},
+            "effects": {"type": "array", "items": {"type": "string"}},
+            "forward_paths": {"type": "array", "items": {"type": "string"}},
+            "backward_paths": {"type": "array", "items": {"type": "string"}},
+            "derivative_paths": {"type": "array", "items": {"type": "string"}},
+            "antiderivative_paths": {"type": "array", "items": {"type": "string"}},
+            "temporal_scope": {"type": "string"}
+          }
+        },
+        "d6_epistemic_gap": {
+          "type": "object", "additionalProperties": false,
+          "required": ["evidence_state", "missing_variables", "token_vazio"],
+          "properties": {
+            "evidence_state": {"type": "string", "enum": ["unobserved", "declared", "partial", "validated", "contradicted"]},
+            "missing_variables": {"type": "array", "items": {"type": "string"}},
+            "token_vazio": {"type": "boolean"},
+            "uncertainties": {"type": "array", "items": {"type": "string"}},
+            "falsifiers": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "d7_operational_governance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["intended_action", "execution_gate", "audit_required"],
+          "properties": {
+            "intended_action": {"type": "string", "minLength": 1},
+            "execution_gate": {"type": "string", "enum": ["allow", "sandbox_only", "blocked", "human_review"]},
+            "audit_required": {"type": "boolean"},
+            "next_action": {"type": "string"},
+            "runtime_target": {"type": "string"}
+          }
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["evidence_id", "status"],
+        "properties": {
+          "evidence_id": {"type": "string", "minLength": 1},
+          "status": {"type": "string", "enum": ["declared", "partial", "validated", "contradicted"]},
+          "source_ref": {"type": "string"},
+          "hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{6,128}$"}
+        }
+      }
+    },
+    "uncertainty": {"type": "number", "minimum": 0, "maximum": 1},
+    "epistemic_status": {"type": "string", "enum": ["symbolic", "hypothesis", "evidence", "validated", "gap", "contradiction", "operational"]},
+    "use_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["privacy", "training_eligibility", "retention", "purpose", "owner"],
+      "properties": {
+        "privacy": {"type": "string", "enum": ["public", "private", "sensitive", "unknown"]},
+        "training_eligibility": {"type": "string", "enum": ["no", "yes_explicit", "unknown"]},
+        "retention": {"type": "string", "enum": ["ephemeral", "session", "workspace", "archive", "unknown"]},
+        "purpose": {"type": "string", "enum": ["inference", "audit", "evaluation", "indexing", "training_explicit", "unknown"]},
+        "owner": {"type": "string", "enum": ["user", "organization", "public", "unknown"]},
+        "license_ref": {"type": "string"}
+      }
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

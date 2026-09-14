@@ -1,0 +1,69 @@
+{
+  "unit_id": "STU-MECHANICS-0001",
+  "raw_span": "Uma polia móvel eleva uma carga por uma rampa.",
+  "language": "pt-BR",
+  "lexical_tokens": [
+    {"surface": "Uma", "normalized": "uma", "index": 0},
+    {"surface": "polia", "normalized": "polia", "index": 1},
+    {"surface": "móvel", "normalized": "móvel", "index": 2},
+    {"surface": "eleva", "normalized": "elevar", "index": 3},
+    {"surface": "uma", "normalized": "uma", "index": 4},
+    {"surface": "carga", "normalized": "carga", "index": 5},
+    {"surface": "por", "normalized": "por", "index": 6},
+    {"surface": "uma", "normalized": "uma", "index": 7},
+    {"surface": "rampa", "normalized": "rampa", "index": 8}
+  ],
+  "views_7d": {
+    "d1_lexical_structure": {
+      "normalized_form": "polia móvel elevar carga por rampa",
+      "syntactic_roles": ["sujeito:polia móvel", "verbo:elevar", "objeto:carga", "complemento:rampa"],
+      "ambiguities": ["móvel pode significar deslocável ou tipo mecânico de polia"]
+    },
+    "d2_entity_domain": {
+      "domains": ["mecânica clássica", "engenharia"],
+      "entities": ["polia móvel", "carga", "rampa", "cabo"],
+      "domain_variables": ["massa", "gravidade", "ângulo", "atrito", "raio da polia", "inércia rotacional", "elasticidade do cabo", "peso do cabo"],
+      "units": ["kg", "m/s²", "grau", "N", "m", "kg·m²"]
+    },
+    "d3_relational_isogonic": {
+      "isogonic_links": ["vantagem mecânica ideal ↔ número de segmentos sustentadores", "ângulo da rampa ↔ componente tangencial do peso"],
+      "dependencies": ["tensão depende de carga, geometria e perdas", "força real depende de atrito e deformação"],
+      "analogical_links": ["rampa e polia reduzem força ideal ao aumentar deslocamento"],
+      "invariants": ["conservação de energia no modelo ideal"]
+    },
+    "d4_antagonic_constraints": {
+      "antagonic_links": ["vantagem ideal ↔ perdas reais", "cabo flexível ↔ rigidez e histerese"],
+      "constraints": ["atrito no eixo", "atrito rampa-carga", "limite de resistência do cabo", "deformação da estrutura"],
+      "contradictions": [],
+      "failure_modes": ["ruptura do cabo", "escorregamento", "travamento do eixo", "tombamento da carga"]
+    },
+    "d5_causal_temporal": {
+      "causes": ["força aplicada gera tensão", "tensão gera aceleração se superar resistências"],
+      "effects": ["movimento da carga", "aquecimento por atrito", "deformação do cabo"],
+      "forward_paths": ["força→tensão→aceleração→deslocamento"],
+      "backward_paths": ["deslocamento medido→aceleração→força líquida→força aplicada estimada"],
+      "derivative_paths": ["posição→velocidade→aceleração"],
+      "antiderivative_paths": ["aceleração→velocidade→posição"],
+      "temporal_scope": "ensaio transitório e regime quase-estático"
+    },
+    "d6_epistemic_gap": {
+      "evidence_state": "partial",
+      "missing_variables": ["coeficiente de atrito", "massa do cabo", "raio real da polia", "momento de inércia", "incerteza dos sensores"],
+      "token_vazio": true,
+      "uncertainties": ["não há dados experimentais no enunciado"],
+      "falsifiers": ["medir força real e comparar com modelo completo"]
+    },
+    "d7_operational_governance": {
+      "intended_action": "construir modelo auditável antes de calcular",
+      "execution_gate": "human_review",
+      "audit_required": true,
+      "next_action": "coletar variáveis faltantes e registrar condições de contorno",
+      "runtime_target": "solver de mecânica / caderno experimental"
+    }
+  },
+  "evidence_refs": [{"evidence_id": "EV-MECH-0001", "status": "partial", "source_ref": "enunciado do problema"}],
+  "uncertainty": 0.65,
+  "epistemic_status": "gap",
+  "use_policy": {"privacy": "private", "training_eligibility": "no", "retention": "workspace", "purpose": "inference", "owner": "user"},
+  "created_at": "2026-07-09T21:00:00-03:00"
+}

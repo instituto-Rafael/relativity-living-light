@@ -1,0 +1,21 @@
+{
+  "schema": "rafaelia.capabilities.v1",
+  "capabilities": {
+    "git.read": {
+      "classification": "allow",
+      "description": "Read repository state without changing files."
+    },
+    "git.diff": {
+      "classification": "allow",
+      "description": "Inspect diffs in readonly form."
+    },
+    "filesystem.read": {
+      "classification": "sandbox_only",
+      "description": "Read file contents from permitted workspace."
+    },
+    "termux.command.safe": {
+      "classification": "sandbox_only",
+      "description": "Run precompiled safe Termux commands only."
+    }
+  }
+}

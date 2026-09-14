@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/concept-matrix.v1.schema.json",
+  "title": "Polymathic Concept Matrix v1",
+  "description": "Structural contract for the cross-domain knowledge matrix produced by scripts/polymathic_concept_matrix.py. Validates structure only — does not establish scientific truth, metaphor correctness, or quantitative validity of cross-domain mappings.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "schema_version",
+    "timestamp_utc",
+    "run_date",
+    "generator",
+    "claim_boundary",
+    "integrity",
+    "knowledge_matrix",
+    "mining_queue",
+    "hypotheses",
+    "nodes"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "rll.polymathic-concept-matrix.v1"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "description": "ISO 8601 UTC timestamp of matrix generation."
+    },
+    "run_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "generator": {
+      "type": "string"
+    },
+    "blake3_available": {
+      "type": "boolean"
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Global claim boundary for the entire matrix."
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["total_nodes", "equation_nodes", "metaphor_nodes", "root_sha256"],
+      "properties": {
+        "total_nodes": {"type": "integer", "minimum": 0},
+        "equation_nodes": {"type": "integer", "minimum": 0},
+        "metaphor_nodes": {"type": "integer", "minimum": 0},
+        "root_sha256": {"type": "string", "minLength": 64, "maxLength": 64},
+        "root_blake3": {"type": "string"},
+        "chain_terminal_hash": {"type": "string"}
+      }
+    },
+    "knowledge_matrix": {
+      "type": "object",
+      "description": "domain → {equations, metaphors, total} counts.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["equations", "metaphors", "total"],
+        "properties": {
+          "equations": {"type": "integer", "minimum": 0},
+          "metaphors": {"type": "integer", "minimum": 0},
+          "total": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "mining_queue": {
+      "type": "array",
+      "description": "Concepts ranked by evidence density score, descending.",
+      "items": {
+        "type": "object",
+        "required": ["rank", "id", "type", "score", "sha256_prefix"],
+        "properties": {
+          "rank": {"type": "integer", "minimum": 1},
+          "id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "enum": ["FORMULA", "METAPHOR", "THEOREM", "THESIS", "CONCEPT"]},
+          "score": {"type": "number", "minimum": 0},
+          "domains": {"type": "array", "items": {"type": "string"}},
+          "sha256_prefix": {"type": "string", "minLength": 8}
+        }
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["hypothesis_id", "bridge_id", "pattern", "text", "status", "evidence_state", "next_gate"],
+        "properties": {
+          "hypothesis_id": {"type": "string"},
+          "bridge_id": {"type": "string"},
+          "pattern": {"type": "string"},
+          "linked_equations": {"type": "array", "items": {"type": "string"}},
+          "domains": {"type": "array", "items": {"type": "string"}},
+          "text": {"type": "string", "minLength": 20},
+          "status": {"type": "string", "enum": ["CANDIDATE", "VALIDATED", "REFUTED", "TOKEN_VAZIO"]},
+          "evidence_state": {"type": "string", "enum": ["TOKEN_VAZIO", "DECLARED_BY_AUTHOR", "VERIFIED", "CONTRADICTION"]},
+          "next_gate": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name", "domains", "claim_boundary", "timestamp_utc", "sha256", "chain_hash"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "enum": ["FORMULA", "METAPHOR", "THEOREM", "THESIS", "CONCEPT"]},
+          "name": {"type": "string", "minLength": 1},
+          "domains": {"type": "array", "items": {"type": "string"}},
+          "claim_boundary": {"type": "string"},
+          "timestamp_utc": {"type": "string"},
+          "previous_hash": {"type": "string"},
+          "sha256": {"type": "string", "minLength": 64, "maxLength": 64},
+          "blake3": {"type": "string"},
+          "chain_hash": {"type": "string", "minLength": 64}
+        }
+      }
+    }
+  }
+}

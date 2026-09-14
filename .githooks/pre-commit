@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+python tools/workflow_contract_sync.py --write-report \
+  --output-dir artifacts/workflow-contract-sync/local-pre-commit

@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.invalid/schemas/session_operating_system.schema.json",
+  "title": "RLL Session Knowledge Operating System",
+  "description": "Structural contract for organizing session groups, source pointers, concepts, formulas, operations, evidence states, destinations and reversible microcommits without promoting scientific claims or exposing private content.",
+  "type": "object",
+  "required": [
+    "schema", "operation_id", "title", "status", "claim_allowed", "claim_boundary",
+    "execution_policy", "source_policy", "traceability_chain", "state_vocabulary",
+    "organizational_metrics", "session_groups", "commit_plan"
+  ],
+  "properties": {
+    "schema": {"const": "rll.session_knowledge_operating_system.v1"},
+    "operation_id": {"type": "string", "pattern": "^RLL-KOS-[0-9]{8}-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 10},
+    "status": {"enum": ["AUDIT", "PARTIAL", "VERIFIED_LIMITED"]},
+    "claim_allowed": {"const": false},
+    "claim_boundary": {"type": "string", "minLength": 40},
+    "execution_policy": {
+      "type": "object",
+      "required": [
+        "entrypoint", "workflow_path", "trigger_policy", "automatic_cross_repo_write",
+        "automatic_merge", "destructive_actions", "commit_results_default",
+        "fail_closed_on_private_content", "continue_audit_after_nonfatal_gaps"
+      ],
+      "properties": {
+        "entrypoint": {"type": "string"},
+        "workflow_path": {"type": "string", "pattern": "^\\.github/workflows/.+\\.ya?ml$"},
+        "trigger_policy": {"enum": ["pull_request_or_manual", "manual_only"]},
+        "automatic_cross_repo_write": {"const": false},
+        "automatic_merge": {"const": false},
+        "destructive_actions": {"const": false},
+        "commit_results_default": {"const": false},
+        "fail_closed_on_private_content": {"const": true},
+        "continue_audit_after_nonfatal_gaps": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "source_policy": {"type": "object"},
+    "traceability_chain": {
+      "type": "array",
+      "minItems": 10,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "state_vocabulary": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "organizational_metrics": {"type": "object"},
+    "session_groups": {
+      "type": "array",
+      "minItems": 4,
+      "items": {"$ref": "#/$defs/session_group"}
+    },
+    "commit_plan": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["order", "name", "intent", "files", "rollback"],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1},
+          "name": {"type": "string", "minLength": 3},
+          "intent": {"type": "string", "minLength": 15},
+          "files": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "rollback": {"type": "string", "minLength": 20}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "source_link": {
+      "type": "object",
+      "required": ["repo", "path", "visibility", "content_mode", "role", "source_state"],
+      "properties": {
+        "repo": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+        "path": {"type": "string", "minLength": 1},
+        "visibility": {"enum": ["public", "private", "unknown", "public_or_private_unknown"]},
+        "content_mode": {"enum": ["source_content", "pointer_only"]},
+        "role": {"type": "string", "minLength": 3},
+        "source_state": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "concept": {
+      "type": "object",
+      "required": ["name", "type", "formula_public", "formula_ref"],
+      "properties": {
+        "name": {"type": "string", "minLength": 3},
+        "type": {"type": "string", "minLength": 3},
+        "formula_public": {"type": ["string", "null"]},
+        "formula_ref": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "target_route": {
+      "type": "object",
+      "required": ["repo", "destination", "mode", "state"],
+      "properties": {
+        "repo": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+        "destination": {"type": "string", "minLength": 3},
+        "mode": {"type": "string", "minLength": 3},
+        "state": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "required": ["kind", "locator", "role"],
+      "properties": {
+        "kind": {"type": "string"},
+        "locator": {"type": "string"},
+        "role": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "session_group": {
+      "type": "object",
+      "required": [
+        "id", "title", "origin", "scope", "source_links", "concepts", "operations",
+        "evidence_state", "target_routes", "references", "next_action", "claim_boundary"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SG-[A-Z0-9-]+$"},
+        "title": {"type": "string", "minLength": 10},
+        "origin": {"type": "string", "minLength": 3},
+        "scope": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string"}},
+        "source_links": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_link"}},
+        "concepts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/concept"}},
+        "operations": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "string"}},
+        "evidence_state": {"type": "string"},
+        "target_routes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/target_route"}},
+        "references": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
+        "next_action": {"type": "string", "minLength": 20},
+        "claim_boundary": {"type": "string", "minLength": 30}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

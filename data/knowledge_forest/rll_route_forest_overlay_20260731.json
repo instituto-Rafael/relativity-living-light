@@ -1,0 +1,76 @@
+{
+  "schema": "rll.route_forest_overlay.v1",
+  "base_forest_id": "RLL-OMEGA-ROUTE-FOREST-20260720",
+  "target_forest_id": "RLL-OMEGA-ROUTE-FOREST-20260731",
+  "generated_at": "2026-07-31T15:15:00Z",
+  "window_id": "SNAPSHOT-20260731",
+  "claim_allowed": false,
+  "path_normalizations": {
+    "data/real/cosmology/pantheon_plus/": "data/real/cosmology/pantheon_plus",
+    "data/real/cosmology/desi_bao_dr2_cobaya/": "data/real/cosmology/desi_bao_dr2_cobaya"
+  },
+  "route_patches": {
+    "RT-RD-TO-SCIENCE": {
+      "relation": "routes",
+      "status": "verified"
+    },
+    "RT-METH-FALSIFIER": {
+      "relation": "evaluates",
+      "status": "partial_resolution"
+    }
+  },
+  "route_additions": {
+    "RT-RD-METH-INGEST": {
+      "tree": "T-REAL-DATA",
+      "source": "N-RD-ROOT",
+      "target": "N-METH-INGEST",
+      "relation": "routes",
+      "status": "verified",
+      "refs": [
+        "data/manifests/dados_reais_fundamentais_v1.json"
+      ]
+    },
+    "RT-RD-HZ-LIKELIHOOD": {
+      "tree": "T-REAL-DATA",
+      "source": "N-RD-HZ",
+      "target": "N-METH-LIKELIHOOD",
+      "relation": "routes",
+      "status": "verified",
+      "refs": [
+        "data/real/Hz_data_real.csv"
+      ]
+    },
+    "RT-RD-BAO-LIKELIHOOD": {
+      "tree": "T-REAL-DATA",
+      "source": "N-RD-BAO",
+      "target": "N-METH-LIKELIHOOD",
+      "relation": "routes",
+      "status": "verified",
+      "refs": [
+        "data/real/BAO_data_real.csv"
+      ]
+    },
+    "RT-RD-GROWTH-CLAIM-GATE": {
+      "tree": "T-REAL-DATA",
+      "source": "N-RD-FSigma8",
+      "target": "N-METH-CLAIM-GATE",
+      "relation": "evaluates",
+      "status": "verified",
+      "refs": [
+        "data/real/cosmology/fsigma8_growth_real.csv"
+      ]
+    },
+    "RT-RD-CMB-MODEL-SELECT": {
+      "tree": "T-REAL-DATA",
+      "source": "N-RD-CMB",
+      "target": "N-METH-MODEL-SELECT",
+      "relation": "evaluates",
+      "status": "verified",
+      "refs": [
+        "data/real/CMB_shift_real.json"
+      ]
+    }
+  },
+  "source_ref": "data/knowledge_forest/rll_route_forest_overlay_20260731.json",
+  "boundary": "The overlay reconciles a versioned structural snapshot. It does not validate data, methods or RLL scientific claims."
+}

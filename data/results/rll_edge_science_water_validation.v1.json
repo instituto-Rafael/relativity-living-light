@@ -1,0 +1,12 @@
+{
+  "matrix_id": "rll-edge-science-water-chem-bio-v1",
+  "filaments": 18,
+  "edges": 14,
+  "vector_components": 24,
+  "references": 12,
+  "claim_allowed": false,
+  "training_allowed": false,
+  "new_workflow_required": false,
+  "status": "PASS",
+  "execution_scope": "local_stdlib_validation"
+}

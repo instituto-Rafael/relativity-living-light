@@ -1,0 +1,45 @@
+{
+  "schema": "rll.strong_gravity.toroidal_sine_reference.validation_receipt.v1",
+  "observed_at": "2026-07-20T12:45:00Z",
+  "environment": {
+    "runtime": "Python standard library",
+    "external_dependencies": 0,
+    "execution_scope": "focused local adapter suite"
+  },
+  "checks": [
+    {
+      "id": "PY_COMPILE",
+      "state": "PASS",
+      "target": "data/pipelines/strong_gravity/toroidal_sine_reference.py"
+    },
+    {
+      "id": "UNIT_TESTS",
+      "state": "PASS",
+      "passed": 15,
+      "failed": 0,
+      "target": "tests/strong_gravity/test_toroidal_sine_reference.py"
+    },
+    {
+      "id": "BASELINE_MATCH",
+      "state": "PASS",
+      "target": "data/results/strong_gravity/toroidal_sine_reference_baseline.json"
+    },
+    {
+      "id": "CLAIM_BOUNDARY",
+      "state": "PASS",
+      "claim_allowed": false
+    }
+  ],
+  "repository_blob_sha": {
+    "data/contracts/toroidal_research_cycle_adapter.v1.json": "014e45558938acec04732b319ff7646bff6b80fd",
+    "data/pipelines/strong_gravity/toroidal_sine_reference.py": "d0bd5174b2ab8d4b18799322eced4012726e8b86",
+    "data/results/strong_gravity/toroidal_sine_reference_baseline.json": "2df1553e99787dfde0f5a8a776f2d3d9c97b37f1",
+    "tests/strong_gravity/test_toroidal_sine_reference.py": "1379d9bb4c2164fac74c4701e4b411bb3e2472f1",
+    "docs/strong_gravity/TOROIDAL_SINE_REFERENCE_ADAPTER.md": "0f7268d3a4ca7624299a3f67282d0ff05d0fadaa"
+  },
+  "boundaries": {
+    "remote_ci_observed": "TOKEN_VAZIO_UNTIL_PULL_REQUEST",
+    "physical_validation": false,
+    "claim_allowed": false
+  }
+}

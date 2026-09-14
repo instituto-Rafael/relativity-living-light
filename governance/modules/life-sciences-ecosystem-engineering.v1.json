@@ -1,0 +1,76 @@
+{
+  "module_id": "rll.life_sciences.ecosystem_engineering",
+  "version": "1.0.0",
+  "title": "Life Sciences, Ecosystem and Engineering Governance Envelope",
+  "domains": ["biomedicine", "biology", "biochemistry", "fauna", "flora", "ecosystems", "engineering"],
+  "state": "ARCHITECTURE_READY",
+  "scope": "Define auditable admission gates for biological, biomedical, biochemical, ecological, fauna, flora, ecosystem and engineering data before any operational or scientific claim.",
+  "epistemic_status": "MODELO_ANALOGICO",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "evidence": {
+    "receipts": [],
+    "tests": ["tests/test_rll_governance_audit.py"],
+    "sources": [],
+    "limitations": [
+      "No biomedical, clinical, ecological or engineering dataset is automatically approved by this architecture.",
+      "No ethics committee, biosafety, environmental licensing, professional responsibility or regulatory authorization is inferred.",
+      "Domain metrics and validation protocols remain TOKEN_VAZIO until a concrete study is declared."
+    ]
+  },
+  "data_governance": {
+    "classification": "MIXED_DOMAIN_DATA_ADMISSION_GATE",
+    "required_metadata": ["origin", "license", "hash", "version", "collected_at", "unit", "uncertainty", "provenance", "update_policy", "species_or_population_context", "spatial_scale", "temporal_scale"],
+    "retention": "Defined per study, ethics approval, legal basis, consent and source license; no indefinite personal-data retention by default.",
+    "update_policy": "Versioned per dataset, protocol, taxonomy, instrument calibration and study amendment.",
+    "legal_applicability": "TOKEN_VAZIO_REQUIRES_CASE_SPECIFIC_LEGAL_ETHICS_BIOSAFETY_AND_ENGINEERING_REVIEW",
+    "personal_data": "PROHIBITED_BY_DEFAULT",
+    "sensitive_health_genetic_biometric_data": "PROHIBITED_BY_DEFAULT",
+    "human_participants": "ETHICS_REVIEW_REQUIRED",
+    "animal_research": "ETHICS_AND_WELFARE_REVIEW_REQUIRED",
+    "biosafety": "RISK_CLASS_AND_FACILITY_REVIEW_REQUIRED",
+    "environmental_intervention": "IMPACT_AND_AUTHORIZATION_REVIEW_REQUIRED"
+  },
+  "security": {
+    "least_privilege": true,
+    "secrets": "No participant, patient, genomic, location-sensitive species or critical-infrastructure secret may enter CI logs.",
+    "integrity": ["hashes", "access classification", "de-identification record", "provenance", "calibration record", "chain of custody"],
+    "incident_record": "Contain access, preserve evidence, classify affected data, document notification duties and suspend affected processing."
+  },
+  "quality": {
+    "metrics": [
+      {"id": "metadata_completeness", "definition": "Required metadata fields present and non-ambiguous", "unit": "ratio", "target": "TOKEN_VAZIO_PER_STUDY"},
+      {"id": "measurement_uncertainty_coverage", "definition": "Measurements carrying unit, uncertainty and calibration context", "unit": "ratio", "target": "TOKEN_VAZIO_PER_INSTRUMENT"},
+      {"id": "reproducible_analysis_rate", "definition": "Analyses reproducible from declared dataset, code, environment and receipt", "unit": "ratio", "target": "TOKEN_VAZIO_PER_PROTOCOL"},
+      {"id": "safety_gate_pass_rate", "definition": "Applicable ethics, biosafety, environmental and engineering gates satisfied", "unit": "ratio", "target": "1.0 before execution"}
+    ],
+    "acceptance_criteria": [
+      "Study scope and population/ecosystem boundary are explicit",
+      "Applicable ethics, biosafety, privacy, environmental and engineering reviews are declared",
+      "Units, uncertainty, calibration, provenance and taxonomy are versioned",
+      "Claims remain bounded by study design and evidence"
+    ],
+    "rejection_criteria": [
+      "Sensitive data enters CI or public artifacts",
+      "Human or animal research lacks applicable review",
+      "Clinical diagnosis or treatment is inferred from an unvalidated model",
+      "Species, spatial scale, temporal scale, unit or uncertainty is absent",
+      "Engineering safety claim lacks declared design basis and verification"
+    ],
+    "change_control": "DMAIC-compatible cycle: define, measure, analyze, improve and control, with immutable evidence and explicit exit criteria."
+  },
+  "risks": [
+    {"id": "R-LIFE-001", "severity": "critical", "description": "Exposure or misuse of health, genetic, biometric or identifiable research data", "treatment": "Prohibit by default; require case-specific governance before use"},
+    {"id": "R-LIFE-002", "severity": "critical", "description": "Unvalidated model interpreted as diagnosis, treatment or public-health recommendation", "treatment": "Explicit out-of-scope boundary and claim gate"},
+    {"id": "R-ECO-001", "severity": "high", "description": "Ecological correlation promoted as causality across incompatible scales", "treatment": "Declare scale, mechanism, confounders and validation design"},
+    {"id": "R-ENG-001", "severity": "critical", "description": "Research output used as safety-critical engineering authorization", "treatment": "Require responsible professional, design standard and independent verification"}
+  ],
+  "rollback": {
+    "trigger": "Unauthorized data, ethics/privacy/biosafety breach, invalid taxonomy, calibration failure or unsupported safety/clinical claim.",
+    "procedure": "Suspend processing, quarantine artifacts, revoke access, preserve custody record and revert public outputs where possible.",
+    "verification": "Independent review confirms containment, corrected provenance and reauthorization before restart."
+  },
+  "f_ok": ["Governance envelope defined", "Sensitive-data default deny", "Cross-domain metadata contract", "Safety and ethics gates"],
+  "f_gap": ["Concrete datasets", "Study protocols", "Ethics approvals", "Domain-specific validation", "Operational evidence"],
+  "f_next": ["Select one non-personal public ecological dataset for a pilot", "Define domain-specific schema and uncertainty model", "Produce first reproducible receipt without clinical or operational claims"]
+}

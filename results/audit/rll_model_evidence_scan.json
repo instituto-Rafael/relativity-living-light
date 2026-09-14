@@ -1,0 +1,143 @@
+{
+  "input_csv": "results/structure_d/joint_real_likelihood.csv",
+  "registry": "data/inputs/cosmology_joint/parameter_origin_registry.json",
+  "registry_schema": "rll.parameter_origin_registry.v2",
+  "commit_sha": "31e10fa7c428e2c822e3229879e58e2233869411",
+  "row_count": 4,
+  "models_present": [
+    "CPL",
+    "LCDM",
+    "RLL",
+    "wCDM"
+  ],
+  "missing_required_model_classes": [],
+  "best_by_AICc": "CPL_w0waCDM_joint_real",
+  "best_by_BIC": "CPL_w0waCDM_joint_real",
+  "H0_all_equal": false,
+  "H0_values": [
+    60.00000063178996,
+    60.0,
+    60.151105071543775,
+    60.00304290371374
+  ],
+  "claim_status": "CLAIM_BLOCKED",
+  "claim_summary": "RLL is disfavored relative to CPL and its authorial amplitude collapses to zero in this result table.",
+  "blocking_reasons": [
+    "RLL Os0 collapsed to zero"
+  ],
+  "warnings": [],
+  "model_scans": [
+    {
+      "model": "LCDM",
+      "row_name": "LCDM_joint_real",
+      "chi2": 93.95354560099567,
+      "AIC": 103.95354560099567,
+      "AICc": 104.98802835961635,
+      "BIC": 114.74796101779403,
+      "N": 64,
+      "k": 5,
+      "dof": 59,
+      "dof_consistent": true,
+      "delta_AICc_best": 25.868473743221074,
+      "delta_BIC_best": 22.51622481788104,
+      "delta_AICc_CPL": 25.868473743221074,
+      "delta_BIC_CPL": 22.51622481788104,
+      "H0": 60.00000063178996,
+      "Os0": null,
+      "zt": null,
+      "wt": null,
+      "component_chi2": {
+        "chi2_Hz": 28.689146678458307,
+        "chi2_DESI_DR2_BAO": 19.07091845950121,
+        "chi2_fsigma8": 23.66253932342459,
+        "chi2_CMB_shift": 22.530941139611556
+      },
+      "local_flags": []
+    },
+    {
+      "model": "wCDM",
+      "row_name": "wCDM_joint_real",
+      "chi2": 92.79427056355686,
+      "AIC": 104.79427056355686,
+      "AICc": 106.26795477408318,
+      "BIC": 117.74756906371489,
+      "N": 64,
+      "k": 6,
+      "dof": 58,
+      "dof_consistent": true,
+      "delta_AICc_best": 27.148400157687902,
+      "delta_BIC_best": 25.515832863801904,
+      "delta_AICc_CPL": 27.148400157687902,
+      "delta_BIC_CPL": 25.515832863801904,
+      "H0": 60.0,
+      "Os0": null,
+      "zt": null,
+      "wt": null,
+      "component_chi2": {
+        "chi2_Hz": 28.258331520090362,
+        "chi2_DESI_DR2_BAO": 15.463676477799806,
+        "chi2_fsigma8": 22.64875516585215,
+        "chi2_CMB_shift": 26.423507399814547
+      },
+      "local_flags": []
+    },
+    {
+      "model": "CPL",
+      "row_name": "CPL_w0waCDM_joint_real",
+      "chi2": 63.119554616395284,
+      "AIC": 77.11955461639528,
+      "AICc": 79.11955461639528,
+      "BIC": 92.23173619991299,
+      "N": 64,
+      "k": 7,
+      "dof": 57,
+      "dof_consistent": true,
+      "delta_AICc_best": 0.0,
+      "delta_BIC_best": 0.0,
+      "delta_AICc_CPL": 0.0,
+      "delta_BIC_CPL": 0.0,
+      "H0": 60.151105071543775,
+      "Os0": null,
+      "zt": null,
+      "wt": null,
+      "component_chi2": {
+        "chi2_Hz": 20.49695533658436,
+        "chi2_DESI_DR2_BAO": 11.122948121040453,
+        "chi2_fsigma8": 18.805525163391785,
+        "chi2_CMB_shift": 12.694125995378686
+      },
+      "local_flags": []
+    },
+    {
+      "model": "RLL",
+      "row_name": "RLL_joint_real",
+      "chi2": 93.95983068903539,
+      "AIC": 109.95983068903539,
+      "AICc": 112.57801250721721,
+      "BIC": 127.23089535591276,
+      "N": 64,
+      "k": 8,
+      "dof": 56,
+      "dof_consistent": true,
+      "delta_AICc_best": 33.45845789082193,
+      "delta_BIC_best": 34.99915915599978,
+      "delta_AICc_CPL": 33.45845789082193,
+      "delta_BIC_CPL": 34.99915915599978,
+      "H0": 60.00304290371374,
+      "Os0": 0.0,
+      "zt": 6.006796735267388,
+      "wt": 0.7806099951360136,
+      "component_chi2": {
+        "chi2_Hz": 28.70658045782483,
+        "chi2_DESI_DR2_BAO": 19.198725661654947,
+        "chi2_fsigma8": 23.654558176474517,
+        "chi2_CMB_shift": 22.399966393081083
+      },
+      "local_flags": [
+        "RLL authorial amplitude Os0 collapsed to zero",
+        "RLL AICc worse than CPL",
+        "RLL BIC worse than CPL"
+      ]
+    }
+  ]
+}

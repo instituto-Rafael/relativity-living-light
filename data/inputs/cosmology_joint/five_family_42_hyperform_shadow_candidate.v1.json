@@ -1,0 +1,69 @@
+{
+  "schema": "rll.shadow_candidate.v1",
+  "candidate_id": "RLL-SHADOW-5F-42H-20260816",
+  "title": "Five canonical families versus latent correlation fields versus 42 hyperforms",
+  "intake_mode": "AUTO_SHADOW",
+  "source_state": "VISUAL_AND_USER_SUPPLIED_STRUCTURE_ONLY",
+  "canonical_families": ["TRIG", "FIB", "TOROID", "DIZIMA", "BITRAF"],
+  "objects": {
+    "family_partition": {
+      "count": 5,
+      "status": "USER_CANONICAL_TAXONOMY"
+    },
+    "correlation_matrix": {
+      "shape_claimed": [100, 100],
+      "raw_numeric_matrix": "TOKEN_VAZIO_NOT_AVAILABLE",
+      "index_to_formula_map": "TOKEN_VAZIO_NOT_AVAILABLE",
+      "raster_only_observed": true,
+      "k5_state": "PLAUSIBLE_NOT_PROVEN"
+    },
+    "hyperform_graph": {
+      "node_count_observed_from_figure": 42,
+      "adjacency_or_edge_list": "TOKEN_VAZIO_NOT_AVAILABLE",
+      "community_assignment": "TOKEN_VAZIO_NOT_AVAILABLE"
+    }
+  },
+  "shadow_hypotheses": [
+    {
+      "id": "S5F42-H0A",
+      "statement": "The five canonical family labels are not associated with unsupervised correlation clusters beyond chance."
+    },
+    {
+      "id": "S5F42-H1A",
+      "statement": "The five canonical family labels show reproducible association with latent correlation clusters under label-blind analysis."
+    },
+    {
+      "id": "S5F42-H0B",
+      "statement": "The 42-hyperform graph does not mediate or improve the association between family labels and correlation structure beyond chance."
+    },
+    {
+      "id": "S5F42-H1B",
+      "statement": "The 42-hyperform graph provides reproducible structural information linking family labels to correlation structure."
+    }
+  ],
+  "required_tests": [
+    "recover raw 100x100 numeric matrix and immutable index-to-formula mapping",
+    "estimate cluster count without forcing k=5",
+    "evaluate cluster stability under bootstrap/resampling",
+    "compute family-versus-cluster contingency table",
+    "compute ARI and NMI only after independent cluster estimation",
+    "run permutation test with family labels shuffled",
+    "recover 42-node adjacency/edge list and compute graph communities/modularity",
+    "test whether hyperform-derived features improve held-out family/cluster association",
+    "preserve negative and null results"
+  ],
+  "promotion_gate": {
+    "requires_raw_matrix": true,
+    "requires_index_map": true,
+    "requires_edge_list_for_42_graph_claim": true,
+    "requires_label_blind_k_selection": true,
+    "requires_out_of_sample_or_resampling_stability": true,
+    "requires_permutation_baseline": true
+  },
+  "graph_binding": "TOKEN_VAZIO_NO_CANONICAL_GRAPH",
+  "affects_cosmology_evidence": false,
+  "direct_model_integration_allowed": false,
+  "promotion_allowed": false,
+  "claim_allowed": false,
+  "notes": "Five canonical RAFAELIA families and five candidate correlation fields are distinct objects until independently linked. The 42-hyperform visualization is not treated as an adjacency matrix or empirical cosmology result."
+}

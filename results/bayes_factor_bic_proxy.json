@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "script": "compute_bayes_factor_bic_proxy.py",
+    "method": "BIC proxy — aproximação de Laplace (ln B₁₀ ≈ −ΔBIC/2)",
+    "limitation": "Aproximação conservadora; valor exato aguarda pipeline G2 (dynesty/MultiNest)",
+    "source_chi2": "joint likelihood 64 pontos (Pantheon+ + DESI DR2 BAO) — RLL colapsou para Ωs0=0",
+    "reference": "08_ARVORE_CONCEITUAL_RLL.md §Nível 3 + §SÍNTESE"
+  },
+  "inputs": {
+    "n_points": 64,
+    "k_lcdm": 5,
+    "k_rll": 8,
+    "chi2_lcdm": 27.03,
+    "chi2_rll": 27.03,
+    "note_rll": "Ωs0→0 no otimizador joint → χ²_RLL ≈ χ²_ΛCDM (pior caso para RLL)"
+  },
+  "bic": {
+    "bic_lcdm": 47.8244,
+    "bic_rll": 60.3011,
+    "delta_bic_rll_minus_lcdm": 12.4766,
+    "formula": "ΔBIC = (k_RLL − k_ΛCDM) × ln(n) = 3 × ln(64) = 3 × 4.1589 = 12.4767"
+  },
+  "bayes_factor": {
+    "ln_B10_proxy": -6.2383,
+    "jeffreys_scale": "Forte evidência CONTRA RLL",
+    "threshold_f_cos_04": -5.0,
+    "passes_f_cos_04": false
+  },
+  "falsifier": {
+    "F-COS-04": {
+      "claim": "ln(B₁₀) RLL/ΛCDM > −5 — escala Jeffreys",
+      "threshold": "ln(B₁₀) > −5",
+      "result_proxy": -6.2383,
+      "outcome": "FAIL (proxy) — ln(B₁₀)_proxy = -6.24 < −5 [C] — aproximação BIC com Ωs0→0. Resultado definitivo aguarda G2 pipeline."
+    }
+  },
+  "epistemic_status": "[C] resultado de aproximação BIC com χ²_RLL = χ²_ΛCDM (Ωs0 colapsado). Este é o pior caso para RLL — se a otimização livre com MCMC encontrar Ωs0 > 0 com χ² significativamente menor, ln(B₁₀) pode melhorar. [VAZIO P0] resultado definitivo aguarda pipeline G2 (dynesty).",
+  "interpretation": "O colapso Ωs0→0 indica que com parâmetros nominais, o setor RLL não contribui significativamente para os dados combinados. O BIC penaliza os 3 parâmetros extras (Ωs0, z_t, w_t) sem ganho em χ², resultando em ΔBIC = +12.47 e ln(B₁₀) ≈ −6.24. Esse é o mesmo resultado que sustenta a conclusão de F-COS-03 FAIL e confirma que claim_allowed = false até MCMC joint G1+G2."
+}

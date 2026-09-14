@@ -1,0 +1,186 @@
+name: Polymathic Concept Matrix — Cross-domain Knowledge Orchestration
+
+# Orchestrates formulas × biological metaphors × academic references:
+#   - Loads equation registry (rll_equation_registry.yml)
+#   - Applies polymathic bridges (turtle/jellyfish/reef/RNA/DNA/tide metaphors)
+#   - Computes SHA-256 + BLAKE3 per concept node (hash chain = tamper-evident)
+#   - Builds multi-dimensional knowledge matrix (domain × concept_type)
+#   - Generates hypothesis candidates across domains
+#   - Creates mining queue ordered by evidence density
+#   - Validates output against schema contract
+#   - Uploads JSON artifacts (matrix, manifest, schema validation report)
+#
+# Policy: read-only permissions; no push/auto-commit; outputs via upload-artifact.
+# Claim Boundary: metaphors illustrate domain analogies only; they do not validate
+#   scientific claims. No synthetic, mock, fixture, or placeholder data is used —
+#   rll_equation_registry.yml is the canonical real-data source for all nodes.
+
+on:
+  push:
+    paths:
+      - "rll_equation_registry.yml"
+      - "scripts/polymathic_concept_matrix.py"
+      - "schemas/concept-matrix.v1.schema.json"
+      - ".github/workflows/polymathic-concept-matrix.yml"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run without writing output files (hash + schema check only)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: polymathic-concept-matrix-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  concept-matrix:
+    name: Build polymathic concept matrix + validate schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: "Metaphors illustrate domain analogies only; do not validate scientific claims."
+      OUTPUT_DIR: "results/concept_matrix"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install pyyaml blake3 jsonschema
+
+      - name: Verify equation registry exists
+        run: |
+          set -euo pipefail
+          if [ ! -f rll_equation_registry.yml ]; then
+            echo "TOKEN_VAZIO: rll_equation_registry.yml missing"
+            exit 1
+          fi
+          echo "REGISTRY: FOUND"
+          python -c "import yaml; d=yaml.safe_load(open('rll_equation_registry.yml')); \
+            eqs=d.get('equations',[]); \
+            print(f'REGISTRY: {len(eqs)} equations'); \
+            assert len(eqs) > 0, 'registry is empty'"
+
+      - name: Verify schema contract exists
+        run: |
+          set -euo pipefail
+          if [ ! -f schemas/concept-matrix.v1.schema.json ]; then
+            echo "TOKEN_VAZIO: schemas/concept-matrix.v1.schema.json missing"
+            exit 1
+          fi
+          echo "SCHEMA: FOUND"
+          python -m json.tool schemas/concept-matrix.v1.schema.json > /dev/null
+          echo "SCHEMA: valid JSON"
+
+      - name: Run concept matrix synthesis (dry-run)
+        if: ${{ inputs.dry_run == true }}
+        run: |
+          set -euo pipefail
+          python scripts/polymathic_concept_matrix.py \
+            --registry rll_equation_registry.yml \
+            --output-dir "$OUTPUT_DIR" \
+            --dry-run
+
+      - name: Run concept matrix synthesis (full)
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUTPUT_DIR"
+          python scripts/polymathic_concept_matrix.py \
+            --registry rll_equation_registry.yml \
+            --output-dir "$OUTPUT_DIR"
+          MATRIX_FILE=$(ls "$OUTPUT_DIR"/*_concept_matrix.json | sort | tail -1)
+          MANIFEST_FILE=$(ls "$OUTPUT_DIR"/*_manifest.json | sort | tail -1)
+          test -s "$MATRIX_FILE" && echo "MATRIX: $(wc -c < "$MATRIX_FILE") bytes"
+          test -s "$MANIFEST_FILE" && echo "MANIFEST: $(wc -c < "$MANIFEST_FILE") bytes"
+          echo "MATRIX_FILE=$MATRIX_FILE" >> "$GITHUB_ENV"
+          echo "MANIFEST_FILE=$MANIFEST_FILE" >> "$GITHUB_ENV"
+
+      - name: Validate output against schema
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          set -euo pipefail
+          python - <<'PYEOF'
+          import json, jsonschema, pathlib, sys
+
+          schema_path = pathlib.Path("schemas/concept-matrix.v1.schema.json")
+          matrix_file = sorted(pathlib.Path("results/concept_matrix").glob("*_concept_matrix.json"))[-1]
+
+          schema = json.loads(schema_path.read_text(encoding='utf-8'))
+          doc    = json.loads(matrix_file.read_text(encoding='utf-8'))
+
+          validator = jsonschema.Draft202012Validator(schema)
+          errors = list(validator.iter_errors(doc))
+          if errors:
+              for e in errors[:5]:
+                  print(f"SCHEMA_ERROR: {e.json_path} — {e.message}", file=sys.stderr)
+              print(f"SCHEMA VALIDATION: FAIL ({len(errors)} errors)", file=sys.stderr)
+              sys.exit(1)
+          print(f"SCHEMA VALIDATION: PASS — {matrix_file.name}")
+          PYEOF
+
+      - name: Compute file checksums
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          set -euo pipefail
+          echo "## Concept Matrix Checksums" > results/concept_matrix/CHECKSUMS.sha256
+          echo "Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> results/concept_matrix/CHECKSUMS.sha256
+          echo "" >> results/concept_matrix/CHECKSUMS.sha256
+          sha256sum results/concept_matrix/*_concept_matrix.json \
+                    results/concept_matrix/*_manifest.json \
+            >> results/concept_matrix/CHECKSUMS.sha256
+          if command -v b3sum >/dev/null 2>&1; then
+            b3sum results/concept_matrix/*_concept_matrix.json \
+                  results/concept_matrix/*_manifest.json \
+              >> results/concept_matrix/CHECKSUMS.sha256
+          else
+            echo "b3sum not available (TOKEN_VAZIO)" >> results/concept_matrix/CHECKSUMS.sha256
+          fi
+          cat results/concept_matrix/CHECKSUMS.sha256
+
+      - name: Print mining queue summary
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          python - <<'PYEOF'
+          import json, pathlib, sys
+          matrix_file = sorted(pathlib.Path("results/concept_matrix").glob("*_concept_matrix.json"))[-1]
+          doc = json.loads(matrix_file.read_text(encoding='utf-8'))
+          queue = doc.get("mining_queue", [])
+          print(f"Mining queue: {len(queue)} concepts ranked by evidence density")
+          print(f"{'Rank':<5} {'ID':<45} {'Score':<7} {'Type':<10}")
+          print("-" * 72)
+          for entry in queue[:10]:
+              print(f"{entry['rank']:<5} {entry['id']:<45} {entry['score']:<7} {entry['type']:<10}")
+          matrix = doc.get("knowledge_matrix", {})
+          print(f"\nKnowledge matrix — {len(matrix)} domains:")
+          for domain, counts in sorted(matrix.items(), key=lambda x: -x[1]['total'])[:10]:
+              print(f"  {domain:<40} eq={counts['equations']} metaphor={counts['metaphors']}")
+          integrity = doc.get("integrity", {})
+          print(f"\nIntegrity: root_sha256={integrity.get('root_sha256','TOKEN_VAZIO')[:24]}...")
+          print(f"blake3_available: {doc.get('blake3_available', False)}")
+          PYEOF
+
+      - name: Upload concept matrix artifacts
+        if: always() && inputs.dry_run != true
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: polymathic-concept-matrix-${{ github.run_number }}
+          path: results/concept_matrix/
+          if-no-files-found: warn
+          retention-days: 90

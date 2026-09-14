@@ -28,20 +28,69 @@ A schema can verify that an object has the required fields and claim gates. It c
 |---|---|---|
 | `relational_validation_package.schema.json` | Structural contract for relational validation packages. | `claim_allowed=false` |
 | `relation_graph.schema.json` | Structural contract for claim-bounded relation graphs. | `claim_allowed=false` |
+| `information_evolution_trace.schema.json` | Structural contract for internal custody traces across information states, transformations, tests and epistemic gates. | `claim_allowed=false`; unknown origin remains `TOKEN_VAZIO` |
+| `rll_run_manifest.schema.json` | Structural contract for field-level provenance of one scientific execution. | `claim_allowed=false`; partial absence cannot silently supersede prior evidence |
+| `rll_environmental_signal_manifest.schema.json` | Ordered contract for atmosphere, aerosols, spray electrification, electric-shower heating, acoustic context, detector backgrounds and noise decisions. | `claim_allowed=false`; no discard/correction/promotion before meaning + reproduction + mechanism |
+| `rll_epistemic_void.schema.json` | Structural contract for unknowns, contradictions, creative alternatives, falsifiers and objective exit conditions. | `claim_allowed=false`; creativity generates candidates, not evidence |
+| `omega_operational_invariant.schema.json` | Structural contract for seven operational directions, hard invariants, geometric routing metrics and urgent exit gates. | `claim_allowed=false`; Ω metrics are architectural conventions, not physical evidence |
+| `rll_route_forest_blueprint.schema.json` | Structural contract for declarative Ω regions, nodes, routes, trees and twelve ML-readiness gates. | `claim_allowed=false`; blueprint is not a trained model |
+| `rll_route_flow_event.schema.json` | Structural contract for one append-only route-flow event inside a versioned snapshot. | event frequency is not Hertz, probability or behavioral traffic |
+| `rll_route_forest.schema.json` | Structural contract for the compiled acyclic knowledge forest, operational vectors, route deltas, regional centroids and ML readiness. | `claim_allowed=false`; readiness does not authorize training |
 | `omega_artifact.schema.json` | Structural contract for RAFAELIA Ω living knowledge units. | epistemic status required |
 | `omega_node.schema.json` | Structural contract for RAFAELIA Ω versioned semantic cells. | score fields are routing metadata |
 | `omega_relation.schema.json` | Structural contract for RAFAELIA Ω weighted semantic relations. | preserves relation-weight formula |
-| `omega_schema.json` | Structural aggregate for RAFAELIA Ω architecture state. | preserves canonical Ω equation |
+| `omega_schema.json` | Structural aggregate for RAFAELIA Ω architecture state. | preserves canonical Ω equation and may reference Ω7 and route-forest assessments |
 
 ## Omega examples
 
 Minimal RAFAELIA Ω fixtures live in `schemas/examples/`. They are didactic examples for structural validation only: they do not validate scientific claims, promote metaphors to evidence, or close TOKEN_VAZIO gaps.
 
-Validate schemas and examples with:
+`schemas/examples/information_evolution_trace.example.json` demonstrates how an unknown remote origin remains `TOKEN_VAZIO` while subsequent transformations become internally traceable. It does not prove the historical origin or external validity of the represented information.
+
+Validate the information-evolution contract and its contiguous example chain with:
+
+```bash
+python scripts/validate_information_evolution_trace.py
+```
+
+Validate the environmental signal manifest and its fixed module order with:
+
+```bash
+python3 scripts/validate_rll_environmental_signal_manifest.py --strict --write-report
+python3 -m unittest tests/test_rll_environmental_signal_manifest.py
+```
+
+This gate preserves diesel mixed-phase aerosol semantics, separates Joule heating from spray electrification, blocks an ionization-to-singing causal claim and keeps IceCube backgrounds distinct from optical-telescope refraction. It does not validate an atmospheric or RLL physical claim.
+
+Validate the Omega schemas and examples with:
 
 ```bash
 python3 scripts/validate_omega_schemas.py
 ```
+
+Validate the RLL epistemic-void ledger with:
+
+```bash
+python tools/validate_epistemic_void.py --strict --write-report
+```
+
+The operational entropy emitted by this validator is a routing convention. It is not thermodynamic entropy, Shannon entropy, evidence or a scientific score.
+
+Validate the Ω7 operational invariant with:
+
+```bash
+python tools/validate_omega7_operational.py --strict --write-report
+```
+
+The Ω7 geometric mean and minimum are routing conventions over seven declared structural scores. They are not physical geometry, probability, model preference or scientific validation. The assessment may pass structurally while its decision remains `BLOCKED`.
+
+Validate and compile the Ω route forest with:
+
+```bash
+python tools/build_rll_route_forest.py --strict --write-report
+```
+
+The route forest counts explicit events per versioned snapshot and derives vectors from declared D1–D7 scores. It does not infer physical frequencies, create learned embeddings, train a random forest or authorize machine learning.
 
 ## Required discipline
 

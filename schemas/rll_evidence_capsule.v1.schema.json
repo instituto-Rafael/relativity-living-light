@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rafaelmeloreisnovo/relativity-living-light/schemas/rll_evidence_capsule.v1.schema.json",
+  "title": "RLL Evidence Capsule V1",
+  "description": "Structural contract for one claim-bounded scientific mechanism execution. It records provenance, artifacts, uncertainties and allowed claims without treating CI success as scientific validation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "capsule_id",
+    "mechanism_id",
+    "source",
+    "execution",
+    "claims",
+    "uncertainties",
+    "artifacts",
+    "expected_runtime_artifacts",
+    "claim_allowed",
+    "F_ok",
+    "F_gap",
+    "F_next"
+  ],
+  "properties": {
+    "schema": {"const": "rll.evidence_capsule.v1"},
+    "capsule_id": {"type": "string", "minLength": 1},
+    "mechanism_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit_sha", "workflow", "inputs"],
+      "properties": {
+        "commit_sha": {"type": "string", "minLength": 7},
+        "workflow": {"type": "string", "minLength": 1},
+        "inputs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "environment", "commands"],
+      "properties": {
+        "state": {
+          "enum": [
+            "VERIFIED",
+            "VERIFIED_LIMITED",
+            "METADATA_READY",
+            "TOKEN_VAZIO",
+            "CONTRADICTION",
+            "CLAIM_BLOCKED",
+            "NOT_EXECUTED"
+          ]
+        },
+        "environment": {"type": "string"},
+        "commands": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "blocked"],
+      "properties": {
+        "allowed": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "blocked": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "uncertainties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token_vazio_count", "ledger"],
+      "properties": {
+        "token_vazio_count": {"type": "integer", "minimum": 0},
+        "ledger": {"type": "string", "minLength": 1}
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "role", "state"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "role": {"type": "string", "minLength": 1},
+          "state": {
+            "enum": ["VERIFIED", "VERIFIED_LIMITED", "TOKEN_VAZIO", "CONTRADICTION", "HISTORICAL"]
+          }
+        }
+      }
+    },
+    "expected_runtime_artifacts": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "claim_allowed": {"const": false},
+    "F_ok": {"type": "array", "items": {"type": "string"}},
+    "F_gap": {"type": "array", "items": {"type": "string"}},
+    "F_next": {"type": "array", "items": {"type": "string"}}
+  }
+}

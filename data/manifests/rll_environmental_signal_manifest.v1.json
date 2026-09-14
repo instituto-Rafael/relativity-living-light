@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0",
+  "manifest_id": "rll-envsig-canonical-v1",
+  "claim_allowed": false,
+  "orchestration_policy": {
+    "yaml_role": "ORDER_ONLY",
+    "shell_role": "TYPED_MODULE_INVOCATION",
+    "semantic_authority": "MANIFEST_AND_MODULE_CONTRACTS",
+    "no_new_workflow_required": true
+  },
+  "modules": [
+    {
+      "order": 1,
+      "id": "source_custody",
+      "responsibility": "Preserve literal observation, source identifier, hashes, timestamp and authorization.",
+      "inputs": ["source_custody.input"],
+      "outputs": ["source_custody.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "order": 2,
+      "id": "medium_state",
+      "responsibility": "Represent atmospheric composition, thermodynamics, wind, water phases, charge and validity masks.",
+      "inputs": ["medium_state.input"],
+      "outputs": ["medium_state.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "order": 3,
+      "id": "optical_transport",
+      "responsibility": "Transform wavelength-dependent radiation through refraction, extinction, scattering and turbulence.",
+      "inputs": ["optical_transport.input"],
+      "outputs": ["optical_transport.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "order": 4,
+      "id": "cloud_phase_microphysics",
+      "responsibility": "Keep vapor, liquid, supercooled liquid, ice, graupel, hail and phase transitions distinct.",
+      "inputs": ["cloud_phase_microphysics.input"],
+      "outputs": ["cloud_phase_microphysics.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "order": 5,
+      "id": "combustion_and_mineral_aerosol",
+      "responsibility": "Classify diesel soot, condensable organics, dust, salts, ash, metals and bioaerosols without phase collapse.",
+      "inputs": ["combustion_and_mineral_aerosol.input"],
+      "outputs": ["combustion_and_mineral_aerosol.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "EXTERNAL_REFERENCE",
+      "claim_allowed": false
+    },
+    {
+      "order": 6,
+      "id": "spray_electrification",
+      "responsibility": "Represent charge separation caused by droplets and spray without assigning it to the heater resistance.",
+      "inputs": ["spray_electrification.input"],
+      "outputs": ["spray_electrification.receipt"],
+      "epistemic_state": "EVIDENCED_EXTERNALLY",
+      "mechanism_status": "PARTIAL",
+      "reproduction_status": "EXTERNAL_REFERENCE",
+      "claim_allowed": false
+    },
+    {
+      "order": 7,
+      "id": "electrical_heating_shower",
+      "responsibility": "Represent electric-shower Joule heating, leakage and safety variables separately from spray electrification.",
+      "inputs": ["electrical_heating_shower.input"],
+      "outputs": ["electrical_heating_shower.receipt"],
+      "epistemic_state": "EVIDENCED_EXTERNALLY",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "EXTERNAL_REFERENCE",
+      "claim_allowed": false
+    },
+    {
+      "order": 8,
+      "id": "human_acoustic_context",
+      "responsibility": "Represent room acoustics, vocal support and context without claiming ionization causes singing.",
+      "inputs": ["human_acoustic_context.input"],
+      "outputs": ["human_acoustic_context.receipt"],
+      "epistemic_state": "EVIDENCED_EXTERNALLY",
+      "mechanism_status": "PARTIAL",
+      "reproduction_status": "EXTERNAL_REFERENCE",
+      "claim_allowed": false
+    },
+    {
+      "order": 9,
+      "id": "detector_specific_background",
+      "responsibility": "Select instrument-specific background semantics for optical observatories, IceCube and other detectors.",
+      "inputs": ["detector_specific_background.input"],
+      "outputs": ["detector_specific_background.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "EXTERNAL_REFERENCE",
+      "claim_allowed": false
+    },
+    {
+      "order": 10,
+      "id": "noise_classification",
+      "responsibility": "Classify anomaly, physical background, instrument background, drift, discrepancy or unresolved cause.",
+      "inputs": ["noise_classification.input"],
+      "outputs": ["noise_classification.receipt"],
+      "epistemic_state": "TESTABLE",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "order": 11,
+      "id": "reproduction_and_mechanism",
+      "responsibility": "Record independent or non-independent reproduction and compare candidate mechanisms and alternatives.",
+      "inputs": ["reproduction_and_mechanism.input"],
+      "outputs": ["reproduction_and_mechanism.receipt"],
+      "epistemic_state": "BLOCKED",
+      "mechanism_status": "PARTIAL",
+      "reproduction_status": "NOT_ATTEMPTED",
+      "claim_allowed": false
+    },
+    {
+      "order": 12,
+      "id": "decision_and_claim_gate",
+      "responsibility": "Block, discard with reason, correct with receipt or promote only after the three mandatory gates.",
+      "inputs": ["decision_and_claim_gate.input"],
+      "outputs": ["decision_and_claim_gate.receipt"],
+      "epistemic_state": "BLOCKED",
+      "mechanism_status": "KNOWN",
+      "reproduction_status": "NOT_ATTEMPTED",
+      "claim_allowed": false
+    }
+  ],
+  "physical_facts": {
+    "diesel_exhaust": {
+      "phase_model": "MIXED_PHASE_AEROSOL",
+      "solid_carbonaceous_core": true,
+      "solid_only": false,
+      "components": [
+        "ELEMENTAL_CARBON_SOOT",
+        "ORGANIC_CARBON_AND_ADSORBED_ORGANICS",
+        "CONDENSABLE_PARTICULATE_MATTER",
+        "SULFATE_NITRATE",
+        "ASH_AND_TRACE_METALS",
+        "ASSOCIATED_WATER"
+      ],
+      "evidence_state": "EVIDENCED_EXTERNALLY"
+    },
+    "electric_shower": {
+      "primary_heating_mechanism": "JOULE_HEATING",
+      "resistance_directly_ionizes_surroundings": false,
+      "spray_electrification_candidate": true,
+      "local_ion_measurement_state": "TOKEN_VAZIO_LOCAL_MEASUREMENT"
+    },
+    "singing_context": {
+      "ionization_causes_singing": false,
+      "supported_route": [
+        "ROOM_ACOUSTIC_REFLECTION_AND_REVERBERATION",
+        "PERCEIVED_VOCAL_SUPPORT"
+      ],
+      "psychological_context_state": "CONTEXT_DEPENDENT"
+    },
+    "icecube_background": {
+      "atmospheric_backgrounds": [
+        "ATMOSPHERIC_MUONS",
+        "ATMOSPHERIC_NEUTRINOS"
+      ],
+      "detection_medium": "ANTARCTIC_ICE_CHERENKOV",
+      "optical_refraction_equivalent": false
+    }
+  },
+  "decision_policy": {
+    "required_gates": [
+      "SEMANTIC_MEANING",
+      "REPRODUCTION",
+      "MECHANISM"
+    ],
+    "allowed_terminal_states": [
+      "DISCARDED_WITH_REASON",
+      "CORRECTED_WITH_RECEIPT",
+      "PROMOTED_TO_SIGNAL"
+    ],
+    "promotion_allowed": false,
+    "current_state": "BLOCKED_PENDING_REPRODUCTION_AND_MECHANISM"
+  },
+  "references": [
+    {
+      "id": "EPA_PM_SPECIATION_2026",
+      "title": "How PM2.5 relates to EC, OC, sulfate, nitrate, PMFINE and diesel PM",
+      "source_type": "OFFICIAL",
+      "locator": "https://www.epa.gov/air-emissions-inventories/how-does-pm25-relate-pm-species-such-ec-oc-so4-no3-pmfine-and-diesel-pm25"
+    },
+    {
+      "id": "EPA_DIESEL_HAD",
+      "title": "Health Assessment Document for Diesel Engine Exhaust",
+      "source_type": "OFFICIAL",
+      "locator": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=300055PV.TXT"
+    },
+    {
+      "id": "XIA_2024_SPRAY_CHARGE",
+      "title": "Visualization of the Charging of Water Droplets Sprayed into Air",
+      "source_type": "PEER_REVIEWED",
+      "locator": "doi:10.1021/acs.jpca.4c02981"
+    },
+    {
+      "id": "NASPOLINI_RUTHER_2016",
+      "title": "Electrical resistance showerhead peak demand study",
+      "source_type": "PEER_REVIEWED",
+      "locator": "doi:10.1016/j.renene.2015.11.046"
+    },
+    {
+      "id": "REDMAN_ET_AL_2023",
+      "title": "Singing in different performance spaces: effect of room acoustics on singers' perception",
+      "source_type": "PEER_REVIEWED",
+      "locator": "doi:10.1121/10.0021331"
+    },
+    {
+      "id": "ICECUBE_DETECTOR",
+      "title": "IceCube detector and Cherenkov light in Antarctic ice",
+      "source_type": "OFFICIAL",
+      "locator": "https://icecube.wisc.edu/science/icecube/"
+    },
+    {
+      "id": "ICECUBE_SOUTHERN_SKY_BACKGROUND",
+      "title": "Atmospheric muon and neutrino backgrounds in southern-sky searches",
+      "source_type": "OFFICIAL",
+      "locator": "https://icecube.wisc.edu/news/research/2025/01/icecube-search-for-neutrino-sources-from-the-southern-sky-using-neutrinos-at-medium-energies/"
+    }
+  ],
+  "next_gate": "Acquire instrumented local shower and environmental measurements, then connect typed receipts to the existing RLL likelihood without adding a workflow."
+}

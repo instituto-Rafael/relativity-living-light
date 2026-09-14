@@ -1,0 +1,30 @@
+{
+  "schema": "rll.session_multiscale_avalanche.contract.v1",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "purpose": "Finite synthesis of ordered infall, damping, plasma transport, 144/288 kHz forcing and carbon-phase hypotheses.",
+  "inputs": {
+    "frequency_pair_hz": [144000.0, 288000.0],
+    "light_matter_modes_mev": [3.2, 5.1],
+    "spiral_shrink": "sqrt(3)/2",
+    "state_dimensions": ["rho", "v_r", "v_phi", "T_e", "T_i", "p", "B", "J", "x_e", "entropy", "phase_coherence"]
+  },
+  "operators": ["ordered_infall_step", "damping_partition", "bounded_electrical_avalanche_multiplier", "carbon_phase_gate", "finite_permutation_grid", "canonical_digest"],
+  "required_observables": ["V(t)", "I(t)", "phase_VI(t)", "T_e(t)", "T_i(t)", "n_e(t)", "x_e(t)", "B(t)", "spectrum"],
+  "forbidden_promotions": [
+    "144_or_288_kHz_directly_ionizes_by_single_photon",
+    "ordered_flow_implies_low_entropy",
+    "geometric_path_energy_is_thermodynamic_temperature",
+    "diamond_exists_in_fully_ionized_plasma",
+    "compact_remnant_composition_is_confirmed",
+    "GPT_semantic_transformation_is_physical_plasma_dissipation",
+    "strong_gravity_bridge_validates_RLL_cosmology"
+  ],
+  "boundaries": {
+    "grmhd_solution": false,
+    "plasma_kinetic_solution": false,
+    "carbon_eos_solution": false,
+    "laboratory_validation": false,
+    "astrophysical_validation": false,
+    "claim_allowed": false
+  }
+}

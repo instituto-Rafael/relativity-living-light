@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/docs/contracts/execution_plan.schema.json",
+  "title": "Execution Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "plan_id", "intent_id", "gate_decision", "compiled_commands", "created_at"],
+  "properties": {
+    "schema": {"const": "rafaelia.execution_plan.v1"},
+    "plan_id": {"type": "string", "minLength": 1},
+    "intent_id": {"type": "string", "minLength": 1},
+    "gate_decision": {"type": "string", "enum": ["allow", "sandbox_only", "human_review", "blocked"]},
+    "compiled_commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "args", "read_only"],
+        "properties": {
+          "command": {"type": "string", "const": "git"},
+          "args": {
+            "type": "array",
+            "enum": [["status"], ["diff", "--stat"]]
+          },
+          "read_only": {"type": "boolean", "const": true}
+        }
+      }
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "rll.session_graph.current_state_overlay.v1",
+  "snapshot": {
+    "session_id": "SESSION_FASE17_20_2026-07-14_15",
+    "through_phase": 20,
+    "generated_utc": "2026-07-16T00:00:00Z",
+    "gap_states": {
+      "G1": "FECHADO",
+      "G2": "FECHADO",
+      "G3": "FECHADO",
+      "G4": "TOKEN_VAZIO"
+    }
+  },
+  "current_state": {
+    "through_phase": 22,
+    "as_of_utc": "2026-07-16T21:00:00Z",
+    "gap_states": {
+      "G1": "FECHADO",
+      "G2": "FECHADO",
+      "G3": "FECHADO",
+      "G4": "VERIFIED_LIMITED"
+    },
+    "gap_lifecycle": {
+      "G4": "CLOSED_AS_QUANTIFIED_SYSTEMATIC"
+    },
+    "all_original_gaps_closed": true,
+    "claim_allowed": false
+  },
+  "transitions": [
+    {
+      "gap_id": "G4",
+      "from_state": "TOKEN_VAZIO",
+      "to_state": "VERIFIED_LIMITED",
+      "lifecycle": "CLOSED_AS_QUANTIFIED_SYSTEMATIC",
+      "closed_in_phase": 22,
+      "closed_by_pr": "#556",
+      "script": "scripts/rll_fase22_g4_eh_bias_grid.py",
+      "artifact": "results/rll_fase22_g4_eh_bias_grid.json",
+      "audit_document": "docs/cronologia-auditoria/21_FASE22_G4_EH_BIAS_GRID.md",
+      "result": {
+        "grid": "10x10",
+        "posterior_systematic_mpc": 0.7214,
+        "estimated_delta_ln_b10": "0.1 to 1.0",
+        "qualitative_model_comparison_changed": false
+      },
+      "residual_limitation": {
+        "description": "Recompute rd with CAMB/RECFAST at each MCMC point for precision analysis.",
+        "status": "TOKEN_VAZIO",
+        "priority": "P1"
+      }
+    }
+  ],
+  "boundary": "The overlay synchronizes historical and current repository state. It does not rewrite the FASE17-20 snapshot, eliminate the residual precision limitation, allow a superiority claim, or replace independent review."
+}

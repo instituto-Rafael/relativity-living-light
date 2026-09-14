@@ -1,0 +1,71 @@
+{
+  "receipt_id": "RLL-COSMOLOGICAL-MATTER-SPECTROMETRY-V2-LOCAL-20260730",
+  "created_at": "2026-07-31T02:20:00Z",
+  "repository_target": "instituto-Rafael/relativity-living-light",
+  "branch_target": "feature/cosmological-matter-spectrometry-v2-20260730",
+  "scope": "public-safe structural integration of photonic, particle, nuclear, active sensing, and planetary composition methods",
+  "claim_allowed": false,
+  "execution": {
+    "json_syntax": "PASS",
+    "python_compile": "PASS",
+    "unittest": "8/8 PASS",
+    "synthetic_manifest_validation": "PASS",
+    "schema_claim_boundary_precheck": "PASS",
+    "private_path_secret_adversarial_test": "PASS"
+  },
+  "epistemic_boundary": {
+    "visible_is_small_em_band": true,
+    "photonic_covers_full_em_spectrum": true,
+    "composition_is_inference": true,
+    "dark_matter_direct_chemical_spectrum": "NOT_ESTABLISHED",
+    "dark_energy_photon_destination": "NOT_ESTABLISHED",
+    "public_physical_claim_allowed": false
+  },
+  "files": [
+    {
+      "path": "docs/science/RLL_COSMOLOGICAL_MATTER_SPECTROMETRY_V2.md",
+      "bytes": 11956,
+      "sha256": "1b222aa8ea9454cd44bffca7142d7e26cf4f40889e137ef51bb112cb82ce7081"
+    },
+    {
+      "path": "data/observational/cosmological_matter_spectrometry_registry.v1.json",
+      "bytes": 3391,
+      "sha256": "250735932b61c696ef4144e3bff0ca0c2fa802f555c5916d5fd0aa12a406e475"
+    },
+    {
+      "path": "schemas/cosmological_matter_observation.v1.schema.json",
+      "bytes": 5876,
+      "sha256": "c26bf514ab3f615c078b597221370c0cb2f705d6129e8d81799ea51fb3d692b7"
+    },
+    {
+      "path": "data/synthetic/cosmological_matter_observation.example.json",
+      "bytes": 1462,
+      "sha256": "b57caa07158be55f4272e255299b84514bc36edb0f15059ecd8a5ab7991bff07"
+    },
+    {
+      "path": "scripts/validate_cosmological_matter_manifest.py",
+      "bytes": 4439,
+      "sha256": "e7a52f48c50de79270ca2eb079aef31ffff7f04620af1aca3bea5f0dc02827eb"
+    },
+    {
+      "path": "tests/test_cosmological_matter_manifest.py",
+      "bytes": 1870,
+      "sha256": "b53190310d8cf74f6527d316e2b5f82c6b096e1d641975eba52e4e09ffdae61f"
+    }
+  ],
+  "F_ok": [
+    "canonical target changed to instituto-Rafael public RLL",
+    "four probe families separated",
+    "atmosphere surface plasma and interior layers separated",
+    "350 nm 450 nm and 350 um unit cases tested",
+    "eight local tests passed",
+    "fail-closed validator blocks claim promotion"
+  ],
+  "F_gap": [
+    "no real mission dataset ingested",
+    "no mission response matrix",
+    "no real retrieval posterior",
+    "no independent scientific review"
+  ],
+  "F_next": "open draft PR in the public Instituto Rafael RLL and keep the older personal-repository PR only as migration history"
+}

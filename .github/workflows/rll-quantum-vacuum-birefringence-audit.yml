@@ -1,0 +1,127 @@
+
+name: RLL Quantum Vacuum Birefringence Crosswalk Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      audit_profile:
+        description: Claim-closed audit intensity
+        type: choice
+        required: true
+        default: light
+        options: [light, deep]
+  schedule:
+    # Lightweight integrity/provenance audit once per hour. 17 avoids the most
+    # congested top-of-hour scheduler window.
+    - cron: "17 * * * *"
+    # Deep crosswalk/falsification-contract audit once per day.
+    - cron: "35 4 * * *"
+  pull_request:
+    paths:
+      - "data/real_sources/rll_quantum_vacuum_birefringence_crosswalk_20260903.v1.json"
+      - "tools/audit_rll_quantum_vacuum_birefringence_crosswalk.py"
+      - "tests/test_rll_quantum_vacuum_birefringence_crosswalk.py"
+      - "docs/science/RLL_QUANTUM_VACUUM_BIREFRINGENCE_CROSSWALK_20260903_V1.md"
+      - "workflows/TOKEN_VAZIO_LEDGER_RAFAELIA.md"
+      - ".github/workflows/rll-quantum-vacuum-birefringence-audit.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data/real_sources/rll_quantum_vacuum_birefringence_crosswalk_20260903.v1.json"
+      - "tools/audit_rll_quantum_vacuum_birefringence_crosswalk.py"
+      - "tests/test_rll_quantum_vacuum_birefringence_crosswalk.py"
+      - "docs/science/RLL_QUANTUM_VACUUM_BIREFRINGENCE_CROSSWALK_20260903_V1.md"
+      - "workflows/TOKEN_VAZIO_LEDGER_RAFAELIA.md"
+      - ".github/workflows/rll-quantum-vacuum-birefringence-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-quantum-vacuum-crosswalk-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Claim-closed provenance and falsification audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      EVENT_NAME: ${{ github.event_name }}
+      EVENT_SCHEDULE: ${{ github.event.schedule }}
+      INPUT_PROFILE: ${{ inputs.audit_profile }}
+      OUTPUT_DIR: artifacts/rll-quantum-vacuum-crosswalk
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Select fail-closed audit profile
+        shell: bash
+        run: |
+          set -euo pipefail
+          profile=light
+          reason=hourly_light_schedule
+          if [[ "$EVENT_NAME" == workflow_dispatch ]]; then
+            profile="${INPUT_PROFILE:-light}"
+            reason=manual_dispatch
+          elif [[ "$EVENT_NAME" == pull_request || "$EVENT_NAME" == push ]]; then
+            profile=deep
+            reason=contract_change
+          elif [[ "$EVENT_SCHEDULE" == "35 4 * * *" ]]; then
+            profile=deep
+            reason=daily_deep_schedule
+          fi
+          printf 'AUDIT_PROFILE=%s\nAUDIT_REASON=%s\n' "$profile" "$reason" >> "$GITHUB_ENV"
+          printf 'profile=%s\nreason=%s\n' "$profile" "$reason" > audit-profile.txt
+
+      - name: Validate crosswalk and materialize artifact-only receipt
+        run: |
+          set -euo pipefail
+          python tools/audit_rll_quantum_vacuum_birefringence_crosswalk.py \
+            --profile "$AUDIT_PROFILE" \
+            --output-dir "$OUTPUT_DIR"
+
+      - name: Run positive and negative contract tests
+        run: |
+          set -euo pipefail
+          python -m unittest tests/test_rll_quantum_vacuum_birefringence_crosswalk.py -v
+
+      - name: Record CI boundary summary
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUTPUT_DIR"
+          input_sha=$(sha256sum data/real_sources/rll_quantum_vacuum_birefringence_crosswalk_20260903.v1.json | cut -d' ' -f1)
+          decision=PASS
+          residuals=TOKEN_VAZIO_QED_SOURCE_REPRODUCTION_MODEL_AND_TRANSFER
+          if [[ "$JOB_STATUS" != success ]]; then
+            decision=FAIL
+            residuals=VALIDATION_OR_TEST_FAILURE
+          fi
+          printf '{"schema":"rll.quantum_vacuum_birefringence_ci_boundary.v1","commit_sha":"%s","audit_profile":"%s","audit_reason":"%s","claim_allowed":false,"publication_effect":"NONE","repository_write_attempted":false,"external_data_ingestion_attempted":false,"input_sha256":"%s","decision":"%s","residuals":"%s"}\n' \
+            "$GITHUB_SHA" "${AUDIT_PROFILE:-unknown}" "${AUDIT_REASON:-unknown}" "$input_sha" "$decision" "$residuals" \
+            > "$OUTPUT_DIR/ci-boundary.json"
+          cat "$OUTPUT_DIR/ci-boundary.json" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-quantum-vacuum-crosswalk-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/rll-quantum-vacuum-crosswalk/
+            audit-profile.txt
+          retention-days: 30
+          if-no-files-found: error
+

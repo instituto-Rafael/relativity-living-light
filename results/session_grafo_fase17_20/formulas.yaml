@@ -1,0 +1,72 @@
+# Fórmulas-chave da sessão FASE 17-20
+# Status: fórmulas operacionais com variáveis definidas, dados e domínio especificados
+# Heurística H8: regressão simbólica somente após operacionalização completa
+
+formulas:
+
+  - id: E_squared_z
+    name: "Equação de Friedmann modificada RLL"
+    expression: "E^2(z) = Om*(1+z)^3 + Or*(1+z)^4 + Os0*[f(z) + (1-f(z))*(1+z)^3] + OL"
+    variables:
+      E: "H(z)/H0 (razão de expansão adimensional)"
+      Om: "densidade de matéria; prior [0.20, 0.50]"
+      Or: "densidade de radiação; derivada de T_CMB=2.7255 K ~ 9e-5"
+      Os0: "amplitude da componente de transição RLL; prior [0.0, 0.15]"
+      OL: "densidade efetiva do termo cosmológico = 1 - Om - Or - Os0"
+      f_z: "função de transição logística (ver id: f_z)"
+      z: "redshift observacional [0, 20]"
+    domain: "z in [0, 20]; parâmetros nos priors especificados"
+    datasets_used: ["Moresco 33pts H(z)", "BAO hist. 4pts", "DESI DR2 13pts", "Pantheon+ 1624pts", "CMB 3pts"]
+    status: "OPERACIONAL — usado em FASE 17–20"
+
+  - id: f_z
+    name: "Função de transição logística RLL"
+    expression: "f(z) = 1 / (1 + exp((z - z_t) / w_t))"
+    variables:
+      z_t: "redshift de transição; prior [0.1, 20.0]"
+      w_t: "largura da transição; prior [0.05, 2.0]"
+    properties:
+      - "f(z) -> 0 para z >> z_t (dominância de matéria no passado distante)"
+      - "f(z) -> 1 para z << z_t (fase presente de baixo redshift)"
+      - "Mecanismo de fase física localizável; distingue RLL do CPL"
+    status: "OPERACIONAL"
+
+  - id: rd_correction
+    name: "Calibração aditiva de rd (horizonte de arraste)"
+    expression: "rd_corr = rd_EH_numerical + delta_rd"
+    variables:
+      rd_EH_numerical: "rd calculado por integração com z_drag via fórmula E&H [Mpc]"
+      delta_rd: "offset = rd_Planck - rd_EH(params_Planck) = 147.09 - 150.704 = -3.6140 Mpc"
+      rd_Planck: "147.09 Mpc [Planck 2018 VI, arXiv:1807.06209, Tabela 2]"
+    limitation: "Offset calculado nos parâmetros Planck; pode variar em outros pontos do espaço de parâmetros (G4)"
+    status: "OPERACIONAL — G2 fechado"
+
+  - id: rs_star_correction
+    name: "Calibração aditiva de rs_star (raio acústico na última dispersão)"
+    expression: "rs_star_corr = rs_star_numerical + delta_rs_star"
+    variables:
+      rs_star_numerical: "rs*(z*) calculado por integração numérica com E&H para z_*"
+      delta_rs_star: "+0.1988165 Mpc"
+      target: "rs*(z*) tal que chi^2_CMB(Planck 2018) ≈ 0"
+    status: "OPERACIONAL — herdado de FASE 18-E"
+
+  - id: l_A
+    name: "Parâmetro de shift acústico (distância angular ao CMB)"
+    expression: "l_A = pi * D_M(z_*) / rs_star(z_*)"
+    reference: "Chen, Huang & Wang 2019 (arXiv:1808.05724)"
+    variables:
+      D_M: "distância comóvel ao redshift de desacoplamento z_* ≈ 1089.9"
+      rs_star: "raio do horizonte sonoro em z_* (calibrado)"
+    note: "l_A usa r_s(z_*), não r_s(z_drag) — confusão histórica corrigida em FASE 17→18"
+    status: "OPERACIONAL"
+
+  - id: ln_B10
+    name: "Log do fator de Bayes RLL vs ΛCDM"
+    expression: "ln(B_10) = log Z_RLL - log Z_LCDM"
+    variables:
+      log_Z_RLL: "-404.340 ± 0.530 (dynesty, nlive=150)"
+      log_Z_LCDM: "-398.150 ± 0.443 (dynesty, nlive=150)"
+      ln_B10: "-6.190 ± 0.691"
+    interpretation: "|ln(B10)| > 5 → evidência muito forte para ΛCDM (Jeffreys 1961)"
+    note: "Discrepância com BIC/2 (≈ -11.14) esperada: BIC assume posterior gaussiana concentrada no MAP"
+    status: "RESULTADO_FINAL — G3 fechado"

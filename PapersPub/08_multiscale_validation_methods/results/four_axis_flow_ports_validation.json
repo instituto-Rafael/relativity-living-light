@@ -1,0 +1,42 @@
+{
+  "axis_count": 4,
+  "base7_example": {
+    "decimal": 7,
+    "phase": 7,
+    "positional": "10",
+    "quotient": 1,
+    "remainder": 0
+  },
+  "checks": {
+    "complete_state_is_1_0": true,
+    "diagonal_normalization": true,
+    "diameter_is_2r": true,
+    "eight_matrix_directions": true,
+    "eight_ports": true,
+    "empirical_fluid_interpretation_not_applicable": true,
+    "four_axes": true,
+    "lifted_seam_preserves_winding": true,
+    "opposed_midpoint_is_center": true,
+    "phase_seven_is_preserved": true,
+    "ports_on_circle": true,
+    "reconstruction_preserves_seven": true,
+    "seven_decimal_is_10_base7": true,
+    "tangent_line_distance_is_r": true,
+    "tangent_perpendicular": true,
+    "torus_sweep_preserves_meridian_radius": true,
+    "two_ports_per_axis": true,
+    "venturi_fold_is_lossless": true,
+    "vortex_seven_plus_one_returns_phase_one": true,
+    "vortex_six_plus_one_reaches_phase_seven": true,
+    "zero_is_valid_state": true
+  },
+  "checks_failed": 0,
+  "checks_passed": 21,
+  "checks_total": 21,
+  "claim_allowed": true,
+  "empirical_fluid_interpretation": "NOT_APPLICABLE",
+  "exact_geometry_state": "PASS",
+  "operator_state": "PASS",
+  "port_count": 8,
+  "schema": "paper.validation.four_axis_flow_ports.v2"
+}

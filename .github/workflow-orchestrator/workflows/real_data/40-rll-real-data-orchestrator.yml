@@ -1,0 +1,26 @@
+id: rll_real_data_orchestrator
+description: "Run artifact-focused RLL real-data orchestration."
+file: rll-real-data-orchestrator.yml
+stage: 40
+enabled: true
+tags: [all, real_data, science]
+wait_for_completion: true
+timeout_minutes: 60
+inputs:
+  pipeline_scope: all
+  dataset_group: all
+  mode: metadata_only
+  real_data_source: auto
+  book_scope: all
+  retention_days: "14"
+  fetch_igrf14: false
+  fetch_wmm2025: false
+  fetch_omni: false
+  fetch_nmdb: false
+  fetch_desi: false
+  fetch_pantheon: false
+  fetch_planck: false
+  fetch_spenvis_reference: false
+  run_iml: true
+  run_formulas: true
+  run_plots: false

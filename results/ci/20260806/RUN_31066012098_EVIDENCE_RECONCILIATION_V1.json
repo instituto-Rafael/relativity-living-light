@@ -1,0 +1,102 @@
+{
+  "canonical_run": {
+    "result_commit": "cfcd8b4915fef664486bc0d93ee2a2bb6d84ec65",
+    "run_id": 31066012098,
+    "source_head_sha": "3191a1d289db28b09b155b4b9eba62a32ad90005"
+  },
+  "claim_allowed": false,
+  "closure": {
+    "bayes_bic_proxy": "CALCULATED_BIC_PROXY",
+    "claim_allowed": false,
+    "pantheon_run_31066012098": "TOKEN_VAZIO_EXECUTION_FAILURE",
+    "real_bayes_inference": "TOKEN_VAZIO_REAL_BAYES_INFERENCE"
+  },
+  "generated_at": "2026-08-06T04:15:00+00:00",
+  "invariants": [
+    "catalog_or_checkpoint_is_not_materialized_evidence",
+    "derived_value_does_not_replace_source_bytes",
+    "BIC_proxy_is_not_real_Bayesian_evidence",
+    "historical_results_are_not_overwritten",
+    "TOKEN_VAZIO_does_not_authorize_invention"
+  ],
+  "repository": "instituto-Rafael/relativity-living-light",
+  "results": {
+    "bayes_bic_proxy": {
+      "basis": "RECONSTRUCTED_FROM_MATERIALIZED_BIC_ROWS",
+      "claim_allowed": false,
+      "delta_bic_rll_minus_lcdm": 11.336539,
+      "evidence_class": "C",
+      "falsifier_gate": {
+        "id": "F-COS-04",
+        "status": "FAIL",
+        "threshold": "ln(B10) > -5"
+      },
+      "jeffreys_label": "Evidência substancial contra RLL",
+      "method": "BIC proxy (ln B10 ≈ −ΔBIC/2)",
+      "metric": "ln_B10_rll_over_lcdm",
+      "source_metrics": {
+        "lcdm": {
+          "aic": 131.681105,
+          "bic": 138.907755,
+          "chi2": 123.681105,
+          "dof": 41,
+          "k": 4,
+          "n": 45
+        },
+        "rll": {
+          "aic": 137.597656,
+          "bic": 150.244294,
+          "chi2": 123.597656,
+          "dof": 38,
+          "k": 7,
+          "n": 45
+        }
+      },
+      "source_receipts": [
+        {
+          "artifact": "bayes-factor-results-31066012098.zip",
+          "internal_checksums_valid": true,
+          "sha256": "6f5e11105d8cdd23586bd9b36238f705bf198f01f8dd662b34ea51cd29127078"
+        }
+      ],
+      "state": "CALCULATED_BIC_PROXY",
+      "value": -5.6682695
+    },
+    "bayes_real_inference": {
+      "claim_allowed": false,
+      "evidence_class": "P",
+      "method": "nested sampling / independently validated posterior evidence",
+      "metric": "ln_B10_real_nested_sampling",
+      "note": "A BIC proxy is class C and cannot substitute real Bayesian evidence.",
+      "source_receipts": [],
+      "state": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "value": null
+    },
+    "pantheon_delta_aic": {
+      "claim_allowed": false,
+      "evidence_class": "P",
+      "failure": {
+        "kind": "MODULE_NOT_FOUND",
+        "module": "models"
+      },
+      "historical_reference_not_promoted": {
+        "chi2_lcdm": 710.808,
+        "chi2_rll": 710.613,
+        "delta_aic": 3.81,
+        "source": "results/pantheon_plus_resultado_real.txt"
+      },
+      "method": "AIC difference from the same materialized run output",
+      "metric": "delta_aic_rll_minus_lcdm",
+      "source_receipts": [
+        {
+          "artifact": "pantheon-fit-results-31066012098.zip",
+          "internal_checksums_valid": true,
+          "sha256": "c7b192cfa624dde19d5628781e120ba60d8628c792f3d7037e43c1092094f7e6"
+        }
+      ],
+      "state": "TOKEN_VAZIO_EXECUTION_FAILURE",
+      "value": null
+    }
+  },
+  "schema": "rll.evidence_reconciliation.v1"
+}

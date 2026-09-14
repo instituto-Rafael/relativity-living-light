@@ -1,0 +1,72 @@
+schema: rll.cosmology_model_family_multiseed_receipt.v1
+status: EXPERIMENTAL_SHADOW
+claim_allowed: false
+publication_effect: NONE
+canonical_outputs_modified: false
+
+source_contract: data/contracts/cosmology_model_family_shadow.v1.json
+execution:
+  mode: core
+  seeds_source: execution_policy.predeclared_seeds
+  require_all_predeclared_seeds: true
+  maxiter_source: execution_policy.default_maxiter
+  tol_source: execution_policy.default_tol
+  optimizer_must_match_source_contract: true
+  post_hoc_parameter_or_bound_changes_forbidden: true
+
+comparison:
+  ranking_metric: AICc
+  preserve_metrics:
+    - chi2
+    - AIC
+    - AICc
+    - BIC
+  preserve_components:
+    - chi2_Hz
+    - chi2_DESI_DR2_BAO
+  report_without_compensatory_score:
+    - per_seed_rank
+    - rank_min
+    - rank_max
+    - rank_span
+    - objective_min
+    - objective_median
+    - objective_max
+    - objective_span
+    - parameter_min_median_max
+  forbidden:
+    - probability_of_truth
+    - post_hoc_seed_selection
+    - hidden_average_quality_score
+    - promotion_from_unanimous_ranking_alone
+    - publication_claim
+
+completion:
+  complete_when:
+    - every predeclared seed has one receipt
+    - every receipt uses identical input hashes
+    - every receipt uses identical model order
+    - every receipt uses identical bounds, objective, data, and covariance policy
+    - every model has finite ranking metrics for every seed
+  incomplete_state: TOKEN_VAZIO_ROBUST_MULTI_SEED_RECEIPT
+  complete_state: RECEIPTED_MULTI_SEED_COMPARISON
+  complete_state_does_not_imply:
+    - robust physical preference
+    - independent replication
+    - perturbation validation
+    - theory confirmation
+    - claim_allowed
+
+omega_feedback:
+  observed_rank_variation: preserve_as_residual
+  observed_parameter_variation: preserve_as_residual
+  negative_or_unstable_result: append_only_knowledge
+  next_decision_requires: explicit human or versioned contract review
+
+receipt:
+  schema: rll.cosmology_model_family_multiseed.result.v1
+  hash_algorithm: SHA-256
+  outputs:
+    - model_family_multiseed_receipt.json
+    - model_family_multiseed_summary.csv
+    - MODEL_FAMILY_MULTISEED_REPORT.md

@@ -1,0 +1,301 @@
+{
+  "schema": "rll.omega7_operational_assessment.v1",
+  "assessment_id": "OMEGA7-RLL-MAIN-20260720",
+  "subject": {
+    "id": "instituto-Rafael/relativity-living-light",
+    "kind": "repository",
+    "scope": "structural operational readiness for scientific and governance evolution"
+  },
+  "generated_at": "2026-07-20T08:45:00Z",
+  "source_commit": "c07c157d061e63ecc004edc007393ba2a30bad7e",
+  "semantic_matrix_ref": "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md",
+  "invariant_definition": {
+    "semantic_class": "[C]",
+    "equation": "Omega = Identity tensor Relation tensor Provenance tensor Measure tensor Rights tensor State tensor Evidence",
+    "interpretation": "Operational Omega is the preservation of identity, relation, provenance, measure, rights, state and evidence across transformations.",
+    "operator_boundary": "tensor denotes architectural articulation, not physical multiplication"
+  },
+  "hard_invariants": [
+    {
+      "invariant_id": "I1",
+      "statement": "No promoted result exists without origin, run, commit, method and dataset lineage.",
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        "schemas/rll_run_manifest.schema.json"
+      ],
+      "next_action": "Migrate historical results to manifests."
+    },
+    {
+      "invariant_id": "I2",
+      "statement": "No scientific claim is promoted without evidence and explicit claim-boundary review.",
+      "status": "PASS",
+      "evidence_refs": [
+        "tools/validate_schemas_claim_boundary.py",
+        "schemas/README.md"
+      ],
+      "next_action": "Keep fail-closed enforcement active."
+    },
+    {
+      "invariant_id": "I3",
+      "statement": "No TOKEN_VAZIO is silently converted into certainty, falsehood or supersession.",
+      "status": "PASS",
+      "evidence_refs": [
+        "schemas/rll_epistemic_void.schema.json",
+        "schemas/rll_run_manifest.schema.json"
+      ],
+      "next_action": "Retain semantic regression tests."
+    },
+    {
+      "invariant_id": "I4",
+      "statement": "No material transformation occurs without an auditable record of input, action and output.",
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        ".github/workflows/validate-schema-contracts.yml"
+      ],
+      "next_action": "Extend receipts to non-CI and historical transformations."
+    },
+    {
+      "invariant_id": "I5",
+      "statement": "No historical evidence is erased; supersession and invalidation remain append-only and justified.",
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        "docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md"
+      ],
+      "next_action": "Materialize the state-transition ledger."
+    },
+    {
+      "invariant_id": "I6",
+      "statement": "No critical execution advances without logs, checksums, status and a reproducible audit receipt.",
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        ".github/workflows/rll-pipeline-linear-completo.yml"
+      ],
+      "next_action": "Inventory workflows lacking complete receipts."
+    },
+    {
+      "invariant_id": "I7",
+      "statement": "No technical objective overrides authorization, dignity, privacy, authorship, license or safety.",
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md"
+      ],
+      "next_action": "Link dataset rights manifests to every run lineage."
+    }
+  ],
+  "directions": [
+    {
+      "direction_id": "D1",
+      "dimension": "origin_provenance",
+      "question": "Can every promoted result be traced to one run, commit, dataset lineage and immutable artifact?",
+      "score": 2,
+      "normalized_score": 0.5,
+      "status": "PARTIAL",
+      "evidence_refs": [
+        "schemas/rll_run_manifest.schema.json",
+        "docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md"
+      ],
+      "gap": "Historical results have not all been migrated into field-level run manifests.",
+      "urgent_action": "Materialize manifests for historical cosmology runs and build a canonical append-only run ledger.",
+      "gate_artifact": "results/run_ledger.jsonl"
+    },
+    {
+      "direction_id": "D2",
+      "dimension": "semantic_coherence",
+      "question": "Do model names, epistemic states, units and claim boundaries retain one meaning across code and documents?",
+      "score": 3,
+      "normalized_score": 0.75,
+      "status": "READY_FOR_TEST",
+      "evidence_refs": [
+        "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md",
+        "schemas/README.md"
+      ],
+      "gap": "RLL model-family names and version boundaries are not yet enforced by one machine-readable registry.",
+      "urgent_action": "Create a canonical RLL model-family registry and validate references from reports and manifests.",
+      "gate_artifact": "data/contracts/rll_model_family_registry.yml"
+    },
+    {
+      "direction_id": "D3",
+      "dimension": "geometric_dimensional_integrity",
+      "question": "Are units, domains, transformations, normalizations and boundary conditions explicit and mutually compatible?",
+      "score": 1,
+      "normalized_score": 0.25,
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md"
+      ],
+      "gap": "No single dimensional-invariant registry covers the scientific outputs and transformations of the full RLL pipeline.",
+      "urgent_action": "Create a dimensional contract for observables, parameters, domains, units and allowed transformations.",
+      "gate_artifact": "data/contracts/rll_dimensional_invariants.json"
+    },
+    {
+      "direction_id": "D4",
+      "dimension": "runtime_execution",
+      "question": "Does the runtime execute what the canonical architecture declares and emit auditable receipts?",
+      "score": 4,
+      "normalized_score": 1.0,
+      "status": "VERIFIED",
+      "evidence_refs": [
+        ".github/workflow-contract.yml",
+        "tools/validate_workflow_docs.py",
+        ".github/workflows/rll-pipeline-linear-completo.yml"
+      ],
+      "gap": "Resume and verified artifact-reuse controls are still incomplete even though structural execution mapping is verified.",
+      "urgent_action": "Add start_from, stop_after and hash-verified artifact reuse without weakening the deterministic gate.",
+      "gate_artifact": "artifacts/workflow-docs/workflow_registry.json"
+    },
+    {
+      "direction_id": "D5",
+      "dimension": "temporal_state_memory",
+      "question": "Can the system preserve history, distinguish lineages and explain every supersession or invalidation?",
+      "score": 2,
+      "normalized_score": 0.5,
+      "status": "PARTIAL",
+      "evidence_refs": [
+        "schemas/rll_run_manifest.schema.json",
+        "data/epistemic_void/rll_epistemic_void.json"
+      ],
+      "gap": "The precedence policy exists structurally, but historical state transitions are not yet materialized in an append-only ledger.",
+      "urgent_action": "Implement field-level precedence resolution and a state-transition ledger preserving invalidated evidence.",
+      "gate_artifact": "results/state_transition_ledger.jsonl"
+    },
+    {
+      "direction_id": "D6",
+      "dimension": "rights_security",
+      "question": "Are authorization, license, privacy, authorship, retention and security boundaries attached to each input and action?",
+      "score": 2,
+      "normalized_score": 0.5,
+      "status": "PARTIAL",
+      "evidence_refs": [
+        "docs/architecture/30_SEVEN_DIRECTION_SEMANTIC_MATRIX.md",
+        "schemas/semantic_token_unit.schema.json"
+      ],
+      "gap": "Dataset-level rights and license manifests are not uniformly linked to scientific run provenance.",
+      "urgent_action": "Require rights, license, access date, privacy class and consent boundary in every dataset lineage entry.",
+      "gate_artifact": "data/contracts/dataset_rights_manifest.schema.json"
+    },
+    {
+      "direction_id": "D7",
+      "dimension": "evidence_falsification",
+      "question": "Does every hypothesis define an observable, baseline, uncertainty, falsifier and objective exit condition?",
+      "score": 1,
+      "normalized_score": 0.25,
+      "status": "TOKEN_VAZIO",
+      "evidence_refs": [
+        "data/epistemic_void/rll_epistemic_void.json",
+        "docs/science/TOKEN_VAZIO_PRIORITY_LEDGER.md"
+      ],
+      "gap": "Growth, out-of-sample validation and full CMB scope remain open falsification routes.",
+      "urgent_action": "Materialize falsifier contracts for f_sigma8, holdout validation and explicitly versioned CMB backend levels.",
+      "gate_artifact": "data/contracts/rll_falsifier_bundle.json"
+    }
+  ],
+  "omega_metrics": {
+    "formula_class": "[C]",
+    "geometric_formula": "Omega_G = (product(d_i))^(1/7)",
+    "minimum_formula": "Omega_min = min(d_i)",
+    "omega_g": 0.479867804894,
+    "omega_min": 0.25,
+    "weakest_directions": [
+      "D3",
+      "D7"
+    ],
+    "hard_gate_open": [
+      "I1",
+      "I4",
+      "I5",
+      "I6",
+      "I7"
+    ],
+    "decision": "BLOCKED",
+    "metric_boundary": "routing convention; not physical geometry, probability, evidence or scientific validation"
+  },
+  "urgent_conditions": [
+    {
+      "condition_id": "U1",
+      "direction_id": "D1",
+      "priority": "P0",
+      "statement": "Materialize field-level provenance for every canonical scientific result.",
+      "required_artifact": "results/run_ledger.jsonl",
+      "exit_criteria": [
+        "Historical canonical runs have valid manifests.",
+        "Every promoted result resolves to one artifact SHA-256."
+      ],
+      "status": "OPEN"
+    },
+    {
+      "condition_id": "U2",
+      "direction_id": "D2",
+      "priority": "P1",
+      "statement": "Define machine-readable RLL model families and semantic version boundaries.",
+      "required_artifact": "data/contracts/rll_model_family_registry.yml",
+      "exit_criteria": [
+        "Each report names one registered model family.",
+        "Ambiguous aliases fail validation."
+      ],
+      "status": "OPEN"
+    },
+    {
+      "condition_id": "U3",
+      "direction_id": "D3",
+      "priority": "P0",
+      "statement": "Create the dimensional and domain invariant registry for the full scientific pipeline.",
+      "required_artifact": "data/contracts/rll_dimensional_invariants.json",
+      "exit_criteria": [
+        "Every observable declares unit and domain.",
+        "Every transformation declares compatible input and output dimensions."
+      ],
+      "status": "OPEN"
+    },
+    {
+      "condition_id": "U4",
+      "direction_id": "D4",
+      "priority": "P1",
+      "statement": "Add resumable execution with verified artifact reuse and deterministic boundaries.",
+      "required_artifact": "data/contracts/rll_resume_policy.json",
+      "exit_criteria": [
+        "start_from and stop_after are validated.",
+        "Reused artifacts match code, data, parameter and environment hashes."
+      ],
+      "status": "READY_FOR_TEST"
+    },
+    {
+      "condition_id": "U5",
+      "direction_id": "D5",
+      "priority": "P0",
+      "statement": "Materialize append-only temporal state transitions and field-level precedence.",
+      "required_artifact": "results/state_transition_ledger.jsonl",
+      "exit_criteria": [
+        "Supersession is justified per field.",
+        "Invalidated results remain preserved with reasons."
+      ],
+      "status": "OPEN"
+    },
+    {
+      "condition_id": "U6",
+      "direction_id": "D6",
+      "priority": "P0",
+      "statement": "Attach rights, license, privacy and authorization metadata to all dataset lineages.",
+      "required_artifact": "data/contracts/dataset_rights_manifest.schema.json",
+      "exit_criteria": [
+        "Every dataset has source, license and access date.",
+        "Sensitive or unknown rights fail closed."
+      ],
+      "status": "OPEN"
+    },
+    {
+      "condition_id": "U7",
+      "direction_id": "D7",
+      "priority": "P0",
+      "statement": "Complete falsifier contracts for growth, holdout validation and CMB scope.",
+      "required_artifact": "data/contracts/rll_falsifier_bundle.json",
+      "exit_criteria": [
+        "Each hypothesis has observable, baseline, uncertainty and falsifier.",
+        "Each route emits a versioned evidence artifact or TOKEN_VAZIO."
+      ],
+      "status": "OPEN"
+    }
+  ],
+  "state": "BLOCKED",
+  "claim_allowed": false,
+  "next_gate": "Implement U1, U3, U5, U6 and U7 before any stronger operational or scientific promotion."
+}

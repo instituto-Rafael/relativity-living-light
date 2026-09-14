@@ -1,0 +1,60 @@
+{
+  "schema": "rll.dovekie_cpl_wa_lower_bound_receipt.v1",
+  "observed_at": "2026-08-07T23:31:48Z",
+  "state": "VERIFIED_FINITE_LOWER_95_BOUND",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_workflow": {
+    "name": "Dovekie CPL wa Lower-Bound Gate",
+    "run_id": 31227378178,
+    "run_number": 3,
+    "conclusion": "success",
+    "head_branch": "audit/token-vazio-closure-reconciler-20260807-v1",
+    "head_sha": "1bfe779fde734793bb9aeae1890f558d4a9af70a"
+  },
+  "artifact": {
+    "id": 9012576268,
+    "name": "dovekie-wa-lower-bound-31227378178",
+    "size_in_bytes": 8375,
+    "digest": "sha256:2c20ce9a029eabcaa943d1a754970017a07932b1a4ee49c0d47b2b4db35a4405",
+    "expired": false
+  },
+  "inputs": {
+    "n_supernovae": 1820,
+    "hubble_diagram_sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+    "precision_sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+    "profile_sha256": "be7b5a4d978fc9f0930eafef1a9d0d75c256b0b205ccd06b28218bf73d22c44f"
+  },
+  "target": {
+    "parameter": "wa",
+    "method": "frequentist profile likelihood with Omega_m and w0 re-optimized at every fixed wa",
+    "confidence_rule": "Delta-chi2 1 dof",
+    "delta_chi2": 3.841458820694124
+  },
+  "result": {
+    "global_best_chi2": 1625.3554394913956,
+    "wa_lower_95_estimate": -12.6064453125,
+    "excluded_low_wa": -12.609375,
+    "excluded_low_delta_chi2": 3.8473252233993662,
+    "included_high_wa": -12.603515625,
+    "included_high_delta_chi2": 3.8356923917440326,
+    "bracket_width": 0.005859375,
+    "all_starts_converged": true,
+    "w0_at_crossing_behavior": "optimizer at declared upper bound w0=-0.3 in the sampled lower-tail crossing region"
+  },
+  "receipt_sha256": "f96352c7b38b16e4912557ce0bb5ccc8c64053cbcb68e825073631aa06f81ce2",
+  "resolves_token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+  "scientific_boundary": "This closes the finite lower 95% profile crossing for the declared Dovekie SN-only CPL parameterization. It is not a Bayesian credible interval, does not validate CPL over LCDM, and the w0 boundary behavior remains relevant for physical interpretation.",
+  "F_ok": [
+    "The lower 95% crossing is bracketed on both sides of Delta-chi2=3.841458820694124.",
+    "The final bracket width is below 0.01 in wa.",
+    "All optimization starts converged in the stored solver receipt."
+  ],
+  "F_gap": [
+    "Physical interpretation of the extreme CPL tail remains limited by the declared w0 prior/boundary and SN-only identifiability."
+  ],
+  "F_next": [
+    "Use wa > approximately -12.606 only as the declared SN-only profile lower-bound result under this parameter box.",
+    "Prefer the prior-locked Bayes receipt and future multi-probe constraints for model interpretation."
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "rll.postmerge_ci_receipt.v1",
+  "generated_at": "2026-08-06T05:04:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "pull_request": 647,
+  "supersedes_queue_item": "RLL-P0-POSTMERGE-CI-RECEIPT",
+  "source_queue": "data/governance/RLL_EXECUTION_QUEUE_20260806_V1.json",
+  "evidence_class": "E",
+  "state": "PASS_POSTMERGE_FULL_SUITE_RECEIPT",
+  "claim_allowed": false,
+  "git": {
+    "base_sha": "e7997693d4038f379aa0d960a3485f61e94d454b",
+    "head_sha": "6b04fc7fad0ca92b63d5c6ab5dde18e8b9e22272",
+    "merge_ref_sha": "5aec83b4ecd6a403edb96e02e4f57406d4281bb4",
+    "merged_prs_present_in_base": {
+      "645": "73872e3e8aa036d0973a2078f94b87bff2293992",
+      "646": "e7997693d4038f379aa0d960a3485f61e94d454b"
+    }
+  },
+  "python_tests": {
+    "workflow_run_id": 31072885285,
+    "job_id": 92524316815,
+    "status": "completed",
+    "conclusion": "success",
+    "passed": 924,
+    "failed": 0,
+    "subtests_passed": 3,
+    "duration_seconds": 58.87,
+    "artifact": {
+      "artifact_id": 8956323450,
+      "name": "python-tests-31072885285",
+      "size_bytes": 19182,
+      "sha256": "e26352ae357103352f2e3080ef49a502afe56b694f7806596d6a11e9616a8579"
+    }
+  },
+  "workflow_summary": {
+    "observed": 7,
+    "success": 7,
+    "failure": 0,
+    "runs": [
+      {
+        "name": "Python tests",
+        "run_id": 31072885285,
+        "conclusion": "success"
+      },
+      {
+        "name": "formulas-artifacts",
+        "run_id": 31072885302,
+        "conclusion": "success"
+      },
+      {
+        "name": "RLL FASE 24.1 — Gate Determinístico",
+        "run_id": 31072885275,
+        "conclusion": "success"
+      },
+      {
+        "name": "RLL Governance Quality Gate — non-certification",
+        "run_id": 31072885263,
+        "conclusion": "success"
+      },
+      {
+        "name": "Validate Schema Contracts",
+        "run_id": 31072885271,
+        "conclusion": "success"
+      },
+      {
+        "name": "Convention Consistency Check",
+        "run_id": 31072885294,
+        "conclusion": "success"
+      },
+      {
+        "name": "RLL Knowledge Matrix — Orquestração de Fórmulas e Conceitos",
+        "run_id": 31072885290,
+        "conclusion": "success"
+      }
+    ]
+  },
+  "invariants_checked": [
+    "base_contains_pr_645_and_pr_646",
+    "full_python_suite_passed",
+    "schema_contracts_passed",
+    "governance_gate_passed",
+    "deterministic_gate_passed",
+    "negative_history_not_deleted",
+    "claim_allowed_remains_false"
+  ],
+  "promotion": {
+    "from": {
+      "evidence_class": "P",
+      "state": "TOKEN_VAZIO_POSTMERGE_FULL_SUITE_RECEIPT"
+    },
+    "to": {
+      "evidence_class": "E",
+      "state": "PASS_POSTMERGE_FULL_SUITE_RECEIPT"
+    },
+    "scope": "post-merge software and governance integration only",
+    "does_not_promote": [
+      "TERMUX physical execution",
+      "new Pantheon scientific run",
+      "Pantheon full covariance",
+      "real Bayesian nested-sampling evidence",
+      "independent scientific review"
+    ]
+  },
+  "next_gate": "RLL-P0-TERMUX-PHYSICAL-REPLAY"
+}

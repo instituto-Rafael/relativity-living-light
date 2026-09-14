@@ -1,0 +1,62 @@
+{
+  "schema": "raf.rll.full_method_coverage_manifest.v2",
+  "date": "2026-09-05",
+  "claim_allowed": false,
+  "old_nibiguiri_12_fraction_within_v2": "12/96=1/8",
+  "partition_state": "V2_COVERAGE_ARCHITECTURE_NOT_UNIQUE_THEOREM",
+  "families": [
+    {"id":"F01","title":"Estado / representação / epistemologia"},
+    {"id":"F02","title":"Relation Calculus / transformação"},
+    {"id":"F03","title":"Geometria / topologia"},
+    {"id":"F04","title":"Aritmética / modular / discreta"},
+    {"id":"F05","title":"Dinâmica / tempo / controle"},
+    {"id":"F06","title":"Empírico / estatístico / falsificação"},
+    {"id":"F07","title":"Semântico / polimático / transdisciplinar"},
+    {"id":"F08","title":"Governança / proveniência / meta-método"}
+  ],
+  "directions": [
+    {"id":"N01","angle_deg":0,"verb":"preservar","opposite":"N07"},
+    {"id":"N02","angle_deg":30,"verb":"transformar","opposite":"N08"},
+    {"id":"N03","angle_deg":60,"verb":"local→global","opposite":"N09"},
+    {"id":"N04","angle_deg":90,"verb":"finito→família","opposite":"N10"},
+    {"id":"N05","angle_deg":120,"verb":"direto→inverso","opposite":"N11"},
+    {"id":"N06","angle_deg":150,"verb":"interno→externo","opposite":"N12"},
+    {"id":"N07","angle_deg":180,"verb":"comprimir","opposite":"N01"},
+    {"id":"N08","angle_deg":210,"verb":"quotientar","opposite":"N02"},
+    {"id":"N09","angle_deg":240,"verb":"global→local","opposite":"N03"},
+    {"id":"N10","angle_deg":270,"verb":"assintótico→finito","opposite":"N04"},
+    {"id":"N11","angle_deg":300,"verb":"inverso→mecanismo","opposite":"N05"},
+    {"id":"N12","angle_deg":330,"verb":"evidência→anti-evidência","opposite":"N06"}
+  ],
+  "lenses_96": [
+    "F01N01","F01N02","F01N03","F01N04","F01N05","F01N06","F01N07","F01N08","F01N09","F01N10","F01N11","F01N12",
+    "F02N01","F02N02","F02N03","F02N04","F02N05","F02N06","F02N07","F02N08","F02N09","F02N10","F02N11","F02N12",
+    "F03N01","F03N02","F03N03","F03N04","F03N05","F03N06","F03N07","F03N08","F03N09","F03N10","F03N11","F03N12",
+    "F04N01","F04N02","F04N03","F04N04","F04N05","F04N06","F04N07","F04N08","F04N09","F04N10","F04N11","F04N12",
+    "F05N01","F05N02","F05N03","F05N04","F05N05","F05N06","F05N07","F05N08","F05N09","F05N10","F05N11","F05N12",
+    "F06N01","F06N02","F06N03","F06N04","F06N05","F06N06","F06N07","F06N08","F06N09","F06N10","F06N11","F06N12",
+    "F07N01","F07N02","F07N03","F07N04","F07N05","F07N06","F07N07","F07N08","F07N09","F07N10","F07N11","F07N12",
+    "F08N01","F08N02","F08N03","F08N04","F08N05","F08N06","F08N07","F08N08","F08N09","F08N10","F08N11","F08N12"
+  ],
+  "AE_operators": [
+    {"id":"A","name":"OBSERVE_SOURCE_CONTEXT"},
+    {"id":"B","name":"MAP_RELATIONS"},
+    {"id":"C","name":"TRANSFORM_CALCULATE"},
+    {"id":"D","name":"CHALLENGE_FALSIFY"},
+    {"id":"E","name":"SYNTHESIZE_GATE"}
+  ],
+  "AE_permutations_120": [
+    "ABCDE","ABCED","ABDCE","ABDEC","ABECD","ABEDC","ACBDE","ACBED","ACDBE","ACDEB","ACEBD","ACEDB","ADBCE","ADBEC","ADCBE","ADCEB","ADEBC","ADECB","AEBCD","AEBDC","AECBD","AECDB","AEDBC","AEDCB",
+    "BACDE","BACED","BADCE","BADEC","BAECD","BAEDC","BCADE","BCAED","BCDAE","BCDEA","BCEAD","BCEDA","BDACE","BDAEC","BDCAE","BDCEA","BDEAC","BDECA","BEACD","BEADC","BECAD","BECDA","BEDAC","BEDCA",
+    "CABDE","CABED","CADBE","CADEB","CAEBD","CAEDB","CBADE","CBAED","CBDAE","CBDEA","CBEAD","CBEDA","CDABE","CDAEB","CDBAE","CDBEA","CDEAB","CDEBA","CEABD","CEADB","CEBAD","CEBDA","CEDAB","CEDBA",
+    "DABCE","DABEC","DACBE","DACEB","DAEBC","DAECB","DBACE","DBAEC","DBCAE","DBCEA","DBEAC","DBECA","DCABE","DCAEB","DCBAE","DCBEA","DCEAB","DCEBA","DEABC","DEACB","DEBAC","DEBCA","DECAB","DECBA",
+    "EABCD","EABDC","EACBD","EACDB","EADBC","EADCB","EBACD","EBADC","EBCAD","EBCDA","EBDAC","EBDCA","ECABD","ECADB","ECBAD","ECBDA","ECDAB","ECDBA","EDABC","EDACB","EDBAC","EDBCA","EDCAB","EDCBA"
+  ],
+  "relation_operators_12": ["DIRECT","INVERSE","DERIVATIVE","ANTIDERIVATIVE","EXCLUSIVE","COMPLEMENT","COMPOSITION","CORRELATION","INVARIANT","EQUIVARIANT","COUNTERFACTUAL","META_RELATION"],
+  "semantic_slots_34": [
+    {"id":"D01","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D02","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D03","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D04","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D05","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D06","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D07","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D08","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D09","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D10","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D11","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D12","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D13","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D14","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D15","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D16","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D17","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D18","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D19","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D20","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D21","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D22","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D23","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D24","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D25","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D26","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D27","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D28","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D29","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D30","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D31","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D32","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D33","canonical_name":"TOKEN_VAZIO_AXIS_NAME"},{"id":"D34","canonical_name":"TOKEN_VAZIO_AXIS_NAME"}
+  ],
+  "counts": {"units":48,"families":8,"directions":12,"lenses":96,"AE_permutations":120,"relation_operators":12,"semantic_slots":34,"base_cells":4608,"AE_cells":5760,"relation_cells":576,"semantic_cells":1632,"staged_total":12576,"full_cross":225607680},
+  "obligations_sha256": "0cab962d33e4c12acae90dd49938f0c2b4c9e11e24f6db9660a28be9cedc1085",
+  "boundaries": ["12/96 is architectural coverage in V2, not a theorem of all possible methods","34D axis names remain TOKEN_VAZIO until source-bound","historical exact A-E label semantics remain TOKEN_VAZIO","matrix size is not quality"]
+}

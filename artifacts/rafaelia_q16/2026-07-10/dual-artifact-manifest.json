@@ -1,0 +1,64 @@
+{
+  "schema": "rafaelia.q16.dual-artifact-manifest.v1",
+  "experiment_id": "RAFAELIA-Q16-ARM32-DUAL-20260710",
+  "author": "Rafael Melo Reis",
+  "signature": "RAFCODE-PHI / DeltaRafaelVerboOmega",
+  "epistemic_status": "NUMERICALLY_OBSERVED_AND_BEHAVIORALLY_EQUIVALENT",
+  "runtime": {
+    "architecture": "armv7l",
+    "elf_class": "ELF32",
+    "machine": "ARM",
+    "abi": "EABI5",
+    "elf_type": "DYN",
+    "interpreter": "/system/bin/linker",
+    "execution": "ring-3-freestanding-kernel-mediated"
+  },
+  "artifacts": {
+    "audit": {
+      "name": "rafaelia_node",
+      "size_bytes": 5608,
+      "sha256": "9cb04542b7385081310c31e276f17e336e99e639a4367b5774282a6a5c8b8030",
+      "stripped": false,
+      "exit_status": 0
+    },
+    "distribution": {
+      "name": "rafaelia_node.stripped",
+      "size_bytes": 4352,
+      "sha256": "82bdd4b70352de3301777808023c152938398d3cf8d9ebb2d8716fbff62191ac",
+      "stripped": true,
+      "exit_status": 0
+    }
+  },
+  "size_reduction": {
+    "bytes": 1256,
+    "percent_approx": 22.4
+  },
+  "behavioral_vectors": {
+    "result_48_q16": 1516200,
+    "result_96_q16": 1517719,
+    "target_q16": 1517675,
+    "error_q16": 44,
+    "tolerance_q16": 64,
+    "fixed_count": 7,
+    "fixed_min_q16": 1517719,
+    "fixed_max_q16": 1517725,
+    "first_fixed_iteration": 90,
+    "reached_fixed_q16": 1517719
+  },
+  "observed_equivalence": {
+    "same_reported_output": true,
+    "same_exit_status": true,
+    "bytewise_output_comparison_in_original_run": false,
+    "bytewise_output_comparison_required_in_reproduction": true
+  },
+  "acceptance": {
+    "original_exit_must_be_zero": true,
+    "stripped_exit_must_be_zero": true,
+    "outputs_must_be_byte_identical": true,
+    "all_behavioral_vectors_must_match": true
+  },
+  "boundary": {
+    "supported": "Stripping reduced the observed ELF while preserving the reported Q16 behavior and exit status.",
+    "not_supported": "The two ELF files are byte-identical or the hash is toolchain-independent."
+  }
+}

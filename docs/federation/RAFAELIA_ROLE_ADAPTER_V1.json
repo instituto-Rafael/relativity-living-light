@@ -1,0 +1,86 @@
+{
+  "schema": "rafaelia.repository-role-adapter/v1",
+  "schema_version": "1.0.0",
+  "status": "DECLARATION_ONLY",
+  "policy": {
+    "append_only": true,
+    "destructive_writes": false,
+    "automatic_promotion": false,
+    "claim_allowed": false
+  },
+  "federated_control_plane": {
+    "repository": "rafaelmeloreisnovo/Mapa",
+    "authority_matrix": {
+      "path": "governance/AUTHORITY_MATRIX_V1.yaml",
+      "ref": "b2a5d10fb3f386a69b26029cbc6d4355dc7ce0ed"
+    },
+    "role_contract": {
+      "path": "contracts/vertical_slice_v1_repository_adapters.json",
+      "ref": "b2a5d10fb3f386a69b26029cbc6d4355dc7ce0ed"
+    }
+  },
+  "data_boundary": {
+    "raw_private_content": "FORBIDDEN",
+    "credentials_and_secrets": "FORBIDDEN",
+    "permitted_inputs": [
+      "descriptor-only records",
+      "immutable source references",
+      "hashes and checksums",
+      "bounded metadata",
+      "explicitly authorized test inputs"
+    ],
+    "deletion_move_share_or_publication": "NOT_AUTHORIZED_BY_THIS_ADAPTER"
+  },
+  "evidence_envelope": {
+    "required_for_any_result": [
+      "source locator",
+      "immutable version",
+      "method or command",
+      "environment when executed",
+      "output artifact or explicit absence",
+      "checksum when bytes exist",
+      "failure mode",
+      "next verifiable step"
+    ],
+    "invariant": "SOURCE != IMPLEMENTATION != EXECUTION != EVIDENCE != CLAIM"
+  },
+  "claim_policy": {
+    "claim_allowed": false,
+    "no_automatic_promotion": true,
+    "missing_evidence_state": "TOKEN_VAZIO",
+    "ci_or_merge_is_not_execution_proof": true
+  },
+  "adapter_id": "adapter:rll-falsification-domain-v1",
+  "repository": {
+    "full_name": "instituto-Rafael/relativity-living-light",
+    "default_branch": "main",
+    "observed_base_commit": "d00528ceb3d7be7805a6526d55fb6a39ba8e672f"
+  },
+  "role": "SCIENTIFIC_FALSIFICATION_DOMAIN",
+  "input_contract": [
+    "declared dataset provenance",
+    "baseline",
+    "model",
+    "falsifier",
+    "reproducible analysis protocol"
+  ],
+  "output_contract": [
+    "bounded scientific experiment",
+    "baseline comparison",
+    "falsifier result",
+    "limited decision"
+  ],
+  "authority_boundary": {
+    "may_authorize": [
+      "scientific_experiment",
+      "baseline_comparison",
+      "falsifier_result"
+    ],
+    "may_not_authorize": [
+      "unreplicated_publication_claim",
+      "universal_scientific_truth",
+      "runtime_product_readiness"
+    ]
+  },
+  "next_verifiable_step": "Run only the pinned real-data protocol, preserve negative or null findings, and export a bounded result that separates data, model, computation, and claim."
+}

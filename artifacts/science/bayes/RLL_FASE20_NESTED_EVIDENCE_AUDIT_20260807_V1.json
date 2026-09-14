@@ -1,0 +1,93 @@
+{
+  "schema": "rll.fase20_nested_evidence_audit.v1",
+  "audited_at": "2026-08-07T23:18:00Z",
+  "state": "VERIFIED_LEGACY_REAL_NESTED_SAMPLING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source": {
+    "script_path": "scripts/rll_fase20_mcmc_bayes.py",
+    "script_blob_sha": "0190ee19cd4e8be983b3c627ac754436e768d6f6",
+    "result_path": "results/rll_fase20_mcmc_bayes.json",
+    "result_blob_sha": "2be5ed87b6c744cf9034e8c1117922f0d2ea7f5f"
+  },
+  "sampler": {
+    "name": "dynesty.NestedSampler",
+    "nlive": 150,
+    "dlogz": 0.5,
+    "rng_seed": 42,
+    "sampler_version_recorded_in_legacy_receipt": false
+  },
+  "data_contract": {
+    "class": "legacy_joint_real_data",
+    "n_total": 1677,
+    "components_declared_by_source": [
+      "Moresco H(z)",
+      "historical BAO subset",
+      "DESI DR2 tracer points",
+      "Pantheon-like SN input used by FASE20",
+      "compressed CMB shift parameters",
+      "BBN prior"
+    ],
+    "modern_full_covariance_sn_contract": false,
+    "official_DESI_DR2_joint_likelihood_reproduction": false,
+    "ACT_DR6_full_likelihood": false,
+    "DES_Y6_3x2pt": false
+  },
+  "models": {
+    "LCDM": {
+      "dimension": 3,
+      "parameters": ["H0", "Omega_m", "Omega_b"],
+      "logZ": -398.15007573481137,
+      "logZ_error": 0.4429460223145894
+    },
+    "RLL": {
+      "dimension": 6,
+      "parameters": ["H0", "Omega_m", "Omega_b", "Omega_s0", "z_t", "w_t"],
+      "logZ": -404.34028649723075,
+      "logZ_error": 0.5299056817115321
+    },
+    "CPL": {
+      "included_in_same_nested_run": false
+    }
+  },
+  "bayes_factor": {
+    "comparison": "RLL/LCDM",
+    "lnB10": -6.190210762419383,
+    "lnB10_error": 0.6906527421175422,
+    "direction": "LCDM_FAVORED_UNDER_LEGACY_PRIORS_AND_LIKELIHOOD"
+  },
+  "prior_contract": {
+    "ranges_are_explicit_in_source": true,
+    "prior_file_or_payload_sha256_recorded": false,
+    "same_modern_three_model_prior_registry": false,
+    "CPL_prior_present": false
+  },
+  "replication": {
+    "independent_replication": false,
+    "second_sampler_or_external_team": false
+  },
+  "classification": {
+    "historical_statement": "A real dynesty nested-sampling calculation exists and produced stored logZ values; therefore 'no real Bayes execution exists anywhere in RLL' is false.",
+    "modern_statement": "The modern P0 Bayes gate is not closed because the legacy run is not the current LCDM/CPL/RLL three-model likelihood contract, lacks a hashed modern prior registry and lacks independent replication.",
+    "action": "REDUCE_GENERIC_TOKEN_TO_MODERN_BAYES_SUCCESSORS"
+  },
+  "resolves_generic_token_by_reduction": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+  "successor_tokens": [
+    "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+  ],
+  "scientific_boundary": "This audit recognizes an existing formal nested-sampling result; it does not transplant its Bayes factor to the modern full-covariance/precision likelihoods and does not authorize publication or a positive RLL claim.",
+  "F_ok": [
+    "Real nested sampling with dynesty is present in the repository and stored logZ values are available.",
+    "The legacy evidence favors LCDM over RLL under that run's declared likelihood and priors.",
+    "The modern residual requirements are now named instead of conflated with 'Bayes never executed'."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_REAL_BAYES_MODERN_3MODEL_PRIOR_LOCK",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+  ],
+  "F_next": [
+    "Execute LCDM, CPL and RLL under one versioned modern likelihood/prior registry and record sampler version, logZ errors and stopping criteria.",
+    "Require a genuinely independent reproduction before scientific promotion."
+  ]
+}

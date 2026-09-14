@@ -1,0 +1,110 @@
+{
+  "schema": "rll.governance_profile.v1",
+  "version": "1.0.0",
+  "reference_snapshot": "2026-07-30",
+  "title": "RLL Operational Excellence and Research Governance Profile",
+  "language": "pt-BR",
+  "enforcement_mode": "progressive",
+  "certification_claim": false,
+  "conformity_claim": false,
+  "legal_compliance_claim": false,
+  "claim_boundary": "Este perfil usa princípios públicos e boas práticas como arquitetura de engenharia. Ele não certifica, não declara conformidade e não substitui auditoria, assessoria jurídica, comitê de ética ou organismo acreditado.",
+  "absolute_audit_definition": "Auditoria absoluta significa declarar integralmente o escopo observado, as medições, as lacunas, as hipóteses, as evidências, os riscos e o próximo passo; não significa onisciência nem ausência garantida de defeitos.",
+  "epistemic_states": [
+    "PROVADO",
+    "EVIDENCIADO",
+    "HIPOTESE",
+    "MODELO_ANALOGICO",
+    "PARABOLA",
+    "REFUTADO_COMO_ESCRITO",
+    "TOKEN_VAZIO"
+  ],
+  "required_module_fields": [
+    "module_id",
+    "version",
+    "title",
+    "domains",
+    "state",
+    "scope",
+    "epistemic_status",
+    "claim_allowed",
+    "certification_claim",
+    "evidence",
+    "data_governance",
+    "security",
+    "quality",
+    "risks",
+    "rollback",
+    "f_ok",
+    "f_gap",
+    "f_next"
+  ],
+  "layers": [
+    {
+      "id": "software_engineering",
+      "name": "Engenharia, requisitos, verificação e validação",
+      "inspired_by": ["IEEE 1012-2024", "ISO/IEC/IEEE 29148", "IEEE 730 family", "IETF BCP 14", "W3C PROV-O"],
+      "controls": ["requirements_traceability", "deterministic_validation", "reproducible_tests", "receipts", "rollback", "provenance"]
+    },
+    {
+      "id": "quality",
+      "name": "Qualidade e melhoria contínua",
+      "inspired_by": ["ISO 9001:2015", "Six Sigma DMAIC", "Lean"],
+      "controls": ["objective", "measurement", "root_cause", "correction", "validation", "lessons_learned", "change_control"]
+    },
+    {
+      "id": "data_governance",
+      "name": "Governança e qualidade de dados",
+      "inspired_by": ["ISO 8000 family", "FAIR Guiding Principles", "DAMA-DMBOK concepts", "W3C PROV-O"],
+      "controls": ["origin", "license", "hash", "version", "time", "unit", "uncertainty", "provenance", "update_policy"]
+    },
+    {
+      "id": "information_security",
+      "name": "Segurança da informação e desenvolvimento seguro",
+      "inspired_by": ["ISO/IEC 27001:2022", "ISO/IEC 27002 family", "NIST CSF 2.0", "NIST SP 800-218 SSDF", "OWASP guidance", "GitHub Actions secure use"],
+      "controls": ["least_privilege", "immutable_action_refs", "secret_minimization", "input_validation", "integrity", "incident_record", "chain_of_custody"]
+    },
+    {
+      "id": "scientific_research",
+      "name": "Pesquisa científica, reprodutibilidade e limites epistemológicos",
+      "inspired_by": ["Open Science", "FAIR Guiding Principles", "peer review practices", "WHO data principles"],
+      "controls": ["hypothesis", "experiment", "dataset", "code", "receipt", "result", "conclusion", "claim_boundary"]
+    },
+    {
+      "id": "health_life_environment_engineering",
+      "name": "Biomedicina, biologia, bioquímica, fauna, flora, ecossistemas e engenharia",
+      "inspired_by": ["WHO health ethics and governance", "WHO data principles", "LGPD Lei 13.709/2018", "ANPD research guidance", "domain-specific ethics and safety review"],
+      "controls": ["data_sensitivity", "human_subjects_gate", "biosafety_gate", "environmental_impact", "engineering_safety", "legal_applicability_review", "ethics_review"]
+    }
+  ],
+  "normative_references": [
+    {"id": "IEEE-1012-2024", "type": "standard", "use": "verification_validation", "certification_basis": false},
+    {"id": "ISO-9001-2015", "type": "standard", "use": "quality_management_inspiration", "certification_basis": false, "review_due": "2026-09-30"},
+    {"id": "ISO-8000-FAMILY", "type": "standard_family", "use": "data_quality_inspiration", "certification_basis": false},
+    {"id": "ISO-IEC-27001-2022", "type": "standard", "use": "information_security_inspiration", "certification_basis": false},
+    {"id": "NIST-SP-800-218", "type": "framework", "use": "secure_software_development", "certification_basis": false},
+    {"id": "IETF-BCP-14", "type": "specification_convention", "use": "requirement_keywords", "certification_basis": false},
+    {"id": "W3C-PROV-O", "type": "recommendation", "use": "provenance_model", "certification_basis": false},
+    {"id": "FAIR", "type": "guiding_principles", "use": "research_data_stewardship", "certification_basis": false},
+    {"id": "WHO-DATA-PRINCIPLES", "type": "public_health_guidance", "use": "health_data_governance", "certification_basis": false},
+    {"id": "LGPD-13.709-2018", "type": "law", "use": "applicability_gate_only", "certification_basis": false},
+    {"id": "ANPD-RESEARCH-GUIDANCE", "type": "regulatory_guidance", "use": "research_data_gate", "certification_basis": false}
+  ],
+  "workflow_policy": {
+    "permissions": "read_only_by_default",
+    "external_actions": "full_commit_sha_required_for_new_governance_workflows",
+    "secrets": "forbidden_unless_explicitly_justified",
+    "pull_request_target": "forbidden_by_default",
+    "network": "disabled_by_default_for_governance_gate",
+    "legacy_findings": "reported_as_F_gap_until_baselined_and_remediated",
+    "generated_receipts": "must declare evaluated revision and remain claim_allowed=false"
+  },
+  "health_and_biomedical_policy": {
+    "personal_data": "prohibited_by_default",
+    "sensitive_health_genetic_biometric_data": "prohibited_by_default",
+    "human_participants": "ethics_review_required_before_ingestion_or_analysis",
+    "clinical_decision_support": "out_of_scope_until_domain_validation_and_regulatory_review",
+    "diagnosis_or_treatment_claims": "forbidden_without_validated_evidence_and_applicable_authorization",
+    "de_identification": "required_but_not_sufficient_for_legal_or_ethics_approval"
+  }
+}

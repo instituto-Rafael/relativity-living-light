@@ -1,0 +1,31 @@
+{
+  "schema": "rll.project_sources_local_receipt.v1",
+  "recorded_at": "2026-07-26T00:00:00Z",
+  "environment": "isolated_local_runtime",
+  "manifest_sha256": "ccb546b713cc8c8a144cd50b90dac8dda57cde026df1a2b8b3141c56a8b51736",
+  "source_count": 14,
+  "verified_local_hash_count": 12,
+  "metadata_only_count": 1,
+  "private_pointer_only_count": 1,
+  "chunk_count": 198,
+  "missing_count": 0,
+  "hash_mismatch_count": 0,
+  "vector_model": "rll-hash32-v1",
+  "vector_dimensions": 32,
+  "raw_bodies_committed": false,
+  "database_committed": false,
+  "claim_allowed": false,
+  "sample_query": "grafo epistêmico falsificador RLL cosmologia",
+  "sample_top_source_ids": [
+    "SRC-AUDIT-001",
+    "SRC-INVENTORY-001",
+    "SRC-RAFGITTOOLS-001",
+    "SRC-ARMV7-001"
+  ],
+  "tests": {
+    "project_source_unit_tests": "PASS_5_OF_5",
+    "python_compile": "PASS",
+    "json_schema": "PASS"
+  },
+  "boundary": "Receipt proves local hash matching, chunk creation and deterministic retrieval only. It does not validate scientific claims contained in the sources."
+}

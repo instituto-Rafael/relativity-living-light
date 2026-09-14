@@ -1,0 +1,311 @@
+{
+  "base64_prefix_decoded_bytes": 30000,
+  "base64_prefix_parts": [
+    {
+      "name": "corpus.public.v1.jsonl.gz.b64.part00",
+      "sha256": "5ca49a05c57daebe748e3ae6eee7c4cb40dc642a6dd65c3102ea8300eb4813cc",
+      "size_bytes": 8000
+    },
+    {
+      "name": "corpus.public.v1.jsonl.gz.b64.part01",
+      "sha256": "6df30f75464dd18df3bb2f2fdea1b634fea6c3c2e48d4af0141b4accd0bba520",
+      "size_bytes": 8000
+    },
+    {
+      "name": "corpus.public.v1.jsonl.gz.b64.part02",
+      "sha256": "5d7fef5d58af91abf350b80dbc1b655314ff1092d4e708bf1304c1d3d8819287",
+      "size_bytes": 8000
+    },
+    {
+      "name": "corpus.public.v1.jsonl.gz.b64.part03",
+      "sha256": "cf685e8e7d875a2fac95de570653370b461a9c195056bd3b3812e9aac62a2f06",
+      "size_bytes": 8000
+    },
+    {
+      "name": "corpus.public.v1.jsonl.gz.b64.part04",
+      "sha256": "e51da48e3be07c4768b1ac2f0ea3843990806fa829069a3bc72e8990784082f0",
+      "size_bytes": 8000
+    }
+  ],
+  "binary_tail_parts": [
+    {
+      "git_blob_sha": "f73b48a818799e4b486375b9f205000870b86d4a",
+      "name": "corpus.public.v1.jsonl.gz.tail00",
+      "sha256": "83d0420506ce4df0042095b55202afaa084afa893b5e908dbb0758a1639d215f",
+      "size_bytes": 8192
+    },
+    {
+      "git_blob_sha": "f4812051cb4e1c07edacc3a24e98d29a19737c45",
+      "name": "corpus.public.v1.jsonl.gz.tail01",
+      "sha256": "5826f8c3adc4adcf46071a96da50191957ff6a52bd41c521481e8a7b12106c4d",
+      "size_bytes": 8192
+    },
+    {
+      "git_blob_sha": "729d47108b7e5b920ea9f0aceae2d0e61cb82c53",
+      "name": "corpus.public.v1.jsonl.gz.tail02",
+      "sha256": "73e71682803e8402a109261aaa0eade0821c29d88fd1254412e4d77613e04bdc",
+      "size_bytes": 1643
+    }
+  ],
+  "bundle_encoding": "base64-prefix+binary-tail(gzip(jsonl:utf-8))",
+  "bundle_gzip_sha256": "61092ab3e15a164dcf5140c9db3fe5c21b1eaa37763cb4fbf14e25feab728d34",
+  "bundle_gzip_size_bytes": 48027,
+  "bundle_record_count": 13,
+  "bundle_root": "data/project_sources/seed_v1",
+  "bundle_sha256": "73508cb515ef5416b7b06acfbc63c3802317d33a6c59a9afbaf39c6dce1e99af",
+  "bundle_transport_sha256": "34a0ea70355a79bdacdf1206a60efef8ba42dbd0f641c51d32243361e2ab3f6c",
+  "claim_allowed": false,
+  "committed_body_count": 13,
+  "created_at": "2026-07-31T14:04:00Z",
+  "execution_ready": true,
+  "invariant": "Committed public seed data enables deterministic bootstrap; private personal data remains pointer-only; no source promotes a scientific claim.",
+  "pointer_only_count": 1,
+  "private_bodies_committed": false,
+  "public_body_scope": "PUBLIC_SAFE_ONLY",
+  "schema": "rll.project_sources_seed.v1",
+  "source_count": 14,
+  "sources": [
+    {
+      "bundle_record_id": "SRC-ARMV7-001",
+      "claim_allowed": false,
+      "content_sha256": "a223b003200727ee85c956b44357e9960544ea1651fd0ec565319865ab36ee52",
+      "display_name": "Execução ARMv7 Verificada.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 281,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "OPERATIONAL_EVIDENCE",
+      "size_bytes": 7723,
+      "source_id": "SRC-ARMV7-001",
+      "summary": "Recibo ARMv7: compilação, execução C/ASM, ELF e limites do claim.",
+      "temporal_state": "execution_receipt",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-AUDIT-001",
+      "claim_allowed": false,
+      "content_sha256": "325371a73f9db9e1b3a19dc4f38f06bfbfe1c4ebed6fd75bb697845f18c3a9b5",
+      "display_name": "Análise de arquivo.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 487,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "FEDERATED_GOVERNANCE",
+      "size_bytes": 14161,
+      "source_id": "SRC-AUDIT-001",
+      "summary": "Auditoria de artefatos, proveniência, limites de claims e conteúdo privado pointer-only.",
+      "temporal_state": "audit_snapshot",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-FAQ-SCANNER-001",
+      "claim_allowed": false,
+      "content_sha256": "67006c1c31710679afab02a9edcd78dc22982998200cc8b5157f66b7d861727d",
+      "display_name": "Script Github FAQ Invariantes.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 363,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "FEDERATED_GOVERNANCE",
+      "size_bytes": 11767,
+      "source_id": "SRC-FAQ-SCANNER-001",
+      "summary": "Scanner e contratos para invariantes, divergências, estados e watchdogs.",
+      "temporal_state": "tooling_snapshot",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-GEOMETRY-001",
+      "claim_allowed": false,
+      "content_sha256": "b5babeebcff5ab66e82a92ab7c019ce24575c0ca01eeef4a565fa8842db783f6",
+      "display_name": "Geometria e Projeções.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 79,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [
+        "COSMOLOGICAL_CLAIM",
+        "PHYSICAL_LAW",
+        "BIOLOGICAL_OR_PHYSIOLOGICAL_CLAIM"
+      ],
+      "rll_relation": "MATHEMATICAL_CONTEXT",
+      "size_bytes": 3638,
+      "source_id": "SRC-GEOMETRY-001",
+      "summary": "Geometria de déficit quadrático, claims formais e experimentos planejados.",
+      "temporal_state": "research_draft",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-INVENTORY-001",
+      "claim_allowed": false,
+      "content_sha256": "d6e4078a0a4ea222c76eb94ad68247672b4653bc67e3154041528590d1c3f87c",
+      "display_name": "Fontes e memória Git.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 452,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "SOURCE_INVENTORY",
+      "size_bytes": 14667,
+      "source_id": "SRC-INVENTORY-001",
+      "summary": "Inventário longitudinal de fontes, repositórios e papéis de autoridade.",
+      "temporal_state": "inventory_current",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-LATEST-INDEX-001",
+      "claim_allowed": false,
+      "content_sha256": "73104b5c2092e05ad87012abc2c2455c8b0defbd951bf9dc5c352f840a366b73",
+      "display_name": "Últimas fontes do projeto.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 99,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "INDEX_POINTER",
+      "size_bytes": 2723,
+      "source_id": "SRC-LATEST-INDEX-001",
+      "summary": "Ponteiro de continuidade Redes Complexas→Vetores→ZIPRAF.",
+      "temporal_state": "index_pointer",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-NETWORKS-001",
+      "claim_allowed": false,
+      "content_sha256": "b8c81490c28cb79c4d843d7d5b94d02d503d77ab40666951b58c4fcfb14e42f6",
+      "display_name": "Pesquisa em Redes Complexas.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 856,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "RLL_DIRECT_AND_METHODOLOGY",
+      "size_bytes": 20487,
+      "source_id": "SRC-NETWORKS-001",
+      "summary": "FASE 21, grafo epistêmico, claims, gaps, contradições e separação temporal.",
+      "temporal_state": "mixed_historical_current",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-ORCID-RLL-001",
+      "claim_allowed": false,
+      "content_sha256": "cfaf238eaf0231d01df2c489c4797bd841e852edca64f8fe44b1ed66fb8bd01c",
+      "display_name": "Integração Orcid RLL.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 168,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "RLL_DIRECT_AND_BIBLIOGRAPHIC",
+      "size_bytes": 6173,
+      "source_id": "SRC-ORCID-RLL-001",
+      "summary": "Estado do núcleo ORCID↔RLL, vetores, proveniência e gates.",
+      "temporal_state": "current_integration",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-RAFGITTOOLS-001",
+      "claim_allowed": false,
+      "content_sha256": "a10876cd0af3d0a5c08c0dfb94de293395705b33489f87a0c8b6b8362c579cb2",
+      "display_name": "Análise Estrutural Rafgittools.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 294,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "FEDERATED_GOVERNANCE",
+      "size_bytes": 7843,
+      "source_id": "SRC-RAFGITTOOLS-001",
+      "summary": "Memória científica, coesão de erros, schemas, claims e falsificadores.",
+      "temporal_state": "governance_snapshot",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-REPO-ANALYSIS-001",
+      "claim_allowed": false,
+      "content_sha256": "d346b3662981646b3707cbe96c3646b663e995165ba110984a5f897c17bca63a",
+      "display_name": "Análise de repositórios GitHub.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 202,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "METHODOLOGY",
+      "size_bytes": 6319,
+      "source_id": "SRC-REPO-ANALYSIS-001",
+      "summary": "Método longitudinal sessão→claim→arquivo→commit→teste→evidência.",
+      "temporal_state": "method_current",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-VECTORS-001",
+      "claim_allowed": false,
+      "content_sha256": "4605c5b2f6bc7600005b90236f45c93152ea57f170ef3bf627afe695fb3c2f62",
+      "display_name": "Análise de vetores e matrizes.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 237,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [
+        "COSMOLOGICAL_CLAIM",
+        "PHYSICAL_LAW",
+        "BIOLOGICAL_OR_PHYSIOLOGICAL_CLAIM"
+      ],
+      "rll_relation": "COMPUTATIONAL_CONTEXT",
+      "size_bytes": 6584,
+      "source_id": "SRC-VECTORS-001",
+      "summary": "Ω-CUBE-42, matrizes, floresta vetorial e limites entre matemática, implementação e física.",
+      "temporal_state": "computational_research",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-WORKFLOW-001",
+      "claim_allowed": false,
+      "content_sha256": "61e566d420d931d924f139eaf9d4a7202d36650d3017c657e39ff63e2d078aa8",
+      "display_name": "Análise de sessões workflow.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 452,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [],
+      "rll_relation": "METHODOLOGY",
+      "size_bytes": 11077,
+      "source_id": "SRC-WORKFLOW-001",
+      "summary": "Mapa das sessões e invariante intenção→evidência→execução→teste→custódia.",
+      "temporal_state": "historical_snapshot",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": "SRC-ZIPRAF-001",
+      "claim_allowed": false,
+      "content_sha256": "78a501c446ea664ef4877fd9c60cd799428e097c169ea2a968ef18e38ecf6b96",
+      "display_name": "Avaliação Geométrica ZIPRAF.txt",
+      "ingestion_policy": "ingest",
+      "line_count": 513,
+      "next_gate": "Reviewed search and source-specific evidence gate",
+      "not_evidence_for": [
+        "COSMOLOGICAL_CLAIM",
+        "PHYSICAL_LAW",
+        "BIOLOGICAL_OR_PHYSIOLOGICAL_CLAIM"
+      ],
+      "rll_relation": "COMPUTATIONAL_CONTEXT",
+      "size_bytes": 10484,
+      "source_id": "SRC-ZIPRAF-001",
+      "summary": "ZIPRAF-AO42, append-only, rotas, páginas, CRC e reconstrução seletiva.",
+      "temporal_state": "computational_research",
+      "visibility": "PUBLIC_SAFE_COMMITTED_BODY"
+    },
+    {
+      "bundle_record_id": null,
+      "claim_allowed": false,
+      "content_sha256": "419fadf19b88c39a94415a6905bb450aefc5e448e2812ae755dc9d7321d34734",
+      "display_name": "PRIVATE_PERSONAL_SOURCE_01",
+      "ingestion_policy": "pointer_only",
+      "line_count": 744,
+      "next_gate": "Explicit private-repository decision; body prohibited in this public repository",
+      "not_evidence_for": [
+        "COSMOLOGICAL_CLAIM",
+        "PHYSICAL_LAW",
+        "BIOLOGICAL_OR_PHYSIOLOGICAL_CLAIM"
+      ],
+      "rll_relation": "OUT_OF_SCOPE_PERSONAL",
+      "size_bytes": 21584,
+      "source_id": "SRC-PRIVATE-PERSONAL-001",
+      "summary": "Fonte pessoal separada; não entra no corpus científico RLL nem em inferências biomédicas.",
+      "temporal_state": "private_personal",
+      "visibility": "PRIVATE_POINTER_ONLY"
+    }
+  ],
+  "total_public_bytes": 123646,
+  "total_public_lines": 4483
+}

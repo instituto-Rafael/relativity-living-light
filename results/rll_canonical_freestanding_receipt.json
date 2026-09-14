@@ -1,0 +1,77 @@
+{
+  "schema": "rll.canonical-freestanding-receipt.v1",
+  "executed_at_utc": "2026-07-27T05:00:55Z",
+  "base_commit": "9ac210b605575738a7f303cee1f75e894eb423cd",
+  "integrated_on_main_base": "6cf57d2db398eae5f177c2186b991bd2ee253e59",
+  "claim_allowed": false,
+  "sources": {
+    "hz_csv": {
+      "path": "data/real/Hz_data_real.csv",
+      "git_blob_sha": "3ac5da2594bfc127c28c6b4e817259e1bee28085",
+      "rows": 33
+    },
+    "phase20": {
+      "path": "results/rll_fase20_mcmc_bayes.json",
+      "git_blob_sha": "2be5ed87b6c744cf9034e8c1117922f0d2ea7f5f",
+      "n_total": 1677
+    }
+  },
+  "build": {
+    "host": "x86_64-linux",
+    "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+    "freestanding_flags": [
+      "-std=c11",
+      "-O2",
+      "-ffreestanding",
+      "-fno-builtin",
+      "-fno-stack-protector",
+      "-fno-pic",
+      "-fno-pie",
+      "-nostdlib",
+      "-static",
+      "-no-pie",
+      "-Wl,--build-id=none",
+      "-Wl,-e,_start"
+    ],
+    "elf_sha256": "ccfa962b74cb4bca478dcf7e5a1c79d6e93acba1c5a2a08bc40171e9c44ddc33",
+    "elf_bytes_sections": {
+      "text": 8826,
+      "data": 0,
+      "bss": 664,
+      "total": 9490
+    },
+    "unresolved_symbols": [],
+    "dynamic_imports": []
+  },
+  "armv7_emulation": {
+    "compiler": "clang 17.0.0",
+    "target": "armv7a-none-eabi",
+    "combined_object_bytes_sections": {
+      "text": 16022,
+      "data": 0,
+      "bss": 656,
+      "total": 16678
+    },
+    "unresolved_symbols": [],
+    "compiler_runtime_helpers": []
+  },
+  "tests": {
+    "command": "pytest -q tests/test_rll_canonical_model_kernel.py",
+    "passed": 4,
+    "failed": 0
+  },
+  "receipt_line": "RLLCAN1 rows=33 valid=33 rejected=0 chi2_rll_q16=1541113 chi2_lcdm_q16=1541113 delta_q16=0 data_crc32=c7e56bca data_fnv64=f48a2db3d131c45f params_crc32=2505dec9 phase20_crc32=1b6c7c85 joint_n=1677 lnB10_q16=-405682 lnB10_err_q16=45263 delta_bic_q16=1459487 os0_ul95_q16=116 joint_best=LCDM receipt_crc32=34387926 best=TIE claim_allowed=0 token_vazio=7 numeric_flags=0",
+  "interpretation": {
+    "hz_subset": "TIE_AT_Q16_PHASE20_MEAN",
+    "joint_phase20": "VERY_STRONG_EVIDENCE_FOR_LCDM",
+    "lnB10": -6.190210762419383,
+    "lnB10_error": 0.6906527421175422,
+    "delta_bic": 22.27,
+    "os0_upper95": 0.0017772301590821408
+  },
+  "token_vazio": [
+    "FULL_COVARIANCE_NOT_EMBEDDED",
+    "INDEPENDENT_REPLICATION_NOT_EXECUTED",
+    "EXTERNAL_BINARY_AUDIT_NOT_EXECUTED"
+  ]
+}

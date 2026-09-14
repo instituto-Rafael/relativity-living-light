@@ -1,0 +1,120 @@
+{
+  "trace_id": "iev-2026-07-11-custodia-viva-001",
+  "schema_version": "1.0.0",
+  "artifact_type": "mixed",
+  "origin_status": "TOKEN_VAZIO",
+  "origin_evidence": [],
+  "first_observable_state": {
+    "state_id": "state-0001",
+    "timestamp": "2026-07-11T12:44:29Z",
+    "content_summary": "Formulação inicial: antes de existirem citações, existiam marcas; práticas, artefatos e registros podem preservar transformação mesmo quando a origem remota é desconhecida.",
+    "content_status": "metaphorical",
+    "coherence_score": null,
+    "predictive_score": null,
+    "reproducibility_score": null,
+    "evidence_refs": [],
+    "claim_boundary": "Imagem pedagógica; não constitui afirmação histórica universal nem prova científica."
+  },
+  "current_state": {
+    "state_id": "state-0002",
+    "timestamp": "2026-07-11T13:00:00Z",
+    "content_summary": "A metáfora foi transformada em protocolo estrutural que separa proveniência, evolução e validação; preserva TOKEN_VAZIO; registra estados, transformações, testes e gates.",
+    "content_status": "derived",
+    "coherence_score": 0.92,
+    "predictive_score": null,
+    "reproducibility_score": null,
+    "evidence_refs": [
+      {
+        "kind": "repository_path",
+        "locator": "docs/governance/CADEIA_CUSTODIA_VIVA_OITO_DIRECOES.md",
+        "verified": true,
+        "note": "Documento metodológico canônico."
+      },
+      {
+        "kind": "repository_path",
+        "locator": "schemas/information_evolution_trace.schema.json",
+        "verified": true,
+        "note": "Contrato estrutural claim-bounded."
+      }
+    ],
+    "claim_boundary": "Demonstra rastreabilidade interna da transformação documental; não demonstra origem histórica completa, validade científica externa ou confirmação de RLL."
+  },
+  "transformations": [
+    {
+      "transformation_id": "transform-0001",
+      "from_state": "state-0001",
+      "to_state": "state-0002",
+      "timestamp": "2026-07-11T13:00:00Z",
+      "procedure": "eight_direction_epistemic_mapping",
+      "procedure_version": "1.0.0",
+      "inputs": [
+        "parábola das oito direções",
+        "distinção entre proveniência, evolução e validação",
+        "TOKEN_VAZIO para origem não verificada",
+        "heurísticas D1-D8 do framework de rapport semântico"
+      ],
+      "context": [
+        "governança documental do repositório",
+        "necessidade de separar metáfora e evidência",
+        "necessidade de registro auditável de transformação"
+      ],
+      "observed_noise": [
+        "risco de tratar coerência interna como verdade externa",
+        "risco de atribuir universalidade a imagens culturais",
+        "risco de usar auto-organização como prova de vida ou consciência"
+      ],
+      "tests": [
+        {
+          "test_id": "test-structure-001",
+          "method": "Verificação de presença de estado anterior, transformação, boundary, TOKEN_VAZIO e próximo gate.",
+          "baseline": "schemas/README.md claim-boundary discipline",
+          "result": "passed",
+          "reproducible": true,
+          "external_baseline": false,
+          "artifact_refs": [
+            {
+              "kind": "repository_path",
+              "locator": "schemas/README.md",
+              "verified": true,
+              "note": "Baseline interno de disciplina estrutural."
+            }
+          ],
+          "observations": [
+            "A estrutura é internamente rastreável.",
+            "Nenhum teste externo de validade científica foi executado."
+          ]
+        },
+        {
+          "test_id": "test-external-001",
+          "method": "Comparação com fontes históricas e literatura formal sobre transmissão cultural e proveniência.",
+          "baseline": null,
+          "result": "not_run",
+          "reproducible": false,
+          "external_baseline": true,
+          "artifact_refs": [],
+          "observations": [
+            "Gate externo permanece pendente.",
+            "Afirmações históricas específicas continuam bloqueadas."
+          ]
+        }
+      ],
+      "decision": "retain",
+      "decision_reason": "A transformação preserva a tese como método claim-bounded, declara lacunas e separa metáfora de prova.",
+      "commit_sha": null
+    }
+  ],
+  "epistemic_status": "internally_traceable",
+  "claim_allowed": false,
+  "blocked_claims": [
+    "A rastreabilidade interna prova a origem histórica completa.",
+    "A coerência interna prova verdade científica externa.",
+    "A parábola representa universalmente todas as culturas humanas.",
+    "O schema valida RLL ou qualquer teoria física.",
+    "A auto-organização informacional demonstra consciência."
+  ],
+  "next_gate": "Executar validação estrutural automatizada e, para qualquer afirmação histórica específica, adicionar fontes externas verificáveis antes de promover o status.",
+  "notes": [
+    "Exemplo didático de contrato estrutural.",
+    "TOKEN_VAZIO é preservado como informação explícita sobre a lacuna de origem."
+  ]
+}

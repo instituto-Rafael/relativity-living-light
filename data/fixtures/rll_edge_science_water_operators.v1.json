@@ -1,0 +1,29 @@
+{
+  "fixture_id": "rll-edge-science-water-operators-v1",
+  "claim_allowed": false,
+  "cases": {
+    "derivative": {
+      "x": [0, 1, 3],
+      "y": [0, 2, 8],
+      "axis_unit": "h",
+      "value_unit": "mg/L",
+      "expected": [2.0, 3.0]
+    },
+    "antiderivative": {
+      "x": [0, 1, 2],
+      "y": [1, 1, 1],
+      "boundary_value": 5.0,
+      "expected": [5.0, 6.0, 7.0]
+    },
+    "nitrate_nitrite": {
+      "nitrate_as_N_mg_L": 5.0,
+      "nitrite_as_N_mg_L": 0.5,
+      "expected_ratio": 1.0
+    },
+    "log_log": {
+      "x": [1, 2, 4, 8],
+      "y": [2, 4, 8, 16],
+      "expected_models": 2
+    }
+  }
+}

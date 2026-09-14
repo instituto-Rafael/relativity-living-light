@@ -1,0 +1,46 @@
+{
+  "schema": "rll.desi_dr2_reproduction_boundary_audit.v1",
+  "audited_at": "2026-08-07T23:35:00Z",
+  "state": "VERIFIED_PARTIAL_LOCAL_SETUP_NOT_OFFICIAL_JOINT_REPRODUCTION",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "observed_repository_artifacts": {
+    "model_comparison_path": "data/results/desi_dr2_bao_model_comparison.json",
+    "model_comparison_blob_sha": "140630872ba86aa24e346c6fb451fba8860ec4e1",
+    "covariance_audit_path": "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md",
+    "covariance_audit_blob_sha": "7ea44fdb92c90b12b43e86ae40b4be0bc5a1a96f"
+  },
+  "existing_local_setup": {
+    "n_observables": 13,
+    "matrix_shape": [13, 13],
+    "lcdm_chi2": 28.69369107892563,
+    "rll_chi2": 34.52747167050697,
+    "delta_chi2_rll_minus_lcdm": 5.83378059158134,
+    "delta_aic_rll_minus_lcdm": 9.83378059158134,
+    "delta_bic_rll_minus_lcdm": 10.963679306682362,
+    "repository_interpretation": "lcdm_preferred_for_this_desi_dr2_bao_setup"
+  },
+  "boundary": {
+    "official_joint_crossblock_covariance_reproduced": false,
+    "official_chain_or_likelihood_reference_reproduced": false,
+    "lcdm_and_cpl_official_reference_tolerance_receipt": false,
+    "block_diagonal_or_local_setup_must_not_be_called_official_joint": true
+  },
+  "classification": {
+    "generic_token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+    "action": "REDUCE_TO_SPECIFIC_OFFICIAL_JOINT_GAP",
+    "successor_token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+    "reason": "The repository already contains a 13-observable DESI DR2 BAO comparison setup and result, so treating all DESI DR2 work as absent is stale. What remains unclosed is reproduction of the official joint/cross-block likelihood products and reference-model tolerances."
+  },
+  "scientific_boundary": "The existing local 13-observable result is a real project result but is not promoted to an official DESI joint likelihood reproduction. The current local setup favors LCDM over RLL, and that negative result is preserved.",
+  "F_ok": [
+    "A 13-observable DESI DR2 BAO comparison exists in the repository.",
+    "The local setup records a negative RLL-vs-LCDM result rather than hiding it.",
+    "The audit explicitly separates local/block construction from official joint/cross-block reproduction."
+  ],
+  "F_gap": ["TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION"],
+  "F_next": [
+    "Materialize immutable official DESI DR2 joint/cross-block products or likelihood release.",
+    "Reproduce official LCDM and CPL reference outputs within declared tolerance before interpreting RLL deltas."
+  ]
+}

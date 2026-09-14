@@ -1,0 +1,57 @@
+{
+  "schema": "rll.act_dr6_materialization_reconciliation.v1",
+  "state": "VERIFIED_PINNED_UPSTREAM_REFERENCE_PREDICATE",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_pr": 681,
+  "source_merge_commit": "8c75020d57413e683579e7131d21a37fa637588d",
+  "source_workflow": {
+    "run_id": 31238546026,
+    "conclusion": "success"
+  },
+  "source_artifact": {
+    "id": 9016264501,
+    "name": "act-dr6-cmbonly-31238546026",
+    "digest": "sha256:1bc55ce55bf28c152727eef9cf3194bb654538bbaed96f72ccfa4fd37bbaa367"
+  },
+  "upstream": {
+    "repository": "ACTCollaboration/DR6-ACT-lite",
+    "commit": "627aeafb88ae5ad1aa66b406bea2d65cfa66a27d",
+    "git_tree": "63a698e0f83eb0bc19cd54c45debe5083f416487",
+    "reference_test_sha256": "78040b4502cbb8236a79d1a2990dcdfc4936fe08764da8e9cb3f82c8427aaf4c"
+  },
+  "effective_camb": {
+    "git_sha": "ecd375bff3cd736b3590a22c8f9663b9e6180ee2",
+    "reported_version": "1.5.8",
+    "resolved_cutoff": "2024-11-14T00:00:00Z"
+  },
+  "upstream_tests": {
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reference_likelihood": {
+    "authority": {
+      "comparison": "numpy.isclose",
+      "atol": 0.01,
+      "rtol": 0.00001,
+      "formula": "abs(actual-expected) <= atol + rtol*abs(expected)"
+    },
+    "ACT_TTTEEE_loglike": -395.4830238850144,
+    "ACT_PlanckActCut_loglike": -962.2836901208385,
+    "absolute_error_ACT_TTTEEE": 0.0030238850143859963,
+    "absolute_error_ACT_PlanckActCut": 0.013690120838532494,
+    "upstream_predicate_pass_ACT_TTTEEE": true,
+    "upstream_predicate_pass_ACT_PlanckActCut": true,
+    "strict_abs_only_0p01_pass_ACT_PlanckActCut": false
+  },
+  "boundary": {
+    "materialization_and_reference_predicate_reproduced": true,
+    "posterior_chain_reproduced": false,
+    "rll_cmb_validated": false,
+    "strict_absolute_only_planck_residual_preserved": true
+  },
+  "reduces_or_resolves": "TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION",
+  "successor": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION"
+}

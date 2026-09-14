@@ -13,6 +13,7 @@ import csv
 import hashlib
 import json
 import math
+import re
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -26,6 +27,21 @@ DEFAULT_SCHEMA = Path("schemas/rll_latentes_observations.schema.json")
 LATENT_SCORE_FIELDS = ("C", "I", "P", "E", "Rc", "Ru", "Am", "Vb")
 FNV64_OFFSET = 0xCBF29CE484222325
 FNV64_PRIME = 0x100000001B3
+SEMANTIC_DIRECTIONS = (
+    "d1_lexical_structure",
+    "d2_entity_domain",
+    "d3_relational_isogonic",
+    "d4_antagonic_constraints",
+    "d5_causal_temporal",
+    "d6_epistemic_gap",
+    "d7_operational_governance",
+)
+SEMANTIC_UNIT_ID_PATTERN = r"STU-[A-Z0-9_]{2,24}-[0-9]{4,12}"
+PROMPT_TOKEN_PATTERN = r"[^\W_]+(?:['’-][^\W_]+)*"
+# Stable machine-readable labels; presentation layers may use title case.
+REQUIRED_EVIDENCE_CATEGORIES = ("domain evidence", "operational authorization", "independent proof")
+NUMERIC_ID_DIGITS = 12
+NUMERIC_ID_MODULO = 10**NUMERIC_ID_DIGITS
 
 
 @dataclass(frozen=True)
@@ -57,6 +73,129 @@ class PipelinePlan:
     report_target: str
     suggested_command: str
     rollback: str
+
+
+def ucase_prompt(prompt: str) -> str:
+    """Normalize a prompt without discarding its Unicode characters."""
+
+    if not isinstance(prompt, str):
+        raise TypeError("prompt must be a string")
+    normalized = " ".join(prompt.split())
+    if not normalized:
+        raise ValueError("prompt must not be empty")
+    return normalized.upper()
+
+
+def _prompt_tokens(prompt: str) -> list[dict[str, Any]]:
+    # [^\W_] means a Unicode word character excluding underscore.
+    return [
+        {"surface": match.group(0), "normalized": match.group(0), "index": index}
+        for index, match in enumerate(re.finditer(PROMPT_TOKEN_PATTERN, prompt, re.UNICODE))
+    ]
+
+
+def build_semantic_token_unit(prompt: str, *, unit_id: str | None = None, language: str = "pt-BR") -> dict[str, Any]:
+    """Create a conservative, schema-shaped seven-direction prompt analysis.
+
+    The function records what can be established from the prompt alone. It does
+    not infer domain facts, causal claims, authorization, or evidence that the
+    input does not provide.
+    """
+
+    normalized = ucase_prompt(prompt)
+    digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+    # Truncate the digest to a decimal-safe, fixed-width identifier.
+    numeric_id = int(digest[:NUMERIC_ID_DIGITS], 16) % NUMERIC_ID_MODULO
+    token_unit_id = unit_id or f"STU-PROMPT-{numeric_id:0{NUMERIC_ID_DIGITS}d}"
+    if not re.fullmatch(SEMANTIC_UNIT_ID_PATTERN, token_unit_id):
+        raise ValueError(f"unit_id must match {SEMANTIC_UNIT_ID_PATTERN}")
+    if not isinstance(language, str) or len(language) < 2:
+        raise ValueError("language must contain at least two characters")
+
+    lexical_tokens = _prompt_tokens(normalized)
+    payload = {
+        "unit_id": token_unit_id,
+        "raw_span": normalized,
+        "language": language,
+        "lexical_tokens": lexical_tokens,
+        "views_7d": {
+            "d1_lexical_structure": {
+                "normalized_form": normalized,
+                "syntactic_roles": [],
+                "ambiguities": ["semantic roles require explicit interpretation"],
+            },
+            "d2_entity_domain": {
+                "domains": ["unclassified"],
+                "entities": [item["normalized"] for item in lexical_tokens],
+                "domain_variables": [],
+                "units": [],
+            },
+            "d3_relational_isogonic": {
+                "isogonic_links": [],
+                "dependencies": [],
+                "analogical_links": [],
+                "invariants": [],
+            },
+            "d4_antagonic_constraints": {
+                "antagonic_links": [],
+                "constraints": [],
+                "contradictions": [],
+                "failure_modes": [],
+            },
+            "d5_causal_temporal": {
+                "causes": [],
+                "effects": [],
+                "forward_paths": [],
+                "backward_paths": [],
+                "derivative_paths": [],
+                "antiderivative_paths": [],
+                "temporal_scope": "unspecified",
+            },
+            "d6_epistemic_gap": {
+                "evidence_state": "unobserved",
+                # Copy the immutable defaults so callers can add observed gaps.
+                "missing_variables": list(REQUIRED_EVIDENCE_CATEGORIES),
+                "token_vazio": True,
+                "uncertainties": ["prompt-only analysis has no attached evidence"],
+                "falsifiers": ["attach verifiable source and reproduce the procedure"],
+            },
+            "d7_operational_governance": {
+                "intended_action": "classify and route for review",
+                "execution_gate": "human_review",
+                "audit_required": True,
+                "next_action": "supply evidence, authorization, and acceptance criteria",
+                "runtime_target": "governed prompt analysis",
+            },
+        },
+        "evidence_refs": [],
+        "uncertainty": 1.0,
+        "epistemic_status": "gap",
+        "use_policy": {
+            "privacy": "unknown",
+            "training_eligibility": "unknown",
+            "retention": "session",
+            "purpose": "inference",
+            "owner": "user",
+        },
+        "created_at": utc_now_iso(),
+    }
+    validate_semantic_token_unit(payload)
+    return payload
+
+
+def validate_semantic_token_unit(payload: dict[str, Any]) -> None:
+    """Enforce the safety invariants that prevent a gap becoming an assertion."""
+
+    if tuple(payload.get("views_7d", {})) != SEMANTIC_DIRECTIONS:
+        raise ValueError("semantic token unit must contain the ordered seven directions")
+    gap = payload["views_7d"]["d6_epistemic_gap"]
+    governance = payload["views_7d"]["d7_operational_governance"]
+    if gap["token_vazio"] and not gap["missing_variables"]:
+        raise ValueError("TOKEN_VAZIO flag requires non-empty missing_variables list")
+    if gap["token_vazio"] and payload["epistemic_status"] != "gap":
+        raise ValueError("TOKEN_VAZIO requires epistemic_status=gap")
+    if gap["token_vazio"] and governance["execution_gate"] == "allow":
+        raise ValueError("TOKEN_VAZIO cannot execute directly")
 
 
 def utc_now_iso() -> str:
@@ -211,6 +350,12 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def print_json(payload: Any, *, sort_keys: bool = False) -> None:
+    """Emit consistent human-readable JSON for CLI responses."""
+
+    print(json.dumps(payload, indent=2, sort_keys=sort_keys, ensure_ascii=False))
+
+
 def write_dry_run_manifests(catalog: dict[str, Any], root: Path) -> list[Path]:
     """Materialize source manifests without network access or destructive writes."""
 
@@ -341,6 +486,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     score_parser.add_argument("--source-id", default=None)
     report_parser = subparsers.add_parser("report", help="Run all seven steps in dry-run mode")
     report_parser.add_argument("--source-id", default=None)
+    tokenize_parser = subparsers.add_parser("tokenize", help="Build a governed seven-direction prompt unit")
+    prompt_group = tokenize_parser.add_mutually_exclusive_group(required=True)
+    prompt_group.add_argument("--prompt")
+    prompt_group.add_argument("--prompt-file", type=Path)
+    tokenize_parser.add_argument("--unit-id", default=None)
     subparsers.add_parser("verify", help="Validate catalog and emit provenance-ready status")
     return parser
 
@@ -351,32 +501,38 @@ def main(argv: list[str] | None = None) -> int:
     catalog = validate_catalog(args.catalog, args.schema)
 
     if args.command == "validate":
-        print(json.dumps({"status": "ok", "sources": len(catalog["sources"]), "future_steps": len(catalog["future_steps"])}, sort_keys=True))
+        print_json({"status": "ok", "sources": len(catalog["sources"]), "future_steps": len(catalog["future_steps"])}, sort_keys=True)
         return 0
     if args.command == "plan":
         plan = [asdict(item) for item in build_plan(catalog)]
         if args.json:
-            print(json.dumps(plan, indent=2, sort_keys=True, ensure_ascii=False))
+            print_json(plan, sort_keys=True)
         else:
             for item in plan:
                 print(f"{item['source_id']} -> {item['ingest_target']}")
         return 0
     if args.command == "fetch":
         paths = write_dry_run_manifests(catalog, args.root)
-        print(json.dumps({"status": "dry_run", "written": [str(path) for path in paths]}, indent=2, sort_keys=True, ensure_ascii=False))
+        print_json({"status": "dry_run", "written": [str(path) for path in paths]}, sort_keys=True)
         return 0
     if args.command == "score":
         selected = args.source_id or catalog["sources"][0]["source_id"]
         score = score_latent(C=0.9, I=0.99, P=1.0, E=0.88, Rc=0.95, Ru=0.3, Am=0.2, Vb=0.1)
         status = classify_control(score, controls_present=False, null_rejected=False)
         path = write_score_csv(args.root, selected, score, status)
-        print(json.dumps({"status": status, "score_path": str(path), "S_L": score.S_L}, sort_keys=True))
+        print_json({"status": status, "score_path": str(path), "S_L": score.S_L}, sort_keys=True)
         return 0
     if args.command == "report":
-        print(json.dumps(run_dry_pipeline(args.catalog, args.schema, args.root, args.source_id), indent=2, sort_keys=True, ensure_ascii=False))
+        print_json(run_dry_pipeline(args.catalog, args.schema, args.root, args.source_id), sort_keys=True)
+        return 0
+    if args.command == "tokenize":
+        prompt = args.prompt
+        if args.prompt_file is not None:
+            prompt = args.prompt_file.read_text(encoding="utf-8")
+        print_json(build_semantic_token_unit(prompt, unit_id=args.unit_id))
         return 0
     if args.command == "verify":
-        print(json.dumps({"status": "verified", "schema": str(args.schema), "catalog": str(args.catalog)}, sort_keys=True))
+        print_json({"status": "verified", "schema": str(args.schema), "catalog": str(args.catalog)}, sort_keys=True)
         return 0
     parser.error(f"unknown command: {args.command}")
     return 2

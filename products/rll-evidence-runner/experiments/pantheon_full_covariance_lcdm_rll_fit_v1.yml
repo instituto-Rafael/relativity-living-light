@@ -1,0 +1,78 @@
+schema: rll_evidence_experiment_v1
+experiment_id: RLL-EVIDENCE-PANTHEON-FIT-001
+title: Pantheon Plus SH0ES full-covariance LCDM versus RLL fit
+repository_root: ../../..
+claim_allowed: false
+publication_effect: NONE
+execution:
+  timeout_seconds: 21600
+inputs:
+  - id: pantheon-catalog
+    path: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat
+    required: true
+    expected_bytes: 579283
+    expected_sha256: 1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8
+  - id: pantheon-stat-sys-covariance
+    path: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov
+    required: true
+    expected_bytes: 33284960
+    expected_sha256: abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc
+    sha256_sidecar: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov.sha256
+steps:
+  - id: verify-pantheon-full-covariance
+    argv: [python, scripts/verify_pantheon_inputs.py, --json, --require-full-covariance]
+    required: true
+    expected_exit_codes: [0]
+  - id: fit-pantheon-lcdm-rll-multiseed
+    argv:
+      - python
+      - -m
+      - rll_evidence.pantheon_fit_ascii
+      - --catalog
+      - data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat
+      - --covariance
+      - data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov
+      - --output
+      - artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json
+      - --seeds
+      - 11,23,37,53,71
+      - --maxiter
+      - "250"
+      - --integration-points
+      - "4096"
+      - --z-min
+      - "0.01"
+    env:
+      PYTHONPATH: products/rll-evidence-runner/src
+    timeout_seconds: 21600
+    required: true
+    expected_exit_codes: [0]
+    outputs:
+      - path: artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json
+        required: true
+        media_type: application/json
+result_extractors:
+  - id: pantheon-models
+    path: artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/pantheon_fit_result.json
+    rows_path: [rows]
+    model_key: model
+    include_models: [LCDM_pantheon_full, RLL_pantheon_full]
+    metrics: [chi2, AIC, AICc, BIC, N, k, dof]
+comparisons:
+  - baseline: LCDM_pantheon_full
+    candidate: RLL_pantheon_full
+    metrics: [chi2, AIC, AICc, BIC]
+receipt:
+  path: artifacts/evidence/RLL-EVIDENCE-PANTHEON-FIT-001/receipt.json
+F_ok:
+  - The official catalog and full STAT+SYS covariance are required and hash-bound.
+  - Calibrator rows use CEPH_DIST and Hubble-flow rows use m_b_corr with the same selected covariance.
+  - LCDM and RLL share selection, covariance, common parameter bounds, seeds, optimizer and integration grid.
+  - M_B is analytically profiled and counted in k.
+  - ASCII covariance asymmetry is accepted only up to 5e-8, recorded and symmetrized deterministically without jitter.
+F_gap:
+  - Pantheon Plus SH0ES is one likelihood block and does not validate RLL independently.
+  - External cross-implementation reproduction and joint BAO H(z) growth CMB composition remain absent.
+F_next:
+  - Reproduce the receipt on an independent machine and compare hashes and fitted metrics.
+  - Compose the new Pantheon likelihood with the existing joint-real blocks without overwriting historical artifacts.

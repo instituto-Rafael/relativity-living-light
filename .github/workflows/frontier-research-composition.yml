@@ -1,0 +1,265 @@
+# KNOWS_BY_ON_FIRST_LINE: non-publishing frontier composition and receipts.
+name: Frontier Research Ω Composition
+run-name: Frontier Ω · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  push:
+    branches: [main]
+    paths: &frontier_paths
+      - "data/contracts/frontier_research_composition.v1.yml"
+      - "data/contracts/frontier_possibility_ladder.v1.yml"
+      - "data/contracts/theory_practice_calibration.v1.yml"
+      - "data/contracts/cosmology_model_family_shadow.v1.json"
+      - "data/contracts/model_family_multiseed_receipt.v1.yml"
+      - "data/inputs/cosmology_joint/frontier_research_queue.v1.yml"
+      - "data/pipelines/structure_d/model_family_shadow.py"
+      - "data/pipelines/structure_d/model_family_multiseed_receipt.py"
+      - "requirements/ci-frontier.txt"
+      - "scripts/validate_frontier_research_composition.py"
+      - "scripts/validate_frontier_possibility_ladder.py"
+      - "scripts/validate_theory_practice_calibration.py"
+      - "scripts/run_frontier_research_orchestrator.py"
+      - "tools/frontier_registry_receipt.py"
+      - "tests/test_frontier_research_composition.py"
+      - "tests/test_frontier_possibility_ladder.py"
+      - "tests/test_theory_practice_calibration.py"
+      - "tests/test_model_family_shadow.py"
+      - "tests/test_model_family_multiseed_receipt.py"
+      - "tests/test_frontier_registry_receipt.py"
+      - ".github/workflows/frontier-research-composition.yml"
+  pull_request:
+    branches: [main]
+    paths: *frontier_paths
+  workflow_call:
+    inputs:
+      run_shadow_smoke:
+        description: Run the bounded, non-publishing single-seed smoke benchmark
+        required: false
+        default: false
+        type: boolean
+      run_multiseed_receipt:
+        description: Run all frozen seeds with the contract default optimizer budget
+        required: false
+        default: false
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      run_shadow_smoke:
+        description: Run the bounded, non-publishing single-seed smoke benchmark
+        required: false
+        default: false
+        type: boolean
+      run_multiseed_receipt:
+        description: Run all frozen seeds with the contract default optimizer budget
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontier-omega-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  PYTHON_VERSION: "3.11"
+  FRONTIER_RECEIPT_DIR: artifacts/frontier-research
+  ARTIFACT_RETENTION_DAYS: "30"
+
+jobs:
+  epistemic-contract:
+    name: Validate contracts, formulas, registry, and Ω feedback
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5 resolved 2026-07-30
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Validate composition, possibility, and calibration contracts
+        run: |
+          set -euo pipefail
+          mkdir -p "$FRONTIER_RECEIPT_DIR"
+          python scripts/validate_frontier_research_composition.py --contract data/contracts/frontier_research_composition.v1.yml --queue data/inputs/cosmology_joint/frontier_research_queue.v1.yml --report "$FRONTIER_RECEIPT_DIR/validation.json"
+          python scripts/validate_frontier_possibility_ladder.py --ladder data/contracts/frontier_possibility_ladder.v1.yml --queue data/inputs/cosmology_joint/frontier_research_queue.v1.yml --report "$FRONTIER_RECEIPT_DIR/possibility-ladder-validation.json"
+          python scripts/validate_theory_practice_calibration.py --calibration data/contracts/theory_practice_calibration.v1.yml --ladder data/contracts/frontier_possibility_ladder.v1.yml --queue data/inputs/cosmology_joint/frontier_research_queue.v1.yml --report "$FRONTIER_RECEIPT_DIR/theory-practice-calibration-validation.json"
+
+      - name: Iterate prompt gates to epistemic fixed point
+        run: |
+          set -euo pipefail
+          python scripts/run_frontier_research_orchestrator.py \
+            --contract data/contracts/frontier_research_composition.v1.yml \
+            --queue data/inputs/cosmology_joint/frontier_research_queue.v1.yml \
+            --json-out "$FRONTIER_RECEIPT_DIR/prompt-evolution.json" \
+            --md-out "$FRONTIER_RECEIPT_DIR/prompt-evolution.md"
+
+      - name: Emit deterministic model-registry receipt
+        run: |
+          set -euo pipefail
+          python -m tools.frontier_registry_receipt \
+            --contract data/contracts/cosmology_model_family_shadow.v1.json \
+            --json-out "$FRONTIER_RECEIPT_DIR/model-registry.json" \
+            --text-out "$FRONTIER_RECEIPT_DIR/model-registry.txt"
+
+      - name: Run focused adversarial tests
+        run: |
+          set -euo pipefail
+          pytest -q \
+            tests/test_frontier_research_composition.py \
+            tests/test_frontier_possibility_ladder.py \
+            tests/test_theory_practice_calibration.py \
+            tests/test_model_family_shadow.py \
+            tests/test_model_family_multiseed_receipt.py \
+            tests/test_frontier_registry_receipt.py \
+            --junitxml="$FRONTIER_RECEIPT_DIR/junit.xml" \
+            2>&1 | tee "$FRONTIER_RECEIPT_DIR/pytest.log"
+
+      - name: Seal environment and frontier receipts
+        run: |
+          set -euo pipefail
+          python -VV > "$FRONTIER_RECEIPT_DIR/python-version.txt"
+          python -m pip freeze --all > "$FRONTIER_RECEIPT_DIR/pip-freeze.txt"
+          printf '%s\n' 'claim_allowed=false' 'publication_effect=NONE' 'canonical_outputs_modified=false' > "$FRONTIER_RECEIPT_DIR/CLAIM_BOUNDARY.txt"
+          (cd "$FRONTIER_RECEIPT_DIR" && sha256sum * > CHECKSUMS.sha256)
+
+      - name: Upload auditable frontier receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4 resolved 2026-07-30
+        with:
+          name: frontier-research-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/frontier-research/
+          retention-days: 30
+          if-no-files-found: error
+
+  shadow-smoke:
+    name: Bounded single-seed shadow smoke
+    if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.run_shadow_smoke }}
+    needs: epistemic-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RLL_MODEL_FAMILY_MODE: core
+      RLL_MODEL_FAMILY_SEED: "11"
+      RLL_MODEL_FAMILY_MAXITER: "2"
+      RLL_MODEL_FAMILY_TOL: "0.001"
+      SMOKE_RECEIPT_DIR: artifacts/frontier-shadow-smoke
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5 resolved 2026-07-30
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Run non-publishing shadow smoke benchmark
+        run: |
+          set -euo pipefail
+          mkdir -p "$SMOKE_RECEIPT_DIR"
+          python -m data.pipelines.structure_d.model_family_shadow 2>&1 | tee "$SMOKE_RECEIPT_DIR/run.log"
+          cp results/structure_d/model_family_shadow.json "$SMOKE_RECEIPT_DIR/"
+          cp results/structure_d/model_family_shadow.csv "$SMOKE_RECEIPT_DIR/"
+          printf '%s\n' 'claim_allowed=false' 'publication_effect=NONE' 'mode=core' 'maxiter=2' > "$SMOKE_RECEIPT_DIR/CLAIM_BOUNDARY.txt"
+          (cd "$SMOKE_RECEIPT_DIR" && sha256sum * > CHECKSUMS.sha256)
+
+      - name: Upload smoke receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4 resolved 2026-07-30
+        with:
+          name: frontier-shadow-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/frontier-shadow-smoke/
+          retention-days: 30
+          if-no-files-found: error
+
+  multiseed-receipt:
+    name: Frozen five-seed shadow comparison
+    if: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call') && inputs.run_multiseed_receipt }}
+    needs: epistemic-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MULTISEED_RECEIPT_DIR: artifacts/frontier-multiseed
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5 resolved 2026-07-30
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Execute every predeclared seed without post-hoc adaptation
+        run: |
+          set -euo pipefail
+          mkdir -p "$MULTISEED_RECEIPT_DIR"
+          python -m data.pipelines.structure_d.model_family_multiseed_receipt \
+            --mode core \
+            --output-dir "$MULTISEED_RECEIPT_DIR" \
+            2>&1 | tee "$MULTISEED_RECEIPT_DIR/run.log"
+
+      - name: Seal numerical environment and checksums
+        run: |
+          set -euo pipefail
+          python -VV > "$MULTISEED_RECEIPT_DIR/python-version.txt"
+          python -m pip freeze --all > "$MULTISEED_RECEIPT_DIR/pip-freeze.txt"
+          printf '%s\n' 'claim_allowed=false' 'publication_effect=NONE' 'independent_replication=false' > "$MULTISEED_RECEIPT_DIR/CLAIM_BOUNDARY.txt"
+          (cd "$MULTISEED_RECEIPT_DIR" && sha256sum * > CHECKSUMS.sha256)
+
+      - name: Publish multi-seed Ω residual summary
+        if: always()
+        run: |
+          set -euo pipefail
+          report="$MULTISEED_RECEIPT_DIR/MODEL_FAMILY_MULTISEED_REPORT.md"
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_ROBUST_MULTI_SEED_RECEIPT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload complete multi-seed receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4 resolved 2026-07-30
+        with:
+          name: frontier-multiseed-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/frontier-multiseed/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,188 @@
+schema: rll.workflow_orchestrator.specialty_block.v1
+claim_allowed: false
+publication_effect: NONE
+
+workflows:
+  - id: yaml_deep_audit
+    description: "Parse, hash, classify, and cross-check every YAML/YML file."
+    file: yaml-deep-audit.yml
+    stage: 5
+    specialty: YAML_CUSTODY_SCAN
+    enabled: true
+    tags: [tower, core, validation]
+    wait_for_completion: true
+    timeout_minutes: 20
+    inputs: {fail_on: high}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: yml_syntax_validation
+    description: "Enforce syntax, permissions, architecture, and documentation contracts."
+    file: yml-syntax-validation.yml
+    stage: 10
+    specialty: WORKFLOW_ARCHITECTURE
+    enabled: true
+    tags: [tower, core, validation]
+    wait_for_completion: true
+    timeout_minutes: 20
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: workflow_contract_sync_v2
+    description: "Fail closed when the executable workflow inventory drifts."
+    file: workflow-contract-sync-v2.yml
+    stage: 20
+    specialty: EXECUTABLE_CONTRACT
+    enabled: true
+    tags: [tower, core, validation]
+    wait_for_completion: true
+    timeout_minutes: 20
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: python_tests
+    description: "Execute the repository regression suite with an auditable receipt."
+    file: python-tests.yml
+    stage: 30
+    specialty: REGRESSION
+    enabled: true
+    tags: [tower, core, validation]
+    wait_for_completion: true
+    timeout_minutes: 40
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: governance_quality_gate
+    description: "Validate governance, TOKEN_VAZIO custody, and non-certification boundaries."
+    file: rll-governance-quality-gate.yml
+    stage: 40
+    specialty: GOVERNANCE
+    enabled: true
+    tags: [tower, core, validation]
+    wait_for_completion: true
+    timeout_minutes: 20
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: real_data_complete_execution
+    description: "Execute canonical real-data custody in strict audit-only mode."
+    file: real-data-complete-execution.yml
+    stage: 50
+    specialty: REAL_DATA_CUSTODY
+    enabled: true
+    tags: [tower, real_data, validation]
+    wait_for_completion: true
+    timeout_minutes: 70
+    inputs:
+      execution_mode: audit_only
+      materialize_pantheon: false
+      run_structure_d: false
+      run_pantheon_validation: false
+      strict_real_data: true
+      retention_days: "30"
+    override_allowlist: [retention_days]
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: deterministic_pipeline
+    description: "Execute the canonical 44-step pipeline in dry-run mode."
+    file: rll-pipeline-linear-completo.yml
+    stage: 60
+    specialty: SCIENCE_DRY_RUN
+    enabled: true
+    tags: [tower, science_shadow, validation]
+    wait_for_completion: true
+    timeout_minutes: 130
+    inputs: {modo: dry_run}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: frontier_research_omega
+    description: "Validate frontier contracts without running or promoting model claims."
+    file: frontier-research-composition.yml
+    stage: 70
+    specialty: FRONTIER_SHADOW
+    enabled: true
+    tags: [tower, science_shadow, validation]
+    wait_for_completion: true
+    timeout_minutes: 60
+    inputs:
+      run_shadow_smoke: false
+      run_multiseed_receipt: false
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: rll_real_data_orchestrator
+    description: "Domain-specific real-data audit retained for its dedicated profile."
+    file: rll-real-data-orchestrator.yml
+    stage: 55
+    specialty: REAL_DATA_DOMAIN
+    enabled: true
+    tags: [real_data]
+    wait_for_completion: true
+    timeout_minutes: 70
+    inputs:
+      pipeline_scope: all
+      dataset_group: all
+      mode: metadata_only
+      real_data_source: repo
+      retention_days: "30"
+    override_allowlist: [pipeline_scope, dataset_group, retention_days]
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: start_manual_interop
+    description: "Legacy manual selector retained outside the governed transit tower."
+    file: START_MANUAL_HERE.yml
+    stage: 90
+    specialty: LEGACY_INTEROP
+    enabled: false
+    disabled_reason: "oversized inline programs and mutable action/dependency references require a separate migration"
+    tags: [legacy]
+    wait_for_completion: true
+    timeout_minutes: 45
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: formulas_artifacts
+    description: "Legacy artifact generator excluded until receipt and credential controls are hardened."
+    file: formulas-artifacts.yml
+    stage: 91
+    specialty: LEGACY_ARTIFACT
+    enabled: false
+    disabled_reason: "checkout credentials are implicit and artifact upload is not guaranteed on failure"
+    tags: [legacy, artifacts]
+    wait_for_completion: true
+    timeout_minutes: 30
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE
+
+  - id: iml_artifact
+    description: "Legacy IML artifact generator excluded from strict transit."
+    file: iml_artifact.yml
+    stage: 92
+    specialty: LEGACY_ARTIFACT
+    enabled: false
+    disabled_reason: "missing input falls back to an example fixture and cannot enter a strict evidence transit"
+    tags: [legacy, artifacts]
+    wait_for_completion: true
+    timeout_minutes: 30
+    inputs: {}
+    override_allowlist: []
+    claim_allowed: false
+    publication_effect: NONE

@@ -1,0 +1,130 @@
+{
+  "boundaries": {
+    "exact_geometry_is_physical_validation": false,
+    "local_geophysics_is_cosmological_evidence": false,
+    "synthetic_is_observational_evidence": false,
+    "token_vazio_is_zero": false
+  },
+  "claim_allowed": false,
+  "commands": [
+    {
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-nostdlib",
+        "-c",
+        "core/lowlevel_runtime/c/rll_canonical_coupling.c",
+        "-Icore/lowlevel_runtime/include",
+        "-o",
+        "/tmp/rll_canonical_coupling.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "nm",
+        "-u",
+        "/tmp/rll_canonical_coupling.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "tests/c/rll_canonical_coupling_vectors.c",
+        "core/lowlevel_runtime/c/rll_canonical_coupling.c",
+        "-Icore/lowlevel_runtime/include",
+        "-o",
+        "/tmp/rll_canonical_coupling_vectors"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/tmp/rll_canonical_coupling_vectors"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "clang",
+        "--target=armv7a-none-eabi",
+        "-std=c11",
+        "-Oz",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-nostdlib",
+        "-c",
+        "core/lowlevel_runtime/c/rll_canonical_coupling.c",
+        "-Icore/lowlevel_runtime/include",
+        "-o",
+        "/tmp/rll_canonical_armv7.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "clang",
+        "--target=aarch64-none-elf",
+        "-std=c11",
+        "-Oz",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-nostdlib",
+        "-c",
+        "core/lowlevel_runtime/c/rll_canonical_coupling.c",
+        "-Icore/lowlevel_runtime/include",
+        "-o",
+        "/tmp/rll_canonical_aarch64.o"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "schema": "rll_canonical_freestanding_validation_v1",
+  "sha256": {
+    "harness": "6e38d0458bc781c21089bd87583f5f4c2d7d7c06e7bd0964a493021d7243108b",
+    "header": "67e2b17601913c542caf2a852a0a9ffeebdf347a25dd8318d36da3caa5564e21",
+    "source": "cd135798414ffaadc9cba1262fed4124dd38fbb0f8d23c46b11b4aa824bd7662"
+  },
+  "source_contract": {
+    "aarch64_object": true,
+    "armv7_object": true,
+    "fixed_point": "Q16.16",
+    "host_vector_exit_zero": true,
+    "no_heap": true,
+    "no_libc_calls": true
+  },
+  "status": "PASS"
+}

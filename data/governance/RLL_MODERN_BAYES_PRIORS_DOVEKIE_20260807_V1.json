@@ -1,0 +1,45 @@
+{
+  "schema": "rll.modern_bayes_prior_registry.v1",
+  "generated_at": "2026-08-07T23:25:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "likelihood": {
+    "id": "DES_DOVEKIE_FULL_PRECISION_SN_ONLY",
+    "h0_policy": "fixed reference H0=70 km/s/Mpc; no H0 inference",
+    "magnitude_offset": "sampled explicitly with one proper uniform prior shared by all models",
+    "matrix_semantics": "inverse_covariance_precision",
+    "normalization": "full Gaussian normalization from logdet(precision) included"
+  },
+  "prior_set": "DOVEKIE_3MODEL_BROAD_V1",
+  "priors": {
+    "LCDM_dovekie": {
+      "Omega_m": [0.10, 0.60],
+      "M_offset": [-2.0, 2.0]
+    },
+    "CPL_dovekie": {
+      "Omega_m": [0.10, 0.60],
+      "w0": [-2.0, -0.3],
+      "wa": [-12.0, 3.0],
+      "M_offset": [-2.0, 2.0]
+    },
+    "RLL_dovekie": {
+      "Omega_m": [0.10, 0.60],
+      "Omega_s0": [0.0, 0.25],
+      "z_t": [0.10, 10.0],
+      "w_t": [0.05, 2.0],
+      "M_offset": [-2.0, 2.0]
+    }
+  },
+  "rationale": {
+    "wa": "Expanded below the historical -3 optimizer bound because the executed profile moved the optimum to about -6 and remained open toward lower wa. Evidence is prior-sensitive, so this wider bound is explicit rather than hidden.",
+    "M_offset": "A proper shared finite prior is sampled rather than profiling an improper nuisance direction; this makes the model evidence mathematically defined.",
+    "RLL": "Existing declared RLL parameter bounds are retained so the Bayes calculation measures the Occam penalty of the actual tested parameter volume rather than post-hoc shrinking around the optimum."
+  },
+  "invariants": [
+    "all models use the exact same Dovekie HD and precision matrix",
+    "all models sample the same proper magnitude-offset nuisance prior",
+    "no BIC proxy is accepted as logZ",
+    "CPL and RLL prior volumes are declared before execution",
+    "independent replication remains a separate gate"
+  ]
+}

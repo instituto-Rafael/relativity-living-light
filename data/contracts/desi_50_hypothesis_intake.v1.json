@@ -1,0 +1,35 @@
+{
+  "schema": "rll-desi-50-hypothesis-intake/v1.0",
+  "recorded_at": "2026-08-15T21:06:00-03:00",
+  "source_type": "USER_PROPOSED_HYPOTHESIS_SET",
+  "source_count": 50,
+  "data_path": "data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv",
+  "governed_by": "data/contracts/cross_domain_equation_intake.v1.json",
+  "frontier_queue": "data/inputs/cosmology_joint/frontier_research_queue.v1.yml",
+  "claim_allowed": false,
+  "promotion_allowed": false,
+  "gate_order": ["D", "P", "O", "F", "E"],
+  "gate_meaning": {
+    "D": "dimensional_or_formal_consistency",
+    "P": "physical_mechanism",
+    "O": "observable_mapping",
+    "F": "falsifier",
+    "E": "evidence_or_receipt"
+  },
+  "expected_state_counts": {"H": 15, "U": 29, "A": 5, "R": 1},
+  "expected_desi_relevance_counts": {"DIRECT_DESI": 17, "INDIRECT_COSMOLOGY": 21, "OUTSIDE_DESI_CORE": 12},
+  "hard_invariants": [
+    "formula != mechanism != implementation != execution != evidence != claim",
+    "TOKEN_VAZIO is not zero, false, PASS or proof of absence",
+    "DESI relevance does not imply DESI support",
+    "symbolic language may be preserved but cannot be promoted as physical evidence",
+    "no hypothesis in this intake has E=PASS at creation time",
+    "absolute certainty is not a scientifically promotable claim"
+  ],
+  "known_fail_closed_items": {
+    "H15": "as written sigma8(0)=0, contradicting its sigma8_0 normalization label",
+    "H35": "exp(pi i)=-1; a power spectrum cannot be made negative by an unexplained phase factor",
+    "H44": "Euler characteristic is a scalar while Matrix_10x10x3 is an object of different type",
+    "H50": "absolute-certainty clause is rejected as non-falsifiable"
+  }
+}

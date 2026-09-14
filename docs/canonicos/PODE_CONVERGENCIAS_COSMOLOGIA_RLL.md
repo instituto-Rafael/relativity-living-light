@@ -534,4 +534,39 @@ O que diferencia o RLL de outros modelos de energia escura dinâmica:
 
 ---
 
+## Adendo FASES 20–22 (2026-07-15/16)
+
+Os desbloqueadores P0 citados ao longo deste documento foram executados e fechados.
+
+### Gaps P0 — Estado Final
+
+| Gap | Status (pré-FASE 20) | Status final | Resultado [E] |
+|-----|---------------------|-------------|---------------|
+| Joint MCMC Pantheon+ + DESI BAO | TOKEN_VAZIO P0 | ✅ FECHADO | Ωs0 UL95 = 0.00178 (emcee 32×1500, N=1677) |
+| Bayes Factor RLL/ΛCDM | TOKEN_VAZIO P0 | ✅ FECHADO | ln(B₁₀) = −6.190 ± 0.691 (dynesty nlive=150) |
+
+**ΛCDM fortemente preferido**: |ln B₁₀| = 6.19 > 5.0 → escala Jeffreys "evidência muito forte".
+
+### Atualização do PODE 12 — Propriedade "Reprodutível"
+
+A lacuna `Joint MCMC + Bayes Factor pendentes` (linha 467) foi resolvida:
+
+| Propriedade | Status pós-FASE 20 |
+|-------------|-------------------|
+| Reprodutível | ✅ [E] — MCMC e Bayes Factor executados; resultados em `results/rll_fase20_mcmc_bayes.json` |
+
+### Falsificadores — Estado Final
+
+| F-COS | Resultado | Status |
+|-------|-----------|--------|
+| F-COS-01 | ΔAIC=3.805 | ✅ PASS [E] |
+| F-COS-02 | χ²_red=0.4387 | ✅ PASS [E] |
+| F-COS-03 | z_t_BAO=0.30 (fora [0.5,1.5]) | ✗ FAIL [E] |
+| F-COS-04 | ln(B₁₀)=−6.190±0.691 | ✗ FAIL [E] |
+| F-COS-05 | χ²_nom=93.81 | ✅ PASS [E] |
+
+**CONTRATO final**: `2/5 PASS · 2/5 FAIL · 0/5 TOKEN_VAZIO`. `claim_allowed = false` permanece — por resultado empírico, não por lacuna.
+
+---
+
 *"PODE é a forma gramatical da ciência: não afirma, pergunta com precisão suficiente para responder — e com falsificador suficiente para calar." — RAFAELIA*
