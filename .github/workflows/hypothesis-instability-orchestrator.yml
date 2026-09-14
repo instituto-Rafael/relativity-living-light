@@ -30,7 +30,7 @@ jobs:
       has_candidates: ${{ steps.route.outputs.has_candidates }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build fast C barometer
         shell: bash
@@ -85,7 +85,7 @@ jobs:
       matrix: ${{ fromJson(needs.barometer.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Verify routed hypothesis exists in governed intake
         shell: bash
