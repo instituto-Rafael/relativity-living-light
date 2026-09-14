@@ -113,6 +113,56 @@ class RLLAgentAuthorityTests(unittest.TestCase):
         self.assertFalse(allowed)
         self.assertEqual(reason, "PR_MERGE_FORBIDDEN")
 
+    def test_pr_create_requires_explicit_rll_lab_base(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--title", "x"],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_REQUIRES_EXPLICIT_RLL_LAB_BASE")
+
+    def test_pr_create_rejects_main_base(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--base", "main", "--title", "x"],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_BASE_FORBIDDEN")
+
+    def test_pr_create_requires_work_branch(self):
+        allowed, reason = authority.classify_command(
+            ["gh", "pr", "create", "--base", "rll/lab", "--title", "x"],
+            branch="rll/lab",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_REQUIRES_WORK_BRANCH")
+
+    def test_pr_create_allowed_from_work_branch_to_rll_lab(self):
+        allowed, reason = authority.classify_command(
+            [
+                "gh", "pr", "create",
+                "--base", "rll/lab",
+                "--head", "agent/test",
+                "--title", "x",
+            ],
+            branch="agent/test",
+        )
+        self.assertTrue(allowed)
+        self.assertEqual(reason, "ALLOW_PR_CREATE_TO_RLL_LAB")
+
+    def test_pr_create_rejects_mismatched_head(self):
+        allowed, reason = authority.classify_command(
+            [
+                "gh", "pr", "create",
+                "--base", "rll/lab",
+                "--head", "agent/other",
+                "--title", "x",
+            ],
+            branch="agent/test",
+        )
+        self.assertFalse(allowed)
+        self.assertEqual(reason, "PR_CREATE_HEAD_MUST_MATCH_CURRENT_WORK_BRANCH")
+
     def test_secret_mutation_denied(self):
         allowed, reason = authority.classify_command(
             ["gh", "secret", "set", "SOME_SECRET"]
