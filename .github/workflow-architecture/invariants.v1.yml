@@ -281,7 +281,7 @@ security:
     git_ref_delete_with_external_credentials: FORBIDDEN
     contents_write_implies_no_delete: false
     climate_trial:
-      actions_secret: RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+      actions_secret: CLIMA
       allowed_consumer: workflow_dispatch_guarded_job_only
       secret_value_in_receipts: FORBIDDEN
       secret_hash_in_receipts: FORBIDDEN

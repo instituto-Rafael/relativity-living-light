@@ -62,7 +62,7 @@ credential_authority:
       repository_write_authority: NONE_IN_ASSURANCE_WORKFLOW
       runtime_state: TOKEN_VAZIO_UNTIL_DISPATCH
     climate_trial:
-      secret: RLL_CLIMATE_ENGINE_TRIAL_TOKEN
+      secret: CLIMA
       process_binding: CLIMATE_ENGINE_API_KEY
       workflow: .github/workflows/rll-climate-engine-trial-live.yml
       allowed_execution: workflow_dispatch_guarded_provider_read

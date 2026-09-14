@@ -142,7 +142,7 @@ def main() -> int:
         "run_id": os.environ.get("GITHUB_RUN_ID", "TOKEN_VAZIO"),
         "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", "TOKEN_VAZIO"),
         "operation": operation,
-        "secret_name": "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+        "secret_name": "CLIMA",
         "secret_binding_present_boolean": secret_present,
         "secret_value_persisted": False,
         "secret_hash_persisted": False,

@@ -9,6 +9,10 @@ on:
       - "tools/agent/rll_agent_authority.py"
       - "data/governance/rll_agent_authority.v1.json"
       - "tests/test_rll_agent_authority.py"
+      - "tools/agent/rll_agent_seven_guards.py"
+      - "tests/test_rll_agent_seven_guards.py"
+      - "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json"
+      - "tools/validate_rll_evidence_evolution_matrix.py"
   pull_request:
     paths:
       - ".github/workflows/copilot-setup-steps.yml"
@@ -16,6 +20,10 @@ on:
       - "tools/agent/rll_agent_authority.py"
       - "data/governance/rll_agent_authority.v1.json"
       - "tests/test_rll_agent_authority.py"
+      - "tools/agent/rll_agent_seven_guards.py"
+      - "tests/test_rll_agent_seven_guards.py"
+      - "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json"
+      - "tools/validate_rll_evidence_evolution_matrix.py"
 
 permissions:
   contents: read
@@ -38,9 +46,10 @@ jobs:
           python-version: "3.12"
 
       - name: Validate Secretary authority boundary
+        id: authority-tests
         run: |
           set -euo pipefail
-          python -m unittest -v tests.test_rll_agent_authority
+          python -m unittest -v tests.test_rll_agent_authority tests.test_rll_agent_seven_guards
 
       - name: Observe Agent PAT authority without mutation
         id: authority-probe
@@ -85,16 +94,33 @@ jobs:
           )
           PY
 
+      - name: Record seven guards without network or credential output
+        id: seven-guards
+        if: always()
+        run: python -m tools.agent.rll_agent_seven_guards --runtime agents
+
+      - name: Preserve seven-guard receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-agent-seven-guards-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/rll-agent-authority/RLL-AGENT-7G-*.json
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Publish bounded setup summary
         if: always()
         shell: bash
         env:
           PROBE_RC: ${{ steps.authority-probe.outputs.probe_rc }}
+          TEST_OUTCOME: ${{ steps.authority-tests.outcome }}
+          GUARDS_OUTCOME: ${{ steps.seven-guards.outcome }}
         run: |
           {
             echo "## RLL Secretary Agent"
             echo
-            echo "- setup tests: executed"
+            echo "- setup tests: ${TEST_OUTCOME:-TOKEN_VAZIO}"
+            echo "- seven-guard preflight: ${GUARDS_OUTCOME:-TOKEN_VAZIO}"
             echo "- authority probe rc: ${PROBE_RC:-TOKEN_VAZIO}"
             echo "- PAT values: never printed/persisted"
             echo "- destructive capability probing: forbidden"

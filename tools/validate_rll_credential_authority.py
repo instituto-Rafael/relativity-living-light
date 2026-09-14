@@ -3,7 +3,7 @@
 
 Canonical repository secrets:
 - GITPAT: manual read-only GitHub authentication assurance only.
-- RLL_CLIMATE_ENGINE_TRIAL_TOKEN: manual Climate Engine provider-read jobs only.
+- CLIMA: manual Climate Engine provider-read jobs only.
 
 Secret values are never read by this static audit, persisted, hashed, or logged.
 """
@@ -24,16 +24,20 @@ SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
 WORKFLOW_ROOT = Path(".github/workflows")
 GITHUB_SECRET = "GITPAT"
-CLIMATE_SECRET = "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"
+CLIMATE_SECRET = "CLIMA"
 GITHUB_ASSURANCE_WORKFLOW = ".github/workflows/rll-repository-pat-assurance.yml"
 
 GITHUB_SECRET_REF_RE = re.compile(rf"secrets\.{re.escape(GITHUB_SECRET)}\b", re.IGNORECASE)
 LEGACY_PAT_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT)\b",
+    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT|PATGITHUB|GIT)\b",
     re.IGNORECASE,
 )
 CLIMATE_SECRET_REF_RE = re.compile(
     rf"secrets\.{re.escape(CLIMATE_SECRET)}\b",
+    re.IGNORECASE,
+)
+LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
+    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
     re.IGNORECASE,
 )
 DESTRUCTIVE_RE = re.compile(
@@ -164,6 +168,12 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
             findings.append(Finding(
                 "ERROR", "GITHUB_PAT_IN_ACTIONS_FORBIDDEN", rel,
                 "legacy/alternate PAT secret names are forbidden; canonical repository secret is GITPAT",
+            ))
+
+        if LEGACY_CLIMATE_SECRET_REF_RE.search(text):
+            findings.append(Finding(
+                "ERROR", "CLIMATE_SECRET_SURFACE_OR_NAME", rel,
+                "Actions uses CLIMA; Agents CLIMATE and the historical Actions name are not implicit fallbacks",
             ))
 
         has_gitpat = bool(GITHUB_SECRET_REF_RE.search(text))

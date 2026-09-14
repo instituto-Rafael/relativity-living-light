@@ -89,7 +89,7 @@ jobs:
     permissions:
       contents: read
     env:
-      CLIMATE_ENGINE_API_KEY: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+      CLIMATE_ENGINE_API_KEY: ${{ secrets.CLIMA }}
       RLL_CLIMATE_OPERATION: ${{ inputs.operation }}
       RLL_CLIMATE_DATASET: ${{ inputs.dataset }}
       RLL_CLIMATE_VARIABLE: ${{ inputs.variable }}
