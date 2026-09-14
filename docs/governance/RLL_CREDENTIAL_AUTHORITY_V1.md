@@ -11,7 +11,7 @@ The two credentials named by the repository owner are **GitHub Actions Repositor
 | Repository Secret | Purpose | Runtime surface | Repository write |
 |---|---|---|---|
 | `GITPAT` | manual GitHub authentication/read assurance | `.github/workflows/rll-repository-pat-assurance.yml` | none in assurance workflow |
-| `RLL_CLIMATE_ENGINE_TRIAL_TOKEN` | temporary Climate Engine read/query execution | guarded manual Actions jobs | none |
+| `CLIMA` | temporary Climate Engine read/query execution | guarded manual Actions jobs | none |
 
 The Climate secret is bound inside the process as `CLIMATE_ENGINE_API_KEY`; that is an environment binding, not a third secret.
 
@@ -34,7 +34,7 @@ The assurance uses only `GET /user` and `GET /repos/{owner}/{repo}`. A PASS prov
 
 ## Climate boundary
 
-`RLL_CLIMATE_ENGINE_TRIAL_TOKEN` is a Repository Secret. A guarded job maps it to:
+`CLIMA` is a Repository Secret. A guarded job maps it to:
 
 ```text
 CLIMATE_ENGINE_API_KEY
@@ -48,9 +48,13 @@ RESIDUAL != CAUSE
 VISUALIZATION != EVIDENCE
 ```
 
+## Agent secret surface declared by owner
+
+Copilot cloud-agent secrets are a separate authority plane: repository `GIT`; organization `CLIMATE` and `PATGITHUB`. Their names may be recorded for routing, but their values are never read, persisted, or hashed. Actions must not consume these Agent secret names. Runtime use remains `TOKEN_VAZIO_AGENT_RUNTIME` until an Agent execution receipt is observed.
+
 ## Agent / Secretary
 
-The Secretary/Agent is a **separate authority plane**. Repository Secrets are not treated as Agent secrets and direct Agent access to `GITPAT` or `RLL_CLIMATE_ENGINE_TRIAL_TOKEN` is not inferred.
+The Secretary/Agent is a **separate authority plane**. Repository Secrets are not treated as Agent secrets and direct Agent access to `GITPAT` or `CLIMA` is not inferred.
 
 Legacy Agent selector names remain non-canonical compatibility concepts only; they do not redefine the two repository credentials.
 
