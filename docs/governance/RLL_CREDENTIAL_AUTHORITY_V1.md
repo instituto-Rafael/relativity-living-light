@@ -6,7 +6,7 @@ Scientific effect: `NONE`
 
 ## Canonical authority
 
-The two credentials named by the repository owner are **GitHub Actions Repository Secrets**:
+The owner-reported Actions pair is **GitHub Actions Repository Secrets**. Agents has its own separate pair, documented below:
 
 | Repository Secret | Purpose | Runtime surface | Repository write |
 |---|---|---|---|
@@ -56,7 +56,7 @@ Copilot cloud-agent secrets are a separate authority plane: repository `GIT`; or
 
 The Secretary/Agent is a **separate authority plane**. Repository Secrets are not treated as Agent secrets and direct Agent access to `GITPAT` or `CLIMA` is not inferred.
 
-Legacy Agent selector names remain non-canonical compatibility concepts only; they do not redefine the two repository credentials.
+Agents has the owner-reported candidate pair `PATGITHUB` + `CLIMATE`, exposed as environment variables. The explicit selectors are `RLL_AGENT_GITHUB_PAT_ENV` and `RLL_AGENT_CLIMATE_KEY_ENV`. `GIT` remains `TOKEN_VAZIO_ROLE` until explicitly assigned. These names do not redefine Actions bindings.
 
 ## Runtime evidence
 
@@ -74,3 +74,9 @@ until the corresponding manual workflows execute and emit sanitized receipts.
 - **F_ok:** two canonical Repository Secrets are unambiguous and separated.
 - **F_gap:** runtime presence/authentication and intrinsic PAT scope remain external until observed.
 - **F_next:** dispatch GITPAT assurance, then Climate metadata probe, then bounded timeseries/map comparison against an independently sourced RLL path.
+
+## Mapping correction — 2026-09-14
+
+The owner supplied the current names from the Agents and Actions settings. `CLIMA` supersedes the historical Actions name `RLL_CLIMATE_ENGINE_TRIAL_TOKEN`; the previous mapping remains in Git history and receipts. Names and provider roles remain owner-reported/candidate until runtime authentication is observed. No secret values or Settings API metadata were read during this change.
+
+Run the [seven-guard preflight](RLL_AGENT_SEVEN_GUARDS_V1.md) before credential-backed work. The GitHub connector used to edit this repository is an independent connection; it is not evidence that an Agents or Actions secret was consumed.

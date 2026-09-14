@@ -40,6 +40,10 @@ CLIMATE_SECRET_REF_RE = re.compile(
     rf"secrets\.{re.escape(CLIMATE_SECRET)}\b",
     re.IGNORECASE,
 )
+LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
+    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
+    re.IGNORECASE,
+)
 DESTRUCTIVE_RE = re.compile(
     r"(?:\bcurl\b[^\n]*(?:-X|--request)\s*(?:POST|PUT|PATCH|DELETE)\b|"
     r"\bgh\s+api\b[^\n]*(?:-X|--method)\s*(?:POST|PUT|PATCH|DELETE)\b|"
@@ -183,6 +187,12 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
             findings.append(Finding(
                 "ERROR", "CLIMATE_SECRET_IN_ACTIONS_FORBIDDEN", rel,
                 "legacy/Agent Climate secret names are forbidden in Actions; canonical Actions secret is CLIMA",
+            ))
+
+        if LEGACY_CLIMATE_SECRET_REF_RE.search(text):
+            findings.append(Finding(
+                "ERROR", "CLIMATE_SECRET_SURFACE_OR_NAME", rel,
+                "Actions uses CLIMA; Agents CLIMATE and the historical Actions name are not implicit fallbacks",
             ))
 
         has_gitpat = bool(GITHUB_SECRET_REF_RE.search(text))

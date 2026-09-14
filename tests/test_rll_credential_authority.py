@@ -170,6 +170,24 @@ jobs:
         self.assertFalse(payload["secret_value_observed"])
         self.assertFalse(payload["secret_value_hashed"])
 
+    def test_agent_and_historical_climate_names_are_rejected_in_actions(self):
+        for name in ("CLIMATE", "RLL_CLIMATE_ENGINE_TRIAL_TOKEN"):
+            with self.subTest(name=name):
+                workflow = """name: x
+'on':
+  workflow_dispatch:
+jobs:
+  x:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      KEY: ${{ secrets.NAME }}
+    steps:
+      - run: echo safe
+""".replace("secrets.NAME", "secrets." + name)
+                findings, _ = audit(self._repo(workflow))
+                self.assertIn("CLIMATE_SECRET_SURFACE_OR_NAME", {item.code for item in findings})
+
 
 if __name__ == "__main__":
     unittest.main()
