@@ -196,7 +196,7 @@ jobs:
 
       - name: "Verify Climate Actions binding without disclosing secret"
         env:
-          RLL_CLIMATE_ENGINE_TRIAL_TOKEN: ${{ secrets.RLL_CLIMATE_ENGINE_TRIAL_TOKEN }}
+          CLIMA: ${{ secrets.CLIMA }}
         run: >-
           python3 tools/validate_rll_credential_authority.py
           --strict --write-report --runtime-binding-check

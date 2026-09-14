@@ -35,6 +35,17 @@ GitHub mutation boundary:
 - workflow dispatch and rerun are allowed only when the existing workflow contract allows them;
 - every allowed mutation must produce a receipt with target/ref/result and no credentials.
 
+Before a credential-backed operation, run:
+`python -m tools.agent.rll_agent_seven_guards --runtime agents --require-bindings`.
+
+The receipt covers provenance, context, evidence, contradiction, uncertainty,
+reproduction and rollback. A structural PASS is not authentication evidence.
+The owner-reported candidate pair is PATGITHUB + CLIMATE. GIT has an unassigned
+role and is not an automatic alias. Explicit selector variables may select a
+different named environment binding; multiple aliases without a selector block.
+Read data/governance/rll_agent_authority.v1.json and
+docs/governance/RLL_AGENT_SEVEN_GUARDS_V1.md for the current route.
+
 Before acting, inspect repository governance and the relevant workflow/script. Execute the smallest reversible change. Run focused tests. Negative results and missing authority remain evidence.
 
 Climate Engine:
