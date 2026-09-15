@@ -96,3 +96,110 @@ The intended evidence producer is RafPolimata. No RafPolimata implementation is 
 **F_ok:** model contract and boundaries defined.
 **F_gap:** executable producer, calibration, benchmark and independent reproduction remain `TOKEN_VAZIO`.
 **F_next:** implement bounded deterministic evolution engine in RafPolimata and publish hash-bound receipts.
+
+
+## Quiescent knowledge bank
+
+The in-vitro model is a low-activity knowledge bank, not merely isolated execution.
+
+[
+activity(S_i)approx0
+
+otRightarrow
+S_i=emptyset.
+]
+
+Every preserved lineage may be reactivated later. No state is silently discarded because it is currently unexplained or apparently noisy.
+
+## Non-linear lineage topology
+
+The canonical topology is a temporal typed hypergraph:
+
+[
+mathcal H=(V,mathcal E,	au).
+]
+
+A child may have multiple parents, including an ancestor used by backcross. The graph remains temporally directed because every new child has a later generation/event timestamp.
+
+[
+LINEAGE
+eq LINEAR_SEQUENCE.
+]
+
+## Latent relation gate
+
+A relation may be absent from the current projection while still derivable from stored structure.
+
+[
+HIDDEN_IN_PROJECTION
+
+eq
+ABSENT_FROM_MODEL.
+]
+
+Control example:
+
+[
+h=(sqrt3/2)a
+]
+
+for an equilateral triangle.
+
+Discovery of a latent relation must record the derivation and source state rather than relabel it as newly created information.
+
+## Backcross operator
+
+For current lineage (S_n), ancestor (A_k), and trait mask (M):
+
+[
+S_{n+1}=B(S_n,A_k;M).
+]
+
+Required receipt fields:
+
+- current parent ID;
+- ancestor ID;
+- selected trait IDs;
+- compatibility result;
+- transform parameters;
+- pre/post trait diff;
+- deterministic seed;
+- output hash.
+
+Backcross creates a new node. It never rewrites the ancestor or current parent.
+
+## Practice-theory residual
+
+Define:
+
+[
+Delta_{PT}=d(O_{practice},P_{theory}).
+]
+
+Initial classification:
+
+[
+owner(Delta_{PT})=TOKEN_VAZIO_RESIDUAL_OWNER.
+]
+
+Allowed later classifications include measurement noise, model misspecification, discretization artifact, unmodeled structure, implementation gap, theory-only prediction, practice-only effect, contradiction and anomaly.
+
+Hard invariant:
+
+[
+PRACTICE_THEORY_MISMATCH
+
+eq
+AUTOMATIC_NOISE_ASSIGNMENT.
+]
+
+## Additional operators
+
+`INDIRECT`
+`DERIVATIVE`
+`BACKCROSS`
+`QUIESCE`
+`REACTIVATE`
+`LATENT_RELATION_PROBE`
+`NOISE_RECLASSIFY`
+
