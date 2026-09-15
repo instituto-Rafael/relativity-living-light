@@ -9,6 +9,8 @@
   },
   "operators": [
     "DIRECT",
+    "INDIRECT",
+    "DERIVATIVE",
     "INVERSE",
     "REVERSE",
     "ANTIDERIVATIVE",
@@ -22,6 +24,11 @@
     "RECURSIVE",
     "PERMUTE",
     "RECOMBINE",
+    "BACKCROSS",
+    "QUIESCE",
+    "REACTIVATE",
+    "LATENT_RELATION_PROBE",
+    "NOISE_RECLASSIFY",
     "GEODESIC_STEP"
   ],
   "selection": {
@@ -40,7 +47,25 @@
     "deterministic_replay": "TOKEN_VAZIO",
     "independent_reproduction": "TOKEN_VAZIO",
     "biological_identity": "BLOCKED",
-    "physical_geodesic_claim": "BLOCKED_WITHOUT_METRIC"
+    "physical_geodesic_claim": "BLOCKED_WITHOUT_METRIC",
+    "backcross_benchmark": "TOKEN_VAZIO",
+    "noise_classifier_benchmark": "TOKEN_VAZIO"
   },
-  "producer_route": "RafPolimata"
+  "producer_route": "RafPolimata",
+  "topology": "TEMPORAL_TYPED_HYPERGRAPH",
+  "quiescent_bank": {
+    "enabled": true,
+    "invariant": "QUIESCENT != DELETED",
+    "reactivation": "EXPLICIT"
+  },
+  "backcross": {
+    "formula": "child=B(current,ancestor;trait_mask)",
+    "parent_rewrite": false,
+    "receipt_required": true
+  },
+  "noise_model": {
+    "residual": "Delta_PT=d(practice_observation,theory_prediction)",
+    "initial_owner": "TOKEN_VAZIO_RESIDUAL_OWNER",
+    "invariant": "MISMATCH != AUTOMATIC_NOISE_ASSIGNMENT"
+  }
 }
