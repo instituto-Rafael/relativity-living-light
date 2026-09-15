@@ -1,0 +1,46 @@
+{
+  "schema": "rll.seed_omega_evolution.v1",
+  "date": "2026-09-15",
+  "claim_allowed": false,
+  "state": "MODEL_CONTRACT_EXECUTION_TOKEN_VAZIO",
+  "scale": {
+    "q": "sqrt(3)/2",
+    "boundary": "EUCLIDEAN_NOT_AUTOMATIC_GEODESIC"
+  },
+  "operators": [
+    "DIRECT",
+    "INVERSE",
+    "REVERSE",
+    "ANTIDERIVATIVE",
+    "RECLUSIVE_CLOSURE",
+    "LOG",
+    "ITERATED_LOG",
+    "TANGENTIAL",
+    "ORTHOGONAL",
+    "TRANSVERSAL",
+    "LATERAL",
+    "RECURSIVE",
+    "PERMUTE",
+    "RECOMBINE",
+    "GEODESIC_STEP"
+  ],
+  "selection": {
+    "mode": "PARETO_FRONT",
+    "dimensions": [
+      "coherence",
+      "novelty",
+      "reconstruction",
+      "evidence",
+      "robustness",
+      "cost"
+    ]
+  },
+  "gates": {
+    "runtime": "TOKEN_VAZIO",
+    "deterministic_replay": "TOKEN_VAZIO",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "biological_identity": "BLOCKED",
+    "physical_geodesic_claim": "BLOCKED_WITHOUT_METRIC"
+  },
+  "producer_route": "RafPolimata"
+}
