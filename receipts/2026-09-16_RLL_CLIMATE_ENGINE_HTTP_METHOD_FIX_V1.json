@@ -1,0 +1,36 @@
+{
+  "schema": "rll.climate_engine_http_method_fix.receipt.v1",
+  "generated_at_utc": "2026-09-16T09:25:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "work/climate-engine-http-method-v1-20260916",
+  "source": {
+    "provider": "Climate Engine API",
+    "swagger": "https://api.climateengine.org/",
+    "docs": [
+      "https://www.climateengine.org/apis/metadataEndpoints/",
+      "https://www.climateengine.org/apis/timeseriesEndpoints/",
+      "https://climateengine.org/apis/mapidEndpoints/"
+    ],
+    "observed_methods": {
+      "metadata_dates": "GET",
+      "metadata_variables": "GET",
+      "timeseries_coordinates": "POST",
+      "map_values": "GET"
+    }
+  },
+  "delta": {
+    "bridge": "timeseries_coordinates now executes POST with JSON while metadata/map remain GET",
+    "workflow_defaults": {
+      "dataset": "GRIDMET",
+      "variable": "pr",
+      "coordinates": "[[-121.61,38.78]]"
+    },
+    "secret_binding": "secrets.CLIMA -> CLIMATE_ENGINE_API_KEY unchanged"
+  },
+  "evidence_state": "IMPLEMENTED_STATIC_TESTS_PENDING_PROVIDER_CI",
+  "provider_runtime": "TOKEN_VAZIO_PENDING_MANUAL_WORKFLOW_DISPATCH",
+  "claim_allowed": false,
+  "F_ok": "method mismatch localized and corrected without changing secret value or repository write authority",
+  "F_gap": "live authentication/provider response still requires manual workflow_dispatch with repository secret CLIMA present",
+  "F_next": "observe pull-request static CI; after merge/review, manually dispatch metadata_dates on GRIDMET, then bounded timeseries"
+}

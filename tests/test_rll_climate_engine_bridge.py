@@ -60,6 +60,28 @@ class ClimateEngineBridgeTests(unittest.TestCase):
         self.assertIn("dataset=GRIDMET", url)
         self.assertIn("variable=pr", url)
 
+    def test_timeseries_execution_uses_post_json_body(self):
+        url = bridge.build_request("timeseries_coordinates", args(), self.provider)
+        request = bridge.build_http_request("timeseries_coordinates", url, "opaque-key")
+        self.assertEqual(request.get_method(), "POST")
+        self.assertEqual(
+            request.full_url,
+            "https://api.climateengine.org/timeseries/native/coordinates",
+        )
+        self.assertIsNotNone(request.data)
+        payload = json.loads(request.data.decode("utf-8"))
+        self.assertEqual(payload["dataset"], "GRIDMET")
+        self.assertEqual(payload["variable"], "pr")
+        self.assertEqual(payload["coordinates"], "[[-121.61,38.78]]")
+        self.assertEqual(payload["area_reducer"], "mean")
+
+    def test_metadata_execution_remains_get(self):
+        url = bridge.build_request("metadata_dates", args(), self.provider)
+        request = bridge.build_http_request("metadata_dates", url, "opaque-key")
+        self.assertEqual(request.get_method(), "GET")
+        self.assertIsNone(request.data)
+        self.assertIn("dataset=GRIDMET", request.full_url)
+
     def test_map_request_is_https_and_allowlisted(self):
         url = bridge.build_request("map_values", args(), self.provider)
         self.assertTrue(url.startswith("https://api.climateengine.org/raster/mapid/values?"))
