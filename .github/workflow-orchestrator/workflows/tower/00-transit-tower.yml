@@ -93,6 +93,31 @@ workflows:
     claim_allowed: false
     publication_effect: NONE
 
+
+  - id: climate_engine_juno_shadow
+    description: "Execute bounded Climate Engine metadata discovery as the Earth-data half of the Juno comparative shadow."
+    file: rll-climate-engine-trial-live.yml
+    stage: 56
+    specialty: CLIMATE_ENGINE_JUNO_SHADOW
+    enabled: true
+    tags: [real_data]
+    wait_for_completion: true
+    timeout_minutes: 25
+    inputs:
+      operation: metadata_variables
+      dataset: GRIDMET
+    override_allowlist:
+      - operation
+      - dataset
+      - variable
+      - start_date
+      - end_date
+      - coordinates
+      - area_reducer
+      - temporal_statistic
+    claim_allowed: false
+    publication_effect: NONE
+
   - id: deterministic_pipeline
     description: "Execute the canonical 44-step pipeline in dry-run mode."
     file: rll-pipeline-linear-completo.yml
