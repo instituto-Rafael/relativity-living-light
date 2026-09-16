@@ -72,17 +72,16 @@ class ClimateEngineBridgeTests(unittest.TestCase):
         payload = json.loads(request.data.decode("utf-8"))
         self.assertEqual(payload["dataset"], "GRIDMET")
         self.assertEqual(payload["variable"], "pr")
-        self.assertEqual(payload["coordinates"], [[-121.61, 38.78]])
+        self.assertEqual(payload["coordinates"], "[[-121.61,38.78]]")\n        self.assertEqual(json.loads(payload["coordinates"]), [[-121.61, 38.78]])
         self.assertEqual(payload["area_reducer"], "mean")
 
-    def test_timeseries_post_rejects_empty_coordinate_array(self):
-        url = bridge.build_request(
-            "timeseries_coordinates",
-            args(coordinates="[]"),
-            self.provider,
-        )
+    def test_timeseries_request_rejects_empty_coordinate_array(self):
         with self.assertRaises(ValueError):
-            bridge.build_http_request("timeseries_coordinates", url, "opaque-key")
+            bridge.build_request(
+                "timeseries_coordinates",
+                args(coordinates="[]"),
+                self.provider,
+            )
 
     def test_metadata_execution_remains_get(self):
         url = bridge.build_request("metadata_dates", args(), self.provider)
