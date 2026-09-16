@@ -1,0 +1,64 @@
+{
+  "schema": "rll.climate_juno_shadow_contract.v1",
+  "claim_allowed": false,
+  "purpose": "Place Climate Engine inside the governed RLL real-data orchestration and prepare a fail-closed comparative shadow against independently sourced Juno observations.",
+  "climate_engine": {
+    "provider": "Climate Engine",
+    "runtime_secret_env": "CLIMATE_ENGINE_API_KEY",
+    "github_secret_binding": "CLIMA",
+    "persist_secret": false,
+    "emit_secret_hash": false,
+    "provider_role": "EXTERNAL_COMPUTE_PRODUCT"
+  },
+  "juno": {
+    "authority": "NASA/JPL/SwRI and instrument teams",
+    "manifest": "data/juno/rll_juno_atmospheric_reference.v1.json",
+    "provider_role": "INDEPENDENT_PLANETARY_OBSERVATION_REFERENCE"
+  },
+  "comparison_axes": [
+    {
+      "axis": "temperature",
+      "earth_candidate": "temperature variables selected from provider metadata",
+      "jupiter_candidate": "radio-occultation/JIRAM temperature-derived observations",
+      "direct_value_equivalence": false
+    },
+    {
+      "axis": "wind_and_vortex_motion",
+      "earth_candidate": "wind speed/direction and storm-track products where available",
+      "jupiter_candidate": "JunoCam/JIRAM cyclone tracking and reported wind speeds",
+      "direct_value_equivalence": false
+    },
+    {
+      "axis": "vertical_structure",
+      "earth_candidate": "pressure/altitude/profile products where available",
+      "jupiter_candidate": "MWR/JIRAM/radio-occultation depth or profile observations",
+      "direct_value_equivalence": false
+    },
+    {
+      "axis": "radiative_output",
+      "earth_candidate": "radiation/cloud variables only when units and spectral band are declared",
+      "jupiter_candidate": "thermal IR, auroral IR/UV, microwave emission",
+      "direct_value_equivalence": false
+    },
+    {
+      "axis": "electrical_activity",
+      "earth_candidate": "lightning/electrical products only from an explicit independent source",
+      "jupiter_candidate": "Juno shallow-lightning observations",
+      "direct_value_equivalence": false
+    }
+  ],
+  "allowed_outputs": [
+    "SOURCE_AND_UNIT_ALIGNMENT",
+    "DIMENSIONLESS_OR_NORMALIZED_DIAGNOSTIC_WITH_DECLARED_SCALE",
+    "STRUCTURAL_ANALOGY",
+    "MODEL_COMPETITION_PLAN",
+    "TOKEN_VAZIO"
+  ],
+  "forbidden_promotions": [
+    "EARTH_CLIMATE_CAUSES_JUPITER_DYNAMICS",
+    "IONIZATION_EXPLAINS_ALL_JOVIAN_LIGHT",
+    "METALLIC_HYDROGEN_DIRECTLY_CAUSES_POLAR_CYCLONE_GEOMETRY_WITHOUT_MODEL",
+    "SAME_SHAPE_MEANS_SAME_MECHANISM",
+    "CLIMATE_ENGINE_OUTPUT_IS_JUNO_EVIDENCE"
+  ]
+}
