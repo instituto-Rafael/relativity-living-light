@@ -128,6 +128,12 @@ def build_http_request(operation: str, request_url: str, api_key: str) -> Reques
             key: values[0] if len(values) == 1 else values
             for key, values in parse_qs(parsed.query, keep_blank_values=True).items()
         }
+        coordinates = payload.get("coordinates")
+        if not isinstance(coordinates, str):
+            raise ValueError("timeseries coordinates must be a JSON-encoded string")
+        # Climate Engine's documented Python POST examples send coordinates as a
+        # JSON-encoded string inside the JSON body. Re-validate and compact it.
+        payload["coordinates"] = compact_coordinates(coordinates)
         post_url = urlunparse(parsed._replace(query=""))
         headers["Content-Type"] = "application/json"
         return Request(

@@ -118,6 +118,28 @@ workflows:
     claim_allowed: false
     publication_effect: NONE
 
+  - id: metar_earth_field
+    description: "Build a bounded NOAA/NWS AWC METAR-derived Earth surface diagnostic field with JSON/CSV/SVG receipts."
+    file: rll-metar-earth-field.yml
+    stage: 57
+    specialty: METAR_EARTH_FIELD
+    enabled: true
+    tags: [real_data]
+    wait_for_completion: true
+    timeout_minutes: 20
+    inputs:
+      station_ids: "SBGR,SBSP,SBKP,SBSJ"
+      hours: "2"
+      nx: "24"
+      ny: "18"
+    override_allowlist:
+      - station_ids
+      - hours
+      - nx
+      - ny
+    claim_allowed: false
+    publication_effect: NONE
+
   - id: deterministic_pipeline
     description: "Execute the canonical 44-step pipeline in dry-run mode."
     file: rll-pipeline-linear-completo.yml
