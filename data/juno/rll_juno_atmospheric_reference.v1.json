@@ -1,0 +1,72 @@
+{
+  "schema": "rll.juno_atmospheric_reference.v1",
+  "generated_for": "RLL Climate Engine x Juno comparative shadow",
+  "claim_allowed": false,
+  "source_role": "PRIMARY_AGENCY_REFERENCE_SNAPSHOT",
+  "target": "Jupiter",
+  "mission": "NASA Juno",
+  "observations": [
+    {
+      "id": "JUNO-POLAR-2025-001",
+      "quantity_class": "vortex_dynamics",
+      "state": "OBSERVED_AND_MODEL_INTERPRETED",
+      "observation": "JunoCam and JIRAM tracked the central north polar cyclone and eight surrounding cyclones over multiple orbits; their motion is consistent with poleward beta drift, mutual interaction, oscillation around central positions, and slow westward drift.",
+      "source": "https://www.nasa.gov/missions/juno/nasas-juno-mission-gets-under-jupiters-and-ios-surface/",
+      "source_date": "2025-04-29"
+    },
+    {
+      "id": "JUNO-POLAR-2025-002",
+      "quantity_class": "temperature_and_wind",
+      "state": "OBSERVED_DERIVED_FROM_RADIO_OCCULTATION",
+      "observation": "NASA reported 26 Juno radio-occultation soundings; the north polar stratospheric cap was about 11 degC cooler than its surroundings and was encircled by winds exceeding 161 km/h.",
+      "source": "https://www.nasa.gov/missions/juno/nasas-juno-mission-gets-under-jupiters-and-ios-surface/",
+      "source_date": "2025-04-29"
+    },
+    {
+      "id": "JUNO-JIRAM-IR-001",
+      "quantity_class": "spectral_radiance",
+      "state": "OBSERVED",
+      "observation": "JIRAM maps Jupiter thermal emission near 4.8 micrometres and auroral emission near 3.45 micrometres.",
+      "wavelengths_um": [4.8, 3.45],
+      "source": "https://science.nasa.gov/photojournal/juno-captures-jupiters-glow-in-infrared-light/"
+    },
+    {
+      "id": "JUNO-CYCLONE-DEPTH-001",
+      "quantity_class": "storm_vertical_structure",
+      "state": "OBSERVED_DERIVED_FROM_MICROWAVE_EMISSION",
+      "observation": "Juno MWR measurements show that at least two polar storms extend at least 100 km below Jupiter cloud tops.",
+      "minimum_depth_km": 100,
+      "source": "https://science.nasa.gov/photojournal/nasas-juno-catches-3-waves-of-jupiters-polar-cyclones/"
+    },
+    {
+      "id": "JUNO-SHALLOW-LIGHTNING-001",
+      "quantity_class": "electrical_discharge",
+      "state": "OBSERVED_WITH_PHYSICAL_INTERPRETATION",
+      "observation": "Juno detected shallow lightning at high altitude; NASA interprets it as electrical discharge in ammonia-water clouds formed when lofted water ice encounters ammonia.",
+      "source": "https://www.nasa.gov/missions/juno/shallow-lightning-and-mushballs-reveal-ammonia-to-nasas-juno-scientists/",
+      "source_date": "2020-08-05"
+    },
+    {
+      "id": "JUPITER-METALLIC-H-001",
+      "quantity_class": "deep_interior_electrodynamics",
+      "state": "EVIDENCED_PLANETARY_MODEL",
+      "observation": "At extreme pressure deep inside Jupiter, hydrogen becomes electrically conducting liquid metallic hydrogen; this region is a leading explanation for Jupiter strong magnetic dynamo.",
+      "source": "https://science.nasa.gov/jupiter/jupiter-facts/"
+    },
+    {
+      "id": "JUPITER-AURORA-001",
+      "quantity_class": "particle_precipitation_emission",
+      "state": "OBSERVED",
+      "observation": "Jupiter has exceptionally bright auroras produced as charged particles precipitate into the atmosphere; Juno observes the particles, fields, and auroral emissions.",
+      "source": "https://www.jpl.nasa.gov/news/press_kits/juno/science/"
+    }
+  ],
+  "invariants": [
+    "THERMAL_IR_IS_NOT_AURORA",
+    "AURORA_IS_NOT_LIGHTNING",
+    "LIGHTNING_IS_NOT_MICROWAVE_THERMAL_EMISSION",
+    "EARTH_CLIMATE_PROVIDER_IS_NOT_JUPITER_SENSOR",
+    "METALLIC_HYDROGEN_MODEL_IS_NOT_CLOUD_LEVEL_MEASUREMENT",
+    "CROSS_PLANET_SIMILARITY_IS_NOT_CAUSAL_IDENTITY"
+  ]
+}
