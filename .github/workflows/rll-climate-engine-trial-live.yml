@@ -92,6 +92,13 @@ jobs:
             tests.test_rll_climate_juno_shadow
           python scripts/rll_climate_juno_shadow.py \
             --output artifacts/science/climate_juno/static_shadow_receipt.json
+      - name: Upload static Climate x Juno receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-climate-juno-static-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/science/climate_juno/static_shadow_receipt.json
+          if-no-files-found: error
+          retention-days: 30
 
   live-probe:
     if: github.event_name == 'workflow_dispatch'
