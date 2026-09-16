@@ -16,10 +16,12 @@ on:
       dataset:
         description: Provider dataset identifier
         required: true
+        default: GRIDMET
         type: string
       variable:
         description: Dataset variable when required
         required: false
+        default: pr
         type: string
       start_date:
         description: YYYY-MM-DD when required
@@ -32,7 +34,7 @@ on:
       coordinates:
         description: JSON coordinate list for timeseries_coordinates
         required: false
-        default: "[]"
+        default: "[[-121.61,38.78]]"
         type: string
       area_reducer:
         required: false
