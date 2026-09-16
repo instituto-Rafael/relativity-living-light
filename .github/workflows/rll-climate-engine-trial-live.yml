@@ -16,6 +16,7 @@ on:
       dataset:
         description: Provider dataset identifier
         required: true
+        default: GRIDMET
         type: string
       variable:
         description: Dataset variable when required
@@ -53,6 +54,11 @@ on:
       - "scripts/rll_climate_engine_bridge.py"
       - "data/contracts/rll_climate_engine_bridge.v1.json"
       - "data/climate/rll_external_compute_registry.v1.json"
+      - "data/juno/rll_juno_atmospheric_reference.v1.json"
+      - "data/contracts/rll_climate_juno_shadow.v1.json"
+      - "scripts/rll_climate_juno_shadow.py"
+      - "tests/test_rll_climate_juno_shadow.py"
+      - "docs/science/RLL_CLIMATE_JUNO_COMPARISON_V1.md"
 
 permissions:
   contents: read
@@ -79,7 +85,12 @@ jobs:
       - name: Validate bridge and secret boundary
         run: |
           set -euo pipefail
-          python -m unittest -v tests.test_rll_climate_engine_bridge tests.test_rll_climate_engine_live_probe
+          python -m unittest -v \
+            tests.test_rll_climate_engine_bridge \
+            tests.test_rll_climate_engine_live_probe \
+            tests.test_rll_climate_juno_shadow
+          python scripts/rll_climate_juno_shadow.py \
+            --output artifacts/science/climate_juno/static_shadow_receipt.json
 
   live-probe:
     if: github.event_name == 'workflow_dispatch'
