@@ -24,6 +24,7 @@ from typing import Any, Sequence
 API = "https://api.github.com"
 ENV_NAME_RE = re.compile(r"^[A-Z_][A-Z0-9_]*$")
 PAT_SELECTOR = "RLL_AGENT_GITHUB_PAT_ENV"
+PAT_PRIMARY = "PATGITHUB"
 PAT_ALIASES = (
     "PATGITHUB",
     "RLL_AGENT_PAT",
@@ -33,6 +34,8 @@ PAT_ALIASES = (
     "GIT_PAT",
     "PAT_GIT",
 )
+AGENT_GIT_SECRET = "GIT"
+AGENT_CLIMATE_SECRET = "CLIMATE"
 PROTECTED_BRANCHES = {"main", "rll/lab", "rll/integration", "rll/release"}
 WORK_PREFIXES = ("agent/", "work/")
 TOKEN_VAZIO = "TOKEN_VAZIO"
@@ -55,6 +58,10 @@ def resolve_pat() -> tuple[str | None, str | None]:
         if not token:
             raise AuthorityError("TOKEN_VAZIO_SELECTED_AGENT_PAT_ABSENT")
         return selector, token
+
+    primary = os.environ.get(PAT_PRIMARY)
+    if primary:
+        return PAT_PRIMARY, primary
 
     present = [name for name in PAT_ALIASES if os.environ.get(name)]
     if not present:
@@ -96,6 +103,11 @@ def probe(repository: str) -> tuple[dict[str, Any], int]:
         "repository_access_observed": False,
         "repository_permission_observed": TOKEN_VAZIO,
         "token_scope_claim": TOKEN_VAZIO,
+        "credential_role_map": {
+            "github_control_plane": PAT_PRIMARY,
+            "git_transport_candidate": AGENT_GIT_SECRET,
+            "climate_provider": AGENT_CLIMATE_SECRET,
+        },
         "operations_observed": [],
         "operations_not_tested": [
             "branch_write",

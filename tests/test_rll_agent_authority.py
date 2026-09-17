@@ -21,6 +21,7 @@ class RLLAgentAuthorityTests(unittest.TestCase):
     def clean_env(self):
         keys = {
             authority.PAT_SELECTOR,
+            authority.PAT_PRIMARY,
             *authority.PAT_ALIASES,
         }
         return mock.patch.dict(os.environ, {key: "" for key in keys}, clear=False)
@@ -60,6 +61,31 @@ class RLLAgentAuthorityTests(unittest.TestCase):
         self.assertEqual(source, "MY_AGENT_PAT")
         self.assertEqual(token, "secret-value")
 
+    def test_patgithub_is_canonical_agent_pat(self):
+        with self.clean_env():
+            with mock.patch.dict(
+                os.environ,
+                {authority.PAT_PRIMARY: "opaque-patgithub"},
+                clear=False,
+            ):
+                source, token = authority.resolve_pat()
+        self.assertEqual(source, "PATGITHUB")
+        self.assertEqual(token, "opaque-patgithub")
+
+    def test_patgithub_wins_over_legacy_alias_without_guessing(self):
+        with self.clean_env():
+            with mock.patch.dict(
+                os.environ,
+                {
+                    authority.PAT_PRIMARY: "canonical",
+                    "GH_PAT": "legacy",
+                },
+                clear=False,
+            ):
+                source, token = authority.resolve_pat()
+        self.assertEqual(source, "PATGITHUB")
+        self.assertEqual(token, "canonical")
+
     def test_probe_receipt_never_contains_secret(self):
         secret = "never-persist-this-token"
         with self.clean_env():
@@ -79,6 +105,9 @@ class RLLAgentAuthorityTests(unittest.TestCase):
         blob = json.dumps(receipt)
         self.assertNotIn(secret, blob)
         self.assertTrue(receipt["authenticated"])
+        self.assertEqual(receipt["credential_role_map"]["github_control_plane"], "PATGITHUB")
+        self.assertEqual(receipt["credential_role_map"]["git_transport_candidate"], "GIT")
+        self.assertEqual(receipt["credential_role_map"]["climate_provider"], "CLIMATE")
         self.assertEqual(
             receipt["token_scope_claim"],
             "TOKEN_VAZIO_FINE_GRAINED_SCOPE_NOT_INFERRED",

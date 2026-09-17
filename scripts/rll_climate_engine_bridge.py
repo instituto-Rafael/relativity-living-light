@@ -18,7 +18,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 REGISTRY_PATH = Path("data/climate/rll_external_compute_registry.v1.json")
@@ -113,6 +113,38 @@ def build_request(operation: str, args: argparse.Namespace, provider: dict[str, 
     return url
 
 
+
+def build_http_request(operation: str, request_url: str, api_key: str) -> Request:
+    """Build the provider HTTP request with the method required by Climate Engine."""
+    headers = {
+        "Authorization": api_key,
+        "User-Agent": "RLL-ClimateEngine-Bridge/1",
+        "Accept": "application/json",
+    }
+
+    if operation == "timeseries_coordinates":
+        parsed = urlparse(request_url)
+        payload = {
+            key: values[0] if len(values) == 1 else values
+            for key, values in parse_qs(parsed.query, keep_blank_values=True).items()
+        }
+        coordinates = payload.get("coordinates")
+        if not isinstance(coordinates, str):
+            raise ValueError("timeseries coordinates must be a JSON-encoded string")
+        # Climate Engine's documented Python POST examples send coordinates as a
+        # JSON-encoded string inside the JSON body. Re-validate and compact it.
+        payload["coordinates"] = compact_coordinates(coordinates)
+        post_url = urlunparse(parsed._replace(query=""))
+        headers["Content-Type"] = "application/json"
+        return Request(
+            post_url,
+            data=json.dumps(payload, separators=(",", ":")).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+
+    return Request(request_url, headers=headers, method="GET")
+
 def sanitize_json(value: Any) -> Any:
     if isinstance(value, dict):
         clean: dict[str, Any] = {}
@@ -203,15 +235,7 @@ def execute_operation(
             gate_status="BLOCKED_CREDENTIAL",
         ), 3
 
-    request = Request(
-        request_url,
-        headers={
-            "Authorization": api_key,
-            "User-Agent": "RLL-ClimateEngine-Bridge/1",
-            "Accept": "application/json",
-        },
-        method="GET",
-    )
+    request = build_http_request(operation, request_url, api_key)
 
     with urlopen(request, timeout=timeout) as response:
         final_url = response.geturl()

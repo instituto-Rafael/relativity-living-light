@@ -14,7 +14,7 @@ profiles:
     description: "Structural, contract, regression, and governance gates."
     include_tags: [core]
   real_data_session:
-    description: "Controlled real-data custody and audit workflows."
+    description: "Controlled real-data custody, Climate Engine discovery, and audit workflows."
     include_tags: [real_data]
   science_shadow_session:
     description: "Non-publishing deterministic and frontier shadow gates."

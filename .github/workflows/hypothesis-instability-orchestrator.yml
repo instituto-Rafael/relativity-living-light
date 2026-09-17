@@ -30,7 +30,7 @@ jobs:
       has_candidates: ${{ steps.route.outputs.has_candidates }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build fast C barometer
         shell: bash
@@ -66,7 +66,7 @@ jobs:
           fi
 
       - name: Upload barometer receipt
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: hypothesis-instability-barometer
           path: |
@@ -85,7 +85,7 @@ jobs:
       matrix: ${{ fromJson(needs.barometer.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Verify routed hypothesis exists in governed intake
         shell: bash
@@ -102,7 +102,7 @@ jobs:
             > "route-${HYPOTHESIS_ID}.receipt"
 
       - name: Upload generated route receipt
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: hypothesis-route-${{ matrix.id }}
           path: route-${{ matrix.id }}.receipt
