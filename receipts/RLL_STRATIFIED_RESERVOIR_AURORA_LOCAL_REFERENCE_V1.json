@@ -1,0 +1,26 @@
+{
+  "boundaries": [
+    "SYNTHETIC_REFERENCE != OBSERVATION",
+    "STRUCTURAL_ANALOGY != MECHANISM_EQUIVALENCE",
+    "LAKE_DEGASSING != AURORA",
+    "PHOTON_WITNESS != RLL_COSMOLOGY_VALIDATION"
+  ],
+  "claim_allowed": false,
+  "gaps": [
+    "TOKEN_VAZIO_LAKE_PROFILE_DATA",
+    "TOKEN_VAZIO_AURORAL_PARTICLE_FIELD_DATA",
+    "TOKEN_VAZIO_CROSS_DOMAIN_FIT",
+    "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION"
+  ],
+  "input_class": "SYNTHETIC_REFERENCE_ONLY",
+  "schema": "rll.stratified_reservoir_aurora.reference_receipt.v1",
+  "witnesses": {
+    "hydrostatic_pressure_200m_pa": 2062655.0,
+    "hydrostatic_pressure_monotonic": true,
+    "oxygen_557_7nm_energy_ev": 2.2231342735018873,
+    "oxygen_630_0nm_energy_ev": 1.9680031497333377,
+    "shorter_wavelength_higher_energy": true,
+    "stable_n2_example": true,
+    "supersaturation_example": true
+  }
+}
