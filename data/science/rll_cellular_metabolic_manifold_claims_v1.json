@@ -73,6 +73,67 @@
       "state": "CORRECTED",
       "claim": "Chernobyl radiotropism/melanin evidence can be treated as a generic radiotrophic-bacteria mechanism.",
       "replacement": "Melanized fungi provide the classic melanin/radiotropism evidence; radioresistant bacteria require a separate mechanism and evidence chain."
+    },
+    {
+      "id": "RLL-CMM-012",
+      "state": "REGULATORY_FACT",
+      "claim": "Arcalion is sulbutiamine, synthetic B1 derivative; fatigue/asthenia indication does not establish a will/motivation mechanism."
+    },
+    {
+      "id": "RLL-CMM-013",
+      "state": "TOKEN_VAZIO_CAUSAL",
+      "claim": "Sulbutiamine independently changes human effort/vigor/action selection after placebo and fatigue controls."
+    },
+    {
+      "id": "RLL-CMM-014",
+      "state": "SUPPORTED_SYSTEMS",
+      "claim": "Dopamine/basal-ganglia circuits contribute to effort allocation, action selection and vigor, distinct from cellular ATP sufficiency."
+    },
+    {
+      "id": "RLL-CMM-015",
+      "state": "BLOCKED_COLLAPSE",
+      "claim": "RO, ED and RED are one reversible process.",
+      "replacement": "Preserve pressure, electrical and salinity-gradient driving forces separately."
+    },
+    {
+      "id": "RLL-CMM-016",
+      "state": "BLOCKED_COLLAPSE",
+      "claim": "EC, KH/alkalinity and pH are equivalent observables."
+    },
+    {
+      "id": "RLL-CMM-017",
+      "state": "EXTERNAL_SUPPORTED_LIMITED",
+      "claim": "Cold-induced BAT activation can raise energy expenditure and improve glucose handling in selected human studies."
+    },
+    {
+      "id": "RLL-CMM-018",
+      "state": "NOT_ESTABLISHED",
+      "claim": "BAT activation universally reverses insulin resistance."
+    },
+    {
+      "id": "RLL-CMM-019",
+      "state": "HETEROGENEOUS",
+      "claim": "Magnesium supplementation improves insulin resistance; effect depends on population/baseline and is not universal."
+    },
+    {
+      "id": "RLL-CMM-020",
+      "state": "SUPPORTED_DEFICIENCY_SPECIFIC",
+      "claim": "B12 deficiency affects mitochondrial/one-carbon and neurological function; replacement evidence is strongest for deficiency."
+    },
+    {
+      "id": "RLL-CMM-021",
+      "state": "SUPPORTED_LIMITED",
+      "claim": "Omega-3 may alter stress/cortisol/anxiety endpoints in some trials, with low-certainty heterogeneous evidence."
+    },
+    {
+      "id": "RLL-CMM-022",
+      "state": "NOT_SUPPORTED",
+      "claim": "Omega-3/omega-6 ratio is a universal insulin-sensitivity controller."
+    },
+    {
+      "id": "RLL-CMM-023",
+      "state": "CONTEXT_SUPPORTED",
+      "claim": "Fat-quality substitution may matter more than a simple omega ratio."
     }
   ]
 }
