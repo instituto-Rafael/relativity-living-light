@@ -443,3 +443,63 @@ COMPLETE
 **F_ok:** Tao/Yin-Yang, 3 bits->8 estados, eixos octogonais, C8/D8, mandala visual, gene de forma e watchdog cruzado estão separados por camada e implementáveis.  
 **F_gap:** ordem histórica exata dos trigramas no octógono e semântica das 42 chaves permanecem TOKEN_VAZIO; independência real entre watchdogs exige implementações diversas ou validação externa.  
 **F_next:** executar fixtures determinísticos, enumerar 8 trigramas/64 pares pequenos exaustivamente, usar amostragem limitada acima do cap, e promover somente receipts que passem A/B/M sem divergência.
+
+
+## 18. Genes de forma recuperados por nova passada
+
+O export também preserva uma decomposição por cardinalidade/processo que agora é carregada como genes independentes:
+
+```text
+GF-001  1 -> origem/ponto
+GF-002  2 -> Yin/Yang
+GF-003  3 -> três linhas / tríade / terços
+GF-004  4 -> eixos cardinais
+GF-005  5 -> cinco fases como processo organizacional
+GF-006  6 -> seis linhas
+GF-008  8 -> octógono / oito estados
+GF-042 42 -> rótulo visual “42 Chaves”; semântica permanece TOKEN_VAZIO
+```
+
+A sequência de decomposição computacional:
+
+```text
+1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 8 -> 42?
+```
+
+não afirma uma genealogia histórica ou física. O `42` final é uma âncora visual ainda sem mapa formal de 42 genes/chaves.
+
+O vetor autoral anterior:
+
+```text
+[4,8,3,5,2,4,8,6]
+```
+
+permanece separadamente como `OPERATOR_AUTHORIAL_UNVALIDATED`.
+
+## 19. FMEA operacional calculável
+
+O watchdog passa a carregar um registro de riscos.
+
+```text
+RPN = severity * occurrence * detectability
+```
+
+As três escalas são ordinais e declaradas. O RPN serve apenas para **priorização operacional**.
+
+Não é:
+
+```text
+RPN != physical probability
+RPN != clinical risk
+RPN != scientific truth score
+```
+
+Riscos iniciais:
+- common-mode entre watchdogs;
+- silêncio/stale;
+- replay;
+- perda de proveniência;
+- explosão combinatória;
+- promoção semântica indevida.
+
+O limiar inicial de mitigação é configurável e pode ser alterado por receipt; não é uma constante universal.
