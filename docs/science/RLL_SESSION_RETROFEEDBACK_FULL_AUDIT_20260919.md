@@ -884,3 +884,27 @@ accumulation -> compression -> re-presentation -> renewed observation
 ```
 
 The ambiguous continuation is not semantically forced into a scientific claim.
+
+
+## 10. RF-037..RF-041 — Genoma de formas e redundância cruzada
+
+A nova passada sobre o export recuperou uma família que não estava ligada ao RLL desta sessão:
+
+- `RF-037`: decompor formas em genes/fragments auditáveis;
+- `RF-038`: A e B vigiam o processo e o histórico um do outro; M compara ambos;
+- `RF-039`: octógono/Bagua computacional -> fenótipo radial/mandala;
+- `RF-040`: geometria Tao formal recuperada como modelo, não física;
+- `RF-041`: A=B não prova independência; risco de common-mode permanece.
+
+A analogia com mRNA foi corrigida: mRNA normalmente não reconstrói a fita complementar de DNA. O operador computacional usa apenas a ideia de **transcrever um fragmento de instrução e recombiná-lo**, sem afirmar equivalência biológica.
+
+### Espaços pequenos versus grandes
+
+```text
+3 bits -> 8 estados: EXHAUSTIVE
+6 bits -> 64 estados: EXHAUSTIVE
+8 trigramas em 8 posições: 8! = 40320 arranjos crus
+D8 com rótulos todos distintos -> 40320/16 = 2520 classes geométricas
+```
+
+Para espaços acima do cap declarado, a implementação amostra deterministicamente e registra seed/budget, em vez de chamar o espaço de infinito.
