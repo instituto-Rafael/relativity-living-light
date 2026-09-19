@@ -503,3 +503,91 @@ Riscos iniciais:
 - promoção semântica indevida.
 
 O limiar inicial de mitigação é configurável e pode ser alterado por receipt; não é uma constante universal.
+
+
+## 20. Ponte geométrica recuperada: forma -> mandala
+
+A nova busca no export encontrou uma cadeia formal já existente e ela substitui qualquer necessidade de inventar uma ponte artificial.
+
+### Losango/forma recursiva
+
+```text
+Lambda_(n+1) = rho * R_theta(Lambda_n)
+```
+
+Caso particular recuperado:
+
+```text
+Lambda_n = (sqrt(3)/2)^n * R_(n*theta)(Lambda_0)
+```
+
+### Hexagrama geométrico
+
+```text
+H = triangle_up union triangle_down
+```
+
+Esta linha é somente geometria de dois triângulos equiláteros inversos; nenhuma semântica religiosa é inferida.
+
+### Coroa radial
+
+```text
+A = {x : r_min <= ||x|| <= r_max}
+```
+
+### Síntese radial
+
+```text
+F_n =
+Radial(
+  R_(n*theta)(
+    triangle_up
+    union triangle_down
+    union Lambda_n
+  )
+)
+```
+
+No RLL esta expressão recebe o estado:
+
+```text
+FORMAL_MODEL_VISUAL_OPERATOR
+```
+
+e pode produzir `MANDALA_CANDIDATE`, nunca `PHYSICAL_CLAIM`.
+
+### Escala
+
+O corpus também recupera:
+
+```text
+q = sqrt(3)/2
+r_n = q^n
+A_(n+1)/A_n = 3/4
+```
+
+quando o operador de escala declarado realmente é aplicado.
+
+## 21. Regra de fenótipo geométrico
+
+```text
+recursive_rhombus
++ two_inverse_triangles
++ annulus
++ radialize
++ optional octagonal assignment
+-> MANDALA_CANDIDATE
+```
+
+Estados possíveis:
+
+```text
+PREREQUISITE_MISSING
+STRUCTURALLY_VALID
+DEGENERATE_RADIUS
+INVALID_SCALE
+TOKEN_VAZIO_ORDER
+D8_EQUIVALENT_DUPLICATE
+MANDALA_CANDIDATE
+BLOCKED_CLAIM
+```
