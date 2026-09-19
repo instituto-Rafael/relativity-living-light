@@ -190,3 +190,10 @@ O conteúdo original permanece abaixo para preservar trilha de auditoria e conte
 - Recurrent implementation: `tools/rll_bidirectional_session_sweep_v1.py`
 - Recurrent tests: `tests/test_rll_bidirectional_session_sweep_v1.py`
 - Terminal vocabulary: `SATURATED_UNDER_CURRENT_RULER != COMPLETE`.
+
+
+- Form-genome + crossed watchdog + Tao/Bagua/mandala: `docs/methods/RLL_FORM_GENOME_WATCHDOG_MANDALA_20260919.md`
+- Seed: `data/science/rll_form_genome_seed_20260919.json`
+- Tool: `tools/rll_form_genome_watchdog_v1.py`
+- Tests: `tests/test_rll_form_genome_watchdog_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_FORM_GENOME_WATCHDOG_MANDALA_V1.md`
