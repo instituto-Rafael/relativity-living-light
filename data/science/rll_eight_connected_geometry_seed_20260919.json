@@ -1,0 +1,80 @@
+{
+  "schema": "rll.eight_connected_geometry.v1",
+  "date": "2026-09-19",
+  "claim_allowed": false,
+  "eight_position_carrier": {
+    "type": "Z4_x_2",
+    "classes": [
+      "VERTEX",
+      "EDGE_MIDPOINT"
+    ],
+    "semantic_assignment": "TOKEN_VAZIO_LAYOUT"
+  },
+  "exact_constants": {
+    "equilateral_height_over_side": "sqrt(3)/2",
+    "sin_30": "1/2",
+    "cos_30": "sqrt(3)/2",
+    "tan_30": "1/sqrt(3)",
+    "tan_15": "2-sqrt(3)"
+  },
+  "families": {
+    "square_D4": {
+      "actions": 8
+    },
+    "hexagram": {
+      "outer_vertices": 6,
+      "construction": "two_equilateral_triangles",
+      "central_hexagon": true
+    },
+    "torus": {
+      "parameters": [
+        "R",
+        "r",
+        "u",
+        "v"
+      ],
+      "entry_v_deg": 30
+    },
+    "sphere": {
+      "radius": "A",
+      "projection": "radial",
+      "geodesic": "great_circle"
+    },
+    "poincare_disk": {
+      "metric": "4(dx^2+dy^2)/(1-r^2)^2",
+      "scale_convention_explicit": true
+    },
+    "post_toroidal": {
+      "status": "AUTHORIAL_DEFORMATION",
+      "rho_profile": "a*z^2+b*z+c",
+      "parameters": "TOKEN_VAZIO"
+    },
+    "modular_phase": {
+      "modules": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        10,
+        14,
+        35,
+        50,
+        70
+      ],
+      "full_zero_sync_period": 1050
+    },
+    "negative_base": {
+      "status": "KNOWN_MATH_SEPARATE_LAYER"
+    }
+  },
+  "boundaries": [
+    "ROTATED_SQUARE != HEXAGRAM",
+    "SQUARE_EDGE_GLUE -> TORUS != POINCARE_DISK",
+    "RADIAL_PROJECTION != ISOMETRY",
+    "SPHERE_COMPRESSION != AUTOMATIC_VERTEX_CREATION",
+    "MODULAR_COINCIDENCE_REQUIRES_NORMALIZED_PHASE_TEST",
+    "POSTOROIDAL != STANDARD_TORUS_UNLESS_REGULARITY_AND_CLOSURE_HOLD",
+    "8_TO_42 = TOKEN_VAZIO_MAPPING"
+  ]
+}
