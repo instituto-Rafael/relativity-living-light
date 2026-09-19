@@ -85,3 +85,23 @@ def test_small_space_is_exhaustive():
     assert r["mode"]=="EXHAUSTIVE"
     assert r["total_space"]==6
     assert r["returned"]==6
+
+
+def test_delayed_reciprocal_watchdog_of_watchdog():
+    r=m.simulate_two_ticks(SEED)
+    assert all(r["cross_check"].values())
+    assert r["M"][0]["decision"]=="CONSENSUS_PASS"
+    assert r["M"][1]["decision"]=="CONSENSUS_PASS"
+
+
+def test_mandala_sample_d8_dedup_and_bounded():
+    seed={**SEED,"search":{"sample_budget":64,"random_seed":42}}
+    a=m.sample_mandala_assignments(seed)
+    b=m.sample_mandala_assignments(seed)
+    assert a==b
+    assert a["raw_total_space"]==40320
+    assert a["d8_equivalence_classes_exact"]==2520
+    assert a["returned"]==64
+    canons=[tuple(x["canonical_d8"]) for x in a["candidates"]]
+    assert len(canons)==len(set(canons))
+    assert all(x["semantic_state"]=="TOKEN_VAZIO_HISTORICAL_ORDER" for x in a["candidates"])
