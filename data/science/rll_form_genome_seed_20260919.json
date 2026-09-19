@@ -202,6 +202,30 @@
       "arity": 42,
       "state": "SOURCE_VISUAL_LABEL_ONLY",
       "semantics": "TOKEN_VAZIO_42_KEY_SEMANTICS"
+    },
+    {
+      "id": "GF-096",
+      "name": "recursive-rhombus-transform",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_FORMAL_MODEL"
+    },
+    {
+      "id": "GF-098",
+      "name": "two-inverted-equilateral-triangles",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_PASS_FORMAL"
+    },
+    {
+      "id": "GF-099",
+      "name": "radial-annulus",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_PASS_FORMAL"
+    },
+    {
+      "id": "GF-100",
+      "name": "radial-synthesis-operator",
+      "arity": 3,
+      "state": "SOURCE_RECOVERED_FORMAL_MODEL"
     }
   ],
   "decomposition_path": [
@@ -261,5 +285,29 @@
         "mitigation": "TOKEN_VAZIO + claim_allowed=false + source/model separation"
       }
     ]
+  },
+  "geometry_to_mandala": {
+    "recursive_rhombus": {
+      "general": "Lambda_(n+1)=rho*R_theta(Lambda_n)",
+      "special": "Lambda_n=(sqrt(3)/2)^n * R_(n*theta)(Lambda_0)",
+      "state": "FORMAL_MODEL"
+    },
+    "hexagram_geometry": {
+      "expression": "H=triangle_up union triangle_down",
+      "state": "PASS_FORMAL_GEOMETRY"
+    },
+    "annulus": {
+      "expression": "A={x:r_min<=||x||<=r_max}",
+      "state": "PASS_FORMAL_GEOMETRY"
+    },
+    "radial_synthesis": {
+      "expression": "F_n=Radial(R_(n*theta)(triangle_up union triangle_down union Lambda_n))",
+      "state": "FORMAL_MODEL_VISUAL_OPERATOR"
+    },
+    "scale": {
+      "q": "sqrt(3)/2",
+      "area_ratio": "3/4",
+      "state": "PASS_FORMAL"
+    }
   }
 }
