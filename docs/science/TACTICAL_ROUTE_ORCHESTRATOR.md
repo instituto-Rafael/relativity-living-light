@@ -85,3 +85,19 @@ The environmental route does not add a workflow. Existing orchestration may call
 ## Safe conclusion
 
 The system should feed more data, but each path must keep custody, module separation, falsifiability gate and negative-result behavior. Environmental anomalies remain blocked until meaning, reproduction and mechanism are recorded; only then may they be discarded with reason, corrected with a receipt or promoted to signal.
+
+---
+
+## Dual observational window route — 2026-09-19
+
+Route: `dual_observation_window`
+
+Purpose: preserve relative support and relative opposition simultaneously across typed observation windows, without automatic noise assignment.
+
+Artifacts:
+- `scripts/rll_dual_observation_window.py`
+- `data/contracts/rll_dual_observation_window.v1.json`
+- `tests/test_rll_dual_observation_window.py`
+- `docs/science/RLL_DUAL_OBSERVATION_WINDOW.md`
+
+Gate: covariance/uncertainty + preregistered context + hard falsifiers + mechanism separation + independent replication. Structured residual remains `TOKEN_VAZIO_MECHANISM` until those gates close.
