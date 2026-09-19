@@ -78,3 +78,16 @@ FMEA register added with ordinal RPN only:
 `RPN=severity*occurrence*detectability`.
 
 RPN is explicitly not probability or scientific evidence.
+
+
+## Geometry-to-mandala source bridge recovered
+
+Recovered formal source expressions:
+- Lambda_(n+1)=rho*R_theta(Lambda_n)
+- Lambda_n=(sqrt(3)/2)^n*R_(n*theta)(Lambda_0)
+- H=triangle_up union triangle_down
+- A={x:r_min<=||x||<=r_max}
+- F_n=Radial(R_(n*theta)(triangle_up union triangle_down union Lambda_n))
+- q=sqrt(3)/2 and q^2=3/4
+
+These are stored as geometry/formal-model operators. They do not promote physical or historical claims.
