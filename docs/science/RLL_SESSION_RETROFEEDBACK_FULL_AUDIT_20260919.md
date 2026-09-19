@@ -821,3 +821,66 @@ This allows later backcross/recovery without rewriting history.
 **F_ok:** the session's underrepresented and omitted fragments are explicitly recovered; symbol collisions, causal boundaries and method gaps are recorded; the existing SEED Ω and gap-retrofeedback operators are reused rather than duplicated.  
 **F_gap:** verbatim full-session export is not bound here; many new cross-links are hypotheses without datasets; adaptive weights have no empirical reward history yet.  
 **F_next:** execute the bounded permutation ruler over the machine-readable fragment ledger, emit deterministic candidate receipts, and promote only candidates that acquire explicit sources, units, compartments, falsifiers and independent evidence.
+
+
+## 9. RF-036 — The audit itself becomes a new representation
+
+**State:** `METHOD_GAP_RECOVERED`
+
+The previous recovery ledger was still a static endpoint. The present retrofeedback adds a recurrent operator:
+
+```text
+FIRST_FRAGMENT
+-> ... forward ...
+-> LAST_FRAGMENT
+-> ... reverse ...
+-> FIRST_FRAGMENT
+-> COMPRESS
+-> NEW_REPRESENTATION
+-> FIRST_FRAGMENT_AGAIN
+```
+
+The second arrival at the first fragment is not identical to the first arrival because the working representation now contains later corrections, relations, contradictions and TOKEN_VAZIO states.
+
+Therefore:
+
+```text
+F_0 | context_0 != F_0 | context_after_full_cycle
+```
+
+This creates legitimate new **questions** even when it creates no new scientific facts.
+
+### New-gap classes exposed by the return pass
+
+- an early claim whose comparator changed later;
+- an early symbol whose meaning collided with a later symbol;
+- a later correction that invalidates an earlier edge but not the original node;
+- two relations sharing an invariant that were never composed;
+- a fragment preserved as TOKEN_VAZIO whose metric became definable later;
+- a summary compression that silently dropped a non-dominant branch;
+- a context/gate that changed without changing the source fragment;
+- an observable that gained a compartment, time axis or falsifier only later.
+
+### Closure vocabulary
+
+Do not write `COMPLETE`.
+
+Allowed terminal labels:
+
+```text
+SATURATED_UNDER_CURRENT_RULER
+SATURATED_UNDER_CURRENT_SOURCE_BINDING
+REOPENED_BY_NEW_REPRESENTATION
+REOPENED_BY_NEW_SOURCE
+REOPENED_BY_RESOLVED_TOKEN_VAZIO
+```
+
+### User parable preserved
+
+The utterance “o verbo ficou cheio e voltou para representação” is preserved as a methodological parable:
+
+```text
+accumulation -> compression -> re-presentation -> renewed observation
+```
+
+The ambiguous continuation is not semantically forced into a scientific claim.
