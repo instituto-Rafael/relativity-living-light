@@ -67,6 +67,12 @@
       "state": "HYPOTHESIS",
       "claim": "Flux-resolved N/P/S/redox models outperform static carbon/ATP pools.",
       "falsifier": "No reproducible out-of-sample improvement after complexity penalty."
+    },
+    {
+      "id": "RLL-CMM-011",
+      "state": "CORRECTED",
+      "claim": "Chernobyl radiotropism/melanin evidence can be treated as a generic radiotrophic-bacteria mechanism.",
+      "replacement": "Melanized fungi provide the classic melanin/radiotropism evidence; radioresistant bacteria require a separate mechanism and evidence chain."
     }
   ]
 }
