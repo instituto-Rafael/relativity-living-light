@@ -908,3 +908,62 @@ D8 com rótulos todos distintos -> 40320/16 = 2520 classes geométricas
 ```
 
 Para espaços acima do cap declarado, a implementação amostra deterministicamente e registra seed/budget, em vez de chamar o espaço de infinito.
+
+
+## 10. RF-037..RF-042 — watchdog redundancy and form-genome recovery
+
+The renewed sweep over export material recovered a previously unbound cluster.
+
+RF-037: dual cross-watchdog with process-progress proof.
+A watchdog must not be considered healthy only because its peer is alive. Both WA and WB must observe process progression and can cross-check one another. A meta-watchdog classifies disagreement.
+
+Invariant:
+PEER_HEARTBEAT_WITHOUT_PROCESS_PROGRESS != HEALTH
+
+RF-038: form genome.
+Small typed form fragments are stored immutably and selected by an ephemeral messenger-like expression plan. The plan composes derived phenotypes/artifacts and never rewrites the source library.
+
+RF-039: export-grounded finite binary geometry.
+The export explicitly preserves:
+YIN=0, YANG=1;
+three lines -> 2^3=8 states;
+two three-line blocks -> 2^6=64 states;
+Hamming distance as a computational mutation metric.
+
+RF-040: eight-sector mandala versus 42-state hyperformas.
+The visual export shows a mandala with eight sectors and 42 Chaves at the center, while RLL Canon 28 preserves 42=6x7. Equal visual circularity is not a mapping.
+State: TOKEN_VAZIO_MAPPING.
+
+RF-041: biological analogy boundary.
+The user's messenger-RNA analogy is useful as a software metaphor for expression plans, but ordinary mRNA does not construct a complementary DNA strand. The source intuition is preserved; the biological equivalence is blocked.
+
+RF-042: watchdog common-mode residual.
+Two watchdogs are not automatically independent when they share clock, memory, runtime, parser or data source. Independence is a measured/configured property, not inferred from count=2.
+
+### Geometry decomposition
+
+Computational families remain separate:
+- B2 polarity;
+- B8={0,1}^3;
+- H64={0,1}^6;
+- D8 regular-octagon symmetry with 16 rotations/reflections;
+- Hyperformas42 with 6x7 addressing;
+- Mandala8 as projection/view.
+
+A bounded sampler can compose H64 x D8 x H42 without enumerating the entire state space. The finite raw product 64*16*42=43008 is metadata, not a mandate to execute all states.
+
+### Watchdog-driven sweep
+
+FORWARD
+-> WATCHDOG_CROSSCHECK
+-> GAP_DISCOVERY
+-> REVERSE
+-> WATCHDOG_CROSSCHECK
+-> RELATION_OF_RELATIONS
+-> FORM_RECOMBINATION
+-> WATCHDOG_CROSSCHECK
+-> COMPRESS
+-> NEW_REPRESENTATION
+-> RESWEEP
+
+Any watchdog disagreement may quarantine the branch; process staleness to both produces FAILSAFE_BLOCK.
