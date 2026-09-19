@@ -184,3 +184,9 @@ O conteúdo original permanece abaixo para preservar trilha de auditoria e conte
 - Receipt: `receipts/2026-09-19_RLL_SESSION_RETROFEEDBACK_RULER_V1_VALID_WORK_ROUTE.md`
 - Branch-local gap: `TOKEN_VAZIO_UPSTREAM_MAIN_TO_RLL_LAB_SYNC`.
 - Boundary: `SEARCH_SCORE != EVIDENCE != CLAIM`; blind Cartesian products are forbidden.
+
+
+- Bidirectional recurrent resweep: `docs/methods/RLL_BIDIRECTIONAL_RECURRENT_SESSION_SWEEP_20260919.md`
+- Recurrent implementation: `tools/rll_bidirectional_session_sweep_v1.py`
+- Recurrent tests: `tests/test_rll_bidirectional_session_sweep_v1.py`
+- Terminal vocabulary: `SATURATED_UNDER_CURRENT_RULER != COMPLETE`.
