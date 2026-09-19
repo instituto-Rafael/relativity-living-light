@@ -547,6 +547,21 @@
       "novelty": 0.6,
       "provenance": 1,
       "claim_gate": "INVARIANT"
+    },
+    {
+      "id": "RF-042",
+      "name": "dual watchdog common-mode failure residual",
+      "state": "OBVIOUS_NOT_EXPLICIT",
+      "layer": "fault_domain",
+      "impact": 8,
+      "uncertainty_reduction": 8,
+      "effort": 2,
+      "undercoverage": 1,
+      "recurrence": 1,
+      "testability": 1,
+      "novelty": 0.7,
+      "provenance": 1,
+      "claim_gate": "METHOD_RULE"
     }
   ],
   "candidate_crosslinks": [
@@ -659,6 +674,15 @@
       ],
       "claim": "source-derived Tao geometry can seed form genes without becoming physical evidence",
       "state": "METHOD_RULE"
+    },
+    {
+      "id": "X13",
+      "fragments": [
+        "RF-036",
+        "RF-038"
+      ],
+      "claim": "new representation can be decomposed into form genes and resampled in later sweeps",
+      "state": "METHOD_RULE"
     }
   ],
   "bidirectional_recurrent_policy": {
@@ -682,5 +706,19 @@
     "patience_cycles": 2,
     "representation_hash_feedback": true,
     "verbatim_transcript_binding": "TOKEN_VAZIO_NOT_BOUND_HERE"
+  },
+  "form_genome_watchdog_extension": {
+    "state": "IMPLEMENTED",
+    "form_seed": "data/science/rll_form_genome_seed_20260919.json",
+    "method": "docs/methods/RLL_FORM_GENOME_DUAL_WATCHDOG_MANDALA_20260919.md",
+    "tool": "tools/rll_form_genome_watchdog_v1.py",
+    "tests": "tests/test_rll_form_genome_watchdog_v1.py",
+    "invariants": [
+      "PEER_HEARTBEAT_WITHOUT_PROCESS_PROGRESS != HEALTH",
+      "DUAL_WATCHDOG != INDEPENDENT_REDUNDANCY_AUTOMATICALLY",
+      "BAGUA_8 != MANDALA_VISUAL_8 != HYPERFORMAS_42",
+      "MAPPING_8_TO_42 = TOKEN_VAZIO",
+      "FORM_GENOME_ANALOGY != BIOLOGICAL_EQUIVALENCE"
+    ]
   }
 }
