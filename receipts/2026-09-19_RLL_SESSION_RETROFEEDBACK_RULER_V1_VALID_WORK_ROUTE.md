@@ -58,3 +58,17 @@ IMPLEMENTED_UNTESTED != PASS
 F_ok: artifacts, ledger, method, implementation, tests, receipt and valid WORK -> rll/lab route exist.
 F_gap: CI execution and upstream main->rll/lab cellular-document synchronization remain unresolved.
 F_next: run CI on the valid work PR; only then promote through integration/release/main.
+
+
+## Bidirectional recurrent extension
+
+Added after the first recovery pass:
+- `docs/methods/RLL_BIDIRECTIONAL_RECURRENT_SESSION_SWEEP_20260919.md`
+- `tools/rll_bidirectional_session_sweep_v1.py`
+- `tests/test_rll_bidirectional_session_sweep_v1.py`
+- ledger entry `RF-036`
+
+Invariant:
+`FORWARD -> REVERSE -> COMPRESS -> NEW_REPRESENTATION -> RESWEEP`.
+
+This extension does not claim full transcript coverage. It explicitly marks `VERBATIM_TRANSCRIPT_BINDING=TOKEN_VAZIO_NOT_BOUND_HERE`.
