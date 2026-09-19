@@ -1,0 +1,156 @@
+{
+  "schema": "rll.form_genome_seed.v1",
+  "date": "2026-09-19",
+  "claim_allowed": false,
+  "source_basis": [
+    "RAFAELIA_SEMENTES_MATEMATICAS_512_2026-09-11",
+    "Espiral Longitudinal Omega / MHEL-Omega Bagua",
+    "Drive receipt SEMENTEIRA-LANG-MULTIMODAL-BAGUA-20260916",
+    "current RLL session retrofeedback"
+  ],
+  "invariants": [
+    "TOKEN_VAZIO != 0",
+    "SEARCH_SCORE != EVIDENCE != CLAIM",
+    "SELF_CERTIFICATION = FORBIDDEN",
+    "SATURATED_UNDER_CURRENT_RULER != COMPLETE",
+    "symbolic != physical_proof"
+  ],
+  "alphabet": {
+    "yin": 0,
+    "yang": 1,
+    "token_vazio": null
+  },
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "antipodal_pairs": [
+    [
+      "N",
+      "S"
+    ],
+    [
+      "E",
+      "W"
+    ],
+    [
+      "NE",
+      "SW"
+    ],
+    [
+      "NW",
+      "SE"
+    ]
+  ],
+  "center": "O",
+  "trigram_bits": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "trigram_historical_order": "TOKEN_VAZIO_HISTORICAL_ORDER",
+  "epistemic_trits": [
+    0,
+    1,
+    null
+  ],
+  "groups": {
+    "C8": {
+      "rotations": 8
+    },
+    "D8": {
+      "rotations": 8,
+      "reflections": 8,
+      "total": 16
+    }
+  },
+  "tao_formal": {
+    "complementarity": "Y union G = D",
+    "interior_disjoint": "int(Y) intersect int(G) = empty",
+    "measure_conservation": "mu(Y)+mu(G)=mu(D)",
+    "ideal_symmetry": "mu(Y)=mu(G)=mu(D)/2",
+    "half_turn_swap": [
+      "R_pi(Y)=G",
+      "R_pi(G)=Y"
+    ]
+  },
+  "authorial_selector": {
+    "T_RAF": [
+      4,
+      8,
+      3,
+      5,
+      2,
+      4,
+      8,
+      6
+    ],
+    "state": "OPERATOR_AUTHORIAL_UNVALIDATED"
+  },
+  "mandala": {
+    "source_visual_label": "Mandala RAFAELIA - 42 (Resposta Universal)",
+    "observed_sectors": 8,
+    "observed_center_label": "RAFAELIA / 42 Chaves",
+    "key_mapping": "TOKEN_VAZIO_42_KEY_SEMANTICS"
+  },
+  "watchdog": {
+    "process": "P",
+    "observers": [
+      "A",
+      "B"
+    ],
+    "meta": "M",
+    "self_certification": false,
+    "delayed_reciprocal_check": true,
+    "fail_closed_on_divergence": true
+  },
+  "search": {
+    "exhaustive_cap": 4096,
+    "random_seed": 42,
+    "sample_budget": 512,
+    "max_fragment_order": 4
+  }
+}
