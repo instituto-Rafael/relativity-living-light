@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from pathlib import Path
 
 
@@ -9,6 +10,7 @@ MOD_PATH = ROOT / "tools" / "rll_adaptive_permutation_ruler_v1.py"
 SPEC = importlib.util.spec_from_file_location("ruler", MOD_PATH)
 ruler = importlib.util.module_from_spec(SPEC)
 assert SPEC and SPEC.loader
+sys.modules[SPEC.name] = ruler
 SPEC.loader.exec_module(ruler)
 
 
@@ -44,7 +46,7 @@ def test_no_duplicate_fragment_ids_inside_candidate():
         assert len(c["ids"]) == len(set(c["ids"]))
 
 
-def test_token_vazio_blocks_promotion_not_exploration():
+def test_non_safe_gate_blocks_promotion_not_exploration():
     fs = sample_fragments()
     b = next(x for x in fs if x.id == "B")
     a = next(x for x in fs if x.id == "A")
