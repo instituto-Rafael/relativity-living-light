@@ -170,3 +170,12 @@ Este arquivo foi normalizado para **uso acadêmico-profissional** com linguagem 
 O conteúdo original permanece abaixo para preservar trilha de auditoria e contexto evolutivo.
 
 ---
+
+
+---
+
+## Cellular metabolic manifold bridge — 2026-09-18
+
+- Science bridge: `docs/science/RLL_CELLULAR_METABOLIC_MANIFOLD_BRIDGE_20260918.md`
+- Claims ledger: `data/science/rll_cellular_metabolic_manifold_claims_v1.json`
+- Boundary: cell biology/metabolism enters RLL only as measured observables, typed hypotheses and falsifiers; it is not cosmological evidence by analogy.
