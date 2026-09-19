@@ -121,3 +121,27 @@ def test_risk_register_prioritizes_common_mode():
     assert r["items"][0]["rpn"]==252
     assert r["items"][0]["mitigation_required"] is True
     assert r["items"][1]["mitigation_required"] is False
+
+
+def test_radial_geometry_reference_scale():
+    r=m.validate_radial_geometry(SEED,rho=(3**0.5)/2,r_min=0.5,r_max=1.0)
+    assert r["state"]=="STRUCTURALLY_VALID"
+    assert abs(r["area_ratio_if_q"]-0.75)<1e-12
+
+
+def test_mandala_candidate_preserves_semantic_gaps():
+    seed={**SEED,
+          "trigram_historical_order":"TOKEN_VAZIO_HISTORICAL_ORDER",
+          "geometry_to_mandala":{"radial_synthesis":{"state":"FORMAL_MODEL_VISUAL_OPERATOR"}}}
+    d=m.mandala_candidate_descriptor(seed)
+    assert d["state"]=="MANDALA_CANDIDATE"
+    assert d["historical_order"]=="TOKEN_VAZIO_HISTORICAL_ORDER"
+    assert d["key_42_semantics"]=="TOKEN_VAZIO_42_KEY_SEMANTICS"
+    assert d["claim_allowed"] is False
+
+
+def test_invalid_radial_geometry_is_blocked():
+    r=m.validate_radial_geometry(SEED,rho=1.2,r_min=2.0,r_max=1.0)
+    assert r["state"]=="STRUCTURALLY_INVALID"
+    assert "INVALID_SCALE" in r["reasons"]
+    assert "DEGENERATE_RADIUS" in r["reasons"]
