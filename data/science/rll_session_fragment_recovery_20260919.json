@@ -457,6 +457,21 @@
       "novelty": 0.8,
       "provenance": 1,
       "claim_gate": "METHOD"
+    },
+    {
+      "id": "RF-036",
+      "name": "audit representation becomes a new object for forward-reverse resweep",
+      "state": "METHOD_GAP_RECOVERED",
+      "layer": "representation_recursion",
+      "impact": 8,
+      "uncertainty_reduction": 8,
+      "effort": 2,
+      "undercoverage": 1,
+      "recurrence": 1,
+      "testability": 1,
+      "novelty": 0.9,
+      "provenance": 1,
+      "claim_gate": "METHOD"
     }
   ],
   "candidate_crosslinks": [
@@ -533,6 +548,37 @@
       ],
       "claim": "comparator logic applied to deficiency/supplement studies",
       "state": "METHOD_RULE"
+    },
+    {
+      "id": "X9",
+      "fragments": [
+        "RF-034",
+        "RF-036"
+      ],
+      "claim": "relation-of-relations becomes input to the next representation sweep",
+      "state": "METHOD_RULE"
     }
-  ]
+  ],
+  "bidirectional_recurrent_policy": {
+    "state": "IMPLEMENTED_BOUNDED_SWEEP",
+    "sequence": [
+      "FORWARD_SWEEP",
+      "GAP_DISCOVERY",
+      "REVERSE_SWEEP",
+      "ASYMMETRY_CHECK",
+      "RELATION_OF_RELATIONS",
+      "COMPRESSION",
+      "NEW_REPRESENTATION",
+      "RESWEEP"
+    ],
+    "terminal_state": "SATURATED_UNDER_CURRENT_RULER",
+    "complete_state_forbidden": true,
+    "max_cycles": 6,
+    "fanout": 4,
+    "second_order_budget": 32,
+    "epsilon": 0.02,
+    "patience_cycles": 2,
+    "representation_hash_feedback": true,
+    "verbatim_transcript_binding": "TOKEN_VAZIO_NOT_BOUND_HERE"
+  }
 }
