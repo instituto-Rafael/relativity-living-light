@@ -367,11 +367,35 @@ def sample_mandala_assignments(seed:dict[str,Any], *, budget:int|None=None, rng_
     }
 
 
+
+def risk_register(seed:dict[str,Any])->dict[str,Any]:
+    cfg=seed.get("risk_register",{})
+    threshold=int(cfg.get("mitigation_threshold",100))
+    rows=[]
+    for item in cfg.get("items",[]):
+        s=int(item["severity"]); o=int(item["occurrence"]); d=int(item["detectability"])
+        if any(x<1 or x>10 for x in (s,o,d)):
+            raise ValueError(f"risk scores must be 1..10: {item['id']}")
+        rpn=s*o*d
+        rows.append({
+            **item,
+            "rpn":rpn,
+            "mitigation_required":rpn>=threshold,
+        })
+    rows.sort(key=lambda x:(-x["rpn"],x["id"]))
+    return {
+        "schema":"rll.form_genome_risk_register.v1",
+        "score_semantics":cfg.get("score_semantics"),
+        "mitigation_threshold":threshold,
+        "items":rows,
+        "claim_allowed":False,
+    }
+
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--seed-file",required=True)
     ap.add_argument("--output")
-    ap.add_argument("--mode",choices=("summary","watch","watch2","trigrams","hexagrams","mandala-sample"),default="summary")
+    ap.add_argument("--mode",choices=("summary","watch","watch2","trigrams","hexagrams","mandala-sample","risks"),default="summary")
     args=ap.parse_args()
 
     seed=json.loads(Path(args.seed_file).read_text(encoding="utf-8"))
@@ -385,6 +409,8 @@ def main()->int:
         result={"states":trigram_states(),"count":8,"claim_allowed":False}
     elif args.mode=="hexagrams":
         result={"states":hexagram_states(),"count":64,"claim_allowed":False}
+    elif args.mode=="risks":
+        result=risk_register(seed)
     else:
         result=sample_mandala_assignments(seed)
 
