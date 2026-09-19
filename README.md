@@ -204,3 +204,15 @@ O conteúdo original permanece abaixo para preservar trilha de auditoria e conte
 - Form sampler / cross-watchdog: tools/rll_form_genome_watchdog_v1.py
 - Tests: tests/test_rll_form_genome_watchdog_v1.py
 - New boundary: BAGUA_8 != MANDALA_VISUAL_8 != HYPERFORMAS_42; mapping 8->42 remains TOKEN_VAZIO.
+
+
+---
+
+## Eight-connected / geodesic / post-toroidal geometry — 2026-09-19
+
+- Method: `docs/methods/RLL_EIGHT_CONNECTED_GEODESIC_POSTOROIDAL_FOLD_20260919.md`
+- Seed: `data/science/rll_eight_connected_geometry_seed_20260919.json`
+- Tool: `tools/rll_eight_connected_geometry_v1.py`
+- Tests: `tests/test_rll_eight_connected_geometry_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_EIGHT_CONNECTED_GEOMETRY_V1.md`
+- Boundary: `KNOWN_MATH != AUTHORIAL_DEFORMATION != PHYSICAL_MODEL`; `ROTATED_SQUARE != HEXAGRAM`; `MAPPING_8_TO_42=TOKEN_VAZIO`.
