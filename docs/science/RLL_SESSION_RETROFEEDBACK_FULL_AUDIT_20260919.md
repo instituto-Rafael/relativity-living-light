@@ -967,3 +967,23 @@ FORWARD
 -> RESWEEP
 
 Any watchdog disagreement may quarantine the branch; process staleness to both produces FAILSAFE_BLOCK.
+
+
+## 11. RF-042 — Geometria radial já existente no export
+
+A nova passagem encontrou uma cadeia formal que havia ficado fora das primeiras varreduras:
+
+```text
+Lambda_(n+1)=rho*R_theta(Lambda_n)
+Lambda_n=(sqrt(3)/2)^n*R_(n*theta)(Lambda_0)
+H=triangle_up union triangle_down
+A={x:r_min<=||x||<=r_max}
+F_n=Radial(R_(n*theta)(triangle_up union triangle_down union Lambda_n))
+```
+
+Isto muda a leitura anterior: a ponte até uma mandala não precisa ser criada somente por composição abstrata. O corpus já possui um operador visual radial formalizado.
+
+Estado correto:
+`SOURCE_RECOVERED_FORMAL_MODEL`.
+
+Ele pode gerar `MANDALA_CANDIDATE` estrutural, mas não semântica histórica nem claim físico.
