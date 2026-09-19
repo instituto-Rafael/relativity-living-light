@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "RLL-CELLULAR-METABOLIC-MANIFOLD-V1",
+  "date": "2026-09-18",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "predecessors": [
+    "docs/research/RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE_20260815.md",
+    "docs/science/SESSION_CAPTURE_RELATIONAL_MANIFOLD_20260915.md"
+  ],
+  "boundaries": {
+    "biological_model_is_cosmological_evidence": false,
+    "external_literature_is_local_replication": false,
+    "ordinary_biology_generates_tribo_xray": false,
+    "melanin_is_universal_radiation_battery": false
+  },
+  "claims": [
+    {
+      "id": "RLL-CMM-001",
+      "state": "MODEL_SPEC",
+      "claim": "Compartment-resolved pool and flux variables can be represented in a typed cellular state."
+    },
+    {
+      "id": "RLL-CMM-002",
+      "state": "CORRECTED",
+      "claim": "Ethanol is the normal mitochondrial product of glucose plus oxygen.",
+      "replacement": "Aerobic mitochondria oxidize carbon through TCA/OXPHOS; ethanolic fermentation is a distinct route."
+    },
+    {
+      "id": "RLL-CMM-003",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "Plant hypoxia promotes fermentative NAD+ regeneration when OXPHOS is constrained."
+    },
+    {
+      "id": "RLL-CMM-004",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "Golgi trafficking/glycosylation and plant polysaccharide functions are distinct organellar channels."
+    },
+    {
+      "id": "RLL-CMM-005",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "N/P/S and Na+/Cl- have separable biological transport/metabolic roles."
+    },
+    {
+      "id": "RLL-CMM-006",
+      "state": "EXTERNAL_SUPPORTED_LIMITED",
+      "claim": "Melanization can alter fungal radiation survival/growth/redox response."
+    },
+    {
+      "id": "RLL-CMM-007",
+      "state": "TOKEN_VAZIO",
+      "claim": "Melanin quantitatively harvests ionizing radiation with a defined biological energy yield.",
+      "gap": "Need calorimetry/electron/redox energy balance and replication."
+    },
+    {
+      "id": "RLL-CMM-008",
+      "state": "EXTERNAL_SUPPORTED_PHYSICAL",
+      "claim": "Triboluminescent adhesive-tape experiments can emit X-rays under controlled vacuum/material conditions."
+    },
+    {
+      "id": "RLL-CMM-009",
+      "state": "BLOCKED_NO_EVIDENCE",
+      "claim": "Ordinary animal/plant cellular deformation emits triboluminescent X-rays."
+    },
+    {
+      "id": "RLL-CMM-010",
+      "state": "HYPOTHESIS",
+      "claim": "Flux-resolved N/P/S/redox models outperform static carbon/ATP pools.",
+      "falsifier": "No reproducible out-of-sample improvement after complexity penalty."
+    }
+  ]
+}
