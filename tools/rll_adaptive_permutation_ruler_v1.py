@@ -17,14 +17,12 @@ from pathlib import Path
 from typing import Any
 
 
-BLOCKING_GATES = {
-    "TOKEN_VAZIO",
-    "TOKEN_VAZIO_THRESHOLD",
-    "TOKEN_VAZIO_COMPARATOR",
-    "TOKEN_VAZIO_CAUSAL",
-    "BLOCKED",
-    "CONTEXT_ONLY",
-    "CANCER_CONTEXT",
+PROMOTION_SAFE_GATES = {
+    "SUPPORTED",
+    "INVARIANT",
+    "METHOD_RULE",
+    "METHOD",
+    "NEGATIVE_BOUNDARY",
 }
 
 
@@ -101,10 +99,12 @@ def score_candidate(parts: tuple[Fragment, ...], weights: dict[str, float]) -> t
 
 
 def promotion_allowed(parts: tuple[Fragment, ...]) -> bool:
-    return not any(
-        p.claim_gate in BLOCKING_GATES or p.claim_gate.startswith("TOKEN_VAZIO")
-        for p in parts
-    )
+    """Fail-closed promotion gate.
+
+    Exploration can rank any fragment. Promotion is eligible only when every
+    fragment is already in an explicitly safe gate class.
+    """
+    return all(p.claim_gate in PROMOTION_SAFE_GATES for p in parts)
 
 
 def tuple_hash(ids: tuple[str, ...]) -> str:
