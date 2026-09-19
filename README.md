@@ -197,3 +197,10 @@ O conteúdo original permanece abaixo para preservar trilha de auditoria e conte
 - Tool: `tools/rll_form_genome_watchdog_v1.py`
 - Tests: `tests/test_rll_form_genome_watchdog_v1.py`
 - Receipt: `receipts/2026-09-19_RLL_FORM_GENOME_WATCHDOG_MANDALA_V1.md`
+
+
+- Form genome + dual watchdog + mandala method: docs/methods/RLL_FORM_GENOME_DUAL_WATCHDOG_MANDALA_20260919.md
+- Export-grounded form seed: data/science/rll_form_genome_seed_20260919.json
+- Form sampler / cross-watchdog: tools/rll_form_genome_watchdog_v1.py
+- Tests: tests/test_rll_form_genome_watchdog_v1.py
+- New boundary: BAGUA_8 != MANDALA_VISUAL_8 != HYPERFORMAS_42; mapping 8->42 remains TOKEN_VAZIO.
