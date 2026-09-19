@@ -368,6 +368,54 @@ def sample_mandala_assignments(seed:dict[str,Any], *, budget:int|None=None, rng_
 
 
 
+
+def validate_radial_geometry(seed:dict[str,Any], *, rho:float=math.sqrt(3)/2, r_min:float=0.5, r_max:float=1.0)->dict[str,Any]:
+    reasons=[]
+    if not (0 < rho <= 1):
+        reasons.append("INVALID_SCALE")
+    if not (0 <= r_min <= r_max):
+        reasons.append("DEGENERATE_RADIUS")
+    state="STRUCTURALLY_VALID" if not reasons else "STRUCTURALLY_INVALID"
+    q=math.sqrt(3)/2
+    return {
+        "schema":"rll.radial_geometry_check.v1",
+        "rho":rho,
+        "r_min":r_min,
+        "r_max":r_max,
+        "q_reference":q,
+        "area_ratio_if_q":q*q,
+        "state":state,
+        "reasons":reasons,
+        "claim_allowed":False,
+    }
+
+
+def mandala_candidate_descriptor(seed:dict[str,Any], *, rho:float=math.sqrt(3)/2, r_min:float=0.5, r_max:float=1.0)->dict[str,Any]:
+    check=validate_radial_geometry(seed,rho=rho,r_min=r_min,r_max=r_max)
+    if check["state"]!="STRUCTURALLY_VALID":
+        return {
+            "state":"PREREQUISITE_MISSING",
+            "geometry_check":check,
+            "claim_allowed":False,
+        }
+    return {
+        "schema":"rll.mandala_candidate.v1",
+        "state":"MANDALA_CANDIDATE",
+        "components":[
+            "recursive_rhombus",
+            "triangle_up",
+            "triangle_down",
+            "annulus",
+            "radial_rotation",
+            "optional_octagonal_assignment",
+        ],
+        "formal_chain":seed.get("geometry_to_mandala",{}),
+        "historical_order":seed.get("trigram_historical_order"),
+        "key_42_semantics":seed["mandala"]["key_mapping"],
+        "geometry_check":check,
+        "claim_allowed":False,
+    }
+
 def risk_register(seed:dict[str,Any])->dict[str,Any]:
     cfg=seed.get("risk_register",{})
     threshold=int(cfg.get("mitigation_threshold",100))
@@ -395,7 +443,7 @@ def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--seed-file",required=True)
     ap.add_argument("--output")
-    ap.add_argument("--mode",choices=("summary","watch","watch2","trigrams","hexagrams","mandala-sample","risks"),default="summary")
+    ap.add_argument("--mode",choices=("summary","watch","watch2","trigrams","hexagrams","mandala-sample","mandala-candidate","risks"),default="summary")
     args=ap.parse_args()
 
     seed=json.loads(Path(args.seed_file).read_text(encoding="utf-8"))
@@ -411,6 +459,8 @@ def main()->int:
         result={"states":hexagram_states(),"count":64,"claim_allowed":False}
     elif args.mode=="risks":
         result=risk_register(seed)
+    elif args.mode=="mandala-candidate":
+        result=mandala_candidate_descriptor(seed)
     else:
         result=sample_mandala_assignments(seed)
 
