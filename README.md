@@ -170,3 +170,17 @@ Este arquivo foi normalizado para **uso acadêmico-profissional** com linguagem 
 O conteúdo original permanece abaixo para preservar trilha de auditoria e contexto evolutivo.
 
 ---
+
+
+---
+
+## Session retrofeedback + adaptive permutation ruler — 2026-09-19
+
+- Full session recovery audit: `docs/science/RLL_SESSION_RETROFEEDBACK_FULL_AUDIT_20260919.md`
+- Machine-readable recovery ledger: `data/science/rll_session_fragment_recovery_20260919.json`
+- Adaptive bounded search method: `docs/methods/RLL_ADAPTIVE_PERMUTATION_RULER_20260919.md`
+- Implementation: `tools/rll_adaptive_permutation_ruler_v1.py`
+- Tests: `tests/test_rll_adaptive_permutation_ruler_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_SESSION_RETROFEEDBACK_RULER_V1_VALID_WORK_ROUTE.md`
+- Branch-local gap: `TOKEN_VAZIO_UPSTREAM_MAIN_TO_RLL_LAB_SYNC`.
+- Boundary: `SEARCH_SCORE != EVIDENCE != CLAIM`; blind Cartesian products are forbidden.
