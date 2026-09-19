@@ -105,3 +105,19 @@ def test_mandala_sample_d8_dedup_and_bounded():
     canons=[tuple(x["canonical_d8"]) for x in a["candidates"]]
     assert len(canons)==len(set(canons))
     assert all(x["semantic_state"]=="TOKEN_VAZIO_HISTORICAL_ORDER" for x in a["candidates"])
+
+
+def test_risk_register_prioritizes_common_mode():
+    seed={**SEED,"risk_register":{
+        "score_semantics":"ordinal",
+        "mitigation_threshold":100,
+        "items":[
+            {"id":"common","severity":9,"occurrence":4,"detectability":7,"mitigation":"diverse"},
+            {"id":"replay","severity":7,"occurrence":3,"detectability":2,"mitigation":"seq"},
+        ],
+    }}
+    r=m.risk_register(seed)
+    assert r["items"][0]["id"]=="common"
+    assert r["items"][0]["rpn"]==252
+    assert r["items"][0]["mitigation_required"] is True
+    assert r["items"][1]["mitigation_required"] is False
