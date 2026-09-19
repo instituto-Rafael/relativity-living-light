@@ -273,11 +273,105 @@ def simulate_watch(seed:dict[str,Any])->dict[str,Any]:
     }
 
 
+def simulate_two_ticks(seed:dict[str,Any])->dict[str,Any]:
+    """Demonstrate delayed reciprocal validation.
+
+    A/B validate P at t0. M compares them. At t1, A/B receive both the peer
+    receipt and M(t0) digest. M(t0) therefore cannot certify itself.
+    """
+    fg=form_genome(seed)
+    t0=Tick(0,h(seed),fg["root_hash"],h(fg),tuple(seed["invariants"]),False)
+    a0=validate_tick("A",t0,None,peer_prev=None,meta_prev=None,implementation_id="watch-A.v1")
+    b0=validate_tick("B",t0,None,peer_prev=None,meta_prev=None,implementation_id="watch-B.v1")
+    m0=meta_compare(a0,b0,0)
+
+    state1={**fg,"previous_meta":m0.digest()}
+    t1=Tick(1,t0.output_hash,h(state1),h({"accepted":True,"meta0":m0.digest()}),tuple(seed["invariants"]),False)
+    a1=validate_tick("A",t1,t0,peer_prev=b0,meta_prev=m0,implementation_id="watch-A.v1")
+    b1=validate_tick("B",t1,t0,peer_prev=a0,meta_prev=m0,implementation_id="watch-B.v1")
+    m1=meta_compare(a1,b1,1)
+
+    return {
+        "ticks":[t0.__dict__,t1.__dict__],
+        "A":[{**a0.__dict__,"digest":a0.digest()},{**a1.__dict__,"digest":a1.digest()}],
+        "B":[{**b0.__dict__,"digest":b0.digest()},{**b1.__dict__,"digest":b1.digest()}],
+        "M":[{**m0.__dict__,"digest":m0.digest()},{**m1.__dict__,"digest":m1.digest()}],
+        "cross_check":{
+            "A1_peer_prev_is_B0":a1.peer_prev_digest==b0.digest(),
+            "B1_peer_prev_is_A0":b1.peer_prev_digest==a0.digest(),
+            "A1_meta_prev_is_M0":a1.meta_prev_digest==m0.digest(),
+            "B1_meta_prev_is_M0":b1.meta_prev_digest==m0.digest(),
+        },
+        "claim_allowed":False,
+    }
+
+
+def canonical_d8_assignment(values:tuple[Any,...])->tuple[Any,...]:
+    """Canonical representative of an 8-position ring under D8."""
+    if len(values)!=8:
+        raise ValueError("D8 assignment requires exactly 8 positions")
+    orbit=[]
+    for k in range(8):
+        r=rotate(values,k)
+        orbit.append(r)
+        orbit.append(reflect(r))
+    return min(orbit)
+
+
+def sample_mandala_assignments(seed:dict[str,Any], *, budget:int|None=None, rng_seed:int|None=None)->dict[str,Any]:
+    """Bounded deterministic sampling of trigram->octagon assignments.
+
+    Historical trigram order remains unresolved. Generated mappings are
+    computational candidates only. D8-equivalent candidates are deduplicated.
+    """
+    directions=tuple(seed["directions"])
+    trigrams=tuple("".join(map(str,x)) for x in trigram_states())
+    if len(directions)!=8:
+        raise ValueError("requires 8 directions")
+    budget=int(budget if budget is not None else seed["search"]["sample_budget"])
+    rng_seed=int(rng_seed if rng_seed is not None else seed["search"]["random_seed"])
+    rng=random.Random(rng_seed)
+    raw_total=math.factorial(8)
+    d8_class_count=raw_total//16  # all eight trigram labels are distinct
+    wanted=min(budget,d8_class_count)
+    seen=set()
+    out=[]
+    attempts=0
+    max_attempts=max(1000,wanted*100)
+    while len(out)<wanted and attempts<max_attempts:
+        attempts+=1
+        perm=tuple(rng.sample(trigrams,8))
+        canon=canonical_d8_assignment(perm)
+        if canon in seen:
+            continue
+        seen.add(canon)
+        mapping={directions[i]:perm[i] for i in range(8)}
+        out.append({
+            "genome_hash":h({"mapping":mapping,"canonical":canon}),
+            "mapping":mapping,
+            "canonical_d8":list(canon),
+            "state":"STRUCTURALLY_VALID",
+            "semantic_state":"TOKEN_VAZIO_HISTORICAL_ORDER",
+            "claim_allowed":False,
+        })
+    return {
+        "schema":"rll.mandala_assignment_sample.v1",
+        "raw_total_space":raw_total,
+        "d8_equivalence_classes_exact":d8_class_count,
+        "returned":len(out),
+        "budget":budget,
+        "seed":rng_seed,
+        "attempts":attempts,
+        "candidates":out,
+        "claim_allowed":False,
+    }
+
+
 def main()->int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--seed-file",required=True)
     ap.add_argument("--output")
-    ap.add_argument("--mode",choices=("summary","watch","trigrams","hexagrams"),default="summary")
+    ap.add_argument("--mode",choices=("summary","watch","watch2","trigrams","hexagrams","mandala-sample"),default="summary")
     args=ap.parse_args()
 
     seed=json.loads(Path(args.seed_file).read_text(encoding="utf-8"))
@@ -285,10 +379,14 @@ def main()->int:
         result=form_genome(seed)
     elif args.mode=="watch":
         result=simulate_watch(seed)
+    elif args.mode=="watch2":
+        result=simulate_two_ticks(seed)
     elif args.mode=="trigrams":
         result={"states":trigram_states(),"count":8,"claim_allowed":False}
-    else:
+    elif args.mode=="hexagrams":
         result={"states":hexagram_states(),"count":64,"claim_allowed":False}
+    else:
+        result=sample_mandala_assignments(seed)
 
     payload=json.dumps(result,indent=2,sort_keys=True)
     if args.output:
