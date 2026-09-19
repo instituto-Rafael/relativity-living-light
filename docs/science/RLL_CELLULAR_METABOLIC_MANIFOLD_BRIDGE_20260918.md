@@ -81,7 +81,7 @@ Under oxygen limitation, plant cells can shift toward fermentative pathways that
 
 ### Fungal route
 
-The fungal route is allowed to include melanization/radiation response as a separate environmental interaction channel, not as a default energy source.
+The fungal route is allowed to include melanization/radiation response as a separate environmental interaction channel, not as a default energy source. The classic Chernobyl melanin/radiotropism literature is fungal; radioresistant bacteria are tracked separately and are not promoted as the same mechanism.
 
 ## 4. Corrected respiration/fermentation boundary
 
