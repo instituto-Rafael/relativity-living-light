@@ -48,3 +48,20 @@ mRNA is used only as an analogy for transcribed instruction fragments. Normal mR
 F_ok=source anchors recovered and implementation created.
 F_gap=historical trigram order, 42-key mapping, true independent watchdog implementations and full transcript binding remain unresolved.
 F_next=CI fixtures + replay/divergence injection + exhaustive 8/64 state checks + bounded higher-order composition.
+
+
+## Crossed temporal watchdog extension
+
+A/B now validate, at tick n+1:
+- the peer receipt from tick n;
+- the meta-watchdog M receipt from tick n.
+
+Thus `M_n` is checked by both A and B only in the next logical tick and cannot self-certify in the same cycle.
+
+## Mandala assignment space
+
+For eight distinct trigram labels over eight octagonal positions:
+- raw assignments = 8! = 40320;
+- D8-equivalence classes = 40320/16 = 2520;
+- default implementation uses bounded deterministic sampling, D8 canonicalization and duplicate suppression;
+- historical trigram ordering remains `TOKEN_VAZIO_HISTORICAL_ORDER`.
