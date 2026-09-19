@@ -1,0 +1,47 @@
+{
+  "schema": "rll.dual_observation_window.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "input_schema": "rll.dual_observation_window.input.v1",
+  "authority": {
+    "mathematics": "rafaelmeloreisnovo/Matem-tica-",
+    "deterministic_compute": "rafaelmeloreisnovo/ChipQuantum",
+    "physical_inference": "instituto-Rafael/relativity-living-light"
+  },
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "RESIDUAL != NOISE != CAUSE != NEW_PHYSICS",
+    "support and opposition are preserved separately",
+    "hard falsifier FAIL is non-compensatory",
+    "unknown uncertainty or mechanism remains TOKEN_VAZIO"
+  ],
+  "preregistration_required": [
+    "delta_loss_tolerance",
+    "hard_falsifiers"
+  ],
+  "context_candidate_fields": [
+    "source_intrinsic_variability",
+    "transit_or_occultation_geometry",
+    "gravitational_lensing",
+    "interstellar_medium",
+    "solar_wind_dynamic_pressure",
+    "interplanetary_magnetic_field",
+    "geomagnetic_state",
+    "ionospheric_tec",
+    "solar_zenith_angle",
+    "ozone_column",
+    "surface_pressure",
+    "temperature",
+    "humidity",
+    "cloud_aerosol",
+    "instrument_pointing",
+    "detector_state"
+  ],
+  "states": [
+    "RELATIVE_SUPPORT",
+    "RELATIVE_OPPOSITION",
+    "NEUTRAL_WITHIN_TOLERANCE",
+    "BLOCKED_HARD_FALSIFIER",
+    "TOKEN_VAZIO_MECHANISM"
+  ],
+  "claim_allowed": false
+}
