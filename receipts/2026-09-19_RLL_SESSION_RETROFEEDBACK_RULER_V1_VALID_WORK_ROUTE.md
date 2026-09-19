@@ -72,3 +72,27 @@ Invariant:
 `FORWARD -> REVERSE -> COMPRESS -> NEW_REPRESENTATION -> RESWEEP`.
 
 This extension does not claim full transcript coverage. It explicitly marks `VERBATIM_TRANSCRIPT_BINDING=TOKEN_VAZIO_NOT_BOUND_HERE`.
+
+
+## Form-genome / dual-watchdog extension
+
+Added after another forward/reverse export sweep:
+- docs/methods/RLL_FORM_GENOME_DUAL_WATCHDOG_MANDALA_20260919.md
+- data/science/rll_form_genome_seed_20260919.json
+- tools/rll_form_genome_watchdog_v1.py
+- tests/test_rll_form_genome_watchdog_v1.py
+- RF-037 through RF-042
+
+Source-derived basis:
+- Yin=0 / Yang=1;
+- three binary lines -> 8 states;
+- two three-line blocks -> 64 states;
+- Hamming mutation metric;
+- mandala visual with eight sectors / 42 Chaves;
+- separate canonical 42=6x7 hyperformas family.
+
+Risk invariants:
+PEER_HEARTBEAT_WITHOUT_PROCESS_PROGRESS != HEALTH
+DUAL_WATCHDOG != INDEPENDENT_REDUNDANCY_AUTOMATICALLY
+MAPPING_8_TO_42 = TOKEN_VAZIO
+FORM_GENOME_ANALOGY != BIOLOGICAL_EQUIVALENCE
