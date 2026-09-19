@@ -65,3 +65,16 @@ For eight distinct trigram labels over eight octagonal positions:
 - D8-equivalence classes = 40320/16 = 2520;
 - default implementation uses bounded deterministic sampling, D8 canonicalization and duplicate suppression;
 - historical trigram ordering remains `TOKEN_VAZIO_HISTORICAL_ORDER`.
+
+
+## New decomposition genes and risk monitor
+
+New form genes:
+1 / 2 / 3 / 4 / 5 / 6 / 8 plus the source-observed 42-key label.
+
+The 42-key label remains `TOKEN_VAZIO_42_KEY_SEMANTICS`.
+
+FMEA register added with ordinal RPN only:
+`RPN=severity*occurrence*detectability`.
+
+RPN is explicitly not probability or scientific evidence.
