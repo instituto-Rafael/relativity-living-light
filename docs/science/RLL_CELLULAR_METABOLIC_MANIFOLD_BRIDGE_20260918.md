@@ -307,3 +307,8 @@ external literature != local reproduction
 **F_ok:** session content is routed into typed cellular observables and falsifiers without cosmological promotion.  
 **F_gap:** no local wet-lab/isotope dataset and no direct biological X-ray evidence.  
 **F_next:** build a bounded real-data adapter only when a public dataset or laboratory receipt supplies explicit units, compartments and provenance.
+
+
+## 14. Neuroenergetic/osmotic extension — 2026-09-19
+
+The typed extension for sulbutiamine/B1, action-vigor, multigradient membrane transport, EC-KH-pH, BAT, magnesium, B12 and omega-3/6/9 is maintained in `docs/science/RLL_CMM_NEUROMETABOLIC_OSMOTIC_EXTENSION_20260919.md`. It remains a model/falsifier layer, not evidence by analogy.
