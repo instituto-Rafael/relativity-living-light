@@ -472,6 +472,81 @@
       "novelty": 0.9,
       "provenance": 1,
       "claim_gate": "METHOD"
+    },
+    {
+      "id": "RF-037",
+      "name": "form-genome decomposition for auditable recombination",
+      "state": "METHOD_GAP_RECOVERED",
+      "layer": "form_genome",
+      "impact": 8,
+      "uncertainty_reduction": 8,
+      "effort": 4,
+      "undercoverage": 1,
+      "recurrence": 1,
+      "testability": 1,
+      "novelty": 0.9,
+      "provenance": 1,
+      "claim_gate": "METHOD"
+    },
+    {
+      "id": "RF-038",
+      "name": "crossed dual watchdog plus delayed meta-watchdog verification",
+      "state": "METHOD_GAP_RECOVERED",
+      "layer": "watchdog_governance",
+      "impact": 8,
+      "uncertainty_reduction": 8,
+      "effort": 4,
+      "undercoverage": 1,
+      "recurrence": 1,
+      "testability": 1,
+      "novelty": 0.8,
+      "provenance": 1,
+      "claim_gate": "METHOD"
+    },
+    {
+      "id": "RF-039",
+      "name": "octagon-to-mandala structural phenotype with D8 deduplication",
+      "state": "METHOD_GAP_RECOVERED",
+      "layer": "geometric_composition",
+      "impact": 8,
+      "uncertainty_reduction": 4,
+      "effort": 4,
+      "undercoverage": 1,
+      "recurrence": 0.9,
+      "testability": 1,
+      "novelty": 0.8,
+      "provenance": 1,
+      "claim_gate": "METHOD"
+    },
+    {
+      "id": "RF-040",
+      "name": "Tao formal complementarity rotation and measure model recovered from export",
+      "state": "SOURCE_RECOVERED",
+      "layer": "tao_geometry",
+      "impact": 4,
+      "uncertainty_reduction": 4,
+      "effort": 2,
+      "undercoverage": 1,
+      "recurrence": 0.8,
+      "testability": 1,
+      "novelty": 0.5,
+      "provenance": 1,
+      "claim_gate": "MODEL_SCAFFOLD"
+    },
+    {
+      "id": "RF-041",
+      "name": "dual-watchdog agreement does not prove implementation independence",
+      "state": "OBVIOUS_NOT_EXPLICIT",
+      "layer": "watchdog_risk",
+      "impact": 8,
+      "uncertainty_reduction": 8,
+      "effort": 2,
+      "undercoverage": 1,
+      "recurrence": 1,
+      "testability": 1,
+      "novelty": 0.6,
+      "provenance": 1,
+      "claim_gate": "INVARIANT"
     }
   ],
   "candidate_crosslinks": [
@@ -556,6 +631,33 @@
         "RF-036"
       ],
       "claim": "relation-of-relations becomes input to the next representation sweep",
+      "state": "METHOD_RULE"
+    },
+    {
+      "id": "X10",
+      "fragments": [
+        "RF-037",
+        "RF-039"
+      ],
+      "claim": "form genes recombine into octagonal/mandala structural phenotypes under bounded D8-aware search",
+      "state": "METHOD_RULE"
+    },
+    {
+      "id": "X11",
+      "fragments": [
+        "RF-038",
+        "RF-041"
+      ],
+      "claim": "watchdog consensus must remain separate from independence evidence",
+      "state": "INVARIANT"
+    },
+    {
+      "id": "X12",
+      "fragments": [
+        "RF-040",
+        "RF-037"
+      ],
+      "claim": "source-derived Tao geometry can seed form genes without becoming physical evidence",
       "state": "METHOD_RULE"
     }
   ],
