@@ -1,0 +1,53 @@
+{
+  "mu_id": "MU-RLL-SCD1-BENCH-20260920",
+  "timestamp": "2026-09-20T22:51:00-03:00",
+  "status": "ANALYSIS_RUN_NORMALIZED_CORPUS",
+  "claim_allowed": false,
+  "scope": "Exact reconstruction of normalized verse records for Genesis, Matthew and John; source editorial metadata/formatting excluded.",
+  "source_commits": {
+    "eng": {"repo": "BibleAquifer/WorldEnglishBible", "commit": "bcb8b3edfb302863c241e3d1d2062cf51042d694"},
+    "spa": {"repo": "BibleAquifer/ReinaValera1909", "commit": "84a071324be17c7c66db17dd204d7804e66d728b"},
+    "por": {"repo": "blivre/BibliaLivre", "commit": "a315a15e9f4d01883b62206fe441d57762f126b3"}
+  },
+  "source_blob_sha": {
+    "eng_genesis": "ab430b89a2df24ee5ead89f420d949e578d66857",
+    "eng_matthew": "66ea1f8969733ad7b5487f2e395f81b2fe5c873f",
+    "eng_john": "5a3eab78540944fd35a0db65e4f9be53f187fea6",
+    "spa_genesis": "196eb3017b3786990858b1fed5f08bfa31e34757",
+    "spa_matthew": "28c9e6c1ec1620892218705efe5f615597b47943",
+    "spa_john": "383a0e478de3179113b57050e94152d5867cea7c",
+    "por_genesis": "26fcfa514a0c84f39f978573c6b41f02143d795c",
+    "por_matthew": "ee7f383965665c624a272fc9ba696cf2333564b9",
+    "por_john": "15b94b71261aea1145ee88d9eba2d215fa5b4e54"
+  },
+  "source_files_total_bytes": 3275057,
+  "verse_counts_raw": {"eng": 3483, "spa": 3483, "por": 3483, "intersection": 3483},
+  "normalized_records": 10449,
+  "bytes": {
+    "verbose_records_json": 1642359,
+    "scd1_shared_refs_seed": 1273254,
+    "plain_text_only": 1213948
+  },
+  "deltas": {
+    "seed_vs_verbose_bytes": 369105,
+    "seed_vs_verbose_pct": 22.474,
+    "seed_vs_plain_bytes": 59306,
+    "seed_vs_plain_pct": 4.885
+  },
+  "exact_reconstruction": {
+    "normalized_json_equal": true,
+    "baseline_sha256": "960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f",
+    "reconstructed_sha256": "960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f",
+    "seed_sha256": "2a42fd5e159df8a258c5f0a4e9780c2bc656f653efb6c1f5d6149f5359f85f98"
+  },
+  "interpretation": {
+    "supported": "SCD1 reduces structural/metadata repetition versus the verbose normalized record representation and reconstructs that normalized representation exactly.",
+    "not_supported": "SCD1 is not yet a universal compressor: in this run it is 4.885% larger than plain text alone.",
+    "next_gate": "Compare against gzip/zstd/brotli and a structure-aware codec, accounting for dictionary/schema/decoder costs; repeat on non-religious parallel corpus."
+  },
+  "license_boundary": {
+    "eng": "Public Domain (source/eBible metadata)",
+    "spa": "Public Domain (source/eBible metadata)",
+    "por": "CC BY 3.0 Brasil per source repository LICENCA.md; eBible currently reports CC BY 4.0, so discrepancy is preserved and source repository is used conservatively."
+  }
+}
