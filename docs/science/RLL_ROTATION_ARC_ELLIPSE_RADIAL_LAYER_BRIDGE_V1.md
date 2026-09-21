@@ -339,3 +339,17 @@ implement bounded validator for exact identities and M_GQ null grid;
 emit receipt;
 keep claim_allowed=false for physical inference.
 ```
+
+
+## 10. Reconciliation with existing RLL predecessor
+
+Canonical readback found an earlier same-day RLL baseline at commit `b71eb98bf3da4857c95a2869d59fb2dca73c6fc3`, already binding rotation/arc/ellipse/electronic-layer comparison with `claim_allowed=false`.
+
+This file is a supplemental successor. The incremental RLL contribution is:
+
+- explicit hydrogenic factorization (psi_{nell m}=R_{nell}Y_ell^m);
+- explicit (langle rangle_{nell}) dependence on both (n) and (ell);
+- continuous diagnostic (p_n^*);
+- absolute log mismatch (M_{GQ}) as a normalized successor to the prior signed/log-loss comparator.
+
+No earlier physical gap is closed by this supplement.
