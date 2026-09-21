@@ -42,3 +42,15 @@ Estado atual:
 - fonte canônica de download: `TOKEN_VAZIO`.
 
 Nenhum corpus é considerado ingerido até esses campos serem preenchidos. O teste deve contabilizar integralmente dicionários, índices, alinhamentos, metadados, decoder e proveniência como custo da representação.
+
+
+## Fechamento parcial do TOKEN_VAZIO — corpus trilíngue
+
+Fontes selecionadas para o gate SCD1:
+- ENG: BibleAquifer/WorldEnglishBible @ `bcb8b3edfb302863c241e3d1d2062cf51042d694` — domínio público.
+- SPA: BibleAquifer/ReinaValera1909 @ `84a071324be17c7c66db17dd204d7804e66d728b` — domínio público.
+- POR: blivre/BibliaLivre @ `a315a15e9f4d01883b62206fe441d57762f126b3` — usar conservadoramente **CC BY 3.0 Brasil**, conforme `LICENCA.md` do repositório-fonte.
+
+Observação de licença: eBible apresenta a Bíblia Livre como CC BY 4.0, enquanto o repositório-fonte mantém CC BY 3.0 Brasil. A divergência permanece registrada; não foi reconciliada por inferência.
+
+Os SHA-256 UTF-8 dos nove arquivos usados estão em `results/SCD1_20260920.json`, junto aos blob SHAs e commits de origem.
