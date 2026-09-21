@@ -5,9 +5,18 @@
   "claim_allowed": false,
   "scope": "Exact reconstruction of normalized verse records for Genesis, Matthew and John; source editorial metadata/formatting excluded.",
   "source_commits": {
-    "eng": {"repo": "BibleAquifer/WorldEnglishBible", "commit": "bcb8b3edfb302863c241e3d1d2062cf51042d694"},
-    "spa": {"repo": "BibleAquifer/ReinaValera1909", "commit": "84a071324be17c7c66db17dd204d7804e66d728b"},
-    "por": {"repo": "blivre/BibliaLivre", "commit": "a315a15e9f4d01883b62206fe441d57762f126b3"}
+    "eng": {
+      "repo": "BibleAquifer/WorldEnglishBible",
+      "commit": "bcb8b3edfb302863c241e3d1d2062cf51042d694"
+    },
+    "spa": {
+      "repo": "BibleAquifer/ReinaValera1909",
+      "commit": "84a071324be17c7c66db17dd204d7804e66d728b"
+    },
+    "por": {
+      "repo": "blivre/BibliaLivre",
+      "commit": "a315a15e9f4d01883b62206fe441d57762f126b3"
+    }
   },
   "source_blob_sha": {
     "eng_genesis": "ab430b89a2df24ee5ead89f420d949e578d66857",
@@ -21,7 +30,12 @@
     "por_john": "15b94b71261aea1145ee88d9eba2d215fa5b4e54"
   },
   "source_files_total_bytes": 3275057,
-  "verse_counts_raw": {"eng": 3483, "spa": 3483, "por": 3483, "intersection": 3483},
+  "verse_counts_raw": {
+    "eng": 3483,
+    "spa": 3483,
+    "por": 3483,
+    "intersection": 3483
+  },
   "normalized_records": 10449,
   "bytes": {
     "verbose_records_json": 1642359,
@@ -49,5 +63,16 @@
     "eng": "Public Domain (source/eBible metadata)",
     "spa": "Public Domain (source/eBible metadata)",
     "por": "CC BY 3.0 Brasil per source repository LICENCA.md; eBible currently reports CC BY 4.0, so discrepancy is preserved and source repository is used conservatively."
+  },
+  "source_sha256_utf8": {
+    "eng_genesis": "baa15bae8af292936e53dcbca4c112c92ea719aca0e5b0c17f6ee9cc479fa9ec",
+    "eng_matthew": "6fc380cec5f27bc7465cebd48105f5666b1a406179898f9dec1e813f9da2dbd5",
+    "eng_john": "0b84fcc0879399b485070fce00f96342e0ae2cda8d1afe1687e2940cfc9ab451",
+    "spa_genesis": "ba394ce6ff66d0e5c23b9cc6379ce7d01842a10a1714fbb943eabcf9e30e8248",
+    "spa_matthew": "e2fd6e64c5e9c4563e8bd1171804d83b2e14cc167644d84db1107354e52484c1",
+    "spa_john": "cf00867fb8cdcbdf9fc0fe278662d0ea0f59a937b4ad3473f645a4c7b647f05b",
+    "por_genesis": "7b68f7013cb30efa5f8ba7da24fb2750564abcad7a04227c50bbb3f1d9ed0a56",
+    "por_matthew": "6781b2cd50d60c598fa9bb06c6e85b448d10447a6c0c0ea67ee41e380093e1a9",
+    "por_john": "f1b0bee2eec49ea280bce8d73c983af81701325ad5f8d0dc6ed3204d8b52aa16"
   }
 }
