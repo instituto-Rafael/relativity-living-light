@@ -55,3 +55,27 @@ Resultados negativos, penalização por complexidade, p-valores desfavoráveis, 
 10. Manter `claim_allowed=false` até execução reproduzível.
 
 **Gate:** reorganização que apenas desloca bytes para um dicionário externo sem contabilizá-lo é FAIL. Redução de `H_ctx` deve ser operacional, relativa ao contexto declarado e separada de entropia termodinâmica.
+
+
+## Execução SCD1 reproduzível
+
+Script: `benchmark_scd1.py`  
+Resultado de referência: `results/SCD1_20260920.json`
+
+```bash
+git clone https://github.com/BibleAquifer/WorldEnglishBible /tmp/web
+git -C /tmp/web checkout bcb8b3edfb302863c241e3d1d2062cf51042d694
+
+git clone https://github.com/BibleAquifer/ReinaValera1909 /tmp/rv
+git -C /tmp/rv checkout 84a071324be17c7c66db17dd204d7804e66d728b
+
+git clone https://github.com/blivre/BibliaLivre /tmp/bl
+git -C /tmp/bl checkout a315a15e9f4d01883b62206fe441d57762f126b3
+
+python3 PapersPub/09_language_entropy_formalism/benchmark_scd1.py \
+  --eng-root /tmp/web --spa-root /tmp/rv --por-root /tmp/bl
+```
+
+Gate esperado: `normalized_json_equal=true` e SHA-256 baseline/reconstrução iguais a `960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f`.
+
+O benchmark normaliza para texto principal por versículo e não pretende reproduzir notas, marcação editorial ou metadados completos das fontes.
