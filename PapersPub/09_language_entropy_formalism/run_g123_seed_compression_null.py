@@ -68,20 +68,20 @@ def unique_labels(n,rng):
 
 def null_distributions(refs,maps):
     canonical=seed_from_lists(refs,{l:[maps[l][r] for r in refs] for l in LANGS},"normalized_verse_corpus")
-    metric0=codecs(b(canonical))["zstd_19"]
+    metric0=len(zstd.ZstdCompressor(level=19).compress(b(canonical)))
     dist={"common_order_shuffle":[],"independent_language_shuffle":[],"label_permutation":[]}
     for i in range(N_PERM):
         rng=random.Random(SEED+i)
         rr=refs.copy(); rng.shuffle(rr)
         s=seed_from_lists(rr,{l:[maps[l][r] for r in rr] for l in LANGS},"null_common_order")
-        dist["common_order_shuffle"].append(codecs(b(s))["zstd_19"])
+        dist["common_order_shuffle"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
         texts={l:[maps[l][r] for r in refs] for l in LANGS}
         for l in LANGS: rng.shuffle(texts[l])
         s=seed_from_lists(refs,texts,"null_independent_language")
-        dist["independent_language_shuffle"].append(codecs(b(s))["zstd_19"])
+        dist["independent_language_shuffle"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
         labels=unique_labels(len(refs),rng)
         s=seed_from_lists(labels,{l:[maps[l][r] for r in refs] for l in LANGS},"null_label_permutation")
-        dist["label_permutation"].append(codecs(b(s))["zstd_19"])
+        dist["label_permutation"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
     summary={}
     for k,v in dist.items():
         better=sum(x<=metric0 for x in v)
