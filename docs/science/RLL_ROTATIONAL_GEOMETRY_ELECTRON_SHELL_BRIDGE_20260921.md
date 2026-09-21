@@ -96,3 +96,29 @@ claim_allowed=false.
 F_ok: a typed G-versus-Q bridge now exists without converting analogy into mechanism.
 F_gap: no RLL runtime, dataset, fitted p_n rule, or physical observable binding has been executed.
 F_next: consume a passed Mathematics verifier, then run null-controlled residual comparisons before any RLL scientific promotion.
+
+
+## Successor control — generalized rotational sweep
+
+The geometry producer now also defines for a regular p-gon:
+core_fraction = cos^2(pi/p),
+swept_annulus_fraction = sin^2(pi/p),
+annulus_to_core = tan^2(pi/p).
+
+For nested layers:
+area_scale = product_k cos^2(pi/p_k).
+
+After final circle projection at inclination i:
+projected_area_scale = |cos i| * product_k cos^2(pi/p_k).
+
+For half-step superposition, the central intersection is a regular 2p-gon with:
+R_intersection/R = cos(pi/p)/cos(pi/(2p)).
+
+RLL usage is diagnostic only. No physical observable is assigned by these identities.
+
+Quantum control is strengthened by:
+sum_(l=0)^(n-1)(2l+1)=n^2,
+2*n^2 including spin.
+
+New required falsifier:
+compare any proposed p_n mapping against constant-p, monotone-p and random-p baselines, and require held-out predictive gain. Otherwise PHYSICAL_BINDING remains TOKEN_VAZIO.
