@@ -1,6 +1,6 @@
 # Data Manifest — Formalismo de Linguagem, Entropia e Metáforas
 
-**Status:** `planned`
+**Status:** `analysis_run`
 
 ## Artefatos e dados existentes
 
