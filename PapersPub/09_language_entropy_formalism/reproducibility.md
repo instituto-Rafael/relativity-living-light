@@ -1,6 +1,6 @@
 # Reproducibility — Formalismo de Linguagem, Entropia e Metáforas
 
-**Status:** `planned`
+**Status:** `analysis_run`
 
 ## Ambiente mínimo
 
