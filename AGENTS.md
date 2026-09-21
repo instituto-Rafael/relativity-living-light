@@ -145,6 +145,30 @@ Default: `claim_allowed=false`.
 
 Coherence alone never promotes a scientific claim. Promotion requires the evidence required by the applicable domain contract.
 
+
+## Manifold index navigation
+
+Large knowledge structures should be navigated through recursive indexes rather than loaded as one corpus.
+
+Canonical scaffold:
+
+- `data/navigation/rll_manifold_index_scaffolding_v1.yml`
+- `schemas/rll_manifold_index_scaffolding_v1.schema.json`
+- `docs/architecture/RLL_MANIFOLD_INDEX_SCAFFOLDING_V1.md`
+- Drive scaffold: https://drive.google.com/drive/folders/15dhrj0iJTIRID1UyuOKlN_XXCtIZk6GB
+
+Operational rule:
+
+```text
+TREE = deterministic reconstruction
+MANIFOLD = cross-tree relations
+SUMMARY = progressive view
+SOURCE = authority anchor
+OVERLAY = append-only evolution
+```
+
+Agents should begin with the smallest sufficient summary/index view and expand only the required subtree or relation neighborhood. Summary-of-summary is allowed only when provenance remains reversible to the underlying nodes/sources. Structural cycles are invalid; semantic relation cycles are allowed.
+
 ## Meaningful cycle close
 
 Close significant work with:
