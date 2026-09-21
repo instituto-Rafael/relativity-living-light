@@ -1,3 +1,7 @@
+> **APPEND-ONLY RELATIONSHIP NOTICE — 2026-09-21**
+>
+> RLL baseline bridge already exists at `docs/science/RLL_ROTATIONAL_GEOMETRY_ELECTRON_SHELL_BRIDGE_20260921.md` (commit lineage includes `b71eb98bf3da4857c95a2869d59fb2dca73c6fc3`). This document is **SUPPLEMENTAL_DELTA** only: it adds the logarithmic `L_GQ` comparator/test surface and keeps `claim_allowed=false`.
+>
 # RLL — Circular/Polygon Rotation × Elliptic Projection × Electronic-Layer Bridge V1
 
 **Date:** 2026-09-21  
