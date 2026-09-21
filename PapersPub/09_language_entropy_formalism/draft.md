@@ -1,6 +1,6 @@
 # Formalismo de Linguagem, Entropia e Metáforas
 
-**Status:** `planned`  
+**Status:** `analysis_run`  
 **Escopo:** Transdisciplinary language/entropy material kept as conceptual unless quantified by reproducible metrics.
 
 ## Objetivo
