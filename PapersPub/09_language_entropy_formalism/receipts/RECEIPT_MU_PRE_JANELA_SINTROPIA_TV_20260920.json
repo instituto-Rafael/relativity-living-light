@@ -1,0 +1,49 @@
+{
+  "receipt_id": "RECEIPT-MU-PRE-JANELA-SINTROPIA-TV-20260920",
+  "canonical_mu_id": "MU-PRE-JANELA-SINTROPIA-TV-20260920",
+  "author": "RAFAEL MELO REIS",
+  "purpose": "public documentary chronology / prior-art evidence pointer",
+  "epistemic_state": "PREPAPER_PRIOR_ART_MIRROR",
+  "claim_allowed": false,
+  "public_anchor": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "visibility": "public",
+    "path": "PapersPub/09_language_entropy_formalism/prepaper_observational_window_syntropy_token_vazio_v1.md",
+    "commit_sha": "0f16e59a5a141647a72adfef8f0b11b3548c9ab9",
+    "commit_time_utc": "2026-09-21T02:39:01Z",
+    "commit_time_brt": "2026-09-20T23:39:01-03:00",
+    "git_blob_sha": "03373b70a3f832babbeea27613e8c6135151808c"
+  },
+  "predecessors": [
+    {
+      "repository": "rafaelmeloreisnovo/papers",
+      "visibility": "private",
+      "path": "research_notes/2026-09-20_PREPAPER_JANELA_OBSERVACIONAL_SINTROPIA_TOKEN_VAZIO_V1.md",
+      "commit_sha": "9f13b061aa7af38f881860af1f47dc3bba97ca66",
+      "commit_time_utc": "2026-09-21T02:38:41Z",
+      "git_blob_sha": "52979ee8207a361e4c7686feb9dabe4d9ea9804e"
+    },
+    {
+      "repository": "rafaelmeloreisnovo/Matem-tica-",
+      "visibility": "private",
+      "path": "PrePaper/2026-09-20_JANELA_OBSERVACIONAL_SINTROPIA_TOKEN_VAZIO_V1.md",
+      "commit_sha": "32366633d4df7d7e8c49f664d413adf1baf36be9",
+      "commit_time_utc": "2026-09-21T02:38:46Z",
+      "git_blob_sha": "52979ee8207a361e4c7686feb9dabe4d9ea9804e"
+    }
+  ],
+  "cross_provider": {
+    "templo_vivo_document_id": "1Wz_U9fDLLedASYP-KM2IRBP7IGiwT2H4m4HCNfx4gu8",
+    "templo_vivo_revision_id": "ANLCKQkEredCxvPk57vDRfCK0Y99Tykecf8cHDpB7JzOMTinRDrV8xoBp2XzvhJCa1DH8HqlydsyDC1FYqGAv-r-08ntWbweUuw-xI4bCjo",
+    "start_here_document_id": "1rczmzAyJfKbh_hf1eRqnM9_v4VIqS4RwA1RrbwyZzr4",
+    "start_here_revision_id": "ANLCKQm2kNzW6A1ySs7Hy17DYhc_0VrxRKmc6mFMKEpmjrkC1yN0LnXLeMDluFC3MKGcGTqjSgSkkPLoAWxAC819_Ouebm1QouhrF6Mvfwg"
+  },
+  "core_expression": "JANELA -> RESTRICAO_DE_ESTADOS -> GANHO_DE_INFORMACAO -> COERENCIA_ENTRE_CANAIS -> TOKEN_VAZIO_RESIDUAL",
+  "operational_proxy": "S_obs = D_KL[P(X|Y,C)||P(X|C)] / (L_model + L_context + L_decoder + L_exceptions)",
+  "boundaries": [
+    "SINTROPIA_OPERACIONAL != ENTROPIA_TERMODINAMICA_NEGATIVA",
+    "METAFORA_DO_LEAO != EVIDENCIA_FISICA",
+    "TOKEN_VAZIO != ZERO"
+  ],
+  "legal_boundary": "This receipt documents public chronology and content identity; it does not by itself establish patent priority, copyright ownership, novelty, inventorship, or scientific validity."
+}
