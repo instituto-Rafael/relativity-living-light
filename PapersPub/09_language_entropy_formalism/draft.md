@@ -137,3 +137,55 @@ Resultado: SCD1 reduziu **369.105 bytes (22,474%)** frente ao baseline JSON verb
 **Interpretação proibida:** chamar este resultado de compressor universal ou de compressão semântica superior a compressores gerais.
 
 Próximo gate: comparar, sobre os mesmos bytes e com custos de schema/dicionário contabilizados, SCD1 versus gzip/zstd/brotli e um codec estrutural; repetir em corpus paralelo não religioso.
+
+
+## Δ Semantic Scaffold V1 — João → Mateus
+
+**μID:** `MU-RLL-SEM-SCAFFOLD-V1-20260920`  
+**Estado:** `ANALYSIS_RUN_HEURISTIC_LEXICAL / claim_allowed=false`
+
+Nesta etapa, “entropia” não é redefinida. O constructo operacional proposto é **custo de scaffolding semântico**: quantidade de descrição, contexto, exceções e decoder necessária para recuperar as relações pretendidas com fidelidade declarada.
+
+[
+C_{scaf}(A)=L(A)+L(exceções)+L(decoder)
+]
+
+sujeito a (Fidelidade(A)geq\tau). Como alvo futuro de incerteza semântica:
+
+[
+H_{sem}=H(M\mid E,C)
+]
+
+onde (M) é o significado/intenção, (E) a expressão superficial e (C) o contexto.
+
+### Sinal estrutural por língua
+
+No mesmo corpus de 3.483 referências, a economia SCD1 contra registros verbosos foi ENG=10,242%, SPA=10,428%, POR=10,567%. A faixa estreita (0,325 p.p.) é **observada**, mas é atribuível em grande parte ao schema e contagem de referências compartilhados; não é tratada como constante matemática da semântica.
+
+### Ponte conceitual observada
+
+Heurística lexical em João/Mateus sugere:
+
+[
+João: WORD \leftrightarrow BELIEF \leftrightarrow LIFE \leftrightarrow LOVE
+]
+
+com conexões adicionais a LIGHT/TRUTH, enquanto Mateus desloca densidade para:
+
+[
+KINGDOM \leftrightarrow TRUTH,quad BELIEF \leftrightarrow SERVICE/FORGIVENESS.
+]
+
+Ponte mínima candidata para testar:
+
+[
+WORD \to BELIEF \to LIFE \to LOVE \to TRUTH \to SERVICE/FORGIVENESS \to KINGDOM.
+]
+
+**Resultado negativo útil:** COMPASSION e MERCY aparecem como bons marcadores do lado de Mateus, mas não como âncoras lexicais compartilhadas com João neste gate. Forçá-las como sementes universais aumentaria o custo de inferência/decoder. O próximo teste deve procurar compaixão/misericórdia **latentes em ações**, não apenas palavras.
+
+### Línguas e expressões multiword
+
+A unidade semântica não pode ser sempre a palavra isolada. Expressões como `white spirit`, `spirit level` e `spirit drink` mostram que o token `spirit` muda de região semântica conforme a composição. Portanto o codec semântico precisa permitir nós fraseológicos/contextuais e registrar exceções de tradução, em vez de exigir correspondência palavra↔palavra.
+
+Evidência numérica completa: `results/SEMANTIC_SCAFFOLD_V1_20260920.json`.
