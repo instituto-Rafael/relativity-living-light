@@ -37,3 +37,21 @@ find PapersPub -maxdepth 2 -name draft.md -o -name data_manifest.md -o -name rep
 ## Mitigação de risco científico
 
 Resultados negativos, penalização por complexidade, p-valores desfavoráveis, vieses residuais e lacunas de dados devem aparecer no draft antes de submissão.
+
+
+## Δ Protocolo de falsificação — semente/manifold multilíngue
+
+**Parent:** `MU-RLL-LANG-MANIFOLD-SEED-20260920`
+
+1. Fixar três línguas/edições e registrar licença, bytes e SHA-256.
+2. Definir unidade de alinhamento (verso, sentença ou bloco) antes da análise.
+3. Construir baseline independente por língua e um baseline compressor genérico.
+4. Construir a representação por semente, contabilizando dicionário, índices, alinhamento, schema, proveniência e decoder.
+5. Reconstruir cada versão.
+6. Para modo lossless: exigir SHA-256 idêntico por arquivo reconstruído.
+7. Para modo semântico: fixar métrica e limiar antes de observar os resultados.
+8. Comparar tamanho total, latência, memória, qualidade de reconstrução e falhas.
+9. Repetir em corpus de domínio diferente para testar se o efeito depende da organização bíblica.
+10. Manter `claim_allowed=false` até execução reproduzível.
+
+**Gate:** reorganização que apenas desloca bytes para um dicionário externo sem contabilizá-lo é FAIL. Redução de `H_ctx` deve ser operacional, relativa ao contexto declarado e separada de entropia termodinâmica.
