@@ -15,7 +15,7 @@ EXPECTED_BASELINE="960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82
 
 def b(s:str)->bytes: return s.encode("utf-8")
 def sha_bytes(x:bytes)->str: return hashlib.sha256(x).hexdigest()
-def jdump(x)->str: return json.dumps(x,ensure_ascii=False,separators=(",",":"),sort_keys=True)
+def jdump(x)->str: return json.dumps(x,ensure_ascii=False,separators=(",",":"))
 
 def codecs(data:bytes)->dict[str,int]:
     return {
@@ -93,9 +93,15 @@ def load_udhr(path:Path):
     with path.open("r",encoding="utf-8",newline="") as f:
         rows=list(csv.reader(f,delimiter="\t"))
     header=rows[0]; bylang={row[0]:row for row in rows[1:] if row}
-    chosen={l:bylang.get(l) for l in LANGS}
+    aliases={"eng":["eng"],"spa":["spa"],"por":["por_BR","por_PT","por"]}
+    selected={}
+    chosen={}
+    for lang in LANGS:
+        key=next((k for k in aliases[lang] if k in bylang),None)
+        selected[lang]=key
+        chosen[lang]=bylang.get(key) if key else None
     if any(v is None for v in chosen.values()):
-        return {"status":"TOKEN_VAZIO_LANGUAGE_ROWS","available_sample":sorted(bylang)[:30]}
+        return {"status":"TOKEN_VAZIO_LANGUAGE_ROWS","selected_rows":selected,"available_sample":sorted(bylang)[:30]}
     refs=[]; texts={l:[] for l in LANGS}
     for idx,col in enumerate(header[1:],start=1):
         vals=[chosen[l][idx].strip() if idx<len(chosen[l]) else "" for l in LANGS]
@@ -107,7 +113,7 @@ def load_udhr(path:Path):
     recon=[{"ref":r,"lang":l,"text":seed["texts"][l][i]} for i,r in enumerate(seed["refs"]) for l in LANGS]
     plain="\n".join("\n".join(texts[l]) for l in LANGS)
     vr,ss,rr=jdump(records),jdump(seed),jdump(recon)
-    return {"status":"ANALYSIS_RUN","aligned_segments":len(refs),"normalized_records":len(records),"exact_reconstruction":vr==rr,
+    return {"status":"ANALYSIS_RUN","selected_rows":selected,"aligned_segments":len(refs),"normalized_records":len(records),"exact_reconstruction":vr==rr,
             "sha256":{"baseline":sha_bytes(b(vr)),"reconstructed":sha_bytes(b(rr))},
             "bytes":{"verbose":codecs(b(vr)),"seed":codecs(b(ss)),"plain":codecs(b(plain))}}
 
