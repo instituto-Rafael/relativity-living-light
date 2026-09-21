@@ -16,73 +16,141 @@
     "reconstruction_examples"
   ],
   "properties": {
-    "schema": {"const": "rll.manifold_index_scaffolding.v1"},
-    "status": {"type": "string", "minLength": 1},
-    "claim_allowed": {"const": false},
-    "publication_effect": {"type": "string"},
-    "root_id": {"type": "string", "minLength": 1},
-    "authority": {"type": "object"},
-    "model": {"type": "object"},
+    "schema": {
+      "const": "rll.manifold_index_scaffolding.v1"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "publication_effect": {
+      "type": "string"
+    },
+    "root_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "object"
+    },
+    "model": {
+      "type": "object"
+    },
     "structural_invariants": {
       "type": "array",
       "minItems": 1,
-      "items": {"type": "string", "minLength": 1},
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "uniqueItems": true
     },
     "summary_pyramid": {
       "type": "object",
-      "required": ["SIGMA0", "SIGMA1", "SIGMA2", "SIGMA3", "SIGMA4", "SIGMA5", "SIGMA6"],
+      "required": [
+        "SIGMA0",
+        "SIGMA1",
+        "SIGMA2",
+        "SIGMA3",
+        "SIGMA4",
+        "SIGMA5",
+        "SIGMA6"
+      ],
       "additionalProperties": {
         "type": "object",
-        "required": ["name", "target_tokens", "purpose"],
+        "required": [
+          "name",
+          "target_tokens",
+          "purpose"
+        ],
         "properties": {
-          "name": {"type": "string"},
+          "name": {
+            "type": "string"
+          },
           "target_tokens": {
             "oneOf": [
-              {"type": "integer", "minimum": 1},
-              {"const": "TOKEN_VAZIO"}
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "const": "TOKEN_VAZIO"
+              }
             ]
           },
-          "purpose": {"type": "string"}
+          "purpose": {
+            "type": "string"
+          }
         },
         "additionalProperties": true
       }
     },
-    "relation_types": {"type": "object"},
-    "reconstruction": {"type": "object"},
-    "navigation_budgets": {"type": "object"},
+    "relation_types": {
+      "type": "object"
+    },
+    "reconstruction": {
+      "type": "object"
+    },
+    "navigation_budgets": {
+      "type": "object"
+    },
     "nodes": {
       "type": "object",
       "minProperties": 1,
-      "additionalProperties": {"$ref": "#/$defs/node"}
+      "additionalProperties": {
+        "$ref": "#/$defs/node"
+      }
     },
     "relations": {
       "type": "object",
-      "additionalProperties": {"$ref": "#/$defs/relation"}
+      "additionalProperties": {
+        "$ref": "#/$defs/relation"
+      }
     },
     "overlays": {
       "type": "array",
-      "items": {"$ref": "#/$defs/overlay"}
+      "items": {
+        "$ref": "#/$defs/overlay"
+      }
     },
     "reconstruction_examples": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/$defs/recipe"}
+      "items": {
+        "$ref": "#/$defs/recipe"
+      }
     }
   },
   "$defs": {
     "stringArray": {
       "type": "array",
-      "items": {"type": "string", "minLength": 1},
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "uniqueItems": true
     },
     "summaries": {
       "type": "object",
       "minProperties": 1,
       "propertyNames": {
-        "enum": ["SIGMA0", "SIGMA1", "SIGMA2", "SIGMA3", "SIGMA4", "SIGMA5", "SIGMA6"]
+        "enum": [
+          "SIGMA0",
+          "SIGMA1",
+          "SIGMA2",
+          "SIGMA3",
+          "SIGMA4",
+          "SIGMA5",
+          "SIGMA6"
+        ]
       },
-      "additionalProperties": {"type": "string", "minLength": 1}
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "node": {
       "type": "object",
@@ -126,59 +194,164 @@
             "TOKEN_VAZIO_NODE"
           ]
         },
-        "label": {"type": "string", "minLength": 1},
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
         "primary_parent": {
           "oneOf": [
-            {"type": "string", "minLength": 1},
-            {"type": "null"}
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
           ]
         },
-        "structural_children": {"$ref": "#/$defs/stringArray"},
-        "index_refs": {"$ref": "#/$defs/stringArray"},
-        "source_refs": {"$ref": "#/$defs/stringArray"},
-        "artifact_refs": {"$ref": "#/$defs/stringArray"},
-        "evidence_refs": {"$ref": "#/$defs/stringArray"},
-        "relation_refs": {"$ref": "#/$defs/stringArray"},
-        "inheritance_refs": {"$ref": "#/$defs/stringArray"},
-        "summaries": {"$ref": "#/$defs/summaries"},
+        "structural_children": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "index_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "relation_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "inheritance_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "summaries": {
+          "$ref": "#/$defs/summaries"
+        },
         "L9_routes": {
           "type": "array",
-          "items": {"enum": ["L", "O", "T", "P", "C", "R", "I", "E", "A"]},
+          "items": {
+            "enum": [
+              "L",
+              "O",
+              "T",
+              "P",
+              "C",
+              "R",
+              "I",
+              "E",
+              "A"
+            ]
+          },
           "uniqueItems": true
         },
         "S7_scale": {
-          "enum": ["token", "block", "file", "project", "ecosystem", "corpus", "manifold"]
+          "enum": [
+            "token",
+            "block",
+            "file",
+            "project",
+            "ecosystem",
+            "corpus",
+            "manifold"
+          ]
         },
-        "epistemic_state": {"type": "string", "minLength": 1},
-        "coverage": {"type": "string", "minLength": 1},
-        "revision_ref": {"type": "string", "minLength": 1},
-        "claim_allowed": {"const": false},
-        "gap": {"type": ["string", "object", "array", "null"]},
-        "F_next": {"type": ["string", "null"]}
+        "epistemic_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_allowed": {
+          "const": false
+        },
+        "gap": {
+          "type": [
+            "string",
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        "F_next": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       },
       "additionalProperties": true
     },
     "relation": {
       "type": "object",
-      "required": ["source", "target", "relation", "scope", "evidence_refs", "state"],
+      "required": [
+        "source",
+        "target",
+        "relation",
+        "scope",
+        "evidence_refs",
+        "state"
+      ],
       "properties": {
-        "source": {"type": "string", "minLength": 1},
-        "target": {"type": "string", "minLength": 1},
-        "relation": {"type": "string", "minLength": 1},
-        "scope": {"type": "string", "minLength": 1},
-        "evidence_refs": {"$ref": "#/$defs/stringArray"},
-        "state": {"type": "string", "minLength": 1},
-        "claim_allowed": {"const": false}
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_allowed": {
+          "const": false
+        }
       },
       "additionalProperties": true
     },
     "overlay": {
       "type": "object",
-      "required": ["overlay_id", "base_ref", "operations"],
+      "required": [
+        "overlay_id",
+        "base_ref",
+        "operations"
+      ],
       "properties": {
-        "overlay_id": {"type": "string", "minLength": 1},
-        "base_ref": {"type": "string", "minLength": 1},
-        "operations": {"type": "array"}
+        "overlay_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operations": {
+          "type": "array"
+        }
       },
       "additionalProperties": true
     },
@@ -196,25 +369,58 @@
         "source_policy"
       ],
       "properties": {
-        "recipe_id": {"type": "string", "minLength": 1},
-        "root_node": {"type": "string", "minLength": 1},
-        "target_view": {"type": "string", "minLength": 1},
+        "recipe_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_node": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_view": {
+          "type": "string",
+          "minLength": 1
+        },
         "max_depth": {
           "oneOf": [
-            {"type": "integer", "minimum": 0},
-            {"const": "TOKEN_VAZIO"}
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "const": "TOKEN_VAZIO"
+            }
           ]
         },
         "summary_level": {
-          "enum": ["SIGMA0", "SIGMA1", "SIGMA2", "SIGMA3", "SIGMA4", "SIGMA5", "SIGMA6"]
+          "enum": [
+            "SIGMA0",
+            "SIGMA1",
+            "SIGMA2",
+            "SIGMA3",
+            "SIGMA4",
+            "SIGMA5",
+            "SIGMA6"
+          ]
         },
-        "relation_filters": {"$ref": "#/$defs/stringArray"},
-        "inheritance_policy": {"type": "string", "minLength": 1},
-        "overlay_chain": {"$ref": "#/$defs/stringArray"},
-        "source_policy": {"type": "string", "minLength": 1}
+        "relation_filters": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "inheritance_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overlay_chain": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "source_policy": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": true
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Structural contract for recursive index-of-indexes navigation, summary provenance, deterministic reconstruction, relational manifold links and append-only overlays; schema validity does not validate scientific claims."
 }
