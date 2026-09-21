@@ -1,0 +1,301 @@
+schema: rll.manifold_index_scaffolding.v1
+status: GOVERNED_DRAFT
+claim_allowed: false
+publication_effect: NONE
+root_id: MIDX:RLL:ROOT:v1
+
+authority:
+  drive_house: "https://drive.google.com/drive/folders/1Iza50dV_x13I7amR9gi-y-4qGhoFLxYF"
+  drive_manifold_scaffold: "https://drive.google.com/drive/folders/15dhrj0iJTIRID1UyuOKlN_XXCtIZk6GB"
+  drive_canonical_spec: "https://docs.google.com/document/d/1grVcmNnOJZvxNN7BlyIpBE9DHbygRpK3LesK_EcfSIw/edit"
+  drive_summary_pyramid: "https://docs.google.com/document/d/1UOFfqfrHJFgj2pDFYg-2CIrMMjG4pS739C0BQrkqeFk/edit"
+  repository: instituto-Rafael/relativity-living-light
+  source_boundary: "SOURCE != INDEX != SUMMARY != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"
+
+model:
+  tuple: "MΩI=(V,Es,Er,H,Σ,P,O,G)"
+  tree_role: deterministic_reconstruction_skeleton
+  manifold_role: cross_tree_relational_topology
+  structural_graph: DAG
+  semantic_graph: directed_multigraph_cycles_allowed
+
+structural_invariants:
+  - root_has_no_primary_parent
+  - non_root_has_exactly_one_primary_parent
+  - structural_children_resolve
+  - structural_contains_graph_is_acyclic
+  - summaries_preserve_provenance
+  - overlays_preserve_predecessor
+  - navigation_never_promotes_claim
+  - unresolved_reference_becomes_TOKEN_VAZIO_or_gap
+
+summary_pyramid:
+  SIGMA0:
+    name: LABEL
+    target_tokens: 12
+    purpose: identify
+  SIGMA1:
+    name: MICRO
+    target_tokens: 32
+    purpose: orient
+  SIGMA2:
+    name: BRIEF
+    target_tokens: 128
+    purpose: choose_expansion
+  SIGMA3:
+    name: CAPSULE
+    target_tokens: 512
+    purpose: understand_module
+  SIGMA4:
+    name: SYNTHESIS
+    target_tokens: 2048
+    purpose: summarize_multiple_children
+  SIGMA5:
+    name: EXPANDED
+    target_tokens: TOKEN_VAZIO
+    purpose: reconstruct_selected_subtree
+  SIGMA6:
+    name: SOURCE_VIEW
+    target_tokens: TOKEN_VAZIO
+    purpose: reach_original_sources
+
+relation_types:
+  structural:
+    - CONTAINS
+    - PRIMARY_PARENT
+    - INDEXES
+    - SHARD_OF
+    - SUMMARY_OF
+    - MANIFEST_OF
+  semantic:
+    - AGREES_WITHIN_SCOPE
+    - TENSION
+    - CONTRADICTED_BY_EVIDENCE
+    - ORTHOGONAL
+    - INSUFFICIENT_COMPARABILITY
+    - DERIVES_FROM
+    - REPRODUCES
+    - SUPERSEDES
+    - EVIDENCE_FOR
+    - BLOCKED_BY
+    - REFERENCES
+    - IMPLEMENTS
+    - SPECIALIZES
+    - GENERALIZES
+    - INHERITS
+    - ROUTES_TO
+    - TOKEN_VAZIO_RELATION
+
+reconstruction:
+  default_summary_level: SIGMA2
+  deterministic_child_order: explicit
+  resolve_inheritance: by_reference
+  apply_overlays: in_declared_order
+  missing_reference_policy: TOKEN_VAZIO
+  receipt_required: true
+  receipt_fields:
+    - root_id
+    - resolved_nodes
+    - unresolved_nodes
+    - resolved_edges
+    - unresolved_edges
+    - overlays_applied
+    - summary_level
+    - source_refs
+    - claim_allowed
+
+navigation_budgets:
+  tiny:
+    summary_levels: [SIGMA0, SIGMA1]
+    max_depth: 1
+  small:
+    summary_levels: [SIGMA2]
+    max_depth: 2
+  medium:
+    summary_levels: [SIGMA3]
+    max_depth: 3
+  large:
+    summary_levels: [SIGMA4]
+    max_depth: 6
+  source:
+    summary_levels: [SIGMA6]
+    max_depth: TOKEN_VAZIO
+
+nodes:
+  MIDX:RLL:ROOT:v1:
+    kind: INDEX_ROOT
+    label: RLL manifold scaffold root
+    primary_parent: null
+    structural_children:
+      - MIDX:RLL:ROUTE_FOREST:v1
+      - MIDX:RLL:SCIENTIFIC_NAV:v1
+      - MIDX:RLL:KNOWLEDGE_MATRIX:v1
+      - MIDX:RLL:MIDDLEWARE_HOUSE:v1
+    index_refs:
+      - data/knowledge_forest/rll_route_forest_blueprint.json
+      - data/navigation/scientific_mechanisms.v1.json
+    source_refs:
+      - AGENTS.md
+    summaries:
+      SIGMA0: RLL manifold root
+      SIGMA1: Recursive index of RLL navigation, evidence, middleware and knowledge structures.
+      SIGMA2: >-
+        Root index that reconstructs RLL through subordinate indexes instead of
+        copying their corpora; semantic relations remain cross-tree and
+        claim_allowed stays false.
+    L9_routes: [L, O, T, P, C, R, I, E, A]
+    S7_scale: manifold
+    epistemic_state: GOVERNED_DRAFT
+    coverage: PARTIAL
+    revision_ref: rll/lab
+
+  MIDX:RLL:ROUTE_FOREST:v1:
+    kind: INDEX
+    label: RLL route forest
+    primary_parent: MIDX:RLL:ROOT:v1
+    structural_children: []
+    index_refs:
+      - data/knowledge_forest/rll_route_forest_blueprint.json
+      - data/knowledge_forest/rll_route_forest_overlay_20260731.json
+      - data/knowledge_forest/rll_route_flow_events.jsonl
+    source_refs:
+      - data/knowledge_forest/rll_route_forest_blueprint.json
+    summaries:
+      SIGMA0: Route forest
+      SIGMA1: Structural route forest with nodes, parents, regions, routes and gaps.
+      SIGMA2: >-
+        Existing RLL structural forest reused as a subordinate index; overlays
+        evolve route state without replacing the base snapshot.
+    L9_routes: [L, P, R, I, E]
+    S7_scale: project
+    epistemic_state: SOURCE_BOUND
+    coverage: PARTIAL
+    revision_ref: b659ef50da8dabe60f720a6d24ce46a09968e872
+
+  MIDX:RLL:SCIENTIFIC_NAV:v1:
+    kind: INDEX
+    label: Scientific navigation
+    primary_parent: MIDX:RLL:ROOT:v1
+    structural_children: []
+    index_refs:
+      - data/navigation/scientific_mechanisms.v1.json
+    source_refs:
+      - data/navigation/scientific_mechanisms.v1.json
+    summaries:
+      SIGMA0: Scientific navigation
+      SIGMA1: Registry of scientific mechanisms, authority, evidence routes and uncertainties.
+      SIGMA2: >-
+        Claim-bounded scientific navigation registry used as an evidential facet
+        of the manifold rather than as proof of the listed scientific claims.
+    L9_routes: [P, C, R, I, E]
+    S7_scale: project
+    epistemic_state: SOURCE_BOUND
+    coverage: PARTIAL
+    revision_ref: 9b5fcfb1329ba8919b07e455ff171921f134c48c
+
+  MIDX:RLL:KNOWLEDGE_MATRIX:v1:
+    kind: INDEX
+    label: Knowledge matrix projection
+    primary_parent: MIDX:RLL:ROOT:v1
+    structural_children: []
+    index_refs:
+      - tools/build_knowledge_matrix.py
+    source_refs:
+      - tools/build_knowledge_matrix.py
+    summaries:
+      SIGMA0: Knowledge matrix
+      SIGMA1: Multidimensional projection of formulas, concepts, gaps, results and bridges.
+      SIGMA2: >-
+        Generated projection that can become one manifold view; it does not
+        replace original sources or the reconstruction skeleton.
+    L9_routes: [O, T, R, I, A]
+    S7_scale: project
+    epistemic_state: IMPLEMENTATION_OBSERVED
+    coverage: PARTIAL
+    revision_ref: 69f0c6c30e354ddc97bc0383cf2d51d959608515
+
+  MIDX:RLL:MIDDLEWARE_HOUSE:v1:
+    kind: INDEX
+    label: Shared AI middleware house
+    primary_parent: MIDX:RLL:ROOT:v1
+    structural_children:
+      - MIDX:RLL:MANIFOLD_DRIVE:v1
+    index_refs:
+      - AGENTS.md
+      - data/governance/RLL_AI_SHARED_KNOWLEDGE_MIDDLEWARE_HOUSE_V1.yml
+    source_refs:
+      - AGENTS.md
+    summaries:
+      SIGMA0: AI middleware house
+      SIGMA1: Shared Drive/GitHub handoff and evidence routing contract.
+      SIGMA2: >-
+        Model-neutral middleware connecting human intent, Drive memory and
+        GitHub producer authority through bounded handoffs, receipts and 6Σ.
+    L9_routes: [L, O, T, P, C, R, I, E, A]
+    S7_scale: ecosystem
+    epistemic_state: IMPLEMENTED_MERGED
+    coverage: PARTIAL
+    revision_ref: e9f402fe76253f082395b2d38e8a1ebec4947627
+
+  MIDX:RLL:MANIFOLD_DRIVE:v1:
+    kind: INDEX
+    label: Drive manifold scaffold
+    primary_parent: MIDX:RLL:MIDDLEWARE_HOUSE:v1
+    structural_children: []
+    index_refs:
+      - "https://drive.google.com/drive/folders/15dhrj0iJTIRID1UyuOKlN_XXCtIZk6GB"
+    source_refs:
+      - "https://docs.google.com/document/d/1grVcmNnOJZvxNN7BlyIpBE9DHbygRpK3LesK_EcfSIw/edit"
+      - "https://docs.google.com/document/d/1UOFfqfrHJFgj2pDFYg-2CIrMMjG4pS739C0BQrkqeFk/edit"
+    summaries:
+      SIGMA0: Drive manifold scaffold
+      SIGMA1: Documentary index-of-indexes and summary-pyramid scaffold.
+      SIGMA2: >-
+        Drive-side navigation home for root indexes, summary pyramid, node
+        manifests, relations, reconstruction recipes and append-only overlays.
+    L9_routes: [L, P, C, R, I, A]
+    S7_scale: ecosystem
+    epistemic_state: IMPLEMENTED_DOCUMENTARY
+    coverage: PARTIAL
+    revision_ref: TOKEN_VAZIO_DRIVE_REVISION
+
+relations:
+  REL:RLL:FOREST:NAV:v1:
+    source: MIDX:RLL:ROUTE_FOREST:v1
+    target: MIDX:RLL:SCIENTIFIC_NAV:v1
+    relation: ROUTES_TO
+    scope: navigation
+    evidence_refs:
+      - data/knowledge_forest/rll_route_forest_blueprint.json
+      - data/navigation/scientific_mechanisms.v1.json
+    state: PARTIAL
+  REL:RLL:MATRIX:FOREST:v1:
+    source: MIDX:RLL:KNOWLEDGE_MATRIX:v1
+    target: MIDX:RLL:ROUTE_FOREST:v1
+    relation: DERIVES_FROM
+    scope: generated_projection
+    evidence_refs:
+      - tools/build_knowledge_matrix.py
+      - data/knowledge_forest/rll_route_forest_blueprint.json
+    state: SOURCE_BOUND
+  REL:RLL:MIDDLEWARE:DRIVE:v1:
+    source: MIDX:RLL:MIDDLEWARE_HOUSE:v1
+    target: MIDX:RLL:MANIFOLD_DRIVE:v1
+    relation: ROUTES_TO
+    scope: documentary_navigation
+    evidence_refs:
+      - AGENTS.md
+    state: IMPLEMENTED
+
+overlays: []
+
+reconstruction_examples:
+  - recipe_id: REC:RLL:ROOT:SMALL:v1
+    root_node: MIDX:RLL:ROOT:v1
+    target_view: navigation
+    max_depth: 2
+    summary_level: SIGMA2
+    relation_filters: [ROUTES_TO, DERIVES_FROM]
+    inheritance_policy: by_reference
+    overlay_chain: []
+    source_policy: pointers_only
