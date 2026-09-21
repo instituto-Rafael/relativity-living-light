@@ -119,3 +119,21 @@ A hipótese deve ser reduzida ou rejeitada se:
 - resultados não se reproduzirem em corpus não religioso e estruturalmente diferente.
 
 **Boundary:** `SOURCE ≠ ARTEFATO ≠ EXECUÇÃO ≠ EVIDÊNCIA ≠ CLAIM`.
+
+
+## Resultado SCD1 — 2026-09-20
+
+O primeiro ensaio executado usa 3.483 referências comuns em Gênesis, Mateus e João, totalizando 10.449 registros normalizados em inglês, espanhol e português.
+
+| Representação | bytes UTF-8 |
+|---|---:|
+| registros JSON verbosos | 1.642.359 |
+| SCD1 — refs compartilhadas + vetores linguísticos | 1.273.254 |
+| texto puro concatenado | 1.213.948 |
+
+Resultado: SCD1 reduziu **369.105 bytes (22,474%)** frente ao baseline JSON verboso e reconstruiu exatamente os registros normalizados (`SHA-256 960d1c66…e82c8f`). Porém SCD1 ficou **59.306 bytes (4,885%) maior** que texto puro.
+
+**Interpretação permitida:** há ganho de organização/deduplicação estrutural de metadados para o modelo normalizado.  
+**Interpretação proibida:** chamar este resultado de compressor universal ou de compressão semântica superior a compressores gerais.
+
+Próximo gate: comparar, sobre os mesmos bytes e com custos de schema/dicionário contabilizados, SCD1 versus gzip/zstd/brotli e um codec estrutural; repetir em corpus paralelo não religioso.
