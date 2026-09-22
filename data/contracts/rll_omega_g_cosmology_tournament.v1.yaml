@@ -1,7 +1,7 @@
 schema: rll.omega_g_cosmology_tournament.v1
 version: 1
 date: "2026-09-22"
-state: MATERIALIZED_NOT_EXECUTED
+state: PARTIAL_EXECUTION_G1_PASS_G3_BLOCKED_DATA
 claim_allowed: false
 scientific_confirmation: false
 
@@ -125,9 +125,9 @@ null_tests:
 
 promotion_gates:
   G0_contract: PASS_MATERIALIZED
-  G1_null_parity: TOKEN_VAZIO_NOT_RUN
+  G1_null_parity: PASS_EXACT_IDENTITY
   G2_single_binding_synthetic_recovery: TOKEN_VAZIO
-  G3_real_background_tournament: TOKEN_VAZIO
+  G3_real_background_tournament: BLOCKED_MISSING_PANTHEON_FULL_COVARIANCE_IN_EXECUTION_ENV
   G4_ablation: TOKEN_VAZIO
   G5_holdout: TOKEN_VAZIO
   G6_independent_reproduction: TOKEN_VAZIO
@@ -137,3 +137,30 @@ rollback:
   mode: append_only
   baseline_artifacts_immutable: true
   omega_g_failure_removes_binding_not_baseline: true
+
+
+last_execution:
+  date: "2026-09-22"
+  basis:
+    uploaded_snapshot_sha256: 9dd8f6c44bdfc4a28e43097ce48ce92c3da2406a0594a68d4a00a06dff1a0b33
+    g4_blob_sha: 88bfef7387675ae3c617e2644a999e89a74a08e6
+    g4_contract_blob_sha: 5690741a0f40fa50543935dd9c18a4d713d1c1a7
+    omega_runner_blob_sha: 17ee47033abdbefca977e2fceefb6a57d144fcef
+    omega_tests_blob_sha: 80e865aea6c380de2e46d08bdc8f74bd43f0b7c4
+    omega_registry_blob_sha: 587f76e8614b43bcd2cffafd6923d9fb9fe9429f
+  structural_validation: PASS
+  focused_tests: "6/6 PASS"
+  null_parity:
+    state: PASS
+    models: [LCDM, wCDM, CPL, RLL]
+    redshifts: [0.0, 0.01, 0.1, 0.3, 0.8, 1.5, 2.33]
+    global_max_abs_delta_E2: 0.0
+  baseline_smoke:
+    state: BLOCKED_MISSING_DATA
+    missing: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov
+    fallback_used: false
+    meaning: full Pantheon+ covariance is required by G4; no diagonal substitution was allowed
+  execution_found_and_fixed:
+    - yaml_rollback_key_missing_colon
+    - python313_dynamic_module_registration_for_dataclass
+  claim_allowed: false
