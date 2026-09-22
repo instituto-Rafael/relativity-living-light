@@ -2,7 +2,7 @@
 
 ## Status
 
-`HYPOTHESIS_PROTOCOL` — structural formalization only. `claim_allowed=false`.
+`TYPED_EXTENSION_LOCAL_VALIDATION_PASS` — this document extends the canonical `data/contracts/rll_retarded_spacetime_state.v1.yml` only for ordered intervening-region context. Shared semantics remain governed by the parent contract. `claim_allowed=false`.
 
 ## Core distinction
 
