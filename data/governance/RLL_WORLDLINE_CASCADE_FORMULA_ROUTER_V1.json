@@ -21,7 +21,27 @@
     "delta_p_value_target": 0.18,
     "R": 2,
     "r": 0.7,
-    "unresolved_index_around_70": "TOKEN_VAZIO_INDEX_AROUND_70"
+    "unresolved_index_around_70": "SUPERSEDED_BY_SOURCE_OBSERVED_CV_MEAN_0_700000",
+    "reconciliation_history": [
+      {
+        "date": "2026-09-22",
+        "previous": "TOKEN_VAZIO_INDEX_AROUND_70",
+        "corrected_to": "SOURCE_OBSERVED_CV_MEAN_0_700000",
+        "reason": "spoken 'around 70' was rechecked as decimal ~0.70; exact committed artifact row is zone 28 CV_mean=0.700000"
+      }
+    ],
+    "stability_related_CV_mean_0_70": {
+      "value": 0.7,
+      "zone": 28,
+      "refs": 95,
+      "source": "rafaelmeloreisnovo/llamaRafaelia/rmrCti/zone_stats.txt",
+      "source_blob_sha": "230a578abaa4675f48f967f9af414a23ef1a8ef4",
+      "upstream_metric_definition": "CV = top10% value share using buckets",
+      "upstream_source": "rafaelmeloreisnovo/llamaRafaelia/rmrCti/omega_metrics_v2.c",
+      "upstream_blob_sha": "17cb0e5722ec180091c636ed5e1df3ba2dc68864",
+      "state": "SOURCE_OBSERVED_STABILITY_PROXY_CANDIDATE",
+      "boundary": "not stable_any rate; not DeltaP; not a physical constant"
+    }
   },
   "state_schema": [
     "x_mu",
@@ -120,10 +140,10 @@
   ],
   "F_gap": [
     "independent real RMRCTI trace package",
-    "exact index-around-70 identity",
     "executed astrophysical event-chain fixture",
     "benchmarked cascade sensitivity thresholds",
-    "causal RMRCTI-to-cosmology mapping"
+    "causal RMRCTI-to-cosmology mapping",
+    "interpretation/replication of zone28 CV_mean=0.700000 as stability proxy beyond implemented concentration metric"
   ],
   "F_next": "build one provenance-complete synthetic event-chain fixture and route residuals into RMRCTI without reinterpreting DeltaP physically"
 }
