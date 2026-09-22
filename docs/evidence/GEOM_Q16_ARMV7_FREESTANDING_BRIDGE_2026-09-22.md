@@ -206,3 +206,60 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
 RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
 GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
 ```
+
+
+## v5 r×d boundary sheet at 2r±1
+
+A successor producer branch adds a two-dimensional falsification sheet focused on the exact topology boundary:
+
+```text
+producer_repo=rafaelmeloreisnovo/Matem-tica-
+producer_pr=#38
+producer_branch=agent/geom-v5-rxd-boundary-20260922
+producer_head=4af0f0746c1f1a715f8b9e1de58e768791519e58
+base_v4_source_sha256=43f363f386e001a4cd568b3ae9e7a919ab9bdbef0e38c48fa2ce99bf951f8d0a
+relation=d=2r+delta
+delta={-1,0,+1}
+```
+
+The executable sheet is intentionally not a brute-force claim over the full `r×d` pairspace. It combines:
+
+- exhaustive raw radii `r=1..65536`;
+- 65536 deterministic radii over the domain where `2r+1` remains representable;
+- five representability-edge probes around `2^30`.
+
+Expected and independently reproduced integer-oracle counts are:
+
+```text
+rxd_rows=131072
+rxd_evals=393221
+rxd_minus_cases=131072
+rxd_tangent_cases=131072
+rxd_plus_cases=131072
+rxd_special_cases=5
+INDEPENDENT_RXD_INTEGER_ORACLE=PASS
+oracle_report_sha256=7758bfa89e7d04cec520d876c46fca376c43d0beac75275579d3b7be3be7f078
+producer_c_execution_in_oracle=NOT_RUN
+```
+
+GitHub Actions run `35782026225` was observed twice and failed before any workflow step became observable; both attempts exposed `steps=[]`, and the job-log blob was unavailable. Therefore the provider state is typed narrowly:
+
+```text
+GEOM_RXD_PROVIDER_CI=PROVIDER_PRESTART_FAILURE_REPRODUCED
+GEOM_RXD_PROVIDER_PROGRAM_RESULT=TOKEN_VAZIO
+GEOM_RXD_ARMV7_PHYSICAL=TOKEN_VAZIO
+SECOND_PHYSICAL_DEVICE=TOKEN_VAZIO
+BAREMETAL_PHYSICAL_RESET_BOOT=TOKEN_VAZIO
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
+```
+
+The independent integer oracle reproduces the boundary arithmetic but does not substitute for execution of the producer C artifact, a physical ARMv7 receipt, a second physical device, a board-specific reset-vector boot, or the RLL executable's own physical gate.
+
+### R3 — r×d bridge
+
+F_ok: exact all-Q16 topology proof remains intact; r×d `2r±1` sheet, receipt-v5 runner, master integration and independent arithmetic oracle are materialized in the producer PR; independent oracle counts PASS.
+
+F_gap: provider workflow starts fail before observable steps; producer-C provider result, new physical ARMv7 r×d receipt, second physical device, physical reset boot and RLL physical execution remain open/TOKEN_VAZIO.
+
+F_next: ingest an artifact-specific physical ARMv7 r×d receipt when executed; independently diagnose provider pre-start only if a provider diagnostic becomes available; keep reset boot and RLL engine as separate gates.
