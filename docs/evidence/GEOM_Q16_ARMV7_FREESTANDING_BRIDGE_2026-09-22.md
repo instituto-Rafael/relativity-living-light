@@ -171,3 +171,38 @@ gate_doc_commit=ace1060fbfbe547b980189d62bbec3b6be1a9e4e
 ```
 
 Only the output receipt from that runner may promote `RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL`.
+
+
+## v5 all-radii partition and joint65 physical route
+
+The geometry producer now contains an explicit all-radii proof/reduction set under `.../v5/`:
+
+```text
+ALL_Q16_RADII_TOPOLOGY=PROVED_BY_EXACT_INTEGER_RANGE_PARTITION
+NORMALIZED_X_DOMAIN_0_TO_2=EXHAUSTIVE_REDUCTION_PASS
+SECOND_TOOLCHAIN_REPRODUCTION=PASS
+SECOND_LANGUAGE_REFERENCE_REPRODUCTION=PASS
+SECOND_PHYSICAL_DEVICE_REPRODUCTION=TOKEN_VAZIO
+RESET_VECTOR_BAREMETAL_STRUCTURAL=PASS
+RESET_VECTOR_BAREMETAL_EXECUTION=TOKEN_VAZIO
+```
+
+RLL remains separate. Two physical gates are now available:
+
+```text
+scripts/run_rll_canonical_armv7_physical_gate.sh
+  -> 33-row canonical H(z) kernel
+
+scripts/run_rll_joint65_armv7_freestanding_physical_gate.sh
+  -> 65-observation joint route with the four committed source files embedded by .incbin
+```
+
+The joint65 ELF requires 65/65 bound observations, CMB covariance, pinned chi2 values `4641555` and `4261420`, delta `-380135`, and `claim_allowed=0`, while also requiring zero dynamic/undefined/runtime-helper gates.
+
+Until a physical ARMv7 run is ingested:
+
+```text
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
+GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
+```
