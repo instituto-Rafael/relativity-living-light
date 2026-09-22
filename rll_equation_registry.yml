@@ -223,6 +223,27 @@ equations:
     real_data_validators: []
     claim_boundary: "Algebraic momentum-variable rewrite for A1.2. PASS of the regularity gate does not establish physical stability, initial conditions, CLASS/CAMB parity, or observational validity."
 
+
+  - id: rll_a1_superhorizon_delta_ic_candidate
+    equation: "delta_s/Psi0 = -3/2 - x^2/28 + x^4/280 + O(x^6), x=k tau"
+    domain: ["cosmology", "perturbations", "initial_conditions", "RLL"]
+    status: "research_candidate_series"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_SUPERHORIZON_IC_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_superhorizon_ic_v1.py"
+    methodology_phase: "component_local_superhorizon_ic"
+    real_data_validators: []
+    claim_boundary: "Leading d0=-3/2 is an adiabatic/regular consistency coefficient in the A1 asymptote; higher-order coefficients are conditional on the frozen-potential reduced reference and are not a full coupled cosmological IC."
+
+  - id: rll_a1_superhorizon_momentum_ic_candidate
+    equation: "U_s/(k Psi0) = x/2 - x^3/28 + x^5/840 + O(x^7), U_s=(1+w_s)theta_s"
+    domain: ["cosmology", "perturbations", "initial_conditions", "RLL"]
+    status: "research_candidate_series"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_SUPERHORIZON_IC_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_superhorizon_ic_v1.py"
+    methodology_phase: "component_local_superhorizon_ic"
+    real_data_validators: []
+    claim_boundary: "Component-local regular momentum series only; neutrino/metric corrections, CLASS/CAMB maps, full constraints and solver convergence remain open."
+
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:
   - tools/generate_yml_audit_docs.py
