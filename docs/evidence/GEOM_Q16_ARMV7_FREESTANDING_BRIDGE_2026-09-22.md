@@ -324,3 +324,18 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
 RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
 GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
 ```
+
+
+## Constrained-device bootstrap result
+
+The selective RLL Joint65 bootstrap was physically exercised on the ARMv7 Termux device without cloning the repository.
+
+```text
+pinned_ref=71c66f8efccef70f20a9b9657146d4dcac112672
+downloaded_files=20
+capsule_size=179K
+RLL_JOINT65_SELECTIVE_BOOTSTRAP_ARMV7=PASS
+```
+
+The execution gate remains separate:
+`RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO`.
