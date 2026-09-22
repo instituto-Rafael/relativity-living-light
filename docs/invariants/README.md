@@ -48,3 +48,21 @@ R(t+1)=R(t)×Φ_ethica×E_Verbo×(√3/2)^(πφ)
 - **F_ok:** imagem versionada e documentada.
 - **F_gap:** PNG gerado externamente não foi incorporado como binário neste commit; o SVG é a versão leve/renderizável no GitHub.
 - **F_next:** se necessário, anexar também o PNG final por fluxo binário/local e registrar hash SHA256.
+
+
+## Tear geométrico — invariantes tipados (2026-09-21)
+
+O atlas operacional do corpus geométrico MF-0001..MF-0251 foi registrado em:
+
+- [`geometric_weave_invariants_v1.md`](./geometric_weave_invariants_v1.md)
+- registry: `data/governance/RLL_GEOMETRIC_WEAVE_INVARIANTS_V1.json`
+- receipt: `receipts/2026-09-21_RLL_GEOMETRIC_WEAVE_INVARIANTS_V1.md`
+
+A regra central é distinguir a classe de transformação: rotação, escala uniforme, projeção afim/ortográfica e meia-rotação poligonal não preservam o mesmo conjunto de propriedades.
+
+```text
+geometry invariant != empirical physical confirmation
+formalized != executed pass
+```
+
+R3 = <F_ok: atlas de invariantes ligado ao ledger de 251 expressões; F_gap: prior-art/verificador/calibração ainda abertos; F_next: testes determinísticos + contraexemplos por RLL-GWI ID>.
