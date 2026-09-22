@@ -1,0 +1,59 @@
+{
+  "schema": "rll.perturbation_closure_successor.v4",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V3.json",
+  "state": "A1_3_COMPONENT_LOCAL_SUPERHORIZON_IC_PENDING_CI",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "a1_2_evidence": {
+    "pr": 957,
+    "merge_commit": "6c451eedc704fdd54beee2e13e954473eee7c074",
+    "run_id": 35721844002,
+    "state": "A1_2_GAUGE_VARIABLE_REGULARIZATION_PASS_IC_OPEN",
+    "passing_cases": 9,
+    "stiffness_counts": {
+      "LOW": 5,
+      "MODERATE": 3,
+      "HIGH": 1
+    },
+    "high_case": {
+      "zt": 10,
+      "wt": 0.05,
+      "max_abs_q_w": 210.62193330516268,
+      "max_abs_ca2": 71.31261211384559,
+      "asymptotic_points": 1633
+    },
+    "class_camb_unlock": false
+  },
+  "slot_delta": {
+    "C01_DELTA_S": "CANDIDATE_EQUATION_PLUS_COMPONENT_LOCAL_LEADING_IC",
+    "C02_THETA_S": "U_S_REPARAMETERIZED_CANDIDATE_PLUS_COMPONENT_LOCAL_LEADING_IC",
+    "C03_CS2": "A1_1_CANDIDATE_ASSIGNED_CS2_REST_1",
+    "C04_ENTROPY": "REST_FRAME_NONADIABATIC_CLOSURE_CANDIDATE",
+    "C05_ANISOTROPIC_STRESS": "A1_CANDIDATE_ZERO",
+    "C06_Q_MU": "A1_CANDIDATE_ZERO",
+    "C07_GAUGE_AND_INITIAL_CONDITIONS": "GAUGE_FROZEN_COMPONENT_LOCAL_IC_CANDIDATE_FULL_COUPLED_IC_OPEN",
+    "C08_TRANSITION_REGULARIZATION": "A1_2_PASS_WITH_STIFFNESS_5_LOW_3_MODERATE_1_HIGH",
+    "C09_NONLINEAR_SCOPE": "OUT_OF_SCOPE"
+  },
+  "local_ic_candidate": {
+    "x": "k tau",
+    "delta_over_Psi0": "-3/2 - x^2/28 + x^4/280 + O(x^6)",
+    "U_over_kPsi0": "x/2 - x^3/28 + x^5/840 + O(x^7)",
+    "higher_order_scope": "conditional on frozen-potential reduced component-local reference"
+  },
+  "remaining_hard_blockers": [
+    "full coupled Einstein-Boltzmann initial conditions",
+    "neutrino anisotropic-stress correction",
+    "primordial normalization",
+    "independent CLASS synchronous-gauge map",
+    "independent CAMB variable map",
+    "perturbed Bianchi/Einstein constraint residual",
+    "full solver convergence and cross-engine observables"
+  ],
+  "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "rollback": "Revert A1.3 artifacts only; preserve merged A1.2 evidence and its failure/repair receipts."
+}
