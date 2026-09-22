@@ -23,6 +23,8 @@ def test_omega_math_explorer_materializes_reconstructible_artifacts(tmp_path: Pa
         "candidates.csv",
         "anomalies.json",
         "semantic_graph.json",
+        "formula_coverage.json",
+        "formula_coverage.csv",
         "report.md",
         "receipt.json",
         "CHECKSUMS.sha256",
@@ -90,3 +92,13 @@ def test_explorer_emits_multidimensional_relations(tmp_path: Path):
     receipt = json.loads((tmp_path / "receipt.json").read_text(encoding="utf-8"))
     assert receipt["residuals"]["ideal_objective"]["J"] == 0
     assert receipt["residuals"]["ideal_objective"]["target_reached"] is True
+
+
+    coverage = json.loads((tmp_path / "formula_coverage.json").read_text(encoding="utf-8"))
+    assert coverage["total_entries"] > 0
+    assert coverage["accounted_entries"] == coverage["total_entries"]
+    assert coverage["unaccounted_entries"] == 0
+    by_formula = {row["id"]: row for row in coverage["entries"]}
+    assert by_formula["angular_grid_5678_lcm"]["coverage"] == "EXECUTABLE_GATE_PASS"
+    assert by_formula["torus_surface_projection_ratio"]["coverage"] == "EXECUTABLE_GATE_PASS"
+    assert receipt["residuals"]["formula_registry_unaccounted"] == 0
