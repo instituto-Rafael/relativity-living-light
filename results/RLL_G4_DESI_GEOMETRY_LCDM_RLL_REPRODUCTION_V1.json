@@ -1,0 +1,350 @@
+{
+  "schema": "rll.g4.desi_geometry_lcdm_rll_reproduction.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "source_g4_artifact": {
+    "workflow_run": 33150360583,
+    "artifact_id": 9677562132,
+    "g4_receipt_sha256": "7535a570bbdc9992bacefe487782935766cf934d423b2e5b1c10c2023d109e48"
+  },
+  "method": "independent recomputation from committed DESI 13-vector/covariance using G4 best-fit parameters and the same rd formula; Simpson distance integration",
+  "recorded_g4_chi2_DESI": {
+    "LCDM": 11.770254061852592,
+    "RLL": 11.770253936897157
+  },
+  "outputs": {
+    "LCDM": {
+      "parameters": {
+        "H0": 70.7064147925854,
+        "Om": 0.2997369673100018,
+        "Ob": 0.026
+      },
+      "rd_mpc": 143.15652542379755,
+      "chi2_DESI_recomputed": 11.770259180500712,
+      "predictions": [
+        {
+          "tracer": "BGS",
+          "z": 0.295,
+          "observable": "DV_over_rd",
+          "observed": 7.942,
+          "predicted": 7.921859827754315,
+          "residual_obs_minus_model": 0.020140172245684873
+        },
+        {
+          "tracer": "LRG1",
+          "z": 0.51,
+          "observable": "DM_over_rd",
+          "observed": 13.588,
+          "predicted": 13.28715059707568,
+          "residual_obs_minus_model": 0.30084940292431916
+        },
+        {
+          "tracer": "LRG1",
+          "z": 0.51,
+          "observable": "DH_over_rd",
+          "observed": 21.863,
+          "predicted": 22.500853798273727,
+          "residual_obs_minus_model": -0.6378537982737278
+        },
+        {
+          "tracer": "LRG2",
+          "z": 0.706,
+          "observable": "DM_over_rd",
+          "observed": 17.351,
+          "predicted": 17.449611133545666,
+          "residual_obs_minus_model": -0.09861113354566697
+        },
+        {
+          "tracer": "LRG2",
+          "z": 0.706,
+          "observable": "DH_over_rd",
+          "observed": 19.455,
+          "predicted": 20.017459451572915,
+          "residual_obs_minus_model": -0.5624594515729164
+        },
+        {
+          "tracer": "LRG3_PLUS_ELG1",
+          "z": 0.934,
+          "observable": "DM_over_rd",
+          "observed": 21.576,
+          "predicted": 21.71727546240332,
+          "residual_obs_minus_model": -0.14127546240332123
+        },
+        {
+          "tracer": "LRG3_PLUS_ELG1",
+          "z": 0.934,
+          "observable": "DH_over_rd",
+          "observed": 17.641,
+          "predicted": 17.483714313897494,
+          "residual_obs_minus_model": 0.15728568610250449
+        },
+        {
+          "tracer": "ELG2",
+          "z": 1.321,
+          "observable": "DM_over_rd",
+          "observed": 27.601,
+          "predicted": 27.784398594980164,
+          "residual_obs_minus_model": -0.18339859498016509
+        },
+        {
+          "tracer": "ELG2",
+          "z": 1.321,
+          "observable": "DH_over_rd",
+          "observed": 14.176,
+          "predicted": 14.039339939605705,
+          "residual_obs_minus_model": 0.1366600603942949
+        },
+        {
+          "tracer": "QSO",
+          "z": 1.484,
+          "observable": "DM_over_rd",
+          "observed": 30.512,
+          "predicted": 29.97534502391888,
+          "residual_obs_minus_model": 0.5366549760811203
+        },
+        {
+          "tracer": "QSO",
+          "z": 1.484,
+          "observable": "DH_over_rd",
+          "observed": 12.817,
+          "predicted": 12.867951069224235,
+          "residual_obs_minus_model": -0.05095106922423476
+        },
+        {
+          "tracer": "Lya",
+          "z": 2.33,
+          "observable": "DM_over_rd",
+          "observed": 38.988,
+          "predicted": 38.88630825212762,
+          "residual_obs_minus_model": 0.10169174787237978
+        },
+        {
+          "tracer": "Lya",
+          "z": 2.33,
+          "observable": "DH_over_rd",
+          "observed": 8.632,
+          "predicted": 8.629592600448042,
+          "residual_obs_minus_model": 0.0024073995519575675
+        }
+      ]
+    },
+    "RLL": {
+      "parameters": {
+        "H0": 70.70641477024043,
+        "Om": 0.2997369670803133,
+        "Ob": 0.026,
+        "Os0": 0,
+        "zt": 1.422718791012513,
+        "wt": 0.8209353738324264
+      },
+      "rd_mpc": 143.1565254748442,
+      "chi2_DESI_recomputed": 11.77025905554635,
+      "predictions": [
+        {
+          "tracer": "BGS",
+          "z": 0.295,
+          "observable": "DV_over_rd",
+          "observed": 7.942,
+          "predicted": 7.921859827956167,
+          "residual_obs_minus_model": 0.020140172043833005
+        },
+        {
+          "tracer": "LRG1",
+          "z": 0.51,
+          "observable": "DM_over_rd",
+          "observed": 13.588,
+          "predicted": 13.287150597613211,
+          "residual_obs_minus_model": 0.30084940238678826
+        },
+        {
+          "tracer": "LRG1",
+          "z": 0.51,
+          "observable": "DH_over_rd",
+          "observed": 21.863,
+          "predicted": 22.500853801004727,
+          "residual_obs_minus_model": -0.6378538010047272
+        },
+        {
+          "tracer": "LRG2",
+          "z": 0.706,
+          "observable": "DM_over_rd",
+          "observed": 17.351,
+          "predicted": 17.44961113468597,
+          "residual_obs_minus_model": -0.09861113468597082
+        },
+        {
+          "tracer": "LRG2",
+          "z": 0.706,
+          "observable": "DH_over_rd",
+          "observed": 19.455,
+          "predicted": 20.017459454925017,
+          "residual_obs_minus_model": -0.562459454925019
+        },
+        {
+          "tracer": "LRG3_PLUS_ELG1",
+          "z": 0.934,
+          "observable": "DM_over_rd",
+          "observed": 21.576,
+          "predicted": 21.717275464349047,
+          "residual_obs_minus_model": -0.1412754643490466
+        },
+        {
+          "tracer": "LRG3_PLUS_ELG1",
+          "z": 0.934,
+          "observable": "DH_over_rd",
+          "observed": 17.641,
+          "predicted": 17.48371431755025,
+          "residual_obs_minus_model": 0.15728568244974994
+        },
+        {
+          "tracer": "ELG2",
+          "z": 1.321,
+          "observable": "DM_over_rd",
+          "observed": 27.601,
+          "predicted": 27.784398598344147,
+          "residual_obs_minus_model": -0.18339859834414796
+        },
+        {
+          "tracer": "ELG2",
+          "z": 1.321,
+          "observable": "DH_over_rd",
+          "observed": 14.176,
+          "predicted": 14.039339943203805,
+          "residual_obs_minus_model": 0.1366600567961953
+        },
+        {
+          "tracer": "QSO",
+          "z": 1.484,
+          "observable": "DM_over_rd",
+          "observed": 30.512,
+          "predicted": 29.97534502785946,
+          "residual_obs_minus_model": 0.5366549721405391
+        },
+        {
+          "tracer": "QSO",
+          "z": 1.484,
+          "observable": "DH_over_rd",
+          "observed": 12.817,
+          "predicted": 12.867951072698963,
+          "residual_obs_minus_model": -0.05095107269896282
+        },
+        {
+          "tracer": "Lya",
+          "z": 2.33,
+          "observable": "DM_over_rd",
+          "observed": 38.988,
+          "predicted": 38.88630825866929,
+          "residual_obs_minus_model": 0.10169174133071124
+        },
+        {
+          "tracer": "Lya",
+          "z": 2.33,
+          "observable": "DH_over_rd",
+          "observed": 8.632,
+          "predicted": 8.629592603120724,
+          "residual_obs_minus_model": 0.002407396879275936
+        }
+      ]
+    }
+  },
+  "cross_model_geometry": {
+    "max_abs_prediction_difference": 6.541668540194223e-9,
+    "max_relative_prediction_difference": 3.0971114561850754e-10,
+    "rows": [
+      {
+        "tracer": "BGS",
+        "z": 0.295,
+        "observable": "DV_over_rd",
+        "RLL_minus_LCDM": 2.0185186855314896e-10,
+        "relative": 2.5480284548962118e-11
+      },
+      {
+        "tracer": "LRG1",
+        "z": 0.51,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 5.37530908673034e-10,
+        "relative": 4.045497270510623e-11
+      },
+      {
+        "tracer": "LRG1",
+        "z": 0.51,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 2.7309994266033755e-9,
+        "relative": 1.2137313376570091e-10
+      },
+      {
+        "tracer": "LRG2",
+        "z": 0.706,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 1.1403038513435604e-9,
+        "relative": 6.534839336325149e-11
+      },
+      {
+        "tracer": "LRG2",
+        "z": 0.706,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 3.352102595499673e-9,
+        "relative": 1.67458935607101e-10
+      },
+      {
+        "tracer": "LRG3_PLUS_ELG1",
+        "z": 0.934,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 1.9457253586097067e-9,
+        "relative": 8.959344377501566e-11
+      },
+      {
+        "tracer": "LRG3_PLUS_ELG1",
+        "z": 0.934,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 3.6527545432818442e-9,
+        "relative": 2.0892332308619643e-10
+      },
+      {
+        "tracer": "ELG2",
+        "z": 1.321,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 3.363982870041582e-9,
+        "relative": 1.2107448377207675e-10
+      },
+      {
+        "tracer": "ELG2",
+        "z": 1.321,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 3.5980995960471773e-9,
+        "relative": 2.562869916289401e-10
+      },
+      {
+        "tracer": "QSO",
+        "z": 1.484,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 3.940581194683546e-9,
+        "relative": 1.3146084221205e-10
+      },
+      {
+        "tracer": "QSO",
+        "z": 1.484,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 3.474728060837151e-9,
+        "relative": 2.700295542723552e-10
+      },
+      {
+        "tracer": "Lya",
+        "z": 2.33,
+        "observable": "DM_over_rd",
+        "RLL_minus_LCDM": 6.541668540194223e-9,
+        "relative": 1.6822543358330222e-10
+      },
+      {
+        "tracer": "Lya",
+        "z": 2.33,
+        "observable": "DH_over_rd",
+        "RLL_minus_LCDM": 2.6726816315658652e-9,
+        "relative": 3.0971114561850754e-10
+      }
+    ],
+    "interpretation": "RLL best fit has Omega_s0=0 and lies on the LCDM null submanifold; DESI geometry predictions differ only at numerical/best-fit-parameter residual scale."
+  },
+  "boundary": "This reproduces background DESI geometry only; it does not turn Euclidean MF expressions into cosmological physics."
+}
