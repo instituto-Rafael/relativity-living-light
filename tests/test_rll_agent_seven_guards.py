@@ -40,13 +40,21 @@ class AgentSevenGuardsTests(unittest.TestCase):
             receipt = guards.build_receipt("actions", ROOT)
         self.assertEqual(receipt["runtime_readiness"], "BLOCKED_BINDING")
 
-    def test_missing_binding_and_ambiguous_binding_do_not_promote_readiness(self):
-        for values in ({}, {"PATGITHUB": "fixture-a", "GH_PAT": "fixture-b", "CLIMATE": "fixture-c"}):
+    def test_missing_binding_and_alias_only_ambiguity_do_not_promote_readiness(self):
+        for values in ({}, {"GH_PAT": "fixture-a", "PAT_GIT": "fixture-b", "CLIMATE": "fixture-c"}):
             with self.subTest(names=sorted(values)), mock.patch.dict(os.environ, values, clear=True):
                 receipt = guards.build_receipt("agents", ROOT)
             self.assertEqual(receipt["runtime_readiness"], "BLOCKED_BINDING")
             self.assertTrue(receipt["uncertainty"]["open_items"])
             self.assertFalse(receipt["claim_allowed"])
+
+    def test_canonical_patgithub_precedes_legacy_aliases(self):
+        values = {"PATGITHUB": "fixture-a", "GH_PAT": "fixture-b", "CLIMATE": "fixture-c"}
+        with mock.patch.dict(os.environ, values, clear=True):
+            receipt = guards.build_receipt("agents", ROOT)
+        self.assertEqual(receipt["runtime_readiness"], "BINDINGS_PRESENT_AUTH_UNVERIFIED")
+        self.assertEqual(receipt["evidence"]["bindings"]["github"]["name"], "PATGITHUB")
+        self.assertFalse(receipt["claim_allowed"])
 
     def test_explicit_selector_disambiguates_known_aliases(self):
         with mock.patch.dict(os.environ, {
