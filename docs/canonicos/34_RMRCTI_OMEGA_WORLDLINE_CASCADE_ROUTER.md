@@ -707,3 +707,56 @@ It preserves the existing worldline/cascade route and adds the explicit context
 so geometry is selected by physical regime, validity domain, observation window and covariance rather than by visual shape resemblance.
 
 The RMRCTI value \(\Delta P\approx0.18\) remains an operational \`STABILITY_CANDIDATE\`, never a physical parameter. The recalled index around 70 remains \`TOKEN_VAZIO_INDEX_AROUND_70\`.
+
+
+## 21. Correction receipt — spoken “around 70” means approximately 0.70
+
+A new source-first inspection on 2026-09-22 resolves the earlier wording \`index around 70\`.
+
+The committed artifact:
+
+\`rafaelmeloreisnovo/llamaRafaelia/rmrCti/zone_stats.txt\`
+
+contains:
+
+\`\`\`text
+zone  refs  IC_mean   PP_mean   CV_mean
+28    95    0.147400  0.136800  0.700000
+\`\`\`
+
+The generator \`rmrCti/omega_zone_pipeline_fix.c\` averages per-conversation \`CV\` into \`CV_mean\`.
+
+The upstream metric in \`rmrCti/omega_metrics_v2.c\` is explicitly:
+
+\`\`\`text
+CV = top10% value share using buckets
+\`\`\`
+
+Therefore the previous state
+
+\`\`\`text
+TOKEN_VAZIO_INDEX_AROUND_70
+\`\`\`
+
+is superseded for this recollection by:
+
+\`\`\`text
+SOURCE_OBSERVED_CV_MEAN_0_700000
+zone=28
+refs=95
+state=STABILITY_PROXY_CANDIDATE
+\`\`\`
+
+Hard semantic separation:
+
+\[
+CV_{mean}(28)=0.700000
+\neq
+r=0.7
+\neq
+\Delta P\approx0.18
+\neq
+stable\_any\ rate.
+\]
+
+The project may test \(CV_{mean}\approx0.70\) as a stability/concentration proxy under perturbations, but the implemented variable identity must remain attached and no physical/cosmological constant claim is promoted.
