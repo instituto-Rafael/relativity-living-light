@@ -219,3 +219,53 @@ F_next:
 - add planarization and cycle/orbit enumeration;
 - add recursive simplex/polygon embedding graph;
 - route every new candidate through proof/falsifier/prior-art gates.
+
+
+## First canonical run and Ω feedback
+
+Canonical run:
+
+- workflow run: 35693370128
+- job: omega-math-shadow
+- conclusion: success
+- artifact id: 10679383755
+- artifact digest: sha256:1a85dde723f058ce6e3a8379a7cd26c982a0a6cbef4808e0a69752861a864daa
+- artifact size: 27912 bytes
+- focused tests: 3 passed
+- decision: PASS_FORMAL_SHADOW
+- failed gates: 0
+- candidate relations: 146
+- anomalies: 9
+- TOKEN_VAZIO hypotheses: H-840-SEMANTIC, H-FRACTAL-DIMENSION
+- operational objective: J=9, target 0
+
+The 9 scale anomalies were then inspected rather than suppressed.
+
+All nine reduce to the exact radial-scale rewrite:
+
+cos(pi/3) = cos(pi/4)^2 = 1/2.
+
+Therefore one n=3 inradius contraction has the same radial factor as two consecutive n=4 contractions:
+
+R -> R cos(pi/3) = R/2
+
+and
+
+R -> R cos(pi/4) -> R cos^2(pi/4) = R/2.
+
+The nine observed collisions are instances of this single rewrite combined with other commuting scale factors.
+
+This result was fed back into the next contract revision as:
+
+DERIVED_REWRITE_IDENTITY_COS60_EQ_COS45_SQUARED.
+
+The successor test requires these collisions to stop being classified as anomalies and requires the bounded ideal objective to reach J=0 if no other anomaly is present.
+
+This is the intended Ω cycle:
+
+candidate/anomaly
+-> inspect
+-> derive/falsify
+-> encode exact gate
+-> rerun
+-> preserve both receipts.
