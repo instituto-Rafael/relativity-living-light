@@ -57,3 +57,21 @@ RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
 ```
 
 No claim about the Joint65 executable itself is promoted until the runner compiles, links, executes and emits its own receipt.
+
+
+## Successor static-builtins physical route
+
+The original strict gate above remains a valid falsifier and is still not satisfied by the current source set because compiler ABI helpers are required.
+
+A successor route has now executed physically:
+
+```text
+RLL_JOINT65_STATIC_BUILTINS_PHYSICAL=PASS
+artifact_sha256=4ea887b8a679dd0db6f5ad36ec63030a5fed6ed0affd7a8c6b229f3452020a2b
+receipt_sha256=db822ebf5152f21b9e57faa4af7c0df68299ec08a56aa7a3142fdad0a067639b
+no_libc=PASS
+no_dynamic_loader=PASS
+static_toolchain_runtime=compiler-rt-builtins
+```
+
+This does **not** promote `RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL` under the document's original zero-runtime definition. Keep the two gates distinct.
