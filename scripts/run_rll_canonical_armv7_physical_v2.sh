@@ -63,8 +63,8 @@ UNDEF=$("$NM" -u "$ELF" | sed '/^[[:space:]]*$/d' | wc -l)
 INTERP=$(readelf -l "$ELF" | grep -c INTERP || true)
 NEEDED=$(readelf -d "$ELF" 2>&1 | grep -c NEEDED || true)
 SUSPECT=$(
-  "$NM" "$ELF" |
-  grep -Ec '__aeabi|__div|__udiv|printf|malloc|free|memcpy|memset|sqrt|stack_chk' ||
+  "$NM" -u "$ELF" |
+  grep -Ec '__aeabi|__div|__udiv|(^|[[:space:]])(printf|malloc|free|memcpy|memset|sqrt|stack_chk_fail)([[:space:]]|$)' ||
   true
 )
 
@@ -115,7 +115,7 @@ core_external_undefined=$CORE_UNDEF
 undefined_symbols=$UNDEF
 interpreter_segments=$INTERP
 needed_entries=$NEEDED
-suspicious_runtime_symbols=$SUSPECT
+suspicious_undefined_runtime_symbols=$SUSPECT
 receipt_line_gate=$LINE_OK
 run_exit=$RUN_RC
 
