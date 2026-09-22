@@ -148,3 +148,26 @@ No geometry v5 evidence promotes the RLL engine:
 ```text
 RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
 ```
+
+
+## v5 external geometry gates and RLL physical runner
+
+Geometry v5 has now separated these gates:
+
+```text
+SECOND_IMPLEMENTATION_ORACLE=PASS
+BAREMETAL_RESET_IMAGE_BUILD=PASS
+SECOND_PHYSICAL_DEVICE=TOKEN_VAZIO
+BAREMETAL_PHYSICAL_RESET_BOOT=TOKEN_VAZIO
+```
+
+The RLL engine remains independent. A dedicated physical ARMv7 runner now exists:
+
+```text
+scripts/run_rll_canonical_armv7_physical_v2.sh
+commit=a1af5fdcede400d0a41b11c7f269b327a67f19ea
+gate_doc=docs/evidence/RLL_CANONICAL_ARMV7_PHYSICAL_GATE_V2.md
+gate_doc_commit=ace1060fbfbe547b980189d62bbec3b6be1a9e4e
+```
+
+Only the output receipt from that runner may promote `RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL`.
