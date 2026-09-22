@@ -136,4 +136,4 @@ promotion_gates:
 rollback:
   mode: append_only
   baseline_artifacts_immutable: true
-  omega_g_failure_removes_binding_not_baseline
+  omega_g_failure_removes_binding_not_baseline: true
