@@ -93,3 +93,18 @@ rollback:
   mode: append_only
   preserve_classical_formula_witnesses: true
   remove_binding_without_removing_math: true
+
+
+cosmology_tournament:
+  contract: data/contracts/rll_omega_g_cosmology_tournament.v1.yaml
+  binding_registry: data/inputs/omega_g/observable_effect_binding_registry.v1.yaml
+  runner: tools/run_omega_g_cosmology_tournament.py
+  documentation: docs/science/RLL_OMEGA_G_COSMOLOGY_TOURNAMENT_V1.md
+  baseline_engine: tools/run_g4_background_tournament.py
+  required_models: [LCDM, wCDM, CPL, RLL]
+  background_datasets: [cosmic_chronometers_Hz, DESI_DR2_BAO, PantheonPlus_SH0ES]
+  perturbation_datasets:
+    fsigma8: BLOCKED_UNTIL_MODEL_SPECIFIC_PERTURBATION_CLOSURE
+    CMB: BLOCKED_FROM_BACKGROUND_ONLY_BINDING
+  first_gate: ARM1_NULL_BINDING
+  scientific_claim: BLOCKED
