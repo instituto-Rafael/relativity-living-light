@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-09-16"
+updated_at: "2026-09-22"
 
 inventory:
-  active_workflows: 98
+  active_workflows: 101
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -146,6 +146,15 @@ operational_auto_hotfix:
 
 branch_reconciliation:
   main_to_maturity_content_forward_ported:
+    - .github/workflows/rll-geometric-operator-omega-g.yml
+    - .github/workflows/rll-omega-g-cosmology-tournament.yml
+    - .github/workflows/rll-omega-g-real-background.yml
+    - data/contracts/rll_geometric_operator_omega_g.v1.yaml
+    - data/contracts/rll_omega_g_cosmology_tournament.v1.yaml
+    - data/inputs/omega_g/observable_effect_binding_registry.v1.yaml
+    - tools/run_omega_g_cosmology_tournament.py
+    - tests/test_omega_g_cosmology_tournament.py
+    - artifacts/governance/RLL_OMEGA_G_REAL_BACKGROUND_PROVIDER_RECEIPT_20260922.json
     - .github/workflows/rare-events-evidence-gate.yml
     - data/knowledge_forest/rare_events_claim_registry_v1.yml
     - docs/canonicos/MATRIZ_EVIDENCIAS_EVENTOS_RAROS_V1.md
