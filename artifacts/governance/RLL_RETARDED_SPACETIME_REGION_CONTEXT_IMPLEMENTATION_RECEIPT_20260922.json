@@ -1,0 +1,69 @@
+{
+  "schema": "rll.retarded_spacetime_region_context.implementation_receipt.v1",
+  "date": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "IMPLEMENTED_LOCAL_VALIDATION_PASS",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "source_basis": {
+    "uploaded_rll_zip_sha256": "9dd8f6c44bdfc4a28e43097ce48ce92c3da2406a0594a68d4a00a06dff1a0b33",
+    "canonical_parent": "data/contracts/rll_retarded_spacetime_state.v1.yml",
+    "canonical_parent_blob_sha": "3cd0febf3d475087f49abc85b6149d2a319dac63"
+  },
+  "implemented": {
+    "contract": {
+      "path": "data/contracts/rll_retarded_spacetime_region_context.v1.yaml",
+      "blob_sha": "48a4769583337decc4dcbcf874c54ac238b28911"
+    },
+    "documentation": {
+      "path": "docs/science/RLL_RETARDED_SPACETIME_REGION_CONTEXT_V1.md",
+      "blob_sha": "2a5f44bc9c47405058c45b6718360ec40ae28e0a"
+    },
+    "validator": {
+      "path": "tools/validate_rll_retarded_spacetime_region_context.py",
+      "blob_sha": "d3514a25f609c197889f422cfe0919b535094ca4"
+    },
+    "tests": {
+      "path": "tests/test_rll_retarded_spacetime_region_context.py",
+      "blob_sha": "bcb09724b2842f2288f4a617d56b41e89d56350f"
+    },
+    "workflow": {
+      "path": ".github/workflows/rll-retarded-spacetime-region-context.yml",
+      "blob_sha": "c76314d38ba72712739e080193f4367838b7b0ed"
+    },
+    "source_state_bridge": {
+      "path": "PapersPub/06_source_state_lookback_rll/README.md",
+      "blob_sha": "591178999e569f01a0b3cefc6165995e681f2212"
+    }
+  },
+  "local_validation": {
+    "validator": "PASS",
+    "pytest": "8 passed",
+    "elapsed_pytest_seconds": 0.25,
+    "boundary": "LOCAL_STRUCTURAL_PASS != GITHUB_CI_PASS != SCIENTIFIC_CONFIRMATION"
+  },
+  "github_ci": "TOKEN_VAZIO_NOT_DISPATCHED",
+  "physics_boundaries": {
+    "age_of_position": "replaced_by_event_epoch_lookback_proper_time_and_structure_age_when_defined",
+    "plasma_gravity": "no_new_force_claim; plasma stress-energy and EM/plasma propagation modeled separately",
+    "photon_region_interaction": "region evaluated at photon-crossing event with causal ordering",
+    "post_crossing_change": "cannot affect already-passed photon; may affect later photons/observations",
+    "quantum_coherence_macroscopic_trajectory": "NOT_REQUIRED",
+    "physical_syntropy": "TOKEN_VAZIO"
+  },
+  "open_gates": {
+    "synthetic_lightcone_test": "TOKEN_VAZIO",
+    "moving_region_crossing_test": "TOKEN_VAZIO",
+    "lensing_time_delay_mock": "TOKEN_VAZIO",
+    "plasma_frequency_dependent_mock": "TOKEN_VAZIO",
+    "real_data_covariance_test": "TOKEN_VAZIO",
+    "cross_survey_holdout": "TOKEN_VAZIO",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "scientific_claim": "BLOCKED"
+  },
+  "R3": {
+    "F_ok": "typed region-context extension materialized under canonical retarded-spacetime parent; local validator PASS; 8 focused tests PASS",
+    "F_gap": "provider CI and all synthetic/real-data scientific gates remain unexecuted",
+    "F_next": "synthetic lightcone + moving-region photon-crossing fixture, then lensing/plasma ablations before real cosmology binding"
+  }
+}
