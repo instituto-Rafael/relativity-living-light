@@ -90,3 +90,23 @@ physical ARMv7 v4: TOKEN_VAZIO
 ```
 
 The RLL boundary remains unchanged: geometry pre-physical evidence does not promote the RLL engine. Only an artifact-specific RLL physical receipt can close that gate.
+
+
+## Physical geometry v4 receipt observed
+
+The integrated geometry v4 producer artifact has now been executed on a physical `armv7l` target.
+
+```text
+geometry_source_sha256=43f363f386e001a4cd568b3ae9e7a919ab9bdbef0e38c48fa2ce99bf951f8d0a
+geometry_artifact_sha256=ee8da8dd4ab0eaa474483a4932eb0e1666a601fe1fbb12ff53d4df073de38803
+geometry_receipt_sha256=183fbe34102c9987224598408918a4ea295cdf4e1535694025b99f4360c69c13
+GEOM_INTEGRATED_V4_ARMV7_PHYSICAL=PASS
+```
+
+This still does not promote the RLL engine:
+
+```text
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+```
+
+The geometry receipt is a toolchain/runtime witness and a schema example only; artifact-specific RLL execution evidence remains required.
