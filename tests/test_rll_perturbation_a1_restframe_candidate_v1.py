@@ -43,4 +43,4 @@ def test_canonical_mid_sweep_case_is_regular():
     assert row["pass"] is True
     assert row["rho_min"] > 0.0
     assert row["one_plus_w_min"] >= -1.0e-10
-    assert row["max_abs_continuity_residual"] <= 1.0e-10
+    assert row["max_normalized_continuity_residual"] <= 1.0e-10
