@@ -530,8 +530,102 @@ def explore(
     }
 
 
+def build_formula_coverage(
+    contract: dict[str, Any],
+    gates: list[dict[str, Any]],
+    repo_root: Path,
+) -> dict[str, Any]:
+    config = contract["formula_registry"]
+    registry_path = repo_root / config["path"]
+    payload = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    equations = payload.get("equations", []) if isinstance(payload, dict) else []
+    if not isinstance(equations, list):
+        raise ValueError("formula registry equations must be a list")
+
+    gate_by_id = {gate["id"]: gate for gate in gates}
+    bindings = config.get("gate_bindings", {})
+    rows = []
+    malformed = 0
+
+    for index, equation in enumerate(equations):
+        if not isinstance(equation, dict):
+            malformed += 1
+            rows.append(
+                {
+                    "id": f"TOKEN_VAZIO_FORMULA_{index}",
+                    "coverage": "MALFORMED_REGISTRY_ENTRY",
+                    "next_gate": "repair_registry_entry",
+                }
+            )
+            continue
+
+        formula_id = equation.get("id")
+        if not formula_id:
+            malformed += 1
+            formula_id = f"TOKEN_VAZIO_FORMULA_{index}"
+
+        gate_id = bindings.get(formula_id)
+        gate = gate_by_id.get(gate_id) if gate_id else None
+
+        if gate_id and gate is None:
+            coverage = "BOUND_GATE_MISSING"
+            next_gate = f"materialize_or_fix_gate:{gate_id}"
+        elif gate is not None:
+            coverage = (
+                "EXECUTABLE_GATE_PASS"
+                if gate["status"] == "PASS"
+                else "EXECUTABLE_GATE_FAIL"
+            )
+            next_gate = "preserve_and_regress" if gate["status"] == "PASS" else "repair_gate"
+        elif equation.get("implementation"):
+            coverage = "IMPLEMENTATION_REFERENCED_NOT_EXECUTED_BY_OMEGA_MATH"
+            next_gate = "bind_existing_implementation_to_typed_omega_gate"
+        else:
+            coverage = config["unlisted_formula_policy"]
+            next_gate = "define_typed_gate_or_preserve_as_indexed_formula"
+
+        rows.append(
+            {
+                "id": formula_id,
+                "equation": equation.get("equation", "TOKEN_VAZIO_EQUATION"),
+                "domain": equation.get("domain", []),
+                "registry_status": equation.get("status", "TOKEN_VAZIO_STATUS"),
+                "source_doc": equation.get("source_doc"),
+                "implementation": equation.get("implementation"),
+                "methodology_phase": equation.get("methodology_phase"),
+                "claim_boundary": equation.get("claim_boundary"),
+                "gate_binding": gate_id,
+                "coverage": coverage,
+                "next_gate": next_gate,
+            }
+        )
+
+    counts: dict[str, int] = defaultdict(int)
+    for row in rows:
+        counts[row["coverage"]] += 1
+
+    accounted = len(rows)
+    return {
+        "registry_path": config["path"],
+        "registry_sha256": sha256_bytes(registry_path.read_bytes()),
+        "policy": config["policy"],
+        "total_entries": len(equations),
+        "accounted_entries": accounted,
+        "unaccounted_entries": max(0, len(equations) - accounted),
+        "malformed_entries": malformed,
+        "coverage_counts": dict(sorted(counts.items())),
+        "entries": rows,
+        "claim_boundary": (
+            "Registry coverage means every formula is indexed. "
+            "Only formulas with typed gates are executed by this explorer."
+        ),
+    }
+
+
 def semantic_graph(
-    contract: dict[str, Any], exploration: dict[str, Any]
+    contract: dict[str, Any],
+    exploration: dict[str, Any],
+    formula_coverage: dict[str, Any],
 ) -> dict[str, Any]:
     nodes = []
     edges = []
@@ -554,7 +648,32 @@ def semantic_graph(
             {"id": f"candidate:{index}", "kind": "candidate", "meta": candidate}
         )
 
-    return {"nodes": nodes, "edges": edges, "claim_allowed": False}
+    for formula in formula_coverage["entries"]:
+        formula_node = f"formula:{formula['id']}"
+        nodes.append(
+            {
+                "id": formula_node,
+                "kind": "formula_registry_entry",
+                "coverage": formula["coverage"],
+                "domain": formula.get("domain", []),
+            }
+        )
+        if formula.get("gate_binding"):
+            edges.append(
+                {
+                    "id": f"coverage:{formula['id']}",
+                    "from": formula_node,
+                    "to": f"gate:{formula['gate_binding']}",
+                    "type": "verified_by",
+                }
+            )
+
+    return {
+        "nodes": nodes,
+        "edges": edges,
+        "claim_allowed": False,
+        "formula_registry_total": formula_coverage["total_entries"],
+    }
 
 
 def compute_anomalies(
@@ -655,7 +774,9 @@ def write_artifacts(
         hypothesis_result(hypothesis) for hypothesis in contract["hypotheses"]
     ]
     exploration = explore(contract, max_depth_override)
-    graph = semantic_graph(contract, exploration)
+    repo_root = manifest_path.resolve().parents[2]
+    formula_coverage = build_formula_coverage(contract, gates, repo_root)
+    graph = semantic_graph(contract, exploration, formula_coverage)
     anomalies = compute_anomalies(gates, hypotheses, exploration)
     ideal = ideal_objective(contract, gates, hypotheses, anomalies)
 
@@ -666,6 +787,18 @@ def write_artifacts(
     write_json(output_dir / "exploration.json", exploration)
     write_json(output_dir / "anomalies.json", anomalies)
     write_json(output_dir / "semantic_graph.json", graph)
+    write_json(output_dir / "formula_coverage.json", formula_coverage)
+
+    with (output_dir / "formula_coverage.csv").open(
+        "w", encoding="utf-8", newline=""
+    ) as handle:
+        fieldnames = [
+            "id", "coverage", "gate_binding", "registry_status",
+            "methodology_phase", "implementation", "source_doc", "next_gate"
+        ]
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(formula_coverage["entries"])
 
     with (output_dir / "candidates.csv").open(
         "w", encoding="utf-8", newline=""
@@ -704,6 +837,11 @@ def write_artifacts(
                 h["id"] for h in hypotheses if h["state"] == "TOKEN_VAZIO"
             ],
             "ideal_objective": ideal,
+            "formula_registry_total": formula_coverage["total_entries"],
+            "formula_registry_accounted": formula_coverage["accounted_entries"],
+            "formula_registry_unaccounted": formula_coverage["unaccounted_entries"],
+            "formula_registry_malformed": formula_coverage["malformed_entries"],
+            "formula_coverage_counts": formula_coverage["coverage_counts"],
         },
         "artifacts": {
             "gate_results": "gate_results.json",
@@ -712,6 +850,8 @@ def write_artifacts(
             "candidates": "candidates.csv",
             "anomalies": "anomalies.json",
             "semantic_graph": "semantic_graph.json",
+            "formula_coverage": "formula_coverage.json",
+            "formula_coverage_csv": "formula_coverage.csv",
         },
         "claim_boundary": contract["authority"]["claim_boundary"],
     }
@@ -726,6 +866,8 @@ def write_artifacts(
         f"- candidates: {len(exploration['candidate_relations'])}",
         f"- anomalies: {len(anomalies)}",
         f"- ideal J: {ideal['J']} (target {ideal['target']})",
+        f"- formula registry: {formula_coverage['accounted_entries']}/{formula_coverage['total_entries']} accounted",
+        f"- formula gate-bound: {formula_coverage['coverage_counts'].get('EXECUTABLE_GATE_PASS', 0)} PASS",
         "- claim_allowed: false",
         "- publication_effect: NONE",
         "",
