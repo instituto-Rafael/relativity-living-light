@@ -44,3 +44,51 @@ revert only this successor; preserve all predecessor and negative evidence.
 
 F_next:
 canonical CI -> gauge contract -> C01/C02 -> IC -> Bianchi/constraints -> transition regularity -> independent CLASS/CAMB.
+
+## Canonical execution closure — rll/lab intake
+
+evidence_head=c5e1271f515e651b6915e1da532a24dd2d1f6fa4
+canonical_lab_merge=bc5c51efeba992e232148b65b3695a94cf5bbcd5
+
+CLASS_CAMB_A1_RUN=35698287683
+CLASS_CAMB_A1_CONCLUSION=SUCCESS
+A1_1_STATE=A1_1_NECESSARY_GATES_PASS_GAUGE_IC_OPEN
+A1_1_PASSING_CASES=9/9
+token_resolution=NOT_RESOLVED
+class_camb_unlock=false
+claim_allowed=false
+
+CLASS_CAMB_A1_ARTIFACT=10681302686
+CLASS_CAMB_A1_ARTIFACT_SHA256=f67bc37621243394f58291dd6ac8798138eba5da726e9508af817616aaa661b9
+
+PYTHON_FULL_SUITE_RUN=35698287778
+PYTHON_FULL_SUITE_CONCLUSION=SUCCESS
+PYTHON_ARTIFACT=10680928751
+PYTHON_ARTIFACT_SHA256=42ee709732982e2dde3328606a92c55e616ddc696004e588c653bd7afc1efdb5
+
+governance:
+- Branch Maturity run 35698287695: SUCCESS
+- Transit Tower run 35698287696: SUCCESS
+- YAML Deep Audit run 35698287707: SUCCESS
+- Workflow Architecture run 35698287823: SUCCESS
+- Workflow Contract run 35698287734: SUCCESS
+- Workflow Contract V2 run 35698288033: SUCCESS
+- Platform Assurance run 35698287678: SUCCESS
+- Platform Assurance V2 run 35698287755: SUCCESS
+
+preserved_negative_evidence:
+- A0 remains FALSIFIED_AS_GLOBAL_DEFAULT with 0/9 passing cases.
+
+remaining_hard_blockers:
+- C01_DELTA_S_FULL_EVOLUTION
+- C02_THETA_S_FULL_EVOLUTION
+- C07_GAUGE_AND_INITIAL_CONDITIONS
+- C08_PERTURBATION_TRANSITION_REGULARITY
+- CONSTRAINT_BIANCHI_RESIDUAL
+- TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION
+
+interpretation:
+A1.1 survives the declared necessary-condition sweep only. This execution does not resolve the full perturbation closure, does not validate c_s,rest^2=1 as an RLL property, and does not authorize RLL CLASS/CAMB outputs or observational claims.
+
+next_gate:
+regularize the momentum variable near 1+w -> 0 without arbitrary epsilon; freeze a gauge convention; derive C01/C02 plus super-horizon initial conditions; then execute constraint/Bianchi and transition-regularity gates.
