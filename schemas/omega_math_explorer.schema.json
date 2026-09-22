@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rll.omega_math_explorer.v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "claim_allowed",
+    "publication_effect",
+    "authority",
+    "formula_registry",
+    "constants",
+    "gates",
+    "hypotheses",
+    "exploration",
+    "anomaly_policy",
+    "ideal_state",
+    "artifacts"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.omega_math_explorer.v1"
+    },
+    "status": {
+      "type": "string"
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "publication_effect": {
+      "const": "NONE"
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "repository",
+        "domain",
+        "claim_boundary"
+      ]
+    },
+    "constants": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "semantic_axes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "operations": {
+      "type": "object"
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "epistemic"
+        ]
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "statement",
+          "test",
+          "next_gate"
+        ]
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "from",
+          "to",
+          "type"
+        ]
+      }
+    },
+    "exploration": {
+      "type": "object",
+      "required": [
+        "polygons",
+        "max_depth",
+        "candidate_tolerance"
+      ],
+      "properties": {
+        "polygons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 3
+          }
+        },
+        "max_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "max_sequences": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "numeric_round_digits": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 15
+        },
+        "candidate_tolerance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "anomaly_policy": {
+      "type": "object"
+    },
+    "paradoxes": {
+      "type": "array"
+    },
+    "ideal_state": {
+      "type": "object",
+      "required": [
+        "name",
+        "objective",
+        "terms",
+        "target"
+      ]
+    },
+    "artifacts": {
+      "type": "object",
+      "required": [
+        "output_dir",
+        "emit"
+      ]
+    },
+    "formula_registry": {
+      "type": "object",
+      "required": [
+        "path",
+        "policy",
+        "unlisted_formula_policy",
+        "gate_bindings"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "policy": {
+          "const": "index_all_execute_only_typed_bindings"
+        },
+        "unlisted_formula_policy": {
+          "type": "string"
+        },
+        "gate_bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

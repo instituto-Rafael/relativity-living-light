@@ -114,3 +114,14 @@ sphere != torus
 840_angular != 840_modular_semantics
 external_receipt != canonical_CI
 ```
+
+## Ω Mathematics Explorer V1
+
+- contrato: `data/contracts/omega_math_explorer.v1.yml`
+- schema: `schemas/omega_math_explorer.schema.json`
+- executor: `tools/run_omega_math_explorer.py`
+- testes: `tests/test_omega_math_explorer.py`
+- workflow: `.github/workflows/omega-math-explorer.yml`
+- documentação: [`omega_math_explorer_v1.md`](./omega_math_explorer_v1.md)
+- receipt inicial: `receipts/2026-09-22_RLL_OMEGA_MATH_EXPLORER_V1.md`
+- estado: `FORMAL_SHADOW / claim_allowed=false / publication_effect=NONE`

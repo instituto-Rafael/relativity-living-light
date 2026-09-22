@@ -2,7 +2,7 @@ schema: rll.workflow_contract.v1
 updated_at: "2026-09-16"
 
 inventory:
-  active_workflows: 98
+  active_workflows: 102
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -210,6 +210,7 @@ documented_checks:
     - {context: build-formulas-artifacts, workflow: .github/workflows/formulas-artifacts.yml, job_id: build-formulas-artifacts}
     - {context: formulas-manifest, workflow: .github/workflows/formulas-artifacts-validation.yml, job_id: formulas-manifest}
     - {context: epistemic-contract, workflow: .github/workflows/frontier-research-composition.yml, job_id: epistemic-contract}
+    - {context: omega-math-shadow, workflow: .github/workflows/omega-math-explorer.yml, job_id: omega-math-shadow, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: governance-quality-gate, workflow: .github/workflows/rll-governance-quality-gate.yml, job_id: governance-quality-gate, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: branch-maturity-gate, workflow: .github/workflows/unified-workflow-session-orchestrator.yml, job_id: branch-maturity-gate, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: GitHub platform capability contract, workflow: .github/workflows/github-platform-assurance.yml, job_id: platform-capability-contract, permissions: contents_read, certification_claim: false, conformity_claim: false}

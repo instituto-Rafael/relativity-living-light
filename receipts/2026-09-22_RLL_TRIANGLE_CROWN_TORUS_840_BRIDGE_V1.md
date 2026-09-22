@@ -44,3 +44,12 @@ external_receipt != canonical_CI
 - draft PR: `#946` — https://github.com/instituto-Rafael/relativity-living-light/pull/946
 - workspace-fork PR `rafaelmeloreisnovo/relativity-living-light#33`: `CLOSED_SUPERSEDED / NOT_MERGED`
 - canonical CI at this receipt update: `NOT_RUN` because no repository-native workflow run had been emitted for the draft PR yet.
+
+## Successor delta — triangle simplex / recursive embedding
+
+- commit: `13b6537a5adbf162ebfe27172972786fcfb6b6a9`
+- exact layer: barycentric simplex coordinates, similarity/affine transport, polygon triangulation, incircle/circumcircle formulas.
+- recursive layer: contractive nesting `T_{k+1}=F_k(T_k)` and IFS fixed-set equation `K = union_i F_i(K)`.
+- boundary: `triangle_area_alone != complete_geometry`.
+- boundary: `mathematical_infinite_nesting != physically_realized_infinity`.
+- F_next: extend canonical verifier with simplex/affine/triangulation gates and classify embeddings across 4/5/6/7/8.

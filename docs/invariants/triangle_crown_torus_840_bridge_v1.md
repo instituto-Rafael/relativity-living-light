@@ -555,3 +555,282 @@ PLANAR_HEXAGRAM != SPHERICAL_GEODESIC_HEXAGRAM
 3. enumerate tangent/chord intersections;
 4. test 30°/45°/60°/72° orbit combinations;
 5. only then define any domain-specific physical hypothesis.
+
+
+## 15. Successor delta — triangle simplex, embedding and recursive scale
+
+The current torus/crown bridge is extended by a more general 2D representation rule.
+
+A nondegenerate triangle
+
+\[
+T=(p_0,p_1,p_2)
+\]
+
+is the 2-simplex. Every point in its affine span has barycentric representation
+
+\[
+\boxed{
+x=\lambda_0p_0+\lambda_1p_1+\lambda_2p_2,
+\qquad
+\lambda_0+\lambda_1+\lambda_2=1.
+}
+\]
+
+This gives a local coordinate frame for position and proportion.
+
+### Similarity transport
+
+\[
+\boxed{
+F(x)=\lambda R_\theta x+t
+}
+\]
+
+moves a construction to arbitrary scale, rotation and translation while preserving angles and dimensionless ratios.
+
+\[
+L\mapsto\lambda L,
+\qquad
+A\mapsto\lambda^2A.
+\]
+
+### Affine transport
+
+\[
+\boxed{
+F(x)=Ax+t,
+\qquad
+\det A\neq0.
+}
+\]
+
+Any reference triangle can be mapped to any other nondegenerate triangle.
+
+\[
+\boxed{
+A(F(T))=|\det A|A(T).
+}
+\]
+
+### Triangulation gate
+
+Any simple polygon with \(n\) vertices admits a triangulation into
+
+\[
+\boxed{n-2}
+\]
+
+triangles.
+
+Thus piecewise-linear planar geometry can be represented exactly by triangular cells. Curved boundaries require approximation/refinement or a separate exact parametrization.
+
+### Canonical circles from a triangle
+
+For sides \(a,b,c\), semiperimeter \(s\) and area \(K\):
+
+\[
+\boxed{
+r_{\rm in}=\frac Ks,
+\qquad
+R_{\rm circ}=\frac{abc}{4K}.
+}
+\]
+
+The full triangle geometry therefore provides canonical inside/outside circles.
+
+### Embedding operator
+
+A form \(S\) inside a triangle \(T\) is represented as:
+
+\[
+f:S\hookrightarrow T.
+\]
+
+A triangle inside another form is:
+
+\[
+g:T\hookrightarrow S.
+\]
+
+The map must declare which constraints are preserved: incidence, tangency, scale, orientation, symmetry, area or distance.
+
+### Recursive nesting
+
+Let:
+
+\[
+T_{k+1}=F_k(T_k),
+\qquad
+F_k(x)=\lambda_kR_kx+t_k,
+\qquad
+0<\lambda_k<1.
+\]
+
+Then:
+
+\[
+\boxed{
+\operatorname{diam}(T_m)
+=
+\operatorname{diam}(T_0)
+\prod_{k=0}^{m-1}\lambda_k.
+}
+\]
+
+If \(\lambda_k\le q<1\):
+
+\[
+\boxed{
+\operatorname{diam}(T_m)\to0.
+}
+\]
+
+This gives an infinite nested hierarchy in the mathematical sense.
+
+For a finite family of contractions, an iterated-function-system attractor satisfies:
+
+\[
+\boxed{
+K=\bigcup_iF_i(K).
+}
+\]
+
+Boundary:
+
+\[
+\boxed{
+\text{infinite recursive nesting}
+\neq
+\text{claim of physically realized infinity}.
+}
+\]
+
+Also:
+
+\[
+\boxed{
+A_\triangle\text{ alone}
+\neq
+\text{complete geometry}.
+}
+\]
+
+The universal role comes from the simplex geometry plus transformation/embedding rules, not from one scalar area value.
+
+### Integration with existing RLL weave
+
+The existing polygon layer:
+
+\[
+R_{k+1}=R_k\cos\frac{\pi}{n_k}
+\]
+
+and half-step operator:
+
+\[
+V(P_n)\cup V(R_{\pi/n}P_n)=V(P_{2n})
+\]
+
+now combine with simplex transport:
+
+\[
+\boxed{
+\text{triangle simplex}
+\to
+\text{triangulation}
+\to
+\text{polygon family}
+\to
+\text{rotation}
+\to
+\text{embedding}
+\to
+\text{nested scale}
+\to
+\text{recursive hierarchy}.
+}
+\]
+
+This is a formal geometry/representation result only; it does not establish a physical mechanism.
+
+
+## 16. Signed/oriented geometry and reversible positional ledger
+
+The simplex layer is extended with an information-preservation rule.
+
+Oriented area:
+
+\[
+\boxed{
+A_{\rm or}
+=
+\frac12\det(p_2-p_1,p_3-p_1)
+}
+\]
+
+retains orientation. Metric area is \(A=|A_{\rm or}|\); absolute value is therefore a lossy projection when orientation matters.
+
+Line/circle or line/sphere intersection produces:
+
+\[
+At^2+Bt+C=0,
+\qquad
+\Delta=B^2-4AC.
+\]
+
+The geometric gate is:
+
+\[
+\Delta>0:\text{two cuts},
+\quad
+\Delta=0:\text{tangent},
+\quad
+\Delta<0:\text{no real cut}.
+\]
+
+For a circular cut:
+
+\[
+\Delta=4(R^2-d_\perp^2)=4q^2.
+\]
+
+Negative discriminant is retained as a complex algebraic branch, not interpreted as negative physical area.
+
+Positional representation is typed by:
+
+\[
+N=\sum_kd_kb^k
+\]
+
+and Euclidean division:
+
+\[
+\boxed{
+N=qb+r,\qquad0\le r<b.
+}
+\]
+
+Residue alone is many-to-one. The tuple \((q,r,b)\) is reconstructible:
+
+\[
+N\leftrightarrow(q,r)_b.
+\]
+
+RLL geometry interpretation may use \(r\) as cyclic phase/abscissa and \(q\) as layer/winding index only when both are retained with provenance.
+
+Boundary:
+
+\[
+\boxed{
+0\neq TOKEN\_VAZIO,
+\quad
+SIGN\neq LOSS,
+\quad
+MODULO\_ONLY=\text{LOSSY},
+\quad
+(Q,R,BASE)=\text{REVERSIBLE}.
+}
+\]
+
+This is a governance invariant: lossy views may be derived, but they must not replace the reconstructible source state.
