@@ -339,3 +339,25 @@ RLL_JOINT65_SELECTIVE_BOOTSTRAP_ARMV7=PASS
 
 The execution gate remains separate:
 `RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO`.
+
+
+## RLL Joint65 static-builtins physical successor — PASS
+
+A separate RLL artifact-specific execution has now been observed:
+
+```text
+RLL_JOINT65_STATIC_BUILTINS_PHYSICAL=PASS
+artifact_sha256=4ea887b8a679dd0db6f5ad36ec63030a5fed6ed0affd7a8c6b229f3452020a2b
+receipt_sha256=db822ebf5152f21b9e57faa4af7c0df68299ec08a56aa7a3142fdad0a067639b
+compiler_rt_builtins=STATIC
+no_libc=PASS
+no_dynamic_loader=PASS
+```
+
+This closes the static-builtins Joint65 physical gate only. It does not retroactively change the independent geometry evidence, the strict zero-runtime Joint65 gate, or the 33-row canonical RLL physical gate.
+
+```text
+RLL_JOINT65_STRICT_NO_RUNTIME_PHYSICAL=TOKEN_VAZIO
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
+```
