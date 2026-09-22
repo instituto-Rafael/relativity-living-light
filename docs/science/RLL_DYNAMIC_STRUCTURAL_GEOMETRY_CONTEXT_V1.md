@@ -331,13 +331,49 @@ and not:
 - universal attractor;
 - physical threshold.
 
-The user-recalled quantity around \(70\) is **not** identified with a physical or RMRCTI parameter here. It remains:
+A source re-check resolves the earlier spoken “around 70” ambiguity as a **decimal observation around 0.70**, not an index 70.
+
+The committed RMRCTI artifact
+
+`rmrCti/zone_stats.txt`
+
+contains the exact row
+
+```text
+zone=28  refs=95  IC_mean=0.147400  PP_mean=0.136800  CV_mean=0.700000
+```
+
+and `rmrCti/omega_zone_pipeline_fix.c` computes `CV_mean` as the per-zone mean of `CV`.
+
+The upstream implementation in `rmrCti/omega_metrics_v2.c` defines:
+
+```text
+CV = top10% value share using buckets
+```
+
+Therefore the reconciled state is:
 
 \[
-\boxed{\texttt{TOKEN\_VAZIO\_INDEX\_AROUND\_70}}.
+\boxed{CV_{mean}(zone\ 28)=0.700000}.
 \]
 
-The source router separately records \(R=2.0\) and \(r=0.7\); these values must not be conflated with the unresolved recollection around \(70\).
+Within the project this may be carried as a **stability/concentration proxy candidate**, but its source semantics must stay attached:
+
+\[
+CV_{mean}=0.70
+\neq
+stable\_any\ rate
+\neq
+\Delta P
+\neq
+\text{physical stability constant}.
+\]
+
+The toroidal default \(r=0.7\) also exists independently. Equal decimals do not establish equal variables:
+
+\[
+\boxed{CV_{mean}=0.7\;\neq\;r=0.7}.
+\]
 
 ### Operational use
 
