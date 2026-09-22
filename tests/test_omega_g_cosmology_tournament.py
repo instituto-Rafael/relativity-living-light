@@ -48,3 +48,17 @@ def test_growth_and_cmb_not_silently_bound_at_background_level():
     pert = contract["datasets"]["perturbation_level"]
     assert pert["fsigma8"]["status"].startswith("BLOCKED")
     assert pert["CMB_full_or_compressed"]["status"].startswith("BLOCKED")
+
+
+def test_nonfinite_diagnostics_are_preserved_as_null_with_path():
+    seen = []
+    value = mod._sanitize_for_json(
+        {"ok": 1.0, "bad": float("inf"), "nan": float("nan")},
+        path="report",
+        nonfinite=seen,
+    )
+    assert value["ok"] == 1.0
+    assert value["bad"] is None
+    assert value["nan"] is None
+    assert {item["path"] for item in seen} == {"report.bad", "report.nan"}
+    assert {item["value"] for item in seen} == {"inf", "nan"}
