@@ -79,3 +79,18 @@ A referência ao corpus foi promovida para **registro integral dentro do RLL**:
 - `tools/test_formula_cosmology_geometry_crosswalk.py` — gate executável agregado.
 
 Importação completa não significa `251/251 PASS`: execução individual permanece tipada e append-only.
+
+
+## Execução MF160 + gate cosmológico MF130
+
+Resultados materializados:
+
+- `results/MF160_FORMAL_EXECUTION_V1.json` — 155 PASS, 2 PASS_CONDITIONAL, 2 TOKEN_VAZIO_SEMANTICS, 1 FAIL;
+- `results/MF0089_MF0209_POLYGON_LIMIT_V1.json` — dois limites poligonais PASS_CONDITIONAL;
+- `results/RLL_MF130_COSMO_GEOMETRY_DOMAIN_GATE_V2.json` — 130/130 candidatos com estado de gate;
+- `results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json` — reprodução da geometria BAO no melhor ajuste G4;
+- `results/RLL_G4_DISTANCE_GEOMETRY_LCDM_RLL_V1.json` — resíduos E,H,DH,DM,DA,DL,mu,F_AP;
+- `results/RLL_DESI_SYNTHETIC_GEOMETRY_EMBEDDING_V1.json` — coordenadas dimensionless círculo/triângulo/elipse para os pares BAO;
+- receipt: `receipts/2026-09-21_RLL_MF160_MF130_GEOMETRY_EXECUTION_V1.md`.
+
+Contradição preservada: `MF-0219` FAIL sob a definição padrão de coroa/anel; não apagar o registro original.
