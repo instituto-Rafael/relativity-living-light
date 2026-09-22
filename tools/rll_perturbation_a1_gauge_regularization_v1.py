@@ -8,10 +8,16 @@ import json
 import math
 import os
 import tempfile
+import sys
 from pathlib import Path
 from typing import Any, Sequence
 
 import numpy as np
+
+if __package__ in {None, ""}:
+    # Direct CLI execution sets sys.path[0] to tools/. Add the repository root
+    # so the same canonical tools.* import works in both CLI and pytest/module modes.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.rll_perturbation_a1_restframe_candidate_v1 import (
     CASES,
