@@ -1,0 +1,52 @@
+{
+  "schema": "rll.perturbation_p0_status.v1",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "A1_1_MATERIALIZED_CANONICAL_CI_PENDING",
+  "objective": "Advance the perturbation critical path without inventing a complete theory.",
+  "predecessor": {
+    "A0": "FALSIFIED_AS_GLOBAL_DEFAULT_0_OF_9",
+    "A1": "OPEN_BOUNDED_NECESSARY_CONDITIONS_PASS",
+    "B": "FORMAL_Q_PASS_PHYSICS_BLOCKED",
+    "C": "ACTIVE_BACKGROUND_ONLY"
+  },
+  "current_delta": {
+    "candidate_id": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+    "candidate_contract": "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json",
+    "executable_gate": "tools/rll_perturbation_a1_restframe_candidate_v1.py",
+    "test": "tests/test_rll_perturbation_a1_restframe_candidate_v1.py",
+    "closure_successor": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V2.json",
+    "class_camb_successor": "data/science/perturbations/RLL_CLASS_CAMB_IMPLEMENTATION_SUCCESSOR_20260922_V2.json"
+  },
+  "progress": {
+    "GROWTH_CS2_001": "CANDIDATE_INSTANTIATED_NOT_RESOLVED",
+    "GROWTH_QMU_001": "A1_CANDIDATE_QMU_ZERO_NOT_GLOBAL",
+    "GROWTH_SIGMA_001": "A1_CANDIDATE_SIGMA_ZERO_NOT_GLOBAL",
+    "GROWTH_GAUGE_001": "TOKEN_VAZIO_CRITICAL",
+    "GROWTH_IC_001": "TOKEN_VAZIO_CRITICAL",
+    "GROWTH_CONSERVATION_001": "BACKGROUND_IDENTITY_PASS_PERTURBED_OPEN",
+    "GROWTH_THEORY_001": "PARTIAL_CANDIDATE_ONLY",
+    "GROWTH_D_001": "BLOCKED",
+    "GROWTH_F_001": "BLOCKED",
+    "GROWTH_FSIG8_001": "BLOCKED",
+    "RLL_CLASS_CAMB_IMPLEMENTATION": "BLOCKED"
+  },
+  "next_dependency_order": [
+    "freeze gauge/convention",
+    "derive C01 delta_s evolution",
+    "derive C02 theta_s evolution",
+    "derive super-horizon initial conditions",
+    "run Bianchi/constraint residual gates",
+    "run transition regularity sweep",
+    "only then implement independent CLASS and CAMB paths"
+  ],
+  "non_regression": [
+    "A0 0/9 negative evidence remains immutable",
+    "C background-only route remains safe fallback",
+    "claim_allowed remains false",
+    "no CLASS/CAMB RLL output may be emitted from the background-response growth proxy"
+  ],
+  "rollback": "Revert the A1.1 successor branch/PR only; preserve predecessor contracts and receipts."
+}
