@@ -1,6 +1,9 @@
 #!/data/data/com.termux/files/usr/bin/bash
 set -u
 
+# Android shared storage may be mounted noexec. Always build/run from Termux HOME.
+cd "$HOME" || exit 70
+
 ROOT="${1:-$HOME/rll_joint65_capsule}"
 OUT="$ROOT/build/rll-joint65-armv7-static-builtins"
 mkdir -p "$OUT"
@@ -60,6 +63,29 @@ __aeabi_memcpy8:
     subs r2, r2, #1
     bne 1b
     bx lr
+
+/*
+ * compiler-rt in the Termux ARM toolchain can itself contain stack-protector
+ * references. These symbols close that static dependency without libc.
+ * This is an execution-integrity gate, not a randomized production SSP.
+ */
+.global __stack_chk_fail
+.type __stack_chk_fail, %function
+__stack_chk_fail:
+    mov r0, #127
+    mov r7, #1
+    svc #0
+2:
+    b 2b
+.size __stack_chk_fail, .-__stack_chk_fail
+
+.data
+.align 2
+.global __stack_chk_guard
+.type __stack_chk_guard, %object
+__stack_chk_guard:
+    .word 0x6d5a56da
+.size __stack_chk_guard, 4
 ASM
 
 CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-pic -fno-pie -ffunction-sections -fdata-sections -fno-asynchronous-unwind-tables -fno-unwind-tables -Wall -Wextra -Werror -pedantic"
@@ -112,7 +138,8 @@ compiler=$(clang --version | head -n1)
 linker=$(ld.lld --version | head -n1)
 compiler_rt_builtins=$BUILTINS
 compiler_rt_builtins_sha256=$(sha256sum "$BUILTINS" | awk '{print $1}')
-local_memcpy_shim_sha256=$(sha256sum "$SHIM" | awk '{print $1}')
+local_runtime_shim_sha256=$(sha256sum "$SHIM" | awk '{print $1}')
+runner_sha256=$(sha256sum "$0" | awk '{print $1}')
 undefined_symbols=$UNDEF
 interpreter_segments=$INTERP
 needed_entries=$NEEDED
@@ -130,6 +157,7 @@ claim_allowed_expected=0
 geometry_evidence_transfer=FORBIDDEN
 strict_no_toolchain_runtime=FAIL_BY_DESIGN
 static_toolchain_runtime=compiler-rt-builtins
+stack_guard_mode=deterministic_execution_gate_not_randomized_security_ssp
 no_libc=PASS
 no_dynamic_loader=PASS
 status=$STATUS
