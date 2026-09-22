@@ -59,6 +59,10 @@ def resolve_pat() -> tuple[str | None, str | None]:
             raise AuthorityError("TOKEN_VAZIO_SELECTED_AGENT_PAT_ABSENT")
         return selector, token
 
+    primary = os.environ.get(PAT_PRIMARY)
+    if primary:
+        return PAT_PRIMARY, primary
+
     present = [name for name in PAT_ALIASES if os.environ.get(name)]
     if not present:
         return None, None
