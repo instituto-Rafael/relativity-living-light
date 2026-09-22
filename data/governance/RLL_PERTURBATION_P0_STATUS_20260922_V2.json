@@ -1,0 +1,51 @@
+{
+  "schema": "rll.perturbation_p0_status.v2",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_status": "data/governance/RLL_PERTURBATION_P0_STATUS_20260922_V1.json",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "C07_C08_REGULAR_VARIABLE_PREFLIGHT_MATERIALIZED_CI_PENDING",
+  "candidate_id": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "progress": {
+    "C03_CS2": "CANDIDATE_ASSIGNED_CS2_REST_1",
+    "C04_ENTROPY": "CANDIDATE_ASSIGNED_REST_FRAME_RULE",
+    "C05_ANISOTROPIC_STRESS": "CANDIDATE_ASSIGNED_ZERO",
+    "C06_Q_MU": "CANDIDATE_ASSIGNED_ZERO_FOR_A1",
+    "C07_REFERENCE_GAUGE": "SYNCHRONOUS_COMPUTATIONAL_CONVENTION_DECLARED",
+    "C07_PRIMARY_VARIABLES": "delta_rho_s_and_q_s_DECLARED",
+    "C07_GAUGE_MAPPING": "TOKEN_VAZIO_CLASS_CAMB_MAPPING",
+    "C07_SUPERHORIZON_IC": "TOKEN_VAZIO_SUPERHORIZON_IC",
+    "C08_ENTHALPY_REGULARITY": "PREFLIGHT_MATERIALIZED",
+    "C08_ANALYTIC_LIMIT": "TOKEN_VAZIO_ENTHALPY_DEGENERACY_LIMIT",
+    "C08_BIANCHI_CONSTRAINTS": "TOKEN_VAZIO_PERTURBED_CONSTRAINT_GATE",
+    "C01_DELTA_EVOLUTION": "TOKEN_VAZIO",
+    "C02_MOMENTUM_EVOLUTION": "TOKEN_VAZIO"
+  },
+  "regular_variable_policy": {
+    "delta_rho_s": "PRIMARY_CANDIDATE",
+    "q_s": "PRIMARY_CANDIDATE_MOMENTUM_DENSITY",
+    "q_definition": "q_s=(rho_s+p_s)*theta_s",
+    "theta_s": "DERIVED_ONLY_WHERE_ENTHALPY_IS_CONDITIONED",
+    "epsilon_clipping": "FORBIDDEN_AS_REGULARIZATION"
+  },
+  "integration_promotion": {
+    "pr_955": "BLOCKED_BY_EXTERNAL_GITHUB_SETTINGS_AUTHORITY",
+    "ruleset_observed": "ACTIVE_DEFAULT_BRANCH_DELETE_AND_NON_FAST_FORWARD_ONLY",
+    "branch_protection_api": "403_RESOURCE_NOT_ACCESSIBLE_BY_INTEGRATION",
+    "action": "do_not_bypass"
+  },
+  "next_dependency_order": [
+    "canonical CI for regular-variable preflight",
+    "derive C01 directly for delta_rho_s",
+    "derive C02 directly for q_s",
+    "derive analytic enthalpy-degenerate limit",
+    "derive super-horizon IC",
+    "derive CLASS and CAMB gauge mappings independently",
+    "run perturbed conservation/Bianchi/constraint residuals",
+    "only then unlock RLL CLASS/CAMB implementation"
+  ],
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "rollback": "Revert C07/C08 successor files only; retain A1.1 9/9 necessary-gate evidence and all earlier negative evidence."
+}
