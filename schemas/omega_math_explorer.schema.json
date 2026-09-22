@@ -173,5 +173,7 @@
       }
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "title": "RLL Omega Mathematics Explorer Structural Contract",
+  "description": "Structural contract for the bounded Omega mathematics explorer; schema validity and executable gates do not imply scientific validation, mathematical completeness, or claim promotion."
 }
