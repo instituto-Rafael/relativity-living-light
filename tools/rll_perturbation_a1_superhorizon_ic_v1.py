@@ -114,7 +114,7 @@ def build() -> dict[str, Any]:
         "reference_regime": {
             "x": "k*tau << 1",
             "conformal_H": "1/tau",
-            "metric": "Psi=Psi0+O(x^2), Phi_prime subleading",
+            "metric": "reduced component-local reference: Psi=Psi0 constant and Phi_prime=0 through retained order",
             "normalization": "Psi0 free",
         },
         "coefficients": {
@@ -157,8 +157,9 @@ def build() -> dict[str, Any]:
             "CLASS/CAMB maps without changing the local A1.3 recurrence evidence"
         ),
         "scientific_boundary": (
-            "PASS establishes only a regular component-local series in the declared "
-            "asymptotic reference regime. It is not a complete cosmological IC solution."
+            "PASS establishes only a regular component-local series in the declared frozen-potential "
+            "reference regime. Higher-order coefficients may change in the fully coupled metric "
+            "series; this is not a complete cosmological IC solution."
         ),
     }
 
