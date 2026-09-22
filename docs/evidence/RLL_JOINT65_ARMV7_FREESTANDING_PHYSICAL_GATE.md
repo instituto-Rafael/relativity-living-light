@@ -32,3 +32,28 @@ GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
 ```
 
 Even a PASS here does not equal scientific validation of RLL; it validates this deterministic 65-observation compressed route and its pinned parameter profiles.
+
+
+## Selective bootstrap on constrained ARMv7 — PASS
+
+Observed on 2026-09-22 from Termux/ARMv7:
+
+```text
+method=raw.githubusercontent.com selective download
+git_clone=not_required
+pinned_ref=71c66f8efccef70f20a9b9657146d4dcac112672
+downloaded_files=20
+capsule_size=179K
+status=PASS
+```
+
+The downloaded capsule contains only the production sources, required headers, embedded-data assembler, four pinned datasets, and the physical gate runner needed for the Joint65 execution.
+
+This closes only the deployment/bootstrap gate:
+
+```text
+RLL_JOINT65_SELECTIVE_BOOTSTRAP_ARMV7=PASS
+RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
+```
+
+No claim about the Joint65 executable itself is promoted until the runner compiles, links, executes and emits its own receipt.
