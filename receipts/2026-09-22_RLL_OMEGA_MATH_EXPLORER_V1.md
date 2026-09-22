@@ -71,3 +71,35 @@ J: 9 -> 0, conditional on no new anomaly.
 
 Current successor execution state at this write:
 PENDING_CANONICAL_CI.
+
+
+## Governance residual G1 — preserved failure and correction
+
+workflow_architecture_run=35693565136
+job=106635460218
+architecture_parser_decision=PASS
+yaml_files=225
+yaml_failures=0
+architecture_errors=0
+architecture_warnings=88
+workflow_count_observed=102
+
+failure:
+WF_COUNT_MISMATCH
+declared_active_workflows=99
+observed_active_workflows=102
+
+interpretation:
+The new Omega mathematics workflow was structurally valid. The failure came from a stale
+repository workflow-count registry, not from the mathematical runner.
+
+correction:
+.github/workflow-contract.yml
+active_workflows: 99 -> 102
+commit=55d4df7e98cc8ef7f63fec2d33ae7fe60f4e5be6
+
+rollback:
+revert the correction only if a fresh executable inventory demonstrates a different count.
+
+next:
+require a fresh workflow-architecture and workflow-contract receipt on the corrected head.
