@@ -70,6 +70,44 @@ def _is_missing(value: Any) -> bool:
     return False
 
 
+def _sanitize_for_json(value: Any, *, path: str = "report", nonfinite: list[dict[str, str]] | None = None) -> Any:
+    """Convert numpy scalars/arrays and non-finite diagnostics to strict JSON.
+
+    Non-finite values are never silently discarded: each one is replaced by
+    null and recorded with its structural path. Scientific summary fields are
+    checked separately and remain forbidden from containing non-finite values.
+    """
+    if nonfinite is None:
+        nonfinite = []
+    if isinstance(value, np.bool_):
+        return bool(value)
+    if isinstance(value, np.integer):
+        return int(value)
+    if isinstance(value, (np.floating, float)):
+        v = float(value)
+        if math.isfinite(v):
+            return v
+        label = "nan" if math.isnan(v) else ("inf" if v > 0 else "-inf")
+        nonfinite.append({"path": path, "value": label})
+        return None
+    if isinstance(value, np.ndarray):
+        return [
+            _sanitize_for_json(item, path=f"{path}[{idx}]", nonfinite=nonfinite)
+            for idx, item in enumerate(value.tolist())
+        ]
+    if isinstance(value, dict):
+        return {
+            str(key): _sanitize_for_json(item, path=f"{path}.{key}", nonfinite=nonfinite)
+            for key, item in value.items()
+        }
+    if isinstance(value, (list, tuple)):
+        return [
+            _sanitize_for_json(item, path=f"{path}[{idx}]", nonfinite=nonfinite)
+            for idx, item in enumerate(value)
+        ]
+    return value
+
+
 def validate_contract_and_registry() -> dict[str, Any]:
     contract = _read_yaml(CONTRACT)
     registry = _read_yaml(REGISTRY)
@@ -154,18 +192,32 @@ def null_parity() -> dict[str, Any]:
 
 def run_baseline(output: Path, seeds: Sequence[int], maxiter: int, ftol: float, integration_points: int) -> dict[str, Any]:
     g4 = _load_module("rll_g4_omega_baseline", G4)
-    report = g4.build_report(
+    raw_report = g4.build_report(
         seeds=tuple(int(x) for x in seeds),
         maxiter=int(maxiter),
         ftol=float(ftol),
         integration_points=int(integration_points),
     )
+    nonfinite: list[dict[str, str]] = []
+    report = _sanitize_for_json(raw_report, path="report", nonfinite=nonfinite)
+    critical_prefixes = ("report.rows", "report.datasets", "report.deltas_vs_LCDM")
+    critical_nonfinite = [
+        item for item in nonfinite
+        if item["path"].startswith(critical_prefixes)
+    ]
+    if critical_nonfinite:
+        raise RuntimeError(
+            "non-finite values reached scientific summary fields: "
+            + json.dumps(critical_nonfinite, sort_keys=True)
+        )
     wrapped = {
         "schema": "rll.omega_g_cosmology_tournament.baseline.v1",
         "arm": "ARM0_BASELINE",
         "source_engine": "tools/run_g4_background_tournament.py",
         "omega_g": "disabled",
         "claim_allowed": False,
+        "serialization_nonfinite_count": len(nonfinite),
+        "serialization_nonfinite": nonfinite,
         "report": report,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
