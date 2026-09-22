@@ -7,6 +7,7 @@ run-name: Ω Math Explorer · ${{ github.event_name }} · ${{ github.ref_name }}
     branches: [main, rll/lab]
     paths: &omega_math_paths
       - "data/contracts/omega_math_explorer.v1.yml"
+      - "rll_equation_registry.yml"
       - "schemas/omega_math_explorer.schema.json"
       - "tools/run_omega_math_explorer.py"
       - "tests/test_omega_math_explorer.py"
