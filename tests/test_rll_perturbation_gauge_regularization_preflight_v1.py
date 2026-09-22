@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import json
+import subprocess
+import sys
+from pathlib import Path
+
 from tools.rll_perturbation_gauge_regularization_preflight_v1 import build
 
 
@@ -39,3 +44,25 @@ def test_degeneracy_is_reported_not_clipped_or_silently_removed():
     assert "observed_enthalpy_degeneracy" in payload["sweep"]
     assert payload["theta_policy"] == "derived diagnostic only where enthalpy is conditioned"
     assert "does not define the missing dynamics" in payload["scientific_boundary"]
+
+
+def test_preflight_cli_executes_from_repo_root(tmp_path: Path):
+    output = tmp_path / "receipt.json"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "tools/rll_perturbation_gauge_regularization_preflight_v1.py",
+            "--output",
+            str(output),
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stderr
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["state"] == "C07_C08_REGULAR_VARIABLE_PREFLIGHT_PASS_IC_EQUATIONS_OPEN"
+    assert payload["sweep"]["passing_cases"] == 9
+    assert payload["token_resolution"] == "NOT_RESOLVED"
+    assert payload["class_camb_unlock"] is False
