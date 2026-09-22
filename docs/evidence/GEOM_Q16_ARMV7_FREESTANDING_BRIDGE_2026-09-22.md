@@ -299,3 +299,28 @@ Canonical RLL ARMv7 runner commit:
 `45b1ec7bdef74a7a4d5a8f4cf9cb5f58cd25932d`.
 
 Its suspicious-runtime audit now examines undefined/imported symbols only, preventing internal fixed-point functions from causing a false positive. `undefined_symbols=0` remains mandatory.
+
+
+## GEOM v5 exact canonical physical property — PASS
+
+A physical `armv7l` execution now exists for the exact canonical geometry v5 property route.
+
+```text
+production_core_sha256=43f363f386e001a4cd568b3ae9e7a919ab9bdbef0e38c48fa2ce99bf951f8d0a
+property_core_sha256=811e4aead0c62f08431ee5e228e3231dbea7273d23f66bdf3f3daedf114caa06
+artifact_sha256=f34511b7984ccf4f5d549df9aaf00648496b679ee9ae9612a9e3b0f2afef593e
+receipt_sha256=2d8020b4d7fe793c1aadd9c43d836a2c38a60647fbd1660dcead3b17a6c1cd29
+geometry_evaluations=917510
+scale_comparisons=786432
+monotonicity_steps=131072
+partition_checks=7
+status=PASS
+```
+
+This validates the geometry property executable only. It does not transfer evidence to either RLL executable.
+
+```text
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
+GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
+```
