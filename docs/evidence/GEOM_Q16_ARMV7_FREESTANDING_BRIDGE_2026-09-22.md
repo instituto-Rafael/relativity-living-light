@@ -52,3 +52,26 @@ Recommended correction: compare raw nonnegative Q16 inputs with a wide exact rel
 ## Next RLL-specific gate
 
 Run the actual RLL ARMv7 executable on the physical ARMv7 target and produce an artifact-specific receipt. The geometry receipt may be reused as schema, not as substitute evidence.
+
+
+## Successor geometry v3 — no RLL promotion
+
+The producer repo now contains a v3 candidate that fixes the Q16 boundary falsifier and adds a complete discrete invariant sweep for `r=1`.
+
+```text
+producer: rafaelmeloreisnovo/Matem-tica-
+path: experiments/geom_equal_circles_q16_armv7_2026-09-22/
+v3 materialization commit: 6102f28345e54059873dd848326be7ab0689040b
+v3 source local SHA256: ecbf85fe3a7c96ee5e2eebd1695b9875414145e27b8455b2abbf4d415969b42a
+```
+
+Observed pre-physical state:
+
+```text
+GEOM_V3_HOST_SELFTEST = PASS
+GEOM_V3_ARMV7_CROSS_LINK = PASS
+GEOM_V3_ARMV7_PHYSICAL = TOKEN_VAZIO
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL = TOKEN_VAZIO
+```
+
+No evidence is transferred from the geometry executable to the RLL executable. A v3 physical receipt can validate the geometry successor only.
