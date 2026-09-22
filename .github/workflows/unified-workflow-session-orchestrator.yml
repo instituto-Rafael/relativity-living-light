@@ -1,6 +1,8 @@
-name: Unified Workflow Session Orchestrator
+# KNOWS_BY_ON_FIRST_LINE: one governed transit, sequential barriers, no claim promotion.
+name: RLL Transit Tower — Unified Workflow Orchestrator
+run-name: Transit Tower Ω · ${{ github.event_name }} · ${{ github.ref_name }}
 
-on:
+"on":
   pull_request:
     branches:
       - main
@@ -10,37 +12,24 @@ on:
   workflow_dispatch:
     inputs:
       profile:
-        description: "Execution profile; auto derives scope from the selected maturity branch"
+        description: "Governed specialty profile; auto derives from the selected branch"
         required: true
         default: auto
         type: choice
         options:
           - auto
+          - transit_refactor
           - full_session
           - quick_session
           - real_data_session
-      ref:
-        description: "Branch or ref for dispatch"
-        required: true
-        default: main
-        type: string
-      wait_for_completion:
-        description: "Wait for each selected workflow and fail on non-success conclusions"
-        required: true
-        default: true
-        type: boolean
-      fail_fast:
-        description: "Stop orchestration on first dispatch/run failure"
-        required: true
-        default: true
-        type: boolean
+          - science_shadow_session
       dry_run:
-        description: "Only plan selected workflows without dispatching"
+        description: "Validate and receipt the complete plan without dispatching children"
         required: true
-        default: false
+        default: true
         type: boolean
       overrides:
-        description: "JSON workflow input overrides, keyed by catalog workflow id"
+        description: "JSON overrides; each specialty is default-deny and explicitly allowlisted"
         required: false
         default: "{}"
         type: string
@@ -49,8 +38,14 @@ permissions:
   contents: read
 
 concurrency:
-  group: unified-workflow-session-${{ github.event_name }}-${{ github.event.pull_request.number || inputs.ref || github.ref }}
+  group: rll-transit-tower-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: false
+
+env:
+  CLAIM_ALLOWED: "false"
+  SCIENTIFIC_GATE: BLOCKED
+  PUBLICATION_READY: "false"
+  PUBLICATION_EFFECT: NONE
 
 jobs:
   branch-maturity-gate:
@@ -66,7 +61,6 @@ jobs:
       BASE_SHA: ${{ github.event.pull_request.base.sha }}
       HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       RECEIPT_DIR: artifacts/branch-maturity
-
     steps:
       - name: Checkout full promotion graph without persistent credentials
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -81,9 +75,7 @@ jobs:
           cache: pip
 
       - name: Install bounded validation dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pyyaml pytest jsonschema
+        run: python -m pip install pyyaml pytest jsonschema
 
       - name: Test branch maturity gate
         id: gate-tests
@@ -158,23 +150,77 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
+  transit-preflight:
+    if: github.event_name == 'pull_request'
+    name: Inventory and validate the complete transit plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      HEAD_REF: ${{ github.head_ref }}
+      ORCHESTRATION_COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Checkout exact pull request head without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: .github/workflow-orchestrator/requirements.txt
+
+      - name: Install bounded orchestration dependency
+        run: python -m pip install -r .github/workflow-orchestrator/requirements.txt
+
+      - name: Validate engine and materialize exhaustive dry-run receipt
+        run: |
+          set -euo pipefail
+          python -m unittest -v tests/test_workflow_orchestrator.py
+          python tools/workflow_orchestrator.py \
+            --catalog .github/workflow-orchestrator/session.yml \
+            --profile transit_refactor --ref "$HEAD_REF" \
+            --wait --fail-fast --dry-run \
+            --output-dir artifacts/unified-workflow-session
+
+      - name: Publish preflight summary
+        if: always()
+        run: |
+          report=artifacts/unified-workflow-session/ORCHESTRATION_REPORT.md
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_TRANSIT_PREFLIGHT_REPORT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload preflight receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-transit-preflight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/unified-workflow-session/
+          retention-days: 30
+          if-no-files-found: error
+
   orchestrate-workflow-session:
     if: github.event_name == 'workflow_dispatch'
+    name: Execute specialty transit with fail-fast barriers
     runs-on: ubuntu-24.04
-    timeout-minutes: 180
+    timeout-minutes: 360
     permissions:
       contents: read
       actions: write
     env:
       PROFILE_INPUT: ${{ inputs.profile }}
-      REF_INPUT: ${{ inputs.ref }}
-      WAIT_INPUT: ${{ inputs.wait_for_completion }}
-      FAIL_FAST_INPUT: ${{ inputs.fail_fast }}
+      REF_INPUT: ${{ github.ref_name }}
       DRY_RUN_INPUT: ${{ inputs.dry_run }}
       OVERRIDES_INPUT: ${{ inputs.overrides }}
-
     steps:
-      - name: Checkout repository without persistent credentials
+      - name: Checkout exact transit ref without persistent credentials
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -184,13 +230,15 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+          cache-dependency-path: .github/workflow-orchestrator/requirements.txt
 
-      - name: Install bounded orchestration dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pyyaml
+      - name: Install bounded orchestration dependency
+        run: python -m pip install -r .github/workflow-orchestrator/requirements.txt
 
-      - name: Resolve adaptive profile and run unified orchestration
+      - name: Run adversarial engine tests before dispatch authority
+        run: python -m unittest -v tests/test_workflow_orchestrator.py
+
+      - name: Resolve profile and execute the single-flight transit
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
@@ -199,17 +247,29 @@ jobs:
             case "$REF_INPUT" in
               rll/lab) profile=quick_session ;;
               rll/integration) profile=real_data_session ;;
-              rll/release|main) profile=full_session ;;
+              rll/release|main) profile=transit_refactor ;;
               *) profile=quick_session ;;
             esac
           fi
-          args=(--catalog .github/workflow-orchestrator/session.yml --profile "$profile")
-          args+=(--ref "$REF_INPUT" --overrides "$OVERRIDES_INPUT")
-          args+=(--output-dir artifacts/unified-workflow-session)
-          [[ "$WAIT_INPUT" == true ]] && args+=(--wait)
-          [[ "$FAIL_FAST_INPUT" == true ]] && args+=(--fail-fast)
+          args=(--catalog .github/workflow-orchestrator/session.yml)
+          args+=(--profile "$profile" --ref "$REF_INPUT" --overrides "$OVERRIDES_INPUT")
+          args+=(--output-dir artifacts/unified-workflow-session --wait --fail-fast)
           [[ "$DRY_RUN_INPUT" == true ]] && args+=(--dry-run)
           python tools/workflow_orchestrator.py "${args[@]}"
+
+      - name: Finalize canonical real-data policy checksums
+        if: always()
+        env:
+          CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+          CLAIM_BOUNDARY: "Structural orchestration only; claim_allowed=false; publication_effect=NONE."
+        run: |
+          set -euo pipefail
+          artifact_dir="artifacts/workflow-policy/unified-workflow-session-orchestrator/${GITHUB_JOB}"
+          mkdir -p "$artifact_dir"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$artifact_dir"
+          rll_real_data_assert_boundary_file "$artifact_dir/CLAIM_BOUNDARY.md"
+          rll_real_data_write_checksums "$artifact_dir"
 
       - name: Publish orchestration summary
         if: always()
@@ -221,25 +281,13 @@ jobs:
             printf '%s\n' 'TOKEN_VAZIO_ORCHESTRATION_REPORT' >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Upload orchestration artifacts
+      - name: Upload transit receipts even after a red stage
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: unified-workflow-session-${{ github.run_id }}-${{ github.run_attempt }}
-          path: artifacts/unified-workflow-session/
+          name: rll-transit-tower-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/unified-workflow-session/
+            artifacts/workflow-policy/unified-workflow-session-orchestrator/
           retention-days: 30
           if-no-files-found: error
-
-      - name: Finalize canonical real-data policy checksums
-        if: always()
-        env:
-          CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
-          CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
-        run: |
-          set -euo pipefail
-          artifact_dir="artifacts/workflow-policy/unified-workflow-session-orchestrator/${GITHUB_JOB}"
-          mkdir -p "$artifact_dir"
-          . tools/ci/real_data_workflow_policy.sh
-          rll_real_data_write_claim_boundary "$artifact_dir"
-          rll_real_data_assert_boundary_file "$artifact_dir/CLAIM_BOUNDARY.md"
-          rll_real_data_write_checksums "$artifact_dir"

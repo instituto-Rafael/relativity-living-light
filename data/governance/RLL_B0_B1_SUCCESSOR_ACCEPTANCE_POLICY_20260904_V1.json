@@ -1,0 +1,71 @@
+{
+  "schema": "rll.b0_b1_successor_acceptance_policy.v1",
+  "observed_at": "2026-09-04",
+  "mode": "AUDIT_ONLY",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "forward_port_authorized": false,
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "pr": 807,
+    "base": "main",
+    "pre_policy_head": "e2ed19d451c19065cbabb008a5fd33d45ec51fe6"
+  },
+  "allowed_paths": [
+    ".github/workflow-contract.yml",
+    "data/governance/RLL_B0_B1_SUCCESSOR_GRAPH_ARTIFACT_FLOW_20260904_V1.json",
+    "data/governance/RLL_B0_B1_SUCCESSOR_MANIFEST_20260903_V1.json",
+    "data/governance/RLL_B0_B1_SUCCESSOR_ACCEPTANCE_POLICY_20260904_V1.json"
+  ],
+  "path_gate": {
+    "pre_policy_observed_changed_paths": [
+      ".github/workflow-contract.yml",
+      "data/governance/RLL_B0_B1_SUCCESSOR_GRAPH_ARTIFACT_FLOW_20260904_V1.json",
+      "data/governance/RLL_B0_B1_SUCCESSOR_MANIFEST_20260903_V1.json"
+    ],
+    "expected_changed_paths_after_this_commit": 4,
+    "closure_rule": "set(PR.changed_paths) == set(allowed_paths)",
+    "extraneous_count_definition": "|set(PR.changed_paths) - set(allowed_paths)|",
+    "extraneous_count": "TOKEN_VAZIO_UNTIL_PROVIDER_READBACK"
+  },
+  "artifact_consumer_policy": {
+    "scope": [
+      "workflow-contract-sync-${run_id}-${run_attempt}",
+      "rll-operational-auto-hotfix-${run_id}-${run_attempt}"
+    ],
+    "producer_upload_state": "OBSERVED_CURRENT_REF",
+    "downstream_provider_consumer_state": "NOT_OBSERVED_BY_EXACT_NAME_SEARCH",
+    "mandatory_downstream_consumer": false,
+    "reason": "Current B0/B1 manifests use these provider artifacts as custody/evidence products; no canonical acceptance contract identified a distinct downstream executable consumer as mandatory. Generic actions/download-artifact uses elsewhere do not establish consumption of these exact products.",
+    "boundary": "NOT_REQUIRED_BY_CURRENT_CONTRACT != PROVED_GLOBALLY_ABSENT",
+    "promotion_rule": "If a canonical producer-consumer contract naming either artifact is later observed, reopen this field as TOKEN_VAZIO and require a provider-bound trace."
+  },
+  "remaining_acceptance": {
+    "targeted_governance_tests": "REQUIRE_POST_POLICY_EXACT_HEAD_PROVIDER_EVIDENCE",
+    "workflow_inventory": "REQUIRE_POST_POLICY_EXACT_HEAD_PROVIDER_EVIDENCE",
+    "extraneous_count": "REQUIRE_PROVIDER_READBACK",
+    "aggregate_receipt": "TOKEN_VAZIO_REQUIRED"
+  },
+  "gap": {
+    "gap_id": "TV-RLL-B0-B1-SUCCESSOR-ACCEPTANCE-EXECUTION",
+    "state": "TOKEN_VAZIO_POST_POLICY_EXECUTION_REQUIRED",
+    "source_pointer": "instituto-Rafael/relativity-living-light#807",
+    "missing_field": "post-policy exact-head CI evidence + extraneous_count readback + aggregate receipt",
+    "blocking_dependency": "provider runs on the new branch head",
+    "evidence_needed": "changed-path equality, targeted governance PASS, workflow-contract PASS, aggregate exact-head receipt",
+    "falsifier": "unexpected changed path, failed gate, head mismatch, or newly observed mandatory consumer contract",
+    "next_probe": "read PR changed paths and exact-head workflow runs; issue aggregate receipt only if all gates pass",
+    "owner_authority": "RLL operational/reviewer authority",
+    "urgency": "P0/P1",
+    "closure_gate": "hash-bound successor acceptance receipt with claim_allowed=false",
+    "claim_allowed": false,
+    "predecessor_lineage": "cycle45->46->47->48->49"
+  },
+  "invariants": [
+    "VISÃO != ARTEFATO != EXECUÇÃO != EVIDÊNCIA != CLAIM",
+    "ALLOWED_PATH_SET != CI_PASS",
+    "NOT_REQUIRED_BY_CURRENT_CONTRACT != PROVED_GLOBALLY_ABSENT",
+    "NO_FORWARD_PORT_BEFORE_ACCEPTANCE_GATES"
+  ]
+}

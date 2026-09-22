@@ -32,14 +32,14 @@ equations:
   - id: null_limit_lcdm
     equation: "lim_{Omega_s0->0, Omega_B0->0, Omega_P0->0} E2_RLL(a) = E2_LCDM(a)"
     domain: ["cosmology", "RLL", "model_reduction"]
-    status: "known_physics"
+    status: "algebraic_model_reduction"
     source_doc: "docs/canonicos/14_MODELO_COSMOLOGICO_RLL.md"
     implementation: "src/rll/structural_integration.py"
     methodology_phase: "model_selection"
     real_data_validators:
       - "data/results/model_comparison.json"
       - "data/results/structure_d/joint_real_likelihood.json"
-    claim_boundary: "Verificado analiticamente e numericamente; confirma que RLL é extensão legítima de LCDM com limite nulo bem definido"
+    claim_boundary: "Verificado analiticamente e numericamente como limite algébrico do modelo. Recuperar LCDM no limite nulo é um teste de redução necessário e útil, mas não demonstra por si só validade física, necessidade observacional ou superioridade da extensão RLL."
 
   - id: impulse_response
     equation: "y(t) = (I * h)(t) + eta(t)"
@@ -174,12 +174,54 @@ equations:
   - id: claim_state_entropy
     equation: "H_claim = -sum_{s in C_s} P(s|evidence) log2 P(s|evidence) ; H_max = log2(14) ~ 3.81 bits"
     domain: ["information_theory", "epistemology", "RLL"]
-    status: "author_model"
+    status: "governance_mapping"
     source_doc: "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
     methodology_phase: "claim_gate"
     real_data_validators:
       - "data/results/model_comparison.json"
-    claim_boundary: "TOKEN_VAZIO corresponds to H_max; CLAIM_ALLOWED to H=0; monotonic decrease as evidence accumulates"
+    claim_boundary: "A fórmula de Shannon é conhecida, mas TOKEN_VAZIO->H_max e CLAIM_ALLOWED->0 são convenções de governança, não identidades automáticas. H=log2(14) exige distribuição uniforme sobre 14 estados; H=0 exige posterior degenerada em um único estado."
+
+
+  - id: rll_conserved_effective_pressure
+    equation: "p_cons = -rho_s - (1/3) d rho_s / d ln(a)"
+    domain: ["cosmology", "background", "perturbations", "RLL"]
+    status: "derived_continuity_identity"
+    source_doc: "data/governance/RLL_GROWTH_SEMANTICS_FINAL_CONSOLIDATION_V1.json"
+    implementation: "tools/rll_growth_semantics_abc.py"
+    methodology_phase: "perturbation_closure_prerequisite"
+    real_data_validators: []
+    claim_boundary: "Derived from separate FLRW conservation for the versioned rho_s(a); does not select microphysics or establish perturbation stability."
+
+  - id: rll_a1_restframe_cs2_candidate
+    equation: "c_s,rest^2 = 1"
+    domain: ["cosmology", "perturbations", "RLL"]
+    status: "research_candidate_assumption"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_restframe_candidate_v1.py"
+    methodology_phase: "candidate_falsification"
+    real_data_validators: []
+    claim_boundary: "Explicit A1.1 rest-frame candidate assumption; not derived from the RLL background, not a validated RLL property, and not sufficient to unlock CLASS/CAMB."
+
+
+  - id: rll_a1_newtonian_delta_candidate
+    equation: "delta_s' = -U_s + 3(1+w_s)Phi' - 3H(c_s^2-w_s)delta_s - 9H^2(c_s^2-c_a^2)U_s/k^2"
+    domain: ["cosmology", "perturbations", "RLL"]
+    status: "research_candidate_equation"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
+    methodology_phase: "gauge_regularization_candidate"
+    real_data_validators: []
+    claim_boundary: "Conformal-Newtonian reference equation for the A1.2 candidate after U=(1+w)theta substitution; not solver-validated or promoted as the unique RLL perturbation law."
+
+  - id: rll_a1_regularized_momentum_candidate
+    equation: "U_s' = H[q_w-(1-3c_s^2)]U_s + c_s^2 k^2 delta_s + (1+w_s)k^2 Psi ; q_w=d ln(1+w_s)/d ln a"
+    domain: ["cosmology", "perturbations", "RLL"]
+    status: "research_candidate_equation"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
+    methodology_phase: "gauge_regularization_candidate"
+    real_data_validators: []
+    claim_boundary: "Algebraic momentum-variable rewrite for A1.2. PASS of the regularity gate does not establish physical stability, initial conditions, CLASS/CAMB parity, or observational validity."
 
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:

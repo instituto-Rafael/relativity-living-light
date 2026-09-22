@@ -1,0 +1,67 @@
+{
+  "schema": "rafaelia.rll.zero_job_cluster_receipt.v1",
+  "cycle_id": "RAFAELIA-FED-RLL-ZERO-JOB-VALIDACAO-20260910-06",
+  "predecessor": "RAFAELIA-FED-RLL-YAML-SYNTAX-20260910-05",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "authority_branch_observed": "rll/lab",
+  "audit_branch": "audit/zero-job-validacao-real-20260910",
+  "source": {
+    "workflow_path": ".github/workflows/validacao_real.yml",
+    "workflow_id": 288994902,
+    "workflow_blob_sha": "0bd7b779d1b000f2796f102d6ef8f16ddcd80b55",
+    "classification": "OBSERVED"
+  },
+  "observations": [
+    {
+      "run_id": 34478262944,
+      "head_sha": "e0f750c0237d2ec3275e874f568e9bb907ddfe91",
+      "branch": "rll/lab",
+      "event": "push",
+      "conclusion": "failure",
+      "jobs_count": 0,
+      "workflow_blob_sha": "0bd7b779d1b000f2796f102d6ef8f16ddcd80b55"
+    },
+    {
+      "run_id": 34371991069,
+      "head_sha": "508870f241ff771a1e735857b7576843c2df0b6d",
+      "conclusion": "failure",
+      "jobs_count": 0,
+      "workflow_blob_sha": "0bd7b779d1b000f2796f102d6ef8f16ddcd80b55"
+    },
+    {
+      "run_id": 34371308957,
+      "head_sha": "b3e83216a8111159c739a84670778f613db5175b",
+      "conclusion": "failure",
+      "jobs_count": 0,
+      "workflow_blob_sha": "0bd7b779d1b000f2796f102d6ef8f16ddcd80b55"
+    }
+  ],
+  "inferences": {
+    "same_workflow_blob_across_observed_zero_job_runs": true,
+    "recent_workflow_content_change_is_sufficient_cause": "CONTRADICTED_FOR_OBSERVED_CLUSTER",
+    "provider_root_cause": "TOKEN_VAZIO_ROOT_CAUSE"
+  },
+  "gap": {
+    "gap_id": "TV-RLL-VALIDACAO-REAL-ZERO-JOB-ROOT-CAUSE",
+    "token": "TOKEN_VAZIO_ROOT_CAUSE",
+    "parent_gap": "TV-RLL-ACTIONS-ZERO-JOB-ROOT-CAUSE",
+    "source_pointer": "github:instituto-Rafael/relativity-living-light:.github/workflows/validacao_real.yml@0bd7b779d1b000f2796f102d6ef8f16ddcd80b55",
+    "missing_field": "specific GitHub Actions pre-job/provider validation cause",
+    "blocking_dependency": "provider diagnostic or controlled minimal reproduction",
+    "evidence_needed": "a controlled semantic delta producing jobs materialization versus jobs=[] under comparable trigger/context, or an explicit provider diagnostic",
+    "falsifier": "the identical workflow blob materializes jobs under equivalent trigger/context, falsifying blob-content-alone as a sufficient explanation",
+    "next_probe": "find a jobbed run for workflow_id 288994902 and compare event/ref/permissions/context; if absent, construct one minimal audit-only workflow preserving one semantic class at a time",
+    "owner_authority": "GitHub Actions",
+    "urgency": "P0",
+    "closure_gate": "reproducible causal delta plus receipt and index/memory update",
+    "claim_allowed": false,
+    "predecessor_lineage": [
+      "TV-RLL-ACTIONS-ZERO-JOB-ROOT-CAUSE",
+      "workflow_id:288994902",
+      "blob:0bd7b779d1b000f2796f102d6ef8f16ddcd80b55"
+    ]
+  },
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "default_branch_modified": false
+}

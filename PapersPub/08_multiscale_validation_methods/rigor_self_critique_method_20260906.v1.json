@@ -1,0 +1,107 @@
+{
+  "schema": "raf.rll.rigor_self_critique.v1",
+  "date": "2026-09-06",
+  "append_only": true,
+  "claim_allowed": false,
+  "input_registry": "math_research_program_48_20260905.v1.json",
+  "source_methodology": {
+    "drive_epistemic_classes": ["FATO_COMPROVADO","TEORIA_CIENTIFICA","HIPOTESE_TESTAVEL","IDEIA_ESPECULATIVA","POTENCIAL_PATENTE"],
+    "rll_claim_states": ["PASS_EXACT","CONVENTION","HYPOTHESIS","PARABLE","TOKEN_VAZIO","PROHIBITED"],
+    "principle": "classification != rigor; rigor vector != truth; score cannot bypass hard gates",
+    "drive_observed_methodology": {
+      "epistemic_taxonomy_source": "Drive analysis: Eixo A — Epistemologia Aplicada e Taxonomia das Proposições",
+      "epistemic_classes": ["FATO_COMPROVADO","TEORIA_CIENTIFICA","HIPOTESE_TESTAVEL","IDEIA_ESPECULATIVA","POTENCIAL_PATENTE"],
+      "legacy_rigor_0_10_bridge": {
+        "primary_literature": ["RG07","RG12"],
+        "fact_hypothesis_separation": ["epistemic_class","claim_state"],
+        "falsifiability": ["RG04"],
+        "mathematical_rigor": ["RG01","RG02","RG03"],
+        "recognition_of_limitations": ["RG06","RG09","RG11"]
+      },
+      "traceability_matrix": {
+        "title": "01_MATRIZ_DE_RASTREABILIDADE__INVARIANTES_E_MATRIX",
+        "google_drive_file_id": "1FMuZ-WVvuI7qbQJ8E5LjfHOKShI83VMsJfGB2zyWHgE",
+        "field_bridge": {
+          "status_epistemico": "epistemic_class",
+          "status_operacional": "claim_state",
+          "evidencia": ["supporting_evidence","RG03","RG05","RG11"],
+          "teste_ou_verificador": ["falsifier","RG04","RG05"],
+          "risco_principal": ["counterevidence","RG06","RG11"],
+          "claim_gate": "hard_gate_status",
+          "decisao": "promotion_decision",
+          "proximo_passo": "F_next",
+          "F_ok": "F_ok",
+          "F_gap": "F_gap",
+          "F_next": "F_next",
+          "authority_origin_duplicate": ["RG07","RG08","RG12","provenance"],
+          "structural_role_layer": ["RG09","RG10"]
+        }
+      }
+    }
+  },
+  "cell_scale": {
+    "TOKEN_VAZIO": "não avaliado/desconhecido; nunca é 0",
+    "0": "falha/contradição demonstrada",
+    "1": "alegação/cobertura fraca",
+    "2": "parcialmente especificado/suportado",
+    "3": "forte/reproduzível no escopo",
+    "4": "fechado no critério: prova formal ou verificação independente conforme aplicável"
+  },
+  "dimensions": [
+    {"id":"RG01","title":"Formulação formal","weight":1.2,"hard_gate":true,"question":"A proposição está escrita de forma matemática inequívoca, com objetos e quantificadores quando necessários?"},
+    {"id":"RG02","title":"Domínio, tipos, unidades e hipóteses","weight":1.2,"hard_gate":true,"question":"Domínio, tipos, unidades, condições de contorno e hipóteses estão explícitos?"},
+    {"id":"RG03","title":"Obrigação de prova / derivação","weight":1.4,"hard_gate":true,"question":"Existe prova, derivação ou obrigação de prova claramente decomponível?"},
+    {"id":"RG04","title":"Falsificador / contraexemplo","weight":1.3,"hard_gate":true,"question":"Há protocolo explícito de refutação, contraexemplo ou condição de falha?"},
+    {"id":"RG05","title":"Reprodução computacional / exemplos","weight":1.0,"hard_gate":false,"question":"Há exemplos, testes ou computação determinística reproduzível quando aplicável?"},
+    {"id":"RG06","title":"Robustez, sensibilidade e bordas","weight":1.0,"hard_gate":false,"question":"Casos-limite, perturbações, sensibilidade e exceções foram explorados?"},
+    {"id":"RG07","title":"Prior art e referências externas","weight":1.1,"hard_gate":false,"question":"O estado da arte e resultados próximos/contrários foram auditados?"},
+    {"id":"RG08","title":"Originalidade e contribuição separada","weight":0.9,"hard_gate":false,"question":"A contribuição própria está separada de resultados conhecidos, convenções e reembalagem?"},
+    {"id":"RG09","title":"Escopo e regime de validade","weight":1.1,"hard_gate":true,"question":"Finito/assintótico, local/global, discreto/contínuo e regime de validade estão delimitados?"},
+    {"id":"RG10","title":"Invariância e artefato de representação","weight":1.0,"hard_gate":false,"question":"O resultado sobrevive a mudanças de coordenada/representação relevantes ou elas estão declaradas?"},
+    {"id":"RG11","title":"Contraevidência, anomalias e negativos","weight":1.2,"hard_gate":true,"question":"Contraevidências e falhas são registradas append-only e afetam o claim?"},
+    {"id":"RG12","title":"Revisão independente / adversarial","weight":1.3,"hard_gate":true,"question":"Houve reprodução independente, red-team, revisão ou tentativa ativa de quebrar o resultado?"}
+  ],
+  "rigor_classes": [
+    {"id":"R0","name":"UNASSESSED","rule":"coverage < 0.50"},
+    {"id":"R1","name":"SPECULATIVE","rule":"coverage >= 0.50 and score < 40"},
+    {"id":"R2","name":"FORMALIZED","rule":"coverage >= 0.60 and score >= 40"},
+    {"id":"R3","name":"TESTABLE","rule":"coverage >= 0.70 and score >= 55 and RG01>=3 and RG02>=3 and RG04>=3"},
+    {"id":"R4","name":"SUPPORTED","rule":"coverage >= 0.80 and score >= 70 and RG03>=2 and RG05>=2 and RG11>=2"},
+    {"id":"R5","name":"STRONG","rule":"coverage >= 0.90 and score >= 85 and every hard gate >=3"},
+    {"id":"R6","name":"EXACT_PROVEN","rule":"explicit exact/proof status and RG01=RG02=RG03=RG04=4 and no unresolved contradiction"}
+  ],
+  "promotion_blockers": [
+    "hard gate TOKEN_VAZIO",
+    "unresolved critical counterevidence",
+    "claim scope exceeds evidence scope",
+    "novelty claimed while prior_art_state TOKEN_VAZIO",
+    "physical/causal interpretation inferred only from inverse/correlation",
+    "hash/CI/receipt used as theorem proof"
+  ],
+  "autocritique": {
+    "nibiguiri_lenses": [
+      {"id":"N01","angle_deg":0,"title":"Escala preservada","opposite":"N07"},
+      {"id":"N02","angle_deg":30,"title":"Orientação / transformações","opposite":"N08"},
+      {"id":"N03","angle_deg":60,"title":"Local → global","opposite":"N09"},
+      {"id":"N04","angle_deg":90,"title":"Finito → assintótico","opposite":"N10"},
+      {"id":"N05","angle_deg":120,"title":"Direto → inverso/fibras","opposite":"N11"},
+      {"id":"N06","angle_deg":150,"title":"Interno → externo","opposite":"N12"},
+      {"id":"N07","angle_deg":180,"title":"Compressão / estatística suficiente","opposite":"N01"},
+      {"id":"N08","angle_deg":210,"title":"Quociente / artefato de coordenada","opposite":"N02"},
+      {"id":"N09","angle_deg":240,"title":"Global → local/resíduo","opposite":"N03"},
+      {"id":"N10","angle_deg":270,"title":"Assintótico → finito/exceções","opposite":"N04"},
+      {"id":"N11","angle_deg":300,"title":"Inverso → mecanismo","opposite":"N05"},
+      {"id":"N12","angle_deg":330,"title":"Evidência → anti-evidência","opposite":"N06"}
+    ],
+    "base_matrix_cells": 576,
+    "adversarial_tensor_cells": 6912,
+    "rule": "rigor score provisional until material dimensions survive applicable Nibiguiri lenses"
+  },
+  "output_contract": {
+    "per_unit": ["epistemic_class","claim_state","scores_by_dimension","coverage","rigor_score","rigor_class","hard_gate_status","supporting_evidence","counterevidence","falsifier","prior_art_state","nibiguiri_findings","promotion_blockers","promotion_decision","F_ok","F_gap","F_next","provenance"],
+    "negative_results_append_only": true,
+    "legacy_matrix_bridge_preserved": true,
+    "coverage_and_score_separate": true,
+    "token_vazio_excluded_from_numeric_average": true
+  }
+}

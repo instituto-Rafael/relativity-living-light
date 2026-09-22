@@ -22,8 +22,18 @@ on:
       - "tests/test_rll_open_work_mechanism_gate*.py"
       - "tools/rll_modern_validation_reconcile*.py"
       - "tests/test_rll_modern_validation_reconcile*.py"
+      - "tools/rll_atlas_evolution_gate.py"
+      - "tests/test_rll_atlas_evolution_gate.py"
+      - "tools/rll_atlas_continuous_evolution_gate_v2.py"
+      - "tests/test_rll_atlas_continuous_evolution_gate_v2.py"
+      - "schemas/rll_observational_topology.v1.schema.json"
+      - "tools/validate_rll_observational_topology.py"
+      - "tests/test_rll_observational_topology.py"
       - "scripts/rll_governance_audit.py"
       - "tests/test_rll_governance_audit.py"
+      - "tools/validate_rll_credential_authority.py"
+      - "tests/test_rll_credential_authority.py"
+      - "receipts/2026-09-11_RLL_CREDENTIAL_AUTHORITY_V1_PREFLIGHT.md"
       - "docs/governance/**"
       - ".github/PULL_REQUEST_TEMPLATE.md"
       - ".github/workflows/rll-governance-quality-gate.yml"
@@ -62,6 +72,11 @@ jobs:
 
       - name: "Run governance unit tests"
         run: python3 -m unittest -v tests/test_rll_governance_audit.py
+
+      - name: "Validate credential authority and no-delete boundary"
+        run: |
+          python3 tools/validate_rll_credential_authority.py --strict --write-report
+          python3 -m unittest -v tests.test_rll_credential_authority
 
       - name: "Reproduce TOKEN_VAZIO V2 historical append-only view"
         run: |
@@ -116,6 +131,37 @@ jobs:
             artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATE_V3.json \
             > artifacts/governance/RLL_OPEN_WORK_MECHANISM_GATES.sha256
 
+      - name: "Validate observational topology append-only contract"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.validate_rll_observational_topology \
+            --output artifacts/governance/RLL_OBSERVATIONAL_TOPOLOGY_VALIDATION.json
+          python3 -m unittest -v tests.test_rll_observational_topology
+          sha256sum artifacts/governance/RLL_OBSERVATIONAL_TOPOLOGY_VALIDATION.json \
+            > artifacts/governance/RLL_OBSERVATIONAL_TOPOLOGY_VALIDATION.sha256
+
+      - name: "Validate ATLAS G0-G7 evolution and anti-regression contract"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_atlas_evolution_gate \
+            --candidate data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json \
+            --output artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json
+          python3 -m unittest -v tests.test_rll_atlas_evolution_gate
+          sha256sum artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_EVOLUTION_GATE_RECEIPT.sha256
+
+      - name: "Validate ATLAS continuous evolution Ω6 complementary envelope"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.rll_atlas_continuous_evolution_gate_v2 \
+            --envelope data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V2.json \
+            --trace data/governance/RLL_ATLAS_SESSION_INTERACTION_TRACE_20260827_V2.jsonl \
+            --predecessor data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json \
+            --output artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json
+          python3 -m unittest -v tests.test_rll_atlas_continuous_evolution_gate_v2
+          sha256sum artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json \
+            > artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.sha256
+
       - name: "Publish non-certification report to job summary"
         if: always()
         run: |
@@ -133,3 +179,33 @@ jobs:
           path: artifacts/governance/
           if-no-files-found: warn
           retention-days: 30
+
+  credential-binding-preflight:
+    name: "Credential binding preflight — manual only"
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: "Checkout immutable reviewed action"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "Verify Climate Actions binding without disclosing secret"
+        env:
+          CLIMA: ${{ secrets.CLIMA }}
+        run: >-
+          python3 tools/validate_rll_credential_authority.py
+          --strict --write-report --runtime-binding-check
+
+      - name: "Upload credential binding receipt even after failure"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-credential-binding-${{ github.run_id }}
+          path: artifacts/governance/RLL_CREDENTIAL_AUTHORITY_RECEIPT.json
+          if-no-files-found: warn
+          retention-days: 14

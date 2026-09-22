@@ -1,0 +1,27 @@
+{
+  "schema": "rll.main_lab_reconciliation_maturity_receipt.v1",
+  "date": "2026-08-16",
+  "run_id": 31978654984,
+  "job_id": 95241883040,
+  "head_ref": "audit/main-lab-reconciliation-20260816",
+  "head_sha": "39fb5db7dc8034ffc73a8e113449ac19e0f6502d",
+  "base_ref": "rll/lab",
+  "base_sha": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb",
+  "decision": "PASS",
+  "residuals": [],
+  "changed_files": [
+    "data/governance/RLL_MAIN_LAB_DIVERGENCE_SNAPSHOT_20260816_V1.json",
+    "docs/governance/RLL_MAIN_LAB_RECONCILIATION_PLAN_V1.md",
+    "tests/test_branch_divergence_inventory.py",
+    "tools/branch_divergence_inventory.py"
+  ],
+  "artifact": {
+    "id": 9271745791,
+    "sha256": "401e659878c92cf5631ec821d1e56c7f4c707031c8259f894d8db72c5151a381",
+    "retention_days": 30
+  },
+  "external_settings": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false
+}

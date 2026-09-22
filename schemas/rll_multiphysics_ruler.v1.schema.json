@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.github.io/schemas/rll_multiphysics_ruler.v1.schema.json",
+  "title": "RLL Multiphysics Ruler Inspection V1",
+  "description": "Fail-closed structural contract for ΩRULER-MP-V1 inspection records. This schema validates custody/state fields; it does not make physical claims true.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema","route_token","claim_allowed","source","custody","epistemic_state","units","mechanism","channels","energy_closure","uncertainty","reproducibility","claim_state","F_ok","F_gap","F_next"],
+  "properties": {
+    "schema": {"const": "rll.multiphysics_ruler.inspection.v1"},
+    "route_token": {"const": "ΩRULER-MP-V1"},
+    "claim_allowed": {"const": false},
+    "source": {"type":"object","additionalProperties":false,"required":["locator","version_or_ref"],"properties":{"locator":{"type":"string","minLength":1},"version_or_ref":{"type":["string","null"]},"observed_at":{"type":["string","null"]},"digest":{"type":["string","null"]}}},
+    "custody": {"type":"array","items":{"type":"string","minLength":1}},
+    "epistemic_state": {"enum":["SOURCE","MODEL","EXECUTION","EVIDENCE","CLAIM","TOKEN_VAZIO"]},
+    "units": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^TOKEN_VAZIO"}]},
+    "geometry": {"type":["object","string","null"]},
+    "mechanism": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^(TOKEN_VAZIO|ANALOGY_ONLY|MODEL_ONLY)"}]},
+    "channels": {"type":"array","uniqueItems":true,"items":{"enum":["G","A","O","T","E","H"]}},
+    "coupling_jacobian": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^(TOKEN_VAZIO|NO_COUPLING_OBSERVED)"},{"type":"null"}]},
+    "energy_closure": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^TOKEN_VAZIO"}]},
+    "analog_horizon": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^(TOKEN_VAZIO|NOT_APPLICABLE|PROHIBITED_BY_SCOPE)"},{"type":"null"}]},
+    "uncertainty": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^TOKEN_VAZIO"}]},
+    "reproducibility": {"oneOf":[{"type":"object"},{"type":"string","pattern":"^TOKEN_VAZIO"}]},
+    "gates": {"type":"object","additionalProperties":false,"properties":{"G_D":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]},"G_F":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]},"G_E":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]},"G_H":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]},"G_S":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]},"G_R":{"enum":["PASS","FAIL","TOKEN_VAZIO","NOT_APPLICABLE"]}}},
+    "claim_state": {"enum":["PASS","FAIL","TOKEN_VAZIO","NO_COUPLING_OBSERVED","PROHIBITED_BY_SCOPE"]},
+    "F_ok": {"type":"array","items":{"type":"string"}},
+    "F_gap": {"type":"array","items":{"type":"string"}},
+    "F_next": {"type":["string","null"]}
+  }
+}

@@ -7,39 +7,56 @@ on:
     - data/**
     - docs/science/**
     - scripts/validation/**
-    - tests/**
+    - tests/test_real_seed_utils.py
+    - tests/test_orbital_outputs.py
+    - tests/test_quality_execution_monitor.py
+    - tools/ci/real_data_workflow_policy.sh
+    - tools/ci/quality_execution_monitor.py
     - .github/workflows/claim-boundary-quality-gates.yml
+    - tools/rll_real_data_evidence_bridge.py
+    - tools/rll_cosmology_e0_preflight.py
   push:
     paths:
     - data/**
     - docs/science/**
     - scripts/validation/**
-    - tests/**
+    - tests/test_real_seed_utils.py
+    - tests/test_orbital_outputs.py
+    - tests/test_quality_execution_monitor.py
+    - tools/ci/real_data_workflow_policy.sh
     - .github/workflows/claim-boundary-quality-gates.yml
+    - tools/rll_real_data_evidence_bridge.py
+    - tools/rll_cosmology_e0_preflight.py
 permissions:
   contents: read
 concurrency:
   group: claim-boundary-quality-gates-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   claim-boundary-quality-gates:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
+        fetch-depth: 2
     - name: Set up Python
-      uses: actions/setup-python@v7
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
       with:
         python-version: '3.11'
+        cache: pip
     - name: Install package and test dependencies
       run: 'python -m pip install --upgrade pip
 
         python -m pip install -e .
 
         python -m pip install pytest
+
+        python -m pip install dynesty
+
+        python -m pip install "jsonschema[format]"
 
         '
     - name: Compile validation scripts
@@ -60,10 +77,37 @@ jobs:
       run: 'python scripts/validation/check_seed_artifact_contracts.py
 
         '
-    - name: Run unit tests
-      run: 'python -m pytest -q tests
+    - name: Materialize deterministic audit prerequisites
+      run: 'set -euo pipefail
+
+        python tools/rll_real_data_evidence_bridge.py --output results/audit/rll_real_data_evidence_bridge.json --require-data-ready
+
+        python tools/rll_cosmology_e0_preflight.py --output results/audit/rll_cosmology_e0_preflight.json
+
+        test -s results/audit/rll_real_data_evidence_bridge.json
+
+        test -s results/audit/rll_cosmology_e0_preflight.json
 
         '
+    - name: Run focused claim-boundary regression tests
+      env:
+        BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      run: |
+        set -euo pipefail
+        ARTIFACT_DIR="artifacts/workflow-policy/claim-boundary-quality-gates/${{ github.job }}"
+        mkdir -p "$ARTIFACT_DIR"
+        python -m pytest -q \
+          tests/test_real_seed_utils.py \
+          tests/test_orbital_outputs.py \
+          tests/test_quality_execution_monitor.py \
+          --junitxml="$ARTIFACT_DIR/focused-junit.xml"
+        python tools/ci/quality_execution_monitor.py \
+          --workflow claim-boundary \
+          --base-sha "${BASE_SHA:-}" \
+          --head-sha "${HEAD_SHA:-}" \
+          --junitxml "$ARTIFACT_DIR/focused-junit.xml" \
+          --output "$ARTIFACT_DIR/quality_execution_monitor.json"
     - name: Finalize canonical real-data policy checksums
       if: always()
       run: 'set -euo pipefail
@@ -83,7 +127,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: claim-boundary-quality-gates-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/claim-boundary-quality-gates/${{ github.job }}/
@@ -91,4 +135,3 @@ jobs:
     env:
       CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

@@ -1,0 +1,44 @@
+{
+  "schema": "rafaelia.authorial_formula_registry.v1",
+  "date": "2026-09-12",
+  "formula_count": 168,
+  "family_count": 12,
+  "claim_allowed": false,
+  "authorship_semantics": "Autoral means formulated/composed within RAFAELIA; it does not by itself establish worldwide novelty, patentability, peer-reviewed validity, or a new physical law.",
+  "canonical_catalog": "data/formulas/RAFAELIA_168_FORMULAS_AUTORAIS_2026-09-12.md",
+  "drive_document_id": "1-iiE5ZZM9cIwEP4eBfkH9eR34k-n9MLa6c1QCDehNnA",
+  "drive_document_url": "https://docs.google.com/document/d/1-iiE5ZZM9cIwEP4eBfkH9eR34k-n9MLa6c1QCDehNnA",
+  "local_export_sha256": {
+    "markdown": "1dfc07336c29c733bb2adc545ab300fb6e223227bbd2e4a3e6076cab78f6f710",
+    "structured_json": "99835ad759ff9edb2c70adfc6ca75f700ccc296c67e395ddacb706d86fc4585a"
+  },
+  "families": [
+    "Epistemologia e Proveniência",
+    "Geometria de Observação",
+    "Recorrência Rafaeliana e Multibase",
+    "Toro T7 e Ω7",
+    "RMRCTI e Estabilidade ΔP",
+    "Cascata, Avalanche e Cadeia de Eventos",
+    "Worldlines e Tempos Múltiplos",
+    "Magnetismo, Plasma e GRMHD",
+    "Cosmologia e Roteamento de Modelos",
+    "Informação, Hashing e Compressão",
+    "Grafos, Semântica e Complementaridade",
+    "Falsificabilidade, Gaps e Governança"
+  ],
+  "source_basis": [
+    "RAFAELIA_SEMENTES_MATEMATICAS_512_2026-09-11.xlsx",
+    "docs/canonicos/33_RMRCTI_OMEGA_DELTA_P_STABILITY.md",
+    "docs/canonicos/34_RMRCTI_OMEGA_WORLDLINE_CASCADE_ROUTER.md",
+    "rafaelmeloreisnovo/llamaRafaelia/rmrCti/gbs3_color.c",
+    "rafaelmeloreisnovo/llamaRafaelia/rmrCti/INDEX.md"
+  ],
+  "invariants": [
+    "RECOVERED != DERIVED != GENERALIZED != HYPOTHESIS",
+    "SOURCE != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != ZERO",
+    "CLASSICAL_COMPONENT != AUTHORIAL_NOVELTY",
+    "PROJECT_DEFINED_FORMULA != PHYSICAL_LAW"
+  ],
+  "state": "CANDIDATE_REGISTRY_NOT_PEER_REVIEWED"
+}

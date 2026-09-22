@@ -1,0 +1,68 @@
+{
+  "schema": "raf.rll.rigor_procedure.v2",
+  "date": "2026-09-06",
+  "append_only": true,
+  "claim_allowed": false,
+  "canonical_bindings": {
+    "claim_state_ledger": "knowledge_ecosystem/claim_state_ledger.md",
+    "origin_protocol": "knowledge_ecosystem/origin_reference_protocol.md",
+    "full_method_v2": "PapersPub/08_multiscale_validation_methods/nibiguiri_full_method_coverage_manifest_20260905.v2.json",
+    "program48": "PapersPub/08_multiscale_validation_methods/math_research_program_48_20260905.v1.json"
+  },
+  "canonical_claim_states": ["RAW_ORAL","RAW_NOTE","METAFORA","PARABOLA_DIDATICA","HIPOTESE","REF_REQUIRED","TOKEN_VAZIO","SOURCE_LINKED","METHOD_DEFINED","EVIDENCE_LINKED","RESULT_REPRODUCED","PEER_OR_REVIEW_READY","CLAIM_ALLOWED","CLAIM_BLOCKED"],
+  "cell_states": {
+    "TOKEN_VAZIO": "unknown/not audited; distinct from 0",
+    "0": "observed failure/contradiction",
+    "1": "weak",
+    "2": "partial",
+    "3": "strong within scope",
+    "4": "closed for criterion",
+    "NOT_APPLICABLE_WITH_REASON": "excluded from applicable denominator only with non-empty reason and profile permission"
+  },
+  "dimensions": [
+    {"id":"RG01","title":"Formulação formal","weight":1.2,"hard_gate":true},
+    {"id":"RG02","title":"Domínio, tipos, unidades e hipóteses","weight":1.2,"hard_gate":true},
+    {"id":"RG03","title":"Obrigação de prova / derivação","weight":1.4,"hard_gate":true},
+    {"id":"RG04","title":"Falsificador / contraexemplo","weight":1.3,"hard_gate":true},
+    {"id":"RG05","title":"Reprodução computacional / exemplos","weight":1.0,"hard_gate":false},
+    {"id":"RG06","title":"Robustez, sensibilidade e bordas","weight":1.0,"hard_gate":false},
+    {"id":"RG07","title":"Prior art e referências externas","weight":1.1,"hard_gate":false},
+    {"id":"RG08","title":"Originalidade e contribuição separada","weight":0.9,"hard_gate":false},
+    {"id":"RG09","title":"Escopo e regime de validade","weight":1.1,"hard_gate":true},
+    {"id":"RG10","title":"Invariância e artefato de representação","weight":1.0,"hard_gate":false},
+    {"id":"RG11","title":"Contraevidência, anomalias e negativos","weight":1.2,"hard_gate":true},
+    {"id":"RG12","title":"Revisão independente / adversarial","weight":1.3,"hard_gate":true}
+  ],
+  "presets": {
+    "MAX_RIGOR_MATHEMATICS": {
+      "description":"Default strict preset for mathematical hypotheses and theorem candidates.","domain":"matemática","min_hard_gate_score":3,"required_lens_mode":"FULL_96","require_full_statement":true,"require_falsifier":true,"require_proof_obligation":true,"require_prior_art_for_novelty_only":true,"require_independent_review_for_claim_allowed":true,"allow_na":["RG05"],"ae_permutation_mode":"MATERIAL_ONLY_WITH_ALL_120_AVAILABLE","relation_calculus_mode":"ALL_12","negative_results_append_only":true,"stale_on_basis_change":true
+    },
+    "FORMAL_PROOF": {
+      "description":"Strict proof-oriented preset.","domain":"matemática","min_hard_gate_score":4,"required_lens_mode":"FULL_96","require_full_statement":true,"require_falsifier":true,"require_proof_obligation":true,"require_prior_art_for_novelty_only":true,"require_independent_review_for_claim_allowed":true,"allow_na":["RG05","RG06"],"ae_permutation_mode":"MATERIAL_ONLY_WITH_ALL_120_AVAILABLE","relation_calculus_mode":"ALL_12","negative_results_append_only":true,"stale_on_basis_change":true
+    },
+    "DIAGNOSTIC_FAIL_CLOSED": {
+      "description":"Fast structural diagnosis; never auto-promotes.","domain":"geral","min_hard_gate_score":3,"required_lens_mode":"BASE_12","require_full_statement":true,"require_falsifier":true,"require_proof_obligation":false,"require_prior_art_for_novelty_only":true,"require_independent_review_for_claim_allowed":true,"allow_na":["RG05"],"ae_permutation_mode":"NONE","relation_calculus_mode":"MATERIAL_ONLY","negative_results_append_only":true,"stale_on_basis_change":true
+    }
+  },
+  "default_preset":"MAX_RIGOR_MATHEMATICS",
+  "request_contract":{"required":["request_id","title","target_unit_ids","claim_goal","preset_id","requested_by","created_at"],"claim_goals":["TRUTH","NOVELTY","PUBLICATION","PHYSICAL_INTERPRETATION","METHOD_VALIDATION"],"default_target":"ALL_48","no_missing_next_step":true},
+  "procedure_states":["REQUEST_RECEIVED","REQUEST_NORMALIZED","SCOPE_BOUND","SOURCE_BOUND","DEDUP_CHECKED","FORMAL_STATEMENT_BOUND","EVIDENCE_BOUND","FALSIFIER_BOUND","RIGOR_ASSESSED","NIBIGUIRI_ASSESSED","DEPENDENCIES_PROPAGATED","GATES_EVALUATED","REVIEW_REQUIRED","ELIGIBLE_FOR_CLAIM_TRANSITION","BLOCKED_WITH_NEXT_ACTION","COMPLETED_RECEIPT"],
+  "drive_gates":{"G0":"Fonte identificada","G1":"Duplicidade avaliada","G2":"Definição e domínio explícitos","G3":"Relações registradas","G4":"Evidência ou TOKEN_VAZIO","G5":"Teste e critério de saída","G6":"Risco e rollback"},
+  "evidence_contract":{"required":["evidence_id","origin_type","origin_source","date_or_token_vazio","domain","claim_state","artifact_ref","limit","dimensions","reviewer_relation"],"reviewer_relations":["SELF","SAME_TEAM","INDEPENDENT","EXTERNAL"],"negative_types":["COUNTEREXAMPLE","FAILED_PROOF","FAILED_REPRODUCTION","BOUNDARY_FAILURE","CONTRADICTION"],"dedup_key":"evidence_id"},
+  "assessment_basis_required":["claim_hash","method_hash","evidence_snapshot_hash","source_commit"],
+  "event_contract_required":["event_id","run_id","trace_id","source_module","source_commit","event_type","status","previous_state","new_state","reason","timestamp"],
+  "score_output":["coverage","observed_score","lower_bound","upper_bound","rigor_class","hard_gate_status","promotion_blockers","promotion_decision"],
+  "rigor_classes":[
+    {"id":"R0_UNASSESSED","prerequisites":{"coverage_min":0.0}},
+    {"id":"R1_SPECULATIVE","prerequisites":{"coverage_min":0.5}},
+    {"id":"R2_FORMALIZED","prerequisites":{"coverage_min":0.6,"score_min":40}},
+    {"id":"R3_TESTABLE","prerequisites":{"coverage_min":0.7,"score_min":55,"min_dims":{"RG01":3,"RG02":3,"RG04":3}}},
+    {"id":"R4_SUPPORTED","prerequisites":{"coverage_min":0.8,"score_min":70,"min_dims":{"RG03":2,"RG05":2,"RG11":2}}},
+    {"id":"R5_STRONG","prerequisites":{"coverage_min":0.9,"score_min":85,"all_hard_min":3}},
+    {"id":"R6_EXACT_PROVEN","prerequisites":{"coverage_min":1.0,"proof_status":"PROVEN","all_hard_min":4,"no_unresolved_counterevidence":true}}
+  ],
+  "autocritique":{"base_directions":12,"full_lenses":96,"rigor_dimensions":12,"units":48,"base_tensor":6912,"full_tensor":55296,"matrix_size_is_not_quality":true,"critique_weights_and_thresholds":true,"critique_the_critic":true},
+  "staleness":{"states":["CURRENT","STALE_REVIEW_REQUIRED","TOKEN_VAZIO_BASIS"],"rule":"any claim/method/evidence/source basis change invalidates current assessment until review"},
+  "promotion_policy":{"auto_claim_transition":false,"truth_prior_art_required":false,"novelty_prior_art_required":true,"hard_gate_low_blocks":true,"narrative_hash_is_proof":false,"ci_is_theorem_proof":false},
+  "next_action_policy":{"required_for_all_nonterminal":true,"terminal_states":["COMPLETED_RECEIPT"],"missing_next_action_is_validation_error":true}
+}

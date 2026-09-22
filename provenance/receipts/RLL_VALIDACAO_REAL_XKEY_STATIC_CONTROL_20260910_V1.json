@@ -1,0 +1,137 @@
+{
+  "schema": "rafaelia.rll.validacao_real_xkey_static_control.v1",
+  "cycle_id": "RAFAELIA-FED-RLL-ZEROJOB-XKEY-CONTROL-20260910-08",
+  "predecessor": "RAFAELIA-FED-RLL-ZEROJOB-XKEY-20260910-07",
+  "observed_at": "2026-09-10",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "authority": "GitHub provider state",
+  "base": {
+    "branch": "rll/lab",
+    "sha": "e0f750c0237d2ec3275e874f568e9bb907ddfe91",
+    "workflow_path": ".github/workflows/validacao_real.yml",
+    "workflow_id": 288994902,
+    "workflow_blob": "0bd7b779d1b000f2796f102d6ef8f16ddcd80b55",
+    "x_canonical_top_level_present": true
+  },
+  "audit_delta": {
+    "branch": "audit/zero-job-validacao-real-20260910",
+    "head_before_receipt": "94e8303bafd99e20f75b8a0cc2d92316561bbe70",
+    "fixed_workflow_blob": "2b5f555389b2c9824b8a8b46e8ad360802befe4d",
+    "change": "remove only top-level x-canonical-real-data-policy from validacao_real.yml",
+    "pr": 848,
+    "pr_state": "OPEN_DRAFT",
+    "pr_mergeable_observed": true,
+    "direct_default_branch_write": false
+  },
+  "exact_head_integration_evidence": {
+    "pr_merge_ref": "ea3f52f0ceff5cdbf59b17534adb3464aa44348a",
+    "successful_pr_checks_observed": 13,
+    "runs": [
+      34487060867,
+      34487060749,
+      34487060710,
+      34487060879,
+      34487060727,
+      34487060831,
+      34487060764,
+      34487060595,
+      34487060864,
+      34487060716,
+      34487060866,
+      34487060775,
+      34487060938
+    ],
+    "yaml_deep_audit": {
+      "run_id": 34487060749,
+      "job_id": 102903928854,
+      "conclusion": "success",
+      "yaml_files": 209,
+      "workflow_files": 88,
+      "syntax_failures": 0,
+      "focused_tests": "8/8 PASS",
+      "decision": "REVIEW_REQUIRED",
+      "artifact_id": 10156079694,
+      "artifact_sha256": "5b8447b84ecf8ba6d54c9c0ec6e5a48e7d99320fcc92591b4280721e57c72b47"
+    },
+    "github_platform_assurance": {
+      "run_id": 34487060879,
+      "job_id": 102903929541,
+      "conclusion": "success",
+      "capability_tests": "7/7 PASS",
+      "workflow_documentation_contract": "OK: 88 active workflows",
+      "workflow_architecture": {
+        "decision": "PASS",
+        "workflow_count": 88,
+        "yaml_files": 209,
+        "yaml_failures": 0,
+        "architecture_errors": 0,
+        "architecture_warnings": 51
+      },
+      "capability_gate": {
+        "decision": "PASS",
+        "workflow_count": 88,
+        "errors": 0,
+        "warnings": 15,
+        "residual_state": "TOKEN_VAZIO_EXTERNAL_SETTINGS"
+      },
+      "artifact_id": 10156079584,
+      "artifact_sha256": "6f58a1a0b1cda47278ab7f6fd722d06a20fb6e402ed35905de11bd5caf44ea1e"
+    }
+  },
+  "interpretation": {
+    "fixed_branch_static_integration_validation": "REPRODUCED_PASS",
+    "same_workflow_runtime_control": "TOKEN_VAZIO_EXACT_SAME_WORKFLOW_CONTROL",
+    "provider_root_cause": "TOKEN_VAZIO_ROOT_CAUSE",
+    "x_canonical_key_as_root_cause": "CANDIDATE_NOT_CONFIRMED",
+    "reason": "PR checks prove syntax, architecture, contract and platform-assurance compatibility of the repaired merge ref; they do not execute workflow_id 288994902 itself under an equivalent provider trigger."
+  },
+  "gap": {
+    "gap_id": "TV-RLL-VALIDACAO-REAL-XKEY-EXACT-CONTROL",
+    "token": "TOKEN_VAZIO_EXACT_SAME_WORKFLOW_CONTROL",
+    "source_pointer": "github:instituto-Rafael/relativity-living-light:PR#848@94e8303bafd99e20f75b8a0cc2d92316561bbe70:.github/workflows/validacao_real.yml@2b5f555389b2c9824b8a8b46e8ad360802befe4d",
+    "missing_field": "provider execution result of workflow_id 288994902 using the repaired workflow blob/ref",
+    "blocking_dependency": "authorized workflow_dispatch or provider-equivalent execution of the repaired workflow",
+    "evidence_needed": "run_id for workflow_id 288994902 on repaired blob/ref plus jobs_count and job/step outcomes, or an explicit GitHub Actions parser/provider diagnostic",
+    "falsifier": "repaired exact workflow still produces failure+jobs=[] under comparable provider execution, or provider evidence demonstrates the removed x-canonical key is accepted",
+    "next_probe": "dispatch validacao_real.yml on the repaired ref with commit_results=false; capture run->jobs->steps",
+    "owner_authority": "GitHub Actions + instituto-Rafael/relativity-living-light",
+    "urgency": "P0",
+    "closure_gate": "same repaired workflow materializes provider jobs under controlled execution plus receipt/index update, or explicit provider diagnostic identifies another cause",
+    "claim_allowed": false,
+    "predecessor_lineage": [
+      "TV-RLL-ACTIONS-ZERO-JOB-ROOT-CAUSE",
+      "TV-RLL-VALIDACAO-REAL-ZERO-JOB-ROOT-CAUSE",
+      "workflow_id:288994902",
+      "old_blob:0bd7b779d1b000f2796f102d6ef8f16ddcd80b55",
+      "fixed_blob:2b5f555389b2c9824b8a8b46e8ad360802befe4d"
+    ]
+  },
+  "coverage": {
+    "repaired_static_integration_checks_before": "0/13 consolidated",
+    "repaired_static_integration_checks_after": "13/13 observed success",
+    "exact_same_workflow_runtime_control_before": "0/1",
+    "exact_same_workflow_runtime_control_after": "0/1"
+  },
+  "uncertainty": {
+    "before": "repaired source existed but exact-head integration evidence was not consolidated into the zero-job causal chain",
+    "after": "static/integration validity is reproduced; uncertainty is isolated to provider execution of the same repaired workflow"
+  },
+  "claim_boundary": {
+    "claim_allowed": false,
+    "scientific_claim_changed": false,
+    "publication_effect": "NONE",
+    "root_cause_confirmed": false
+  },
+  "f_ok": [
+    "PR#848 exact merge-ref validation consolidated",
+    "13/13 observed PR checks succeeded",
+    "209 YAML files and 88 workflow files parsed with zero syntax failures",
+    "workflow architecture and GitHub platform assurance passed",
+    "static/integration validation separated from same-workflow runtime evidence"
+  ],
+  "f_gap": [
+    "TOKEN_VAZIO_EXACT_SAME_WORKFLOW_CONTROL",
+    "TOKEN_VAZIO_ROOT_CAUSE remains open"
+  ],
+  "f_next": "execute workflow_id 288994902 on repaired ref with commit_results=false and capture run/jobs/steps; do not merge PR#848 solely from static checks"
+}

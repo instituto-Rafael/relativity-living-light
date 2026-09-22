@@ -1,0 +1,87 @@
+{
+  "schema": "rll.g4_background_tournament.v1",
+  "date": "2026-08-19",
+  "state": "EXECUTABLE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "purpose": "Run the mandatory G4 baseline family on one frozen background-only likelihood before G5, without extending unimplemented perturbation prescriptions to growth/CMB observables.",
+  "datasets": {
+    "cosmic_chronometers": {
+      "path": "data/real/Hz_data_real.csv",
+      "selection": "source begins with CC_ and excludes labels containing BAO",
+      "reason": "avoid silently double-counting legacy BAO-derived H(z) alongside DESI DR2 BAO without a cross-covariance"
+    },
+    "desi_dr2_bao": {
+      "points": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "covariance": "data/real/desi_dr2_bao_covariance.csv",
+      "required_state": "VERIFIED_REPO_ORDER_BINDING"
+    },
+    "pantheon_plus": {
+      "catalog": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat",
+      "covariance": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "selection": "(zHD > 0.01) OR IS_CALIBRATOR==1",
+      "covariance_policy": "full STAT+SYS",
+      "nuisance": "M_B analytically profiled and counted in k"
+    }
+  },
+  "excluded_from_this_gate": {
+    "fsigma8": "requires model-specific perturbation/growth closure; deferred to G8/G9",
+    "CMB_full_or_compressed": "GEDE/IDE/RLL perturbation/early-time consistency must be implemented before fair CMB comparison",
+    "reason": "same-data fairness does not authorize applying one model's approximate perturbation proxy to another model"
+  },
+  "common_parameters": {
+    "H0": [60.0, 80.0],
+    "Omega_m": [0.10, 0.60],
+    "omega_b_h2": [0.018, 0.026]
+  },
+  "models": {
+    "LCDM": {"specific_parameters": {}, "null_role": "baseline"},
+    "wCDM": {"specific_parameters": {"w": [-2.0, -0.3]}},
+    "CPL": {"specific_parameters": {"w0": [-2.0, -0.3], "wa": [-3.0, 3.0]}},
+    "GEDE": {
+      "specific_parameters": {"Delta": [-10.0, 10.0]},
+      "primary_source": "arXiv:2103.03815v2",
+      "equation": "Omega_eDE(z)=Omega_DE0*[1-tanh(Delta*log10((1+z)/(1+zt)))]/[1+tanh(Delta*log10(1+zt))], with zt derived by rho_m(zt)=rho_DE(zt)",
+      "null_limit": "Delta=0 -> LCDM",
+      "prior_provenance": "Table I gives Delta in [-10,10]"
+    },
+    "IDE_QrhoLambda": {
+      "specific_parameters": {"beta": [-0.15, 0.15]},
+      "primary_source": "arXiv:1506.06349",
+      "interaction": "Q=3*beta*H*rho_Lambda; dot(rho_Lambda)=Q; dot(rho_c)=-3H*rho_c-Q",
+      "null_limit": "beta=0 -> LCDM",
+      "prior_provenance": "paper uses beta in [-0.15,0.15] for Q proportional to rho_Lambda"
+    },
+    "RLL": {
+      "specific_parameters": {"Omega_s0": [0.0, 0.25], "z_t": [0.1, 10.0], "w_t": [0.05, 2.0]},
+      "null_limit": "Omega_s0=0 -> LCDM",
+      "source": "RLL canonical background implementation"
+    }
+  },
+  "shared_physics_policy": {
+    "geometry": "flat FLRW in this gate",
+    "radiation": "Omega_r0=9e-5 for all models",
+    "sound_horizon": "same repository calibrated rd(H0,Omega_m,omega_b_h2) approximation for every model",
+    "distances": "same flat comoving-distance integration grid and interpolation",
+    "optimizer": "same multistart L-BFGS-B implementation, seeds, maxiter and ftol",
+    "information_criteria": "k counts H0, Omega_m, omega_b_h2, model-specific free parameters and profiled M_B"
+  },
+  "seeds": [11, 23, 37, 53, 71],
+  "maxiter": 250,
+  "ftol": 1e-10,
+  "integration_points": 4096,
+  "pass_when": [
+    "all six model optimizations return finite results",
+    "all three extension null limits are numerically verified",
+    "all models consume identical selected observations and covariance blocks",
+    "parameter counts and information criteria are emitted",
+    "negative model-selection results remain visible"
+  ],
+  "stop_when": [
+    "a mandatory comparator is missing",
+    "a covariance/input hash is unresolved",
+    "a model receives a different data selection without a declared domain reason",
+    "growth/CMB is silently applied without perturbation closure",
+    "claim_allowed becomes true"
+  ]
+}

@@ -51,3 +51,40 @@ def test_conserved_kinetic_gate_is_finite_for_central_parameters() -> None:
     for z in (0.0, 0.3, 1.0, ZT, 2.0, 5.0):
         value = bg.kinetic_gate_conserved(z, OM, OS0, ZT, WT)
         assert math.isfinite(value)
+
+
+def test_local_cpl_documented_identity() -> None:
+    f0 = bg.f_transition(0.0, ZT, WT)
+    fp0 = bg.df_dlna(0.0, ZT, WT)
+    w0, wa = bg.local_cpl_mapping_documented(ZT, WT)
+    assert math.isclose(w0, -f0, rel_tol=1e-12, abs_tol=1e-12)
+    assert math.isclose(
+        wa,
+        fp0 + 3.0 * f0 * (1.0 - f0),
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    )
+
+
+def test_local_cpl_conserved_identity_and_sign() -> None:
+    f0 = bg.f_transition(0.0, ZT, WT)
+    fp0 = bg.df_dlna(0.0, ZT, WT)
+    w0, wa = bg.local_cpl_mapping_conserved(ZT, WT)
+    assert math.isclose(w0, -f0, rel_tol=1e-12, abs_tol=1e-12)
+    assert math.isclose(
+        wa,
+        2.0 * fp0 + 3.0 * f0 * (1.0 - f0),
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    )
+    assert wa > 0.0
+
+
+def test_central_local_cpl_values_are_pinned() -> None:
+    w0_doc, wa_doc = bg.local_cpl_mapping_documented(ZT, WT)
+    w0_cons, wa_cons = bg.local_cpl_mapping_conserved(ZT, WT)
+    assert math.isclose(w0_doc, -0.9465498439751858, rel_tol=1e-12)
+    assert math.isclose(w0_cons, w0_doc, rel_tol=1e-12, abs_tol=1e-12)
+    assert math.isclose(wa_doc, 0.276701282995822, rel_tol=1e-12)
+    assert math.isclose(wa_cons, 0.4016228554544323, rel_tol=1e-12)
+    assert wa_cons > wa_doc > 0.0

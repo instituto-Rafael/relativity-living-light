@@ -1,0 +1,67 @@
+{
+  "schema": "rll.g3_dataset_compatibility_receipt.v1",
+  "event_id": "RLL-G3-DESI-PANTHEON-20260819-RUN32286390824",
+  "github_run_id": 32286390824,
+  "github_artifact_id": 9377780862,
+  "github_artifact_sha256": "b17760818e865468fbc49305f63d1bfc8f07b1bb77128730854d6ac64f5ee2a1",
+  "state": "PASS_LIMITED_COMPATIBILITY_BRANCH",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "g2_state": "READY_G2_INPUTS_BY_HASH_BOUND_MATERIALIZATION_RECEIPT",
+  "compatibility_decision": {
+    "allowed": true,
+    "branch": "DESI_DR2_BAO_PLUS_PANTHEON_STAT_SYS",
+    "interpretation": "Data blocks may enter a declared joint-likelihood branch; this is not evidence for RLL or any model preference."
+  },
+  "primary_table_transcription": {
+    "passed": true,
+    "source": "DESI DR2 Results II Table IV / arXiv:2503.14738v3",
+    "observables": 13
+  },
+  "F_AP_gate": {
+    "definition": "F_AP_proxy=(DM/rd)/(DH/rd)=DM/DH",
+    "passed": true,
+    "checks": [
+      {"tracer":"LRG1","z_eff":0.510,"repo_dm_over_dh":0.6215066550793578,"primary":0.622,"sigma":0.017,"delta_sigma":0.02902028944954328},
+      {"tracer":"LRG2","z_eff":0.706,"repo_dm_over_dh":0.8918529940889232,"primary":0.892,"sigma":0.021,"delta_sigma":0.007000281479850402},
+      {"tracer":"LRG3_PLUS_ELG1","z_eff":0.934,"repo_dm_over_dh":1.223059917238252,"primary":1.223,"sigma":0.019,"delta_sigma":0.003153538855359347},
+      {"tracer":"ELG2","z_eff":1.321,"repo_dm_over_dh":1.947023137697517,"primary":1.948,"sigma":0.045,"delta_sigma":0.021708051166290255},
+      {"tracer":"QSO","z_eff":1.484,"repo_dm_over_dh":2.3805882811890458,"primary":2.386,"sigma":0.136,"delta_sigma":0.03979205008054683},
+      {"tracer":"Lya","z_eff":2.330,"repo_dm_over_dh":4.516682113067655,"primary":4.518,"sigma":0.097,"delta_sigma":0.013586463220048368}
+    ]
+  },
+  "eta_z_gate": {
+    "value": 0.8461538461538461,
+    "desi_observables_inside_pantheon_span": 11,
+    "desi_observables_total": 13,
+    "pantheon_zHD_span": [0.00122,2.26137],
+    "outside_z": [2.33,2.33],
+    "branch": "SHARED_RANGE_PLUS_DESI_HIGH_Z_EXTENSION",
+    "passed": true
+  },
+  "SN_sample_comparison": {
+    "rows": 1701,
+    "calibrators": 77,
+    "cosmology_rows": 1624,
+    "z_min": 0.00122,
+    "z_max": 2.26137,
+    "passed": true
+  },
+  "reconstruction_sensitivity_report": {
+    "source_recorded": true,
+    "galaxy_quasar_method": "IterativeFFT implemented in pyrecon using fiducial DR1 settings",
+    "systematics_recorded": "RascalC semi-analytical covariance plus published systematic error budget",
+    "rll_independent_reconstruction_ablation": "TOKEN_VAZIO_INDEPENDENT_DESI_RECONSTRUCTION_ABLATION"
+  },
+  "F_ok": [
+    "G2 covariance custody ready",
+    "DESI Table IV transcription passes",
+    "six DM/DH consistency checks pass",
+    "Pantheon 1701/77/1624 partition passes"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_INDEPENDENT_DESI_RECONSTRUCTION_ABLATION",
+    "TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX"
+  ],
+  "F_next": "G4 fair baseline tournament on frozen background data blocks"
+}

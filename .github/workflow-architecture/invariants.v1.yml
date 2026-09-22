@@ -112,6 +112,14 @@ workflow_classes:
       contents: read
     publication_effect: NONE
     claim_allowed: false
+  security_analysis:
+    allowed_permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    publication_effect: NONE
+    claim_allowed: false
   orchestrator:
     allowed_permissions:
       contents: read
@@ -161,6 +169,10 @@ managed_workflows:
       - checkout_without_persistent_credentials
       - always_upload_receipt
       - externalized_algorithm
+  .github/workflows/github-platform-assurance.yml:
+    class: security_analysis
+  .github/workflows/github-platform-assurance-v2.yml:
+    class: security_analysis
   .github/workflows/frontier-research-composition.yml:
     class: scientific_shadow
     require:
@@ -201,6 +213,14 @@ managed_workflows:
       - always_upload_receipt
       - claim_boundary
       - externalized_algorithm
+  .github/workflows/rll-data-pipeline.yml:
+    class: reconciliation
+  .github/workflows/rll-book-data-pipeline.yml:
+    class: reconciliation
+  .github/workflows/validacao_real.yml:
+    class: reconciliation
+  .github/workflows/rll-validacao-cientifica-completa.yml:
+    class: reconciliation
 
 policy:
   errors:
@@ -250,9 +270,25 @@ security:
   persist_credentials_default: false
   treat_github_event_text_as_untrusted: true
   secrets_must_not_be_echoed: true
+  credential_authority:
+    policy: data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+    agent_secrets_are_not_actions_secrets: true
+    same_repo_actions_auth: GITHUB_TOKEN
+    github_pat_actions_binding: FORBIDDEN_BY_DEFAULT
+    github_pat_administration_write: FORBIDDEN
+    github_pat_agent_secrets_write: FORBIDDEN
+    destructive_api_methods_with_external_credentials: FORBIDDEN
+    git_ref_delete_with_external_credentials: FORBIDDEN
+    contents_write_implies_no_delete: false
+    climate_trial:
+      actions_secret: CLIMA
+      allowed_consumer: workflow_dispatch_guarded_job_only
+      secret_value_in_receipts: FORBIDDEN
+      secret_hash_in_receipts: FORBIDDEN
   write_permissions_require_explicit_workflow_class:
     - orchestrator
     - reconciliation
+    - security_analysis
   pull_request_target_default: FORBIDDEN
   automated_pull_requests:
     review_required: true

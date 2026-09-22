@@ -1,0 +1,37 @@
+{
+  "schema": "rll.parable_internal_reference_index.v1",
+  "version": "1.0.0",
+  "observed_at": "2026-08-16",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "purpose": "Use parables as internal navigation masters for uncertainty, relations and operational action without allowing narrative to satisfy evidence, legal or scientific gates.",
+  "master_topology": [
+    {"state": "VAZIO", "operational_use": "name the unknown, contradiction, missing edge or absent evidence; do not invent closure"},
+    {"state": "EXPANSAO", "operational_use": "enumerate competing interpretations, relations, providers, uses, providencias and falsifiers"},
+    {"state": "PICO", "operational_use": "select only an evidence-supported state; otherwise preserve TOKEN_VAZIO/INCERTEZA"},
+    {"state": "RETORNO", "operational_use": "emit receipt/successor state, preserve negative history and add anti-regression coverage"}
+  ],
+  "references": [
+    {
+      "id": "PARABLE_LICENSE_BRIDGE",
+      "subject": "license/ethics/provenance/symbolic friction",
+      "parable": "A bridge carries four kinds of load: legal terms, ethical duties, provenance records and symbolic meaning. The bridge fails when every load is stamped as the same material. The engineer labels each load, allows only supported crossings, and records every unresolved joint.",
+      "operational_key": "classify layers, declare allowed/forbidden edges, never silently promote one layer into another",
+      "evidence_role": "NONE"
+    },
+    {
+      "id": "PARABLE_LIVING_VERB",
+      "subject": "semantic chain to execution",
+      "parable": "Statistics become tokens; tokens gain metaphors; metaphors can be arranged as word-vectors; vectors may express a promise. Only when the promise becomes an executed path with input, output, test and receipt does it become an executable verb. Omega_n counts successive finite generations; it does not erase physical or computational limits.",
+      "operational_key": "promise=contract intent; executable verb=tested execution; Omega_n=finite versioned iteration",
+      "evidence_role": "NONE"
+    }
+  ],
+  "external_sources": [
+    {"name": "SCIENTIFIC_FOUNDATIONS_PARABLES_SKILLS.md", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH", "allowed_use": "structural/narrative inspiration only", "forbidden_use": "importing empirical neuroscience claims as verified evidence"},
+    {"name": "GOVERNANCE_SKILLS_SUMMARY.md", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH", "allowed_use": "governance-ethics gap inventory only", "forbidden_use": "treating completion percentages as repository-verified status"},
+    {"name": "RAFAELIA_INVARIANT-5.txt", "repo_hash": "TOKEN_VAZIO_EXTERNAL_SOURCE_HASH", "allowed_use": "license-expression precedent/reference only", "forbidden_use": "treating its Apache-2.0 OR CC0-1.0 expression as the RLL repository license"}
+  ],
+  "forbidden": ["parable_as_proof", "parable_as_legal_authority", "metaphor_as_runtime_capability", "omega_n_as_infinity_claim"],
+  "falsifier": "Reject this index if any parable/reference has evidence_role other than NONE, an external source is falsely marked repository-hash-bound, or Omega_n is described as unbounded capability."
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "rll.validacao_cientifica_reference_values.v1",
+  "state": "REFERENCE_ONLY_NOT_NEW_MEASUREMENT",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "purpose": "Remove historical/reference scientific result literals from GitHub workflow code while preserving their provenance and claim boundary.",
+  "pantheon_reference": {
+    "chi2_lcdm": 710.808,
+    "chi2_rll": 710.613,
+    "delta_aic": 3.81,
+    "source": "results/pantheon_plus_resultado_real.txt",
+    "authority": "historical_repository_result_only"
+  },
+  "desi_nominal_reference": {
+    "chi2_nominal_rll": 93.81,
+    "source": "docs/canonicos/09_PANTHEON_DESI_VALIDACAO_REAL.md",
+    "authority": "nominal_documented_reference_not_optimized_fit"
+  },
+  "claim_boundary": "Reference values do not constitute a new run, independent replication, posterior validation, or RLL superiority evidence. New scientific outputs must be computed by versioned scripts and preserved by receipts."
+}

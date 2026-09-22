@@ -34,6 +34,8 @@ env:
   RUN_DIR: artifacts/rll_balance
   CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
   CLAIM_BOUNDARY: "Balance reporting summarizes supplied metrics; it does not validate source data or authorize superiority claims."
+  INPUT_JSON_REQUESTED: ${{ inputs.input_json || 'artifacts/joint_real_likelihood.json' }}
+  METRIC_REQUESTED: ${{ inputs.metric || 'bic' }}
 
 jobs:
   balance-report:
@@ -43,12 +45,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: "3.11"
 
@@ -58,8 +60,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          INPUT_JSON="${{ github.event.inputs.input_json || 'artifacts/joint_real_likelihood.json' }}"
-          METRIC="${{ github.event.inputs.metric || 'bic' }}"
+          INPUT_JSON="$INPUT_JSON_REQUESTED"
+          METRIC="$METRIC_REQUESTED"
           mkdir -p "$RUN_DIR"
 
           if [ -f "$INPUT_JSON" ]; then
@@ -169,7 +171,8 @@ jobs:
             > "$RUN_DIR/CHECKSUMS.sha256"
 
       - name: Upload RLL balance artifacts
-        uses: actions/upload-artifact@v7
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-balance-report-${{ github.run_id }}
           path: artifacts/rll_balance/

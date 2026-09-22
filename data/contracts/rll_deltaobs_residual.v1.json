@@ -1,0 +1,46 @@
+{
+  "schema": "rll.deltaobs.residual.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "window_hours": {
+    "baseline": 6,
+    "challenge": 3,
+    "feedback": 3
+  },
+  "input": {
+    "schema": "rll.deltaobs.normalized_input.v1",
+    "sample_required_fields": ["timestamp_utc", "measurement_family", "value", "uncertainty"],
+    "preregistration_required_fields": ["z_threshold", "min_families", "min_samples_per_window"]
+  },
+  "numeric_gate": {
+    "family_residual": "(mean_challenge - mean_baseline) / sqrt(var_mean_challenge + var_mean_baseline)",
+    "feedback_residual": "(mean_feedback - mean_baseline) / sqrt(var_mean_feedback + var_mean_baseline)",
+    "candidate_rule": "count(abs(z_challenge) >= z_threshold) >= min_families",
+    "threshold_selection": "MUST_BE_PREREGISTERED_BEFORE_SAMPLE_EVALUATION",
+    "automatic_threshold_tuning": false
+  },
+  "states": [
+    "NO_NUMERIC_CANDIDATE",
+    "NUMERIC_CROSS_FAMILY_CANDIDATE",
+    "TOKEN_VAZIO_INSUFFICIENT_WINDOW",
+    "TOKEN_VAZIO_ZERO_SCALE",
+    "TOKEN_VAZIO_COMMON_MODE_CONTROLS",
+    "TOKEN_VAZIO_CAUSA"
+  ],
+  "epistemic_boundary": {
+    "numeric_candidate_is_not_observed_cross_domain": true,
+    "measurement_family_distinct_is_not_statistical_independence": true,
+    "residual_is_not_cause": true,
+    "common_mode_controls_required_for_later_promotion": true,
+    "observed_cross_domain": false,
+    "statistical_independence_established": false,
+    "cause": "TOKEN_VAZIO_CAUSA",
+    "claim_allowed": false
+  },
+  "prohibited_promotions": [
+    "NUMERIC_CROSS_FAMILY_CANDIDATE -> CAUSE",
+    "NUMERIC_CROSS_FAMILY_CANDIDATE -> NEW_PHYSICS",
+    "SOURCE_AVAILABILITY -> EVENT_CORRELATION",
+    "MEASUREMENT_FAMILY_DISTINCT -> STATISTICAL_INDEPENDENCE"
+  ],
+  "F_next": "validate on synthetic/negative controls, then integrate into Trinity633 as a separate phase only after exact-head CI"
+}

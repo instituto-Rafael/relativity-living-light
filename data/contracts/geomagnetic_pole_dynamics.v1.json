@@ -1,0 +1,106 @@
+{
+  "schema": "rll.geomagnetism.pole_dynamics.contract.v1",
+  "claim_allowed": false,
+  "state": "BOUNDED_RESEARCH_ADAPTER",
+  "purpose": "Evaluate magnetic-pole motion, secular-variation kinematics and pre-registered RAFAELIA geometric diagnostics without promoting geomagnetism into an RLL cosmological claim.",
+  "official_model_routes": {
+    "WMM2025": {
+      "authority": "NOAA NCEI + British Geological Survey",
+      "model_epoch": "2025.0-2030.0",
+      "degree_order_main": 12,
+      "degree_order_sv": 12,
+      "doi": "10.25921/aqfd-sd83",
+      "technical_report_doi": "10.25923/prbc-s316",
+      "binding_state": "TOKEN_VAZIO_CHECKSUM_NOT_BOUND"
+    },
+    "WMMHR2025": {
+      "core_sv_degree_max": 15,
+      "crustal_degree_range": "16-133",
+      "binding_state": "TOKEN_VAZIO_CHECKSUM_NOT_BOUND"
+    },
+    "IGRF14": {
+      "epoch_2025_degree_order": 13,
+      "forecast_sv_2025_2030_degree_order": 8,
+      "reference": "Beggan et al., 2026, Earth Planets Space 78:127",
+      "doi": "10.1186/s40623-025-02360-0",
+      "binding_state": "TOKEN_VAZIO_CHECKSUM_NOT_BOUND"
+    },
+    "CHAOS8": {
+      "valid_span": "1999-2025",
+      "time_dependent_internal_degree": 20,
+      "recommended_cmb_field_truncation_degree": 13,
+      "recommended_cmb_sv_sa_truncation_degree": 15,
+      "doi": "10.1186/s40623-025-02352-0",
+      "binding_state": "TOKEN_VAZIO_CHECKSUM_NOT_BOUND"
+    }
+  },
+  "literature_anchors": [
+    {
+      "id": "LIVERMORE_2020_NMP",
+      "doi": "10.1038/s41561-020-0570-9",
+      "bounded_use": "Canada/Siberia CMB flux-lobe mechanism hypothesis and source-sensitivity experiments"
+    },
+    {
+      "id": "FINLAY_KLOSS_GILLET_2025_SWARM11",
+      "doi": "10.1016/j.pepi.2025.107447",
+      "bounded_use": "2014-2025 surface/core-field changes and Canada/Siberia strong-field evolution"
+    },
+    {
+      "id": "CLAVEAU_ETAL_2025_COVSAT",
+      "doi": "10.1186/s40623-025-02248-z",
+      "bounded_use": "AR-3 temporal covariance and approximately 2-year short-period cutoff context"
+    },
+    {
+      "id": "SHAKESPEARE_REES_ETAL_2025_PINNFLOW",
+      "doi": "10.1016/j.pepi.2025.107424",
+      "bounded_use": "local/regional core-flow inversion and frozen-flux residual context"
+    },
+    {
+      "id": "MADSEN_ETAL_2026_IGRF14_FLOW_ACCEL",
+      "doi": "10.1186/s40623-025-02347-x",
+      "bounded_use": "zero-mean sinusoidal acceleration-coefficient scan and 1-20 year candidate periods"
+    },
+    {
+      "id": "SHAKESPEARE_REES_ETAL_2026_IGRF14_PINN",
+      "doi": "10.1186/s40623-026-02427-6",
+      "bounded_use": "regional/global PINN forecast and induction-equation implementation reference"
+    },
+    {
+      "id": "KLOSS_ETAL_2026_CHAOS8",
+      "doi": "10.1186/s40623-025-02352-0",
+      "bounded_use": "m=13, approximately 200 km/yr eastward small-scale CMB SV feature and modern temporal regularization"
+    }
+  ],
+  "derived_operators": {
+    "moving_zero_velocity": "p_dot = -J_h^{-1} h_t",
+    "moving_zero_acceleration": "J_h p_ddot = -(h_tt + 2 h_xt p_dot + p_dot^T H_h p_dot)",
+    "source_amplitude_sensitivity": "dp/dalpha_i = -J_h^{-1} h_i",
+    "frozen_flux_residual": "R_ff = B_r,t + u_H.grad_H(B_r) + B_r div_H(u_H)",
+    "mode_passage_period": "T_m = 2*pi*R/(m*v_phase)",
+    "fixed_ratio_gate": "R_q = RMS(log(x[n+1]/x[n]) - log(sqrt(3)/2))"
+  },
+  "cross_paper_numeric_witness": {
+    "radius_cmb_km": 3485.0,
+    "azimuthal_wavenumber": 13,
+    "phase_speed_km_per_year": 200.0,
+    "derived_wavelength_km": 1684.3769842708352,
+    "derived_passage_period_year": 8.421884921354176,
+    "independent_reported_period_context": "Swarm toroidal flow-acceleration coefficient distribution peaks around 8-9 years",
+    "epistemic_status": "NUMERICAL_CONSISTENCY_NOT_MODE_IDENTITY"
+  },
+  "pre_registration": {
+    "sqrt3_over_2_ratio": 0.8660254037844386,
+    "ratio_may_be_fitted": false,
+    "observable_must_be_declared_before_evaluation": true,
+    "projection_center_must_be_declared_if_radial_geometry_is_used": true,
+    "phi_test_default": "DISABLED_UNTIL_GEOMETRIC_CENTER_AND_QUARTER_TURN_DEFINITION_ARE_PREREGISTERED"
+  },
+  "hard_boundaries": [
+    "magnetic dip pole is a field-defined zero, not a material object",
+    "Canada/Siberia source decomposition must be source-traced before sensitivity is interpreted physically",
+    "frozen flux is an approximation and residual does not uniquely identify magnetic diffusion",
+    "an 8.42-year numerical match does not prove common modal identity",
+    "a geomagnetic geometric fit does not support RLL cosmology",
+    "TOKEN_VAZIO is preserved for missing coefficient datasets, checksums and real-data outputs"
+  ]
+}

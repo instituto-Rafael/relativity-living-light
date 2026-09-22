@@ -1,0 +1,23 @@
+{
+  "schema": "rll.provenance.mpemba_horizon_source_federation.v1",
+  "recorded_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_head": "100ba7584b65b9fdd14cd6e6dc7103b24e6c3409",
+  "pull_request": 778,
+  "branch": "science/mpemba-horizon-atlas-20260827",
+  "source_crosswalk": "data/registries/rll_mpemba_horizon_source_crosswalk.v1.json",
+  "canonical_source_registry": "data/registries/rll_recent_primary_sources_2026.json",
+  "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+  "mapped_external_sources": 6,
+  "context_only_canonical_sources": 2,
+  "internal_drive_sources_kept_internal": 2,
+  "invariants": [
+    "local contract source ids resolve to canonical registry ids where an external canonical source exists",
+    "preprint status remains explicit",
+    "EHT public dataset identity does not imply checksum-verified local ingest",
+    "internal Drive symbolic hypotheses are not promoted to external evidence",
+    "claim_allowed remains false"
+  ],
+  "global_scientific_claim_allowed": false,
+  "final_head_ci_at_receipt_creation": "TOKEN_VAZIO_PENDING_GITHUB_ACTIONS"
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "rll.provenance.receipt.mpemba_horizon_atlas.v1",
+  "recorded_at": "2026-08-27T18:10:00Z",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "maturity_target": "rll/lab",
+  "base": {
+    "branch": "rll/lab",
+    "sha": "97b542390d470fd72f8de48467b73643fcea6bde"
+  },
+  "implementation_branch": "science/mpemba-horizon-atlas-20260827",
+  "route_correction": {
+    "detected": true,
+    "initial_noncanonical_repo": "rafaelmeloreisnovo/relativity-living-light",
+    "initial_pr": 27,
+    "guard_evidence": "Canonical Institute Authority Guard rejected PR-to-fork-main route",
+    "action": "do not merge backup PR; re-materialize bounded delta in canonical institute-Rafael authority using work-branch -> rll/lab topology"
+  },
+  "scope": "F-gap + F-next for black-hole thermodynamics, observer separation, relativistic jets and falsifiable Mpemba-like relaxation",
+  "urgency": {
+    "P0": [
+      "prevent theory/observation category errors",
+      "prevent EHT plasma observables from being relabelled Hawking thermometry",
+      "prevent causal-horizon violations in jet interpretation",
+      "keep astrophysical Mpemba at TOKEN_VAZIO until a real-data promotion gate closes"
+    ],
+    "P1": [
+      "ingest EHT 2026-D01-01 calibrated 2018/2021 polarimetric products",
+      "record file-level SHA256 and freeze immutable manifest",
+      "preregister observable, equilibrium target, D(t), epsilon and covariance treatment",
+      "compare turbulence/GRMHD/radiative-transfer nulls and independently reproduce"
+    ]
+  },
+  "artifacts": [
+    "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py",
+    "tests/strong_gravity/test_mpemba_horizon_falsifier.py",
+    "data/contracts/mpemba_horizon_falsifier.v1.json",
+    "docs/RLL_MPEMBA_HORIZON_ATLAS.md",
+    "FALSIFIABILITY_PROTOCOL.md"
+  ],
+  "source_chain": [
+    {"id": "SRC-BH-THERMO-REVIEW-2026", "class": "peer_reviewed_review", "doi": "10.1038/s42254-026-00942-9", "published": "2026-05-11"},
+    {"id": "SRC-MPEMBA-PRX-2026", "class": "peer_reviewed_theory", "doi": "10.1103/rbt4-psfd", "published": "2026-03-25"},
+    {"id": "SRC-MPEMBA-THERMOMAJOR-2025", "class": "peer_reviewed_theory", "doi": "10.1103/PhysRevLett.134.107101"},
+    {"id": "SRC-UNRUH-MPEMBA-2026", "class": "peer_reviewed_theory", "doi": "10.1007/JHEP06(2026)183", "published": "2026-06-17"},
+    {"id": "SRC-HOLOGRAPHIC-MPEMBA-2026", "class": "preprint_theory", "arxiv": "2607.20899", "submitted": "2026-07-23"},
+    {"id": "SRC-EHT-M87-VARIABILITY-2025", "class": "peer_reviewed_observation", "citation": "A&A 704, A91", "doi": "10.1051/0004-6361/202555855"},
+    {"id": "SRC-EHT-M87-JETBASE-2026", "class": "peer_reviewed_observation_plus_modeling", "citation": "A&A 706, A27", "doi": "10.1051/0004-6361/202557022"},
+    {"id": "DATA-EHT-2026-D01-01", "class": "public_observational_data_product", "title": "2018 and 2021 Calibrated polarimetric data", "last_updated": "2026-06-29", "numeric_ingest": false, "sha256_verified": false}
+  ],
+  "claim_transitions": [
+    {"id": "BH-MP-01", "to": "SUPPORTED_ANALYTIC_SEMICLASSICAL"},
+    {"id": "BH-MP-02", "to": "FALSIFIED_AS_EQUIVALENCE"},
+    {"id": "BH-MP-03", "to": "REJECT_LITERAL_CLAIM"},
+    {"id": "BH-MP-04", "to": "FALSIFIED_BY_CAUSAL_BOUNDARY"},
+    {"id": "BH-MP-05", "to": "LITERATURE_OBSERVATION_SUPPORTED_BOUNDED"},
+    {"id": "BH-MP-06", "to": "TOKEN_VAZIO"},
+    {"id": "BH-MP-07", "to": "LITERATURE_SUPPORTED_THEORY"},
+    {"id": "BH-MP-08", "to": "TOKEN_VAZIO"},
+    {"id": "BH-MP-09", "to": "REJECT_OVERGENERALIZATION"}
+  ],
+  "falsifier_classes": [
+    "domain",
+    "observer_class",
+    "causal_boundary",
+    "observable_definition",
+    "distance_metric_post_selection",
+    "first_passage_threshold_post_selection",
+    "covariance_and_calibration",
+    "standard_physical_nulls",
+    "slow_mode_ablation",
+    "look_elsewhere",
+    "hold_out",
+    "independent_replication"
+  ],
+  "token_vazio": [
+    "file-level SHA256 for EHT 2026-D01-01 inputs",
+    "checksum-verified numeric ingest",
+    "preregistered astrophysical D(t)/epsilon",
+    "matched far/near M87* or Sgr A* relaxation trajectories",
+    "covariance-aware Mpemba inference",
+    "direct astrophysical Hawking thermometry",
+    "independent reproduction of an astrophysical Mpemba witness"
+  ],
+  "execution_evidence": {
+    "git_connector_writes": "MATERIALIZED",
+    "local_snapshot_execution": "TOKEN_VAZIO_INFRA_CONTAINER_ENOENT",
+    "remote_canonical_ci": "PENDING_PR_TRIGGER_AT_RECEIPT_CREATION",
+    "scientific_claim_allowed": false
+  },
+  "next_verifiable_step": "Open canonical PR to rll/lab, inspect exact GitHub Actions results, fix any regression, and only then close implementation execution gate."
+}

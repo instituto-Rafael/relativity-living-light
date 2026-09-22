@@ -1,0 +1,93 @@
+{
+  "schema": "rll.session_evolution_mesh.v1",
+  "created_at": "2026-08-27T20:32:00-03:00",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "baseline_ref": "rll/lab",
+  "baseline_commit": "75323d72c9c8d0180c2a01dfb7c7601f5da735c5",
+  "predecessor_closure_commit": "30e4d2fd7af3d7b9db3096ba530b72d0275e37f2",
+  "status": "ACTIVE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "no_untracked_session_gaps": true,
+  "source_closure_registry": "data/registries/rll_mpemba_horizon_closure_registry.v1.json",
+  "source_global_atlas_gate": "data/governance/RLL_ATLAS_EVOLUTION_GATE_20260827_V1.json",
+  "interaction_ledger": "data/registries/rll_session_interaction_ledger_20260827.v1.json",
+  "atlas": "docs/RLL_SESSION_EVOLUTION_ATLAS_20260827.md",
+  "receipt": "provenance/receipts/rll_session_evolution_mesh_20260827.json",
+  "validator": "tools/validate_session_evolution_mesh.py",
+  "invariants": [
+    "VISAO != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
+    "TOKEN_VAZIO is an auditable state and may not be silently coerced to success",
+    "new governance fields are append-only unless an explicit migration exists",
+    "scientific claim promotion is forbidden while either B10/C11 or G0-G7 promotion gates remain fail-closed",
+    "external evidence requires independent provenance and byte-level custody when used numerically",
+    "same-author rerun is reproducibility, not independent replication",
+    "newer rll/lab governance is consumed as predecessor evidence and may not be overwritten by this mesh"
+  ],
+  "existing_enclosures": ["URGENCY", "PROVENANCE", "RECEIPTS", "ATLAS", "CHAIN_OF_CUSTODY"],
+  "six_continuous_evolution_fences": [
+    {
+      "id": "FENCE-01-AUTHORITY",
+      "name": "authority_and_least_privilege",
+      "state": "ENFORCED",
+      "rule": "Every write, promotion and closure must name the authoritative repository or external authority and must not exceed that authority.",
+      "automatic_check": "validator requires RLL authority and verifies G0/G7 remain authoritative promotion gates",
+      "maps_to_existing_gates": ["G0_SOURCE_RIGHTS_FREEZE", "G7_CLAIM_DECISION"],
+      "risk_reduced": ["authority drift", "duplicate source of truth", "cross-repository semantic overwrite"]
+    },
+    {
+      "id": "FENCE-02-NONREGRESSION",
+      "name": "append_only_non_regression",
+      "state": "ENFORCED",
+      "rule": "Historical identifiers, field types, evidence states and canonical tokens are preserved unless a versioned migration and compatibility test exist.",
+      "automatic_check": "CI validates the mesh, B10/C11 closure and G0-G7 no-regression contract",
+      "maps_to_existing_gates": ["G7_CLAIM_DECISION"],
+      "risk_reduced": ["schema regression", "semantic renaming", "consumer breakage"]
+    },
+    {
+      "id": "FENCE-03-FALSIFIABILITY",
+      "name": "claim_and_falsifier_gate",
+      "state": "ENFORCED",
+      "rule": "No hypothesis becomes evidence or claim without a declared falsifier, observable and objective close condition.",
+      "automatic_check": "validator requires claim_allowed=false here and in both parent governance records",
+      "maps_to_existing_gates": ["G1_OBSERVABLE_SCHEMA", "G3_LIKELIHOOD_PARITY", "G7_CLAIM_DECISION"],
+      "risk_reduced": ["overclaim", "post-hoc promotion", "analogy-to-evidence collapse"]
+    },
+    {
+      "id": "FENCE-04-ROLLBACK",
+      "name": "rollback_and_reversibility",
+      "state": "ENFORCED",
+      "rule": "Evolution remains reversible by Git history, branch isolation and bounded changes; destructive mutation is outside this contract.",
+      "automatic_check": "workflow is read-only; source mutation occurs only through reviewed commits/PRs",
+      "maps_to_existing_gates": ["G0_SOURCE_RIGHTS_FREEZE"],
+      "risk_reduced": ["irreversible corruption", "silent deletion", "unreviewed autonomous mutation"]
+    },
+    {
+      "id": "FENCE-05-DRIFT",
+      "name": "freshness_drift_and_decay_watch",
+      "state": "ENFORCED",
+      "rule": "External metadata, references and open TOKEN_VAZIO states are periodically re-evaluated; stale evidence cannot silently remain current.",
+      "automatic_check": "RLL validates on lab changes; Instituto control-plane performs time-based federation watch from its default branch",
+      "maps_to_existing_gates": ["G0_SOURCE_RIGHTS_FREEZE", "G2_FULL_COVARIANCE", "G5_ROBUST_INFERENCE"],
+      "risk_reduced": ["stale provenance", "knowledge decay", "closed-gap reappearance"]
+    },
+    {
+      "id": "FENCE-06-INDEPENDENCE",
+      "name": "separation_of_duties_and_independent_replication",
+      "state": "ENFORCED",
+      "rule": "Independent replication cannot be self-issued by the producer; same-author CI remains a separate evidence class.",
+      "automatic_check": "validator requires the G0-G7 independent-replication blocking token and the B10/C11 external replication item to remain open until external evidence exists",
+      "maps_to_existing_gates": ["G7_CLAIM_DECISION"],
+      "risk_reduced": ["self-certification", "circular validation", "provenance laundering"]
+    }
+  ],
+  "continuous_operation": {
+    "rll_event_driven": true,
+    "rll_time_schedule": false,
+    "reason": "GitHub scheduled workflows execute from the default branch; RLL governance remains on rll/lab pending explicit maturity promotion.",
+    "institute_time_watch": "delegated to instituto-Rafael/RAFAELIA_CORE default-branch assurance workflow",
+    "autonomous_source_writes": false,
+    "autonomous_validation": true,
+    "failure_mode": "FAIL_CLOSED"
+  },
+  "close_rule": "A session gap is operationally closed only when it is tracked with urgency, provenance, authority, mechanism, verification, falsifier, custody status and objective close condition. External evidence may remain TOKEN_VAZIO without becoming an untracked gap."
+}

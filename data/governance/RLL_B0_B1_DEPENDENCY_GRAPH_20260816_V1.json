@@ -1,0 +1,82 @@
+{
+  "schema": "rll.b0_b1_dependency_graph.v1",
+  "observed_at": "2026-08-16",
+  "state": "FORMALIZED_EVIDENCE_BACKED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "source_refs": {
+    "main": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+    "rll/lab": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb"
+  },
+  "nodes": [
+    {"id":"B0_LAB_INVARIANTS","batch":"B0","ref":"rll/lab","path":".github/workflow-architecture/invariants.v1.yml","role":"governance_invariant_authority"},
+    {"id":"B0_LAB_SYNC_WORKFLOW","batch":"B0","ref":"rll/lab","path":".github/workflows/workflow-contract-sync.yml","role":"reconciliation_carrier"},
+    {"id":"B0_LAB_SYNC_TOOL","batch":"B0","ref":"rll/lab","path":"tools/workflow_contract_sync.py","role":"contract_census_and_bounded_writer"},
+    {"id":"B0_LAB_PROPOSAL_TOOL","batch":"B0","ref":"rll/lab","path":"tools/propose_workflow_contract_pr.py","role":"review_pr_proposal"},
+    {"id":"B1_MAIN_CONTRACT","batch":"B1","ref":"main","path":".github/workflow-contract.yml","role":"executable_workflow_contract"},
+    {"id":"B1_MAIN_AUTO_WORKFLOW","batch":"B1","ref":"main","path":".github/workflows/rll-operational-auto-hotfix.yml","role":"operational_observer_carrier"},
+    {"id":"B1_MAIN_AUTO_TOOL","batch":"B1","ref":"main","path":"tools/rll_auto_hotfix.py","role":"operational_observer_and_bounded_workspace_repair"},
+    {"id":"B1_MAIN_AUTO_PROPOSAL","batch":"B1","ref":"main","path":"tools/propose_operational_hotfix_pr.py","role":"operational_review_pr_proposal"},
+    {"id":"B1_MAIN_POLICY","batch":"B1","ref":"main","path":"data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json","role":"operational_mutation_policy"},
+    {"id":"B1_MAIN_LEDGER","batch":"B1","ref":"main","path":"data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl","role":"append_only_gap_ledger"},
+    {"id":"B1_MAIN_DOC","batch":"B1","ref":"main","path":"docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md","role":"canonical_operational_documentation"}
+  ],
+  "edges": [
+    {"id":"E01","from":"B0_LAB_INVARIANTS","to":"B1_MAIN_CONTRACT","relation":"CONTRACT_SYNC_TARGET","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"branch_reconciliation.contract_sync.target = .github/workflow-contract.yml"},
+    {"id":"E02","from":"B0_LAB_INVARIANTS","to":"B0_LAB_SYNC_WORKFLOW","relation":"MANAGED_WORKFLOW","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"managed_workflows contains .github/workflows/workflow-contract-sync.yml"},
+    {"id":"E03","from":"B0_LAB_SYNC_WORKFLOW","to":"B0_LAB_SYNC_TOOL","relation":"EXECUTES","state":"VERIFIED_EXECUTION_REFERENCE","evidence":"workflow invokes python tools/workflow_contract_sync.py"},
+    {"id":"E04","from":"B0_LAB_SYNC_WORKFLOW","to":"B0_LAB_PROPOSAL_TOOL","relation":"EXECUTES","state":"VERIFIED_EXECUTION_REFERENCE","evidence":"proposal job invokes python tools/propose_workflow_contract_pr.py"},
+    {"id":"E05","from":"B0_LAB_SYNC_WORKFLOW","to":"B1_MAIN_CONTRACT","relation":"OBSERVES_AND_SYNCHRONIZES_PATH","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow path filter includes .github/workflow-contract.yml and synchronizer operates on that path"},
+    {"id":"E06","from":"B0_LAB_SYNC_TOOL","to":"B1_MAIN_CONTRACT","relation":"READS_OPTIONALLY_WRITES_SCALAR","state":"VERIFIED_IMPLEMENTATION_REFERENCE","evidence":"DEFAULT_CONTRACT=.github/workflow-contract.yml; write mode changes only inventory.active_workflows"},
+    {"id":"E07","from":"B0_LAB_PROPOSAL_TOOL","to":"B1_MAIN_CONTRACT","relation":"PROPOSES_REVIEWED_CONTRACT_DIFF","state":"VERIFIED_IMPLEMENTATION_REFERENCE","evidence":"default --contract=.github/workflow-contract.yml and default --base=rll/lab"},
+    {"id":"E08","from":"B1_MAIN_CONTRACT","to":"B0_LAB_INVARIANTS","relation":"AUTHORITY_ORDER_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"documentation.authority_order includes .github/workflow-architecture/invariants.v1.yml"},
+    {"id":"E09","from":"B1_MAIN_CONTRACT","to":"B0_LAB_SYNC_WORKFLOW","relation":"RECONCILIATION_WORKFLOW_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow_contract_reconciliation.workflow=.github/workflows/workflow-contract-sync.yml"},
+    {"id":"E10","from":"B1_MAIN_CONTRACT","to":"B0_LAB_SYNC_TOOL","relation":"RECONCILIATION_TOOL_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow_contract_reconciliation.tool=tools/workflow_contract_sync.py"},
+    {"id":"E11","from":"B1_MAIN_CONTRACT","to":"B0_LAB_PROPOSAL_TOOL","relation":"PROPOSAL_TOOL_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow_contract_reconciliation.proposal_tool=tools/propose_workflow_contract_pr.py"},
+    {"id":"E12","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_AUTO_WORKFLOW","relation":"OPERATIONAL_WORKFLOW_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.workflow=.github/workflows/rll-operational-auto-hotfix.yml"},
+    {"id":"E13","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_AUTO_TOOL","relation":"OBSERVER_TOOL_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.observer=tools/rll_auto_hotfix.py"},
+    {"id":"E14","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_AUTO_PROPOSAL","relation":"OPERATIONAL_PROPOSAL_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.proposal_tool=tools/propose_operational_hotfix_pr.py"},
+    {"id":"E15","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_POLICY","relation":"POLICY_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.policy points to policy JSON"},
+    {"id":"E16","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_LEDGER","relation":"LEDGER_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.ledger points to append-only ledger"},
+    {"id":"E17","from":"B1_MAIN_CONTRACT","to":"B1_MAIN_DOC","relation":"DOCUMENTATION_REFERENCE","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"operational_auto_hotfix.documentation points to canonical doc"},
+    {"id":"E18","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_CONTRACT","relation":"TRIGGER_AND_RUNTIME_INPUT","state":"VERIFIED_EXECUTION_REFERENCE","evidence":"workflow path filter includes .github/workflow-contract.yml and runs workflow_contract_sync.py"},
+    {"id":"E19","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_AUTO_TOOL","relation":"EXECUTES","state":"VERIFIED_EXECUTION_REFERENCE","evidence":"workflow invokes python tools/rll_auto_hotfix.py"},
+    {"id":"E20","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_AUTO_PROPOSAL","relation":"EXECUTES","state":"VERIFIED_EXECUTION_REFERENCE","evidence":"proposal job invokes python tools/propose_operational_hotfix_pr.py --base main"},
+    {"id":"E21","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_POLICY","relation":"TRIGGER_INPUT","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow path filter includes policy JSON"},
+    {"id":"E22","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_LEDGER","relation":"TRIGGER_INPUT","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow path filter includes operational gap ledger"},
+    {"id":"E23","from":"B1_MAIN_AUTO_WORKFLOW","to":"B1_MAIN_DOC","relation":"TRIGGER_INPUT","state":"VERIFIED_TEXTUAL_CONTRACT","evidence":"workflow path filter includes canonical operational documentation"},
+    {"id":"E24","from":"B1_MAIN_AUTO_TOOL","to":"B1_MAIN_CONTRACT","relation":"READS_AND_BOUNDED_WORKSPACE_WRITE","state":"VERIFIED_IMPLEMENTATION_REFERENCE","evidence":"CONTRACT=Path(.github/workflow-contract.yml); only active_workflows can be auto-fixed"},
+    {"id":"E25","from":"B1_MAIN_AUTO_PROPOSAL","to":"B1_MAIN_CONTRACT","relation":"APPROVED_PATH_ONLY","state":"VERIFIED_IMPLEMENTATION_REFERENCE","evidence":"APPROVED_PATHS=[.github/workflow-contract.yml]"}
+  ],
+  "strongly_connected_components": [
+    {
+      "id":"SCC_GOVERNANCE_CORE",
+      "members":[
+        "B0_LAB_INVARIANTS",
+        "B0_LAB_SYNC_WORKFLOW",
+        "B0_LAB_SYNC_TOOL",
+        "B0_LAB_PROPOSAL_TOOL",
+        "B1_MAIN_CONTRACT",
+        "B1_MAIN_AUTO_WORKFLOW",
+        "B1_MAIN_AUTO_TOOL",
+        "B1_MAIN_AUTO_PROPOSAL"
+      ],
+      "state":"VERIFIED_BY_DIRECTED_PATHS_IN_DECLARED_GRAPH",
+      "acceptance_rule":"Members may be changed in separate commits, but compatibility must be validated as one governance component before forward-port promotion."
+    }
+  ],
+  "leaf_dependencies": ["B1_MAIN_POLICY","B1_MAIN_LEDGER","B1_MAIN_DOC"],
+  "token_vazio_edges": [],
+  "residuals": [
+    "TOKEN_VAZIO_SEMANTIC_DEPENDENCY_OUTSIDE_B0_B1",
+    "TOKEN_VAZIO_GENERATED_ARTIFACT_PRODUCER_CONSUMER_EDGES",
+    "TOKEN_VAZIO_MAIN_RLL_LAB_HISTORY_RECONCILIATION"
+  ],
+  "decision": "B0_B1_COMPATIBILITY_GATE_REQUIRED_BEFORE_FORWARD_PORT",
+  "forbidden_inference": [
+    "SCC requires one giant commit",
+    "SCC authorizes merge",
+    "verified textual edge proves scientific validity"
+  ]
+}

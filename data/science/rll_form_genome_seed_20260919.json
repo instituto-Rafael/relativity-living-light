@@ -1,0 +1,313 @@
+{
+  "schema": "rll.form_genome_seed.v1",
+  "date": "2026-09-19",
+  "claim_allowed": false,
+  "source_basis": [
+    "RAFAELIA_SEMENTES_MATEMATICAS_512_2026-09-11",
+    "Espiral Longitudinal Omega / MHEL-Omega Bagua",
+    "Drive receipt SEMENTEIRA-LANG-MULTIMODAL-BAGUA-20260916",
+    "current RLL session retrofeedback"
+  ],
+  "invariants": [
+    "TOKEN_VAZIO != 0",
+    "SEARCH_SCORE != EVIDENCE != CLAIM",
+    "SELF_CERTIFICATION = FORBIDDEN",
+    "SATURATED_UNDER_CURRENT_RULER != COMPLETE",
+    "symbolic != physical_proof"
+  ],
+  "alphabet": {
+    "yin": 0,
+    "yang": 1,
+    "token_vazio": null
+  },
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "antipodal_pairs": [
+    [
+      "N",
+      "S"
+    ],
+    [
+      "E",
+      "W"
+    ],
+    [
+      "NE",
+      "SW"
+    ],
+    [
+      "NW",
+      "SE"
+    ]
+  ],
+  "center": "O",
+  "trigram_bits": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "trigram_historical_order": "TOKEN_VAZIO_HISTORICAL_ORDER",
+  "epistemic_trits": [
+    0,
+    1,
+    null
+  ],
+  "groups": {
+    "C8": {
+      "rotations": 8
+    },
+    "D8": {
+      "rotations": 8,
+      "reflections": 8,
+      "total": 16
+    }
+  },
+  "tao_formal": {
+    "complementarity": "Y union G = D",
+    "interior_disjoint": "int(Y) intersect int(G) = empty",
+    "measure_conservation": "mu(Y)+mu(G)=mu(D)",
+    "ideal_symmetry": "mu(Y)=mu(G)=mu(D)/2",
+    "half_turn_swap": [
+      "R_pi(Y)=G",
+      "R_pi(G)=Y"
+    ]
+  },
+  "authorial_selector": {
+    "T_RAF": [
+      4,
+      8,
+      3,
+      5,
+      2,
+      4,
+      8,
+      6
+    ],
+    "state": "OPERATOR_AUTHORIAL_UNVALIDATED"
+  },
+  "mandala": {
+    "source_visual_label": "Mandala RAFAELIA - 42 (Resposta Universal)",
+    "observed_sectors": 8,
+    "observed_center_label": "RAFAELIA / 42 Chaves",
+    "key_mapping": "TOKEN_VAZIO_42_KEY_SEMANTICS"
+  },
+  "watchdog": {
+    "process": "P",
+    "observers": [
+      "A",
+      "B"
+    ],
+    "meta": "M",
+    "self_certification": false,
+    "delayed_reciprocal_check": true,
+    "fail_closed_on_divergence": true
+  },
+  "search": {
+    "exhaustive_cap": 4096,
+    "random_seed": 42,
+    "sample_budget": 512,
+    "max_fragment_order": 4
+  },
+  "form_genes": [
+    {
+      "id": "GF-001",
+      "name": "origin-point",
+      "arity": 1,
+      "state": "MODEL_PRIMITIVE"
+    },
+    {
+      "id": "GF-002",
+      "name": "yin-yang-dyad",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED"
+    },
+    {
+      "id": "GF-003",
+      "name": "trigram-line-triad",
+      "arity": 3,
+      "state": "SOURCE_RECOVERED"
+    },
+    {
+      "id": "GF-004",
+      "name": "axial-cardinal-quad",
+      "arity": 4,
+      "state": "SOURCE_RECOVERED"
+    },
+    {
+      "id": "GF-005",
+      "name": "five-phase-process",
+      "arity": 5,
+      "state": "SOURCE_RECOVERED_ORGANIZATIONAL"
+    },
+    {
+      "id": "GF-006",
+      "name": "hexagram-six-lines",
+      "arity": 6,
+      "state": "SOURCE_RECOVERED"
+    },
+    {
+      "id": "GF-008",
+      "name": "octagonal-bagua-state",
+      "arity": 8,
+      "state": "SOURCE_RECOVERED"
+    },
+    {
+      "id": "GF-042",
+      "name": "mandala-42-keys-label",
+      "arity": 42,
+      "state": "SOURCE_VISUAL_LABEL_ONLY",
+      "semantics": "TOKEN_VAZIO_42_KEY_SEMANTICS"
+    },
+    {
+      "id": "GF-096",
+      "name": "recursive-rhombus-transform",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_FORMAL_MODEL"
+    },
+    {
+      "id": "GF-098",
+      "name": "two-inverted-equilateral-triangles",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_PASS_FORMAL"
+    },
+    {
+      "id": "GF-099",
+      "name": "radial-annulus",
+      "arity": 2,
+      "state": "SOURCE_RECOVERED_PASS_FORMAL"
+    },
+    {
+      "id": "GF-100",
+      "name": "radial-synthesis-operator",
+      "arity": 3,
+      "state": "SOURCE_RECOVERED_FORMAL_MODEL"
+    }
+  ],
+  "decomposition_path": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    42
+  ],
+  "risk_register": {
+    "score_semantics": "RPN=severity*occurrence*detectability; ordinal operational priority, not probability",
+    "mitigation_threshold": 100,
+    "items": [
+      {
+        "id": "R-COMMON-MODE",
+        "severity": 9,
+        "occurrence": 4,
+        "detectability": 7,
+        "mitigation": "diverse implementation IDs + external validator"
+      },
+      {
+        "id": "R-WATCHDOG-SILENCE",
+        "severity": 8,
+        "occurrence": 3,
+        "detectability": 3,
+        "mitigation": "logical heartbeat + fail-closed silence state"
+      },
+      {
+        "id": "R-REPLAY",
+        "severity": 7,
+        "occurrence": 3,
+        "detectability": 2,
+        "mitigation": "monotonic seq + chained digests"
+      },
+      {
+        "id": "R-PROVENANCE-LOSS",
+        "severity": 9,
+        "occurrence": 3,
+        "detectability": 4,
+        "mitigation": "parent/source hashes + append-only receipt"
+      },
+      {
+        "id": "R-COMBINATORIAL-EXPLOSION",
+        "severity": 8,
+        "occurrence": 6,
+        "detectability": 2,
+        "mitigation": "exhaustive cap + bounded deterministic sample + symmetry dedup"
+      },
+      {
+        "id": "R-SEMANTIC-OVERPROMOTION",
+        "severity": 10,
+        "occurrence": 4,
+        "detectability": 3,
+        "mitigation": "TOKEN_VAZIO + claim_allowed=false + source/model separation"
+      }
+    ]
+  },
+  "geometry_to_mandala": {
+    "recursive_rhombus": {
+      "general": "Lambda_(n+1)=rho*R_theta(Lambda_n)",
+      "special": "Lambda_n=(sqrt(3)/2)^n * R_(n*theta)(Lambda_0)",
+      "state": "FORMAL_MODEL"
+    },
+    "hexagram_geometry": {
+      "expression": "H=triangle_up union triangle_down",
+      "state": "PASS_FORMAL_GEOMETRY"
+    },
+    "annulus": {
+      "expression": "A={x:r_min<=||x||<=r_max}",
+      "state": "PASS_FORMAL_GEOMETRY"
+    },
+    "radial_synthesis": {
+      "expression": "F_n=Radial(R_(n*theta)(triangle_up union triangle_down union Lambda_n))",
+      "state": "FORMAL_MODEL_VISUAL_OPERATOR"
+    },
+    "scale": {
+      "q": "sqrt(3)/2",
+      "area_ratio": "3/4",
+      "state": "PASS_FORMAL"
+    }
+  }
+}

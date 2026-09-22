@@ -74,3 +74,42 @@ The implementation formalizes and calibrates the session's analogies. It does no
 `F_ok`: mechanisms, scales, recurrence, numerical anchors and CI are explicit.  
 `F_gap`: source-specific fields, composition, cross sections, covariance and observational targets remain `TOKEN_VAZIO`.  
 `F_next`: replace the reference ring with a declared self-gravitating GRMHD/GRPIC source manifest before fitting any physical parameter.
+
+---
+
+## Append-only successor — 2026-08-27
+
+The historical B08/B09 calibration above is unchanged. A successor route is now registered instead of rewriting the July calibration:
+
+```text
+B10 black-hole thermodynamics + Mpemba-horizon falsifier
+```
+
+Canonical artifacts:
+
+1. `data/pipelines/strong_gravity/mpemba_horizon_falsifier.py`
+2. `data/contracts/mpemba_horizon_falsifier.v1.json`
+3. `tests/strong_gravity/test_mpemba_horizon_falsifier.py`
+4. `docs/RLL_MPEMBA_HORIZON_ATLAS.md`
+5. `FALSIFIABILITY_PROTOCOL.md`
+6. `provenance/receipts/rll_mpemba_horizon_atlas_20260827.json`
+7. `provenance/receipts/rll_mpemba_horizon_drive_crosswalk_20260827.json`
+
+Registry wiring:
+
+- `data/registries/rll_operational_integration_registry.json` gains `B10_black_hole_thermodynamics_mpemba_falsifier` append-only.
+- `data/registries/rll_strong_gravity_calibration_registry.json` retains H1–H8 and the committed July numeric result, and adds a `successor_extensions` entry.
+
+Non-regression invariants:
+
+```text
+B00..B09 historical branch semantics remain present
+H1..H8 historical strong-gravity heuristics remain present in order
+results/strong_gravity_calibration/session_reference_sweep_20260717.json remains the committed July numeric result
+raw_data_policy = immutable
+claim_allowed = false
+BH-MP-06 astrophysical Mpemba detection = TOKEN_VAZIO
+BH-MP-08 direct astrophysical Hawking thermometry = TOKEN_VAZIO
+```
+
+The successor does not reinterpret the July numerical sweep as black-hole thermodynamics evidence. It adds a new falsification layer whose real-data promotion requires checksum-verified time series, preregistered distance/threshold, covariance, standard relaxation nulls, hold-out/look-elsewhere control and independent reproduction.

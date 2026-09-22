@@ -1,0 +1,114 @@
+{
+  "schema": "rll.dataset_rights_reconciliation.v1",
+  "event_id": "RLL-RIGHTS-RECONCILIATION-20260822",
+  "recorded_at": "2026-08-22T12:55:00Z",
+  "append_only": true,
+  "claim_allowed": false,
+  "legal_effect_claim": false,
+  "training_allowed": false,
+  "redistribution_allowed": false,
+  "predecessor": {
+    "path": "data/contracts/dataset_rights_manifest.json",
+    "schema": "rll.dataset_rights_manifest.v2",
+    "git_blob_sha1": "4b25e7dbe18abea6dd5c599d25964dec16ee2b9e",
+    "generated_at": "2026-07-20T15:00:00Z",
+    "rights_complete": 0,
+    "rights_incomplete": 5,
+    "license_verified": 0
+  },
+  "later_evidence": [
+    {
+      "event_id": "ROOT-LICENSE-OBSERVED-20260822",
+      "path": "LICENSE.md",
+      "git_blob_sha1": "26c69bb3c850bc2b3063621a5f72a2badc1535c2",
+      "fact": "a repository-level custom authorial license file now exists",
+      "does_not_imply": [
+        "third_party_dataset_permission",
+        "standard_spdx_equivalence",
+        "jurisdiction_specific_enforceability",
+        "training_permission_for_external_material",
+        "redistribution_permission_for_external_material"
+      ]
+    },
+    {
+      "event_id": "DES-SN5YR-NEGATIVE-ROOT-LICENSE-AUDIT-20260807",
+      "path": "artifacts/governance/DES_SN5YR_LICENSE_AUDIT_20260807_V1.json",
+      "git_blob_sha1": "f27f671eb655cd922b7e52b22c4c32b1c141be39",
+      "source_repository": "des-science/DES-SN5YR",
+      "source_commit": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f",
+      "fact": "no explicit license grant was found in the audited repository root or README at the pinned source commit",
+      "redistribution_allowed_by_audit": false,
+      "boundary": "negative root-license evidence is a conservative restriction; it does not prove no applicable permission exists elsewhere"
+    },
+    {
+      "event_id": "PANTHEON-PROVENANCE-FIELDS-OBSERVED",
+      "path": "data/pantheon/README.md",
+      "git_blob_sha1": "8606e0ec9a847bb930c843788a2339221f357432",
+      "fact": "the ingestion guide explicitly requires license_or_terms provenance per Pantheon+ file",
+      "boundary": "provenance-field requirement is not license evidence"
+    }
+  ],
+  "reconciliation": {
+    "stale_statement": "DS-DENSE-FEATURES V2 use_boundary says the repository has no root LICENSE file",
+    "successor_fact": "LICENSE.md now exists as repository-level authorial intent",
+    "rights_consequence": "NO_PERMISSION_PROMOTION",
+    "reason": "the existence of a repository-level custom license does not establish the licenses or derivative-use permissions of upstream third-party sources",
+    "dataset_v2_state_preserved": true,
+    "rights_complete_after_reconciliation": 0,
+    "license_verified_after_reconciliation": 0,
+    "training_allowed_after_reconciliation": false,
+    "redistribution_allowed_after_reconciliation": false
+  },
+  "dataset_routes": [
+    {
+      "dataset_id": "DS-PANTHEON-PLUS",
+      "state": "TOKEN_VAZIO_RIGHTS_TERMS",
+      "evidence_status": "PROVENANCE_REQUIREMENTS_DEFINED_TERMS_NOT_ARCHIVED",
+      "F_next": "archive exact applicable terms with immutable retrieval evidence and review use/redistribution/training separately"
+    },
+    {
+      "dataset_id": "DS-DESI-DR2-BAO",
+      "state": "TOKEN_VAZIO_RIGHTS_TERMS",
+      "evidence_status": "PUBLIC_ACCESS_NOT_PERMISSION",
+      "F_next": "archive exact DR2 terms and attribution/redistribution obligations for the downloaded files"
+    },
+    {
+      "dataset_id": "DS-MORESCO-HZ",
+      "state": "TOKEN_VAZIO_RIGHTS_SOURCE",
+      "evidence_status": "ORIGINAL_SOURCE_AND_TERMS_UNRESOLVED",
+      "F_next": "identify original table/source and archive license/terms plus extraction lineage"
+    },
+    {
+      "dataset_id": "DS-PLANCK-2018",
+      "state": "TOKEN_VAZIO_RIGHTS_TERMS",
+      "evidence_status": "PRODUCT_CLASS_TERMS_UNRESOLVED",
+      "F_next": "separate applicable terms for compressed priors, maps and likelihood products"
+    },
+    {
+      "dataset_id": "DS-DENSE-FEATURES",
+      "state": "TOKEN_VAZIO_DERIVATIVE_RIGHTS",
+      "evidence_status": "ROOT_LICENSE_NOW_PRESENT_UPSTREAM_RIGHTS_STILL_INCOMPLETE",
+      "F_next": "inventory every contributing upstream source and derive a reviewed compatibility/redistribution policy"
+    },
+    {
+      "dataset_id": "DS-DES-SN5YR",
+      "state": "BLOCKED_NEGATIVE_ROOT_LICENSE_EVIDENCE",
+      "evidence_status": "VERIFIED_NEGATIVE_ROOT_LICENSE_AT_PINNED_COMMIT",
+      "F_next": "seek explicit applicable permission/terms from another authoritative upstream channel before redistribution"
+    }
+  ],
+  "F_ok": [
+    "V2 rights manifest remains preserved",
+    "later root LICENSE existence is recorded without retroactively rewriting V2",
+    "DES-SN5YR negative root-license audit is linked as later evidence",
+    "repository-level authorial intent is separated from third-party rights",
+    "training and redistribution remain fail-closed"
+  ],
+  "F_gap": [
+    "exact applicable terms for Pantheon+, DESI, Moresco and Planck",
+    "complete upstream rights graph for Dense Features",
+    "possible non-root permission channel for DES-SN5YR if redistribution is intended",
+    "qualified compatibility review for concrete distribution/training uses"
+  ],
+  "F_next": "prioritize intended-use-specific rights evidence; do not treat repository LICENSE.md as closure of third-party dataset rights"
+}

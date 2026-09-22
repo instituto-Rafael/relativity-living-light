@@ -170,3 +170,49 @@ Este arquivo foi normalizado para **uso acadêmico-profissional** com linguagem 
 O conteúdo original permanece abaixo para preservar trilha de auditoria e contexto evolutivo.
 
 ---
+
+
+---
+
+## Session retrofeedback + adaptive permutation ruler — 2026-09-19
+
+- Full session recovery audit: `docs/science/RLL_SESSION_RETROFEEDBACK_FULL_AUDIT_20260919.md`
+- Machine-readable recovery ledger: `data/science/rll_session_fragment_recovery_20260919.json`
+- Adaptive bounded search method: `docs/methods/RLL_ADAPTIVE_PERMUTATION_RULER_20260919.md`
+- Implementation: `tools/rll_adaptive_permutation_ruler_v1.py`
+- Tests: `tests/test_rll_adaptive_permutation_ruler_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_SESSION_RETROFEEDBACK_RULER_V1_VALID_WORK_ROUTE.md`
+- Branch-local gap: `TOKEN_VAZIO_UPSTREAM_MAIN_TO_RLL_LAB_SYNC`.
+- Boundary: `SEARCH_SCORE != EVIDENCE != CLAIM`; blind Cartesian products are forbidden.
+
+
+- Bidirectional recurrent resweep: `docs/methods/RLL_BIDIRECTIONAL_RECURRENT_SESSION_SWEEP_20260919.md`
+- Recurrent implementation: `tools/rll_bidirectional_session_sweep_v1.py`
+- Recurrent tests: `tests/test_rll_bidirectional_session_sweep_v1.py`
+- Terminal vocabulary: `SATURATED_UNDER_CURRENT_RULER != COMPLETE`.
+
+
+- Form-genome + crossed watchdog + Tao/Bagua/mandala: `docs/methods/RLL_FORM_GENOME_WATCHDOG_MANDALA_20260919.md`
+- Seed: `data/science/rll_form_genome_seed_20260919.json`
+- Tool: `tools/rll_form_genome_watchdog_v1.py`
+- Tests: `tests/test_rll_form_genome_watchdog_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_FORM_GENOME_WATCHDOG_MANDALA_V1.md`
+
+
+- Form genome + dual watchdog + mandala method: docs/methods/RLL_FORM_GENOME_DUAL_WATCHDOG_MANDALA_20260919.md
+- Export-grounded form seed: data/science/rll_form_genome_seed_20260919.json
+- Form sampler / cross-watchdog: tools/rll_form_genome_watchdog_v1.py
+- Tests: tests/test_rll_form_genome_watchdog_v1.py
+- New boundary: BAGUA_8 != MANDALA_VISUAL_8 != HYPERFORMAS_42; mapping 8->42 remains TOKEN_VAZIO.
+
+
+---
+
+## Eight-connected / geodesic / post-toroidal geometry — 2026-09-19
+
+- Method: `docs/methods/RLL_EIGHT_CONNECTED_GEODESIC_POSTOROIDAL_FOLD_20260919.md`
+- Seed: `data/science/rll_eight_connected_geometry_seed_20260919.json`
+- Tool: `tools/rll_eight_connected_geometry_v1.py`
+- Tests: `tests/test_rll_eight_connected_geometry_v1.py`
+- Receipt: `receipts/2026-09-19_RLL_EIGHT_CONNECTED_GEOMETRY_V1.md`
+- Boundary: `KNOWN_MATH != AUTHORIAL_DEFORMATION != PHYSICAL_MODEL`; `ROTATED_SQUARE != HEXAGRAM`; `MAPPING_8_TO_42=TOKEN_VAZIO`.

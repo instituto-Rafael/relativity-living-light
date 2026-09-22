@@ -1,0 +1,83 @@
+{
+  "schema": "rll.w0wa_sign_falsifiability_gate.v1",
+  "status": "ACTIVE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scope": "canonical flat RLL logistic background, local CPL tangent coordinates at a=1",
+  "definitions": {
+    "transition": "f(z)=1/(1+exp((z-zt)/wt))",
+    "sector_density_shape": "g(a)=f(a)+(1-f(a))*a^-3",
+    "sector_w": "w_s(a)=-f(a)/g(a)",
+    "total_dark_w": "w_dark(a)=-(Omega_Lambda+Omega_s0*f(a))/(Omega_Lambda+Omega_s0*g(a))",
+    "cpl_local_coordinates": "w0_eff=w_dark(1); wa_eff=-dw_dark/da|a=1"
+  },
+  "assumptions": [
+    "Omega_s0 >= 0",
+    "Omega_Lambda >= 0",
+    "wt > 0",
+    "flat-background closure is applied consistently when Omega_Lambda is derived"
+  ],
+  "exact_results": {
+    "f0": "1/(1+exp(-zt/wt))",
+    "sector_w0": "-f0",
+    "sector_wa": "f0*(1-f0)*(3+1/wt)",
+    "total_dark_w0": "-(Omega_Lambda+Omega_s0*f0)/(Omega_Lambda+Omega_s0)",
+    "total_dark_wa": "Omega_s0*(1-f0)/(Omega_Lambda+Omega_s0)^2 * [f0*(Omega_Lambda+Omega_s0)/wt + 3*(Omega_Lambda+Omega_s0*f0)]",
+    "sign_theorem": "Under the assumptions, total_dark_wa >= 0; it is exactly 0 when Omega_s0=0 and strictly >0 for Omega_s0>0 with nonzero finite factors.",
+    "total_dark_w0_domain": "For 0<f0<1 and non-negative Omega_Lambda,Omega_s0: -1 <= w0_eff <= -f0 < 0."
+  },
+  "corrections_to_pasted_interpretation": [
+    {
+      "item": "sector wa coefficient",
+      "incorrect": "-w0*(1+w0)*(3+2/wt)",
+      "correct": "-w0*(1+w0)*(3+1/wt)",
+      "reason": "At a=1, df/da=f0*(1-f0)/wt and dg/da=-3*(1-f0)."
+    },
+    {
+      "item": "w0 compared to CPL",
+      "incorrect": "w0=-f0 is the full RLL dark-sector coordinate",
+      "correct": "w0=-f0 is the isolated superposition-sector coordinate; the canonical total dark-sector coordinate includes Omega_Lambda."
+    },
+    {
+      "item": "observational language",
+      "incorrect": "DESI requires wa=-1.52",
+      "correct": "Negative wa values are posterior/best-fit results within specified model+dataset combinations; they are not direct observables and are dataset-dependent."
+    },
+    {
+      "item": "falsifiability language",
+      "incorrect": "A model whose prediction disagrees with data fails falsifiability.",
+      "correct": "A risky sign prediction is evidence of falsifiability; sufficiently robust exclusion can falsify that model form in a stated data/assumption scope."
+    },
+    {
+      "item": "license language",
+      "incorrect": "A non-OSI custom license makes scientific falsifiability empty.",
+      "correct": "License interoperability and scientific falsifiability are separate gates. A custom license can impede code reuse, but does not by itself erase mathematical testability."
+    }
+  ],
+  "observational_gate": {
+    "state": "STRUCTURAL_SIGN_TENSION_NOT_YET_FALSIFICATION",
+    "reason": "The canonical RLL local tangent domain has wa_eff>=0 while several external CPL fits have negative-wa central/posterior support. A matched posterior-overlap calculation is still required before declaring the canonical RLL form falsified.",
+    "required_next_test": [
+      "materialize a public DESI posterior/chain for a precisely named dataset combination",
+      "coarse pre-gate: compute posterior mass P(wa>=0 | D) with the same CPL convention",
+      "decisive gate: compute 2D posterior overlap/HPD distance with the full RLL-accessible local (w0_eff,wa_eff) domain under current parameter bounds",
+      "repeat with/without SN and with the 2026 Ly-alpha full-shape update",
+      "report prior sensitivity and the local-coordinate-versus-global-likelihood limitation"
+    ],
+    "falsification_condition": "Only declare FALSIFIED_IN_SCOPE if a predeclared, likelihood-matched posterior excludes the full RLL-accessible 2D local prediction domain (not merely wa>=0) at the chosen confidence/evidence threshold and the local mapping is validated against global observables."
+  },
+  "license_boundary": {
+    "repository_license_is_standard_spdx": false,
+    "scientific_falsifiability_depends_on_license": false,
+    "operational_reproducibility_may_be_affected": true,
+    "legal_effect": "TOKEN_VAZIO_QUALIFIED_LEGAL_REVIEW"
+  },
+  "invariants": [
+    "BEST_FIT_POINT != DIRECT_OBSERVABLE",
+    "LOCAL_CPL_MAP != GLOBAL_LIKELIHOOD_EQUIVALENCE",
+    "SIGN_TENSION != FALSIFIED_WITHOUT_POSTERIOR_OVERLAP",
+    "CUSTOM_LICENSE != NON_FALSIFIABLE",
+    "MODEL_EXTENSION != AUTOMATIC_RESCUE",
+    "claim_allowed=false",
+    "P(wa>=0) != FULL_2D_RLL_DOMAIN_OVERLAP"
+  ]
+}

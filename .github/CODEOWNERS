@@ -15,3 +15,7 @@
 /tests/test_rare_events_registry.py @rafaelmeloreisnovo
 /docs/governance/ @rafaelmeloreisnovo
 /docs/workflows/ @rafaelmeloreisnovo
+/data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json @rafaelmeloreisnovo
+/tools/validate_rll_credential_authority.py @rafaelmeloreisnovo
+/tests/test_rll_credential_authority.py @rafaelmeloreisnovo
+/receipts/2026-09-11_RLL_CREDENTIAL_AUTHORITY_V1_PREFLIGHT.md @rafaelmeloreisnovo

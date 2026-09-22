@@ -1,0 +1,87 @@
+{
+  "schema": "rll.novoexport_formula_crosswalk.v1",
+  "authority": {
+    "producer": "instituto-Rafael/relativity-living-light",
+    "target_ref": "rll/lab",
+    "canonical_registry": "scripts/rll_structural_invariants.py::formula_registry"
+  },
+  "source": {
+    "novoexport_physical_shards_scanned": 50,
+    "novoexport_physical_bytes_scanned": 1095174561,
+    "formula_occurrences_total": 357144,
+    "canonical_formula_candidates_total": 215427,
+    "raw018_state": "TOKEN_VAZIO_PROVIDER_GAP",
+    "census_summary_sha256": "8e716c0961051a487ac9c74d1330897ef2ae67930f62c4529b3bab58ef8b6d56",
+    "formula_occurrences_gz_sha256": "ae1f6f2100d150d1bff8163ec8ce67faf4ba5b6e02ddaa9208d75ce1124963e9",
+    "formula_registry_gz_sha256": "b7422e9c56b388115538cd3fc35d2a7fa4599c940a531247125b47cdbf3558ea"
+  },
+  "rll_subset": {
+    "domains": [
+      "rll_cosmology_statistics",
+      "strong_gravity_thermodynamics"
+    ],
+    "occurrences": 8793,
+    "canonical_candidates": 6333,
+    "strict_match_occurrences_by_rll_formula": {
+      "RLL-F001": 8,
+      "RLL-F002": 48,
+      "RLL-F003": 0,
+      "RLL-F004": 4,
+      "RLL-F005": 129,
+      "RLL-F006": 0,
+      "RLL-F007": 0,
+      "RLL-F008": 0,
+      "RLL-F009": 0,
+      "RLL-F010": 0,
+      "RLL-F011": 0,
+      "RLL-F012": 2,
+      "RLL-F013": 1,
+      "RLL-F014": 0,
+      "RLL-F015": 0,
+      "RLL-F016": 0,
+      "RLL-F017": 1,
+      "RLL-F018": 1,
+      "RLL-F019": 3,
+      "RLL-F020": 0,
+      "RLL-F021": 0,
+      "RLL-F022": 3,
+      "RLL-F023": 1
+    },
+    "candidate_index_sha256": "91adc91aedb869dbc06d87facaf1e58fa611dba468d16f92e0cf6d0a2c457e0c",
+    "candidate_index_publication": "HASH_ONLY_PUBLIC_RLL; FULL_INDEX_PRIVATE_DRIVE_CUSTODY"
+  },
+  "canonical_rll_formula_ids": [
+    "RLL-F001",
+    "RLL-F002",
+    "RLL-F003",
+    "RLL-F004",
+    "RLL-F005",
+    "RLL-F006",
+    "RLL-F007",
+    "RLL-F008",
+    "RLL-F009",
+    "RLL-F010",
+    "RLL-F011",
+    "RLL-F012",
+    "RLL-F013",
+    "RLL-F014",
+    "RLL-F015",
+    "RLL-F016",
+    "RLL-F017",
+    "RLL-F018",
+    "RLL-F019",
+    "RLL-F020",
+    "RLL-F021",
+    "RLL-F022",
+    "RLL-F023"
+  ],
+  "rules": [
+    "NOVOexport candidate != canonical RLL formula",
+    "strict textual/structural match != observational or physical validation",
+    "unmatched and ambiguous candidates remain candidate-only",
+    "raw conversation text remains in private Drive custody; public RLL stores hashes and counts only",
+    "RAW018 remains TOKEN_VAZIO until provider bytes exist",
+    "claim_allowed remains false"
+  ],
+  "claim_allowed": false
+}

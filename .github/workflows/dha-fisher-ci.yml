@@ -29,10 +29,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: '3.11'
 
@@ -61,7 +63,6 @@ jobs:
       - name: Run ln(1+z) extractor
         run: python scripts/run_ln1pz_extractor.py --input results/dha/mock_catalog.csv --output results/dha/ln1pz_fit.csv --summary results/dha/ln1pz_fit_summary.json
 
-
       - name: Run DESI/BOSS DHA extractor pipeline
         run: python scripts/run_desi_dha_pipeline.py --output results/dha/desi_dha_pipeline_summary.json
 
@@ -69,21 +70,30 @@ jobs:
         run: python scripts/export_dha_forecast.py
 
       - name: Upload DHA forecast artifact
-        uses: actions/upload-artifact@v7
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: dha-fisher-forecast
           path: results/dha/fisher_forecast_reference.json
+          retention-days: 30
+          if-no-files-found: warn
 
       - name: Upload ln(1+z) extractor artifacts
-        uses: actions/upload-artifact@v7
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ln1pz-extractor
           path: |
             results/dha/ln1pz_fit.csv
             results/dha/ln1pz_fit_summary.json
+          retention-days: 30
+          if-no-files-found: warn
 
       - name: Upload DESI DHA extractor artifact
-        uses: actions/upload-artifact@v7
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: desi-dha-extractor
           path: results/dha/desi_dha_pipeline_summary.json
+          retention-days: 30
+          if-no-files-found: warn

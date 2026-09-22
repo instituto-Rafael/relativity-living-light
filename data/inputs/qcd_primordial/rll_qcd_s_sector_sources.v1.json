@@ -1,0 +1,77 @@
+{
+  "schema": "rll.qcd_s_sector_sources.v1",
+  "description": "Provenance and claim boundaries for the conservative RLL s-sector primordial expansion bound.",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "scope": "RLL_S_SECTOR_ONLY",
+  "sources": [
+    {
+      "id": "RLL_CANONICAL_BACKGROUND",
+      "kind": "CANONICAL_MODEL",
+      "repository": "instituto-Rafael/relativity-living-light",
+      "base_ref": "rll/lab",
+      "equation": "E^2(z)=Omega_m(1+z)^3+(Omega_r+Omega_B0+Omega_P0)(1+z)^4+Omega_Lambda+Omega_s0*g(z); g=f+(1-f)(1+z)^3",
+      "role": "MODEL_AUTHORITY"
+    },
+    {
+      "id": "RLL_OMEGA_S0_FASE20_HISTORICAL",
+      "kind": "HISTORICAL_SCOPED_RESULT",
+      "value": 0.0017772301590821408,
+      "quantity": "Omega_s0_UL95",
+      "state": "EVIDENCIADO_PARCIAL",
+      "claim_allowed": false,
+      "guard": "Historical FASE20 upper limit; later G6 convergence/RNG work means this is used only for a conservative scoped bound, not as a current model-preference receipt."
+    },
+    {
+      "id": "RLL_H0_ABLATION_MATRIX",
+      "kind": "REPOSITORY_INPUT",
+      "path": "data/inputs/cosmology_joint/h0_rd_ablation_matrix.json",
+      "blob_sha": "9bd0056adaec2529cb0a456df29349a99555b4c6",
+      "role": "H0_RANGE_AUTHORITY",
+      "H0_bounds_km_s_Mpc": [50.0, 90.0]
+    },
+    {
+      "id": "BORSANYI_2016_LATTICE_QCD_COSMOLOGY",
+      "kind": "PEER_REVIEWED_REFERENCE",
+      "citation": "S. Borsanyi et al., Nature 539, 69-71 (2016), arXiv:1606.07494",
+      "role": "THERMAL_HISTORY_AND_ENTROPY_REFERENCE",
+      "use": "Supports g_rho/g_s thermodynamic degrees of freedom and entropy-based time/temperature cosmology; no numerical lattice table is ingested in this V1 bound."
+    },
+    {
+      "id": "HOTQCD_2014_EOS",
+      "kind": "PEER_REVIEWED_REFERENCE",
+      "citation": "A. Bazavov et al. (HotQCD), Phys. Rev. D 90, 094503 (2014)",
+      "doi": "10.1103/PhysRevD.90.094503",
+      "role": "QCD_EOS_REFERENCE_ONLY",
+      "use": "Establishes a lattice-QCD equation of state across the crossover region; numeric EoS ingestion remains a later tightening step."
+    },
+    {
+      "id": "PDG_BBN_2024",
+      "kind": "REVIEW_REFERENCE",
+      "citation": "Particle Data Group, Big-Bang Nucleosynthesis review (2024)",
+      "role": "BBN_COMPARISON_PROXY",
+      "inputs": {
+        "Nnu_BBN_68CL": [2.898, 0.141],
+        "Nnu_standard": 3.044
+      },
+      "guard": "The derived ~1% expansion comparison is a BBN-era proxy, not a direct observational constraint at the QCD transition."
+    },
+    {
+      "id": "ALICE_CMS_LIGHT_ION_2026",
+      "kind": "PEER_REVIEWED_REFERENCE",
+      "role": "QCD_COLLECTIVITY_CONTEXT_ONLY",
+      "guard": "v2/v3 in O-O and Ne-Ne are not a cosmological likelihood and are not evidence for RLL."
+    }
+  ],
+  "conservative_assumptions": [
+    "Omega_radiation >= Omega_gamma",
+    "Omega_gamma*h^2 >= 2.46e-5 (rounded-down floor at T0=2.725 K)",
+    "g_s(T)/g_s0 >= 1 for T in [130,400] MeV",
+    "0<=f(z)<=1 so g_RLL(z)<= (1+z)^3 for z>=0"
+  ],
+  "full_rll_gaps": [
+    "Omega_B0_primordial_bound",
+    "Omega_P0_primordial_bound",
+    "post_rng_fix_MCMC_reference_receipt"
+  ]
+}

@@ -46,5 +46,20 @@
     "GAIA_phi": "deterministic core and guard/vecdb engines",
     "llamaRafaelia": "local inference runtime and RMRCTI primary source path",
     "RLL": "scientific validation, loaders, CI and claim gates"
+  },
+  "routing_extensions": {
+    "worldline_cascade_router": "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json",
+    "canonical_document": "docs/canonicos/34_RMRCTI_OMEGA_WORLDLINE_CASCADE_ROUTER.md",
+    "purpose": "route formulas by physical regime, event chain, reference frame, observables, provenance and falsifiers before scientific use",
+    "boundary": "RMRCTI DeltaP remains an operational stability/routing metric and is not promoted to a cosmological physical quantity"
+  },
+  "authorial_candidate_registry": {
+    "formula_count": 168,
+    "family_count": 12,
+    "state": "CANDIDATE_REGISTRY_NOT_PEER_REVIEWED",
+    "catalog": "data/formulas/RAFAELIA_168_FORMULAS_AUTORAIS_2026-09-12.md",
+    "manifest": "data/formulas/RAFAELIA_AUTHORIAL_FORMULA_REGISTRY_V1.json",
+    "drive_document_id": "1-iiE5ZZM9cIwEP4eBfkH9eR34k-n9MLa6c1QCDehNnA",
+    "boundary": "Autoral means project-authored/derived definition; it does not assert worldwide novelty or scientific validation."
   }
 }

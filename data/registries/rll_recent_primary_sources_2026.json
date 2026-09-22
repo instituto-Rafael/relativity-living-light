@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "verified_as_of": "2026-07-17",
+  "verified_as_of": "2026-08-27",
   "claim_allowed": false,
   "purpose": "Primary-source registry for recent literature that constrains or contextualizes RLL branches. Inclusion establishes relevance, not equivalence or validation.",
   "sources": [
@@ -113,6 +113,86 @@
       "verification_status": "primary_verified",
       "domains": ["photon_field_coupling", "dark_matter", "dark_energy"],
       "safe_use": "Comparator for distinguishing field origins of birefringence; not evidence for the RLL magnetic coupling."
+    },
+    {
+      "source_id": "BH-THERMODYNAMICS-REVIEW-2026",
+      "title": "Black-hole thermodynamics",
+      "year": 2026,
+      "locator": "DOI:10.1038/s42254-026-00942-9",
+      "kind": "peer_reviewed_review",
+      "verification_status": "primary_verified",
+      "domains": ["strong_gravity", "black_hole_thermodynamics", "non_equilibrium"],
+      "safe_use": "Authority for established black-hole thermodynamic framework and open problems; not direct astrophysical Hawking thermometry or Mpemba evidence."
+    },
+    {
+      "source_id": "MPEMBA-PRX-2026",
+      "title": "Resource-Theoretical Unification of Mpemba Effects: Classical and Quantum",
+      "year": 2026,
+      "locator": "DOI:10.1103/rbt4-psfd",
+      "kind": "peer_reviewed_theory",
+      "verification_status": "primary_verified",
+      "domains": ["non_equilibrium", "Mpemba", "quantum_thermodynamics"],
+      "safe_use": "Supports slow-mode/resource organization of Mpemba effects; it does not establish an astrophysical black-hole Mpemba observation."
+    },
+    {
+      "source_id": "MPEMBA-THERMOMAJORIZATION-2025",
+      "title": "Thermomajorization Mpemba Effect",
+      "year": 2025,
+      "locator": "DOI:10.1103/PhysRevLett.134.107101",
+      "kind": "peer_reviewed_theory",
+      "verification_status": "primary_verified",
+      "domains": ["non_equilibrium", "Mpemba", "Markovian_dynamics"],
+      "safe_use": "Supports distance-robust thermomajorization formulations; not astrophysical detection."
+    },
+    {
+      "source_id": "UNRUH-MPEMBA-2026",
+      "title": "Quantum Mpemba-like effect in Unruh thermalization",
+      "year": 2026,
+      "locator": "DOI:10.1007/JHEP06(2026)183",
+      "kind": "peer_reviewed_theory",
+      "verification_status": "primary_verified",
+      "domains": ["QFT", "Unruh", "Mpemba", "relativistic_thermalization"],
+      "safe_use": "Relativistic-QFT thermalization precedent only; do not promote it to an astrophysical black-hole observation."
+    },
+    {
+      "source_id": "HOLOGRAPHIC-MPEMBA-2026",
+      "title": "Quantum Mpemba effect in holography",
+      "year": 2026,
+      "locator": "arXiv:2607.20899",
+      "kind": "preprint_theory",
+      "verification_status": "metadata_verified",
+      "domains": ["holography", "Mpemba", "quasinormal_modes", "horizon_flux"],
+      "safe_use": "Theory-preprint precedent for horizon-flux relaxation and mode competition; keep preprint status explicit and separate from astrophysical evidence."
+    },
+    {
+      "source_id": "EHT-M87-VARIABILITY-2025",
+      "title": "Horizon-scale variability of M87* from 2017-2021 EHT observations",
+      "year": 2025,
+      "locator": "DOI:10.1051/0004-6361/202555855",
+      "kind": "primary_observational",
+      "verification_status": "primary_verified",
+      "domains": ["EHT", "M87", "strong_gravity", "polarimetry", "variability"],
+      "safe_use": "Real horizon-scale plasma/variability anchor; it is not Hawking thermometry and is not a Mpemba detection without preregistered relaxation analysis."
+    },
+    {
+      "source_id": "EHT-M87-JET-BASE-2026",
+      "title": "Probing jet base emission of M87* with the 2021 Event Horizon Telescope observations",
+      "year": 2026,
+      "locator": "DOI:10.1051/0004-6361/202557022",
+      "kind": "primary_observational",
+      "verification_status": "primary_verified",
+      "domains": ["EHT", "M87", "jet", "strong_gravity", "plasma"],
+      "safe_use": "Observational/model-comparison anchor for exterior jet-base emission; does not support matter escaping from inside the event horizon."
+    },
+    {
+      "source_id": "EHT-2026-D01-01",
+      "title": "2018 and 2021 Calibrated polarimetric data",
+      "year": 2026,
+      "locator": "EHT public data product 2026-D01-01",
+      "kind": "public_observational_data_product",
+      "verification_status": "metadata_verified",
+      "domains": ["EHT", "M87", "polarimetry", "real_data"],
+      "safe_use": "Dataset identity is registered, but file-level RLL ingest and SHA256 verification remain TOKEN_VAZIO until an immutable local manifest is produced."
     }
   ]
 }

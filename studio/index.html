@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="RLL Studio — interface local-first para experimentos, resultados, evidências e rastreabilidade do Relativity Living Light.">
+  <title>RLL Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <div class="brand" aria-label="RLL Studio">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <div>
+          <strong>RLL Studio</strong>
+          <small>Evidence-first workspace</small>
+        </div>
+      </div>
+
+      <nav class="primary-nav" id="primaryNav">
+        <button class="nav-item is-active" data-view="home" aria-current="page"><span aria-hidden="true">⌂</span> Início</button>
+        <button class="nav-item" data-view="experiment"><span aria-hidden="true">◇</span> Experimento</button>
+        <button class="nav-item" data-view="results"><span aria-hidden="true">▥</span> Resultados</button>
+        <button class="nav-item" data-view="evidence"><span aria-hidden="true">✓</span> Evidências</button>
+        <button class="nav-item" data-view="library"><span aria-hidden="true">▤</span> Biblioteca</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="compact-status">
+          <span class="status-dot" id="sideStatusDot" aria-hidden="true"></span>
+          <div><small>Claim científico</small><strong id="sideClaim">Bloqueado</strong></div>
+        </div>
+        <button class="quiet-button" id="themeToggle" type="button" aria-label="Alternar aparência">◐ Aparência</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir navegação" aria-expanded="false">☰</button>
+        <div class="context-title">
+          <small id="contextEyebrow">Visão operacional</small>
+          <h1 id="contextTitle">Início</h1>
+        </div>
+        <div class="top-actions">
+          <label class="file-button" for="manifestInput">Importar manifest</label>
+          <input id="manifestInput" type="file" accept="application/json,.json" hidden>
+          <button class="secondary-button" id="exportManifest" type="button">Exportar</button>
+          <button class="primary-button" id="newExperiment" type="button">Novo experimento</button>
+        </div>
+      </header>
+
+      <main id="main" class="main-content" tabindex="-1">
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+        <section class="view is-active" data-view-panel="home" aria-labelledby="homeTitle">
+          <div class="hero-grid">
+            <article class="hero-card">
+              <div class="eyebrow">Estado do experimento</div>
+              <h2 id="homeTitle">Entenda o resultado antes de abrir os detalhes.</h2>
+              <p id="summaryText" class="lead">Carregando estado seguro…</p>
+              <div class="hero-actions">
+                <button class="primary-button" data-go="results">Ver resultados</button>
+                <button class="secondary-button" data-go="evidence">Ver evidências</button>
+              </div>
+            </article>
+
+            <article class="trust-card" aria-labelledby="trustTitle">
+              <div class="card-heading">
+                <div><span class="eyebrow">Fronteira de confiança</span><h2 id="trustTitle">Claim gate</h2></div>
+                <span id="claimBadge" class="badge badge-blocked">Bloqueado</span>
+              </div>
+              <p id="claimReason">A interface nunca promove um claim sem receipt e gate explícitos.</p>
+              <button class="text-button" data-go="evidence">Por que este estado? →</button>
+            </article>
+          </div>
+
+          <section class="metrics-grid" aria-label="Resumo do experimento">
+            <article class="metric-card"><span>Modelo</span><strong id="metricModel">—</strong><small id="metricComparator">—</small></article>
+            <article class="metric-card"><span>Dataset</span><strong id="metricDataset">—</strong><small id="metricDatasetVersion">—</small></article>
+            <article class="metric-card"><span>Execução</span><strong id="metricRun">—</strong><small id="metricRunTime">—</small></article>
+            <article class="metric-card"><span>Evidência</span><strong id="metricEvidence">—</strong><small id="metricEvidenceDetail">—</small></article>
+          </section>
+
+          <section class="section-card" aria-labelledby="workflowTitle">
+            <div class="section-heading"><div><span class="eyebrow">Fluxo principal</span><h2 id="workflowTitle">Cinco atos, uma cadeia auditável</h2></div></div>
+            <ol class="stepper" id="workflowStepper">
+              <li><span>1</span><div><strong>Dados</strong><small>fonte, versão, hash</small></div></li>
+              <li><span>2</span><div><strong>Modelo</strong><small>hipótese e parâmetros</small></div></li>
+              <li><span>3</span><div><strong>Executar</strong><small>ambiente e método</small></div></li>
+              <li><span>4</span><div><strong>Comparar</strong><small>baseline e métricas</small></div></li>
+              <li><span>5</span><div><strong>Evidência</strong><small>receipt e limitações</small></div></li>
+            </ol>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="experiment" aria-labelledby="experimentTitle">
+          <div class="page-intro"><span class="eyebrow">Configuração legível</span><h2 id="experimentTitle">Experimento</h2><p>O manifest é a unidade interoperável entre UI, CLI, notebook e CI.</p></div>
+          <div class="two-column">
+            <article class="section-card">
+              <div class="section-heading"><h3>Identidade</h3><span id="experimentStateBadge" class="badge">—</span></div>
+              <dl class="definition-grid" id="experimentIdentity"></dl>
+            </article>
+            <article class="section-card">
+              <div class="section-heading"><h3>Parâmetros</h3><button class="text-button" id="copyParameters" type="button">Copiar JSON</button></div>
+              <div id="parameterList" class="parameter-list"></div>
+            </article>
+          </div>
+          <article class="section-card">
+            <div class="section-heading"><div><h3>Interoperabilidade</h3><p>Um contrato, múltiplas superfícies.</p></div></div>
+            <div class="interop-grid" id="interopGrid"></div>
+          </article>
+        </section>
+
+        <section class="view" data-view-panel="results" aria-labelledby="resultsTitle">
+          <div class="page-intro"><span class="eyebrow">Resultado antes do ruído</span><h2 id="resultsTitle">Resultados</h2><p id="resultNarrative">Sem resultado carregado.</p></div>
+          <section class="metrics-grid" id="resultMetrics" aria-label="Métricas principais"></section>
+          <div class="two-column results-layout">
+            <article class="section-card">
+              <div class="section-heading"><h3>Parâmetros estimados</h3><span class="microcopy">valor ± incerteza</span></div>
+              <div class="table-wrap"><table><thead><tr><th>Parâmetro</th><th>Valor</th><th>68%</th><th>Estado</th></tr></thead><tbody id="parameterResults"></tbody></table></div>
+            </article>
+            <article class="section-card">
+              <div class="section-heading"><h3>Comparação</h3><span class="microcopy" id="comparisonLabel">—</span></div>
+              <div id="comparisonBars" class="comparison-bars"></div>
+              <p class="caption" id="comparisonCaption"></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view-panel="evidence" aria-labelledby="evidenceTitle">
+          <div class="page-intro"><span class="eyebrow">Confiança explicável</span><h2 id="evidenceTitle">Evidências</h2><p>Cada estado deve apontar para fonte, teste, receipt, limitação e próximo gate.</p></div>
+          <div class="evidence-layout">
+            <article class="section-card">
+              <div class="section-heading"><h3>Matriz de evidência</h3><label class="filter-label">Filtrar <select id="evidenceFilter"><option value="ALL">Todos</option><option value="PASS">Verificados</option><option value="OBSERVED_LIMITED">Parciais</option><option value="BLOCKED">Bloqueados</option><option value="TOKEN_VAZIO">Não medidos</option><option value="FAIL">Falhas</option></select></label></div>
+              <div id="evidenceList" class="evidence-list"></div>
+            </article>
+            <aside class="section-card evidence-detail" aria-live="polite">
+              <span class="eyebrow">Detalhe auditável</span>
+              <h3 id="evidenceDetailTitle">Selecione uma evidência</h3>
+              <p id="evidenceDetailSummary">O detalhe aparece aqui sem poluir a visão principal.</p>
+              <dl class="definition-grid" id="evidenceDetail"></dl>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" data-view-panel="library" aria-labelledby="libraryTitle">
+          <div class="page-intro"><span class="eyebrow">Contexto sem sobrecarga</span><h2 id="libraryTitle">Biblioteca</h2><p>Fontes, modelos, papers, dados e artefatos ligados ao experimento atual.</p></div>
+          <div id="libraryGrid" class="library-grid"></div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>RLL Studio · camada de apresentação, não autoridade científica.</span>
+        <span id="footerManifest">manifest: —</span>
+      </footer>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
