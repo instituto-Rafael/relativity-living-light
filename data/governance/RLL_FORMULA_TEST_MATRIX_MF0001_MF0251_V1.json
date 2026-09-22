@@ -1140,11 +1140,12 @@
       "source_class": "LIMIT_MODEL",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "HYPOTHESIS_OR_MODEL_FALSIFIER",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS_CONDITIONAL",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF0089_MF0209_POLYGON_LIMIT_V1.json"
     },
     {
       "mf_id": "MF-0090",
@@ -2663,11 +2664,12 @@
       "source_class": "LIMIT_MODEL",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "HYPOTHESIS_OR_MODEL_FALSIFIER",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS_CONDITIONAL",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF0089_MF0209_POLYGON_LIMIT_V1.json"
     },
     {
       "mf_id": "MF-0210",
@@ -3213,6 +3215,15 @@
         "FAIL": 1
       },
       "result_path": "results/MF160_FORMAL_EXECUTION_V1.json"
+    },
+    {
+      "kind": "POLYGON_DOUBLING_LIMIT_V1",
+      "ids": [
+        "MF-0089",
+        "MF-0209"
+      ],
+      "status": "PASS_CONDITIONAL",
+      "result_path": "results/MF0089_MF0209_POLYGON_LIMIT_V1.json"
     }
   ]
 }
