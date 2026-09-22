@@ -74,14 +74,11 @@ chmod +x "$ELF"
 RUN_RC=$?
 cat "$OUTPUT"
 
+EXPECTED_LINE='RLLCAN1 rows=33 valid=33 rejected=0 chi2_rll_q16=1541113 chi2_lcdm_q16=1541113 delta_q16=0 data_crc32=c7e56bca data_fnv64=f48a2db3d131c45f params_crc32=2505dec9 phase20_crc32=1b6c7c85 joint_n=1677 lnB10_q16=-405682 lnB10_err_q16=45263 delta_bic_q16=1459487 os0_ul95_q16=116 joint_best=LCDM receipt_crc32=34387926 best=TIE claim_allowed=0 token_vazio=7 numeric_flags=0'
+ACTUAL_LINE=$(cat "$OUTPUT")
+
 LINE_OK=0
-grep -q '^RLLCAN1 ' "$OUTPUT" &&
-grep -q 'rows=33 ' "$OUTPUT" &&
-grep -q 'valid=33 ' "$OUTPUT" &&
-grep -q 'rejected=0 ' "$OUTPUT" &&
-grep -q 'claim_allowed=0 ' "$OUTPUT" &&
-grep -q 'numeric_flags=0' "$OUTPUT" &&
-LINE_OK=1
+[ "$ACTUAL_LINE" = "$EXPECTED_LINE" ] && LINE_OK=1
 
 STATUS=FAIL
 if [ "$RUN_RC" -eq 0 ] &&
@@ -117,6 +114,8 @@ interpreter_segments=$INTERP
 needed_entries=$NEEDED
 suspicious_undefined_runtime_symbols=$SUSPECT
 receipt_line_gate=$LINE_OK
+receipt_line_expected_sha256=$(printf '%s\n' "$EXPECTED_LINE" | sha256sum | awk '{print $1}')
+receipt_line_observed_sha256=$(sha256sum "$OUTPUT" | awk '{print $1}')
 run_exit=$RUN_RC
 
 compiler=$(clang --version | head -n1)
