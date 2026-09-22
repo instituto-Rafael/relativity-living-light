@@ -21,7 +21,7 @@ run_exit=0
 undefined_symbols=0
 interpreter_segments=0
 needed_entries=0
-suspicious_runtime_symbols=0
+suspicious_undefined_runtime_symbols=0
 receipt_line starts RLLCAN1
 rows=33
 valid=33
@@ -41,3 +41,19 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL = TOKEN_VAZIO until runner receipt
 FULL_JOINT_PHYSICAL_RECOMPUTE = TOKEN_VAZIO
 INDEPENDENT_SECOND_DEVICE_RLL = TOKEN_VAZIO
 ```
+
+
+## Runtime-helper audit hardening
+
+The canonical physical runner was corrected in commit
+`45b1ec7bdef74a7a4d5a8f4cf9cb5f58cd25932d`.
+
+The previous grep scanned all ELF symbols and could theoretically confuse an internal function whose name contains `sqrt` with a forbidden external dependency. The hardened gate scans only undefined/imported symbols:
+
+```text
+nm -u ELF -> suspicious runtime-helper filter
+```
+
+This is stricter semantically: external runtime helpers remain forbidden, while legitimate internal fixed-point routines are not mislabeled.
+
+The independent hard gate `undefined_symbols=0` remains unchanged.
