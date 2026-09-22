@@ -75,3 +75,18 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL = TOKEN_VAZIO
 ```
 
 No evidence is transferred from the geometry executable to the RLL executable. A v3 physical receipt can validate the geometry successor only.
+
+
+## Integrated geometry successor v4
+
+Parallel geometry hardening branches were reconciled in the producer repository into `geom_freestanding_integrated_v4.c`.
+
+```text
+integration decision commit: b0fd4f03e36b77c16fec3f1df3d88203fc743688
+local source SHA256: 43f363f386e001a4cd568b3ae9e7a919ab9bdbef0e38c48fa2ce99bf951f8d0a
+host UBSan selftest+sweep: PASS
+ARMv7 cross static structural gate: PASS
+physical ARMv7 v4: TOKEN_VAZIO
+```
+
+The RLL boundary remains unchanged: geometry pre-physical evidence does not promote the RLL engine. Only an artifact-specific RLL physical receipt can close that gate.
