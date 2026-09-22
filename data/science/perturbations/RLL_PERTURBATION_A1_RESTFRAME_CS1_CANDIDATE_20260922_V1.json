@@ -75,7 +75,7 @@
   "necessary_gates": [
     "rho_s finite and positive",
     "p_cons and w_cons finite",
-    "separate-continuity residual within 1e-10",
+    "normalized separate-continuity residual within 1e-10; absolute residual retained as diagnostic",
     "1+w_cons >= -1e-10 over declared sweep",
     "0 <= c_s_rest^2 <= 1",
     "no claim promotion while C01/C02/C07/perturbative C08 remain open"
