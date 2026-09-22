@@ -16,6 +16,9 @@ on:
       - "tests/test_rll_perturbation_a1_restframe_candidate_v1.py"
       - "tools/rll_perturbation_a1_gauge_regularization_v1.py"
       - "tests/test_rll_perturbation_a1_gauge_regularization_v1.py"
+      - "tools/rll_perturbation_a1_superhorizon_ic_v1.py"
+      - "tests/test_rll_perturbation_a1_superhorizon_ic_v1.py"
+      - "data/science/perturbations/RLL_PERTURBATION_A1_SUPERHORIZON_IC_20260922_V1.json"
       - "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
       - "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json"
       - "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V2.json"
@@ -68,7 +71,8 @@ jobs:
             tests/test_class_camb_baseline_crosscheck_v1.py \
             tests/test_rll_perturbation_barotropic_candidate_v1.py \
             tests/test_rll_perturbation_a1_restframe_candidate_v1.py \
-            tests/test_rll_perturbation_a1_gauge_regularization_v1.py
+            tests/test_rll_perturbation_a1_gauge_regularization_v1.py \
+            tests/test_rll_perturbation_a1_superhorizon_ic_v1.py
 
       - name: Execute background-derived barotropic closure falsifier
         run: |
@@ -141,6 +145,33 @@ jobs:
           PY
           sha256sum artifacts/science/perturbations/RLL_A1_GAUGE_REGULARIZATION_CURRENT.json \
             > artifacts/science/perturbations/RLL_A1_GAUGE_REGULARIZATION_CURRENT.sha256
+
+      - name: Execute A1.3 component-local super-horizon IC gate
+        run: |
+          set -euo pipefail
+          python tools/rll_perturbation_a1_superhorizon_ic_v1.py \
+            --output artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          assert d["state"] == "A1_3_COMPONENT_LOCAL_SUPERHORIZON_SERIES_PASS_COUPLED_IC_OPEN"
+          assert d["exact_recurrence_pass"] is True
+          assert d["passing_background_cases"] == d["total_background_cases"] == 9
+          assert d["token_resolution"] == "NOT_RESOLVED"
+          assert d["class_camb_unlock"] is False
+          assert "FULL_COUPLED_EINSTEIN_BOLTZMANN_INITIAL_CONDITIONS" in d["hard_blockers"]
+          print(json.dumps({
+              "state": d["state"],
+              "passing_background_cases": d["passing_background_cases"],
+              "exact_recurrence_pass": d["exact_recurrence_pass"],
+              "hard_blockers": d["hard_blockers"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.json \
+            > artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.sha256
 
       - name: Execute LCDM and CPL crosscheck
         id: engine_run
@@ -239,6 +270,8 @@ jobs:
             artifacts/science/perturbations/RLL_A1_RESTFRAME_CLOSURE_CANDIDATE_CURRENT.sha256
             artifacts/science/perturbations/RLL_A1_GAUGE_REGULARIZATION_CURRENT.json
             artifacts/science/perturbations/RLL_A1_GAUGE_REGULARIZATION_CURRENT.sha256
+            artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.json
+            artifacts/science/perturbations/RLL_A1_SUPERHORIZON_IC_CURRENT.sha256
             artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json
             artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.sha256
           if-no-files-found: error
