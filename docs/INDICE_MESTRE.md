@@ -86,6 +86,8 @@ Encaminhamentos complementares:
 ## 1.2) Métodos matemáticos e pontes claim-gated
 
 - [`docs/science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md`](science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md) - método modular/icosaédrico; sem promoção cosmológica.
+- [`docs/science/RLL_RETARDED_SPACETIME_STATE_V1.md`](science/RLL_RETARDED_SPACETIME_STATE_V1.md) - contrato light-cone/source-state: época, tempo próprio, trajetória da matéria, foreground dinâmico, lenteamento e propagação em plasma; claim-gated.
+- [`data/contracts/rll_retarded_spacetime_state.v1.yml`](../data/contracts/rll_retarded_spacetime_state.v1.yml) - contrato executável associado.
 
 
 ## 2) Governanca, organizacao e auditoria
