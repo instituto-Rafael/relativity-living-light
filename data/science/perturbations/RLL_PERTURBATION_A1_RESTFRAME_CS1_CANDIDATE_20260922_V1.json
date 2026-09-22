@@ -1,0 +1,88 @@
+{
+  "schema": "rll.perturbation_a1_restframe_candidate.v1",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "CANDIDATE_DECLARED_EXECUTION_PENDING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "candidate_id": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "parent_route": "A1_CONSERVED_INDEPENDENT_REST_FRAME_CLOSURE",
+  "purpose": "Instantiate one falsifiable A1 successor without treating the assumption as a derived RLL property.",
+  "background": {
+    "rho_factor": "R(a)=f+(1-f)*a^-3",
+    "pressure": "p_cons=-rho_s-(1/3)*d rho_s/dln(a)",
+    "equation_of_state": "w_cons=p_cons/rho_s",
+    "separate_conservation": true
+  },
+  "physical_assumptions": {
+    "rest_frame_sound_speed_squared": {
+      "value": 1,
+      "status": "RESEARCH_CANDIDATE_ASSUMPTION",
+      "frame": "component rest frame",
+      "motivation": "canonical minimally coupled scalar subroute reference; not inferred from the RLL background",
+      "falsifiers": [
+        "full perturbation evolution is singular or unstable",
+        "gauge-mapped pressure perturbation is inconsistent",
+        "independent CLASS/CAMB implementations fail parity after convergence"
+      ]
+    },
+    "entropy_policy": {
+      "status": "NONADIABATIC_ALLOWED",
+      "rule": "delta_p_rest = c_s_rest^2 * delta_rho_rest; c_s_rest^2 is independent of c_a^2",
+      "boundary": "full gauge-space pressure-perturbation relation remains blocked until the gauge/velocity convention is frozen"
+    },
+    "interaction_current": {
+      "value": "Q_mu=0",
+      "status": "RESEARCH_CANDIDATE_ASSUMPTION",
+      "boundary": "valid only for the separately conserved A1 candidate; does not apply to route B"
+    },
+    "anisotropic_stress": {
+      "value": "sigma_s=0",
+      "status": "RESEARCH_CANDIDATE_ASSUMPTION",
+      "falsifier": "future solver/data evidence requiring nonzero shear rejects this candidate"
+    }
+  },
+  "assigned_slots": {
+    "C03_CS2": "CANDIDATE_ASSIGNED_CS2_REST_1",
+    "C04_ENTROPY": "CANDIDATE_ASSIGNED_NONADIABATIC_REST_FRAME_RULE",
+    "C05_ANISOTROPIC_STRESS": "CANDIDATE_ASSIGNED_ZERO",
+    "C06_Q_MU": "CANDIDATE_ASSIGNED_ZERO_FOR_A1"
+  },
+  "unresolved_slots": {
+    "C01_DELTA_S": "requires full perturbation evolution equation in chosen gauge",
+    "C02_THETA_S": "requires full Euler/momentum equation in chosen gauge",
+    "C07_GAUGE_AND_INITIAL_CONDITIONS": "TOKEN_VAZIO",
+    "C08_TRANSITION_REGULARIZATION": "background regularity testable now; perturbation regularity remains TOKEN_VAZIO"
+  },
+  "declared_sweep": {
+    "zt": [
+      0.1,
+      1,
+      10
+    ],
+    "wt": [
+      0.05,
+      0.3,
+      2
+    ],
+    "z_domain": [
+      0,
+      10000
+    ],
+    "points_per_low_branch": 2401,
+    "points_per_high_branch": 1200
+  },
+  "necessary_gates": [
+    "rho_s finite and positive",
+    "p_cons and w_cons finite",
+    "separate-continuity residual within 1e-10",
+    "1+w_cons >= -1e-10 over declared sweep",
+    "0 <= c_s_rest^2 <= 1",
+    "no claim promotion while C01/C02/C07/perturbative C08 remain open"
+  ],
+  "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "rollback": "Remove only A1.1 candidate files/overlay and restore A1 open state; preserve A0 0/9 negative evidence.",
+  "claim_boundary": "Passing necessary background/closure gates does not establish a complete perturbation theory, CLASS/CAMB readiness, observational support, or a canonical scalar identity."
+}
