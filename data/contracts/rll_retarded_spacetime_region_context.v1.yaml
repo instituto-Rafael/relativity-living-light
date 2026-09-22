@@ -1,0 +1,309 @@
+schema: rll.retarded_spacetime_region_context.v1
+version: 1
+date: "2026-09-22"
+authority: instituto-Rafael/relativity-living-light
+state: HYPOTHESIS_PROTOCOL
+claim_allowed: false
+scientific_confirmation: false
+
+purpose:
+  summary: >-
+    Represent each cosmological observation as a retarded spacetime event plus
+    a null signal path through time-dependent intervening regions, while keeping
+    the later/current matter state as a separate timelike inference problem.
+  prevents:
+    - present_time_3d_snapshot_assumption
+    - post_hoc_parameter_choice_per_observation
+    - plasma_gravity_promoted_to_distinct_force_without_model
+    - semantic_energy_confused_with_physical_energy
+    - syntropy_promoted_to_physical_observable_without_definition
+
+source_basis:
+  - path: PapersPub/06_source_state_lookback_rll/README.md
+    role: source_state_lookback_anchor
+  - path: data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json
+    role: observational_dependency_graph
+  - path: data/governance/RLL_UNCERTAINTY_VARIANCE_LEDGER_20260807_V1.json
+    role: uncertainty_axes
+  - path: data/inputs/cosmology_joint/parameter_origin_registry.json
+    role: governed_global_parameters
+  - path: data/contracts/rll_seven_guards_observer_three_window.v1.json
+    role: epistemic_guards
+
+physics_boundary:
+  standard_relativistic_components:
+    - past_light_cone
+    - null_geodesic_signal_propagation
+    - timelike_matter_evolution
+    - cosmological_redshift
+    - peculiar_velocity_redshift_space_distortion
+    - gravitational_redshift
+    - gravitational_lensing
+    - shapiro_time_delay
+    - local_proper_time
+  plasma_components:
+    allowed:
+      - electron_density_along_line_of_sight
+      - plasma_dispersion_for_frequency_dependent_signals
+      - faraday_rotation_when_magnetized_plasma_data_exist
+      - scattering_absorption_refraction_when_supported
+      - plasma_stress_energy_as_part_of_total_stress_energy_tensor
+      - plasma_motion_under_gravity_and_electromagnetic_forces
+    blocked_claims:
+      - plasma_gravity_as_new_fundamental_force
+      - frequency_independent_plasma_delay_without_model
+  quantum_boundary:
+    required_for:
+      - photon_emission_absorption_microphysics_when_modeled
+      - atomic_spectral_transitions_when_modeled
+      - particle_microphysics_when_modeled
+    not_required_for:
+      - macroscopic_galaxy_trajectory_inference
+      - classical_gravitational_time_dilation
+    blocked_claims:
+      - macroscopic_quantum_coherence_from_geometry_alone
+  unresolved:
+    physical_syntropy: TOKEN_VAZIO
+    literal_universe_shape_from_project_geometry: TOKEN_VAZIO
+
+core_invariants:
+  - SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM
+  - TOKEN_VAZIO != 0
+  - SIGNAL_NULL_PATH != MATTER_TIMELIKE_PATH
+  - OBSERVED_EMISSION_STATE != CURRENT_MATTER_STATE_INFERENCE
+  - CAUSAL_FUTURE_EVENT_CANNOT_AFFECT_ALREADY_PASSED_PHOTON_SEGMENT
+  - GLOBAL_COSMOLOGY_PARAMETERS_NOT_CHOSEN_POST_HOC_PER_DATUM
+  - DIMENSIONAL_CONSISTENCY_REQUIRED
+  - PHYSICAL_ENERGY != STATISTICAL_ENERGY != SEMANTIC_ENERGY != COMPUTATIONAL_ENERGY
+  - PLASMA_GRAVITY_IS_NOT_A_SEPARATE_FORCE_WITHOUT_AN_EXPLICIT_TESTABLE_MODEL
+
+covariant_relations:
+  null_signal:
+    expression: "g_mu_nu * k^mu * k^nu = 0"
+    status: STANDARD
+  timelike_matter:
+    expression: "g_mu_nu * u^mu * u^nu = -c^2"
+    status: STANDARD
+  proper_time:
+    expression: "d_tau^2 = -(g_mu_nu dx^mu dx^nu)/c^2"
+    status: STANDARD
+  observed_redshift:
+    expression: "1 + z = (k_mu u^mu)_emit / (k_mu u^mu)_obs"
+    status: STANDARD
+  lookback_time_flrw:
+    expression: "t_L(z) = integral_0^z dz' / ((1+z') H(z'))"
+    status: MODEL_DEPENDENT_FLRW
+  comoving_distance_flrw:
+    expression: "chi(z) = c * integral_0^z dz' / H(z')"
+    status: MODEL_DEPENDENT_FLRW
+  static_schwarzschild_clock_rate:
+    expression: "d_tau/d_t = sqrt(1 - r_s/r)"
+    domain: "static observer outside Schwarzschild horizon"
+    status: SPECIAL_CASE_NOT_GLOBAL_COSMOLOGY
+
+observation_state:
+  emission_event:
+    required:
+      - event_id
+      - source_id
+      - observed_redshift
+      - emission_epoch_estimate
+    optional:
+      - spacetime_coordinates
+      - cosmic_time_at_emission
+      - lookback_time
+      - source_formation_age_at_emission
+      - source_state
+      - source_four_velocity
+      - local_proper_time
+      - local_gravitational_environment
+  observation_event:
+    required:
+      - observer_id
+      - observation_time
+      - instrument_or_survey
+    optional:
+      - observer_four_velocity
+      - band_or_frequency
+      - angular_position
+      - selection_function_ref
+      - calibration_ref
+  current_state_inference:
+    direct_observation: false
+    representation: posterior_distribution
+    required_output:
+      - posterior_state_or_TOKEN_VAZIO
+      - uncertainty_or_TOKEN_VAZIO
+      - dynamical_model_ref_or_TOKEN_VAZIO
+
+region_path_model:
+  representation: ordered_segments_on_null_path
+  causal_ordering_required: true
+  segment_fields:
+    required:
+      - segment_id
+      - order_index
+      - entry_event_or_locator
+      - exit_event_or_locator
+    epoch_geometry:
+      - cosmic_time_at_crossing
+      - lookback_time_at_crossing
+      - scale_factor_at_crossing
+      - redshift_at_crossing
+      - region_formation_age_if_defined
+    spacetime_motion:
+      - photon_crossing_time
+      - path_length_model
+      - peculiar_velocity_field
+      - bulk_flow
+      - dynamical_time
+      - expansion_rate_context
+    relativistic_gravity:
+      - metric_or_potential_model
+      - gravitational_redshift_contribution
+      - lensing_convergence
+      - lensing_shear
+      - shapiro_delay
+      - lensing_time_delay
+    plasma_mhd:
+      - electron_density
+      - plasma_frequency
+      - dispersion_measure
+      - rotation_measure
+      - magnetic_field_parallel
+      - scattering_measure
+      - opacity
+      - plasma_bulk_velocity
+      - plasma_stress_energy_ref
+    matter_environment:
+      - density_field
+      - baryon_fraction
+      - halo_or_structure_membership
+      - neighboring_mass_distribution
+      - merger_or_accretion_state
+    evidence_fields:
+      - source_ref
+      - units
+      - covariance_ref
+      - status
+      - provenance_hash_or_TOKEN_VAZIO
+
+crossing_logic:
+  photon_speed:
+    vacuum_local_inertial: c
+    medium_note: >-
+      In plasma the group velocity can be frequency dependent; use a declared
+      plasma propagation model rather than replacing c globally.
+  before_after_rule: >-
+    A region can affect the detected photon only through conditions causally
+    encountered along the photon's path before observation. Changes occurring
+    after the photon left that region can affect later photons/observations but
+    not the already-passed signal.
+  moving_region_rule: >-
+    Region state must be evaluated at the photon-crossing event, not at the
+    observer's present-time extrapolation of that region.
+
+parameter_model:
+  global_theta:
+    source: data/inputs/cosmology_joint/parameter_origin_registry.json
+    post_hoc_per_datum_adaptation_allowed: false
+  contextual_nuisance:
+    form: "eta_i = B(c_i) beta + u_group(i)"
+    prior_required: true
+    predeclared_context_required: true
+    allowed_context_examples:
+      - observed_redshift
+      - lookback_time
+      - source_population
+      - environment
+      - instrument_or_survey
+      - selection
+      - physical_scale
+      - line_of_sight_regime
+
+uncertainty_model:
+  representation: full_covariance_preferred
+  axes:
+    - observational_statistical
+    - observational_systematic
+    - sample_calibration
+    - source_state_latent
+    - lightcone_propagation
+    - peculiar_velocity
+    - gravitational_lensing
+    - plasma_propagation
+    - model_selection
+    - provenance
+  posterior_entropy:
+    expression: "H[X_current | D] = -integral p(x|D) log p(x|D) dx"
+    allowed_interpretation: information_uncertainty
+  information_gain:
+    expression: "IG = H_prior - H_posterior"
+    allowed_interpretation: uncertainty_reduction
+    physical_syntropy_equivalence: false
+
+statistics:
+  seven_guards_are_separate: true
+  S7_observation: [min, Q1, median, Q3, max, MAD, covariance_or_correlation]
+  S7_model: [chi2, log_likelihood, AICc, BIC, log_evidence, posterior_predictive_check, longitudinal_window_stability]
+
+geometry_role:
+  allowed:
+    - contextual_state_space
+    - graph_of_observation_relations
+    - covariance_geometry
+    - posterior_geometry
+    - geodesic_or_lensing_visualization_when_physically_bound
+  graph_kernel:
+    distance: "d_ij^2 = (c_i-c_j)^T Sigma_c^-1 (c_i-c_j)"
+    weight: "w_ij = exp(-d_ij^2/(2 ell^2))"
+    laplacian_regularizer: "R_G = Z^T L Z"
+  blocked:
+    - infer_literal_spacetime_topology_from_visual_similarity_only
+    - infer_new_force_from_polygon_or_spiral_correspondence_only
+
+falsifiers:
+  - id: F1_RESIDUAL_CONTEXT_INDEPENDENCE
+    null: "P(r | c) = P(r) after declared systematics and covariance"
+    fail_if: reproducible_context_dependence_remains
+  - id: F2_CROSS_SURVEY_HOLDOUT
+    requirement: effect_survives_predeclared_holdout_survey
+  - id: F3_MULTI_IMAGE_DELAY_CONSISTENCY
+    requirement: reconstructed_source_states_agree_after_lens_time_delay_transform
+  - id: F4_REGION_TIME_ORDERING
+    requirement: no_post_crossing_region_state_used_to_explain_already_passed_photon
+  - id: F5_PARAMETER_PENALTY
+    requirement: extra_context_parameters_counted_in_model_comparison
+  - id: F6_PLASMA_ABLATION
+    requirement: radio_or_plasma_sensitive_effect_retested_with_and_without_plasma_terms
+  - id: F7_GRAVITY_ABLATION
+    requirement: lensing_redshift_delay_terms_retested_under_declared_GR_baseline
+
+gates:
+  structural_contract: IMPLEMENTED_LOCAL_VALIDATION_PASS
+  synthetic_lightcone_test: TOKEN_VAZIO
+  lensing_time_delay_mock: TOKEN_VAZIO
+  plasma_frequency_dependent_mock: TOKEN_VAZIO
+  real_data_covariance_test: TOKEN_VAZIO
+  cross_survey_holdout: TOKEN_VAZIO
+  independent_reproduction: TOKEN_VAZIO
+  scientific_claim: BLOCKED
+
+required_round_output:
+  - provenance
+  - context
+  - evidence
+  - contradiction
+  - uncertainty
+  - reproduction
+  - rollback
+  - R3
+  - claim_allowed
+
+next:
+  - validate_schema_and_epistemic_boundaries
+  - build_deterministic_synthetic_lightcone_mock
+  - add_moving_region_and_photon_crossing_time_test
+  - add_lensing_multi_path_time_delay_test
+  - add_frequency_dependent_plasma_ablation
+  - only_then_bind_real_cosmology_likelihood
