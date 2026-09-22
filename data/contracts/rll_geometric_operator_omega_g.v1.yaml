@@ -1,0 +1,110 @@
+schema: rll.geometric_operator_omega_g.v1
+version: 1
+date: "2026-09-22"
+state: TYPED_MATHEMATICAL_CONSUMER
+claim_allowed: false
+scientific_confirmation: false
+
+identity:
+  symbol: "Omega_G"
+  ascii_name: OMEGA_G
+  project_defined: true
+  standard_universal_operator_claimed: false
+  distinct_from:
+    - data/omega_operational/rll_omega7_operational.json
+  distinction: >-
+    Omega_G is a mathematical geometric-family composition operator.
+    Omega7 is an operational governance invariant. They are not interchangeable.
+
+canonical_math_source:
+  repository: rafaelmeloreisnovo/Matem-tica-
+  path_yaml: operators/omega_g_geometric_operator.v1.yaml
+  path_doc: operators/OMEGA_G_GEOMETRIC_OPERATOR_V1.md
+  yaml_commit: 7986c6dbafe2583b21d224224308267f576ef7bf
+  doc_commit: 5a31acede2f9ea27058495f8ba33b3edd6dd30f7
+  authority_rule: mathematics_repo_governs_formula_family_semantics
+
+composition:
+  expression: "Omega_G(X;Theta,k,Gamma) = I(Pi_Gamma(T_Theta(B^k(X))))"
+  stages: [B, T, Pi, I]
+  reconstruction_required: true
+
+families_consumed:
+  - DELTA_d_regular_simplex
+  - Q_d_hypercube
+  - P_n_regular_polygon
+  - S_dminus1_hypersphere
+  - QUADRIC
+  - T_d_torus_product
+  - GRAPH_relational
+
+rll_binding:
+  direct_likelihood_binding: false
+  required_bridge: "BIND(I_j,O_k,mechanism,units,covariance,falsifier)"
+  binding_fields:
+    - invariant_id
+    - observable_id
+    - mechanism
+    - units
+    - covariance
+    - falsifier
+    - provenance
+  default_state: TOKEN_VAZIO
+  forbidden:
+    - visual_similarity_to_cosmological_causation
+    - geometry_constant_to_free_parameter_without_mechanism
+    - operator_compression_to_new_physics_claim
+    - duplicate_counting_of_effects_already_inside_compressed_observables
+
+observable_applicability_required:
+  H_z: TOKEN_VAZIO
+  BAO: TOKEN_VAZIO
+  fsigma8: TOKEN_VAZIO
+  CMB_shift: TOKEN_VAZIO
+  Pantheon: TOKEN_VAZIO
+  lensing: TOKEN_VAZIO
+
+numerical_backends:
+  float64_reference: PLANNED
+  python_oracle: PLANNED
+  q16_16: PLANNED
+  c_freestanding: PLANNED
+  property_tests: PLANNED
+
+typed_boundaries:
+  median_geom_not_median_stat: true
+  median_stat_not_barycentric_B: true
+  torus_not_forced_into_quadric_family: true
+  sphere_is_quadric_special_case: true
+  geodesic_sphere_requires_subdivision_plus_projection: true
+
+gates:
+  contract_materialized: PASS
+  mathematical_source_linked: PASS
+  local_validator: TOKEN_VAZIO
+  focused_tests: TOKEN_VAZIO
+  generated_backends: TOKEN_VAZIO
+  observable_effect_matrix: TOKEN_VAZIO
+  likelihood_binding: TOKEN_VAZIO
+  independent_reproduction: TOKEN_VAZIO
+  scientific_claim: BLOCKED
+
+rollback:
+  mode: append_only
+  preserve_classical_formula_witnesses: true
+  remove_binding_without_removing_math: true
+
+
+cosmology_tournament:
+  contract: data/contracts/rll_omega_g_cosmology_tournament.v1.yaml
+  binding_registry: data/inputs/omega_g/observable_effect_binding_registry.v1.yaml
+  runner: tools/run_omega_g_cosmology_tournament.py
+  documentation: docs/science/RLL_OMEGA_G_COSMOLOGY_TOURNAMENT_V1.md
+  baseline_engine: tools/run_g4_background_tournament.py
+  required_models: [LCDM, wCDM, CPL, RLL]
+  background_datasets: [cosmic_chronometers_Hz, DESI_DR2_BAO, PantheonPlus_SH0ES]
+  perturbation_datasets:
+    fsigma8: BLOCKED_UNTIL_MODEL_SPECIFIC_PERTURBATION_CLOSURE
+    CMB: BLOCKED_FROM_BACKGROUND_ONLY_BINDING
+  first_gate: ARM1_NULL_BINDING
+  scientific_claim: BLOCKED
