@@ -1,0 +1,842 @@
+{
+  "schema": "rll.mf160.formal_execution.result.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "execution_state": "LOCAL_ISOLATED_EXECUTION_COMPLETE",
+  "claim_allowed": false,
+  "runtime": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "tolerance": 1e-10
+  },
+  "verifier_commit": "eae0f97bdaa93e87ebf088d0c6e7db6d1fd4b492",
+  "test_commit": "a26037bb106c630fd8a943f2d8b3121e241f47fa",
+  "summary": {
+    "target_count": 160,
+    "executed_count": 160,
+    "PASS": 155,
+    "PASS_CONDITIONAL": 2,
+    "TOKEN_VAZIO_SEMANTICS": 2,
+    "FAIL": 1,
+    "strict_all_pass": false
+  },
+  "contradiction": {
+    "mf_id": "MF-0219",
+    "written": "`núcleo ⊂ coroa ⊂ envoltória circular`",
+    "finding": "FAIL",
+    "repair_candidate": "core subset envelope AND crown subset envelope; do not assert core subset crown under standard annulus semantics"
+  },
+  "per_id": [
+    {
+      "mf_id": "MF-0006",
+      "status": "PASS",
+      "expression": "`4+6+4=14`"
+    },
+    {
+      "mf_id": "MF-0007",
+      "status": "PASS",
+      "expression": "`70×7=490`"
+    },
+    {
+      "mf_id": "MF-0014",
+      "status": "PASS",
+      "expression": "`R=(V_f-V_i)/V_i=1=100%`"
+    },
+    {
+      "mf_id": "MF-0015",
+      "status": "PASS",
+      "expression": "`R=0`"
+    },
+    {
+      "mf_id": "MF-0032",
+      "status": "PASS",
+      "expression": "`0=∅`"
+    },
+    {
+      "mf_id": "MF-0033",
+      "status": "PASS",
+      "expression": "`1={0}={∅}`"
+    },
+    {
+      "mf_id": "MF-0034",
+      "status": "PASS",
+      "expression": "`2={0,1}`"
+    },
+    {
+      "mf_id": "MF-0035",
+      "status": "PASS",
+      "expression": "`3={0,1,2}`"
+    },
+    {
+      "mf_id": "MF-0036",
+      "status": "PASS",
+      "expression": "`0⊂1⊂2⊂3⊂...`"
+    },
+    {
+      "mf_id": "MF-0038",
+      "status": "PASS",
+      "expression": "`d(P1,P1)=0`"
+    },
+    {
+      "mf_id": "MF-0039",
+      "status": "PASS",
+      "expression": "`d(P1,P2)>0`"
+    },
+    {
+      "mf_id": "MF-0040",
+      "status": "PASS",
+      "expression": "`(d12,d23,d31)`"
+    },
+    {
+      "mf_id": "MF-0042",
+      "status": "PASS",
+      "expression": "`7_10=10_7`"
+    },
+    {
+      "mf_id": "MF-0043",
+      "status": "PASS",
+      "expression": "`14_10=20_7`"
+    },
+    {
+      "mf_id": "MF-0044",
+      "status": "PASS",
+      "expression": "`14_10+14_10+14_10=42_10`"
+    },
+    {
+      "mf_id": "MF-0045",
+      "status": "PASS",
+      "expression": "`20_7+20_7+20_7=60_7`"
+    },
+    {
+      "mf_id": "MF-0046",
+      "status": "PASS",
+      "expression": "`60_7=6×7=42_10`"
+    },
+    {
+      "mf_id": "MF-0047",
+      "status": "PASS",
+      "expression": "`3×14_10=42_10`"
+    },
+    {
+      "mf_id": "MF-0048",
+      "status": "PASS",
+      "expression": "`3×20_7=60_7`"
+    },
+    {
+      "mf_id": "MF-0049",
+      "status": "PASS",
+      "expression": "`14_10=2×7`"
+    },
+    {
+      "mf_id": "MF-0050",
+      "status": "PASS",
+      "expression": "`20_7=2×10_7`"
+    },
+    {
+      "mf_id": "MF-0051",
+      "status": "PASS",
+      "expression": "`7_10=10_7=111_2`"
+    },
+    {
+      "mf_id": "MF-0052",
+      "status": "PASS",
+      "expression": "`14_7=1×7+4=11_10`"
+    },
+    {
+      "mf_id": "MF-0055",
+      "status": "PASS",
+      "expression": "`A=Z+N`"
+    },
+    {
+      "mf_id": "MF-0056",
+      "status": "PASS",
+      "expression": "`q=Z-e`"
+    },
+    {
+      "mf_id": "MF-0062",
+      "status": "PASS",
+      "expression": "`d_xy+d_yz≥d_xz`"
+    },
+    {
+      "mf_id": "MF-0063",
+      "status": "PASS",
+      "expression": "`Σ7={0,1,2,3,4,5,6}`"
+    },
+    {
+      "mf_id": "MF-0064",
+      "status": "PASS",
+      "expression": "`...,7^3,7^2,7^1,7^0`"
+    },
+    {
+      "mf_id": "MF-0065",
+      "status": "PASS",
+      "expression": "`6_7+1=10_7`"
+    },
+    {
+      "mf_id": "MF-0066",
+      "status": "PASS",
+      "expression": "`R=s/√2`"
+    },
+    {
+      "mf_id": "MF-0067",
+      "status": "PASS",
+      "expression": "`0°→90°`"
+    },
+    {
+      "mf_id": "MF-0068",
+      "status": "PASS",
+      "expression": "`θ=45°=π/4`"
+    },
+    {
+      "mf_id": "MF-0069",
+      "status": "PASS",
+      "expression": "`L=Rθ=Rπ/4`"
+    },
+    {
+      "mf_id": "MF-0070",
+      "status": "PASS",
+      "expression": "`c=2R sin(θ/2)=2R sin22.5°`"
+    },
+    {
+      "mf_id": "MF-0071",
+      "status": "PASS",
+      "expression": "`sin22.5°=√(2-√2)/2`"
+    },
+    {
+      "mf_id": "MF-0072",
+      "status": "PASS",
+      "expression": "`c=R√(2-√2)`"
+    },
+    {
+      "mf_id": "MF-0073",
+      "status": "PASS",
+      "expression": "`h=R cos22.5°=(R/2)√(2+√2)`"
+    },
+    {
+      "mf_id": "MF-0074",
+      "status": "PASS",
+      "expression": "`A_triangle=(1/2)R² sin45°=(√2/4)R²`"
+    },
+    {
+      "mf_id": "MF-0075",
+      "status": "PASS",
+      "expression": "`A_sector=(1/2)R²θ=(π/8)R²`"
+    },
+    {
+      "mf_id": "MF-0076",
+      "status": "PASS",
+      "expression": "`A_segment=A_sector-A_triangle`"
+    },
+    {
+      "mf_id": "MF-0077",
+      "status": "PASS",
+      "expression": "`A_segment=R²(π/8-√2/4)`"
+    },
+    {
+      "mf_id": "MF-0078",
+      "status": "PASS",
+      "expression": "`45°=22.5°+22.5°`"
+    },
+    {
+      "mf_id": "MF-0080",
+      "status": "PASS",
+      "expression": "`R_ext=a/√2`"
+    },
+    {
+      "mf_id": "MF-0081",
+      "status": "PASS",
+      "expression": "`R_int=a/2`"
+    },
+    {
+      "mf_id": "MF-0082",
+      "status": "PASS",
+      "expression": "`R_ext/R_int=√2`"
+    },
+    {
+      "mf_id": "MF-0083",
+      "status": "PASS",
+      "expression": "`a/2 ≤ r ≤ a/√2`"
+    },
+    {
+      "mf_id": "MF-0084",
+      "status": "PASS",
+      "expression": "`⋃_θ R_θ(S)=disk(a/√2)`"
+    },
+    {
+      "mf_id": "MF-0085",
+      "status": "PASS",
+      "expression": "`⋂_θ R_θ(S)=disk(a/2)`"
+    },
+    {
+      "mf_id": "MF-0086",
+      "status": "PASS",
+      "expression": "`Δθ=45°=π/4`"
+    },
+    {
+      "mf_id": "MF-0091",
+      "status": "PASS",
+      "expression": "`s_n=2R sin(π/n)`"
+    },
+    {
+      "mf_id": "MF-0092",
+      "status": "PASS",
+      "expression": "`r_n=R cos(π/n)`"
+    },
+    {
+      "mf_id": "MF-0093",
+      "status": "PASS",
+      "expression": "`A_n=(n/2)R² sin(2π/n)`"
+    },
+    {
+      "mf_id": "MF-0094",
+      "status": "PASS",
+      "expression": "`P_n=2nR sin(π/n)`"
+    },
+    {
+      "mf_id": "MF-0095",
+      "status": "PASS",
+      "expression": "`P_n→2πR, A_n→πR² as n→∞`"
+    },
+    {
+      "mf_id": "MF-0096",
+      "status": "PASS",
+      "expression": "`h=(√3/2)a`"
+    },
+    {
+      "mf_id": "MF-0097",
+      "status": "PASS",
+      "expression": "`(a/2,(√3/2)a,a)`"
+    },
+    {
+      "mf_id": "MF-0098",
+      "status": "PASS",
+      "expression": "`1:√3:2`"
+    },
+    {
+      "mf_id": "MF-0099",
+      "status": "PASS",
+      "expression": "`R=a/√3`"
+    },
+    {
+      "mf_id": "MF-0100",
+      "status": "PASS",
+      "expression": "`a=√3R`"
+    },
+    {
+      "mf_id": "MF-0101",
+      "status": "PASS",
+      "expression": "`h=(3/2)R`"
+    },
+    {
+      "mf_id": "MF-0102",
+      "status": "PASS",
+      "expression": "`r=R/2`"
+    },
+    {
+      "mf_id": "MF-0103",
+      "status": "PASS",
+      "expression": "`h=R+r`"
+    },
+    {
+      "mf_id": "MF-0104",
+      "status": "PASS",
+      "expression": "`r:R:h=1/2:1:3/2=1:2:3`"
+    },
+    {
+      "mf_id": "MF-0105",
+      "status": "PASS",
+      "expression": "`s_6=R`"
+    },
+    {
+      "mf_id": "MF-0106",
+      "status": "PASS",
+      "expression": "`r_6=(√3/2)R`"
+    },
+    {
+      "mf_id": "MF-0107",
+      "status": "PASS",
+      "expression": "`120°/2=60°`"
+    },
+    {
+      "mf_id": "MF-0108",
+      "status": "PASS",
+      "expression": "`3+3=6`"
+    },
+    {
+      "mf_id": "MF-0110",
+      "status": "PASS",
+      "expression": "`s_4=√2R`"
+    },
+    {
+      "mf_id": "MF-0111",
+      "status": "PASS",
+      "expression": "`r_4=R/√2=(√2/2)R`"
+    },
+    {
+      "mf_id": "MF-0112",
+      "status": "PASS",
+      "expression": "`R/r_4=√2`"
+    },
+    {
+      "mf_id": "MF-0114",
+      "status": "PASS",
+      "expression": "`Δθ=180°/n=π/n`"
+    },
+    {
+      "mf_id": "MF-0115",
+      "status": "PASS",
+      "expression": "`n+n=2n`"
+    },
+    {
+      "mf_id": "MF-0118",
+      "status": "PASS",
+      "expression": "`V(P_n) ∪ V(R_(π/n)P_n)=V(P_(2n))`"
+    },
+    {
+      "mf_id": "MF-0119",
+      "status": "PASS",
+      "expression": "`R_k=R_0(1/√2)^k`"
+    },
+    {
+      "mf_id": "MF-0121",
+      "status": "PASS",
+      "expression": "`T_n=cos(π/n)`"
+    },
+    {
+      "mf_id": "MF-0122",
+      "status": "PASS",
+      "expression": "`cos60°=1/2, cos45°=√2/2, cos30°=√3/2`"
+    },
+    {
+      "mf_id": "MF-0123",
+      "status": "PASS",
+      "expression": "`c=2R sin(θ/2)`"
+    },
+    {
+      "mf_id": "MF-0124",
+      "status": "PASS",
+      "expression": "`h=R cos(θ/2)`"
+    },
+    {
+      "mf_id": "MF-0125",
+      "status": "PASS",
+      "expression": "`A_triangle=(1/2)R² sinθ`"
+    },
+    {
+      "mf_id": "MF-0126",
+      "status": "PASS",
+      "expression": "`L_arc=Rθ`"
+    },
+    {
+      "mf_id": "MF-0127",
+      "status": "PASS",
+      "expression": "`A_sector=(1/2)R²θ`"
+    },
+    {
+      "mf_id": "MF-0128",
+      "status": "PASS",
+      "expression": "`A_segment=(R²/2)(θ-sinθ)`"
+    },
+    {
+      "mf_id": "MF-0129",
+      "status": "PASS_CONDITIONAL",
+      "expression": "`c=2R`",
+      "condition": "theta=pi (diameter chord)"
+    },
+    {
+      "mf_id": "MF-0130",
+      "status": "TOKEN_VAZIO_SEMANTICS",
+      "expression": "`m=R`",
+      "reason": "symbol m is undefined in source ledger"
+    },
+    {
+      "mf_id": "MF-0131",
+      "status": "PASS",
+      "expression": "`R_(k+1)=R_k cos(π/n_k)`"
+    },
+    {
+      "mf_id": "MF-0132",
+      "status": "PASS",
+      "expression": "`R_m=R_0 ∏_(k=0)^(m-1) cos(π/n_k)`"
+    },
+    {
+      "mf_id": "MF-0133",
+      "status": "PASS",
+      "expression": "`s=Rθ`"
+    },
+    {
+      "mf_id": "MF-0134",
+      "status": "PASS",
+      "expression": "`c=2R sin(θ/2)`"
+    },
+    {
+      "mf_id": "MF-0135",
+      "status": "PASS",
+      "expression": "`d=R cos(θ/2)`"
+    },
+    {
+      "mf_id": "MF-0136",
+      "status": "PASS",
+      "expression": "`f=R(1-cos(θ/2))`"
+    },
+    {
+      "mf_id": "MF-0137",
+      "status": "PASS",
+      "expression": "`s/c=θ/[2 sin(θ/2)]`"
+    },
+    {
+      "mf_id": "MF-0138",
+      "status": "PASS",
+      "expression": "`tan(θ/2)=(c/2)/d`"
+    },
+    {
+      "mf_id": "MF-0139",
+      "status": "PASS",
+      "expression": "`f/(c/2)=tan(θ/4)`"
+    },
+    {
+      "mf_id": "MF-0140",
+      "status": "PASS",
+      "expression": "`lim_(θ→0) s/c=1`"
+    },
+    {
+      "mf_id": "MF-0141",
+      "status": "PASS",
+      "expression": "`s_45=πR/4`"
+    },
+    {
+      "mf_id": "MF-0142",
+      "status": "PASS",
+      "expression": "`c_45=R√(2-√2)`"
+    },
+    {
+      "mf_id": "MF-0143",
+      "status": "PASS",
+      "expression": "`d_45=(R/2)√(2+√2)`"
+    },
+    {
+      "mf_id": "MF-0144",
+      "status": "PASS",
+      "expression": "`f_45=R[1-√(2+√2)/2]`"
+    },
+    {
+      "mf_id": "MF-0145",
+      "status": "PASS",
+      "expression": "`s_45/c_45≈1.02617`"
+    },
+    {
+      "mf_id": "MF-0146",
+      "status": "PASS",
+      "expression": "`x(θ)=R cosθ, y(θ)=R sinθ, x²+y²=R²`"
+    },
+    {
+      "mf_id": "MF-0147",
+      "status": "PASS",
+      "expression": "`s_8=2R sin(π/8)=R√(2-√2)`"
+    },
+    {
+      "mf_id": "MF-0148",
+      "status": "PASS",
+      "expression": "`r_8=R cos(π/8)=(R/2)√(2+√2)`"
+    },
+    {
+      "mf_id": "MF-0149",
+      "status": "PASS",
+      "expression": "`α_p=2π/p`"
+    },
+    {
+      "mf_id": "MF-0150",
+      "status": "PASS",
+      "expression": "`s_p=2R sin(π/p)`"
+    },
+    {
+      "mf_id": "MF-0151",
+      "status": "PASS",
+      "expression": "`r_p=R cos(π/p)`"
+    },
+    {
+      "mf_id": "MF-0152",
+      "status": "PASS",
+      "expression": "`A_p=(p/2)R² sin(2π/p)`"
+    },
+    {
+      "mf_id": "MF-0153",
+      "status": "PASS",
+      "expression": "`P_p=2pR sin(π/p)`"
+    },
+    {
+      "mf_id": "MF-0154",
+      "status": "PASS",
+      "expression": "`a_e=R, b_e=R|cos i|`"
+    },
+    {
+      "mf_id": "MF-0155",
+      "status": "PASS",
+      "expression": "`b_e/a_e=|cos i|`"
+    },
+    {
+      "mf_id": "MF-0156",
+      "status": "PASS",
+      "expression": "`e=√(1-b_e²/a_e²)=|sin i|`"
+    },
+    {
+      "mf_id": "MF-0157",
+      "status": "PASS",
+      "expression": "`e²+(b_e/a_e)²=1`"
+    },
+    {
+      "mf_id": "MF-0158",
+      "status": "PASS",
+      "expression": "`A_c=πR²`"
+    },
+    {
+      "mf_id": "MF-0159",
+      "status": "PASS",
+      "expression": "`A_e=πa_e b_e=πR²|cos i|`"
+    },
+    {
+      "mf_id": "MF-0160",
+      "status": "PASS",
+      "expression": "`A_e/A_c=|cos i|`"
+    },
+    {
+      "mf_id": "MF-0161",
+      "status": "PASS",
+      "expression": "`x'=R cos t, y'=R cos i sin t`"
+    },
+    {
+      "mf_id": "MF-0162",
+      "status": "PASS",
+      "expression": "`x'^2/R² + y'^2/(R² cos²i)=1`"
+    },
+    {
+      "mf_id": "MF-0163",
+      "status": "PASS",
+      "expression": "`ds_e=R√(1-sin²i cos²t) dt`"
+    },
+    {
+      "mf_id": "MF-0164",
+      "status": "PASS",
+      "expression": "`S_e=R∫_[t1,t2] √(1-sin²i cos²t) dt`"
+    },
+    {
+      "mf_id": "MF-0165",
+      "status": "PASS",
+      "expression": "`C_e=4aE(e)`"
+    },
+    {
+      "mf_id": "MF-0166",
+      "status": "PASS",
+      "expression": "`R_(k+1)=R_k sec(π/p_k)`"
+    },
+    {
+      "mf_id": "MF-0167",
+      "status": "PASS",
+      "expression": "`2, √2, 2/√3`"
+    },
+    {
+      "mf_id": "MF-0168",
+      "status": "PASS",
+      "expression": "`1/2, √2/2, √3/2`"
+    },
+    {
+      "mf_id": "MF-0170",
+      "status": "PASS",
+      "expression": "`r_n^(B)=(a_0/Z)n²`"
+    },
+    {
+      "mf_id": "MF-0171",
+      "status": "PASS",
+      "expression": "`r_(n+1)^(B)/r_n^(B)=((n+1)/n)²`"
+    },
+    {
+      "mf_id": "MF-0175",
+      "status": "PASS",
+      "expression": "`N_n=2n²`"
+    },
+    {
+      "mf_id": "MF-0176",
+      "status": "PASS",
+      "expression": "`r_1:r_2:r_3:r_4=1:4:9:16`"
+    },
+    {
+      "mf_id": "MF-0191",
+      "status": "TOKEN_VAZIO_SEMANTICS",
+      "expression": "`indeterminado→∅→{∅}→{0,1}→{0,1,2}`",
+      "reason": "leading indeterminado-> mapping is not formally defined"
+    },
+    {
+      "mf_id": "MF-0197",
+      "status": "PASS",
+      "expression": "`arco + dois raios = setor circular`"
+    },
+    {
+      "mf_id": "MF-0198",
+      "status": "PASS",
+      "expression": "`corda + dois raios = triângulo isósceles`"
+    },
+    {
+      "mf_id": "MF-0201",
+      "status": "PASS",
+      "expression": "`0°→45°→90°`"
+    },
+    {
+      "mf_id": "MF-0204",
+      "status": "PASS",
+      "expression": "`núcleo invariável ⊂ região variável ⊂ envoltória máxima`"
+    },
+    {
+      "mf_id": "MF-0208",
+      "status": "PASS",
+      "expression": "`4+4=8`"
+    },
+    {
+      "mf_id": "MF-0212",
+      "status": "PASS",
+      "expression": "`h/a=√3/2`"
+    },
+    {
+      "mf_id": "MF-0213",
+      "status": "PASS",
+      "expression": "`h/R=3/2`"
+    },
+    {
+      "mf_id": "MF-0219",
+      "status": "FAIL",
+      "expression": "`núcleo ⊂ coroa ⊂ envoltória circular`",
+      "reason": "under standard annulus/crown semantics, the inner core is not a subset of the crown"
+    },
+    {
+      "mf_id": "MF-0221",
+      "status": "PASS_CONDITIONAL",
+      "expression": "`R_1<R_2<R_3<...`",
+      "condition": "outward sec(pi/n) nesting with n>2"
+    },
+    {
+      "mf_id": "MF-0228",
+      "status": "PASS",
+      "expression": "\\`R_phi=[[cosφ,-sinφ],[sinφ,cosφ]]\\`"
+    },
+    {
+      "mf_id": "MF-0229",
+      "status": "PASS",
+      "expression": "\\`R_(π/4)=(1/√2)[[1,-1],[1,1]]\\`"
+    },
+    {
+      "mf_id": "MF-0230",
+      "status": "PASS",
+      "expression": "\\`Q0={|x|≤L/2,|y|≤L/2}\\`"
+    },
+    {
+      "mf_id": "MF-0231",
+      "status": "PASS",
+      "expression": "\\`Q45={|x|+|y|≤L/√2}\\`"
+    },
+    {
+      "mf_id": "MF-0232",
+      "status": "PASS",
+      "expression": "\\`O_cap=Q0∩Q45\\`"
+    },
+    {
+      "mf_id": "MF-0233",
+      "status": "PASS",
+      "expression": "\\`O_hull=conv(V(Q0)∪V(Q45))\\`"
+    },
+    {
+      "mf_id": "MF-0234",
+      "status": "PASS",
+      "expression": "\\`Δθ=2π/8=π/4=45°\\`"
+    },
+    {
+      "mf_id": "MF-0235",
+      "status": "PASS",
+      "expression": "\\`angle_internal=135°\\`"
+    },
+    {
+      "mf_id": "MF-0236",
+      "status": "PASS",
+      "expression": "\\`1:1:√2\\`"
+    },
+    {
+      "mf_id": "MF-0237",
+      "status": "PASS",
+      "expression": "\\`L-2x=x√2\\`"
+    },
+    {
+      "mf_id": "MF-0238",
+      "status": "PASS",
+      "expression": "\\`x=L/(2+√2)=L(2-√2)/2\\`"
+    },
+    {
+      "mf_id": "MF-0239",
+      "status": "PASS",
+      "expression": "\\`s_cap=L(√2-1)\\`"
+    },
+    {
+      "mf_id": "MF-0240",
+      "status": "PASS",
+      "expression": "\\`r_cap=L/2\\`"
+    },
+    {
+      "mf_id": "MF-0241",
+      "status": "PASS",
+      "expression": "\\`R_cap=L/√(2+√2)\\`"
+    },
+    {
+      "mf_id": "MF-0242",
+      "status": "PASS",
+      "expression": "\\`P_cap=8L(√2-1)\\`"
+    },
+    {
+      "mf_id": "MF-0243",
+      "status": "PASS",
+      "expression": "\\`A_cap=2(√2-1)L²\\`"
+    },
+    {
+      "mf_id": "MF-0244",
+      "status": "PASS",
+      "expression": "\\`A_cap/L²=2(√2-1)\\`"
+    },
+    {
+      "mf_id": "MF-0245",
+      "status": "PASS",
+      "expression": "\\`R_hull=L/√2\\`"
+    },
+    {
+      "mf_id": "MF-0246",
+      "status": "PASS",
+      "expression": "\\`s_hull=L√((2-√2)/2)\\`"
+    },
+    {
+      "mf_id": "MF-0247",
+      "status": "PASS",
+      "expression": "\\`A_hull=√2L²\\`"
+    },
+    {
+      "mf_id": "MF-0248",
+      "status": "PASS",
+      "expression": "\\`R_cap=s_hull\\`"
+    },
+    {
+      "mf_id": "MF-0249",
+      "status": "PASS",
+      "expression": "\\`phase(O_cap,O_hull)=π/8=22.5°\\`"
+    },
+    {
+      "mf_id": "MF-0250",
+      "status": "PASS",
+      "expression": "\\`s8/(2r8)=tan(π/8)=√2-1\\`"
+    },
+    {
+      "mf_id": "MF-0251",
+      "status": "PASS",
+      "expression": "\\`4 --π/4--> 8\\`"
+    }
+  ],
+  "boundaries": [
+    "formal mathematical pass != cosmological confirmation",
+    "conditional pass requires its recorded condition",
+    "TOKEN_VAZIO is preserved, not coerced to PASS or zero",
+    "failed expression remains in append-only history"
+  ]
+}
