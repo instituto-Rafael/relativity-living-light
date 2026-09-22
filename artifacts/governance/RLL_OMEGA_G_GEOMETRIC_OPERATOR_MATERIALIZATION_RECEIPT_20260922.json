@@ -1,0 +1,52 @@
+{
+  "schema": "rll.omega_g_geometric_operator.materialization_receipt.v1",
+  "date": "2026-09-22",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "canonical_math": {
+    "repository": "rafaelmeloreisnovo/Matem-tica-",
+    "yaml_path": "operators/omega_g_geometric_operator.v1.yaml",
+    "yaml_commit": "7986c6dbafe2583b21d224224308267f576ef7bf",
+    "doc_path": "operators/OMEGA_G_GEOMETRIC_OPERATOR_V1.md",
+    "doc_commit": "5a31acede2f9ea27058495f8ba33b3edd6dd30f7"
+  },
+  "rll": {
+    "contract_commit": "f0c082eca34287c0dee7dac181953e7dcab67bef",
+    "doc_commit": "7d2c815edc2e51ce0273f9c572497458641fe9fe",
+    "validator_commit": "01d40d1e8a6ae2ad1107cbd8e1b81da6a9ce2c15",
+    "tests_commit": "55212fcf1edffe0a07506c3726cec8b3eb357f7a",
+    "workflow_commit": "3f7fe005f8a6db6a3b083bd09f1b82909c170c28",
+    "validator_execution": "TOKEN_VAZIO",
+    "ci_execution": "TOKEN_VAZIO_NOT_DISPATCHED"
+  },
+  "papers": {
+    "path": "papers/OMEGA_G_GEOMETRIC_OPERATOR_RLL_V1_2026-09-22.md",
+    "commit": "2aae8dbdfdbe9b7c4b1739287bfbc1c7e4456831"
+  },
+  "google_drive": {
+    "folder_id": "1sSfnzQRbL9NoMHI_E_3RRYNGBSneLOqi",
+    "folder_url": "https://drive.google.com/drive/folders/1sSfnzQRbL9NoMHI_E_3RRYNGBSneLOqi",
+    "document_id": "1OnfqoHNcJHARasjyOjRJdWfNjVtigc_C3M8XubxO2lA",
+    "document_url": "https://docs.google.com/document/d/1OnfqoHNcJHARasjyOjRJdWfNjVtigc_C3M8XubxO2lA/edit?usp=drivesdk",
+    "spreadsheet_id": "1g1bITvZ2F46D7BxzN3ZG1rGHMQvx0pyuopvcy6JrrXk",
+    "spreadsheet_url": "https://docs.google.com/spreadsheets/d/1g1bITvZ2F46D7BxzN3ZG1rGHMQvx0pyuopvcy6JrrXk/edit?usp=drivesdk"
+  },
+  "operator": {
+    "expression": "Omega_G(X;Theta,k,Gamma)=I(Pi_Gamma(T_Theta(B^k(X))))",
+    "scientific_binding": "BIND(I_j,O_k,mechanism,units,covariance,falsifier)",
+    "omega7_distinct": true,
+    "reconstruction_required": true
+  },
+  "open_gates": [
+    "prior_art_novelty_review",
+    "float64_backend",
+    "python_oracle",
+    "q16_16_backend",
+    "c_freestanding_backend",
+    "property_tests",
+    "observable_effect_matrix",
+    "scientific_likelihood_binding",
+    "independent_reproduction"
+  ],
+  "boundary": "MATERIALIZATION_PASS != VALIDATOR_PASS != SCIENTIFIC_CONFIRMATION"
+}
