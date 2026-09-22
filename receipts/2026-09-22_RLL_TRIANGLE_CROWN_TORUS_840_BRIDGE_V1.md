@@ -36,3 +36,11 @@ external_receipt != canonical_CI
 **F_gap:** canonical CI and semantic/physical bridges remain open.
 
 **F_next:** consume CI outcome; only promote execution state after repository-native PASS.
+
+## Canonical intake
+
+- repository: `instituto-Rafael/relativity-living-light`
+- branch: `geometry/triangle-crown-torus-840-bridge-v1`
+- draft PR: `#946` — https://github.com/instituto-Rafael/relativity-living-light/pull/946
+- workspace-fork PR `rafaelmeloreisnovo/relativity-living-light#33`: `CLOSED_SUPERSEDED / NOT_MERGED`
+- canonical CI at this receipt update: `NOT_RUN` because no repository-native workflow run had been emitted for the draft PR yet.
