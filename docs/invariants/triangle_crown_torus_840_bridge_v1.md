@@ -753,3 +753,84 @@ now combine with simplex transport:
 \]
 
 This is a formal geometry/representation result only; it does not establish a physical mechanism.
+
+
+## 16. Signed/oriented geometry and reversible positional ledger
+
+The simplex layer is extended with an information-preservation rule.
+
+Oriented area:
+
+\[
+\boxed{
+A_{\rm or}
+=
+\frac12\det(p_2-p_1,p_3-p_1)
+}
+\]
+
+retains orientation. Metric area is \(A=|A_{\rm or}|\); absolute value is therefore a lossy projection when orientation matters.
+
+Line/circle or line/sphere intersection produces:
+
+\[
+At^2+Bt+C=0,
+\qquad
+\Delta=B^2-4AC.
+\]
+
+The geometric gate is:
+
+\[
+\Delta>0:\text{two cuts},
+\quad
+\Delta=0:\text{tangent},
+\quad
+\Delta<0:\text{no real cut}.
+\]
+
+For a circular cut:
+
+\[
+\Delta=4(R^2-d_\perp^2)=4q^2.
+\]
+
+Negative discriminant is retained as a complex algebraic branch, not interpreted as negative physical area.
+
+Positional representation is typed by:
+
+\[
+N=\sum_kd_kb^k
+\]
+
+and Euclidean division:
+
+\[
+\boxed{
+N=qb+r,\qquad0\le r<b.
+}
+\]
+
+Residue alone is many-to-one. The tuple \((q,r,b)\) is reconstructible:
+
+\[
+N\leftrightarrow(q,r)_b.
+\]
+
+RLL geometry interpretation may use \(r\) as cyclic phase/abscissa and \(q\) as layer/winding index only when both are retained with provenance.
+
+Boundary:
+
+\[
+\boxed{
+0\neq TOKEN\_VAZIO,
+\quad
+SIGN\neq LOSS,
+\quad
+MODULO\_ONLY=\text{LOSSY},
+\quad
+(Q,R,BASE)=\text{REVERSIBLE}.
+}
+\]
+
+This is a governance invariant: lossy views may be derived, but they must not replace the reconstructible source state.
