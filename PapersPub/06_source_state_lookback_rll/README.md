@@ -76,3 +76,21 @@ No new plasma-gravity force is claimed and physical syntropy remains
 `TOKEN_VAZIO_PHYSICAL_DEFINITION`.
 
 State: `FORMAL_MODEL_SHADOW`; `claim_allowed=false`.
+
+
+### Ordered region-context extension
+
+The canonical parent remains `data/contracts/rll_retarded_spacetime_state.v1.yml`.
+The new `data/contracts/rll_retarded_spacetime_region_context.v1.yaml` is a typed extension for the ordered intervening-region stack.
+
+It adds explicit fields for:
+- cosmic time/lookback/scale factor at photon crossing;
+- photon crossing time and moving-region state;
+- peculiar/bulk velocity fields;
+- GR redshift/lensing/Shapiro/time-delay terms;
+- plasma/MHD propagation terms with a strict no-new-force boundary;
+- matter environment / neighboring mass distribution;
+- covariance/provenance at segment level;
+- causal rule that post-crossing changes cannot alter a photon that has already left the region.
+
+Shared source-state, proper-time, geometry, uncertainty and claim semantics remain governed by the parent contract. `claim_allowed=false`.
