@@ -10,8 +10,34 @@
     "delta_p_definition": "P(stable_any=1|peak)-P(stable_any=1|nonpeak)",
     "delta_p_target": 0.18,
     "delta_p_state": "STABILITY_CANDIDATE",
-    "unresolved_index_around_70": "TOKEN_VAZIO_INDEX_AROUND_70",
-    "hard_boundary": "delta_p_target is operational/testable, not a physical constant"
+    "hard_boundary": "delta_p_target is operational/testable, not a physical constant",
+    "stability_related_observation_0_70": {
+      "state": "SOURCE_OBSERVED_STABILITY_PROXY_CANDIDATE",
+      "value": 0.7,
+      "exact_artifact_value": "0.700000",
+      "source_repository": "rafaelmeloreisnovo/llamaRafaelia",
+      "source_path": "rmrCti/zone_stats.txt",
+      "source_blob_sha": "230a578abaa4675f48f967f9af414a23ef1a8ef4",
+      "source_row": {
+        "zone": 28,
+        "refs": 95,
+        "IC_mean": 0.1474,
+        "PP_mean": 0.1368,
+        "CV_mean": 0.7
+      },
+      "upstream_definition": {
+        "source_path": "rmrCti/omega_metrics_v2.c",
+        "source_blob_sha": "17cb0e5722ec180091c636ed5e1df3ba2dc68864",
+        "CV": "top10% value share using buckets"
+      },
+      "semantic_boundary": "0.700000 is directly observed as CV_mean for zone 28. It is not the stable_any rate and is not DeltaP. It may be used as a project stability/concentration proxy only with this field identity preserved."
+    },
+    "distinct_values": {
+      "delta_p_target": 0.18,
+      "zone28_CV_mean": 0.7,
+      "torus_r_default": 0.7,
+      "rule": "same_decimal != same_variable"
+    }
   },
   "geometry_context_fields": [
     "domain",
@@ -174,7 +200,7 @@
     "end_to_end_synthetic_hidden_truth_benchmark",
     "domain_calibrated_sensitivity_thresholds",
     "independent_RMRCTI_real_trace_replication",
-    "exact_index_around_70_identity"
+    "physical/statistical interpretation of zone28 CV_mean=0.700000 beyond its implemented CV definition"
   ],
   "F_next": "implement and execute the synthetic hidden-truth body-Y benchmark; route only residual classifications into DeltaP/Omega"
 }
