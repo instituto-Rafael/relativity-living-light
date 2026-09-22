@@ -1,0 +1,3936 @@
+{
+  "schema": "rll.mf130.cosmology_domain_gate.v2",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "predecessor": "results/RLL_MF130_COSMO_GEOMETRY_BASELINE_V1.json",
+  "candidate_count": 130,
+  "counts": {
+    "PASS_DOMAIN_GATE": 125,
+    "PASS_DOMAIN_GATE_CONDITIONAL": 3,
+    "TOKEN_VAZIO_SEMANTICS": 1,
+    "BLOCKED_UPSTREAM_FAIL": 1
+  },
+  "diagnostic_family_counts": {
+    "METRIC_SHAPE_TEMPLATE": 93,
+    "ANGULAR_ROTATION_TEMPLATE": 12,
+    "LIMIT_CONVERGENCE_TEMPLATE": 4,
+    "PROJECTION_CALCULUS_TEMPLATE": 9,
+    "GEOMETRY_TEMPLATE_OTHER": 1,
+    "SET_TOPOLOGY_TEMPLATE": 8,
+    "DIMENSIONLESS_SHAPE_RATIO": 3
+  },
+  "shared_observational_geometry": {
+    "DESI": "{DM/rd,DH/rd,DV/rd,F_AP=DM/DH}",
+    "PantheonPlus": "{DL,mu}",
+    "LCDM_RLL": "{E,H,DH,DM,DA,DL,mu,F_AP}"
+  },
+  "anti_p_hacking_rule": "No MF-specific free remapping, redshift selection, scale, sign, phase, or normalization may be chosen after seeing residuals. Any empirical mapping must be declared before scoring.",
+  "rows": [
+    {
+      "mf_id": "MF-0014",
+      "expression": "`R=(V_f-V_i)/V_i=1=100%`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0015",
+      "expression": "`R=0`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0038",
+      "expression": "`d(P1,P1)=0`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0039",
+      "expression": "`d(P1,P2)>0`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0040",
+      "expression": "`(d12,d23,d31)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0062",
+      "expression": "`d_xy+d_yz≥d_xz`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0066",
+      "expression": "`R=s/√2`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0067",
+      "expression": "`0°→90°`",
+      "source_class": "ROTATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0068",
+      "expression": "`θ=45°=π/4`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0069",
+      "expression": "`L=Rθ=Rπ/4`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0070",
+      "expression": "`c=2R sin(θ/2)=2R sin22.5°`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0071",
+      "expression": "`sin22.5°=√(2-√2)/2`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0072",
+      "expression": "`c=R√(2-√2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0073",
+      "expression": "`h=R cos22.5°=(R/2)√(2+√2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0074",
+      "expression": "`A_triangle=(1/2)R² sin45°=(√2/4)R²`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0075",
+      "expression": "`A_sector=(1/2)R²θ=(π/8)R²`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0076",
+      "expression": "`A_segment=A_sector-A_triangle`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0077",
+      "expression": "`A_segment=R²(π/8-√2/4)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0080",
+      "expression": "`R_ext=a/√2`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0081",
+      "expression": "`R_int=a/2`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0082",
+      "expression": "`R_ext/R_int=√2`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0083",
+      "expression": "`a/2 ≤ r ≤ a/√2`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0084",
+      "expression": "`⋃_θ R_θ(S)=disk(a/√2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0085",
+      "expression": "`⋂_θ R_θ(S)=disk(a/2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0086",
+      "expression": "`Δθ=45°=π/4`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0089",
+      "expression": "`P_(2^n)→C as n→∞`",
+      "source_class": "LIMIT_MODEL",
+      "formal_state": "PASS_CONDITIONAL",
+      "diagnostic_family": "LIMIT_CONVERGENCE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE_CONDITIONAL",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0091",
+      "expression": "`s_n=2R sin(π/n)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0092",
+      "expression": "`r_n=R cos(π/n)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0093",
+      "expression": "`A_n=(n/2)R² sin(2π/n)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0094",
+      "expression": "`P_n=2nR sin(π/n)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0095",
+      "expression": "`P_n→2πR, A_n→πR² as n→∞`",
+      "source_class": "STANDARD_LIMIT",
+      "formal_state": "PASS",
+      "diagnostic_family": "LIMIT_CONVERGENCE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0096",
+      "expression": "`h=(√3/2)a`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0097",
+      "expression": "`(a/2,(√3/2)a,a)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0098",
+      "expression": "`1:√3:2`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0099",
+      "expression": "`R=a/√3`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0100",
+      "expression": "`a=√3R`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0101",
+      "expression": "`h=(3/2)R`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0102",
+      "expression": "`r=R/2`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0103",
+      "expression": "`h=R+r`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0104",
+      "expression": "`r:R:h=1/2:1:3/2=1:2:3`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0105",
+      "expression": "`s_6=R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0106",
+      "expression": "`r_6=(√3/2)R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0110",
+      "expression": "`s_4=√2R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0111",
+      "expression": "`r_4=R/√2=(√2/2)R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0112",
+      "expression": "`R/r_4=√2`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0114",
+      "expression": "`Δθ=180°/n=π/n`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0118",
+      "expression": "`V(P_n) ∪ V(R_(π/n)P_n)=V(P_(2n))`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0119",
+      "expression": "`R_k=R_0(1/√2)^k`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0121",
+      "expression": "`T_n=cos(π/n)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0122",
+      "expression": "`cos60°=1/2, cos45°=√2/2, cos30°=√3/2`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0123",
+      "expression": "`c=2R sin(θ/2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0124",
+      "expression": "`h=R cos(θ/2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0125",
+      "expression": "`A_triangle=(1/2)R² sinθ`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0126",
+      "expression": "`L_arc=Rθ`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0127",
+      "expression": "`A_sector=(1/2)R²θ`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0128",
+      "expression": "`A_segment=(R²/2)(θ-sinθ)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0129",
+      "expression": "`c=2R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS_CONDITIONAL",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE_CONDITIONAL",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0130",
+      "expression": "`m=R`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "TOKEN_VAZIO_SEMANTICS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "TOKEN_VAZIO_SEMANTICS",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0131",
+      "expression": "`R_(k+1)=R_k cos(π/n_k)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0132",
+      "expression": "`R_m=R_0 ∏_(k=0)^(m-1) cos(π/n_k)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0133",
+      "expression": "`s=Rθ`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0134",
+      "expression": "`c=2R sin(θ/2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0135",
+      "expression": "`d=R cos(θ/2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0136",
+      "expression": "`f=R(1-cos(θ/2))`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0137",
+      "expression": "`s/c=θ/[2 sin(θ/2)]`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0138",
+      "expression": "`tan(θ/2)=(c/2)/d`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0139",
+      "expression": "`f/(c/2)=tan(θ/4)`",
+      "source_class": "TRIGONOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0140",
+      "expression": "`lim_(θ→0) s/c=1`",
+      "source_class": "STANDARD_LIMIT",
+      "formal_state": "PASS",
+      "diagnostic_family": "LIMIT_CONVERGENCE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0141",
+      "expression": "`s_45=πR/4`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0142",
+      "expression": "`c_45=R√(2-√2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0143",
+      "expression": "`d_45=(R/2)√(2+√2)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0144",
+      "expression": "`f_45=R[1-√(2+√2)/2]`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0145",
+      "expression": "`s_45/c_45≈1.02617`",
+      "source_class": "NUMERIC",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0146",
+      "expression": "`x(θ)=R cosθ, y(θ)=R sinθ, x²+y²=R²`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0147",
+      "expression": "`s_8=2R sin(π/8)=R√(2-√2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0148",
+      "expression": "`r_8=R cos(π/8)=(R/2)√(2+√2)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0149",
+      "expression": "`α_p=2π/p`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0150",
+      "expression": "`s_p=2R sin(π/p)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0151",
+      "expression": "`r_p=R cos(π/p)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0152",
+      "expression": "`A_p=(p/2)R² sin(2π/p)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0153",
+      "expression": "`P_p=2pR sin(π/p)`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0154",
+      "expression": "`a_e=R, b_e=R|cos i|`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0155",
+      "expression": "`b_e/a_e=|cos i|`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0156",
+      "expression": "`e=√(1-b_e²/a_e²)=|sin i|`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0157",
+      "expression": "`e²+(b_e/a_e)²=1`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0158",
+      "expression": "`A_c=πR²`",
+      "source_class": "STANDARD_GEOMETRY",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0159",
+      "expression": "`A_e=πa_e b_e=πR²|cos i|`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0160",
+      "expression": "`A_e/A_c=|cos i|`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0161",
+      "expression": "`x'=R cos t, y'=R cos i sin t`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0162",
+      "expression": "`x'^2/R² + y'^2/(R² cos²i)=1`",
+      "source_class": "STANDARD_PROJECTION",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0163",
+      "expression": "`ds_e=R√(1-sin²i cos²t) dt`",
+      "source_class": "STANDARD_CALCULUS",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0164",
+      "expression": "`S_e=R∫_[t1,t2] √(1-sin²i cos²t) dt`",
+      "source_class": "STANDARD_CALCULUS",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0165",
+      "expression": "`C_e=4aE(e)`",
+      "source_class": "STANDARD_CALCULUS",
+      "formal_state": "PASS",
+      "diagnostic_family": "PROJECTION_CALCULUS_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0166",
+      "expression": "`R_(k+1)=R_k sec(π/p_k)`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0167",
+      "expression": "`2, √2, 2/√3`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0168",
+      "expression": "`1/2, √2/2, √3/2`",
+      "source_class": "STANDARD_TRIG",
+      "formal_state": "PASS",
+      "diagnostic_family": "GEOMETRY_TEMPLATE_OTHER",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0171",
+      "expression": "`r_(n+1)^(B)/r_n^(B)=((n+1)/n)²`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0176",
+      "expression": "`r_1:r_2:r_3:r_4=1:4:9:16`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0197",
+      "expression": "`arco + dois raios = setor circular`",
+      "source_class": "GEOMETRIC_DEFINITION",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0198",
+      "expression": "`corda + dois raios = triângulo isósceles`",
+      "source_class": "GEOMETRIC_DEFINITION",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0201",
+      "expression": "`0°→45°→90°`",
+      "source_class": "ROTATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0204",
+      "expression": "`núcleo invariável ⊂ região variável ⊂ envoltória máxima`",
+      "source_class": "SET_RELATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0209",
+      "expression": "`4→8→16→32→...→limite circular`",
+      "source_class": "LIMIT_MODEL",
+      "formal_state": "PASS_CONDITIONAL",
+      "diagnostic_family": "LIMIT_CONVERGENCE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE_CONDITIONAL",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0212",
+      "expression": "`h/a=√3/2`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0213",
+      "expression": "`h/R=3/2`",
+      "source_class": "DERIVED",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0219",
+      "expression": "`núcleo ⊂ coroa ⊂ envoltória circular`",
+      "source_class": "SET_RELATION",
+      "formal_state": "FAIL",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "BLOCKED_UPSTREAM_FAIL",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0228",
+      "expression": "\\`R_phi=[[cosφ,-sinφ],[sinφ,cosφ]]\\`",
+      "source_class": "ROTATION_MATRIX",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0229",
+      "expression": "\\`R_(π/4)=(1/√2)[[1,-1],[1,1]]\\`",
+      "source_class": "ROTATION_MATRIX",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0230",
+      "expression": "\\`Q0={|x|≤L/2,|y|≤L/2}\\`",
+      "source_class": "SET_MODEL",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0231",
+      "expression": "\\`Q45={|x|+|y|≤L/√2}\\`",
+      "source_class": "SET_MODEL",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0232",
+      "expression": "\\`O_cap=Q0∩Q45\\`",
+      "source_class": "SET_MODEL",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0233",
+      "expression": "\\`O_hull=conv(V(Q0)∪V(Q45))\\`",
+      "source_class": "SET_MODEL",
+      "formal_state": "PASS",
+      "diagnostic_family": "SET_TOPOLOGY_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0234",
+      "expression": "\\`Δθ=2π/8=π/4=45°\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0235",
+      "expression": "\\`angle_internal=135°\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0236",
+      "expression": "\\`1:1:√2\\`",
+      "source_class": "TRIANGLE",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0237",
+      "expression": "\\`L-2x=x√2\\`",
+      "source_class": "TRUNCATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0238",
+      "expression": "\\`x=L/(2+√2)=L(2-√2)/2\\`",
+      "source_class": "TRUNCATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0239",
+      "expression": "\\`s_cap=L(√2-1)\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0240",
+      "expression": "\\`r_cap=L/2\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0241",
+      "expression": "\\`R_cap=L/√(2+√2)\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0242",
+      "expression": "\\`P_cap=8L(√2-1)\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0243",
+      "expression": "\\`A_cap=2(√2-1)L²\\`",
+      "source_class": "OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0244",
+      "expression": "\\`A_cap/L²=2(√2-1)\\`",
+      "source_class": "AREA_RATIO",
+      "formal_state": "PASS",
+      "diagnostic_family": "DIMENSIONLESS_SHAPE_RATIO",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0245",
+      "expression": "\\`R_hull=L/√2\\`",
+      "source_class": "HULL_OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0246",
+      "expression": "\\`s_hull=L√((2-√2)/2)\\`",
+      "source_class": "HULL_OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0247",
+      "expression": "\\`A_hull=√2L²\\`",
+      "source_class": "HULL_OCTAGON",
+      "formal_state": "PASS",
+      "diagnostic_family": "METRIC_SHAPE_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0248",
+      "expression": "\\`R_cap=s_hull\\`",
+      "source_class": "CROSS_RELATION",
+      "formal_state": "PASS",
+      "diagnostic_family": "DIMENSIONLESS_SHAPE_RATIO",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0249",
+      "expression": "\\`phase(O_cap,O_hull)=π/8=22.5°\\`",
+      "source_class": "PHASE",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0250",
+      "expression": "\\`s8/(2r8)=tan(π/8)=√2-1\\`",
+      "source_class": "OCTAGON_TRIG",
+      "formal_state": "PASS",
+      "diagnostic_family": "DIMENSIONLESS_SHAPE_RATIO",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    },
+    {
+      "mf_id": "MF-0251",
+      "expression": "\\`4 --π/4--> 8\\`",
+      "source_class": "ROTATION_OPERATOR",
+      "formal_state": "PASS",
+      "diagnostic_family": "ANGULAR_ROTATION_TEMPLATE",
+      "domain_gate_state": "PASS_DOMAIN_GATE",
+      "desi_observables": [
+        "DM_over_rd",
+        "DH_over_rd",
+        "DV_over_rd",
+        "F_AP=DM/DH"
+      ],
+      "pantheon_observables": [
+        "DL",
+        "mu"
+      ],
+      "model_observables": [
+        "E",
+        "H",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "F_AP"
+      ],
+      "physical_mapping_state": "NOT_ASSUMED",
+      "empirical_formula_specific_state": "PENDING_PREDECLARED_MAPPING"
+    }
+  ],
+  "evidence_bindings": [
+    "results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json",
+    "results/RLL_G4_DISTANCE_GEOMETRY_LCDM_RLL_V1.json",
+    "artifacts/science/RLL_G4_PANTHEON_FAIRNESS_RECEIPT_20260819_RUN32286390824.json"
+  ],
+  "claim_allowed": false
+}
