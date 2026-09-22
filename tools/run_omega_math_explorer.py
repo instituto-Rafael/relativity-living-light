@@ -118,6 +118,22 @@ def gate_result(gate: dict[str, Any]) -> dict[str, Any]:
         residual = observed - expected
         passed = close(observed, expected, tol)
 
+    elif kind == "scale_rewrite_344":
+        triangle_step = math.cos(math.pi / 3.0)
+        two_square_steps = math.cos(math.pi / 4.0) ** 2
+        observed = {
+            "cos_pi_over_3": triangle_step,
+            "cos_pi_over_4_squared": two_square_steps,
+        }
+        expected = 0.5
+        residual = max(
+            abs(triangle_step - expected),
+            abs(two_square_steps - expected),
+        )
+        passed = close(triangle_step, expected, tol) and close(
+            two_square_steps, expected, tol
+        )
+
     elif kind == "pythagoras":
         a, b, c = [float(x) for x in gate["sides"]]
         observed = a * a + b * b
@@ -449,21 +465,39 @@ def explore(
         if truncated:
             break
 
+    def rewrite_344_signature(sequence: tuple[int, ...]) -> tuple[int, ...]:
+        counts: dict[int, int] = defaultdict(int)
+        for n in sequence:
+            counts[n] += 1
+        square_pairs = counts.get(4, 0) // 2
+        counts[4] = counts.get(4, 0) % 2
+        counts[3] = counts.get(3, 0) + square_pairs
+        canonical: list[int] = []
+        for n in sorted(counts):
+            canonical.extend([n] * counts[n])
+        return tuple(canonical)
+
     scale_collisions = []
     for value, sequences in sorted(scale_bins.items()):
         if len(sequences) < 2:
             continue
         multisets = {tuple(sorted(sequence)) for sequence in sequences}
+        rewrite_signatures = {rewrite_344_signature(sequence) for sequence in sequences}
+        if len(multisets) == 1:
+            status = "KNOWN_PERMUTATION_INVARIANCE"
+        elif len(rewrite_signatures) == 1:
+            status = "DERIVED_REWRITE_IDENTITY_COS60_EQ_COS45_SQUARED"
+        else:
+            status = "CANDIDATE_NONTRIVIAL_SCALE_IDENTITY"
         scale_collisions.append(
             {
-                "status": (
-                    "KNOWN_PERMUTATION_INVARIANCE"
-                    if len(multisets) == 1
-                    else "CANDIDATE_NONTRIVIAL_SCALE_IDENTITY"
-                ),
+                "status": status,
                 "rounded_scale": value,
                 "sequences": [list(sequence) for sequence in sequences[:20]],
                 "distinct_multisets": len(multisets),
+                "rewrite_344_signatures": [
+                    list(signature) for signature in sorted(rewrite_signatures)
+                ],
             }
         )
 
