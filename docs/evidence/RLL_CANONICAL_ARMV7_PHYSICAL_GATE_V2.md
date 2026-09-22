@@ -57,3 +57,13 @@ nm -u ELF -> suspicious runtime-helper filter
 This is stricter semantically: external runtime helpers remain forbidden, while legitimate internal fixed-point routines are not mislabeled.
 
 The independent hard gate `undefined_symbols=0` remains unchanged.
+
+
+## Exact canonical receipt pinning
+
+The physical runner was further hardened in commit
+`75e9fc8e7a3c8401b38703caa7b66f750f365cf9`.
+
+Promotion now requires the complete emitted `RLLCAN1` line to match the canonical expected line byte-for-byte after command-substitution newline normalization. This binds the physical run to the declared Q16 χ² values, data hashes, parameter/phase hashes, pinned joint summary, `claim_allowed=0`, `token_vazio=7`, and `numeric_flags=0`.
+
+The receipt records both the expected-line SHA-256 and the observed stdout SHA-256. Structural gates remain mandatory in parallel; exact line matching does not replace ELF/dependency auditing.
