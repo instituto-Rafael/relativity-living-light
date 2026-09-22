@@ -206,3 +206,23 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
 RLL_JOINT65_ARMV7_FREESTANDING_PHYSICAL=TOKEN_VAZIO
 GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
 ```
+
+
+## RLL ARMv7 physical runner materialized
+
+The RLL-specific physical gate now has its own runner:
+
+```text
+scripts/run_rll_canonical_armv7_physical.sh
+```
+
+It rebuilds the **RLL canonical engine sources themselves** on the ARMv7 target, links with direct `ld.lld -m armelf_linux_eabi -static -e _start`, audits undefined/interpreter/DT_NEEDED/runtime helpers, executes the RLL ELF, validates the `RLLCAN1` receipt line, and writes an artifact-specific physical receipt.
+
+Current state remains:
+
+```text
+RLL_CANONICAL_ENGINE_ARMV7_RUNNER = READY
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL = TOKEN_VAZIO
+```
+
+No geometry receipt is reused as RLL execution evidence.
