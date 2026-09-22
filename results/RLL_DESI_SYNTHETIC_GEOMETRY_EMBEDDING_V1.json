@@ -1,0 +1,366 @@
+{
+  "schema": "rll.desi.synthetic_geometry_embedding.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "definition": {
+    "coordinates": "x=DM/rd, y=DH/rd",
+    "radius_proxy": "rho=sqrt(x^2+y^2)",
+    "angle_proxy": "phi=atan2(x,y), measured from DH axis toward DM axis",
+    "ellipse_axis_ratio_proxy": "q=min(x,y)/max(x,y)",
+    "ellipse_eccentricity_proxy": "sqrt(1-q^2)",
+    "area_proxies": [
+      "A_triangle=xy/2",
+      "A_ellipse=pi*x*y"
+    ]
+  },
+  "observed_DESI_DR2": [
+    {
+      "tracer": "LRG1",
+      "z": 0.51,
+      "DM_over_rd": 13.588,
+      "DH_over_rd": 21.863,
+      "F_AP": 0.6215066550793578,
+      "synthetic_geometry": {
+        "rho": 25.741493993162088,
+        "phi_rad": 0.5560833021386911,
+        "phi_deg": 31.861226270245183,
+        "axis_ratio_q": 0.6215066550793578,
+        "ellipse_eccentricity_proxy": 0.7834088828268851,
+        "right_triangle_area_proxy": 148.53722199999999,
+        "ellipse_area_proxy": 933.2868908396723
+      }
+    },
+    {
+      "tracer": "LRG2",
+      "z": 0.706,
+      "DM_over_rd": 17.351,
+      "DH_over_rd": 19.455,
+      "F_AP": 0.8918529940889232,
+      "synthetic_geometry": {
+        "rho": 26.06826089327786,
+        "phi_rad": 0.7282957161737673,
+        "phi_deg": 41.72827077421456,
+        "axis_ratio_q": 0.8918529940889232,
+        "ellipse_eccentricity_proxy": 0.45232536622946895,
+        "right_triangle_area_proxy": 168.78185249999999,
+        "ellipse_area_proxy": 1060.487655746552
+      }
+    },
+    {
+      "tracer": "LRG3_PLUS_ELG1",
+      "z": 0.934,
+      "DM_over_rd": 21.576,
+      "DH_over_rd": 17.641,
+      "F_AP": 1.223059917238252,
+      "synthetic_geometry": {
+        "rho": 27.869852116579306,
+        "phi_rad": 0.8854025854320441,
+        "phi_deg": 50.72983131522743,
+        "axis_ratio_q": 0.8176214312198739,
+        "ellipse_eccentricity_proxy": 0.5757561942436791,
+        "right_triangle_area_proxy": 190.311108,
+        "ellipse_area_proxy": 1195.7599575786674
+      }
+    },
+    {
+      "tracer": "ELG2",
+      "z": 1.321,
+      "DM_over_rd": 27.601,
+      "DH_over_rd": 14.176,
+      "F_AP": 1.947023137697517,
+      "synthetic_geometry": {
+        "rho": 31.0286025627968,
+        "phi_rad": 1.0963243834350442,
+        "phi_deg": 62.81476014811022,
+        "axis_ratio_q": 0.5136045795442195,
+        "ellipse_eccentricity_proxy": 0.8580270018310645,
+        "right_triangle_area_proxy": 195.635888,
+        "ellipse_area_proxy": 1229.216537038631
+      }
+    },
+    {
+      "tracer": "QSO",
+      "z": 1.484,
+      "DM_over_rd": 30.512,
+      "DH_over_rd": 12.817,
+      "F_AP": 2.3805882811890458,
+      "synthetic_geometry": {
+        "rho": 33.0946768076076,
+        "phi_rad": 1.1731137317805382,
+        "phi_deg": 67.21446571986691,
+        "axis_ratio_q": 0.42006423702149975,
+        "ellipse_eccentricity_proxy": 0.9074943728616423,
+        "right_triangle_area_proxy": 195.53615200000002,
+        "ellipse_area_proxy": 1228.5898772688345
+      }
+    },
+    {
+      "tracer": "Lya",
+      "z": 2.33,
+      "DM_over_rd": 38.988,
+      "DH_over_rd": 8.632,
+      "F_AP": 4.516682113067655,
+      "synthetic_geometry": {
+        "rho": 39.9321370327209,
+        "phi_rad": 1.3529096578395765,
+        "phi_deg": 77.51601345669602,
+        "axis_ratio_q": 0.22140145685852056,
+        "ellipse_eccentricity_proxy": 0.9751827494889995,
+        "right_triangle_area_proxy": 168.27220799999998,
+        "ellipse_area_proxy": 1057.2854649122671
+      }
+    }
+  ],
+  "G4_LCDM": [
+    {
+      "tracer": "LRG1",
+      "z": 0.51,
+      "DM_over_rd": 13.28715059707568,
+      "DH_over_rd": 22.500853798273727,
+      "F_AP": 0.5905176184067769,
+      "synthetic_geometry": {
+        "rho": 26.13114602616307,
+        "phi_rad": 0.53341798462899,
+        "phi_deg": 30.562599235615348,
+        "axis_ratio_q": 0.5905176184067769,
+        "ellipse_eccentricity_proxy": 0.8070247470500445,
+        "right_triangle_area_proxy": 149.48611649022266,
+        "ellipse_area_proxy": 939.2489707587031
+      }
+    },
+    {
+      "tracer": "LRG2",
+      "z": 0.706,
+      "DM_over_rd": 17.449611133545666,
+      "DH_over_rd": 20.017459451572915,
+      "F_AP": 0.871719569396931,
+      "synthetic_geometry": {
+        "rho": 26.555368790648092,
+        "phi_rad": 0.7169690333969848,
+        "phi_deg": 41.07929965522139,
+        "axis_ratio_q": 0.871719569396931,
+        "ellipse_eccentricity_proxy": 0.4900050941882434,
+        "right_triangle_area_proxy": 174.64844165573282,
+        "ellipse_area_proxy": 1097.3485225331117
+      }
+    },
+    {
+      "tracer": "LRG3_PLUS_ELG1",
+      "z": 0.934,
+      "DM_over_rd": 21.71727546240332,
+      "DH_over_rd": 17.483714313897494,
+      "F_AP": 1.2421431208779616,
+      "synthetic_geometry": {
+        "rho": 27.880464840455755,
+        "phi_rad": 0.8929774987047586,
+        "phi_deg": 51.1638418759316,
+        "axis_ratio_q": 0.805060208595921,
+        "ellipse_eccentricity_proxy": 0.5931931056034723,
+        "right_triangle_area_proxy": 189.84931993043787,
+        "ellipse_area_proxy": 1192.8584575649638
+      }
+    },
+    {
+      "tracer": "ELG2",
+      "z": 1.321,
+      "DM_over_rd": 27.784398594980164,
+      "DH_over_rd": 14.039339939605705,
+      "F_AP": 1.979038809125131,
+      "synthetic_geometry": {
+        "rho": 31.129983476136694,
+        "phi_rad": 1.102921057880696,
+        "phi_deg": 63.192721752667865,
+        "axis_ratio_q": 0.5052958008651016,
+        "ellipse_eccentricity_proxy": 0.8629462055238991,
+        "right_triangle_area_proxy": 195.03730844621484,
+        "ellipse_area_proxy": 1225.45555078111
+      }
+    },
+    {
+      "tracer": "QSO",
+      "z": 1.484,
+      "DM_over_rd": 29.97534502391888,
+      "DH_over_rd": 12.867951069224235,
+      "F_AP": 2.329457491924236,
+      "synthetic_geometry": {
+        "rho": 32.62062957735377,
+        "phi_rad": 1.165302271738652,
+        "phi_deg": 66.76690202763176,
+        "axis_ratio_q": 0.4292845022786637,
+        "ellipse_eccentricity_proxy": 0.9031693175165773,
+        "right_triangle_area_proxy": 192.86063652545116,
+        "ellipse_area_proxy": 1211.7791177500171
+      }
+    },
+    {
+      "tracer": "Lya",
+      "z": 2.33,
+      "DM_over_rd": 38.88630825212762,
+      "DH_over_rd": 8.629592600448042,
+      "F_AP": 4.506158060127737,
+      "synthetic_geometry": {
+        "rho": 39.83233407583838,
+        "phi_rad": 1.3524167945650019,
+        "phi_deg": 77.4877744711859,
+        "axis_ratio_q": 0.2219185360692059,
+        "ellipse_eccentricity_proxy": 0.9750652097931197,
+        "right_triangle_area_proxy": 167.78649897565109,
+        "ellipse_area_proxy": 1054.2336651069136
+      }
+    }
+  ],
+  "G4_RLL": [
+    {
+      "tracer": "LRG1",
+      "z": 0.51,
+      "DM_over_rd": 13.287150597613211,
+      "DH_over_rd": 22.500853801004727,
+      "F_AP": 0.5905176183589932,
+      "synthetic_geometry": {
+        "rho": 26.131146028787985,
+        "phi_rad": 0.5334179845935609,
+        "phi_deg": 30.56259923358541,
+        "axis_ratio_q": 0.5905176183589932,
+        "ellipse_eccentricity_proxy": 0.8070247470850088,
+        "right_triangle_area_proxy": 149.4861165144137,
+        "ellipse_area_proxy": 939.2489709107
+      }
+    },
+    {
+      "tracer": "LRG2",
+      "z": 0.706,
+      "DM_over_rd": 17.44961113468597,
+      "DH_over_rd": 20.017459454925017,
+      "F_AP": 0.8717195693079192,
+      "synthetic_geometry": {
+        "rho": 26.555368793924206,
+        "phi_rad": 0.7169690333464068,
+        "phi_deg": 41.0792996523235,
+        "axis_ratio_q": 0.8717195693079192,
+        "ellipse_eccentricity_proxy": 0.49000509434659545,
+        "right_triangle_area_proxy": 174.64844169639227,
+        "ellipse_area_proxy": 1097.3485227885824
+      }
+    },
+    {
+      "tracer": "LRG3_PLUS_ELG1",
+      "z": 0.934,
+      "DM_over_rd": 21.717275464349047,
+      "DH_over_rd": 17.48371431755025,
+      "F_AP": 1.2421431207297369,
+      "synthetic_geometry": {
+        "rho": 27.880464844261986,
+        "phi_rad": 0.8929774986464694,
+        "phi_deg": 51.163841872591874,
+        "axis_ratio_q": 0.8050602086919887,
+        "ellipse_eccentricity_proxy": 0.5931931054730927,
+        "right_triangle_area_proxy": 189.84931998711107,
+        "ellipse_area_proxy": 1192.8584579210521
+      }
+    },
+    {
+      "tracer": "ELG2",
+      "z": 1.321,
+      "DM_over_rd": 27.784398598344147,
+      "DH_over_rd": 14.039339943203805,
+      "F_AP": 1.9790388088575404,
+      "synthetic_geometry": {
+        "rho": 31.12998348076186,
+        "phi_rad": 1.10292105782627,
+        "phi_deg": 63.192721749549484,
+        "axis_ratio_q": 0.5052958009334239,
+        "ellipse_eccentricity_proxy": 0.8629462054838932,
+        "right_triangle_area_proxy": 195.0373085198144,
+        "ellipse_area_proxy": 1225.4555512435497
+      }
+    },
+    {
+      "tracer": "QSO",
+      "z": 1.484,
+      "DM_over_rd": 29.97534502785946,
+      "DH_over_rd": 12.867951072698963,
+      "F_AP": 2.329457491601446,
+      "synthetic_geometry": {
+        "rho": 32.62062958234549,
+        "phi_rad": 1.1653022716884232,
+        "phi_deg": 66.76690202475385,
+        "axis_ratio_q": 0.4292845023381492,
+        "ellipse_eccentricity_proxy": 0.9031693174883033,
+        "right_triangle_area_proxy": 192.86063660288283,
+        "ellipse_area_proxy": 1211.779118236535
+      }
+    },
+    {
+      "tracer": "Lya",
+      "z": 2.33,
+      "DM_over_rd": 38.88630825866929,
+      "DH_over_rd": 8.629592603120724,
+      "F_AP": 4.50615805949018,
+      "synthetic_geometry": {
+        "rho": 39.832334082803726,
+        "phi_rad": 1.3524167945350773,
+        "phi_deg": 77.48777446947135,
+        "axis_ratio_q": 0.2219185361006042,
+        "ellipse_eccentricity_proxy": 0.9750652097859737,
+        "right_triangle_area_proxy": 167.7864990558424,
+        "ellipse_area_proxy": 1054.2336656107705
+      }
+    }
+  ],
+  "RLL_minus_LCDM": [
+    {
+      "tracer": "LRG1",
+      "z": 0.51,
+      "delta_phi_deg": -2.029938883651994e-9,
+      "delta_rho": 2.6249153961543925e-9,
+      "delta_axis_ratio": -4.778366591295935e-11,
+      "delta_eccentricity_proxy": 3.496436473682252e-11
+    },
+    {
+      "tracer": "LRG2",
+      "z": 0.706,
+      "delta_phi_deg": -2.897891704378708e-9,
+      "delta_rho": 3.276113602623809e-9,
+      "delta_axis_ratio": -8.901179793241454e-11,
+      "delta_eccentricity_proxy": 1.58352053691857e-10
+    },
+    {
+      "tracer": "LRG3_PLUS_ELG1",
+      "z": 0.934,
+      "delta_phi_deg": -3.339728493756411e-9,
+      "delta_rho": 3.806231774206026e-9,
+      "delta_axis_ratio": 9.606770934311726e-11,
+      "delta_eccentricity_proxy": -1.3037959600836757e-10
+    },
+    {
+      "tracer": "ELG2",
+      "z": 1.321,
+      "delta_phi_deg": -3.1183802207124245e-9,
+      "delta_rho": 4.625167804306329e-9,
+      "delta_axis_ratio": 6.832223675701243e-11,
+      "delta_eccentricity_proxy": -4.0005887491645353e-11
+    },
+    {
+      "tracer": "QSO",
+      "z": 1.484,
+      "delta_phi_deg": -2.8779112426491338e-9,
+      "delta_rho": 4.991719038116571e-9,
+      "delta_axis_ratio": 5.948547210365973e-11,
+      "delta_eccentricity_proxy": -2.82739387458264e-11
+    },
+    {
+      "tracer": "Lya",
+      "z": 2.33,
+      "delta_phi_deg": -1.714553832243837e-9,
+      "delta_rho": 6.965343857245898e-9,
+      "delta_axis_ratio": 3.13983006261509e-11,
+      "delta_eccentricity_proxy": -7.1460615203022826e-12
+    }
+  ],
+  "boundary": [
+    "This is a dimensionless synthetic embedding of BAO radial/transverse observables.",
+    "The ellipse/cone/triangle names are geometric coordinates, not a claim that BAO points literally form Euclidean ellipses or cones in spacetime.",
+    "RLL and LCDM differences are expected to be near zero here because the recorded G4 RLL best fit has Omega_s0=0."
+  ]
+}
