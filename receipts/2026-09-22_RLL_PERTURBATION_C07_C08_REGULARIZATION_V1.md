@@ -40,3 +40,29 @@ token_resolution=NOT_RESOLVED
 class_camb_unlock=false
 
 F_next: canonical CI -> derive C01/C02 in regular variables -> analytic limit -> IC -> gauge mappings -> Bianchi/constraint gates.
+
+
+## Canonical CI R1 — preserved harness failure
+
+run_id=35721226047
+job_id=106724347532
+focused_tests=15_PASS
+A0=FALSIFIED_AS_GLOBAL_DEFAULT_0_OF_9
+A1_1=NECESSARY_GATES_PASS_9_OF_9
+
+C07_C08_workflow_conclusion=FAIL
+failure_class=DIRECT_SCRIPT_IMPORT_PATH
+failure=ModuleNotFoundError: No module named 'tools'
+
+interpretation:
+The failure occurred before the C07/C08 executable preflight could run as a direct script.
+Pytest import-mode passed because the repository root was already importable.
+The later missing CLASS/CAMB/CMB receipts were cascade failures after this abort, not new backend evidence.
+
+correction:
+- make the preflight insert the repository root into sys.path when executed directly;
+- add a regression that invokes the exact CLI form used by the workflow.
+
+scientific_state_after_R1:
+TOKEN_VAZIO / NOT_RESOLVED
+No C07/C08 PASS is claimed from R1.
