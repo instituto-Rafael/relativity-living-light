@@ -86,7 +86,13 @@ def evaluate_case(zt: float, wt: float) -> dict[str, Any]:
     rho = rho_factor(z, zt, wt)
     pressure = p_conserved_factor(z, zt, wt)
     w = pressure / rho
+    drho = drho_factor_dlna(z, zt, wt)
     residual = continuity_residual(z, zt, wt)
+    continuity_scale = np.maximum(
+        1.0,
+        np.abs(drho) + 3.0 * np.abs(rho + pressure),
+    )
+    normalized_residual = np.abs(residual) / continuity_scale
 
     finite = (
         np.isfinite(rho)
@@ -96,6 +102,7 @@ def evaluate_case(zt: float, wt: float) -> dict[str, Any]:
     )
 
     max_abs_residual = float(np.max(np.abs(residual[finite]))) if np.any(finite) else math.inf
+    max_normalized_residual = float(np.max(normalized_residual[finite])) if np.any(finite) else math.inf
     min_rho = float(np.min(rho[finite])) if np.any(finite) else -math.inf
     min_one_plus_w = float(np.min(1.0 + w[finite])) if np.any(finite) else -math.inf
     max_abs_w = float(np.max(np.abs(w[finite]))) if np.any(finite) else math.inf
@@ -103,7 +110,7 @@ def evaluate_case(zt: float, wt: float) -> dict[str, Any]:
     gates = {
         "finite_everywhere": bool(np.all(finite)),
         "rho_positive": bool(np.all(rho > 0.0)),
-        "continuity_closed": bool(max_abs_residual <= TOL),
+        "continuity_closed": bool(max_normalized_residual <= TOL),
         "canonical_kinetic_sign_necessary": bool(min_one_plus_w >= -TOL),
         "cs2_rest_bounded": bool(0.0 <= CS2_REST <= 1.0),
     }
@@ -118,6 +125,8 @@ def evaluate_case(zt: float, wt: float) -> dict[str, Any]:
         "one_plus_w_min": min_one_plus_w,
         "max_abs_w": max_abs_w,
         "max_abs_continuity_residual": max_abs_residual,
+        "max_normalized_continuity_residual": max_normalized_residual,
+        "continuity_residual_policy": "normalized residual <= 1e-10; absolute residual retained as floating-cancellation diagnostic",
         "cs2_rest": CS2_REST,
         "z_domain": [float(z[0]), float(z[-1])],
         "samples": int(z.size),
