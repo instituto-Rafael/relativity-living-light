@@ -76,7 +76,7 @@ A referência ao corpus foi promovida para **registro integral dentro do RLL**:
 - `data/governance/RLL_FORMULA_TEST_MATRIX_MF0001_MF0251_V1.json` — rota de teste para cada MF;
 - `docs/cosmology/RLL_FORMULA_GEOMETRY_CROSSWALK_DESI_PANTHEON_LCDM_RLL_V1.md` — DESI/Pantheon+/LCDM/RLL;
 - `docs/invariants/circle_triangle_cone_annulus_v1.md` — círculos, triângulos, cones, coroas e troncos de cone;
-- `tools/test_formula_cosmology_geometry_crosswalk.py` — gate executável agregado.
+- `tools/check_formula_cosmology_geometry_crosswalk.py` — gate executável agregado (renamed from the historical `tools/test_formula_cosmology_geometry_crosswalk.py` to avoid pytest module-name collision).
 
 Importação completa não significa `251/251 PASS`: execução individual permanece tipada e append-only.
 

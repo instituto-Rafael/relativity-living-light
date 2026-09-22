@@ -1,4 +1,4 @@
-from tools.test_formula_cosmology_geometry_crosswalk import (
+from tools.check_formula_cosmology_geometry_crosswalk import (
     registry_gate,
     desi_geometry_gate,
     cone_annulus_gate,

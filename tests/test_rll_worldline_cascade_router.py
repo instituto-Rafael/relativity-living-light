@@ -27,7 +27,12 @@ def test_rmrcti_semantics_do_not_collapse() -> None:
     assert s["delta_p_value_target"] == 0.18
     assert s["R"] == 2.0
     assert s["r"] == 0.7
-    assert s["unresolved_index_around_70"] == "TOKEN_VAZIO_INDEX_AROUND_70"
+    assert s["unresolved_index_around_70"] == "SUPERSEDED_BY_SOURCE_OBSERVED_CV_MEAN_0_700000"
+    history = s["reconciliation_history"]
+    assert history[-1]["previous"] == "TOKEN_VAZIO_INDEX_AROUND_70"
+    assert history[-1]["corrected_to"] == "SOURCE_OBSERVED_CV_MEAN_0_700000"
+    assert s["stability_related_CV_mean_0_70"]["value"] == 0.7
+    assert s["stability_related_CV_mean_0_70"]["boundary"] == "not stable_any rate; not DeltaP; not a physical constant"
 
 
 def test_permutation_is_bounded_and_reproducible() -> None:
