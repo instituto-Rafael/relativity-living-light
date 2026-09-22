@@ -245,3 +245,49 @@ run_rll_canonical_armv7_physical.sh    = AUXILIARY/HISTORICAL
 ```
 
 The v2 runner remains the only route that should promote `RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL`.
+
+
+## v5 r×d boundary sheet at 2r±1 — merged producer bridge
+
+Canonical producer state:
+
+```text
+producer_repo=rafaelmeloreisnovo/Matem-tica-
+producer_pr=#38
+producer_merge_commit=96873a4c46c761f1f1f3c51198cc8e6f571ccb10
+base_v4_source_sha256=43f363f386e001a4cd568b3ae9e7a919ab9bdbef0e38c48fa2ce99bf951f8d0a
+relation=d=2r+delta
+delta={-1,0,+1}
+```
+
+The executable sheet is not a brute-force claim over the full `r×d` pairspace. It combines exhaustive raw radii `r=1..65536`, 65536 deterministic radii over the boundary-capable domain, and five representability-edge probes around `2^30`.
+
+Expected and independently reproduced counts:
+
+```text
+rxd_rows=131072
+rxd_evals=393221
+rxd_minus_cases=131072
+rxd_tangent_cases=131072
+rxd_plus_cases=131072
+rxd_special_cases=5
+INDEPENDENT_RXD_INTEGER_ORACLE=PASS
+oracle_report_sha256=7758bfa89e7d04cec520d876c46fca376c43d0beac75275579d3b7be3be7f078
+producer_c_execution_in_oracle=NOT_RUN
+```
+
+GitHub Actions run `35782026225` was observed twice and failed before observable workflow steps; both attempts exposed `steps=[]`, and the job-log blob was unavailable. The provider state therefore remains:
+
+```text
+GEOM_RXD_PROVIDER_CI=PROVIDER_PRESTART_FAILURE_REPRODUCED
+GEOM_RXD_PROVIDER_PROGRAM_RESULT=TOKEN_VAZIO
+GEOM_RXD_ARMV7_PHYSICAL=TOKEN_VAZIO
+SECOND_PHYSICAL_DEVICE=TOKEN_VAZIO
+BAREMETAL_PHYSICAL_RESET_BOOT=TOKEN_VAZIO
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
+```
+
+The independent integer oracle reproduces the boundary arithmetic but does not substitute for execution of the producer C artifact, a physical ARMv7 receipt, a second physical device, a board-specific reset-vector boot, or the RLL executable's own physical gate.
+
+R3=<F_ok: producer #38 merged; exact all-Q16 topology proof + r×d 2r±1 sheet + independent oracle PASS; F_gap: provider pre-start, physical r×d receipt, second device, reset boot and RLL physical remain open; F_next: ingest artifact-specific physical receipts independently>.
