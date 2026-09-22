@@ -41,7 +41,7 @@ def test_omega_math_core_gates_and_hypothesis_boundaries(tmp_path: Path):
     assert by_id["G-LINES-5678"]["observed"] == 16
 
     assert by_id["G-SCALE-344"]["status"] == "PASS"
-    assert by_id["G-SCALE-344"]["observed"]["cos_pi_over_3"] == 0.5
+    assert abs(by_id["G-SCALE-344"]["observed"]["cos_pi_over_3"] - 0.5) <= 1.0e-12
 
     hypotheses = json.loads(
         (tmp_path / "hypothesis_results.json").read_text(encoding="utf-8")
