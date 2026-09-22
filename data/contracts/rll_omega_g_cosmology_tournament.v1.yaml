@@ -1,0 +1,139 @@
+schema: rll.omega_g_cosmology_tournament.v1
+version: 1
+date: "2026-09-22"
+state: MATERIALIZED_NOT_EXECUTED
+claim_allowed: false
+scientific_confirmation: false
+
+purpose: >-
+  Test whether any explicitly bound Omega_G geometric invariant adds explanatory
+  power to established cosmological model families under the same datasets,
+  covariance, nuisance policy, optimizer policy and model-selection penalties.
+
+authority:
+  geometry:
+    repository: rafaelmeloreisnovo/Matem-tica-
+    path: operators/omega_g_geometric_operator.v1.yaml
+  rll_binding:
+    path: data/contracts/rll_geometric_operator_omega_g.v1.yaml
+  background_likelihood:
+    path: tools/run_g4_background_tournament.py
+    contract: data/contracts/rll_g4_background_tournament.v1.json
+
+models:
+  baseline:
+    - LCDM
+    - wCDM
+    - CPL
+  candidate:
+    - RLL
+  additional_existing_g4_controls:
+    - GEDE
+    - IDE_QrhoLambda
+
+datasets:
+  G4_background:
+    cosmic_chronometers_Hz:
+      path: data/real/Hz_data_real.csv
+      covariance: diagonal_reported_sigma
+      status: ACTIVE_EXISTING_G4
+    DESI_DR2_BAO:
+      points: data/real/cosmology/desi_dr2_bao_primary_points.csv
+      covariance: data/real/desi_dr2_bao_covariance.csv
+      expected_vector_length: 13
+      status: ACTIVE_EXISTING_G4
+    PantheonPlus_SH0ES:
+      catalog: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat
+      covariance: data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov
+      status: ACTIVE_EXISTING_G4
+  perturbation_level:
+    fsigma8:
+      status: BLOCKED_UNTIL_MODEL_SPECIFIC_PERTURBATION_CLOSURE
+    CMB_full_or_compressed:
+      status: BLOCKED_FROM_OMEGA_G_BACKGROUND_BINDING
+    lensing:
+      status: TOKEN_VAZIO_BINDING
+
+experimental_arms:
+  - id: ARM0_BASELINE
+    omega_g: disabled
+    description: existing G4 tournament unchanged
+  - id: ARM1_NULL_BINDING
+    omega_g: identity
+    description: Omega_G plumbing enabled but numerical prediction must equal ARM0
+    required_result: exact_or_tolerance_parity
+  - id: ARM2_BOUND_CANDIDATE
+    omega_g: registry_binding
+    description: one predeclared invariant-mechanism-observable binding at a time
+    default_state: BLOCKED_UNTIL_BINDING_COMPLETE
+  - id: ARM3_ABLATION
+    omega_g: remove_one_bound_effect
+    description: subtractive ablation against ARM2
+    default_state: BLOCKED_UNTIL_ARM2_EXECUTED
+  - id: ARM4_HOLDOUT
+    omega_g: bound_candidate_on_predeclared_holdout
+    description: out-of-sample confirmation
+    default_state: TOKEN_VAZIO
+
+binding_requirements:
+  required_fields:
+    - binding_id
+    - invariant_id
+    - source_family
+    - observable_id
+    - mechanism
+    - mathematical_map
+    - units_input
+    - units_output
+    - free_parameters
+    - parameter_priors_or_bounds
+    - covariance_policy
+    - aggregation_level
+    - double_counting_audit
+    - falsifier
+    - holdout_policy
+    - provenance
+  activation_rule: all_required_fields_nonempty_and_state_APPROVED_FOR_TEST
+  one_binding_at_a_time_first_pass: true
+
+fairness:
+  same_data_vector: true
+  same_covariance: true
+  same_nuisance_policy: true
+  same_optimizer_policy: true
+  same_priors_for_shared_parameters: true
+  extra_omega_g_parameters_count_in_k: true
+  compare:
+    - chi2_total
+    - chi2_by_block
+    - log_likelihood
+    - AIC
+    - AICc
+    - BIC
+    - boundary_hits
+    - seed_stability
+  bayes_evidence:
+    status: TOKEN_VAZIO_SEPARATE_ROUTE
+
+null_tests:
+  - Omega_G_identity_must_not_change_LCDM
+  - Omega_G_identity_must_not_change_wCDM
+  - Omega_G_identity_must_not_change_CPL
+  - Omega_G_identity_must_not_change_RLL
+  - dataset_counts_and_covariance_hashes_must_match_G4
+  - claim_allowed_must_remain_false
+
+promotion_gates:
+  G0_contract: PASS_MATERIALIZED
+  G1_null_parity: TOKEN_VAZIO_NOT_RUN
+  G2_single_binding_synthetic_recovery: TOKEN_VAZIO
+  G3_real_background_tournament: TOKEN_VAZIO
+  G4_ablation: TOKEN_VAZIO
+  G5_holdout: TOKEN_VAZIO
+  G6_independent_reproduction: TOKEN_VAZIO
+  scientific_claim: BLOCKED
+
+rollback:
+  mode: append_only
+  baseline_artifacts_immutable: true
+  omega_g_failure_removes_binding_not_baseline
