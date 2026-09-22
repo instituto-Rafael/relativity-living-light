@@ -94,3 +94,23 @@ Resultados materializados:
 - receipt: `receipts/2026-09-21_RLL_MF160_MF130_GEOMETRY_EXECUTION_V1.md`.
 
 Contradição preservada: `MF-0219` FAIL sob a definição padrão de coroa/anel; não apagar o registro original.
+
+## Ponte triângulo × coroa × toro × 840 (2026-09-22)
+
+Delta sucessor da geometria já canônica de círculo–triângulo–cone–coroa e do Tear Geométrico:
+
+- [`triangle_crown_torus_840_bridge_v1.md`](./triangle_crown_torus_840_bridge_v1.md)
+- governança: `governance/modules/geometry-triangle-crown-torus-840.v1.json`
+- verificador: `tools/verify_triangle_crown_torus_840_bridge.py`
+- teste: `tests/test_triangle_crown_torus_840_bridge.py`
+- receipt externo: `results/audit/triangle_crown_torus_840_bridge_v1.json`
+- μWRITE: `receipts/2026-09-22_RLL_TRIANGLE_CROWN_TORUS_840_BRIDGE_V1.md`
+
+Estado: **geometria formal + combinatória finita**. O receipt de 21/21 foi executado fora do CI canônico e permanece explicitamente separado do futuro receipt nativo da PR.
+
+```text
+formal_geometry != physical_vortex
+sphere != torus
+840_angular != 840_modular_semantics
+external_receipt != canonical_CI
+```
