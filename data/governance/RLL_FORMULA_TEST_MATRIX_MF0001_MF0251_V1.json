@@ -95,11 +95,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0007",
@@ -107,11 +108,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0008",
@@ -191,11 +193,12 @@
       "source_class": "DERIVED",
       "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0015",
@@ -203,11 +206,12 @@
       "source_class": "DERIVED",
       "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0016",
@@ -407,11 +411,12 @@
       "source_class": "STANDARD_SET",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0033",
@@ -419,11 +424,12 @@
       "source_class": "STANDARD_SET",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0034",
@@ -431,11 +437,12 @@
       "source_class": "STANDARD_SET",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0035",
@@ -443,11 +450,12 @@
       "source_class": "STANDARD_SET",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0036",
@@ -455,11 +463,12 @@
       "source_class": "STANDARD_SET",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0037",
@@ -479,11 +488,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0039",
@@ -491,11 +501,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0040",
@@ -503,11 +514,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0041",
@@ -527,11 +539,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0043",
@@ -539,11 +552,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0044",
@@ -551,11 +565,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0045",
@@ -563,11 +578,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0046",
@@ -575,11 +591,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0047",
@@ -587,11 +604,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0048",
@@ -599,11 +617,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0049",
@@ -611,11 +630,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0050",
@@ -623,11 +643,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0051",
@@ -635,11 +656,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0052",
@@ -647,11 +669,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0053",
@@ -683,11 +706,12 @@
       "source_class": "STANDARD_PHYSICS",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "DOMAIN_SEPARATION_CONTROL",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0056",
@@ -695,11 +719,12 @@
       "source_class": "STANDARD_PHYSICS",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "DOMAIN_SEPARATION_CONTROL",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0057",
@@ -767,11 +792,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0063",
@@ -779,11 +805,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0064",
@@ -791,11 +818,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0065",
@@ -803,11 +831,12 @@
       "source_class": "BASE_REPRESENTATION",
       "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NEGATIVE_CONTROL_NO_COSMOLOGY",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0066",
@@ -815,11 +844,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0067",
@@ -827,11 +857,12 @@
       "source_class": "ROTATION",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0068",
@@ -839,11 +870,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0069",
@@ -851,11 +883,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0070",
@@ -863,11 +896,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0071",
@@ -875,11 +909,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0072",
@@ -887,11 +922,12 @@
       "source_class": "DERIVED",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0073",
@@ -899,11 +935,12 @@
       "source_class": "DERIVED",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0074",
@@ -911,11 +948,12 @@
       "source_class": "DERIVED",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0075",
@@ -923,11 +961,12 @@
       "source_class": "DERIVED",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0076",
@@ -935,11 +974,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0077",
@@ -947,11 +987,12 @@
       "source_class": "DERIVED",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0078",
@@ -959,11 +1000,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0079",
@@ -983,11 +1025,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0081",
@@ -995,11 +1038,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0082",
@@ -1007,11 +1051,12 @@
       "source_class": "DERIVED",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0083",
@@ -1019,11 +1064,12 @@
       "source_class": "DERIVED",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0084",
@@ -1031,11 +1077,12 @@
       "source_class": "DERIVED",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0085",
@@ -1043,11 +1090,12 @@
       "source_class": "DERIVED",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0086",
@@ -1055,11 +1103,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0087",
@@ -1115,11 +1164,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0092",
@@ -1127,11 +1177,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0093",
@@ -1139,11 +1190,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0094",
@@ -1151,11 +1203,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0095",
@@ -1163,11 +1216,12 @@
       "source_class": "STANDARD_LIMIT",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0096",
@@ -1175,11 +1229,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0097",
@@ -1187,11 +1242,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0098",
@@ -1199,11 +1255,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0099",
@@ -1211,11 +1268,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0100",
@@ -1223,11 +1281,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0101",
@@ -1235,11 +1294,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0102",
@@ -1247,11 +1307,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0103",
@@ -1259,11 +1320,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0104",
@@ -1271,11 +1333,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0105",
@@ -1283,11 +1346,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0106",
@@ -1295,11 +1359,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0107",
@@ -1307,11 +1372,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0108",
@@ -1319,11 +1385,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0109",
@@ -1343,11 +1410,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0111",
@@ -1355,11 +1423,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0112",
@@ -1367,11 +1436,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0113",
@@ -1391,11 +1461,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0115",
@@ -1403,11 +1474,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0116",
@@ -1439,11 +1511,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0119",
@@ -1451,11 +1524,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0120",
@@ -1475,11 +1549,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0122",
@@ -1487,11 +1562,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0123",
@@ -1499,11 +1575,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0124",
@@ -1511,11 +1588,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0125",
@@ -1523,11 +1601,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0126",
@@ -1535,11 +1614,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0127",
@@ -1547,11 +1627,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0128",
@@ -1559,11 +1640,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0129",
@@ -1571,11 +1653,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS_CONDITIONAL",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0130",
@@ -1583,11 +1666,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "TOKEN_VAZIO_SEMANTICS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0131",
@@ -1595,11 +1679,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0132",
@@ -1607,11 +1692,12 @@
       "source_class": "DERIVED",
       "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0133",
@@ -1619,11 +1705,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0134",
@@ -1631,11 +1718,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0135",
@@ -1643,11 +1731,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0136",
@@ -1655,11 +1744,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0137",
@@ -1667,11 +1757,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0138",
@@ -1679,11 +1770,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0139",
@@ -1691,11 +1783,12 @@
       "source_class": "TRIGONOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0140",
@@ -1703,11 +1796,12 @@
       "source_class": "STANDARD_LIMIT",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0141",
@@ -1715,11 +1809,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0142",
@@ -1727,11 +1822,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0143",
@@ -1739,11 +1835,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0144",
@@ -1751,11 +1848,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0145",
@@ -1763,11 +1861,12 @@
       "source_class": "NUMERIC",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0146",
@@ -1775,11 +1874,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0147",
@@ -1787,11 +1887,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0148",
@@ -1799,11 +1900,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0149",
@@ -1811,11 +1913,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0150",
@@ -1823,11 +1926,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0151",
@@ -1835,11 +1939,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0152",
@@ -1847,11 +1952,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0153",
@@ -1859,11 +1965,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0154",
@@ -1871,11 +1978,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0155",
@@ -1883,11 +1991,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0156",
@@ -1895,11 +2004,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0157",
@@ -1907,11 +2017,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0158",
@@ -1919,11 +2030,12 @@
       "source_class": "STANDARD_GEOMETRY",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0159",
@@ -1931,11 +2043,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0160",
@@ -1943,11 +2056,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0161",
@@ -1955,11 +2069,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0162",
@@ -1967,11 +2082,12 @@
       "source_class": "STANDARD_PROJECTION",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0163",
@@ -1979,11 +2095,12 @@
       "source_class": "STANDARD_CALCULUS",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0164",
@@ -1991,11 +2108,12 @@
       "source_class": "STANDARD_CALCULUS",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0165",
@@ -2003,11 +2121,12 @@
       "source_class": "STANDARD_CALCULUS",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0166",
@@ -2015,11 +2134,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0167",
@@ -2027,11 +2147,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0168",
@@ -2039,11 +2160,12 @@
       "source_class": "STANDARD_TRIG",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0169",
@@ -2063,11 +2185,12 @@
       "source_class": "STANDARD_PHYSICS_MODEL",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "DOMAIN_SEPARATION_CONTROL",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0171",
@@ -2075,11 +2198,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0172",
@@ -2123,11 +2247,12 @@
       "source_class": "STANDARD_PHYSICS",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "DOMAIN_SEPARATION_CONTROL",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0176",
@@ -2135,11 +2260,12 @@
       "source_class": "DERIVED",
       "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0177",
@@ -2315,11 +2441,12 @@
       "source_class": "STANDARD_SET/PROJECT_BRIDGE",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "TOKEN_VAZIO_SEMANTICS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0192",
@@ -2387,11 +2514,12 @@
       "source_class": "GEOMETRIC_DEFINITION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0198",
@@ -2399,11 +2527,12 @@
       "source_class": "GEOMETRIC_DEFINITION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0199",
@@ -2435,11 +2564,12 @@
       "source_class": "ROTATION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0202",
@@ -2471,11 +2601,12 @@
       "source_class": "SET_RELATION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0205",
@@ -2519,11 +2650,12 @@
       "source_class": "ARITHMETIC",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0209",
@@ -2567,11 +2699,12 @@
       "source_class": "DERIVED",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0213",
@@ -2579,11 +2712,12 @@
       "source_class": "DERIVED",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0214",
@@ -2651,11 +2785,12 @@
       "source_class": "SET_RELATION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "FAIL",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0220",
@@ -2675,11 +2810,12 @@
       "source_class": "ORDER_RELATION",
       "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS_CONDITIONAL",
       "cosmology_route": "NO_DIRECT_COSMOLOGY_BINDING",
       "desi_route": "NOT_APPLICABLE",
       "pantheon_route": "NOT_APPLICABLE",
-      "lcdm_rll_route": "NOT_APPLICABLE"
+      "lcdm_rll_route": "NOT_APPLICABLE",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0222",
@@ -2759,11 +2895,12 @@
       "source_class": "ROTATION_MATRIX",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0229",
@@ -2771,11 +2908,12 @@
       "source_class": "ROTATION_MATRIX",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0230",
@@ -2783,11 +2921,12 @@
       "source_class": "SET_MODEL",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0231",
@@ -2795,11 +2934,12 @@
       "source_class": "SET_MODEL",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0232",
@@ -2807,11 +2947,12 @@
       "source_class": "SET_MODEL",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0233",
@@ -2819,11 +2960,12 @@
       "source_class": "SET_MODEL",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0234",
@@ -2831,11 +2973,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0235",
@@ -2843,11 +2986,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0236",
@@ -2855,11 +2999,12 @@
       "source_class": "TRIANGLE",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0237",
@@ -2867,11 +3012,12 @@
       "source_class": "TRUNCATION",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0238",
@@ -2879,11 +3025,12 @@
       "source_class": "TRUNCATION",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0239",
@@ -2891,11 +3038,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0240",
@@ -2903,11 +3051,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0241",
@@ -2915,11 +3064,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0242",
@@ -2927,11 +3077,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0243",
@@ -2939,11 +3090,12 @@
       "source_class": "OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0244",
@@ -2951,11 +3103,12 @@
       "source_class": "AREA_RATIO",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0245",
@@ -2963,11 +3116,12 @@
       "source_class": "HULL_OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0246",
@@ -2975,11 +3129,12 @@
       "source_class": "HULL_OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0247",
@@ -2987,11 +3142,12 @@
       "source_class": "HULL_OCTAGON",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0248",
@@ -2999,11 +3155,12 @@
       "source_class": "CROSS_RELATION",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0249",
@@ -3011,11 +3168,12 @@
       "source_class": "PHASE",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0250",
@@ -3023,11 +3181,12 @@
       "source_class": "OCTAGON_TRIG",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "DETERMINISTIC_NUMERIC_OR_SYMBOLIC",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
     },
     {
       "mf_id": "MF-0251",
@@ -3035,11 +3194,25 @@
       "source_class": "ROTATION_OPERATOR",
       "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
       "test_route": "STRUCTURAL_ASSERTION",
-      "test_state": "PENDING_PER_EXPRESSION",
+      "test_state": "PASS",
       "cosmology_route": "GEOMETRY_DIAGNOSTIC_CANDIDATE",
       "desi_route": "CANDIDATE_AFTER_DIMENSIONAL_GATE",
       "pantheon_route": "CANDIDATE_AFTER_DISTANCE_GATE",
-      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY"
+      "lcdm_rll_route": "MODEL_SPACE_DIAGNOSTIC_ONLY",
+      "execution_ref": "results/MF160_FORMAL_EXECUTION_V1.json"
+    }
+  ],
+  "execution_updates": [
+    {
+      "kind": "MF160_FORMAL_EXECUTION_V1",
+      "target_count": 160,
+      "status_counts": {
+        "PASS": 155,
+        "PASS_CONDITIONAL": 2,
+        "TOKEN_VAZIO_SEMANTICS": 2,
+        "FAIL": 1
+      },
+      "result_path": "results/MF160_FORMAL_EXECUTION_V1.json"
     }
   ]
 }
