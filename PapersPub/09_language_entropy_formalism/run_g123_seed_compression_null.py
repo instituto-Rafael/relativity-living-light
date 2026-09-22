@@ -61,32 +61,50 @@ def seed_from_lists(refs, texts, scope):
     obj={"schema":"SCD1","scope":scope,"refs":refs,"texts":texts}
     return jdump(obj)
 
-def unique_labels(n,rng):
-    out=set()
-    while len(out)<n: out.add(f"{rng.randrange(100_000_000):08d}")
-    return list(out)
-
 def null_distributions(refs,maps):
-    canonical=seed_from_lists(refs,{l:[maps[l][r] for r in refs] for l in LANGS},"normalized_verse_corpus")
+    # Hold every serialized metadata byte constant across the null families.
+    # Only the preregistered structural relation is permuted.
+    canonical_scope="normalized_verse_corpus"
+    canonical=seed_from_lists(refs,{l:[maps[l][r] for r in refs] for l in LANGS},canonical_scope)
     metric0=len(zstd.ZstdCompressor(level=19).compress(b(canonical)))
     dist={"common_order_shuffle":[],"independent_language_shuffle":[],"label_permutation":[]}
     for i in range(N_PERM):
         rng=random.Random(SEED+i)
+
         rr=refs.copy(); rng.shuffle(rr)
-        s=seed_from_lists(rr,{l:[maps[l][r] for r in rr] for l in LANGS},"null_common_order")
+        s=seed_from_lists(rr,{l:[maps[l][r] for r in rr] for l in LANGS},canonical_scope)
         dist["common_order_shuffle"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
+
         texts={l:[maps[l][r] for r in refs] for l in LANGS}
         for l in LANGS: rng.shuffle(texts[l])
-        s=seed_from_lists(refs,texts,"null_independent_language")
+        s=seed_from_lists(refs,texts,canonical_scope)
         dist["independent_language_shuffle"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
-        labels=unique_labels(len(refs),rng)
-        s=seed_from_lists(labels,{l:[maps[l][r] for r in refs] for l in LANGS},"null_label_permutation")
+
+        # True label permutation: preserve the exact label multiset/bytes and
+        # change only the association between refs and canonical texts.
+        labels=refs.copy(); rng.shuffle(labels)
+        s=seed_from_lists(labels,{l:[maps[l][r] for r in refs] for l in LANGS},canonical_scope)
         dist["label_permutation"].append(len(zstd.ZstdCompressor(level=19).compress(b(s))))
+
     summary={}
     for k,v in dist.items():
-        better=sum(x<=metric0 for x in v)
-        summary[k]={"n":len(v),"canonical_zstd_bytes":metric0,"null_min":min(v),"null_median":statistics.median(v),"null_max":max(v),
-                    "null_le_canonical_count":better,"empirical_p_one_sided":round((better+1)/(len(v)+1),6),"samples":v}
+        # "canonical beats a null" means strictly fewer compressed bytes.
+        beaten=sum(metric0 < x for x in v)
+        beat_fraction=beaten/len(v)
+        null_le_canonical=sum(x<=metric0 for x in v)
+        summary[k]={
+            "n":len(v),
+            "canonical_zstd_bytes":metric0,
+            "null_min":min(v),
+            "null_median":statistics.median(v),
+            "null_max":max(v),
+            "canonical_beats_null_count":beaten,
+            "canonical_beats_null_fraction":round(beat_fraction,6),
+            "gate_pass_95pct":beat_fraction>=0.95,
+            "null_le_canonical_count":null_le_canonical,
+            "empirical_p_one_sided":round((null_le_canonical+1)/(len(v)+1),6),
+            "samples":v,
+        }
     return summary
 
 def load_udhr(path:Path):
@@ -142,9 +160,9 @@ def main():
         "strong_claim_pass":best_seed+custom_overhead<best_plain,
         "strong_claim":"SCD1 custom representation beats the best generic-compressed plain-text baseline after counted repository-local schema+decoder overhead."}
     nulls=null_distributions(refs,maps)
-    g3_pass=all(v["empirical_p_one_sided"]<=0.05 for v in nulls.values())
+    g3_pass=all(v["gate_pass_95pct"] for v in nulls.values())
     result={"mu_id":"MU-RLL-G123-SEED-COMPRESSION-NULL-20260921","status":"ANALYSIS_RUN","claim_allowed":False,
-      "preregistered":{"seed":SEED,"n_permutations":N_PERM,"null_metric":"zstd_19 compressed bytes of SCD1 seed","null_gate":"canonical must beat >=95% of each null family"},
+      "preregistered":{"seed":SEED,"n_permutations":N_PERM,"null_metric":"zstd_19 compressed bytes of SCD1 seed","null_gate":"canonical must have strictly fewer zstd-19 bytes than >=95% of each null family; ties are not wins"},
       "G1_seed_reconstruction":{"status":"PASS" if g1_ok else "FAIL","source_sha256":checks,"intersection":len(refs),"normalized_records":len(refs)*3,
          "exact_reconstruction":verbose==recon,"baseline_sha256":sha_bytes(b(verbose)),"reconstructed_sha256":sha_bytes(b(recon)),"expected_baseline_sha256":EXPECTED_BASELINE},
       "G2_total_cost_compression":g2,
