@@ -13,11 +13,16 @@ import argparse
 import json
 import math
 import os
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any, Sequence
 
 import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from tools.rll_perturbation_a1_restframe_candidate_v1 import (
     CASES,
