@@ -66,3 +66,16 @@ formalized != executed pass
 ```
 
 R3 = <F_ok: atlas de invariantes ligado ao ledger de 251 expressões; F_gap: prior-art/verificador/calibração ainda abertos; F_next: testes determinísticos + contraexemplos por RLL-GWI ID>.
+
+
+## MF-0001..MF-0251 — importação integral e geometria cosmológica
+
+A referência ao corpus foi promovida para **registro integral dentro do RLL**:
+
+- `data/governance/RLL_SESSION_FORMULA_REGISTRY_MF0001_MF0251_V1.json` — 251/251, sem lacunas/duplicatas;
+- `data/governance/RLL_FORMULA_TEST_MATRIX_MF0001_MF0251_V1.json` — rota de teste para cada MF;
+- `docs/cosmology/RLL_FORMULA_GEOMETRY_CROSSWALK_DESI_PANTHEON_LCDM_RLL_V1.md` — DESI/Pantheon+/LCDM/RLL;
+- `docs/invariants/circle_triangle_cone_annulus_v1.md` — círculos, triângulos, cones, coroas e troncos de cone;
+- `tools/test_formula_cosmology_geometry_crosswalk.py` — gate executável agregado.
+
+Importação completa não significa `251/251 PASS`: execução individual permanece tipada e append-only.
