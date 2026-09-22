@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import json
+import subprocess
+import sys
+from pathlib import Path
+
 import numpy as np
 
 from tools.rll_perturbation_a1_gauge_regularization_v1 import (
@@ -60,3 +65,24 @@ def test_sharp_transitions_are_preserved_as_stiffness_not_silently_rejected():
     sharp = [r for r in payload["cases"] if r["wt"] == 0.05]
     assert sharp
     assert any(r["stiffness"] in {"MODERATE", "HIGH"} for r in sharp)
+
+
+def test_direct_cli_execution_from_repository_root(tmp_path):
+    out = tmp_path / "a1_2.json"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "tools/rll_perturbation_a1_gauge_regularization_v1.py",
+            "--output",
+            str(out),
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stderr + proc.stdout
+    payload = json.loads(out.read_text(encoding="utf-8"))
+    assert payload["state"] == "A1_2_GAUGE_VARIABLE_REGULARIZATION_PASS_IC_OPEN"
+    assert payload["passing_cases"] == payload["total_cases"] == 9
+    assert payload["class_camb_unlock"] is False
