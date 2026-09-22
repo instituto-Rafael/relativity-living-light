@@ -13,7 +13,10 @@ def test_dynamic_geometry_contract_is_fail_closed():
     c = load()
     assert c["claim_allowed"] is False
     assert c["source_bridge"]["delta_p_state"] == "STABILITY_CANDIDATE"
-    assert c["source_bridge"]["unresolved_index_around_70"] == "TOKEN_VAZIO_INDEX_AROUND_70"
+    obs = c["source_bridge"]["stability_related_observation_0_70"]
+    assert obs["value"] == 0.7
+    assert obs["source_row"]["zone"] == 28
+    assert obs["source_row"]["CV_mean"] == 0.7
 
 
 def test_delta_p_is_not_promoted_to_physics():
@@ -36,3 +39,11 @@ def test_hidden_truth_experiment_is_required_before_promotion():
     assert "held_out_truth" in c["controls"]
     assert "wrong_geometry" in c["controls"]
     assert "wrong_event_order" in c["controls"]
+
+
+def test_equal_decimals_are_not_merged_semantically():
+    c = load()
+    vals = c["source_bridge"]["distinct_values"]
+    assert vals["zone28_CV_mean"] == 0.7
+    assert vals["torus_r_default"] == 0.7
+    assert vals["rule"] == "same_decimal != same_variable"
