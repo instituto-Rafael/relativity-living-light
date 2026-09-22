@@ -1,0 +1,180 @@
+{
+  "schema": "rll.dynamic_structural_geometry_context.v1",
+  "date": "2026-09-22",
+  "author": "RAFAEL MELO REIS",
+  "state": "MODEL_CONTRACT",
+  "claim_allowed": false,
+  "parent": "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json",
+  "source_bridge": {
+    "rmrcti_primary": "rafaelmeloreisnovo/llamaRafaelia/rmrCti/gbs3_color.c",
+    "delta_p_definition": "P(stable_any=1|peak)-P(stable_any=1|nonpeak)",
+    "delta_p_target": 0.18,
+    "delta_p_state": "STABILITY_CANDIDATE",
+    "unresolved_index_around_70": "TOKEN_VAZIO_INDEX_AROUND_70",
+    "hard_boundary": "delta_p_target is operational/testable, not a physical constant"
+  },
+  "geometry_context_fields": [
+    "domain",
+    "metric_or_approximation",
+    "reference_frame",
+    "timescales",
+    "validity_conditions",
+    "observables",
+    "covariance",
+    "provenance"
+  ],
+  "regime_router": [
+    {
+      "id": "G0",
+      "name": "euclidean_local_diagnostic",
+      "physical_identity": false
+    },
+    {
+      "id": "G1",
+      "name": "newtonian_nbody_weak_field",
+      "gates": [
+        "GM/(rc^2)<<1",
+        "v/c<<1"
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "post_newtonian_relativistic_local",
+      "order": "MODEL_SPECIFIC"
+    },
+    {
+      "id": "G3",
+      "name": "strong_gravity",
+      "models": [
+        "Schwarzschild",
+        "Kerr",
+        "numerical_relativity_as_required"
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "plasma_mhd_grmhd"
+    },
+    {
+      "id": "G5",
+      "name": "cosmological_flrw_background",
+      "observables": [
+        "H",
+        "E",
+        "DH",
+        "DM",
+        "DA",
+        "DL",
+        "mu",
+        "BAO",
+        "F_AP"
+      ]
+    },
+    {
+      "id": "G6",
+      "name": "observation_projection",
+      "includes": [
+        "instrument",
+        "sky_projection",
+        "selection",
+        "PSF",
+        "lensing",
+        "line_of_sight",
+        "covariance"
+      ]
+    }
+  ],
+  "hybrid_context": [
+    "observation",
+    "light_cone_retarded_time",
+    "event_chain",
+    "geometry_context",
+    "scenario_ensemble",
+    "covariance",
+    "residual_stability"
+  ],
+  "event_candidates": [
+    "native",
+    "flyby",
+    "slingshot",
+    "binary_ejection",
+    "collision",
+    "merger",
+    "fragmentation_ejecta",
+    "tidal_disruption",
+    "capture",
+    "accretion",
+    "shock_plasma_impulse",
+    "strong_field_passage",
+    "projection_superposition"
+  ],
+  "cascade_diagnostics": {
+    "jacobian": "J_k=dF_k/dX_k",
+    "amplification": "A_i_j=norm(J_{j-1}...J_i)",
+    "log_sensitivity": "Lambda_i_j=sum(log(norm(J_k)))",
+    "thresholds": "TOKEN_VAZIO_DOMAIN_CALIBRATION"
+  },
+  "rmrcti_adapter": {
+    "input": "predeclared residual/state classification from physical model",
+    "output": [
+      "DeltaP_op",
+      "Omega_persistence"
+    ],
+    "allowed_use": "routing/stability diagnostic",
+    "forbidden_use": [
+      "equation_of_motion_parameter",
+      "cosmological_parameter",
+      "physical_pressure",
+      "universal_constant"
+    ]
+  },
+  "required_experiment": {
+    "type": "SYNTHETIC_HIDDEN_TRUTH_EVENT_CHAIN",
+    "steps": [
+      "body_state_with_covariance",
+      "retarded_observation",
+      "weak_field_propagation",
+      "close_encounter_or_slingshot",
+      "optional_collision_fragmentation_branch",
+      "strong_field_gate",
+      "observable_generation",
+      "competing_history_reconstruction",
+      "linear_vs_nonlinear_comparison",
+      "jacobian_and_residual_diagnostics",
+      "RMRCTI_DeltaP_and_Omega_routing",
+      "seeded_null_and_adversarial_repetition"
+    ]
+  },
+  "controls": [
+    "no_event",
+    "wrong_event_order",
+    "wrong_geometry",
+    "line_of_sight_superposition",
+    "covariance_resampling",
+    "parameter_perturbation",
+    "held_out_truth",
+    "seed_replication",
+    "multiple_scenario_correction",
+    "independent_integrator"
+  ],
+  "boundaries": [
+    "observed_state != guaranteed_present_state",
+    "geometry_fit != causal_explanation",
+    "possible_history != inferred_history",
+    "DeltaP≈0.18 != physical_stability_constant",
+    "RMRCTI_routing_stability != cosmological_likelihood"
+  ],
+  "F_ok": [
+    "existing DeltaP and Omega semantics preserved",
+    "region-specific geometry context typed",
+    "retarded observation separated from present-state inference",
+    "event-chain and regime switching made explicit"
+  ],
+  "F_gap": [
+    "end_to_end_synthetic_hidden_truth_benchmark",
+    "domain_calibrated_sensitivity_thresholds",
+    "independent_RMRCTI_real_trace_replication",
+    "exact_index_around_70_identity"
+  ],
+  "F_next": "implement and execute the synthetic hidden-truth body-Y benchmark; route only residual classifications into DeltaP/Omega"
+}
