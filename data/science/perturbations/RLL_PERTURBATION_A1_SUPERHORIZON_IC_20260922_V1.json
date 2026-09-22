@@ -1,0 +1,62 @@
+{
+  "schema": "rll.perturbation_a1_superhorizon_ic.v1",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "CANDIDATE_COMPONENT_LOCAL_SUPERHORIZON_IC",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "parent": "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json",
+  "asymptotic_background": {
+    "limit": "z -> infinity for finite z_t,w_t",
+    "w_s": "0",
+    "q_w": "0",
+    "c_a_squared": "0",
+    "interpretation": "matter-like background asymptote only; perturbations retain A1.1 rest-frame sound-speed candidate"
+  },
+  "expansion": {
+    "x": "k tau",
+    "regime": "x << 1",
+    "conformal_H": "1/tau under radiation-dominated reference background",
+    "metric_source": "Psi=Psi0+O(x^2), Phi'=subleading",
+    "normalization": "Psi0 free"
+  },
+  "candidate_series": {
+    "delta_over_Psi0": "-3/2 - x^2/28 + x^4/280 + O(x^6)",
+    "U_over_kPsi0": "x/2 - x^3/28 + x^5/840 + O(x^7)",
+    "leading_adiabatic_relation": "delta_s = (3/4) delta_gamma + O(x^2), conditional on the shared adiabatic radiation mode"
+  },
+  "exact_recurrence_constraints": [
+    "-3 d0 - 9 v1 = 0",
+    "v1 - (2 v1 + d0 + 1) = 0",
+    "5 d2 + v1 + 9 v3 = 0",
+    "v3 - d2 = 0",
+    "7 d4 + v3 + 9 v5 = 0",
+    "3 v5 - d4 = 0"
+  ],
+  "coefficients": {
+    "d0": "-3/2",
+    "d2": "-1/28",
+    "d4": "1/280",
+    "v1": "1/2",
+    "v3": "-1/28",
+    "v5": "1/840"
+  },
+  "evidence_boundary": {
+    "validates": "component-local regular series of the frozen A1.2 equations in the declared asymptotic reference regime",
+    "does_not_validate": [
+      "full coupled Einstein-Boltzmann initial conditions",
+      "neutrino anisotropic-stress corrections",
+      "primordial normalization",
+      "CLASS synchronous-gauge mapping",
+      "CAMB variable mapping",
+      "solver convergence or observational validity"
+    ]
+  },
+  "source_basis": [
+    "A1.2 frozen conformal-Newtonian candidate equations",
+    "Ma & Bertschinger 1995 astro-ph/9506072 for gauge/adiabatic IC framework"
+  ],
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "next_gate": "derive the full coupled radiation+neutrino Einstein-Boltzmann leading-order system and explicit independent CLASS/CAMB maps"
+}
