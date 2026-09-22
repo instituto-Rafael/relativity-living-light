@@ -397,3 +397,52 @@ Research projection:
 **F_gap:** no global prior-art closure; no image calibration; no independent verifier for this RLL intake; no physical binding.
 
 **F_next:** implement an executable invariant test matrix over rotation, scale, affine projection and counterexamples, then issue PASS/FAIL receipts per invariant family.
+
+
+## 15. Executed invariant gate — local isolated run
+
+The deterministic verifier is now materialized at:
+
+- \`tools/verify_geometric_weave_invariants.py\`
+- \`tests/test_geometric_weave_invariants.py\`
+- \`results/geometric_weave_invariants_v1.json\`
+- execution receipt: \`receipts/2026-09-21_RLL_GEOMETRIC_WEAVE_INVARIANTS_EXECUTION_V1.md\`
+
+Observed isolated execution:
+
+\`\`\`text
+runtime: Python 3.13.5
+platform: Linux-6.18.44-x86_64-with-glibc2.41
+tolerance: 1e-12
+RLL-GWI-001..010: 10 PASS / 0 FAIL
+\`\`\`
+
+The run also exercised negative controls:
+
+- Euclidean angle under a non-similarity affine map: expected non-invariance observed;
+- Euclidean length ratio under the same affine map: expected non-invariance observed;
+- \`R_cap=s_hull\` under a selected anisotropic scaling: expected non-invariance observed.
+
+Therefore the current execution state is:
+
+\[
+\boxed{\texttt{LOCAL\_ISOLATED\_EXECUTION\_PASS}}
+\]
+
+for the **mathematical checks only**.
+
+This does not close:
+
+- prior-art;
+- image calibration;
+- independent reproduction;
+- GitHub CI;
+- physical/cosmological binding.
+
+### Successor R3
+
+**F_ok:** all ten scoped mathematical invariant checks and their declared counterexample boundaries executed successfully within tolerance.
+
+**F_gap:** CI and independent reproduction are still not executed; prior-art/image/physics remain open.
+
+**F_next:** external/independent rerun plus prior-art classification; keep physical claim blocked.
