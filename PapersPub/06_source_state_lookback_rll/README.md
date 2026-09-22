@@ -41,3 +41,38 @@ Preservar TOKEN_VAZIO quando o estado atual nao puder ser inferido.
 ## Ponte RLL
 
 compressao energia -> emissao transiente -> propagacao cosmologica -> observacao -> inferencia -> lacuna auditavel
+
+
+## Retarded spacetime / dynamic foreground bridge — V1
+
+The source-state track now has an executable contract:
+
+- `data/contracts/rll_retarded_spacetime_state.v1.yml`
+- `docs/science/RLL_RETARDED_SPACETIME_STATE_V1.md`
+- `tools/validate_rll_retarded_spacetime_state.py`
+
+The observation is represented as an emission event on the past light cone plus
+an evolving propagation path. The later matter state remains a separate
+timelike inference.
+
+Key boundaries:
+
+```text
+OBSERVATION_EVENT != PRESENT_SOURCE_STATE
+NULL_SIGNAL_PATH != TIMELIKE_MATTER_WORLDLINE
+GLOBAL_COSMOLOGICAL_PARAMETER != POST_HOC_PER_POINT_PARAMETER
+```
+
+The contract also separates cosmological epoch/lookback, source proper time,
+peculiar velocity, dynamic gravitational foreground, lensing/time delay, plasma
+dispersion/rotation/scattering and instrument/selection uncertainty.
+
+"Age of a position" is not used as a physical primitive. The stored quantities
+are cosmological age of the event, lookback time, source-age/proper-time
+estimates, and independently defined formation-age proxies.
+
+Strong-gravity plasma remains under the separate GRMHD/GRPIC authority.
+No new plasma-gravity force is claimed and physical syntropy remains
+`TOKEN_VAZIO_PHYSICAL_DEFINITION`.
+
+State: `FORMAL_MODEL_SHADOW`; `claim_allowed=false`.
