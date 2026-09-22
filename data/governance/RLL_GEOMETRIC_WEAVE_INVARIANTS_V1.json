@@ -2,7 +2,7 @@
   "schema": "rll.geometric_weave_invariants.v1",
   "date": "2026-09-21",
   "author": "RAFAEL MELO REIS",
-  "state": "FORMALIZED_INVARIANT_CANDIDATES",
+  "state": "LOCAL_ISOLATED_EXECUTION_PASS",
   "claim_allowed": false,
   "upstream": {
     "mathematics_repo": "rafaelmeloreisnovo/Matem-tica-",
@@ -29,7 +29,8 @@
         "area_magnitude",
         "collinearity",
         "parallelism"
-      ]
+      ],
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-002",
@@ -41,25 +42,29 @@
         "h/a=sqrt(3)/2",
         "h/R=3/2",
         "r:R:h=1:2:3"
-      ]
+      ],
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-003",
       "name": "half_step_interleaving",
       "state": "EXACT_CONDITIONAL_COMBINATORIAL_INVARIANT",
-      "expression": "V(P_n) union V(Rot(pi/n)P_n)=V(P_2n)"
+      "expression": "V(P_n) union V(Rot(pi/n)P_n)=V(P_2n)",
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-004",
       "name": "normalized_nested_radius",
       "state": "EXACT_DERIVED_SCALE_INVARIANT",
-      "expression": "R_m/R_0=product cos(pi/n_k)"
+      "expression": "R_m/R_0=product cos(pi/n_k)",
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-005",
       "name": "normalized_nested_area",
       "state": "EXACT_DERIVED_SCALE_INVARIANT",
-      "expression": "A_m/A_0=product cos^2(pi/n_k)"
+      "expression": "A_m/A_0=product cos^2(pi/n_k)",
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-006",
@@ -74,7 +79,8 @@
         "euclidean_angle",
         "euclidean_length",
         "circle_shape"
-      ]
+      ],
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-007",
@@ -84,33 +90,37 @@
         "b/a=abs(cos(i))",
         "e=abs(sin(i))",
         "e^2+(b/a)^2=1"
-      ]
+      ],
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-008",
       "name": "concentric_projection_anisotropy",
       "state": "EXACT_CONDITIONAL_FAMILY_INVARIANT",
-      "expression": "for all j: b_j/a_j=abs(cos(i))"
+      "expression": "for all j: b_j/a_j=abs(cos(i))",
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-009",
       "name": "two_octagon_cross_relation",
       "state": "EXACT_MODEL_INVARIANT_UNDER_SIMILARITIES",
       "expression": "R_cap=s_hull",
-      "fails_under": "arbitrary anisotropic projection not guaranteed"
+      "fails_under": "arbitrary anisotropic projection not guaranteed",
+      "verifier_state": "LOCAL_PASS"
     },
     {
       "id": "RLL-GWI-010",
       "name": "relative_direction_classes",
       "state": "EXACT_RELATIVE_ANGLE_INVARIANT",
-      "expression": "relative classes {0,45,90,135} degrees modulo global rotation"
+      "expression": "relative classes {0,45,90,135} degrees modulo global rotation",
+      "verifier_state": "LOCAL_PASS"
     }
   ],
   "gates": {
-    "prior_art": "OPEN",
-    "image_calibration": "NOT_RUN",
-    "executable_verifier": "NOT_RUN",
-    "physical_binding": "BLOCKED_TOKEN_VAZIO",
+    "prior_art": "TOKEN_VAZIO",
+    "image_calibration": "TOKEN_VAZIO",
+    "executable_verifier": "LOCAL_PASS",
+    "physical_binding": "TOKEN_VAZIO_BLOCKED",
     "independent_reproduction": "NOT_RUN"
   },
   "boundaries": [
@@ -118,5 +128,18 @@
     "not_recognized_in_training != proven_global_novelty",
     "image_appearance != calibrated_geometry",
     "formalized != executed_pass"
-  ]
+  ],
+  "execution": {
+    "state": "LOCAL_ISOLATED_EXECUTION_PASS",
+    "checks": 10,
+    "pass": 10,
+    "fail": 0,
+    "tolerance": 1e-12,
+    "script_sha256": "f72185d974b81d21d9b3372e521d4c6e05a1b21822dbd4b9dfe6f4f8da371ceb",
+    "verifier_commit": "f44f4332c255471cebccead0b5a9181b537b1d1c",
+    "test_commit": "e6a37467334b4fb26848a8cf4f86216c870fdcb2",
+    "result_commit": "6c28322aae063e2cca192af2410324fa809de52f",
+    "receipt_commit": "83a19557c4cc266b731f04aa58760fe25be34dd3",
+    "github_ci": "NOT_RUN"
+  }
 }
