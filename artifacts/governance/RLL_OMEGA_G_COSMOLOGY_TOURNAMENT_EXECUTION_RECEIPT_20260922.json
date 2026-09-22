@@ -1,0 +1,66 @@
+{
+  "schema": "rll.omega_g_cosmology_tournament.execution_receipt.v1",
+  "date": "2026-09-22",
+  "state": "PARTIAL_EXECUTION_G1_PASS_G3_BLOCKED_DATA",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "provenance": {
+    "uploaded_snapshot_sha256": "9dd8f6c44bdfc4a28e43097ce48ce92c3da2406a0594a68d4a00a06dff1a0b33",
+    "g4_blob_sha": "88bfef7387675ae3c617e2644a999e89a74a08e6",
+    "g4_contract_blob_sha": "5690741a0f40fa50543935dd9c18a4d713d1c1a7",
+    "omega_runner_blob_sha": "17ee47033abdbefca977e2fceefb6a57d144fcef",
+    "omega_tests_blob_sha": "80e865aea6c380de2e46d08bdc8f74bd43f0b7c4",
+    "omega_registry_blob_sha": "587f76e8614b43bcd2cffafd6923d9fb9fe9429f"
+  },
+  "execution": {
+    "structural_validation": {
+      "state": "PASS",
+      "errors": [],
+      "active_bindings": []
+    },
+    "null_parity": {
+      "state": "PASS",
+      "models": ["LCDM", "wCDM", "CPL", "RLL"],
+      "redshifts": [0.0, 0.01, 0.1, 0.3, 0.8, 1.5, 2.33],
+      "global_max_abs_delta_E2": 0.0
+    },
+    "focused_tests": {
+      "state": "PASS",
+      "passed": 6,
+      "failed": 0
+    },
+    "g4_baseline_smoke": {
+      "state": "BLOCKED_MISSING_DATA",
+      "exit_code": 1,
+      "missing_path": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "fallback_used": false,
+      "reason": "G4 requires the official full Pantheon+ STAT+SYS covariance; snapshot policy excludes that heavy external file."
+    }
+  },
+  "bugs_found_and_fixed": [
+    {
+      "issue": "rollback YAML key missing colon",
+      "fix_commit": "03b5be1248e13da54e9c68d840baabaea5ee5a38"
+    },
+    {
+      "issue": "Python 3.13 dynamic import did not register G4 module before dataclass decoration",
+      "fix_commit": "ffcb5b3786facc48103c8494a7fadb329fdcb1cc"
+    }
+  ],
+  "gates": {
+    "G0_contract": "PASS",
+    "G1_null_parity": "PASS_EXACT_IDENTITY",
+    "G2_single_binding_synthetic_recovery": "TOKEN_VAZIO",
+    "G3_real_background_tournament": "BLOCKED_MISSING_PANTHEON_FULL_COVARIANCE_IN_EXECUTION_ENV",
+    "G4_ablation": "TOKEN_VAZIO",
+    "G5_holdout": "TOKEN_VAZIO",
+    "G6_independent_reproduction": "TOKEN_VAZIO",
+    "scientific_claim": "BLOCKED"
+  },
+  "boundary": "NULL_PARITY_PASS != REAL_DATA_TOURNAMENT_PASS != SCIENTIFIC_CONFIRMATION",
+  "R3": {
+    "F_ok": "Exact Omega_G identity parity passed for LCDM/wCDM/CPL/RLL and all focused structural tests passed.",
+    "F_gap": "Full Pantheon+ STAT+SYS covariance is absent from the execution environment, so the real G4 background tournament was not run and no diagonal fallback was used.",
+    "F_next": "Materialize and hash-pin the official covariance, rerun ARM0 baseline, then define one mechanism-complete Omega_G binding and execute synthetic recovery before real-data ARM2."
+  }
+}
