@@ -253,6 +253,27 @@ equations:
     real_data_validators: []
     claim_boundary: "Same numeric cyclic order as the 5/6/7/8 angular refinement does not establish semantic identity."
 
+
+  - id: rll_conserved_effective_pressure
+    equation: "p_cons = -rho_s - (1/3) d rho_s / d ln(a)"
+    domain: ["cosmology", "background", "perturbations", "RLL"]
+    status: "derived_continuity_identity"
+    source_doc: "data/governance/RLL_GROWTH_SEMANTICS_FINAL_CONSOLIDATION_V1.json"
+    implementation: "tools/rll_growth_semantics_abc.py"
+    methodology_phase: "perturbation_closure_prerequisite"
+    real_data_validators: []
+    claim_boundary: "Derived from separate FLRW conservation for the versioned rho_s(a); does not select microphysics or establish perturbation stability."
+
+  - id: rll_a1_restframe_cs2_candidate
+    equation: "c_s,rest^2 = 1"
+    domain: ["cosmology", "perturbations", "RLL"]
+    status: "research_candidate_assumption"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json"
+    implementation: "tools/rll_perturbation_a1_restframe_candidate_v1.py"
+    methodology_phase: "candidate_falsification"
+    real_data_validators: []
+    claim_boundary: "Explicit A1.1 rest-frame candidate assumption; not derived from the RLL background, not a validated RLL property, and not sufficient to unlock CLASS/CAMB."
+
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:
   - tools/generate_yml_audit_docs.py
