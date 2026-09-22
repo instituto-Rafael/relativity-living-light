@@ -688,3 +688,22 @@ Create one synthetic, provenance-complete event-chain fixture with:
 5. strong-field segment;
 6. emission/observation timing;
 then compare linearized versus nonlinear propagation, compute the cascade sensitivity diagnostic, produce residuals and route those residuals into RMRCTI without using DeltaP as a physical quantity.
+
+
+## 20. Dynamic Structural Geometry Context successor — 2026-09-22
+
+The region-specific geometry/regime layer requested after the MF/DESI geometry work is materialized in:
+
+- \`docs/science/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.md\`;
+- \`data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json\`;
+- \`tests/test_dynamic_structural_geometry_context.py\`.
+
+It preserves the existing worldline/cascade route and adds the explicit context
+
+\[
+\Gamma_j=(\mathcal D_j,g_j,\mathcal F_j,\mathcal T_j,\mathcal V_j,\mathcal O_j,\Sigma_j)
+\]
+
+so geometry is selected by physical regime, validity domain, observation window and covariance rather than by visual shape resemblance.
+
+The RMRCTI value \(\Delta P\approx0.18\) remains an operational \`STABILITY_CANDIDATE\`, never a physical parameter. The recalled index around 70 remains \`TOKEN_VAZIO_INDEX_AROUND_70\`.
