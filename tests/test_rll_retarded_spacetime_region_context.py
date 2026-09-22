@@ -52,3 +52,10 @@ def test_seven_statistics_are_orthogonal_to_seven_guards():
 def test_scientific_gate_remains_blocked():
     data = load()
     assert data["gates"]["scientific_claim"] == "BLOCKED"
+
+
+def test_region_context_extends_canonical_parent():
+    data = load()
+    parent = data["canonical_parent"]
+    assert parent["path"] == "data/contracts/rll_retarded_spacetime_state.v1.yml"
+    assert parent["duplicate_authority_forbidden"] is True
