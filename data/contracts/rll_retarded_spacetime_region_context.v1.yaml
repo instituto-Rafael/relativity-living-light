@@ -2,9 +2,15 @@ schema: rll.retarded_spacetime_region_context.v1
 version: 1
 date: "2026-09-22"
 authority: instituto-Rafael/relativity-living-light
-state: HYPOTHESIS_PROTOCOL
+state: TYPED_EXTENSION_LOCAL_VALIDATION_PASS
 claim_allowed: false
 scientific_confirmation: false
+
+canonical_parent:
+  path: data/contracts/rll_retarded_spacetime_state.v1.yml
+  relation: extends_region_path_context
+  authority_rule: parent_governs_shared_semantics
+  duplicate_authority_forbidden: true
 
 purpose:
   summary: >-
