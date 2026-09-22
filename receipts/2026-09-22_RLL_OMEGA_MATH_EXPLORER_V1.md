@@ -137,3 +137,55 @@ replace exact float equality with absolute tolerance <=1e-12.
 LEARN:
 FORMAL_GATE_PASS != TEST_HARNESS_PASS.
 Both are required for operational promotion.
+
+
+## Canonical run R4 — registry coverage + bounded operational closure
+
+evidence_head=cc4a79d7b5ccbd72f5be35821750e495e3ae4c5b
+omega_run_id=35694014978
+omega_job=106636818130
+omega_conclusion=success
+decision=PASS_FORMAL_SHADOW
+focused_tests=3_PASS
+failed_math_gates=0
+candidate_count=146
+anomaly_count=0
+J=0
+target_reached=true
+
+formula_registry_total=27
+formula_registry_accounted=27
+formula_registry_unaccounted=0
+formula_registry_malformed=0
+formula_coverage_EXECUTABLE_GATE_PASS=3
+formula_coverage_IMPLEMENTATION_REFERENCED_NOT_EXECUTED_BY_OMEGA_MATH=6
+formula_coverage_INDEXED_NOT_EXECUTABLE_WITH_NEXT_GATE=18
+
+artifact_id=10680010183
+artifact_size_bytes=36320
+artifact_digest=sha256:70f364e2af39896525af5d5c3907e425784ff0e096a9e59aa3a75ea735800ed2
+
+governance:
+workflow_architecture_run=35694015052:SUCCESS
+workflow_contract_reconciliation_run=35694014907:SUCCESS
+workflow_contract_reconciliation_v2_run=35694014926:SUCCESS
+
+interpretation:
+- every current rll_equation_registry entry is visible to the explorer;
+- only typed bindings count as Omega-executed formulas;
+- an implementation reference is not relabeled as an executed gate;
+- indexed-only formulas are preserved with a next gate and are not silently ignored;
+- J=0 applies only to the bounded operational objective of this execution surface.
+
+remaining_gap:
+24/27 registry formulas are not yet directly verified by a typed Omega gate in this explorer
+(6 have implementation references, 18 are indexed-only).
+
+next:
+convert registry entries to domain-specific typed gates incrementally;
+never execute equation strings through arbitrary eval;
+extend exact symbolic/cyclotomic recognition, chord planarization, cycles/orbits and recursive embedding exploration.
+
+rollback:
+R1, R2 and governance failure receipts remain append-only;
+revert R4 coverage code without deleting historical artifacts if a successor contract changes coverage semantics.
