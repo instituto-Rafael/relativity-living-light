@@ -103,3 +103,37 @@ revert the correction only if a fresh executable inventory demonstrates a differ
 
 next:
 require a fresh workflow-architecture and workflow-contract receipt on the corrected head.
+
+
+## Canonical run R2 — mathematical target reached, workflow regression failed
+
+run_id=35693565113
+job_id=106635459816
+runner_decision=PASS_FORMAL_SHADOW
+failed_math_gates=0
+candidate_count=146
+anomaly_count=0
+J=0
+target_reached=true
+artifact_id=10679532527
+artifact_digest=sha256:94f410d70e909d24205659e56b9a2d2365083e6df3d2131a228d81deec2957e4
+
+workflow_conclusion=FAIL
+
+failure_class=NUMERIC_REGRESSION_TEST_OVERSTRICT
+observed=0.5000000000000001
+test_expected_binary_equality=0.5
+mathematical_gate_tolerance=1e-12
+identity=cos(pi/3)=cos(pi/4)^2=1/2
+
+interpretation:
+The mathematical executor reached the declared bounded target J=0.
+The workflow failed because a regression assertion used binary floating-point exact equality
+instead of the same tolerance contract used by the mathematical gate.
+
+correction:
+replace exact float equality with absolute tolerance <=1e-12.
+
+LEARN:
+FORMAL_GATE_PASS != TEST_HARNESS_PASS.
+Both are required for operational promotion.
