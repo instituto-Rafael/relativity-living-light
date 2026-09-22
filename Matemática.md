@@ -254,3 +254,28 @@ Tudo isso converge para uma função testável \Omega_n, cujo próximo passo é 
 ---
 
 Se desejar, posso agora escrever essa função em pseudocódigo ou diretamente em Python para você testar.
+
+
+---
+
+## Router addendum — Octagon K8 no-loss cycle space — 2026-09-22
+
+Canonical RLL consumer bridge:
+- `docs/mathematics/RLL_OCTAGON_K8_NO_LOSS_CYCLE_SPACE_V1.md`
+- `data/governance/RLL_OCTAGON_K8_NO_LOSS_CYCLE_SPACE_V1.json`
+- `receipts/2026-09-22_RLL_OCTAGON_K8_NO_LOSS_CYCLE_SPACE_V1.md`
+
+Formal mathematics authority remains `rafaelmeloreisnovo/Matem-tica-`.
+
+Key invariant:
+[
+56+24=80
+]
+counts bounded elementary faces only; it is not the complete family of composite forms.
+
+No-loss representation:
+[
+eta_1=80,qquad mathcal C(G)cong GF(2)^{80}.
+]
+
+Physical/cosmological binding remains `TOKEN_VAZIO_PHYSICAL_BINDING`.
