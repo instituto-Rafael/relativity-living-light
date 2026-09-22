@@ -66,3 +66,38 @@ correction:
 scientific_state_after_R1:
 TOKEN_VAZIO / NOT_RESOLVED
 No C07/C08 PASS is claimed from R1.
+
+
+## Canonical CI R2 — regular-variable preflight executed
+
+run_id=35721464364
+job_id=106725502835
+workflow_conclusion=SUCCESS
+artifact_id=10692245509
+artifact_digest=sha256:1c7e9c221d89d18e95c548ebbb0b2e276198b8ddf82848517bf25a15386edebf
+artifact_size_bytes=13696
+
+focused_tests=PASS
+A0=FALSIFIED_AS_GLOBAL_DEFAULT_0_OF_9
+A1_1=NECESSARY_GATES_PASS_9_OF_9
+
+C07_C08_state=C07_C08_REGULAR_VARIABLE_PREFLIGHT_PASS_IC_EQUATIONS_OPEN
+C07_C08_passing_cases=9/9
+observed_enthalpy_degeneracy=true
+token_resolution=NOT_RESOLVED
+class_camb_unlock=false
+claim_allowed=false
+
+baseline_engine_state=VERIFIED_BASELINE_ENGINE_CROSSCHECK_WITH_RDRAG
+rll_recombination_state=VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK
+
+interpretation:
+- the regular-variable representation survived the declared algebraic/background sweep;
+- near-degenerate enthalpy is actually observed in the sweep, so theta_s must not be the unguarded primary variable;
+- q_s=(rho_s+p_s)theta_s remains the primary candidate momentum variable;
+- this PASS does not derive C01/C02, super-horizon IC, CLASS/CAMB gauge mappings, the analytic degenerate limit, or perturbed Bianchi constraints.
+
+R1 remains preserved as a direct-script harness failure and is not rewritten.
+
+next:
+C01/C02 derivation in (delta_rho_s,q_s) -> analytic enthalpy-degenerate limit -> super-horizon IC -> independent CLASS/CAMB gauge maps -> Bianchi/constraint gates.
