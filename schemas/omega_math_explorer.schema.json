@@ -8,6 +8,7 @@
     "claim_allowed",
     "publication_effect",
     "authority",
+    "formula_registry",
     "constants",
     "gates",
     "hypotheses",
@@ -144,6 +145,32 @@
         "output_dir",
         "emit"
       ]
+    },
+    "formula_registry": {
+      "type": "object",
+      "required": [
+        "path",
+        "policy",
+        "unlisted_formula_policy",
+        "gate_bindings"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "policy": {
+          "const": "index_all_execute_only_typed_bindings"
+        },
+        "unlisted_formula_policy": {
+          "type": "string"
+        },
+        "gate_bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "additionalProperties": true
