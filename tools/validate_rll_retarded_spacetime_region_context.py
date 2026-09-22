@@ -44,6 +44,17 @@ def validate_contract(data: dict[str, Any]) -> dict[str, Any]:
         "schema mismatch",
         errors,
     )
+    parent = data.get("canonical_parent", {})
+    req(
+        parent.get("path") == "data/contracts/rll_retarded_spacetime_state.v1.yml",
+        "canonical parent mismatch",
+        errors,
+    )
+    req(
+        parent.get("duplicate_authority_forbidden") is True,
+        "region context must remain an extension, not a competing authority",
+        errors,
+    )
     req(data.get("claim_allowed") is False, "claim_allowed must remain false", errors)
     req(
         data.get("scientific_confirmation") is False,
