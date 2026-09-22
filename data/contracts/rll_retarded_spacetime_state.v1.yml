@@ -329,3 +329,18 @@ R3:
   F_next: >-
     Validate the schema, generate deterministic synthetic lightcone/foreground
     fixtures, then run ablations before connecting the layer to any cosmological claim.
+
+
+typed_extensions:
+  - path: data/contracts/rll_retarded_spacetime_region_context.v1.yaml
+    relation: ordered_intervening_region_context
+    scope:
+      - photon_crossing_epoch
+      - moving_region_state
+      - relativistic_gravity_segment_terms
+      - plasma_mhd_segment_terms
+      - matter_environment_segment_terms
+      - causal_before_after_rule
+      - segment_covariance_and_provenance
+    authority_rule: this_parent_governs_shared_retarded_spacetime_semantics
+    claim_allowed: false
