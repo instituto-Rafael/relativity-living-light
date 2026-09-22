@@ -291,3 +291,11 @@ GEOM_TO_RLL_EVIDENCE_TRANSFER=FORBIDDEN
 The independent integer oracle reproduces the boundary arithmetic but does not substitute for execution of the producer C artifact, a physical ARMv7 receipt, a second physical device, a board-specific reset-vector boot, or the RLL executable's own physical gate.
 
 R3=<F_ok: producer #38 merged; exact all-Q16 topology proof + r×d 2r±1 sheet + independent oracle PASS; F_gap: provider pre-start, physical r×d receipt, second device, reset boot and RLL physical remain open; F_next: ingest artifact-specific physical receipts independently>.
+
+
+## RLL v2 runner helper-audit hardening
+
+Canonical RLL ARMv7 runner commit:
+`45b1ec7bdef74a7a4d5a8f4cf9cb5f58cd25932d`.
+
+Its suspicious-runtime audit now examines undefined/imported symbols only, preventing internal fixed-point functions from causing a false positive. `undefined_symbols=0` remains mandatory.
