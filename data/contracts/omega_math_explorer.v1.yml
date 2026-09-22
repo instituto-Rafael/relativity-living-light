@@ -31,6 +31,15 @@ constants:
   sqrt5: {role: pentagonal_quadratic_extension, expression: sqrt(5)}
   phi: {role: pentagon_diagonal_over_side, expression: (1+sqrt(5))/2}
 
+formula_registry:
+  path: rll_equation_registry.yml
+  policy: index_all_execute_only_typed_bindings
+  unlisted_formula_policy: INDEXED_NOT_EXECUTABLE_WITH_NEXT_GATE
+  gate_bindings:
+    torus_projection_annulus_area: G-TORUS-PROJECTION
+    torus_surface_projection_ratio: G-TORUS-PROJECTION
+    angular_grid_5678_lcm: G-LCM-5678
+
 semantic_axes:
   - object_vs_representation
   - exact_vs_approximate
@@ -184,6 +193,8 @@ artifacts:
     - candidates.csv
     - anomalies.json
     - semantic_graph.json
+    - formula_coverage.json
+    - formula_coverage.csv
     - report.md
     - receipt.json
     - CHECKSUMS.sha256
