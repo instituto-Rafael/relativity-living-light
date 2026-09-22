@@ -40,6 +40,9 @@ def test_omega_math_core_gates_and_hypothesis_boundaries(tmp_path: Path):
     assert by_id["G-RAYS-5678"]["observed"] == 22
     assert by_id["G-LINES-5678"]["observed"] == 16
 
+    assert by_id["G-SCALE-344"]["status"] == "PASS"
+    assert by_id["G-SCALE-344"]["observed"]["cos_pi_over_3"] == 0.5
+
     hypotheses = json.loads(
         (tmp_path / "hypothesis_results.json").read_text(encoding="utf-8")
     )
@@ -73,3 +76,17 @@ def test_explorer_emits_multidimensional_relations(tmp_path: Path):
         row["constant"] == "phi" and row["n"] == 5
         for row in exploration["constant_matches"]
     )
+
+
+    rewrites = [
+        row for row in exploration["nested_scale_collisions"]
+        if row["status"] == "DERIVED_REWRITE_IDENTITY_COS60_EQ_COS45_SQUARED"
+    ]
+    assert rewrites
+
+    anomalies = json.loads((tmp_path / "anomalies.json").read_text(encoding="utf-8"))
+    assert anomalies == []
+
+    receipt = json.loads((tmp_path / "receipt.json").read_text(encoding="utf-8"))
+    assert receipt["residuals"]["ideal_objective"]["J"] == 0
+    assert receipt["residuals"]["ideal_objective"]["target_reached"] is True
