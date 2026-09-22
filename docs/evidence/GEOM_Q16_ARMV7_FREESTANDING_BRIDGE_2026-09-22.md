@@ -110,3 +110,41 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
 ```
 
 The geometry receipt is a toolchain/runtime witness and a schema example only; artifact-specific RLL execution evidence remains required.
+
+
+## v5 orthogonal validation axes
+
+The geometry producer now separates three evidence types:
+
+```text
+FORMAL_TOPOLOGY_PROOF
+HOSTED_PROPERTY_PLUS_INDEPENDENT_ORACLE
+FREESTANDING_CROSS_SCALE_PROPERTY
+```
+
+Formal topology proof covers every representable positive Q16 radius by exact integer partition of raw `d` versus `2r`. Hosted v5 enumerates all 131073 normalized Q16 states and adds one million deterministic radius regressions plus an independent Python oracle.
+
+A new freestanding property axis has pre-physical PASS evidence:
+
+```text
+917510 geometry evaluations
+786432 cross-scale comparisons
+131072 monotonic normalized steps
+7 exact scales
+host PASS
+UBSan PASS
+ARMv7 cross static PASS
+dynamic/interpreter/undefined/suspicious helpers = 0
+```
+
+Its physical ARMv7 state remains:
+
+```text
+GEOM_V5F_ARMV7_PHYSICAL=TOKEN_VAZIO
+```
+
+No geometry v5 evidence promotes the RLL engine:
+
+```text
+RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL=TOKEN_VAZIO
+```
