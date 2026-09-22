@@ -1,0 +1,50 @@
+{
+  "claim_boundary": {
+    "classical_optics_snell": "testable_as_classical_formula_only",
+    "cosmological_binding": "TOKEN_VAZIO_EVIDENCE",
+    "mathematical_identites": "testable",
+    "physical_rll_binding": "TOKEN_VAZIO_EVIDENCE"
+  },
+  "execution_state": {
+    "mathematical_tests": "EXECUTED",
+    "physical_rll_binding": "TOKEN_VAZIO_EVIDENCE",
+    "repository_provider_ci": "NOT_RUN"
+  },
+  "failed_tests": [],
+  "key_invariants": {
+    "K16": {"complete_edges":120,"interlayer_edges":64,"intralayer_edges":56,"vertices":16},
+    "K8": {
+      "bounded_faces":{"quadrilaterals":24,"triangles":56},
+      "concurrency":{"2":40,"3":8,"4":1},
+      "cycle_rank":80,
+      "intersections":49,
+      "planar":{"E":136,"F":81,"V":57},
+      "segments":28
+    },
+    "triangle_overlays":{"six_rotations_30deg_unique_vertices":12,"six_rotations_60deg_unique_vertices":6}
+  },
+  "scenario_summary": {
+    "S01_REGULAR_POLYGON":{"passed":40,"state":"PASS","total":40},
+    "S02_CHORD_CLASSES":{"passed":16,"state":"PASS","total":16},
+    "S03_EQUILATERAL_TRIANGLE":{"passed":5,"state":"PASS","total":5},
+    "S04_TRIANGLE_CIRCLE_AREA_RATIOS":{"passed":2,"state":"PASS","total":2},
+    "S05_HEXAGON_SIX_TRIANGLES":{"passed":2,"state":"PASS","total":2},
+    "S06_CONCENTRIC_LAYERS":{"passed":9,"state":"PASS","total":9},
+    "S07_RADIAL_PROJECTION":{"passed":2,"state":"PASS","total":2},
+    "S08_HOMOTHETY":{"passed":2,"state":"PASS","total":2},
+    "S09_ROTATION":{"passed":2,"state":"PASS","total":2},
+    "S10_REFLECTION":{"passed":3,"state":"PASS","total":3},
+    "S11_CIRCLE_INVERSION":{"passed":2,"state":"PASS","total":2},
+    "S12_POLYGON_TO_CIRCLE_LIMIT":{"passed":3,"state":"PASS","total":3},
+    "S13_K8_PLANAR_NO_LOSS":{"passed":6,"state":"PASS","total":6},
+    "S14_ROTATED_TRIANGLE_OVERLAYS":{"passed":2,"state":"PASS","total":2},
+    "S15_SNELL_REFRACTION":{"passed":2,"state":"PASS","total":2},
+    "S16_OCTAGONAL_PRISM_K16":{"passed":6,"state":"PASS","total":6},
+    "S17_SPHERICAL_SHELL_PROJECTION":{"passed":3,"state":"PASS","total":3},
+    "S18_MULTILAYER_COMPLETE_GRAPH":{"passed":2,"state":"PASS","total":2},
+    "S19_INDEX_FAMILY":{"passed":5,"state":"PASS","total":5},
+    "S20_DIHEDRAL_ORBIT_STABILIZER":{"passed":6,"state":"PASS","total":6}
+  },
+  "status":"PASS",
+  "summary":{"failed":0,"passed":120,"scenarios":20,"tests_total":120}
+}
