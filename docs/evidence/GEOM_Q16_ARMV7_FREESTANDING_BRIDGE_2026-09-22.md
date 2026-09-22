@@ -226,3 +226,22 @@ RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL = TOKEN_VAZIO
 ```
 
 No geometry receipt is reused as RLL execution evidence.
+
+
+## Runner authority reconciliation
+
+A later inventory found the pre-existing, stricter canonical RLL runner:
+
+```text
+scripts/run_rll_canonical_armv7_physical_v2.sh
+docs/evidence/RLL_CANONICAL_ARMV7_PHYSICAL_GATE_V2.md
+```
+
+Therefore:
+
+```text
+run_rll_canonical_armv7_physical_v2.sh = CANONICAL
+run_rll_canonical_armv7_physical.sh    = AUXILIARY/HISTORICAL
+```
+
+The v2 runner remains the only route that should promote `RLL_CANONICAL_ENGINE_ARMV7_PHYSICAL`.
