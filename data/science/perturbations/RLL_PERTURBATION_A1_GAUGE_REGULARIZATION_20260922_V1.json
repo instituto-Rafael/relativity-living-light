@@ -1,0 +1,71 @@
+{
+  "schema": "rll.perturbation_a1_gauge_regularization.v1",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "CANDIDATE_GAUGE_REGULARIZATION_DECLARED",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "parent_candidate": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "gauge_reference": {
+    "name": "conformal_newtonian",
+    "metric": "ds^2=a^2[-(1+2 Psi)d tau^2+(1-2 Phi)delta_ij dx^i dx^j]",
+    "prime": "d/d conformal time tau",
+    "theta": "Fourier velocity-divergence variable",
+    "sigma_s": 0
+  },
+  "variables": {
+    "delta_s": "delta rho_s / rho_s",
+    "theta_s": "velocity divergence; retained only as comparison variable away from 1+w=0",
+    "U_s": "(1+w_s) theta_s",
+    "ca2": "w_s - (1/3) d ln(1+w_s)/d ln a",
+    "cs2_rest": 1
+  },
+  "candidate_equations": {
+    "delta_prime": "-U_s + 3(1+w_s)Phi_prime - 3H(cs2_rest-w_s)delta_s - 9H^2(cs2_rest-ca2)U_s/k^2",
+    "U_prime": "H[q_w-(1-3cs2_rest)]U_s + cs2_rest k^2 delta_s + (1+w_s)k^2 Psi",
+    "q_w": "d ln(1+w_s)/d ln a",
+    "original_theta_comparison": "theta_prime=-H(1-3cs2_rest)theta_s + cs2_rest k^2 delta_s/(1+w_s) + k^2 Psi"
+  },
+  "sources": [
+    {
+      "id": "Ma_Bertschinger_1995",
+      "ref": "arXiv:astro-ph/9506072",
+      "role": "linear scalar perturbation gauge conventions and fluid equations"
+    },
+    {
+      "id": "CLASS_explanatory_ini",
+      "ref": "https://github.com/lesgourg/class_public/blob/master/explanatory.ini",
+      "role": "fluid rest-frame sound-speed semantics and PPF boundary"
+    },
+    {
+      "id": "CAMB_symbolic",
+      "ref": "https://github.com/cmbant/CAMB/blob/master/camb/symbolic.py",
+      "role": "rest-frame dark-energy sound-speed semantic cross-check"
+    }
+  ],
+  "executable_gates": [
+    "no phantom crossing in declared A1.1 sweep",
+    "finite q_w and ca2 on active region 1+w>1e-12",
+    "regularized delta/U equations algebraically match theta form away from the divide",
+    "record asymptotic points where 1+w<=1e-12 without dividing by them",
+    "quantify max |q_w|, |ca2| and |U coefficient| per transition case"
+  ],
+  "stiffness_policy": {
+    "LOW": "max_abs_q_w <= 10",
+    "MODERATE": "10 < max_abs_q_w <= 50",
+    "HIGH": "max_abs_q_w > 50",
+    "boundary": "classification is a numerical-stiffness diagnostic, not a physical exclusion criterion"
+  },
+  "unresolved": {
+    "super_horizon_initial_conditions": "TOKEN_VAZIO",
+    "class_mapping": "TOKEN_VAZIO",
+    "camb_mapping": "TOKEN_VAZIO",
+    "bianchi_constraint_residual": "TOKEN_VAZIO",
+    "full_solver_convergence": "TOKEN_VAZIO",
+    "observational_likelihood_effect": "TOKEN_VAZIO"
+  },
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "next_gate": "derive super-horizon IC and solver-specific gauge maps from this frozen variable convention; then run independent CLASS/CAMB implementations",
+  "claim_boundary": "This contract freezes a candidate gauge/variable representation and tests algebraic/numerical regularity only. It does not establish a complete perturbation theory or physical correctness."
+}

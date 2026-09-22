@@ -1,0 +1,44 @@
+{
+  "schema": "rll.perturbation_closure_successor.v3",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V2.json",
+  "state": "A1_2_GAUGE_FORM_CANDIDATE_REGULARIZATION_PENDING_CI",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "candidate_contract": "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json",
+  "slot_delta": {
+    "C01_DELTA_S": "CANDIDATE_EQUATION_CONFORMAL_NEWTONIAN_NOT_SOLVER_VALIDATED",
+    "C02_THETA_S": "REPARAMETERIZED_AS_U_S_CANDIDATE_NOT_SOLVER_VALIDATED",
+    "C03_CS2": "A1_1_CANDIDATE_ASSIGNED_CS2_REST_1",
+    "C04_ENTROPY": "REST_FRAME_NONADIABATIC_CLOSURE_CANDIDATE",
+    "C05_ANISOTROPIC_STRESS": "A1_CANDIDATE_ZERO",
+    "C06_Q_MU": "A1_CANDIDATE_ZERO",
+    "C07_GAUGE_AND_INITIAL_CONDITIONS": "GAUGE_REFERENCE_FROZEN_INITIAL_CONDITIONS_TOKEN_VAZIO",
+    "C08_TRANSITION_REGULARIZATION": "MOMENTUM_VARIABLE_REWRITE_DECLARED_STIFFNESS_QUANTIFICATION_PENDING_CI",
+    "C09_NONLINEAR_SCOPE": "OUT_OF_SCOPE"
+  },
+  "frozen_convention": {
+    "gauge": "conformal_newtonian_reference",
+    "variable": "U_s=(1+w_s) theta_s",
+    "sound_speed_semantics": "rest_frame",
+    "source_basis": [
+      "Ma_Bertschinger_1995_astro-ph/9506072",
+      "CLASS_explanatory_ini_cs2_fld",
+      "CAMB_symbolic_rest_frame_dark_energy_sound_speed"
+    ]
+  },
+  "remaining_hard_blockers": [
+    "super-horizon initial conditions",
+    "independent CLASS variable/gauge map",
+    "independent CAMB variable/gauge map",
+    "perturbed Einstein/Bianchi constraint residual",
+    "full ODE integration and convergence",
+    "cross-engine observable parity"
+  ],
+  "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "promotion_rule": "Algebraic/gauge regularity PASS may only advance C01/C02/C07/C08 to candidate-typed states; it cannot resolve the perturbation theory without IC, solver maps and constraint tests.",
+  "rollback": "Revert A1.2 artifacts only; preserve A1.1 9/9 necessary-condition evidence."
+}
