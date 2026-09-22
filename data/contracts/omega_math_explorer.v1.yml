@@ -68,6 +68,7 @@ gates:
   - {id: G-PI-001, kind: pi_circumference, epistemic: PROVADO, tolerance: 1.0e-12}
   - {id: G-SQRT2-001, kind: square_diagonal, epistemic: PROVADO, tolerance: 1.0e-12}
   - {id: G-SQRT3-001, kind: equilateral_height, epistemic: PROVADO, tolerance: 1.0e-12}
+  - {id: G-SCALE-344, kind: scale_rewrite_344, epistemic: DERIVADO, tolerance: 1.0e-12}
   - {id: G-PYTH-001, kind: pythagoras, epistemic: PROVADO, sides: [3,4,5]}
   - id: G-POLY-TRIG-001
     kind: polygon_trig_identity
@@ -123,6 +124,7 @@ relations:
   - {id: R-TRIANGLE-MEDIAN, from: equilateral_triangle, to: right_triangle_30_60_90, type: decomposition}
   - {id: R-SQUARE-DIAGONAL, from: square, to: right_triangle_45_45_90, type: decomposition}
   - {id: R-SQUARE-OCTAGON, from: square, to: octagonal_directions, type: half_step_rotation}
+  - {id: R-SCALE-344, from: triangle_inradius_contraction, to: two_square_inradius_contractions, type: exact_scale_rewrite}
   - {id: R-CIRCLE-QUADRATIC, from: line_circle_intersection, to: quadratic_discriminant, type: exact_bridge}
   - {id: R-POLYGON-TRIANGULATION, from: simple_polygon, to: triangle_family, type: exact_decomposition}
   - {id: R-POLYGON-CIRCLE, from: regular_polygon, to: incircle_circumcircle, type: radial_relation}
