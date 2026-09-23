@@ -13,11 +13,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from rx.cosmology import e2
+from rx.contracts import active_contract
+from rx.cosmology import ORAD, e2
 from rx.kernel import invert_matrix, quad_form, read_csv, simpson
 
 ROOT = Path(__file__).resolve().parents[1]
 failures = []
+contract_id, contract = active_contract()
 
 def check(condition, label):
     if condition:
@@ -51,6 +53,11 @@ check(len(hz) == 28, "current_Hz_count_28")
 check(len(bao) == 13, "current_BAO_count_13")
 check(len(growth) == 16, "current_growth_count_16")
 check(len(hz) + len(bao) + len(growth) + 3 == 60, "current_multiprobe_N_60")
+check(contract_id == "RX-STRUCTURE-D-PARITY-V1", "active_contract_id")
+check(abs(float(contract["omega_r"]) - ORAD) < 1.0e-15, "contract_omega_r_matches_runtime")
+check(contract["growth_mode"] == "structure_d_proxy", "contract_growth_mode")
+check(contract["cmb_acoustic_mode"] == "structure_d_rd", "contract_cmb_mode")
+check(contract["claim_allowed"] is False, "contract_claim_closed")
 
 stdlib = set(getattr(sys, "stdlib_module_names", ()))
 stdlib.update({"__future__"})
@@ -78,6 +85,7 @@ result = {
     "ai_runtime": False,
     "third_party_python_dependencies": [],
     "current_multiprobe_N": len(hz) + len(bao) + len(growth) + 3,
+    "physics_contract_id": contract_id,
 }
 out = ROOT / "results" / "rx_selftest.json"
 out.parent.mkdir(exist_ok=True)
