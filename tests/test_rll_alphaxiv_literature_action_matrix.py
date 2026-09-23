@@ -23,6 +23,8 @@ class RllAlphaXivLiteratureActionMatrixTests(unittest.TestCase):
         self.assertTrue(checks["citation_keys_nonempty"])
         self.assertTrue(checks["citation_keys_unique"])
         self.assertTrue(checks["citation_keys_resolve_in_canonical_bibtex"])
+        self.assertTrue(checks["bibliography_paths_declared"])
+        self.assertTrue(checks["citation_keys_resolve_in_declared_paths"])
         self.assertTrue(checks["primary_data_authorities_bound"])
         self.assertTrue(checks["bibliography_not_truth_score"])
         self.assertTrue(checks["implementation_refs_do_not_resolve_physics"])
