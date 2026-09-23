@@ -27,6 +27,14 @@ on:
       - "scripts/calc_data.py"
       - "tools/validate_calc_data_stdlib_migration.py"
       - ".github/workflows/calc-data.yml"
+      - "validation/load_data.py"
+      - "validation/load_data_numpy_legacy.py"
+      - "validation/run_lcdm.py"
+      - "validation/run_rll.py"
+      - "validation/compare_models.py"
+      - "validation/bayes_rll.py"
+      - "validation/bayes_compare.py"
+      - "tools/validate_validation_deterministic_stdlib.py"
       - "tests/test_rll_credential_authority.py"
       - "scripts/generate_rll_plots.py"
       - "tools/rll_security_surface_audit.py"
@@ -143,6 +151,8 @@ jobs:
       run: python3 tools/validate_watch_config_stdlib_migration.py
     - name: Validate calc-data stdlib migration
       run: python3 tools/validate_calc_data_stdlib_migration.py
+    - name: Validate deterministic validation stdlib migration
+      run: python3 tools/validate_validation_deterministic_stdlib.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
@@ -176,6 +186,7 @@ jobs:
           results/credential_authority_stdlib_migration.json
           results/watch_config_stdlib_migration.json
           results/calc_data_stdlib_migration.json
+          results/validation_deterministic_stdlib_migration.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
           results/rx_dependency_migration_plan.json
