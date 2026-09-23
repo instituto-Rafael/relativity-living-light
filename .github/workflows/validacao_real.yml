@@ -1,6 +1,15 @@
 # Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
 name: Validacao Real RLL
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "rx/**"
+      - "validacao_real/**"
+      - "tools/rx_*.py"
+      - "configs/rx_physics_contracts.json"
+      - ".github/workflows/validacao_real.yml"
   workflow_dispatch:
     inputs:
       note:
