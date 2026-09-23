@@ -5,14 +5,17 @@ from __future__ import annotations
 import ast
 import importlib.util
 import json
+import sys
 import tempfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 TARGET=ROOT/"tools"/"validate_rll_credential_authority.py"
 
-spec=importlib.util.spec_from_file_location("rll_validate_credential_authority_gate_target",TARGET)
+module_name="rll_validate_credential_authority_gate_target"
+spec=importlib.util.spec_from_file_location(module_name,TARGET)
 mod=importlib.util.module_from_spec(spec)
+sys.modules[module_name]=mod
 spec.loader.exec_module(mod)
 
 tree=ast.parse(TARGET.read_text(encoding="utf-8"))
