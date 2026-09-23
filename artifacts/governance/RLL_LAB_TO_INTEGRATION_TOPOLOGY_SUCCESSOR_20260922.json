@@ -1,0 +1,36 @@
+{
+  "schema": "rll.branch_reconciliation.lab_to_integration.topology_successor.v1",
+  "date_local": "2026-09-22",
+  "parent_receipt": "artifacts/governance/RLL_LAB_TO_INTEGRATION_RECONCILIATION_RECEIPT_20260922.json",
+  "state": "TOPOLOGY_RECONCILED_APPEND_ONLY",
+  "source_branch": "rll/lab",
+  "target_branch": "rll/integration",
+  "predecessor_lab_head": "d105ab2cda59f4656e5efb3dc1980efd0c0ab57d",
+  "integration_parent": "b8e08f86729cbf8b27923c5533f12b7f0d11fc4a",
+  "reconciliation_merge_commit": "ba535d347fe64943d5a5ba15526a0ba7f6ac2141",
+  "tree_sha_preserved": "b8377686811a507e110add06e3def6e267d100f8",
+  "tree_content_changed_by_topology_merge": false,
+  "history_rewritten": false,
+  "force_update_used": false,
+  "reason": "branch maturity policy requires literal rll/lab -> rll/integration. Integration ancestry was added as a second parent while preserving the audited lab tree exactly.",
+  "supersedes_route": {
+    "pr": 962,
+    "branch": "promotion/lab-integration-reconcile-20260922",
+    "reason": "clean-tree content was valid but branch name was invalid under the canonical maturity topology"
+  },
+  "canonical_promotion_pr": 961,
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TREE_EQUIVALENCE != SCIENTIFIC_VALIDATION",
+    "NO_HISTORY_REWRITE",
+    "NO_TREE_REGRESSION",
+    "claim_allowed=false"
+  ],
+  "R3": {
+    "F_ok": "integration ancestry is now present in rll/lab with identical audited tree and no force update",
+    "F_gap": "exact-head PR gates must rerun after topology reconciliation",
+    "F_next": "observe PR 961 exact-head gates and merge into rll/integration only if canonical promotion gates are green"
+  },
+  "claim_allowed": false,
+  "scientific_confirmation": false
+}
