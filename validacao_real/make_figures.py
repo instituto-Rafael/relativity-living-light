@@ -11,8 +11,6 @@ import json
 import math
 from pathlib import Path
 
-import yaml
-
 HERE = Path(__file__).resolve().parent
 FETCHED = HERE / "fetched"
 RESULTS = HERE / "results"
@@ -33,7 +31,7 @@ RD_MPC = 147.09
 def load(path: Path) -> dict:
     if path.suffix == ".json":
         return json.loads(path.read_text(encoding="utf-8"))
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _model_curves():
@@ -50,7 +48,7 @@ def _model_curves():
 
 def fig_hubble():
     cv, lcdm, rll, zs = _model_curves()
-    hz = load(FETCHED / "hz_cosmic_chronometers.yml")["points"]
+    hz = load(FETCHED / "hz_cosmic_chronometers.json")["points"]
     plt.figure(figsize=(8, 5))
     plt.errorbar([p["z"] for p in hz], [p["H"] for p in hz], yerr=[p["sigma"] for p in hz],
                  fmt="o", ms=4, capsize=2, color="#222", label="H(z) cosmic chronometers", zorder=3)
@@ -64,7 +62,7 @@ def fig_hubble():
 
 def fig_bao():
     cv, lcdm, rll, zs = _model_curves()
-    bao = load(FETCHED / "desi_dr2_bao.yml")["points"]
+    bao = load(FETCHED / "desi_dr2_bao.json")["points"]
     plt.figure(figsize=(8, 5))
     for obs, mk in [("DM_over_rd", "o"), ("DH_over_rd", "s"), ("DV_over_rd", "^")]:
         pts = [p for p in bao if p["observable"] == obs]
