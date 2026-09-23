@@ -26,8 +26,12 @@ jobs:
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
+    - name: Rx deterministic selftest
+      run: python3 tools/rx_selftest.py
     - name: Rx zero-dependency validation pipeline
       run: python3 -m validacao_real.run_rx_pipeline
+    - name: Rx multiprobe validation
+      run: python3 -m validacao_real.run_rx_multiprobe
     - name: Check fallback provenance boundary
       run: |
         set -euo pipefail
