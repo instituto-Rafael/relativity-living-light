@@ -103,3 +103,39 @@ Never collapse them into one provenance statement.
 `F_ok`: RLL now has an explicit consumer-side prior-art bridge for octagon/cycle-space/840/DHA/ChipQuantum.  
 `F_gap`: item-level prior-art mapping for all MF-0001..MF-0251 is not complete.  
 `F_next`: add `prior_art_state`, `external_source_id` and `project_residual` per MF row without rewriting historical source text.
+
+
+## MF-0001..MF-0251 machine-readable prior-art intake
+
+Upstream mathematics authority now exposes:
+
+`rafaelmeloreisnovo/Matem-tica-/data/registries/PRIOR_ART_MATRIX_MF0001_MF0251_V1.json`
+
+with a human summary at:
+
+`docs/audits/2026-09-23_PRIOR_ART_MATRIX_MF0001_MF0251_V1.md`.
+
+First-pass coverage: **251/251** rows.
+
+Current state counts:
+
+- `KNOWN_CLASSICAL`: 98
+- `KNOWN_DERIVABLE`: 50
+- `TEXTUAL_CONTEXT_OR_BOUNDARY`: 58
+- `PROJECT_COMPOSITION_NOVELTY_UNPROVEN`: 36
+- `PRIOR_ART_FOUND`: 4
+- `RELATED_PRIOR_ART_FOUND_NOVELTY_UNPROVEN`: 1
+- `KNOWN_CLASSICAL_PHYSICS`: 2
+- `TOKEN_VAZIO_PRIOR_ART_DEDICATED_SEARCH`: 2
+
+Dedicated literature queue: **40 rows**.
+
+RLL consumption rule:
+
+```text
+MF prior_art_state is inherited from mathematics authority.
+RLL may add execution/evidence state.
+RLL must not upgrade novelty state.
+```
+
+Thus a RLL PASS on a geometric verifier cannot turn `KNOWN_CLASSICAL`, `KNOWN_DERIVABLE` or `NOVELTY_UNPROVEN` into a novelty claim.
