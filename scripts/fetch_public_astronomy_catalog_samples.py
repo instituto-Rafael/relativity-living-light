@@ -34,7 +34,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import requests
+from rx.http import RxHttpError, get_json
 
 
 SDSS_SQL_TEMPLATE = (
@@ -46,6 +46,8 @@ SDSS_SQL_TEMPLATE = (
 
 SDSS_ENDPOINT = "https://skyserver.sdss.org/dr16/SkyServerWS/SearchTools/SqlSearch"
 OSC_URL = "https://sne.space/astrocats/astrocats/supernovae/output/json/supernovae.json"
+
+FETCH_ALLOWED_HOSTS = {"skyserver.sdss.org", "sne.space"}
 
 CLAIM_BOUNDARY = (
     "Public astronomy catalog samples are not cosmology likelihoods and do not "
@@ -123,14 +125,14 @@ def first_value(entry: dict[str, Any], key: str) -> Any:
 
 def request_json(url: str, *, timeout: int = 60, params: dict[str, Any] | None = None) -> Any:
     try:
-        response = requests.get(
+        return get_json(
             url,
-            params=params,
+            allowed_hosts=FETCH_ALLOWED_HOSTS,
             timeout=timeout,
-            headers={"User-Agent": "RLL-public-astronomy-fetcher/1.0"},
+            max_bytes=128 * 1024 * 1024,
+            params=params,
+            user_agent="RLL-public-astronomy-fetcher/1.0",
         )
-        response.raise_for_status()
-        return response.json()
     except Exception as exc:  # pragma: no cover - network-dependent
         raise FetchError(f"failed to fetch {url}: {exc}") from exc
 
