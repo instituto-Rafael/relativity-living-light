@@ -27,6 +27,7 @@ paths = {
     "structure_d_rx": ROOT / "results" / "structure_d" / "joint_real_likelihood_rx.json",
     "governance": ROOT / "results" / "development_governance_validation.json",
     "security_surface": ROOT / "results" / "security_surface_audit.json",
+    "authority_registry": ROOT / "results" / "executable_entrypoint_authority_registry_validation.json",
 }
 
 cli_security_receipts = sorted(
@@ -57,6 +58,8 @@ checks["governance_bundle_pass"] = data["governance"].get("pass") is True
 checks["governance_claim_closed"] = data["governance"].get("claim_allowed") is False
 checks["security_surface_strict_pass"] = data["security_surface"].get("strict_pass") is True
 checks["security_surface_no_critical"] = data["security_surface"].get("critical_count") == 0
+checks["authority_registry_pass"] = data["authority_registry"].get("pass") is True
+checks["authority_registry_claim_closed"] = data["authority_registry"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -172,7 +175,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, security-surface audit, CLI/simple/multiprobe security preflights, "
         "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
