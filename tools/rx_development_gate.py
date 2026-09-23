@@ -149,6 +149,13 @@ migration_plan = data["migration_plan"]
 checks["migration_plan_materialized"] = isinstance(migration_plan.get("rows"), list)
 checks["migration_plan_no_mass_rewrite"] = migration_plan.get("policy", {}).get("automatic_mass_rewrite") is False
 checks["migration_plan_active_rx_zero_dependency"] = migration_plan.get("policy", {}).get("active_rx_runtime_already_zero_dependency") is True
+closed_families = {
+    row.get("family"): row.get("state")
+    for row in migration_plan.get("closed_families", [])
+}
+checks["validacao_real_yaml_matplotlib_migrated"] = (
+    closed_families.get("validacao_real_yaml_matplotlib") == "MIGRATED_WITH_PARITY_GATE"
+)
 
 structure_d_rx = data["structure_d_rx"]
 successor = structure_d_rx.get("structure_d_successor", {})
@@ -189,7 +196,7 @@ payload = {
     ),
     "F_gap": (
         "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; "
-        "repository-wide third-party Python migration, OS sandbox evidence, external GitHub controls and independent security review remain open."
+        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation family, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
         "Choose and version one common growth/CMB/sound-horizon contract, then require "
