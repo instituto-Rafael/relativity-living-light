@@ -154,7 +154,7 @@ for model, profile in profiles.items():
     freestanding = component_chi2(model, profile, "freestanding")
     rows[model] = {
         "structure_d_semantics": structure_d,
-        "freestanding_semantics": freestanding,
+        "freestanding_projection": freestanding,
         "delta_freestanding_minus_structure_d": {
             key: freestanding[key] - structure_d[key]
             for key in ("Hz", "DESI_DR2_BAO", "fsigma8", "CMB_shift", "total")
@@ -185,12 +185,16 @@ payload = {
         "cmb_acoustic_semantics_state": "CONTRACT_DIVERGENCE",
         "rd_semantics_equal": False,
         "rd_semantics_state": "CONTRACT_DIVERGENCE",
+        "radiation_density_semantics_equal": False,
+        "radiation_density_semantics_state": "CONTRACT_DIVERGENCE",
         "claim_allowed": False,
     },
     "interpretation": (
         "A parity delta here is not evidence for or against RLL. It identifies "
         "differences in runtime semantics that must be reconciled before numerical "
-        "results from Structure-D and freestanding routes are compared as equivalent."
+        "results from Structure-D and freestanding routes are compared as equivalent. "
+        "The freestanding projection here does not claim binary parity because Rx currently "
+        "uses Omega_r=9.0e-5 while FASE18E/freestanding profiles use 9.18e-5."
     ),
 }
 
@@ -207,7 +211,7 @@ lines = [
 for model, record in rows.items():
     for key in ("Hz", "DESI_DR2_BAO", "fsigma8", "CMB_shift", "total"):
         a = record["structure_d_semantics"][key]
-        b = record["freestanding_semantics"][key]
+        b = record["freestanding_projection"][key]
         lines.append("| %s | %s | %.8f | %.8f | %.8f |" % (model, key, a, b, b - a))
     lines.append(
         "| %s | rd_formula - rd_freestanding [Mpc] | %.8f | — | — |"
@@ -222,6 +226,7 @@ lines += [
     "- growth semantics: CONTRACT_DIVERGENCE",
     "- CMB acoustic-scale semantics: CONTRACT_DIVERGENCE",
     "- r_d semantics: CONTRACT_DIVERGENCE",
+    "- radiation density Ωr: CONTRACT_DIVERGENCE (9.0e-5 vs 9.18e-5)",
     "- claim_allowed: false",
     "",
     "These divergences must be resolved explicitly before cross-runtime chi2 values are treated as parity evidence.",
@@ -230,7 +235,7 @@ OUT_MD.parent.mkdir(parents=True, exist_ok=True)
 OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 print("RX_SEMANTIC_PARITY=PASS_LEDGER")
-print("growth=CONTRACT_DIVERGENCE cmb=CONTRACT_DIVERGENCE rd=CONTRACT_DIVERGENCE")
+print("growth=CONTRACT_DIVERGENCE cmb=CONTRACT_DIVERGENCE rd=CONTRACT_DIVERGENCE radiation=CONTRACT_DIVERGENCE")
 print("claim_allowed=False")
 print("wrote", OUT_JSON.relative_to(ROOT))
 print("wrote", OUT_MD.relative_to(ROOT))
