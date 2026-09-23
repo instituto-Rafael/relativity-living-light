@@ -204,6 +204,26 @@
       "scientific_claim_effect": "NONE"
     },
     {
+      "route_id": "CALC_DATA_AUDIT_STDLIB",
+      "entrypoints": [
+        "python3 scripts/calc_data.py --in <ALLOWLISTED_COMMITTED_INPUT> --out _audit/processed/results.json"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "_audit/processed/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false,
+      "network_write": false,
+      "scientific_claim_effect": "NONE"
+    },
+    {
       "route_id": "EXTERNAL_REPOSITORY_MUTATION",
       "entrypoints": [
         "workflow PR creation, publication, repository mutation outside declared result paths"
