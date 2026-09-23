@@ -156,6 +156,20 @@ def develop():
     print("RLL_RX_DEVELOPMENT=PASS")
 
 
+def orchestrate(plan="configs/rll_execution_plan.v1.yml", execute=True):
+    from .orchestrator import orchestrate as run_execution_fabric
+
+    result = run_execution_fabric(plan_path=plan, execute=execute)
+    print("RLL_RX_ORCHESTRATE=" + result["status"])
+    print("run_id=" + result["run_id"])
+    print("physics_contract=" + result["physics_contract"])
+    print("regimes=" + ",".join(result["regimes"]))
+    print("selected_formula_count=" + str(result["selected_formula_count"]))
+    print("rejected_formula_count=" + str(result["rejected_formula_count"]))
+    print("claim_allowed=False")
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         prog="python3 -m rx",
@@ -165,7 +179,17 @@ def main(argv=None):
         "command",
         nargs="?",
         default="status",
-        choices=("status", "selftest", "validate", "parity", "audit", "develop"),
+        choices=("status", "selftest", "validate", "parity", "audit", "develop", "orchestrate"),
+    )
+    parser.add_argument(
+        "--plan",
+        default="configs/rll_execution_plan.v1.yml",
+        help="Execution plan for the orchestrate command.",
+    )
+    parser.add_argument(
+        "--no-execute",
+        action="store_true",
+        help="Build the execution graph and receipts without running scientific routes.",
     )
     args = parser.parse_args(argv)
 
@@ -176,6 +200,10 @@ def main(argv=None):
         "parity": parity,
         "audit": audit,
         "develop": develop,
+        "orchestrate": lambda: orchestrate(
+            plan=args.plan,
+            execute=not args.no_execute,
+        ),
     }
     if args.command != "status":
         _security_preflight(args.command)
