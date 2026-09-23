@@ -71,6 +71,7 @@ class RxExecutionFabricTests(unittest.TestCase):
                 "selected_formulas.json",
                 "rejected_formulas.json",
                 "covariance_contract.json",
+                "scientific_gate_graph.json",
                 "metrics.json",
                 "negative_results.json",
                 "manifest.json",
