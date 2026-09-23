@@ -115,7 +115,7 @@ Objetivo: reproduzir a semântica atual do Structure-D sem NumPy/Pandas/SciPy.
 - CMB = matriz 3x3
 - runtime = Rx stdlib-only
 
-Estado: `IMPLEMENTED_UNTESTED_ON_TARGET`.
+Estado: `CI_VERIFIED_ENGINEERING_PARITY` (workflow `Validacao Real RLL`, run `35817865087`, head `4eecebb180467500f7bd32cca4e09d1efe92004f`).
 
 ### RX-FREESTANDING-PROJECTION-V1
 
@@ -189,3 +189,19 @@ A próxima mudança científica deve nascer como novo contrato versionado, não 
 **F_gap:** Ωr, growth, r_d/r_s e superfície H(z) ainda diferem entre famílias históricas.
 
 **F_next:** implementar `RX-PHYSICS-CANONICAL-V2` somente com cada decisão física explicitamente versionada e validada contra vetores de referência.
+
+
+## Fechamento de dependência validacao_real — 2026-09-23
+
+A família de serialização/apresentação do bundle legado `validacao_real` foi migrada sem alterar as equações fixed-point históricas:
+
+- PyYAML -> JSON stdlib/versionado;
+- Matplotlib -> renderer SVG de `rx.kernel`;
+- YAMLs históricos preservados;
+- paridade YAML->JSON validada ponto a ponto;
+- core `fetch_real_data.py + compute_validation.py + make_figures.py + render_report.py` com zero imports Python de terceiros;
+- CI run `35817865087`: PASS;
+- migration plan: `closed_families=1`;
+- aggregate: `PASS_WITH_OPEN_CONTRACT_DIVERGENCES`.
+
+Isto fecha uma família de engenharia, não escolhe física e não promove claim.
