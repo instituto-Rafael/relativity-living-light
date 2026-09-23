@@ -43,21 +43,27 @@
     },
     "G4": {
       "qualified_id": "SCI_GATE:G4",
-      "executor_state": "TOKEN_VAZIO_FULL_TOURNAMENT_EXECUTOR",
-      "executors": [],
-      "note": "Pantheon three-model subgate exists but is not the complete declared fair-baseline tournament."
+      "executor_state": "FULL_DECLARED_BACKGROUND_EXECUTOR",
+      "executors": [
+        "tools/run_g4_background_tournament.py"
+      ],
+      "note": "Six-model fair background tournament exists; scientific gate evidence still requires a passing exact receipt."
     },
     "G5": {
       "qualified_id": "SCI_GATE:G5",
-      "executor_state": "TOKEN_VAZIO_CANONICAL_JOINT_LIKELIHOOD_EXECUTOR",
-      "executors": [],
-      "note": "WS02 owns canonical full-covariance likelihood closure."
+      "executor_state": "FULL_DECLARED_BACKGROUND_MANIFEST_EXECUTOR",
+      "executors": [
+        "tools/build_g5_canonical_background_manifest.py"
+      ],
+      "note": "Hash-bound G5 background manifest builder exists and must consume the exact passing G4 receipt."
     },
     "G6": {
       "qualified_id": "SCI_GATE:G6",
-      "executor_state": "TOKEN_VAZIO_MULTIPROBE_POSTERIOR_EVIDENCE_EXECUTOR",
-      "executors": [],
-      "note": "Historical/SN-only inference does not close joint multiprobe G6."
+      "executor_state": "PREREGISTERED_CANONICAL_BACKGROUND_INFERENCE_EXECUTOR",
+      "executors": [
+        "tools/run_g6_canonical_inference.py"
+      ],
+      "note": "Canonical background MCMC+nested executor exists; this does not equal final growth/CMB/lensing multiprobe closure or G10 replication."
     },
     "G7": {
       "qualified_id": "SCI_GATE:G7",
