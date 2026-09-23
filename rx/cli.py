@@ -89,7 +89,6 @@ def selftest():
     _tool("validate_rx_fairness.py")
     _tool("validate_rx_inference.py")
     _tool("validate_rx_dha.py")
-    _tool("validate_rx_dha.py")
     _tool("rx_sound_horizon_selftest.py")
     _tool("rx_freestanding65_parity.py")
 
@@ -140,9 +139,13 @@ def develop():
     _tool("validate_credential_authority_stdlib_migration.py")
     _tool("validate_watch_config_stdlib_migration.py")
     _tool("validate_calc_data_stdlib_migration.py")
+    _tool("validate_validation_deterministic_stdlib.py")
+    _tool("validate_ci_scientific_skills_stdlib_migration.py")
     _tool("validate_rx_fairness.py")
     _tool("validate_rx_inference.py")
     _tool("validate_rx_dha.py")
+    _tool("validate_validation_simple_claim_boundary.py")
+    _tool("validate_real_data_materialization_security.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_no_ai_gate.py")
     _tool("rx_zero_dependency_gate.py")
@@ -155,6 +158,17 @@ def develop():
     _tool("rx_semantic_parity.py")
     _tool("rx_dependency_audit.py")
     _tool("rx_dependency_migration_plan.py")
+    _tool_args("rll_closure_queue.py", ["--write"])
+    _tool_args("rll_closure_work_packets.py", ["--write"])
+    _tool_args("rx_physics_v2_decision_packet.py", ["--write"])
+    _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
+    _tool_args("rll_current_rx_source_freeze.py", ["--write"])
+    _tool_args("validate_energy_momentum_bridge_dimensions.py", ["--write"])
+    _tool_args("rll_branch_maturity_decision_packet.py", ["--write"])
+    _tool_args(
+        "rll_token_vazio_reconcile_v4.py",
+        ["--output", "artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json"],
+    )
     _tool("rx_development_gate.py")
     print("RLL_RX_DEVELOPMENT=PASS")
 

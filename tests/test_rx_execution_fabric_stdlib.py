@@ -22,6 +22,9 @@ class RxExecutionFabricTests(unittest.TestCase):
         self.assertIn("G5", result["regimes"])
         self.assertIn("G6", result["regimes"])
         self.assertEqual(result["primary_regime"], "G5")
+        self.assertEqual(result["regime_namespace"], "REGIME")
+        self.assertIn("REGIME:G5", result["qualified_regimes"])
+        self.assertEqual(result["qualified_primary_regime"], "REGIME:G5")
 
     def test_correlated_data_blocks_diagonal_mode(self):
         result = route_dispersion({
@@ -68,6 +71,7 @@ class RxExecutionFabricTests(unittest.TestCase):
                 "selected_formulas.json",
                 "rejected_formulas.json",
                 "covariance_contract.json",
+                "scientific_gate_graph.json",
                 "metrics.json",
                 "negative_results.json",
                 "manifest.json",

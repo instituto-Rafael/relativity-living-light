@@ -1,0 +1,45 @@
+{
+  "schema": "rll.gate_namespace_registry.v1",
+  "date": "2026-09-23",
+  "claim_allowed": false,
+  "purpose": "Prevent semantic collision between physical/geometric regime identifiers and scientific evidence-gate identifiers.",
+  "rules": [
+    "Qualified identifiers are authoritative outside the native source contract.",
+    "REGIME:G* describes applicability/context, never evidence maturity.",
+    "SCI_GATE:G* describes evidence progression, never a physical regime.",
+    "An unqualified G* may be preserved only inside its original versioned source document.",
+    "A PASS in REGIME routing is not a PASS in SCI_GATE validation."
+  ],
+  "namespaces": {
+    "REGIME": {
+      "source": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+      "ids": {
+        "G0": "euclidean_local_diagnostic",
+        "G1": "newtonian_nbody_weak_field",
+        "G2": "post_newtonian_relativistic_local",
+        "G3": "strong_gravity",
+        "G4": "plasma_mhd_grmhd",
+        "G5": "cosmological_flrw_background",
+        "G6": "observation_projection"
+      }
+    },
+    "SCI_GATE": {
+      "source": "data/contracts/rll_scientific_validation_orchestrator.v1.json",
+      "ids": {
+        "G0": "authority_provenance_and_freeze",
+        "G1": "structural_math_and_null_limit",
+        "G2": "real_data_and_full_covariance_materialization",
+        "G3": "dataset_compatibility_before_joint_fit",
+        "G4": "fair_baseline_tournament",
+        "G5": "canonical_joint_likelihood",
+        "G6": "posterior_and_evidence_integrity",
+        "G7": "robustness_ablation_and_recovery",
+        "G8": "physical_closure_and_perturbations",
+        "G9": "growth_CMB_lensing_and_nonlinear_observables",
+        "G10": "independent_replication",
+        "G11": "publication_and_claim_router"
+      }
+    }
+  },
+  "claim_boundary": "Namespace reconciliation changes labels and routing clarity only; it does not promote scientific evidence."
+}

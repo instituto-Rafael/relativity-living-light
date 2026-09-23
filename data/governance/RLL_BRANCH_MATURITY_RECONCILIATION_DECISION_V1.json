@@ -1,0 +1,56 @@
+{
+  "schema": "rll.branch_maturity_reconciliation_decision.v1",
+  "date": "2026-09-23",
+  "claim_allowed": false,
+  "current_contract": {
+    "topology": [
+      "non-protected work branch -> rll/lab",
+      "rll/lab -> rll/integration",
+      "rll/integration -> rll/release",
+      "rll/release -> main"
+    ],
+    "source": ".github/workflow-contract.yml"
+  },
+  "observed_against_main": {
+    "rll/lab": {"status": "diverged", "ahead_by": 151, "behind_by": 629},
+    "rll/integration": {"status": "diverged", "ahead_by": 152, "behind_by": 629},
+    "rll/release": {"status": "behind", "ahead_by": 0, "behind_by": 1950}
+  },
+  "invariants": [
+    "no force reset of a branch with unreviewed unique commits",
+    "divergence is not itself technical value",
+    "unique patches require patch-equivalence and semantic review",
+    "governance policy must match actual permitted promotion paths",
+    "external platform enforcement is a separate authority plane"
+  ],
+  "options": [
+    {
+      "id": "PRESERVE_TOPOLOGY_RECONCILE_HISTORY",
+      "description": "Keep lab->integration->release->main as canonical, semantically review unique diverged patches, forward-port accepted value, then bring each maturity branch forward without history destruction.",
+      "requirements": [
+        "merge-base/cherry patch-equivalence census",
+        "unique patch classification",
+        "manual value review for non-equivalent patches",
+        "forward-port receipts",
+        "future PRs routed through canonical chain"
+      ]
+    },
+    {
+      "id": "VERSION_REVIEWED_DIRECT_MAIN_EXCEPTION",
+      "description": "Keep maturity chain for release work but explicitly version a reviewed work-branch->main exception for bounded engineering changes with mandatory evidence.",
+      "requirements": [
+        "new branch-maturity contract version",
+        "explicit eligible change classes",
+        "required checks and human review",
+        "rollback and receipt",
+        "GitHub ruleset/branch-protection alignment"
+      ]
+    }
+  ],
+  "selected_option": "TOKEN_VAZIO_GOVERNANCE_AUTHORITY_DECISION",
+  "forbidden_shortcuts": [
+    "force-reset rll/lab or rll/integration to main",
+    "declare diverged commits valuable without semantic review",
+    "disable branch-maturity gate solely to make CI green"
+  ]
+}

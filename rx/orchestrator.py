@@ -14,6 +14,7 @@ from .dispersion import route_dispersion
 from .formula_selector import load_formula_bindings, select_formulas
 from .kernel import dump_json
 from .region_router import classify_region
+from .scientific_gates import build_scientific_gate_graph
 from .yaml_subset import load as load_yaml_subset
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -134,6 +135,7 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
 
     region = classify_region(plan["region"])
     dispersion = route_dispersion(plan["dispersion"])
+    scientific_gate_graph = build_scientific_gate_graph()
 
     registry_path = _repo_path(plan.get("formula_registry"))
     registry = load_formula_bindings(registry_path)
@@ -169,6 +171,7 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         "claim_allowed": False,
     })
     dump_json(output_dir / "covariance_contract.json", dispersion)
+    dump_json(output_dir / "scientific_gate_graph.json", scientific_gate_graph)
 
     routes = (plan.get("execution") or {}).get("routes") or []
     if not isinstance(routes, list):
@@ -225,10 +228,15 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         "physics_contract": contract_id,
         "physics_contract_state": contract.get("state"),
         "regimes": region["regimes"],
+        "qualified_regimes": region["qualified_regimes"],
         "primary_regime": region["primary_regime"],
+        "qualified_primary_regime": region["qualified_primary_regime"],
         "dispersion_operator": dispersion["operator"],
         "selected_formula_count": selection["selected_count"],
         "rejected_formula_count": selection["rejected_count"],
+        "scientific_gate_count": scientific_gate_graph["gate_count"],
+        "scientific_gate_namespace": scientific_gate_graph["namespace"],
+        "scientific_claim_allowed": scientific_gate_graph["claim_allowed"],
         "routes": route_results,
         "claim_allowed": False,
     }
@@ -240,6 +248,9 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         ROOT / "configs" / "rx_physics_contracts.json",
         ROOT / "data" / "governance" / "RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
         ROOT / "data" / "governance" / "RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json",
+        ROOT / "data" / "contracts" / "rll_scientific_validation_orchestrator.v1.json",
+        ROOT / "data" / "governance" / "RLL_SCIENTIFIC_GATE_EXECUTOR_REGISTRY_V1.json",
+        ROOT / "data" / "governance" / "RLL_GATE_NAMESPACE_REGISTRY_V1.json",
     ]
     source_manifest = _source_manifest(source_paths)
 
@@ -256,6 +267,7 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
             "selected_formulas.json",
             "rejected_formulas.json",
             "covariance_contract.json",
+            "scientific_gate_graph.json",
             "metrics.json",
             "negative_results.json",
             "receipt.json",
@@ -284,9 +296,17 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         "execute": bool(execute),
         "physics_contract": contract_id,
         "region_primary": region["primary_regime"],
+        "qualified_region_primary": region["qualified_primary_regime"],
         "regimes": region["regimes"],
+        "qualified_regimes": region["qualified_regimes"],
         "dispersion_operator": dispersion["operator"],
         "formula_selection_basis": "declared_applicability_only",
+        "scientific_gate_graph": {
+            "namespace": scientific_gate_graph["namespace"],
+            "gate_count": scientific_gate_graph["gate_count"],
+            "claim_allowed": False,
+            "execution_boundary": "dependency graph and authorized mappings only; no gate auto-promotion",
+        },
         "route_results": route_results,
         "canonical_v2_state": canonical_v2.get("state", "TOKEN_VAZIO"),
         "training": False,
@@ -305,6 +325,7 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
             "selected_formulas.json",
             "rejected_formulas.json",
             "covariance_contract.json",
+            "scientific_gate_graph.json",
             "metrics.json",
             "negative_results.json",
             "manifest.json",
@@ -321,6 +342,8 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         "output_dir": str(output_dir),
         "physics_contract": contract_id,
         "regimes": region["regimes"],
+        "qualified_regimes": region["qualified_regimes"],
+        "scientific_gate_count": scientific_gate_graph["gate_count"],
         "selected_formula_count": selection["selected_count"],
         "rejected_formula_count": selection["rejected_count"],
         "claim_allowed": False,

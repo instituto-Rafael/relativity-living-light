@@ -128,8 +128,11 @@ def classify_region(region):
 
     return {
         "schema": "rll.rx.region_classification.v1",
+        "regime_namespace": "REGIME",
         "regimes": regimes,
+        "qualified_regimes": ["REGIME:" + key for key in regimes],
         "primary_regime": primary,
+        "qualified_primary_regime": "REGIME:" + primary,
         "projection_wrapper": "G6" in regimes,
         "regime_names": {key: REGIME_NAMES[key] for key in regimes},
         "reasons": reasons,
