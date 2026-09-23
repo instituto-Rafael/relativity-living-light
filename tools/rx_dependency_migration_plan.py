@@ -24,6 +24,7 @@ CREDENTIAL_STDLIB_GATE = ROOT / "results" / "credential_authority_stdlib_migrati
 WATCH_CONFIG_GATE = ROOT / "results" / "watch_config_stdlib_migration.json"
 CALC_DATA_STDLIB_GATE = ROOT / "results" / "calc_data_stdlib_migration.json"
 VALIDATION_DETERMINISTIC_GATE = ROOT / "results" / "validation_deterministic_stdlib_migration.json"
+CI_SCIENTIFIC_SKILLS_GATE = ROOT / "results" / "ci_scientific_skills_stdlib_migration.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -322,6 +323,38 @@ if VALIDATION_DETERMINISTIC_GATE.exists():
             "scientific_semantics_changed": False,
         })
 
+
+if CI_SCIENTIFIC_SKILLS_GATE.exists():
+    skills_gate = json.loads(CI_SCIENTIFIC_SKILLS_GATE.read_text(encoding="utf-8"))
+    skills_external = any(
+        item.get("path") == "tools/ci_scientific_skills.py" and item.get("external_imports")
+        for item in audit.get("files", [])
+    )
+    test_external = any(
+        item.get("path") == "tests/test_ci_scientific_skills.py" and item.get("external_imports")
+        for item in audit.get("files", [])
+    )
+    if skills_gate.get("pass") is True and not skills_external and not test_external:
+        closed_families.append({
+            "family": "ci_scientific_skills_numpy_pandas_stdlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "tools/ci_scientific_skills.py",
+                "tests/test_ci_scientific_skills.py",
+                ".github/workflows/ci-scientific-skills.yml",
+            ],
+            "replacements": {
+                "numpy": "math/statistics/authorial real DFT",
+                "pandas": "csv Python stdlib",
+                "pytest": "unittest Python stdlib for this focused workflow",
+            },
+            "evidence": [
+                str(CI_SCIENTIFIC_SKILLS_GATE.relative_to(ROOT)),
+                str(AUDIT.relative_to(ROOT)),
+            ],
+            "network_requests_performed": 0,
+            "scientific_semantics_changed": False,
+        })
 
 payload = {
     "schema": "rll.rx.dependency_migration_plan.v1",
