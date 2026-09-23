@@ -12,6 +12,10 @@ on:
       - "tools/validate_validacao_real_serialization_parity.py"
       - "tools/validate_validacao_real_zero_dependency.py"
       - "tools/validate_rll_development_governance.py"
+      - "tools/validate_inventory_config_parity.py"
+      - "tools/docs_inventory.py"
+      - "tools/inventory_config.yml"
+      - "tools/inventory_config.json"
       - "tools/rll_security_surface_audit.py"
       - "internal/governance/**"
       - "data/governance/RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
@@ -70,6 +74,8 @@ jobs:
       run: python3 tools/validate_validacao_real_serialization_parity.py
     - name: Validate legacy validacao_real zero dependency core
       run: python3 tools/validate_validacao_real_zero_dependency.py
+    - name: Validate inventory config YAML-to-JSON parity
+      run: python3 tools/validate_inventory_config_parity.py
     - name: Audit governed Python security surface
       run: python3 tools/rll_security_surface_audit.py --strict
     - name: Legacy validacao_real compatibility route (zero third-party)
@@ -154,6 +160,7 @@ jobs:
           results/executable_entrypoint_authority_registry_validation.json
           results/validacao_real_serialization_parity.json
           results/validacao_real_zero_dependency_core.json
+          results/inventory_config_serialization_parity.json
           validacao_real/fetched/
           validacao_real/results/
           results/rx_semantic_parity.json
