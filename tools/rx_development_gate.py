@@ -37,6 +37,7 @@ paths = {
     "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
     "ci_scientific_skills_stdlib": ROOT / "results" / "ci_scientific_skills_stdlib_migration.json",
     "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
+    "real_data_materialization_security": ROOT / "results" / "real_data_materialization_security_gate.json",
 }
 
 cli_security_receipts = sorted(
@@ -95,6 +96,10 @@ checks["validation_deterministic_stdlib_bayes_still_legacy"] = data["validation_
 checks["validation_deterministic_stdlib_claim_closed"] = data["validation_deterministic_stdlib"].get("claim_allowed") is False
 checks["validation_simple_claim_boundary_pass"] = data["validation_simple_claim_boundary"].get("pass") is True
 checks["validation_simple_claim_boundary_claim_closed"] = data["validation_simple_claim_boundary"].get("claim_allowed") is False
+checks["real_data_materialization_security_pass"] = data["real_data_materialization_security"].get("pass") is True
+checks["real_data_materialization_security_no_network"] = data["real_data_materialization_security"].get("network_requests_performed") == 0
+checks["real_data_materialization_security_zero_third_party"] = data["real_data_materialization_security"].get("third_party_python_dependencies") == []
+checks["real_data_materialization_security_claim_closed"] = data["real_data_materialization_security"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
