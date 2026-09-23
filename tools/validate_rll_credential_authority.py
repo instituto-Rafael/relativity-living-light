@@ -18,7 +18,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
 
 SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
@@ -67,47 +66,106 @@ class Finding:
     job: str = ""
 
 
-def _load_yaml(path: Path) -> dict[str, Any]:
-    payload = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
-    return payload if isinstance(payload, dict) else {}
+def _yaml_key_at_indent(line: str, indent: int):
+    if not line.strip() or line.lstrip().startswith("#"):
+        return None
+    actual = len(line) - len(line.lstrip(" "))
+    if actual != indent:
+        return None
+    stripped = line.strip()
+    match = re.match(r"^(?P<q>['\"]?)(?P<key>[A-Za-z0-9_.-]+)(?P=q):(?:\\s*(?P<value>.*))?$", stripped)
+    if not match:
+        return None
+    return match.group("key"), (match.group("value") or "").strip()
 
 
-def _triggers(doc: dict[str, Any]) -> set[str]:
-    raw = doc.get("on")
-    if isinstance(raw, str):
-        return {raw}
-    if isinstance(raw, list):
-        return {str(item) for item in raw}
-    if isinstance(raw, dict):
-        return {str(item) for item in raw}
+def _workflow_triggers(text: str) -> set[str]:
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        parsed = _yaml_key_at_indent(line, 0)
+        if not parsed or parsed[0] != "on":
+            continue
+        inline = parsed[1]
+        if inline:
+            value = inline.strip()
+            if value.startswith("[") and value.endswith("]"):
+                return {
+                    item.strip().strip("'\"")
+                    for item in value[1:-1].split(",")
+                    if item.strip()
+                }
+            return {value.strip("'\"")}
+        triggers: set[str] = set()
+        for child in lines[index + 1:]:
+            if not child.strip() or child.lstrip().startswith("#"):
+                continue
+            child_indent = len(child) - len(child.lstrip(" "))
+            if child_indent == 0:
+                break
+            parsed_child = _yaml_key_at_indent(child, 2)
+            if parsed_child:
+                triggers.add(parsed_child[0])
+        return triggers
     return set()
 
 
-def _contains_manual_guard(job: dict[str, Any]) -> bool:
-    expr = str(job.get("if", ""))
-    return "github.event_name" in expr and "workflow_dispatch" in expr
+def _job_blocks(text: str) -> dict[str, str]:
+    lines = text.splitlines()
+    jobs_start = None
+    for index, line in enumerate(lines):
+        parsed = _yaml_key_at_indent(line, 0)
+        if parsed and parsed[0] == "jobs":
+            jobs_start = index + 1
+            break
+    if jobs_start is None:
+        return {}
+
+    blocks: dict[str, list[str]] = {}
+    current: str | None = None
+    for line in lines[jobs_start:]:
+        if line.strip() and not line.lstrip().startswith("#"):
+            indent = len(line) - len(line.lstrip(" "))
+            if indent == 0:
+                break
+            parsed = _yaml_key_at_indent(line, 2)
+            if parsed:
+                current = parsed[0]
+                blocks[current] = [line]
+                continue
+        if current is not None:
+            blocks[current].append(line)
+    return {name: "\n".join(lines_) for name, lines_ in blocks.items()}
+
+
+def _contains_manual_guard_text(job_text: str) -> bool:
+    for line in job_text.splitlines():
+        parsed = _yaml_key_at_indent(line, 4)
+        if parsed and parsed[0] == "if":
+            expr = parsed[1]
+            return "github.event_name" in expr and "workflow_dispatch" in expr
+    return False
 
 
 def _audit_secret_job(
     findings: list[Finding],
     rel: str,
-    doc: dict[str, Any],
+    workflow_text: str,
     secret_re: re.Pattern[str],
     code_prefix: str,
 ) -> None:
-    if "pull_request_target" in _triggers(doc):
+    triggers = _workflow_triggers(workflow_text)
+    if "pull_request_target" in triggers:
         findings.append(Finding(
             "ERROR", "PULL_REQUEST_TARGET_SECRET", rel,
             "credential-bearing workflow cannot use pull_request_target",
         ))
 
-    for job_id, raw_job in (doc.get("jobs") or {}).items():
-        if not isinstance(raw_job, dict):
-            continue
-        job_text = json.dumps(raw_job, ensure_ascii=False)
+    matched_job = False
+    for job_id, job_text in _job_blocks(workflow_text).items():
         if not secret_re.search(job_text):
             continue
-        if not _contains_manual_guard(raw_job):
+        matched_job = True
+        if not _contains_manual_guard_text(job_text):
             findings.append(Finding(
                 "ERROR", f"{code_prefix}_NON_MANUAL", rel,
                 "job consuming a repository secret must be guarded by workflow_dispatch",
@@ -125,6 +183,12 @@ def _audit_secret_job(
                 "shell tracing or environment dumping is forbidden in a credential-bearing job",
                 str(job_id),
             ))
+
+    if secret_re.search(workflow_text) and not matched_job:
+        findings.append(Finding(
+            "ERROR", f"{code_prefix}_STRUCTURE_UNPARSED", rel,
+            "secret reference was found outside a structurally parsed job; fail closed",
+        ))
 
 
 def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Finding], dict[str, Any]]:
@@ -206,20 +270,10 @@ def audit(repo_root: Path, policy_path: Path = DEFAULT_POLICY) -> tuple[list[Fin
                     "ERROR", "GITPAT_OUTSIDE_ASSURANCE_WORKFLOW", rel,
                     "GITPAT may only be consumed by the reviewed read-only assurance workflow",
                 ))
-            try:
-                doc = _load_yaml(workflow)
-            except Exception as exc:  # noqa: BLE001
-                findings.append(Finding("ERROR", "WORKFLOW_PARSE", rel, str(exc)))
-            else:
-                _audit_secret_job(findings, rel, doc, GITHUB_SECRET_REF_RE, "GITPAT")
+            _audit_secret_job(findings, rel, text, GITHUB_SECRET_REF_RE, "GITPAT")
 
         if has_climate:
-            try:
-                doc = _load_yaml(workflow)
-            except Exception as exc:  # noqa: BLE001
-                findings.append(Finding("ERROR", "WORKFLOW_PARSE", rel, str(exc)))
-            else:
-                _audit_secret_job(findings, rel, doc, CLIMATE_SECRET_REF_RE, "CLIMATE_TRIAL")
+            _audit_secret_job(findings, rel, text, CLIMATE_SECRET_REF_RE, "CLIMATE_TRIAL")
 
         if has_gitpat and has_climate:
             findings.append(Finding(
