@@ -1,0 +1,177 @@
+{
+  "schema": "rll.data_use_purpose_registry.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "compliance_claim": false,
+  "principle": "Collect/use only what is necessary for a declared purpose; unknown or sensitive classes fail closed to human review.",
+  "actors": {
+    "human_operator": {
+      "description": "Person explicitly invoking a local command or approving/reviewing repository changes.",
+      "may_set_goal": true,
+      "may_expand_scope": "ONLY_BY_EXPLICIT_NEW_OPERATION_OR_REVIEW"
+    },
+    "reviewed_ci_workflow": {
+      "description": "Repository-reviewed deterministic workflow executing a declared operation.",
+      "may_set_goal": false,
+      "may_expand_scope": false
+    },
+    "deterministic_program": {
+      "description": "Program executes only the operation contract supplied to it.",
+      "may_set_goal": false,
+      "may_expand_scope": false,
+      "self_authorize": false
+    },
+    "autonomous_agent": {
+      "allowed": false,
+      "reason": "Development envelope forbids autonomous goal setting/scope expansion for governed RLL runtime."
+    }
+  },
+  "routes": [
+    {
+      "route_id": "RLL_RX_REAL_VALIDATION_V1",
+      "runtime": "Rx Python stdlib-only",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Compare declared RLL/LCDM predictions with committed public non-personal H(z) and DESI DR2 BAO anchors.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": true,
+        "purpose": "source reachability probe only",
+        "hosts": [
+          "arxiv.org",
+          "gitlab.com"
+        ],
+        "writes": false
+      },
+      "filesystem": {
+        "read": "repository declared inputs",
+        "write": [
+          "validacao_real/fetched_rx/",
+          "validacao_real/results_rx/"
+        ]
+      },
+      "retention": {
+        "local": "operator controlled",
+        "ci_artifact_days": 30,
+        "repository_commit": "explicit opt-in only"
+      },
+      "audit": [
+        "security preflight receipt",
+        "input SHA-256",
+        "result JSON/CSV/SVG",
+        "claim_allowed=false"
+      ]
+    },
+    {
+      "route_id": "RLL_FREESTANDING_REAL_KERNEL",
+      "runtime": "freestanding C/Q16",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Deterministic low-level reproduction of committed cosmology calculations and custody receipts.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "writes": false
+      },
+      "retention": {
+        "repository_receipts": "append-only/versioned"
+      },
+      "audit": [
+        "source digests",
+        "Q16 receipts",
+        "claim_allowed=0"
+      ]
+    },
+    {
+      "route_id": "STRUCTURE_D_LEGACY",
+      "runtime": "Python scientific stack",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Broader multiprobe model comparison and historical scientific analysis.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "external_dependencies": true,
+      "migration_state": "TOKEN_VAZIO_RX_MIGRATION",
+      "claim_allowed": false
+    },
+    {
+      "route_id": "SECURITY_AUDIT",
+      "runtime": "Python stdlib-only",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Inspect declared source surfaces for policy drift and risky runtime primitives.",
+      "inputs": [
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "writes": false
+      },
+      "audit": [
+        "security_surface_audit.json",
+        "security_surface_audit.md"
+      ]
+    }
+  ],
+  "prohibited_uses": [
+    "surveillance_of_people",
+    "behavioral_profiling_of_people",
+    "credential_harvesting",
+    "unauthorized_private_data_collection",
+    "arbitrary_remote_command_execution",
+    "unreviewed_destructive_repository_actions",
+    "autonomous_goal_setting",
+    "silent_scope_expansion",
+    "scientific_claim_promotion_by_runtime_only"
+  ],
+  "unknown_use": "HUMAN_REVIEW",
+  "residual_gaps": [
+    "TOKEN_VAZIO_LEGAL_ROLE_MAPPING",
+    "TOKEN_VAZIO_EXTERNAL_CONTROL_PLANE_SETTINGS",
+    "TOKEN_VAZIO_INDEPENDENT_PRIVACY_REVIEW"
+  ]
+}
