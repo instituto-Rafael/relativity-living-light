@@ -118,6 +118,11 @@ jobs:
       - name: Validate fail-closed SCI_GATE execution graph
         run: python3 -m unittest tests.test_rx_scientific_gate_graph
 
+      - name: Reconcile current TOKEN_VAZIO authority view
+        run: |
+          python3 -m unittest tests.test_rll_token_vazio_reconcile_v4
+          python3 tools/rll_token_vazio_reconcile_v4.py             --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
+
       - name: Validate Rx DHA angular-frequency baseline
         run: python3 tools/validate_rx_dha.py
 
@@ -158,6 +163,7 @@ jobs:
             results/rll_closure_queue.md
             results/rx_physics_v2_decision_packet.json
             results/rll_perturbation_solver_readiness.json
+            artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
           retention-days: 30
           if-no-files-found: error
 
