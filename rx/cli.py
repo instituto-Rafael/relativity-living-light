@@ -6,12 +6,47 @@ No model training. No AI runtime. No third-party Python dependencies.
 from __future__ import annotations
 
 import argparse
+import os
 import runpy
+from datetime import datetime, timezone
 from pathlib import Path
 
+from internal.governance.development_guard import evaluate_operation
 from .contracts import active_contract, load_contracts
+from .kernel import dump_json, load_json
 
 ROOT = Path(__file__).resolve().parents[1]
+SECURITY_POLICY_PATH = ROOT / "data" / "governance" / "RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
+CLI_OPERATION_PATH = ROOT / "configs" / "rx_cli_operation.json"
+
+
+def _security_preflight(command):
+    policy = load_json(SECURITY_POLICY_PATH)
+    operation = load_json(CLI_OPERATION_PATH)
+    runtime_authority_mode = os.environ.get(
+        "RLL_AUTHORITY_MODE",
+        operation.get("authority", {}).get("default_runtime_mode", "explicit_local_command"),
+    )
+    receipt = evaluate_operation(
+        policy,
+        operation,
+        runtime_authority_mode=runtime_authority_mode,
+    )
+    receipt["rx_cli_command"] = command
+    if receipt["decision"] != "ALLOW":
+        raise SystemExit(
+            "Rx CLI security preflight blocked execution: "
+            + receipt["decision"]
+            + " "
+            + "; ".join(receipt["reasons"])
+        )
+    out_dir = ROOT / "results"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    out = out_dir / ("rx_cli_security_preflight_" + stamp + "_" + command + ".json")
+    dump_json(out, receipt)
+    print("RX_CLI_SECURITY_PREFLIGHT=ALLOW", "authority=", runtime_authority_mode)
+    print("wrote", out.relative_to(ROOT))
 
 
 def _tool(name):
@@ -99,6 +134,8 @@ def main(argv=None):
         "audit": audit,
         "develop": develop,
     }
+    if args.command != "status":
+        _security_preflight(args.command)
     commands[args.command]()
 
 
