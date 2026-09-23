@@ -19,6 +19,7 @@ SERIALIZATION_PARITY = ROOT / "results" / "validacao_real_serialization_parity.j
 VALIDACAO_ZERO_DEP = ROOT / "results" / "validacao_real_zero_dependency_core.json"
 INVENTORY_CONFIG_PARITY = ROOT / "results" / "inventory_config_serialization_parity.json"
 HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
+CREDENTIAL_STDLIB_GATE = ROOT / "results" / "credential_authority_stdlib_migration.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -179,6 +180,26 @@ if HTTP_MIGRATION_GATE.exists():
                 str(HTTP_MIGRATION_GATE.relative_to(ROOT)),
             ],
             "credentialed_mode": "BLOCKED_REQUIRES_SEPARATE_REVIEWED_ROUTE",
+            "scientific_semantics_changed": False,
+        })
+
+if CREDENTIAL_STDLIB_GATE.exists():
+    credential_gate = json.loads(CREDENTIAL_STDLIB_GATE.read_text(encoding="utf-8"))
+    if credential_gate.get("pass") is True:
+        closed_families.append({
+            "family": "credential_authority_pyyaml_stdlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "tools/validate_rll_credential_authority.py",
+                "tests/test_rll_credential_authority.py",
+            ],
+            "replacements": {
+                "yaml": "strict workflow-structure scanner over only required credential-governance fields",
+            },
+            "evidence": [
+                str(CREDENTIAL_STDLIB_GATE.relative_to(ROOT)),
+            ],
+            "general_yaml_parser_claim": False,
             "scientific_semantics_changed": False,
         })
 
