@@ -1,0 +1,26 @@
+{
+  "receipt_id": "RLL-STRUCTURE-D-TERMUX-DEPENDENCY-GATE-20260922-V1",
+  "timestamp": "2026-09-22T23:00:00-03:00",
+  "kind": "muwrite_runtime_dependency_gate",
+  "source": "user-provided Termux execution transcript",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "execution": {
+    "python_dependency_probe": "FAIL",
+    "py_compile_joint_real_likelihood": "PASS_OBSERVED_NO_TRACEBACK",
+    "joint_real_likelihood_runtime": "NOT_RUN_PAST_IMPORT",
+    "first_blocker": "ModuleNotFoundError: No module named 'numpy'"
+  },
+  "evidence": {
+    "command": "python3 -c 'import numpy,pandas,scipy; ...'",
+    "error": "ModuleNotFoundError: No module named 'numpy'",
+    "runtime_entrypoint": "data/pipelines/structure_d/joint_real_likelihood.py",
+    "failure_line": "import numpy as np"
+  },
+  "claim_boundary": {
+    "claim_allowed": false,
+    "reason": "No cosmological likelihood execution occurred in this run; dependency import failed before model evaluation."
+  },
+  "state": "TOKEN_VAZIO_DEPENDENCY",
+  "next": "install/verify minimal Termux scientific runtime (numpy, pandas, scipy), then rerun the versioned seed-1 smoke gate",
+  "append_only": true
+}
