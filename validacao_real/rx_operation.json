@@ -1,7 +1,7 @@
 {
   "schema": "rll.development_operation.v1",
   "operation_id": "RLL_RX_REAL_VALIDATION_V1",
-  "purpose": "Reproduce RLL/LCDM H(z)+DESI DR2 BAO calculations and write non-personal scientific artifacts.",
+  "purpose": "Reproduce and compare governed RLL/LCDM/wCDM/CPL real-data H(z), DESI DR2 BAO, fσ8 and compressed-CMB calculations, including Rx/Structure-D parity artifacts.",
   "authority": {
     "human_required": true,
     "self_authorized": false,
@@ -37,7 +37,8 @@
   "shell_free_text": false,
   "writes": [
     "validacao_real/fetched_rx/",
-    "validacao_real/results_rx/"
+    "validacao_real/results_rx/",
+    "results/"
   ],
   "network": {
     "required": false,
