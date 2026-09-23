@@ -123,14 +123,13 @@
         "declare nuisance registry and overlap exclusions",
         "emit one canonical likelihood manifest"
       ],
-      "closes_tokens": [
-        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE"
-      ],
+      "closes_tokens": [],
       "required_outputs": [
         "artifacts/science/likelihood/RLL_CANONICAL_JOINT_LIKELIHOOD_RECEIPT.json"
       ],
       "falsifier": "Any competitor receives different data, covariance, nuisance treatment or hidden exclusions without a declared branch.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "note": "Closes the G2/G5 canonical likelihood prerequisite, not Bayesian evidence itself."
     },
     {
       "id": "WS03",
@@ -439,7 +438,8 @@
       "dependencies": [
         "WS02",
         "WS07",
-        "WS10"
+        "WS10",
+        "WS23"
       ],
       "objective": "Run multichain/multiseed posterior and nested evidence from one frozen likelihood/prior manifest.",
       "tasks": [
@@ -456,7 +456,8 @@
         "artifacts/science/bayes/nested_sampling_receipt.json"
       ],
       "falsifier": "Nonconvergence, seed sensitivity or prior fragility changes the conclusion outside preregistered tolerance.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "note": "The existing G6 background-only runner is a bounded subgate; final multiprobe evidence must respect downstream observable closures in this workstream scope."
     },
     {
       "id": "WS14",
