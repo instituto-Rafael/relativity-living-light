@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 paths = {
     "selftest": ROOT / "results" / "rx_selftest.json",
+    "sound_horizon": ROOT / "results" / "rx_sound_horizon_selftest.json",
     "simple": ROOT / "validacao_real" / "results_rx" / "validation_summary_rx.json",
     "multiprobe": ROOT / "validacao_real" / "results_rx" / "multiprobe_rx.json",
     "parity": ROOT / "results" / "rx_semantic_parity.json",
@@ -36,6 +37,10 @@ checks["selftest_pass"] = bool(data["selftest"].get("pass"))
 checks["selftest_no_training"] = data["selftest"].get("training") is False
 checks["selftest_no_ai_runtime"] = data["selftest"].get("ai_runtime") is False
 checks["selftest_zero_third_party"] = data["selftest"].get("third_party_python_dependencies") == []
+checks["sound_horizon_reference_pass"] = data["sound_horizon"].get("pass") is True
+checks["sound_horizon_no_training"] = data["sound_horizon"].get("training") is False
+checks["sound_horizon_no_ai_runtime"] = data["sound_horizon"].get("ai_runtime") is False
+checks["sound_horizon_claim_closed"] = data["sound_horizon"].get("claim_allowed") is False
 
 simple_runtime = data["simple"].get("runtime", {})
 checks["simple_claim_closed"] = data["simple"].get("claim_allowed") is False
@@ -101,8 +106,8 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "Rx stdlib runtime, simple validation, current multiprobe surface, nested baselines, "
-        "semantic parity ledger and dependency audit are connected in one executable chain."
+        "Rx stdlib runtime, sound-horizon reference vectors, simple validation, current multiprobe surface, "
+        "nested baselines, semantic parity ledger and dependency audit are connected in one executable chain."
     ),
     "F_gap": (
         "Growth/CMB/r_d semantics are not yet unified across Structure-D and freestanding; "
