@@ -1,0 +1,34 @@
+{
+  "receipt_id": "RLL-STDLIB-VALIDATION-ROUTE-20260922-V1",
+  "timestamp": "2026-09-22T23:00:00-03:00",
+  "kind": "implementation_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_ref": "user request: Python puro, sem dependencias e sem funcoes definidas pelo usuario",
+  "artifacts": [
+    {
+      "path": "validacao_real/compute_validation_stdlib.py",
+      "blob_sha": "8abc982dc34083c31702a02e00b5a425d5a65e6c",
+      "commit": "850fd1706f483a55fcf0cae16b715463122acba2"
+    },
+    {
+      "path": "validacao_real/README.md",
+      "blob_sha": "597e4226a3af941c7d05d5b2476a11c1752a0213",
+      "commit": "1d154d87ced1e5a854ac8b02e44a1e6cb29c8ee2"
+    }
+  ],
+  "implementation": {
+    "third_party_dependencies": 0,
+    "user_defined_functions": 0,
+    "scope": "H(z) + DESI DR2 BAO",
+    "desi_covariance": "committed full matrix",
+    "optimizer": "bounded coordinate search with seeded stdlib random probes",
+    "rll_nested_start": "best LCDM point extended with Os0=0"
+  },
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "evidence": "source file fetched from main and verified to contain no numpy/pandas/scipy/yaml imports and no def declarations",
+  "gap": "runtime execution on the target Termux device has not yet been observed",
+  "next": "run python3 validacao_real/compute_validation_stdlib.py with no package installation",
+  "rollback": "revert commits 1d154d87ced1e5a854ac8b02e44a1e6cb29c8ee2 and 850fd1706f483a55fcf0cae16b715463122acba2",
+  "append_only": true
+}
