@@ -1,0 +1,52 @@
+{
+  "schema": "rll.development_operation.v1",
+  "operation_id": "RLL_RX_MULTIPROBE_V1",
+  "program_type": "deterministic_scientific_runtime",
+  "purpose": "Run dependency-free multiprobe RLL/LCDM/wCDM/CPL comparison over committed public non-personal H(z), DESI BAO, fσ8 and compressed CMB inputs.",
+  "authority": {
+    "human_required": true,
+    "self_authorized": false,
+    "permitted_modes": [
+      "explicit_local_command",
+      "reviewed_ci_workflow"
+    ],
+    "default_runtime_mode": "explicit_local_command"
+  },
+  "autonomy": {
+    "goal_setting": false,
+    "scope_expansion": false,
+    "background_persistence": false
+  },
+  "capabilities": [
+    "repository.read",
+    "repository.write.results",
+    "scientific.compute",
+    "scientific.compare",
+    "provenance.hash",
+    "audit.receipt.write",
+    "process.git.readonly"
+  ],
+  "data_classes": [
+    "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+    "REPOSITORY_SOURCE_CODE",
+    "DERIVED_NON_PERSONAL_RESULTS"
+  ],
+  "personal_data_expected": false,
+  "secrets_required": false,
+  "destructive_actions": false,
+  "shell_free_text": false,
+  "writes": [
+    "validacao_real/results_rx/"
+  ],
+  "network": {
+    "required": false,
+    "default_enabled": false,
+    "hosts": [],
+    "methods": [],
+    "purpose": "No network required."
+  },
+  "retention": {
+    "repository_commit": "explicit opt-in or reviewed repository change only"
+  },
+  "claim_allowed": false
+}
