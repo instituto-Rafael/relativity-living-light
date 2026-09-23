@@ -32,6 +32,8 @@ on:
       - "validation/run_lcdm.py"
       - "validation/run_rll.py"
       - "validation/compare_models.py"
+      - "validation/check_falsification.py"
+      - "tools/validate_validation_simple_claim_boundary.py"
       - "validation/bayes_rll.py"
       - "validation/bayes_compare.py"
       - "tools/validate_validation_deterministic_stdlib.py"
@@ -153,6 +155,8 @@ jobs:
       run: python3 tools/validate_calc_data_stdlib_migration.py
     - name: Validate deterministic validation stdlib migration
       run: python3 tools/validate_validation_deterministic_stdlib.py
+    - name: Validate simple deterministic claim boundary
+      run: python3 tools/validate_validation_simple_claim_boundary.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
@@ -187,6 +191,7 @@ jobs:
           results/watch_config_stdlib_migration.json
           results/calc_data_stdlib_migration.json
           results/validation_deterministic_stdlib_migration.json
+          results/validation_simple_claim_boundary.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
           results/rx_dependency_migration_plan.json
