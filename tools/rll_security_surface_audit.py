@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SCOPES = ["rx", "validacao_real/run_rx_pipeline.py", "validacao_real/run_rx_multiprobe.py", "validacao_real/compute_validation_stdlib.py", "data/pipelines/structure_d/joint_real_likelihood_rx.py", "scripts/fetch_real_sources.py", "scripts/fetch_public_astronomy_catalog_samples.py", "internal/governance"]
+DEFAULT_SCOPES = ["rx", "validacao_real/run_rx_pipeline.py", "validacao_real/run_rx_multiprobe.py", "validacao_real/compute_validation_stdlib.py", "data/pipelines/structure_d/joint_real_likelihood_rx.py", "scripts/fetch_real_sources.py", "scripts/fetch_public_astronomy_catalog_samples.py", "scripts/import_data.py", "internal/governance"]
 
 CRITICAL_CALLS = {"eval", "exec", "__import__"}
 CRITICAL_ATTR_CALLS = {
