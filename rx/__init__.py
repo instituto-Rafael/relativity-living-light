@@ -14,7 +14,9 @@ from .kernel import (
     read_csv,
     simpson,
     write_csv,
+    write_svg_bars,
     write_svg_chart,
+    write_svg_message,
 )
 
 __all__ = [
@@ -26,5 +28,7 @@ __all__ = [
     "read_csv",
     "simpson",
     "write_csv",
+    "write_svg_bars",
     "write_svg_chart",
+    "write_svg_message",
 ]
