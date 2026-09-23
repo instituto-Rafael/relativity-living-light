@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Rx parity gate against the canonical freestanding 65-observation profiles.
+"""Exact Rx mirror of the canonical freestanding joint65 Q16 receipt.
 
-No fitting, no training, no AI runtime. The goal is implementation parity.
+No fitting, no training, no AI runtime. This gate mirrors:
+- rll_canonical_real_inputs.c Q16 parsing/evidence accumulation
+- rll_canonical_real.c freestanding model math
+- rll_canonical_real_models.c fixed FASE18E profiles
 """
 
 from __future__ import annotations
 
 import json
-import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,12 +18,16 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from rx.cosmology import C_KMS, unpack
-from rx.kernel import invert_matrix, load_json, quad_form, read_csv, simpson
-from rx.sound_horizon import e2_with_omega_r
-
-OMEGA_R = 9.18e-5
-STEPS = 1024
+from rx.freestanding_math import (
+    Q16,
+    chi_diag_q16,
+    cmb_chi_q16,
+    predict,
+    q16_from_float,
+    q16_from_text,
+    q16_to_float,
+)
+from rx.kernel import load_json, read_csv
 
 HZ_PATH = ROOT / "data" / "real" / "Hz_data_real.csv"
 BAO_PATH = ROOT / "data" / "real" / "cosmology" / "desi_dr2_bao_primary_points.csv"
@@ -32,199 +38,177 @@ hz = read_csv(HZ_PATH)
 bao = read_csv(BAO_PATH)
 growth = read_csv(GROWTH_PATH)
 cmb = load_json(CMB_PATH)
-cmb_inv = invert_matrix(cmb["covariance"])
 
 profiles = {
     "LCDM": {
-        "vector": [67.66725167785673, 0.3162598585368923, 0.022440865749970035, 0.811],
-        "rd_mpc": 149.8314329013423,
-        "rs_star_mpc": 143.67973843293154,
-        "reference_chi2": 70.82450866699219,
+        "params": {
+            "H0": 67.66725167785673,
+            "Om": 0.3162598585368923,
+            "Ob": 0.04900975504762562,
+            "Or": 9.18e-5,
+            "Os0": 0.0,
+            "zt": 1.0,
+            "wt": 0.3,
+            "sigma8": 0.811,
+            "gamma": 0.55,
+            "rd": 149.8314329013423,
+            "rs_star": 143.67973843293154,
+            "steps": 1024,
+        },
+        "reference_q16": 4641555,
     },
     "RLL": {
-        "vector": [
-            66.99367300987414,
-            0.32475606452625294,
-            0.011594905594391598,
-            11.452558895186602,
-            0.22656819958262459,
-            0.022412064168652816,
-            0.811,
-        ],
-        "rd_mpc": 148.98654354573253,
-        "rs_star_mpc": 142.91992714632195,
-        "reference_chi2": 65.02410888671875,
+        "params": {
+            "H0": 66.99367300987414,
+            "Om": 0.32475606452625294,
+            "Ob": 0.04993606066218619,
+            "Or": 9.18e-5,
+            "Os0": 0.011594905594391598,
+            "zt": 11.452558895186602,
+            "wt": 0.22656819958262459,
+            "sigma8": 0.811,
+            "gamma": 0.55,
+            "rd": 148.98654354573253,
+            "rs_star": 142.91992714632195,
+            "steps": 1024,
+        },
+        "reference_q16": 4261420,
     },
 }
 
-def hubble(model, z, vector):
-    p = unpack(model, vector)
-    return p["H0"] * math.sqrt(max(e2_with_omega_r(model, z, vector, OMEGA_R), 1.0e-300))
+def diagonal_block(rows, model, params, observable_of, z_key, value_key, sigma_key):
+    total = 0
+    count = 0
+    for row in rows:
+        zq = q16_from_text(row[z_key])
+        z = q16_to_float(zq)
+        obsq = q16_from_text(row[value_key])
+        sigq = q16_from_text(row[sigma_key])
+        prediction = predict(observable_of(row), z, params, model)
+        modelq = q16_from_float(prediction)
+        total += chi_diag_q16(obsq, modelq, sigq)
+        count += 1
+    return total, count
 
-def comoving(model, z, vector):
-    p = unpack(model, vector)
-    xmax = math.log1p(float(z))
-    return (C_KMS / p["H0"]) * simpson(
-        lambda x: math.exp(x)
-        / math.sqrt(
-            max(
-                e2_with_omega_r(model, math.exp(x) - 1.0, vector, OMEGA_R),
-                1.0e-300,
-            )
-        ),
-        0.0,
-        xmax,
-        STEPS,
-    )
-
-def omega_m_z(model, z, vector):
-    p = unpack(model, vector)
-    e2 = e2_with_omega_r(model, z, vector, OMEGA_R)
-    return p["Om"] * (1.0 + float(z)) ** 3 / max(e2, 1.0e-300)
-
-def growth_factor(model, z, vector):
-    xmax = math.log1p(float(z))
-    integral = simpson(
-        lambda x: max(
-            omega_m_z(model, math.exp(x) - 1.0, vector),
-            1.0e-300,
-        ) ** 0.55,
-        0.0,
-        xmax,
-        STEPS,
-    )
-    return math.exp(-integral)
-
-def fsigma8(model, z, vector):
-    p = unpack(model, vector)
-    f = max(omega_m_z(model, z, vector), 1.0e-300) ** 0.55
-    return f * p["sigma8"] * growth_factor(model, z, vector)
-
-def bao_chi2(model, profile):
-    vector = profile["vector"]
-    rd = profile["rd_mpc"]
-    total = 0.0
-    i = 0
-    cache = {}
-    while i < len(bao):
-        a = bao[i]
-        z = float(a["z_eff"])
-        if z not in cache:
-            cache[z] = comoving(model, z, vector)
-        dm = cache[z]
-        hzv = hubble(model, z, vector)
-        if a["observable"] == "DM_over_rd":
-            pa = dm / rd
-        elif a["observable"] == "DH_over_rd":
-            pa = (C_KMS / hzv) / rd
-        elif a["observable"] == "DV_over_rd":
-            pa = (z * C_KMS * dm * dm / hzv) ** (1.0 / 3.0) / rd
-        else:
-            raise ValueError(a["observable"])
-
-        if (
-            a.get("correlation_coefficient", "") not in ("", None)
-            and i + 1 < len(bao)
-            and bao[i + 1]["covariance_block"] == a["covariance_block"]
-        ):
-            b = bao[i + 1]
-            zb = float(b["z_eff"])
-            if zb not in cache:
-                cache[zb] = comoving(model, zb, vector)
-            dmb = cache[zb]
-            hzb = hubble(model, zb, vector)
-            if b["observable"] == "DM_over_rd":
-                pb = dmb / rd
-            elif b["observable"] == "DH_over_rd":
-                pb = (C_KMS / hzb) / rd
-            elif b["observable"] == "DV_over_rd":
-                pb = (zb * C_KMS * dmb * dmb / hzb) ** (1.0 / 3.0) / rd
-            else:
-                raise ValueError(b["observable"])
-            rho = float(a["correlation_coefficient"])
-            xa = (float(a["value"]) - pa) / float(a["sigma"])
-            xb = (float(b["value"]) - pb) / float(b["sigma"])
-            total += (xa * xa - 2.0 * rho * xa * xb + xb * xb) / (1.0 - rho * rho)
-            i += 2
-        else:
-            x = (float(a["value"]) - pa) / float(a["sigma"])
-            total += x * x
-            i += 1
-    return total
-
-def cmb_chi2(model, profile):
-    vector = profile["vector"]
-    p = unpack(model, vector)
-    z = float(cmb["z_CMB"])
-    dc = comoving(model, z, vector)
-    pred = [
-        math.sqrt(p["Om"]) * p["H0"] * dc / C_KMS,
-        math.pi * dc / profile["rs_star_mpc"],
-        p["Ob_h2"],
+def cmb_block(model, params):
+    zq = q16_from_text(str(cmb["z_CMB"]))
+    z = q16_to_float(zq)
+    obs = [
+        q16_from_text(str(cmb["R_obs"])),
+        q16_from_text(str(cmb["la_obs"])),
+        q16_from_text(str(cmb["ob_h2_obs"])),
     ]
-    obs = [float(cmb["R_obs"]), float(cmb["la_obs"]), float(cmb["ob_h2_obs"])]
-    return quad_form([o - q for o, q in zip(obs, pred)], cmb_inv), pred
+    sigma = [
+        q16_from_text(str(cmb["R_sig"])),
+        q16_from_text(str(cmb["la_sig"])),
+        q16_from_text(str(cmb["ob_h2_sig"])),
+    ]
+    modelq = [
+        q16_from_float(predict("CMB_R", z, params, model)),
+        q16_from_float(predict("CMB_LA", z, params, model)),
+        q16_from_float(predict("OBH2", z, params, model)),
+    ]
+    corr = [q16_from_text(str(value)) for row in cmb["correlation_matrix"] for value in row]
+    return cmb_chi_q16(obs, modelq, sigma, corr), modelq
 
-rows = {}
+def bao_observable(row):
+    value = row["observable"]
+    if value == "DV_over_rd":
+        return "DV"
+    if value == "DM_over_rd":
+        return "DM"
+    if value == "DH_over_rd":
+        return "DH"
+    raise ValueError(value)
+
+rows_out = {}
 failures = []
-tolerance_total = 0.08
 
 for model, profile in profiles.items():
-    vector = profile["vector"]
-    chi_hz = 0.0
-    for row in hz:
-        pred = hubble(model, float(row["z"]), vector)
-        chi_hz += ((float(row["H_obs"]) - pred) / float(row["sigma_H"])) ** 2
+    params = profile["params"]
+    hz_q16, n_hz = diagonal_block(
+        hz, model, params, lambda row: "HZ", "z", "H_obs", "sigma_H"
+    )
+    growth_q16, n_growth = diagonal_block(
+        growth, model, params, lambda row: "FS8", "z", "fs8", "sigma"
+    )
+    bao_q16, n_bao = diagonal_block(
+        bao, model, params, bao_observable, "z_eff", "value", "sigma"
+    )
+    cmb_q16, cmb_model_q16 = cmb_block(model, params)
+    total_q16 = hz_q16 + growth_q16 + bao_q16 + cmb_q16
+    reference_q16 = int(profile["reference_q16"])
+    delta_q16 = total_q16 - reference_q16
+    passed = delta_q16 == 0
 
-    chi_growth = 0.0
-    for row in growth:
-        pred = fsigma8(model, float(row["z"]), vector)
-        chi_growth += ((float(row["fs8"]) - pred) / float(row["sigma"])) ** 2
-
-    chi_bao = bao_chi2(model, profile)
-    chi_cmb, cmb_pred = cmb_chi2(model, profile)
-    total = chi_hz + chi_growth + chi_bao + chi_cmb
-    delta = total - profile["reference_chi2"]
-    passed = abs(delta) <= tolerance_total
-    rows[model] = {
-        "chi2": {
-            "Hz": chi_hz,
-            "fsigma8": chi_growth,
-            "DESI_DR2_BAO": chi_bao,
-            "CMB_shift": chi_cmb,
-            "total": total,
+    rows_out[model] = {
+        "components_q16": {
+            "Hz": hz_q16,
+            "fsigma8": growth_q16,
+            "DESI_DR2_BAO": bao_q16,
+            "CMB_shift": cmb_q16,
+            "total": total_q16,
         },
-        "cmb_prediction": cmb_pred,
-        "reference_chi2": profile["reference_chi2"],
-        "delta_total": delta,
+        "components_decoded": {
+            "Hz": hz_q16 / Q16,
+            "fsigma8": growth_q16 / Q16,
+            "DESI_DR2_BAO": bao_q16 / Q16,
+            "CMB_shift": cmb_q16 / Q16,
+            "total": total_q16 / Q16,
+        },
+        "cmb_model_q16": cmb_model_q16,
+        "reference_q16": reference_q16,
+        "reference_decoded": reference_q16 / Q16,
+        "delta_q16": delta_q16,
+        "delta_decoded": delta_q16 / Q16,
         "pass": passed,
     }
+
     print(
         ("PASS" if passed else "FAIL"),
         model,
-        "chi2=%.9f" % total,
-        "reference=%.9f" % profile["reference_chi2"],
-        "delta=%.9f" % delta,
+        "q16=%d" % total_q16,
+        "reference=%d" % reference_q16,
+        "delta=%d" % delta_q16,
+        "decoded=%.9f" % (total_q16 / Q16),
+    )
+    print(
+        " components",
+        "Hz=%d" % hz_q16,
+        "growth=%d" % growth_q16,
+        "BAO=%d" % bao_q16,
+        "CMB=%d" % cmb_q16,
     )
     if not passed:
         failures.append(model)
 
 payload = {
-    "schema": "rll.rx.freestanding65_parity.v1",
+    "schema": "rll.rx.freestanding65_parity.v2",
     "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
-    "surface": {"Hz": len(hz), "BAO": len(bao), "fsigma8": len(growth), "CMB": 3, "N": len(hz)+len(bao)+len(growth)+3},
-    "omega_r": OMEGA_R,
-    "integration_steps": STEPS,
+    "surface": {
+        "Hz": len(hz),
+        "BAO": len(bao),
+        "fsigma8": len(growth),
+        "CMB": 3,
+        "N": len(hz) + len(bao) + len(growth) + 3,
+    },
+    "mechanics": {
+        "observation_quantization": "Q16.16",
+        "model_quantization": "Q16.16",
+        "axis_quantization": "Q16.16",
+        "Hz_growth_BAO_metric": "diagonal_Q16_chi2",
+        "CMB_metric": "Q16_correlation_matrix_chi2",
+        "freestanding_math_mirror": True,
+    },
     "reference_receipt": "artifacts/canonical-coupling/joint-real-model-v2.json",
-    "tolerance_total_chi2": tolerance_total,
-    "rows": rows,
+    "rows": rows_out,
     "pass": not failures,
     "training": False,
     "ai_runtime": False,
     "claim_allowed": False,
     "boundary": (
-        "This gate tests numerical implementation parity against fixed freestanding "
-        "profiles. It is not a parameter refit or a scientific model-selection claim."
+        "Exact receipt parity is an implementation/reproduction gate. "
+        "It is not a new fit or scientific model-selection claim."
     ),
 }
 
