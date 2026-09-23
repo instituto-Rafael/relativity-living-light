@@ -224,6 +224,29 @@
       "scientific_claim_effect": "NONE"
     },
     {
+      "route_id": "CI_SCIENTIFIC_SKILLS_STDLIB",
+      "entrypoints": [
+        "python3 tools/ci_scientific_skills.py --root . --output <ARTIFACT>"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "artifacts/ci-scientific-skills/",
+        "results/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false,
+      "network_write": false,
+      "training": false,
+      "ai_runtime": false,
+      "scientific_claim_effect": "NONE"
+    },
+    {
       "route_id": "EXTERNAL_REPOSITORY_MUTATION",
       "entrypoints": [
         "workflow PR creation, publication, repository mutation outside declared result paths"
