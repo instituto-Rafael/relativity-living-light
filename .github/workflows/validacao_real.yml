@@ -26,22 +26,15 @@ jobs:
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
-    - name: Set up Python
-      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
-      with:
-        python-version: '3.12'
-    - name: Install minimal deps
-      run: pip install pyyaml matplotlib
-    - name: Fetch/materialize declared data anchors with explicit fallback boundary
-      working-directory: validacao_real
-      run: python3 fetch_real_data.py
+    - name: Rx zero-dependency validation pipeline
+      run: python3 -m validacao_real.run_rx_pipeline
     - name: Check fallback provenance boundary
       run: |
         set -euo pipefail
         python - <<'PY'
         import json
         from pathlib import Path
-        manifest = json.loads(Path('validacao_real/fetched/manifest.json').read_text(encoding='utf-8'))
+        manifest = json.loads(Path('validacao_real/fetched_rx/manifest.json').read_text(encoding='utf-8'))
         boundary = manifest.get('claim_boundary', '')
         required = [
             'does not validate RLL',
@@ -58,27 +51,22 @@ jobs:
                 raise SystemExit(f"missing per-source claim boundary for {row.get('source_id')}")
         print('validacao_real fallback provenance boundary OK')
         PY
-    - name: Compute validation (chi2 / AIC / BIC / falsifiability)
-      working-directory: validacao_real
-      run: python3 compute_validation.py
-    - name: Generate figures
-      working-directory: validacao_real
-      run: python3 make_figures.py
-    - name: Render documentation from artifacts
-      working-directory: validacao_real
-      run: python3 render_report.py
+    - name: Audit remaining Python external imports
+      run: python3 tools/rx_dependency_audit.py
     - name: Build artifact checksums
       run: |
         set -euo pipefail
-        find validacao_real/fetched validacao_real/results -type f -print0 | sort -z | xargs -0 -r sha256sum > validacao_real/results/CHECKSUMS.sha256
+        find validacao_real/fetched_rx validacao_real/results_rx -type f -print0 | sort -z | xargs -0 -r sha256sum > validacao_real/results/CHECKSUMS.sha256
     - name: Upload artifacts
       if: always()
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: validacao-real-artifacts
         path: |
-          validacao_real/fetched/
-          validacao_real/results/
+          validacao_real/fetched_rx/
+          validacao_real/results_rx/
+          results/rx_dependency_audit.json
+          results/rx_dependency_audit.md
         retention-days: '30'
         if-no-files-found: warn
     - name: Finalize canonical real-data policy checksums
@@ -120,7 +108,7 @@ jobs:
         esac
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add validacao_real/fetched validacao_real/results
+        git add validacao_real/fetched_rx validacao_real/results_rx results/rx_dependency_audit.json results/rx_dependency_audit.md
         if git diff --cached --quiet; then
           echo "nothing to commit"
           exit 0
