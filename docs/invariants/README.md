@@ -125,3 +125,21 @@ external_receipt != canonical_CI
 - documentação: [`omega_math_explorer_v1.md`](./omega_math_explorer_v1.md)
 - receipt inicial: `receipts/2026-09-22_RLL_OMEGA_MATH_EXPLORER_V1.md`
 - estado: `FORMAL_SHADOW / claim_allowed=false / publication_effect=NONE`
+
+
+## WG250 session geometry intake (2026-09-22)
+
+The complete 250-item session ledger remains in Drive WORLD69 and the Papers research ledger. RLL consumes it through a non-duplicating crosswalk:
+
+- crosswalk: [`wg250_session_crosswalk_v1.md`](./wg250_session_crosswalk_v1.md)
+- intake contract: `data/governance/RLL_WG250_GEOMETRY_INTAKE_V1.json`
+- deterministic gate tests: `tests/test_rll_wg250_geometry_intake.py`
+- receipt: `receipts/2026-09-22_RLL_WG250_GEOMETRY_INTAKE_V1.md`
+
+```text
+WG250 capture != MF identity
+WG250 != MF until item-level provenance mapping
+IMPLEMENTED_UNTESTED != PASS
+```
+
+The existing `MF-0001..MF-0251` registry remains the RLL formula registry; WG250 is a session-ledger namespace and route layer, not a replacement.
