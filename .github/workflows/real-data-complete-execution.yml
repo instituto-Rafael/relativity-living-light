@@ -29,6 +29,9 @@ name: Real Data Complete Execution
       - "data/governance/RLL_CURRENT_RX_SOURCE_FREEZE_SPEC_V1.json"
       - "tools/rll_current_rx_source_freeze.py"
       - "tests/test_rll_current_rx_source_freeze.py"
+      - "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json"
+      - "tools/validate_energy_momentum_bridge_dimensions.py"
+      - "tests/test_energy_momentum_bridge_dimensions.py"
       - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
       - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
@@ -131,6 +134,11 @@ jobs:
           python3 -m unittest tests.test_rll_current_rx_source_freeze
           python3 tools/rll_current_rx_source_freeze.py --write
 
+      - name: Audit energy-momentum bridge dimensional boundary
+        run: |
+          python3 -m unittest tests.test_energy_momentum_bridge_dimensions
+          python3 tools/validate_energy_momentum_bridge_dimensions.py --write
+
       - name: Validate Rx DHA angular-frequency baseline
         run: python3 tools/validate_rx_dha.py
 
@@ -173,6 +181,7 @@ jobs:
             results/rll_perturbation_solver_readiness.json
             artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
             artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json
+            results/rll_energy_momentum_dimension_gate.json
           retention-days: 30
           if-no-files-found: error
 
