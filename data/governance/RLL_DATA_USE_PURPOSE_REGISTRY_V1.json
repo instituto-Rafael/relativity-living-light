@@ -279,6 +279,53 @@
         "versioned output stem",
         "claim_allowed=false"
       ]
+    },
+    {
+      "route_id": "PUBLIC_SOURCE_FETCHERS_STDLIB",
+      "runtime": "Rx bounded Python stdlib HTTPS read-only transport",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Fetch declared public non-personal scientific/catalog source material from explicit allowlisted HTTPS hosts.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "READ_ONLY",
+        "optional": false,
+        "hosts": [
+          "www.ncei.noaa.gov",
+          "omniweb.gsfc.nasa.gov",
+          "www.nmdb.eu",
+          "raw.githubusercontent.com",
+          "arxiv.org",
+          "skyserver.sdss.org",
+          "sne.space"
+        ],
+        "writes": false
+      },
+      "filesystem": {
+        "write": [
+          "artifacts/",
+          "data/real/astronomy/",
+          "data/provenance/",
+          "data/examples/"
+        ]
+      },
+      "audit": [
+        "bounded transport gate",
+        "source URL/provenance",
+        "output hash where materialized",
+        "claim_allowed=false"
+      ]
     }
   ],
   "prohibited_uses": [
