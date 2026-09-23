@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import os
 import runpy
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -53,6 +54,15 @@ def _tool(name):
     runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
 
 
+def _tool_args(name, args):
+    previous = sys.argv[:]
+    try:
+        sys.argv = [name] + list(args)
+        runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
+    finally:
+        sys.argv = previous
+
+
 def _module(name):
     runpy.run_module(name, run_name="__main__")
 
@@ -93,11 +103,15 @@ def parity():
 
 
 def audit():
+    _tool_args("validate_rll_development_governance.py", ["--strict"])
+    _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_dependency_audit.py")
     _tool("rx_dependency_migration_plan.py")
 
 
 def develop():
+    _tool_args("validate_rll_development_governance.py", ["--strict"])
+    _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_no_ai_gate.py")
     _tool("rx_zero_dependency_gate.py")
     _tool("rx_selftest.py")
