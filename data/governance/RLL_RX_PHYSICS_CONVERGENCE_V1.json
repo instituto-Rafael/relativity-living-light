@@ -1,0 +1,70 @@
+{
+  "schema": "rll.rx.physics_convergence.v1",
+  "version": "1.0.0",
+  "target_contract": "RX-PHYSICS-CANONICAL-V2",
+  "development_may_continue_while_open": true,
+  "claim_allowed": false,
+  "promotion_rule": "ALL_REQUIRED_GATES_PASS_AND_ZERO_TOKEN_VAZIO_DECISIONS",
+  "gates": {
+    "omega_r": {
+      "status": "TOKEN_VAZIO_DECISION",
+      "observed_variants": [
+        0.00009,
+        0.0000918
+      ],
+      "requirement": "One derived/provenance-backed radiation-density convention shared by all runtimes.",
+      "falsifier": "Cross-runtime parity requires hidden per-runtime Omega_r substitution."
+    },
+    "hz_dataset": {
+      "status": "TOKEN_VAZIO_DECISION",
+      "observed_surfaces": {
+        "rx_simple_45": "32 H(z) fallback points + 13 BAO",
+        "rx_structure_d_60": "28 independent H(z) + 13 BAO + 16 fsigma8 + 3 CMB",
+        "freestanding_65": "33 H(z) + 13 BAO + 16 fsigma8 + 3 CMB"
+      },
+      "requirement": "Choose a canonical scientific surface by explicit independence/covariance/provenance criteria; preserve other surfaces as named projections.",
+      "falsifier": "N changes without dataset/hash/version change."
+    },
+    "growth_mode": {
+      "status": "TOKEN_VAZIO_DECISION",
+      "observed_variants": [
+        "structure_d_proxy",
+        "freestanding_growth_with_Dz"
+      ],
+      "requirement": "Canonical promotion requires a validated RLL perturbation/growth completion with baseline recovery; proxies remain engineering projections.",
+      "falsifier": "Background-only proxy is labeled full physical growth."
+    },
+    "bao_sound_horizon": {
+      "status": "PARTIAL_EVIDENCE",
+      "required_semantics": "sound_horizon_integral_required",
+      "evidence_artifact": "results/rx_sound_horizon_selftest.json",
+      "requirement": "r_d calculation passes versioned reference/convergence gates."
+    },
+    "cmb_acoustic_mode": {
+      "status": "PARTIAL_EVIDENCE",
+      "required_semantics": "rs_star_required",
+      "evidence_artifact": "results/rx_sound_horizon_selftest.json",
+      "requirement": "CMB acoustic scale uses r_s(z_star) under the canonical contract; compressed prior remains distinct from full Planck likelihood."
+    },
+    "distance_integration": {
+      "status": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
+      "observed_method": "log1p_simpson",
+      "requirement": "Version absolute/relative convergence tolerance and demonstrate stable observables under step refinement."
+    },
+    "cross_runtime_parity": {
+      "status": "PARTIAL_EVIDENCE",
+      "evidence_artifacts": [
+        "results/rx_freestanding65_parity.json",
+        "results/rx_semantic_parity.json"
+      ],
+      "requirement": "Exact parity only on explicitly common semantics and data surface; semantic divergences stay named."
+    }
+  },
+  "non_negotiable": [
+    "claim_allowed=false until independent scientific gates permit otherwise",
+    "training=false",
+    "ai_runtime=false",
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0"
+  ]
+}
