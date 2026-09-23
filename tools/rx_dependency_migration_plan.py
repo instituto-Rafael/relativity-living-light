@@ -160,6 +160,28 @@ if HTTP_MIGRATION_GATE.exists():
             "scientific_semantics_changed": False,
         })
 
+if HTTP_MIGRATION_GATE.exists():
+    http_gate = json.loads(HTTP_MIGRATION_GATE.read_text(encoding="utf-8"))
+    if http_gate.get("pass") is True:
+        closed_families.append({
+            "family": "guarded_import_data_stdlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "scripts/import_data.py",
+                ".github/workflows/import-data.yml",
+                "rx/http.py",
+            ],
+            "replacements": {
+                "requests": "rx.http bounded stdlib HTTPS GET transport",
+                "pandas": "csv/json Python stdlib normalization",
+            },
+            "evidence": [
+                str(HTTP_MIGRATION_GATE.relative_to(ROOT)),
+            ],
+            "credentialed_mode": "BLOCKED_REQUIRES_SEPARATE_REVIEWED_ROUTE",
+            "scientific_semantics_changed": False,
+        })
+
 payload = {
     "schema": "rll.rx.dependency_migration_plan.v1",
     "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
