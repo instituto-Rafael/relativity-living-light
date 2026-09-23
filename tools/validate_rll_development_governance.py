@@ -11,12 +11,84 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = ROOT / "data" / "governance" / "RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
 PURPOSE_PATH = ROOT / "data" / "governance" / "RLL_DATA_USE_PURPOSE_REGISTRY_V1.json"
 RISK_PATH = ROOT / "data" / "governance" / "RLL_SECURITY_PRIVACY_RISK_REGISTER_V1.json"
-OPERATION_PATH = ROOT / "validacao_real" / "rx_operation.json"
-WORKFLOW_PATH = ROOT / ".github" / "workflows" / "validacao_real.yml"
+OPERATION_PATHS = [
+    ROOT / "validacao_real" / "rx_operation.json",
+    ROOT / "validacao_real" / "rx_multiprobe_operation.json",
+    ROOT / "configs" / "rx_cli_operation.json",
+]
+WORKFLOW_PATHS = [
+    ROOT / ".github" / "workflows" / "validacao_real.yml",
+    ROOT / ".github" / "workflows" / "rx-development.yml",
+]
+PROMOTED_PATHS = [
+    ROOT / "validacao_real" / "run_rx_pipeline.py",
+    ROOT / "validacao_real" / "run_rx_multiprobe.py",
+    ROOT / "rx" / "cli.py",
+]
 
 
 def load(path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validate_operation(policy, purpose_routes, path):
+    errors = []
+    operation = load(path)
+    prefix = path.relative_to(ROOT).as_posix()
+
+    if operation.get("schema") != "rll.development_operation.v1":
+        errors.append(prefix + ":schema")
+    for field in ("claim_allowed", "personal_data_expected", "secrets_required", "destructive_actions", "shell_free_text"):
+        if operation.get(field) is not False:
+            errors.append(prefix + ":" + field + "_must_be_false")
+
+    authority = operation.get("authority", {})
+    policy_modes = set(policy.get("human_authority", {}).get("accepted_modes", []))
+    op_modes = set(authority.get("permitted_modes", []))
+    if authority.get("human_required") is not True:
+        errors.append(prefix + ":human_required")
+    if authority.get("self_authorized") is not False:
+        errors.append(prefix + ":self_authorized")
+    if not op_modes or not op_modes.issubset(policy_modes):
+        errors.append(prefix + ":authority_modes")
+
+    autonomy = operation.get("autonomy", {})
+    for field in ("goal_setting", "scope_expansion", "background_persistence"):
+        if autonomy.get(field) is not False:
+            errors.append(prefix + ":autonomy_" + field)
+
+    allowed_caps = set(policy.get("allowed_capabilities", []))
+    extra_caps = sorted(set(operation.get("capabilities", [])) - allowed_caps)
+    if extra_caps:
+        errors.append(prefix + ":capability_not_allowlisted:" + ",".join(extra_caps))
+
+    allowed_classes = set(policy.get("data_governance", {}).get("allowed_classes", []))
+    extra_classes = sorted(set(operation.get("data_classes", [])) - allowed_classes)
+    if extra_classes:
+        errors.append(prefix + ":data_class_not_allowlisted:" + ",".join(extra_classes))
+
+    allowed_hosts = set(policy.get("network", {}).get("exact_hosts", []))
+    op_hosts = set(operation.get("network", {}).get("hosts", []))
+    extra_hosts = sorted(op_hosts - allowed_hosts)
+    if extra_hosts:
+        errors.append(prefix + ":network_host_not_allowlisted:" + ",".join(extra_hosts))
+    if operation.get("network", {}).get("default_enabled") is not False:
+        errors.append(prefix + ":network_default_must_be_off")
+
+    op_id = operation.get("operation_id")
+    route = purpose_routes.get(op_id)
+    if route is None:
+        errors.append(prefix + ":missing_from_purpose_registry")
+    else:
+        if route.get("personal_data") is not False:
+            errors.append(prefix + ":purpose_personal_data_mismatch")
+        if route.get("secrets") is not False:
+            errors.append(prefix + ":purpose_secrets_mismatch")
+        route_hosts = set(route.get("network", {}).get("hosts", []))
+        if route_hosts != op_hosts:
+            errors.append(prefix + ":purpose_network_hosts_mismatch")
+
+    return errors
 
 
 def validate():
@@ -26,8 +98,6 @@ def validate():
     policy = load(POLICY_PATH)
     purpose = load(PURPOSE_PATH)
     risk = load(RISK_PATH)
-    operation = load(OPERATION_PATH)
-    workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
 
     if policy.get("schema") != "rll.development_security_envelope.v1":
         errors.append("policy_schema")
@@ -55,72 +125,69 @@ def validate():
     risk_ids = [row.get("id") for row in risk.get("risks", [])]
     if len(risk_ids) != len(set(risk_ids)):
         errors.append("duplicate_risk_ids")
-    if len(risk_ids) < 10:
+    if len(risk_ids) < 16:
         warnings.append("risk_register_sparse")
-
-    if operation.get("schema") != "rll.development_operation.v1":
-        errors.append("operation_schema")
-    if operation.get("claim_allowed") is not False:
-        errors.append("operation_claim_allowed_must_be_false")
-    if operation.get("personal_data_expected") is not False:
-        errors.append("operation_personal_data_must_be_false")
-    if operation.get("secrets_required") is not False:
-        errors.append("operation_secrets_must_be_false")
-    if operation.get("destructive_actions") is not False:
-        errors.append("operation_destructive_actions_must_be_false")
-    if operation.get("shell_free_text") is not False:
-        errors.append("operation_shell_free_text_must_be_false")
-
-    allowed_caps = set(policy.get("allowed_capabilities", []))
-    op_caps = set(operation.get("capabilities", []))
-    extra_caps = sorted(op_caps - allowed_caps)
-    if extra_caps:
-        errors.append("operation_capability_not_allowlisted:" + ",".join(extra_caps))
-
-    allowed_classes = set(policy.get("data_governance", {}).get("allowed_classes", []))
-    op_classes = set(operation.get("data_classes", []))
-    extra_classes = sorted(op_classes - allowed_classes)
-    if extra_classes:
-        errors.append("operation_data_class_not_allowlisted:" + ",".join(extra_classes))
-
-    allowed_hosts = set(policy.get("network", {}).get("exact_hosts", []))
-    op_hosts = set(operation.get("network", {}).get("hosts", []))
-    extra_hosts = sorted(op_hosts - allowed_hosts)
-    if extra_hosts:
-        errors.append("operation_network_host_not_allowlisted:" + ",".join(extra_hosts))
 
     purpose_routes = {
         route.get("route_id"): route
         for route in purpose.get("routes", [])
         if route.get("route_id")
     }
-    op_id = operation.get("operation_id")
-    if op_id not in purpose_routes:
-        errors.append("operation_missing_from_purpose_registry")
-    else:
-        route = purpose_routes[op_id]
-        if route.get("personal_data") is not False:
-            errors.append("purpose_route_personal_data_mismatch")
-        if route.get("secrets") is not False:
-            errors.append("purpose_route_secrets_mismatch")
-        route_hosts = set(route.get("network", {}).get("hosts", []))
-        if route_hosts != op_hosts:
-            errors.append("purpose_route_network_hosts_mismatch")
+    for path in OPERATION_PATHS:
+        if not path.exists():
+            errors.append("missing_operation:" + path.relative_to(ROOT).as_posix())
+            continue
+        errors.extend(validate_operation(policy, purpose_routes, path))
 
-    required_workflow_fragments = [
+    validacao_workflow = WORKFLOW_PATHS[0].read_text(encoding="utf-8")
+    required_validation_fragments = [
         "tests/test_rll_development_guard.py",
         "internal/governance/development_guard.py",
         "--authority-mode reviewed_ci_workflow",
+        "tools/validate_rll_development_governance.py --strict",
         "tools/rll_security_surface_audit.py --strict",
         "RLL_AUTHORITY_MODE: reviewed_ci_workflow",
-        "RX_NETWORK_PROBE: \"0\"",
+        'RX_NETWORK_PROBE: "0"',
         "python3 -m validacao_real.run_rx_pipeline",
     ]
-    for fragment in required_workflow_fragments:
-        if fragment not in workflow:
-            errors.append("workflow_missing:" + fragment)
-    if "pip install" in workflow:
-        errors.append("governed_rx_workflow_must_not_pip_install")
+    for fragment in required_validation_fragments:
+        if fragment not in validacao_workflow:
+            errors.append("validacao_workflow_missing:" + fragment)
+    if "pip install" in validacao_workflow:
+        errors.append("validacao_workflow_must_not_pip_install")
+
+    rx_workflow = WORKFLOW_PATHS[1].read_text(encoding="utf-8")
+    required_rx_fragments = [
+        "workflow_dispatch",
+        "permissions:",
+        "contents: read",
+        "persist-credentials: false",
+        "tests/test_rll_development_guard.py",
+        "tools/validate_rll_development_governance.py --strict",
+        "tools/rll_security_surface_audit.py --strict",
+        "RLL_AUTHORITY_MODE: reviewed_ci_workflow",
+        'RX_NETWORK_PROBE: "0"',
+        "python3 -m rx develop",
+    ]
+    for fragment in required_rx_fragments:
+        if fragment not in rx_workflow:
+            errors.append("rx_workflow_missing:" + fragment)
+    if "pip install" in rx_workflow:
+        errors.append("rx_workflow_must_not_pip_install")
+    if "contents: write" in rx_workflow:
+        errors.append("rx_workflow_contents_write_forbidden")
+
+    promoted = {
+        path.relative_to(ROOT).as_posix(): path.read_text(encoding="utf-8")
+        for path in PROMOTED_PATHS
+    }
+    for rel, source in promoted.items():
+        if "evaluate_operation" not in source:
+            errors.append(rel + ":missing_security_preflight")
+        if "RLL_AUTHORITY_MODE" not in source:
+            errors.append(rel + ":missing_runtime_authority_mode")
+    if "RX_NETWORK_PROBE" not in promoted["validacao_real/run_rx_pipeline.py"]:
+        errors.append("run_rx_pipeline_missing_network_default_gate")
 
     required_risk_ids = {
         "SEC-01","SEC-02","SEC-03","SEC-04","SEC-05","SEC-06",
@@ -131,23 +198,18 @@ def validate():
     if missing_risks:
         errors.append("missing_security_risks:" + ",".join(missing_risks))
 
+    checked = [POLICY_PATH, PURPOSE_PATH, RISK_PATH] + OPERATION_PATHS + WORKFLOW_PATHS + PROMOTED_PATHS
     return {
-        "schema": "rll.development_governance_bundle_validation.v1",
+        "schema": "rll.development_governance_bundle_validation.v2",
         "pass": not errors,
         "errors": errors,
         "warnings": warnings,
         "claim_allowed": False,
-        "checked": [
-            str(POLICY_PATH.relative_to(ROOT)),
-            str(PURPOSE_PATH.relative_to(ROOT)),
-            str(RISK_PATH.relative_to(ROOT)),
-            str(OPERATION_PATH.relative_to(ROOT)),
-            str(WORKFLOW_PATH.relative_to(ROOT)),
-        ],
+        "checked": [str(path.relative_to(ROOT)) for path in checked],
         "boundary": (
             "Bundle consistency PASS proves only repository contract alignment. "
             "It does not prove runtime isolation, vulnerability absence, external "
-            "GitHub settings, legal compliance, or scientific validity."
+            "GitHub settings, legal compliance, independent security review, or scientific validity."
         ),
     }
 
@@ -169,6 +231,7 @@ def main(argv=None):
     lines = [
         "# RLL development governance validation",
         "",
+        "- schema: %s" % payload["schema"],
         "- pass: %s" % str(payload["pass"]).lower(),
         "- errors: %d" % len(payload["errors"]),
         "- warnings: %d" % len(payload["warnings"]),
