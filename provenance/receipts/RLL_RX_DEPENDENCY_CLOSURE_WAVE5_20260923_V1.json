@@ -1,0 +1,41 @@
+{
+  "receipt_id": "RLL-RX-DEPENDENCY-CLOSURE-WAVE5-20260923-V1",
+  "timestamp": "2026-09-23T01:42:00-03:00",
+  "kind": "engineering_dependency_migration_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "head_sha": "7dfca7657197297ab9389ed9553eda2487a49a65",
+  "ci": {
+    "validacao_real": {
+      "run_id": 35819348251,
+      "job_id": 107047697771,
+      "conclusion": "success"
+    }
+  },
+  "migration_metrics": {
+    "files_with_external_imports": 266,
+    "token_vazio_replacements": 193,
+    "closed_families": 9
+  },
+  "new_family": {
+    "id": "validation_deterministic_numpy_pandas_stdlib",
+    "state": "MIGRATED_WITH_PARITY_GATE",
+    "surface": "canonical data/real/Hz_data_real.csv",
+    "deterministic_scope": [
+      "validation/load_data.py",
+      "validation/run_lcdm.py",
+      "validation/run_rll.py",
+      "validation/compare_models.py"
+    ],
+    "legacy_adapter": "validation/load_data_numpy_legacy.py",
+    "bayesian_legacy_consumers": [
+      "validation/bayes_rll.py",
+      "validation/bayes_compare.py"
+    ],
+    "bayesian_legacy_migrated": false,
+    "scientific_semantics_changed": false
+  },
+  "aggregate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES",
+  "claim_allowed": false,
+  "rollback": "Deterministic stdlib route can be reverted independently; explicit NumPy/Pandas legacy adapter preserves Bayesian rollback semantics.",
+  "append_only": true
+}
