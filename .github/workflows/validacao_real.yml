@@ -118,6 +118,9 @@ jobs:
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
       run: python3 tools/rx_dependency_migration_plan.py
+    - name: Materialize reviewed CI develop authority receipt
+      run: |
+        python3 internal/governance/development_guard.py           --operation configs/rx_cli_operation.json           --authority-mode reviewed_ci_workflow           --receipt results/rx_cli_security_preflight_ci_develop.json           --strict
     - name: Rx aggregate development gate
       run: python3 tools/rx_development_gate.py
     - name: Build artifact checksums
@@ -158,6 +161,7 @@ jobs:
           results/rx_selftest.json
           results/rx_sound_horizon_selftest.json
           results/rx_freestanding65_parity.json
+          results/rx_cli_security_preflight_ci_develop.json
           results/rx_development_gate.json
           results/rx_development_gate.md
         retention-days: '30'
