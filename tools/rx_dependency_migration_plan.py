@@ -23,6 +23,7 @@ HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
 CREDENTIAL_STDLIB_GATE = ROOT / "results" / "credential_authority_stdlib_migration.json"
 WATCH_CONFIG_GATE = ROOT / "results" / "watch_config_stdlib_migration.json"
 CALC_DATA_STDLIB_GATE = ROOT / "results" / "calc_data_stdlib_migration.json"
+VALIDATION_DETERMINISTIC_GATE = ROOT / "results" / "validation_deterministic_stdlib_migration.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -283,6 +284,41 @@ if CALC_DATA_STDLIB_GATE.exists():
                 str(AUDIT.relative_to(ROOT)),
             ],
             "statistics_contract": "mean/median/sample-std/min/max/non-null/sample-head-tail",
+            "scientific_semantics_changed": False,
+        })
+
+
+if VALIDATION_DETERMINISTIC_GATE.exists():
+    validation_gate = json.loads(VALIDATION_DETERMINISTIC_GATE.read_text(encoding="utf-8"))
+    deterministic_paths = {
+        "validation/load_data.py",
+        "validation/run_lcdm.py",
+        "validation/run_rll.py",
+        "validation/compare_models.py",
+    }
+    deterministic_external = any(
+        item.get("path") in deterministic_paths and item.get("external_imports")
+        for item in audit.get("files", [])
+    )
+    if validation_gate.get("pass") is True and not deterministic_external:
+        closed_families.append({
+            "family": "validation_deterministic_numpy_pandas_stdlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": sorted(deterministic_paths),
+            "legacy_adapter": "validation/load_data_numpy_legacy.py",
+            "legacy_consumers": [
+                "validation/bayes_rll.py",
+                "validation/bayes_compare.py",
+            ],
+            "replacements": {
+                "numpy": "math/list scalar operations",
+                "pandas": "csv Python stdlib",
+            },
+            "evidence": [
+                str(VALIDATION_DETERMINISTIC_GATE.relative_to(ROOT)),
+                str(AUDIT.relative_to(ROOT)),
+            ],
+            "bayesian_legacy_migrated": False,
             "scientific_semantics_changed": False,
         })
 
