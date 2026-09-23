@@ -56,6 +56,9 @@ checks["multiprobe_N_consistent"] = (
     + int(surface.get("CMB_compressed_parameters", 0))
 )
 checks["multiprobe_current_N_60"] = int(surface.get("N", -1)) == 60
+contract = multi.get("physics_contract", {})
+checks["multiprobe_contract_id"] = contract.get("id") == "RX-STRUCTURE-D-PARITY-V1"
+checks["multiprobe_contract_claim_closed"] = contract.get("claim_allowed") is False
 
 nested = multi.get("nested_invariants", {})
 checks["nested_wCDM"] = bool(nested.get("wCDM", {}).get("pass"))
