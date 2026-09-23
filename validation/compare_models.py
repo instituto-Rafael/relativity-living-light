@@ -3,12 +3,32 @@ import os
 import sys
 from pathlib import Path
 
-import numpy as np
-
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from validation.load_data import load_real_data
+
+
+def compare(y, yerr, lcdm_vals, rll_vals):
+    if not (len(y) == len(yerr) == len(lcdm_vals) == len(rll_vals)):
+        raise ValueError("comparison vectors must have equal length")
+    chi_lcdm = sum(
+        ((float(pred) - float(obs)) / (float(sig) + 1e-8)) ** 2
+        for pred, obs, sig in zip(lcdm_vals, y, yerr)
+    )
+    chi_rll = sum(
+        ((float(pred) - float(obs)) / (float(sig) + 1e-8)) ** 2
+        for pred, obs, sig in zip(rll_vals, y, yerr)
+    )
+    return {
+        "chi2_lcdm": float(chi_lcdm),
+        "chi2_rll": float(chi_rll),
+        "delta": float(chi_lcdm - chi_rll),
+        "claim_boundary": (
+            "comparison metric only; no superiority claim without predefined "
+            "real-data thresholds"
+        ),
+    }
 
 
 if __name__ == "__main__":
@@ -16,21 +36,12 @@ if __name__ == "__main__":
 
     z, y, yerr = load_real_data()
 
-    lcdm = json.load(open("validation_outputs/lcdm.json", encoding="utf-8"))
-    rll = json.load(open("validation_outputs/rll.json", encoding="utf-8"))
+    with open("validation_outputs/lcdm.json", encoding="utf-8") as handle:
+        lcdm = json.load(handle)
+    with open("validation_outputs/rll.json", encoding="utf-8") as handle:
+        rll = json.load(handle)
 
-    lcdm_vals = np.array(lcdm["values"], dtype=float)
-    rll_vals = np.array(rll["values"], dtype=float)
-
-    chi_lcdm = np.sum(((lcdm_vals - y) / (yerr + 1e-8)) ** 2)
-    chi_rll = np.sum(((rll_vals - y) / (yerr + 1e-8)) ** 2)
-
-    result = {
-        "chi2_lcdm": float(chi_lcdm),
-        "chi2_rll": float(chi_rll),
-        "delta": float(chi_lcdm - chi_rll),
-        "claim_boundary": "comparison metric only; no superiority claim without predefined real-data thresholds",
-    }
+    result = compare(y, yerr, lcdm["values"], rll["values"])
 
     with open("validation_outputs/comparison.json", "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
