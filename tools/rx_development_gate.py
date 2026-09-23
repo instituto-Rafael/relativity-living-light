@@ -69,6 +69,7 @@ checks["parity_background_shared"] = parity_gates.get("background_model_equation
 checks["growth_divergence_explicit"] = parity_gates.get("growth_semantics_state") == "CONTRACT_DIVERGENCE"
 checks["cmb_divergence_explicit"] = parity_gates.get("cmb_acoustic_semantics_state") == "CONTRACT_DIVERGENCE"
 checks["rd_divergence_explicit"] = parity_gates.get("rd_semantics_state") == "CONTRACT_DIVERGENCE"
+checks["radiation_divergence_explicit"] = parity_gates.get("radiation_density_semantics_state") == "CONTRACT_DIVERGENCE"
 
 audit = data["dependency_audit"]
 checks["dependency_audit_materialized"] = isinstance(audit.get("files"), list)
@@ -88,7 +89,8 @@ payload = {
     "open_contract_divergences": [
         "growth: Structure-D sigma8*Omega_m(z)^0.55 vs freestanding f*sigma8*D(z)",
         "CMB acoustic scale: Structure-D r_d vs freestanding r_s(z_star)",
-        "sound-horizon calibration: fitted r_d approximation vs pinned freestanding profile r_d",
+        "sound-horizon calibration: fitted r_d approximation vs pinned/integrated freestanding horizons",
+        "radiation density: Structure-D/Rx 9.0e-5 vs FASE18E/freestanding 9.18e-5",
     ],
     "migration_debt": {
         "python_files_with_external_imports": audit.get("python_files_with_external_imports"),
