@@ -1,0 +1,196 @@
+{
+  "schema": "rll.executable_entrypoint_authority_registry.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "principle": "Program capability does not imply permission; each executable route has a bounded authority/data envelope.",
+  "authority_levels": {
+    "A0": "pure deterministic compute/read committed inputs; no external side effect",
+    "A1": "repository-local governed result writes",
+    "A2": "declared external read-only network access",
+    "A3": "external write or publication; human authorization required",
+    "A4": "sensitive/personal/privileged operation; human review required",
+    "A5": "destructive/irreversible; deny by default"
+  },
+  "data_classes": {
+    "D0": "public non-personal",
+    "D1": "repository/project internal non-personal",
+    "D2": "confidential/restricted",
+    "D3": "personal",
+    "D4": "sensitive personal or credential/secret"
+  },
+  "routes": [
+    {
+      "route_id": "RLL_RX_REAL_VALIDATION_V1",
+      "entrypoints": [
+        "python3 -m validacao_real.run_rx_pipeline",
+        "python3 validacao_real/compute_validation_stdlib.py"
+      ],
+      "max_authority_default": "A1",
+      "max_authority_optional": "A2",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "optional_network_hosts": [
+        "arxiv.org",
+        "gitlab.com"
+      ],
+      "write_prefixes": [
+        "validacao_real/fetched_rx/",
+        "validacao_real/results_rx/"
+      ],
+      "human_gate_for_default": false,
+      "human_gate_for_optional_network": "explicit runtime flag/declared mode",
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "RLL_RX_MULTIPROBE_V1",
+      "entrypoints": [
+        "python3 -m validacao_real.run_rx_multiprobe"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "validacao_real/results_rx/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "RLL_RX_CLI_DEVELOPMENT_V1",
+      "entrypoints": [
+        "python3 -m rx develop",
+        "scripts/run_rx_development.sh"
+      ],
+      "max_authority_default": "A1",
+      "max_authority_optional": "A2",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "validacao_real/fetched_rx/",
+        "validacao_real/results_rx/",
+        "results/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "RLL_FREESTANDING_REAL_KERNEL",
+      "entrypoints": [
+        "scripts/build_rll_canonical_freestanding.sh",
+        "tools/run_rll_canonical_real_freestanding.sh",
+        "scripts/run_rll_joint65_armv7_freestanding_physical_gate.sh"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "results/",
+        "artifacts/",
+        "provenance/receipts/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "STRUCTURE_D_RX_SUCCESSOR",
+      "entrypoints": [
+        "data/pipelines/structure_d/joint_real_likelihood_rx.py"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "results/structure_d/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "SECURITY_AUDIT",
+      "entrypoints": [
+        "tools/rll_security_surface_audit.py",
+        "tools/validate_rll_development_governance.py",
+        "tools/rx_dependency_audit.py",
+        "tools/rx_dependency_migration_plan.py"
+      ],
+      "max_authority_default": "A1",
+      "data_classes": [
+        "D1"
+      ],
+      "network_default": "OFF",
+      "write_prefixes": [
+        "results/"
+      ],
+      "human_gate_for_default": false,
+      "secrets": false,
+      "destructive": false
+    },
+    {
+      "route_id": "EXTERNAL_REPOSITORY_MUTATION",
+      "entrypoints": [
+        "workflow PR creation, publication, repository mutation outside declared result paths"
+      ],
+      "max_authority_default": "A3",
+      "data_classes": [
+        "D1"
+      ],
+      "network_default": "WRITE",
+      "human_gate_for_default": true,
+      "secrets": "REVIEW_IF_REQUIRED",
+      "destructive": false,
+      "state": "NOT_GRANTED_BY_RX_RUNTIME"
+    },
+    {
+      "route_id": "SENSITIVE_OR_PRIVILEGED",
+      "entrypoints": [
+        "any route using D3/D4 or privileged administration"
+      ],
+      "max_authority_default": "A4",
+      "data_classes": [
+        "D3",
+        "D4"
+      ],
+      "human_gate_for_default": true,
+      "additional_review": true,
+      "state": "DENIED_BY_DEFAULT_IN_CURRENT_RLL_DEVELOPMENT"
+    },
+    {
+      "route_id": "DESTRUCTIVE_IRREVERSIBLE",
+      "entrypoints": [
+        "force push, delete ref, arbitrary destructive filesystem/platform operations"
+      ],
+      "max_authority_default": "A5",
+      "human_gate_for_default": true,
+      "default_decision": "DENY",
+      "state": "FORBIDDEN"
+    }
+  ],
+  "invariants": [
+    "A route may operate only at or below its declared maximum authority.",
+    "D3/D4 never inherit permission from a D0/D1 route.",
+    "Network OFF is not equivalent to A2 permission; A2 must be explicitly activated.",
+    "A3-A5 cannot be self-authorized by deterministic program execution.",
+    "TOKEN_VAZIO in required authority/data fields blocks escalation."
+  ]
+}
