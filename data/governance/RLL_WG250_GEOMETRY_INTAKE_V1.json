@@ -1,0 +1,169 @@
+{
+  "schema": "rll.wg250_geometry_intake.v1",
+  "date": "2026-09-22",
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "source_namespace": "WG250-0001..WG250-0250",
+  "source_count": 250,
+  "source_authorities": {
+    "drive_document_id": "1_ExzqBfIAvf7dqyWoLY9uYBXG-YMTzXqYBuK0jTFA4I",
+    "drive_matrix_id": "1UDKtMdK3Hma4wqDGEHpw6H-bsFx0t1oiPOlMK5c4cfk",
+    "drive_matrix_tab": "WG250_20260922",
+    "papers_path": "research_notes/2026-09-22_MATH_GEOMETRY_WG250_LEDGER_V1.md",
+    "papers_commit": "c05ade2b51bf82822280e11363ef7ba8faa3b9c6",
+    "rll_existing_registry": "data/governance/RLL_SESSION_FORMULA_REGISTRY_MF0001_MF0251_V1.json",
+    "rll_existing_contract": "data/contracts/omega_math_explorer.v1.yml"
+  },
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "WG250 != MF until item-level mapping closes provenance",
+    "geometric identity != cosmological mechanism",
+    "IMPLEMENTED_UNTESTED != PASS"
+  ],
+  "range_routes": [
+    {
+      "range": "WG250-0001..0011",
+      "route": "representation_and_boundary",
+      "rll_mode": "REFERENCE_ONLY"
+    },
+    {
+      "range": "WG250-0012..0045",
+      "route": "euclidean_polygon_arc_projection",
+      "rll_mode": "EXISTING_GATES_PLUS_CROSSWALK"
+    },
+    {
+      "range": "WG250-0046",
+      "route": "electronic_layer_analogy",
+      "rll_mode": "BLOCK_PHYSICAL_CLAIM"
+    },
+    {
+      "range": "WG250-0047..0104",
+      "route": "octagon_K8_distances_intersections",
+      "rll_mode": "FORMAL_GEOMETRY_GATE"
+    },
+    {
+      "range": "WG250-0105..0118",
+      "route": "governance_provenance",
+      "rll_mode": "GOVERNANCE_ONLY"
+    },
+    {
+      "range": "WG250-0119..0190",
+      "route": "sqrt3_scaling_complex_angles_small_angle",
+      "rll_mode": "FORMAL_GEOMETRY_GATE"
+    },
+    {
+      "range": "WG250-0191..0236",
+      "route": "geodesic_curvature_projection_typing",
+      "rll_mode": "FORMAL_GEODESIC_GATE"
+    },
+    {
+      "range": "WG250-0237..0250",
+      "route": "angular_division_crosswalk",
+      "rll_mode": "FORMAL_GRID_GATE"
+    }
+  ],
+  "existing_gate_reuse": [
+    "G-SQRT3-001",
+    "G-POLY-TRIG-001",
+    "G-HALFSTEP-001",
+    "G-LCM-5678",
+    "G-BHASKARA-CIRCLE",
+    "G-TOPOLOGY-BOUNDARY"
+  ],
+  "successor_gate_targets": [
+    {
+      "id": "G-WG250-K8-COUNT",
+      "wg250": [
+        "WG250-0057",
+        "WG250-0058",
+        "WG250-0059"
+      ],
+      "expression": "C(8,2)=28"
+    },
+    {
+      "id": "G-WG250-K8-DISTANCE-SPECTRUM",
+      "wg250": [
+        "WG250-0060",
+        "WG250-0061",
+        "WG250-0062",
+        "WG250-0063",
+        "WG250-0064",
+        "WG250-0065",
+        "WG250-0066"
+      ],
+      "expression": "d_k=2R*sin(k*pi/8), k=1..4"
+    },
+    {
+      "id": "G-WG250-ANGLE-GRID-15",
+      "wg250": [
+        "WG250-0151",
+        "WG250-0159",
+        "WG250-0224",
+        "WG250-0225",
+        "WG250-0247",
+        "WG250-0248",
+        "WG250-0249",
+        "WG250-0250"
+      ],
+      "expression": "30=2*15;45=3*15;60=4*15;90=6*15"
+    },
+    {
+      "id": "G-WG250-C3600",
+      "wg250": [
+        "WG250-0175",
+        "WG250-0176",
+        "WG250-0177",
+        "WG250-0178",
+        "WG250-0179",
+        "WG250-0180",
+        "WG250-0181",
+        "WG250-0182"
+      ],
+      "expression": "360/0.1=3600"
+    },
+    {
+      "id": "G-WG250-GEODESIC-SMALL-ANGLE",
+      "wg250": [
+        "WG250-0199",
+        "WG250-0200",
+        "WG250-0201",
+        "WG250-0202",
+        "WG250-0203",
+        "WG250-0204",
+        "WG250-0205",
+        "WG250-0206"
+      ],
+      "expression": "s-c~R*theta^3/24; sagitta~R*theta^2/8"
+    },
+    {
+      "id": "G-WG250-SPHERICAL-TRIANGLE",
+      "wg250": [
+        "WG250-0208",
+        "WG250-0209",
+        "WG250-0210",
+        "WG250-0211",
+        "WG250-0212",
+        "WG250-0213",
+        "WG250-0214",
+        "WG250-0215",
+        "WG250-0216"
+      ],
+      "expression": "cos(A)=cos(sigma)/(1+cos(sigma)); area=R^2*(3A-pi)"
+    },
+    {
+      "id": "G-WG250-PROJECTION-TYPING",
+      "wg250": [
+        "WG250-0189",
+        "WG250-0190",
+        "WG250-0234",
+        "WG250-0235",
+        "WG250-0236"
+      ],
+      "expression": "quadratic projection requires explicit operator; otherwise TOKEN_VAZIO_PROJECTION_OPERATOR"
+    }
+  ],
+  "mapping_to_mf_state": "TOKEN_VAZIO_ITEM_LEVEL_DEDUP",
+  "publication_effect": "NONE",
+  "next": "execute deterministic gate suite, then map only provenance-closed WG250 items to MF records"
+}

@@ -48,3 +48,20 @@ R(t+1)=R(t)×Φ_ethica×E_Verbo×(√3/2)^(πφ)
 - **F_ok:** imagem versionada e documentada.
 - **F_gap:** PNG gerado externamente não foi incorporado como binário neste commit; o SVG é a versão leve/renderizável no GitHub.
 - **F_next:** se necessário, anexar também o PNG final por fluxo binário/local e registrar hash SHA256.
+
+## WG250 session geometry intake (2026-09-22)
+
+The complete 250-item session ledger remains in Drive WORLD69 and the Papers research ledger. RLL consumes it through a non-duplicating crosswalk:
+
+- crosswalk: [`wg250_session_crosswalk_v1.md`](./wg250_session_crosswalk_v1.md)
+- intake contract: `data/governance/RLL_WG250_GEOMETRY_INTAKE_V1.json`
+- deterministic gate tests: `tests/test_rll_wg250_geometry_intake.py`
+- receipt: `receipts/2026-09-22_RLL_WG250_GEOMETRY_INTAKE_V1.md`
+
+```text
+WG250 capture != MF identity
+WG250 != MF until item-level provenance mapping
+IMPLEMENTED_UNTESTED != PASS
+```
+
+The existing `MF-0001..MF-0251` registry remains the RLL formula registry; WG250 is a session-ledger namespace and route layer, not a replacement.
