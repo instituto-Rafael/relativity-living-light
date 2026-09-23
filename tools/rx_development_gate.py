@@ -164,6 +164,9 @@ checks["validacao_real_yaml_matplotlib_migrated"] = (
 checks["requests_public_read_fetchers_migrated"] = (
     closed_families.get("requests_public_read_fetchers") == "MIGRATED_WITH_PARITY_GATE"
 )
+checks["docs_inventory_config_yaml_migrated"] = (
+    closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
+)
 
 structure_d_rx = data["structure_d_rx"]
 successor = structure_d_rx.get("structure_d_successor", {})
@@ -204,7 +207,7 @@ payload = {
     ),
     "F_gap": (
         "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; "
-        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation and bounded HTTP fetcher families, OS sandbox evidence, external GitHub controls and independent security review remain open."
+        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation, bounded HTTP fetcher, and docs-inventory config families, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
         "Choose and version one common growth/CMB/sound-horizon contract, then require "
