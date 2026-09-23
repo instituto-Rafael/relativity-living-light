@@ -36,6 +36,37 @@
       "distance_integration": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
       "flat_closure": true,
       "claim_allowed": false
+    },
+    "RX-FREESTANDING65-PARITY-V1": {
+      "state": "VERIFIED_EXACT_Q16_PARITY",
+      "omega_r": 0.0000918,
+      "hz_dataset": "data/real/Hz_data_real.csv",
+      "hz_rows": 33,
+      "bao_dataset": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "bao_rows": 13,
+      "growth_dataset": "data/real/cosmology/fsigma8_growth_real.csv",
+      "growth_rows": 16,
+      "cmb_dataset": "data/real/CMB_shift_real.json",
+      "cmb_parameters": 3,
+      "N": 65,
+      "growth_mode": "freestanding_growth_with_Dz",
+      "bao_sound_horizon": "FASE18E_rd_profile_backed_by_rx_sound_horizon_gate",
+      "cmb_acoustic_mode": "FASE18E_rs_star_profile_backed_by_rx_sound_horizon_gate",
+      "observation_quantization": "Q16.16",
+      "model_quantization": "Q16.16",
+      "axis_quantization": "Q16.16",
+      "chi2_Hz_growth_BAO": "diagonal_Q16",
+      "chi2_CMB": "Q16_correlation_matrix",
+      "reference_receipt": "artifacts/canonical-coupling/joint-real-model-v2.json",
+      "parity_receipt": "results/rx_freestanding65_parity.json",
+      "parity_expected": {
+        "LCDM_chi2_q16": 4641555,
+        "RLL_chi2_q16": 4261420,
+        "delta_q16": -380135
+      },
+      "training": false,
+      "ai_runtime": false,
+      "claim_allowed": false
     }
   }
 }
