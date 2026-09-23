@@ -19,6 +19,16 @@ class RllAlphaXivLiteratureActionMatrixTests(unittest.TestCase):
         self.assertTrue(checks["perturbation_token_unresolved"])
         self.assertTrue(checks["required_papers_present"])
         self.assertTrue(checks["required_gates_present"])
+        self.assertTrue(checks["bibliography_files_present"])
+        self.assertTrue(checks["citation_keys_nonempty"])
+        self.assertTrue(checks["citation_keys_unique"])
+        self.assertTrue(checks["citation_keys_resolve_in_canonical_bibtex"])
+        self.assertTrue(checks["primary_data_authorities_bound"])
+        self.assertTrue(checks["bibliography_not_truth_score"])
+        self.assertTrue(checks["implementation_refs_do_not_resolve_physics"])
+        self.assertEqual(len(payload["paper_ids"]), 7)
+        self.assertIn("DESI2025DR2BAO", payload["citation_keys"])
+        self.assertIn("Brout2022PantheonPlus", payload["citation_keys"])
 
 if __name__ == "__main__":
     unittest.main()
