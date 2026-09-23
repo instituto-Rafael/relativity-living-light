@@ -1,0 +1,123 @@
+{
+  "schema": "rll.alphaxiv_literature_action_matrix.v1",
+  "date": "2026-09-23",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "purpose": "Translate external literature into fail-closed implementation requirements for RLL background inference, perturbation closure, CLASS/CAMB parity and structure-growth validation without importing another model's physics as RLL physics.",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "source_boundary": "External papers are literature evidence and implementation guidance. They do not resolve TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS and do not authorize model-selection claims.",
+  "papers": [
+    {
+      "id": "2607.25539",
+      "title": "No preference for generalized emergent dark energy from current cosmological data",
+      "published": "2026-07-28",
+      "role": "current_observational_control_GEDE",
+      "extracted_findings": [
+        "Uses DESI DR2 BAO with CMB and Type Ia supernovae including Pantheon+.",
+        "GEDE parameter Delta is consistent with the LambdaCDM value Delta=0 within 2 sigma once SNe Ia are included.",
+        "Gaussian significance below 2 sigma and Bayesian evidence lnB<1 do not establish preference for GEDE over LambdaCDM.",
+        "Inference uses CAMB/Cobaya and full CMB information rather than background-only BAO/SN optimization."
+      ],
+      "rll_action": [
+        "Preserve G4 background-only results as limited evidence.",
+        "Do not promote a background-fit improvement or equality to physical preference.",
+        "Require G6 posterior/evidence and perturbation/CMB gates before any model-selection claim."
+      ]
+    },
+    {
+      "id": "2609.03062",
+      "title": "Reassessing Evidence for Dark-Sector Interactions with Dynamical Dark Energy and DESI DR2",
+      "published": "2026-09-02",
+      "role": "current_observational_control_IDE",
+      "extracted_findings": [
+        "Studies Q=beta H rho_de with perturbations evolved using a generalized PPF treatment.",
+        "The statistical role and even sign of a preferred interaction depend strongly on the assumed dark-energy trajectory.",
+        "Interacting GEDE can strongly suppress matter power while improving a CMB+BAO+SNIa fit.",
+        "RSD, galaxy clustering, weak lensing and cluster abundance are identified as direct tests of the growth predictions."
+      ],
+      "rll_action": [
+        "Treat interaction-like background degeneracy as non-identifying.",
+        "Require perturbation-derived P(k), f_sigma8 and lensing/RSD confrontation before interaction claims.",
+        "Keep route B interacting-sector semantics independent from route A1 and background-only route C."
+      ]
+    },
+    {
+      "id": "2306.01593",
+      "title": "IDECAMB: an implementation of interacting dark energy cosmology in CAMB",
+      "published": "2023-09-13",
+      "role": "implementation_reference_interacting_sector",
+      "extracted_findings": [
+        "A covariant interaction requires background Q plus perturbative deltaQ and momentum-transfer f components.",
+        "Energy-density, velocity, pressure perturbation and anisotropic stress variables must close the perturbation system.",
+        "Gauge transformation of pressure perturbations and rest-frame sound-speed semantics must be explicit.",
+        "Large-scale instability can require a PPF-type treatment for coupled-fluid models."
+      ],
+      "rll_action": [
+        "If RLL route B is selected, Q_mu must decompose into Q, deltaQ and momentum-transfer terms with one declared frame/gauge convention.",
+        "A hidden background Q is insufficient for solver implementation.",
+        "Large-scale/super-horizon stability is a mandatory gate, not an optimizer prior workaround."
+      ]
+    },
+    {
+      "id": "2506.17411",
+      "title": "Consistent Initial Conditions for Early Modified Gravity in Effective Field Theory",
+      "published": "2025-06-20",
+      "role": "initial_condition_reference",
+      "extracted_findings": [
+        "Beyond-standard perturbation systems can require model-consistent initial conditions rather than reused GR initial conditions.",
+        "Inconsistent initial conditions can generate measurable changes in CMB spectra.",
+        "Super-horizon evolution and conserved metric-potential behavior provide diagnostic constraints."
+      ],
+      "rll_action": [
+        "C07 cannot be closed by copying standard GR initial values.",
+        "Derive a super-horizon series/constraint-compatible mode from the frozen RLL equations.",
+        "Test the initial solution against conservation/constraint residuals before Boltzmann handoff."
+      ]
+    },
+    {
+      "id": "1104.2934",
+      "title": "The Cosmic Linear Anisotropy Solving System (CLASS) III: Comparision with CAMB for LambdaCDM",
+      "published": "2011-05-16",
+      "role": "independent_solver_parity_reference",
+      "extracted_findings": [
+        "Independent CLASS and CAMB calculations reached about 0.01 percent agreement for reference LambdaCDM lensed CMB and matter spectra when physical assumptions and precision settings were aligned.",
+        "Parity requires matched physical inputs such as recombination history and explicit numerical convergence tests.",
+        "The paper compares CMB TT/EE/lensing and matter P(k), not only background H(z)."
+      ],
+      "rll_action": [
+        "CLASS and CAMB RLL integrations must be independent implementations of one frozen solver-neutral equation contract.",
+        "Baseline LambdaCDM recovery and numerical-convergence sweeps must precede RLL cross-backend comparison.",
+        "The historical 0.01 percent LambdaCDM result is a reference, not an automatically inherited RLL acceptance threshold; RLL tolerance must be preregistered after convergence studies."
+      ]
+    }
+  ],
+  "mandatory_gates": {
+    "background_claim_boundary": true,
+    "posterior_or_evidence_gate_before_model_preference": true,
+    "c01_delta_evolution_required": true,
+    "c02_theta_momentum_required": true,
+    "c07_model_consistent_superhorizon_initial_conditions_required": true,
+    "c08_transition_or_crossing_regularity_required": true,
+    "conservation_constraint_bianchi_required": true,
+    "interacting_route_q_deltaq_momentum_transfer_required_if_selected": true,
+    "large_scale_stability_required": true,
+    "independent_class_camb_implementations_required": true,
+    "baseline_lcdm_recovery_required": true,
+    "numerical_convergence_sweep_required": true,
+    "cmb_tt_ee_lensing_and_linear_pk_parity_surface_required": true,
+    "rll_cross_backend_tolerance_preregistered_not_inherited": true,
+    "growth_rsd_lensing_structure_validation_required_before_interaction_or_growth_claim": true
+  },
+  "parity_reference": {
+    "historical_lcdm_reference": "~0.01 percent in arXiv:1104.2934 for aligned high-precision CLASS/CAMB reference spectra",
+    "rll_acceptance_tolerance": "TOKEN_VAZIO_PREREGISTRATION_REQUIRED",
+    "rule": "Do not copy the historical LambdaCDM threshold into RLL. Freeze tolerance only after independent convergence sweeps demonstrate the numerical floor for the implemented RLL closure."
+  },
+  "unresolved": [
+    "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+    "TOKEN_VAZIO_RLL_CLASS_IMPLEMENTATION",
+    "TOKEN_VAZIO_RLL_CAMB_IMPLEMENTATION",
+    "TOKEN_VAZIO_RLL_CLASS_CAMB_PARITY_TOLERANCE",
+    "TOKEN_VAZIO_GROWTH_LSS_FULL_VALIDATION"
+  ]
+}
