@@ -45,6 +45,8 @@ active_files = sorted((ROOT / "rx").glob("*.py")) + [
     ROOT / "internal" / "governance" / "development_guard.py",
     ROOT / "tools" / "validate_rll_development_governance.py",
     ROOT / "tools" / "rll_security_surface_audit.py",
+    ROOT / "tools" / "validate_ci_scientific_skills_stdlib_migration.py",
+    ROOT / "tools" / "ci_scientific_skills.py",
     ROOT / "tools" / "validate_calc_data_stdlib_migration.py",
     ROOT / "scripts" / "calc_data.py",
     ROOT / "tools" / "validate_watch_config_stdlib_migration.py",
