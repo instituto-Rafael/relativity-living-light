@@ -405,6 +405,45 @@
         "claim boundary"
       ],
       "claim_effect": "NONE"
+    },
+    {
+      "route_id": "CI_SCIENTIFIC_SKILLS_STDLIB",
+      "runtime": "Python stdlib deterministic diagnostics",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Run claim-bounded anomaly, Fourier T^1 and BIC-proxy diagnostics over declared repository inputs.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "hosts": [],
+        "writes": false
+      },
+      "filesystem": {
+        "read": "declared repository data/results",
+        "write": [
+          "artifacts/ci-scientific-skills/",
+          "results/"
+        ]
+      },
+      "audit": [
+        "input SHA-256",
+        "diagnostic report",
+        "receipt/checksums",
+        "claim boundary"
+      ],
+      "claim_effect": "NONE"
     }
   ],
   "prohibited_uses": [
