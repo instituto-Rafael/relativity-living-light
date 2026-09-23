@@ -55,8 +55,22 @@ jobs:
       run: python3 internal/governance/development_guard.py --operation validacao_real/rx_operation.json --authority-mode reviewed_ci_workflow --strict
     - name: Validate governance bundle consistency
       run: python3 tools/validate_rll_development_governance.py --strict
+    - name: Validate executable entrypoint authority registry
+      run: python3 tools/validate_executable_entrypoint_authority_registry.py
+    - name: Validate legacy YAML-to-JSON serialization parity
+      run: python3 tools/validate_validacao_real_serialization_parity.py
+    - name: Validate legacy validacao_real zero dependency core
+      run: python3 tools/validate_validacao_real_zero_dependency.py
     - name: Audit governed Python security surface
       run: python3 tools/rll_security_surface_audit.py --strict
+    - name: Legacy validacao_real compatibility route (zero third-party)
+      env:
+        RLL_LEGACY_NETWORK_PROBE: "0"
+      run: |
+        python3 -m validacao_real.fetch_real_data
+        python3 -m validacao_real.compute_validation
+        python3 -m validacao_real.make_figures
+        python3 -m validacao_real.render_report
     - name: Rx zero-dependency validation pipeline
       env:
         RLL_AUTHORITY_MODE: reviewed_ci_workflow
@@ -125,6 +139,11 @@ jobs:
           results/security_surface_audit.md
           results/development_governance_validation.json
           results/development_governance_validation.md
+          results/executable_entrypoint_authority_registry_validation.json
+          results/validacao_real_serialization_parity.json
+          results/validacao_real_zero_dependency_core.json
+          validacao_real/fetched/
+          validacao_real/results/
           results/rx_semantic_parity.json
           results/rx_semantic_parity.md
           results/rx_selftest.json
