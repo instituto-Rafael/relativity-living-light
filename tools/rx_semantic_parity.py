@@ -15,6 +15,10 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from rx.cosmology import (
     C_KMS,
     bao_prediction,
@@ -26,10 +30,6 @@ from rx.cosmology import (
     rd_drag_mpc,
 )
 from rx.kernel import dump_json, invert_matrix, load_json, read_csv
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
 OUT_JSON = ROOT / "results" / "rx_semantic_parity.json"
 OUT_MD = ROOT / "results" / "rx_semantic_parity.md"
 
