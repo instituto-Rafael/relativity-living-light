@@ -87,6 +87,7 @@ for source in source_registry["sources"]:
             "remote_probe_bytes": remote_bytes,
             "remote_error": remote_error or "NONE",
             "used": "committed_rx_json_fallback",
+            "fallback_state": "committed_local_payload_not_fresh_remote_download",
             "fallback_path": str(fallback.relative_to(ROOT)),
             "n_points": len(payload.get("points", [])),
             "claim_boundary": source_registry["claim_boundary"],
