@@ -88,6 +88,7 @@ def selftest():
     _tool("rx_selftest.py")
     _tool("validate_rx_fairness.py")
     _tool("validate_rx_inference.py")
+    _tool("validate_rx_dha.py")
     _tool("rx_sound_horizon_selftest.py")
     _tool("rx_freestanding65_parity.py")
 
