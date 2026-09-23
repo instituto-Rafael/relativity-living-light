@@ -6,16 +6,4 @@ cd "$ROOT"
 
 echo "=== Rx development chain ==="
 echo "training=False ai_runtime=False"
-
-python3 tools/rx_no_ai_gate.py
-python3 tools/rx_selftest.py
-python3 tools/rx_sound_horizon_selftest.py
-python3 tools/rx_freestanding65_parity.py
-python3 -m validacao_real.run_rx_pipeline
-python3 -m validacao_real.run_rx_multiprobe
-python3 -m data.pipelines.structure_d.joint_real_likelihood_rx
-python3 tools/rx_semantic_parity.py
-python3 tools/rx_dependency_audit.py
-python3 tools/rx_development_gate.py
-
-echo "RX_DEVELOPMENT_CHAIN=PASS"
+exec python3 -m rx develop
