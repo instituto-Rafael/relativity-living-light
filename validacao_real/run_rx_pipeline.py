@@ -30,6 +30,11 @@ from rx import (
     write_csv,
     write_svg_chart,
 )
+from internal.governance.development_guard import (
+    authorize_url,
+    evaluate_operation,
+    safe_public_probe,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "validacao_real"
@@ -38,6 +43,8 @@ RESULTS = HERE / "results_rx"
 FIGS = RESULTS / "figures"
 SOURCES = HERE / "sources_rx.json"
 DESI_COV = ROOT / "data" / "real" / "desi_dr2_bao_covariance.csv"
+SECURITY_POLICY = ROOT / "data" / "governance" / "RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
+OPERATION_CONTRACT = HERE / "rx_operation.json"
 
 C_KMS = 299792.458
 OMEGA_R = 9.0e-5
@@ -47,11 +54,35 @@ FETCHED.mkdir(parents=True, exist_ok=True)
 RESULTS.mkdir(parents=True, exist_ok=True)
 FIGS.mkdir(parents=True, exist_ok=True)
 
+security_policy = load_json(SECURITY_POLICY)
+operation_contract = load_json(OPERATION_CONTRACT)
+security_preflight = evaluate_operation(security_policy, operation_contract)
+if security_preflight["decision"] != "ALLOW":
+    raise SystemExit(
+        "Rx security preflight blocked execution: "
+        + security_preflight["decision"]
+        + " "
+        + "; ".join(security_preflight["reasons"])
+    )
+
+run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+security_preflight_path = RESULTS / ("security_preflight_" + run_stamp + ".json")
+dump_json(security_preflight_path, security_preflight)
+
+network_probe_enabled = os.environ.get("RX_NETWORK_PROBE", "0") == "1"
+
 source_registry = load_json(SOURCES)
+for source in source_registry["sources"]:
+    portal = source.get("portal", "")
+    if portal:
+        authorize_url(security_policy, portal)
+
 manifest = {
     "schema": "rll.validacao_real.rx.manifest.v1",
     "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
     "claim_boundary": source_registry["claim_boundary"],
+    "security_preflight": str(security_preflight_path.relative_to(ROOT)),
+    "network_probe_enabled": network_probe_enabled,
     "sources": [],
 }
 
@@ -60,20 +91,16 @@ for source in source_registry["sources"]:
     reachable = False
     remote_bytes = 0
     remote_error = "TOKEN_VAZIO"
-    if portal:
+    if portal and network_probe_enabled:
         try:
-            req = urllib.request.Request(
-                portal,
-                headers={"User-Agent": "RLL-Rx/1.0"},
-                method="GET",
-            )
-            with urllib.request.urlopen(req, timeout=5) as response:
-                chunk = response.read(128)
-                remote_bytes = len(chunk)
-                reachable = True
-                remote_error = ""
+            probe = safe_public_probe(security_policy, portal, user_agent="RLL-Rx/1.0")
+            remote_bytes = int(probe["bytes_sampled"])
+            reachable = 200 <= int(probe["status"]) < 400
+            remote_error = "" if reachable else "HTTP_STATUS_" + str(probe["status"])
         except (urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
             remote_error = exc.__class__.__name__
+    elif portal:
+        remote_error = "NETWORK_PROBE_DISABLED_BY_DEFAULT"
 
     fallback = HERE / source["embedded_fallback"]
     payload = load_json(fallback)
@@ -283,6 +310,8 @@ payload = {
         "seed": seed,
         "maxiter": maxiter,
         "simpson_steps": simpson_steps,
+        "security_preflight": str(security_preflight_path.relative_to(ROOT)),
+        "network_probe_enabled": network_probe_enabled,
     },
     "datasets": {
         "Hz_points": len(hz),
