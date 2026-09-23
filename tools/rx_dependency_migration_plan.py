@@ -21,6 +21,7 @@ INVENTORY_CONFIG_PARITY = ROOT / "results" / "inventory_config_serialization_par
 PLOT_MIGRATION_GATE = ROOT / "results" / "rx_plot_migration_gate.json"
 HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
 CREDENTIAL_STDLIB_GATE = ROOT / "results" / "credential_authority_stdlib_migration.json"
+WATCH_CONFIG_GATE = ROOT / "results" / "watch_config_stdlib_migration.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -228,6 +229,33 @@ if CREDENTIAL_STDLIB_GATE.exists():
                 str(CREDENTIAL_STDLIB_GATE.relative_to(ROOT)),
             ],
             "general_yaml_parser_claim": False,
+            "scientific_semantics_changed": False,
+        })
+
+if WATCH_CONFIG_GATE.exists():
+    watch_gate = json.loads(WATCH_CONFIG_GATE.read_text(encoding="utf-8"))
+    if watch_gate.get("pass") is True:
+        closed_families.append({
+            "family": "technology_watch_yaml_jsonschema_stdlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "scripts/validate_watch_config.py",
+                "rll_inovacao_tecnologica_watch.json",
+                "rll_inovacao_tecnologica_watch.yml",
+                "schemas/rll_watch.schema.json",
+                "rx/yaml_subset.py",
+                "rx/schema_subset.py",
+            ],
+            "replacements": {
+                "yaml": "rx.yaml_subset strict parser",
+                "jsonschema": "rx.schema_subset strict validator",
+            },
+            "evidence": [
+                str(WATCH_CONFIG_GATE.relative_to(ROOT)),
+            ],
+            "legacy_yaml_preserved": True,
+            "general_yaml_parser_claim": False,
+            "general_json_schema_claim": False,
             "scientific_semantics_changed": False,
         })
 
