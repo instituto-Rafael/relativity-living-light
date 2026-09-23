@@ -31,6 +31,7 @@ paths = {
     "serialization_parity": ROOT / "results" / "validacao_real_serialization_parity.json",
     "validacao_real_zero_dependency": ROOT / "results" / "validacao_real_zero_dependency_core.json",
     "http_migration": ROOT / "results" / "rx_http_migration_gate.json",
+    "credential_authority_stdlib": ROOT / "results" / "credential_authority_stdlib_migration.json",
 }
 
 cli_security_receipts = sorted(
@@ -73,6 +74,9 @@ checks["http_migration_pass"] = data["http_migration"].get("pass") is True
 checks["http_migration_zero_third_party"] = data["http_migration"].get("third_party_python_dependencies") == []
 checks["http_migration_no_network_in_gate"] = data["http_migration"].get("network_requests_performed") == 0
 checks["http_migration_claim_closed"] = data["http_migration"].get("claim_allowed") is False
+checks["credential_authority_stdlib_pass"] = data["credential_authority_stdlib"].get("pass") is True
+checks["credential_authority_stdlib_zero_third_party"] = data["credential_authority_stdlib"].get("third_party_python_dependencies") == []
+checks["credential_authority_stdlib_claim_closed"] = data["credential_authority_stdlib"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -167,6 +171,9 @@ checks["requests_public_read_fetchers_migrated"] = (
 checks["guarded_import_data_stdlib_migrated"] = (
     closed_families.get("guarded_import_data_stdlib") == "MIGRATED_WITH_PARITY_GATE"
 )
+checks["credential_authority_pyyaml_stdlib_migrated"] = (
+    closed_families.get("credential_authority_pyyaml_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
 checks["docs_inventory_config_yaml_migrated"] = (
     closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
 )
@@ -204,7 +211,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, credential-authority PyYAML stdlib migration, security-surface audit, CLI/simple/multiprobe security preflights, "
         "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
