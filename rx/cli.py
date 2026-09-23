@@ -87,7 +87,8 @@ def selftest():
     _tool("rx_zero_dependency_gate.py")
     _tool("rx_selftest.py")
     _tool("validate_rx_fairness.py")
-    _tool("validate_rx_inference.py")\n    _tool("validate_rx_dha.py")
+    _tool("validate_rx_inference.py")
+    _tool("validate_rx_dha.py")
     _tool("validate_rx_dha.py")
     _tool("rx_sound_horizon_selftest.py")
     _tool("rx_freestanding65_parity.py")
@@ -119,7 +120,8 @@ def audit():
     _tool("validate_validation_deterministic_stdlib.py")
     _tool("validate_ci_scientific_skills_stdlib_migration.py")
     _tool("validate_rx_fairness.py")
-    _tool("validate_rx_inference.py")\n    _tool("validate_rx_dha.py")
+    _tool("validate_rx_inference.py")
+    _tool("validate_rx_dha.py")
     _tool("validate_validation_simple_claim_boundary.py")
     _tool("validate_real_data_materialization_security.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
@@ -139,7 +141,8 @@ def develop():
     _tool("validate_watch_config_stdlib_migration.py")
     _tool("validate_calc_data_stdlib_migration.py")
     _tool("validate_rx_fairness.py")
-    _tool("validate_rx_inference.py")\n    _tool("validate_rx_dha.py")
+    _tool("validate_rx_inference.py")
+    _tool("validate_rx_dha.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_no_ai_gate.py")
     _tool("rx_zero_dependency_gate.py")
@@ -156,6 +159,20 @@ def develop():
     print("RLL_RX_DEVELOPMENT=PASS")
 
 
+def orchestrate(plan="configs/rll_execution_plan.v1.yml", execute=True):
+    from .orchestrator import orchestrate as run_execution_fabric
+
+    result = run_execution_fabric(plan_path=plan, execute=execute)
+    print("RLL_RX_ORCHESTRATE=" + result["status"])
+    print("run_id=" + result["run_id"])
+    print("physics_contract=" + result["physics_contract"])
+    print("regimes=" + ",".join(result["regimes"]))
+    print("selected_formula_count=" + str(result["selected_formula_count"]))
+    print("rejected_formula_count=" + str(result["rejected_formula_count"]))
+    print("claim_allowed=False")
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         prog="python3 -m rx",
@@ -165,7 +182,17 @@ def main(argv=None):
         "command",
         nargs="?",
         default="status",
-        choices=("status", "selftest", "validate", "parity", "audit", "develop"),
+        choices=("status", "selftest", "validate", "parity", "audit", "develop", "orchestrate"),
+    )
+    parser.add_argument(
+        "--plan",
+        default="configs/rll_execution_plan.v1.yml",
+        help="Execution plan for the orchestrate command.",
+    )
+    parser.add_argument(
+        "--no-execute",
+        action="store_true",
+        help="Build the execution graph and receipts without running scientific routes.",
     )
     args = parser.parse_args(argv)
 
@@ -176,6 +203,10 @@ def main(argv=None):
         "parity": parity,
         "audit": audit,
         "develop": develop,
+        "orchestrate": lambda: orchestrate(
+            plan=args.plan,
+            execute=not args.no_execute,
+        ),
     }
     if args.command != "status":
         _security_preflight(args.command)

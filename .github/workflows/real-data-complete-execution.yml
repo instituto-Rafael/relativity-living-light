@@ -3,6 +3,13 @@ name: Real Data Complete Execution
 "on":
   pull_request:
     paths:
+      - "rx/**"
+      - "configs/rll_execution_plan.v1.yml"
+      - "configs/rx_physics_contracts.json"
+      - "data/governance/RLL_RX_FORMULA_BINDINGS_V1.json"
+      - "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json"
+      - "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json"
+      - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
       - "scripts/verify_pantheon_inputs.py"
       - "tools/validate_scientific_validation_orchestrator_v3.py"
@@ -59,6 +66,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  rx-execution-fabric-pr-gate:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Rx execution-fabric stdlib tests
+        run: python3 -m unittest tests.test_rx_execution_fabric_stdlib
+
+      - name: Rx no-AI runtime gate
+        run: python3 tools/rx_no_ai_gate.py
+
+      - name: Rx zero-third-party gate
+        run: python3 tools/rx_zero_dependency_gate.py
+
+      - name: Execute canonical Rx engineering plan
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+        run: python3 -m rx orchestrate --plan configs/rll_execution_plan.v1.yml
+
+      - name: Cross-runtime semantic parity gate
+        run: python3 tools/rx_semantic_parity.py
+
+      - name: Upload Rx execution receipt bundle
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-execution-fabric-${{ github.run_id }}
+          path: results/rll-execution/
+          retention-days: 30
+          if-no-files-found: error
+
   pantheon-full-covariance-pr-gate:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
