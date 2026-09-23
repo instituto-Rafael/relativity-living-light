@@ -566,7 +566,7 @@ def run_joint_likelihood(output_stem: str = "joint_real_likelihood") -> dict:
 
     registry = inputs["parameter_registry"]
     commit_sha = _git_sha()
-    n_obs = int(len(inputs["hz"]) + len(inputs["desi"]) + len(inputs["fs8"]) + 2)
+    n_obs = int(len(inputs["hz"]) + len(inputs["desi"]) + len(inputs["fs8"]) + 3)
     rows = [_model_row(model, fitted[model][0], fitted[model][1], n_obs, registry=registry, commit_sha=commit_sha) for model in MODEL_ORDER]
     rows_by_model = {row["model"]: row for row in rows}
     rll_delta = _delta_against(rows_by_model, MODEL_RLL)
