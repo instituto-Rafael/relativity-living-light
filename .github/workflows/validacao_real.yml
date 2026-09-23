@@ -12,6 +12,8 @@ on:
       - "tools/validate_validacao_real_serialization_parity.py"
       - "tools/validate_validacao_real_zero_dependency.py"
       - "tools/validate_rll_development_governance.py"
+      - "tools/validate_credential_authority_stdlib_migration.py"
+      - "tools/validate_rll_credential_authority.py"
       - "tools/validate_inventory_config_parity.py"
       - "tools/docs_inventory.py"
       - "tools/inventory_config.yml"
