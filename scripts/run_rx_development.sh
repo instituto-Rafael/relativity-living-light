@@ -13,6 +13,7 @@ python3 tools/rx_sound_horizon_selftest.py
 python3 tools/rx_freestanding65_parity.py
 python3 -m validacao_real.run_rx_pipeline
 python3 -m validacao_real.run_rx_multiprobe
+python3 -m data.pipelines.structure_d.joint_real_likelihood_rx
 python3 tools/rx_semantic_parity.py
 python3 tools/rx_dependency_audit.py
 python3 tools/rx_development_gate.py
