@@ -1,0 +1,65 @@
+{
+  "receipt_id": "RLL-RX-VALIDACAO-DEPENDENCY-CLOSURE-20260923-V1",
+  "timestamp": "2026-09-23T01:20:00-03:00",
+  "kind": "engineering_closure_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "head_sha": "4eecebb180467500f7bd32cca4e09d1efe92004f",
+  "workflow": {
+    "name": "Validacao Real RLL",
+    "run_id": 35817865087,
+    "job": "validate",
+    "conclusion": "success"
+  },
+  "closed_family": {
+    "id": "validacao_real_yaml_matplotlib",
+    "state": "MIGRATED_WITH_PARITY_GATE",
+    "scope": [
+      "validacao_real/fetch_real_data.py",
+      "validacao_real/compute_validation.py",
+      "validacao_real/make_figures.py",
+      "validacao_real/render_report.py"
+    ],
+    "replacements": {
+      "yaml": "JSON stdlib / versioned Rx payloads",
+      "matplotlib": "rx.kernel.write_svg_chart"
+    },
+    "legacy_yaml_preserved": true,
+    "scientific_semantics_changed": false
+  },
+  "gates": {
+    "authority_registry": "PASS",
+    "yaml_json_serialization_parity": "PASS",
+    "legacy_zero_dependency_core": "PASS",
+    "security_surface_audit": "PASS",
+    "legacy_compatibility_route": "PASS",
+    "rx_simple": "PASS",
+    "rx_multiprobe": "PASS",
+    "structure_d_rx_successor": "PASS",
+    "semantic_parity_ledger": "PASS",
+    "dependency_audit": "PASS",
+    "typed_migration_plan": "PASS",
+    "develop_authority_receipt": "PASS",
+    "aggregate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES"
+  },
+  "migration_metrics": {
+    "files_with_external_imports": 275,
+    "token_vazio_replacements": 195,
+    "closed_families": 1
+  },
+  "open_contract_divergences": [
+    "Omega_r differs across versioned Structure-D/Rx and FASE18E/freestanding contracts",
+    "growth semantics differ",
+    "r_d/r_s and CMB acoustic-scale semantics differ",
+    "H(z) data surfaces differ"
+  ],
+  "provenance": [
+    "GitHub Actions run 35817865087",
+    "results/validacao_real_serialization_parity.json",
+    "results/validacao_real_zero_dependency_core.json",
+    "results/rx_dependency_migration_plan.json",
+    "results/rx_development_gate.json"
+  ],
+  "rollback": "Legacy YAML files remain preserved. Revert the JSON/renderer migration commits and CI wiring commits to restore the previous route; scientific datasets and versioned physics contracts were not rewritten.",
+  "claim_allowed": false,
+  "append_only": true
+}
