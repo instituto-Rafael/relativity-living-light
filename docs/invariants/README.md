@@ -143,3 +143,29 @@ IMPLEMENTED_UNTESTED != PASS
 ```
 
 The existing `MF-0001..MF-0251` registry remains the RLL formula registry; WG250 is a session-ledger namespace and route layer, not a replacement.
+
+
+## Prior-art crosswalk — mathematics × ChipQuantum (2026-09-23)
+
+Consumer bridge:
+[`prior_art_math_chipquantum_crosswalk_20260923.md`](./prior_art_math_chipquantum_crosswalk_20260923.md)
+
+Receipt:
+`receipts/2026-09-23_RLL_PRIOR_ART_MATH_CHIPQUANTUM_CROSSWALK_V1.md`
+
+This closes the previous generic `prior-art = TOKEN_VAZIO` state for a bounded subset:
+
+```text
+octagon 49 / 40+8+1 / 80 -> PRIOR_ART_FOUND
+56 triangles + 24 quadrilaterals -> PRIOR_ART_FOUND
+beta1=80 / GF(2)^80 -> KNOWN_GRAPH_THEORY
+lcm(5,6,7,8)=840 -> KNOWN_MATH
+DHA modular identities -> KNOWN_MATH
+DHA exact aggregate metric -> PROJECT_DEFINED / NOVELTY_UNPROVEN
+graph/tight-binding Hamiltonians -> PRIOR_ART_FOUND
+ChipQuantum T7/Q16/42 residual runtime binding -> PROJECT_IMPLEMENTATION / NOVELTY_UNPROVEN
+```
+
+The RLL verifiers remain valid as independent computational reproduction/integration evidence; they are not first-discovery evidence for the classical results above.
+
+R3 = <F_ok: bounded prior-art gaps closed with external dates + project chronology; F_gap: MF-0001..MF-0251 item-level review still incomplete; F_next: attach prior_art_state/source_id/project_residual per MF row>.
