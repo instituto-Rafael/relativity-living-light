@@ -23,6 +23,14 @@ def test_rx_fairness_stdlib_gate() -> None:
     assert '"claim_allowed": false' in result.stdout
 
 
+def test_rx_dha_angular_frequency_gate() -> None:
+    result = _run("tools/validate_rx_dha.py")
+    assert result.returncode == 0, result.stdout + "\n" + result.stderr
+    assert '"pass": true' in result.stdout
+    assert '"astropy_semantic_parity": "TOKEN_VAZIO"' in result.stdout
+    assert '"false_alarm_probability": "TOKEN_VAZIO"' in result.stdout
+
+
 def test_rx_inference_baseline_gate() -> None:
     result = _run("tools/validate_rx_inference.py")
     assert result.returncode == 0, result.stdout + "\n" + result.stderr

@@ -31,7 +31,7 @@ No global search/replace is authorized.
 | deterministic optimizer | SciPy optimize | rx/kernel.bounded_coordinate_search | ACTIVE_BASELINE | algorithm differs; contract-specific parity required |
 | posterior sampling baseline | emcee | rx/inference.py bounded random-walk Metropolis | NEW_BASELINE | deterministic gate; emcee parity remains TOKEN_VAZIO |
 | nested Bayesian evidence | dynesty | none | TOKEN_VAZIO | do not substitute a different algorithm silently |
-| astronomy convenience APIs | astropy | domain-specific ports required | TOKEN_VAZIO | only exact used semantics should be ported |
+| DHA spectral scan | astropy LombScargle | rx/dha.py explicit angular GLS baseline | NEW_BASELINE | legacy omega->Astropy cyclic-frequency contract has a 2pi semantic gap; Astropy normalization/FAP parity remains TOKEN_VAZIO |
 | growth/Boltzmann reference | CLASS/CAMB | internal approximate growth exists | EXTERNAL_BENCHMARK_REQUIRED | do not rebrand approximation as Boltzmann parity |
 | Pantheon+ full-covariance evidence | external data release/provenance | project loader/materializer routes | PARTIAL | data/hash/covariance gate, not a library-rewrite problem |
 | low-level deterministic execution | libc/libm/runtime helpers | core/lowlevel_runtime C/ASM/Q16 | ACTIVE_BOUNDED | undefined-symbol/dynamic-dependency + physical target gates |
@@ -58,7 +58,7 @@ Priority after this delta:
 2. migrate one SciPy optimization family at a time where the result contract permits;
 3. use rx/inference.py only as a deterministic baseline; keep emcee parity open;
 4. implement and validate a nested-evidence route before retiring dynesty;
-5. port astropy consumers according to the exact units/coordinate semantics used;
+5. reconcile the legacy DHA omega/cyclic-frequency mismatch, then validate Astropy normalization/FAP parity before switching that route;
 6. decide the packaging boundary only after installed-CLI compatibility is proven;
 7. keep CLASS/CAMB as optional external benchmark gates;
 8. do not select RX-PHYSICS-CANONICAL-V2 until Omega_r, growth semantics, r_d/r_s/CMB semantics and the H(z) surface are explicitly resolved.
