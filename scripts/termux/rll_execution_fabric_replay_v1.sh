@@ -95,7 +95,7 @@ cp "$PLAN" "$OUT_DIR/execution_plan_source.yml"
   cp -R "$CANONICAL_DIR"/. "$RUN2"/
 } > "$OUT_DIR/RUN.log" 2>&1
 
-FILES="execution_plan.json region_classification.json selected_formulas.json rejected_formulas.json covariance_contract.json metrics.json negative_results.json manifest.json"
+FILES="execution_plan.json region_classification.json selected_formulas.json rejected_formulas.json covariance_contract.json scientific_gate_graph.json metrics.json negative_results.json manifest.json"
 : > "$OUT_DIR/RUN1_DETERMINISTIC.sha256"
 : > "$OUT_DIR/RUN2_DETERMINISTIC.sha256"
 for name in $FILES; do
