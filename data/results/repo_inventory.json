@@ -7047,6 +7047,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "data/governance/RLL_WG250_GEOMETRY_INTAKE_V1.json",
+    "bytes": 4509,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 169,
+    "sha256": "0fa98d98718b3d122deebe3e236486199014e6fef95248323d97e1ebd98d4c8e",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json",
     "bytes": 3504,
     "ext": ".json",
@@ -13600,11 +13609,11 @@
   },
   {
     "path": "docs/governance/RLL_LAB_GAPFILL_RECONCILIATION_20260922.md",
-    "bytes": 1075,
+    "bytes": 2038,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 30,
-    "sha256": "4c2c2db00136e405a2dbdf3bd5dfa7884aef3c36be4677b150e98f479f0948ef",
+    "linhas": 43,
+    "sha256": "7c00129e4b231e38d79307d33ab6bd7220c732a0bdbb775d8f7b427d79846f36",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -13771,11 +13780,11 @@
   },
   {
     "path": "docs/invariants/README.md",
-    "bytes": 2145,
+    "bytes": 2894,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 50,
-    "sha256": "a4d4c5de6cada647885a3f422c83801bd98e3089cb6028bb0b74d49cb5dc9346",
+    "linhas": 67,
+    "sha256": "c39bed438c7bbea19bb3d370fdb0c240681987f79c614071b897fc70a2eba3d6",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -13840,6 +13849,15 @@
     "linhas": 0,
     "sha256": "1a4a502956968581a56e492665d756a5f4839bcd33cd67b63a0429205ce2148d",
     "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "docs/invariants/wg250_session_crosswalk_v1.md",
+    "bytes": 2450,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 52,
+    "sha256": "26723c619631a5a4f6bba7f8e665121a4e85f33defc678c7c4e51ed4db8b6382",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "docs/knowledge/HYPERFORMAS_COHESION_BOUNDARY_V1.md",
@@ -18384,6 +18402,15 @@
     "tipo": "documentation_md",
     "linhas": 55,
     "sha256": "fe416971010f8121fa248bcc8cdef6c5940413ea9fcf2c4581cf88c36c38a4af",
+    "flags": ""
+  },
+  {
+    "path": "receipts/2026-09-22_RLL_WG250_GEOMETRY_INTAKE_V1.md",
+    "bytes": 1239,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 34,
+    "sha256": "2e3831aa70801f463981c5b38f0ab28983ba49b225af649e8a53f9ea07dfd9e1",
     "flags": ""
   },
   {
@@ -27024,6 +27051,15 @@
     "tipo": "source_code",
     "linhas": 119,
     "sha256": "d9413f95e395459365a131bd6cc773989fb3967c3bc388571af9458fd7c7a9a2",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_wg250_geometry_intake.py",
+    "bytes": 1697,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 55,
+    "sha256": "89ce7f811d4dbdaebba98c25dd4ddeac2c8a88a67f50329c1dd5fa96df1bcdde",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
