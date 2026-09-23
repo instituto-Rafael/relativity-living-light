@@ -7,6 +7,7 @@ cd "$ROOT"
 echo "=== Rx development chain ==="
 echo "training=False ai_runtime=False"
 
+python3 tools/rx_no_ai_gate.py
 python3 tools/rx_selftest.py
 python3 tools/rx_sound_horizon_selftest.py
 python3 -m validacao_real.run_rx_pipeline
