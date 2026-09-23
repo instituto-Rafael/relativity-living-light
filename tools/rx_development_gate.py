@@ -22,6 +22,7 @@ paths = {
     "multiprobe": ROOT / "validacao_real" / "results_rx" / "multiprobe_rx.json",
     "parity": ROOT / "results" / "rx_semantic_parity.json",
     "dependency_audit": ROOT / "results" / "rx_dependency_audit.json",
+    "structure_d_rx": ROOT / "results" / "structure_d" / "joint_real_likelihood_rx.json",
 }
 
 missing = [name for name, path in paths.items() if not path.exists()]
@@ -92,6 +93,15 @@ checks["radiation_divergence_explicit"] = parity_gates.get("radiation_density_se
 audit = data["dependency_audit"]
 checks["dependency_audit_materialized"] = isinstance(audit.get("files"), list)
 
+structure_d_rx = data["structure_d_rx"]
+successor = structure_d_rx.get("structure_d_successor", {})
+checks["structure_d_rx_engine"] = successor.get("engine") == "Rx"
+checks["structure_d_rx_zero_third_party"] = successor.get("third_party_python_dependencies") == []
+checks["structure_d_rx_no_training"] = successor.get("training") is False
+checks["structure_d_rx_no_ai_runtime"] = successor.get("ai_runtime") is False
+checks["structure_d_rx_legacy_preserved"] = successor.get("legacy_external_pipeline_mutated") is False
+checks["structure_d_rx_claim_closed"] = structure_d_rx.get("claim_allowed") is False
+
 failed = [name for name, passed in checks.items() if not passed]
 state = "PASS_WITH_OPEN_CONTRACT_DIVERGENCES" if not failed else "FAIL"
 
@@ -116,7 +126,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, Rx stdlib runtime, sound-horizon vectors, freestanding65 parity, simple validation, current multiprobe surface, "
+        "No-AI runtime gate, Rx stdlib runtime, sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger and dependency audit are connected in one executable chain."
     ),
     "F_gap": (
