@@ -35,6 +35,7 @@ from scipy.linalg import LinAlgError, cho_factor, cho_solve
 from scipy.optimize import brentq, minimize
 
 ROOT = Path(__file__).resolve().parents[1]
+STRICT_JSON_PATH = ROOT / "tools/strict_json_receipt.py"
 CONTRACT_PATH = ROOT / "data/contracts/rll_g4_background_tournament.v1.json"
 G3_PATH = ROOT / "tools/run_g3_dataset_compatibility.py"
 HZ_PATH = ROOT / "data/real/Hz_data_real.csv"
@@ -699,6 +700,18 @@ def build_report(*, seeds: Sequence[int] | None = None, maxiter: int | None = No
     }
 
 
+
+def strict_json_dumps(value: Any) -> str:
+    """Serialize receipts as strict JSON while preserving failed diagnostics as null.
+
+    Optimizer attempts may legitimately end with NaN/Infinity diagnostics.  Those
+    values are evidence of a failed attempt, not numbers to publish.  Reuse the
+    repository-wide strict receipt policy so a non-finite failed seed cannot make
+    the complete G4 receipt itself unserializable and cannot be converted to zero.
+    """
+    strict_json = _module("rll_g4_strict_json_receipt", STRICT_JSON_PATH)
+    return strict_json.dumps(value, indent=2)
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run six-model G4 background fairness tournament")
     parser.add_argument("--output", type=Path, required=True)
@@ -715,7 +728,7 @@ def main() -> int:
         print(f"[rll] BLOCKED_G4_EXCEPTION: {exc}", file=sys.stderr)
         return 2
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+    args.output.write_text(strict_json_dumps(report) + "\n", encoding="utf-8")
     print(f"{report['state']} N={report['datasets']['N_total']} runtime={report['runtime_seconds']:.3f}s")
     for model in MODEL_ORDER:
         row = next(item for item in report["rows"] if item["model"] == model)
