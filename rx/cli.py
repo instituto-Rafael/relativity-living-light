@@ -164,6 +164,7 @@ def develop():
     _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
     _tool_args("rll_current_rx_source_freeze.py", ["--write"])
     _tool_args("validate_energy_momentum_bridge_dimensions.py", ["--write"])
+    _tool_args("rll_branch_maturity_decision_packet.py", ["--write"])
     _tool_args(
         "rll_token_vazio_reconcile_v4.py",
         ["--output", "artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json"],
