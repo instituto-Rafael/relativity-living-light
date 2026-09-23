@@ -85,10 +85,16 @@ A workstream is never marked CLOSED merely because its target file exists. Closu
 
 Do not silently instantiate RX-PHYSICS-CANONICAL-V2. Human/scientific authority must version the chosen background semantics. Then the perturbation closure can be derived and independently implemented in CLASS and CAMB.
 
+## Additional closure domains now represented
+
+The master registry also includes source/provenance freeze (WS21), Execution Fabric to SCI_GATE bridge (WS22), H/BAO/SN typed bindings (WS23), energy-momentum dimensional reconciliation (WS24), legacy dependency-family migration (WS25), TOKEN_VAZIO current-state reconciliation (WS26), generated documentation inventory reconciliation (WS27), and independent GitHub/security platform assurance (WS28).
+
+WS24 remains scientifically blocked: pressure in Pa is already dimensionally J/m^3, while the current legacy bridge divides pressure by c^2 before summing with J/m^3 terms. The quantity convention must be explicitly chosen before code semantics are changed.
+
 ## R3
 
-F_ok: closure responsibilities, dependencies, outputs and falsifiers are machine-readable.
+F_ok: 29 closure workstreams have machine-readable responsibilities, dependencies, outputs and falsifiers; WS00 is evidence-closed; WS16 has an executable physical capsule; WS01 has a fail-closed decision packet; WS03 has a solver-handoff blocker gate.
 
-F_gap: scientific choices, physical ARM execution, external-likelihood custody and independent replication remain evidence-dependent.
+F_gap: WS01 scientific choices, WS03 physical derivation, physical ARM execution, source freeze, external-likelihood custody, branch/platform enforcement, inventory drift and independent replication remain evidence-dependent.
 
-F_next: close WS00/WS19 in CI, run WS16 physically, then resolve WS01 explicitly before WS03.
+F_next: keep WS00 closed; execute WS16 physically; materialize WS21 source freeze and WS22 SCI_GATE bridge receipts; resolve WS01 explicitly before deriving WS03; reconcile WS19 branch/platform governance separately.
