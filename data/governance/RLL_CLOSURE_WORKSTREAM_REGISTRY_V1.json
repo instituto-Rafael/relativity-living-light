@@ -657,7 +657,8 @@
       "current_state": "WAIT_DEPENDENCY",
       "dependencies": [
         "WS14",
-        "WS15"
+        "WS15",
+        "WS21"
       ],
       "objective": "Map every promoted scientific sentence to evidence while preserving limitations, contradictions and negative results.",
       "tasks": [
@@ -672,6 +673,244 @@
         "artifacts/science/publication/RLL_CLAIM_ROUTER_RECEIPT.json"
       ],
       "falsifier": "Any promoted sentence exceeds its evidence state.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS21",
+      "priority": "P0",
+      "name": "source_provenance_and_dataset_freeze",
+      "discipline": [
+        "data_engineering",
+        "scientific_governance",
+        "reproducibility"
+      ],
+      "current_state": "OPEN_ENGINEERING",
+      "dependencies": [
+        "WS00"
+      ],
+      "objective": "Materialize SCI_GATE:G0 authority, source identity, dataset versions, raw hashes, inclusion/exclusion and rights/TOKEN_VAZIO snapshot.",
+      "tasks": [
+        "build authoritative source registry for every consumed real-data block",
+        "freeze raw checksums and dataset version identifiers",
+        "freeze inclusion/exclusion manifest and overlap policy",
+        "record rights/license state without replacing unknowns",
+        "emit canonical TOKEN_VAZIO snapshot for scientific inputs"
+      ],
+      "closes_tokens": [],
+      "required_outputs": [
+        "artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json"
+      ],
+      "falsifier": "Any consumed source has ambiguous identity, mutable unversioned content, unexplained exclusion, or unresolved provenance silently substituted.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS22",
+      "priority": "P0",
+      "name": "execution_fabric_to_scientific_gate_bridge",
+      "discipline": [
+        "software_architecture",
+        "scientific_governance",
+        "qa_reproducibility"
+      ],
+      "current_state": "OPEN_ENGINEERING",
+      "dependencies": [
+        "WS00",
+        "WS21"
+      ],
+      "objective": "Wire the currently inert scientific G0..G11 contract into the Execution Fabric as a fail-closed evidence graph without confusing it with REGIME:G0..G6.",
+      "tasks": [
+        "parse SCI_GATE prerequisites and required outputs",
+        "map each gate to named internal executors/validators only",
+        "refuse descendants when prerequisite gate is not evidence-closed",
+        "emit per-gate state, missing evidence and next executable gate",
+        "never execute arbitrary commands from contract data"
+      ],
+      "closes_tokens": [],
+      "required_outputs": [
+        "results/rll_scientific_gate_execution_graph.json",
+        "artifacts/science/governance/RLL_SCIENTIFIC_GATE_BRIDGE_RECEIPT.json"
+      ],
+      "falsifier": "A descendant SCI_GATE executes despite an unmet prerequisite, or REGIME and SCI_GATE identifiers are conflated.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS23",
+      "priority": "P0",
+      "name": "background_observable_bindings_h_bao_sn",
+      "discipline": [
+        "cosmology",
+        "data_engineering",
+        "statistics"
+      ],
+      "current_state": "WAIT_DEPENDENCY",
+      "dependencies": [
+        "WS01",
+        "WS02",
+        "WS21"
+      ],
+      "objective": "Fill mechanism/map/units/priors/falsifier/holdout/provenance for H(z), DESI BAO and Pantheon+ bindings without direct geometry-to-cosmology promotion.",
+      "tasks": [
+        "close OGB-HZ-001 typed mechanism and units",
+        "close OGB-BAO-001 sound-horizon and covariance binding",
+        "close OGB-SN-001 distance-modulus/nuisance/full-covariance binding",
+        "define falsifier and holdout policy for each observable"
+      ],
+      "closes_tokens": [
+        "OGB-HZ-001:TOKEN_VAZIO_MECHANISM",
+        "OGB-BAO-001:TOKEN_VAZIO_MECHANISM",
+        "OGB-SN-001:TOKEN_VAZIO_MECHANISM"
+      ],
+      "required_outputs": [
+        "data/inputs/omega_g/observable_effect_binding_registry.v2.yaml"
+      ],
+      "falsifier": "Any binding lacks dimensional consistency, provenance, covariance policy or independently stated falsifier.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS24",
+      "priority": "P1",
+      "name": "energy_momentum_bridge_dimensional_reconciliation",
+      "discipline": [
+        "mathematical_physics",
+        "scientific_computing",
+        "dimensional_analysis"
+      ],
+      "current_state": "BLOCKED_SCIENTIFIC_DECISION",
+      "dependencies": [
+        "WS00"
+      ],
+      "objective": "Resolve the pressure/rho dimensional mismatch in Structure-D energy_momentum_bridge before the quantity is used as a physical bridge.",
+      "tasks": [
+        "declare whether ledger quantities are energy density J/m^3 or mass density kg/m^3",
+        "derive the pressure contribution from the chosen stress-energy convention",
+        "make every summed term dimensionally identical",
+        "add dimensional tests and uncertainty propagation tests",
+        "preserve old behavior as legacy comparison rather than silently changing historical outputs"
+      ],
+      "closes_tokens": [
+        "TOKEN_VAZIO_ENERGY_MOMENTUM_BRIDGE_DIMENSIONAL_AUTHORITY"
+      ],
+      "required_outputs": [
+        "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json",
+        "artifacts/science/energy/RLL_ENERGY_MOMENTUM_DIMENSIONAL_RECEIPT.json"
+      ],
+      "falsifier": "The selected convention cannot make every additive term dimensionally consistent or violates the intended stress-energy identity.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS25",
+      "priority": "P2",
+      "name": "legacy_external_dependency_family_migration",
+      "discipline": [
+        "software_engineering",
+        "scientific_computing",
+        "qa_reproducibility"
+      ],
+      "current_state": "OPEN_ENGINEERING",
+      "dependencies": [
+        "WS00"
+      ],
+      "objective": "Reduce legacy third-party dependency debt family-by-family without mass rewrite or semantic drift.",
+      "tasks": [
+        "refresh dependency audit",
+        "select one bounded dependency family",
+        "port to stdlib/Rx or isolate dependency",
+        "run parity gate against preserved legacy route",
+        "switch/add route only after parity and keep rollback"
+      ],
+      "closes_tokens": [],
+      "required_outputs": [
+        "results/rx_dependency_audit.json",
+        "results/rx_dependency_migration_plan.json"
+      ],
+      "falsifier": "Migration changes scientific semantics, lacks parity receipt, removes rollback, or rewrites unrelated families.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS26",
+      "priority": "P0",
+      "name": "token_vazio_current_state_reconciliation",
+      "discipline": [
+        "governance",
+        "knowledge_engineering",
+        "reproducibility"
+      ],
+      "current_state": "OPEN_ENGINEERING",
+      "dependencies": [
+        "WS00"
+      ],
+      "objective": "Separate canonical open tokens, field-level TOKEN_VAZIO and historical/superseded tokens so stale labels never re-open closed questions.",
+      "tasks": [
+        "enumerate canonical token ledger with successor chains",
+        "classify field-level TOKEN_VAZIO separately from authority tokens",
+        "map historical tokens to current successor or terminal evidence",
+        "require evidence assertions for RESOLVED/REDUCED states",
+        "emit unresolved critical-path token set"
+      ],
+      "closes_tokens": [],
+      "required_outputs": [
+        "artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json"
+      ],
+      "falsifier": "A terminal/superseded token is treated as current, or an unresolved field is silently converted to zero/PASS.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS27",
+      "priority": "P2",
+      "name": "documentation_inventory_reconciliation",
+      "discipline": [
+        "documentation_engineering",
+        "devops",
+        "governance"
+      ],
+      "current_state": "OPEN_ENGINEERING",
+      "dependencies": [
+        "WS00"
+      ],
+      "objective": "Regenerate the deterministic documentation/source inventory in a dedicated change and classify accumulated drift rather than mixing megabyte-scale generated updates into unrelated scientific PRs.",
+      "tasks": [
+        "regenerate docs inventory artifacts",
+        "separate inherited inventory drift from current-delta drift",
+        "review unexpected deletions/renames",
+        "commit generated inventory as one receipt-bound reconciliation"
+      ],
+      "closes_tokens": [],
+      "required_outputs": [
+        "docs/DOCUMENTATION_FULL_INVENTORY.md",
+        "data/results/repo_inventory.json",
+        "data/results/repo_inventory.tsv",
+        "data/results/repo_inventory_summary.json"
+      ],
+      "falsifier": "Generated inventory does not match git-tracked files or silently hides read/custody errors.",
+      "claim_allowed": false
+    },
+    {
+      "id": "WS28",
+      "priority": "P1",
+      "name": "independent_security_and_platform_assurance",
+      "discipline": [
+        "security_engineering",
+        "github_platform_governance",
+        "independent_review"
+      ],
+      "current_state": "BLOCKED_EXTERNAL_AUTHORITY",
+      "dependencies": [
+        "WS19"
+      ],
+      "objective": "Verify/enforce branch protection, rulesets, required checks and independent security review outside repository-local assertions.",
+      "tasks": [
+        "materialize current branch-protection/ruleset state",
+        "define required-check enforcement",
+        "verify write/merge authority boundaries",
+        "perform independent security review and record residuals"
+      ],
+      "closes_tokens": [
+        "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT"
+      ],
+      "required_outputs": [
+        "artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT.json"
+      ],
+      "falsifier": "Repository-local policy claims enforcement that GitHub external settings do not actually impose.",
       "claim_allowed": false
     }
   ]
