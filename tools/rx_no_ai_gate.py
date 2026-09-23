@@ -40,6 +40,7 @@ active_files = sorted((ROOT / "rx").glob("*.py")) + [
     ROOT / "tools" / "rx_semantic_parity.py",
     ROOT / "tools" / "rx_dependency_audit.py",
     ROOT / "tools" / "rx_development_gate.py",
+    ROOT / "tools" / "rx_zero_dependency_gate.py",
 ]
 
 violations = []
