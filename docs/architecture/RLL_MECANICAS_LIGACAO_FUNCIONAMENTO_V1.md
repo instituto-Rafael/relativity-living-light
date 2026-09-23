@@ -290,10 +290,11 @@ Estado:
 ### Rota D — Structure-D científico amplo
 
 ```text
-H(z)
-+ DESI BAO
-+ f sigma8
-+ CMB
+28 H(z)
++ 13 BAO
++ 16 f sigma8
++ 3 CMB
+= 60 observáveis atuais
  -> likelihood
  -> LCDM / wCDM / CPL / RLL
  -> optimizer
@@ -308,29 +309,34 @@ Hoje essa rota histórica usa:
 
 A sucessora de fechamento plano garante `E(0)=1` por construção.
 
+Foi corrigido um erro de contagem: o código somava apenas `+2` para um vetor CMB de três parâmetros. O `N` atual é derivado como `28+13+16+3=60`.
+
 Estado:
 `LEGACY_ACTIVE / RX_MIGRATION_PENDING`.
 
 Ela não deve ser confundida com a rota Rx já dependency-free.
 
-## 7. Por que aparecem 45, 64 e 65 observações
+## 7. Por que aparecem 45, 60, 64 histórico e 65 observações
 
-Não são contradições; são superfícies diferentes.
+Não são automaticamente a mesma superfície.
 
 ```text
-Rx:
+Rx inicial:
 32 H(z) + 13 BAO = 45
 
-Structure-D:
-32 H(z) + 13 BAO + 16 f sigma8 + 3 CMB = 64
+Rx multiprobe / Structure-D atual:
+28 H(z) + 13 BAO + 16 f sigma8 + 3 CMB = 60
+
+Structure-D histórico documentado:
+N=64 em artefatos anteriores — preservar como histórico; não usar como contagem do snapshot atual
 
 Freestanding joint:
 33 H(z) + 13 BAO + 16 f sigma8 + 3 CMB = 65
 ```
 
-O conjunto freestanding usa o arquivo canônico de 33 linhas H(z); a rota Rx/Structure-D usa a partição independente de 32 cronômetros.
+O conjunto freestanding usa o arquivo canônico de 33 linhas H(z). A rota Structure-D atual usa o arquivo independente com 28 linhas. A rota Rx inicial usa o payload de 32 cronômetros da validação simples.
 
-A contagem sempre deve viajar junto com a identificação do dataset.
+A contagem sempre deve viajar junto com a identificação e o hash do dataset.
 
 ## 8. Mecânica de custódia
 
@@ -461,12 +467,13 @@ elo_{ausente}=TOKEN_VAZIO.
 
 A rota natural é fazer o Rx absorver, sem regressão semântica:
 
-1. `f sigma8` da rota conjunta;
-2. CMB comprimido + matriz 3x3;
-3. wCDM e CPL como adversários;
-4. paridade numérica Rx <-> Structure-D;
-5. paridade Rx <-> freestanding C em conjuntos comuns;
-6. depois, somente depois, substituir a dependência externa do Structure-D.
+1. executar e estabilizar o multiprobe Rx de 60 observações;
+2. medir paridade semântica por componente;
+3. reconciliar o contrato de crescimento (proxy Structure-D vs D(z) freestanding);
+4. reconciliar o contrato acústico CMB (r_d vs r_s(z_star));
+5. promover paridade numérica Rx <-> Structure-D na mesma semântica;
+6. promover paridade Rx <-> freestanding em uma semântica explicitamente comum;
+7. somente depois substituir a dependência externa do Structure-D.
 
 O objetivo não é reescrever matemática acadêmica; é possuir a implementação, a cadeia de custódia e a execução do pipeline.
 
@@ -478,4 +485,4 @@ O objetivo não é reescrever matemática acadêmica; é possuir a implementaç�
 
 `F_gap`: Rx ainda não cobre todo o multiprobe; perturbações RLL, Planck completo, posterior robusto e reprodução independente continuam abertos.
 
-`F_next`: promover Rx de 45 para 64 observações com f sigma8 + CMB mantendo paridade contra Structure-D e sem pacote externo.
+`F_next`: executar o Rx multiprobe de 60 observações e fechar os contratos de paridade growth/CMB antes de substituir o Structure-D legado.
