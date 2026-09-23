@@ -93,6 +93,8 @@ jobs:
       run: python3 tools/rx_semantic_parity.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
+    - name: Build typed dependency migration plan
+      run: python3 tools/rx_dependency_migration_plan.py
     - name: Rx aggregate development gate
       run: python3 tools/rx_development_gate.py
     - name: Build artifact checksums
@@ -117,6 +119,8 @@ jobs:
           results/rx_zero_dependency_gate.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
+          results/rx_dependency_migration_plan.json
+          results/rx_dependency_migration_plan.md
           results/security_surface_audit.json
           results/security_surface_audit.md
           results/development_governance_validation.json
@@ -169,7 +173,7 @@ jobs:
         esac
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add validacao_real/fetched_rx validacao_real/results_rx results/structure_d/joint_real_likelihood_rx.json results/structure_d/joint_real_likelihood_rx.csv results/structure_d/joint_real_likelihood_rx_manifest.json results/rx_no_ai_runtime_gate.json results/rx_zero_dependency_gate.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_development_gate.json results/rx_development_gate.md
+        git add validacao_real/fetched_rx validacao_real/results_rx results/structure_d/joint_real_likelihood_rx.json results/structure_d/joint_real_likelihood_rx.csv results/structure_d/joint_real_likelihood_rx_manifest.json results/rx_no_ai_runtime_gate.json results/rx_zero_dependency_gate.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_dependency_migration_plan.json results/rx_dependency_migration_plan.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_development_gate.json results/rx_development_gate.md
         if git diff --cached --quiet; then
           echo "nothing to commit"
           exit 0
