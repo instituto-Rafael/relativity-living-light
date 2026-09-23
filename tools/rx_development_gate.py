@@ -35,6 +35,7 @@ paths = {
     "watch_config_stdlib": ROOT / "results" / "watch_config_stdlib_migration.json",
     "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
     "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
+    "ci_scientific_skills_stdlib": ROOT / "results" / "ci_scientific_skills_stdlib_migration.json",
     "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
 }
 
@@ -199,6 +200,9 @@ checks["calc_data_numpy_pandas_stdlib_migrated"] = (
 )
 checks["validation_deterministic_numpy_pandas_stdlib_migrated"] = (
     closed_families.get("validation_deterministic_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["ci_scientific_skills_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("ci_scientific_skills_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
 )
 checks["docs_inventory_config_yaml_migrated"] = (
     closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
