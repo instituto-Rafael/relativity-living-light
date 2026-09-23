@@ -240,6 +240,45 @@
         "development gate",
         "claim_allowed=false"
       ]
+    },
+    {
+      "route_id": "STRUCTURE_D_RX_SUCCESSOR",
+      "runtime": "Rx Python stdlib-only Structure-D successor",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Run the zero-third-party Structure-D successor over declared public non-personal cosmology inputs without mutating the legacy external-dependency pipeline.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "hosts": [],
+        "writes": false
+      },
+      "filesystem": {
+        "read": "declared committed cosmology inputs",
+        "write": [
+          "results/structure_d/"
+        ]
+      },
+      "retention": {
+        "repository_commit": "reviewed repository change only"
+      },
+      "audit": [
+        "input hashes",
+        "versioned output stem",
+        "claim_allowed=false"
+      ]
     }
   ],
   "prohibited_uses": [
