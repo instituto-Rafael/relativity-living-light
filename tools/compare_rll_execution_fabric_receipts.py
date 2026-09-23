@@ -33,6 +33,8 @@ def compare(actions_dir, termux_dir):
     tm = load(termux_run / "metrics.json")
     ac = load(actions_dir / "covariance_contract.json")
     tc = load(termux_run / "covariance_contract.json")
+    ag = load(actions_dir / "scientific_gate_graph.json")
+    tg = load(termux_run / "scientific_gate_graph.json")
 
     checks = {
         "actions_pass": ar.get("status") == "PASS",
@@ -47,6 +49,7 @@ def compare(actions_dir, termux_dir):
         "selected_formula_count_equal": am.get("selected_formula_count") == tm.get("selected_formula_count"),
         "rejected_formula_count_equal": am.get("rejected_formula_count") == tm.get("rejected_formula_count"),
         "covariance_contract_equal": ac == tc,
+        "scientific_gate_graph_equal": ag == tg,
         "claim_boundaries_closed": ar.get("claim_allowed") is False and tr.get("claim_allowed") is False,
     }
     actions_routes = {row.get("route_id"): row for row in ar.get("route_results", [])}
