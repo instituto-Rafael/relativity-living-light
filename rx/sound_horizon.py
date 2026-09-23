@@ -116,35 +116,77 @@ def sound_horizons(
     omega_gamma_h2=OMEGA_GAMMA_H2,
     rs_star_calib_mpc=RS_STAR_CALIB_FASE18E_MPC,
 ):
+    """Reproduce the FASE18E logarithmic-grid sound-horizon discretization.
+
+    The steps argument is treated as the historical number of log-spaced grid
+    points, matching numpy.logspace(..., _Z_RS_N), not as interval count.
+    """
     p = unpack(model, vector)
     h = p["H0"] / 100.0
     om_h2 = p["Om"] * h * h
     ob_h2 = p["Ob_h2"]
     z_drag = z_drag_eh98(om_h2, ob_h2)
+    z_star = float(z_star)
+    z_high = float(z_high)
+    n_points = max(32, int(steps))
+    z_low = min(z_drag, z_star)
 
-    rd_body = _log_trapezoid_integral(
-        model, z_drag, z_high, vector, omega_r, omega_gamma_h2, steps
-    )
-    rs_body = _log_trapezoid_integral(
-        model, z_star, z_high, vector, omega_r, omega_gamma_h2, steps
-    )
+    x0 = math.log10(max(z_low, 1.0))
+    x1 = math.log10(z_high)
+    grid = [
+        10.0 ** (x0 + (x1 - x0) * i / (n_points - 1))
+        for i in range(n_points)
+    ]
+    values = [
+        _cs_over_h(model, z, vector, omega_r, omega_gamma_h2)
+        for z in grid
+    ]
+
+    cumulative = [0.0]
+    total = 0.0
+    for i in range(1, n_points):
+        total += 0.5 * (values[i - 1] + values[i]) * (grid[i] - grid[i - 1])
+        cumulative.append(total)
 
     tail = (
         C_KMS
         / math.sqrt(3.0)
         / (p["H0"] * math.sqrt(max(float(omega_r), 1.0e-30)))
-        / (1.0 + float(z_high))
+        / (1.0 + z_high)
     )
+    rs_total = total + tail
+
+    i_drag = 0
+    while i_drag < n_points and grid[i_drag] < z_drag:
+        i_drag += 1
+    if i_drag >= n_points:
+        i_drag = n_points - 1
+
+    i_star = 0
+    while i_star < n_points and grid[i_star] < z_star:
+        i_star += 1
+    if i_star >= n_points:
+        i_star = n_points - 1
+
+    if z_drag <= z_star:
+        rd = rs_total
+        rs_drag_to_star = cumulative[i_star]
+        rs_star_raw = rd - rs_drag_to_star
+    else:
+        rs_star_raw = rs_total
+        rs_star_to_drag = cumulative[i_drag]
+        rd = rs_total - rs_star_to_drag
 
     return {
         "z_drag": z_drag,
-        "rd_mpc": rd_body + tail,
-        "rs_star_raw_mpc": rs_body + tail,
-        "rs_star_mpc": rs_body + tail + float(rs_star_calib_mpc),
+        "rd_mpc": rd,
+        "rs_star_raw_mpc": rs_star_raw,
+        "rs_star_mpc": rs_star_raw + float(rs_star_calib_mpc),
         "omega_r": float(omega_r),
         "omega_gamma_h2": float(omega_gamma_h2),
-        "z_star": float(z_star),
-        "z_high": float(z_high),
-        "steps": int(steps),
+        "z_star": z_star,
+        "z_high": z_high,
+        "steps": n_points,
+        "grid_semantics": "FASE18E_logspace_points_searchsorted",
         "rs_star_calib_mpc": float(rs_star_calib_mpc),
     }
