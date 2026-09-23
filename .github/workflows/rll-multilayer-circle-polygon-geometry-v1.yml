@@ -1,0 +1,52 @@
+name: RLL Multilayer Circle Polygon Geometry V1
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml"
+      - "scripts/validate_multilayer_circle_polygon_geometry_v1.py"
+      - "tests/test_multilayer_circle_polygon_geometry_v1.py"
+      - "docs/mathematics/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.md"
+      - "PapersPub/12_multilayer_circle_polygon_geometry/**"
+      - ".github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml"
+      - "scripts/validate_multilayer_circle_polygon_geometry_v1.py"
+      - "tests/test_multilayer_circle_polygon_geometry_v1.py"
+      - "docs/mathematics/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.md"
+      - "PapersPub/12_multilayer_circle_polygon_geometry/**"
+      - ".github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependency
+        run: python -m pip install "PyYAML>=6.0"
+      - name: Run unit test
+        run: python -m unittest tests/test_multilayer_circle_polygon_geometry_v1.py -v
+      - name: Generate CI result
+        run: |
+          mkdir -p ci-artifacts
+          python scripts/validate_multilayer_circle_polygon_geometry_v1.py \
+            --spec data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml \
+            --output ci-artifacts/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.json
+          sha256sum \
+            data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml \
+            scripts/validate_multilayer_circle_polygon_geometry_v1.py \
+            ci-artifacts/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.json \
+            > ci-artifacts/CHECKSUMS.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rll-multilayer-circle-polygon-geometry-v1
+          path: ci-artifacts/

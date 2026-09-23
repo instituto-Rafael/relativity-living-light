@@ -1,0 +1,28 @@
+{
+  "id":"RLL-MULTILAYER-CIRCLE-POLYGON-GEOMETRY-V1",
+  "date":"2026-09-22",
+  "execution_state":"LOCAL_EXECUTION_PASS",
+  "provider_ci":"NOT_RUN",
+  "summary":{"failed":0,"passed":120,"scenarios":20,"tests_total":120},
+  "artifacts":{
+    "spec":"data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml",
+    "validator":"scripts/validate_multilayer_circle_polygon_geometry_v1.py",
+    "unit_test":"tests/test_multilayer_circle_polygon_geometry_v1.py",
+    "result":"results/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.json",
+    "report":"artifacts/rll-multilayer-circle-polygon-geometry/REPORT.md",
+    "manifest":"artifacts/rll-multilayer-circle-polygon-geometry/MANIFEST.json",
+    "checksums":"artifacts/rll-multilayer-circle-polygon-geometry/CHECKSUMS.sha256",
+    "workflow":".github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml"
+  },
+  "hashes":{
+    "spec_sha256":"e356d4e983fc474120362ab7e4f5979cc3251b98097fe0db514bdcb107a82aaa",
+    "validator_sha256":"9dd4259f7ee9eada79e90e721ff25d80171250219c09e15d3003c2f9658caa5b",
+    "local_result_sha256":"9d5c7ac4a3e39b7dadd2a2e4e365a1d0de70e2303b0249491ed1b087c3f2c0f1"
+  },
+  "boundaries":{
+    "mathematics":"LOCAL_REPRODUCED",
+    "classical_optics":"FORMULA_LEVEL_TEST",
+    "physical_rll_binding":"TOKEN_VAZIO_EVIDENCE",
+    "cosmological_binding":"TOKEN_VAZIO_EVIDENCE"
+  }
+}

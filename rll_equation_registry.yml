@@ -203,25 +203,97 @@ equations:
     claim_boundary: "Explicit A1.1 rest-frame candidate assumption; not derived from the RLL background, not a validated RLL property, and not sufficient to unlock CLASS/CAMB."
 
 
-  - id: rll_a1_newtonian_delta_candidate
-    equation: "delta_s' = -U_s + 3(1+w_s)Phi' - 3H(c_s^2-w_s)delta_s - 9H^2(c_s^2-c_a^2)U_s/k^2"
-    domain: ["cosmology", "perturbations", "RLL"]
-    status: "research_candidate_equation"
-    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
-    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
-    methodology_phase: "gauge_regularization_candidate"
+  - id: rll_a1_enthalpy_identity
+    equation: "rho_s + p_s = -(1/3) d rho_s / d ln(a)"
+    domain: ["cosmology", "background", "perturbations", "RLL"]
+    status: "derived_continuity_identity"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_GAUGE_REGULARIZATION_CONTRACT_20260922_V1.json"
+    implementation: "tools/rll_perturbation_gauge_regularization_preflight_v1.py"
+    methodology_phase: "regular_variable_preflight"
     real_data_validators: []
-    claim_boundary: "Conformal-Newtonian reference equation for the A1.2 candidate after U=(1+w)theta substitution; not solver-validated or promoted as the unique RLL perturbation law."
+    claim_boundary: "Exact for the separately conserved A1.1 background definition; does not define missing perturbation dynamics or stability."
 
-  - id: rll_a1_regularized_momentum_candidate
-    equation: "U_s' = H[q_w-(1-3c_s^2)]U_s + c_s^2 k^2 delta_s + (1+w_s)k^2 Psi ; q_w=d ln(1+w_s)/d ln a"
+  - id: rll_a1_regular_momentum_definition
+    equation: "q_s = (rho_s + p_s) theta_s"
     domain: ["cosmology", "perturbations", "RLL"]
-    status: "research_candidate_equation"
-    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
-    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
-    methodology_phase: "gauge_regularization_candidate"
+    status: "candidate_variable_definition"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_GAUGE_REGULARIZATION_CONTRACT_20260922_V1.json"
+    implementation: "tools/rll_perturbation_gauge_regularization_preflight_v1.py"
+    methodology_phase: "regular_variable_preflight"
     real_data_validators: []
-    claim_boundary: "Algebraic momentum-variable rewrite for A1.2. PASS of the regularity gate does not establish physical stability, initial conditions, CLASS/CAMB parity, or observational validity."
+    claim_boundary: "Definition of a candidate primary momentum-density variable; theta_s recovery is allowed only where enthalpy is nonzero and conditioned."
+
+  - id: torus_projection_annulus_area
+    equation: "A_crown = pi[(R+r)^2-(R-r)^2] = 4 pi R r"
+    domain: ["geometry", "toroidal_geometry", "projection", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Exact for the standard ring torus under orthographic xy projection; projected annulus != torus surface and no physical vortex claim is implied."
+
+  - id: torus_surface_projection_ratio
+    equation: "A_torus / A_crown = pi"
+    domain: ["geometry", "toroidal_geometry", "projection", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Metric relation for the standard torus and its equatorial projected annulus; same ratio does not identify the objects."
+
+  - id: polygon_annulus_toroidal_shell_fraction
+    equation: "V_shell,n / V_torus = sin^2(pi/n)"
+    domain: ["geometry", "toroidal_geometry", "pappus", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Successor of the existing polygon annulus area fraction; requires the declared external revolution axis and centered annular cross-section."
+
+  - id: hexagon_torus_volume_ratio
+    equation: "V_6 / V_torus = 3 sqrt(3) / (2 pi)"
+    domain: ["geometry", "equilateral_triangle", "hexagon", "toroidal_geometry", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Six equilateral triangles define an inscribed hexagonal cross-section; this is a geometric approximation of a circular torus, not a physical mechanism."
+
+  - id: parallel_torus_tangent_separation
+    equation: "d_parallel = 2 r"
+    domain: ["geometry", "toroidal_geometry", "tangency", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Perpendicular separation of the two parallel tangents with a common slope to the circular torus meridian."
+
+  - id: six_sector_toroidal_opposite_pair_closure
+    equation: "V(v0,pi/3)+V(v0+pi,pi/3) = V_shell,total / 3"
+    domain: ["geometry", "annulus", "toroidal_geometry", "symmetry", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Six equal planar sectors generally produce unequal toroidal volumes; only opposite-pair sums close equally in the declared centered model."
+
+  - id: angular_grid_5678_lcm
+    equation: "lcm(5,6,7,8) = 840 ; delta_theta = 2 pi / 840"
+    domain: ["finite_combinatorics", "angular_geometry", "RLL"]
+    status: "derived_exact"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Common angular refinement order; distinct from the semantics of any other period-840 carrier."
+
+  - id: modular_carrier_24_10_42_period
+    equation: "lcm(24,10,42) = 840"
+    domain: ["finite_combinatorics", "modular_phase", "RLL"]
+    status: "derived_exact"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Same numeric cyclic order as the 5/6/7/8 angular refinement does not establish semantic identity."
 
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:

@@ -1,0 +1,200 @@
+schema: rll.omega_math_explorer.v1
+status: FORMAL_SHADOW_EXPERIMENT
+claim_allowed: false
+publication_effect: NONE
+
+authority:
+  repository: instituto-Rafael/relativity-living-light
+  domain: formal_mathematics_geometry
+  owner: RAFAEL_MELO_REIS
+  claim_boundary: >-
+    A PASS verifies only the declared mathematical identities and deterministic
+    exploration rules. It does not prove a new theorem, a physical mechanism,
+    novelty, completeness of mathematics, or independent replication.
+
+epistemic_states:
+  - PROVADO
+  - DERIVADO
+  - MODELO
+  - HIPOTESE
+  - REFUTADO
+  - CANDIDATE
+  - ANOMALY
+  - CONTRADICTION
+  - TOKEN_VAZIO
+
+constants:
+  pi: {role: circumference_over_diameter, expression: pi}
+  sqrt2: {role: square_diagonal_over_side, expression: sqrt(2)}
+  sqrt3: {role: equilateral_and_hexagonal_kernel, expression: sqrt(3)}
+  sqrt3_over_2: {role: equilateral_height_over_side, expression: sqrt(3)/2}
+  sqrt5: {role: pentagonal_quadratic_extension, expression: sqrt(5)}
+  phi: {role: pentagon_diagonal_over_side, expression: (1+sqrt(5))/2}
+
+formula_registry:
+  path: rll_equation_registry.yml
+  policy: index_all_execute_only_typed_bindings
+  unlisted_formula_policy: INDEXED_NOT_EXECUTABLE_WITH_NEXT_GATE
+  gate_bindings:
+    torus_projection_annulus_area: G-TORUS-PROJECTION
+    torus_surface_projection_ratio: G-TORUS-PROJECTION
+    angular_grid_5678_lcm: G-LCM-5678
+
+semantic_axes:
+  - object_vs_representation
+  - exact_vs_approximate
+  - metric_vs_orientation
+  - real_vs_complex_branch
+  - finite_vs_limit
+  - geometric_identity_vs_physical_mechanism
+  - same_numeric_order_vs_same_semantics
+
+operations:
+  reversible_with_metadata:
+    - similarity
+    - invertible_affine_map
+    - signed_rotation
+    - quotient_remainder_pair
+  lossy_views_require_rollback_metadata:
+    - absolute_value
+    - square_without_sign
+    - modulo_without_quotient
+    - projection_without_depth
+    - area_without_shape
+  geometric:
+    - regular_polygon
+    - triangulate
+    - median
+    - chord
+    - tangent
+    - half_step_rotate
+    - radial_nest
+    - reflect
+    - embed
+    - roots_of_unity
+
+gates:
+  - {id: G-PI-001, kind: pi_circumference, epistemic: PROVADO, tolerance: 1.0e-12}
+  - {id: G-SQRT2-001, kind: square_diagonal, epistemic: PROVADO, tolerance: 1.0e-12}
+  - {id: G-SQRT3-001, kind: equilateral_height, epistemic: PROVADO, tolerance: 1.0e-12}
+  - {id: G-SCALE-344, kind: scale_rewrite_344, epistemic: DERIVADO, tolerance: 1.0e-12}
+  - {id: G-PYTH-001, kind: pythagoras, epistemic: PROVADO, sides: [3,4,5]}
+  - id: G-POLY-TRIG-001
+    kind: polygon_trig_identity
+    epistemic: PROVADO
+    n: [3,4,5,6,7,8,10,12]
+    tolerance: 1.0e-12
+  - {id: G-HALFSTEP-001, kind: half_step_doubling, epistemic: DERIVADO, n: [3,4,5,6,7,8]}
+  - {id: G-LCM-5678, kind: lcm, epistemic: DERIVADO, values: [5,6,7,8], expected: 840}
+  - {id: G-RAYS-5678, kind: root_union_count, epistemic: DERIVADO, values: [5,6,7,8], expected: 22}
+  - {id: G-LINES-5678, kind: line_orientation_count, epistemic: DERIVADO, values: [5,6,7,8], expected: 16}
+  - {id: G-TRIANGULATION, kind: triangulation_count, epistemic: PROVADO, n: [4,5,6,7,8,12]}
+  - id: G-BHASKARA-CIRCLE
+    kind: bhaskara_circle_cut
+    epistemic: DERIVADO
+    radius: 5
+    distances: [3,5,7]
+    expected_classes: [SECANT,TANGENT,NO_REAL_CUT]
+  - {id: G-TORUS-PROJECTION, kind: torus_projection_ratio, epistemic: DERIVADO, R: 5, r: 1, tolerance: 1.0e-12}
+  - {id: G-ANNULUS-FRACTION, kind: polygon_annulus_fraction, epistemic: DERIVADO, n: [3,4,6,8], tolerance: 1.0e-12}
+  - {id: G-AFFINE-AREA, kind: affine_area, epistemic: PROVADO, tolerance: 1.0e-12}
+  - {id: G-ORIENTED-AREA, kind: oriented_area, epistemic: PROVADO}
+  - id: G-QUOTIENT-REMAINDER
+    kind: quotient_remainder
+    epistemic: PROVADO
+    examples: [[7,7],[70,100],[700,100],[142857,7]]
+  - id: G-RECURSIVE-NEST
+    kind: recursive_nesting
+    epistemic: MODELO
+    sequence: [8,6,5,8,5]
+    start_radius: 1.0
+  - {id: G-TOPOLOGY-BOUNDARY, kind: sphere_torus_euler, epistemic: PROVADO}
+
+hypotheses:
+  - id: H-AREA-UNIVERSAL
+    statement: triangle_area_alone_determines_complete_shape
+    test: same_area_noncongruent_triangles
+    falsifier: existence_of_same_area_noncongruent_pair
+    next_gate: preserve_vertices_orientation_and_embedding_rule
+  - id: H-840-SEMANTIC
+    statement: angular_840_and_modular_840_have_identical_semantics
+    test: requires_explicit_mapping
+    next_gate: declare_state_to_angle_mapping_and_test_bijection
+  - id: H-PHYSICAL-INFINITY
+    statement: recursive_mathematical_nesting_implies_physically_realized_infinity
+    test: blocked_by_domain_boundary
+    next_gate: physical_model_observables_units_and_data
+  - id: H-FRACTAL-DIMENSION
+    statement: recursive_embedding_has_nontrivial_fractal_dimension
+    test: requires_declared_ifs_maps
+    next_gate: declare_contractions_and_test_open_set_conditions
+
+relations:
+  - {id: R-TRIANGLE-MEDIAN, from: equilateral_triangle, to: right_triangle_30_60_90, type: decomposition}
+  - {id: R-SQUARE-DIAGONAL, from: square, to: right_triangle_45_45_90, type: decomposition}
+  - {id: R-SQUARE-OCTAGON, from: square, to: octagonal_directions, type: half_step_rotation}
+  - {id: R-SCALE-344, from: triangle_inradius_contraction, to: two_square_inradius_contractions, type: exact_scale_rewrite}
+  - {id: R-CIRCLE-QUADRATIC, from: line_circle_intersection, to: quadratic_discriminant, type: exact_bridge}
+  - {id: R-POLYGON-TRIANGULATION, from: simple_polygon, to: triangle_family, type: exact_decomposition}
+  - {id: R-POLYGON-CIRCLE, from: regular_polygon, to: incircle_circumcircle, type: radial_relation}
+  - {id: R-REPRESENTATION-LEDGER, from: integer, to: quotient_remainder_base, type: reversible_representation}
+
+exploration:
+  polygons: [3,4,5,6,7,8,10,12]
+  angular_groups:
+    - [4,5,6,8]
+    - [5,6,7,8]
+  max_depth: 3
+  max_sequences: 1000
+  numeric_round_digits: 12
+  candidate_tolerance: 1.0e-10
+  discovery_rules:
+    - pairwise_gcd_lcm
+    - distance_spectrum
+    - constant_matches
+    - nested_scale_collisions
+    - cross_family_distance_matches
+    - half_step_doubling
+
+anomaly_policy:
+  gate_failure: ANOMALY
+  nonfinite_number: ANOMALY
+  unexpected_nontrivial_scale_collision: CANDIDATE
+  same_numeric_value_different_semantics: CONTRADICTION_IF_COLLAPSED
+  token_vazio_without_next_gate: ANOMALY
+
+paradoxes:
+  - {id: P-SAME-AREA-SAME-SHAPE, proposition: same_area_implies_same_shape, resolution: false_by_counterexample}
+  - {id: P-840, proposition: same_cyclic_order_implies_same_semantics, resolution: false_without_mapping}
+  - {id: P-ZERO-EMPTY, proposition: zero_digit_equals_unknown_slot, resolution: false_zero_is_observed_coefficient}
+
+ideal_state:
+  name: OMEGA_OPERATIONAL_TARGET
+  objective: minimize_J
+  terms:
+    failed_gate: 10
+    unresolved_contradiction: 5
+    untracked_lossy_operation: 5
+    token_vazio_without_next_gate: 3
+    anomaly: 1
+  target: 0
+  interpretation: >-
+    J=0 is an operational target for this bounded experiment, not a claim of
+    mathematical completeness or universal truth.
+
+artifacts:
+  output_dir: artifacts/omega-math-explorer
+  emit:
+    - resolved_manifest.json
+    - constants.json
+    - gate_results.json
+    - hypothesis_results.json
+    - exploration.json
+    - candidates.csv
+    - anomalies.json
+    - semantic_graph.json
+    - formula_coverage.json
+    - formula_coverage.csv
+    - report.md
+    - receipt.json
+    - CHECKSUMS.sha256

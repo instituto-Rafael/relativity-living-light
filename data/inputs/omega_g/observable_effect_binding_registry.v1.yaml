@@ -1,0 +1,118 @@
+schema: rll.omega_g_observable_binding_registry.v1
+version: 1
+date: "2026-09-22"
+claim_allowed: false
+policy:
+  default_state: TOKEN_VAZIO
+  activation_requires_all_fields: true
+  direct_geometry_to_cosmology_binding_forbidden: true
+  one_binding_at_a_time_first_pass: true
+
+bindings:
+  - binding_id: OGB-HZ-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: H_z_cosmic_chronometers
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: km_s_Mpc
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: preserve_existing_CC_sigma
+    aggregation_level: observable_point
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: TOKEN_VAZIO_MECHANISM
+
+  - binding_id: OGB-BAO-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: DESI_DR2_BAO
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: dimensionless_distance_ratio
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: preserve_full_13x13_DESI_covariance
+    aggregation_level: compressed_background_distance_vector
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: TOKEN_VAZIO_MECHANISM
+
+  - binding_id: OGB-SN-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: PantheonPlus
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: distance_modulus_or_magnitude_residual
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: preserve_full_STAT_SYS_covariance_and_profiled_MB
+    aggregation_level: supernova_distance_modulus
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: TOKEN_VAZIO_MECHANISM
+
+  - binding_id: OGB-FS8-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: fsigma8
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: dimensionless_growth
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: TOKEN_VAZIO
+    aggregation_level: growth_summary
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: BLOCKED_UNTIL_PERTURBATION_BACKEND
+
+  - binding_id: OGB-CMB-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: CMB
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: model_specific
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: TOKEN_VAZIO
+    aggregation_level: compressed_or_full_CMB
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: BLOCKED_UNTIL_PERTURBATION_AND_LIKELIHOOD_CLOSURE
+
+  - binding_id: OGB-LENS-001
+    invariant_id: TOKEN_VAZIO
+    source_family: TOKEN_VAZIO
+    observable_id: lensing
+    mechanism: TOKEN_VAZIO
+    mathematical_map: TOKEN_VAZIO
+    units_input: TOKEN_VAZIO
+    units_output: model_specific
+    free_parameters: []
+    parameter_priors_or_bounds: TOKEN_VAZIO
+    covariance_policy: TOKEN_VAZIO
+    aggregation_level: kernel_or_map_summary
+    double_counting_audit: REQUIRED
+    falsifier: TOKEN_VAZIO
+    holdout_policy: TOKEN_VAZIO
+    provenance: TOKEN_VAZIO
+    state: TOKEN_VAZIO_BINDING
