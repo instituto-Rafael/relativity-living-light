@@ -129,7 +129,13 @@
       ],
       "falsifier": "Any competitor receives different data, covariance, nuisance treatment or hidden exclusions without a declared branch.",
       "claim_allowed": false,
-      "note": "Closes the G2/G5 canonical likelihood prerequisite, not Bayesian evidence itself."
+      "note": "Closes the G2/G5 canonical likelihood prerequisite, not Bayesian evidence itself.",
+      "bibliography_keys": [
+        "DESI2025DR2BAO",
+        "Brout2022PantheonPlus",
+        "Sharma2026GEDE"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS03",
@@ -154,7 +160,12 @@
         "bound C06 Q_mu scope",
         "freeze C07 gauge and super-horizon initial conditions",
         "close C08 transition regularity",
-        "run conservation/constraint/Bianchi residual tests"
+        "run conservation/constraint/Bianchi residual tests",
+        "bind alphaXiv literature action matrix as implementation guardrail, not as RLL equation authority",
+        "derive gauge-consistent pressure perturbation relation from the frozen RLL closure",
+        "derive model-consistent super-horizon initial conditions; standard GR IC copy is forbidden without proof",
+        "if route B is selected, freeze covariant Q plus deltaQ and momentum-transfer prescription",
+        "execute large-scale stability sweep before solver handoff"
       ],
       "closes_tokens": [
         "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"
@@ -164,7 +175,14 @@
         "artifacts/science/perturbations/RLL_PERTURBATION_CLOSURE_RECEIPT.json"
       ],
       "falsifier": "No globally regular, conserved and stable closure satisfies the frozen contract.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "literature_authority": "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json",
+      "bibliography_keys": [
+        "LiZhang2023IDECAMB",
+        "Pan2025ConsistentICs",
+        "Wang2026DarkSectorDESIDR2"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS04",
@@ -183,7 +201,9 @@
       "tasks": [
         "recover baseline with RLL sector off",
         "implement RLL sector",
-        "record precision/tolerance receipts"
+        "record precision/tolerance receipts",
+        "run precision-convergence sweep against the CLASS LambdaCDM baseline before RLL activation",
+        "preserve matched recombination/thermodynamic assumptions in parity receipts"
       ],
       "closes_tokens": [
         "TOKEN_VAZIO_RLL_CLASS_IMPLEMENTATION"
@@ -192,7 +212,12 @@
         "artifacts/science/perturbations/RLL_CLASS_RLL_RECEIPT.json"
       ],
       "falsifier": "Baseline recovery or solver stability fails.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "bibliography_keys": [
+        "Lesgourgues2011CLASSCAMB",
+        "Pan2025ConsistentICs"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS05",
@@ -211,7 +236,9 @@
       "tasks": [
         "recover baseline with RLL sector off",
         "implement RLL sector independently of CLASS",
-        "record precision/tolerance receipts"
+        "record precision/tolerance receipts",
+        "run precision-convergence sweep against the CAMB LambdaCDM baseline before RLL activation",
+        "preserve matched recombination/thermodynamic assumptions in parity receipts"
       ],
       "closes_tokens": [
         "TOKEN_VAZIO_RLL_CAMB_IMPLEMENTATION"
@@ -220,7 +247,12 @@
         "artifacts/science/perturbations/RLL_CAMB_RLL_RECEIPT.json"
       ],
       "falsifier": "Baseline recovery or solver stability fails.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "bibliography_keys": [
+        "Lesgourgues2011CLASSCAMB",
+        "Pan2025ConsistentICs"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS06",
@@ -242,7 +274,11 @@
         "compare D+(z)",
         "compare f_sigma8",
         "compare P(k,z)",
-        "compare applicable CMB spectra"
+        "compare applicable CMB spectra",
+        "compare TT and EE spectra",
+        "compare lensing-potential/lensed-CMB spectra where the closure applies",
+        "derive the RLL numerical parity floor from convergence sweeps before freezing a tolerance",
+        "do not inherit the historical LambdaCDM 0.01 percent CLASS/CAMB benchmark as an automatic RLL threshold"
       ],
       "closes_tokens": [
         "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
@@ -251,7 +287,13 @@
         "artifacts/science/perturbations/RLL_CLASS_CAMB_RLL_PARITY_RECEIPT.json"
       ],
       "falsifier": "Cross-backend deltas exceed preregistered tolerances without an explained numerical cause.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "literature_authority": "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json",
+      "bibliography_keys": [
+        "Lesgourgues2011CLASSCAMB",
+        "Pan2025ConsistentICs"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS07",
@@ -267,7 +309,9 @@
       ],
       "objective": "Replace the engineering growth proxy with perturbation-derived f_sigma8 under one binding contract.",
       "tasks": [
-        "fill mechanism/map/units/priors/covariance/falsifier/provenance for OGB-FS8-001"
+        "fill mechanism/map/units/priors/covariance/falsifier/provenance for OGB-FS8-001",
+        "bind redshift-space distortion validation",
+        "bind weak-lensing and structure-growth falsifiers before any interaction/growth claim"
       ],
       "closes_tokens": [
         "OGB-FS8-001:BLOCKED_UNTIL_PERTURBATION_BACKEND"
@@ -276,7 +320,12 @@
         "data/inputs/omega_g/observable_effect_binding_registry.v1.yaml"
       ],
       "falsifier": "Perturbation-derived growth fails data/covariance or backend-parity checks.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "literature_authority": "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json",
+      "bibliography_keys": [
+        "Wang2026DarkSectorDESIDR2"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS08",
@@ -365,7 +414,11 @@
         "artifacts/science/desi/dr2_official_reproduction_receipt.json"
       ],
       "falsifier": "Official reference likelihood/control cannot be reproduced within declared tolerance.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "bibliography_keys": [
+        "DESI2025DR2BAO"
+      ],
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
     },
     {
       "id": "WS11",
@@ -914,5 +967,13 @@
       "falsifier": "Repository-local policy claims enforcement that GitHub external settings do not actually impose.",
       "claim_allowed": false
     }
-  ]
+  ],
+  "bibliography_authority": {
+    "matrix": "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json",
+    "bibtex": [
+      "PapersPub/01_cosmology_pantheon_desi/references.bib",
+      "PapersPub/02_cosmology_growth_structure_d/references.bib"
+    ],
+    "policy": "Workstream citations identify data authority, implementation guidance, comparators and falsifiers. They never close a scientific TOKEN_VAZIO by analogy."
+  }
 }

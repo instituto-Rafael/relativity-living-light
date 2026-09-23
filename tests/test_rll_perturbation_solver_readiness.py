@@ -29,6 +29,13 @@ class RllPerturbationSolverReadinessTests(unittest.TestCase):
         self.assertEqual(payload["class_state"], "NOT_IMPLEMENTED_RLL_PERTURBATIONS")
         self.assertEqual(payload["camb_state"], "NOT_IMPLEMENTED_RLL_PERTURBATIONS")
         self.assertTrue(payload["checks"]["constraint_bianchi_gate_declared"])
+        self.assertTrue(payload["checks"]["literature_gate_set_complete"])
+        self.assertTrue(payload["checks"]["literature_gates_fail_closed"])
+        self.assertTrue(payload["checks"]["rll_parity_tolerance_not_silently_inherited"])
+        self.assertEqual(
+            payload["literature_authority"]["rll_parity_tolerance"],
+            "TOKEN_VAZIO_PREREGISTRATION_REQUIRED",
+        )
 
 
 if __name__ == "__main__":

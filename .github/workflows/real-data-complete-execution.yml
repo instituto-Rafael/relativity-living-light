@@ -25,6 +25,14 @@ name: Real Data Complete Execution
       - "tests/test_rx_physics_v2_decision_packet.py"
       - "tools/rll_perturbation_solver_readiness.py"
       - "tests/test_rll_perturbation_solver_readiness.py"
+      - "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json"
+      - "tools/validate_rll_alphaxiv_literature_action_matrix.py"
+      - "tests/test_rll_alphaxiv_literature_action_matrix.py"
+      - "PapersPub/01_cosmology_pantheon_desi/references.bib"
+      - "PapersPub/01_cosmology_pantheon_desi/references.md"
+      - "PapersPub/02_cosmology_growth_structure_d/references.bib"
+      - "PapersPub/02_cosmology_growth_structure_d/references.md"
+      - "docs/science/RLL_ALPHAXIV_LITERATURE_ACTIONS_20260923.md"
       - "data/governance/RLL_SCIENTIFIC_GATE_EXECUTOR_REGISTRY_V1.json"
       - "rx/scientific_gates.py"
       - "tests/test_rx_scientific_gate_graph.py"
@@ -133,6 +141,11 @@ jobs:
           python3 -m unittest tests.test_rll_perturbation_solver_readiness
           python3 tools/rll_perturbation_solver_readiness.py --write
 
+      - name: Validate alphaXiv literature action matrix
+        run: |
+          python3 -m unittest tests.test_rll_alphaxiv_literature_action_matrix
+          python3 tools/validate_rll_alphaxiv_literature_action_matrix.py --write
+
       - name: Validate fail-closed SCI_GATE execution graph
         run: python3 -m unittest tests.test_rx_scientific_gate_graph
 
@@ -198,6 +211,7 @@ jobs:
             results/rll_closure_work_packets.md
             results/rx_physics_v2_decision_packet.json
             results/rll_perturbation_solver_readiness.json
+            results/rll_alphaxiv_literature_action_matrix.json
             artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
             artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json
             results/rll_energy_momentum_dimension_gate.json
