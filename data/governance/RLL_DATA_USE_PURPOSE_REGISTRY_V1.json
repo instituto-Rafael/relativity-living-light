@@ -326,6 +326,47 @@
         "output hash where materialized",
         "claim_allowed=false"
       ]
+    },
+    {
+      "route_id": "PUBLIC_DATA_IMPORT_AUDIT_STDLIB",
+      "runtime": "Rx bounded Python stdlib HTTPS read-only transport + stdlib CSV/JSON normalization",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Materialize an explicitly supplied public non-personal HTTPS JSON/CSV input into a temporary audit artifact without repository commit.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "credentialed_mode": "BLOCKED_REQUIRES_SEPARATE_REVIEWED_ROUTE",
+      "network": {
+        "default": "READ_ONLY_EXPLICIT_HOST",
+        "optional": false,
+        "host_policy": "public HTTPS hostname supplied by human/workflow input and checked against local/private/reserved resolution",
+        "writes": false
+      },
+      "filesystem": {
+        "write": [
+          "_audit/"
+        ]
+      },
+      "retention": {
+        "repository_commit": "NONE_BY_WORKFLOW",
+        "artifact": "temporary workflow artifact"
+      },
+      "audit": [
+        "source URL",
+        "artifact SHA-256",
+        "byte count",
+        "claim boundary"
+      ]
     }
   ],
   "prohibited_uses": [
