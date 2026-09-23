@@ -128,7 +128,7 @@ Current state counts:
 - `KNOWN_CLASSICAL_PHYSICS`: 2
 - `TOKEN_VAZIO_PRIOR_ART_DEDICATED_SEARCH`: 2
 
-Dedicated literature queue: **40 rows**.
+Dedicated family-search queue: **0 rows** after the 2026-09-23 family pass. Deep-novelty residual: **10 rows**.
 
 RLL consumption rule:
 
@@ -139,3 +139,22 @@ RLL must not upgrade novelty state.
 ```
 
 Thus a RLL PASS on a geometric verifier cannot turn `KNOWN_CLASSICAL`, `KNOWN_DERIVABLE` or `NOVELTY_UNPROVEN` into a novelty claim.
+
+
+## MF251 family-search closure successor
+
+Upstream matrix successor:
+`fe90f10b3d7e3b68b8b76ef7f5ee87fedecc0931`
+
+Upstream audit successor:
+`fbeb5c130b25c587d6b0af8d76b96e56b0dcb18b`
+
+Primary historical closure for shell capacity:
+Edmund C. Stoner, *The distribution of electrons among atomic levels*, Philosophical Magazine 48(286), 719–736 (1924), DOI `10.1080/14786442408634535`.
+
+RLL inheritance rule remains unchanged:
+```text
+family-search resolution may demote a novelty candidate to known/derivable;
+RLL execution may add evidence;
+RLL execution may not create a novelty claim.
+```
