@@ -1,0 +1,41 @@
+{
+  "schema": "rll.rx.physics_contracts.v1",
+  "active_contract": "RX-STRUCTURE-D-PARITY-V1",
+  "training": false,
+  "ai_runtime": false,
+  "contracts": {
+    "RX-STRUCTURE-D-PARITY-V1": {
+      "state": "ACTIVE_ENGINEERING_PARITY",
+      "omega_r": 0.00009,
+      "hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "growth_mode": "structure_d_proxy",
+      "bao_sound_horizon": "rd_power_law",
+      "cmb_acoustic_mode": "structure_d_rd",
+      "distance_integration": "log1p_simpson",
+      "flat_closure": true,
+      "claim_allowed": false
+    },
+    "RX-FREESTANDING-PROJECTION-V1": {
+      "state": "PARTIAL_PROJECTION",
+      "omega_r": "9.18e-5_IN_FREESTANDING_NOT_RX_COMMON",
+      "hz_dataset": "data/real/Hz_data_real.csv",
+      "growth_mode": "freestanding_growth",
+      "bao_sound_horizon": "freestanding_profile_or_integrated",
+      "cmb_acoustic_mode": "freestanding_rs_star",
+      "flat_closure": true,
+      "claim_allowed": false,
+      "note": "Projection only; not exact binary parity because Omega_r and data surface differ."
+    },
+    "RX-PHYSICS-CANONICAL-V2": {
+      "state": "TOKEN_VAZIO_CONTRACT",
+      "omega_r": "TOKEN_VAZIO_DECISION",
+      "hz_dataset": "TOKEN_VAZIO_DECISION",
+      "growth_mode": "TOKEN_VAZIO_DECISION",
+      "bao_sound_horizon": "sound_horizon_integral_required",
+      "cmb_acoustic_mode": "rs_star_required",
+      "distance_integration": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
+      "flat_closure": true,
+      "claim_allowed": false
+    }
+  }
+}
