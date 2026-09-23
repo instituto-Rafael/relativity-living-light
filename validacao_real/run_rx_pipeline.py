@@ -56,7 +56,15 @@ FIGS.mkdir(parents=True, exist_ok=True)
 
 security_policy = load_json(SECURITY_POLICY)
 operation_contract = load_json(OPERATION_CONTRACT)
-security_preflight = evaluate_operation(security_policy, operation_contract)
+runtime_authority_mode = os.environ.get(
+    "RLL_AUTHORITY_MODE",
+    operation_contract.get("authority", {}).get("default_runtime_mode", "explicit_local_command"),
+)
+security_preflight = evaluate_operation(
+    security_policy,
+    operation_contract,
+    runtime_authority_mode=runtime_authority_mode,
+)
 if security_preflight["decision"] != "ALLOW":
     raise SystemExit(
         "Rx security preflight blocked execution: "
@@ -311,6 +319,7 @@ payload = {
         "maxiter": maxiter,
         "simpson_steps": simpson_steps,
         "security_preflight": str(security_preflight_path.relative_to(ROOT)),
+        "runtime_authority_mode": runtime_authority_mode,
         "network_probe_enabled": network_probe_enabled,
     },
     "datasets": {
