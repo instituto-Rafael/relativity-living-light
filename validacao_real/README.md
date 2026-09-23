@@ -74,3 +74,25 @@ O auditor percorre os arquivos Python e materializa a dívida externa restante e
 - `results/rx_dependency_audit.md`
 
 Arquivos históricos, notebooks e rotas científicas antigas não são declarados migrados até que o auditor e testes específicos comprovem a substituição.
+
+
+## Entrada canônica do programa Rx
+
+O desenvolvimento dependency-free pode ser executado por um único programa determinístico:
+
+```bash
+cd ~/relativity-living-light-main
+python3 -m rx status
+python3 -m rx develop
+```
+
+Subcomandos:
+
+- `status`: contratos e estado do runtime;
+- `selftest`: gates de runtime, horizonte sonoro e paridade freestanding;
+- `validate`: validação Rx + sucessor Structure-D;
+- `parity`: gates de paridade semântica e Q16;
+- `audit`: dívida de imports externos do repositório;
+- `develop`: cadeia completa de desenvolvimento.
+
+Contrato operacional: `training=false`, `ai_runtime=false`, zero dependências Python de terceiros no caminho Rx ativo. Otimização matemática determinística permanece permitida.
