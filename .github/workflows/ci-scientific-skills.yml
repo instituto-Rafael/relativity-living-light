@@ -11,6 +11,7 @@ on:
   pull_request:
     paths:
       - "tools/ci_scientific_skills.py"
+      - "tools/validate_ci_scientific_skills_stdlib_migration.py"
       - "tests/test_ci_scientific_skills.py"
       - ".github/workflows/ci-scientific-skills.yml"
       - "data/real/**"
@@ -62,6 +63,11 @@ jobs:
         run: |
           set -euo pipefail
           python -m unittest discover -s tests -p 'test_ci_scientific_skills.py' -v
+
+      - name: Validate stdlib migration gate
+        run: |
+          set -euo pipefail
+          python tools/validate_ci_scientific_skills_stdlib_migration.py
 
       - name: Run claim-bounded repository diagnostics
         env:
