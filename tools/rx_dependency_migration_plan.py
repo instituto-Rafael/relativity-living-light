@@ -18,6 +18,7 @@ OUT_MD = ROOT / "results" / "rx_dependency_migration_plan.md"
 SERIALIZATION_PARITY = ROOT / "results" / "validacao_real_serialization_parity.json"
 VALIDACAO_ZERO_DEP = ROOT / "results" / "validacao_real_zero_dependency_core.json"
 INVENTORY_CONFIG_PARITY = ROOT / "results" / "inventory_config_serialization_parity.json"
+PLOT_MIGRATION_GATE = ROOT / "results" / "rx_plot_migration_gate.json"
 HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
 CREDENTIAL_STDLIB_GATE = ROOT / "results" / "credential_authority_stdlib_migration.json"
 
@@ -136,6 +137,33 @@ if INVENTORY_CONFIG_PARITY.exists():
                 str(AUDIT.relative_to(ROOT)),
             ],
             "legacy_yaml_preserved": True,
+            "scientific_semantics_changed": False,
+        })
+
+
+if PLOT_MIGRATION_GATE.exists():
+    plot_gate = json.loads(PLOT_MIGRATION_GATE.read_text(encoding="utf-8"))
+    plot_external = any(
+        item.get("path") == "scripts/generate_rll_plots.py" and item.get("external_imports")
+        for item in audit.get("files", [])
+    )
+    if plot_gate.get("pass") is True and not plot_external:
+        closed_families.append({
+            "family": "rll_real_run_plotting",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "scripts/generate_rll_plots.py",
+                "rx/kernel.py",
+            ],
+            "replacements": {
+                "pandas": "rx.read_csv / Python stdlib",
+                "matplotlib": "Rx SVG renderer",
+            },
+            "evidence": [
+                str(PLOT_MIGRATION_GATE.relative_to(ROOT)),
+                str(AUDIT.relative_to(ROOT)),
+            ],
+            "legacy_png_contract": "mapped_to_svg_in_plots_manifest",
             "scientific_semantics_changed": False,
         })
 
