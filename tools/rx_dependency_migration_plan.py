@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "results" / "rx_dependency_audit.json"
 OUT_JSON = ROOT / "results" / "rx_dependency_migration_plan.json"
 OUT_MD = ROOT / "results" / "rx_dependency_migration_plan.md"
+SERIALIZATION_PARITY = ROOT / "results" / "validacao_real_serialization_parity.json"
+VALIDACAO_ZERO_DEP = ROOT / "results" / "validacao_real_zero_dependency_core.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -81,6 +83,32 @@ priority_order = {
 }
 rows.sort(key=lambda row: (priority_order.get(row["class"], 99), row["path"]))
 
+closed_families = []
+if SERIALIZATION_PARITY.exists() and VALIDACAO_ZERO_DEP.exists():
+    serialization = json.loads(SERIALIZATION_PARITY.read_text(encoding="utf-8"))
+    zero_dep = json.loads(VALIDACAO_ZERO_DEP.read_text(encoding="utf-8"))
+    if serialization.get("pass") is True and zero_dep.get("pass") is True:
+        closed_families.append({
+            "family": "validacao_real_yaml_matplotlib",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "validacao_real/fetch_real_data.py",
+                "validacao_real/compute_validation.py",
+                "validacao_real/make_figures.py",
+                "validacao_real/render_report.py",
+            ],
+            "replacements": {
+                "yaml": "JSON stdlib / versioned Rx payloads",
+                "matplotlib": "rx.kernel.write_svg_chart",
+            },
+            "evidence": [
+                str(SERIALIZATION_PARITY.relative_to(ROOT)),
+                str(VALIDACAO_ZERO_DEP.relative_to(ROOT)),
+            ],
+            "legacy_yaml_preserved": True,
+            "scientific_semantics_changed": False,
+        })
+
 payload = {
     "schema": "rll.rx.dependency_migration_plan.v1",
     "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
@@ -90,6 +118,7 @@ payload = {
     "by_module": dict(by_module),
     "rows": rows,
     "token_vazio_replacements": token_vazio,
+    "closed_families": closed_families,
     "policy": {
         "automatic_mass_rewrite": False,
         "active_rx_runtime_already_zero_dependency": True,
@@ -119,6 +148,13 @@ lines += ["", "## By module", ""]
 for name, count in sorted(by_module.items(), key=lambda item: (-item[1], item[0])):
     lines.append("- %s: %d -> %s" % (name, count, replacement.get(name, "TOKEN_VAZIO_REPLACEMENT_ROUTE")))
 
+lines += ["", "## Closed families", ""]
+if closed_families:
+    for family in closed_families:
+        lines.append("- %s: %s" % (family["family"], family["state"]))
+else:
+    lines.append("- none observed in this execution")
+
 lines += [
     "",
     "## Migration invariant",
@@ -134,5 +170,6 @@ print("files=", payload["files_with_external_imports"])
 for name, count in sorted(by_class.items(), key=lambda item: (-item[1], item[0])):
     print(name, count)
 print("token_vazio_replacements=", len(token_vazio))
+print("closed_families=", len(closed_families))
 print("wrote", OUT_JSON.relative_to(ROOT))
 print("wrote", OUT_MD.relative_to(ROOT))
