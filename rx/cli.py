@@ -107,6 +107,7 @@ def audit():
     _tool("validate_executable_entrypoint_authority_registry.py")
     _tool("validate_validacao_real_serialization_parity.py")
     _tool("validate_validacao_real_zero_dependency.py")
+    _tool("validate_rx_http_migration.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_dependency_audit.py")
     _tool("rx_dependency_migration_plan.py")
