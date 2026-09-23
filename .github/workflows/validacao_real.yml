@@ -51,6 +51,8 @@ jobs:
       run: python3 tests/test_rll_development_guard.py
     - name: Enforce Rx operation contract
       run: python3 internal/governance/development_guard.py --operation validacao_real/rx_operation.json --authority-mode reviewed_ci_workflow --strict
+    - name: Audit governed Python security surface
+      run: python3 tools/rll_security_surface_audit.py --strict
     - name: Rx zero-dependency validation pipeline
       env:
         RLL_AUTHORITY_MODE: reviewed_ci_workflow
@@ -110,6 +112,8 @@ jobs:
           results/rx_no_ai_runtime_gate.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
+          results/security_surface_audit.json
+          results/security_surface_audit.md
           results/rx_semantic_parity.json
           results/rx_semantic_parity.md
           results/rx_selftest.json
