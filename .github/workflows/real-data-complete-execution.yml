@@ -21,6 +21,8 @@ name: Real Data Complete Execution
       - "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
       - "tools/rx_physics_v2_decision_packet.py"
       - "tests/test_rx_physics_v2_decision_packet.py"
+      - "tools/rll_perturbation_solver_readiness.py"
+      - "tests/test_rll_perturbation_solver_readiness.py"
       - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
       - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
@@ -105,6 +107,11 @@ jobs:
           python3 -m unittest tests.test_rx_physics_v2_decision_packet
           python3 tools/rx_physics_v2_decision_packet.py --write
 
+      - name: Enforce perturbation solver handoff boundary
+        run: |
+          python3 -m unittest tests.test_rll_perturbation_solver_readiness
+          python3 tools/rll_perturbation_solver_readiness.py --write
+
       - name: Validate Rx DHA angular-frequency baseline
         run: python3 tools/validate_rx_dha.py
 
@@ -144,6 +151,7 @@ jobs:
             results/rll_closure_queue.json
             results/rll_closure_queue.md
             results/rx_physics_v2_decision_packet.json
+            results/rll_perturbation_solver_readiness.json
           retention-days: 30
           if-no-files-found: error
 
