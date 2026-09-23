@@ -40,9 +40,7 @@
       ],
       "closes_tokens": [],
       "required_outputs": [
-        "results/rx_dha_angular_frequency_gate.json",
-        "results/rll_closure_queue.json",
-        "results/rll_closure_queue.md"
+        "results/rx_dha_angular_frequency_gate.json"
       ],
       "falsifier": "Any declared closure step is missing, non-deterministic, or weakens fail-closed governance.",
       "claim_allowed": false
