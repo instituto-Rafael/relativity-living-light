@@ -10,6 +10,7 @@ echo "training=False ai_runtime=False"
 python3 tools/rx_no_ai_gate.py
 python3 tools/rx_selftest.py
 python3 tools/rx_sound_horizon_selftest.py
+python3 tools/rx_freestanding65_parity.py
 python3 -m validacao_real.run_rx_pipeline
 python3 -m validacao_real.run_rx_multiprobe
 python3 tools/rx_semantic_parity.py
