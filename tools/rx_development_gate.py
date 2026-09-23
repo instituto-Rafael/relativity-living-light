@@ -29,6 +29,7 @@ paths = {
     "security_surface": ROOT / "results" / "security_surface_audit.json",
     "authority_registry": ROOT / "results" / "executable_entrypoint_authority_registry_validation.json",
     "serialization_parity": ROOT / "results" / "validacao_real_serialization_parity.json",
+    "validacao_real_zero_dependency": ROOT / "results" / "validacao_real_zero_dependency_core.json",
 }
 
 cli_security_receipts = sorted(
@@ -64,6 +65,9 @@ checks["authority_registry_claim_closed"] = data["authority_registry"].get("clai
 checks["serialization_parity_pass"] = data["serialization_parity"].get("pass") is True
 checks["serialization_parity_zero_third_party"] = data["serialization_parity"].get("third_party_python_dependencies") == []
 checks["serialization_parity_claim_closed"] = data["serialization_parity"].get("claim_allowed") is False
+checks["validacao_real_zero_dependency_pass"] = data["validacao_real_zero_dependency"].get("pass") is True
+checks["validacao_real_zero_dependency_list_empty"] = data["validacao_real_zero_dependency"].get("third_party_python_dependencies") == []
+checks["validacao_real_zero_dependency_claim_closed"] = data["validacao_real_zero_dependency"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -179,7 +183,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, security-surface audit, CLI/simple/multiprobe security preflights, "
         "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
