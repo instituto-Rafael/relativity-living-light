@@ -19,6 +19,11 @@ on:
       - "tools/inventory_config.yml"
       - "tools/inventory_config.json"
       - "tools/validate_rll_plot_migration.py"
+      - "schemas/rll_watch.schema.json"
+      - "rll_inovacao_tecnologica_watch.yml"
+      - "rll_inovacao_tecnologica_watch.json"
+      - "scripts/validate_watch_config.py"
+      - "tools/validate_watch_config_stdlib_migration.py"
       - "tests/test_rll_credential_authority.py"
       - "scripts/generate_rll_plots.py"
       - "tools/rll_security_surface_audit.py"
@@ -131,6 +136,8 @@ jobs:
       run: python3 tools/validate_rx_http_migration.py
     - name: Validate credential-authority stdlib migration
       run: python3 tools/validate_credential_authority_stdlib_migration.py
+    - name: Validate technology-watch stdlib migration
+      run: python3 tools/validate_watch_config_stdlib_migration.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
@@ -162,6 +169,7 @@ jobs:
           results/rx_zero_dependency_gate.json
           results/rx_http_migration_gate.json
           results/credential_authority_stdlib_migration.json
+          results/watch_config_stdlib_migration.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
           results/rx_dependency_migration_plan.json
