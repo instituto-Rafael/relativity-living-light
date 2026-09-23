@@ -73,7 +73,7 @@ def _yaml_key_at_indent(line: str, indent: int):
     if actual != indent:
         return None
     stripped = line.strip()
-    match = re.match(r"^(?P<q>['\"]?)(?P<key>[A-Za-z0-9_.-]+)(?P=q):(?:\\s*(?P<value>.*))?$", stripped)
+    match = re.match(r"^(?P<q>['\"]?)(?P<key>[A-Za-z0-9_.-]+)(?P=q):(?:\s*(?P<value>.*))?$", stripped)
     if not match:
         return None
     return match.group("key"), (match.group("value") or "").strip()
