@@ -28,3 +28,16 @@ Rollback: revert this single atomic commit.
 - F_ok: additive forward-port rebuilt on current lab base.
 - F_gap: 35 semantic merges remain; CI/runtime pending.
 - F_next: observe PR gates, merge only with non-regression evidence.
+
+## μWRITE — fechamento do encaixe do laboratório
+
+- source snapshot: `main@f69d6827b0a35674de2fd8bad2477fcf8c827af2`
+- lab after PR #963: `5c8f8bc2904c97ffce5c63d19714aed67b8bc848`
+- lab after WG250 PR #965: `8f925511a26818885845ecbd013d7f5be9936b68`
+- exact-head gates: PR #963 = `27/27 PASS`; PR #965 = `12/12 PASS`
+- post-merge tree relation: `missing_in_lab=0`, `changed_existing=41`, `lab_only=53`
+- interpretation: zero missing paths relative to the named main snapshot; the 41 differing existing paths remain semantic-version differences and the 53 lab-only paths remain preserved laboratory evolution.
+- inventory provider evidence: `repo-real-inventory` run `35807306098`, artifact `10727993628`, digest `sha256:95f0aae015bcd0ba72d70a4aa5d7ca43f89bdb99191e9d53f3ce734242901970`.
+- boundary: `CI_PASS != scientific_confirmation`; `claim_allowed=false`.
+- rollback: revert only this append/inventory fixed-point PR; do not rewrite prior lab history.
+
