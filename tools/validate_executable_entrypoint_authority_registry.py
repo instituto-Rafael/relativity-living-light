@@ -61,7 +61,7 @@ def main():
             if row.get("network_default") != "OFF":
                 errors.append("materialization_network_must_default_off")
 
-        if rid in {"RLL_RX_REAL_VALIDATION_V1","RLL_RX_MULTIPROBE_V1","RLL_RX_CLI_DEVELOPMENT_V1","RLL_FREESTANDING_REAL_KERNEL","STRUCTURE_D_RX_SUCCESSOR","SECURITY_AUDIT","PUBLIC_SOURCE_FETCHERS_STDLIB","PUBLIC_DATA_IMPORT_AUDIT_STDLIB","CALC_DATA_AUDIT_STDLIB","CI_SCIENTIFIC_SKILLS_STDLIB"} and rid not in purpose_ids:
+        if rid in {"RLL_RX_REAL_VALIDATION_V1","RLL_RX_MULTIPROBE_V1","RLL_RX_CLI_DEVELOPMENT_V1","RLL_FREESTANDING_REAL_KERNEL","STRUCTURE_D_RX_SUCCESSOR","SECURITY_AUDIT","PUBLIC_SOURCE_FETCHERS_STDLIB","PUBLIC_DATA_IMPORT_AUDIT_STDLIB","CALC_DATA_AUDIT_STDLIB","CI_SCIENTIFIC_SKILLS_STDLIB","REAL_DATA_MATERIALIZATION_V2"} and rid not in purpose_ids:
             errors.append("missing_from_purpose_registry:"+rid)
 
     if policy.get("human_authority",{}).get("self_authorization")!="FORBIDDEN":
