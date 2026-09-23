@@ -203,25 +203,25 @@ equations:
     claim_boundary: "Explicit A1.1 rest-frame candidate assumption; not derived from the RLL background, not a validated RLL property, and not sufficient to unlock CLASS/CAMB."
 
 
-  - id: rll_a1_newtonian_delta_candidate
-    equation: "delta_s' = -U_s + 3(1+w_s)Phi' - 3H(c_s^2-w_s)delta_s - 9H^2(c_s^2-c_a^2)U_s/k^2"
-    domain: ["cosmology", "perturbations", "RLL"]
-    status: "research_candidate_equation"
-    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
-    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
-    methodology_phase: "gauge_regularization_candidate"
+  - id: rll_a1_enthalpy_identity
+    equation: "rho_s + p_s = -(1/3) d rho_s / d ln(a)"
+    domain: ["cosmology", "background", "perturbations", "RLL"]
+    status: "derived_continuity_identity"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_GAUGE_REGULARIZATION_CONTRACT_20260922_V1.json"
+    implementation: "tools/rll_perturbation_gauge_regularization_preflight_v1.py"
+    methodology_phase: "regular_variable_preflight"
     real_data_validators: []
-    claim_boundary: "Conformal-Newtonian reference equation for the A1.2 candidate after U=(1+w)theta substitution; not solver-validated or promoted as the unique RLL perturbation law."
+    claim_boundary: "Exact for the separately conserved A1.1 background definition; does not define missing perturbation dynamics or stability."
 
-  - id: rll_a1_regularized_momentum_candidate
-    equation: "U_s' = H[q_w-(1-3c_s^2)]U_s + c_s^2 k^2 delta_s + (1+w_s)k^2 Psi ; q_w=d ln(1+w_s)/d ln a"
+  - id: rll_a1_regular_momentum_definition
+    equation: "q_s = (rho_s + p_s) theta_s"
     domain: ["cosmology", "perturbations", "RLL"]
-    status: "research_candidate_equation"
-    source_doc: "data/science/perturbations/RLL_PERTURBATION_A1_GAUGE_REGULARIZATION_20260922_V1.json"
-    implementation: "tools/rll_perturbation_a1_gauge_regularization_v1.py"
-    methodology_phase: "gauge_regularization_candidate"
+    status: "candidate_variable_definition"
+    source_doc: "data/science/perturbations/RLL_PERTURBATION_GAUGE_REGULARIZATION_CONTRACT_20260922_V1.json"
+    implementation: "tools/rll_perturbation_gauge_regularization_preflight_v1.py"
+    methodology_phase: "regular_variable_preflight"
     real_data_validators: []
-    claim_boundary: "Algebraic momentum-variable rewrite for A1.2. PASS of the regularity gate does not establish physical stability, initial conditions, CLASS/CAMB parity, or observational validity."
+    claim_boundary: "Definition of a candidate primary momentum-density variable; theta_s recovery is allowed only where enthalpy is nonzero and conditioned."
 
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:

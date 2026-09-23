@@ -1,0 +1,85 @@
+{
+  "schema": "rll.branch_reconciliation.lab_to_integration.v1",
+  "date_local": "2026-09-22",
+  "intent": "encaixar rll/lab na cadeia de maturidade sem regressao estrutural nem promocao indevida de claim",
+  "source": {
+    "branch": "rll/lab",
+    "head_sha_before_receipt": "73c4ff5f3452bdf9e0f9f2e6328a6d4593871930",
+    "tree_sha_before_receipt": "8c6fcccb8c3990650d822ec581649920bd8bb4e5"
+  },
+  "target": {
+    "branch": "rll/integration",
+    "head_sha_observed": "b8e08f86729cbf8b27923c5533f12b7f0d11fc4a",
+    "tree_sha_observed": "17c2bbf512f2b03267348d8e6e9d89b523800525"
+  },
+  "tree_reconciliation_before_receipt": {
+    "different_paths": 24,
+    "source_only_additions": 21,
+    "changed_paths": 3,
+    "target_only_deletions_required": 0,
+    "changed_paths_reviewed": [
+      ".github/workflow-contract.yml",
+      ".github/workflows/class-camb-baseline-crosscheck.yml",
+      "rll_equation_registry.yml"
+    ],
+    "decision": "SAFE_TO_PROMOTE_TO_INTEGRATION_WITH_GATES",
+    "boundary": "tree_non_regression != scientific_validation"
+  },
+  "reviewed_deltas": {
+    "workflow_inventory": {
+      "from": 98,
+      "to": 101,
+      "reason": "three Omega_G workflows added and routed"
+    },
+    "perturbation_preflight": {
+      "supersedes_runtime_focus": "A1.2 gauge diagnostic",
+      "new_focus": "C07/C08 regular-variable preflight",
+      "provider_run_success": 35721464364,
+      "state": "C07_C08_REGULAR_VARIABLE_PREFLIGHT_PASS_IC_EQUATIONS_OPEN",
+      "class_camb_unlock": false,
+      "claim_allowed": false
+    },
+    "equation_registry": {
+      "change": "candidate Newtonian evolution equations removed from active registry surface; exact enthalpy identity and typed regular momentum definition added",
+      "effect": "reduces overclaim while preserving historical source artifacts",
+      "claim_allowed": false
+    },
+    "omega_g_real_background": {
+      "provider_run": 35797890689,
+      "provider_pr": 959,
+      "state": "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT",
+      "scientific_confirmation": false,
+      "claim_allowed": false
+    }
+  },
+  "main_boundary": {
+    "main_head_observed": "c545e5ac451d8001d927d52d9c089c9092155736",
+    "direct_lab_to_main_merge": "FORBIDDEN_BY_THIS_RECEIPT",
+    "reason": "rll/lab is materially behind main and a raw historical merge could regress main-only assets; promotion must continue through integration/release with explicit forward-port reconciliation"
+  },
+  "gaps_preserved": [
+    "TOKEN_VAZIO_C01_DELTA_RHO_EVOLUTION",
+    "TOKEN_VAZIO_C02_Q_EVOLUTION",
+    "TOKEN_VAZIO_CLASS_CAMB_GAUGE_MAPPING",
+    "TOKEN_VAZIO_SUPERHORIZON_IC",
+    "TOKEN_VAZIO_ENTHALPY_DEGENERACY_LIMIT",
+    "TOKEN_VAZIO_PERTURBED_CONSTRAINT_GATE",
+    "TOKEN_VAZIO_OMEGA_G_SINGLE_BINDING_SYNTHETIC_RECOVERY",
+    "TOKEN_VAZIO_OMEGA_G_ABLATION",
+    "TOKEN_VAZIO_OMEGA_G_HOLDOUT",
+    "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION"
+  ],
+  "promotion": {
+    "route": "rll/lab -> rll/integration",
+    "direct_main_commit": false,
+    "merge_requires_observable_pr_gate": true,
+    "rollback": "revert promotion merge on rll/integration; do not rewrite rll/lab history"
+  },
+  "R3": {
+    "F_ok": "lab tree reconciled against integration with zero target-only deletions; C07/C08 provider success and Omega_G limited real-background provider evidence are present with claims blocked",
+    "F_gap": "full perturbation closure, model-specific CLASS/CAMB implementation, Omega_G physical binding/ablation/holdout and independent reproduction remain open",
+    "F_next": "open canonical lab-to-integration promotion PR; observe exact-head gates; merge only if the promotion checks are green"
+  },
+  "claim_allowed": false,
+  "scientific_confirmation": false
+}

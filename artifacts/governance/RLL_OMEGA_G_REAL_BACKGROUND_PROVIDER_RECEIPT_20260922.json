@@ -1,0 +1,127 @@
+{
+  "schema": "rll.omega_g.real_background.provider_receipt.v1",
+  "date": "2026-09-22",
+  "state": "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "github": {
+    "pr": 959,
+    "run_id": 35797890689,
+    "job_id": 106981378021,
+    "head_sha": "a6e4ca2feda10c63284cc82ec522d309f401e0b6",
+    "artifact_id": 10724482094,
+    "artifact_sha256": "51e1b6dd09b1f6474caca6e3df1ca43a9aea4c720a57e464ab1a330222c645eb"
+  },
+  "covariance": {
+    "bytes": 33284960,
+    "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+    "git_blob_sha1": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+    "dimension": 1701,
+    "values": 2893401
+  },
+  "datasets": {
+    "Pantheon_rows": 1657,
+    "pure_CC_rows": 28,
+    "DESI_rows": 13,
+    "N_total": 1698
+  },
+  "models": {
+    "LCDM": {
+      "chi2": 1495.1384043550452,
+      "AIC": 1503.1384043550452,
+      "AICc": 1503.1620310532142,
+      "BIC": 1524.8872298225303,
+      "boundary_hits": [
+        "omega_b_h2"
+      ]
+    },
+    "wCDM": {
+      "chi2": 1495.130711434247,
+      "AIC": 1505.130711434247,
+      "AICc": 1505.1661724271546,
+      "BIC": 1532.3167432686034,
+      "boundary_hits": [
+        "omega_b_h2"
+      ]
+    },
+    "CPL": {
+      "chi2": 1489.9996736424855,
+      "AIC": 1501.9996736424855,
+      "AICc": 1502.049348391155,
+      "BIC": 1534.6229118437132,
+      "boundary_hits": [
+        "omega_b_h2"
+      ]
+    },
+    "GEDE": {
+      "chi2": 1495.130187031126,
+      "AIC": 1505.130187031126,
+      "AICc": 1505.1656480240338,
+      "BIC": 1532.3162188654826,
+      "boundary_hits": [
+        "omega_b_h2"
+      ]
+    },
+    "IDE_QrhoLambda": {
+      "chi2": 1487.7735269141874,
+      "AIC": 1497.7735269141874,
+      "AICc": 1497.8089879070951,
+      "BIC": 1524.959558748544,
+      "boundary_hits": []
+    },
+    "RLL": {
+      "chi2": 1495.1384043550524,
+      "AIC": 1509.1384043550524,
+      "AICc": 1509.2046765444015,
+      "BIC": 1547.1988489231514,
+      "boundary_hits": [
+        "omega_b_h2",
+        "Omega_s0"
+      ]
+    }
+  },
+  "deltas_vs_LCDM": {
+    "wCDM": {
+      "delta_chi2": -0.007692920798263003,
+      "delta_AIC": 1.992307079201737,
+      "delta_AICc": 2.004141373940456,
+      "delta_BIC": 7.429513446073088
+    },
+    "CPL": {
+      "delta_chi2": -5.1387307125596635,
+      "delta_AIC": -1.1387307125596635,
+      "delta_AICc": -1.1126826620591146,
+      "delta_BIC": 9.73568202118281
+    },
+    "GEDE": {
+      "delta_chi2": -0.008217323919097907,
+      "delta_AIC": 1.991782676080902,
+      "delta_AICc": 2.003616970819621,
+      "delta_BIC": 7.428989042952253
+    },
+    "IDE_QrhoLambda": {
+      "delta_chi2": -7.364877440857754,
+      "delta_AIC": -5.364877440857754,
+      "delta_AICc": -5.353043146119035,
+      "delta_BIC": 0.07232892601359708
+    },
+    "RLL": {
+      "delta_chi2": 7.275957614183426e-12,
+      "delta_AIC": 6.000000000007276,
+      "delta_AICc": 6.042645491187386,
+      "delta_BIC": 22.3116191006211
+    }
+  },
+  "nonfinite_diagnostics": {
+    "count": 5,
+    "paths": [
+      "report.models.GEDE.runs[1].chi2",
+      "report.models.GEDE.runs[1].chi2_Pantheon",
+      "report.models.GEDE.runs[1].chi2_CC",
+      "report.models.GEDE.runs[1].chi2_DESI",
+      "report.models.GEDE.runs[1].M_B_profiled"
+    ],
+    "scientific_summary_nonfinite": 0
+  },
+  "boundary": "background tournament != Omega_G physical binding != scientific confirmation"
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "rll.perturbation_gauge_regularization_contract.v1",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_candidate": "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "C07_C08_REGULAR_VARIABLE_CONTRACT_DECLARED",
+  "physical_closure_frame": "component_rest_frame",
+  "derivation_reference_gauge": {
+    "name": "synchronous",
+    "status": "COMPUTATIONAL_CONVENTION_FROZEN_FOR_DERIVATION_ONLY",
+    "boundary": "Gauge choice is a representation convention, not a physical claim. CLASS and CAMB mappings must be implemented and tested independently."
+  },
+  "primary_candidate_variables": [
+    {
+      "id": "delta_rho_s",
+      "definition": "component density perturbation",
+      "reason": "does not divide by 1+w_s"
+    },
+    {
+      "id": "q_s",
+      "definition": "q_s=(rho_s+p_s)*theta_s",
+      "reason": "momentum-density variable remains primary when 1+w_s approaches zero"
+    }
+  ],
+  "derived_variables": [
+    {
+      "id": "delta_s",
+      "definition": "delta_s=delta_rho_s/rho_s",
+      "allowed_when": "rho_s>0"
+    },
+    {
+      "id": "theta_s",
+      "definition": "theta_s=q_s/(rho_s+p_s)",
+      "allowed_when": "rho_s+p_s is demonstrably nonzero and numerically conditioned",
+      "boundary": "not a primary evolution variable near enthalpy degeneracy"
+    }
+  ],
+  "regularity_invariants": [
+    "no naked division by 1+w_s in primary evolution equations",
+    "no epsilon clipping may be used to manufacture regularity",
+    "rho_s+p_s = -(1/3) d rho_s / d ln(a) must hold for the separately conserved candidate",
+    "theta_s reconstruction may be diagnostic only where enthalpy is sufficiently nonzero",
+    "analytic limiting equations must be derived before CLASS/CAMB implementation"
+  ],
+  "diagnostics": {
+    "crossing_tolerance": 1e-10,
+    "degeneracy_report_thresholds": [
+      1e-8,
+      1e-12
+    ],
+    "rule": "thresholds classify numerical conditioning only; they do not alter equations or clip variables"
+  },
+  "open_slots": {
+    "C01_DELTA_S_EVOLUTION": "TOKEN_VAZIO",
+    "C02_MOMENTUM_EVOLUTION": "TOKEN_VAZIO",
+    "C07_GAUGE_MAPPING": "TOKEN_VAZIO_CLASS_CAMB_MAPPING",
+    "C07_SUPERHORIZON_IC": "TOKEN_VAZIO_SUPERHORIZON_IC",
+    "C08_ANALYTIC_LIMIT": "TOKEN_VAZIO_ENTHALPY_DEGENERACY_LIMIT",
+    "C08_BIANCHI_CONSTRAINTS": "TOKEN_VAZIO_PERTURBED_CONSTRAINT_GATE"
+  },
+  "next_gate": "derive conservation equations directly in (delta_rho_s,q_s) in the frozen reference gauge, derive the enthalpy-degenerate limit analytically, then derive super-horizon IC and independent CLASS/CAMB mappings",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "rollback": "Revert this regular-variable contract only; retain A1.1 necessary-gate evidence and reopen C07/C08."
+}
