@@ -45,6 +45,11 @@ active_files = sorted((ROOT / "rx").glob("*.py")) + [
     ROOT / "internal" / "governance" / "development_guard.py",
     ROOT / "tools" / "validate_rll_development_governance.py",
     ROOT / "tools" / "rll_security_surface_audit.py",
+    ROOT / "scripts" / "import_data.py",
+    ROOT / "scripts" / "fetch_public_astronomy_catalog_samples.py",
+    ROOT / "scripts" / "fetch_real_sources.py",
+    ROOT / "tools" / "validate_rx_http_migration.py",
+    ROOT / "tools" / "validate_executable_entrypoint_authority_registry.py",
 ]
 
 violations = []
