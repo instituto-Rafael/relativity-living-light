@@ -47,7 +47,7 @@ def main():
             if cls not in valid_data:
                 errors.append("invalid_data_class:%s:%s"%(rid,cls))
 
-        if level in {"A3","A4","A5"} and row.get("human_gate_for_default") is not True:
+        if level in {"A2","A3","A4","A5"} and row.get("human_gate_for_default") is not True:
             errors.append("human_gate_required:"+rid)
         if level=="A5" and row.get("default_decision")!="DENY":
             errors.append("a5_must_default_deny:"+rid)
