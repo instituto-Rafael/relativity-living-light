@@ -23,6 +23,7 @@ from rx.kernel import (
     write_csv,
     write_svg_chart,
 )
+from rx.contracts import active_contract
 from rx.cosmology import (
     BOUNDS,
     MODEL_ORDER,
@@ -49,6 +50,10 @@ CMB_PATH = ROOT / "data" / "real" / "CMB_shift_real.json"
 RESULTS.mkdir(parents=True, exist_ok=True)
 FIGS.mkdir(parents=True, exist_ok=True)
 
+CONTRACT_ID, CONTRACT = active_contract()
+if CONTRACT_ID != "RX-STRUCTURE-D-PARITY-V1":
+    raise SystemExit("run_rx_multiprobe currently requires RX-STRUCTURE-D-PARITY-V1")
+
 hz = read_csv(HZ_PATH)
 bao = read_csv(BAO_PATH)
 growth = read_csv(FS8_PATH)
@@ -69,8 +74,10 @@ maxiter = max(1, int(os.environ.get("RX_MULTIPROBE_MAXITER", "12")))
 distance_steps = max(64, int(os.environ.get("RX_DISTANCE_STEPS", "256")))
 cmb_steps = max(256, int(os.environ.get("RX_CMB_STEPS", "1024")))
 growth_steps = max(64, int(os.environ.get("RX_GROWTH_STEPS", "256")))
-growth_mode = os.environ.get("RX_GROWTH_MODE", "structure_d_proxy")
-cmb_mode = os.environ.get("RX_CMB_MODE", "structure_d_rd")
+growth_mode = os.environ.get("RX_GROWTH_MODE", CONTRACT["growth_mode"])
+cmb_mode = os.environ.get("RX_CMB_MODE", CONTRACT["cmb_acoustic_mode"])
+if growth_mode != CONTRACT["growth_mode"] or cmb_mode != CONTRACT["cmb_acoustic_mode"]:
+    raise SystemExit("runtime semantics differ from active versioned physics contract")
 
 def evaluate(model, vector):
     ol = omega_lambda(model, vector)
@@ -248,10 +255,17 @@ payload = {
         "CMB_compressed_parameters": n_cmb,
         "N": n_obs,
     },
+    "physics_contract": {
+        "id": CONTRACT_ID,
+        "state": CONTRACT["state"],
+        "omega_r": CONTRACT["omega_r"],
+        "hz_dataset": CONTRACT["hz_dataset"],
+        "claim_allowed": CONTRACT["claim_allowed"],
+    },
     "semantics": {
         "growth_mode": growth_mode,
         "cmb_acoustic_mode": cmb_mode,
-        "distance_integration": "log1p_simpson",
+        "distance_integration": CONTRACT["distance_integration"],
         "flat_closure": True,
     },
     "rows": rows,
