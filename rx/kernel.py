@@ -204,3 +204,69 @@ def write_svg_chart(path, title, series, width=900, height=520):
     )
     out.append("</svg>")
     path.write_text("\n".join(out) + "\n", encoding="utf-8")
+
+
+def write_svg_bars(path, title, labels, values, width=900, height=520):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    labels = [str(x) for x in labels]
+    values = [float(x) for x in values]
+    if len(labels) != len(values):
+        raise ValueError("labels/values length mismatch")
+    if not labels:
+        labels = ["empty"]
+        values = [0.0]
+
+    left, right, top, bottom = 70.0, 25.0, 55.0, 85.0
+    pw = width - left - right
+    ph = height - top - bottom
+    vmax = max(max(values), 0.0)
+    vmin = min(min(values), 0.0)
+    if vmax == vmin:
+        vmax = vmin + 1.0
+
+    def sy(value):
+        return top + (vmax - float(value)) * ph / (vmax - vmin)
+
+    zero_y = sy(0.0)
+    slot = pw / max(len(labels), 1)
+    bar_w = slot * 0.62
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        f'<text x="{left}" y="30" font-size="20" font-family="sans-serif">{html.escape(str(title))}</text>',
+        f'<line x1="{left}" y1="{zero_y:.2f}" x2="{left+pw}" y2="{zero_y:.2f}" stroke="black"/>',
+        f'<line x1="{left}" y1="{top}" x2="{left}" y2="{top+ph}" stroke="black"/>',
+    ]
+    for idx, (label, value) in enumerate(zip(labels, values)):
+        x = left + idx * slot + (slot - bar_w) / 2.0
+        y = sy(max(value, 0.0))
+        y2 = sy(min(value, 0.0))
+        h = max(abs(y2 - y), 1.0)
+        out.append(
+            f'<rect x="{x:.2f}" y="{min(y,y2):.2f}" width="{bar_w:.2f}" height="{h:.2f}" '
+            'fill="none" stroke="black"/>'
+        )
+        out.append(
+            f'<text x="{x + bar_w/2:.2f}" y="{top+ph+20}" text-anchor="middle" '
+            f'font-size="11" font-family="monospace">{html.escape(label)}</text>'
+        )
+        out.append(
+            f'<text x="{x + bar_w/2:.2f}" y="{min(y,y2)-4:.2f}" text-anchor="middle" '
+            f'font-size="10" font-family="monospace">{value:.6g}</text>'
+        )
+    out.append("</svg>")
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
+
+
+def write_svg_message(path, title, message, width=900, height=320):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        f'<text x="40" y="50" font-size="20" font-family="sans-serif">{html.escape(str(title))}</text>',
+        f'<text x="40" y="110" font-size="15" font-family="monospace">{html.escape(str(message))}</text>',
+        "</svg>",
+    ]
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
