@@ -17,6 +17,7 @@ paths = {
     "no_ai": ROOT / "results" / "rx_no_ai_runtime_gate.json",
     "selftest": ROOT / "results" / "rx_selftest.json",
     "sound_horizon": ROOT / "results" / "rx_sound_horizon_selftest.json",
+    "freestanding65": ROOT / "results" / "rx_freestanding65_parity.json",
     "simple": ROOT / "validacao_real" / "results_rx" / "validation_summary_rx.json",
     "multiprobe": ROOT / "validacao_real" / "results_rx" / "multiprobe_rx.json",
     "parity": ROOT / "results" / "rx_semantic_parity.json",
@@ -45,6 +46,11 @@ checks["sound_horizon_reference_pass"] = data["sound_horizon"].get("pass") is Tr
 checks["sound_horizon_no_training"] = data["sound_horizon"].get("training") is False
 checks["sound_horizon_no_ai_runtime"] = data["sound_horizon"].get("ai_runtime") is False
 checks["sound_horizon_claim_closed"] = data["sound_horizon"].get("claim_allowed") is False
+checks["freestanding65_parity_pass"] = data["freestanding65"].get("pass") is True
+checks["freestanding65_surface_N_65"] = data["freestanding65"].get("surface", {}).get("N") == 65
+checks["freestanding65_no_training"] = data["freestanding65"].get("training") is False
+checks["freestanding65_no_ai_runtime"] = data["freestanding65"].get("ai_runtime") is False
+checks["freestanding65_claim_closed"] = data["freestanding65"].get("claim_allowed") is False
 
 simple_runtime = data["simple"].get("runtime", {})
 checks["simple_claim_closed"] = data["simple"].get("claim_allowed") is False
@@ -110,7 +116,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, Rx stdlib runtime, sound-horizon reference vectors, simple validation, current multiprobe surface, "
+        "No-AI runtime gate, Rx stdlib runtime, sound-horizon vectors, freestanding65 parity, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger and dependency audit are connected in one executable chain."
     ),
     "F_gap": (
