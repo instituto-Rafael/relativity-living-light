@@ -8,6 +8,58 @@
   "source_boundary": "External papers are literature evidence and implementation guidance. They do not resolve TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS and do not authorize model-selection claims.",
   "papers": [
     {
+      "id": "2503.14738",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "published": "2025-03-18",
+      "citation_key": "DESI2025DR2BAO",
+      "authors": [
+        "DESI Collaboration"
+      ],
+      "arxiv": "arXiv:2503.14738",
+      "epistemic_role": "DATA_AUTHORITY",
+      "bibliography_paths": [
+        "PapersPub/01_cosmology_pantheon_desi/references.bib"
+      ],
+      "role": "primary_data_authority_DESI_DR2_BAO",
+      "extracted_findings": [
+        "Primary DESI DR2 authority for compressed BAO observables and cosmological constraints.",
+        "RLL data custody/order/covariance checks must trace to the primary DESI products rather than only to secondary model papers."
+      ],
+      "rll_action": [
+        "Bind DESI DR2 likelihood/data receipts to this primary authority.",
+        "Require vector-order, covariance and hash provenance before background comparison.",
+        "Do not treat data materialization as evidence for RLL."
+      ]
+    },
+    {
+      "id": "2202.04077",
+      "title": "The Pantheon+ Analysis: Cosmological Constraints",
+      "published": "2022-02-08",
+      "citation_key": "Brout2022PantheonPlus",
+      "authors": [
+        "Dillon Brout",
+        "Dan Scolnic",
+        "Brodie Popovic",
+        "Adam G. Riess",
+        "et al."
+      ],
+      "arxiv": "arXiv:2202.04077",
+      "epistemic_role": "DATA_AUTHORITY",
+      "bibliography_paths": [
+        "PapersPub/01_cosmology_pantheon_desi/references.bib"
+      ],
+      "role": "primary_data_authority_PantheonPlus",
+      "extracted_findings": [
+        "Primary Pantheon+ cosmology reference for 1701 light curves of 1550 Type Ia supernovae and systematic treatment.",
+        "Pantheon+ likelihood use requires the dataset/covariance provenance boundary to remain explicit."
+      ],
+      "rll_action": [
+        "Bind Pantheon+ catalog and STAT+SYS covariance receipts to this primary authority.",
+        "Preserve nuisance/calibration treatment and z-cut provenance in every formal fit.",
+        "Do not promote a covariance-ready run to a scientific claim without the remaining gates."
+      ]
+    },
+    {
       "id": "2607.25539",
       "title": "No preference for generalized emergent dark energy from current cosmological data",
       "published": "2026-07-28",
@@ -22,6 +74,19 @@
         "Preserve G4 background-only results as limited evidence.",
         "Do not promote a background-fit improvement or equality to physical preference.",
         "Require G6 posterior/evidence and perturbation/CMB gates before any model-selection claim."
+      ],
+      "citation_key": "Sharma2026GEDE",
+      "authors": [
+        "Vipin Kumar Sharma",
+        "Himanshu Chaudhary",
+        "Salvatore Capozziello",
+        "Dhruba Jyoti Gogoi",
+        "G. Mustafa"
+      ],
+      "arxiv": "arXiv:2607.25539v1",
+      "epistemic_role": "COMPARATOR",
+      "bibliography_paths": [
+        "PapersPub/01_cosmology_pantheon_desi/references.bib"
       ]
     },
     {
@@ -39,6 +104,18 @@
         "Treat interaction-like background degeneracy as non-identifying.",
         "Require perturbation-derived P(k), f_sigma8 and lensing/RSD confrontation before interaction claims.",
         "Keep route B interacting-sector semantics independent from route A1 and background-only route C."
+      ],
+      "citation_key": "Wang2026DarkSectorDESIDR2",
+      "authors": [
+        "Jincheng Wang",
+        "Hongwei Yu",
+        "Puxun Wu"
+      ],
+      "arxiv": "arXiv:2609.03062v1",
+      "epistemic_role": "COMPARATOR_AND_FALSIFIER_GUIDE",
+      "bibliography_paths": [
+        "PapersPub/01_cosmology_pantheon_desi/references.bib",
+        "PapersPub/02_cosmology_growth_structure_d/references.bib"
       ]
     },
     {
@@ -56,6 +133,16 @@
         "If RLL route B is selected, Q_mu must decompose into Q, deltaQ and momentum-transfer terms with one declared frame/gauge convention.",
         "A hidden background Q is insufficient for solver implementation.",
         "Large-scale/super-horizon stability is a mandatory gate, not an optimizer prior workaround."
+      ],
+      "citation_key": "LiZhang2023IDECAMB",
+      "authors": [
+        "Yun-He Li",
+        "Xin Zhang"
+      ],
+      "arxiv": "arXiv:2306.01593v2",
+      "epistemic_role": "IMPLEMENTATION_REFERENCE",
+      "bibliography_paths": [
+        "PapersPub/02_cosmology_growth_structure_d/references.bib"
       ]
     },
     {
@@ -72,6 +159,19 @@
         "C07 cannot be closed by copying standard GR initial values.",
         "Derive a super-horizon series/constraint-compatible mode from the frozen RLL equations.",
         "Test the initial solution against conservation/constraint residuals before Boltzmann handoff."
+      ],
+      "citation_key": "Pan2025ConsistentICs",
+      "authors": [
+        "Jiaming Pan",
+        "Meng-Xiang Lin",
+        "Gen Ye",
+        "Marco Raveri",
+        "Alessandra Silvestri"
+      ],
+      "arxiv": "arXiv:2506.17411v1",
+      "epistemic_role": "IMPLEMENTATION_REFERENCE",
+      "bibliography_paths": [
+        "PapersPub/02_cosmology_growth_structure_d/references.bib"
       ]
     },
     {
@@ -88,6 +188,15 @@
         "CLASS and CAMB RLL integrations must be independent implementations of one frozen solver-neutral equation contract.",
         "Baseline LambdaCDM recovery and numerical-convergence sweeps must precede RLL cross-backend comparison.",
         "The historical 0.01 percent LambdaCDM result is a reference, not an automatically inherited RLL acceptance threshold; RLL tolerance must be preregistered after convergence studies."
+      ],
+      "citation_key": "Lesgourgues2011CLASSCAMB",
+      "authors": [
+        "Julien Lesgourgues"
+      ],
+      "arxiv": "arXiv:1104.2934v2",
+      "epistemic_role": "NUMERICAL_PARITY_REFERENCE",
+      "bibliography_paths": [
+        "PapersPub/02_cosmology_growth_structure_d/references.bib"
       ]
     }
   ],
@@ -119,5 +228,23 @@
     "TOKEN_VAZIO_RLL_CAMB_IMPLEMENTATION",
     "TOKEN_VAZIO_RLL_CLASS_CAMB_PARITY_TOLERANCE",
     "TOKEN_VAZIO_GROWTH_LSS_FULL_VALIDATION"
-  ]
+  ],
+  "bibliography": {
+    "style": "BibTeX",
+    "primary_files": [
+      "PapersPub/01_cosmology_pantheon_desi/references.bib",
+      "PapersPub/02_cosmology_growth_structure_d/references.bib"
+    ],
+    "human_maps": [
+      "PapersPub/01_cosmology_pantheon_desi/references.md",
+      "PapersPub/02_cosmology_growth_structure_d/references.md"
+    ],
+    "citation_policy": [
+      "Every external literature action must resolve to a citation_key present in a canonical BibTeX file.",
+      "DATA_AUTHORITY references bind dataset/likelihood provenance; they do not support RLL preference.",
+      "IMPLEMENTATION_REFERENCE equations are constraints/guides, not imported RLL equations.",
+      "COMPARATOR and FALSIFIER_GUIDE references define comparison/falsification surfaces, not truth scores.",
+      "bibliography_count != evidence_strength"
+    ]
+  }
 }
