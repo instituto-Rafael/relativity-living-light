@@ -10,7 +10,7 @@
     {
       "id": "2503.14738",
       "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
-      "published": "2025-03-18",
+      "published": "2025",
       "citation_key": "DESI2025DR2BAO",
       "authors": [
         "DESI Collaboration"
@@ -29,12 +29,14 @@
         "Bind DESI DR2 likelihood/data receipts to this primary authority.",
         "Require vector-order, covariance and hash provenance before background comparison.",
         "Do not treat data materialization as evidence for RLL."
-      ]
+      ],
+      "source_version": "v3",
+      "source_version_date": "2025-10-09"
     },
     {
       "id": "2202.04077",
       "title": "The Pantheon+ Analysis: Cosmological Constraints",
-      "published": "2022-02-08",
+      "published": "2022",
       "citation_key": "Brout2022PantheonPlus",
       "authors": [
         "Dillon Brout",
@@ -57,7 +59,9 @@
         "Bind Pantheon+ catalog and STAT+SYS covariance receipts to this primary authority.",
         "Preserve nuisance/calibration treatment and z-cut provenance in every formal fit.",
         "Do not promote a covariance-ready run to a scientific claim without the remaining gates."
-      ]
+      ],
+      "source_version": "v2",
+      "source_version_date": "2022-11-14"
     },
     {
       "id": "2607.25539",
