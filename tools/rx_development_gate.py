@@ -164,6 +164,9 @@ checks["validacao_real_yaml_matplotlib_migrated"] = (
 checks["requests_public_read_fetchers_migrated"] = (
     closed_families.get("requests_public_read_fetchers") == "MIGRATED_WITH_PARITY_GATE"
 )
+checks["guarded_import_data_stdlib_migrated"] = (
+    closed_families.get("guarded_import_data_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
 checks["docs_inventory_config_yaml_migrated"] = (
     closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
 )
