@@ -1,0 +1,39 @@
+{
+  "schema": "rll.retarded_spacetime_region_context.implementation_receipt.v2",
+  "date": "2026-09-22",
+  "supersedes": "artifacts/governance/RLL_RETARDED_SPACETIME_REGION_CONTEXT_IMPLEMENTATION_RECEIPT_20260922.json",
+  "correction_scope": "canonical-parent route advanced to explicitly reference typed extension",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "IMPLEMENTED_LOCAL_VALIDATION_PASS",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "source_basis": {
+    "uploaded_rll_zip_sha256": "9dd8f6c44bdfc4a28e43097ce48ce92c3da2406a0594a68d4a00a06dff1a0b33",
+    "canonical_parent": "data/contracts/rll_retarded_spacetime_state.v1.yml",
+    "canonical_parent_blob_sha": "4d7f30d61da8679983ba351e360eee3b42619716",
+    "canonical_parent_route_commit": "4ab7edd5b5d9c595dd91cf30243391727f206bf3"
+  },
+  "typed_extension": {
+    "path": "data/contracts/rll_retarded_spacetime_region_context.v1.yaml",
+    "blob_sha": "48a4769583337decc4dcbcf874c54ac238b28911",
+    "relation": "ordered_intervening_region_context"
+  },
+  "local_validation": {
+    "validator": "PASS",
+    "pytest": "8 passed",
+    "boundary": "LOCAL_STRUCTURAL_PASS != GITHUB_CI_PASS != SCIENTIFIC_CONFIRMATION"
+  },
+  "github_ci": "TOKEN_VAZIO_NOT_DISPATCHED",
+  "drive_evidence_bundle_id": "1mIP6vNq5aCNzZ2h0ajp2ELvscepmPe67",
+  "papers_commit": "b75d0bb84c03a1a485144a13e8368067556cc246",
+  "open_gates": {
+    "synthetic_lightcone_test": "TOKEN_VAZIO",
+    "moving_region_crossing_test": "TOKEN_VAZIO",
+    "lensing_time_delay_mock": "TOKEN_VAZIO",
+    "plasma_frequency_dependent_mock": "TOKEN_VAZIO",
+    "real_data_covariance_test": "TOKEN_VAZIO",
+    "cross_survey_holdout": "TOKEN_VAZIO",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "scientific_claim": "BLOCKED"
+  }
+}

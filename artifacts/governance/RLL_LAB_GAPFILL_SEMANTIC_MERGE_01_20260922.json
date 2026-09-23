@@ -1,0 +1,46 @@
+{
+  "schema": "rll.lab_gapfill_semantic_merge.v1",
+  "date": "2026-09-22",
+  "parent": "artifacts/governance/RLL_LAB_GAPFILL_RECONCILIATION_20260922.json",
+  "state": "PATCHED_PENDING_CI",
+  "pr": 963,
+  "branch": "reconcile/rll-lab-gapfill-20260922",
+  "failure_evidence": {
+    "workflow_run": 35805885212,
+    "job": 107006512178,
+    "failing_test": "tests/test_omega_math_explorer.py::test_explorer_emits_multidimensional_relations",
+    "observed_error": "KeyError: angular_grid_5678_lcm"
+  },
+  "cause": "Omega Math explorer/test was forward-ported while the divergent lab equation registry was intentionally preserved; eight geometry/combinatorics entries required by the new coverage gate were therefore absent.",
+  "repair": {
+    "mode": "SEMANTIC_ADDITIVE_UNION_BY_EQUATION_ID",
+    "registry": "rll_equation_registry.yml",
+    "work_registry_before_sha": "3a00608865f7e6c9459ec84a8bae7f59895809ba",
+    "main_registry_sha": "1bab13b6c8cb44e9998a091fa2cc0781b4ec59f0",
+    "preserved_existing_lab_entries": true,
+    "added_ids": [
+      "torus_projection_annulus_area",
+      "torus_surface_projection_ratio",
+      "polygon_annulus_toroidal_shell_fraction",
+      "hexagon_torus_volume_ratio",
+      "parallel_torus_tangent_separation",
+      "six_sector_toroidal_opposite_pair_closure",
+      "angular_grid_5678_lcm",
+      "modular_carrier_24_10_42_period"
+    ],
+    "preserved_lab_only_ids": [
+      "rll_a1_enthalpy_identity",
+      "rll_a1_regular_momentum_definition"
+    ],
+    "resulting_id_count": 31
+  },
+  "boundary": "REGISTRY_UNION != NEW_SCIENTIFIC_EVIDENCE; CI_RETEST_REQUIRED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "rollback": "revert this semantic-merge commit; parent gap-fill receipt remains historical",
+  "R3": {
+    "F_ok": "Root cause isolated from provider log and repaired by ID-level additive registry union.",
+    "F_gap": "CI re-execution required; remaining divergent existing paths stay unresolved unless a gate demonstrates a dependency.",
+    "F_next": "Observe rerun; only merge PR #963 if relevant gates pass."
+  }
+}

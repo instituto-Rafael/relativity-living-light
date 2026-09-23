@@ -1,0 +1,152 @@
+{
+  "schema": "rll.polygon_doubling_limit.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "state": "PASS_CONDITIONAL",
+  "assumptions": [
+    "P_n is a regular polygon inscribed in a fixed circle of radius R",
+    "doubling route n_k=4*2^k",
+    "circle limit means Hausdorff/radial and perimeter convergence"
+  ],
+  "expressions": {
+    "MF-0089": "P_(2^n)→C as n→∞",
+    "MF-0209": "4→8→16→32→...→limite circular"
+  },
+  "analytic": {
+    "radial_gap": "R[1-cos(pi/n)] -> 0",
+    "perimeter": "2nR sin(pi/n) -> 2piR"
+  },
+  "execution": {
+    "R": 1,
+    "monotone_radial_gap": true,
+    "final_n": 262144,
+    "final_radial_gap": 7.18107795449896e-11,
+    "final_perimeter_error": 1.504005808783404e-10,
+    "rows": [
+      {
+        "k": 0,
+        "n": 4,
+        "radial_gap": 0.2928932188134524,
+        "perimeter": 5.65685424949238,
+        "perimeter_error_from_circle": 0.6263310576872065
+      },
+      {
+        "k": 1,
+        "n": 8,
+        "radial_gap": 0.07612046748871326,
+        "perimeter": 6.1229349178414365,
+        "perimeter_error_from_circle": 0.16025038933814972
+      },
+      {
+        "k": 2,
+        "n": 16,
+        "radial_gap": 0.01921471959676957,
+        "perimeter": 6.242890304516104,
+        "perimeter_error_from_circle": 0.04029500266348229
+      },
+      {
+        "k": 3,
+        "n": 32,
+        "radial_gap": 0.004815273327803071,
+        "perimeter": 6.273096981091879,
+        "perimeter_error_from_circle": 0.0100883260877076
+      },
+      {
+        "k": 4,
+        "n": 64,
+        "radial_gap": 0.001204543794827595,
+        "perimeter": 6.280662313909506,
+        "perimeter_error_from_circle": 0.0025229932700803204
+      },
+      {
+        "k": 5,
+        "n": 128,
+        "radial_gap": 0.00030118130379575003,
+        "perimeter": 6.282554501865546,
+        "perimeter_error_from_circle": 0.0006308053140404724
+      },
+      {
+        "k": 6,
+        "n": 256,
+        "radial_gap": 0.00007529816085549701,
+        "perimeter": 6.283027602288602,
+        "perimeter_error_from_circle": 0.00015770489098443363
+      },
+      {
+        "k": 7,
+        "n": 512,
+        "radial_gap": 0.00001882471739889091,
+        "perimeter": 6.283145880734183,
+        "perimeter_error_from_circle": 0.00003942644540355644
+      },
+      {
+        "k": 8,
+        "n": 1024,
+        "radial_gap": 0.00000470619042380882,
+        "perimeter": 6.283175450554319,
+        "perimeter_error_from_circle": 0.000009856625267090635
+      },
+      {
+        "k": 9,
+        "n": 2048,
+        "radial_gap": 0.0000011765482981207498,
+        "perimeter": 6.2831828430223995,
+        "perimeter_error_from_circle": 0.000002464157186743421
+      },
+      {
+        "k": 10,
+        "n": 4096,
+        "radial_gap": 2.9413711777337426e-7,
+        "perimeter": 6.283184691140235,
+        "perimeter_error_from_circle": 6.160393510867834e-7
+      },
+      {
+        "k": 11,
+        "n": 8192,
+        "radial_gap": 7.353428210787882e-8,
+        "perimeter": 6.283185153169745,
+        "perimeter_error_from_circle": 1.5400984132440954e-7
+      },
+      {
+        "k": 12,
+        "n": 16384,
+        "radial_gap": 1.8383570665747584e-8,
+        "perimeter": 6.2831852686771255,
+        "perimeter_error_from_circle": 3.8502460775191594e-8
+      },
+      {
+        "k": 13,
+        "n": 32768,
+        "radial_gap": 4.595892666436896e-9,
+        "perimeter": 6.283185297553971,
+        "perimeter_error_from_circle": 9.625614971753294e-9
+      },
+      {
+        "k": 14,
+        "n": 65536,
+        "radial_gap": 1.1489731388536484e-9,
+        "perimeter": 6.283185304773182,
+        "perimeter_error_from_circle": 2.4064039649829283e-9
+      },
+      {
+        "k": 15,
+        "n": 131072,
+        "radial_gap": 2.8724334022456333e-10,
+        "perimeter": 6.283185306577986,
+        "perimeter_error_from_circle": 6.016005471565222e-10
+      },
+      {
+        "k": 16,
+        "n": 262144,
+        "radial_gap": 7.18107795449896e-11,
+        "perimeter": 6.283185307029186,
+        "perimeter_error_from_circle": 1.504005808783404e-10
+      }
+    ]
+  },
+  "result": {
+    "MF-0089": "PASS_CONDITIONAL",
+    "MF-0209": "PASS_CONDITIONAL"
+  },
+  "boundary": "Without the regular-inscribed-polygon definition, the symbolic arrows alone are underspecified."
+}

@@ -1,0 +1,159 @@
+schema_version: '1.0'
+id: RLL-MULTILAYER-CIRCLE-POLYGON-GEOMETRY-V1
+date: '2026-09-22'
+author: RAFAEL MELO REIS
+state: FORMAL_TEST_CONTRACT
+claim_boundary:
+  mathematical_identites: testable
+  classical_optics_snell: testable_as_classical_formula_only
+  physical_rll_binding: TOKEN_VAZIO_EVIDENCE
+  cosmological_binding: TOKEN_VAZIO_EVIDENCE
+parameters:
+  radius:
+    symbol: R
+    domain: R>0
+  polygon_order:
+    symbol: n
+    domain: integer n>=3
+  chord_step:
+    symbol: k
+    domain: 1<=k<=floor(n/2)
+  layer_scale:
+    symbol: lambda
+    domain: 0<lambda<1
+  phase:
+    symbol: phi
+    domain: real modulo 2*pi
+  layer_index:
+    symbol: j
+    domain: integer j>=0
+  refractive_index:
+    symbol: eta
+    domain: eta>0
+  sphere_radius:
+    symbol: Rs
+    domain: Rs>0
+  prism_height:
+    symbol: h
+    domain: h>0
+scenarios:
+- id: S01_REGULAR_POLYGON
+  kind: euclidean_2d
+  tests: [central_angle, side, apothem, perimeter, area]
+- id: S02_CHORD_CLASSES
+  kind: trigonometry
+  tests: [chord_formula, diameter_even_n]
+- id: S03_EQUILATERAL_TRIANGLE
+  kind: euclidean_2d
+  tests: [height, area, circumradius, inradius, R_eq_2r]
+- id: S04_TRIANGLE_CIRCLE_AREA_RATIOS
+  kind: area_ratio
+  tests: [incircle_over_triangle, circumcircle_over_triangle]
+- id: S05_HEXAGON_SIX_TRIANGLES
+  kind: decomposition
+  tests: [side_equals_R, six_equilateral_areas_equal_hexagon]
+- id: S06_CONCENTRIC_LAYERS
+  kind: layers
+  tests: [geometric_radius, annulus_area, geometric_area_sum]
+- id: S07_RADIAL_PROJECTION
+  kind: transformation
+  tests: [angle_preserved, radius_rescaled]
+- id: S08_HOMOTHETY
+  kind: transformation
+  tests: [length_scale, area_scale]
+- id: S09_ROTATION
+  kind: transformation
+  tests: [norm_preserved, distance_preserved]
+- id: S10_REFLECTION
+  kind: transformation
+  tests: [norm_preserved, distance_preserved, orientation_reversed]
+- id: S11_CIRCLE_INVERSION
+  kind: transformation
+  tests: [radial_product_rho_squared, involution]
+- id: S12_POLYGON_TO_CIRCLE_LIMIT
+  kind: limit
+  tests: [area_ratio_monotonic, perimeter_ratio_monotonic, convergence_96]
+- id: S13_K8_PLANAR_NO_LOSS
+  kind: graph_geometry
+  tests: [segments_28, intersections_49, concurrency_40_8_1, planar_57_136_81, faces_56_24, cycle_rank_80]
+- id: S14_ROTATED_TRIANGLE_OVERLAYS
+  kind: angular_superposition
+  tests: [six_rotations_60deg_give_6_unique_vertices, six_rotations_30deg_give_12_unique_vertices]
+- id: S15_SNELL_REFRACTION
+  kind: classical_optics
+  tests: [air_to_glass, total_internal_reflection_case]
+- id: S16_OCTAGONAL_PRISM_K16
+  kind: euclidean_3d
+  tests: [vertices_16, complete_edges_120, edge_decomposition_56_64, volume, surface_area, cross_layer_distance]
+- id: S17_SPHERICAL_SHELL_PROJECTION
+  kind: spherical_geometry
+  tests: [radial_projection_to_shell, angular_chord_arc_relation, octant_spherical_triangle_area]
+- id: S18_MULTILAYER_COMPLETE_GRAPH
+  kind: combinatorics
+  tests: [sum_vertices, all_to_all_edge_identity]
+- id: S19_INDEX_FAMILY
+  kind: dimensionless_indices
+  tests: [fill_index, polygonality_index, scale_index, chord_index, topological_index]
+- id: S20_DIHEDRAL_ORBIT_STABILIZER
+  kind: symmetry
+  tests: [D8_order_16, orbit_stabilizer_identity_samples]
+fixtures:
+  polygon_orders: [3, 4, 6, 8, 12, 24, 48, 96]
+  layer_scales: [0.5, sqrt(2)-1, sqrt(3)/2]
+  triangle_overlay_phase_degrees: [60, 30]
+  optics:
+  - {n1: 1.0, n2: 1.5, alpha_deg: 30.0, expect: REFRACT}
+  - {n1: 1.5, n2: 1.0, alpha_deg: 60.0, expect: TIR}
+  multilayer_orders: [3, 6, 8]
+outputs:
+  result_json: results/RLL_MULTILAYER_CIRCLE_POLYGON_GEOMETRY_V1.json
+  report_md: artifacts/rll-multilayer-circle-polygon-geometry/REPORT.md
+  manifest_json: artifacts/rll-multilayer-circle-polygon-geometry/MANIFEST.json
+  checksums: artifacts/rll-multilayer-circle-polygon-geometry/CHECKSUMS.sha256
+formula_registry:
+  F01_POLYGON_CENTRAL_ANGLE: theta_n = 2*pi/n
+  F02_POLYGON_SIDE: s_n = 2*R*sin(pi/n)
+  F03_POLYGON_APOTHEM: a_n = R*cos(pi/n)
+  F04_POLYGON_PERIMETER: P_n = 2*n*R*sin(pi/n)
+  F05_POLYGON_AREA: A_n = (n/2)*R^2*sin(2*pi/n)
+  F06_CHORD: ell_nk = 2*R*sin(k*pi/n)
+  F07_TRIANGLE_HEIGHT: h = (sqrt(3)/2)*a
+  F08_TRIANGLE_AREA: A_tri = (sqrt(3)/4)*a^2
+  F09_TRIANGLE_CIRCUMRADIUS: R_tri = a/sqrt(3)
+  F10_TRIANGLE_INRADIUS: r_tri = a/(2*sqrt(3))
+  F11_TRIANGLE_RADIUS_RATIO: R_tri = 2*r_tri
+  F12_INCIRCLE_AREA_RATIO: A_incircle/A_tri = pi/(3*sqrt(3))
+  F13_CIRCUMCIRCLE_AREA_RATIO: A_circumcircle/A_tri = 4*pi/(3*sqrt(3))
+  F14_LAYER_RADIUS: R_j = R_0*lambda^j
+  F15_ANNULUS_AREA: A_annulus_j = pi*(R_j^2-R_(j+1)^2)
+  F16_LAYER_AREA_SUM: sum_j>=0 pi*R_0^2*lambda^(2j) = pi*R_0^2/(1-lambda^2)
+  F17_RADIAL_PROJECTION: Pi_a_to_b(z) = (R_b/R_a)*z
+  F18_HOMOTHETY: H_mu(z)=mu*z; length->mu; area->mu^2
+  F19_ROTATION: Rot_theta(z)=exp(i*theta)*z
+  F20_REFLECTION: Ref_alpha(z)=exp(2*i*alpha)*conj(z)
+  F21_CIRCLE_INVERSION: Inv_rho(z)=rho^2/conj(z)
+  F22_SNELL: n1*sin(alpha)=n2*sin(beta)
+  F23_SPHERICAL_CHORD: c_s = 2*R_s*sin(gamma/2)
+  F24_SPHERICAL_ARC: s_s = R_s*gamma
+  F25_SPHERICAL_TRIANGLE_AREA: A_s = R_s^2*(A+B+C-pi)
+  F26_PRISM_CROSSLAYER_DISTANCE: D_k=sqrt((2*R*sin(k*pi/8))^2+h^2)
+  F27_OCTAGONAL_PRISM_VOLUME: V=2*(1+sqrt(2))*s^2*h
+  F28_OCTAGONAL_PRISM_SURFACE: S=4*(1+sqrt(2))*s^2+8*s*h
+  F29_CYCLE_RANK: beta_1=E-V+C
+  F30_DIHEDRAL_ORBIT_STABILIZER: '|Orb_G(x)|=|G|/|Stab_G(x)|'
+index_registry:
+  I01_FILL: A(shape)/(pi*R^2)
+  I02_POLYGONALITY: n*sin(2*pi/n)/(2*pi)
+  I03_SCALE: R_(j+1)/R_j
+  I04_CHORD: ell_nk/R
+  I05_TOPOLOGICAL: chi=C-H
+  I06_SYMMETRY: '|Stab_G(shape)|'
+  I07_ORBIT: '|Orb_G(shape)|'
+  I08_COMBINATORIAL: (w_F,w_E)
+topological_states:
+- EMPTY
+- SIMPLE_CYCLE
+- MULTI_CYCLE
+- REGION_WITH_HOLES
+- EVEN_DEGREE_EULERIAN
+- DISCONNECTED_CLOSED_SUPPORT

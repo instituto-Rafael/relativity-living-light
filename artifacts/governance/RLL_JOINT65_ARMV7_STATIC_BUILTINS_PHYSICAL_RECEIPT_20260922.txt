@@ -1,0 +1,45 @@
+schema=rll.joint65-armv7-static-builtins-physical.v1
+provenance=USER_OBSERVED_PHYSICAL_TERMUX_TRANSCRIPT
+timestamp=2026-09-22T18:37:56-03:00
+arch=armv7l
+pinned_ref=71c66f8efccef70f20a9b9657146d4dcac112672
+
+runner_local_name=run_rll_joint65_armv7_static_builtins_gate_v2.sh
+runner_local_sha256=e508a93476892c3ef6ed5eac64bd2f8e97279ab2efea52fe844bf46a8ef9e13a
+
+artifact=/data/data/com.termux/files/home/rll_joint65_capsule/build/rll-joint65-armv7-static-builtins/rll_joint65_armv7_static_builtins
+artifact_sha256=4ea887b8a679dd0db6f5ad36ec63030a5fed6ed0affd7a8c6b229f3452020a2b
+
+compiler=clang version 21.1.8
+linker=LLD 21.1.8 (compatible with GNU linkers)
+compiler_rt_builtins=/data/data/com.termux/files/usr/lib/clang/21/lib/linux/libclang_rt.builtins-arm-android.a
+compiler_rt_builtins_sha256=dcb6cfe8f1afa5bb37b935173e7b90709cb474c3d6b6104e8b8f386a5f108e60
+local_runtime_shim_sha256=b3462dd2612f79428e7415d52b8b731e3f0b1342ce4c9dc59a7cb403e0a167cb
+
+undefined_symbols=0
+interpreter_segments=0
+needed_entries=0
+libc_like_undefined=0
+aeabi_defined=__aeabi_d2lz,__aeabi_d2ulz,__aeabi_idiv0,__aeabi_l2d,__aeabi_ldivmod,__aeabi_memcpy,__aeabi_memcpy4,__aeabi_memcpy8,__aeabi_uidiv,__aeabi_uldivmod
+aeabi_undefined=NONE
+execution_exit=0
+
+rows_expected=65
+model_token_vazio_rows_expected=0
+cmb_covariance_used_expected=1
+lcdm_chi2_q16_expected=4641555
+rll_chi2_q16_expected=4261420
+delta_q16_expected=-380135
+claim_allowed_expected=0
+
+entry_semantics_note=execution_exit_0 means the pinned entry checks for row counts, covariance, chi2 values, delta and claim_allowed all passed for the executed artifact
+observed_values_printed_directly=false
+
+geometry_evidence_transfer=FORBIDDEN
+strict_no_toolchain_runtime=FAIL_BY_DESIGN
+static_toolchain_runtime=compiler-rt-builtins
+no_libc=PASS
+no_dynamic_loader=PASS
+status=PASS
+
+receipt_sha256=db822ebf5152f21b9e57faa4af7c0df68299ec08a56aa7a3142fdad0a067639b
