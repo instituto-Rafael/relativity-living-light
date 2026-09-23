@@ -114,6 +114,7 @@ def audit():
 def develop():
     _tool_args("validate_rll_development_governance.py", ["--strict"])
     _tool("validate_executable_entrypoint_authority_registry.py")
+    _tool("validate_validacao_real_serialization_parity.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_no_ai_gate.py")
     _tool("rx_zero_dependency_gate.py")
