@@ -34,6 +34,7 @@ paths = {
     "credential_authority_stdlib": ROOT / "results" / "credential_authority_stdlib_migration.json",
     "watch_config_stdlib": ROOT / "results" / "watch_config_stdlib_migration.json",
     "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
+    "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
 }
 
 cli_security_receipts = sorted(
@@ -86,6 +87,10 @@ checks["calc_data_stdlib_pass"] = data["calc_data_stdlib"].get("pass") is True
 checks["calc_data_stdlib_zero_third_party"] = data["calc_data_stdlib"].get("third_party_python_dependencies") == []
 checks["calc_data_stdlib_no_network"] = data["calc_data_stdlib"].get("network_requests_performed") == 0
 checks["calc_data_stdlib_claim_closed"] = data["calc_data_stdlib"].get("claim_allowed") is False
+checks["validation_deterministic_stdlib_pass"] = data["validation_deterministic_stdlib"].get("pass") is True
+checks["validation_deterministic_stdlib_zero_third_party"] = data["validation_deterministic_stdlib"].get("third_party_python_dependencies") == []
+checks["validation_deterministic_stdlib_bayes_still_legacy"] = data["validation_deterministic_stdlib"].get("bayesian_legacy_migrated") is False
+checks["validation_deterministic_stdlib_claim_closed"] = data["validation_deterministic_stdlib"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -188,6 +193,9 @@ checks["technology_watch_yaml_jsonschema_stdlib_migrated"] = (
 )
 checks["calc_data_numpy_pandas_stdlib_migrated"] = (
     closed_families.get("calc_data_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["validation_deterministic_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("validation_deterministic_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
 )
 checks["docs_inventory_config_yaml_migrated"] = (
     closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
