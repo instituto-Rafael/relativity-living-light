@@ -7,6 +7,7 @@ No third-party packages. No training. No AI runtime.
 from __future__ import annotations
 
 import ast
+import importlib
 import json
 import math
 import sys
@@ -60,6 +61,12 @@ check(abs(float(contract["omega_r"]) - ORAD) < 1.0e-15, "contract_omega_r_matche
 check(contract["growth_mode"] == "structure_d_proxy", "contract_growth_mode")
 check(contract["cmb_acoustic_mode"] == "structure_d_rd", "contract_cmb_mode")
 check(contract["claim_allowed"] is False, "contract_claim_closed")
+try:
+    importlib.import_module("data.pipelines.structure_d")
+    structure_namespace_ok = True
+except Exception:
+    structure_namespace_ok = False
+check(structure_namespace_ok, "structure_d_namespace_import_without_legacy_dependencies")
 
 stdlib = set(getattr(sys, "stdlib_module_names", ()))
 stdlib.update({"__future__"})
