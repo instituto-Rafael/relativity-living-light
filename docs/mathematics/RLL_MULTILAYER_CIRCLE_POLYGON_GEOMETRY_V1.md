@@ -313,3 +313,40 @@ Physical/cosmological interpretation is not tested by this mathematical suite an
 **F_ok:** one YAML now routes 20 mathematical situations into one reproducible validator and CI contract.  
 **F_gap:** exhaustive generative enumeration of arbitrary layer/order/phase combinations and their simple-cycle/D8 orbit ledgers remains open.  
 **F_next:** turn generated forms into streaming append-only records with parameters, invariants, topology, symmetry and rollback refs.
+
+
+---
+
+## 13. Portable C99 consumer and cross-repository parity — 2026-09-22
+
+A portable C99 consumer was materialized at:
+
+- `tools/multilayer_geometry/multilayer_geometry.c`
+- `tools/multilayer_geometry/build_and_selftest.sh`
+- `tools/multilayer_geometry/README.md`
+- `tools/multilayer_geometry/manifest.json`
+
+The same C source was read back with byte-for-byte text parity across:
+
+- `instituto-Rafael/relativity-living-light@main`
+- `rafaelmeloreisnovo/RafGitTools@main`
+- `rafaelmeloreisnovo/Vectras-VM-Android@master`
+- `rafaelmeloreisnovo/termux-app-rafacodephi@research/multilayer-geometry-portable-c99-v1-20260922`
+
+The pre-materialization local build of the portable source returned:
+
+[
+35	ext{ PASS},qquad0	ext{ FAIL}.
+]
+
+This does not replace the richer RLL Python/YAML suite, whose preserved result remains 120/120 PASS.
+
+Publication synthesis:
+`rafaelmeloreisnovo/papers/papers/multilayer_circle_polygon_geometry_v1/paper.md`
+
+Termux integration is currently carried by draft PR #455; device-native Termux execution is still a separate evidence gate.
+
+RafGitTools and Vectras copies are standalone tooling consumers. Android JNI/UI wiring remains `TOKEN_VAZIO_NOT_WIRED`.
+
+Receipt:
+`receipts/2026-09-22_RLL_MULTILAYER_GEOMETRY_PORTABLE_C99_V1_MAIN.md`.
