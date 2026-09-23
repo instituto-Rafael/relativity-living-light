@@ -1,6 +1,6 @@
 {
   "schema": "rll.development_security_envelope.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "ACTIVE_GOVERNED_DRAFT",
   "purpose": "Bound software development/execution without autonomous goal setting, unreviewed sensitive-data handling, arbitrary shell/network authority, or silent claim promotion.",
   "default_decision": "BLOCK",
@@ -15,7 +15,9 @@
     ],
     "autonomous_goal_setting": "FORBIDDEN",
     "autonomous_scope_expansion": "FORBIDDEN",
-    "self_authorization": "FORBIDDEN"
+    "self_authorization": "FORBIDDEN",
+    "runtime_mode_must_be_declared": true,
+    "runtime_mode_is_identity_proof": false
   },
   "decisions": [
     "ALLOW",
@@ -184,5 +186,11 @@
     "TOKEN_VAZIO_OS_SANDBOX_ENFORCEMENT",
     "TOKEN_VAZIO_INDEPENDENT_SECURITY_REVIEW",
     "TOKEN_VAZIO_LEGAL_COMPLIANCE_REVIEW"
-  ]
+  ],
+  "mode": {
+    "software_development": true,
+    "model_training": false,
+    "autonomous_agent": false,
+    "deterministic_program_execution": true
+  }
 }
