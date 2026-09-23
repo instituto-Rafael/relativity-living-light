@@ -151,7 +151,7 @@ def run_joint_likelihood_flat(output_stem: str = DEFAULT_OUTPUT_STEM) -> dict:
 
     registry = inputs["parameter_registry"]
     commit_sha = legacy._git_sha()
-    n_obs = int(len(inputs["hz"]) + len(inputs["desi"]) + len(inputs["fs8"]) + 2)
+    n_obs = int(len(inputs["hz"]) + len(inputs["desi"]) + len(inputs["fs8"]) + 3)
     rows = [
         _model_row(model, fitted[model][0], fitted[model][1], n_obs, registry, commit_sha)
         for model in MODEL_ORDER
