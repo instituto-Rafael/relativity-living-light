@@ -1,8 +1,6 @@
+import csv
 import json
 from pathlib import Path
-
-import numpy as np
-import pandas as pd
 
 from tools.ci_scientific_skills import (
     anomaly_diagnostic,
@@ -15,13 +13,18 @@ from tools.ci_scientific_skills import (
 
 def test_robust_anomaly_detects_large_outlier():
     scores = robust_anomaly_scores([1.0, 1.1, 0.9, 1.05, 40.0])
-    assert int(np.argmax(np.abs(scores))) == 4
+    index = max(range(len(scores)), key=lambda i: abs(scores[i]))
+    assert index == 4
     assert abs(scores[4]) > 3.5
 
 
 def test_anomaly_diagnostic_records_input_hash(tmp_path: Path):
     path = tmp_path / "observations.csv"
-    pd.DataFrame({"value": [1.0, 1.1, 0.9, 1.05, 40.0]}).to_csv(path, index=False)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["value"])
+        writer.writeheader()
+        for value in [1.0, 1.1, 0.9, 1.05, 40.0]:
+            writer.writerow({"value": value})
     report = anomaly_diagnostic(path)
     assert report["status"] == "EVIDENCED_ON_REPOSITORY_DATA"
     assert report["anomaly_indices"] == [4]
@@ -32,17 +35,21 @@ def test_fourier_torus_method_is_deterministic_and_precise():
     report = fourier_torus_diagnostic(samples=2048, max_mode=32)
     assert report["status"] == "VERIFIED_METHOD"
     assert report["rmse"] < 1e-12
+    assert report["tail_energy_after_mode_5"] < 1e-24
     assert report["space"] == "T^1"
 
 
 def test_bayes_proxy_prefers_lower_bic(tmp_path: Path):
     path = tmp_path / "comparison.csv"
-    pd.DataFrame(
-        [
-            {"model": "lcdm", "BIC": 110.0},
-            {"model": "rll", "BIC": 116.0},
-        ]
-    ).to_csv(path, index=False)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["model", "BIC"])
+        writer.writeheader()
+        writer.writerows(
+            [
+                {"model": "lcdm", "BIC": 110.0},
+                {"model": "rll", "BIC": 116.0},
+            ]
+        )
     report = bayes_proxy_diagnostic(path)
     assert report["preferred_by_bic"] == "lcdm"
     assert report["delta_bic_alternative_minus_preferred"] == 6.0
