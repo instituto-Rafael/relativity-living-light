@@ -1,0 +1,62 @@
+{
+  "schema": "rll.lab_gapfill_generated_inventory_sync.v1",
+  "date": "2026-09-22",
+  "parent": "artifacts/governance/RLL_LAB_GAPFILL_SEMANTIC_MERGE_01_20260922.json",
+  "state": "MATERIALIZED_PENDING_CI",
+  "pr": 963,
+  "branch": "reconcile/rll-lab-gapfill-20260922",
+  "provider": {
+    "workflow_run": 35806116467,
+    "job": 107007244830,
+    "validator_observed": "PASS",
+    "generated_inventory_observed": "DELTA_REQUIRED",
+    "artifact_id": 10727439236,
+    "artifact_digest": "sha256:7d1840dd94af72a340368fa9eee528e5ee35edcdac6f61a840c9fc8a6d441801"
+  },
+  "repair": {
+    "method": "REPLAY_PROVIDER_GIT_DIFF_ON_EQUIVALENT_MERGE_TREE",
+    "generator": "tools/docs_inventory.py",
+    "source_tree_head": "7852ac30f00ee908c14f4d804aa06a82fbc9d1fe",
+    "updated_files": [
+      {
+        "path": "docs/DOCUMENTATION_FULL_INVENTORY.md",
+        "before_blob_sha": "3f125598a2159cee158e0c375117efdd2c61ec60",
+        "after_blob_sha": "51289a31e06eefd4e259212e527917de376176c8"
+      },
+      {
+        "path": "docs/REAL_NUMBERS_REPORT.md",
+        "before_blob_sha": "08eb98d3a7a3eababdb933ecdc0be96d3994c4c4",
+        "after_blob_sha": "cc2ba933bc0cfbf99479448f3800e2b4898bf9f4"
+      },
+      {
+        "path": "docs/YML_WORKFLOWS_INDEX.md",
+        "before_blob_sha": "bd29a47096f1c7420659df911d5c9fa3eb64f1b8",
+        "after_blob_sha": "3630038c828eec85e4efb5d6e732388dcef51dbe"
+      },
+      {
+        "path": "data/results/repo_inventory.json",
+        "before_blob_sha": "1f084eeb53b8b91df2d2a184f1c30c0b51302c4e",
+        "after_blob_sha": "fbaa9587ac366c73e72a7cd23d5a9633ccd36fa1"
+      },
+      {
+        "path": "data/results/repo_inventory.tsv",
+        "before_blob_sha": "ccdb8058ed65ce7bca795057d8a934dcd8ecee48",
+        "after_blob_sha": "84df0b0cdd6ae72accf1f6d0297a2f712380678b"
+      },
+      {
+        "path": "data/results/repo_inventory_summary.json",
+        "before_blob_sha": "4e0ec7b606b02dec266718f2d8625d78deb18ead",
+        "after_blob_sha": "e15927443edb87d49dbde25d7ea7516cdd88b143"
+      }
+    ]
+  },
+  "boundary": "GENERATED_INVENTORY_SYNC != SCIENTIFIC_EVIDENCE; EXACT_HEAD_CI_RETEST_REQUIRED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "rollback": "revert this generated-inventory commit; preserve provider failure and prior receipts",
+  "R3": {
+    "F_ok": "Six Sigma semantic validator passed; generated inventory delta materialized from provider evidence.",
+    "F_gap": "Exact-head CI retest required.",
+    "F_next": "Merge PR #963 only after successor gates show no regression."
+  }
+}
