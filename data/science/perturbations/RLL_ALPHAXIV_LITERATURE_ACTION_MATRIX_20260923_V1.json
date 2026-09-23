@@ -10,7 +10,7 @@
     {
       "id": "2503.14738",
       "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
-      "published": "2025",
+      "published": "2025-03-18",
       "citation_key": "DESI2025DR2BAO",
       "authors": [
         "DESI Collaboration"
@@ -36,7 +36,7 @@
     {
       "id": "2202.04077",
       "title": "The Pantheon+ Analysis: Cosmological Constraints",
-      "published": "2022",
+      "published": "2022-02-08",
       "citation_key": "Brout2022PantheonPlus",
       "authors": [
         "Dillon Brout",
@@ -249,6 +249,12 @@
       "IMPLEMENTATION_REFERENCE equations are constraints/guides, not imported RLL equations.",
       "COMPARATOR and FALSIFIER_GUIDE references define comparison/falsification surfaces, not truth scores.",
       "bibliography_count != evidence_strength"
-    ]
+    ],
+    "alphaXiv_library": {
+      "folder": "RLL — Perturbations & DESI DR2",
+      "folder_id": "01a0ce9b-6292-7a0b-b70c-ac00e261fb2c",
+      "paper_count": 7,
+      "verified_on": "2026-09-23"
+    }
   }
 }
