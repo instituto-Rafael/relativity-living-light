@@ -247,6 +247,33 @@
       "scientific_claim_effect": "NONE"
     },
     {
+      "route_id": "REAL_DATA_MATERIALIZATION_V2",
+      "entrypoints": [
+        "python3 scripts/materialize_real_data_guarded.py --dataset pantheon_plus_shoes --dry-run",
+        "python3 scripts/materialize_real_data_guarded.py --dataset pantheon_plus_shoes --authorize-network-materialization"
+      ],
+      "mechanism": "scripts/materialize_real_data.py",
+      "max_authority_default": "A1",
+      "max_authority_optional": "A2",
+      "data_classes": [
+        "D0",
+        "D1"
+      ],
+      "network_default": "OFF",
+      "optional_network_hosts": [
+        "raw.githubusercontent.com"
+      ],
+      "write_prefixes": [
+        "data/pantheon/",
+        "data/real_sources/real_data_manifest.json"
+      ],
+      "human_gate_for_default": false,
+      "human_gate_for_optional_network": true,
+      "secrets": false,
+      "destructive": false,
+      "state": "GOVERNED_BOUNDED_PUBLIC_READ"
+    },
+    {
       "route_id": "EXTERNAL_REPOSITORY_MUTATION",
       "entrypoints": [
         "workflow PR creation, publication, repository mutation outside declared result paths"
