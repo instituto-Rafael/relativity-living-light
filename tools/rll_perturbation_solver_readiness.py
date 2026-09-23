@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json"
 SUCCESSOR = ROOT / "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V2.json"
 CLASS_CAMB = ROOT / "data/science/perturbations/RLL_CLASS_CAMB_IMPLEMENTATION_SUCCESSOR_20260922_V2.json"
+LITERATURE = ROOT / "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json"
 OUT = ROOT / "results/rll_perturbation_solver_readiness.json"
 
 REQUIRED_HARD_BLOCKERS = {
@@ -21,11 +22,26 @@ REQUIRED_HARD_BLOCKERS = {
     "C08_TRANSITION_REGULARIZATION",
 }
 
+REQUIRED_LITERATURE_GATES = {
+    "background_claim_boundary",
+    "posterior_or_evidence_gate_before_model_preference",
+    "c07_model_consistent_superhorizon_initial_conditions_required",
+    "conservation_constraint_bianchi_required",
+    "large_scale_stability_required",
+    "independent_class_camb_implementations_required",
+    "baseline_lcdm_recovery_required",
+    "numerical_convergence_sweep_required",
+    "cmb_tt_ee_lensing_and_linear_pk_parity_surface_required",
+    "rll_cross_backend_tolerance_preregistered_not_inherited",
+    "growth_rsd_lensing_structure_validation_required_before_interaction_or_growth_claim",
+}
+
 
 def build():
     contract = load_json(CONTRACT)
     successor = load_json(SUCCESSOR)
     class_camb = load_json(CLASS_CAMB)
+    literature = load_json(LITERATURE)
 
     if contract.get("schema") != "rll.perturbation_closure_contract.v1":
         raise ValueError("unexpected perturbation closure contract")
@@ -33,7 +49,9 @@ def build():
         raise ValueError("unexpected perturbation successor")
     if class_camb.get("schema") != "rll.class_camb_implementation_successor.v2":
         raise ValueError("unexpected CLASS/CAMB successor")
-    for payload in (contract, successor, class_camb):
+    if literature.get("schema") != "rll.alphaxiv_literature_action_matrix.v1":
+        raise ValueError("unexpected literature action matrix")
+    for payload in (contract, successor, class_camb, literature):
         if payload.get("claim_allowed") is not False:
             raise ValueError("all perturbation handoff contracts must remain claim_allowed=false")
 
@@ -59,11 +77,21 @@ def build():
         "Bianchi" in str(value) or "constraint" in str(value)
         for value in successor.get("hard_blockers_for_class_camb", [])
     )
+    literature_gates = literature.get("mandatory_gates", {})
+    literature_gate_set_complete = REQUIRED_LITERATURE_GATES <= set(literature_gates)
+    literature_gates_fail_closed = literature_gate_set_complete and all(
+        literature_gates.get(key) is True for key in REQUIRED_LITERATURE_GATES
+    )
+    parity_tolerance_unresolved = (
+        literature.get("parity_reference", {}).get("rll_acceptance_tolerance")
+        == "TOKEN_VAZIO_PREREGISTRATION_REQUIRED"
+    )
 
     unlock = (
         not open_slots
         and not missing_blocker_labels
         and conservation_blocker_declared
+        and literature_gates_fail_closed
         and successor.get("token_resolution") == "RESOLVED"
     )
 
@@ -71,6 +99,9 @@ def build():
         "required_slots_present": not missing_blocker_labels,
         "open_slots_preserved": set(open_slots) == REQUIRED_HARD_BLOCKERS,
         "constraint_bianchi_gate_declared": conservation_blocker_declared,
+        "literature_gate_set_complete": literature_gate_set_complete,
+        "literature_gates_fail_closed": literature_gates_fail_closed,
+        "rll_parity_tolerance_not_silently_inherited": parity_tolerance_unresolved,
         "class_camb_outputs_blocked_while_incomplete": solver_outputs_blocked,
         "token_not_falsely_resolved": successor.get("token_resolution") == "NOT_RESOLVED",
         "class_camb_unlock_false": successor.get("class_camb_state") == "BLOCKED_BY_PARTIAL_CLOSURE",
@@ -93,15 +124,24 @@ def build():
             "freeze gauge and variable normalization",
             "derive C01 delta_s evolution from the frozen conserved A1.1 equations",
             "derive C02 theta_s Euler/momentum evolution from the same equations",
-            "derive super-horizon initial conditions and constraint-compatible mode",
-            "derive perturbative transition regularization C08 without arbitrary hidden epsilon",
+            "derive gauge-consistent pressure perturbation relation from the frozen closure",
+            "derive super-horizon initial conditions and constraint-compatible mode; do not copy GR ICs by default",
+            "if interacting route B is selected, freeze Q, deltaQ and momentum-transfer components in one covariant convention",
+            "derive perturbative transition/crossing regularization C08 without arbitrary hidden epsilon",
+            "execute super-horizon/large-scale stability sweep",
             "execute perturbed conservation/constraint/Bianchi residual gate",
             "freeze one solver-neutral equation contract",
-            "only then hand independently to CLASS and CAMB implementations"
+            "only then hand independently to CLASS and CAMB implementations",
+            "after both backends exist: recover the same LambdaCDM baseline, run precision-convergence sweeps, preregister RLL parity tolerance, then compare TT/EE/lensing and linear P(k)"
         ],
         "class_state": class_state,
         "camb_state": camb_state,
         "class_camb_unlock": bool(unlock),
+        "literature_authority": {
+            "matrix": str(LITERATURE.relative_to(ROOT)),
+            "paper_ids": [row.get("id") for row in literature.get("papers", [])],
+            "rll_parity_tolerance": literature.get("parity_reference", {}).get("rll_acceptance_tolerance"),
+        },
         "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
         "claim_allowed": False,
         "boundary": "This gate proves only whether the solver handoff is permitted. It never invents C01/C02/C07/C08 equations.",
