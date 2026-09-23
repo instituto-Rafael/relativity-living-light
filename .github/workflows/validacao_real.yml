@@ -41,6 +41,11 @@ on:
       - "validation/bayes_rll.py"
       - "validation/bayes_compare.py"
       - "tools/validate_validation_deterministic_stdlib.py"
+      - "scripts/materialize_real_data.py"
+      - "scripts/materialize_real_data_guarded.py"
+      - "tools/validate_real_data_materialization_security.py"
+      - "configs/real_data_materialization_operation.json"
+      - "data/real_sources/real_data_registry.json"
       - "tests/test_rll_credential_authority.py"
       - "scripts/generate_rll_plots.py"
       - "tools/rll_security_surface_audit.py"
@@ -163,6 +168,8 @@ jobs:
       run: python3 tools/validate_ci_scientific_skills_stdlib_migration.py
     - name: Validate simple deterministic claim boundary
       run: python3 tools/validate_validation_simple_claim_boundary.py
+    - name: Validate governed real-data materialization security
+      run: python3 tools/validate_real_data_materialization_security.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
@@ -199,6 +206,7 @@ jobs:
           results/validation_deterministic_stdlib_migration.json
           results/ci_scientific_skills_stdlib_migration.json
           results/validation_simple_claim_boundary.json
+          results/real_data_materialization_security_gate.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
           results/rx_dependency_migration_plan.json
