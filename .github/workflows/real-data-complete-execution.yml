@@ -324,6 +324,37 @@ jobs:
           print('G4 Pantheon subgate PASS_LIMITED; overall G4 not yet promoted')
           PY
 
+      - name: Execute complete six-model G4 background tournament
+        run: |
+          set -euo pipefail
+          python3 tools/run_g4_background_tournament.py \
+            --output artifacts/pantheon-full-covariance/g4_background_tournament.json \
+            --seeds 11,23,37,53,71 \
+            --maxiter 250 \
+            --ftol 1e-10 \
+            --integration-points 4096 \
+            --require-pass
+
+      - name: Freeze G5 canonical background likelihood manifest
+        run: |
+          set -euo pipefail
+          python3 tools/build_g5_canonical_background_manifest.py \
+            --g4-receipt artifacts/pantheon-full-covariance/g4_background_tournament.json \
+            --output artifacts/pantheon-full-covariance/g5_canonical_background_likelihood.json \
+            --require-ready
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          g4 = json.loads(Path('artifacts/pantheon-full-covariance/g4_background_tournament.json').read_text())
+          g5 = json.loads(Path('artifacts/pantheon-full-covariance/g5_canonical_background_likelihood.json').read_text())
+          assert g4['state'] == 'PASS_LIMITED_G4_BACKGROUND_TOURNAMENT'
+          assert g4['claim_allowed'] is False
+          assert g5['state'] == 'READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD'
+          assert g5['claim_allowed'] is False
+          assert g5['scientific_confirmation'] is False
+          print('G4 complete background tournament PASS; G5 manifest frozen; claim_allowed=false')
+          PY
+
       - name: Upload G2 G3 G4 evidence bundle
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
