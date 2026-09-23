@@ -116,6 +116,7 @@ def audit():
     _tool("validate_validation_deterministic_stdlib.py")
     _tool("validate_ci_scientific_skills_stdlib_migration.py")
     _tool("validate_validation_simple_claim_boundary.py")
+    _tool("validate_real_data_materialization_security.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_dependency_audit.py")
     _tool("rx_dependency_migration_plan.py")
