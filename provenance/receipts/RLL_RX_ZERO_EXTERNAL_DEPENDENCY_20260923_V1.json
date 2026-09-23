@@ -1,0 +1,56 @@
+{
+  "receipt_id": "RLL-RX-ZERO-EXTERNAL-DEPENDENCY-20260923-V1",
+  "timestamp": "2026-09-23T00:08:00-03:00",
+  "kind": "implementation_migration_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "intent": "Introduce Rx as the project-owned stdlib-only Python runtime and migrate the active validacao_real route away from third-party Python packages.",
+  "implemented": [
+    "rx/__init__.py",
+    "rx/kernel.py",
+    "validacao_real/__init__.py",
+    "validacao_real/sources_rx.json",
+    "validacao_real/data/desi_dr2_bao_rx.json",
+    "validacao_real/data/hz_cosmic_chronometers_rx.json",
+    "validacao_real/run_rx_pipeline.py",
+    "validacao_real/compute_validation_stdlib.py delegates to Rx",
+    "tools/rx_dependency_audit.py",
+    "requirements-rx.txt",
+    ".github/workflows/validacao_real.yml no longer installs pip packages"
+  ],
+  "rx_capabilities": [
+    "JSON/CSV IO",
+    "Gauss-Jordan matrix inversion",
+    "quadratic form",
+    "Simpson integration",
+    "bounded coordinate search",
+    "SVG generation"
+  ],
+  "scientific_scope": {
+    "active_rx_route": "H(z) + DESI DR2 BAO with committed DESI covariance",
+    "nested_invariant": "RLL(Os0=0) -> LCDM-like flat background",
+    "claim_allowed": false,
+    "model_selection_claim_allowed": false
+  },
+  "authorship_boundary": "The project authors the Rx software implementation/architecture. Standard mathematical/statistical algorithms and scientific formulas retain their established provenance and are not claimed as original inventions.",
+  "migration_state": {
+    "validacao_real_active_route": "IMPLEMENTED_UNTESTED",
+    "structure_d_numpy_pandas_scipy": "TOKEN_VAZIO_MIGRATION",
+    "bayesian_emcee_dynesty": "TOKEN_VAZIO_MIGRATION",
+    "astropy_consumers": "TOKEN_VAZIO_MIGRATION",
+    "yaml_governance_consumers": "TOKEN_VAZIO_MIGRATION",
+    "matplotlib_legacy_consumers": "TOKEN_VAZIO_MIGRATION",
+    "notebooks_historical": "PRESERVED_NOT_MIGRATED"
+  },
+  "evidence": [
+    "Rx source files contain only Python standard-library imports plus project-local rx imports.",
+    "Auxiliary validacao_real workflow was refactored to execute python3 -m validacao_real.run_rx_pipeline without pip install.",
+    "Global dependency auditor was added to materialize remaining third-party import debt."
+  ],
+  "gap": "A physical/CI execution of the new Rx pipeline has not yet been observed in this session, and the global repository still contains legacy third-party imports outside the migrated route.",
+  "next": "Run python3 -m validacao_real.run_rx_pipeline and python3 tools/rx_dependency_audit.py; then migrate remaining active scientific modules by dependency family without changing scientific semantics.",
+  "rollback": [
+    "revert commits for rx runtime and validacao_real Rx files",
+    "restore previous .github/workflows/validacao_real.yml"
+  ],
+  "append_only": true
+}
