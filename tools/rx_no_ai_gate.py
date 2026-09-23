@@ -33,6 +33,7 @@ active_files = sorted((ROOT / "rx").glob("*.py")) + [
     ROOT / "validacao_real" / "run_rx_pipeline.py",
     ROOT / "validacao_real" / "run_rx_multiprobe.py",
     ROOT / "validacao_real" / "compute_validation_stdlib.py",
+    ROOT / "data" / "pipelines" / "structure_d" / "joint_real_likelihood_rx.py",
     ROOT / "tools" / "rx_selftest.py",
     ROOT / "tools" / "rx_sound_horizon_selftest.py",
     ROOT / "tools" / "rx_freestanding65_parity.py",
