@@ -43,7 +43,7 @@ class _AllowlistRedirect(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def get_bytes(
+def get_response(
     url,
     *,
     allowed_hosts,
@@ -51,6 +51,7 @@ def get_bytes(
     max_bytes=8 * 1024 * 1024,
     params=None,
     user_agent="RLL-Rx-HTTP/1.0",
+    accept=None,
 ):
     allowed = set(str(x) for x in allowed_hosts)
     host = _host(url)
@@ -64,11 +65,10 @@ def get_bytes(
         url = urllib.parse.urlunsplit(parsed)
 
     opener = urllib.request.build_opener(_AllowlistRedirect(allowed))
-    request = urllib.request.Request(
-        str(url),
-        headers={"User-Agent": str(user_agent), "Accept-Encoding": "identity"},
-        method="GET",
-    )
+    headers = {"User-Agent": str(user_agent), "Accept-Encoding": "identity"}
+    if accept:
+        headers["Accept"] = str(accept)
+    request = urllib.request.Request(str(url), headers=headers, method="GET")
     try:
         with opener.open(request, timeout=float(timeout)) as response:
             content_length = response.headers.get("Content-Length")
@@ -84,11 +84,21 @@ def get_bytes(
             status = int(getattr(response, "status", 200))
             if status < 200 or status >= 300:
                 raise RxHttpError("http_status:%d" % status)
-            return payload
+            return {
+                "payload": payload,
+                "status": status,
+                "content_type": response.headers.get("Content-Type", ""),
+                "content_length": len(payload),
+                "final_url": str(getattr(response, "url", url)),
+            }
     except RxHttpError:
         raise
     except Exception as exc:
         raise RxHttpError("%s:%s" % (exc.__class__.__name__, exc)) from exc
+
+
+def get_bytes(url, **kwargs):
+    return get_response(url, **kwargs)["payload"]
 
 
 def get_json(url, **kwargs):
