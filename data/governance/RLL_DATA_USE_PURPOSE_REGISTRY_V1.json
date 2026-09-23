@@ -367,6 +367,44 @@
         "byte count",
         "claim boundary"
       ]
+    },
+    {
+      "route_id": "CALC_DATA_AUDIT_STDLIB",
+      "runtime": "Python stdlib audit statistics",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Compute descriptive audit statistics over allowlisted committed public/non-personal real-data JSON/CSV inputs.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "hosts": [],
+        "writes": false
+      },
+      "filesystem": {
+        "read": "allowlisted committed data/real inputs",
+        "write": [
+          "_audit/processed/"
+        ]
+      },
+      "audit": [
+        "input SHA-256",
+        "result SHA-256",
+        "calc manifest",
+        "claim boundary"
+      ],
+      "claim_effect": "NONE"
     }
   ],
   "prohibited_uses": [
