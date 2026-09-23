@@ -25,6 +25,9 @@ active_files = sorted((ROOT / "rx").glob("*.py")) + [
     ROOT / "tools" / "rx_dependency_audit.py",
     ROOT / "tools" / "rx_dependency_migration_plan.py",
     ROOT / "tools" / "rx_development_gate.py",
+    ROOT / "internal" / "governance" / "development_guard.py",
+    ROOT / "tools" / "validate_rll_development_governance.py",
+    ROOT / "tools" / "rll_security_surface_audit.py",
 ]
 
 stdlib = set(getattr(sys, "stdlib_module_names", ()))
