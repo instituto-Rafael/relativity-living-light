@@ -7,8 +7,10 @@ No third-party packages. No training. No AI runtime.
 from __future__ import annotations
 
 import ast
+import json
 import math
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from rx.cosmology import e2
@@ -67,9 +69,24 @@ for path in sorted((ROOT / "rx").glob("*.py")):
                 external.add(root)
     check(not external, "stdlib_only_%s" % path.name)
 
+result = {
+    "schema": "rll.rx.selftest.v1",
+    "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+    "pass": not failures,
+    "failures": failures,
+    "training": False,
+    "ai_runtime": False,
+    "third_party_python_dependencies": [],
+    "current_multiprobe_N": len(hz) + len(bao) + len(growth) + 3,
+}
+out = ROOT / "results" / "rx_selftest.json"
+out.parent.mkdir(exist_ok=True)
+out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
 if failures:
     print("RX_SELFTEST=FAIL", failures)
     raise SystemExit(1)
 
 print("RX_SELFTEST=PASS")
 print("training=False ai_runtime=False third_party_python_dependencies=0")
+print("wrote", out.relative_to(ROOT))
