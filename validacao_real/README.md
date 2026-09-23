@@ -32,29 +32,45 @@ A validação não declara descoberta. Ela materializa dados públicos/fallbacks
 calcula métricas explícitas e registra critérios de falsificação. Se a execução
 falhar, o erro deve permanecer visível para fail-safe/failover/rollback.
 
+## Fluxo Rx — zero dependências externas Python
 
-## Fluxo Python puro / stdlib-only
-
-Para ambientes mínimos (por exemplo Termux sem NumPy/Pandas/SciPy/PyYAML), use a rota aditiva abaixo:
+O caminho dependency-free canônico deste bundle é o runtime autoral `rx/`, construído apenas sobre a biblioteca padrão do Python.
 
 ```bash
 cd ~/relativity-living-light-main
-RLL_STDLIB_OUTPUT_STEM="rll_lcdm_hz_bao_stdlib_v1" \
-RLL_STDLIB_SEED=1 \
-RLL_STDLIB_MAXITER=12 \
+python3 -m validacao_real.run_rx_pipeline
+```
+
+Compatibilidade com o comando anterior:
+
+```bash
 python3 validacao_real/compute_validation_stdlib.py
 ```
 
-Características desta rota:
+Esse segundo comando apenas delega para o mesmo motor Rx; não existe uma segunda implementação numérica concorrente.
 
-- zero dependências Python de terceiros;
-- zero funções definidas pelo usuário no arquivo (`def`);
-- lê diretamente CSVs reais já versionados no repositório;
-- usa a matriz de covariância DESI DR2 materializada;
-- integra distâncias por Simpson implementado no próprio fluxo;
-- ajusta LCDM e RLL por busca limitada determinística;
-- inicializa RLL no limite aninhado `Os0=0` a partir do melhor ponto LCDM, impedindo regressão artificial do χ² nesse gate;
-- escreve saídas versionadas em `validacao_real/results/`;
-- mantém `claim_allowed=false`.
+### Contrato Rx
 
-Escopo: H(z) + DESI DR2 BAO. Esta rota não substitui a pilha multiprobe/Scipy; ela existe para reprodução em Python mínimo sem dependências externas.
+- nenhum `pip install`;
+- nenhum NumPy/Pandas/SciPy/PyYAML/Matplotlib/Astropy/emcee/dynesty;
+- entrada operacional em JSON/CSV;
+- inversão matricial, forma quadrática, Simpson, busca limitada, CSV/JSON e SVG implementados em `rx/kernel.py`;
+- DESI DR2 usa a matriz de covariância commitada;
+- RLL inicia no limite aninhado `Os0=0` do melhor ponto LCDM para o gate de não-regressão;
+- figuras são SVG geradas sem biblioteca gráfica externa;
+- `claim_allowed=false` permanece obrigatório.
+
+Os algoritmos matemáticos utilizados são métodos conhecidos. "Autoral" aqui significa a implementação e arquitetura de software do projeto, não reivindicação de autoria sobre Simpson, Gauss-Jordan, AIC/BIC ou outros métodos acadêmicos existentes.
+
+### Auditoria global de dependências
+
+```bash
+python3 tools/rx_dependency_audit.py
+```
+
+O auditor percorre os arquivos Python e materializa a dívida externa restante em:
+
+- `results/rx_dependency_audit.json`
+- `results/rx_dependency_audit.md`
+
+Arquivos históricos, notebooks e rotas científicas antigas não são declarados migrados até que o auditor e testes específicos comprovem a substituição.
