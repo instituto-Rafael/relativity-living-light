@@ -30,6 +30,7 @@ paths = {
     "authority_registry": ROOT / "results" / "executable_entrypoint_authority_registry_validation.json",
     "serialization_parity": ROOT / "results" / "validacao_real_serialization_parity.json",
     "validacao_real_zero_dependency": ROOT / "results" / "validacao_real_zero_dependency_core.json",
+    "http_migration": ROOT / "results" / "rx_http_migration_gate.json",
 }
 
 cli_security_receipts = sorted(
@@ -68,6 +69,10 @@ checks["serialization_parity_claim_closed"] = data["serialization_parity"].get("
 checks["validacao_real_zero_dependency_pass"] = data["validacao_real_zero_dependency"].get("pass") is True
 checks["validacao_real_zero_dependency_list_empty"] = data["validacao_real_zero_dependency"].get("third_party_python_dependencies") == []
 checks["validacao_real_zero_dependency_claim_closed"] = data["validacao_real_zero_dependency"].get("claim_allowed") is False
+checks["http_migration_pass"] = data["http_migration"].get("pass") is True
+checks["http_migration_zero_third_party"] = data["http_migration"].get("third_party_python_dependencies") == []
+checks["http_migration_no_network_in_gate"] = data["http_migration"].get("network_requests_performed") == 0
+checks["http_migration_claim_closed"] = data["http_migration"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -156,6 +161,9 @@ closed_families = {
 checks["validacao_real_yaml_matplotlib_migrated"] = (
     closed_families.get("validacao_real_yaml_matplotlib") == "MIGRATED_WITH_PARITY_GATE"
 )
+checks["requests_public_read_fetchers_migrated"] = (
+    closed_families.get("requests_public_read_fetchers") == "MIGRATED_WITH_PARITY_GATE"
+)
 
 structure_d_rx = data["structure_d_rx"]
 successor = structure_d_rx.get("structure_d_successor", {})
@@ -190,13 +198,13 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, security-surface audit, CLI/simple/multiprobe security preflights, "
         "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
     "F_gap": (
         "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; "
-        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation family, OS sandbox evidence, external GitHub controls and independent security review remain open."
+        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation and bounded HTTP fetcher families, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
         "Choose and version one common growth/CMB/sound-horizon contract, then require "
