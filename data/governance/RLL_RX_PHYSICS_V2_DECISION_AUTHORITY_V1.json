@@ -1,0 +1,166 @@
+{
+  "schema": "rll.rx.physics_v2_decision_authority.v1",
+  "date": "2026-09-23",
+  "claim_allowed": false,
+  "target_contract": "RX-PHYSICS-CANONICAL-V2",
+  "decision_rule": "Choose only by explicit scientific authority plus preregistered null-limit/dimensional/reference-vector tests; never by preferred fit quality.",
+  "axes": [
+    {
+      "id": "omega_r",
+      "current": "TOKEN_VAZIO_DECISION",
+      "options": [
+        {
+          "id": "structure_d_value",
+          "value": 0.00009,
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "REPRODUCIBLE_ENGINEERING_SEMANTICS"
+        },
+        {
+          "id": "freestanding_value",
+          "value": 0.0000918,
+          "source_contract": "RX-FREESTANDING65-PARITY-V1",
+          "state": "VERIFIED_EXACT_Q16_PARITY_SEMANTICS"
+        }
+      ],
+      "required_decision_evidence": [
+        "background null-limit vectors",
+        "high-redshift sensitivity table",
+        "Rx/C reference vectors under the selected value"
+      ],
+      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+    },
+    {
+      "id": "hz_dataset",
+      "current": "TOKEN_VAZIO_DECISION",
+      "options": [
+        {
+          "id": "independent_cosmic_chronometers_28",
+          "value": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "ACTIVE_ENGINEERING_SURFACE"
+        },
+        {
+          "id": "canonical_freestanding_33",
+          "value": "data/real/Hz_data_real.csv",
+          "source_contract": "RX-FREESTANDING65-PARITY-V1",
+          "state": "VERIFIED_Q16_SURFACE"
+        }
+      ],
+      "required_decision_evidence": [
+        "row-level provenance and overlap report",
+        "inclusion/exclusion policy",
+        "same-likelihood ablation comparing 28 versus 33 rows without double counting"
+      ],
+      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+    },
+    {
+      "id": "growth_mode",
+      "current": "TOKEN_VAZIO_DECISION",
+      "options": [
+        {
+          "id": "structure_d_proxy",
+          "value": "structure_d_proxy",
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "ENGINEERING_PROXY_ONLY",
+          "promotion_allowed": false
+        },
+        {
+          "id": "freestanding_growth_with_Dz",
+          "value": "freestanding_growth_with_Dz",
+          "source_contract": "RX-FREESTANDING65-PARITY-V1",
+          "state": "FREESTANDING_PARITY_SEMANTICS_NOT_PERTURBATION_CLOSURE",
+          "promotion_allowed": false
+        },
+        {
+          "id": "perturbation_backend_fsigma8",
+          "value": "TOKEN_VAZIO_UNTIL_WS06",
+          "source_contract": "WS03->WS04/WS05->WS06",
+          "state": "SCIENTIFIC_TARGET_BLOCKED_BY_PERTURBATION_CLOSURE",
+          "promotion_allowed": false
+        }
+      ],
+      "required_decision_evidence": [
+        "explicit boundary between background engineering proxy and physical perturbation prediction",
+        "CLASS/CAMB parity before scientific growth promotion"
+      ],
+      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+    },
+    {
+      "id": "bao_sound_horizon",
+      "current": "sound_horizon_integral_required",
+      "options": [
+        {
+          "id": "rd_power_law_legacy",
+          "value": "rd_power_law",
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "LEGACY_ENGINEERING_APPROXIMATION",
+          "canonical_v2_allowed": false
+        },
+        {
+          "id": "rd_integrated",
+          "value": "sound_horizon_integral",
+          "source_contract": "RX-FREESTANDING-PROJECTION-V1",
+          "state": "CANONICAL_V2_REQUIRED_DIRECTION",
+          "canonical_v2_allowed": true
+        }
+      ],
+      "required_decision_evidence": [
+        "z_drag definition frozen",
+        "direct integral reference vectors",
+        "CLASS/CAMB r_drag control where applicable"
+      ],
+      "selected_option": "rd_integrated_REQUIRED_BY_EXISTING_V2_CONTRACT"
+    },
+    {
+      "id": "cmb_acoustic_mode",
+      "current": "rs_star_required",
+      "options": [
+        {
+          "id": "structure_d_rd",
+          "value": "structure_d_rd",
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "LEGACY_COMPRESSED_APPROXIMATION",
+          "canonical_v2_allowed": false
+        },
+        {
+          "id": "rs_star",
+          "value": "freestanding_rs_star",
+          "source_contract": "RX-FREESTANDING-PROJECTION-V1",
+          "state": "CANONICAL_V2_REQUIRED_DIRECTION",
+          "canonical_v2_allowed": true
+        }
+      ],
+      "required_decision_evidence": [
+        "z_star definition frozen",
+        "r_s(z_star) reference vectors",
+        "compressed-CMB route explicitly labeled diagnostic"
+      ],
+      "selected_option": "rs_star_REQUIRED_BY_EXISTING_V2_CONTRACT"
+    },
+    {
+      "id": "distance_integration",
+      "current": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
+      "options": [
+        {
+          "id": "log1p_simpson_with_preregistered_tolerance",
+          "value": "log1p_simpson",
+          "source_contract": "RX-STRUCTURE-D-PARITY-V1",
+          "state": "IMPLEMENTED_NUMERICAL_METHOD_TOLERANCE_PENDING"
+        }
+      ],
+      "required_decision_evidence": [
+        "convergence sweep over representative redshift grid",
+        "absolute and relative tolerance per observable",
+        "independent integrator crosscheck"
+      ],
+      "selected_option": "TOKEN_VAZIO_TOLERANCE_DECISION"
+    }
+  ],
+  "promotion_requirements": [
+    "all selected_option fields terminal and evidence-backed",
+    "same input surface and hashes for Rx/C comparison",
+    "null-limit recovery passes",
+    "component parity within declared tolerances",
+    "claim_allowed remains false until downstream scientific gates pass"
+  ]
+}
