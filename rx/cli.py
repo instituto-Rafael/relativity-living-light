@@ -39,6 +39,7 @@ def status():
 
 def selftest():
     _tool("rx_no_ai_gate.py")
+    _tool("rx_zero_dependency_gate.py")
     _tool("rx_selftest.py")
     _tool("rx_sound_horizon_selftest.py")
     _tool("rx_freestanding65_parity.py")
@@ -62,6 +63,7 @@ def audit():
 
 def develop():
     _tool("rx_no_ai_gate.py")
+    _tool("rx_zero_dependency_gate.py")
     _tool("rx_selftest.py")
     _tool("rx_sound_horizon_selftest.py")
     _tool("rx_freestanding65_parity.py")
