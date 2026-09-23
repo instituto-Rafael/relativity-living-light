@@ -23,6 +23,7 @@ paths = {
     "multiprobe": ROOT / "validacao_real" / "results_rx" / "multiprobe_rx.json",
     "parity": ROOT / "results" / "rx_semantic_parity.json",
     "dependency_audit": ROOT / "results" / "rx_dependency_audit.json",
+    "migration_plan": ROOT / "results" / "rx_dependency_migration_plan.json",
     "structure_d_rx": ROOT / "results" / "structure_d" / "joint_real_likelihood_rx.json",
 }
 
@@ -95,6 +96,10 @@ checks["radiation_divergence_explicit"] = parity_gates.get("radiation_density_se
 
 audit = data["dependency_audit"]
 checks["dependency_audit_materialized"] = isinstance(audit.get("files"), list)
+migration_plan = data["migration_plan"]
+checks["migration_plan_materialized"] = isinstance(migration_plan.get("rows"), list)
+checks["migration_plan_no_mass_rewrite"] = migration_plan.get("policy", {}).get("automatic_mass_rewrite") is False
+checks["migration_plan_active_rx_zero_dependency"] = migration_plan.get("policy", {}).get("active_rx_runtime_already_zero_dependency") is True
 
 structure_d_rx = data["structure_d_rx"]
 successor = structure_d_rx.get("structure_d_successor", {})
