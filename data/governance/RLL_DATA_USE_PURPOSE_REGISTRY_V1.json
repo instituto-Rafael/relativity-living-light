@@ -444,6 +444,51 @@
         "claim boundary"
       ],
       "claim_effect": "NONE"
+    },
+    {
+      "route_id": "REAL_DATA_MATERIALIZATION_V2",
+      "runtime": "Python stdlib + project-local Rx bounded HTTP",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Materialize explicitly declared public Pantheon+ source files from reviewed HTTPS paths with bounded size, provenance hashes and fail-closed network authority.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS",
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": true,
+        "hosts": [
+          "raw.githubusercontent.com"
+        ],
+        "writes": false,
+        "explicit_human_opt_in_required": true
+      },
+      "filesystem": {
+        "read": "data/real_sources/real_data_registry.json",
+        "write": [
+          "data/pantheon/",
+          "data/real_sources/real_data_manifest.json"
+        ]
+      },
+      "audit": [
+        "development_guard preflight",
+        "URL host/path policy",
+        "response size bound",
+        "SHA-256",
+        "materialization manifest",
+        "claim_allowed=false"
+      ],
+      "claim_allowed": false
     }
   ],
   "prohibited_uses": [
