@@ -34,6 +34,9 @@ name: Real Data Complete Execution
       - "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json"
       - "tools/validate_energy_momentum_bridge_dimensions.py"
       - "tests/test_energy_momentum_bridge_dimensions.py"
+      - "data/governance/RLL_BRANCH_MATURITY_RECONCILIATION_DECISION_V1.json"
+      - "tools/rll_branch_maturity_decision_packet.py"
+      - "tests/test_rll_branch_maturity_decision_packet.py"
       - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
       - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
@@ -146,6 +149,11 @@ jobs:
           python3 -m unittest tests.test_energy_momentum_bridge_dimensions
           python3 tools/validate_energy_momentum_bridge_dimensions.py --write
 
+      - name: Materialize branch maturity reconciliation decision
+        run: |
+          python3 -m unittest tests.test_rll_branch_maturity_decision_packet
+          python3 tools/rll_branch_maturity_decision_packet.py --write
+
       - name: Validate Rx DHA angular-frequency baseline
         run: python3 tools/validate_rx_dha.py
 
@@ -191,6 +199,7 @@ jobs:
             artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
             artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json
             results/rll_energy_momentum_dimension_gate.json
+            results/rll_branch_maturity_decision_packet.json
           retention-days: 30
           if-no-files-found: error
 
