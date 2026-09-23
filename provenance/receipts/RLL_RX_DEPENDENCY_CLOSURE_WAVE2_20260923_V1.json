@@ -1,0 +1,75 @@
+{
+  "receipt_id": "RLL-RX-DEPENDENCY-CLOSURE-WAVE2-20260923-V1",
+  "timestamp": "2026-09-23T01:25:00-03:00",
+  "kind": "engineering_dependency_migration_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "head_sha": "18010b0ac21f96d6710c81b137d699a9163d4a66",
+  "ci": {
+    "validacao_real": {
+      "run_id": 35818173729,
+      "conclusion": "success"
+    },
+    "repo_real_inventory": {
+      "run_id": 35818173735,
+      "conclusion": "success"
+    }
+  },
+  "migration_metrics": {
+    "files_with_external_imports": 273,
+    "token_vazio_replacements": 194,
+    "closed_families": 4
+  },
+  "closed_families": [
+    {
+      "id": "validacao_real_yaml_matplotlib",
+      "evidence": [
+        "YAML->JSON point parity PASS",
+        "legacy validacao_real zero-dependency core PASS"
+      ],
+      "semantics": "scientific equations unchanged"
+    },
+    {
+      "id": "requests_public_read_fetchers",
+      "evidence": [
+        "rx_http_migration_gate PASS",
+        "network_requests_performed=0"
+      ],
+      "semantics": "bounded read-only transport replacement"
+    },
+    {
+      "id": "guarded_import_data_stdlib",
+      "evidence": [
+        "stdlib_csv_normalization PASS",
+        "credentialed public import blocked",
+        "requests/pandas installs absent"
+      ],
+      "semantics": "import/normalization route only"
+    },
+    {
+      "id": "docs_inventory_config_yaml",
+      "evidence": [
+        "inventory config YAML->JSON parity PASS",
+        "repo-real-inventory PASS",
+        "docs_inventory external import removed"
+      ],
+      "semantics": "repository inventory configuration only"
+    }
+  ],
+  "aggregate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES",
+  "open_science_contracts": [
+    "Omega_r contract divergence",
+    "growth/D(z) contract divergence",
+    "r_d versus r_s(z*) contract divergence",
+    "H(z) surface divergence"
+  ],
+  "invariants": [
+    "software_refactor != physics_contract_change",
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "claim_allowed=false",
+    "training=false",
+    "ai_runtime=false"
+  ],
+  "rollback": "Each migration is additive/versioned or preserves historical YAML/legacy routes. Revert family-specific commits independently; do not rewrite prior receipts.",
+  "claim_allowed": false,
+  "append_only": true
+}
