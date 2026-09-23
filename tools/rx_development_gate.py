@@ -33,6 +33,7 @@ paths = {
     "http_migration": ROOT / "results" / "rx_http_migration_gate.json",
     "credential_authority_stdlib": ROOT / "results" / "credential_authority_stdlib_migration.json",
     "watch_config_stdlib": ROOT / "results" / "watch_config_stdlib_migration.json",
+    "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
 }
 
 cli_security_receipts = sorted(
@@ -81,6 +82,10 @@ checks["credential_authority_stdlib_claim_closed"] = data["credential_authority_
 checks["watch_config_stdlib_pass"] = data["watch_config_stdlib"].get("pass") is True
 checks["watch_config_stdlib_zero_third_party"] = data["watch_config_stdlib"].get("third_party_python_dependencies") == []
 checks["watch_config_stdlib_claim_closed"] = data["watch_config_stdlib"].get("claim_allowed") is False
+checks["calc_data_stdlib_pass"] = data["calc_data_stdlib"].get("pass") is True
+checks["calc_data_stdlib_zero_third_party"] = data["calc_data_stdlib"].get("third_party_python_dependencies") == []
+checks["calc_data_stdlib_no_network"] = data["calc_data_stdlib"].get("network_requests_performed") == 0
+checks["calc_data_stdlib_claim_closed"] = data["calc_data_stdlib"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
@@ -180,6 +185,9 @@ checks["credential_authority_pyyaml_stdlib_migrated"] = (
 )
 checks["technology_watch_yaml_jsonschema_stdlib_migrated"] = (
     closed_families.get("technology_watch_yaml_jsonschema_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["calc_data_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("calc_data_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
 )
 checks["docs_inventory_config_yaml_migrated"] = (
     closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
