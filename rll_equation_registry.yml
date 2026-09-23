@@ -223,6 +223,78 @@ equations:
     real_data_validators: []
     claim_boundary: "Definition of a candidate primary momentum-density variable; theta_s recovery is allowed only where enthalpy is nonzero and conditioned."
 
+  - id: torus_projection_annulus_area
+    equation: "A_crown = pi[(R+r)^2-(R-r)^2] = 4 pi R r"
+    domain: ["geometry", "toroidal_geometry", "projection", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Exact for the standard ring torus under orthographic xy projection; projected annulus != torus surface and no physical vortex claim is implied."
+
+  - id: torus_surface_projection_ratio
+    equation: "A_torus / A_crown = pi"
+    domain: ["geometry", "toroidal_geometry", "projection", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Metric relation for the standard torus and its equatorial projected annulus; same ratio does not identify the objects."
+
+  - id: polygon_annulus_toroidal_shell_fraction
+    equation: "V_shell,n / V_torus = sin^2(pi/n)"
+    domain: ["geometry", "toroidal_geometry", "pappus", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Successor of the existing polygon annulus area fraction; requires the declared external revolution axis and centered annular cross-section."
+
+  - id: hexagon_torus_volume_ratio
+    equation: "V_6 / V_torus = 3 sqrt(3) / (2 pi)"
+    domain: ["geometry", "equilateral_triangle", "hexagon", "toroidal_geometry", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Six equilateral triangles define an inscribed hexagonal cross-section; this is a geometric approximation of a circular torus, not a physical mechanism."
+
+  - id: parallel_torus_tangent_separation
+    equation: "d_parallel = 2 r"
+    domain: ["geometry", "toroidal_geometry", "tangency", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Perpendicular separation of the two parallel tangents with a common slope to the circular torus meridian."
+
+  - id: six_sector_toroidal_opposite_pair_closure
+    equation: "V(v0,pi/3)+V(v0+pi,pi/3) = V_shell,total / 3"
+    domain: ["geometry", "annulus", "toroidal_geometry", "symmetry", "RLL"]
+    status: "derived_geometry"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Six equal planar sectors generally produce unequal toroidal volumes; only opposite-pair sums close equally in the declared centered model."
+
+  - id: angular_grid_5678_lcm
+    equation: "lcm(5,6,7,8) = 840 ; delta_theta = 2 pi / 840"
+    domain: ["finite_combinatorics", "angular_geometry", "RLL"]
+    status: "derived_exact"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Common angular refinement order; distinct from the semantics of any other period-840 carrier."
+
+  - id: modular_carrier_24_10_42_period
+    equation: "lcm(24,10,42) = 840"
+    domain: ["finite_combinatorics", "modular_phase", "RLL"]
+    status: "derived_exact"
+    source_doc: "docs/invariants/triangle_crown_torus_840_bridge_v1.md"
+    methodology_phase: "formal_geometry"
+    real_data_validators: []
+    claim_boundary: "Same numeric cyclic order as the 5/6/7/8 angular refinement does not establish semantic identity."
+
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:
   - tools/generate_yml_audit_docs.py
