@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 paths = {
+    "no_ai": ROOT / "results" / "rx_no_ai_runtime_gate.json",
     "selftest": ROOT / "results" / "rx_selftest.json",
     "sound_horizon": ROOT / "results" / "rx_sound_horizon_selftest.json",
     "simple": ROOT / "validacao_real" / "results_rx" / "validation_summary_rx.json",
@@ -33,6 +34,9 @@ data = {
 
 checks = {}
 
+checks["no_ai_runtime_gate"] = data["no_ai"].get("state") == "PASS"
+checks["no_ai_training_false"] = data["no_ai"].get("policy", {}).get("training") is False
+checks["no_ai_runtime_false"] = data["no_ai"].get("policy", {}).get("ai_runtime") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
 checks["selftest_no_training"] = data["selftest"].get("training") is False
 checks["selftest_no_ai_runtime"] = data["selftest"].get("ai_runtime") is False
@@ -106,7 +110,7 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "Rx stdlib runtime, sound-horizon reference vectors, simple validation, current multiprobe surface, "
+        "No-AI runtime gate, Rx stdlib runtime, sound-horizon reference vectors, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger and dependency audit are connected in one executable chain."
     ),
     "F_gap": (
