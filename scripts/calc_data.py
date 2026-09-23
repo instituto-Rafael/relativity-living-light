@@ -1,32 +1,24 @@
 #!/usr/bin/env python3
-"""
-Carrega um arquivo JSON ou CSV já commitado e calcula estatísticas simples.
+"""Compute simple audit statistics from a committed JSON or CSV input.
 
-Saída esperada:
-- n registros;
-- colunas numéricas: mean, median, std, min, max;
-- pequenas amostras (first/last 5).
-
-Fronteira de claim:
-este script só gera artefato de auditoria estatística. Ele não valida RLL,
-matéria escura, energia escura ou qualquer hipótese cosmológica.
+Python stdlib only. This is an audit/statistics utility, not a scientific
+validation engine. Output contract preserves the historical keys produced by
+the former Pandas/NumPy implementation.
 """
+from __future__ import annotations
 
 import argparse
+import csv
 import json
 import math
+import statistics
 from pathlib import Path
 from typing import Any
-
-import numpy as np
-import pandas as pd
-
 
 RECORD_KEYS = ("records", "data", "dados", "rows", "items")
 
 
 def _json_records(payload: Any) -> list[dict[str, Any]]:
-    """Normalize common JSON shapes into tabular records."""
     if isinstance(payload, list):
         if all(isinstance(item, dict) for item in payload):
             return payload
@@ -52,57 +44,105 @@ def _json_records(payload: Any) -> list[dict[str, Any]]:
     return [{"value": payload}]
 
 
-def load(path: str) -> pd.DataFrame:
-    p = Path(path)
-    if not p.exists():
+def _csv_scalar(value: str | None) -> Any:
+    if value is None:
+        return None
+    text = value.strip()
+    if text.lower() in {"", "na", "nan", "null", "none"}:
+        return None
+    try:
+        if text.isdigit() or (text.startswith(("+", "-")) and text[1:].isdigit()):
+            return int(text)
+        number = float(text)
+        return number if math.isfinite(number) else text
+    except ValueError:
+        return text
+
+
+def load(path: str) -> list[dict[str, Any]]:
+    source = Path(path)
+    if not source.exists():
         raise FileNotFoundError(path)
 
-    suffix = p.suffix.lower()
-    if suffix == ".json":
-        with p.open("r", encoding="utf-8") as f:
-            payload = json.load(f)
-        return pd.DataFrame(_json_records(payload))
+    if source.suffix.lower() == ".json":
+        with source.open("r", encoding="utf-8") as handle:
+            return _json_records(json.load(handle))
 
-    return pd.read_csv(p)
+    with source.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames:
+            raise ValueError(f"CSV sem cabeçalho: {source}")
+        return [
+            {str(key): _csv_scalar(value) for key, value in row.items()}
+            for row in reader
+        ]
 
 
-def _finite_or_none(value: Any) -> float | None:
-    try:
+def _columns(records: list[dict[str, Any]]) -> list[str]:
+    columns: list[str] = []
+    for row in records:
+        for key in row:
+            if key not in columns:
+                columns.append(str(key))
+    return columns
+
+
+def _numeric_values(records: list[dict[str, Any]], column: str) -> list[float] | None:
+    present = []
+    for row in records:
+        value = row.get(column)
+        if value is None:
+            continue
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return None
         number = float(value)
-    except (TypeError, ValueError):
-        return None
-    if math.isfinite(number):
-        return number
-    return None
+        if not math.isfinite(number):
+            return None
+        present.append(number)
+    return present if present else None
 
 
-def _sample(df: pd.DataFrame, n: int, tail: bool = False) -> list[dict[str, Any]]:
-    frame = df.tail(n) if tail else df.head(n)
-    return json.loads(frame.to_json(orient="records", force_ascii=False))
+def _json_safe_row(row: dict[str, Any], columns: list[str]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for column in columns:
+        value = row.get(column)
+        if isinstance(value, float) and not math.isfinite(value):
+            value = None
+        out[column] = value
+    return out
 
 
-def summarize(df: pd.DataFrame) -> dict[str, Any]:
-    numeric = df.select_dtypes(include=[np.number])
+def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
+    columns = _columns(records)
+    numeric: dict[str, list[float]] = {}
+    for column in columns:
+        values = _numeric_values(records, column)
+        if values is not None:
+            numeric[column] = values
+
     stats: dict[str, Any] = {
-        "n_records": int(len(df)),
-        "n_columns": int(len(df.columns)),
-        "numeric_columns": [str(col) for col in numeric.columns],
+        "n_records": len(records),
+        "n_columns": len(columns),
+        "numeric_columns": list(numeric),
         "columns": {},
     }
 
-    for col in numeric.columns:
-        s = numeric[col].dropna()
-        stats["columns"][str(col)] = {
-            "mean": _finite_or_none(s.mean()) if len(s) > 0 else None,
-            "median": _finite_or_none(s.median()) if len(s) > 0 else None,
-            "std": _finite_or_none(s.std()) if len(s) > 1 else None,
-            "min": _finite_or_none(s.min()) if len(s) > 0 else None,
-            "max": _finite_or_none(s.max()) if len(s) > 0 else None,
-            "n_nonnull": int(s.count()),
+    for column, values in numeric.items():
+        stats["columns"][column] = {
+            "mean": statistics.fmean(values),
+            "median": statistics.median(values),
+            "std": statistics.stdev(values) if len(values) > 1 else None,
+            "min": min(values),
+            "max": max(values),
+            "n_nonnull": len(values),
         }
 
-    stats["sample_head"] = _sample(df, 5, tail=False)
-    stats["sample_tail"] = _sample(df, 5, tail=True)
+    stats["sample_head"] = [
+        _json_safe_row(row, columns) for row in records[:5]
+    ]
+    stats["sample_tail"] = [
+        _json_safe_row(row, columns) for row in records[-5:]
+    ]
     return stats
 
 
@@ -112,11 +152,14 @@ def main() -> None:
     parser.add_argument("--out", dest="outfile", required=True)
     args = parser.parse_args()
 
-    df = load(args.infile)
-    res = summarize(df)
-    Path(args.outfile).parent.mkdir(parents=True, exist_ok=True)
-    with open(args.outfile, "w", encoding="utf-8") as f:
-        json.dump(res, f, ensure_ascii=False, indent=2, allow_nan=False)
+    records = load(args.infile)
+    result = summarize(records)
+    output = Path(args.outfile)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
     print(f"Resultados gravados em {args.outfile}")
 
 
