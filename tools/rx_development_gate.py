@@ -38,6 +38,7 @@ paths = {
     "ci_scientific_skills_stdlib": ROOT / "results" / "ci_scientific_skills_stdlib_migration.json",
     "fairness_stdlib": ROOT / "results" / "rx_fairness_stdlib_gate.json",
     "inference_baseline": ROOT / "results" / "rx_inference_baseline_gate.json",
+    "dha_angular": ROOT / "results" / "rx_dha_angular_frequency_gate.json",
     "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
     "real_data_materialization_security": ROOT / "results" / "real_data_materialization_security_gate.json",
 }
@@ -105,6 +106,12 @@ checks["inference_baseline_zero_third_party"] = data["inference_baseline"].get("
 checks["inference_emcee_parity_open"] = data["inference_baseline"].get("emcee_semantic_parity") == "TOKEN_VAZIO"
 checks["inference_dynesty_open"] = data["inference_baseline"].get("dynesty_nested_evidence") == "TOKEN_VAZIO"
 checks["inference_claim_closed"] = data["inference_baseline"].get("claim_allowed") is False
+checks["dha_angular_pass"] = data["dha_angular"].get("pass") is True
+checks["dha_angular_zero_third_party"] = data["dha_angular"].get("third_party_python_dependencies") == []
+checks["dha_astropy_parity_open"] = data["dha_angular"].get("astropy_semantic_parity") == "TOKEN_VAZIO"
+checks["dha_fap_open"] = data["dha_angular"].get("false_alarm_probability") == "TOKEN_VAZIO"
+checks["dha_legacy_route_preserved"] = data["dha_angular"].get("legacy_route_replaced") is False
+checks["dha_claim_closed"] = data["dha_angular"].get("claim_allowed") is False
 checks["validation_simple_claim_boundary_pass"] = data["validation_simple_claim_boundary"].get("pass") is True
 checks["validation_simple_claim_boundary_claim_closed"] = data["validation_simple_claim_boundary"].get("claim_allowed") is False
 checks["real_data_materialization_security_pass"] = data["real_data_materialization_security"].get("pass") is True
@@ -261,11 +268,11 @@ payload = {
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
         "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, credential-authority PyYAML stdlib migration, technology-watch YAML/jsonschema stdlib migration, security-surface audit, CLI/simple/multiprobe security preflights, "
-        "sound-horizon vectors, freestanding65 parity, stdlib fairness primitives, deterministic inference baseline, Structure-D Rx successor, simple validation, current multiprobe surface, "
+        "sound-horizon vectors, freestanding65 parity, stdlib fairness primitives, deterministic inference baseline, explicit-angular DHA baseline, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
     "F_gap": (
-        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; emcee semantic parity and dynesty nested evidence remain TOKEN_VAZIO; "
+        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; emcee semantic parity, dynesty nested evidence, Astropy DHA parity and DHA FAP remain TOKEN_VAZIO; "
         "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation, bounded HTTP fetcher, docs-inventory config, and RLL plotting families, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
