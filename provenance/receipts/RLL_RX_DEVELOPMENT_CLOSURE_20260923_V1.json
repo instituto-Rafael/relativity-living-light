@@ -1,0 +1,145 @@
+{
+  "receipt_id": "RLL-RX-DEVELOPMENT-CLOSURE-20260923-V1",
+  "timestamp": "2026-09-23T01:05:30-03:00",
+  "kind": "development_closure_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "intent": "Advance RLL as deterministic software development to the last piece that can be sustained without model training, AI runtime, silent physics changes, or scientific claim promotion.",
+  "invariants": [
+    "software_development=true",
+    "model_training=false",
+    "ai_runtime=false",
+    "deterministic_program_execution=true",
+    "SOURCE != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "claim_allowed=false"
+  ],
+  "canonical_entrypoint": "python3 -m rx develop",
+  "active_physics_contract": "RX-STRUCTURE-D-PARITY-V1",
+  "verified_parallel_contract": "RX-FREESTANDING65-PARITY-V1",
+  "ci_evidence": {
+    "workflow": "Validacao Real RLL",
+    "run_id": 35816863862,
+    "run_number": 2785,
+    "head_sha": "7e15e86ffb050fabfdf0973d2ecc8794465a6886",
+    "validate_job": "SUCCESS",
+    "gates": {
+      "cli_status": "PASS",
+      "no_ai_runtime": "PASS",
+      "zero_third_party_active_route": "PASS",
+      "deterministic_selftest": "PASS",
+      "sound_horizon_reference": "PASS",
+      "freestanding65_q16_parity": "PASS",
+      "development_security_guard": "PASS",
+      "operation_contract": "PASS",
+      "governance_bundle_consistency": "PASS",
+      "security_surface_audit": "PASS",
+      "rx_real_validation": "PASS",
+      "rx_multiprobe": "PASS",
+      "structure_d_rx_successor": "PASS",
+      "provenance_boundary": "PASS",
+      "semantic_parity_ledger": "PASS",
+      "global_dependency_audit": "PASS",
+      "typed_dependency_migration_plan": "PASS",
+      "aggregate_development_gate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES"
+    }
+  },
+  "exact_parity": {
+    "surface_N": 65,
+    "LCDM_chi2_q16": 4641555,
+    "LCDM_chi2_decoded": 70.824508667,
+    "RLL_chi2_q16": 4261420,
+    "RLL_chi2_decoded": 65.024108887,
+    "delta_q16": -380135,
+    "parity_delta_q16_LCDM": 0,
+    "parity_delta_q16_RLL": 0,
+    "boundary": "Implementation/receipt parity only; not a fresh fit or model-selection claim."
+  },
+  "current_structure_d_rx": {
+    "surface": {
+      "Hz": 28,
+      "DESI_DR2_BAO": 13,
+      "fsigma8": 16,
+      "CMB": 3,
+      "N": 60
+    },
+    "successor": "data/pipelines/structure_d/joint_real_likelihood_rx.py",
+    "third_party_python_dependencies": 0,
+    "training": false,
+    "ai_runtime": false,
+    "legacy_external_pipeline_mutated": false,
+    "claim_allowed": false
+  },
+  "global_legacy_dependency_debt": {
+    "files_with_external_imports": 280,
+    "leading_modules": {
+      "numpy": 96,
+      "yaml": 72,
+      "scipy": 30,
+      "pandas": 26
+    },
+    "token_vazio_replacements": 196,
+    "active_rx_runtime_affected": false,
+    "automatic_mass_rewrite": false,
+    "migration_rule": "port -> parity gate -> switch/add route -> preserve legacy -> rollback"
+  },
+  "closed_engineering_pieces": [
+    "Rx stdlib numerical/IO kernel",
+    "Rx cosmology kernel",
+    "versioned physics contracts",
+    "no-AI runtime gate",
+    "zero-third-party active-route gate",
+    "sound-horizon FASE18E stdlib port",
+    "exact freestanding C/Q16 math mirror",
+    "exact joint65 receipt parity",
+    "Rx multiprobe N=60",
+    "Structure-D zero-dependency Rx successor",
+    "lazy Structure-D package boundary",
+    "deterministic Rx CLI",
+    "development security/operation governance",
+    "global dependency audit",
+    "typed dependency migration plan",
+    "aggregate development gate"
+  ],
+  "open_contract_divergences": [
+    "Current Structure-D/Rx parity contract uses Omega_r=9.0e-5; FASE18E/freestanding contract uses 9.18e-5.",
+    "Current Structure-D growth proxy differs from freestanding growth including D(z).",
+    "Current Structure-D compressed-CMB historical semantics differ from freestanding r_s(z_star) semantics.",
+    "Current Structure-D/Rx data surface N=60 differs from freestanding joint surface N=65 because H(z) datasets differ.",
+    "A single RX-PHYSICS-CANONICAL-V2 is not selected automatically."
+  ],
+  "stop_condition": {
+    "reached": true,
+    "reason": "The next unification step would choose scientific semantics between already reproducible versioned contracts, or migrate unrelated legacy files whose semantic parity must be handled family-by-family. Neither is a safe silent refactor.",
+    "next_allowed_routes": [
+      "Create/version RX-PHYSICS-CANONICAL-V2 with explicit scientific decisions and parity vectors.",
+      "Select one legacy dependency family from results/rx_dependency_migration_plan.json and migrate it behind a dedicated parity gate."
+    ]
+  },
+  "artifacts": [
+    "rx/",
+    "configs/rx_physics_contracts.json",
+    "validacao_real/run_rx_pipeline.py",
+    "validacao_real/run_rx_multiprobe.py",
+    "data/pipelines/structure_d/joint_real_likelihood_rx.py",
+    "tools/rx_no_ai_gate.py",
+    "tools/rx_zero_dependency_gate.py",
+    "tools/rx_selftest.py",
+    "tools/rx_sound_horizon_selftest.py",
+    "tools/rx_freestanding65_parity.py",
+    "tools/rx_semantic_parity.py",
+    "tools/rx_dependency_audit.py",
+    "tools/rx_dependency_migration_plan.py",
+    "tools/rx_development_gate.py",
+    "scripts/run_rx_development.sh",
+    "docs/architecture/RLL_MECANICAS_LIGACAO_FUNCIONAMENTO_V1.md",
+    "docs/architecture/RLL_RX_PHYSICS_CONTRACT_LEDGER_V1.md"
+  ],
+  "R3": {
+    "F_ok": "Deterministic no-AI zero-third-party active RLL program is implemented and CI-verified, including exact Rx<->freestanding Q16 parity and Structure-D Rx successor.",
+    "F_gap": "One canonical physics contract is not silently chosen; global legacy external dependencies remain a typed migration backlog.",
+    "F_next": "Choose/version a physics contract explicitly or migrate one legacy dependency family with its own parity gate; do not mass-rewrite."
+  },
+  "rollback": "All changes are additive/versioned; legacy numerical pipelines remain preserved. Revert individual Rx commits/routes without rewriting historical receipts.",
+  "append_only": true,
+  "claim_allowed": false
+}
