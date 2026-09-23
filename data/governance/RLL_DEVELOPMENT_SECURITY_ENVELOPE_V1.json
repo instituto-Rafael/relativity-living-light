@@ -1,0 +1,188 @@
+{
+  "schema": "rll.development_security_envelope.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "purpose": "Bound software development/execution without autonomous goal setting, unreviewed sensitive-data handling, arbitrary shell/network authority, or silent claim promotion.",
+  "default_decision": "BLOCK",
+  "claim_allowed": false,
+  "compliance_claim": false,
+  "human_authority": {
+    "required": true,
+    "accepted_modes": [
+      "explicit_local_command",
+      "reviewed_ci_workflow",
+      "reviewed_repository_change"
+    ],
+    "autonomous_goal_setting": "FORBIDDEN",
+    "autonomous_scope_expansion": "FORBIDDEN",
+    "self_authorization": "FORBIDDEN"
+  },
+  "decisions": [
+    "ALLOW",
+    "SANDBOX_ONLY",
+    "HUMAN_REVIEW",
+    "BLOCK"
+  ],
+  "allowed_capabilities": [
+    "repository.read",
+    "repository.write.results",
+    "scientific.compute",
+    "scientific.compare",
+    "provenance.hash",
+    "audit.receipt.write",
+    "process.git.readonly",
+    "network.public_read.declared_hosts"
+  ],
+  "forbidden_capabilities": [
+    "shell.free_text",
+    "process.exec.arbitrary",
+    "credential.read",
+    "credential.export",
+    "repository.force_push",
+    "repository.delete_ref",
+    "filesystem.write.arbitrary",
+    "network.write",
+    "network.arbitrary_host",
+    "surveillance.person",
+    "behavioral.profile.person",
+    "autonomous.goal_set",
+    "autonomous.scope_expand"
+  ],
+  "data_governance": {
+    "allowed_classes": [
+      "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+      "PUBLIC_NON_PERSONAL_DOCUMENTATION",
+      "REPOSITORY_SOURCE_CODE",
+      "DERIVED_NON_PERSONAL_RESULTS"
+    ],
+    "denied_by_default": [
+      "PERSONAL_DATA",
+      "PRECISE_PERSON_LOCATION",
+      "BIOMETRIC_DATA",
+      "HEALTH_DATA",
+      "CREDENTIALS_SECRETS_TOKENS",
+      "PRIVATE_COMMUNICATIONS",
+      "UNAUTHORIZED_THIRD_PARTY_PRIVATE_DATA"
+    ],
+    "minimization_required": true,
+    "purpose_limitation_required": true,
+    "raw_sensitive_data_repository_persistence": "FORBIDDEN",
+    "unknown_class": "HUMAN_REVIEW"
+  },
+  "filesystem": {
+    "repository_relative_paths_only": true,
+    "deny_parent_traversal": true,
+    "deny_absolute_paths": true,
+    "allowed_write_prefixes": [
+      "validacao_real/fetched_rx/",
+      "validacao_real/results_rx/",
+      "results/",
+      "artifacts/",
+      "provenance/receipts/"
+    ],
+    "forbidden_write_prefixes": [
+      ".git/",
+      ".github/workflows/",
+      "data/real/",
+      "data/governance/",
+      "internal/governance/"
+    ],
+    "policy_mutation_during_guarded_run": "FORBIDDEN"
+  },
+  "network": {
+    "default": "OFF",
+    "mode_when_enabled": "READ_ONLY_DECLARED_HOSTS",
+    "schemes": [
+      "https"
+    ],
+    "exact_hosts": [
+      "arxiv.org",
+      "gitlab.com"
+    ],
+    "arbitrary_url": "FORBIDDEN",
+    "url_userinfo": "FORBIDDEN",
+    "url_query": "FORBIDDEN",
+    "url_fragment": "FORBIDDEN",
+    "custom_port": "FORBIDDEN",
+    "cross_host_redirect": "FORBIDDEN",
+    "write_methods": [
+      "FORBIDDEN"
+    ],
+    "secrets_in_headers": "FORBIDDEN",
+    "timeout_seconds_max": 20,
+    "response_bytes_max": 1000000
+  },
+  "secrets": {
+    "ingestion": "FORBIDDEN_BY_DEFAULT",
+    "logging": "FORBIDDEN",
+    "hashing_into_receipts": "FORBIDDEN",
+    "length_into_receipts": "FORBIDDEN",
+    "environment_dump": "FORBIDDEN",
+    "authorization_header_logging": "FORBIDDEN"
+  },
+  "execution": {
+    "dynamic_code_eval": "FORBIDDEN",
+    "arbitrary_plugin_loading": "FORBIDDEN",
+    "shell_true": "FORBIDDEN",
+    "destructive_actions": "FORBIDDEN",
+    "external_side_effects_without_explicit_contract": "FORBIDDEN",
+    "network_probe_requires_explicit_runtime_flag": true
+  },
+  "audit": {
+    "decision_receipt_required": true,
+    "required_fields": [
+      "policy_schema",
+      "operation_id",
+      "decision",
+      "reasons",
+      "policy_sha256",
+      "operation_sha256",
+      "claim_allowed"
+    ],
+    "append_only_for_canonical_receipts": true,
+    "security_event_types": [
+      "POLICY_BLOCK",
+      "HUMAN_REVIEW_REQUIRED",
+      "SANDBOX_ONLY",
+      "AUTHORIZED_EXECUTION",
+      "POLICY_VIOLATION",
+      "INCIDENT"
+    ]
+  },
+  "incident": {
+    "on_secret_exposure": [
+      "STOP_EXECUTION",
+      "DO_NOT_COMMIT",
+      "ROTATE_OR_REVOKE_EXTERNALLY",
+      "REDACT_PUBLIC_ARTIFACTS",
+      "APPEND_INCIDENT_RECEIPT"
+    ],
+    "on_personal_data_detection": [
+      "STOP_EXECUTION",
+      "QUARANTINE_LOCAL_OUTPUT",
+      "DO_NOT_COMMIT",
+      "HUMAN_REVIEW"
+    ],
+    "on_policy_bypass": [
+      "STOP_EXECUTION",
+      "PRESERVE_LOGS_WITHOUT_SECRETS",
+      "HUMAN_REVIEW",
+      "ROLLBACK_IF_MUTATION_OCCURRED"
+    ],
+    "public_vulnerability_detail": "MINIMAL_NON_EXPLOIT_SUMMARY_ONLY"
+  },
+  "epistemic_boundary": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "SECURITY_CONTROL != SECURITY_CERTIFICATION",
+    "POLICY_PASS != ABSENCE_OF_VULNERABILITIES",
+    "AUTHORIZED_EXECUTION != SCIENTIFIC_VALIDATION",
+    "TOKEN_VAZIO != 0"
+  ],
+  "residual_gaps": [
+    "TOKEN_VAZIO_EXTERNAL_BRANCH_PROTECTION",
+    "TOKEN_VAZIO_EXTERNAL_SECRET_SCANNING",
+    "TOKEN_VAZIO_OS_SANDBOX_ENFORCEMENT",
+    "TOKEN_VAZIO_INDEPENDENT_SECURITY_REVIEW",
+    "TOKEN_VAZIO_LEGAL_COMPLIANCE_REVIEW"
+  ]
+}
