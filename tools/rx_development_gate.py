@@ -36,6 +36,8 @@ paths = {
     "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
     "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
     "ci_scientific_skills_stdlib": ROOT / "results" / "ci_scientific_skills_stdlib_migration.json",
+    "fairness_stdlib": ROOT / "results" / "rx_fairness_stdlib_gate.json",
+    "inference_baseline": ROOT / "results" / "rx_inference_baseline_gate.json",
     "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
     "real_data_materialization_security": ROOT / "results" / "real_data_materialization_security_gate.json",
 }
@@ -94,6 +96,15 @@ checks["validation_deterministic_stdlib_pass"] = data["validation_deterministic_
 checks["validation_deterministic_stdlib_zero_third_party"] = data["validation_deterministic_stdlib"].get("third_party_python_dependencies") == []
 checks["validation_deterministic_stdlib_bayes_still_legacy"] = data["validation_deterministic_stdlib"].get("bayesian_legacy_migrated") is False
 checks["validation_deterministic_stdlib_claim_closed"] = data["validation_deterministic_stdlib"].get("claim_allowed") is False
+checks["fairness_stdlib_pass"] = data["fairness_stdlib"].get("pass") is True
+checks["fairness_stdlib_zero_third_party"] = data["fairness_stdlib"].get("third_party_python_dependencies") == []
+checks["fairness_stdlib_legacy_route_preserved"] = data["fairness_stdlib"].get("legacy_numpy_route_replaced") is False
+checks["fairness_stdlib_claim_closed"] = data["fairness_stdlib"].get("claim_allowed") is False
+checks["inference_baseline_pass"] = data["inference_baseline"].get("pass") is True
+checks["inference_baseline_zero_third_party"] = data["inference_baseline"].get("third_party_python_dependencies") == []
+checks["inference_emcee_parity_open"] = data["inference_baseline"].get("emcee_semantic_parity") == "TOKEN_VAZIO"
+checks["inference_dynesty_open"] = data["inference_baseline"].get("dynesty_nested_evidence") == "TOKEN_VAZIO"
+checks["inference_claim_closed"] = data["inference_baseline"].get("claim_allowed") is False
 checks["validation_simple_claim_boundary_pass"] = data["validation_simple_claim_boundary"].get("pass") is True
 checks["validation_simple_claim_boundary_claim_closed"] = data["validation_simple_claim_boundary"].get("claim_allowed") is False
 checks["real_data_materialization_security_pass"] = data["real_data_materialization_security"].get("pass") is True
@@ -250,11 +261,11 @@ payload = {
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
         "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, credential-authority PyYAML stdlib migration, technology-watch YAML/jsonschema stdlib migration, security-surface audit, CLI/simple/multiprobe security preflights, "
-        "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
+        "sound-horizon vectors, freestanding65 parity, stdlib fairness primitives, deterministic inference baseline, Structure-D Rx successor, simple validation, current multiprobe surface, "
         "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
     "F_gap": (
-        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; "
+        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; emcee semantic parity and dynesty nested evidence remain TOKEN_VAZIO; "
         "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation, bounded HTTP fetcher, docs-inventory config, and RLL plotting families, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
