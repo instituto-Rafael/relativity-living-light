@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 paths = {
     "no_ai": ROOT / "results" / "rx_no_ai_runtime_gate.json",
+    "zero_dependency": ROOT / "results" / "rx_zero_dependency_gate.json",
     "selftest": ROOT / "results" / "rx_selftest.json",
     "sound_horizon": ROOT / "results" / "rx_sound_horizon_selftest.json",
     "freestanding65": ROOT / "results" / "rx_freestanding65_parity.json",
@@ -39,6 +40,8 @@ checks = {}
 checks["no_ai_runtime_gate"] = data["no_ai"].get("state") == "PASS"
 checks["no_ai_training_false"] = data["no_ai"].get("policy", {}).get("training") is False
 checks["no_ai_runtime_false"] = data["no_ai"].get("policy", {}).get("ai_runtime") is False
+checks["zero_dependency_gate"] = data["zero_dependency"].get("state") == "PASS"
+checks["zero_dependency_list_empty"] = data["zero_dependency"].get("third_party_python_dependencies") == []
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
 checks["selftest_no_training"] = data["selftest"].get("training") is False
 checks["selftest_no_ai_runtime"] = data["selftest"].get("ai_runtime") is False
