@@ -3,9 +3,13 @@
   "operation_id": "RLL_RX_REAL_VALIDATION_V1",
   "purpose": "Reproduce RLL/LCDM H(z)+DESI DR2 BAO calculations and write non-personal scientific artifacts.",
   "authority": {
-    "mode": "explicit_local_command",
     "human_required": true,
-    "self_authorized": false
+    "self_authorized": false,
+    "permitted_modes": [
+      "explicit_local_command",
+      "reviewed_ci_workflow"
+    ],
+    "default_runtime_mode": "explicit_local_command"
   },
   "autonomy": {
     "goal_setting": false,
@@ -51,5 +55,6 @@
     "raw_remote_payload_persisted": false,
     "repository_results_may_be_committed_only_by_explicit_opt_in": true
   },
-  "claim_allowed": false
+  "claim_allowed": false,
+  "program_type": "deterministic_scientific_runtime"
 }
