@@ -106,6 +106,13 @@ jobs:
           RX_NETWORK_PROBE: "0"
         run: python3 -m rx orchestrate --plan configs/rll_execution_plan.v1.yml
 
+      - name: Execute aggregate Rx development closure
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+          RLL_LEGACY_NETWORK_PROBE: "0"
+        run: python3 -m rx develop
+
       - name: Cross-runtime semantic parity gate
         run: python3 tools/rx_semantic_parity.py
 
