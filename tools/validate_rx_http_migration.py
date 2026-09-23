@@ -9,6 +9,7 @@ import ast
 import importlib.util
 import json
 import sys
+import tempfile
 import urllib.request
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -22,6 +23,7 @@ from rx import http as rx_http
 TARGETS=[
     ROOT/"scripts"/"fetch_real_sources.py",
     ROOT/"scripts"/"fetch_public_astronomy_catalog_samples.py",
+    ROOT/"scripts"/"import_data.py",
 ]
 
 def imported_roots(path):
@@ -72,6 +74,7 @@ for path in TARGETS:
 
 real=load_module(TARGETS[0],"rll_fetch_real_sources_gate")
 astro=load_module(TARGETS[1],"rll_fetch_public_astronomy_gate")
+import_data=load_module(TARGETS[2],"rll_import_data_gate")
 
 nonheavy_hosts={
     urlsplit(cfg["url"]).hostname
@@ -118,6 +121,37 @@ try:
         checks["response_limit_enforced"]=True
 finally:
     urllib.request.build_opener=original_build
+
+
+original_validate=import_data.validate_public_https_url
+try:
+    import_data.validate_public_https_url=lambda value: value
+    try:
+        import_data.fetch("https://example.org/data.csv", api_key="secret", max_bytes=1024)
+        checks["credentialed_public_import_blocked"]=False
+    except import_data.ImportDataError:
+        checks["credentialed_public_import_blocked"]=True
+finally:
+    import_data.validate_public_https_url=original_validate
+
+with tempfile.TemporaryDirectory() as tmp:
+    out=Path(tmp)/"data.json"
+    kind=import_data.try_parse_text_as_json_or_csv(
+        "a,b,c\n1,2.5,hello\n-3,NaN,world\n",
+        out,
+    )
+    parsed=json.loads(out.read_text(encoding="utf-8"))
+    checks["stdlib_csv_normalization"]=(
+        kind=="csv"
+        and parsed==[
+            {"a":1,"b":2.5,"c":"hello"},
+            {"a":-3,"b":None,"c":"world"},
+        ]
+    )
+
+workflow_text=(ROOT/".github/workflows/import-data.yml").read_text(encoding="utf-8")
+checks["import_workflow_no_requests_install"]="pip install requests" not in workflow_text
+checks["import_workflow_no_pandas_install"]="pip install pandas" not in workflow_text
 
 failed=[name for name,passed in checks.items() if not passed]
 payload={
