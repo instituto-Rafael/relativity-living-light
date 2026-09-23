@@ -155,6 +155,91 @@
         "security_surface_audit.json",
         "security_surface_audit.md"
       ]
+    },
+    {
+      "route_id": "RLL_RX_MULTIPROBE_V1",
+      "runtime": "Rx Python stdlib-only multiprobe",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Compare RLL/LCDM/wCDM/CPL over committed public H(z), DESI BAO, fσ8 and compressed CMB data.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": false,
+        "hosts": [],
+        "writes": false
+      },
+      "filesystem": {
+        "read": "declared committed cosmology inputs",
+        "write": [
+          "validacao_real/results_rx/"
+        ]
+      },
+      "retention": {
+        "repository_commit": "explicit opt-in or reviewed repository change only"
+      },
+      "audit": [
+        "security preflight",
+        "input SHA-256",
+        "multiprobe JSON/CSV/SVG",
+        "claim_allowed=false"
+      ]
+    },
+    {
+      "route_id": "RLL_RX_CLI_DEVELOPMENT_V1",
+      "runtime": "python -m rx",
+      "actors": [
+        "human_operator",
+        "reviewed_ci_workflow",
+        "deterministic_program"
+      ],
+      "purpose": "Orchestrate the reviewed Rx development/selftest/validation/parity/audit chain without model training or AI runtime.",
+      "inputs": [
+        "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+        "REPOSITORY_SOURCE_CODE"
+      ],
+      "outputs": [
+        "DERIVED_NON_PERSONAL_RESULTS"
+      ],
+      "personal_data": false,
+      "secrets": false,
+      "network": {
+        "default": "OFF",
+        "optional": true,
+        "hosts": [
+          "arxiv.org",
+          "gitlab.com"
+        ],
+        "writes": false,
+        "purpose": "only nested declared source-probe route when explicitly enabled"
+      },
+      "filesystem": {
+        "read": "repository",
+        "write": [
+          "validacao_real/fetched_rx/",
+          "validacao_real/results_rx/",
+          "results/"
+        ]
+      },
+      "retention": {
+        "repository_commit": "explicit reviewed change only"
+      },
+      "audit": [
+        "CLI security preflight",
+        "development gate",
+        "claim_allowed=false"
+      ]
     }
   ],
   "prohibited_uses": [
