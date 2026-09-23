@@ -159,6 +159,15 @@ def develop():
     _tool("rx_dependency_audit.py")
     _tool("rx_dependency_migration_plan.py")
     _tool_args("rll_closure_queue.py", ["--write"])
+    _tool_args("rll_closure_work_packets.py", ["--write"])
+    _tool_args("rx_physics_v2_decision_packet.py", ["--write"])
+    _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
+    _tool_args("rll_current_rx_source_freeze.py", ["--write"])
+    _tool_args("validate_energy_momentum_bridge_dimensions.py", ["--write"])
+    _tool_args(
+        "rll_token_vazio_reconcile_v4.py",
+        ["--output", "artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json"],
+    )
     _tool("rx_development_gate.py")
     print("RLL_RX_DEVELOPMENT=PASS")
 
