@@ -59,6 +59,7 @@ def parity():
 
 def audit():
     _tool("rx_dependency_audit.py")
+    _tool("rx_dependency_migration_plan.py")
 
 
 def develop():
@@ -72,6 +73,7 @@ def develop():
     _module("data.pipelines.structure_d.joint_real_likelihood_rx")
     _tool("rx_semantic_parity.py")
     _tool("rx_dependency_audit.py")
+    _tool("rx_dependency_migration_plan.py")
     _tool("rx_development_gate.py")
     print("RLL_RX_DEVELOPMENT=PASS")
 
