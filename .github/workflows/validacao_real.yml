@@ -9,6 +9,7 @@ on:
       - "validacao_real/**"
       - "tools/rx_*.py"
       - "configs/rx_physics_contracts.json"
+      - "data/pipelines/structure_d/joint_real_likelihood_rx.py"
       - ".github/workflows/validacao_real.yml"
   workflow_dispatch:
     inputs:
@@ -47,6 +48,8 @@ jobs:
       run: python3 -m validacao_real.run_rx_pipeline
     - name: Rx multiprobe validation
       run: python3 -m validacao_real.run_rx_multiprobe
+    - name: Structure-D Rx zero-dependency successor
+      run: python3 -m data.pipelines.structure_d.joint_real_likelihood_rx
     - name: Check fallback provenance boundary
       run: |
         set -euo pipefail
@@ -91,6 +94,9 @@ jobs:
         path: |
           validacao_real/fetched_rx/
           validacao_real/results_rx/
+          results/structure_d/joint_real_likelihood_rx.json
+          results/structure_d/joint_real_likelihood_rx.csv
+          results/structure_d/joint_real_likelihood_rx_manifest.json
           results/rx_no_ai_runtime_gate.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
@@ -142,7 +148,7 @@ jobs:
         esac
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add validacao_real/fetched_rx validacao_real/results_rx results/rx_no_ai_runtime_gate.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_development_gate.json results/rx_development_gate.md
+        git add validacao_real/fetched_rx validacao_real/results_rx results/structure_d/joint_real_likelihood_rx.json results/structure_d/joint_real_likelihood_rx.csv results/structure_d/joint_real_likelihood_rx_manifest.json results/rx_no_ai_runtime_gate.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_development_gate.json results/rx_development_gate.md
         if git diff --cached --quiet; then
           echo "nothing to commit"
           exit 0
