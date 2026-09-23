@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import ast
+import importlib.util
 import json
 import tempfile
 from pathlib import Path
 
-from tools import validate_rll_credential_authority as mod
-
 ROOT=Path(__file__).resolve().parents[1]
 TARGET=ROOT/"tools"/"validate_rll_credential_authority.py"
+
+spec=importlib.util.spec_from_file_location("rll_validate_credential_authority_gate_target",TARGET)
+mod=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
 
 tree=ast.parse(TARGET.read_text(encoding="utf-8"))
 imports=set()
