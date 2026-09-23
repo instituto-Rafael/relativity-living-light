@@ -44,7 +44,14 @@ jobs:
       run: python3 tools/rx_sound_horizon_selftest.py
     - name: Rx freestanding65 parity gate
       run: python3 tools/rx_freestanding65_parity.py
+    - name: Validate development security guard
+      run: python3 tests/test_rll_development_guard.py
+    - name: Enforce Rx operation contract
+      run: python3 internal/governance/development_guard.py --operation validacao_real/rx_operation.json --authority-mode reviewed_ci_workflow --strict
     - name: Rx zero-dependency validation pipeline
+      env:
+        RLL_AUTHORITY_MODE: reviewed_ci_workflow
+        RX_NETWORK_PROBE: "0"
       run: python3 -m validacao_real.run_rx_pipeline
     - name: Rx multiprobe validation
       run: python3 -m validacao_real.run_rx_multiprobe
