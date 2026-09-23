@@ -55,6 +55,8 @@ jobs:
                 raise SystemExit(f"missing per-source claim boundary for {row.get('source_id')}")
         print('validacao_real fallback provenance boundary OK')
         PY
+    - name: Rx cross-runtime semantic parity ledger
+      run: python3 tools/rx_semantic_parity.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build artifact checksums
@@ -71,6 +73,8 @@ jobs:
           validacao_real/results_rx/
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
+          results/rx_semantic_parity.json
+          results/rx_semantic_parity.md
         retention-days: '30'
         if-no-files-found: warn
     - name: Finalize canonical real-data policy checksums
@@ -112,7 +116,7 @@ jobs:
         esac
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add validacao_real/fetched_rx validacao_real/results_rx results/rx_dependency_audit.json results/rx_dependency_audit.md
+        git add validacao_real/fetched_rx validacao_real/results_rx results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_semantic_parity.json results/rx_semantic_parity.md
         if git diff --cached --quiet; then
           echo "nothing to commit"
           exit 0
