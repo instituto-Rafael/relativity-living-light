@@ -19,6 +19,10 @@ on:
       - "tools/inventory_config.yml"
       - "tools/inventory_config.json"
       - "tools/validate_rll_plot_migration.py"
+      - ".github/workflows/ci-scientific-skills.yml"
+      - "tests/test_ci_scientific_skills.py"
+      - "tools/ci_scientific_skills.py"
+      - "tools/validate_ci_scientific_skills_stdlib_migration.py"
       - "schemas/rll_watch.schema.json"
       - "rll_inovacao_tecnologica_watch.yml"
       - "rll_inovacao_tecnologica_watch.json"
@@ -155,6 +159,8 @@ jobs:
       run: python3 tools/validate_calc_data_stdlib_migration.py
     - name: Validate deterministic validation stdlib migration
       run: python3 tools/validate_validation_deterministic_stdlib.py
+    - name: Validate CI scientific skills stdlib migration
+      run: python3 tools/validate_ci_scientific_skills_stdlib_migration.py
     - name: Validate simple deterministic claim boundary
       run: python3 tools/validate_validation_simple_claim_boundary.py
     - name: Audit remaining Python external imports
@@ -191,6 +197,7 @@ jobs:
           results/watch_config_stdlib_migration.json
           results/calc_data_stdlib_migration.json
           results/validation_deterministic_stdlib_migration.json
+          results/ci_scientific_skills_stdlib_migration.json
           results/validation_simple_claim_boundary.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
