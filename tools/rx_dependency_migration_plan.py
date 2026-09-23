@@ -17,6 +17,7 @@ OUT_JSON = ROOT / "results" / "rx_dependency_migration_plan.json"
 OUT_MD = ROOT / "results" / "rx_dependency_migration_plan.md"
 SERIALIZATION_PARITY = ROOT / "results" / "validacao_real_serialization_parity.json"
 VALIDACAO_ZERO_DEP = ROOT / "results" / "validacao_real_zero_dependency_core.json"
+HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
 
 if not AUDIT.exists():
     raise SystemExit("dependency audit missing; run tools/rx_dependency_audit.py first")
@@ -32,6 +33,7 @@ replacement = {
     "emcee": "TOKEN_VAZIO_INFERENCE_REPLACEMENT",
     "dynesty": "TOKEN_VAZIO_INFERENCE_REPLACEMENT",
     "astropy": "TOKEN_VAZIO_DOMAIN_REPLACEMENT",
+    "requests": "RX_BOUNDED_HTTP_READ_ONLY",
 }
 
 def classify(path):
@@ -106,6 +108,28 @@ if SERIALIZATION_PARITY.exists() and VALIDACAO_ZERO_DEP.exists():
                 str(VALIDACAO_ZERO_DEP.relative_to(ROOT)),
             ],
             "legacy_yaml_preserved": True,
+            "scientific_semantics_changed": False,
+        })
+
+
+if HTTP_MIGRATION_GATE.exists():
+    http_gate = json.loads(HTTP_MIGRATION_GATE.read_text(encoding="utf-8"))
+    if http_gate.get("pass") is True:
+        closed_families.append({
+            "family": "requests_public_read_fetchers",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "scripts/fetch_real_sources.py",
+                "scripts/fetch_public_astronomy_catalog_samples.py",
+                "rx/http.py",
+            ],
+            "replacements": {
+                "requests": "rx.http bounded stdlib HTTPS GET transport",
+            },
+            "evidence": [
+                str(HTTP_MIGRATION_GATE.relative_to(ROOT)),
+            ],
+            "network_write_allowed": False,
             "scientific_semantics_changed": False,
         })
 
