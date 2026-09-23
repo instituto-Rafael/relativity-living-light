@@ -13,13 +13,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from rx.contracts import active_contract
-from rx.cosmology import ORAD, e2
-from rx.kernel import invert_matrix, quad_form, read_csv, simpson
-
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+from rx.contracts import active_contract
+from rx.cosmology import ORAD, e2
+from rx.kernel import invert_matrix, quad_form, read_csv, simpson
 failures = []
 contract_id, contract = active_contract()
 
