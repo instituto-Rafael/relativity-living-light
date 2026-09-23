@@ -60,6 +60,22 @@ def build() -> dict:
         ("{" + key + ",") in bib_text for key in citation_keys
     )
 
+    bibliography_paths_declared = all(
+        isinstance(row.get("bibliography_paths"), list) and bool(row.get("bibliography_paths"))
+        for row in paper_rows
+    )
+    citation_keys_resolve_in_declared_paths = bibliography_paths_declared
+    if citation_keys_resolve_in_declared_paths:
+        for row in paper_rows:
+            key = str(row.get("citation_key", "")).strip()
+            for relative_path in row.get("bibliography_paths", []):
+                path = ROOT / str(relative_path)
+                if not path.exists() or ("{" + key + ",") not in path.read_text(encoding="utf-8"):
+                    citation_keys_resolve_in_declared_paths = False
+                    break
+            if not citation_keys_resolve_in_declared_paths:
+                break
+
     data_authority_map = {
         str(row.get("id")): (row.get("citation_key"), row.get("epistemic_role"))
         for row in paper_rows
@@ -88,6 +104,8 @@ def build() -> dict:
         "citation_keys_nonempty": citation_keys_nonempty,
         "citation_keys_unique": citation_keys_unique,
         "citation_keys_resolve_in_canonical_bibtex": citation_keys_resolve,
+        "bibliography_paths_declared": bibliography_paths_declared,
+        "citation_keys_resolve_in_declared_paths": citation_keys_resolve_in_declared_paths,
         "primary_data_authorities_bound": primary_data_authorities_bound,
         "bibliography_not_truth_score": bibliography_not_truth_score,
         "implementation_refs_do_not_resolve_physics": implementation_refs_do_not_resolve_physics,
