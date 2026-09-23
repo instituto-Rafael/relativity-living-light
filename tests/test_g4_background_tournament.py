@@ -90,3 +90,22 @@ def test_g4_contract_source_equations_are_pinned():
     assert ide["primary_source"] == "arXiv:1506.06349"
     assert ide["interaction"].startswith("Q=3*beta*H*rho_Lambda")
     assert ide["null_limit"] == "beta=0 -> LCDM"
+
+def test_strict_json_serializer_maps_nonfinite_failed_seed_to_null():
+    mod = load_module()
+    rendered = mod.strict_json_dumps(
+        {
+            "chi2": float("inf"),
+            "M_B_profiled": float("nan"),
+            "claim_allowed": False,
+        }
+    )
+    parsed = json.loads(rendered)
+    assert parsed == {
+        "chi2": None,
+        "M_B_profiled": None,
+        "claim_allowed": False,
+    }
+    assert "Infinity" not in rendered
+    assert "NaN" not in rendered
+
