@@ -44,7 +44,7 @@ def _safe_relative_prefix(value):
     return normalized
 
 
-def evaluate_operation(policy, operation):
+def evaluate_operation(policy, operation, runtime_authority_mode=None):
     blockers = []
     reviews = []
 
@@ -55,12 +55,16 @@ def evaluate_operation(policy, operation):
 
     authority = operation.get("authority", {})
     allowed_modes = set(policy.get("human_authority", {}).get("accepted_modes", []))
+    permitted_modes = set(authority.get("permitted_modes", []))
+    runtime_mode = runtime_authority_mode or authority.get("default_runtime_mode")
     if authority.get("human_required") is not True:
         blockers.append("human_authority_not_required")
     if authority.get("self_authorized") is not False:
         blockers.append("self_authorization_not_forbidden")
-    if authority.get("mode") not in allowed_modes:
-        blockers.append("authority_mode_not_allowed")
+    if not permitted_modes or not permitted_modes.issubset(allowed_modes):
+        blockers.append("operation_authority_modes_not_allowed")
+    if runtime_mode not in permitted_modes or runtime_mode not in allowed_modes:
+        blockers.append("runtime_authority_mode_not_allowed")
 
     autonomy = operation.get("autonomy", {})
     for field in ("goal_setting", "scope_expansion", "background_persistence"):
@@ -146,6 +150,8 @@ def evaluate_operation(policy, operation):
         "schema": "rll.development_guard.receipt.v1",
         "policy_schema": policy.get("schema", "TOKEN_VAZIO"),
         "operation_id": operation.get("operation_id", "TOKEN_VAZIO"),
+        "runtime_authority_mode": runtime_mode,
+        "runtime_authority_mode_is_identity_proof": False,
         "decision": decision,
         "event_type": event_type,
         "reasons": blockers + reviews if (blockers or reviews) else ["policy_constraints_satisfied"],
@@ -233,12 +239,17 @@ def main(argv=None):
     parser.add_argument("--policy", default=str(DEFAULT_POLICY))
     parser.add_argument("--operation", required=True)
     parser.add_argument("--receipt", default="")
+    parser.add_argument("--authority-mode", default="")
     parser.add_argument("--strict", action="store_true")
     args = parser.parse_args(argv)
 
     policy = _load(args.policy)
     operation = _load(args.operation)
-    receipt = evaluate_operation(policy, operation)
+    receipt = evaluate_operation(
+        policy,
+        operation,
+        runtime_authority_mode=(args.authority_mode or None),
+    )
 
     if args.receipt:
         out = Path(args.receipt)
