@@ -126,6 +126,8 @@ jobs:
       run: python3 tools/rx_semantic_parity.py
     - name: Validate bounded stdlib HTTP migration
       run: python3 tools/validate_rx_http_migration.py
+    - name: Validate credential-authority stdlib migration
+      run: python3 tools/validate_credential_authority_stdlib_migration.py
     - name: Audit remaining Python external imports
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
@@ -156,6 +158,7 @@ jobs:
           results/rx_no_ai_runtime_gate.json
           results/rx_zero_dependency_gate.json
           results/rx_http_migration_gate.json
+          results/credential_authority_stdlib_migration.json
           results/rx_dependency_audit.json
           results/rx_dependency_audit.md
           results/rx_dependency_migration_plan.json
