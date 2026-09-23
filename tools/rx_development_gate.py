@@ -25,7 +25,16 @@ paths = {
     "dependency_audit": ROOT / "results" / "rx_dependency_audit.json",
     "migration_plan": ROOT / "results" / "rx_dependency_migration_plan.json",
     "structure_d_rx": ROOT / "results" / "structure_d" / "joint_real_likelihood_rx.json",
+    "governance": ROOT / "results" / "development_governance_validation.json",
+    "security_surface": ROOT / "results" / "security_surface_audit.json",
 }
+
+cli_security_receipts = sorted(
+    (ROOT / "results").glob("rx_cli_security_preflight_*_develop.json")
+)
+if not cli_security_receipts:
+    raise SystemExit("RX_DEVELOPMENT_GATE missing CLI security preflight for develop")
+paths["cli_security"] = cli_security_receipts[-1]
 
 missing = [name for name, path in paths.items() if not path.exists()]
 if missing:
@@ -43,6 +52,13 @@ checks["no_ai_training_false"] = data["no_ai"].get("policy", {}).get("training")
 checks["no_ai_runtime_false"] = data["no_ai"].get("policy", {}).get("ai_runtime") is False
 checks["zero_dependency_gate"] = data["zero_dependency"].get("state") == "PASS"
 checks["zero_dependency_list_empty"] = data["zero_dependency"].get("third_party_python_dependencies") == []
+
+checks["governance_bundle_pass"] = data["governance"].get("pass") is True
+checks["governance_claim_closed"] = data["governance"].get("claim_allowed") is False
+checks["security_surface_strict_pass"] = data["security_surface"].get("strict_pass") is True
+checks["security_surface_no_critical"] = data["security_surface"].get("critical_count") == 0
+checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
+checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
 checks["selftest_no_training"] = data["selftest"].get("training") is False
 checks["selftest_no_ai_runtime"] = data["selftest"].get("ai_runtime") is False
@@ -61,6 +77,17 @@ simple_runtime = data["simple"].get("runtime", {})
 checks["simple_claim_closed"] = data["simple"].get("claim_allowed") is False
 checks["simple_zero_third_party"] = simple_runtime.get("third_party_python_dependencies") == []
 
+simple_security_rel = simple_runtime.get("security_preflight", "")
+simple_security_path = ROOT / simple_security_rel if simple_security_rel else None
+checks["simple_security_preflight_exists"] = bool(simple_security_path and simple_security_path.exists())
+if checks["simple_security_preflight_exists"]:
+    simple_security = json.loads(simple_security_path.read_text(encoding="utf-8"))
+    checks["simple_security_allow"] = simple_security.get("decision") == "ALLOW"
+    checks["simple_security_claim_closed"] = simple_security.get("claim_allowed") is False
+else:
+    checks["simple_security_allow"] = False
+    checks["simple_security_claim_closed"] = False
+
 multi = data["multiprobe"]
 multi_runtime = multi.get("runtime", {})
 surface = multi.get("data_surface", {})
@@ -68,6 +95,17 @@ checks["multiprobe_claim_closed"] = multi.get("claim_allowed") is False
 checks["multiprobe_no_training"] = multi_runtime.get("training") is False
 checks["multiprobe_no_ai_runtime"] = multi_runtime.get("ai_runtime") is False
 checks["multiprobe_zero_third_party"] = multi_runtime.get("third_party_python_dependencies") == []
+
+multi_security_rel = multi_runtime.get("security_preflight", "")
+multi_security_path = ROOT / multi_security_rel if multi_security_rel else None
+checks["multiprobe_security_preflight_exists"] = bool(multi_security_path and multi_security_path.exists())
+if checks["multiprobe_security_preflight_exists"]:
+    multi_security = json.loads(multi_security_path.read_text(encoding="utf-8"))
+    checks["multiprobe_security_allow"] = multi_security.get("decision") == "ALLOW"
+    checks["multiprobe_security_claim_closed"] = multi_security.get("claim_allowed") is False
+else:
+    checks["multiprobe_security_allow"] = False
+    checks["multiprobe_security_claim_closed"] = False
 checks["multiprobe_N_consistent"] = (
     int(surface.get("N", -1))
     == int(surface.get("Hz", 0))
@@ -134,12 +172,13 @@ payload = {
     },
     "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
     "F_ok": (
-        "No-AI runtime gate, Rx stdlib runtime, sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
-        "nested baselines, semantic parity ledger and dependency audit are connected in one executable chain."
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "sound-horizon vectors, freestanding65 parity, Structure-D Rx successor, simple validation, current multiprobe surface, "
+        "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
     ),
     "F_gap": (
-        "Growth/CMB/r_d semantics are not yet unified across Structure-D and freestanding; "
-        "repository-wide third-party Python migration remains open."
+        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; "
+        "repository-wide third-party Python migration, OS sandbox evidence, external GitHub controls and independent security review remain open."
     ),
     "F_next": (
         "Choose and version one common growth/CMB/sound-horizon contract, then require "
