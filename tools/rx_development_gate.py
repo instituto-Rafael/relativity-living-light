@@ -35,6 +35,7 @@ paths = {
     "watch_config_stdlib": ROOT / "results" / "watch_config_stdlib_migration.json",
     "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
     "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
+    "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
 }
 
 cli_security_receipts = sorted(
@@ -91,6 +92,8 @@ checks["validation_deterministic_stdlib_pass"] = data["validation_deterministic_
 checks["validation_deterministic_stdlib_zero_third_party"] = data["validation_deterministic_stdlib"].get("third_party_python_dependencies") == []
 checks["validation_deterministic_stdlib_bayes_still_legacy"] = data["validation_deterministic_stdlib"].get("bayesian_legacy_migrated") is False
 checks["validation_deterministic_stdlib_claim_closed"] = data["validation_deterministic_stdlib"].get("claim_allowed") is False
+checks["validation_simple_claim_boundary_pass"] = data["validation_simple_claim_boundary"].get("pass") is True
+checks["validation_simple_claim_boundary_claim_closed"] = data["validation_simple_claim_boundary"].get("claim_allowed") is False
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))
