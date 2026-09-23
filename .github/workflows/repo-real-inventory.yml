@@ -35,6 +35,8 @@ jobs:
       with:
         fetch-depth: 0
         persist-credentials: false
+    - name: Validate inventory config YAML-to-JSON parity
+      run: python3 tools/validate_inventory_config_parity.py
     - name: Generate real inventory from canonical tool
       shell: bash
       run: 'set -euo pipefail
@@ -71,6 +73,8 @@ jobs:
           data/results/repo_inventory_checksums.sha256
 
           data/results/repo_inventory_commit_policy.txt
+
+          results/inventory_config_serialization_parity.json
 
           '
         retention-days: 14
