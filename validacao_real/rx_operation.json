@@ -1,0 +1,55 @@
+{
+  "schema": "rll.development_operation.v1",
+  "operation_id": "RLL_RX_REAL_VALIDATION_V1",
+  "purpose": "Reproduce RLL/LCDM H(z)+DESI DR2 BAO calculations and write non-personal scientific artifacts.",
+  "authority": {
+    "mode": "explicit_local_command",
+    "human_required": true,
+    "self_authorized": false
+  },
+  "autonomy": {
+    "goal_setting": false,
+    "scope_expansion": false,
+    "background_persistence": false
+  },
+  "capabilities": [
+    "repository.read",
+    "repository.write.results",
+    "scientific.compute",
+    "scientific.compare",
+    "provenance.hash",
+    "audit.receipt.write",
+    "process.git.readonly",
+    "network.public_read.declared_hosts"
+  ],
+  "data_classes": [
+    "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+    "REPOSITORY_SOURCE_CODE",
+    "DERIVED_NON_PERSONAL_RESULTS"
+  ],
+  "personal_data_expected": false,
+  "secrets_required": false,
+  "destructive_actions": false,
+  "shell_free_text": false,
+  "writes": [
+    "validacao_real/fetched_rx/",
+    "validacao_real/results_rx/"
+  ],
+  "network": {
+    "required": false,
+    "default_enabled": false,
+    "hosts": [
+      "arxiv.org",
+      "gitlab.com"
+    ],
+    "methods": [
+      "GET"
+    ],
+    "purpose": "Optional source reachability probe only; calculation uses committed local scientific anchors."
+  },
+  "retention": {
+    "raw_remote_payload_persisted": false,
+    "repository_results_may_be_committed_only_by_explicit_opt_in": true
+  },
+  "claim_allowed": false
+}
