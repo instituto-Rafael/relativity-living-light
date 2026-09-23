@@ -56,6 +56,11 @@ on:
       - "data/governance/RLL_DATA_USE_PURPOSE_REGISTRY_V1.json"
       - "data/governance/RLL_EXECUTABLE_ENTRYPOINT_AUTHORITY_REGISTRY_V1.json"
       - "configs/rx_physics_contracts.json"
+      - "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+      - "data/governance/RLL_GATE_NAMESPACE_REGISTRY_V1.json"
+      - "tools/rll_closure_queue.py"
+      - "tools/validate_rx_dha.py"
+      - "tests/test_rll_closure_queue.py"
       - "data/pipelines/structure_d/joint_real_likelihood_rx.py"
       - "data/pipelines/structure_d/__init__.py"
       - ".github/workflows/validacao_real.yml"
@@ -180,6 +185,12 @@ jobs:
       run: python3 tools/rx_dependency_audit.py
     - name: Build typed dependency migration plan
       run: python3 tools/rx_dependency_migration_plan.py
+    - name: Validate Rx DHA angular-frequency baseline
+      run: python3 tools/validate_rx_dha.py
+    - name: Validate closure dependency graph
+      run: python3 -m unittest tests.test_rll_closure_queue
+    - name: Build RLL closure queue receipt
+      run: python3 tools/rll_closure_queue.py --write
     - name: Materialize reviewed CI develop authority receipt
       run: |
         python3 internal/governance/development_guard.py           --operation configs/rx_cli_operation.json           --authority-mode reviewed_ci_workflow           --receipt results/rx_cli_security_preflight_ci_develop.json           --strict
@@ -213,6 +224,9 @@ jobs:
           results/ci_scientific_skills_stdlib_migration.json
           results/rx_fairness_stdlib_gate.json
           results/rx_inference_baseline_gate.json
+          results/rx_dha_angular_frequency_gate.json
+          results/rll_closure_queue.json
+          results/rll_closure_queue.md
           results/validation_simple_claim_boundary.json
           results/real_data_materialization_security_gate.json
           results/rx_dependency_audit.json
@@ -255,7 +269,7 @@ jobs:
       CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.
   commit-results:
     needs: validate
-    if: ${{ inputs.commit_results }}
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.commit_results == true }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -279,7 +293,7 @@ jobs:
         esac
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add validacao_real/fetched_rx validacao_real/results_rx results/structure_d/joint_real_likelihood_rx.json results/structure_d/joint_real_likelihood_rx.csv results/structure_d/joint_real_likelihood_rx_manifest.json results/rx_no_ai_runtime_gate.json results/rx_zero_dependency_gate.json results/rx_http_migration_gate.json results/rx_plot_migration_gate.json results/credential_authority_stdlib_migration.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_dependency_migration_plan.json results/rx_dependency_migration_plan.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_fairness_stdlib_gate.json results/rx_inference_baseline_gate.json results/rx_dha_angular_frequency_gate.json results/rx_development_gate.json results/rx_development_gate.md
+        git add validacao_real/fetched_rx validacao_real/results_rx results/structure_d/joint_real_likelihood_rx.json results/structure_d/joint_real_likelihood_rx.csv results/structure_d/joint_real_likelihood_rx_manifest.json results/rx_no_ai_runtime_gate.json results/rx_zero_dependency_gate.json results/rx_http_migration_gate.json results/rx_plot_migration_gate.json results/credential_authority_stdlib_migration.json results/rx_dependency_audit.json results/rx_dependency_audit.md results/rx_dependency_migration_plan.json results/rx_dependency_migration_plan.md results/rx_semantic_parity.json results/rx_semantic_parity.md results/rx_selftest.json results/rx_sound_horizon_selftest.json results/rx_freestanding65_parity.json results/rx_fairness_stdlib_gate.json results/rx_inference_baseline_gate.json results/rx_dha_angular_frequency_gate.json results/rll_closure_queue.json results/rll_closure_queue.md results/rx_development_gate.json results/rx_development_gate.md
         if git diff --cached --quiet; then
           echo "nothing to commit"
           exit 0
