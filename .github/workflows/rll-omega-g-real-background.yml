@@ -1,0 +1,100 @@
+name: RLL Omega_G Real Background Gate
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/rll-omega-g-real-background.yml"
+      - "tools/run_omega_g_cosmology_tournament.py"
+      - "data/contracts/rll_omega_g_cosmology_tournament.v1.yaml"
+      - "data/inputs/omega_g/observable_effect_binding_registry.v1.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: omega-g-real-background-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  real-background:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check numpy scipy pyyaml pytest
+
+      - name: Validate Omega_G structure
+        run: python tools/run_omega_g_cosmology_tournament.py --mode validate
+
+      - name: Exact null parity
+        run: python tools/run_omega_g_cosmology_tournament.py --mode null-parity
+
+      - name: Focused tests
+        run: python -m pytest -q tests/test_omega_g_cosmology_tournament.py
+
+      - name: Materialize pinned Pantheon+ full covariance
+        run: |
+          set -euo pipefail
+          python scripts/fetch_pantheon_covariance.py             --receipt artifacts/omega_g/pantheon_covariance_materialization.json
+
+      - name: Run full G4 background through Omega_G bridge
+        run: |
+          set -euo pipefail
+          python tools/run_omega_g_cosmology_tournament.py             --mode baseline             --seeds 11,23,37,53,71             --maxiter 250             --ftol 1e-10             --integration-points 4096             --output artifacts/omega_g/g4_baseline_real.json
+
+      - name: Build execution receipt
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          report_path=Path("artifacts/omega_g/g4_baseline_real.json")
+          cov_path=Path("data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov")
+          wrapped=json.loads(report_path.read_text())
+          report=wrapped["report"]
+          rows={row["model"]:row for row in report["rows"]}
+          receipt={
+            "schema":"rll.omega_g.real_background.execution_receipt.v1",
+            "state":report["state"],
+            "claim_allowed":False,
+            "scientific_confirmation":False,
+            "covariance":{
+              "bytes":cov_path.stat().st_size,
+              "sha256":hashlib.sha256(cov_path.read_bytes()).hexdigest(),
+            },
+            "datasets":report["datasets"],
+            "models":{k:{
+              "chi2":v["chi2"],
+              "AIC":v["AIC"],
+              "AICc":v["AICc"],
+              "BIC":v["BIC"],
+              "boundary_hits":v["boundary_hits"]
+            } for k,v in rows.items()},
+            "deltas_vs_LCDM":report["deltas_vs_LCDM"],
+            "boundary":"G4 background execution != Omega_G physical binding != scientific confirmation"
+          }
+          out=Path("artifacts/omega_g/real_background_execution_receipt.json")
+          out.write_text(json.dumps(receipt,indent=2,ensure_ascii=False,allow_nan=False)+"\n")
+          print(json.dumps(receipt,indent=2))
+          PY
+
+      - name: Upload compact execution evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: omega-g-real-background-${{ github.run_id }}
+          path: |
+            artifacts/omega_g/g4_baseline_real.json
+            artifacts/omega_g/real_background_execution_receipt.json
+            artifacts/omega_g/pantheon_covariance_materialization.json
+          retention-days: 30
+          if-no-files-found: error
