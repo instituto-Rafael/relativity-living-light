@@ -10,6 +10,7 @@ on:
       - "tools/rx_*.py"
       - "configs/rx_physics_contracts.json"
       - "data/pipelines/structure_d/joint_real_likelihood_rx.py"
+      - "data/pipelines/structure_d/__init__.py"
       - ".github/workflows/validacao_real.yml"
   workflow_dispatch:
     inputs:
