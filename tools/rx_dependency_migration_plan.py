@@ -17,6 +17,7 @@ OUT_JSON = ROOT / "results" / "rx_dependency_migration_plan.json"
 OUT_MD = ROOT / "results" / "rx_dependency_migration_plan.md"
 SERIALIZATION_PARITY = ROOT / "results" / "validacao_real_serialization_parity.json"
 VALIDACAO_ZERO_DEP = ROOT / "results" / "validacao_real_zero_dependency_core.json"
+INVENTORY_CONFIG_PARITY = ROOT / "results" / "inventory_config_serialization_parity.json"
 HTTP_MIGRATION_GATE = ROOT / "results" / "rx_http_migration_gate.json"
 
 if not AUDIT.exists():
@@ -106,6 +107,32 @@ if SERIALIZATION_PARITY.exists() and VALIDACAO_ZERO_DEP.exists():
             "evidence": [
                 str(SERIALIZATION_PARITY.relative_to(ROOT)),
                 str(VALIDACAO_ZERO_DEP.relative_to(ROOT)),
+            ],
+            "legacy_yaml_preserved": True,
+            "scientific_semantics_changed": False,
+        })
+
+
+if INVENTORY_CONFIG_PARITY.exists():
+    inventory_parity = json.loads(INVENTORY_CONFIG_PARITY.read_text(encoding="utf-8"))
+    docs_inventory_external = any(
+        item.get("path") == "tools/docs_inventory.py" and item.get("external_imports")
+        for item in audit.get("files", [])
+    )
+    if inventory_parity.get("pass") is True and not docs_inventory_external:
+        closed_families.append({
+            "family": "docs_inventory_config_yaml",
+            "state": "MIGRATED_WITH_PARITY_GATE",
+            "scope": [
+                "tools/docs_inventory.py",
+                "tools/inventory_config.json",
+            ],
+            "replacements": {
+                "yaml": "JSON stdlib config",
+            },
+            "evidence": [
+                str(INVENTORY_CONFIG_PARITY.relative_to(ROOT)),
+                str(AUDIT.relative_to(ROOT)),
             ],
             "legacy_yaml_preserved": True,
             "scientific_semantics_changed": False,
