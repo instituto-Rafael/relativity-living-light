@@ -4266,6 +4266,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "artifacts/governance/RLL_LAB_GAPFILL_INVENTORY_SYNC_20260922.json",
+    "bytes": 2562,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 62,
+    "sha256": "4cb231c324e06f49ca30cee19a5d4cf65008baf68cee708ffbaa25961f7f3e92",
+    "flags": ""
+  },
+  {
     "path": "artifacts/governance/RLL_LAB_GAPFILL_RECONCILIATION_20260922.json",
     "bytes": 15769,
     "ext": ".json",

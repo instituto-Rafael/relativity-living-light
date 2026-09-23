@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3324 |
-| `cataloged_files` | 3313 |
+| `tracked_files_total` | 3325 |
+| `cataloged_files` | 3314 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 54607145 |
-| `total_text_lines` | 503742 |
+| `total_bytes` | 54609707 |
+| `total_text_lines` | 503804 |
 | `markdown_files` | 1118 |
 | `yml_yaml_files` | 234 |
 | `github_workflow_yml_files` | 107 |
-| `data_or_result_files` | 916 |
+| `data_or_result_files` | 917 |
 
-**Total de arquivos catalogados:** 3313
+**Total de arquivos catalogados:** 3314
 
 ## Inventário completo
 
@@ -497,6 +497,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `artifacts/governance/RLL_GEOM_TRIPLE_PASS_AUDIT_RECEIPT_20260922.json` | 1639 | `.json` | `data_or_result` | 34 | `1da32559c9d7d0db14a3009aa2f73a2a6b293ce06d0128512751a1161c55c11e` | `token_vazio_declared` |
 | `artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json` | 2796 | `.json` | `data_or_result` | 67 | `048505b53be361ad9d5c99ff41e560c8302e11f6f277d4a1bb767a84cff6c303` | `token_vazio_declared` |
 | `artifacts/governance/RLL_JOINT65_ARMV7_STATIC_BUILTINS_PHYSICAL_RECEIPT_20260922.txt` | 1894 | `.txt` | `other` | 45 | `4d1f61f7207ab1eb68f57cc30dca4364384c9e036e70e047f1e63d29dd824843` | `token_vazio_declared` |
+| `artifacts/governance/RLL_LAB_GAPFILL_INVENTORY_SYNC_20260922.json` | 2562 | `.json` | `data_or_result` | 62 | `4cb231c324e06f49ca30cee19a5d4cf65008baf68cee708ffbaa25961f7f3e92` | `` |
 | `artifacts/governance/RLL_LAB_GAPFILL_RECONCILIATION_20260922.json` | 15769 | `.json` | `data_or_result` | 274 | `277e7846762709f30ff24b6e345c02e84ed6d5d949bafc3a158c93fa5b066911` | `mentions_synthetic,token_vazio_declared` |
 | `artifacts/governance/RLL_LAB_GAPFILL_SEMANTIC_MERGE_01_20260922.json` | 2093 | `.json` | `data_or_result` | 46 | `f68f2df82851c6773b9e51b444b5ec468b948ec958c62d8a7fb15f5bbc2b6b57` | `` |
 | `artifacts/governance/RLL_LAB_TO_INTEGRATION_RECONCILIATION_RECEIPT_20260922.json` | 3714 | `.json` | `data_or_result` | 85 | `76c5fb217a7ec0c8684ac9f38bfd02ab7c2a18d4a8540c3d470cc276a954e170` | `mentions_synthetic,token_vazio_declared` |
