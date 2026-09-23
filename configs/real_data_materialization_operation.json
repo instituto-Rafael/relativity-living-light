@@ -1,0 +1,53 @@
+{
+  "schema": "rll.development_operation.v1",
+  "operation_id": "REAL_DATA_MATERIALIZATION_V2",
+  "version": "2.0.0",
+  "purpose": "Materialize explicitly declared public Pantheon+ files from reviewed HTTPS source paths into declared repository data locations with bounded transport and provenance.",
+  "authority": {
+    "human_required": true,
+    "self_authorized": false,
+    "permitted_modes": [
+      "explicit_local_command",
+      "reviewed_ci_workflow"
+    ],
+    "default_runtime_mode": "explicit_local_command"
+  },
+  "autonomy": {
+    "goal_setting": false,
+    "scope_expansion": false,
+    "background_persistence": false
+  },
+  "capabilities": [
+    "repository.read",
+    "repository.write.materialized_public_data",
+    "provenance.hash",
+    "network.public_read.declared_hosts"
+  ],
+  "data_classes": [
+    "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+    "REPOSITORY_SOURCE_CODE"
+  ],
+  "personal_data_expected": false,
+  "secrets_required": false,
+  "destructive_actions": false,
+  "shell_free_text": false,
+  "writes": [
+    "data/pantheon/",
+    "data/real_sources/real_data_manifest.json"
+  ],
+  "network": {
+    "default_enabled": false,
+    "hosts": [
+      "raw.githubusercontent.com"
+    ],
+    "methods": [
+      "GET"
+    ]
+  },
+  "claim_allowed": false,
+  "rollback": [
+    "remove newly materialized file only after confirming it was not pre-existing",
+    "restore prior manifest from version control or receipt",
+    "never overwrite scientific source silently"
+  ]
+}
