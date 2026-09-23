@@ -1,0 +1,176 @@
+{
+  "schema": "rll.development_safety_authority.v1",
+  "version": "1.0.0",
+  "mode": "fail_closed",
+  "purpose": "Allow software development to advance while preventing unreviewed authority, unsafe side effects, sensitive-data misuse, secret exposure, or autonomous escalation.",
+  "invariants": [
+    "PROGRAM_EXECUTION != AUTHORITY",
+    "CAPABILITY != PERMISSION",
+    "DATA_ACCESS != DATA_OWNERSHIP",
+    "OBSERVATION != IDENTIFICATION",
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0"
+  ],
+  "default_policy": {
+    "filesystem": "read_only_unless_explicit_write_scope",
+    "network": "off_or_read_only_unless_declared",
+    "credentials": "no_secret_value_in_source_logs_receipts_or_prompts",
+    "personal_data": "deny_by_default",
+    "sensitive_data": "deny_by_default",
+    "external_side_effects": "human_authorization_required",
+    "privilege_escalation": "forbidden",
+    "destructive_actions": "forbidden_without_explicit_scope_snapshot_and_rollback",
+    "autonomous_policy_change": "forbidden",
+    "autonomous_permission_expansion": "forbidden"
+  },
+  "authority_levels": [
+    {
+      "id": "A0",
+      "name": "PURE_COMPUTE",
+      "allowed": [
+        "local deterministic computation",
+        "read committed public/project data"
+      ],
+      "human_gate": false
+    },
+    {
+      "id": "A1",
+      "name": "WORKSPACE_WRITE",
+      "allowed": [
+        "create or modify declared project artifacts",
+        "append receipts"
+      ],
+      "human_gate": "scope must already be authorized"
+    },
+    {
+      "id": "A2",
+      "name": "EXTERNAL_READ",
+      "allowed": [
+        "read declared external APIs/sources"
+      ],
+      "human_gate": "provider and data class must be declared"
+    },
+    {
+      "id": "A3",
+      "name": "EXTERNAL_WRITE",
+      "allowed": [
+        "send, publish, mutate external service, create PR or issue"
+      ],
+      "human_gate": true
+    },
+    {
+      "id": "A4",
+      "name": "SENSITIVE_OR_PRIVILEGED",
+      "allowed": [
+        "personal/sensitive data or privileged administration"
+      ],
+      "human_gate": true,
+      "additional_review": true
+    },
+    {
+      "id": "A5",
+      "name": "DESTRUCTIVE_OR_IRREVERSIBLE",
+      "allowed": [],
+      "human_gate": true,
+      "default": "DENY"
+    }
+  ],
+  "data_classes": [
+    {
+      "id": "D0",
+      "name": "PUBLIC",
+      "default": "ALLOW"
+    },
+    {
+      "id": "D1",
+      "name": "PROJECT_INTERNAL",
+      "default": "ALLOW_WITH_PROVENANCE"
+    },
+    {
+      "id": "D2",
+      "name": "CONFIDENTIAL",
+      "default": "REVIEW"
+    },
+    {
+      "id": "D3",
+      "name": "PERSONAL",
+      "default": "DENY_UNLESS_EXPLICIT_PURPOSE_AND_AUTHORITY"
+    },
+    {
+      "id": "D4",
+      "name": "SENSITIVE_PERSONAL_OR_SECRET",
+      "default": "DENY_BY_DEFAULT"
+    }
+  ],
+  "mandatory_execution_envelope": [
+    "actor",
+    "purpose",
+    "authority_level",
+    "data_classes",
+    "inputs",
+    "outputs",
+    "network_mode",
+    "write_scope",
+    "secrets_required",
+    "retention",
+    "audit_receipt",
+    "rollback",
+    "expiry"
+  ],
+  "stop_conditions": [
+    "unknown actor or purpose",
+    "authority level missing",
+    "data classification missing for non-public input",
+    "secret would be persisted",
+    "write target outside declared scope",
+    "network destination outside declared allowlist",
+    "unexpected executable/code from untrusted input",
+    "request to weaken or bypass audit/security controls",
+    "destructive operation without explicit human authorization and rollback",
+    "TOKEN_VAZIO in a field required for the requested authority"
+  ],
+  "security_review_domains": [
+    "authentication_and_authorization",
+    "secret_management",
+    "input_validation_and_injection",
+    "dependency_and_supply_chain",
+    "filesystem_and_path_boundaries",
+    "network_egress",
+    "logging_and_sensitive_data",
+    "artifact_integrity_and_signing",
+    "workflow_permissions",
+    "rollback_and_incident_response"
+  ],
+  "privacy": {
+    "principles": [
+      "purpose_limitation",
+      "data_minimization",
+      "access_control",
+      "retention_limit",
+      "provenance",
+      "deletion_or_supersession_process"
+    ],
+    "tracking": "Only operational events necessary for provenance/security should be recorded; do not create behavioral tracking by default.",
+    "receipt_rule": "Receipts record identifiers/hashes and decisions, not secret values or unnecessary personal content."
+  },
+  "incident_model": {
+    "states": [
+      "SUSPECTED",
+      "CONTAINED",
+      "EVIDENCE_PRESERVED",
+      "ASSESSED",
+      "REMEDIATED",
+      "CLOSED"
+    ],
+    "first_actions": [
+      "stop side effects",
+      "preserve evidence",
+      "revoke or rotate affected credentials through authorized owner",
+      "identify scope",
+      "record append-only incident receipt"
+    ],
+    "no_silent_fix": true
+  },
+  "legal_boundary": "Engineering controls only. This policy does not assert legal compliance or certification; applicable legal/privacy/security review remains separate.",
+  "claim_allowed": false
+}
