@@ -8,10 +8,18 @@ import json
 from pathlib import Path
 from typing import Any
 
-import requests
+from rx.http import RxHttpError, get_bytes
 
 DEFAULT_OUTPUT_DIR = "artifacts/rll-real-run"
 LATENTES_OUTPUT_DIR = "artifacts/rll_latentes"
+
+FETCH_ALLOWED_HOSTS = {
+    "www.ncei.noaa.gov",
+    "omniweb.gsfc.nasa.gov",
+    "www.nmdb.eu",
+    "raw.githubusercontent.com",
+    "arxiv.org",
+}
 
 # These are the committed real inputs consumed by the joint cosmology route.
 # Keep observables separate: IML receives H(z) only, while Structure-D consumes
@@ -166,9 +174,14 @@ def sha256_file(p: Path) -> str:
 
 def fetch_text(url: str, out: Path) -> tuple[str, str | None]:
     try:
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        out.write_bytes(r.content)
+        payload = get_bytes(
+            url,
+            allowed_hosts=FETCH_ALLOWED_HOSTS,
+            timeout=30,
+            max_bytes=8 * 1024 * 1024,
+            user_agent="RLL-real-source-fetcher/1.0",
+        )
+        out.write_bytes(payload)
         return "fetched", None
     except Exception as e:
         return "fetch_failed", str(e)
@@ -176,10 +189,14 @@ def fetch_text(url: str, out: Path) -> tuple[str, str | None]:
 
 def fetch_csv(url: str, out: Path) -> tuple[str, str | None]:
     try:
-        r = requests.get(url, timeout=60)
-        r.raise_for_status()
-        out.write_bytes(r.content)
-        # sanity check
+        payload = get_bytes(
+            url,
+            allowed_hosts=FETCH_ALLOWED_HOSTS,
+            timeout=60,
+            max_bytes=16 * 1024 * 1024,
+            user_agent="RLL-real-source-fetcher/1.0",
+        )
+        out.write_bytes(payload)
         with out.open("r", encoding="utf-8", errors="replace") as fh:
             sample = fh.read(2048)
         if "," not in sample and "\t" not in sample:
