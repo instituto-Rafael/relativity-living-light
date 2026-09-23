@@ -31,6 +31,23 @@ class DevelopmentGuardTests(unittest.TestCase):
         self.assertEqual(receipt["decision"], "ALLOW")
         self.assertFalse(receipt["claim_allowed"])
 
+    def test_reviewed_ci_authority_is_allowed(self):
+        receipt = evaluate_operation(
+            POLICY,
+            OPERATION,
+            runtime_authority_mode="reviewed_ci_workflow",
+        )
+        self.assertEqual(receipt["decision"], "ALLOW")
+        self.assertEqual(receipt["runtime_authority_mode"], "reviewed_ci_workflow")
+
+    def test_unknown_authority_mode_is_blocked(self):
+        receipt = evaluate_operation(
+            POLICY,
+            OPERATION,
+            runtime_authority_mode="autonomous_agent",
+        )
+        self.assertEqual(receipt["decision"], "BLOCK")
+
     def test_unknown_capability_is_blocked(self):
         op = copy.deepcopy(OPERATION)
         op["capabilities"].append("process.exec.arbitrary")
