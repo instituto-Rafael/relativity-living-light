@@ -24,6 +24,7 @@ from rx.kernel import (
     write_svg_chart,
 )
 from rx.contracts import active_contract
+from internal.governance.development_guard import evaluate_operation
 from rx.cosmology import (
     BOUNDS,
     MODEL_ORDER,
@@ -46,9 +47,33 @@ BAO_PATH = ROOT / "data" / "real" / "cosmology" / "desi_dr2_bao_primary_points.c
 BAO_COV_PATH = ROOT / "data" / "real" / "desi_dr2_bao_covariance.csv"
 FS8_PATH = ROOT / "data" / "real" / "cosmology" / "fsigma8_growth_real.csv"
 CMB_PATH = ROOT / "data" / "real" / "CMB_shift_real.json"
+SECURITY_POLICY_PATH = ROOT / "data" / "governance" / "RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
+OPERATION_PATH = ROOT / "validacao_real" / "rx_multiprobe_operation.json"
+
+security_policy = load_json(SECURITY_POLICY_PATH)
+operation_contract = load_json(OPERATION_PATH)
+runtime_authority_mode = os.environ.get(
+    "RLL_AUTHORITY_MODE",
+    operation_contract.get("authority", {}).get("default_runtime_mode", "explicit_local_command"),
+)
+security_preflight = evaluate_operation(
+    security_policy,
+    operation_contract,
+    runtime_authority_mode=runtime_authority_mode,
+)
+if security_preflight["decision"] != "ALLOW":
+    raise SystemExit(
+        "Rx multiprobe security preflight blocked execution: "
+        + security_preflight["decision"]
+        + " "
+        + "; ".join(security_preflight["reasons"])
+    )
 
 RESULTS.mkdir(parents=True, exist_ok=True)
 FIGS.mkdir(parents=True, exist_ok=True)
+run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+security_preflight_path = RESULTS / ("multiprobe_security_preflight_" + run_stamp + ".json")
+dump_json(security_preflight_path, security_preflight)
 
 CONTRACT_ID, CONTRACT = active_contract()
 if CONTRACT_ID != "RX-STRUCTURE-D-PARITY-V1":
@@ -247,6 +272,8 @@ payload = {
         "distance_steps": distance_steps,
         "cmb_steps": cmb_steps,
         "growth_steps": growth_steps,
+        "runtime_authority_mode": runtime_authority_mode,
+        "security_preflight": str(security_preflight_path.relative_to(ROOT)),
     },
     "data_surface": {
         "Hz": n_hz,
