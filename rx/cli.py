@@ -124,6 +124,7 @@ def develop():
     _tool("validate_inventory_config_parity.py")
     _tool("validate_rll_plot_migration.py")
     _tool("validate_rx_http_migration.py")
+    _tool("validate_credential_authority_stdlib_migration.py")
     _tool_args("rll_security_surface_audit.py", ["--strict"])
     _tool("rx_no_ai_gate.py")
     _tool("rx_zero_dependency_gate.py")
