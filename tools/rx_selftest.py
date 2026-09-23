@@ -70,6 +70,7 @@ check(structure_namespace_ok, "structure_d_namespace_import_without_legacy_depen
 
 stdlib = set(getattr(sys, "stdlib_module_names", ()))
 stdlib.update({"__future__"})
+project_local_roots = {"rx", "internal"}
 for path in sorted((ROOT / "rx").glob("*.py")):
     tree = ast.parse(path.read_text(encoding="utf-8"))
     external = set()
@@ -77,11 +78,11 @@ for path in sorted((ROOT / "rx").glob("*.py")):
         if isinstance(node, ast.Import):
             for alias in node.names:
                 root = alias.name.split(".")[0]
-                if root not in stdlib and root != "rx":
+                if root not in stdlib and root not in project_local_roots:
                     external.add(root)
         elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
             root = node.module.split(".")[0]
-            if root not in stdlib and root != "rx":
+            if root not in stdlib and root not in project_local_roots:
                 external.add(root)
     check(not external, "stdlib_only_%s" % path.name)
 
