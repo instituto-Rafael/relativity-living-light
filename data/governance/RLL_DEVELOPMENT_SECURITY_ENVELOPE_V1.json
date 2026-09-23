@@ -1,6 +1,6 @@
 {
   "schema": "rll.development_security_envelope.v1",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "ACTIVE_GOVERNED_DRAFT",
   "purpose": "Bound software development/execution without autonomous goal setting, unreviewed sensitive-data handling, arbitrary shell/network authority, or silent claim promotion.",
   "default_decision": "BLOCK",
@@ -33,7 +33,8 @@
     "provenance.hash",
     "audit.receipt.write",
     "process.git.readonly",
-    "network.public_read.declared_hosts"
+    "network.public_read.declared_hosts",
+    "repository.write.materialized_public_data"
   ],
   "forbidden_capabilities": [
     "shell.free_text",
@@ -80,7 +81,9 @@
       "validacao_real/results_rx/",
       "results/",
       "artifacts/",
-      "provenance/receipts/"
+      "provenance/receipts/",
+      "data/pantheon/",
+      "data/real_sources/real_data_manifest.json"
     ],
     "forbidden_write_prefixes": [
       ".git/",
@@ -99,7 +102,8 @@
     ],
     "exact_hosts": [
       "arxiv.org",
-      "gitlab.com"
+      "gitlab.com",
+      "raw.githubusercontent.com"
     ],
     "arbitrary_url": "FORBIDDEN",
     "url_userinfo": "FORBIDDEN",
