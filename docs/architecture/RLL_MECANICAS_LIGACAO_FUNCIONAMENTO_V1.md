@@ -486,3 +486,123 @@ O objetivo não é reescrever matemática acadêmica; é possuir a implementaç�
 `F_gap`: Rx ainda não cobre todo o multiprobe; perturbações RLL, Planck completo, posterior robusto e reprodução independente continuam abertos.
 
 `F_next`: executar o Rx multiprobe de 60 observações e fechar os contratos de paridade growth/CMB antes de substituir o Structure-D legado.
+
+
+## 13. Delta de desenvolvimento Rx — fechamento executável
+
+Após a arquitetura inicial, a rota foi desenvolvida até uma cadeia executável fail-closed:
+
+```text
+python3 -m rx status
+        |
+        v
+NO_AI_RUNTIME
+        |
+        v
+ZERO_THIRD_PARTY_ACTIVE_ROUTE
+        |
+        v
+RX_SELFTEST
+        |
+        v
+SOUND_HORIZON_REFERENCE
+        |
+        v
+FREESTANDING65_Q16_PARITY
+        |
+        v
+RX_REAL_VALIDATION
+        |
+        v
+RX_MULTIPROBE_N60
+        |
+        v
+STRUCTURE_D_RX_SUCCESSOR
+        |
+        v
+SEMANTIC_PARITY_LEDGER
+        |
+        v
+GLOBAL_DEPENDENCY_AUDIT
+        |
+        v
+TYPED_MIGRATION_PLAN
+        |
+        v
+RX_DEVELOPMENT_GATE
+```
+
+### 13.1 Sem IA
+
+O caminho ativo possui gate explícito:
+
+```text
+training = false
+ai_runtime = false
+mathematical_optimization_allowed = true
+```
+
+Imports de frameworks de IA são bloqueados no runtime governado.
+
+### 13.2 Zero dependências externas no caminho ativo
+
+O caminho Rx/Structure-D successor utiliza Python standard library + código local do projeto.
+
+O auditor global continua encontrando dependências em arquivos legados/históricos do repositório. Isso é dívida de migração, não dependência do caminho Rx ativo.
+
+### 13.3 Horizonte sonoro
+
+A mecânica FASE18E de `z_drag`, `r_d` e `r_s(z_*)` foi portada para stdlib e reproduz os vetores de referência LCDM/RLL.
+
+### 13.4 Paridade freestanding 65
+
+O espelho Rx reproduz exatamente o receipt Q16 canônico:
+
+```text
+LCDM chi2_q16 = 4641555
+RLL  chi2_q16 = 4261420
+delta          = -380135
+```
+
+A igualdade é de implementação/receipt. Não é novo ajuste nem autorização de claim científico.
+
+### 13.5 Structure-D Rx successor
+
+Existe rota aditiva:
+
+```text
+python3 -m data.pipelines.structure_d.joint_real_likelihood_rx
+```
+
+Ela:
+- usa Rx;
+- não importa NumPy/Pandas/SciPy;
+- preserva o pipeline legado;
+- materializa resultados em `results/structure_d/joint_real_likelihood_rx.*`;
+- mantém `claim_allowed=false`.
+
+O `data.pipelines.structure_d.__init__` passou a carregar o legado numericamente pesado de forma lazy, evitando que apenas importar o namespace force dependências externas.
+
+### 13.6 Contratos físicos permanecem versionados
+
+Dois contratos podem ser reproduzidos sem serem confundidos:
+
+- `RX-STRUCTURE-D-PARITY-V1`: superfície atual N=60 e semântica flat/Structure-D;
+- `RX-FREESTANDING65-PARITY-V1`: superfície N=65 e receipt Q16 freestanding exato.
+
+Escolher um único `RX-PHYSICS-CANONICAL-V2` continua uma decisão física explícita, não uma refatoração de software.
+
+### 13.7 Última peça sustentável desta cadeia
+
+A engenharia automática pode avançar enquanto preserva:
+
+```text
+port
+-> parity gate
+-> versioned contract
+-> switch/add route
+-> receipt
+-> rollback
+```
+
+Quando a próxima alteração exige escolher entre valores/semânticas físicas divergentes, ela deve nascer como novo contrato científico versionado e não como "limpeza" de código.
