@@ -14,6 +14,10 @@ name: Real Data Complete Execution
       - "tools/rll_closure_queue.py"
       - "tools/validate_rx_dha.py"
       - "tests/test_rll_closure_queue.py"
+      - "scripts/termux/rll_execution_fabric_replay_v1.sh"
+      - "tools/validate_rll_execution_fabric_termux_replay.py"
+      - "tools/compare_rll_execution_fabric_receipts.py"
+      - "tests/test_rll_execution_fabric_termux_replay.py"
       - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
       - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
@@ -87,6 +91,11 @@ jobs:
 
       - name: RLL closure dependency-graph tests
         run: python3 -m unittest tests.test_rll_closure_queue
+
+      - name: Validate Termux Execution Fabric capsule contract
+        run: |
+          sh -n scripts/termux/rll_execution_fabric_replay_v1.sh
+          python3 -m unittest tests.test_rll_execution_fabric_termux_replay
 
       - name: Validate Rx DHA angular-frequency baseline
         run: python3 tools/validate_rx_dha.py
