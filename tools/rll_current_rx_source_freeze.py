@@ -46,6 +46,70 @@ def json_info(path, provenance_fields):
     }
 
 
+def runtime_materialization_info(item):
+    binding = item.get("runtime_materialization")
+    if not isinstance(binding, dict):
+        return None
+
+    receipt_rel = str(binding.get("receipt_path", ""))
+    file_key = str(binding.get("file_key", ""))
+    if not receipt_rel or not file_key:
+        return {"valid": False, "reason": "incomplete_runtime_materialization_binding"}
+
+    receipt_path = ROOT / receipt_rel
+    if not receipt_path.is_file():
+        return {
+            "valid": False,
+            "reason": "materialization_receipt_missing",
+            "receipt_path": receipt_rel,
+        }
+
+    receipt = load_json(receipt_path)
+    expected_schema = binding.get("receipt_schema")
+    if expected_schema and receipt.get("schema") != expected_schema:
+        return {
+            "valid": False,
+            "reason": "materialization_receipt_schema_mismatch",
+            "receipt_path": receipt_rel,
+        }
+
+    ready_field = str(binding.get("ready_field", ""))
+    if ready_field and receipt.get(ready_field) is not True:
+        return {
+            "valid": False,
+            "reason": "materialization_receipt_not_ready",
+            "receipt_path": receipt_rel,
+        }
+
+    file_info = (receipt.get("files", {}) or {}).get(file_key)
+    if not isinstance(file_info, dict):
+        return {
+            "valid": False,
+            "reason": "materialization_file_key_missing",
+            "receipt_path": receipt_rel,
+        }
+
+    digest = str(file_info.get("sha256", ""))
+    if len(digest) != 64 or any(ch not in "0123456789abcdef" for ch in digest):
+        return {
+            "valid": False,
+            "reason": "materialization_sha256_invalid",
+            "receipt_path": receipt_rel,
+        }
+
+    return {
+        "valid": True,
+        "receipt_path": receipt_rel,
+        "receipt_sha256": sha256(receipt_path),
+        "source_file_key": file_key,
+        "source_sha256": digest,
+        "bytes": file_info.get("bytes"),
+        "source_status": file_info.get("status"),
+        "source_commit": receipt.get("source_commit"),
+        "provider": receipt.get("provider"),
+    }
+
+
 def build(spec_path=SPEC):
     spec = load_json(spec_path)
     if spec.get("schema") != "rll.current_rx_source_freeze_spec.v1":
@@ -58,13 +122,47 @@ def build(spec_path=SPEC):
     for item in spec.get("inputs", []):
         rel = str(item["path"])
         path = ROOT / rel
+        authority = str(item.get("primary_authority_state", "TOKEN_VAZIO"))
+        rights = str(item.get("rights_state", "TOKEN_VAZIO"))
+        if authority.startswith("TOKEN_VAZIO"):
+            blockers.append(item["id"] + ":primary_authority")
+        if rights.startswith("TOKEN_VAZIO"):
+            blockers.append(item["id"] + ":rights")
+
         if not path.is_file():
+            materialized = runtime_materialization_info(item)
+            if materialized and materialized.get("valid"):
+                records.append({
+                    "id": item["id"],
+                    "path": rel,
+                    "role": item.get("role"),
+                    "local_present": False,
+                    "bytes": materialized.get("bytes"),
+                    "sha256": materialized["source_sha256"],
+                    "expected_rows": item.get("expected_rows"),
+                    "observed": {
+                        "runtime_materialization": materialized,
+                        "missing_provenance_fields": [],
+                    },
+                    "row_count_matches": True,
+                    "primary_authority_state": authority,
+                    "rights_state": rights,
+                    "state": "RUNTIME_MATERIALIZATION_FROZEN_AUTHORITY_PARTIAL"
+                    if any(x.startswith(item["id"] + ":") for x in blockers)
+                    else "SOURCE_FROZEN_BY_MATERIALIZATION_RECEIPT",
+                })
+                continue
+
             records.append({
                 "id": item["id"],
                 "path": rel,
+                "local_present": False,
+                "runtime_materialization": materialized,
                 "state": "TOKEN_VAZIO_MISSING_LOCAL_INPUT",
             })
             blockers.append(item["id"] + ":missing_local_input")
+            if materialized is not None:
+                blockers.append(item["id"] + ":runtime_materialization_invalid")
             continue
 
         suffix = path.suffix.lower()
@@ -79,12 +177,6 @@ def build(spec_path=SPEC):
             info = {"missing_provenance_fields": []}
             row_match = True
 
-        authority = str(item.get("primary_authority_state", "TOKEN_VAZIO"))
-        rights = str(item.get("rights_state", "TOKEN_VAZIO"))
-        if authority.startswith("TOKEN_VAZIO"):
-            blockers.append(item["id"] + ":primary_authority")
-        if rights.startswith("TOKEN_VAZIO"):
-            blockers.append(item["id"] + ":rights")
         if info.get("missing_provenance_fields"):
             blockers.append(item["id"] + ":missing_provenance_fields")
         if not row_match:
@@ -94,6 +186,7 @@ def build(spec_path=SPEC):
             "id": item["id"],
             "path": rel,
             "role": item.get("role"),
+            "local_present": True,
             "bytes": path.stat().st_size,
             "sha256": sha256(path),
             "expected_rows": item.get("expected_rows"),
