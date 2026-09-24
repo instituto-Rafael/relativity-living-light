@@ -1,0 +1,62 @@
+{
+  "schema": "rll.current_rx_source_freeze_spec.v1",
+  "date": "2026-09-24",
+  "claim_allowed": false,
+  "scope": "WS02/G4/G5 canonical background input surface",
+  "inputs": [
+    {
+      "id": "HZ_G4_33",
+      "path": "data/real/Hz_data_real.csv",
+      "role": "G4/G5 H(z) source table; pure CC selection occurs in executor",
+      "expected_rows": 33,
+      "provenance_fields": ["source"],
+      "primary_authority_state": "ROW_SOURCE_LABELS_PRESENT_PRIMARY_ROW_LEVEL_CUSTODY_PARTIAL",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "DESI_DR2_BAO_13",
+      "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "role": "DESI DR2 BAO 13-vector",
+      "expected_rows": 13,
+      "provenance_fields": ["release", "tracer", "source_table", "source_url"],
+      "primary_authority_state": "DECLARED_IN_DATA_ROWS_REQUIRES_WS10_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "DESI_DR2_BAO_COV_13",
+      "path": "data/real/desi_dr2_bao_covariance.csv",
+      "role": "DESI DR2 BAO covariance used by G4/G5",
+      "expected_rows": 13,
+      "provenance_fields": [],
+      "primary_authority_state": "REPOSITORY_DERIVED_COVARIANCE_REQUIRES_WS10_OFFICIAL_CROSSBLOCK_AUTHORITY",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "PANTHEON_PLUS_CATALOG",
+      "path": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat",
+      "role": "Pantheon+SH0ES distance catalog consumed by G4/G5",
+      "expected_rows": null,
+      "provenance_fields": [],
+      "primary_authority_state": "MATERIALIZED_WITH_REPOSITORY_RECEIPT",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_REVIEW_REQUIRED"
+    },
+    {
+      "id": "PANTHEON_PLUS_STAT_SYS_COV",
+      "path": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "role": "Pantheon+ full STAT+SYS covariance consumed by G4/G5",
+      "expected_rows": null,
+      "provenance_fields": [],
+      "primary_authority_state": "MATERIALIZED_WITH_REPOSITORY_RECEIPT",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_REVIEW_REQUIRED"
+    }
+  ],
+  "execution_sources": [
+    "data/contracts/rll_g4_background_tournament.v1.json",
+    "data/contracts/rll_g5_canonical_background_likelihood.v1.json",
+    "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+    "tools/run_g4_background_tournament.py",
+    "tools/build_g5_canonical_background_manifest.py",
+    "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json"
+  ],
+  "closure_rule": "Freeze exact bytes and execution sources now; SCI_GATE:G0 remains open while required rights or external authority states remain TOKEN_VAZIO."
+}
