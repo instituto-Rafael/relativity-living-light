@@ -84,6 +84,12 @@ def _ws02_consistency() -> dict[str, Any]:
     if pan.get("nuisance") != g4_pan.get("nuisance"):
         blockers.append("PANTHEON_NUISANCE_MISMATCH")
 
+    source_freeze = build_source_freeze(FREEZE_SPEC)
+    source_by_path = {
+        str(row.get("path")): row
+        for row in source_freeze.get("inputs", [])
+        if isinstance(row, dict)
+    }
     for rel in (
         str(cc.get("path", "")),
         str(desi.get("points", "")),
@@ -91,8 +97,14 @@ def _ws02_consistency() -> dict[str, Any]:
         str(pan.get("catalog", "")),
         str(pan.get("covariance", "")),
     ):
-        if rel:
-            _must_file(rel, blockers, hashes)
+        if not rel:
+            continue
+        source_row = source_by_path.get(rel)
+        digest = str((source_row or {}).get("sha256", ""))
+        if len(digest) == 64:
+            hashes[rel] = digest
+        else:
+            blockers.append("SOURCE_CUSTODY_UNAVAILABLE:" + rel)
 
     shared = ws02.get("shared_policy", {})
     for key in ("growth", "cmb"):

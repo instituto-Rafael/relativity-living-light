@@ -145,8 +145,9 @@
       "current_delta": {
         "contract": "data/contracts/rll_ws02_canonical_background_surface.v1.json",
         "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
-        "state": "MATERIALIZED_PENDING_EXACT_HEAD_CI",
-        "boundary": "Surface consistency does not equal official DESI cross-block authority or Bayesian evidence."
+        "state": "CANONICAL_SURFACE_CONSISTENCY_RECEIPT_BOUND_PENDING_EXACT_HEAD_CI",
+        "boundary": "Receipt-bound custody closes workspace-location mismatch only; it does not close rights, official DESI cross-block authority, WS01 semantics, or Bayesian evidence.",
+        "runtime_custody": "PANTHEON_PLUS_STAT_SYS_COV bound by pinned materialization receipt when bytes are absent from the current workspace"
       }
     },
     {
@@ -804,8 +805,9 @@
       "current_delta": {
         "executor": "tools/rll_current_rx_source_freeze.py",
         "canonical_background_spec": "data/governance/RLL_CANONICAL_BACKGROUND_SOURCE_FREEZE_SPEC_V1.json",
-        "state": "MATERIALIZED_PENDING_EXACT_HEAD_CI",
-        "boundary": "Local byte freeze is now executable for G4/G5; authority/rights TOKEN_VAZIO still prevent G0 closure."
+        "state": "MATERIALIZED_WITH_RIGHTS_AUTHORITY_GAPS",
+        "boundary": "Local byte freeze is now executable for G4/G5; authority/rights TOKEN_VAZIO still prevent G0 closure.",
+        "runtime_materialization_policy": "large external inputs may be source-frozen by a validated hash-bound materialization receipt without pretending the bytes are committed locally"
       }
     },
     {

@@ -9,7 +9,9 @@
       "path": "data/real/Hz_data_real.csv",
       "role": "G4/G5 H(z) source table; pure CC selection occurs in executor",
       "expected_rows": 33,
-      "provenance_fields": ["source"],
+      "provenance_fields": [
+        "source"
+      ],
       "primary_authority_state": "ROW_SOURCE_LABELS_PRESENT_PRIMARY_ROW_LEVEL_CUSTODY_PARTIAL",
       "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
     },
@@ -18,7 +20,12 @@
       "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
       "role": "DESI DR2 BAO 13-vector",
       "expected_rows": 13,
-      "provenance_fields": ["release", "tracer", "source_table", "source_url"],
+      "provenance_fields": [
+        "release",
+        "tracer",
+        "source_table",
+        "source_url"
+      ],
       "primary_authority_state": "DECLARED_IN_DATA_ROWS_REQUIRES_WS10_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
       "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
     },
@@ -46,8 +53,14 @@
       "role": "Pantheon+ full STAT+SYS covariance consumed by G4/G5",
       "expected_rows": null,
       "provenance_fields": [],
-      "primary_authority_state": "MATERIALIZED_WITH_REPOSITORY_RECEIPT",
-      "rights_state": "TOKEN_VAZIO_RIGHTS_REVIEW_REQUIRED"
+      "primary_authority_state": "MATERIALIZED_HASH_BOUND_BY_PINNED_PROVIDER_RECEIPT",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_REVIEW_REQUIRED",
+      "runtime_materialization": {
+        "receipt_path": "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json",
+        "receipt_schema": "rll.pantheon_full_covariance_materialization_receipt.v1",
+        "file_key": "Pantheon+SH0ES_STAT+SYS.cov",
+        "ready_field": "full_covariance_likelihood_ready"
+      }
     }
   ],
   "execution_sources": [
@@ -58,5 +71,5 @@
     "tools/build_g5_canonical_background_manifest.py",
     "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json"
   ],
-  "closure_rule": "Freeze exact bytes and execution sources now; SCI_GATE:G0 remains open while required rights or external authority states remain TOKEN_VAZIO."
+  "closure_rule": "Freeze committed bytes directly and externally materialized large inputs through hash-bound receipts; SCI_GATE:G0 remains open while required rights or external authority states remain TOKEN_VAZIO."
 }
