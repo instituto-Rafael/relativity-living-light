@@ -1,0 +1,67 @@
+name: CRF formalization artifact
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "tools/build_crf_formalization_artifact.py"
+      - "data/contracts/rll_crf_formalization_artifact.v1.json"
+      - "docs/formalization/RLL_CRF_FORMALIZATION_ARTIFACT_V1.md"
+      - ".github/workflows/crf-formalization-artifact.yml"
+  pull_request:
+    paths:
+      - "tools/build_crf_formalization_artifact.py"
+      - "data/contracts/rll_crf_formalization_artifact.v1.json"
+      - "docs/formalization/RLL_CRF_FORMALIZATION_ARTIFACT_V1.md"
+      - ".github/workflows/crf-formalization-artifact.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-crf-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact commit without checkout action
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout --detach FETCH_HEAD
+
+      - name: Compile dependency-free builder
+        run: python3 -m py_compile tools/build_crf_formalization_artifact.py
+
+      - name: Build CRF formalization artifact
+        run: |
+          rm -rf artifacts/crf-formalization-v1
+          python3 tools/build_crf_formalization_artifact.py             --contract data/contracts/rll_crf_formalization_artifact.v1.json             --outdir artifacts/crf-formalization-v1
+
+      - name: Replay determinism gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/crf-replay
+          python3 tools/build_crf_formalization_artifact.py             --contract data/contracts/rll_crf_formalization_artifact.v1.json             --outdir /tmp/crf-replay
+          diff -ru artifacts/crf-formalization-v1 /tmp/crf-replay
+
+      - name: Show manifest and checksums
+        run: |
+          cat artifacts/crf-formalization-v1/MANIFEST.json
+          cat artifacts/crf-formalization-v1/CHECKSUMS.sha256
+
+      - name: Upload CRF artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-crf-formalization-v1
+          path: artifacts/crf-formalization-v1
+          if-no-files-found: error
+          retention-days: 30
