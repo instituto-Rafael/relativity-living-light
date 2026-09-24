@@ -371,7 +371,7 @@ def proofs_markdown(formal: dict[str,Any]) -> str:
     for item in formal["items"]:
         lines += [
             f"## {item['id']} — {item['title']}","",
-            f"**Expression:** \`{item['expression']}\`","",
+            f"**Expression:** `{item['expression']}`","",
             f"**Signature:** {item['signature']['domain']} → {item['signature']['codomain']}","",
             f"**Definition:** {item['definition']}","",
             f"**Lemma:** {item['lemma']}","",
@@ -418,6 +418,64 @@ def main() -> int:
             results.append({"id":item_id,"status":"FAIL","details":[f"{exc.__class__.__name__}: {exc}"]})
 
     failures=[r for r in results if r["status"]!="PASS"]
+    result_by_id={r["id"]:r for r in results}
+    formal_by_id={x["id"]:x for x in formal["items"]}
+    groups={
+        key:[x["id"] for x in source["items"] if x.get("readiness")==key]
+        for key in ("A","B","C")
+    }
+    merged_items=[]
+    for src in source["items"]:
+        base={
+            "id":src["id"],"title":src["title"],"kind":src["kind"],
+            "expression":src["expression"],"readiness":src["readiness"],
+            "source":src["source"],"code":src["code"],"test":src["test"],
+            "evidence":src["evidence"],"prior_art":src["prior_art"],"gaps":src["gaps"],
+        }
+        fm=formal_by_id.get(src["id"])
+        if fm:
+            rr=result_by_id[src["id"]]
+            base["formalization"]={
+                "status":fm["formal_status"],
+                "ci_test_status":rr["status"],
+                "ci_test_details":rr["details"],
+                "signature":fm["signature"],
+                "definition":fm["definition"],
+                "lemma":fm["lemma"],
+                "theorem":fm["theorem"],
+                "proof":fm["proof"],
+                "test":fm["test"],
+                "evidence_boundary":fm["evidence_boundary"],
+                "prior_art_state":fm["prior_art_state"],
+                "token_vazio":fm["token_vazio"],
+                "certificate":fm["certificate"],
+            }
+        else:
+            base["formalization"]={
+                "status":"NOT_FORMALIZED_IN_A_V1",
+                "ci_test_status":"NOT_RUN",
+                "ci_test_details":[],
+                "token_vazio":["FORMALIZATION_PENDING_BY_READINESS_GATE"],
+            }
+        merged_items.append(base)
+
+    page_v2={
+        "schema":"rll.crf_page_data.v2",
+        "artifact":"rll-crf-a-formalization-v1",
+        "base_artifact":"rll-crf-formalization-v1",
+        "source":{
+            "repository":"rafaelmeloreisnovo/Matem-tica-",
+            "ref":"61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
+            "path":"data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
+            "git_blob_sha1":source_blob,
+        },
+        "counts":{"total":34,"A":25,"B":8,"C":1},
+        "formalization_counts":{"A_total":25,"A_pass":25-len(failures),"A_fail":len(failures)},
+        "groups":groups,
+        "items":merged_items,
+        "claim_allowed":False,
+        "page_rule":"page consumes artifact only; page does not scrape source repositories",
+    }
     summary={
         "schema":"rll.crf_a_formalization_results.v1",
         "status":"PASS" if not failures else "FAIL",
@@ -438,9 +496,10 @@ def main() -> int:
     (out/"FORMALIZATION_A.json").write_bytes(canonical_bytes(formal))
     (out/"A_ITEM_RESULTS.json").write_bytes(canonical_bytes(summary))
     (out/"FORMALIZATION_PROOFS.md").write_text(proofs_markdown(formal),encoding="utf-8",newline="\n")
+    (out/"PAGE_DATA_V2.json").write_bytes(canonical_bytes(page_v2))
 
     files={}
-    for name in ("FORMALIZATION_A.json","A_ITEM_RESULTS.json","FORMALIZATION_PROOFS.md"):
+    for name in ("FORMALIZATION_A.json","A_ITEM_RESULTS.json","FORMALIZATION_PROOFS.md","PAGE_DATA_V2.json"):
         p=out/name
         files[name]={"sha256":sha256_file(p),"bytes":p.stat().st_size}
 
@@ -462,9 +521,10 @@ def main() -> int:
         "pass_count":summary["pass_count"],
         "fail_count":summary["fail_count"],
         "files":files,
+        "page_entrypoint":"PAGE_DATA_V2.json",
     }
     (out/"MANIFEST.json").write_bytes(canonical_bytes(manifest))
-    names=["MANIFEST.json","FORMALIZATION_A.json","A_ITEM_RESULTS.json","FORMALIZATION_PROOFS.md"]
+    names=["MANIFEST.json","FORMALIZATION_A.json","A_ITEM_RESULTS.json","FORMALIZATION_PROOFS.md","PAGE_DATA_V2.json"]
     (out/"CHECKSUMS.sha256").write_text("\n".join(f"{sha256_file(out/n)}  {n}" for n in names)+"\n",encoding="utf-8",newline="\n")
     if failures:
         print(json.dumps(summary,ensure_ascii=False,indent=2,sort_keys=True))
