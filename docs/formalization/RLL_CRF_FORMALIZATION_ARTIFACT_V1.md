@@ -8,7 +8,7 @@
 
 Materialize the cross-repository formalization map as one deterministic CI artifact before building any web page.
 
-The pipeline consumes one pinned registry from `rafaelmeloreisnovo/Matem-tica-` and emits a page-ready artifact without scraping Markdown or copying the underlying papers/code repositories.
+The pipeline consumes an exact byte snapshot of one pinned registry from `rafaelmeloreisnovo/Matem-tica-` and emits a page-ready artifact without scraping Markdown or copying the underlying papers/code repositories. The source repository is private, so the RLL CI uses a source-locked local snapshot instead of a cross-repository secret.
 
 ```text
 Matem-tica- CRF registry (pinned blob)
@@ -42,13 +42,15 @@ The CI intentionally avoids:
 - npm;
 - jq;
 - yq;
-- project-specific Python packages.
+- project-specific Python packages;
+- cross-repository authentication secrets;
+- runtime network access for the CRF source.
 
 Repository checkout uses the runner's `git`. The only external GitHub Action is the official, commit-pinned `actions/upload-artifact`, because GitHub Actions artifacts require a publication mechanism.
 
 ## Source lock
 
-The input is pinned by repository, commit, path and Git blob SHA-1. If the source bytes change, the builder fails closed.
+The input is pinned by origin repository, commit, path and Git blob SHA-1. The registry bytes are vendored as a small snapshot inside RLL; the builder recomputes the Git blob SHA-1 and fails closed if the snapshot differs from the private origin.
 
 This prevents a moving `main` branch from silently changing the generated artifact.
 
