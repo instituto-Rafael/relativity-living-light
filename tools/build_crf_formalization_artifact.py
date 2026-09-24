@@ -16,7 +16,6 @@ import argparse
 import hashlib
 import json
 import pathlib
-import urllib.request
 from collections import Counter
 from typing import Any
 
@@ -50,15 +49,11 @@ def sha256_file(path: pathlib.Path) -> str:
     return h.hexdigest()
 
 
-def fetch_source(url: str, source_file: str | None) -> bytes:
-    if source_file:
-        return pathlib.Path(source_file).read_bytes()
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": "RLL-CRF-formalization-artifact-v1"},
-    )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return response.read()
+def load_source(snapshot_path: str, source_file: str | None) -> bytes:
+    path = pathlib.Path(source_file) if source_file else pathlib.Path(snapshot_path)
+    if not path.is_file():
+        raise SystemExit(f"source snapshot not found: {path}")
+    return path.read_bytes()
 
 
 def validate(contract: dict[str, Any], source: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, int]]:
@@ -140,9 +135,9 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     contract = read_json(contract_path)
 
-    source_bytes = fetch_source(contract["source"]["raw_url"], args.source_file)
+    source_bytes = load_source(contract["source"]["snapshot_path"], args.source_file)
     observed_blob = git_blob_sha1(source_bytes)
-    expected_blob = contract["source"]["git_blob_sha1"]
+    expected_blob = contract["source"]["origin_git_blob_sha1"]
     if observed_blob != expected_blob:
         raise SystemExit(
             f"source blob mismatch: observed={observed_blob} expected={expected_blob}"
@@ -171,9 +166,9 @@ def main() -> int:
         "schema": "rll.crf_formalization_registry.v1",
         "claim_allowed": False,
         "source": {
-            "repository": contract["source"]["repository"],
-            "ref": contract["source"]["ref"],
-            "path": contract["source"]["path"],
+            "repository": contract["source"]["origin_repository"],
+            "ref": contract["source"]["origin_ref"],
+            "path": contract["source"]["origin_path"],
             "git_blob_sha1": observed_blob,
         },
         "items": normalized_items,
@@ -217,7 +212,7 @@ def main() -> int:
     table_lines = [
         "# RLL CRF Formalization Index V1",
         "",
-        f"Source lock: \`{contract['source']['repository']}@{contract['source']['ref']}\`",
+        f"Source lock: \`{contract['source']['origin_repository']}@{contract['source']['origin_ref']}\`",
         "",
         f"Total: **{len(normalized_items)}** · A: **{readiness_counts['A']}** · B: **{readiness_counts['B']}** · C: **{readiness_counts['C']}**",
         "",
