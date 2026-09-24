@@ -50,21 +50,40 @@ def _security_preflight(command):
     print("wrote", out.relative_to(ROOT))
 
 
+def _runpy_entrypoint(call):
+    """Treat SystemExit(0) as normal CLI return; propagate non-zero exits.
+
+    Repository tools often use raise SystemExit(main()). When invoked through
+    runpy inside rx develop, a successful exit must not terminate the aggregate
+    orchestrator before the remaining gates execute.
+    """
+    try:
+        return call()
+    except SystemExit as exc:
+        if exc.code in (None, 0):
+            return None
+        raise
+
+
 def _tool(name):
-    runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
+    return _runpy_entrypoint(
+        lambda: runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
+    )
 
 
 def _tool_args(name, args):
     previous = sys.argv[:]
     try:
         sys.argv = [name] + list(args)
-        runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
+        return _runpy_entrypoint(
+            lambda: runpy.run_path(str(ROOT / "tools" / name), run_name="__main__")
+        )
     finally:
         sys.argv = previous
 
 
 def _module(name):
-    runpy.run_module(name, run_name="__main__")
+    return _runpy_entrypoint(lambda: runpy.run_module(name, run_name="__main__"))
 
 
 def status():
@@ -161,6 +180,7 @@ def develop():
     _tool_args("rll_closure_queue.py", ["--write"])
     _tool_args("rll_closure_work_packets.py", ["--write"])
     _tool_args("rx_physics_v2_decision_packet.py", ["--write"])
+    _tool_args("rll_perturbation_a1_linear_fluid_regularity_v1.py", ["--write"])
     _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
     _tool_args("rll_current_rx_source_freeze.py", ["--write"])
     _tool_args("rll_ws01_ws02_ws21_ws23_bridge.py", ["--write"])

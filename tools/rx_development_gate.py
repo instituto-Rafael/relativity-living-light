@@ -41,6 +41,11 @@ paths = {
     "dha_angular": ROOT / "results" / "rx_dha_angular_frequency_gate.json",
     "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
     "real_data_materialization_security": ROOT / "results" / "real_data_materialization_security_gate.json",
+    "physics_v2_decision": ROOT / "results" / "rx_physics_v2_decision_packet.json",
+    "perturbation_regularity": ROOT / "artifacts" / "science" / "perturbations" / "RLL_A1_LINEAR_FLUID_REGULARITY_RECEIPT.json",
+    "perturbation_readiness": ROOT / "results" / "rll_perturbation_solver_readiness.json",
+    "g0_source_freeze": ROOT / "artifacts" / "science" / "provenance" / "RLL_G0_SOURCE_FREEZE_RECEIPT.json",
+    "ws23_bridge": ROOT / "artifacts" / "science" / "integration" / "RLL_WS01_WS02_WS21_WS23_BRIDGE_RECEIPT.json",
 }
 
 cli_security_receipts = sorted(
@@ -118,6 +123,50 @@ checks["real_data_materialization_security_pass"] = data["real_data_materializat
 checks["real_data_materialization_security_no_network"] = data["real_data_materialization_security"].get("network_requests_performed") == 0
 checks["real_data_materialization_security_zero_third_party"] = data["real_data_materialization_security"].get("third_party_python_dependencies") == []
 checks["real_data_materialization_security_claim_closed"] = data["real_data_materialization_security"].get("claim_allowed") is False
+
+physics_decision = data["physics_v2_decision"]
+checks["physics_v2_decision_schema"] = physics_decision.get("schema") == "rll.rx.physics_v2_decision_packet.v1"
+checks["physics_v2_decision_state"] = physics_decision.get("state") in {
+    "READY_FOR_VERSIONED_SCIENTIFIC_DECISIONS",
+    "READY_FOR_CANONICAL_V2_IMPLEMENTATION",
+}
+checks["physics_v2_decision_claim_closed"] = physics_decision.get("claim_allowed") is False
+checks["physics_v2_decision_axes_explicit"] = isinstance(physics_decision.get("blocking_axes"), list)
+
+regularity = data["perturbation_regularity"]
+checks["perturbation_regularity_schema"] = regularity.get("schema") == "rll.perturbation_a1_linear_fluid_regularity.v1"
+checks["perturbation_regularity_claim_closed"] = regularity.get("claim_allowed") is False
+checks["perturbation_regularity_no_solver_unlock"] = regularity.get("class_camb_unlock") is False
+checks["perturbation_regularity_negative_result_preserved"] = regularity.get("state") in {
+    "BLOCKED_DIRECT_STANDARD_FLUID_DOUBLE_PRECISION_REGULARITY",
+    "PASS_REPRESENTATION_ONLY_CONDITIONING_REMAINS_DIAGNOSTIC",
+}
+
+readiness = data["perturbation_readiness"]
+checks["perturbation_readiness_schema"] = readiness.get("schema") == "rll.perturbation_solver_readiness.v1"
+checks["perturbation_readiness_claim_closed"] = readiness.get("claim_allowed") is False
+checks["perturbation_readiness_contract_consistent"] = readiness.get("state") != "FAIL_CONTRACT_INCONSISTENCY"
+checks["perturbation_readiness_unlock_boolean"] = isinstance(readiness.get("class_camb_unlock"), bool)
+
+source_freeze = data["g0_source_freeze"]
+checks["g0_source_freeze_schema"] = source_freeze.get("schema") == "rll.g0.source_freeze_receipt.v1"
+checks["g0_source_freeze_claim_closed"] = source_freeze.get("claim_allowed") is False
+checks["g0_source_freeze_inputs_materialized"] = isinstance(source_freeze.get("inputs"), list) and bool(source_freeze.get("inputs"))
+checks["g0_source_freeze_blockers_explicit"] = isinstance(source_freeze.get("blockers"), list)
+
+ws23_bridge = data["ws23_bridge"]
+checks["ws23_bridge_schema"] = ws23_bridge.get("schema") == "rll.ws01_ws02_ws21_ws23_bridge_receipt.v1"
+checks["ws23_bridge_claim_closed"] = ws23_bridge.get("claim_allowed") is False
+checks["ws23_bridge_no_perturbative_promotion"] = ws23_bridge.get("growth_cmb_lensing_promotion") is False
+checks["ws23_bridge_negative_results_preserved"] = ws23_bridge.get("negative_results_preserved") is True
+checks["ws23_bridge_state_explicit"] = ws23_bridge.get("state") in {
+    "BLOCKED_WS23_BACKGROUND_BINDINGS",
+    "READY_WS23_BACKGROUND_BINDINGS",
+}
+bridge_ws01 = ws23_bridge.get("workstreams", {}).get("WS01", {})
+checks["ws23_bridge_physics_axes_consistent"] = sorted(bridge_ws01.get("blocking_axes", [])) == sorted(
+    physics_decision.get("blocking_axes", [])
+)
 checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
 checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
 checks["selftest_pass"] = bool(data["selftest"].get("pass"))

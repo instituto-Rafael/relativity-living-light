@@ -15,14 +15,17 @@ class ScientificGateGraphTests(unittest.TestCase):
         self.assertEqual(ids, {"SCI_GATE:G%d" % i for i in range(12)})
         self.assertTrue(all(node["evidence_state"].startswith("TOKEN_VAZIO") for node in graph["nodes"]))
 
-    def test_perturbation_gate_maps_only_to_blocking_readiness_executor(self):
+    def test_perturbation_gate_maps_only_to_blocking_derivation_executors(self):
         graph = build_scientific_gate_graph()
         by_id = {node["id"]: node for node in graph["nodes"]}
         g8 = by_id["G8"]
-        self.assertEqual(g8["executor_state"], "BLOCKING_READINESS_EXECUTOR")
+        self.assertEqual(g8["executor_state"], "BLOCKING_DERIVATION_AND_REGULARITY_EXECUTORS")
         self.assertEqual(
             [row["path"] for row in g8["executor_paths"]],
-            ["tools/rll_perturbation_solver_readiness.py"],
+            [
+                "tools/rll_perturbation_a1_linear_fluid_regularity_v1.py",
+                "tools/rll_perturbation_solver_readiness.py",
+            ],
         )
         self.assertTrue(all(row["present"] for row in g8["executor_paths"]))
 

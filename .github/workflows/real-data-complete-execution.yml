@@ -138,6 +138,8 @@ jobs:
 
       - name: Enforce perturbation solver handoff boundary
         run: |
+          python3 -m unittest tests.test_rll_perturbation_a1_linear_fluid_regularity_v1
+          python3 tools/rll_perturbation_a1_linear_fluid_regularity_v1.py --write
           python3 -m unittest tests.test_rll_perturbation_solver_readiness
           python3 tools/rll_perturbation_solver_readiness.py --write
 
@@ -211,6 +213,8 @@ jobs:
             results/rll_closure_work_packets.md
             results/rx_physics_v2_decision_packet.json
             results/rll_perturbation_solver_readiness.json
+            artifacts/science/perturbations/RLL_A1_LINEAR_FLUID_REGULARITY_RECEIPT.json
+            artifacts/science/integration/RLL_WS01_WS02_WS21_WS23_BRIDGE_RECEIPT.json
             results/rll_alphaxiv_literature_action_matrix.json
             artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
             artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json

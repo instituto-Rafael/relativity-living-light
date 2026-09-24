@@ -1,0 +1,83 @@
+{
+  "schema": "rll.perturbation_a1_linear_fluid_equation_family.v1",
+  "date": "2026-09-24",
+  "candidate_id": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "state": "RESEARCH_CANDIDATE_EQUATIONS_NOT_SOLVER_READY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "purpose": "Materialize the linear conservation-equation family implied by the declared A1.1 assumptions, while preserving gauge/IC/regularity blockers and without asserting that the candidate is the canonical RLL perturbation theory.",
+  "source_authority": [
+    {
+      "id": "arXiv:2306.01593v2",
+      "title": "IDECAMB: an implementation of interacting dark energy cosmology in CAMB",
+      "role": "equation_and_gauge_implementation_reference",
+      "equations": ["2.6", "2.7", "4.3", "4.4", "4.5", "5.10", "5.11"],
+      "boundary": "External conservation equations constrain implementation form; they do not derive RLL microphysics."
+    },
+    {
+      "id": "arXiv:2506.17411v1",
+      "title": "Consistent Initial Conditions for Early Modified Gravity in Effective Field Theory",
+      "role": "initial_condition_method_reference",
+      "equations": ["18", "19", "20", "21", "22", "23a-f"],
+      "boundary": "The Taylor-series/constraint methodology is transferable guidance; Horndeski/EFT-specific field equations and coefficients are not imported into RLL."
+    }
+  ],
+  "notation": {
+    "prime": "conformal_time_derivative",
+    "H": "conformal_Hubble_parameter",
+    "delta_s": "delta_rho_s/rho_s",
+    "theta_s": "(v_s-B)/k in the IDECAMB general-gauge convention",
+    "A_B_HL": "scalar metric perturbations in the IDECAMB convention",
+    "c_s2": 1.0,
+    "c_a2": "p_s_prime/rho_s_prime",
+    "w": "p_s/rho_s",
+    "Q_mu": "0",
+    "anisotropic_stress": "0"
+  },
+  "general_gauge_candidate": {
+    "C01_DELTA_S": "delta_s' + 3 H (c_s2-w) delta_s + (1+w)(k^2 theta_s + k B + 3 H_L') + 9 H^2 (c_s2-c_a2)(1+w) theta_s = 0",
+    "C02_THETA_S": "theta_s' + H(1-3 c_s2) theta_s - c_s2 delta_s/(1+w) - A = 0",
+    "derivation": "IDECAMB equations (4.4)-(4.5) under Q=deltaQ=f=0 and sigma_s=0; c_s2=1 is the existing A1.1 candidate assumption."
+  },
+  "synchronous_projection_reference": {
+    "gauge_conditions": "A=B=0; h=6 H_L",
+    "C01_DELTA_S": "delta_s' + 3 H(c_s2-w)delta_s + (1+w)(k v_s + h'/2) + 9 H^2(c_s2-c_a2)(1+w) v_s/k = 0",
+    "C02_V_S": "v_s' + H(1-3 c_s2)v_s - c_s2 k delta_s/(1+w) = 0",
+    "source_equations": ["5.10", "5.11"],
+    "status": "REFERENCE_PROJECTION_NOT_CANONICAL_GAUGE_SELECTION"
+  },
+  "regularity_obligation": {
+    "problem_term": "1/(1+w)",
+    "source_warning": "The implementation reference explicitly warns that direct fluid pressure-perturbation evolution can become unstable near phantom-divide behavior; A1.1 must prove numerical regularity for its own w(a).",
+    "rules": [
+      "do not insert a hidden epsilon into 1+w",
+      "record min_abs_1_plus_w and conditioning diagnostics over the preregistered sweep",
+      "detect subtraction collapse in the existing double-precision background representation",
+      "a failure of direct standard-fluid regularity blocks solver handoff but does not by itself falsify every alternative regularization/PPF representation"
+    ]
+  },
+  "initial_condition_obligation": {
+    "state": "TOKEN_VAZIO_C07",
+    "method": "derive a model-consistent super-horizon series from the frozen RLL equations and constraints, using k*tau as expansion parameter; do not copy GR ICs by default",
+    "required_checks": [
+      "adiabatic-or-explicitly-declared-mode condition",
+      "Einstein/constraint compatibility",
+      "early-time power-law behavior",
+      "Weyl/metric-potential regularity or the corresponding RLL gauge-invariant diagnostic",
+      "stability over the declared early-time domain"
+    ]
+  },
+  "slot_state": {
+    "C01_DELTA_S": "CANDIDATE_EQUATION_FAMILY_MATERIALIZED",
+    "C02_THETA_S": "CANDIDATE_EQUATION_FAMILY_MATERIALIZED",
+    "C03_CS2": "CANDIDATE_ASSIGNED_CS2_REST_1",
+    "C04_ENTROPY": "CANDIDATE_GAUGE_MAP_MATERIALIZED_REFERENCE_NOT_FULLY_VALIDATED",
+    "C05_ANISOTROPIC_STRESS": "CANDIDATE_ASSIGNED_ZERO",
+    "C06_Q_MU": "CANDIDATE_ASSIGNED_ZERO_FOR_A1",
+    "C07_GAUGE_AND_INITIAL_CONDITIONS": "OPEN_CRITICAL",
+    "C08_TRANSITION_REGULARIZATION": "OPEN_NUMERICAL_REGULARITY_GATE"
+  },
+  "class_camb_unlock": false,
+  "token_resolution": "NOT_RESOLVED",
+  "boundary": "Equation-family materialization is not canonical gauge selection, initial-condition closure, solver implementation, observational evidence, or confirmation of RLL."
+}

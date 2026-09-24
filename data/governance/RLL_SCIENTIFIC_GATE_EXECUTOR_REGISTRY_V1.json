@@ -78,11 +78,12 @@
     },
     "G8": {
       "qualified_id": "SCI_GATE:G8",
-      "executor_state": "BLOCKING_READINESS_EXECUTOR",
+      "executor_state": "BLOCKING_DERIVATION_AND_REGULARITY_EXECUTORS",
       "executors": [
+        "tools/rll_perturbation_a1_linear_fluid_regularity_v1.py",
         "tools/rll_perturbation_solver_readiness.py"
       ],
-      "note": "Executor proves solver handoff remains blocked; it does not derive missing physics."
+      "note": "A1.1 equation-family regularity gate plus solver-readiness gate are mapped. The regularity gate can falsify naive direct-fluid double-precision handoff near 1+w≈0; neither executor derives missing gauge/IC physics or unlocks CLASS/CAMB."
     },
     "G9": {
       "qualified_id": "SCI_GATE:G9",
