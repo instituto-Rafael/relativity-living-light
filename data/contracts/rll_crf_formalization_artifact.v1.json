@@ -4,11 +4,12 @@
   "artifact_name": "rll-crf-formalization-v1",
   "claim_allowed": false,
   "source": {
-    "repository": "rafaelmeloreisnovo/Matem-tica-",
-    "ref": "61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
-    "path": "data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
-    "git_blob_sha1": "c0419c91b213773377518752a15983416773f1c7",
-    "raw_url": "https://raw.githubusercontent.com/rafaelmeloreisnovo/Matem-tica-/61e3c1a6ed1e63dee5afedf36f33fee1f565025d/data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json"
+    "origin_repository": "rafaelmeloreisnovo/Matem-tica-",
+    "origin_ref": "61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
+    "origin_path": "data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
+    "origin_git_blob_sha1": "c0419c91b213773377518752a15983416773f1c7",
+    "snapshot_path": "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json",
+    "snapshot_policy": "EXACT_BYTE_SNAPSHOT_OF_PINNED_PRIVATE_SOURCE"
   },
   "expected": {
     "schema": "rafaelia.crossrepo.formalization-map.v1",
@@ -50,6 +51,6 @@
     "SOURCE != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
     "artifact validates routing/formalization metadata; it does not prove mathematical novelty",
     "TOKEN_VAZIO remains explicit and is never coerced to zero, PASS or evidence",
-    "cross-repository payloads are not copied beyond the canonical formula registry projection"
+    "snapshot is an exact pinned registry projection; papers, code, tests and evidence payloads stay pointer-only in their source repositories"
   ]
 }
