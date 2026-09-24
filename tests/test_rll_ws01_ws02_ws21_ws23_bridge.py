@@ -11,7 +11,7 @@ from tools.rll_ws01_ws02_ws21_ws23_bridge import (
 
 
 class Ws01Ws02Ws21Ws23BridgeTests(unittest.TestCase):
-    def test_ws02_surface_matches_g4_g5_and_hashes_local_inputs(self):
+    def test_ws02_surface_matches_g4_g5_and_hashes_source_custody(self):
         result = _ws02_consistency()
         self.assertEqual(result["state"], "PASS_WS02_SURFACE_CONSISTENCY")
         self.assertEqual(result["blockers"], [])
@@ -28,6 +28,27 @@ class Ws01Ws02Ws21Ws23BridgeTests(unittest.TestCase):
         self.assertTrue(all(row.get("sha256") for row in receipt["inputs"]))
         self.assertFalse(receipt["claim_allowed"])
 
+    def test_pantheon_covariance_is_receipt_bound_when_not_committed(self):
+        receipt = build_source_freeze(FREEZE_SPEC)
+        by_id = {row["id"]: row for row in receipt["inputs"]}
+        cov = by_id["PANTHEON_PLUS_STAT_SYS_COV"]
+        self.assertFalse(cov["local_present"])
+        self.assertEqual(
+            cov["sha256"],
+            "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+        )
+        materialization = cov["observed"]["runtime_materialization"]
+        self.assertTrue(materialization["valid"])
+        self.assertEqual(
+            materialization["source_file_key"],
+            "Pantheon+SH0ES_STAT+SYS.cov",
+        )
+        self.assertNotIn(
+            "PANTHEON_PLUS_STAT_SYS_COV:missing_local_input",
+            receipt["blockers"],
+        )
+        self.assertIn("PANTHEON_PLUS_STAT_SYS_COV:rights", receipt["blockers"])
+
     def test_bridge_keeps_ws23_blocked_while_ws01_or_g0_is_open(self):
         receipt = build()
         self.assertEqual(receipt["state"], "BLOCKED_WS23_BACKGROUND_BINDINGS")
@@ -35,6 +56,12 @@ class Ws01Ws02Ws21Ws23BridgeTests(unittest.TestCase):
         self.assertGreater(len(receipt["workstreams"]["WS01"]["blocking_axes"]), 0)
         self.assertEqual(receipt["workstreams"]["WS23"]["ready_count"], 0)
         self.assertEqual(receipt["workstreams"]["WS23"]["total_count"], 3)
+        self.assertEqual(
+            receipt["workstreams"]["WS02"]["state"],
+            "PASS_WS02_SURFACE_CONSISTENCY",
+        )
+        for row in receipt["workstreams"]["WS23"]["bindings"]:
+            self.assertNotIn("WS02_SURFACE_NOT_VALID", row["blockers"])
         self.assertFalse(receipt["claim_allowed"])
 
     def test_no_perturbative_observable_is_promoted_by_background_bridge(self):
