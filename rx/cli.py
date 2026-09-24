@@ -161,6 +161,7 @@ def develop():
     _tool_args("rll_closure_queue.py", ["--write"])
     _tool_args("rll_closure_work_packets.py", ["--write"])
     _tool_args("rx_physics_v2_decision_packet.py", ["--write"])
+    _tool_args("rll_perturbation_a1_linear_fluid_regularity_v1.py", ["--write"])
     _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
     _tool_args("rll_current_rx_source_freeze.py", ["--write"])
     _tool_args("rll_ws01_ws02_ws21_ws23_bridge.py", ["--write"])
