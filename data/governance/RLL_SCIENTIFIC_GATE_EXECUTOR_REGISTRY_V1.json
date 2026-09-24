@@ -11,9 +11,11 @@
   "gates": {
     "G0": {
       "qualified_id": "SCI_GATE:G0",
-      "executor_state": "TOKEN_VAZIO_EXECUTOR",
-      "executors": [],
-      "note": "Source/provenance freeze is distributed and remains WS21."
+      "executor_state": "PARTIAL_SOURCE_FREEZE_EXECUTOR",
+      "executors": [
+        "tools/rll_current_rx_source_freeze.py"
+      ],
+      "note": "Versioned source-freeze executor exists for both legacy Rx and canonical G4/G5 background surfaces. It freezes local bytes but does not close G0 while primary authority/rights blockers remain TOKEN_VAZIO."
     },
     "G1": {
       "qualified_id": "SCI_GATE:G1",
@@ -29,9 +31,10 @@
       "executor_state": "PARTIAL_EXECUTORS",
       "executors": [
         "tools/validate_scientific_validation_orchestrator_v3.py",
-        "scripts/verify_pantheon_inputs.py"
+        "scripts/verify_pantheon_inputs.py",
+        "tools/rll_ws01_ws02_ws21_ws23_bridge.py"
       ],
-      "note": "Pantheon receipt-aware materialization is strong; complete source freeze/cross-block authority remains separate."
+      "note": "Pantheon materialization plus the WS01/WS02/WS21/WS23 bridge can verify the shared background surface. Full source authority and official cross-block covariance remain separate blockers."
     },
     "G3": {
       "qualified_id": "SCI_GATE:G3",
@@ -54,9 +57,10 @@
       "qualified_id": "SCI_GATE:G5",
       "executor_state": "FULL_DECLARED_BACKGROUND_MANIFEST_EXECUTOR",
       "executors": [
-        "tools/build_g5_canonical_background_manifest.py"
+        "tools/build_g5_canonical_background_manifest.py",
+        "tools/rll_ws01_ws02_ws21_ws23_bridge.py"
       ],
-      "note": "Hash-bound G5 background manifest builder exists and must consume the exact passing G4 receipt."
+      "note": "Hash-bound G5 manifest builder remains canonical. The WS bridge is an auxiliary consistency gate proving that WS02 surface and WS23 bindings do not bypass unresolved WS01/WS21 prerequisites."
     },
     "G6": {
       "qualified_id": "SCI_GATE:G6",

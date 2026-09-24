@@ -163,6 +163,7 @@ def develop():
     _tool_args("rx_physics_v2_decision_packet.py", ["--write"])
     _tool_args("rll_perturbation_solver_readiness.py", ["--write"])
     _tool_args("rll_current_rx_source_freeze.py", ["--write"])
+    _tool_args("rll_ws01_ws02_ws21_ws23_bridge.py", ["--write"])
     _tool_args("validate_energy_momentum_bridge_dimensions.py", ["--write"])
     _tool_args("rll_branch_maturity_decision_packet.py", ["--write"])
     _tool_args(

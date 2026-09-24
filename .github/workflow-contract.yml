@@ -40,11 +40,11 @@ github_platform_assurance:
   jobs: [platform-capability-contract, dependency-review, codeql]
   codeql_languages: [actions, python]
   external_settings_verified: true
-  external_state: RESOLVED_NEGATIVE_NO_BRANCH_PROTECTION_OR_RULESETS
-  external_evidence: artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json
-  external_successor: TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT
+  external_state: VERIFIED_LIMITED_ACTIVE_RULESET_NO_MATURITY_TOPOLOGY_ENFORCEMENT
+  external_evidence: artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT_20260924.json
+  external_successor: TOKEN_VAZIO_BRANCH_MATURITY_PLATFORM_ENFORCEMENT
   branch_protection_observed: false
-  repository_ruleset_count_observed: 0
+  repository_ruleset_count_observed: 1
   claim_allowed: false
   publication_effect: NONE
 
