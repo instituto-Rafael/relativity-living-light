@@ -1,0 +1,66 @@
+{
+  "schema": "rll.crf_a_formalization_receipt.v1",
+  "date": "2026-09-24",
+  "status": "PASS",
+  "claim_allowed": false,
+  "branch": "feat/crf-formalization-artifact-v1-20260924",
+  "source_registry": {
+    "origin_repository": "rafaelmeloreisnovo/Matem-tica-",
+    "origin_ref": "61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
+    "origin_path": "data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
+    "origin_git_blob_sha1": "c0419c91b213773377518752a15983416773f1c7",
+    "snapshot_path": "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json"
+  },
+  "workflow": {
+    "path": ".github/workflows/crf-formalization-artifact.yml",
+    "run_id": 35977875434,
+    "job_id": 107562539519,
+    "conclusion": "success",
+    "head_sha": "851a95ed504c277165cab6947f182a4f19873ba8"
+  },
+  "artifact": {
+    "id": 10799216367,
+    "name": "rll-crf-a-formalization-v1",
+    "size_bytes": 30025,
+    "digest": "sha256:0afba028d9d297efd2836fc603813a7c8ad083f2e1165de26504e1b87bf2fc7e",
+    "manifest_sha256": "53c99e03ba3031832a39942bbe02cb30d6538c783d7e4eceb85cc66caeec77c4",
+    "files": {
+      "FORMALIZATION_A.json": "2cdc65eac481c5122bab8ed9f30159865095b184c4bf7cf3bb77ff454810ddef",
+      "A_ITEM_RESULTS.json": "39ba07be0ceb27457f0ccb633413ae0530836f2dad06dd100cbc612feb857bd3",
+      "FORMALIZATION_PROOFS.md": "1ad70e3e4a4b157dfa5e5017d89dab028bf349dce0db889bc684cf59bf55bd85",
+      "PAGE_DATA_V2.json": "9e73e19a231df145dfa22d81814eea2a3dca14ab053402f0bb6a56d092a61bc1"
+    }
+  },
+  "formalization": {
+    "readiness_scope": "A / FORMALIZE_NOW",
+    "item_count": 25,
+    "pass_count": 25,
+    "fail_count": 0,
+    "contract": [
+      "Definition",
+      "Lemma",
+      "Theorem",
+      "Proof",
+      "Test",
+      "EvidenceBoundary",
+      "PriorArt",
+      "Certificate",
+      "TOKEN_VAZIO"
+    ],
+    "expression_binding": "EXACT_MATCH_TO_SOURCE_REGISTRY",
+    "deterministic_replay": "PASS",
+    "dependency_policy": "PYTHON_STDLIB_ONLY",
+    "page_entrypoint": "PAGE_DATA_V2.json"
+  },
+  "conditional_boundaries": {
+    "CRF-006": "Euler closure is conditional on witnessed V=57,E=136,F=81 planarization counts.",
+    "CRF-007": "Cycle rank is conditional on witnessed V=57,E=136 and connectedness.",
+    "CRF-030": "Typed absence contract is proved internally; novelty relative to Option/Error/Bottom types remains open.",
+    "general": "Internal proof/test PASS does not establish global mathematical novelty or physical mechanism."
+  },
+  "r3": {
+    "F_ok": "25/25 A-items have Definition/Lemma/Theorem/Proof/Test/Boundary/Certificate and deterministic CI PASS.",
+    "F_gap": "B/C readiness gates, global prior-art novelty, and item-specific external witnesses remain fail-closed.",
+    "F_next": "Publish PAGE_DATA_V2 through Templo Vivo hash gate, then attack B items one material gate at a time."
+  }
+}
