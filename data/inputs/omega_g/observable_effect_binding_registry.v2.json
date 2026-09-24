@@ -1,0 +1,79 @@
+{
+  "schema": "rll.omega_g_observable_binding_registry.v2",
+  "version": 2,
+  "date": "2026-09-24",
+  "claim_allowed": false,
+  "policy": {
+    "direct_geometry_to_cosmology_binding_forbidden": true,
+    "physics_contract": "RX-PHYSICS-CANONICAL-V2",
+    "source_freeze": "SCI_GATE:G0/WS21",
+    "likelihood_surface": "WS02",
+    "activation_rule": "A binding is promotable only when WS21 source authority, WS02 likelihood consistency and the required WS01 physics axis are terminal and receipt-backed."
+  },
+  "bindings": [
+    {
+      "binding_id": "OGB-HZ-001",
+      "observable_id": "H_z_cosmic_chronometers",
+      "mechanism": "FLRW background expansion H(z; theta) from the selected canonical background physics contract",
+      "mathematical_map": "theta -> H_model(z) -> residual H_obs-H_model using the frozen pure-CC selection",
+      "units_input": "redshift_dimensionless",
+      "units_output": "km_s_Mpc",
+      "data_path": "data/real/Hz_data_real.csv",
+      "selection": "source begins with CC_ and excludes labels containing BAO",
+      "covariance_policy": "published_diagonal_sigma_per_selected_CC_row",
+      "required_ws01_axes": ["omega_r", "hz_dataset", "distance_integration"],
+      "falsifier": "selected H(z) surface, units, null limit or integration tolerance disagrees with the frozen canonical contract",
+      "provenance": "WS21+WS02+RX-PHYSICS-CANONICAL-V2",
+      "state": "BLOCKED_UNTIL_WS21_WS02_WS01"
+    },
+    {
+      "binding_id": "OGB-BAO-001",
+      "observable_id": "DESI_DR2_BAO",
+      "mechanism": "background distances and drag-epoch sound horizon under the selected canonical background physics contract",
+      "mathematical_map": "theta -> {D_M(z)/r_d, D_H(z)/r_d, D_V(z)/r_d} -> 13-vector residual under frozen covariance",
+      "units_input": "redshift_dimensionless",
+      "units_output": "dimensionless_distance_ratio",
+      "data_path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "covariance_path": "data/real/desi_dr2_bao_covariance.csv",
+      "covariance_policy": "preserve_full_13x13_DESI_covariance",
+      "required_ws01_axes": ["omega_r", "bao_sound_horizon", "distance_integration"],
+      "falsifier": "r_d semantics, data order, covariance or null-limit behavior differs from the frozen canonical contract",
+      "provenance": "WS21+WS02+RX-PHYSICS-CANONICAL-V2",
+      "state": "BLOCKED_UNTIL_WS21_WS02_WS01"
+    },
+    {
+      "binding_id": "OGB-SN-001",
+      "observable_id": "PantheonPlus",
+      "mechanism": "background luminosity distance mapped to SN magnitude residuals with shared nuisance treatment",
+      "mathematical_map": "theta -> D_L(z) -> distance modulus/m_B model -> residual with analytically profiled M_B",
+      "units_input": "redshift_dimensionless",
+      "units_output": "magnitude_residual",
+      "data_path": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat",
+      "covariance_path": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "selection": "(zHD > 0.01) OR IS_CALIBRATOR==1",
+      "covariance_policy": "preserve_full_STAT_SYS_covariance_and_profiled_MB",
+      "required_ws01_axes": ["omega_r", "distance_integration"],
+      "falsifier": "distance map, covariance selection or nuisance treatment differs between competitors or from the frozen contract",
+      "provenance": "WS21+WS02+RX-PHYSICS-CANONICAL-V2",
+      "state": "BLOCKED_UNTIL_WS21_WS02_WS01"
+    },
+    {
+      "binding_id": "OGB-FS8-001",
+      "observable_id": "fsigma8",
+      "state": "BLOCKED_UNTIL_PERTURBATION_BACKEND",
+      "required_dependency": "WS03->WS04/WS05->WS06"
+    },
+    {
+      "binding_id": "OGB-CMB-001",
+      "observable_id": "CMB",
+      "state": "BLOCKED_UNTIL_PERTURBATION_AND_LIKELIHOOD_CLOSURE",
+      "required_dependency": "WS03->WS04/WS05->WS06 + WS11"
+    },
+    {
+      "binding_id": "OGB-LENS-001",
+      "observable_id": "lensing",
+      "state": "TOKEN_VAZIO_BINDING",
+      "required_dependency": "WS06 + WS09"
+    }
+  ]
+}
