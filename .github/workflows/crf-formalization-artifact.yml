@@ -5,6 +5,9 @@ on:
     branches: ["**"]
     paths:
       - "tools/build_crf_formalization_artifact.py"
+      - "docs/formalization/CRF_A_FORMALIZATION_V1.md"
+      - "data/formalization/crf_a_formalization_v1.json"
+      - "tools/build_crf_a_formalization_artifact.py"
       - "data/contracts/rll_crf_formalization_artifact.v1.json"
       - "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json"
       - "docs/formalization/RLL_CRF_FORMALIZATION_ARTIFACT_V1.md"
@@ -64,5 +67,40 @@ jobs:
         with:
           name: rll-crf-formalization-v1
           path: artifacts/crf-formalization-v1
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Compile CRF-A formalization builder
+        run: python3 -m py_compile tools/build_crf_a_formalization_artifact.py
+
+      - name: Build CRF-A formalization artifact
+        run: |
+          rm -rf artifacts/crf-a-formalization-v1
+          python3 tools/build_crf_a_formalization_artifact.py \
+            --source data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json \
+            --formal data/formalization/crf_a_formalization_v1.json \
+            --outdir artifacts/crf-a-formalization-v1
+
+      - name: Replay CRF-A determinism gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/crf-a-replay
+          python3 tools/build_crf_a_formalization_artifact.py \
+            --source data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json \
+            --formal data/formalization/crf_a_formalization_v1.json \
+            --outdir /tmp/crf-a-replay
+          diff -ru artifacts/crf-a-formalization-v1 /tmp/crf-a-replay
+
+      - name: Show CRF-A manifest and checksums
+        run: |
+          cat artifacts/crf-a-formalization-v1/MANIFEST.json
+          cat artifacts/crf-a-formalization-v1/CHECKSUMS.sha256
+
+      - name: Upload CRF-A formalization artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-crf-a-formalization-v1
+          path: artifacts/crf-a-formalization-v1
           if-no-files-found: error
           retention-days: 30
