@@ -1,0 +1,75 @@
+{
+  "schema": "rll.dark_dimension_benchmark.v1",
+  "date": "2026-09-24",
+  "status": "ISOLATED_EXTERNAL_COMPARATOR",
+  "claim_allowed": false,
+  "execution_effect": "BENCHMARK_ONLY_NOT_CANONICAL_LIKELIHOOD",
+  "purpose": "Represent the Dark Dimension / five-dimensional PBH literature as an external comparator without equating it with RLL or promoting observational claims.",
+  "sources": [
+    {
+      "id": "DD_PBH5D_2026",
+      "title": "Primordial black holes are five dimensional",
+      "authors": ["Luis A. Anchordoqui", "Alek Bedroya", "Dieter Lust"],
+      "doi": "10.1103/g12h-93th",
+      "arxiv": "2506.14874",
+      "source_state": "PEER_REVIEW_ACCEPTED",
+      "supports": [
+        "conditional_five_dimensional_PBH_result_within_dark_dimension_scenario",
+        "Gregory_Laflamme_dimensional_transition_as_relevant_scale",
+        "five_dimensional_PBH_observational_consequences_as_model_predictions"
+      ],
+      "does_not_support": [
+        "direct_observation_of_a_dark_dimension",
+        "equivalence_between_RLL_and_dark_dimension",
+        "RLL_confirmation"
+      ]
+    },
+    {
+      "id": "DD_EVOLVING_DARK_SECTOR_2026",
+      "title": "Evolving dark sector and the dark dimension scenario",
+      "authors": ["Alek Bedroya", "Georges Obied", "Cumrun Vafa", "David H. Wu"],
+      "doi": "10.1103/1rsq-cv2m",
+      "source_state": "PEER_REVIEW_ACCEPTED",
+      "supports": [
+        "dark_dimension_background_comparator_against_DESI_DR2_plus_supernovae",
+        "scalar_controlled_evolving_dark_energy_and_dark_matter_mass"
+      ],
+      "does_not_support": [
+        "likelihood_parity_with_RLL_repository_pipeline",
+        "RLL_dark_dimension_equivalence"
+      ]
+    }
+  ],
+  "model_families": [
+    "LCDM",
+    "RLL",
+    "DARK_DIMENSION_PBH5D",
+    "DARK_DIMENSION_EVOLVING_DARK_SECTOR",
+    "RLL_PLUS_DARK_DIMENSION_PROHIBITED_UNTIL_PARITY"
+  ],
+  "dimensionless_crossover": {
+    "ratio": "chi = r_h / R_perp",
+    "interpretation": {
+      "chi_much_greater_than_1": "effectively_4D_at_scale_r_h",
+      "chi_order_1": "crossover_requires_full_model_specific_stability_analysis",
+      "chi_much_less_than_1": "5D_sensitivity_expected_within_model_scope"
+    },
+    "boundary": "The ratio is a routing diagnostic, not a replacement for the paper's full Gregory-Laflamme stability calculation."
+  },
+  "gates": {
+    "structural_4d_limit": "REQUIRED",
+    "structural_5d_limit": "REQUIRED",
+    "crossover_fail_closed": "REQUIRED",
+    "source_provenance": "REQUIRED",
+    "same_data_same_covariance_same_nuisance_policy": "TOKEN_VAZIO_UNTIL_G5_PARITY",
+    "DESI_DR2_SN_likelihood_parity": "TOKEN_VAZIO",
+    "RLL_PLUS_DD_execution": "BLOCKED"
+  },
+  "promotion_rules": [
+    "structural benchmark PASS does not imply observational support",
+    "literature consistency does not imply RLL equivalence",
+    "RLL_PLUS_DD remains blocked until the same frozen likelihood and nuisance policy are used",
+    "no DD parameter may silently replace or alias an RLL parameter",
+    "negative and null results must be preserved"
+  ]
+}
