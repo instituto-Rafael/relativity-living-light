@@ -1,6 +1,6 @@
 {
   "schema": "rll.branch_maturity_reconciliation_decision.v1",
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "claim_allowed": false,
   "current_contract": {
     "topology": [
@@ -12,9 +12,24 @@
     "source": ".github/workflow-contract.yml"
   },
   "observed_against_main": {
-    "rll/lab": {"status": "diverged", "ahead_by": 151, "behind_by": 629},
-    "rll/integration": {"status": "diverged", "ahead_by": 152, "behind_by": 629},
-    "rll/release": {"status": "behind", "ahead_by": 0, "behind_by": 1950}
+    "rll/lab": {
+      "status": "diverged",
+      "ahead_by": 151,
+      "behind_by": 765,
+      "ref_sha": "de4099bbbb7c5adeb21eeeabc220aa803aaa5011"
+    },
+    "rll/integration": {
+      "status": "diverged",
+      "ahead_by": 152,
+      "behind_by": 765,
+      "ref_sha": "2f30179ebebf91e7514ffdffb61609a3cf12ef0b"
+    },
+    "rll/release": {
+      "status": "behind",
+      "ahead_by": 0,
+      "behind_by": 2086,
+      "ref_sha": "2cb3e3e88677ea9ac1f263377114b539db7bc47f"
+    }
   },
   "invariants": [
     "no force reset of a branch with unreviewed unique commits",
@@ -52,5 +67,18 @@
     "force-reset rll/lab or rll/integration to main",
     "declare diverged commits valuable without semantic review",
     "disable branch-maturity gate solely to make CI green"
-  ]
+  ],
+  "observation_head": "31c529d4cc51f302f48191515d39e1a0d56fe675",
+  "platform_observation": {
+    "ruleset_id": 23116926,
+    "enforcement": "active",
+    "applies_to": "~DEFAULT_BRANCH",
+    "rules": [
+      "deletion",
+      "non_fast_forward"
+    ],
+    "maturity_topology_enforcement": "NOT_PRESENT_IN_OBSERVED_RULESET",
+    "classic_branch_protection": "TOKEN_VAZIO_UNREADABLE_BY_CURRENT_INTEGRATION",
+    "receipt": "artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT_20260924.json"
+  }
 }
