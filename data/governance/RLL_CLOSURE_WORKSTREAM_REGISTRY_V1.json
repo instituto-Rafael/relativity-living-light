@@ -598,19 +598,29 @@
       "objective": "Run the exact canonical Execution Fabric plan on physical Android/Termux and compare it with Actions.",
       "tasks": [
         "record device/toolchain identity",
-        "run exact plan",
+        "run exact plan twice on physical Android/Termux",
         "preserve receipt/checksums",
-        "compare Actions versus ARM"
+        "download or materialize the matching canonical Actions execution directory",
+        "run tools/compare_rll_execution_fabric_actions_termux.py against Actions and Termux artifacts",
+        "preserve parity receipt"
       ],
       "closes_tokens": [
         "TOKEN_VAZIO_PHYSICAL_EXECUTION",
         "TOKEN_VAZIO_PHYSICAL_WITNESS:RX_EXECUTION_FABRIC_V1"
       ],
       "required_outputs": [
-        "artifacts/termux/rll-execution-fabric-v1/TERMUX_RECEIPT.json"
+        "artifacts/termux/rll-execution-fabric-v1/TERMUX_RECEIPT.json",
+        "artifacts/termux/rll-execution-fabric-v1/ACTIONS_TERMUX_PARITY_RECEIPT.json"
       ],
       "falsifier": "Physical receipt is incomplete or cross-runtime output exceeds declared parity tolerance.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "current_delta": {
+        "physical_runner": "scripts/termux/rll_execution_fabric_replay_v1.sh",
+        "capsule_validator": "tools/validate_rll_execution_fabric_termux_replay.py",
+        "actions_termux_comparator": "tools/compare_rll_execution_fabric_actions_termux.py",
+        "state": "COMPARISON_EXECUTOR_READY_PHYSICAL_RUN_PENDING",
+        "boundary": "Software path for physical replay and deterministic Actions↔ARM comparison is complete; no physical receipt exists until executed on an Android/Termux device."
+      }
     },
     {
       "id": "WS17",
