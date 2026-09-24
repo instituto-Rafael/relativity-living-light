@@ -1,0 +1,67 @@
+{
+  "schema": "rll.crf_formalization_artifact_receipt.v1",
+  "date": "2026-09-24",
+  "status": "PASS",
+  "claim_allowed": false,
+  "branch": "feat/crf-formalization-artifact-v1-20260924",
+  "head_sha": "7d02f9ac048bdc46e5445dc53cf895662816d2b8",
+  "workflow": {
+    "path": ".github/workflows/crf-formalization-artifact.yml",
+    "run_id": 35975261676,
+    "job_id": 107554125284,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 10797792652,
+    "name": "rll-crf-formalization-v1",
+    "size_bytes": 13408,
+    "digest": "sha256:36d2647183ea523518dd9cdb15d5e91c92c5bec364f9ae699d552549890296b5",
+    "retention_until": "2026-10-24T08:26:41Z",
+    "files": {
+      "MANIFEST.json": "fcd56eb2fbc6db11774e593aa1c213a2be61c012e95b764125d5995026b84773",
+      "SUMMARY.json": "dcffa5e0ca2d759ef6c586226e8743ab7742411fb62b0bbca85f20b7a34539d7",
+      "FORMALIZATION_REGISTRY.json": "8e92d1ec127dc5102d44c0e64c44afcc2de000466931f1f60dfaa9bb39ea8931",
+      "FORMALIZATION_INDEX.md": "fa2e1f8a07f9a64047864c5b0746fe1fe7b503802a7c511d9587b1c5d3c9c579",
+      "PAGE_DATA.json": "1964a1203a68b580cbb4b0636add101ecf322fdb5587e9b02192f870889227df"
+    }
+  },
+  "source_lock": {
+    "repository": "rafaelmeloreisnovo/Matem-tica-",
+    "ref": "61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
+    "path": "data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
+    "git_blob_sha1": "c0419c91b213773377518752a15983416773f1c7",
+    "snapshot": "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json",
+    "source_visibility": "private",
+    "snapshot_verified_exact": true
+  },
+  "formalization": {
+    "item_count": 34,
+    "readiness": {
+      "A": 25,
+      "B": 8,
+      "C": 1
+    },
+    "page_entrypoint": "PAGE_DATA.json",
+    "dependency_policy": "PYTHON_STDLIB_ONLY",
+    "runtime_network_dependency": false,
+    "cross_repo_secret_dependency": false,
+    "upload_dependency": "actions/upload-artifact pinned to 043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+  },
+  "predecessor_failure": {
+    "run_id": 35974945022,
+    "state": "RESOLVED",
+    "cause": "private source raw URL returned HTTP 404 to unauthenticated RLL runner",
+    "correction": "vendor exact pinned registry snapshot and verify origin Git blob SHA-1 locally"
+  },
+  "boundaries": [
+    "artifact PASS validates formalization routing and deterministic packaging",
+    "artifact PASS does not prove mathematical novelty or physical claims",
+    "PAGE_DATA.json is the only planned page input",
+    "TOKEN_VAZIO remains explicit"
+  ],
+  "r3": {
+    "F_ok": "stdlib builder + deterministic replay + source lock + artifact upload PASS",
+    "F_gap": "individual CRF proof/test/prior-art gates remain item-specific",
+    "F_next": "build the page from PAGE_DATA.json only after this artifact contract is merged/adopted"
+  }
+}

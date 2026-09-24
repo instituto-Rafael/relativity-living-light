@@ -1,0 +1,56 @@
+{
+  "schema": "rll.crf_formalization_artifact_contract.v1",
+  "date": "2026-09-24",
+  "artifact_name": "rll-crf-formalization-v1",
+  "claim_allowed": false,
+  "source": {
+    "origin_repository": "rafaelmeloreisnovo/Matem-tica-",
+    "origin_ref": "61e3c1a6ed1e63dee5afedf36f33fee1f565025d",
+    "origin_path": "data/registries/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.json",
+    "origin_git_blob_sha1": "c0419c91b213773377518752a15983416773f1c7",
+    "snapshot_path": "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json",
+    "snapshot_policy": "EXACT_BYTE_SNAPSHOT_OF_PINNED_PRIVATE_SOURCE"
+  },
+  "expected": {
+    "schema": "rafaelia.crossrepo.formalization-map.v1",
+    "item_count": 34,
+    "ids": {
+      "prefix": "CRF-",
+      "first": 1,
+      "last": 34,
+      "width": 3
+    },
+    "readiness_counts": {
+      "A": 25,
+      "B": 8,
+      "C": 1
+    },
+    "claim_allowed": false
+  },
+  "outputs": [
+    "MANIFEST.json",
+    "SUMMARY.json",
+    "FORMALIZATION_REGISTRY.json",
+    "FORMALIZATION_INDEX.md",
+    "PAGE_DATA.json",
+    "CHECKSUMS.sha256"
+  ],
+  "page_contract": {
+    "source_file": "PAGE_DATA.json",
+    "rule": "page consumes artifact only; page does not scrape source repositories",
+    "stable_keys": [
+      "schema",
+      "artifact",
+      "source",
+      "counts",
+      "groups",
+      "items"
+    ]
+  },
+  "boundaries": [
+    "SOURCE != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
+    "artifact validates routing/formalization metadata; it does not prove mathematical novelty",
+    "TOKEN_VAZIO remains explicit and is never coerced to zero, PASS or evidence",
+    "snapshot is an exact pinned registry projection; papers, code, tests and evidence payloads stay pointer-only in their source repositories"
+  ]
+}

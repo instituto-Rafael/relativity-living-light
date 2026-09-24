@@ -1,0 +1,524 @@
+{
+  "schema": "rafaelia.crossrepo.formalization-map.v1",
+  "date": "2026-09-24",
+  "authority_repo": "rafaelmeloreisnovo/Matem-tica-",
+  "pointer_only": true,
+  "claim_allowed": false,
+  "scope": [
+    "rafaelmeloreisnovo/Matem-tica-",
+    "rafaelmeloreisnovo/ChipQuantum",
+    "rafaelmeloreisnovo/teoremas",
+    "rafaelmeloreisnovo/papers"
+  ],
+  "rule": "SOURCE != ARTEFATO != EXECUCAO != EVIDENCIA != CLAIM",
+  "readiness": {
+    "A": "FORMALIZE_NOW",
+    "B": "ONE_GATE",
+    "C": "RESEARCH_PROGRAM"
+  },
+  "fields": [
+    "id",
+    "title",
+    "expression",
+    "kind",
+    "readiness",
+    "source",
+    "code",
+    "test",
+    "evidence",
+    "prior_art",
+    "gaps"
+  ],
+  "items": [
+    {
+      "id": "CRF-001",
+      "title": "Forma Normal 123",
+      "expression": "red(∅^n 0^n 1123)=123, n>=0",
+      "kind": "THEOREM",
+      "readiness": "A",
+      "source": "Matem-tica-:papers/2026-05-23_teorema_forma_normal_123.md",
+      "code": "Matem-tica-:src/verify_123.py",
+      "test": "Matem-tica-:scripts/run_math_proof_gates_local.sh",
+      "evidence": "Matem-tica-:papers/2026-05-23_teorema_forma_normal_123.md",
+      "prior_art": "Matem-tica-:docs/audits/2026-09-23_PRIOR_ART_DATE_MATRIX_MATHEMATICS_CHIPQUANTUM_V1.md",
+      "gaps": [
+        "GLOBAL_NOVELTY_TOKEN_VAZIO"
+      ]
+    },
+    {
+      "id": "CRF-002",
+      "title": "Omega Cube-42 cardinality",
+      "expression": "C(4,2)*7=42",
+      "kind": "FINITE_COMBINATORICS",
+      "readiness": "A",
+      "source": "Matem-tica-:papers/2026-07-17_omega_cube42_invariante_geometrica.md",
+      "code": "Matem-tica-:src/verify_omega_cube42.py",
+      "test": "ChipQuantum:experiments/omega_cube42_forest/test_omega_cube42.c",
+      "evidence": "Matem-tica-:results/omega_cube42_verification.json",
+      "prior_art": "Matem-tica-:docs/audits/2026-09-23_PRIOR_ART_DATE_MATRIX_MATHEMATICS_CHIPQUANTUM_V1.md",
+      "gaps": [
+        "PHYSICAL_COUPLING_TOKEN_VAZIO"
+      ]
+    },
+    {
+      "id": "CRF-003",
+      "title": "Crown angular step",
+      "expression": "δ=π/12",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/CROWN_15_30_45_PI12_PI5_GEODESIC_REFLECTION_CROSSWALK_V1.md",
+      "code": "Matem-tica-:src/verify_crown_geodesic_fold_v1.py",
+      "test": "Matem-tica-:tests/test_crown_geodesic_fold_v1.py",
+      "evidence": "Matem-tica-:results/crown_geodesic_fold_v1_verification.json",
+      "prior_art": "Papers:papers/crown_geodesic_reflection_geometry_v1/provenance.md",
+      "gaps": []
+    },
+    {
+      "id": "CRF-004",
+      "title": "Crown annulus sector",
+      "expression": "A_ann(θ)=θ/2*(r_o^2-r_i^2)",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/CROWN_15_30_45_PI12_PI5_GEODESIC_REFLECTION_CROSSWALK_V1.md",
+      "code": "Matem-tica-:src/verify_crown_geodesic_fold_v1.py",
+      "test": "Matem-tica-:tests/test_crown_geodesic_fold_v1.py",
+      "evidence": "Matem-tica-:results/crown_geodesic_fold_v1_verification.json",
+      "prior_art": "CLASSICAL_SECTOR_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-005",
+      "title": "Half-chord/apothem identity",
+      "expression": "q=R sin(θ/2); d=R cos(θ/2); q^2+d^2=R^2",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/CROWN_15_30_45_PI12_PI5_GEODESIC_REFLECTION_CROSSWALK_V1.md",
+      "code": "Matem-tica-:src/verify_crown_geodesic_fold_v1.py",
+      "test": "Matem-tica-:tests/test_crown_geodesic_fold_v1.py",
+      "evidence": "Matem-tica-:results/crown_geodesic_fold_v1_verification.json",
+      "prior_art": "CLASSICAL_TRIGONOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-006",
+      "title": "Octagon K8 planar Euler closure",
+      "expression": "V=57; E=136; F=81; V-E+F=2",
+      "kind": "GRAPH_GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:papers/2026-09-21_octogono_k8_geometria_total_trigonometria_espacial_v1.md",
+      "code": "Matem-tica-:src/verify_octagon_k8_geometry_v1.py",
+      "test": "TOKEN_VAZIO_DEDICATED_TEST",
+      "evidence": "Matem-tica-:results/octagon_k8_geometry_v1_verification.json",
+      "prior_art": "Matem-tica-:docs/audits/2026-09-23_PRIOR_ART_DATE_MATRIX_MATHEMATICS_CHIPQUANTUM_V1.md",
+      "gaps": [
+        "COMPOSITE_POLYGON_CATALOG_TOKEN_VAZIO"
+      ]
+    },
+    {
+      "id": "CRF-007",
+      "title": "Octagon K8 cycle rank",
+      "expression": "β1=E-V+1=80",
+      "kind": "GRAPH_TOPOLOGY",
+      "readiness": "A",
+      "source": "Matem-tica-:papers/2026-09-22_octogono_k8_cycle_prefix_d8_v1.md",
+      "code": "Matem-tica-:src/verify_octagon_k8_cycle_prefix_v1.py",
+      "test": "TOKEN_VAZIO_DEDICATED_TEST",
+      "evidence": "Matem-tica-:results/octagon_k8_cycle_prefix_v1.json",
+      "prior_art": "CLASSICAL_CYCLE_SPACE_PLUS_PROJECT_PLANARIZATION",
+      "gaps": []
+    },
+    {
+      "id": "CRF-008",
+      "title": "Triangular contraction kernel",
+      "expression": "q=√3/2",
+      "kind": "GEOMETRY_SCALE",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/PRIME_SCALE_200_FORMULA_CATALOG_V1.md",
+      "code": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/global_context_closure_v4.py",
+      "test": "ChipQuantum:tests/test_numeric_atlas_14000.py",
+      "evidence": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/results/global_context_closure_v4.json",
+      "prior_art": "CLASSICAL_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-009",
+      "title": "Scale powers",
+      "expression": "L_n=L_0 q^n; A_n=A_0 q^(2n); V_n=V_0 q^(3n)",
+      "kind": "GEOMETRY_SCALE",
+      "readiness": "A",
+      "source": "Papers:research_notes/2026-09-22_MATH_GEOMETRY_WG250_LEDGER_V1.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_DIMENSIONAL_SCALING",
+      "prior_art": "CLASSICAL_DIMENSIONAL_SCALING",
+      "gaps": []
+    },
+    {
+      "id": "CRF-010",
+      "title": "Arc/chord ratio",
+      "expression": "Q(θ)=θ/[2 sin(θ/2)]",
+      "kind": "CALCULUS_GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/RELATION_CALCULUS_DIRECT_INVERSE_DERIVATIVE_META_V1.md",
+      "code": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/relation_calculus.py",
+      "test": "ChipQuantum:tests/test_relation_calculus.py",
+      "evidence": "LOCAL_RELATION_CALCULUS_TESTS",
+      "prior_art": "CLASSICAL_CIRCLE_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-011",
+      "title": "Regular polygon side",
+      "expression": "s_n=2R sin(π/n)",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/session_formula_ledger/06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "DERIVED_STANDARD_GEOMETRY",
+      "prior_art": "CLASSICAL_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-012",
+      "title": "Regular polygon apothem",
+      "expression": "r_n=R cos(π/n)",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/session_formula_ledger/06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "DERIVED_STANDARD_GEOMETRY",
+      "prior_art": "CLASSICAL_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-013",
+      "title": "Regular polygon area",
+      "expression": "A_n=(n/2)R^2 sin(2π/n)",
+      "kind": "GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/session_formula_ledger/06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "DERIVED_STANDARD_GEOMETRY",
+      "prior_art": "CLASSICAL_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-014",
+      "title": "Circle-to-ellipse projection",
+      "expression": "a_e=R; b_e=R|cos i|; e=|sin i|",
+      "kind": "PROJECTION_GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/session_formula_ledger/06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_DECLARED_PROJECTION_MODEL",
+      "prior_art": "CLASSICAL_PROJECTION_GEOMETRY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-015",
+      "title": "Prime-indexed radial sampler",
+      "expression": "R_k=q^(p_k)",
+      "kind": "NUMBER_THEORY_GEOMETRY",
+      "readiness": "B",
+      "source": "Matem-tica-:docs/formal/PRIME_SCALE_200_FORMULA_CATALOG_V1.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VERIFIER",
+      "test": "TOKEN_VAZIO",
+      "evidence": "CONSTRUCTED_DEFINITION",
+      "prior_art": "PRIOR_ART_REQUIRED",
+      "gaps": [
+        "DEDICATED_VERIFIER",
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-016",
+      "title": "Prime-gap radial ratio",
+      "expression": "R_(k+1)/R_k=q^(g_k)=(3/4)^(g_k/2)",
+      "kind": "NUMBER_THEORY_GEOMETRY",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/PRIME_SCALE_200_FORMULA_CATALOG_V1.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VERIFIER",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_DERIVATION",
+      "prior_art": "Papers:research_notes/2026-09-15_PRIME_SCALE_200_FORMULAS_AUTHORSHIP_CANDIDATES.md",
+      "gaps": [
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-017",
+      "title": "Prime-Spiral transition",
+      "expression": "z_k=q^(p_k)e^(i p_k θ0); z_(k+1)/z_k=(q e^(iθ0))^(g_k)",
+      "kind": "COMPLEX_SAMPLING",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/PRIME_SCALE_200_FORMULA_CATALOG_V1.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VERIFIER",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_DERIVATION",
+      "prior_art": "Papers:research_notes/2026-09-15_PRIME_SCALE_200_FORMULAS_AUTHORSHIP_CANDIDATES.md",
+      "gaps": [
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-018",
+      "title": "Affine contraction solution",
+      "expression": "x_(n+1)=q x_n+c; x*=c/(1-q); x_n=x*+q^n(x_0-x*)",
+      "kind": "DYNAMICAL_SYSTEM",
+      "readiness": "A",
+      "source": "Papers:research_notes/2026-09-15_PRIME_SCALE_200_FORMULAS_AUTHORSHIP_CANDIDATES.md",
+      "code": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/global_context_closure_v4.py",
+      "test": "TOKEN_VAZIO_DEDICATED_TEST",
+      "evidence": "EXACT_CLOSED_FORM",
+      "prior_art": "CLASSICAL_RECURRENCE",
+      "gaps": []
+    },
+    {
+      "id": "CRF-019",
+      "title": "Period-42 incompatibility diagnostic",
+      "expression": "D_42(n)=|1-q^42||x_n-x*|",
+      "kind": "DYNAMICAL_DIAGNOSTIC",
+      "readiness": "B",
+      "source": "Papers:research_notes/2026-09-15_PRIME_SCALE_200_FORMULAS_AUTHORSHIP_CANDIDATES.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VERIFIER",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_NEGATIVE_RESULT_ROUTE",
+      "prior_art": "PRIOR_ART_REQUIRED",
+      "gaps": [
+        "VERIFIER",
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-020",
+      "title": "Secant vs quadratic comparator",
+      "expression": "sec(π/p_n)≈((n+1)/n)^2",
+      "kind": "HYPOTHESIS_TEST",
+      "readiness": "B",
+      "source": "Matem-tica-:docs/formal/session_formula_ledger/06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "code": "TOKEN_VAZIO_DEDICATED_COMPARATOR",
+      "test": "TOKEN_VAZIO",
+      "evidence": "HYPOTHESIS_TEST",
+      "prior_art": "Matem-tica-:data/registries/PRIOR_ART_MATRIX_MF0001_MF0251_V1.json",
+      "gaps": [
+        "DEFINE_p_n",
+        "ERROR_METRIC",
+        "TEST"
+      ]
+    },
+    {
+      "id": "CRF-021",
+      "title": "Fibonacci-Rafael affine recurrence",
+      "expression": "F^R_1=2; F^R_2=4; F^R_n=F^R_(n-1)+F^R_(n-2)-1",
+      "kind": "RECURRENCE",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/global_context_closure_v4.py",
+      "test": "TOKEN_VAZIO_DEDICATED_TEST",
+      "evidence": "SHIFT_EQUIVALENCE_TO_FIBONACCI",
+      "prior_art": "CLASSICAL_CORE_AUTHORIAL_REPARAMETERIZATION",
+      "gaps": [
+        "CANONICAL_INDEX_CONVENTION"
+      ]
+    },
+    {
+      "id": "CRF-022",
+      "title": "Reverse Fibonacci-Rafael operator",
+      "expression": "F^R_(n-2)=F^R_n-F^R_(n-1)+1",
+      "kind": "RECURRENCE_INVERSE",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "EXACT_DERIVATION",
+      "prior_art": "CLASSICAL_ALGEBRA",
+      "gaps": []
+    },
+    {
+      "id": "CRF-023",
+      "title": "Circulant 42 jumps 6 and 7",
+      "expression": "λ_k=2w6+2w7-2w6 cos(2π6k/42)-2w7 cos(2π7k/42)",
+      "kind": "SPECTRAL_GRAPH",
+      "readiness": "A",
+      "source": "Matem-tica-:docs/formal/GEODESIC_PI_PHI_MOD7_INVARIANTS_V1.md",
+      "code": "ChipQuantum:src/geometry/sqrt3_geometry_matrix/global_context_closure_v4.py",
+      "test": "ChipQuantum:tests/test_echo420.py",
+      "evidence": "FINITE_SPECTRAL_WITNESS",
+      "prior_art": "CLASSICAL_CIRCULANT_SPECTRAL_THEORY",
+      "gaps": []
+    },
+    {
+      "id": "CRF-024",
+      "title": "Hypergraph memory 42x4",
+      "expression": "X=Z_42×Z_4; |X|=168; E=E_spatial∪E_temporal∪E_cross",
+      "kind": "HYPERGRAPH_STATE_SPACE",
+      "readiness": "B",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "FORMULATED",
+      "prior_art": "PRIOR_ART_REQUIRED",
+      "gaps": [
+        "DEFINE_EDGE_FAMILIES",
+        "VERIFIER"
+      ]
+    },
+    {
+      "id": "CRF-025",
+      "title": "Memory-4 companion matrix",
+      "expression": "x_(n+1)=a x_n+b x_(n-1)+c x_(n-2)+d x_(n-3); companion M",
+      "kind": "LINEAR_DYNAMICS",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "CLASSICAL_COMPANION_MATRIX",
+      "prior_art": "CLASSICAL_LINEAR_SYSTEMS",
+      "gaps": []
+    },
+    {
+      "id": "CRF-026",
+      "title": "BITRAF 42-bit typed word",
+      "expression": "6+3+10+12+11=42; B=(opcode_6,direction_3,layer_10,immediate_12,flags_11)",
+      "kind": "ENCODING",
+      "readiness": "B",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "Papers:src/asm/bitraf64_prototype_Version4.py",
+      "test": "TOKEN_VAZIO_CANONICAL_TEST",
+      "evidence": "Papers:src/asm/bitraf_mobile.c",
+      "prior_art": "PRIOR_ART_REQUIRED_ENCODING_LAYOUT",
+      "gaps": [
+        "FREEZE_FIELDS",
+        "TEST"
+      ]
+    },
+    {
+      "id": "CRF-027",
+      "title": "BITRAF strict versus modular",
+      "expression": "E_mod(x)=x mod 2^42; E_strict(x)=x if 0<=x<2^42 else VOID",
+      "kind": "ENCODING_POLICY",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO_CANONICAL_IMPLEMENTATION",
+      "test": "TOKEN_VAZIO",
+      "evidence": "FORMULATED",
+      "prior_art": "STANDARD_OVERFLOW_BOUNDARY_PROJECT_TYPING",
+      "gaps": [
+        "TEST_VECTORS"
+      ]
+    },
+    {
+      "id": "CRF-028",
+      "title": "Sector signature",
+      "expression": "σ_j(X)=Σ_(i∈S_j) w_i X_i mod M",
+      "kind": "MODULAR_INVARIANT",
+      "readiness": "B",
+      "source": "Teoremas:TEORIA_ATRACTOR_42.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VALIDATOR",
+      "test": "TOKEN_VAZIO",
+      "evidence": "Teoremas:AUDITORIA_TEORIA_ATRACTOR_42_20260808.md",
+      "prior_art": "WEIGHTED_MODULAR_SUM_KNOWN",
+      "gaps": [
+        "EXPLICIT_WEIGHT_SYMMETRY",
+        "VALIDATOR"
+      ]
+    },
+    {
+      "id": "CRF-029",
+      "title": "Multibase phase vector",
+      "expression": "Π(n)=(n mod7,n mod10,n mod12,n mod20)",
+      "kind": "MODULAR_ARITHMETIC",
+      "readiness": "A",
+      "source": "Teoremas:TEORIA_ATRACTOR_42.md",
+      "code": "TOKEN_VAZIO_DEDICATED_VALIDATOR",
+      "test": "TOKEN_VAZIO",
+      "evidence": "Teoremas:AUDITORIA_TEORIA_ATRACTOR_42_20260808.md",
+      "prior_art": "CLASSICAL_CRT",
+      "gaps": []
+    },
+    {
+      "id": "CRF-030",
+      "title": "Typed TOKEN_VAZIO algebra",
+      "expression": "⊥_τ=(absence,reason,risk,next_test,τ); f(⊥_τ)=⊥_(τ')",
+      "kind": "EPISTEMIC_TYPE",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "Matem-tica-:src/verify_delta_void_frontier.py",
+      "test": "Papers:tests/test_session_vectors_four_inks.py",
+      "evidence": "Papers:docs/vazio-toroidal-drive-research-note.md",
+      "prior_art": "OPTION_ERROR_BOTTOM_TYPE_PRIOR_ART_REQUIRED",
+      "gaps": [
+        "ALGEBRAIC_LAWS",
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-031",
+      "title": "Epistemic closure measure",
+      "expression": "C(c)=I_source I_method I_execution I_artifact I_reproduction",
+      "kind": "EPISTEMIC_METRIC",
+      "readiness": "A",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO",
+      "test": "TOKEN_VAZIO",
+      "evidence": "FORMULATED",
+      "prior_art": "PRIOR_ART_REQUIRED",
+      "gaps": [
+        "OPERATIONAL_INDICATORS"
+      ]
+    },
+    {
+      "id": "CRF-032",
+      "title": "R3 evolution state",
+      "expression": "R3=(F_ok,F_gap,F_next); R3^(n+1)=U(R3^n,e_n)",
+      "kind": "PROCESS_STATE",
+      "readiness": "B",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO_CANONICAL_IMPLEMENTATION",
+      "test": "TOKEN_VAZIO",
+      "evidence": "USED_OPERATIONALLY",
+      "prior_art": "PRIOR_ART_REQUIRED",
+      "gaps": [
+        "DEFINE_U",
+        "STATE_INVARIANTS"
+      ]
+    },
+    {
+      "id": "CRF-033",
+      "title": "Provenance transformation graph",
+      "expression": "G_P=(A,T,E); relations={generatedBy,splitInto,derivedFrom,indexedBy}",
+      "kind": "PROVENANCE_GRAPH",
+      "readiness": "B",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO_SCHEMA",
+      "test": "TOKEN_VAZIO",
+      "evidence": "MULTIPLE_PROVENANCE_DOCS",
+      "prior_art": "W3C_PROV_CROSSWALK_REQUIRED",
+      "gaps": [
+        "SCHEMA",
+        "PRIOR_ART"
+      ]
+    },
+    {
+      "id": "CRF-034",
+      "title": "Epistemic runtime",
+      "expression": "R=(S,A,E,Γ,T); T:S×A×E→S×E; Γ(s,a,e)∈{0,1}",
+      "kind": "FORMAL_RUNTIME",
+      "readiness": "C",
+      "source": "Papers:docs/matematica_autoral/INVENTARIO_60_FORMULACOES_MATEMATICAS_AUTORAIS_E_LATENTES_RAFAELIA.md",
+      "code": "TOKEN_VAZIO_CANONICAL_RUNTIME",
+      "test": "TOKEN_VAZIO",
+      "evidence": "FORMULATED",
+      "prior_art": "RUNTIME_MONITOR_POLICY_AUTOMATA_PRIOR_ART_REQUIRED",
+      "gaps": [
+        "DECOMPOSE_PROPERTIES",
+        "IMPLEMENTATION",
+        "PRIOR_ART"
+      ]
+    }
+  ]
+}
