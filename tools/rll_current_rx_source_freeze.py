@@ -46,8 +46,8 @@ def json_info(path, provenance_fields):
     }
 
 
-def build():
-    spec = load_json(SPEC)
+def build(spec_path=SPEC):
+    spec = load_json(spec_path)
     if spec.get("schema") != "rll.current_rx_source_freeze_spec.v1":
         raise ValueError("unsupported source freeze spec")
     if spec.get("claim_allowed") is not False:
@@ -134,10 +134,14 @@ def build():
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--spec", type=Path, default=SPEC)
+    parser.add_argument("--output", type=Path, default=OUT)
     args = parser.parse_args(argv)
-    payload = build()
+    spec_path = args.spec if args.spec.is_absolute() else ROOT / args.spec
+    output = args.output if args.output.is_absolute() else ROOT / args.output
+    payload = build(spec_path)
     if args.write:
-        dump_json(OUT, payload)
+        dump_json(output, payload)
     print(json.dumps({
         "state": payload["state"],
         "blocker_count": len(payload["blockers"]),
@@ -145,7 +149,7 @@ def main(argv=None):
         "claim_allowed": False,
     }, ensure_ascii=False, indent=2))
     if args.write:
-        print("wrote", OUT.relative_to(ROOT))
+        print("wrote", output.relative_to(ROOT) if output.is_relative_to(ROOT) else output)
     return 0
 
 
