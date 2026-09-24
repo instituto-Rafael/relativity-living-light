@@ -1,6 +1,6 @@
 {
   "schema": "rll.closure_workstream_registry.v1",
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "author": "RAFAEL MELO REIS",
   "claim_allowed": false,
   "purpose": "Single dependency-aware closure program for engineering, scientific, data, low-level, governance and independent-replication work.",
@@ -100,7 +100,13 @@
         "provenance/receipts/RLL_RX_PHYSICS_CANONICAL_V2_BACKGROUND_RECEIPT.json"
       ],
       "falsifier": "Null-limit, dimensional, or common-surface parity fails under the chosen versioned contract.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "current_delta": {
+        "decision_packet": "tools/rx_physics_v2_decision_packet.py",
+        "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
+        "state": "NO_AUTO_SELECTION",
+        "boundary": "Bridge consumes blocking axes but cannot choose omega_r, H(z) surface, growth semantics or integration tolerance."
+      }
     },
     {
       "id": "WS02",
@@ -135,7 +141,13 @@
         "Brout2022PantheonPlus",
         "Sharma2026GEDE"
       ],
-      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only.",
+      "current_delta": {
+        "contract": "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+        "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
+        "state": "MATERIALIZED_PENDING_EXACT_HEAD_CI",
+        "boundary": "Surface consistency does not equal official DESI cross-block authority or Bayesian evidence."
+      }
     },
     {
       "id": "WS03",
@@ -685,7 +697,8 @@
       "completed_subtasks": [
         "executable workflow inventory reconciled to 107/107",
         "write-enabled validacao_real job guarded by explicit workflow_dispatch",
-        "Deep YAML audit passes exact-head"
+        "Deep YAML audit passes exact-head",
+        "executable workflow inventory reconciled to 108/108 on 2026-09-24"
       ],
       "remaining_subtasks": [
         "reconcile canonical branch maturity topology with current branch histories",
@@ -697,6 +710,13 @@
         "workflow_contract_run": 35854146823,
         "deep_yaml_run": 35854146807,
         "branch_maturity_state": "BLOCKED_INVALID_BRANCH_TRANSITION"
+      },
+      "current_observation": {
+        "main_head_at_observation": "31c529d4cc51f302f48191515d39e1a0d56fe675",
+        "declared_topology": "work->rll/lab->rll/integration->rll/release->main",
+        "observed_platform_behavior": "PR976 merged feature branch directly to main despite maturity gate reporting invalid transition",
+        "interpretation": "declared policy and actual GitHub enforcement remain non-equivalent; do not infer platform protection from repository-local gate logic",
+        "claim_allowed": false
       }
     },
     {
@@ -755,7 +775,13 @@
         "artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json"
       ],
       "falsifier": "Any consumed source has ambiguous identity, mutable unversioned content, unexplained exclusion, or unresolved provenance silently substituted.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "current_delta": {
+        "executor": "tools/rll_current_rx_source_freeze.py",
+        "canonical_background_spec": "data/governance/RLL_CANONICAL_BACKGROUND_SOURCE_FREEZE_SPEC_V1.json",
+        "state": "MATERIALIZED_PENDING_EXACT_HEAD_CI",
+        "boundary": "Local byte freeze is now executable for G4/G5; authority/rights TOKEN_VAZIO still prevent G0 closure."
+      }
     },
     {
       "id": "WS22",
@@ -818,7 +844,18 @@
         "data/inputs/omega_g/observable_effect_binding_registry.v2.yaml"
       ],
       "falsifier": "Any binding lacks dimensional consistency, provenance, covariance policy or independently stated falsifier.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "current_delta": {
+        "registry": "data/inputs/omega_g/observable_effect_binding_registry.v2.json",
+        "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
+        "background_bindings": [
+          "OGB-HZ-001",
+          "OGB-BAO-001",
+          "OGB-SN-001"
+        ],
+        "state": "TYPED_BLOCKED_UNTIL_WS21_WS02_WS01",
+        "boundary": "Mechanism/map/units/covariance are explicit, but promotion remains blocked by source authority and unresolved canonical physics."
+      }
     },
     {
       "id": "WS24",
