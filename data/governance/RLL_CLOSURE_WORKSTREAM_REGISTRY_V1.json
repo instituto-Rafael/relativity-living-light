@@ -716,7 +716,10 @@
         "declared_topology": "work->rll/lab->rll/integration->rll/release->main",
         "observed_platform_behavior": "PR976 merged feature branch directly to main despite maturity gate reporting invalid transition",
         "interpretation": "declared policy and actual GitHub enforcement remain non-equivalent; do not infer platform protection from repository-local gate logic",
-        "claim_allowed": false
+        "claim_allowed": false,
+        "ruleset_id": 23116926,
+        "ruleset_effect": "active on default branch; deletion and non-fast-forward only; does not implement declared maturity topology",
+        "platform_gap": "TOKEN_VAZIO_BRANCH_MATURITY_PLATFORM_ENFORCEMENT"
       }
     },
     {
@@ -1002,7 +1005,19 @@
         "artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT.json"
       ],
       "falsifier": "Repository-local policy claims enforcement that GitHub external settings do not actually impose.",
-      "claim_allowed": false
+      "claim_allowed": false,
+      "current_delta": {
+        "receipt": "artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT_20260924.json",
+        "observed_ruleset_id": 23116926,
+        "observed_state": "VERIFIED_LIMITED_ACTIVE_RULESET",
+        "enforced_rules": [
+          "deletion",
+          "non_fast_forward"
+        ],
+        "maturity_topology_enforced": false,
+        "classic_branch_protection": "TOKEN_VAZIO_UNREADABLE_BY_CURRENT_INTEGRATION",
+        "next": "materialize required PR/status-check/source-topology enforcement or preserve explicit platform gap"
+      }
     }
   ],
   "bibliography_authority": {
