@@ -129,7 +129,7 @@ jobs:
       - name: Validate Termux Execution Fabric capsule contract
         run: |
           sh -n scripts/termux/rll_execution_fabric_replay_v1.sh
-          python3 -m unittest tests.test_rll_execution_fabric_termux_replay
+          python3 -m unittest tests.test_rll_execution_fabric_termux_replay tests.test_compare_rll_execution_fabric_actions_termux
 
       - name: Build canonical V2 scientific decision packet
         run: |
