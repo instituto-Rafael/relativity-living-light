@@ -87,7 +87,7 @@
           "free monoid Σ*",
           "explicit rewrite rules"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -127,7 +127,7 @@
         "dependencies": [
           "binomial coefficient"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -165,7 +165,7 @@
         "dependencies": [
           "180°=π radians"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -203,7 +203,7 @@
         "dependencies": [
           "sector area A=θr²/2"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -241,7 +241,7 @@
         "dependencies": [
           "sin²x+cos²x=1"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -283,7 +283,7 @@
           "witnessed V,E,F counts",
           "Euler formula for connected planar graphs"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -325,7 +325,7 @@
           "connectedness",
           "witnessed V,E"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -363,7 +363,7 @@
         "dependencies": [
           "real square root"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -401,7 +401,7 @@
         "dependencies": [
           "Euclidean scaling laws"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -441,7 +441,7 @@
           "s=Rθ",
           "c=2R sin(θ/2)"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -479,7 +479,7 @@
         "dependencies": [
           "chord formula"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -517,7 +517,7 @@
         "dependencies": [
           "right-triangle decomposition of regular n-gon"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -555,7 +555,7 @@
         "dependencies": [
           "triangle area ab sin C /2"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -596,7 +596,7 @@
           "orthographic projection",
           "ellipse eccentricity e=sqrt(1-b²/a²)"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -638,7 +638,7 @@
           "CRF-008",
           "prime sequence"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -683,7 +683,7 @@
           "exponent laws",
           "g_k prime gap"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -722,7 +722,7 @@
         "dependencies": [
           "geometric progression"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -763,7 +763,7 @@
         "dependencies": [
           "Fibonacci recurrence F_0=0,F_1=1"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -800,7 +800,7 @@
         "dependencies": [
           "CRF-021"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -839,7 +839,7 @@
         "dependencies": [
           "Fourier characters of finite cyclic group"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -877,7 +877,7 @@
         "dependencies": [
           "matrix multiplication"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -920,7 +920,7 @@
           "integer modulo",
           "typed VOID/TOKEN_VAZIO boundary"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -963,7 +963,7 @@
           "modular arithmetic",
           "lcm"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -1005,7 +1005,7 @@
         "dependencies": [
           "tagged sum/partial type semantics"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     },
@@ -1046,7 +1046,7 @@
         "dependencies": [
           "Boolean arithmetic"
         ],
-        "receipt": "PENDING_CI_RECEIPT"
+        "receipt": "provenance/receipts/RLL_CRF_A_FORMALIZATION_V1_20260924.json"
       },
       "claim_allowed": false
     }
