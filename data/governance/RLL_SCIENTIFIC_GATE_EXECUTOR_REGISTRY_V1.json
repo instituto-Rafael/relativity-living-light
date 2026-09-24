@@ -1,6 +1,6 @@
 {
   "schema": "rll.scientific_gate_executor_registry.v1",
-  "date": "2026-09-23",
+  "date": "2026-09-24",
   "claim_allowed": false,
   "execution_policy": {
     "arbitrary_command_from_contract": false,
@@ -45,9 +45,10 @@
       "qualified_id": "SCI_GATE:G4",
       "executor_state": "FULL_DECLARED_BACKGROUND_EXECUTOR",
       "executors": [
-        "tools/run_g4_background_tournament.py"
+        "tools/run_g4_background_tournament.py",
+        "tools/run_dark_dimension_benchmark_v1.py"
       ],
-      "note": "Six-model fair background tournament exists; scientific gate evidence still requires a passing exact receipt."
+      "note": "Canonical six-model fair background tournament remains authoritative. Dark Dimension runner is mapped only as an isolated external-comparator readiness benchmark; it cannot close G4 or enter G5 until same-data/same-covariance/same-nuisance likelihood parity exists."
     },
     "G5": {
       "qualified_id": "SCI_GATE:G5",

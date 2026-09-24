@@ -1,0 +1,40 @@
+{
+  "schema": "rll.dark_dimension_benchmark.readiness_receipt.v1",
+  "date": "2026-09-24",
+  "state": "IMPLEMENTED_PENDING_EXACT_HEAD_CI",
+  "branch": "feat/dark-dimension-benchmark-v1-20260924",
+  "parent_observed_head": "156dbec4de0d0ec8744f0a87c7c06263649af197",
+  "parent_ci": {
+    "passing_workflows": [
+      "formulas-artifacts",
+      "repo-real-inventory",
+      "Real Data Bootstrap Validation",
+      "RLL Governance Quality Gate — non-certification",
+      "Convention Consistency Check",
+      "RLL FASE 24.1 — Gate Determinístico",
+      "Claim Boundary Quality Gates",
+      "Real Data Contract CI",
+      "Real Data Complete Execution",
+      "RLL Knowledge Matrix — Orquestração de Fórmulas e Conceitos"
+    ],
+    "known_blockers": [
+      "INVALID_BRANCH_TRANSITION: main accepts only rll/release",
+      "WF_COUNT_MISMATCH: contract expected 107 while executable inventory discovered 108"
+    ],
+    "interpretation": "The workflow-count drift is inherited repository governance debt and is repaired by the successor commit. Branch-topology promotion remains intentionally fail-closed."
+  },
+  "benchmark_evidence": {
+    "contract_present": true,
+    "stdlib_kernel_present": true,
+    "runner_present": true,
+    "structural_tests_present": 7,
+    "g4_auxiliary_mapping_present": true,
+    "new_workflow_yaml": false,
+    "likelihood_parity": "TOKEN_VAZIO_NOT_EXECUTED",
+    "desi_dr2_sn_fit": "TOKEN_VAZIO_NOT_EXECUTED",
+    "rll_plus_dark_dimension": "BLOCKED_UNTIL_G5_PARITY"
+  },
+  "next_step": "Run exact-head CI after workflow inventory reconciliation; then freeze the Dark Dimension background equations and parameter priors before binding the same DESI DR2 + SN likelihood/covariance/nuisance policy used by G5.",
+  "claim_allowed": false,
+  "publication_effect": "NONE"
+}
