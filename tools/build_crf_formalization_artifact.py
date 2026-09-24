@@ -212,7 +212,7 @@ def main() -> int:
     table_lines = [
         "# RLL CRF Formalization Index V1",
         "",
-        f"Source lock: \`{contract['source']['origin_repository']}@{contract['source']['origin_ref']}\`",
+        f"Source lock: `{contract['source']['origin_repository']}@{contract['source']['origin_ref']}`",
         "",
         f"Total: **{len(normalized_items)}** · A: **{readiness_counts['A']}** · B: **{readiness_counts['B']}** · C: **{readiness_counts['C']}**",
         "",
@@ -226,7 +226,7 @@ def main() -> int:
         gaps = gaps.replace("|", "\\|")
         table_lines.append(
             f"| {item['id']} | {item['kind']} | {item['readiness']} | "
-            f"\`{expr}\` — {title} | {gaps} |"
+            f"`{expr}` — {title} | {gaps} |"
         )
     table_lines += [
         "",
