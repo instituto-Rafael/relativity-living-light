@@ -1,0 +1,35 @@
+{
+  "schema": "rll.github_platform_enforcement_receipt.v1",
+  "observed_at": "2026-09-24",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "default_branch": "main",
+  "ruleset_observation": {
+    "ruleset_count": 1,
+    "id": 23116926,
+    "name": "1",
+    "target": "branch",
+    "enforcement": "active",
+    "include": ["~DEFAULT_BRANCH"],
+    "rules": ["deletion", "non_fast_forward"],
+    "current_user_can_bypass": "always",
+    "bypass_classes_observed": ["OrganizationAdmin", "DeployKey", "RepositoryRole", "Integration"]
+  },
+  "classic_branch_protection": {
+    "state": "TOKEN_VAZIO_UNREADABLE_BY_CURRENT_INTEGRATION",
+    "http_status": 403,
+    "reason": "Resource not accessible by integration"
+  },
+  "maturity_topology_enforcement": {
+    "state": "NOT_PROVEN",
+    "declared_topology": "work->rll/lab->rll/integration->rll/release->main",
+    "observed_ruleset_effect": "prevents deletion and non-fast-forward on default branch only",
+    "required_pull_request_reviews": "TOKEN_VAZIO_NOT_OBSERVED_IN_RULESET",
+    "required_status_checks": "TOKEN_VAZIO_NOT_OBSERVED_IN_RULESET",
+    "branch_source_topology_restriction": "NOT_PRESENT_IN_OBSERVED_RULESET",
+    "evidence": "PR #976 was mergeable and merged feature->main while repository-local maturity gate reported invalid transition"
+  },
+  "state": "VERIFIED_LIMITED_PLATFORM_RULESET",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "boundary": "An active ruleset exists, but the observed rules do not enforce the repository's declared branch-maturity topology. Bypass authority remains material and classic branch protection is unreadable by this integration."
+}
