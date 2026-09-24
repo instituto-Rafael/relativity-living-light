@@ -6,6 +6,7 @@ on:
     paths:
       - "tools/build_crf_formalization_artifact.py"
       - "data/contracts/rll_crf_formalization_artifact.v1.json"
+      - "data/formulas/CROSSREPO_FORMULA_FORMALIZATION_MAP_V1.snapshot.json"
       - "docs/formalization/RLL_CRF_FORMALIZATION_ARTIFACT_V1.md"
       - ".github/workflows/crf-formalization-artifact.yml"
   pull_request:
