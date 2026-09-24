@@ -194,7 +194,19 @@
         "Pan2025ConsistentICs",
         "Wang2026DarkSectorDESIDR2"
       ],
-      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only."
+      "bibliography_policy": "REFERENCE != EVIDENCE != CLAIM; bibliography keys bind provenance/guidance only.",
+      "current_delta": {
+        "status_delta": "data/governance/RLL_PERTURBATION_P0_STATUS_DELTA_20260924_V2.json",
+        "equation_contract": "data/science/perturbations/RLL_PERTURBATION_A1_LINEAR_FLUID_EQUATION_FAMILY_20260924_V1.json",
+        "regularity_executor": "tools/rll_perturbation_a1_linear_fluid_regularity_v1.py",
+        "c01": "CANDIDATE_EQUATION_FAMILY_MATERIALIZED_NOT_CANONICAL",
+        "c02": "CANDIDATE_EQUATION_FAMILY_MATERIALIZED_NOT_CANONICAL",
+        "c07": "TOKEN_VAZIO_CRITICAL",
+        "c08": "BLOCKED_DIRECT_STANDARD_FLUID_DOUBLE_PRECISION_REGULARITY",
+        "class_camb_unlock": false,
+        "state": "PROGRESSED_BUT_BLOCKED",
+        "boundary": "The standard conservation equation family narrows C01/C02, while the 1/(1+w) conditioning audit blocks naive direct solver handoff. No gauge, IC or canonical perturbation closure is inferred."
+      }
     },
     {
       "id": "WS04",
