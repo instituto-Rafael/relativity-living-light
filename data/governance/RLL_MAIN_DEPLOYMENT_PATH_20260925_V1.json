@@ -17,7 +17,9 @@
     "no feature/research branch may promote directly to main",
     "every promotion edge requires a fresh receipt bound to the promoted head",
     "negative/null evidence must survive promotion unchanged",
-    "claim_allowed=false unless a separate explicit scientific authority changes that state"
+    "claim_allowed=false unless a separate explicit scientific authority changes that state",
+    "HISTORICAL_NEGATIVE_OBSERVATION != CURRENT_PLATFORM_STATE",
+    "WORKFLOW_SUCCESS != EXTERNAL_ENFORCEMENT_RESOLVED"
   ],
   "promotion_topology": [
     {
@@ -42,10 +44,10 @@
     }
   ],
   "global_main_gate": {
-    "state": "BLOCKED_EXTERNAL_GOVERNANCE",
+    "state": "BLOCKED_EXTERNAL_AUTHORITY_INCOMPLETE",
     "blocker": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
-    "reason": "V4 resolved the former external-settings uncertainty as a negative fact: declared maturity branches were observed unprotected and no repository rulesets were present.",
-    "closure": "Configure and re-observe branch protection/rulesets, required checks/reviews and bounded bypass policy. Repository YAML alone cannot close this token."
+    "reason": "Current 2026-09-25 read-only platform probe observed branch metadata and rulesets, but protection detail is incomplete and resolution_eligible=false. Historical 2026-08-08 negative evidence is preserved but is not treated as current platform truth.",
+    "closure": "Obtain a fresh read-only receipt with complete protection detail and directly verify required maturity/governance checks, review policy, bypass policy, force-push/delete restrictions, and applicable rulesets for main/rll-release/rll-integration/rll-lab."
   },
   "resolved_facts": [
     {
@@ -59,13 +61,6 @@
       "state": "RESOLVED",
       "classification": "FROZEN_35_REF_SEMANTIC_DISPOSITION_COMPLETE",
       "evidence": "data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json"
-    },
-    {
-      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
-      "state": "RESOLVED_NEGATIVE",
-      "classification": "EXTERNAL_SETTINGS_OBSERVED_NO_BRANCH_PROTECTION_OR_RULESETS",
-      "evidence": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json",
-      "successor": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT"
     }
   ],
   "priority_counts": {
@@ -330,10 +325,10 @@
     {
       "id": "NP-001",
       "priority": "P0",
-      "state": "OPEN_EXTERNAL",
-      "issue": "GitHub platform enforcement absent for maturity topology",
-      "action": "Configure rulesets/branch protection outside repository files, then preserve a fresh read-only receipt.",
-      "evidence": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json"
+      "state": "OPEN_EXTERNAL_CURRENT_OBSERVATION_PARTIAL",
+      "issue": "GitHub maturity-branch enforcement is not currently resolution-eligible: current probe has incomplete protection detail.",
+      "action": "Acquire/enable authority needed for complete branch-protection observation; configure missing enforcement if required; re-run read-only probe and persist current receipt.",
+      "evidence": "GitHub Platform Assurance V2 run 36169792228, job 108186255604, artifact 10879902755"
     },
     {
       "id": "NP-002",
@@ -370,20 +365,49 @@
   },
   "R3": {
     "F_ok": [
-      "V4 facts preserved",
+      "V4 historical facts preserved without projecting stale provider state forward",
+      "2026-09-25 live platform observation appended as PARTIAL_EXTERNAL_SETTINGS_OBSERVED",
       "12 current open items routed",
       "priority/dependency topology explicit",
       "main path reuses existing maturity chain"
     ],
     "F_gap": [
-      "platform enforcement external action",
+      "current platform protection detail incomplete and resolution_eligible=false",
+      "Six Sigma derived documentation inventory is stale on rll/lab",
       "scientific/external/physical/human receipts listed by item",
       "README hotfix and license inventory remain separate necessary points"
     ],
     "F_next": [
-      "merge this registry through rll/lab only after gates pass",
-      "execute Wave 0 platform enforcement and Wave 1 parallel work",
-      "promote each resolved item through integration/release/main with fresh receipts"
+      "keep PR #991 draft until current platform authority and inventory drift are reconciled",
+      "execute ready Wave 1 work without claiming main deployment",
+      "promote each resolved item through integration/release/main only with fresh receipts"
     ]
-  }
+  },
+  "source_live_platform_observation": {
+    "observed_at": "2026-09-25",
+    "workflow": "GitHub Platform Assurance V2",
+    "run_id": 36169792228,
+    "job_id": 108186255604,
+    "artifact_id": 10879902755,
+    "state": "PARTIAL_EXTERNAL_SETTINGS_OBSERVED",
+    "branch_count": 4,
+    "branch_metadata_complete": true,
+    "protection_detail_complete": false,
+    "rulesets_observed": true,
+    "resolution_eligible": false,
+    "claim_allowed": false,
+    "interpretation": "Current live observation does not prove platform enforcement and is not eligible to resolve the external-settings/enforcement boundary."
+  },
+  "historical_observations": [
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "observed_at": "2026-08-08",
+      "historical_state": "RESOLVED_NEGATIVE",
+      "classification": "EXTERNAL_SETTINGS_OBSERVED_NO_BRANCH_PROTECTION_OR_RULESETS",
+      "evidence": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json",
+      "successor": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+      "current_authority": "SUPERSEDED_FOR_CURRENT_STATE_BY_2026-09-25_PARTIAL_LIVE_OBSERVATION",
+      "boundary": "Preserve as historical evidence only; do not project the 2026-08-08 provider state onto 2026-09-25."
+    }
+  ]
 }
