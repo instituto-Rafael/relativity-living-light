@@ -282,3 +282,23 @@ documentation:
       - "sem certificação"
       - "auditoria absoluta"
       - "claim_allowed=true"
+
+main_deployment_path_v1:
+  state: IMPLEMENTED_DRAFT
+  claim_allowed: false
+  publication_effect: NONE
+  registry: data/governance/RLL_MAIN_DEPLOYMENT_PATH_20260925_V1.json
+  validator: tools/rll_main_deployment_path.py
+  test: tests/test_rll_main_deployment_path.py
+  documentation: docs/governance/RLL_MAIN_DEPLOYMENT_PATH_20260925_V1.md
+  topology:
+    - "work/*|feature/*|science/*|research/*|engineering/*|governance/*|hotfix/* -> rll/lab"
+    - "rll/lab -> rll/integration"
+    - "rll/integration -> rll/release"
+    - "rll/release -> main"
+  global_main_blocker: TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT
+  invariants:
+    - "TOKEN_VAZIO != 0"
+    - "RESOLVED_NEGATIVE != PASS"
+    - "IMPLEMENTED_UNTESTED != PASS"
+    - "feature/research branch != direct main promotion"
