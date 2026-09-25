@@ -6,6 +6,10 @@ from rx.unified_shape_toroidal_transport import (
     common_envelope_shape_family,
     equal_sphere_overlap,
     four_equilateral_cross_fold,
+    figure8_cross_equilateral_bridge,
+    figure8_double_point,
+    figure8_sheet_tangent_cross,
+    figure8_torus_immersion,
     rigid_transport_invariant,
 )
 
@@ -94,3 +98,38 @@ def test_144_cells_project_to_42_vertex_lattice_and_measure_stability_concentrat
     assert by_vertex[2]["stable"] == 12
     assert by_vertex[41]["stable"] == 6
     assert math.isclose(by_vertex[41]["stable_fraction"], 0.5, abs_tol=1e-15)
+
+
+def test_continuous_figure8_torus_is_self_intersecting_immersion():
+    R, a, u = 2.0, 0.75, 0.37
+    double = figure8_double_point(R, a, u=u)
+    assert double["coincident_residual"] < 1e-12
+
+    p1 = figure8_torus_immersion(u, math.pi / 2.0, R, a)
+    p2 = figure8_torus_immersion(u, 3.0 * math.pi / 2.0, R, a)
+    assert all(math.isclose(x, y, abs_tol=1e-12) for x, y in zip(p1, p2))
+
+
+def test_figure8_two_sheets_cross_orthogonally_at_double_point():
+    cross = figure8_sheet_tangent_cross(2.0, 0.75, u=0.61)
+    assert cross["orthogonal"] is True
+    assert abs(cross["dot"]) < 1e-12
+    assert math.isclose(cross["angle_deg"], 90.0, abs_tol=1e-12)
+    assert cross["physical_interpenetration_claim"] is False
+
+
+def test_figure8_local_cross_bridges_to_four_equilateral_pulses():
+    bridge = figure8_cross_equilateral_bridge(
+        major_radius=2.0,
+        loop_radius=0.75,
+        pulse_radius=1.25,
+        u=0.41,
+    )
+    assert bridge["figure8_cross"]["orthogonal"] is True
+    assert bridge["all_four_equilateral"] is True
+    assert bridge["global_embedding_claim"] is False
+
+    for tri in bridge["cross_fold"]["triangles"]:
+        assert tri["equilateral"] is True
+        for side in tri["sides"]:
+            assert math.isclose(side, 1.25, abs_tol=1e-12)
