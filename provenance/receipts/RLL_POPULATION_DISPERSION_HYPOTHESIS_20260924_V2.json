@@ -1,0 +1,35 @@
+{
+  "schema": "rll.muwrite.population_dispersion.v2",
+  "mu_id": "MU-RLL-POP-DISP-20260924-V2",
+  "timestamp": "2026-09-24T21:45:00-03:00",
+  "source_ref": "PR#983 branch rll-lab-population-dispersion-v1-20260924",
+  "parent": "provenance/receipts/RLL_POPULATION_DISPERSION_HYPOTHESIS_20260924_V1.json",
+  "supersedes": "MU-RLL-POP-DISP-20260924 only for F_next/state; V1 history preserved",
+  "kind": "IMPLEMENTATION_DELTA+HIDDEN_TRUTH_CONTROL",
+  "delta_summary": "Added deterministic stdlib-only one-vs-two Gaussian hidden-truth benchmark with BIC complexity control and a null case that must reject the unnecessary second population.",
+  "artifacts_added": [
+    "rx/population_dispersion_benchmark.py",
+    "tests/test_population_dispersion_benchmark.py"
+  ],
+  "commits": [
+    "cabd87c087a6550681cca7cb6c7f369a9651c426",
+    "ff2dd46ac2363268ab7f14377b9de36629a24039"
+  ],
+  "expected_controls": {
+    "mixture_case": "two-population model should survive BIC penalty",
+    "null_case": "one-population model should remain preferred"
+  },
+  "execution_evidence": "TOKEN_VAZIO_CI_NEW_HEAD_NOT_YET_OBSERVED",
+  "state": "IMPLEMENTED_CI_PENDING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "gap": [
+    "CI_NEW_HEAD",
+    "real_dataset_binding",
+    "domain_priors_and_covariance",
+    "independent_reproduction",
+    "RLL_specific_deformation_parameter"
+  ],
+  "next": "Observe PR#983 exact-head CI; if tests pass, bind one real domain without altering canonical cosmological likelihood.",
+  "rollback": "append-only branch; delete/revert new files if rejected; canonical likelihood unchanged"
+}
