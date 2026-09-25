@@ -1,0 +1,67 @@
+{
+  "schema": "rll.adaptive_geometry_feature_layer.result.v1",
+  "date": "2026-09-25",
+  "source": "results/RLL_DESI_SYNTHETIC_GEOMETRY_EMBEDDING_V1.json",
+  "source_blob_sha": "9bea701c6e5733ac7d4769c6ed2a4e9b2803301a",
+  "claim_allowed": false,
+  "independent_coordinates": {
+    "log_scale": "0.5*ln((DM/rd)*(DH/rd))",
+    "anisotropy": "ln((DM/rd)/(DH/rd))=ln(F_AP)"
+  },
+  "observed_DESI_DR2": [
+    [
+      "LRG1",
+      0.51,
+      2.846991380296544,
+      -0.4756086599964132
+    ],
+    [
+      "LRG2",
+      0.706,
+      2.910877124028026,
+      -0.11445396481698221
+    ],
+    [
+      "LRG3_PLUS_ELG1",
+      0.934,
+      2.9709036620758487,
+      0.2013558475231601
+    ],
+    [
+      "ELG2",
+      1.321,
+      2.984701198906764,
+      0.6663016100880783
+    ],
+    [
+      "QSO",
+      1.484,
+      2.9844462318028753,
+      0.8673476341103763
+    ],
+    [
+      "Lya",
+      2.33,
+      2.9093650672153983,
+      1.50777767851913
+    ]
+  ],
+  "null_control": {
+    "recorded_boundary": "Omega_s0=0",
+    "max_abs_delta_log_scale_RLL_minus_LCDM": 2.3896840062320734e-10,
+    "max_abs_delta_anisotropy_RLL_minus_LCDM": 1.4148571203520532e-10,
+    "interpretation": "RLL adaptive features collapse to LCDM within numerical/best-fit tolerance on the recorded null boundary."
+  },
+  "exact_redundancy_identities": [
+    "phi=atan(F_AP) for positive DM/rd,DH/rd",
+    "q=min(F_AP,1/F_AP)",
+    "A_ellipse=2*pi*A_triangle",
+    "rho^2=(x*y)*(F_AP+1/F_AP)"
+  ],
+  "local_precommit": {
+    "status": "PASS",
+    "module_sha256": "dc2f86247c2a329f21fe61f15ee61157f5d1dd20c6d74fbfa632c91516fdf1cc",
+    "test_sha256": "069d9ab22ea796e6063f38a7d4880642fbd9b1024487bb5c709309b8549d4f1b"
+  },
+  "boundary": "Derived geometry features are diagnostics/reparameterizations only; they are not new cosmological evidence or parameters."
+}
