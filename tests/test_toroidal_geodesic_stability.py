@@ -157,3 +157,26 @@ def test_pythagorean_cathetus_difference_and_complements():
     routes = complementary_angle_routes(theta)
     assert math.isclose(routes["theta"] + routes["to_60"], math.pi / 3.0, abs_tol=1e-15)
     assert math.isclose(routes["theta"] + routes["to_90"], math.pi / 2.0, abs_tol=1e-15)
+
+
+def test_unified_shape_complex_keeps_maps_and_nonidentities_typed():
+    from rx.toroidal_geodesic_stability import unified_shape_complex_contract
+    c = unified_shape_complex_contract()
+    assert c["state"] == "FORMAL_TYPED_COMPLEX"
+    assert ["QxI", "C", "extrusion"] in c["relations"]
+    assert ["Q", "T2", "opposite_edge_identification"] in c["relations"]
+    assert "sphere != torus" in c["nonidentities"]
+
+
+def test_equal_spheres_overlap_is_not_mislabeled_as_rigid_passage():
+    from rx.toroidal_geodesic_stability import sphere_through_equal_sphere_gate
+    out = sphere_through_equal_sphere_gate(1.0, 1.0)
+    assert out["mathematical_interpenetration"] is True
+    assert out["volume_relation"] == "equal_spheres_overlap"
+    assert out["rigid_material_passage"].startswith("TOKEN_VAZIO")
+
+
+def test_equal_sphere_requires_aperture_radius_at_least_its_radius():
+    from rx.toroidal_geodesic_stability import equal_sphere_aperture_gate
+    assert equal_sphere_aperture_gate(1.0, 1.0)["passes_without_deformation"] is True
+    assert equal_sphere_aperture_gate(1.0, 0.999)["passes_without_deformation"] is False
