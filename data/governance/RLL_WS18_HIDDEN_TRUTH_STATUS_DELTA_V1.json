@@ -1,0 +1,24 @@
+{
+  "schema": "rll.ws18.hidden_truth_status_delta.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "parent_workstream": "WS18_rmrcti_hidden_truth_and_real_trace_replication",
+  "claim_allowed": false,
+  "state": "PROGRESSED_OPEN_ENGINEERING",
+  "closed_subtask": {
+    "name": "synthetic hidden-truth body-Y benchmark",
+    "state": "LOCAL_REPLAY_PASS_PROVIDER_CI_PENDING",
+    "receipt": "artifacts/science/rmrcti/RLL_RMRCTI_HIDDEN_TRUTH_RECEIPT.json",
+    "recovery": "5/5"
+  },
+  "remaining_subtasks": [
+    "independent real trace package",
+    "domain-calibrated sensitivity-threshold benchmark"
+  ],
+  "token_vazio": [
+    "INDEPENDENT_REAL_RMRCTI_TRACE_PACKAGE",
+    "TOKEN_VAZIO_DOMAIN_CALIBRATION:RMRCTI_THRESHOLDS"
+  ],
+  "boundary": "WS18 is not CLOSED until independent real-trace replication and threshold calibration exist."
+}
+
