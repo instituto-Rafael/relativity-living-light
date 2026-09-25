@@ -1,0 +1,86 @@
+{
+  "schema": "rll.geometric_adaptive_feature_router.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "state": "BOUNDED_DIAGNOSTIC_ADAPTER",
+  "claim_allowed": false,
+  "parent": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "purpose": "Convert exact dimensionless geometry relations into diagnostic features that may adapt numerical resolution, synthetic fixture density and routing priority without adapting physical/cosmological parameters.",
+  "allowed_regimes": ["G0", "G6"],
+  "conditional_handoff": {
+    "to_G5": "ONLY_AS_PREDECLARED_OBSERVABLE_OR_RESIDUAL_FEATURE_AFTER_SCI_GATE_G1_G2_G3",
+    "direct_parameter_binding": false
+  },
+  "feature_families": {
+    "annulus": {
+      "inputs": ["0 < r_in < r_out"],
+      "features": [
+        "q=r_in/r_out",
+        "thickness_ratio=1-q",
+        "inner_area_ratio=q^2",
+        "annulus_area_fraction=1-q^2",
+        "circumference_ratio=q"
+      ]
+    },
+    "spherical_shell": {
+      "features": ["inner_volume_ratio=q^3", "shell_volume_fraction=1-q^3"]
+    },
+    "circle_inversion": {
+      "expression": "r_image=a^2/r",
+      "invariant": "r*r_image=a^2"
+    },
+    "projection": {
+      "features": ["b/a=|cos(i)|", "e=|sin(i)|", "e^2+(b/a)^2=1", "A_proj/A=|cos(i)|"]
+    },
+    "regular_polygon": {
+      "features": [
+        "r_in/R=cos(pi/n)",
+        "s/(2R)=sin(pi/n)",
+        "lambda_n=2cos(pi/n)",
+        "Q_n=pi/(n tan(pi/n))"
+      ],
+      "diagonal_recurrence": "d_{k+1}=lambda_n*d_k-d_{k-1}"
+    },
+    "complex_rotation": {
+      "representation": "z=rho*exp(i theta)",
+      "operations": [
+        "rotation: z->z exp(i phi)",
+        "multiplication: radii multiply and phases add",
+        "division: radii divide and phases subtract",
+        "kth roots: radius^(1/k), phase branches (theta+2pi m)/k"
+      ]
+    }
+  },
+  "adaptive_policy": {
+    "allowed": ["numerical_resolution", "synthetic_fixture_density", "diagnostic_router_priority"],
+    "blocked": ["H0", "Omega_m", "Omega_s0", "w0", "wa", "physical_constants", "equation_of_motion_parameters"],
+    "reason": "Geometry resemblance or a dimensionless invariant is not a physical mechanism and must not become a post-hoc fitted cosmological parameter."
+  },
+  "pre_registration": {
+    "required": true,
+    "multiple_testing_control": true,
+    "held_out_or_synthetic_truth": true,
+    "negative_controls_preserved": true
+  },
+  "boundaries": [
+    "geometry_feature != physical_parameter",
+    "geometry_fit != causal_explanation",
+    "annulus_or_torus_morphology != physical_torus_mechanism",
+    "phi_or_pi_occurrence != new_physics",
+    "adaptive_numerics != adaptive_physics",
+    "post_hoc_feature_mining != confirmatory_test"
+  ],
+  "implementation": "rx/geometric_features.py",
+  "tests": "tests/test_geometric_adaptive_feature_router.py",
+  "F_ok": [
+    "exact geometry descriptors can be computed dimensionlessly",
+    "RLL G0/G6 already provide a legitimate diagnostic/projection context",
+    "adaptive use can be restricted to numerical and routing decisions"
+  ],
+  "F_gap": [
+    "no validated mapping from these features to RLL physical parameters",
+    "no observational likelihood improvement attributable to this adapter",
+    "no independent provider CI receipt yet"
+  ],
+  "F_next": "run deterministic tests; then predeclare one synthetic hidden-truth experiment and one observational residual feature before any G5 handoff"
+}
