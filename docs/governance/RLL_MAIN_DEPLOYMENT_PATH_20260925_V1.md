@@ -27,16 +27,40 @@ A feature/research branch must not jump directly to `main`.
 The current authority is the append-only V4 TOKEN_VAZIO reconciliation, not the
 older 14-item registry alone.
 
-Three historical gaps are already facts and must not be reopened:
+Two narrow scientific/governance gaps are current resolved facts and must not
+be reopened:
 
 - H0 primary-source provenance: `RESOLVED`;
-- diverged/descendant ref semantic review: `RESOLVED`;
-- external GitHub settings uncertainty: `RESOLVED_NEGATIVE`.
+- diverged/descendant ref semantic review: `RESOLVED`.
 
-The last item is important: the settings were observed, and the observation
-reported no branch protection/rulesets. The uncertainty closed as a negative
-fact and produced the P0 successor
-`TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT`.
+The external GitHub settings record needs a temporal distinction. The
+2026-08-08 probe is preserved append-only as a historical
+`RESOLVED_NEGATIVE` observation. It is **not** projected forward as the
+current provider state.
+
+A new live observation from GitHub Platform Assurance V2, run
+`36169792228`, job `108186255604`, artifact `10879902755`, reports:
+
+```text
+state = PARTIAL_EXTERNAL_SETTINGS_OBSERVED
+branch_count = 4
+branch_metadata_complete = true
+protection_detail_complete = false
+rulesets_observed = true
+resolution_eligible = false
+claim_allowed = false
+```
+
+Therefore:
+
+```text
+HISTORICAL_NEGATIVE_OBSERVATION != CURRENT_PLATFORM_STATE
+WORKFLOW_SUCCESS != EXTERNAL_ENFORCEMENT_RESOLVED
+```
+
+The current P0 successor
+`TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT` remains open because the current
+authority is incomplete, not because the August state is assumed to persist.
 
 ## Current open denominator
 
@@ -111,8 +135,10 @@ A PASS at one edge is not authority for the next edge without a fresh receipt.
 
 ### NP-001 — P0 GitHub enforcement
 
-This is an external platform action, not something repository files can
-self-certify.
+This is an external platform authority boundary, not something repository
+files can self-certify. The current live probe has complete branch metadata but
+incomplete protection detail and is not resolution-eligible. A fresh complete
+observation is required before the path may call `main` protected.
 
 ### NP-002 — P1 license authority contradiction
 
@@ -144,13 +170,17 @@ exists.
 
 ## R3
 
-**F_ok:** V4 state reconciled; 12 open successor obligations routed; narrow
-resolutions and negative settings evidence preserved; urgency, branches,
-receipts, dependencies and promotion topology are explicit.
+**F_ok:** historical V4 evidence preserved append-only; the 2026-09-25 live
+platform observation is separately recorded; 12 open successor obligations are
+routed; urgency, branches, receipts, dependencies and promotion topology are
+explicit.
 
-**F_gap:** GitHub platform enforcement, six Wave-1 execution/materialization
-items, dependency-unlocked CLASS/CAMB and multi-probe work, independent
-replication, physical execution and two editorial/legal necessary points.
+**F_gap:** current GitHub protection detail is incomplete and not
+resolution-eligible; the Six Sigma derived documentation inventory is stale on
+`rll/lab`; scientific/external/physical/human execution receipts remain open;
+license authority and README rendering remain separate necessary points.
 
-**F_next:** land this contract in `rll/lab` after gates; execute Wave 0 and
-Wave 1; promote only resolved deltas one edge at a time with fresh receipts.
+**F_next:** keep PR #991 draft while current platform authority and derived
+inventory drift remain unresolved; execute ready Wave 1 work without claiming
+main deployment; then advance only resolved deltas one edge at a time with
+fresh receipts.
