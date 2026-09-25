@@ -262,16 +262,30 @@ def equal_sphere_overlap(center_a, center_b, radius):
 
 
 def nearest_icosphere_vertex(point, vertices, sphere_radius):
+    """Deterministic nearest-vertex assignment with a geometric tie tolerance.
+
+    Symmetric source points can be equidistant from two mesh vertices. Raw
+    libm acos rounding may differ by a few ulps across runners, so exact float
+    tuple ordering can split one canonical bin into two. Distances within a
+    scale-aware tolerance are treated as the same geometric tie and the lower
+    vertex index wins deterministically.
+    """
     S=float(sphere_radius)
-    best=None
+    tol=max(1.0,abs(S))*1.0e-12
+    best_distance=None
+    best_index=None
     for i,q in enumerate(vertices):
         cosang=sum(float(a)*float(b) for a,b in zip(point,q))/(S*S)
         cosang=max(-1.0,min(1.0,cosang))
         distance=S*math.acos(cosang)
-        row=(distance,i)
-        if best is None or row<best:
-            best=row
-    return {"index":best[1],"geodesic_distance":best[0]}
+        if (
+            best_distance is None
+            or distance < best_distance - tol
+            or (abs(distance-best_distance) <= tol and i < best_index)
+        ):
+            best_distance=distance
+            best_index=i
+    return {"index":best_index,"geodesic_distance":best_distance}
 
 
 def aggregate_144_to_42(major_radius=2.0, minor_radius=1.0):
