@@ -234,3 +234,24 @@ def test_full_shape_relation_state_keeps_torus_and_sphere_distinct():
     assert out["torus_surface_residual"] < 1e-12
     assert out["objects"] == ["I","S1","Q","Delta_plus","Delta_minus","T2","S2","C","B"]
     assert out["claim_allowed"] is False
+
+
+def test_144_to_42_projection_conserves_all_source_states():
+    from rx.toroidal_geodesic_stability import stability_concentration_144_to_42
+    out = stability_concentration_144_to_42(2.0, 1.0)
+    assert out["source_state_count"] == 144
+    assert out["target_vertex_count"] == 42
+    assert out["assigned_state_count"] == 144
+    assert out["stable_state_count"] + out["unstable_state_count"] == 144
+    assert 1 <= out["active_vertex_count"] <= 42
+    assert sum(row["total"] for row in out["bins"]) == 144
+    assert out["claim_allowed"] is False
+
+
+def test_144_to_42_stability_is_source_preserving_not_vertex_recomputed():
+    from rx.toroidal_geodesic_stability import stability_concentration_144_to_42
+    out = stability_concentration_144_to_42(2.0, 1.0)
+    for row in out["bins"]:
+        assert row["stable"] + row["unstable"] == row["total"]
+        if row["total"]:
+            assert 0.0 <= row["stable_fraction"] <= 1.0
