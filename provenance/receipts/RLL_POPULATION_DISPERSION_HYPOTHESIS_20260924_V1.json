@@ -1,0 +1,43 @@
+{
+  "schema": "rll.muwrite.population_dispersion.v1",
+  "mu_id": "MU-RLL-POP-DISP-20260924",
+  "timestamp": "2026-09-24T21:37:00-03:00",
+  "source_ref": "current-session + recent primary literature",
+  "parent": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "kind": "HYPOTHESIS_FORMALIZATION+EXECUTABLE_ROUTER+TESTS",
+  "delta_summary": "Formalized observed dispersion as a latent mixture of origin/age/velocity/residence/transport populations with intervening-medium, projection and selection terms; added strong-gravity specialization; preserved Earth hidden-reservoir evidence as analogy only; no canonical likelihood mutation.",
+  "routes": ["L", "O", "T", "P", "C", "R", "I", "E", "A"],
+  "artifacts": [
+    "rx/population_dispersion.py",
+    "data/governance/RLL_POPULATION_DISPERSION_HYPOTHESIS_V1.json",
+    "tests/test_population_dispersion.py",
+    "docs/science/RLL_POPULATION_DISPERSION_HYPOTHESIS_V1.md"
+  ],
+  "implementation_commits": [
+    "cee2bd37f071be20cb67153007a672faca1467eb",
+    "537a30ef45693a2445e18881c67c8b5c6b70c296",
+    "1d5b588545f0bd5eda77c17f359ba12a9be3e8a4",
+    "e65f1da088dc537433383afb9d9ca38f40c46a29"
+  ],
+  "evidence": {
+    "DESI_DR2_LyA_AP_2026": "arXiv:2607.27410",
+    "DESI_extended_dark_energy_2025": "arXiv:2503.14743",
+    "planet_age_architecture_2025": "DOI:10.1038/s41550-025-02539-1",
+    "hydrous_ringwoodite_2014": "DOI:10.1038/nature13080",
+    "lower_mantle_water_2025": "DOI:10.1029/2024GL114180",
+    "offshore_freshened_groundwater_2023": "DOI:10.1038/s41467-023-39507-0",
+    "M87_ring_ellipticity_2025": "A&A 699 A279"
+  },
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "gap": [
+    "CI_NOT_YET_OBSERVED",
+    "synthetic_hidden_truth_benchmark",
+    "real_dataset_priors_and_covariance",
+    "independent_reproduction",
+    "RLL_specific_deformation_parameter"
+  ],
+  "next": "Open draft PR, observe CI, repair only evidence-backed regressions, then implement deterministic two-population hidden-truth benchmark.",
+  "rollback": "additive branch; canonical RLL likelihood and existing V1 geometry contract unchanged"
+}
