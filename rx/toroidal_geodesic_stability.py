@@ -449,3 +449,62 @@ def complementary_angle_routes(theta):
         "to_60": math.pi / 3.0 - value,
         "to_90": math.pi / 2.0 - value,
     }
+
+
+def unified_shape_complex_contract():
+    """Typed PG-Omega7 family: maps relate shapes without declaring them identical."""
+    return {
+        "objects": ["I","S1","Q","Delta_plus","Delta_minus","T2","S2","C","B"],
+        "relations": [
+            ["I","S1","boundary_quotient"],
+            ["S1xS1","T2","product"],
+            ["Q","T2","opposite_edge_identification"],
+            ["QxI","C","extrusion"],
+            ["Delta_plus_union_Delta_minus","T2","triangular_lattice_quotient"],
+            ["C","S2","radial_projection"],
+            ["B","S2","radial_projection"],
+        ],
+        "nonidentities": [
+            "sphere != torus",
+            "projection != equivalence",
+            "square != two_equilateral_triangles_in_euclidean_metric",
+        ],
+        "state": "FORMAL_TYPED_COMPLEX",
+    }
+
+
+def sphere_through_equal_sphere_gate(center_distance, radius):
+    """Separate equal-sphere overlap from passage through a physical aperture."""
+    d = float(center_distance)
+    r = float(radius)
+    if r <= 0.0 or d < 0.0:
+        raise ValueError("require radius > 0 and center_distance >= 0")
+    if d == 0.0:
+        relation = "coincident_equal_spheres"
+    elif d < 2.0 * r:
+        relation = "equal_spheres_overlap"
+    elif math.isclose(d, 2.0 * r, rel_tol=0.0, abs_tol=1e-12):
+        relation = "externally_tangent"
+    else:
+        relation = "disjoint"
+    return {
+        "center_distance": d,
+        "radius": r,
+        "volume_relation": relation,
+        "mathematical_interpenetration": d < 2.0 * r,
+        "rigid_material_passage": "TOKEN_VAZIO_APERTURE_RADIUS_AND_DEFORMATION_MODEL",
+    }
+
+
+def equal_sphere_aperture_gate(sphere_radius, aperture_radius):
+    """Rigid-size gate for a sphere crossing a planar circular aperture."""
+    r = float(sphere_radius)
+    a = float(aperture_radius)
+    if r <= 0.0 or a < 0.0:
+        raise ValueError("require sphere_radius > 0 and aperture_radius >= 0")
+    return {
+        "sphere_radius": r,
+        "aperture_radius": a,
+        "passes_without_deformation": a >= r,
+        "clearance": a - r,
+    }
