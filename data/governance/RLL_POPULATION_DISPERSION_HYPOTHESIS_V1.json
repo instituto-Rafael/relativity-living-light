@@ -1,0 +1,219 @@
+{
+  "schema": "rll.population_dispersion_hypothesis.v1",
+  "date": "2026-09-24",
+  "author": "RAFAEL MELO REIS",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "state": "EXECUTABLE_HYPOTHESIS_FAIL_CLOSED",
+  "claim_allowed": false,
+  "purpose": "Model observed dispersion as a time-dependent mixture of populations with different origin, age, velocity, residence/capture history, intervening medium, projection and selection effects, without silently adding parameters to the canonical RLL likelihood.",
+  "core_hypothesis": {
+    "statement": "An observed field can contain superposed populations that arrived from different regions and epochs with different velocity distributions; some objects may be captured, delayed, migrated or retained, so present position or apparent ring/shell membership does not imply common origin or common age.",
+    "mixture_likelihood": "p(y_i|Theta)=sum_k pi_k * integral p(y_i|z_i,k,Theta) p(z_i|k,Theta) dz_i",
+    "transport": [
+      "dx/dt = v",
+      "dv/dt = -grad(Phi) + a_medium + a_RLL + xi(t)"
+    ],
+    "residence_survival": "P_surv(t)=exp(-integral lambda_capture_or_loss(t) dt)",
+    "dispersion_decomposition": "Sigma_obs = Sigma_measurement + Sigma_intrinsic + Sigma_origin + Sigma_transport + Sigma_medium + Sigma_projection + cross_covariances",
+    "selection_rule": "selection/visibility is modeled in the likelihood normalization or explicit selection operator; it is not automatically an additive covariance term",
+    "complexity_rule": "A new parameter is admitted only if it has a declared domain, unit, prior, source or model authority, falsifier and preregistered comparison. More observations do not by themselves authorize more free parameters."
+  },
+  "latent_state_vector": [
+    "origin_region",
+    "birth_or_formation_time",
+    "age",
+    "initial_velocity",
+    "current_velocity",
+    "angular_momentum_or_orbit_class",
+    "transport_history",
+    "residence_time",
+    "capture_or_ejection_state",
+    "environment_or_medium",
+    "projection_state",
+    "selection_state"
+  ],
+  "parameter_families": {
+    "P0_measurement": [
+      "measurement_covariance",
+      "calibration",
+      "epoch",
+      "instrument_response"
+    ],
+    "P1_population": [
+      "mixture_weight_pi_k",
+      "age_distribution",
+      "origin_distribution",
+      "velocity_distribution",
+      "metallicity_or_composition_if_domain_relevant"
+    ],
+    "P2_transport": [
+      "potential_Phi",
+      "migration_or_scattering_rate",
+      "capture_or_loss_rate",
+      "residence_time_distribution"
+    ],
+    "P3_intervening_medium": [
+      "gas_or_plasma_density",
+      "magnetic_field_if_relevant",
+      "dust_or_absorption_if_relevant",
+      "scattering_kernel",
+      "line_of_sight_structure"
+    ],
+    "P4_projection_selection": [
+      "inclination",
+      "lensing_or_projection_operator",
+      "selection_function",
+      "visibility_threshold"
+    ],
+    "P5_RLL_deformation": [
+      "TOKEN_VAZIO_UNTIL_BASELINES_AND_SYSTEMATICS_CLOSE"
+    ]
+  },
+  "strong_gravity_specialization": {
+    "regimes": ["G3", "G4", "G6"],
+    "baseline_parameters": [
+      "black_hole_mass_M",
+      "dimensionless_spin_a_star",
+      "observer_inclination_i",
+      "distance_D",
+      "accretion_or_emission_geometry",
+      "electron_density_profile",
+      "magnetic_field_profile",
+      "scattering_or_imaging_systematics",
+      "observation_epoch"
+    ],
+    "projective_observable": "b_obs = F_GR(M,a_star,i,D,emission_model) + Delta_b_medium + Delta_b_projection + Delta_b_systematics + Delta_b_RLL",
+    "boundary": "Delta_b_RLL remains TOKEN_VAZIO until the GR+plasma+projection baseline is fitted and held-out residual structure survives covariance-aware tests."
+  },
+  "cosmology_specialization": {
+    "regimes": ["G5", "G6"],
+    "baseline_parameters": [
+      "H0",
+      "Omega_m",
+      "Omega_b",
+      "Omega_r",
+      "sum_m_nu_if_modelled",
+      "N_eff_if_modelled",
+      "w0_wa_if_dark_energy_extension_is_selected"
+    ],
+    "rule": "The population-dispersion layer is initially an observation/heterogeneity model. It must not be inserted into H(z) or promoted to a new cosmological density component without an explicit equation-of-motion/continuity bridge and model-selection evidence."
+  },
+  "intervening_space_inventory": {
+    "intergalactic_gas": "SOURCE_BOUND_OBSERVATIONAL_MEDIUM",
+    "plasma_near_compact_objects": "SOURCE_BOUND_DOMAIN_DEPENDENT",
+    "magnetic_fields": "SOURCE_BOUND_DOMAIN_DEPENDENT",
+    "dust_and_absorbers": "SOURCE_BOUND_DOMAIN_DEPENDENT",
+    "massive_neutrino_sector": "COSMOLOGICAL_PARAMETER_FAMILY_WITH_DATA_PRIORS",
+    "dark_matter": "GRAVITATIONALLY_INFERRED_COMPONENT",
+    "dark_energy": "COSMOLOGICALLY_INFERRED_COMPONENT",
+    "quantum_vacuum_microstructure_as_object_inventory": "TOKEN_VAZIO_NOT_ESTABLISHED_BY_THIS_HYPOTHESIS",
+    "boundary": "Intergalactic/interstellar space is not observationally empty, but intervening matter/plasma must not be relabelled as evidence for a new quantum-vacuum component."
+  },
+  "cross_domain_hidden_reservoir_analogy": {
+    "earth_deep_water": {
+      "safe_use": "Methodological analogy: directly visible surface inventory can be smaller than or structurally different from hidden reservoirs inferred or sampled through independent probes.",
+      "forbidden_use": "Earth water reservoirs are not evidence for dark matter, dark energy, RLL vacuum constituents or black-hole interior contents."
+    },
+    "offshore_freshened_groundwater": {
+      "safe_use": "Observed example of a hidden, spatially distributed reservoir whose age, origin, flow history and present location differ.",
+      "forbidden_use": "Do not equate sub-seafloor freshwater with mantle water or with cosmological vacuum structure."
+    },
+    "exoplanet_architecture": {
+      "safe_use": "Observed planetary architectures can evolve with age; age and migration can therefore be legitimate latent variables in planetary-population models.",
+      "forbidden_use": "Planetary evolution does not establish the RLL cosmological sector."
+    }
+  },
+  "recent_evidence_anchors": [
+    {
+      "id": "DESI-DR2-LYA-AP-2026",
+      "title": "DESI DR2 Results IV: Alcock-Paczynski Measurements from the Lyman Alpha Forest and Cosmological Constraints",
+      "year": 2026,
+      "locator": "arXiv:2607.27410",
+      "use": "Full-shape Ly-alpha AP constrains geometry at z_eff=2.33 and demonstrates that additional information can shift extended-model inferences; use as a data/model-comparison anchor, not as automatic permission for extra RLL parameters."
+    },
+    {
+      "id": "DESI-EXTENDED-DE-2025",
+      "title": "Extended Dark Energy analysis using DESI DR2 BAO measurements",
+      "year": 2025,
+      "locator": "arXiv:2503.14743",
+      "use": "Broad parametric and non-parametric tests found a two-parameter w(z) extension sufficient to capture the main trend; complexity must be justified, not accumulated."
+    },
+    {
+      "id": "USP-AGE-ARCH-2025",
+      "title": "Age dependence of the occurrence and architecture of ultra-short-period planet systems",
+      "year": 2025,
+      "locator": "DOI:10.1038/s41550-025-02539-1",
+      "use": "Planet-system architecture shows age dependence, supporting age/evolution as legitimate latent variables in that domain."
+    },
+    {
+      "id": "MW-VELOCITY-DISPERSION-RELATIONS",
+      "title": "Fundamental relations for the velocity dispersion of stars in the Milky Way",
+      "year": 2021,
+      "locator": "MNRAS 506, 1761",
+      "use": "Velocity dispersion depends jointly on age, angular momentum, metallicity and height above the plane; supports multivariate population treatment for Galactic kinematics."
+    },
+    {
+      "id": "EARTH-RINGWOODITE-HYDROUS-2014",
+      "title": "Hydrous mantle transition zone indicated by ringwoodite included within diamond",
+      "year": 2014,
+      "locator": "DOI:10.1038/nature13080",
+      "use": "Direct evidence that at least local mantle-transition-zone material can be hydrous; not a global ocean-volume equality."
+    },
+    {
+      "id": "EARTH-LOWER-MANTLE-WATER-2025",
+      "title": "Water Reservoirs in the Lower Mantle Beneath Northeastern Asia",
+      "year": 2025,
+      "locator": "DOI:10.1029/2024GL114180",
+      "use": "Supports deep-Earth water-reservoir investigation and heterogeneity; does not establish a single global reservoir volume."
+    },
+    {
+      "id": "OFFSHORE-FRESHENED-GROUNDWATER-2023",
+      "title": "Offshore freshened groundwater in the Pearl River estuary and shelf as a significant water resource",
+      "year": 2023,
+      "locator": "DOI:10.1038/s41467-023-39507-0",
+      "use": "Direct borehole/geochemical evidence for extensive freshened groundwater beneath the seafloor on a continental shelf."
+    },
+    {
+      "id": "M87-RING-ELLIPTICITY-2025",
+      "title": "Origin of the elliptical ring structure in M87*",
+      "year": 2025,
+      "locator": "A&A 699 A279",
+      "use": "Ring ellipticity depends on astrophysical and imaging effects and is not a one-parameter spin proxy; motivates explicit nuisance/systematics terms in strong-gravity projection tests."
+    }
+  ],
+  "gates": [
+    "GATE_SOURCE: every promoted parameter has source_ref or model authority",
+    "GATE_UNITS: every promoted parameter has explicit units/dimension",
+    "GATE_PRIOR: prior is declared before fitting",
+    "GATE_SELECTION: selection model is separate from covariance",
+    "GATE_COVARIANCE: correlations are not reduced to diagonal unless justified",
+    "GATE_BASELINE: LCDM/GR/standard population baseline runs first",
+    "GATE_COMPLEXITY: compare information criteria and/or Bayesian evidence/cross-validation",
+    "GATE_HELDOUT: residual structure must survive held-out or posterior-predictive checks",
+    "GATE_CAUSALITY: present location does not imply origin without a transport model",
+    "GATE_CROSS_DOMAIN: analogy never promotes a physical parameter across domains"
+  ],
+  "falsifiers": [
+    "A one-population baseline explains the data after full covariance and selection treatment.",
+    "Added mixture components collapse to zero weight or become prior-dominated.",
+    "Age/origin/velocity effects disappear under measurement-error and selection corrections.",
+    "Residual improvements vanish on held-out data or independent reproduction.",
+    "Strong-gravity residuals disappear after plasma, scattering, imaging and epoch systematics are modeled.",
+    "A proposed RLL parameter is numerically redundant with an existing nuisance parameter.",
+    "Complexity penalties remove apparent preference for the extended model."
+  ],
+  "F_ok": [
+    "user hypothesis translated into typed latent population, transport, residence, medium, projection and selection variables",
+    "recent DESI, planetary, Galactic-kinematic, deep-Earth and offshore-groundwater evidence routed with domain boundaries",
+    "strong-gravity specialization defined without identifying a projective image with a black-hole interior"
+  ],
+  "F_gap": [
+    "dataset-specific population definitions and priors",
+    "full covariance/cross-covariance authority for each target dataset",
+    "pre-registered hidden-truth synthetic benchmark",
+    "independent reproduction",
+    "any nonzero RLL-specific deformation parameter"
+  ],
+  "F_next": "Run a synthetic two-or-more-population hidden-truth benchmark first; then bind one real domain at a time, beginning with strong-gravity projection or Galactic kinematics, before touching the canonical cosmological likelihood."
+}
