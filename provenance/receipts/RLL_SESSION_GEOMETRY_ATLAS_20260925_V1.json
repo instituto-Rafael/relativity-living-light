@@ -1,0 +1,26 @@
+{
+  "schema": "rll.muwrite.session_geometry_atlas_bridge.v1",
+  "mu_id": "MU-RLL-SESSION-GEOMETRY-ATLAS-20260925-V1",
+  "timestamp": "2026-09-25T00:15:00-03:00",
+  "author": "RAFAEL MELO REIS",
+  "kind": "CROSSREPO_FORMAL_GEOMETRY_BRIDGE",
+  "source_ref": "rafaelmeloreisnovo/papers/session-geometric-superposition-atlas-v1-20260925",
+  "parent": "provenance/receipts/RLL_HETE_STABILITY_BOUNDARY_GEOMETRY_20260924_V1.json",
+  "delta_summary": "Registered the session's RLL-appropriate geometry only: polygon/circle/arc/median relations, typed 2D->3D lifts, geodesic sphere, torus, Poincare/HETE, relation indices and strict exclusions for symbolic/cultural or unverified physical interpretations.",
+  "artifacts": [
+    "docs/science/RLL_SESSION_GEOMETRY_ATLAS_BRIDGE_V1.md",
+    "data/governance/RLL_SESSION_GEOMETRY_ATLAS_BRIDGE_V1.json",
+    "docs/science/assets/RLL_SESSION_GEOMETRY_ATLAS_BRIDGE_V1.svg"
+  ],
+  "claim_allowed": false,
+  "state": "IMPLEMENTED_DOCUMENTARY_BRIDGE_CI_NOT_YET_OBSERVED",
+  "gaps": [
+    "exact planarization of hand sketches",
+    "authorial prior-art matrix",
+    "angular refinement persistence",
+    "independent reproduction",
+    "empirical strong-gravity binding"
+  ],
+  "next": "Run CI; then consume only verified geometry IDs into executable RLL tests/diagnostics.",
+  "rollback": "append-only successor branch; prior geometry receipts preserved"
+}

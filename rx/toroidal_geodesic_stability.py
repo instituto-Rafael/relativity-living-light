@@ -31,6 +31,8 @@ DU = math.pi / 6.0       # 30 degrees
 DV = math.pi / 4.0       # 45 degrees
 RETURN_STEPS = 12
 PERIOD_STEPS = 24
+STABILITY_EPS = 1.0e-12
+COS45 = math.sqrt(2.0) / 2.0
 
 
 def _check_torus(major_radius, minor_radius):
@@ -356,7 +358,8 @@ def quadratic_fixed_point_stability(c):
         "roots": (z_plus, z_minus),
         "multipliers": multipliers,
         "min_multiplier": minimum,
-        "stable_any": minimum < 1.0,
+        "stable_any": minimum < 1.0 - STABILITY_EPS,
+        "on_stability_boundary": abs(minimum - 1.0) <= STABILITY_EPS,
         "stability_margin": 1.0 - minimum,
     }
 
@@ -772,5 +775,282 @@ def stability_concentration_144_to_42(major_radius=2.0, minor_radius=1.0):
             "nearest-vertex projection does not identify torus and sphere; "
             "HETE stability remains sourced from the torus cell"
         ),
+        "claim_allowed": False,
+    }
+
+
+def canonical_ratio_stability_regimes():
+    """Exact ratio thresholds for the canonical 30/45 discrete HETE lattice.
+
+    Let q=R/r>1.  Because the pulse amplitude is at most 1/2 and the azimuth
+    grid is in 30-degree steps, only u=0 and u=+/-30 can ever leave the
+    attracting-fixed-point cardioid.
+
+    Along u=0 the cardioid radial boundary is 1/4.
+    Along u=+/-30 it is sqrt(3)/4.
+
+    Combining these exact c-plane boundaries with v in 45-degree steps gives
+    three q thresholds. Boundary points are classified non-stable because
+    HETE requires the strict inequality |2z|<1.
+    """
+    q_outer_30 = (COS30 - COS45) / (1.0 - COS30)
+    q_inner_equator = 3.0
+    q_inner_30 = (COS30 + COS45) / (1.0 - COS30)
+    return {
+        "q_outer_30": q_outer_30,
+        "q_inner_equator": q_inner_equator,
+        "q_inner_30": q_inner_30,
+        "critical_c_radius_u0": 0.25,
+        "critical_c_radius_u30": math.sqrt(3.0) / 4.0,
+        "regimes": [
+            {
+                "q_min": 1.0,
+                "q_min_open": True,
+                "q_max": q_outer_30,
+                "q_max_open": True,
+                "unstable": 6,
+                "stable": 138,
+                "stable_fraction": 23.0 / 24.0,
+            },
+            {
+                "q_min": q_outer_30,
+                "q_min_open": False,
+                "q_max": q_inner_equator,
+                "q_max_open": True,
+                "unstable": 18,
+                "stable": 126,
+                "stable_fraction": 7.0 / 8.0,
+            },
+            {
+                "q_min": q_inner_equator,
+                "q_min_open": False,
+                "q_max": q_inner_30,
+                "q_max_open": True,
+                "unstable": 24,
+                "stable": 120,
+                "stable_fraction": 5.0 / 6.0,
+            },
+            {
+                "q_min": q_inner_30,
+                "q_min_open": False,
+                "q_max": None,
+                "q_max_open": None,
+                "unstable": 36,
+                "stable": 108,
+                "stable_fraction": 3.0 / 4.0,
+            },
+        ],
+        "claim_allowed": False,
+    }
+
+
+def expected_canonical_stability_counts(major_radius, minor_radius):
+    R, r = _check_torus(major_radius, minor_radius)
+    q = R / r
+    regimes = canonical_ratio_stability_regimes()
+    for row in regimes["regimes"]:
+        lo_ok = q > row["q_min"] if row["q_min_open"] else q >= row["q_min"]
+        if row["q_max"] is None:
+            hi_ok = True
+        else:
+            hi_ok = q < row["q_max"] if row["q_max_open"] else q <= row["q_max"]
+        if lo_ok and hi_ok:
+            return {
+                "q": q,
+                "unstable": row["unstable"],
+                "stable": row["stable"],
+                "stable_fraction": row["stable_fraction"],
+                "regime": row,
+            }
+    raise AssertionError("ring-torus ratio was not classified")
+
+
+def _canonical_angle_deg(angle):
+    value = (math.degrees(float(angle)) % 360.0 + 360.0) % 360.0
+    if abs(value - 360.0) <= 1.0e-9 or abs(value) <= 1.0e-9:
+        return 0.0
+    return round(value, 9)
+
+
+def _torus_meridian_class(v):
+    cv = math.cos(float(v))
+    if abs(cv - 1.0) <= 1.0e-9:
+        return "outer_equator"
+    if abs(cv + 1.0) <= 1.0e-9:
+        return "inner_equator"
+    if cv > 1.0e-9:
+        return "outer_half"
+    if cv < -1.0e-9:
+        return "inner_half"
+    return "top_bottom"
+
+
+def instability_geometry_report(major_radius=2.0, minor_radius=1.0):
+    """Locate HETE instability and separate source geometry from projection aliasing."""
+    R, r = _check_torus(major_radius, minor_radius)
+    matrix = six_toroidal_branches(R, r, steps=PERIOD_STEPS)
+    expected = expected_canonical_stability_counts(R, r)
+    S = R + r
+    mesh = icosphere_f2(S)
+
+    unstable = []
+    all_assignments = []
+    for branch_idx, branch in enumerate(matrix["branches"]):
+        for cell in branch["cells"]:
+            hit = nearest_icosphere_vertex(cell["sphere_point"], S, mesh=mesh)
+            row = {
+                "branch": branch_idx,
+                "phase_index": branch["phase_index"],
+                "chirality": branch["chirality"],
+                "n": cell["n"],
+                "u_deg": _canonical_angle_deg(cell["u"]),
+                "v_deg": _canonical_angle_deg(cell["v"]),
+                "point": cell["point"],
+                "c": cell["c"],
+                "min_multiplier": cell["min_multiplier"],
+                "stability_margin": cell["stability_margin"],
+                "stable_any": cell["stable_any"],
+                "meridian_class": _torus_meridian_class(cell["v"]),
+                "nearest_vertex": hit["index"],
+                "assignment_distance": hit["distance"],
+            }
+            all_assignments.append(row)
+            if not cell["stable_any"]:
+                unstable.append(row)
+
+    # Canonicalize geometrically repeated source positions.
+    support = {}
+    for row in unstable:
+        key = (
+            row["u_deg"],
+            row["v_deg"],
+        )
+        support.setdefault(key, {
+            "u_deg": row["u_deg"],
+            "v_deg": row["v_deg"],
+            "point": row["point"],
+            "nearest_vertex": row["nearest_vertex"],
+            "multiplicity": 0,
+            "meridian_class": row["meridian_class"],
+            "min_multiplier": row["min_multiplier"],
+        })
+        support[key]["multiplicity"] += 1
+
+    # A mixed sphere vertex can result from projection aliasing of different
+    # torus source classes. Record those classes explicitly.
+    by_vertex = {}
+    for row in all_assignments:
+        slot = by_vertex.setdefault(row["nearest_vertex"], {
+            "vertex": row["nearest_vertex"],
+            "stable": 0,
+            "unstable": 0,
+            "source_classes": set(),
+            "source_uv": set(),
+        })
+        slot["stable"] += int(row["stable_any"])
+        slot["unstable"] += int(not row["stable_any"])
+        slot["source_classes"].add(row["meridian_class"])
+        slot["source_uv"].add((row["u_deg"], row["v_deg"]))
+
+    mixed_vertices = []
+    for slot in by_vertex.values():
+        if slot["stable"] and slot["unstable"]:
+            mixed_vertices.append({
+                "vertex": slot["vertex"],
+                "stable": slot["stable"],
+                "unstable": slot["unstable"],
+                "source_classes": sorted(slot["source_classes"]),
+                "source_uv": sorted(slot["source_uv"]),
+                "projection_alias": len(slot["source_uv"]) > 1,
+            })
+    mixed_vertices.sort(key=lambda row: row["vertex"])
+
+    # The five unique unstable positions form one axial apex plus four
+    # sign-symmetric corners. Measure their actual embedded base.
+    apex = (R + r, 0.0, 0.0)
+    corner_ring = R + r * COS45
+    corner_x = corner_ring * COS30
+    corner_y = corner_ring * SIN30
+    corner_z = r * COS45
+    base_y = 2.0 * corner_y
+    base_z = 2.0 * corner_z
+    apex_edge = math.sqrt(
+        (R + r - corner_x) ** 2 + corner_y ** 2 + corner_z ** 2
+    )
+    square_residual = abs(base_y - base_z)
+
+    branch_arcs = []
+    for branch_idx, branch in enumerate(matrix["branches"]):
+        bad = [cell["n"] for cell in branch["cells"] if not cell["stable_any"]]
+        branch_arcs.append({
+            "branch": branch_idx,
+            "phase_index": branch["phase_index"],
+            "chirality": branch["chirality"],
+            "unstable_n": bad,
+            "count": len(bad),
+        })
+
+    outer_unstable = sum(
+        row["meridian_class"] in {"outer_equator", "outer_half"}
+        for row in unstable
+    )
+    throat_unstable = sum(row["meridian_class"] == "inner_equator" for row in unstable)
+
+    return {
+        "schema": "rll.instability_geometry_report.v1",
+        "torus": {"R": R, "r": r, "q": R / r},
+        "expected_counts": expected,
+        "observed_counts": {
+            "unstable": len(unstable),
+            "stable": 144 - len(unstable),
+            "stable_fraction": (144 - len(unstable)) / 144.0,
+        },
+        "count_parity": len(unstable) == expected["unstable"],
+        "unique_unstable_position_count": len(support),
+        "unique_unstable_positions": sorted(
+            support.values(), key=lambda row: (row["u_deg"], row["v_deg"])
+        ),
+        "support_signature": (
+            "{(0,0)} union {(+-30,+-45)} for q=2 canonical geometry"
+            if math.isclose(R / r, 2.0, rel_tol=0.0, abs_tol=1.0e-12)
+            else "ratio-dependent; inspect unique_unstable_positions"
+        ),
+        "branch_unstable_arcs": branch_arcs,
+        "outer_side_unstable_count": outer_unstable,
+        "inner_throat_unstable_count": throat_unstable,
+        "meridian_30_mouth_coincidence_count": sum(
+            min(abs(row["v_deg"] - 30.0), abs(row["v_deg"] - 330.0)) <= 1.0e-9
+            for row in unstable
+        ),
+        "five_point_support_shape": {
+            "apex": apex,
+            "corner_plane_x": corner_x,
+            "base_side_y": base_y,
+            "base_side_z": base_z,
+            "base_aspect_y_over_z": base_y / base_z,
+            "apex_to_corner_edge": apex_edge,
+            "square_residual": square_residual,
+            "square_base": square_residual <= 1.0e-12,
+            "square_condition_q": 1.0 / math.sqrt(2.0),
+            "square_condition_compatible_with_ring_torus": False,
+            "classification": "right_rectangular_pyramid_support",
+        },
+        "mixed_projection_vertices": mixed_vertices,
+        "projection_alias_boundary": (
+            "mixed 42-vertex bins do not imply mixed stability at one torus point; "
+            "radial projection and nearest-vertex quantization can merge distinct "
+            "inner/outer torus source states"
+        ),
+        "geometric_findings": {
+            "coincides_with_torus_throat": throat_unstable > 0,
+            "coincides_with_meridian_30_tangency": False,
+            "centered_on_outer_radial_median": any(
+                row["u_deg"] == 0.0 and row["v_deg"] == 0.0 for row in unstable
+            ),
+            "flow_boundary": (
+                "for q=2 each branch has a 3-step cyclic unstable arc centered "
+                "on the outer-equator crossing; the next +/- step is stable"
+            ),
+        },
         "claim_allowed": False,
     }

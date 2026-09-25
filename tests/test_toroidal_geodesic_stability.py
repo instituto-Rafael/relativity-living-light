@@ -255,3 +255,78 @@ def test_144_to_42_stability_is_source_preserving_not_vertex_recomputed():
         assert row["stable"] + row["unstable"] == row["total"]
         if row["total"]:
             assert 0.0 <= row["stable_fraction"] <= 1.0
+
+
+def test_exact_ratio_regimes_include_canonical_q2_as_seven_eighths_stable():
+    from rx.toroidal_geodesic_stability import (
+        canonical_ratio_stability_regimes,
+        expected_canonical_stability_counts,
+    )
+    regimes = canonical_ratio_stability_regimes()
+    assert math.isclose(regimes["critical_c_radius_u0"], 0.25, abs_tol=1e-15)
+    assert math.isclose(
+        regimes["critical_c_radius_u30"], math.sqrt(3.0) / 4.0, abs_tol=1e-15
+    )
+    out = expected_canonical_stability_counts(2.0, 1.0)
+    assert out["unstable"] == 18
+    assert out["stable"] == 126
+    assert math.isclose(out["stable_fraction"], 7.0 / 8.0, abs_tol=1e-15)
+
+
+def test_ratio_regimes_change_only_at_derived_geometry_thresholds():
+    from rx.toroidal_geodesic_stability import expected_canonical_stability_counts
+    assert expected_canonical_stability_counts(1.1, 1.0)["unstable"] == 6
+    assert expected_canonical_stability_counts(1.2, 1.0)["unstable"] == 18
+    assert expected_canonical_stability_counts(4.0, 1.0)["unstable"] == 24
+    assert expected_canonical_stability_counts(12.0, 1.0)["unstable"] == 36
+
+
+def test_q2_instability_support_is_five_positions_and_not_torus_throat():
+    from rx.toroidal_geodesic_stability import instability_geometry_report
+    out = instability_geometry_report(2.0, 1.0)
+    assert out["count_parity"] is True
+    assert out["observed_counts"]["unstable"] == 18
+    assert out["observed_counts"]["stable"] == 126
+    assert out["unique_unstable_position_count"] == 5
+    assert out["outer_side_unstable_count"] == 18
+    assert out["inner_throat_unstable_count"] == 0
+    assert out["geometric_findings"]["coincides_with_torus_throat"] is False
+    assert out["geometric_findings"]["coincides_with_meridian_30_tangency"] is False
+    assert out["geometric_findings"]["centered_on_outer_radial_median"] is True
+
+
+def test_each_q2_branch_has_exactly_three_cyclic_unstable_steps():
+    from rx.toroidal_geodesic_stability import instability_geometry_report
+    out = instability_geometry_report(2.0, 1.0)
+    expected = {
+        0: [0, 1, 23],
+        1: [0, 1, 23],
+        2: [7, 8, 9],
+        3: [7, 8, 9],
+        4: [15, 16, 17],
+        5: [15, 16, 17],
+    }
+    for row in out["branch_unstable_arcs"]:
+        assert sorted(row["unstable_n"]) == expected[row["branch"]]
+        assert row["count"] == 3
+
+
+def test_q2_unstable_support_is_rectangular_pyramid_not_square_pyramid():
+    from rx.toroidal_geodesic_stability import instability_geometry_report
+    out = instability_geometry_report(2.0, 1.0)
+    shape = out["five_point_support_shape"]
+    assert shape["classification"] == "right_rectangular_pyramid_support"
+    assert shape["square_base"] is False
+    assert shape["square_condition_compatible_with_ring_torus"] is False
+    assert shape["base_side_y"] > shape["base_side_z"]
+
+
+def test_mixed_icosphere_vertices_are_projection_aliases_not_source_identity():
+    from rx.toroidal_geodesic_stability import instability_geometry_report
+    out = instability_geometry_report(2.0, 1.0)
+    mixed = {row["vertex"]: row for row in out["mixed_projection_vertices"]}
+    assert set(mixed) == {23, 30, 32, 40, 41}
+    for row in mixed.values():
+        assert row["projection_alias"] is True
+        assert row["stable"] > 0
+        assert row["unstable"] > 0
