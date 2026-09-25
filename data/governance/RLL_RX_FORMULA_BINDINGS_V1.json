@@ -15,9 +15,17 @@
       "formula_id": "RXF-G5-E2-H-V1",
       "name": "FLRW background E2 and H",
       "provenance_class": "STANDARD_COSMOLOGY_PLUS_VERSIONED_RLL_EXTENSION",
-      "required_regimes": ["G5"],
-      "observables": ["E", "H"],
-      "implementation": ["rx.cosmology:e2", "rx.cosmology:hubble"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "E",
+        "H"
+      ],
+      "implementation": [
+        "rx.cosmology:e2",
+        "rx.cosmology:hubble"
+      ],
       "units_contract": "H in km/s/Mpc; E dimensionless",
       "state": "EXECUTABLE"
     },
@@ -25,9 +33,18 @@
       "formula_id": "RXF-G5-DISTANCE-V1",
       "name": "FLRW comoving distance",
       "provenance_class": "STANDARD_COSMOLOGY_NUMERICAL_IMPLEMENTATION",
-      "required_regimes": ["G5"],
-      "observables": ["DM", "DA", "DL", "distance"],
-      "implementation": ["rx.cosmology:comoving_distance_mpc"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "DM",
+        "DA",
+        "DL",
+        "distance"
+      ],
+      "implementation": [
+        "rx.cosmology:comoving_distance_mpc"
+      ],
       "units_contract": "distance in Mpc before observable projection",
       "state": "EXECUTABLE"
     },
@@ -35,9 +52,18 @@
       "formula_id": "RXF-G5-BAO-V1",
       "name": "DESI-style BAO background observables",
       "provenance_class": "STANDARD_BAO_OBSERVABLE_MAPPING",
-      "required_regimes": ["G5"],
-      "observables": ["BAO", "DH", "DM", "DV"],
-      "implementation": ["rx.cosmology:bao_prediction"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "BAO",
+        "DH",
+        "DM",
+        "DV"
+      ],
+      "implementation": [
+        "rx.cosmology:bao_prediction"
+      ],
       "units_contract": "dimensionless distance ratios after sound-horizon normalization",
       "state": "EXECUTABLE"
     },
@@ -45,9 +71,16 @@
       "formula_id": "RXF-G5-GROWTH-V1",
       "name": "Growth proxy / f-sigma8 route",
       "provenance_class": "VERSIONED_ENGINEERING_PROXY_NOT_PERTURBATION_CLOSURE",
-      "required_regimes": ["G5"],
-      "observables": ["FS8", "fsigma8"],
-      "implementation": ["rx.cosmology:fsigma8_prediction"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "FS8",
+        "fsigma8"
+      ],
+      "implementation": [
+        "rx.cosmology:fsigma8_prediction"
+      ],
       "units_contract": "dimensionless",
       "state": "EXECUTABLE"
     },
@@ -55,9 +88,15 @@
       "formula_id": "RXF-G5-CMB-COMPRESSED-V1",
       "name": "Compressed CMB background diagnostic",
       "provenance_class": "COMPRESSED_BACKGROUND_DIAGNOSTIC",
-      "required_regimes": ["G5"],
-      "observables": ["CMB"],
-      "implementation": ["rx.cosmology:cmb_prediction"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "CMB"
+      ],
+      "implementation": [
+        "rx.cosmology:cmb_prediction"
+      ],
       "units_contract": "versioned compressed CMB contract",
       "state": "EXECUTABLE"
     },
@@ -65,10 +104,35 @@
       "formula_id": "RXF-STAT-COVARIANCE-V1",
       "name": "Covariance-aware quadratic residual operator",
       "provenance_class": "STANDARD_STATISTICS",
-      "any_regimes": ["G0", "G1", "G2", "G3", "G4", "G5", "G6"],
-      "observables": ["H", "E", "BAO", "DH", "DM", "DV", "FS8", "fsigma8", "CMB", "distance"],
-      "covariance_modes": ["full", "dataset_contract"],
-      "implementation": ["rx.cosmology:chi2_covariance", "rx.kernel:quad_form"],
+      "any_regimes": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6"
+      ],
+      "observables": [
+        "H",
+        "E",
+        "BAO",
+        "DH",
+        "DM",
+        "DV",
+        "FS8",
+        "fsigma8",
+        "CMB",
+        "distance"
+      ],
+      "covariance_modes": [
+        "full",
+        "dataset_contract"
+      ],
+      "implementation": [
+        "rx.cosmology:chi2_covariance",
+        "rx.kernel:quad_form"
+      ],
       "units_contract": "residual vector and covariance must share one declared ordering",
       "state": "EXECUTABLE"
     },
@@ -76,10 +140,33 @@
       "formula_id": "RXF-STAT-DIAGONAL-V1",
       "name": "Diagonal chi-square operator",
       "provenance_class": "STANDARD_STATISTICS",
-      "any_regimes": ["G0", "G1", "G2", "G3", "G4", "G5", "G6"],
-      "observables": ["H", "E", "BAO", "DH", "DM", "DV", "FS8", "fsigma8", "CMB", "distance"],
-      "covariance_modes": ["diagonal"],
-      "implementation": ["rx.cosmology:chi2_diagonal"],
+      "any_regimes": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6"
+      ],
+      "observables": [
+        "H",
+        "E",
+        "BAO",
+        "DH",
+        "DM",
+        "DV",
+        "FS8",
+        "fsigma8",
+        "CMB",
+        "distance"
+      ],
+      "covariance_modes": [
+        "diagonal"
+      ],
+      "implementation": [
+        "rx.cosmology:chi2_diagonal"
+      ],
       "units_contract": "only when independence/diagonal covariance is explicitly declared",
       "state": "EXECUTABLE"
     },
@@ -87,11 +174,69 @@
       "formula_id": "MF-GEOMETRY-DIRECT-COSMOLOGY",
       "name": "Imported MF geometry direct-to-cosmology binding",
       "provenance_class": "PROJECT_GEOMETRY_CANDIDATE",
-      "required_regimes": ["G5"],
-      "observables": ["BAO", "CMB", "H"],
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "BAO",
+        "CMB",
+        "H"
+      ],
       "implementation": [],
       "units_contract": "TOKEN_VAZIO",
       "state": "BLOCKED_DIRECT_GEOMETRY_TO_COSMOLOGY_BINDING"
+    },
+    {
+      "formula_id": "RXF-G0G6-GEOMETRIC-FEATURES-V1",
+      "name": "Exact dimensionless geometry diagnostic features",
+      "provenance_class": "STANDARD_GEOMETRY_PLUS_PROJECT_TYPED_ADAPTER",
+      "any_regimes": [
+        "G0",
+        "G6"
+      ],
+      "observables": [
+        "geometry_feature_vector",
+        "projection_axis_ratio",
+        "annulus_fraction",
+        "polygon_compactness",
+        "phase"
+      ],
+      "implementation": [
+        "rx.geometric_features:annulus_features",
+        "rx.geometric_features:spherical_shell_features",
+        "rx.geometric_features:circle_inversion",
+        "rx.geometric_features:projection_features",
+        "rx.geometric_features:regular_polygon_features",
+        "rx.geometric_features:chebyshev_diagonal_ratios"
+      ],
+      "units_contract": "dimensionless normalized descriptors; source lengths/angles must declare units before normalization",
+      "state": "EXECUTABLE_DIAGNOSTIC_ONLY"
+    },
+    {
+      "formula_id": "RXF-G5-GEOMETRY-ADAPTIVE-PHYSICAL-PARAMETERS",
+      "name": "Geometry-driven adaptive physical/cosmological parameters",
+      "provenance_class": "PROJECT_GEOMETRY_CANDIDATE",
+      "required_regimes": [
+        "G5"
+      ],
+      "observables": [
+        "H",
+        "E",
+        "BAO",
+        "CMB",
+        "distance"
+      ],
+      "implementation": [],
+      "units_contract": "TOKEN_VAZIO_PHYSICAL_MAPPING",
+      "state": "BLOCKED_DIRECT_GEOMETRY_TO_PHYSICAL_PARAMETER_BINDING",
+      "promotion_requires": [
+        "predeclared physical derivation",
+        "units and conservation closure",
+        "same-data fair baseline",
+        "held-out or independent validation",
+        "multiple-testing correction",
+        "scientific gate receipts"
+      ]
     }
   ]
 }
