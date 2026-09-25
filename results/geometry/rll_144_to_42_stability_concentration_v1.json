@@ -1,0 +1,52 @@
+{
+  "schema": "rll.144_to_42_stability_concentration.v1",
+  "parameters": {
+    "R": 2.0,
+    "r": 1.0,
+    "sphere_radius": 3.0,
+    "du_deg": 30.0,
+    "dv_abs_deg": 45.0,
+    "branches": 6,
+    "steps": 24
+  },
+  "input_cells": 144,
+  "sphere_vertices": 42,
+  "occupied_vertices": 21,
+  "stable_cells": 126,
+  "stable_fraction": 0.875,
+  "top_by_visits": [
+    {"vertex":0,"visits":12,"stable":12,"stable_fraction":1.0,"mean_margin":0.46156164413490647},
+    {"vertex":2,"visits":12,"stable":12,"stable_fraction":1.0,"mean_margin":0.46156164413490663},
+    {"vertex":41,"visits":12,"stable":6,"stable_fraction":0.5,"mean_margin":0.08156835340826546},
+    {"vertex":15,"visits":9,"stable":9,"stable_fraction":1.0,"mean_margin":0.41715658989237403},
+    {"vertex":17,"visits":9,"stable":9,"stable_fraction":1.0,"mean_margin":0.41715658989237403},
+    {"vertex":10,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.47247476834805346},
+    {"vertex":11,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.4724747683480534},
+    {"vertex":12,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.47371744281008504}
+  ],
+  "occupied": [
+    {"vertex":0,"visits":12,"stable":12,"stable_fraction":1.0,"mean_margin":0.46156164413490647,"mean_min_multiplier":0.5384383558650935},
+    {"vertex":2,"visits":12,"stable":12,"stable_fraction":1.0,"mean_margin":0.46156164413490663,"mean_min_multiplier":0.5384383558650935},
+    {"vertex":10,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.47247476834805346,"mean_min_multiplier":0.5275252316519465},
+    {"vertex":11,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.4724747683480534,"mean_min_multiplier":0.5275252316519464},
+    {"vertex":12,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.47371744281008504,"mean_min_multiplier":0.5262825571899149},
+    {"vertex":15,"visits":9,"stable":9,"stable_fraction":1.0,"mean_margin":0.41715658989237403,"mean_min_multiplier":0.5828434101076261},
+    {"vertex":16,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.23313330548860692,"mean_min_multiplier":0.766866694511393},
+    {"vertex":17,"visits":9,"stable":9,"stable_fraction":1.0,"mean_margin":0.41715658989237403,"mean_min_multiplier":0.582843410107626},
+    {"vertex":20,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.47371744281008515,"mean_min_multiplier":0.5262825571899149},
+    {"vertex":23,"visits":6,"stable":3,"stable_fraction":0.5,"mean_margin":0.22355993637094485,"mean_min_multiplier":0.776440063629055},
+    {"vertex":26,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.4737174428100854,"mean_min_multiplier":0.5262825571899147},
+    {"vertex":27,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.4737174428100854,"mean_min_multiplier":0.5262825571899148},
+    {"vertex":30,"visits":6,"stable":3,"stable_fraction":0.5,"mean_margin":0.22355993637094485,"mean_min_multiplier":0.7764400636290553},
+    {"vertex":32,"visits":6,"stable":3,"stable_fraction":0.5,"mean_margin":0.22355993637094537,"mean_min_multiplier":0.7764400636290546},
+    {"vertex":34,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.3294748289653042,"mean_min_multiplier":0.6705251710346958},
+    {"vertex":35,"visits":3,"stable":3,"stable_fraction":1.0,"mean_margin":0.5925201117465146,"mean_min_multiplier":0.40747988825348536},
+    {"vertex":36,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.23313330548860703,"mean_min_multiplier":0.766866694511393},
+    {"vertex":37,"visits":3,"stable":3,"stable_fraction":1.0,"mean_margin":0.5925201117465146,"mean_min_multiplier":0.40747988825348536},
+    {"vertex":38,"visits":6,"stable":6,"stable_fraction":1.0,"mean_margin":0.3294748289653042,"mean_min_multiplier":0.6705251710346957},
+    {"vertex":40,"visits":6,"stable":3,"stable_fraction":0.5,"mean_margin":0.22355993637094537,"mean_min_multiplier":0.7764400636290546},
+    {"vertex":41,"visits":12,"stable":6,"stable_fraction":0.5,"mean_margin":0.08156835340826546,"mean_min_multiplier":0.9184316465917344}
+  ],
+  "state": "CALCULATED_REFERENCE_PENDING_EXACT_HEAD_CI",
+  "claim_allowed": false
+}
