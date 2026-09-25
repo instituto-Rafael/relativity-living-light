@@ -664,14 +664,19 @@ def shape_relation_state(point, major_radius, minor_radius, sphere_radius=None):
 
 
 def nearest_icosphere_vertex(point, sphere_radius, mesh=None):
-    """Nearest one of the 42 f=2 icosphere vertices by spherical geodesic distance."""
+    """Nearest f=2 vertex with deterministic tie-breaking for symmetric points."""
     S = float(sphere_radius)
     mesh = mesh or icosphere_f2(S)
+    tol = max(1.0, abs(S)) * 1.0e-12
     best = None
     for idx, p in enumerate(mesh["vertices"]):
         d = geodesic_distance_sphere(point, p, S)
         row = (d, idx, p, mesh["vertex_labels"][idx])
-        if best is None or row[0] < best[0]:
+        if (
+            best is None
+            or d < best[0] - tol
+            or (abs(d - best[0]) <= tol and idx < best[1])
+        ):
             best = row
     return {
         "distance": best[0],
