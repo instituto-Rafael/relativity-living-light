@@ -60,6 +60,23 @@ def validate(payload: dict) -> dict:
     if "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT" not in tokens:
         errors.append("PLATFORM_ENFORCEMENT_NOT_OPEN")
 
+    live = payload.get("source_live_platform_observation", {})
+    if live.get("state") != "PARTIAL_EXTERNAL_SETTINGS_OBSERVED":
+        errors.append("LIVE_PLATFORM_STATE_MISMATCH")
+    if live.get("resolution_eligible") is not False:
+        errors.append("LIVE_PLATFORM_MUST_REMAIN_UNRESOLVED")
+    if live.get("protection_detail_complete") is not False:
+        errors.append("LIVE_PROTECTION_DETAIL_SHOULD_BE_INCOMPLETE")
+    if live.get("claim_allowed") is not False:
+        errors.append("LIVE_PLATFORM_CLAIM_ALLOWED_MUST_BE_FALSE")
+
+    historical_external = [
+        x for x in payload.get("historical_observations", [])
+        if x.get("token") == "TOKEN_VAZIO_EXTERNAL_SETTINGS"
+    ]
+    if len(historical_external) != 1:
+        errors.append("HISTORICAL_EXTERNAL_SETTINGS_OBSERVATION_REQUIRED")
+
     ready = [x["token"] for x in items if str(x.get("readiness", "")).startswith("READY_")]
     blocked = [x["token"] for x in items if str(x.get("readiness", "")).startswith("BLOCKED_")]
     physical = [x["token"] for x in items if x.get("readiness") == "PHYSICAL_DEVICE_REQUIRED"]
@@ -75,9 +92,15 @@ def validate(payload: dict) -> dict:
         "ready_now": ready,
         "blocked_dependency_or_human": blocked,
         "physical_required": physical,
-        "main_protected_deployment_allowed": False if gate.get("state") != "RESOLVED" else True,
+        "main_protected_deployment_allowed": (
+            gate.get("state") == "RESOLVED"
+            and live.get("resolution_eligible") is True
+            and live.get("protection_detail_complete") is True
+        ),
         "main_blocker": gate.get("blocker"),
-        "next_action": "RESOLVE_PLATFORM_ENFORCEMENT_AND_EXECUTE_READY_WAVE" if not errors else "FIX_REGISTRY_ERRORS"
+        "live_platform_state": live.get("state"),
+        "live_platform_resolution_eligible": live.get("resolution_eligible"),
+        "next_action": "COMPLETE_CURRENT_PLATFORM_AUTHORITY_AND_EXECUTE_READY_WAVE" if not errors else "FIX_REGISTRY_ERRORS"
     }
 
 def main() -> int:
