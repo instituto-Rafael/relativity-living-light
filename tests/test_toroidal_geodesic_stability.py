@@ -180,3 +180,57 @@ def test_equal_sphere_requires_aperture_radius_at_least_its_radius():
     from rx.toroidal_geodesic_stability import equal_sphere_aperture_gate
     assert equal_sphere_aperture_gate(1.0, 1.0)["passes_without_deformation"] is True
     assert equal_sphere_aperture_gate(1.0, 0.999)["passes_without_deformation"] is False
+
+
+def test_cut_fold_has_four_intrinsic_equilateral_triangles():
+    from rx.toroidal_geodesic_stability import triangular_torus_cut_fold
+    out = triangular_torus_cut_fold(side=2.0, twist_angle=math.radians(25.0))
+    assert out["four_equilateral_intrinsic"] is True
+    assert len(out["triangles"]) == 4
+    assert out["intrinsic_max_deviation"] < 1e-12
+    # A non-zero 3D twist is not silently claimed to preserve the xy projection.
+    assert out["four_equilateral_in_xy_projection"] is False
+
+
+def test_flat_bowtie_projection_recovers_four_equilateral_triangles():
+    from rx.toroidal_geodesic_stability import triangular_torus_cut_fold
+    out = triangular_torus_cut_fold(side=1.0, twist_angle=0.0)
+    assert out["four_equilateral_intrinsic"] is True
+    assert out["four_equilateral_in_xy_projection"] is True
+    assert out["projected_max_deviation"] < 1e-12
+
+
+def test_equal_tube_scale_sphere_passage_has_exact_R_ge_2r_gate():
+    from rx.toroidal_geodesic_stability import sphere_through_torus_hole_gate
+    tangent = sphere_through_torus_hole_gate(2.0, 1.0, 1.0)
+    assert tangent["same_tube_scale"] is True
+    assert tangent["passes_axially_without_deformation"] is True
+    assert tangent["state"] == "PASS_TANGENT_LIMIT"
+    assert abs(tangent["clearance"]) < 1e-12
+
+    open_gate = sphere_through_torus_hole_gate(2.5, 1.0, 1.0)
+    assert open_gate["state"] == "PASS_WITH_CLEARANCE"
+    assert math.isclose(open_gate["clearance"], 0.5, abs_tol=1e-12)
+
+    blocked = sphere_through_torus_hole_gate(1.9, 1.0, 1.0)
+    assert blocked["passes_axially_without_deformation"] is False
+    assert blocked["state"] == "BLOCKED_INTERSECTION"
+
+
+def test_axis_flow_clearance_is_minimal_at_torus_midplane():
+    from rx.toroidal_geodesic_stability import torus_axis_flow_clearance
+    c0 = torus_axis_flow_clearance(0.0, 2.5, 1.0, 1.0)
+    c1 = torus_axis_flow_clearance(1.0, 2.5, 1.0, 1.0)
+    cm1 = torus_axis_flow_clearance(-1.0, 2.5, 1.0, 1.0)
+    assert c1 > c0
+    assert cm1 > c0
+    assert math.isclose(c1, cm1, abs_tol=1e-12)
+
+
+def test_full_shape_relation_state_keeps_torus_and_sphere_distinct():
+    from rx.toroidal_geodesic_stability import shape_relation_state, torus_point
+    p = torus_point(0.2, 0.4, 2.0, 1.0)
+    out = shape_relation_state(p, 2.0, 1.0)
+    assert out["torus_surface_residual"] < 1e-12
+    assert out["objects"] == ["I","S1","Q","Delta_plus","Delta_minus","T2","S2","C","B"]
+    assert out["claim_allowed"] is False
