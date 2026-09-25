@@ -4,7 +4,7 @@
 **Proprietário lógico:** `research-governance`  
 **Repositório:** [`instituto-rafael/relativity-living-light`](https://github.com/instituto-rafael/relativity-living-light)
 
-[![DOI](https://zenodo.org/badge/1046495816.svg)](https://doi.org/10.5281/zenodo.17188137)
+> **License authority notice — 2026-09-25:** the repository currently has a documented contradiction between the custom [LICENSE.md](LICENSE.md) surface and `pyproject.toml` MIT metadata. Do not infer one canonical repository-wide grant from either surface alone. See [RLL License Authority Reconciliation](docs/governance/RLL_LICENSE_AUTHORITY_RECONCILIATION_20260925.md). Scientific claim gates are unchanged.\n\n[![DOI](https://zenodo.org/badge/1046495816.svg)](https://doi.org/10.5281/zenodo.17188137)
 [![License](https://img.shields.io/github/license/instituto-Rafael/relativity-living-light)](./LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/commits)
 [![Open Issues](https://img.shields.io/github/issues/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/issues)
