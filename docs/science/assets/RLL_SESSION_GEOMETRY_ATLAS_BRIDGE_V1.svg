@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="t d">
+<title id="t">RLL session geometry bridge</title>
+<desc id="d">Typed path from planar polygon and circular geometry to sphere, torus, Poincare and HETE stability.</desc>
+<rect width="1200" height="650" fill="#0b1320"/>
+<g fill="none" stroke="#a9b8c6" stroke-width="3">
+ <path d="M120 160 H350 H580 H810 H1060"/>
+ <path d="M350 160 V420 H580 H810 H1060"/>
+ <path d="M580 160 V420 M810 160 V420"/>
+</g>
+<g font-family="sans-serif" text-anchor="middle">
+ <g fill="#132238" stroke="#d3a94f" stroke-width="4">
+  <rect x="35" y="95" width="170" height="130" rx="18"/><rect x="265" y="95" width="170" height="130" rx="18"/>
+  <rect x="495" y="95" width="170" height="130" rx="18"/><rect x="725" y="95" width="170" height="130" rx="18"/>
+  <rect x="975" y="95" width="170" height="130" rx="18"/>
+  <rect x="265" y="355" width="170" height="130" rx="18"/><rect x="495" y="355" width="170" height="130" rx="18"/>
+  <rect x="725" y="355" width="170" height="130" rx="18"/><rect x="975" y="355" width="170" height="130" rx="18"/>
+ </g>
+ <g fill="#f2f5f7" font-size="21">
+  <text x="120" y="150">OCTAGON / K8</text><text x="350" y="150">HEXAGRAM / Q</text>
+  <text x="580" y="150">CIRCLE / CROWN</text><text x="810" y="150">ARCS / LENSES</text><text x="1060" y="150">INDICES</text>
+  <text x="350" y="410">3D LIFTS</text><text x="580" y="410">SPHERE f=2</text><text x="810" y="410">TORUS T²</text><text x="1060" y="410">POINCARÉ / HETE</text>
+ </g>
+ <g fill="#8fa3b6" font-size="16">
+  <text x="600" y="35">RLL imports typed formal geometry only</text>
+  <text x="600" y="585">symbolic/cultural motifs remain in Papers; claim_allowed=false</text>
+ </g>
+</g>
+</svg>
