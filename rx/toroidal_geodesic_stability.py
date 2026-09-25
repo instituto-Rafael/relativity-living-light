@@ -508,3 +508,153 @@ def equal_sphere_aperture_gate(sphere_radius, aperture_radius):
         "passes_without_deformation": a >= r,
         "clearance": a - r,
     }
+
+
+def _rotate_x(point, angle):
+    x, y, z = (float(v) for v in point)
+    c = math.cos(float(angle))
+    s = math.sin(float(angle))
+    return (x, y * c - z * s, y * s + z * c)
+
+
+def _triangle_side_lengths3(vertices, tri):
+    a, b, c = (vertices[i] for i in tri)
+    def dist(p, q):
+        return math.sqrt(sum((p[k] - q[k]) ** 2 for k in range(3)))
+    return (dist(a, b), dist(b, c), dist(c, a))
+
+
+def triangular_torus_cut_fold(side=1.0, twist_angle=0.0):
+    """Explicit cut/fold candidate from two 60-degree rhombi.
+
+    Each rhombus is a fundamental domain for a triangular-lattice torus before
+    opposite-edge identification. Cutting each rhombus along its short diagonal
+    gives two exact equilateral triangles. Two congruent copies meet at one
+    vertex to form a bow-tie/figure-eight cell complex (four triangles total).
+
+    The +/- copies may then be twisted rigidly by +/-twist_angle about the x
+    axis. Rigid 3D folding preserves triangle side lengths. The 2D orthogonal
+    projection need not preserve equilateral shape for nonzero twist.
+
+    This is a cellular cut/fold model, not a claim that the smooth embedded
+    torus is homeomorphic to a figure eight.
+    """
+    s = float(side)
+    phi = float(twist_angle)
+    if s <= 0.0:
+        raise ValueError("side must be positive")
+
+    h = COS30 * s
+    O = (0.0, 0.0, 0.0)
+
+    # Right 60-degree rhombus: O-A-C-B, cut by A-B.
+    A = (s, 0.0, 0.0)
+    B = (0.5 * s, h, 0.0)
+    C = (1.5 * s, h, 0.0)
+    right0 = [O, A, B, C]
+    right = [_rotate_x(p, +phi) for p in right0]
+
+    # Left congruent rhombus, reflected through O, twisted oppositely.
+    D = (-s, 0.0, 0.0)
+    E = (-0.5 * s, -h, 0.0)
+    F = (-1.5 * s, -h, 0.0)
+    left0 = [O, D, E, F]
+    left = [_rotate_x(p, -phi) for p in left0]
+
+    vertices = right + left
+    # right: (O,A,B) and (A,C,B); left: (O,D,E) and (D,F,E)
+    triangles = [(0, 1, 2), (1, 3, 2), (4, 5, 6), (5, 7, 6)]
+    lengths = [_triangle_side_lengths3(vertices, tri) for tri in triangles]
+    deviations = [max(ls) - min(ls) for ls in lengths]
+
+    projected = [(p[0], p[1], 0.0) for p in vertices]
+    projected_lengths = [_triangle_side_lengths3(projected, tri) for tri in triangles]
+    projected_deviations = [max(ls) - min(ls) for ls in projected_lengths]
+
+    return {
+        "schema": "rll.triangular_torus_cut_fold.v1",
+        "side": s,
+        "twist_angle": phi,
+        "vertices": vertices,
+        "triangles": triangles,
+        "intrinsic_side_lengths": lengths,
+        "intrinsic_max_deviation": max(deviations),
+        "four_equilateral_intrinsic": max(deviations) <= 1.0e-12,
+        "projected_side_lengths": projected_lengths,
+        "projected_max_deviation": max(projected_deviations),
+        "four_equilateral_in_xy_projection": max(projected_deviations) <= 1.0e-12,
+        "topology_boundary": (
+            "cut/fold cell complex; not a homeomorphism T2 -> figure-eight"
+        ),
+        "claim_allowed": False,
+    }
+
+
+def sphere_through_torus_hole_gate(major_radius, minor_radius, sphere_radius):
+    """Exact axial rigid-sphere passage gate through the hole of a solid torus.
+
+    The torus tube is the set of points within minor_radius r of the centre
+    circle of radius R. A sphere of radius s whose centre moves on the torus
+    symmetry axis has minimum separation from that centre circle at z=0.
+
+    Nonintersection for the whole axial passage is therefore:
+        R >= r + s.
+    In particular, for a sphere with s=r ("same size" as the torus tube),
+        R >= 2r.
+    """
+    R, r = _check_torus(major_radius, minor_radius)
+    s = float(sphere_radius)
+    if s <= 0.0:
+        raise ValueError("sphere_radius must be positive")
+    clearance = R - (r + s)
+    if clearance > 1.0e-12:
+        state = "PASS_WITH_CLEARANCE"
+    elif abs(clearance) <= 1.0e-12:
+        state = "PASS_TANGENT_LIMIT"
+    else:
+        state = "BLOCKED_INTERSECTION"
+    return {
+        "major_radius": R,
+        "minor_radius": r,
+        "sphere_radius": s,
+        "inner_hole_radius": R - r,
+        "clearance": clearance,
+        "passes_axially_without_deformation": clearance >= -1.0e-12,
+        "state": state,
+        "same_tube_scale": math.isclose(s, r, rel_tol=0.0, abs_tol=1e-12),
+        "same_tube_scale_condition": "R >= 2r",
+        "physical_boundary": (
+            "rigid Euclidean geometry only; no matter interpenetration, wormhole, "
+            "or physical spacetime mechanism is inferred"
+        ),
+    }
+
+
+def torus_axis_flow_clearance(z, major_radius, minor_radius, sphere_radius):
+    """Clearance along the exact axial passage path at coordinate z."""
+    R, r = _check_torus(major_radius, minor_radius)
+    s = float(sphere_radius)
+    zz = float(z)
+    if s <= 0.0:
+        raise ValueError("sphere_radius must be positive")
+    centreline_distance = math.sqrt(R * R + zz * zz)
+    return centreline_distance - (r + s)
+
+
+def shape_relation_state(point, major_radius, minor_radius, sphere_radius=None):
+    """Attach the full PG-Omega7 typed geometry context to one torus state."""
+    R, r = _check_torus(major_radius, minor_radius)
+    p = tuple(float(x) for x in point)
+    S = float(sphere_radius) if sphere_radius is not None else R + r
+    rho_xy = math.hypot(p[0], p[1])
+    torus_meridian_residual = abs((rho_xy - R) ** 2 + p[2] ** 2 - r * r)
+    sphere_radial_residual = abs(_dot3(p, p) - S * S)
+    return {
+        "point": p,
+        "objects": unified_shape_complex_contract()["objects"],
+        "relations": unified_shape_complex_contract()["relations"],
+        "torus_surface_residual": torus_meridian_residual,
+        "sphere_surface_residual_before_projection": sphere_radial_residual,
+        "sphere_projection": radial_projection_to_sphere(p, S),
+        "claim_allowed": False,
+    }
