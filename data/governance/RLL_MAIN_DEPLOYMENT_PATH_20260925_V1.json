@@ -1,0 +1,389 @@
+{
+  "schema": "rll.main_deployment_path.v1",
+  "generated_at": "2026-09-25",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_main_observed_commit": "6f3a8d37654b6ca67c3f9496fdd517a57bf4a688",
+  "source_token_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V4_APPEND_ONLY",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "purpose": "Route current RLL gaps through the existing maturity topology without erasing resolved facts, negative evidence, provenance or TOKEN_VAZIO boundaries.",
+  "invariants": [
+    "SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != ZERO",
+    "RESOLVED_NARROWLY != RESOLVED_GLOBALLY",
+    "RESOLVED_NEGATIVE != PASS",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "feature_or_research_branch -> rll/lab -> rll/integration -> rll/release -> main",
+    "no feature/research branch may promote directly to main",
+    "every promotion edge requires a fresh receipt bound to the promoted head",
+    "negative/null evidence must survive promotion unchanged",
+    "claim_allowed=false unless a separate explicit scientific authority changes that state"
+  ],
+  "promotion_topology": [
+    {
+      "from": "work/*|feature/*|science/*|research/*|engineering/*|governance/*|hotfix/*",
+      "to": "rll/lab",
+      "gate": "Branch Maturity Gate V2"
+    },
+    {
+      "from": "rll/lab",
+      "to": "rll/integration",
+      "gate": "Branch Maturity Gate V2"
+    },
+    {
+      "from": "rll/integration",
+      "to": "rll/release",
+      "gate": "Branch Maturity Gate V2"
+    },
+    {
+      "from": "rll/release",
+      "to": "main",
+      "gate": "Branch Maturity Gate V2"
+    }
+  ],
+  "global_main_gate": {
+    "state": "BLOCKED_EXTERNAL_GOVERNANCE",
+    "blocker": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+    "reason": "V4 resolved the former external-settings uncertainty as a negative fact: declared maturity branches were observed unprotected and no repository rulesets were present.",
+    "closure": "Configure and re-observe branch protection/rulesets, required checks/reviews and bounded bypass policy. Repository YAML alone cannot close this token."
+  },
+  "resolved_facts": [
+    {
+      "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+      "state": "RESOLVED",
+      "classification": "PRIMARY_PAPER_NUMERIC_PROVENANCE_AND_MATRIX_MAPPING_VERIFIED",
+      "evidence": "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_20260808_V1.json"
+    },
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "state": "RESOLVED",
+      "classification": "FROZEN_35_REF_SEMANTIC_DISPOSITION_COMPLETE",
+      "evidence": "data/governance/RLL_DIVERGED_REF_TRIAGE_20260808_V1.json"
+    },
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "state": "RESOLVED_NEGATIVE",
+      "classification": "EXTERNAL_SETTINGS_OBSERVED_NO_BRANCH_PROTECTION_OR_RULESETS",
+      "evidence": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json",
+      "successor": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT"
+    }
+  ],
+  "priority_counts": {
+    "P0": 5,
+    "P1": 5,
+    "P2": 2,
+    "total_open": 12
+  },
+  "work_items": [
+    {
+      "order": 1,
+      "token": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+      "priority": "P0",
+      "urgency": "URGENT_CONTROL_PLANE",
+      "state": "OPEN_GOVERNANCE",
+      "readiness": "EXTERNAL_ADMIN_ACTION_REQUIRED",
+      "branch": "governance/github-platform-enforcement-20260925",
+      "dependencies": [],
+      "driver": ".github/workflows/github-platform-assurance.yml",
+      "expected_receipt": "artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_<RUN>.json",
+      "main_rule": "GLOBAL_MAIN_GATE",
+      "close_when": [
+        "main/rll-release/rll-integration/rll-lab enforcement is directly observed",
+        "required maturity/governance checks are server-required",
+        "review/bypass/force-push/delete policy is recorded",
+        "fresh read-only receipt is persisted"
+      ],
+      "boundary": "Local repository files describe intended policy; only observed GitHub platform state proves enforcement."
+    },
+    {
+      "order": 2,
+      "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "priority": "P1",
+      "urgency": "HIGH_SCIENTIFIC_CRITICAL_PATH",
+      "state": "OPEN_MIXED",
+      "readiness": "READY_INTERNAL_THEORY_CONTRACT",
+      "branch": "science/rll-perturbation-closure-v2-20260925",
+      "dependencies": [],
+      "driver": "src/rll/rll_perturbation_kernel.py",
+      "expected_receipt": "artifacts/science/perturbations/RLL_PERTURBATION_CLOSURE_RECEIPT_<RUN>.json",
+      "main_rule": "PROMOTE_ONLY_AFTER_VERSIONED_CLOSURE_AND_LIMITING_TESTS",
+      "close_when": [
+        "all perturbation degrees of freedom have explicit rules",
+        "gauge/initial conditions/transitions are declared",
+        "analytic limiting tests pass",
+        "no missing physics is inferred silently"
+      ],
+      "boundary": "Closure is a falsifiable model assumption, not observational validation."
+    },
+    {
+      "order": 3,
+      "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+      "priority": "P1",
+      "urgency": "HIGH_NEXT_EXECUTABLE",
+      "state": "OPEN_INTERNAL",
+      "readiness": "READY_INTERNAL_EXECUTION",
+      "branch": "science/act-dr6-lcdm-posterior-repro-20260925",
+      "dependencies": [],
+      "driver": ".github/workflows/act-dr6-cmbonly-materialization.yml",
+      "expected_receipt": "artifacts/science/act/RLL_ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_<RUN>.json",
+      "main_rule": "REFERENCE_REPRODUCTION_REQUIRED",
+      "close_when": [
+        "pinned likelihood/runtime hashes match",
+        "priors/config/sampler/seeds are frozen",
+        "convergence diagnostics pass",
+        "reference posterior is reproduced within declared tolerances"
+      ],
+      "boundary": "Validates ACT execution path only; it is not an RLL CMB prediction."
+    },
+    {
+      "order": 4,
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "priority": "P1",
+      "urgency": "HIGH_NEXT_EXECUTABLE",
+      "state": "OPEN_INTERNAL",
+      "readiness": "READY_INTERNAL_EXECUTION",
+      "branch": "science/h0-rd-full-boltzmann-inference-20260925",
+      "dependencies": [],
+      "driver": ".github/workflows/h0-rd-ablation.yml",
+      "expected_receipt": "artifacts/science/h0/RLL_H0_RD_FULL_BOLTZMANN_INFERENCE_<RUN>.json",
+      "main_rule": "FULL_24_CELL_FAIRNESS_RERUN_REQUIRED",
+      "close_when": [
+        "full-Boltzmann route is wired into formal inference",
+        "direct/cache error bound is recorded",
+        "all 24 cells rerun under identical gates",
+        "delta from previous approximation is explicit"
+      ],
+      "boundary": "Removes one numerical approximation; does not validate RLL perturbations."
+    },
+    {
+      "order": 5,
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "priority": "P0",
+      "urgency": "URGENT_EXTERNAL_AVAILABLE",
+      "state": "OPEN_EXTERNAL",
+      "readiness": "READY_EXTERNAL_MATERIALIZATION",
+      "branch": "science/desi-dr2-official-joint-repro-20260925",
+      "dependencies": [],
+      "driver": "official DESI DR2 joint/cross-block likelihood products",
+      "expected_receipt": "artifacts/science/desi/RLL_DESI_DR2_OFFICIAL_JOINT_REPRODUCTION_<RUN>.json",
+      "main_rule": "OFFICIAL_PRODUCT_AND_REFERENCE_REPRODUCTION_REQUIRED",
+      "close_when": [
+        "official products are immutably materialized",
+        "covariance ordering/observable mapping verified",
+        "official LCDM/CPL reference reproduction passes",
+        "license/provenance permits executed use"
+      ],
+      "boundary": "Local DESI comparisons must not be relabeled as official joint likelihood."
+    },
+    {
+      "order": 6,
+      "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "priority": "P1",
+      "urgency": "HIGH_EXTERNAL_LSS_AUTHORITY",
+      "state": "OPEN_EXTERNAL",
+      "readiness": "READY_EXTERNAL_PARTIAL",
+      "branch": "science/des-y6-3x2pt-repro-20260925",
+      "dependencies": [],
+      "driver": "official DES Y6 3x2pt likelihood/data products",
+      "expected_receipt": "artifacts/science/lss/RLL_DES_Y6_3X2PT_REPRODUCTION_<RUN>.json",
+      "main_rule": "OFFICIAL_EXECUTABLE_LIKELIHOOD_REQUIRED",
+      "close_when": [
+        "official products are available and immutable",
+        "reference likelihood/posterior reproduction passes",
+        "nuisance priors/scale cuts are frozen",
+        "provenance/license recorded"
+      ],
+      "boundary": "Placeholder/nonofficial Y6 inputs cannot support an RLL LSS claim."
+    },
+    {
+      "order": 7,
+      "token": "TOKEN_VAZIO_PHYSICAL_EXECUTION",
+      "priority": "P0",
+      "urgency": "URGENT_PHYSICAL_AUTHORITY",
+      "state": "OPEN_EXTERNAL",
+      "readiness": "PHYSICAL_DEVICE_REQUIRED",
+      "branch": "engineering/physical-termux-rll-replay-20260925",
+      "dependencies": [],
+      "driver": "physical Android/Termux device",
+      "expected_receipt": "artifacts/runtime/RLL_PHYSICAL_TERMUX_EXECUTION_<RUN>.json",
+      "main_rule": "PHYSICAL_RECEIPT_REQUIRED_FOR_PHYSICAL_CLAIMS",
+      "close_when": [
+        "device/runtime authority recorded",
+        "repository SHA/environment frozen",
+        "declared commands complete under no-root constraints",
+        "outputs/checksums persisted"
+      ],
+      "boundary": "CI/container success cannot substitute for physical Termux execution."
+    },
+    {
+      "order": 8,
+      "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+      "priority": "P1",
+      "urgency": "HIGH_BLOCKED_BY_CLOSURE",
+      "state": "OPEN_MIXED",
+      "readiness": "BLOCKED_DEPENDENCY",
+      "branch": "science/rll-class-camb-dual-v1-20260925",
+      "dependencies": [
+        "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"
+      ],
+      "driver": "CLASS and CAMB independent RLL code paths",
+      "expected_receipt": "artifacts/science/perturbations/RLL_CLASS_CAMB_DUAL_ENGINE_<RUN>.json",
+      "main_rule": "DO_NOT_START_PHYSICAL_IMPLEMENTATION_BEFORE_CLOSURE_FREEZE",
+      "close_when": [
+        "M07 closure is frozen and tests pass",
+        "CLASS RLL path executes",
+        "CAMB RLL path executes independently",
+        "cross-engine discrepancies are bounded or preserved as negative evidence"
+      ],
+      "boundary": "Dual-engine agreement is numerical evidence, not observational confirmation."
+    },
+    {
+      "order": 9,
+      "token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+      "priority": "P0",
+      "urgency": "URGENT_BLOCKS_GLOBAL_MODEL_EVIDENCE",
+      "state": "OPEN_MIXED",
+      "readiness": "BLOCKED_DEPENDENCY",
+      "branch": "science/joint-multiprobe-bayes-v2-20260925",
+      "dependencies": [
+        "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+        "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"
+      ],
+      "driver": "products/rll-evidence-runner/src/rll_evidence/dovekie_nested_evidence.py",
+      "expected_receipt": "artifacts/science/bayes/RLL_JOINT_MULTIPROBE_EVIDENCE_RECEIPT_<RUN>.json",
+      "main_rule": "DEPENDENCIES_AND_JOINT_COVARIANCE_CONTRACT_REQUIRED",
+      "close_when": [
+        "included component gates resolved or explicitly excluded",
+        "joint covariance/overlap contract frozen",
+        "LCDM/CPL/RLL use identical support/priors",
+        "nested evidence uncertainty/convergence pass"
+      ],
+      "boundary": "Compares declared models under a frozen contract; does not establish a universal theory."
+    },
+    {
+      "order": 10,
+      "token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+      "priority": "P0",
+      "urgency": "URGENT_BLOCKS_INDEPENDENT_VALIDATION",
+      "state": "OPEN_HUMAN",
+      "readiness": "BLOCKED_HUMAN_AND_DEPENDENCY",
+      "branch": "science/external-replication-package-20260925",
+      "dependencies": [
+        "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE"
+      ],
+      "driver": "external independent operator/repository",
+      "expected_receipt": "artifacts/science/replication/RLL_INDEPENDENT_REPLICATION_<RUN>.json",
+      "main_rule": "INTERNAL_RERUN_NEVER_COUNTS_AS_INDEPENDENT_REPLICATION",
+      "close_when": [
+        "replicator is independent",
+        "clean-checkout reproduction documented",
+        "input/output/environment hashes frozen",
+        "agreement or disagreement preserved against predeclared tolerances"
+      ],
+      "boundary": "Internal CI/reruns are reproducibility evidence only."
+    },
+    {
+      "order": 11,
+      "token": "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION",
+      "priority": "P2",
+      "urgency": "NORMAL_PHYSICAL_REPLAY",
+      "state": "OPEN_EXTERNAL",
+      "readiness": "PHYSICAL_DEVICE_REQUIRED",
+      "branch": "engineering/utm185-termux-replay-20260925",
+      "dependencies": [],
+      "driver": "tests/test_utm185_void_mask_attention.py",
+      "expected_receipt": "data/results/utm185_void_mask_termux_receipt.json",
+      "main_rule": "PHYSICAL_RECEIPT_REQUIRED",
+      "close_when": [
+        "physical Termux execution recorded",
+        "frozen UTM185 tests pass",
+        "repository/environment hashes preserved",
+        "receipt keeps software correctness separate from training claims"
+      ],
+      "boundary": "Void-mask unit tests do not prove training stability or superiority."
+    },
+    {
+      "order": 12,
+      "token": "TOKEN_VAZIO_UTM185_REAL_MODEL_TRAINING",
+      "priority": "P2",
+      "urgency": "NORMAL_AFTER_PHYSICAL_REPLAY",
+      "state": "OPEN_MIXED",
+      "readiness": "BLOCKED_DEPENDENCY",
+      "branch": "science/utm185-real-model-ablation-20260925",
+      "dependencies": [
+        "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION"
+      ],
+      "driver": "UTM185 tokenizer/model training harness",
+      "expected_receipt": "artifacts/ml/UTM185_REAL_MODEL_ABLATION_<RUN>.json",
+      "main_rule": "MATCHED_ABLATION_REQUIRED",
+      "close_when": [
+        "real tokenizer/model path integrated",
+        "matched baseline and UTM185 runs complete",
+        "held-out protocol/uncertainty frozen",
+        "positive/null/negative results preserved"
+      ],
+      "boundary": "Superiority requires the predeclared matched ablation to support it."
+    }
+  ],
+  "necessary_points": [
+    {
+      "id": "NP-001",
+      "priority": "P0",
+      "state": "OPEN_EXTERNAL",
+      "issue": "GitHub platform enforcement absent for maturity topology",
+      "action": "Configure rulesets/branch protection outside repository files, then preserve a fresh read-only receipt.",
+      "evidence": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json"
+    },
+    {
+      "id": "NP-002",
+      "priority": "P1",
+      "state": "TOKEN_VAZIO_CONTRADICTION",
+      "issue": "Repository-wide canonical license expression remains unresolved",
+      "action": "Complete file/domain license inventory and historical grant map before synchronized license migration.",
+      "evidence": "docs/governance/RLL_LICENSE_AUTHORITY_RECONCILIATION_20260925.md"
+    },
+    {
+      "id": "NP-003",
+      "priority": "P2",
+      "state": "OPEN_DOC_HOTFIX",
+      "issue": "main README currently contains literal \\\\n\\\\n in the license notice",
+      "action": "Surgical documentation-only fix on a dedicated hotfix branch; no scientific/governance semantic change.",
+      "evidence": "README.md blob 67b6c5579dea603d3e36620c154e57c45546eeb8"
+    }
+  ],
+  "promotion_requirements": {
+    "every_edge": [
+      "fresh Branch Maturity Gate V2 receipt bound to promoted head",
+      "full relevant tests PASS",
+      "workflow architecture/docs validation PASS",
+      "provenance or explicit scoped TOKEN_VAZIO with F_next",
+      "no claim_allowed=true in operational policy surfaces",
+      "negative evidence preserved"
+    ],
+    "release_to_main": [
+      "rll/release is the only valid head for main",
+      "global GitHub platform enforcement token resolved before calling deployment protected",
+      "scientific work item close_when satisfied for the item being promoted",
+      "post-decision receipt persisted"
+    ]
+  },
+  "R3": {
+    "F_ok": [
+      "V4 facts preserved",
+      "12 current open items routed",
+      "priority/dependency topology explicit",
+      "main path reuses existing maturity chain"
+    ],
+    "F_gap": [
+      "platform enforcement external action",
+      "scientific/external/physical/human receipts listed by item",
+      "README hotfix and license inventory remain separate necessary points"
+    ],
+    "F_next": [
+      "merge this registry through rll/lab only after gates pass",
+      "execute Wave 0 platform enforcement and Wave 1 parallel work",
+      "promote each resolved item through integration/release/main with fresh receipts"
+    ]
+  }
+}
