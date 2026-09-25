@@ -1,0 +1,13 @@
+{
+  "mu_id":"MU-RLL-PGOMEGA7-SHAPES-20260924-V1",
+  "timestamp":"2026-09-24T22:38:00-03:00",
+  "source_ref":"rafaelmeloreisnovo/Matem-tica-/docs/PG_OMEGA7_COMPLEXO_UNIFICADO_TORO_ESFERA_CUBO_V1.md",
+  "parent":"MU-RLL-TORUS-GEO-STABILITY-20260924-V1",
+  "kind":"CORRECTIVE_GEOMETRY_SCOPE",
+  "delta_summary":"Restored square, equilateral triangles, circle, cube, pyramid/bipyramid and sphere as typed co-primitives with the torus; added a strict distinction between equal-sphere mathematical overlap and rigid passage through an explicit aperture/flow operator.",
+  "routes":["L","O","T","P","C","R","I","E","A"],
+  "evidence":["PG-Ω7 unified complex located in canonical mathematics repository","exact-head predecessor CI 13/13 workflows SUCCESS","new executable gates added for shape relations and equal-sphere passage distinction"],
+  "gap":["TORUS_TO_FIGURE8_FOLD_OPERATOR","TOROIDAL_FLOW_PASSAGE_OPERATOR","PYRAMID_BASE_CONFIRMATION","new exact-head CI"],
+  "next":"Close new exact-head CI, implement explicit fold/twist and passage maps, then emit 144-to-42 stability concentration receipt retaining generating shape provenance.",
+  "claim_allowed":false
+}

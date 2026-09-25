@@ -1,0 +1,60 @@
+{
+  "schema": "rll.muwrite.figure8_toroidal_immersion_unified_shapes.v3",
+  "mu_id": "MU-RLL-FIGURE8-UNIFIED-SHAPES-20260924-V3",
+  "timestamp": "2026-09-24T23:05:00-03:00",
+  "parent": "MU-RLL-UNIFIED-SHAPE-TORUS-20260924-V2",
+  "kind": "FORMAL_IMMERSION+EXECUTABLE_GEOMETRY+LOCAL_FOLD_PROOF",
+  "source_ref": [
+    "current-session: torus twist to 8; full triangle/square/circle/cube/pyramid/sphere family; same-scale passage",
+    "rafaelmeloreisnovo/papers:docs/matematica/COMPLEXO_UNIFICADO_TORO_ESFERA_CUBO_BIPIRAMIDE_V1.md",
+    "RLL V1/V2 geometry-first branch"
+  ],
+  "delta_summary": "Defined a continuous figure-eight torus immersion using a swept Gerono meridian, proved its two parameter sheets coincide on a self-intersection circle, derived an exact 90-degree sheet crossing there, and bridged that local cross through the existing +/-30 pulse to four exact equilateral triangles.",
+  "routes": [
+    "L",
+    "O",
+    "T",
+    "P",
+    "C",
+    "R",
+    "I",
+    "E",
+    "A"
+  ],
+  "artifacts": [
+    "rx/unified_shape_toroidal_transport.py",
+    "tests/test_unified_shape_toroidal_transport.py",
+    "docs/science/RLL_FIGURE8_TOROIDAL_IMMERSION_UNIFIED_SHAPES_V3.md"
+  ],
+  "commits": [
+    "d4161e4dd37e356f56fa19a05c3a7e07d6a708f1",
+    "6440597397469105ccd4a3c5f61e5686ccf6d144",
+    "2fc11e7e8b8a9a1b226beb76e27510ca9a85c978"
+  ],
+  "formal_results": {
+    "map": "F(u,v)=((R+a cos v) cos u,(R+a cos v) sin u,(a/2) sin 2v)",
+    "self_intersection": "F(u,pi/2)=F(u,3pi/2)=(R cos u,R sin u,0)",
+    "tangent_1": "(-a cos u,-a sin u,-a)",
+    "tangent_2": "(+a cos u,+a sin u,-a)",
+    "tangent_dot": 0,
+    "crossing_angle_deg": 90,
+    "local_cross_to_four_equilateral": "PASS_FORMAL",
+    "global_physical_interpenetration": "NOT_CLAIMED"
+  },
+  "inherited_reference_result": {
+    "cells": 144,
+    "available_icosphere_vertices": 42,
+    "occupied_vertices": 21,
+    "stable_cells": 126,
+    "stable_fraction": 0.875
+  },
+  "state": "IMPLEMENTED_EXACT_HEAD_CI_PENDING",
+  "claim_allowed": false,
+  "gaps": [
+    "exact-head CI V3",
+    "moving orthonormal frame transport on immersed torus",
+    "geometry-to-B7 seven-channel map",
+    "physical observable/cosmology causal bridge"
+  ],
+  "next": "Close exact-head CI, then transport triangle/square/cube/pyramid/sphere frames across both figure-eight sheets and measure metric/orientation/self-intersection invariants."
+}
