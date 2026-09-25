@@ -1,0 +1,71 @@
+{
+  "schema": "rll.session_geometry_atlas_bridge.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "source_authority": "rafaelmeloreisnovo/papers/papers/session_geometric_superposition_atlas_v1/",
+  "state": "FORMAL_GEOMETRY_BRIDGE",
+  "claim_allowed": false,
+  "admitted": [
+    "equilateral_30_60_90",
+    "square_and_45_rotation",
+    "rhombus_60",
+    "regular_hexagon",
+    "hexagram_decomposition",
+    "regular_octagon",
+    "K8_chord_classes",
+    "midpoint_median_intersection_graph",
+    "circle_annulus_arc_sector_segment",
+    "equal_circle_lens_petals",
+    "ellipse_projection",
+    "cube_extrusion",
+    "tetrahedron_pyramid_typed_lift",
+    "sphere",
+    "icosphere_f2_42_120_80",
+    "torus_embedding",
+    "line_sphere_bhaskara",
+    "specular_reflection",
+    "geodesic_distance",
+    "six_toroidal_branches",
+    "poincare_return",
+    "HETE_fixed_point_gate",
+    "source_preserving_144_to_42",
+    "sphere_through_torus_gate",
+    "four_equilateral_cut_fold",
+    "area_perimeter_radius_length_indices",
+    "recursive_half_scale"
+  ],
+  "excluded_from_evidence": [
+    "tzolkin_calendar_analogy",
+    "front_back_eye_symbolism",
+    "glyph_names",
+    "portal_pulsar_santo_loop_symbolism",
+    "visual_black_hole_resemblance",
+    "regular_pentagon_claim_from_hand_sketch",
+    "physical_vortex_claim",
+    "recurring_number_as_physical_constant",
+    "global_novelty_claim"
+  ],
+  "invariants": [
+    "FORMAL_GEOMETRY != PHYSICAL_MECHANISM",
+    "AUTHORIAL_COMPOSITION != NOVELTY_PROVED",
+    "PROJECTION != EQUIVALENCE",
+    "SPHERE != TORUS",
+    "PLANAR_HEXAGRAM != SPHERICAL_GEODESIC_HEXAGRAM",
+    "MIXED_VERTEX_BIN != MIXED_SOURCE_STATE",
+    "TOKEN_VAZIO != 0"
+  ],
+  "authorial_preparation": [
+    "octagon_hexagram_square_circle_overlay",
+    "all_vertices_all_medians_planarization",
+    "crown_polygon_arc_petal_unified_atlas",
+    "typed_2d_to_3d_lifts",
+    "six_toroidal_branch_geometry",
+    "dimensionless_relation_indices",
+    "angular_refinement_without_gate_refit"
+  ],
+  "executable_authorities": [
+    "rx/toroidal_geodesic_stability.py",
+    "scripts/report_toroidal_stability_boundary.py"
+  ],
+  "next": "Promote only verified face/area/orbit IDs after exact planarization and prior-art review."
+}
