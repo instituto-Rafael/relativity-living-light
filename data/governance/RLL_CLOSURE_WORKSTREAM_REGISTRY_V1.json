@@ -103,9 +103,24 @@
       "claim_allowed": false,
       "current_delta": {
         "decision_packet": "tools/rx_physics_v2_decision_packet.py",
-        "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
-        "state": "NO_AUTO_SELECTION",
-        "boundary": "Bridge consumes blocking axes but cannot choose omega_r, H(z) surface, growth semantics or integration tolerance."
+        "evidence_executor": "tools/rx_physics_v2_decision_evidence.py",
+        "evidence_receipt": "artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_RUN36236992273.json",
+        "workflow_run_id": 36236992273,
+        "artifact_id": 10904487612,
+        "state": "PARTIAL_DECISION_EVIDENCE_2_OF_4_TERMINAL",
+        "terminal_axes": [
+          "hz_dataset",
+          "distance_integration"
+        ],
+        "remaining_axes": [
+          "omega_r",
+          "growth_mode"
+        ],
+        "measured_omega_r_sensitivity": {
+          "max_relative_delta_H": 0.0024736895137296927,
+          "max_relative_delta_DM": 0.00009420746846093331
+        },
+        "boundary": "H(z) surface and distance-integration tolerance are evidence-terminal. Omega_r still requires physical authority; growth remains blocked until WS06. RX-PHYSICS-CANONICAL-V2 therefore remains TOKEN_VAZIO_CONTRACT."
       }
     },
     {

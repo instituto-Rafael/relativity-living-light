@@ -1,0 +1,52 @@
+{
+  "schema": "rll.ws01_omega_r_physical_authority.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "state": "PREREGISTERED_PHYSICAL_AUTHORITY_TEST",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "target_axis": "RX-PHYSICS-CANONICAL-V2:omega_r",
+  "candidate_semantics": {
+    "id": "derived_standard_relativistic_radiation",
+    "formula": "Omega_r(H0,Tcmb,Neff) = [Omega_gamma*h^2(Tcmb) * (1 + (7/8)*(4/11)^(4/3)*Neff)] / h^2",
+    "h": "H0 / (100 km s^-1 Mpc^-1)",
+    "tcmb_k": 2.7255,
+    "neff": 3.044,
+    "omega_gamma_h2_ref": 0.00002473,
+    "implementation": "src/rll/cosmology_radiation.py"
+  },
+  "provenance": [
+    {
+      "authority": "Particle Data Group 2024, Astrophysical Constants and Parameters",
+      "fact": "Omega_gamma = 2.473e-5 (T/2.7255 K)^4 h^-2",
+      "url": "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-astrophysical-constants.pdf"
+    },
+    {
+      "authority": "Particle Data Group 2024, Neutrinos in Cosmology",
+      "fact": "rho_nu/rho_gamma = (7/8) N_eff (4/11)^(4/3); review quotes N_eff=3.044 with a note that recent NLO work may favor 3.043",
+      "url": "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-neutrinos-in-cosmology.pdf"
+    }
+  ],
+  "reference_h0_grid_km_s_mpc": [60.0, 67.4, 70.0, 80.0],
+  "legacy_fixed_comparators": [0.00009, 0.0000918],
+  "required_tests": [
+    "implementation constants equal the preregistered contract",
+    "Omega_r*h^2 is invariant across H0 grid",
+    "Omega_r is positive and decreases monotonically as H0 increases",
+    "RLL Omega_s0=0 recovers LCDM under the derived radiation value at every H0 grid node",
+    "both legacy fixed values are represented only as reference-H0 snapshots, not universal physical constants",
+    "derived semantics are not labeled full massive-neutrino Boltzmann evolution"
+  ],
+  "pass_when": {
+    "physical_density_relative_span_max": 1e-14,
+    "rll_lcdm_null_e2_max_abs_delta": 1e-12
+  },
+  "promotion_if_pass": "omega_r axis may become EVIDENCE_TERMINAL_DERIVED_STANDARD_RADIATION for RX-PHYSICS-CANONICAL-V2 background semantics; legacy fixed values remain named parity projections",
+  "boundaries": [
+    "This is a standard relativistic-radiation background convention, not a full massive-neutrino transition calculation.",
+    "Full CLASS/CAMB thermodynamics and perturbations remain downstream gates.",
+    "N_eff=3.044 is the repository's versioned reference; the PDG review notes the fourth significant digit remains a precision-theory detail.",
+    "No model-fit preference is used to select the radiation convention.",
+    "claim_allowed remains false."
+  ]
+}
