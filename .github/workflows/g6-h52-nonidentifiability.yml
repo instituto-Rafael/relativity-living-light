@@ -1,0 +1,125 @@
+name: G6 H52 Nonidentifiability Audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/contracts/rll_g6_h52_nonidentifiability.v1.json"
+      - "tools/run_g6_h52_nonidentifiability.py"
+      - "tests/test_g6_h52_nonidentifiability.py"
+      - "tools/run_g6_canonical_inference.py"
+      - "tools/run_g4_background_tournament.py"
+      - "tools/build_g5_canonical_background_manifest.py"
+      - "scripts/fetch_pantheon_covariance.py"
+      - "data/contracts/rll_g6_canonical_inference.v1.json"
+      - ".github/workflows/g6-h52-nonidentifiability.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: g6-h52-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  h52:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - name: Checkout pinned revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install scientific runtime
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements.txt
+          python -m pip install --disable-pip-version-check --upgrade             "numpy>=1.26,<2"             "scipy>=1.11,<2"             "emcee>=3.1,<4"             "dynesty>=2.1,<4"             "pytest>=8,<10"
+          python - <<'PY'
+          import importlib.metadata, json, platform
+          names = ["numpy", "scipy", "emcee", "dynesty", "pytest"]
+          print(json.dumps({
+              "python": platform.python_version(),
+              **{name: importlib.metadata.version(name) for name in names},
+          }, sort_keys=True))
+          PY
+
+      - name: Run H52 unit and boundary tests
+        run: |
+          python -m pytest -q             tests/test_g6_h52_nonidentifiability.py
+          python -m pytest -q             tests/test_g4_background_tournament_integration.py::test_g6_emcee_proposal_rng_is_deterministic
+
+      - name: Materialize pinned Pantheon covariance
+        run: |
+          mkdir -p artifacts/science/g6_h52
+          python scripts/fetch_pantheon_covariance.py             --receipt artifacts/science/g6_h52/pantheon_covariance_materialization.json
+
+      - name: Rebuild exact G4 background receipt
+        run: |
+          python tools/run_g4_background_tournament.py             --output artifacts/science/g6_h52/g4_background.json             --require-pass
+
+      - name: Freeze exact G5 likelihood manifest
+        run: |
+          python tools/build_g5_canonical_background_manifest.py             --g4-receipt artifacts/science/g6_h52/g4_background.json             --output artifacts/science/g6_h52/g5_manifest.json             --require-ready
+
+      - name: Execute preregistered H52 diagnostic
+        run: |
+          python tools/run_g6_h52_nonidentifiability.py             --g4-receipt artifacts/science/g6_h52/g4_background.json             --g5-manifest artifacts/science/g6_h52/g5_manifest.json             --output artifacts/science/g6_h52/h52_receipt.json
+
+      - name: Verify fail-closed result and measure uncertainty delta
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/g6_h52/h52_receipt.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          allowed = {
+              "SUPPORTED_LIMITED_H52_NONIDENTIFIABILITY",
+              "LONGER_CHAIN_SUFFICIENT_H52_NOT_REQUIRED_FOR_CONVERGENCE",
+              "H52_NOT_RESOLVED_BOTH_ARMS_NONCONVERGED",
+              "H52_ANOMALOUS_FIXED_SHAPE_WORSE",
+          }
+          assert d["state"] in allowed
+          assert d["claim_allowed"] is False
+          assert d["scientific_confirmation"] is False
+          assert d["likelihood_identity_preserved"] is True
+          assert d["negative_results_preserved"] is True
+          assert d["threshold_Rhat"] == 1.10
+          c = d["comparison"]
+          print(json.dumps({
+              "state": d["state"],
+              "free_max_Rhat": c["free_max_Rhat"],
+              "fixed_max_Rhat": c["fixed_max_Rhat"],
+              "absolute_max_Rhat_reduction": c["absolute_max_Rhat_reduction"],
+              "excess_over_one_reduction_fraction": c["excess_over_one_reduction_fraction"],
+              "Omega_s0_q95_free": c["Omega_s0_q95_free"],
+              "Omega_s0_q95_fixed": c["Omega_s0_q95_fixed"],
+              "uncertainty_reduction_observed": c["uncertainty_reduction_observed"],
+              "convergence_gate_recovered_by_fixed_shape": c["convergence_gate_recovered_by_fixed_shape"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+          sha256sum             artifacts/science/g6_h52/g4_background.json             artifacts/science/g6_h52/g5_manifest.json             artifacts/science/g6_h52/h52_receipt.json             > artifacts/science/g6_h52/CHECKSUMS.sha256
+
+      - name: Upload H52 evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: g6-h52-nonidentifiability-${{ github.run_id }}
+          path: |
+            artifacts/science/g6_h52/pantheon_covariance_materialization.json
+            artifacts/science/g6_h52/g4_background.json
+            artifacts/science/g6_h52/g5_manifest.json
+            artifacts/science/g6_h52/h52_receipt.json
+            artifacts/science/g6_h52/CHECKSUMS.sha256
+          if-no-files-found: error
+          retention-days: 30
