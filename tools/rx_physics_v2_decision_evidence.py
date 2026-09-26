@@ -16,14 +16,17 @@ import csv
 import hashlib
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any
 
 from scipy.integrate import quad
 
-import rx.cosmology as cosmo
-
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+import rx.cosmology as cosmo
 CONTRACT_PATH = ROOT / "data/contracts/rll_ws01_background_decision_evidence.v1.json"
 HZ_28 = ROOT / "data/real/cosmology/Hz_cosmic_chronometers_independent.csv"
 HZ_33 = ROOT / "data/real/Hz_data_real.csv"
