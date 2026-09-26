@@ -1,0 +1,76 @@
+{
+  "schema": "rll.ws01_background_decision_evidence_persisted.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "state": "EVIDENCE_REDUCED_WS01_PARTIAL",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "source": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "pr": 993,
+    "tested_head_sha": "90996b9b0883e4e1d37167e778be90ff0e3de8e9",
+    "workflow": "WS01 Background Decision Evidence",
+    "workflow_run_id": 36236992273,
+    "job_id": 108390465741,
+    "artifact_id": 10904487612,
+    "artifact_digest": "sha256:6a8fd6416d29fa57f12211ff7930abdf6dca48f1c4b1ce63fd48f840ecb68f60"
+  },
+  "hz_dataset": {
+    "state": "PASS_IDENTICAL_PURE_CC_SURFACE",
+    "independent_28_git_blob_sha1": "c64da639274296e821bb358a277518252ca30c32",
+    "raw_33_git_blob_sha1": "3ac5da2594bfc127c28c6b4e817259e1bee28085",
+    "raw_rows": 33,
+    "selected_pure_cc_rows": 28,
+    "excluded_bao_or_cc_plus_bao_rows": 5,
+    "row_level_exact_match": true,
+    "fixed_vector_hz_chi2_identical": true,
+    "selected_option": "independent_cosmic_chronometers_28",
+    "uncertainty_reduction": "The apparent 28-vs-33 scientific choice collapses under the no-BAO-double-count rule: both pure-CC likelihood surfaces are the same 28 rows."
+  },
+  "distance_integration": {
+    "state": "PASS_PREREGISTERED_DISTANCE_TOLERANCE",
+    "method": "log1p_simpson",
+    "steps": 2048,
+    "independent_reference": "scipy.integrate.quad_over_z",
+    "preregistered": {
+      "max_relative_error_vs_quad": 1e-8,
+      "max_relative_refinement_delta_2048_to_4096": 1e-8
+    },
+    "observed": {
+      "max_relative_error_vs_quad": 6.185615356109645e-13,
+      "max_relative_refinement_delta_2048_to_4096": 5.820642422073455e-13
+    },
+    "selected_option": "log1p_simpson_with_preregistered_tolerance"
+  },
+  "omega_r": {
+    "state": "MEASURED_NO_PHYSICAL_SELECTION",
+    "candidates": [
+      0.00009,
+      0.0000918
+    ],
+    "observed": {
+      "max_relative_delta_H": 0.0024736895137296927,
+      "max_relative_delta_H_percent": 0.24736895137296927,
+      "max_relative_delta_DM": 0.00009420746846093331,
+      "max_relative_delta_DM_percent": 0.00942074684609333,
+      "rll_null_limit_pass": true
+    },
+    "token": "TOKEN_VAZIO_PHYSICAL_OMEGA_R_AUTHORITY_REQUIRED",
+    "reason": "The difference is measurable, especially at high redshift; numerical smallness or fit quality cannot choose a radiation-density convention."
+  },
+  "growth_mode": {
+    "state": "TOKEN_VAZIO_UNTIL_WS06",
+    "promotion_allowed": false
+  },
+  "terminal_axes": [
+    "hz_dataset",
+    "distance_integration"
+  ],
+  "remaining_blocking_axes": [
+    "omega_r",
+    "growth_mode"
+  ],
+  "canonical_v2_state": "TOKEN_VAZIO_CONTRACT",
+  "negative_results_preserved": true,
+  "F_next": "Derive or source-bind the physical Omega_r convention before any full WS01 freeze; keep growth blocked until perturbation CLASS/CAMB parity reaches WS06."
+}

@@ -70,12 +70,14 @@ class Ws01Ws02Ws21Ws23BridgeTests(unittest.TestCase):
         ids = [row["binding_id"] for row in receipt["workstreams"]["WS23"]["bindings"]]
         self.assertEqual(ids, ["OGB-HZ-001", "OGB-BAO-001", "OGB-SN-001"])
 
-    def test_ws01_axes_are_propagated_per_binding(self):
+    def test_only_unresolved_ws01_axes_are_propagated_per_binding(self):
         receipt = build()
         by_id = {row["binding_id"]: row for row in receipt["workstreams"]["WS23"]["bindings"]}
         self.assertNotIn("WS01_AXIS:hz_dataset", by_id["OGB-HZ-001"]["blockers"])
         self.assertIn("WS01_AXIS:omega_r", by_id["OGB-BAO-001"]["blockers"])
-        self.assertIn("WS01_AXIS:distance_integration", by_id["OGB-SN-001"]["blockers"])
+        self.assertNotIn("WS01_AXIS:distance_integration", by_id["OGB-BAO-001"]["blockers"])
+        self.assertIn("WS01_AXIS:omega_r", by_id["OGB-SN-001"]["blockers"])
+        self.assertNotIn("WS01_AXIS:distance_integration", by_id["OGB-SN-001"]["blockers"])
 
 
 if __name__ == "__main__":

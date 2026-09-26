@@ -6,7 +6,7 @@ from tools.rx_physics_v2_decision_packet import build
 
 
 class RxPhysicsV2DecisionPacketTests(unittest.TestCase):
-    def test_packet_preserves_human_scientific_decisions(self):
+    def test_packet_preserves_only_remaining_scientific_decisions(self):
         packet = build()
         self.assertEqual(packet["target_contract"], "RX-PHYSICS-CANONICAL-V2")
         self.assertEqual(packet["target_state"], "TOKEN_VAZIO_CONTRACT")

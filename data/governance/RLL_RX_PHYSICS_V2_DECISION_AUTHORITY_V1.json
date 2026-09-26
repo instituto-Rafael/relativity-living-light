@@ -27,7 +27,19 @@
         "high-redshift sensitivity table",
         "Rx/C reference vectors under the selected value"
       ],
-      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION",
+      "measurement_evidence": {
+        "workflow_run_id": 36236992273,
+        "candidates": [
+          0.00009,
+          0.0000918
+        ],
+        "max_relative_delta_H": 0.0024736895137296927,
+        "max_relative_delta_DM": 0.00009420746846093331,
+        "null_limit_pass": true,
+        "result": "MEASURED_NO_PHYSICAL_SELECTION",
+        "boundary": "High-z sensitivity is nonzero; physical radiation-density authority remains required."
+      }
     },
     {
       "id": "hz_dataset",
@@ -37,13 +49,13 @@
           "id": "independent_cosmic_chronometers_28",
           "value": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
           "source_contract": "RX-STRUCTURE-D-PARITY-V1",
-          "state": "ACTIVE_ENGINEERING_SURFACE"
+          "state": "EVIDENCE_SELECTED_CANONICAL_PURE_CC"
         },
         {
           "id": "canonical_freestanding_33",
           "value": "data/real/Hz_data_real.csv",
           "source_contract": "RX-FREESTANDING65-PARITY-V1",
-          "state": "VERIFIED_Q16_SURFACE"
+          "state": "PRESERVED_PROJECTION_RAW33_FILTERS_TO_IDENTICAL_28_PURE_CC"
         }
       ],
       "required_decision_evidence": [
@@ -148,13 +160,13 @@
     },
     {
       "id": "distance_integration",
-      "current": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
+      "current": "EVIDENCE_TERMINAL",
       "options": [
         {
           "id": "log1p_simpson_with_preregistered_tolerance",
           "value": "log1p_simpson",
           "source_contract": "RX-STRUCTURE-D-PARITY-V1",
-          "state": "IMPLEMENTED_NUMERICAL_METHOD_TOLERANCE_PENDING"
+          "state": "VERIFIED_PREREGISTERED_TOLERANCE"
         }
       ],
       "required_decision_evidence": [
@@ -162,7 +174,16 @@
         "absolute and relative tolerance per observable",
         "independent integrator crosscheck"
       ],
-      "selected_option": "TOKEN_VAZIO_TOLERANCE_DECISION"
+      "selected_option": "log1p_simpson_with_preregistered_tolerance",
+      "decision_evidence": {
+        "workflow_run_id": 36236992273,
+        "steps": 2048,
+        "max_relative_error_vs_scipy_quad": 6.185615356109645e-13,
+        "max_relative_refinement_delta_2048_to_4096": 5.820642422073455e-13,
+        "preregistered_max_relative_error": 1e-8,
+        "preregistered_max_refinement_delta": 1e-8,
+        "result": "PASS_PREREGISTERED_DISTANCE_TOLERANCE"
+      }
     }
   ],
   "promotion_requirements": [
@@ -171,5 +192,14 @@
     "null-limit recovery passes",
     "component parity within declared tolerances",
     "claim_allowed remains false until downstream scientific gates pass"
-  ]
+  ],
+  "last_evidence": {
+    "state": "EVIDENCE_REDUCED_WS01_PARTIAL",
+    "workflow_run_id": 36236992273,
+    "job_id": 108390465741,
+    "artifact_id": 10904487612,
+    "artifact_digest": "sha256:6a8fd6416d29fa57f12211ff7930abdf6dca48f1c4b1ce63fd48f840ecb68f60",
+    "tested_head_sha": "90996b9b0883e4e1d37167e778be90ff0e3de8e9",
+    "claim_allowed": false
+  }
 }

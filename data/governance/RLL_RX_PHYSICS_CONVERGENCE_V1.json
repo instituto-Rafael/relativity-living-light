@@ -1,6 +1,6 @@
 {
   "schema": "rll.rx.physics_convergence.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "target_contract": "RX-PHYSICS-CANONICAL-V2",
   "development_may_continue_while_open": true,
   "claim_allowed": false,
@@ -13,17 +13,32 @@
         0.0000918
       ],
       "requirement": "One derived/provenance-backed radiation-density convention shared by all runtimes.",
-      "falsifier": "Cross-runtime parity requires hidden per-runtime Omega_r substitution."
+      "falsifier": "Cross-runtime parity requires hidden per-runtime Omega_r substitution.",
+      "evidence": {
+        "workflow_run_id": 36236992273,
+        "max_relative_delta_H": 0.0024736895137296927,
+        "max_relative_delta_DM": 0.00009420746846093331,
+        "null_limit_pass": true,
+        "interpretation": "Sensitivity measured; no physical convention selected."
+      }
     },
     "hz_dataset": {
-      "status": "TOKEN_VAZIO_DECISION",
+      "status": "PASS_EVIDENCE_TERMINAL",
       "observed_surfaces": {
         "rx_simple_45": "32 H(z) fallback points + 13 BAO",
         "rx_structure_d_60": "28 independent H(z) + 13 BAO + 16 fsigma8 + 3 CMB",
         "freestanding_65": "33 H(z) + 13 BAO + 16 fsigma8 + 3 CMB"
       },
       "requirement": "Choose a canonical scientific surface by explicit independence/covariance/provenance criteria; preserve other surfaces as named projections.",
-      "falsifier": "N changes without dataset/hash/version change."
+      "falsifier": "N changes without dataset/hash/version change.",
+      "selected_surface": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "evidence": {
+        "workflow_run_id": 36236992273,
+        "raw_rows": 33,
+        "pure_cc_rows": 28,
+        "excluded_bao_labeled_rows": 5,
+        "selected_rows_exactly_match_independent_28": true
+      }
     },
     "growth_mode": {
       "status": "TOKEN_VAZIO_DECISION",
@@ -47,9 +62,19 @@
       "requirement": "CMB acoustic scale uses r_s(z_star) under the canonical contract; compressed prior remains distinct from full Planck likelihood."
     },
     "distance_integration": {
-      "status": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
+      "status": "PASS_PREREGISTERED_TOLERANCE",
       "observed_method": "log1p_simpson",
-      "requirement": "Version absolute/relative convergence tolerance and demonstrate stable observables under step refinement."
+      "requirement": "Version absolute/relative convergence tolerance and demonstrate stable observables under step refinement.",
+      "steps": 2048,
+      "tolerance": {
+        "max_relative_error_vs_quad": 1e-8,
+        "max_relative_refinement_delta_2048_to_4096": 1e-8
+      },
+      "observed": {
+        "max_relative_error_vs_quad": 6.185615356109645e-13,
+        "max_relative_refinement_delta_2048_to_4096": 5.820642422073455e-13
+      },
+      "evidence_artifact": "artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_RUN36236992273.json"
     },
     "cross_runtime_parity": {
       "status": "PARTIAL_EVIDENCE",
