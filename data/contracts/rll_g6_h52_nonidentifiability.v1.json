@@ -1,0 +1,73 @@
+{
+  "schema": "rll.g6_h52_nonidentifiability.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "state": "PREREGISTERED_EXECUTABLE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "publication_effect": "NONE",
+  "hypothesis_id": "H52",
+  "hypothesis": "At the RLL null Omega_s0=0, z_t and w_t are non-identifiable and materially contribute to G6 MCMC mixing failure.",
+  "source": "docs/cosmology/RLL_GAP_CLOSURE_SUCCESSOR_HYPOTHESES_20260827.md",
+  "requires": [
+    "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT",
+    "READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD",
+    "explicit_verified_emcee_internal_random_state"
+  ],
+  "invariants": [
+    "same G4/G5 data, covariance, selection and nuisance route in both arms",
+    "same seeds, walkers, steps, burn and Rhat threshold in both arms",
+    "no threshold relaxation after observing results",
+    "fixed-shape arm is diagnostic only and cannot become a physical model claim",
+    "negative or inconclusive outcomes are preserved",
+    "claim_allowed remains false"
+  ],
+  "mcmc": {
+    "engine": "emcee.EnsembleSampler",
+    "independent_ensembles": 4,
+    "walkers_per_ensemble": 16,
+    "steps": 1200,
+    "burn": 400,
+    "seeds": [1103, 2207, 3301, 4409],
+    "convergence": {
+      "max_split_Rhat": 1.10,
+      "minimum_postburn_samples_per_ensemble": 12800
+    },
+    "initialization": "independent Gaussian clouds around the G4 best fit with sigma=0.02 of each sampled prior width; clipped strictly inside bounds"
+  },
+  "free_shape_arm": {
+    "sampled": ["H0", "Omega_m", "omega_b_h2", "Omega_s0", "z_t", "w_t"],
+    "fixed": {}
+  },
+  "fixed_shape_diagnostic_arm": {
+    "sampled": ["H0", "Omega_m", "omega_b_h2", "Omega_s0"],
+    "fixed": {
+      "z_t": 1.0,
+      "w_t": 0.30
+    },
+    "fixed_value_authority": "RLL canonical defaults in tools/run_g4_background_tournament.py MODEL_SPEC[RLL].canonical",
+    "interpretation": "Diagnostic removal of null-only shape freedom; not an alternative physical-model claim."
+  },
+  "decision": {
+    "supported_limited_when": "free_shape max_Rhat > 1.10 AND fixed_shape max_Rhat <= 1.10",
+    "long_chain_sufficient_when": "free_shape max_Rhat <= 1.10 AND fixed_shape max_Rhat <= 1.10",
+    "not_resolved_when": "free_shape max_Rhat > 1.10 AND fixed_shape max_Rhat > 1.10",
+    "anomalous_when": "free_shape max_Rhat <= 1.10 AND fixed_shape max_Rhat > 1.10"
+  },
+  "required_outputs": [
+    "exact G4 and G5 SHA-256 bindings",
+    "per-ensemble RNG fingerprints",
+    "free-shape and fixed-shape Rhat vectors",
+    "Omega_s0 posterior quantiles in both arms",
+    "absolute and excess-over-one Rhat reduction",
+    "diagnostic state and remaining gaps"
+  ],
+  "falsifiers": [
+    "fixed-shape diagnostic fails to improve convergence while free-shape remains nonconverged",
+    "G4/G5 hash or likelihood route differs between arms",
+    "Rhat threshold changes after execution",
+    "fixed z_t/w_t values are selected after inspecting this run",
+    "claim_allowed becomes true"
+  ],
+  "boundary": "H52 diagnostic support reduces uncertainty about a sampler pathology; it does not validate RLL, resolve nested-seed stability, close perturbations, or justify CLASS/CAMB RLL implementation."
+}
