@@ -1,25 +1,24 @@
 {
   "schema": "rll.rx.physics_convergence.v1",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "target_contract": "RX-PHYSICS-CANONICAL-V2",
   "development_may_continue_while_open": true,
   "claim_allowed": false,
-  "promotion_rule": "ALL_REQUIRED_GATES_PASS_AND_ZERO_TOKEN_VAZIO_DECISIONS",
+  "promotion_rule": "ALL_BACKGROUND_DECISIONS_TERMINAL_AND_FINALIZER_PASS; DOWNSTREAM_PERTURBATION_GROWTH_REMAINS_SEPARATE",
   "gates": {
     "omega_r": {
-      "status": "TOKEN_VAZIO_DECISION",
-      "observed_variants": [
-        0.00009,
-        0.0000918
-      ],
+      "status": "PASS_DERIVED_STANDARD_RADIATION_AUTHORITY",
+      "selected_semantics": "derived_standard_relativistic_radiation",
       "requirement": "One derived/provenance-backed radiation-density convention shared by all runtimes.",
       "falsifier": "Cross-runtime parity requires hidden per-runtime Omega_r substitution.",
       "evidence": {
-        "workflow_run_id": 36236992273,
-        "max_relative_delta_H": 0.0024736895137296927,
-        "max_relative_delta_DM": 0.00009420746846093331,
+        "workflow_run_id": 36238203778,
+        "job_id": 108393766727,
+        "artifact_id": 10905440455,
+        "omega_r_h2": 0.000041826211911705586,
         "null_limit_pass": true,
-        "interpretation": "Sensitivity measured; no physical convention selected."
+        "legacy_fixed_values_promoted": false,
+        "boundary": "Full massive-neutrino transition remains downstream Boltzmann physics."
       }
     },
     "hz_dataset": {
@@ -41,13 +40,15 @@
       }
     },
     "growth_mode": {
-      "status": "TOKEN_VAZIO_DECISION",
+      "status": "PASS_BACKGROUND_BOUNDARY_FROZEN_WAIT_WS06",
+      "selected_semantics": "EXCLUDED_FROM_BACKGROUND_UNTIL_WS06",
       "observed_variants": [
         "structure_d_proxy",
         "freestanding_growth_with_Dz"
       ],
-      "requirement": "Canonical promotion requires a validated RLL perturbation/growth completion with baseline recovery; proxies remain engineering projections.",
-      "falsifier": "Background-only proxy is labeled full physical growth."
+      "requirement": "No engineering proxy may be promoted as physical RLL growth; validated perturbation-derived f_sigma8 requires WS03->WS04/WS05->WS06.",
+      "falsifier": "Background-only proxy is labeled full physical growth.",
+      "downstream_token": "OGB-FS8-001:BLOCKED_UNTIL_PERTURBATION_BACKEND"
     },
     "bao_sound_horizon": {
       "status": "PARTIAL_EVIDENCE",
@@ -91,5 +92,6 @@
     "ai_runtime=false",
     "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
     "TOKEN_VAZIO != 0"
-  ]
+  ],
+  "background_contract_state": "ALL_DECISIONS_TERMINAL_PENDING_FINALIZER"
 }
