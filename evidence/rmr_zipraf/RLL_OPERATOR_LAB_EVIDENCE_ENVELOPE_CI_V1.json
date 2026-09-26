@@ -1,0 +1,81 @@
+{
+  "artifact_digests": [
+    {
+      "algorithm": "SHA-256",
+      "artifact_ref": "results/operator_lab/v1/receipt.json",
+      "value": "e09f240a8a7a16ae9d26fd906e5523ffee7d336340aef94d4c25e05a3b7dd9ec",
+      "verification_state": "VERIFIED_LOCAL"
+    }
+  ],
+  "claim_allowed": false,
+  "custody_state": "RLL_OPERATOR_LAB_TESTED_LOCAL",
+  "envelope_id": "RLL-OPLAB-EVIDENCE-V1-e09f240a8a7a16ae",
+  "envelope_root": {
+    "algorithm": "SHA-256",
+    "value": "725d6d827092968f9facc6342ecc186ba9e3fa2b1b94384f827644ee03e6501f"
+  },
+  "external_anchors": [
+    {
+      "locator": "instituto-Rafael/relativity-living-light@a045ffa1c3a3835cfb87fde9ecb3afd7b93f2608",
+      "state": "DECLARED",
+      "type": "GIT_COMMIT_REF",
+      "verification_receipt_ref": null
+    },
+    {
+      "locator": null,
+      "state": "TOKEN_VAZIO",
+      "type": "ED25519_SIGNATURE",
+      "verification_receipt_ref": null
+    },
+    {
+      "locator": null,
+      "state": "NOT_PRESENT",
+      "type": "X509_CERTIFICATE_REF",
+      "verification_receipt_ref": null
+    },
+    {
+      "locator": null,
+      "state": "NOT_PRESENT",
+      "type": "RFC3161_TSA_REF",
+      "verification_receipt_ref": null
+    },
+    {
+      "locator": null,
+      "state": "NOT_PRESENT",
+      "type": "ICP_BRASIL_CERT_REF",
+      "verification_receipt_ref": null
+    }
+  ],
+  "manifest_digest": {
+    "algorithm": "SHA-256",
+    "state": "VERIFIED_LOCAL",
+    "value": "d12289813a33be271d2197c6ac77113b0c4aefe23158716f0d3560441f34441b"
+  },
+  "parent_envelope_root": null,
+  "policy_digest": {
+    "algorithm": "SHA-256",
+    "state": "VERIFIED_LOCAL",
+    "value": "09f795ac6ae735e95ede379e64bf89b45556f98d1172e23c3090597579257278"
+  },
+  "producer": {
+    "component": "RLL Operator Lab V1",
+    "repository": "instituto-Rafael/relativity-living-light"
+  },
+  "receipt_chain_head": {
+    "algorithm": "SHA-256",
+    "state": "DECLARED_FROM_RECEIPT",
+    "value": "298b8a0d49befc3394b6b9846cb5a1626da668fa601adb67dbe9e0d82ff1f5b4"
+  },
+  "rollback_ref": null,
+  "schema_version": "rmr-zipraf-evidence-envelope-v1",
+  "subject": {
+    "kind": "RLL_OPERATOR_LAB_RECEIPT",
+    "physics_binding": false,
+    "run_id": "RLL-OPLAB-NEGATIVE-FIRST-V1",
+    "scientific_gate_effect": "NONE"
+  },
+  "time_attestation": {
+    "state": "TOKEN_VAZIO_TRUSTED_TIME",
+    "trusted_timestamp_state": "TOKEN_VAZIO"
+  }
+}

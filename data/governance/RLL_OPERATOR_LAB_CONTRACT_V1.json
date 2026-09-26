@@ -1,0 +1,47 @@
+{
+  "schema": "rll.operator_lab.contract.v1",
+  "date": "2026-09-26",
+  "state": "IMPLEMENTATION_CONTRACT",
+  "claim_allowed": false,
+  "physics_binding": false,
+  "scientific_gate_effect": "NONE",
+  "training": false,
+  "ai_runtime": false,
+  "network": false,
+  "dynamic_eval": false,
+  "dynamic_exec": false,
+  "arbitrary_shell": false,
+  "allowlist_only": true,
+  "papers_precursor": {
+    "repository": "rafaelmeloreisnovo/papers",
+    "pr": 108,
+    "implementation_commit": "03efd335ee7b1bfd7e77c6fa61873c19b0ee437f",
+    "audited_head": "c4a59abcfcb8761e7ed4f7d3296d7110d00c2336"
+  },
+  "supported_operator_ids": [
+    "O001",
+    "O006",
+    "O025",
+    "O026",
+    "O027",
+    "O028",
+    "O029",
+    "O031",
+    "O032",
+    "O033",
+    "O034",
+    "O035",
+    "O036",
+    "O039",
+    "O040",
+    "O042"
+  ],
+  "unsupported_state": "BLOCKED_UNSUPPORTED",
+  "negative_first_required": true,
+  "boundaries": [
+    "local fixture PASS != physical validation",
+    "receipt != SCI_GATE closure",
+    "evidence envelope != certificate",
+    "operator path != physics contract"
+  ]
+}

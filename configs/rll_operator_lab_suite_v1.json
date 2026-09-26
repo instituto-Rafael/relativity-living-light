@@ -1,0 +1,328 @@
+{
+  "schema": "rll.operator_lab.suite.v1",
+  "suite_id": "RLL-OPLAB-NEGATIVE-FIRST-V1",
+  "claim_allowed": false,
+  "negative": [
+    {
+      "fixture_id": "N001_LOG_ZERO",
+      "input": {
+        "value": 0,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O025"
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F121"
+    },
+    {
+      "fixture_id": "N002_LOG_BASE_ONE",
+      "input": {
+        "value": 8,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O026",
+          "params": {
+            "base": 1
+          }
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F122"
+    },
+    {
+      "fixture_id": "N003_TAN_POLE",
+      "input": {
+        "value": 90,
+        "type": "real",
+        "unit": "degrees"
+      },
+      "path": [
+        {
+          "operator_id": "O035"
+        },
+        {
+          "operator_id": "O033"
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F127"
+    },
+    {
+      "fixture_id": "N004_SQRT_NEGATIVE",
+      "input": {
+        "value": -1,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O040"
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F132"
+    },
+    {
+      "fixture_id": "N005_RECIP_ZERO",
+      "input": {
+        "value": 0,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O006"
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F108"
+    },
+    {
+      "fixture_id": "N006_ITERATED_LOG_BREAK",
+      "input": {
+        "value": 2,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O027",
+          "params": {
+            "base": 2,
+            "k": 3
+          }
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F123"
+    },
+    {
+      "fixture_id": "N007_EVEN_ROOT_NEGATIVE",
+      "input": {
+        "value": -16,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O039",
+          "params": {
+            "n": 4
+          }
+        }
+      ],
+      "expected_state": "BLOCKED_DOMAIN",
+      "expected_falsifier": "F132"
+    },
+    {
+      "fixture_id": "N008_UNIT_MISMATCH",
+      "input": {
+        "value": 180,
+        "type": "real",
+        "unit": "radians"
+      },
+      "path": [
+        {
+          "operator_id": "O035"
+        }
+      ],
+      "expected_state": "BLOCKED_TYPE",
+      "expected_falsifier": "F128"
+    },
+    {
+      "fixture_id": "N009_COMPLEX_BRANCH_REQUIRED",
+      "input": {
+        "value": -8,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O029",
+          "params": {
+            "exponent": 0.5
+          }
+        }
+      ],
+      "expected_state": "BLOCKED_BRANCH",
+      "expected_falsifier": "F133"
+    },
+    {
+      "fixture_id": "N010_UNSUPPORTED_DERIVATIVE",
+      "input": {
+        "value": 4,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O017"
+        }
+      ],
+      "expected_state": "BLOCKED_UNSUPPORTED"
+    }
+  ],
+  "positive": [
+    {
+      "fixture_id": "P001_ID",
+      "input": {
+        "value": 3,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O001"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 3
+    },
+    {
+      "fixture_id": "P002_RECIP",
+      "input": {
+        "value": 4,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O006"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 0.25
+    },
+    {
+      "fixture_id": "P003_LOG2",
+      "input": {
+        "value": 8,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O026",
+          "params": {
+            "base": 2
+          }
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 3
+    },
+    {
+      "fixture_id": "P004_RAD",
+      "input": {
+        "value": 180,
+        "type": "real",
+        "unit": "degrees"
+      },
+      "path": [
+        {
+          "operator_id": "O035"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 3.141592653589793,
+      "tolerance": 1e-12
+    },
+    {
+      "fixture_id": "P005_TAN_45",
+      "input": {
+        "value": 45,
+        "type": "real",
+        "unit": "degrees"
+      },
+      "path": [
+        {
+          "operator_id": "O035"
+        },
+        {
+          "operator_id": "O033"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 1,
+      "tolerance": 1e-12
+    },
+    {
+      "fixture_id": "P006_SQRT9",
+      "input": {
+        "value": 9,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O040"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 3
+    },
+    {
+      "fixture_id": "P007_CUBERT_NEG8",
+      "input": {
+        "value": -8,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O039",
+          "params": {
+            "n": 3
+          }
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": -2,
+      "tolerance": 1e-12
+    },
+    {
+      "fixture_id": "P008_ITERATED_LOG",
+      "input": {
+        "value": 16,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O027",
+          "params": {
+            "base": 2,
+            "k": 2
+          }
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 2
+    },
+    {
+      "fixture_id": "P009_NORM",
+      "input": {
+        "value": [
+          3,
+          4
+        ],
+        "type": "real_vector"
+      },
+      "path": [
+        {
+          "operator_id": "O042"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 5
+    },
+    {
+      "fixture_id": "P010_ATAN1",
+      "input": {
+        "value": 1,
+        "type": "real"
+      },
+      "path": [
+        {
+          "operator_id": "O034"
+        }
+      ],
+      "expected_state": "PASS",
+      "expected_value": 0.7853981633974483,
+      "tolerance": 1e-12
+    }
+  ]
+}

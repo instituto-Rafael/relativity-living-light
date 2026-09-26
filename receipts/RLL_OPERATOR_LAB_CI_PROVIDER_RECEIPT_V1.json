@@ -1,0 +1,62 @@
+{
+  "schema": "rll.operator_lab.provider_receipt.v1",
+  "receipt_id": "RLL-OPLAB-CI-36258384349-V1",
+  "observed_at_utc": "2026-09-26T17:15:59Z",
+  "provider": "GitHub Actions",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "pull_request": 996,
+  "workflow": {
+    "name": "RLL Operator Lab V1",
+    "run_id": 36258384349,
+    "run_number": 1,
+    "job_id": 108449381820,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "tested_ref": {
+    "branch_head_sha": "f7d1a4b0b9659b059be697f3f78512af6dcfb01b",
+    "pull_request_merge_ref_sha": "a045ffa1c3a3835cfb87fde9ecb3afd7b93f2608",
+    "tree_sha": "8a916343aa635832ac227ae7dcd298628f048cdf"
+  },
+  "runtime": {
+    "python": "3.11.16",
+    "unit_and_mutation_tests": {
+      "run": 8,
+      "failures": 0,
+      "errors": 0,
+      "state": "PASS"
+    }
+  },
+  "negative_first": {
+    "negative_count": 10,
+    "positive_count": 10,
+    "negative_gate": "PASS",
+    "positive_phase": "PASS",
+    "state": "PASS",
+    "receipt_file_sha256": "e09f240a8a7a16ae9d26fd906e5523ffee7d336340aef94d4c25e05a3b7dd9ec",
+    "receipt_payload_sha256": "298b8a0d49befc3394b6b9846cb5a1626da668fa601adb67dbe9e0d82ff1f5b4"
+  },
+  "evidence_envelope": {
+    "state": "PASS",
+    "root_state": "VERIFIED",
+    "envelope_root_sha256": "725d6d827092968f9facc6342ecc186ba9e3fa2b1b94384f827644ee03e6501f",
+    "manifest_sha256": "d12289813a33be271d2197c6ac77113b0c4aefe23158716f0d3560441f34441b",
+    "policy_sha256": "09f795ac6ae735e95ede379e64bf89b45556f98d1172e23c3090597579257278"
+  },
+  "artifact": {
+    "artifact_id": 10911730873,
+    "name": "rll-operator-lab-v1-36258384349",
+    "size_bytes": 4774,
+    "uploaded_zip_sha256": "93b9b8e7390ccc654c06c0fdc6beb9cfef6dc3525eba13ff90ff48b9eec5c14e",
+    "retention_days": 30,
+    "state": "PRESENT_AT_OBSERVATION"
+  },
+  "boundaries": {
+    "physics_binding": false,
+    "scientific_gate_effect": "NONE",
+    "claim_allowed": false,
+    "independent_reproduction": false,
+    "trusted_timestamp": false,
+    "human_identity_verified": false
+  }
+}
