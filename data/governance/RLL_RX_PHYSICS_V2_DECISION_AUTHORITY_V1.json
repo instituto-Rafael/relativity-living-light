@@ -7,7 +7,7 @@
   "axes": [
     {
       "id": "omega_r",
-      "current": "TOKEN_VAZIO_DECISION",
+      "current": "derived_standard_relativistic_radiation",
       "options": [
         {
           "id": "structure_d_value",
@@ -20,6 +20,12 @@
           "value": 0.0000918,
           "source_contract": "RX-FREESTANDING65-PARITY-V1",
           "state": "VERIFIED_EXACT_Q16_PARITY_SEMANTICS"
+        },
+        {
+          "id": "derived_standard_relativistic_radiation",
+          "value": "Omega_r(H0,Tcmb,Neff)=omega_r_h2(Tcmb,Neff)/h^2",
+          "source_contract": "data/contracts/rll_ws01_omega_r_physical_authority.v1.json",
+          "state": "PASS_DERIVED_STANDARD_RADIATION_AUTHORITY"
         }
       ],
       "required_decision_evidence": [
@@ -27,7 +33,7 @@
         "high-redshift sensitivity table",
         "Rx/C reference vectors under the selected value"
       ],
-      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION",
+      "selected_option": "derived_standard_relativistic_radiation",
       "measurement_evidence": {
         "workflow_run_id": 36236992273,
         "candidates": [
@@ -39,6 +45,18 @@
         "null_limit_pass": true,
         "result": "MEASURED_NO_PHYSICAL_SELECTION",
         "boundary": "High-z sensitivity is nonzero; physical radiation-density authority remains required."
+      },
+      "decision_state": "EVIDENCE_TERMINAL_DERIVED_STANDARD_RADIATION",
+      "decision_evidence": {
+        "workflow_run_id": 36238203778,
+        "job_id": 108393766727,
+        "artifact_id": 10905440455,
+        "artifact_digest": "sha256:ae99389dcd82897664aaeb688938199ce8452beb9e6869a27339aa85e806af90",
+        "receipt": "artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json",
+        "state": "PASS_DERIVED_STANDARD_RADIATION_AUTHORITY",
+        "omega_r_h2": 0.000041826211911705586,
+        "null_max_delta": 0,
+        "legacy_fixed_values_promoted": false
       }
     },
     {
@@ -76,7 +94,7 @@
     },
     {
       "id": "growth_mode",
-      "current": "TOKEN_VAZIO_DECISION",
+      "current": "EXCLUDED_FROM_BACKGROUND_UNTIL_WS06",
       "options": [
         {
           "id": "structure_d_proxy",
@@ -104,7 +122,18 @@
         "explicit boundary between background engineering proxy and physical perturbation prediction",
         "CLASS/CAMB parity before scientific growth promotion"
       ],
-      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+      "selected_option": "perturbation_backend_fsigma8",
+      "decision_state": "BOUNDARY_FROZEN_NO_PROXY_PROMOTION",
+      "decision_evidence": {
+        "rule": "Background contract excludes physical growth until WS03->WS04/WS05->WS06 produces a validated perturbation backend.",
+        "authorities": [
+          "data/contracts/rll_ws02_canonical_background_surface.v1.json#shared_policy.growth",
+          "data/inputs/omega_g/observable_effect_binding_registry.v2.json#OGB-FS8-001",
+          "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json#WS03-WS07"
+        ],
+        "promoted_proxy": null,
+        "downstream_token": "OGB-FS8-001:BLOCKED_UNTIL_PERTURBATION_BACKEND"
+      }
     },
     {
       "id": "bao_sound_horizon",
@@ -176,14 +205,17 @@
       ],
       "selected_option": "log1p_simpson_with_preregistered_tolerance",
       "decision_evidence": {
-        "workflow_run_id": 36236992273,
+        "workflow_run_id": 36238203778,
+        "job_id": 108393766727,
+        "artifact_id": 10905440455,
+        "state": "PASS_PREREGISTERED_DISTANCE_TOLERANCE",
         "steps": 2048,
         "max_relative_error_vs_scipy_quad": 6.185615356109645e-13,
         "max_relative_refinement_delta_2048_to_4096": 5.820642422073455e-13,
         "preregistered_max_relative_error": 1e-8,
-        "preregistered_max_refinement_delta": 1e-8,
-        "result": "PASS_PREREGISTERED_DISTANCE_TOLERANCE"
-      }
+        "preregistered_max_refinement_delta": 1e-8
+      },
+      "decision_state": "EVIDENCE_TERMINAL_PREREGISTERED_NUMERICAL_TOLERANCE"
     }
   ],
   "promotion_requirements": [
@@ -201,5 +233,6 @@
     "artifact_digest": "sha256:6a8fd6416d29fa57f12211ff7930abdf6dca48f1c4b1ce63fd48f840ecb68f60",
     "tested_head_sha": "90996b9b0883e4e1d37167e778be90ff0e3de8e9",
     "claim_allowed": false
-  }
+  },
+  "background_decision_status": "ALL_AXES_TERMINAL_PENDING_FINALIZER"
 }
