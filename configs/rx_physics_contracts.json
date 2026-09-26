@@ -29,13 +29,15 @@
     "RX-PHYSICS-CANONICAL-V2": {
       "state": "TOKEN_VAZIO_CONTRACT",
       "omega_r": "TOKEN_VAZIO_DECISION",
-      "hz_dataset": "TOKEN_VAZIO_DECISION",
+      "hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
       "growth_mode": "TOKEN_VAZIO_DECISION",
       "bao_sound_horizon": "sound_horizon_integral_required",
       "cmb_acoustic_mode": "rs_star_required",
       "distance_integration": "TOKEN_VAZIO_TOLERANCE_CONTRACT",
       "flat_closure": true,
-      "claim_allowed": false
+      "claim_allowed": false,
+      "hz_dataset_state": "FROZEN_PURE_CC28_NO_DOUBLE_COUNT",
+      "hz_dataset_evidence": "RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1"
     },
     "RX-FREESTANDING65-PARITY-V1": {
       "state": "VERIFIED_EXACT_Q16_PARITY",
