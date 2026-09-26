@@ -5,6 +5,12 @@ on:
   pull_request:
     paths:
       - "data/contracts/rll_ws01_background_decision_evidence.v1.json"
+      - "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+      - "data/governance/RLL_RX_PHYSICS_CONVERGENCE_V1.json"
+      - "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+      - "configs/rx_physics_contracts.json"
+      - "tests/test_rx_physics_v2_decision_packet.py"
+      - "tests/test_rll_ws01_ws02_ws21_ws23_bridge.py"
       - "tools/rx_physics_v2_decision_evidence.py"
       - "tests/test_rx_physics_v2_decision_evidence.py"
       - "rx/cosmology.py"
