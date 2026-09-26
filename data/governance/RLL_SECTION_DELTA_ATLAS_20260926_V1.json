@@ -1,0 +1,97 @@
+{
+  "schema": "rll.section_delta_atlas.v1",
+  "date": "2026-09-26",
+  "append_only": true,
+  "authority": "instituto-Rafael/relativity-living-light",
+  "operator_contract": "data/contracts/rll_section_retrofeedback_operator.v1.json",
+  "claim_allowed": false,
+  "events": [
+    {
+      "§ID": "SECTION-DELTA-WS01-20260926-001",
+      "§ANTES": "WS01 evidence executor had unit-test coverage but direct workflow execution had not been proven.",
+      "§INTENÇÃO": "Execute WS01 background decision evidence without selecting canonical physics from fit quality.",
+      "§ENTRADA": [
+        "tools/rll_ws01_background_decision_evidence.py",
+        "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+        "data/real/Hz_data_real.csv"
+      ],
+      "§EXECUÇÃO": {
+        "state": "OBSERVED",
+        "workflow_run_id": 36237184293,
+        "job_id": 108390983455,
+        "step": "Materialize receipt",
+        "exit_state": "FAIL"
+      },
+      "§OBSERVAÇÃO": "Direct execution failed with ModuleNotFoundError: No module named 'rx'; unit tests had passed, exposing an execution-context discrepancy.",
+      "§RESULTADO": {
+        "outcome": "FAIL",
+        "epistemic_evolution": true,
+        "negative_evidence_preserved": true,
+        "promotion_authorized": false,
+        "claim_allowed": false
+      },
+      "§Δ": "Root cause localized to repository-root import path for direct script execution; repair adds the repository root to sys.path before importing rx.",
+      "§INCERTEZA_ANTES": {
+        "state": "OPEN",
+        "question": "Why does WS01 unit testing pass while the materialization step fails?"
+      },
+      "§INCERTEZA_DEPOIS": {
+        "state": "REDUCED",
+        "direction": "REDUCED",
+        "answer": "The direct executor lacked repository-root import visibility; this specific root cause is identified.",
+        "evidence": ["github-actions:run/36237184293/job/108390983455","commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"]
+      },
+      "§FALSIFICADOR": "If rerun after the import-path repair still fails before producing the receipt, this root-cause closure is insufficient.",
+      "§TOKEN_VAZIO": [
+        "TOKEN_VAZIO_WS01_REPAIRED_EXECUTION_RECEIPT"
+      ],
+      "§PROVENIÊNCIA": {
+        "repository": "instituto-Rafael/relativity-living-light",
+        "pr": 994,
+        "failed_head": "7760f7f5e77df4bfce5cc33ae1747fb2837ca637",
+        "repair_commit": "77b07cc0f5c5f1d4d90501b8f873df9efec976cc"
+      },
+      "§HASH": {
+        "repair_commit": "77b07cc0f5c5f1d4d90501b8f873df9efec976cc"
+      },
+      "§RECEIPT": {
+        "state": "TOKEN_VAZIO",
+        "token": "TOKEN_VAZIO_WS01_REPAIRED_EXECUTION_RECEIPT"
+      },
+      "§GATE": {
+        "state": "FAIL",
+        "promotion": false
+      },
+      "§BOUNDARY": "This event identifies and repairs one execution-context defect. It does not prove the repaired executor until a new workflow run succeeds and does not select RX-PHYSICS-CANONICAL-V2 semantics.",
+      "§ROLLBACK": {
+        "ready": true,
+        "method": "revert repair commit; preserve failed workflow evidence and event"
+      },
+      "§URGÊNCIA": "P0",
+      "§F_NEXT": "Rerun through existing governance workflow, materialize the WS01 receipt, then decide whether any WS01 uncertainty token can be reduced.",
+      "§DEPOIS": "PENDING_REEXECUTION",
+      "§H": {
+        "human_rights_regression": false,
+        "certification": "NOT_ASSESSED"
+      },
+      "§A": {
+        "auditability_regression": false
+      },
+      "§S": {
+        "zero_trust_boundary_preserved": true
+      },
+      "§μ": {
+        "writes": ["commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"]
+      },
+      "§Ω": {
+        "workstream": "WS01",
+        "depends_on": ["WS00"],
+        "unlocks_if_closed": ["WS03","WS12","WS23"]
+      },
+      "§∞": {
+        "next_event_expected": "SECTION-DELTA-WS01-20260926-002"
+      }
+    }
+  ],
+  "boundary": "Atlas events record observable state transitions only; private reasoning is not provenance."
+}
