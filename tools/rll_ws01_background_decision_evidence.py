@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """WS01 evidence executor: measure decision sensitivity without selecting semantics."""
 from __future__ import annotations
-import argparse, csv, hashlib, json, math
+import argparse, csv, hashlib, json, math, sys
 from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+ sys.path.insert(0,str(ROOT))
 
 from rx import cosmology
 from rx.kernel import dump_json, simpson
-
-ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json"
 HZ28=ROOT/"data/real/cosmology/Hz_cosmic_chronometers_independent.csv"
 HZ33=ROOT/"data/real/Hz_data_real.csv"
