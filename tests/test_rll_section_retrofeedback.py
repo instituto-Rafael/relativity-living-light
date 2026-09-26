@@ -16,7 +16,9 @@ class SectionRetrofeedbackTests(unittest.TestCase):
         self.assertTrue(r["valid"])
         self.assertFalse(r["claim_allowed"])
         self.assertEqual(r["authorized_promotion_count"],0)
-        self.assertEqual(r["epistemic_evolution_count"],1)
+        self.assertEqual(r["epistemic_evolution_count"],2)
+        self.assertEqual(r["negative_evidence_event_count"],1)
+        self.assertEqual(r["event_count"],2)
 
     def test_fail_can_evolve_only_when_uncertainty_reduced(self):
         a=copy.deepcopy(self.atlas)
