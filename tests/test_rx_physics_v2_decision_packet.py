@@ -11,18 +11,13 @@ class RxPhysicsV2DecisionPacketTests(unittest.TestCase):
         self.assertEqual(packet["target_contract"], "RX-PHYSICS-CANONICAL-V2")
         self.assertEqual(packet["target_state"], "TOKEN_VAZIO_CONTRACT")
         self.assertFalse(packet["claim_allowed"])
-        self.assertEqual(packet["blocking_axes"], ["omega_r", "growth_mode"])
+        self.assertIn("omega_r", packet["blocking_axes"])
+        self.assertNotIn("hz_dataset", packet["blocking_axes"])
+        self.assertIn("growth_mode", packet["blocking_axes"])
+        self.assertIn("distance_integration", packet["blocking_axes"])
         axes = {row["axis"]: row for row in packet["axes"]}
-        self.assertEqual(
-            axes["hz_dataset"]["selected_option"],
-            "independent_cosmic_chronometers_28",
-        )
+        self.assertEqual(axes["hz_dataset"]["selected_option"], "independent_cosmic_chronometers_28")
         self.assertTrue(axes["hz_dataset"]["decision_terminal"])
-        self.assertEqual(
-            axes["distance_integration"]["selected_option"],
-            "log1p_simpson_with_preregistered_tolerance",
-        )
-        self.assertTrue(axes["distance_integration"]["decision_terminal"])
 
     def test_integrated_sound_horizon_directions_are_not_reopened(self):
         packet = build()

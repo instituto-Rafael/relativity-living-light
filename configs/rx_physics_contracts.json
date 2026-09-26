@@ -36,14 +36,8 @@
       "distance_integration": "log1p_simpson",
       "flat_closure": true,
       "claim_allowed": false,
-      "hz_dataset_policy": "pure_cosmic_chronometers_28_no_BAO_double_count",
-      "distance_integration_steps": 2048,
-      "distance_integration_tolerances": {
-        "max_relative_error_vs_independent_quad": 1e-8,
-        "max_relative_refinement_delta_2048_to_4096": 1e-8
-      },
-      "evidence_state": "PARTIAL_2_OF_4_DECISION_AXES_TERMINAL",
-      "evidence_receipt": "artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_RUN36236992273.json"
+      "hz_dataset_state": "FROZEN_PURE_CC28_NO_DOUBLE_COUNT",
+      "hz_dataset_evidence": "RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1"
     },
     "RX-FREESTANDING65-PARITY-V1": {
       "state": "VERIFIED_EXACT_Q16_PARITY",

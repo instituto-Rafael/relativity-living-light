@@ -1,6 +1,6 @@
 {
   "schema": "rll.closure_workstream_registry.v1",
-  "date": "2026-09-24",
+  "date": "2026-09-26",
   "author": "RAFAEL MELO REIS",
   "claim_allowed": false,
   "purpose": "Single dependency-aware closure program for engineering, scientific, data, low-level, governance and independent-replication work.",
@@ -103,24 +103,22 @@
       "claim_allowed": false,
       "current_delta": {
         "decision_packet": "tools/rx_physics_v2_decision_packet.py",
-        "evidence_executor": "tools/rx_physics_v2_decision_evidence.py",
-        "evidence_receipt": "artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_RUN36236992273.json",
-        "workflow_run_id": 36236992273,
-        "artifact_id": 10904487612,
-        "state": "PARTIAL_DECISION_EVIDENCE_2_OF_4_TERMINAL",
-        "terminal_axes": [
-          "hz_dataset",
+        "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
+        "evidence_executor": "tools/rll_ws01_background_decision_evidence.py",
+        "receipt": "provenance/receipts/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_V1.json",
+        "state": "PARTIAL_DECISION_HZ_DATASET_FROZEN_THREE_AXES_OPEN",
+        "resolved_axes": [
+          "hz_dataset"
+        ],
+        "resolved_tokens": [
+          "TOKEN_VAZIO_DECISION:hz_dataset"
+        ],
+        "remaining_blocking_axes": [
+          "omega_r",
+          "growth_mode",
           "distance_integration"
         ],
-        "remaining_axes": [
-          "omega_r",
-          "growth_mode"
-        ],
-        "measured_omega_r_sensitivity": {
-          "max_relative_delta_H": 0.0024736895137296927,
-          "max_relative_delta_DM": 0.00009420746846093331
-        },
-        "boundary": "H(z) surface and distance-integration tolerance are evidence-terminal. Omega_r still requires physical authority; growth remains blocked until WS06. RX-PHYSICS-CANONICAL-V2 therefore remains TOKEN_VAZIO_CONTRACT."
+        "boundary": "H(z) is frozen to the 28 pure cosmic-chronometer rows because the alternative 33-row container adds only BAO-labelled rows already excluded by the pre-existing G4/WS02 no-double-count policy. Omega_r, growth semantics and integration tolerance remain unresolved; WS01 overall remains BLOCKED_SCIENTIFIC_DECISION."
       }
     },
     {

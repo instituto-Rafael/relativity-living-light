@@ -43,7 +43,7 @@
     },
     {
       "id": "hz_dataset",
-      "current": "EVIDENCE_TERMINAL",
+      "current": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
       "options": [
         {
           "id": "independent_cosmic_chronometers_28",
@@ -64,16 +64,15 @@
         "same-likelihood ablation comparing 28 versus 33 rows without double counting"
       ],
       "selected_option": "independent_cosmic_chronometers_28",
-      "decision_evidence": {
-        "workflow_run_id": 36236992273,
-        "result": "PASS_IDENTICAL_PURE_CC_SURFACE",
-        "raw_33_rows": 33,
-        "selected_pure_cc_rows": 28,
-        "excluded_bao_labeled_rows": 5,
-        "row_level_exact_match": true,
-        "same_fixed_vector_hz_chi2": true,
-        "boundary": "Selection is by independence/double-count policy, not fit quality."
-      }
+      "decision_state": "FROZEN_BY_PREEXISTING_NO_DOUBLE_COUNT_POLICY",
+      "decision_evidence": [
+        "workflow:36237679811",
+        "artifact:10904329440",
+        "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+        "tools/run_g4_background_tournament.py#load_cc",
+        "artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json"
+      ],
+      "decision_reason": "The 33-row container equals the 28-row pure-CC surface plus five BAO-labelled rows. Existing G4/WS02 policy excludes BAO-labelled H(z) rows because DESI BAO is already a separate block; applying that pre-existing policy projects the 33-row file exactly onto the 28 independent CC rows. Selection is therefore based on probe independence/no-double-counting, not fit quality."
     },
     {
       "id": "growth_mode",

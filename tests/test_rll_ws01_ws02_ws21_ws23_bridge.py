@@ -74,8 +74,6 @@ class Ws01Ws02Ws21Ws23BridgeTests(unittest.TestCase):
         receipt = build()
         by_id = {row["binding_id"]: row for row in receipt["workstreams"]["WS23"]["bindings"]}
         self.assertNotIn("WS01_AXIS:hz_dataset", by_id["OGB-HZ-001"]["blockers"])
-        self.assertNotIn("WS01_AXIS:distance_integration", by_id["OGB-HZ-001"]["blockers"])
-        self.assertIn("WS01_AXIS:omega_r", by_id["OGB-HZ-001"]["blockers"])
         self.assertIn("WS01_AXIS:omega_r", by_id["OGB-BAO-001"]["blockers"])
         self.assertNotIn("WS01_AXIS:distance_integration", by_id["OGB-BAO-001"]["blockers"])
         self.assertIn("WS01_AXIS:omega_r", by_id["OGB-SN-001"]["blockers"])
