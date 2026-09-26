@@ -1,0 +1,79 @@
+{
+  "schema": "rll.ws01_background_decision_evidence_ci_receipt.v1",
+  "date": "2026-09-26",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "source": {
+    "pr": 994,
+    "branch": "science/ws01-background-decision-evidence-20260926",
+    "tested_head_sha": "88552462c65f0d1fea6897a9013320e27640a788",
+    "workflow": "RLL Governance Quality Gate — non-certification",
+    "workflow_run_id": 36237679811,
+    "job_id": 108392348752,
+    "artifact_id": 10904329440,
+    "artifact_name": "rll-governance-receipt-36237679811",
+    "artifact_digest": "sha256:c109fc87364d4f1d962cd1576da2f3c011c9eabcfcf0650b17e0aa9ab6561170"
+  },
+  "section_retrofeedback": {
+    "valid": true,
+    "contract_sha256": "da46fe9494115eba370345259ac6dc52518bd529f1705d1d6f6ffa873109c1b5",
+    "atlas_sha256": "7619c81846f834eda3b5781a6b5fc35895026255fa7b7ca3e9f0ca2b0e72be07",
+    "event_count": 1,
+    "epistemic_evolution_count": 1,
+    "negative_evidence_event_count": 1,
+    "authorized_promotion_count": 0,
+    "token_vazio_count": 1,
+    "claim_allowed": false
+  },
+  "ws01_observed": {
+    "state": "EVIDENCE_MATERIALIZED_DECISION_STILL_FAIL_CLOSED",
+    "max_relative_H_delta_omega_r_9e5_vs_9p18e5": 0.002390101756426889,
+    "max_finest_simpson_vs_trapezoid_relative": 4.195721343301793e-8,
+    "shared_redshift_count": 28,
+    "promotion": "BLOCKED",
+    "claim_allowed": false
+  },
+  "row_level_reconciliation": {
+    "independent_cc_rows": 28,
+    "container_rows": 33,
+    "extra_rows": 5,
+    "extra_sources": [
+      {
+        "z": 0.38,
+        "source": "CC+BAO_BOSS"
+      },
+      {
+        "z": 0.51,
+        "source": "CC+BAO_BOSS"
+      },
+      {
+        "z": 0.57,
+        "source": "CC+BAO_BOSS"
+      },
+      {
+        "z": 0.61,
+        "source": "CC+BAO_BOSS"
+      },
+      {
+        "z": 2.34,
+        "source": "BAO_Lya"
+      }
+    ],
+    "existing_selection_authority": "G4/WS02: source begins with CC_ and excludes labels containing BAO",
+    "conclusion": "Applying the pre-existing no-double-count selection to the 33-row container yields the same 28 pure cosmic-chronometer rows as the independent CC file.",
+    "decision_basis": "probe independence and pre-existing selection policy, not fit quality"
+  },
+  "decision_effect": {
+    "resolved": [
+      "TOKEN_VAZIO_DECISION:hz_dataset"
+    ],
+    "selected_hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+    "remaining": [
+      "TOKEN_VAZIO_DECISION:omega_r",
+      "TOKEN_VAZIO_DECISION:growth_mode",
+      "TOKEN_VAZIO_TOLERANCE_CONTRACT:distance_integration"
+    ],
+    "overall_ws01_closed": false
+  },
+  "claim_allowed": false,
+  "boundary": "Successful execution and one resolved WS01 axis do not close RX-PHYSICS-CANONICAL-V2, validate RLL physics, or authorize scientific claims."
+}
