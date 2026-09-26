@@ -15,6 +15,8 @@ on:
       - "tools/rx_physics_v2_decision_evidence.py"
       - "tests/test_rx_physics_v2_decision_evidence.py"
       - "tools/rx_physics_v2_omega_r_authority.py"
+      - "tools/finalize_rx_physics_v2_background.py"
+      - "tests/test_finalize_rx_physics_v2_background.py"
       - "tests/test_rx_physics_v2_omega_r_authority.py"
       - "src/rll/cosmology_radiation.py"
       - "rx/cosmology.py"
@@ -79,6 +81,13 @@ jobs:
             artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json \
             > artifacts/science/ws01/CHECKSUMS.sha256
 
+      - name: Validate versioned canonical background finalizer
+        run: |
+          python -m pytest -q tests/test_rx_physics_v2_decision_packet.py tests/test_finalize_rx_physics_v2_background.py
+          python tools/finalize_rx_physics_v2_background.py \
+            --output provenance/receipts/RLL_RX_PHYSICS_CANONICAL_V2_BACKGROUND_RECEIPT.json \
+            --require-pass
+
       - name: Verify fail-closed boundary
         run: |
           python - <<'PY'
@@ -123,5 +132,6 @@ jobs:
             artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE.json
             artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json
             artifacts/science/ws01/CHECKSUMS.sha256
+            provenance/receipts/RLL_RX_PHYSICS_CANONICAL_V2_BACKGROUND_RECEIPT.json
           if-no-files-found: error
           retention-days: 30
