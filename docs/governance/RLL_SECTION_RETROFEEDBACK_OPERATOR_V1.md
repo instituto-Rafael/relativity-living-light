@@ -73,3 +73,12 @@ python3 -m unittest -v tests.test_rll_section_retrofeedback
 Este operador é uma infraestrutura de governança e engenharia do projeto.
 Não certifica física, ética, conformidade legal, segurança, Six Sigma ou
 replicação independente.
+
+## Delta WS01 — tolerância de integração
+
+Após fechar o eixo H(z) por independência de probes, o próximo eixo numérico foi
+pré-registrado em `data/contracts/rll_ws01_distance_integration_tolerance.v1.json`.
+O limiar é congelado **antes da execução sucessora** (`rtol=1e-6`,
+`atol=0.001 Mpc`) e será testado em 33 combinações modelo×redshift por três
+comparações independentes/semindependentes. Falha preserva o TOKEN_VAZIO;
+PASS autoriza somente congelar o método numérico, nunca uma claim física.
