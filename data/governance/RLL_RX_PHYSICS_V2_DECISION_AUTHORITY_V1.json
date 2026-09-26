@@ -1,6 +1,6 @@
 {
   "schema": "rll.rx.physics_v2_decision_authority.v1",
-  "date": "2026-09-23",
+  "date": "2026-09-26",
   "claim_allowed": false,
   "target_contract": "RX-PHYSICS-CANONICAL-V2",
   "decision_rule": "Choose only by explicit scientific authority plus preregistered null-limit/dimensional/reference-vector tests; never by preferred fit quality.",
@@ -31,7 +31,7 @@
     },
     {
       "id": "hz_dataset",
-      "current": "TOKEN_VAZIO_DECISION",
+      "current": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
       "options": [
         {
           "id": "independent_cosmic_chronometers_28",
@@ -51,7 +51,16 @@
         "inclusion/exclusion policy",
         "same-likelihood ablation comparing 28 versus 33 rows without double counting"
       ],
-      "selected_option": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION"
+      "selected_option": "independent_cosmic_chronometers_28",
+      "decision_state": "FROZEN_BY_PREEXISTING_NO_DOUBLE_COUNT_POLICY",
+      "decision_evidence": [
+        "workflow:36237679811",
+        "artifact:10904329440",
+        "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+        "tools/run_g4_background_tournament.py#load_cc",
+        "artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json"
+      ],
+      "decision_reason": "The 33-row container equals the 28-row pure-CC surface plus five BAO-labelled rows. Existing G4/WS02 policy excludes BAO-labelled H(z) rows because DESI BAO is already a separate block; applying that pre-existing policy projects the 33-row file exactly onto the 28 independent CC rows. Selection is therefore based on probe independence/no-double-counting, not fit quality."
     },
     {
       "id": "growth_mode",
