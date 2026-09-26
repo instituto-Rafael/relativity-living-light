@@ -39,7 +39,10 @@
         "state": "REDUCED",
         "direction": "REDUCED",
         "answer": "The direct executor lacked repository-root import visibility; this specific root cause is identified.",
-        "evidence": ["github-actions:run/36237184293/job/108390983455","commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"]
+        "evidence": [
+          "github-actions:run/36237184293/job/108390983455",
+          "commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"
+        ]
       },
       "§FALSIFICADOR": "If rerun after the import-path repair still fails before producing the receipt, this root-cause closure is insufficient.",
       "§TOKEN_VAZIO": [
@@ -81,15 +84,128 @@
         "zero_trust_boundary_preserved": true
       },
       "§μ": {
-        "writes": ["commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"]
+        "writes": [
+          "commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc"
+        ]
       },
       "§Ω": {
         "workstream": "WS01",
-        "depends_on": ["WS00"],
-        "unlocks_if_closed": ["WS03","WS12","WS23"]
+        "depends_on": [
+          "WS00"
+        ],
+        "unlocks_if_closed": [
+          "WS03",
+          "WS12",
+          "WS23"
+        ]
       },
       "§∞": {
         "next_event_expected": "SECTION-DELTA-WS01-20260926-002"
+      }
+    },
+    {
+      "§ID": "SECTION-DELTA-WS01-20260926-002",
+      "§ANTES": "The WS01 import-path defect was repaired, but the repaired execution receipt was still TOKEN_VAZIO.",
+      "§INTENÇÃO": "Reexecute WS01 under the existing governance workflow and reduce only those decision gaps supported by non-fit-quality evidence.",
+      "§ENTRADA": [
+        "commit:77b07cc0f5c5f1d4d90501b8f873df9efec976cc",
+        "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+        "data/real/Hz_data_real.csv",
+        "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+        "tools/run_g4_background_tournament.py#load_cc"
+      ],
+      "§EXECUÇÃO": {
+        "state": "OBSERVED",
+        "workflow_run_id": 36237679811,
+        "job_id": 108392348752,
+        "step": "Execute WS01 decision-evidence delta through governed runtime",
+        "exit_state": "PASS"
+      },
+      "§OBSERVAÇÃO": "Governed execution passed. max relative H(z) delta for Omega_r choices was 0.002390101756426889; finest Simpson-vs-trapezoid relative difference was 4.195721343301793e-08; 28 redshifts were shared. Row-level inspection shows the five extra rows in the 33-row container are BAO-labelled, and the pre-existing G4/WS02 pure-CC selection yields the 28-row independent surface.",
+      "§RESULTADO": {
+        "outcome": "PASS",
+        "epistemic_evolution": true,
+        "negative_evidence_preserved": true,
+        "promotion_authorized": false,
+        "claim_allowed": false
+      },
+      "§Δ": "Execution uncertainty closed; H(z) surface ambiguity reduced by freezing pure CC28 under the already-existing no-BAO-double-count policy. RX-PHYSICS-CANONICAL-V2 remains open on three axes.",
+      "§INCERTEZA_ANTES": {
+        "state": "OPEN",
+        "question": "Does the repair execute, and are the 28-vs-33 H(z) surfaces scientifically distinct under the canonical pure-CC selection?"
+      },
+      "§INCERTEZA_DEPOIS": {
+        "state": "REDUCED",
+        "direction": "REDUCED",
+        "answer": "Repair executes successfully. The 33-row container adds five BAO-labelled rows; canonical pure-CC selection maps it exactly to the 28-row CC surface, so hz_dataset can be frozen without using fit quality.",
+        "evidence": [
+          "github-actions:run/36237679811/job/108392348752",
+          "artifact:10904329440",
+          "provenance/receipts/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_V1.json"
+        ]
+      },
+      "§FALSIFICADOR": "If the pure-CC projection of the 33-row file ceases to match the independent 28-row file, or the canonical no-double-count policy changes under versioned authority, reopen the hz_dataset decision.",
+      "§TOKEN_VAZIO": [
+        "TOKEN_VAZIO_DECISION:omega_r",
+        "TOKEN_VAZIO_DECISION:growth_mode",
+        "TOKEN_VAZIO_TOLERANCE_CONTRACT:distance_integration"
+      ],
+      "§PROVENIÊNCIA": {
+        "repository": "instituto-Rafael/relativity-living-light",
+        "pr": 994,
+        "workflow_run_id": 36237679811,
+        "artifact_id": 10904329440,
+        "artifact_digest": "sha256:c109fc87364d4f1d962cd1576da2f3c011c9eabcfcf0650b17e0aa9ab6561170"
+      },
+      "§HASH": {
+        "artifact_sha256": "c109fc87364d4f1d962cd1576da2f3c011c9eabcfcf0650b17e0aa9ab6561170"
+      },
+      "§RECEIPT": {
+        "state": "PASS",
+        "ref": "provenance/receipts/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_V1.json",
+        "workflow_artifact": 10904329440
+      },
+      "§GATE": {
+        "state": "PASS",
+        "promotion": false,
+        "scope": "execution_and_hz_axis_evidence_only"
+      },
+      "§BOUNDARY": "PASS means the governed executor and H(z) selection evidence are valid in scope. It does not close omega_r, growth semantics, integration tolerance, WS01 overall, or any RLL scientific claim.",
+      "§ROLLBACK": {
+        "ready": true,
+        "method": "revert the hz_dataset selection commits while preserving both § events and CI receipts"
+      },
+      "§URGÊNCIA": "P0",
+      "§F_NEXT": "Preregister a distance-integration tolerance before rerun; separately close Omega_r with null-limit/high-z/reference-vector evidence. Keep growth_mode TOKEN_VAZIO until WS06.",
+      "§DEPOIS": "HZ_DATASET_FROZEN_THREE_WS01_AXES_REMAIN",
+      "§H": {
+        "human_rights_regression": false,
+        "certification": "NOT_ASSESSED"
+      },
+      "§A": {
+        "auditability_regression": false
+      },
+      "§S": {
+        "zero_trust_boundary_preserved": true
+      },
+      "§μ": {
+        "writes": [
+          "provenance/receipts/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_V1.json",
+          "configs/rx_physics_contracts.json",
+          "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+        ]
+      },
+      "§Ω": {
+        "workstream": "WS01",
+        "resolved_axis": "hz_dataset",
+        "remaining_axes": [
+          "omega_r",
+          "growth_mode",
+          "distance_integration"
+        ]
+      },
+      "§∞": {
+        "next_event_expected": "SECTION-DELTA-WS01-20260926-003"
       }
     }
   ],
