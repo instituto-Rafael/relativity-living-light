@@ -27,17 +27,32 @@
       "note": "Projection only; not exact binary parity because Omega_r and data surface differ."
     },
     "RX-PHYSICS-CANONICAL-V2": {
-      "state": "TOKEN_VAZIO_CONTRACT",
-      "omega_r": "TOKEN_VAZIO_DECISION",
+      "state": "VERSIONED_BACKGROUND_CONTRACT_PENDING_FINALIZER",
+      "omega_r": "derived_standard_relativistic_radiation",
       "hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
-      "growth_mode": "TOKEN_VAZIO_DECISION",
+      "growth_mode": "EXCLUDED_FROM_BACKGROUND_UNTIL_WS06",
       "bao_sound_horizon": "sound_horizon_integral_required",
       "cmb_acoustic_mode": "rs_star_required",
       "distance_integration": "log1p_simpson",
       "flat_closure": true,
       "claim_allowed": false,
       "hz_dataset_state": "FROZEN_PURE_CC28_NO_DOUBLE_COUNT",
-      "hz_dataset_evidence": "RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1"
+      "hz_dataset_evidence": "RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1",
+      "omega_r_authority": {
+        "contract": "data/contracts/rll_ws01_omega_r_physical_authority.v1.json",
+        "formula": "Omega_r=omega_r_h2/h^2",
+        "omega_r_h2": 0.000041826211911705586,
+        "Tcmb_K": 2.7255,
+        "N_eff": 3.044
+      },
+      "growth_mode_state": "BOUNDARY_FROZEN_NO_PROXY_PROMOTION",
+      "distance_integration_state": "PASS_PREREGISTERED_TOLERANCE",
+      "distance_integration_tolerance": {
+        "steps": 2048,
+        "max_relative_error_vs_quad": 1e-8,
+        "max_relative_refinement_delta_2048_to_4096": 1e-8
+      },
+      "activation_policy": "NOT_ACTIVE_UNTIL_EXPLICIT_EXECUTION_PLAN_SELECTS_VERSIONED_CONTRACT"
     },
     "RX-FREESTANDING65-PARITY-V1": {
       "state": "VERIFIED_EXACT_Q16_PARITY",
