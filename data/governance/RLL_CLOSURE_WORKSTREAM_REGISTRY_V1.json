@@ -1,6 +1,6 @@
 {
   "schema": "rll.closure_workstream_registry.v1",
-  "date": "2026-09-24",
+  "date": "2026-09-26",
   "author": "RAFAEL MELO REIS",
   "claim_allowed": false,
   "purpose": "Single dependency-aware closure program for engineering, scientific, data, low-level, governance and independent-replication work.",
@@ -104,8 +104,21 @@
       "current_delta": {
         "decision_packet": "tools/rx_physics_v2_decision_packet.py",
         "bridge": "tools/rll_ws01_ws02_ws21_ws23_bridge.py",
-        "state": "NO_AUTO_SELECTION",
-        "boundary": "Bridge consumes blocking axes but cannot choose omega_r, H(z) surface, growth semantics or integration tolerance."
+        "evidence_executor": "tools/rll_ws01_background_decision_evidence.py",
+        "receipt": "provenance/receipts/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_20260926_V1.json",
+        "state": "PARTIAL_DECISION_HZ_DATASET_FROZEN_THREE_AXES_OPEN",
+        "resolved_axes": [
+          "hz_dataset"
+        ],
+        "resolved_tokens": [
+          "TOKEN_VAZIO_DECISION:hz_dataset"
+        ],
+        "remaining_blocking_axes": [
+          "omega_r",
+          "growth_mode",
+          "distance_integration"
+        ],
+        "boundary": "H(z) is frozen to the 28 pure cosmic-chronometer rows because the alternative 33-row container adds only BAO-labelled rows already excluded by the pre-existing G4/WS02 no-double-count policy. Omega_r, growth semantics and integration tolerance remain unresolved; WS01 overall remains BLOCKED_SCIENTIFIC_DECISION."
       }
     },
     {
