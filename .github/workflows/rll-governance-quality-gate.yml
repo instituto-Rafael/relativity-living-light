@@ -8,6 +8,7 @@ on:
       - "governance/**"
       - "data/governance/**"
       - "data/contracts/rll_section_retrofeedback_operator.v1.json"
+      - "data/contracts/rll_ws01_distance_integration_tolerance.v1.json"
       - "data/science/act/**"
       - "data/science/h0/**"
       - "data/science/perturbations/**"
@@ -31,6 +32,8 @@ on:
       - "tests/test_rll_section_retrofeedback.py"
       - "tools/rll_ws01_background_decision_evidence.py"
       - "tests/test_rll_ws01_background_decision_evidence.py"
+      - "tools/rll_ws01_distance_integration_tolerance.py"
+      - "tests/test_rll_ws01_distance_integration_tolerance.py"
       - "schemas/rll_observational_topology.v1.schema.json"
       - "tools/validate_rll_observational_topology.py"
       - "tests/test_rll_observational_topology.py"
@@ -201,6 +204,13 @@ jobs:
           sha256sum artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json \
             > artifacts/governance/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.sha256
 
+      - name: "Execute preregistered WS01 distance-integration tolerance gate"
+        run: |
+          python3 -m unittest -v tests.test_rll_ws01_distance_integration_tolerance
+          python3 tools/rll_ws01_distance_integration_tolerance.py --write
+          sha256sum artifacts/science/background/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.json \
+            > artifacts/governance/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.sha256
+
       - name: "Publish non-certification report to job summary"
         if: always()
         run: |
@@ -218,6 +228,7 @@ jobs:
           path: |
             artifacts/governance/
             artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json
+            artifacts/science/background/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.json
           if-no-files-found: warn
           retention-days: 30
 
