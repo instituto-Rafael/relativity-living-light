@@ -1,0 +1,98 @@
+{
+  "schema_version": "rmr-zipraf-evidence-envelope-v1",
+  "envelope_id": "RLL-OPLAB-EVIDENCE-PROVIDER-ANCHORED-V1",
+  "subject": {
+    "kind": "RLL_OPERATOR_LAB_PROVIDER_RECEIPT",
+    "run_id": "36258384349",
+    "implementation_head": "f7d1a4b0b9659b059be697f3f78512af6dcfb01b",
+    "physics_binding": false,
+    "scientific_gate_effect": "NONE"
+  },
+  "artifact_digests": [
+    {
+      "artifact_ref": "results/operator_lab/v1/receipt.json",
+      "algorithm": "SHA-256",
+      "value": "e09f240a8a7a16ae9d26fd906e5523ffee7d336340aef94d4c25e05a3b7dd9ec",
+      "verification_state": "VERIFIED_FROM_PROVIDER_LOG"
+    },
+    {
+      "artifact_ref": "GitHub Actions artifact 10911730873",
+      "algorithm": "SHA-256",
+      "value": "93b9b8e7390ccc654c06c0fdc6beb9cfef6dc3525eba13ff90ff48b9eec5c14e",
+      "verification_state": "VERIFIED_FROM_PROVIDER_LOG"
+    }
+  ],
+  "manifest_digest": {
+    "algorithm": "SHA-256",
+    "value": "d12289813a33be271d2197c6ac77113b0c4aefe23158716f0d3560441f34441b",
+    "state": "VERIFIED_FROM_CI_ARTIFACT"
+  },
+  "receipt_chain_head": {
+    "algorithm": "SHA-256",
+    "value": "298b8a0d49befc3394b6b9846cb5a1626da668fa601adb67dbe9e0d82ff1f5b4",
+    "state": "VERIFIED_FROM_PROVIDER_LOG"
+  },
+  "policy_digest": {
+    "algorithm": "SHA-256",
+    "value": "09f795ac6ae735e95ede379e64bf89b45556f98d1172e23c3090597579257278",
+    "state": "VERIFIED_FROM_CI_ARTIFACT"
+  },
+  "parent_envelope_root": "725d6d827092968f9facc6342ecc186ba9e3fa2b1b94384f827644ee03e6501f",
+  "producer": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "component": "RLL Operator Lab V1",
+    "provider": "GitHub Actions",
+    "workflow_run": 36258384349
+  },
+  "time_attestation": {
+    "provider_started_at_utc": "2026-09-26T17:15:57Z",
+    "provider_completed_at_utc": "2026-09-26T17:15:59Z",
+    "state": "PROVIDER_OBSERVED_TIME",
+    "trusted_timestamp_state": "TOKEN_VAZIO_RFC3161_NOT_PRESENT"
+  },
+  "external_anchors": [
+    {
+      "type": "GIT_COMMIT_REF",
+      "state": "VERIFIED",
+      "locator": "instituto-Rafael/relativity-living-light@f7d1a4b0b9659b059be697f3f78512af6dcfb01b",
+      "verification_receipt_ref": "receipts/RLL_OPERATOR_LAB_GIT_ANCHOR_V1.json"
+    },
+    {
+      "type": "GIT_COMMIT_REF",
+      "state": "VERIFIED",
+      "locator": "instituto-Rafael/relativity-living-light@a045ffa1c3a3835cfb87fde9ecb3afd7b93f2608",
+      "verification_receipt_ref": "receipts/RLL_OPERATOR_LAB_GIT_ANCHOR_V1.json"
+    },
+    {
+      "type": "ED25519_SIGNATURE",
+      "state": "TOKEN_VAZIO",
+      "locator": null,
+      "verification_receipt_ref": null
+    },
+    {
+      "type": "X509_CERTIFICATE_REF",
+      "state": "NOT_PRESENT",
+      "locator": null,
+      "verification_receipt_ref": null
+    },
+    {
+      "type": "RFC3161_TSA_REF",
+      "state": "NOT_PRESENT",
+      "locator": null,
+      "verification_receipt_ref": null
+    },
+    {
+      "type": "ICP_BRASIL_CERT_REF",
+      "state": "NOT_PRESENT",
+      "locator": null,
+      "verification_receipt_ref": null
+    }
+  ],
+  "custody_state": "RLL_OPERATOR_LAB_CI_PROVIDER_VERIFIED",
+  "claim_allowed": false,
+  "rollback_ref": "parent_envelope_root",
+  "envelope_root": {
+    "algorithm": "SHA-256",
+    "value": "9e64ef64afc19a18690a132683ab568f613c528abafc52258473b77fb61131b2"
+  }
+}
