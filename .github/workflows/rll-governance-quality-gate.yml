@@ -7,6 +7,7 @@ on:
     paths:
       - "governance/**"
       - "data/governance/**"
+      - "data/contracts/rll_section_retrofeedback_operator.v1.json"
       - "data/science/act/**"
       - "data/science/h0/**"
       - "data/science/perturbations/**"
@@ -26,6 +27,10 @@ on:
       - "tests/test_rll_atlas_evolution_gate.py"
       - "tools/rll_atlas_continuous_evolution_gate_v2.py"
       - "tests/test_rll_atlas_continuous_evolution_gate_v2.py"
+      - "tools/validate_rll_section_retrofeedback.py"
+      - "tests/test_rll_section_retrofeedback.py"
+      - "tools/rll_ws01_background_decision_evidence.py"
+      - "tests/test_rll_ws01_background_decision_evidence.py"
       - "schemas/rll_observational_topology.v1.schema.json"
       - "tools/validate_rll_observational_topology.py"
       - "tests/test_rll_observational_topology.py"
@@ -162,6 +167,40 @@ jobs:
           sha256sum artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.json \
             > artifacts/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_OMEGA6_RECEIPT.sha256
 
+      - name: "Validate §Retrofeedback operator and delta atlas"
+        run: |
+          mkdir -p artifacts/governance
+          python3 -m tools.validate_rll_section_retrofeedback \
+            --output artifacts/governance/RLL_SECTION_RETROFEEDBACK_RECEIPT.json
+          python3 -m unittest -v tests.test_rll_section_retrofeedback
+          sha256sum artifacts/governance/RLL_SECTION_RETROFEEDBACK_RECEIPT.json \
+            > artifacts/governance/RLL_SECTION_RETROFEEDBACK_RECEIPT.sha256
+
+      - name: "Execute WS01 decision-evidence delta through governed runtime"
+        run: |
+          mkdir -p artifacts/science/background
+          python3 -m unittest -v tests.test_rll_ws01_background_decision_evidence
+          python3 tools/rll_ws01_background_decision_evidence.py --write
+          python3 - <<'PY'
+          import json
+          p="artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json"
+          x=json.load(open(p,encoding="utf-8"))
+          assert x["claim_allowed"] is False
+          assert x["decision_selected"] is False
+          assert x["promotion"] == "BLOCKED"
+          assert x["axis_status"]["growth_mode"] == "TOKEN_VAZIO_UNTIL_WS06"
+          print(json.dumps({
+            "state":x["state"],
+            "max_relative_H_delta":x["omega_r_sensitivity"]["max_relative_H_delta"],
+            "max_finest_crosscheck":x["distance_integration"]["max_finest_simpson_vs_trapezoid_relative"],
+            "hz_overlap_count":x["hz_overlap"]["shared_redshift_count"],
+            "promotion":x["promotion"],
+            "claim_allowed":x["claim_allowed"],
+          },sort_keys=True))
+          PY
+          sha256sum artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json \
+            > artifacts/governance/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.sha256
+
       - name: "Publish non-certification report to job summary"
         if: always()
         run: |
@@ -176,7 +215,9 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: rll-governance-receipt-${{ github.run_id }}
-          path: artifacts/governance/
+          path: |
+            artifacts/governance/
+            artifacts/science/background/RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1.json
           if-no-files-found: warn
           retention-days: 30
 
