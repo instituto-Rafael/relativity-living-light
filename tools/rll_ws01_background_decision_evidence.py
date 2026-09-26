@@ -78,16 +78,25 @@ def build():
  max_cross=max(x["simpson_vs_trap_rel"] for x in finest)
  max_ref=max(x["simpson_vs_ref_rel"] for x in finest)
  ov=overlap(a,b)
+ def row_key(r):
+  return (float(r["z"]),float(r["H_obs"]),float(r["sigma_H"]),str(r["source"]))
+ a_keys=[row_key(r) for r in a]
+ pure_b=[r for r in b if str(r.get("source","")).startswith("CC_") and "BAO" not in str(r.get("source","")).upper()]
+ pure_b_keys=[row_key(r) for r in pure_b]
+ a_z={round(float(r["z"]),10) for r in a}
+ extra=[{"z":float(r["z"]),"H_obs":float(r["H_obs"]),"sigma_H":float(r["sigma_H"]),"source":str(r["source"])} for r in b if round(float(r["z"]),10) not in a_z]
+ extra_all_bao=bool(extra) and all("BAO" in r["source"].upper() for r in extra)
+ pure_projection_match=a_keys==pure_b_keys
  return {
   "schema":"rll.ws01.background_decision_evidence.v1",
   "state":"EVIDENCE_MATERIALIZED_DECISION_STILL_FAIL_CLOSED",
   "claim_allowed":False,
   "decision_selected":False,
   "inputs":{"omega_r":OMEGA_R,"hz_surfaces":[{"path":str(HZ28.relative_to(ROOT)),"rows":len(a),"sha256":sha256(HZ28)},{"path":str(HZ33.relative_to(ROOT)),"rows":len(b),"sha256":sha256(HZ33)}]},
-  "hz_overlap":{"shared_redshift_count":len(ov),"shared_redshifts":ov,"boundary":"Redshift equality is not bibliographic identity; row-level provenance remains required before selection."},
+  "hz_overlap":{"shared_redshift_count":len(ov),"shared_redshifts":ov,"extra_rows_in_33":extra,"extra_row_count":len(extra),"extra_all_bao_labeled":extra_all_bao,"pure_cc_projection_rows":len(pure_b),"pure_cc_projection_matches_independent_28_exactly":pure_projection_match,"selection_authority":"G4/WS02 pre-existing rule: source begins with CC_ and excludes labels containing BAO","boundary":"The 33-row container is not a 33-row pure-CC likelihood surface when the pre-existing G4/WS02 no-double-count selection is applied."},
   "omega_r_sensitivity":{"max_relative_H_delta":max_orad,"rows":sensitivity},
   "distance_integration":{"methods":["log1p_simpson","log1p_trapezoid_independent_implementation"],"steps":STEPS,"max_finest_simpson_vs_trapezoid_relative":max_cross,"max_finest_simpson_vs_2048_trapezoid_reference_relative":max_ref,"rows":convergence},
-  "axis_status":{"omega_r":"EVIDENCE_ADDED_NOT_SELECTED","hz_dataset":"EVIDENCE_ADDED_PROVENANCE_POLICY_STILL_REQUIRED","growth_mode":"TOKEN_VAZIO_UNTIL_WS06","distance_integration":"EVIDENCE_ADDED_TOLERANCE_NOT_YET_PROMOTED"},
+  "axis_status":{"omega_r":"EVIDENCE_ADDED_NOT_SELECTED","hz_dataset":"EVIDENCE_SUPPORTS_PURE_CC28_FREEZE_BY_PREEXISTING_NO_DOUBLE_COUNT_POLICY" if pure_projection_match and extra_all_bao else "BLOCKED_HZ_SURFACE_MISMATCH","growth_mode":"TOKEN_VAZIO_UNTIL_WS06","distance_integration":"EVIDENCE_ADDED_TOLERANCE_NOT_YET_PROMOTED"},
   "promotion":"BLOCKED",
   "boundary":"This executor measures sensitivity and numerical convergence only. It MUST NOT choose the canonical option from fit quality."
  }
