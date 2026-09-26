@@ -6,18 +6,19 @@ from tools.rx_physics_v2_decision_packet import build
 
 
 class RxPhysicsV2DecisionPacketTests(unittest.TestCase):
-    def test_packet_preserves_only_remaining_scientific_decisions(self):
+    def test_packet_has_zero_background_decision_blockers(self):
         packet = build()
         self.assertEqual(packet["target_contract"], "RX-PHYSICS-CANONICAL-V2")
-        self.assertEqual(packet["target_state"], "TOKEN_VAZIO_CONTRACT")
+        self.assertEqual(packet["target_state"], "VERSIONED_BACKGROUND_CONTRACT_PENDING_FINALIZER")
+        self.assertEqual(packet["state"], "READY_CANONICAL_V2_BACKGROUND_FINALIZATION")
         self.assertFalse(packet["claim_allowed"])
-        self.assertIn("omega_r", packet["blocking_axes"])
-        self.assertNotIn("hz_dataset", packet["blocking_axes"])
-        self.assertIn("growth_mode", packet["blocking_axes"])
-        self.assertIn("distance_integration", packet["blocking_axes"])
+        self.assertEqual(packet["blocking_axes"], [])
         axes = {row["axis"]: row for row in packet["axes"]}
+        self.assertEqual(axes["omega_r"]["selected_option"], "derived_standard_relativistic_radiation")
         self.assertEqual(axes["hz_dataset"]["selected_option"], "independent_cosmic_chronometers_28")
-        self.assertTrue(axes["hz_dataset"]["decision_terminal"])
+        self.assertEqual(axes["growth_mode"]["selected_option"], "perturbation_backend_fsigma8")
+        self.assertEqual(axes["distance_integration"]["selected_option"], "log1p_simpson_with_preregistered_tolerance")
+        self.assertTrue(all(row["decision_terminal"] for row in axes.values()))
 
     def test_integrated_sound_horizon_directions_are_not_reopened(self):
         packet = build()
