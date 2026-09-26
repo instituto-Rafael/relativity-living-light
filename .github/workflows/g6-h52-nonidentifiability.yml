@@ -39,12 +39,15 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
-          cache: pip
 
-      - name: Install scientific runtime
+      - name: Install minimal scientific runtime
         run: |
-          python -m pip install --disable-pip-version-check -r requirements.txt
-          python -m pip install --disable-pip-version-check --upgrade             "numpy>=1.26,<2"             "scipy>=1.11,<2"             "emcee>=3.1,<4"             "dynesty>=2.1,<4"             "pytest>=8,<10"
+          python -m pip install --disable-pip-version-check --upgrade \
+            "numpy>=1.26,<2" \
+            "scipy>=1.11,<2" \
+            "emcee>=3.1,<4" \
+            "dynesty>=2.1,<4" \
+            "pytest>=8,<10"
           python - <<'PY'
           import importlib.metadata, json, platform
           names = ["numpy", "scipy", "emcee", "dynesty", "pytest"]
@@ -56,25 +59,35 @@ jobs:
 
       - name: Run H52 unit and boundary tests
         run: |
-          python -m pytest -q             tests/test_g6_h52_nonidentifiability.py
-          python -m pytest -q             tests/test_g4_background_tournament_integration.py::test_g6_emcee_proposal_rng_is_deterministic
+          python -m pytest -q tests/test_g6_h52_nonidentifiability.py
+          python -m pytest -q \
+            tests/test_g4_background_tournament_integration.py::test_g6_emcee_proposal_rng_is_deterministic
 
       - name: Materialize pinned Pantheon covariance
         run: |
           mkdir -p artifacts/science/g6_h52
-          python scripts/fetch_pantheon_covariance.py             --receipt artifacts/science/g6_h52/pantheon_covariance_materialization.json
+          python scripts/fetch_pantheon_covariance.py \
+            --receipt artifacts/science/g6_h52/pantheon_covariance_materialization.json
 
       - name: Rebuild exact G4 background receipt
         run: |
-          python tools/run_g4_background_tournament.py             --output artifacts/science/g6_h52/g4_background.json             --require-pass
+          python tools/run_g4_background_tournament.py \
+            --output artifacts/science/g6_h52/g4_background.json \
+            --require-pass
 
       - name: Freeze exact G5 likelihood manifest
         run: |
-          python tools/build_g5_canonical_background_manifest.py             --g4-receipt artifacts/science/g6_h52/g4_background.json             --output artifacts/science/g6_h52/g5_manifest.json             --require-ready
+          python tools/build_g5_canonical_background_manifest.py \
+            --g4-receipt artifacts/science/g6_h52/g4_background.json \
+            --output artifacts/science/g6_h52/g5_manifest.json \
+            --require-ready
 
       - name: Execute preregistered H52 diagnostic
         run: |
-          python tools/run_g6_h52_nonidentifiability.py             --g4-receipt artifacts/science/g6_h52/g4_background.json             --g5-manifest artifacts/science/g6_h52/g5_manifest.json             --output artifacts/science/g6_h52/h52_receipt.json
+          python tools/run_g6_h52_nonidentifiability.py \
+            --g4-receipt artifacts/science/g6_h52/g4_background.json \
+            --g5-manifest artifacts/science/g6_h52/g5_manifest.json \
+            --output artifacts/science/g6_h52/h52_receipt.json
 
       - name: Verify fail-closed result and measure uncertainty delta
         run: |
@@ -109,7 +122,11 @@ jobs:
               "claim_allowed": False,
           }, sort_keys=True))
           PY
-          sha256sum             artifacts/science/g6_h52/g4_background.json             artifacts/science/g6_h52/g5_manifest.json             artifacts/science/g6_h52/h52_receipt.json             > artifacts/science/g6_h52/CHECKSUMS.sha256
+          sha256sum \
+            artifacts/science/g6_h52/g4_background.json \
+            artifacts/science/g6_h52/g5_manifest.json \
+            artifacts/science/g6_h52/h52_receipt.json \
+            > artifacts/science/g6_h52/CHECKSUMS.sha256
 
       - name: Upload H52 evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
