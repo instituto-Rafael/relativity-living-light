@@ -76,9 +76,12 @@ replicação independente.
 
 ## Delta WS01 — tolerância de integração
 
-Após fechar o eixo H(z) por independência de probes, o próximo eixo numérico foi
-pré-registrado em `data/contracts/rll_ws01_distance_integration_tolerance.v1.json`.
-O limiar é congelado **antes da execução sucessora** (`rtol=1e-6`,
-`atol=0.001 Mpc`) e será testado em 33 combinações modelo×redshift por três
-comparações independentes/semindependentes. Falha preserva o TOKEN_VAZIO;
-PASS autoriza somente congelar o método numérico, nunca uma claim física.
+A autoridade canônica de WS01 usa o contrato preregistrado
+`data/contracts/rll_ws01_background_decision_evidence.v1.json` e o executor
+`tools/rx_physics_v2_decision_evidence.py`. O gate foi executado contra
+`scipy.integrate.quad` e refinamento 2048→4096, mantendo a seleção numérica
+separada de qualquer claim física.
+
+O executor local experimental criado durante a exploração foi removido após a
+reconciliação com `main`, evitando duas autoridades concorrentes para o mesmo
+eixo.
