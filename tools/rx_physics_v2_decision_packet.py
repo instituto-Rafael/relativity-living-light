@@ -24,8 +24,8 @@ def build():
     target = contracts.get("contracts", {}).get(authority.get("target_contract"))
     if not isinstance(target, dict):
         raise ValueError("target physics contract missing")
-    if target.get("state") != "TOKEN_VAZIO_CONTRACT":
-        raise ValueError("decision packet is only valid while canonical V2 remains TOKEN_VAZIO_CONTRACT")
+    if target.get("state") not in {"TOKEN_VAZIO_CONTRACT", "VERSIONED_BACKGROUND_CONTRACT_PENDING_FINALIZER", "VERSIONED_BACKGROUND_CONTRACT"}:
+        raise ValueError("unsupported canonical V2 background-contract state")
 
     known = contracts.get("contracts", {})
     rows = []
@@ -53,7 +53,7 @@ def build():
             "options": axis.get("options", []),
         })
 
-    state = "READY_FOR_VERSIONED_SCIENTIFIC_DECISIONS" if blocking else "READY_FOR_CANONICAL_V2_IMPLEMENTATION"
+    state = "READY_FOR_VERSIONED_SCIENTIFIC_DECISIONS" if blocking else "READY_CANONICAL_V2_BACKGROUND_FINALIZATION"
     return {
         "schema": "rll.rx.physics_v2_decision_packet.v1",
         "target_contract": authority["target_contract"],
@@ -64,7 +64,7 @@ def build():
         "decision_rule": authority.get("decision_rule"),
         "promotion_requirements": authority.get("promotion_requirements", []),
         "claim_allowed": False,
-        "boundary": "This packet exposes choices and required evidence. It does not choose scientific semantics from fit quality or assistant preference.",
+        "boundary": "This packet exposes and verifies versioned background choices. A zero-blocker result closes only WS01 background semantics; perturbation-derived growth, CLASS/CAMB, observational claims and independent replication remain separate gates.",
     }
 
 
