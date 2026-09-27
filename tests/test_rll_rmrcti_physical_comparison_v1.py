@@ -30,3 +30,15 @@ def test_geometry_pair_features_are_six_and_finite():
         for row in rows:
             assert math.isfinite(row["residual"]["log_scale"])
             assert math.isfinite(row["residual"]["anisotropy"])
+
+
+def test_joint_real_64_comparison_preserves_null_boundary_and_penalty():
+    out=build()
+    j=out["joint_real_64"]
+    assert j["n_obs"]==64
+    assert j["datasets"]==["Hz","DESI_DR2_BAO","fsigma8","CMB_shift"]
+    assert math.isclose(j["delta_RLL_minus_LCDM"]["chi2"],0.006285088039717834,rel_tol=0,abs_tol=1e-12)
+    assert j["delta_RLL_minus_LCDM"]["AIC"]>6.0
+    assert j["delta_RLL_minus_LCDM"]["BIC"]>12.0
+    assert j["RLL"]["Omega_s0"]==0.0
+    assert j["execution_class"]=="COMMITTED_REAL_JOINT_ARTIFACT_RECOMPARISON_NOT_REFIT"
