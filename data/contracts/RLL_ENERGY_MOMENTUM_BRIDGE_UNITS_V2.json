@@ -1,0 +1,51 @@
+{
+  "schema": "rll.energy_momentum_bridge_units.v2",
+  "date": "2026-09-27",
+  "parent": "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json",
+  "claim_allowed": false,
+  "implementation": "data/pipelines/structure_d/energy_momentum_bridge.py",
+  "purpose": "Close the software dimensional-mixing defect without choosing the model's physical stress-energy semantics.",
+  "legacy_state": {
+    "pressure_unit": "Pa",
+    "rho_fields_unit": "J/m^3",
+    "legacy_pressure_transform": "pressure/c^2",
+    "legacy_mixed_sum": "BLOCKED_FOR_NONZERO_PRESSURE"
+  },
+  "typed_executor": {
+    "default_nonzero_pressure_policy": "FAIL_CLOSED_EXPLICIT_CONVENTION_REQUIRED",
+    "zero_pressure_legacy_compatibility": "ENERGY_DENSITY_NUMERIC_PATH_PRESERVED",
+    "ENERGY_DENSITY_CONVENTION": {
+      "target_unit": "J/m^3",
+      "rho_transform": "identity",
+      "pressure_transform": "Pa == J/m^3; use pressure directly",
+      "uncertainty_transform": "identity"
+    },
+    "MASS_DENSITY_CONVENTION": {
+      "target_unit": "kg/m^3",
+      "rho_transform": "rho_energy/c^2 for every rho-like term",
+      "pressure_transform": "pressure/c^2",
+      "uncertainty_transform": "divide every energy-density uncertainty by c^2"
+    }
+  },
+  "cross_convention_invariant": "energy_density_result/c^2 == mass_density_result for the same scalar proxy inputs",
+  "selected_convention": "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
+  "physical_semantics": {
+    "scalar_pressure_addition": "TOKEN_VAZIO_MECHANISM_JUSTIFICATION",
+    "covariant_stress_energy_binding": "TOKEN_VAZIO",
+    "metric_frame": "TOKEN_VAZIO",
+    "conservation_law_binding": "TOKEN_VAZIO"
+  },
+  "promotion_boundary": {
+    "dimensional_software_repair_can_pass_without_physical_selection": true,
+    "physical_claim_requires_selected_convention_and_mechanism": true,
+    "historical_outputs_are_not_reinterpreted": true
+  },
+  "required_tests": [
+    "nonzero pressure without explicit convention is rejected",
+    "nonzero pressure energy-density fixture is numerically and dimensionally consistent",
+    "nonzero pressure mass-density fixture is numerically and dimensionally consistent",
+    "energy result divided by c^2 equals mass result",
+    "uncertainties transform with the selected convention",
+    "claim_allowed remains false"
+  ]
+}
