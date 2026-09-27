@@ -28,10 +28,45 @@
     "state": "NULL_SUBMANIFOLD_NO_DISCRIMINATION"
   },
   "rmrcti_delta_p": {
-    "synthetic_ci_reference": [0.17, 0.18, 0.19],
+    "synthetic_ci_reference": [
+      0.17,
+      0.18,
+      0.19
+    ],
     "direct_mapping_to_desi": "BLOCKED_NO_TYPED_STABLE_PEAK_PHYSICS_MAPPING",
     "computed_on_desi": false,
     "physical_claim": "NOT_ESTABLISHED"
   },
-  "negative_result": "At the recorded G4 null boundary, RLL and LCDM DESI background-geometry predictions are indistinguishable at the quoted numerical scale. The RMRCTI Delta-P calibration cannot be applied directly to DESI without inventing stable/peak semantics."
+  "negative_result": "At the recorded G4 null boundary, RLL and LCDM DESI background-geometry predictions are indistinguishable at the quoted numerical scale. The RMRCTI Delta-P calibration cannot be applied directly to DESI without inventing stable/peak semantics.",
+  "joint_real_64": {
+    "source": "results/structure_d/joint_real_likelihood.json",
+    "datasets": [
+      "Hz",
+      "DESI_DR2_BAO",
+      "fsigma8",
+      "CMB_shift"
+    ],
+    "n_obs": 64,
+    "LCDM": {
+      "chi2": 93.95354560099567,
+      "AIC": 103.95354560099567,
+      "BIC": 114.74796101779403
+    },
+    "RLL": {
+      "chi2": 93.95983068903539,
+      "AIC": 109.95983068903539,
+      "BIC": 127.23089535591276,
+      "Omega_s0": 0
+    },
+    "delta_RLL_minus_LCDM": {
+      "chi2": 0.006285088039717834,
+      "AIC": 6.006285088039718,
+      "BIC": 12.482934338118739,
+      "Hz": 0.01743377936652113,
+      "DESI_DR2_BAO": 0.12780720215373687,
+      "fsigma8": -0.007981146950073457,
+      "CMB_shift": -0.13097474653047256
+    },
+    "execution_class": "COMMITTED_REAL_JOINT_ARTIFACT_RECOMPARISON_NOT_REFIT"
+  }
 }
