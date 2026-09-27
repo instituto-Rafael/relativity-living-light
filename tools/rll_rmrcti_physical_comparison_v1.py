@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/"data/real/cosmology/desi_dr2_bao_primary_points.csv"
 G4=ROOT/"results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json"
+JOINT=ROOT/"results/structure_d/joint_real_likelihood.json"
 BRIDGE=ROOT/"data/governance/RLL_RMRCTI_DELTA_P_CALIBRATION_BRIDGE_V1.json"
 
 TRACERS=("LRG1","LRG2","LRG3_PLUS_ELG1","ELG2","QSO","Lya")
@@ -91,6 +92,37 @@ def build():
     rows=load_rows()
     g4=json.loads(G4.read_text(encoding="utf-8"))
     bridge=json.loads(BRIDGE.read_text(encoding="utf-8"))
+    joint=json.loads(JOINT.read_text(encoding="utf-8"))
+    joint_rows={row["model"]:row for row in joint["rows"]}
+    jl=joint_rows["LCDM_joint_real"]
+    jr=joint_rows["RLL_joint_real"]
+    joint_comparison={
+        "source":str(JOINT.relative_to(ROOT)),
+        "dataset_type":joint["dataset_type"],
+        "n_obs":int(jl["N"]),
+        "datasets":["Hz","DESI_DR2_BAO","fsigma8","CMB_shift"],
+        "LCDM":{
+            "chi2":float(jl["chi2"]),"AIC":float(jl["AIC"]),"BIC":float(jl["BIC"]),
+            "chi2_Hz":float(jl["chi2_Hz"]),"chi2_DESI_DR2_BAO":float(jl["chi2_DESI_DR2_BAO"]),
+            "chi2_fsigma8":float(jl["chi2_fsigma8"]),"chi2_CMB_shift":float(jl["chi2_CMB_shift"])
+        },
+        "RLL":{
+            "chi2":float(jr["chi2"]),"AIC":float(jr["AIC"]),"BIC":float(jr["BIC"]),
+            "chi2_Hz":float(jr["chi2_Hz"]),"chi2_DESI_DR2_BAO":float(jr["chi2_DESI_DR2_BAO"]),
+            "chi2_fsigma8":float(jr["chi2_fsigma8"]),"chi2_CMB_shift":float(jr["chi2_CMB_shift"]),
+            "Omega_s0":float(jr["Os0"])
+        },
+        "delta_RLL_minus_LCDM":{
+            "chi2":float(jr["chi2"]-jl["chi2"]),
+            "AIC":float(jr["AIC"]-jl["AIC"]),
+            "BIC":float(jr["BIC"]-jl["BIC"]),
+            "Hz":float(jr["chi2_Hz"]-jl["chi2_Hz"]),
+            "DESI_DR2_BAO":float(jr["chi2_DESI_DR2_BAO"]-jl["chi2_DESI_DR2_BAO"]),
+            "fsigma8":float(jr["chi2_fsigma8"]-jl["chi2_fsigma8"]),
+            "CMB_shift":float(jr["chi2_CMB_shift"]-jl["chi2_CMB_shift"])
+        },
+        "execution_class":"COMMITTED_REAL_JOINT_ARTIFACT_RECOMPARISON_NOT_REFIT"
+    }
     models={}
     for model in ("LCDM","RLL"):
         preds=pred_map(g4,model)
@@ -116,6 +148,7 @@ def build():
         "prediction_source":str(G4.relative_to(ROOT)),
       },
       "models":models,
+      "joint_real_64":joint_comparison,
       "cross_model_geometry":g4["cross_model_geometry"],
       "rmrcti_calibration_reference":bridge,
       "direct_delta_p_physical_test":{
