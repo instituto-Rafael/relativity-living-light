@@ -78,6 +78,47 @@ with maximum relative difference
 
 So this particular physical-data state supplies a **negative discrimination result**: the recorded RLL point lies on its LCDM null submanifold.
 
+
+## Joint real 64-observation cross-check
+
+The same executor now also re-compares the committed joint real-likelihood artifact
+`results/structure_d/joint_real_likelihood.json`, which contains 64 observations
+across H(z), DESI DR2 BAO, fσ8 and the compressed CMB-shift block.
+
+The committed totals are:
+
+\[
+\chi^2_{\Lambda CDM}=93.95354560099567,
+\qquad
+\chi^2_{RLL}=93.95983068903539,
+\]
+
+so
+
+\[
+\Delta\chi^2_{RLL-\Lambda CDM}=+0.006285088039717834.
+\]
+
+The information-criterion differences recorded by that same artifact are
+
+\[
+\Delta AIC=+6.006285088039718,
+\qquad
+\Delta BIC=+12.482934338118739.
+\]
+
+The per-block χ² deltas are:
+
+- H(z): +0.01743377936652113;
+- DESI DR2 BAO: +0.12780720215373687;
+- fσ8: -0.007981146950073458;
+- CMB shift: -0.13097474653047256.
+
+These nearly cancel in χ², while RLL still pays the extra-parameter penalty in
+AIC/BIC. The RLL row again has `Omega_s0=0.0`.
+
+This is a recomparison of a committed real-data artifact, not a fresh refit.
+
 ## Why ΔP is not computed on DESI
 
 DESI rows do not define the RMRCTI fields `stable_any` and `peak`. Creating those labels from residual sign, threshold or geometry after seeing the data would be a post-hoc mapping.
