@@ -41,13 +41,45 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          from data.pipelines.structure_d.energy_momentum_bridge import (
-              ENERGY_DENSITY_CONVENTION,
-              MASS_DENSITY_CONVENTION,
-              compute_a_transition,
-              compute_bridge_row,
-              energy_density_to_mass_density,
+          import importlib.util
+          import sys
+          import types
+          from pathlib import Path
+
+          root = Path.cwd()
+          package_paths = {
+              "data": root / "data",
+              "data.pipelines": root / "data/pipelines",
+              "data.pipelines.structure_d": root / "data/pipelines/structure_d",
+          }
+          for name, package_path in package_paths.items():
+              module = types.ModuleType(name)
+              module.__path__ = [str(package_path)]
+              sys.modules[name] = module
+
+          boundary_name = "data.pipelines.structure_d.synthetic_real_boundary"
+          boundary_spec = importlib.util.spec_from_file_location(
+              boundary_name,
+              root / "data/pipelines/structure_d/synthetic_real_boundary.py",
           )
+          boundary = importlib.util.module_from_spec(boundary_spec)
+          sys.modules[boundary_name] = boundary
+          boundary_spec.loader.exec_module(boundary)
+
+          bridge_name = "data.pipelines.structure_d.energy_momentum_bridge"
+          bridge_spec = importlib.util.spec_from_file_location(
+              bridge_name,
+              root / "data/pipelines/structure_d/energy_momentum_bridge.py",
+          )
+          bridge = importlib.util.module_from_spec(bridge_spec)
+          sys.modules[bridge_name] = bridge
+          bridge_spec.loader.exec_module(bridge)
+
+          ENERGY_DENSITY_CONVENTION = bridge.ENERGY_DENSITY_CONVENTION
+          MASS_DENSITY_CONVENTION = bridge.MASS_DENSITY_CONVENTION
+          compute_a_transition = bridge.compute_a_transition
+          compute_bridge_row = bridge.compute_bridge_row
+          energy_density_to_mass_density = bridge.energy_density_to_mass_density
 
           try:
               compute_a_transition(9.0, 18.0, 27.0, 36.0, 9.0, c=3.0)
