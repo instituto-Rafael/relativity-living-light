@@ -1,6 +1,6 @@
 # Energy-momentum typed dimensional executor V2 — 2026-09-27
 
-State: `IMPLEMENTED_UNTESTED`  
+State: `PASS_DIMENSIONAL_SOFTWARE_REPAIR / SCIENTIFIC_SELECTION_OPEN`  
 Scientific claim: `BLOCKED`
 
 ## Delta
@@ -46,12 +46,27 @@ claim_allowed=false
 4. cross-convention c² equivalence;
 5. uncertainty conversion parity.
 
-Until those execute, this artifact remains `IMPLEMENTED_UNTESTED`.
+Observed focused execution on head `c81e2a4862f557873315e8ac5be4004be1bc4bec` passed all causal gates in workflow run `36306055734`.
+
+Evidence:
+
+```text
+compile_changed_python=PASS
+dimensional_contract_tests=PASS_3
+nonzero_pressure_typed_fixtures=PASS
+cross_convention_c2_equivalence=PASS
+dimensional_validator_v2=PASS
+artifact_digest=sha256:bdfab7c5ae1e01418708eeefe8c7d59c3af3ed2f38008aeaf3d6d1c3852fee8b
+```
+
+The earlier run `36305991310` is retained as `ENVIRONMENT_DEPENDENCY_PREEXECUTION`: package initialization required NumPy before the fixture reached the executor. It is not classified as a dimensional FAIL.
+
+This promotes only the software-dimensional repair. The scientific stress-energy selection remains open.
 
 ## R3
 
-F_ok: typed implementation and explicit unit contracts materialized without silently selecting physics.
+F_ok: typed implementation + explicit unit contracts + focused exact-head execution PASS without silently selecting physics.
 
-F_gap: execution evidence + scientific stress-energy semantics remain open.
+F_gap: scientific stress-energy semantics and later promotion-layer regression gates remain open.
 
-F_next: execute focused tests and validator; if PASS, promote only `DIMENSIONAL_SOFTWARE_REPAIR`, not a physical claim.
+F_next: merge through WORK→rll/lab, then propagate via rll/integration→rll/release→main; never promote a physical claim from this repair alone.
