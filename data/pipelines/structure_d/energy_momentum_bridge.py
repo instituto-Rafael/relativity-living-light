@@ -14,6 +14,11 @@ from typing import Any
 from .synthetic_real_boundary import CLAIM_BOUNDARY
 
 C_M_PER_S = 299_792_458.0
+ENERGY_DENSITY_CONVENTION = "ENERGY_DENSITY_CONVENTION"
+MASS_DENSITY_CONVENTION = "MASS_DENSITY_CONVENTION"
+VALID_DIMENSIONAL_CONVENTIONS = frozenset(
+    {ENERGY_DENSITY_CONVENTION, MASS_DENSITY_CONVENTION}
+)
 REQUIRED_LEDGER_FIELDS = (
     "rho_before",
     "rho_rest_after",
@@ -47,11 +52,40 @@ def _finite_float(value: Any) -> float | None:
 
 
 def pressure_density(pressure_pa: float, c: float = C_M_PER_S) -> float:
+    """Return the mass-equivalent density P/c^2 in kg/m^3."""
     return float(pressure_pa) / (float(c) ** 2)
 
 
-def compute_a_lost(rho_before: float, rho_rest_after: float) -> float:
-    return float(rho_before) - float(rho_rest_after)
+def pressure_energy_density(pressure_pa: float) -> float:
+    """Return pressure as energy density; 1 Pa == 1 J/m^3 dimensionally."""
+    return float(pressure_pa)
+
+
+def energy_density_to_mass_density(value_j_per_m3: float, c: float = C_M_PER_S) -> float:
+    return float(value_j_per_m3) / (float(c) ** 2)
+
+
+def _require_dimensional_convention(convention: str) -> str:
+    if convention not in VALID_DIMENSIONAL_CONVENTIONS:
+        raise ValueError(
+            "dimensional convention must be ENERGY_DENSITY_CONVENTION "
+            "or MASS_DENSITY_CONVENTION"
+        )
+    return convention
+
+
+def compute_a_lost(
+    rho_before: float,
+    rho_rest_after: float,
+    *,
+    convention: str = ENERGY_DENSITY_CONVENTION,
+    c: float = C_M_PER_S,
+) -> float:
+    value = float(rho_before) - float(rho_rest_after)
+    convention = _require_dimensional_convention(convention)
+    if convention == MASS_DENSITY_CONVENTION:
+        return energy_density_to_mass_density(value, c)
+    return value
 
 
 def compute_a_transition(
@@ -61,13 +95,36 @@ def compute_a_transition(
     pressure: float,
     rho_field: float,
     c: float = C_M_PER_S,
+    *,
+    convention: str | None = None,
 ) -> float:
-    return (
+    """Compute a dimensionally coherent scalar transition proxy.
+
+    Historical calls with zero pressure remain valid as an energy-density
+    proxy.  Non-zero pressure is fail-closed unless the caller explicitly
+    selects one of the two dimensional conventions.  This function only
+    closes dimensional arithmetic; it does not establish that pressure should
+    enter a scalar physical budget.
+    """
+    pressure = float(pressure)
+    if convention is None:
+        if pressure != 0.0:
+            raise ValueError(
+                "nonzero pressure requires explicit dimensional convention"
+            )
+        convention = ENERGY_DENSITY_CONVENTION
+
+    convention = _require_dimensional_convention(convention)
+    energy_terms = (
         float(rho_radiation)
         + float(rho_kinetic)
         + float(rho_thermal)
-        + pressure_density(float(pressure), c)
         + float(rho_field)
+    )
+    if convention == ENERGY_DENSITY_CONVENTION:
+        return energy_terms + pressure_energy_density(pressure)
+    return energy_density_to_mass_density(energy_terms, c) + pressure_density(
+        pressure, c
     )
 
 
@@ -112,7 +169,12 @@ def validate_ledger(ledger: Mapping[str, Any] | None) -> dict[str, Any]:
     return {"valid": not errors, "status": "measured" if not errors else "not_measured", "errors": errors}
 
 
-def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict[str, Any]:
+def compute_from_ledger(
+    ledger: Mapping[str, Any],
+    c: float = C_M_PER_S,
+    *,
+    convention: str | None = None,
+) -> dict[str, Any]:
     validation = validate_ledger(ledger)
     if not validation["valid"]:
         return {
@@ -124,7 +186,25 @@ def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict
         }
 
     values = {field: float(_entry_from_ledger(ledger, field)["value"]) for field in REQUIRED_LEDGER_FIELDS}  # type: ignore[index]
-    a_lost = compute_a_lost(values["rho_before"], values["rho_rest_after"])
+    if values["pressure"] != 0.0 and convention is None:
+        return {
+            "status": "blocked_dimensional_convention_required",
+            "F_gap": None,
+            "F_gap_uncertainty": None,
+            "uncertainty_status": "incomplete",
+            "dimensional_convention": "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
+            "F_gap_unit": None,
+            "errors": ["nonzero pressure requires explicit dimensional convention"],
+        }
+
+    active_convention = convention or ENERGY_DENSITY_CONVENTION
+    active_convention = _require_dimensional_convention(active_convention)
+    a_lost = compute_a_lost(
+        values["rho_before"],
+        values["rho_rest_after"],
+        convention=active_convention,
+        c=c,
+    )
     a_transition = compute_a_transition(
         values["rho_radiation"],
         values["rho_kinetic"],
@@ -132,6 +212,7 @@ def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict
         values["pressure"],
         values["rho_field"],
         c,
+        convention=active_convention,
     )
     uncertainties = {field: _finite_float(_entry_from_ledger(ledger, field).get("uncertainty")) for field in REQUIRED_LEDGER_FIELDS}  # type: ignore[union-attr]
     uncertainty_status = "complete" if all(value is not None for value in uncertainties.values()) else "incomplete"
@@ -143,7 +224,11 @@ def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict
                 uncertainties["rho_radiation"],  # type: ignore[list-item]
                 uncertainties["rho_kinetic"],  # type: ignore[list-item]
                 uncertainties["rho_thermal"],  # type: ignore[list-item]
-                pressure_density(uncertainties["pressure"], c),  # type: ignore[arg-type]
+                (
+                    uncertainties["pressure"]  # type: ignore[list-item]
+                    if active_convention == ENERGY_DENSITY_CONVENTION
+                    else pressure_density(uncertainties["pressure"], c)  # type: ignore[arg-type]
+                ),
                 uncertainties["rho_field"],  # type: ignore[list-item]
             ]
         )
@@ -153,7 +238,17 @@ def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict
         "status": "measured",
         "A_lost": a_lost,
         "A_transition": a_transition,
-        "pressure_density": pressure_density(values["pressure"], c),
+        "pressure_term": (
+            pressure_energy_density(values["pressure"])
+            if active_convention == ENERGY_DENSITY_CONVENTION
+            else pressure_density(values["pressure"], c)
+        ),
+        "dimensional_convention": active_convention,
+        "F_gap_unit": (
+            "J/m^3"
+            if active_convention == ENERGY_DENSITY_CONVENTION
+            else "kg/m^3"
+        ),
         "F_gap": compute_f_gap(a_lost, a_transition),
         "F_gap_uncertainty": f_gap_uncertainty,
         "uncertainty_status": uncertainty_status,
@@ -161,7 +256,12 @@ def compute_from_ledger(ledger: Mapping[str, Any], c: float = C_M_PER_S) -> dict
     }
 
 
-def compute_bridge_row(row: Mapping[str, Any], c_m_per_s: float = C_M_PER_S) -> dict[str, float]:
+def compute_bridge_row(
+    row: Mapping[str, Any],
+    c_m_per_s: float = C_M_PER_S,
+    *,
+    convention: str | None = None,
+) -> dict[str, Any]:
     values: dict[str, float] = {}
     missing = []
     for field in REQUIRED_LEDGER_FIELDS:
@@ -173,14 +273,41 @@ def compute_bridge_row(row: Mapping[str, Any], c_m_per_s: float = C_M_PER_S) -> 
     if missing:
         raise ValueError(f"transition ledger row missing finite fields: {missing}")
 
-    a_lost = compute_a_lost(values["rho_before"], values["rho_rest_after"])
+    if values["pressure"] != 0.0 and convention is None:
+        raise ValueError("nonzero pressure requires explicit dimensional convention")
+
+    active_convention = _require_dimensional_convention(
+        convention or ENERGY_DENSITY_CONVENTION
+    )
+    a_lost = compute_a_lost(
+        values["rho_before"],
+        values["rho_rest_after"],
+        convention=active_convention,
+        c=c_m_per_s,
+    )
     a_transition = compute_a_transition(
-        values["rho_radiation"], values["rho_kinetic"], values["rho_thermal"], values["pressure"], values["rho_field"], c_m_per_s
+        values["rho_radiation"],
+        values["rho_kinetic"],
+        values["rho_thermal"],
+        values["pressure"],
+        values["rho_field"],
+        c_m_per_s,
+        convention=active_convention,
     )
     return {
         "A_lost": a_lost,
         "A_transition": a_transition,
-        "pressure_density": pressure_density(values["pressure"], c_m_per_s),
+        "pressure_term": (
+            pressure_energy_density(values["pressure"])
+            if active_convention == ENERGY_DENSITY_CONVENTION
+            else pressure_density(values["pressure"], c_m_per_s)
+        ),
+        "dimensional_convention": active_convention,
+        "F_gap_unit": (
+            "J/m^3"
+            if active_convention == ENERGY_DENSITY_CONVENTION
+            else "kg/m^3"
+        ),
         "F_gap": compute_f_gap(a_lost, a_transition),
     }
 
