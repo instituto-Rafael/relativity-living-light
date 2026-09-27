@@ -1,0 +1,161 @@
+name: WS24 Energy Momentum Dimensional V2
+
+on:
+  pull_request:
+    branches: [rll/lab]
+    paths:
+      - "data/pipelines/structure_d/energy_momentum_bridge.py"
+      - "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V2.json"
+      - "tools/validate_energy_momentum_bridge_dimensions.py"
+      - "tests/test_energy_momentum_bridge.py"
+      - "tests/test_energy_momentum_bridge_dimensions.py"
+      - "artifacts/science/energy/RLL_ENERGY_MOMENTUM_DIMENSIONAL_RECEIPT.json"
+      - "docs/evidence/RLL_ENERGY_MOMENTUM_TYPED_EXECUTOR_V2_20260927.md"
+      - ".github/workflows/ws24-energy-momentum-dimensional-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ws24-dimensional-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Compile changed Python
+        run: |
+          set -euo pipefail
+          python3 -m py_compile             data/pipelines/structure_d/energy_momentum_bridge.py             tools/validate_energy_momentum_bridge_dimensions.py             tests/test_energy_momentum_bridge_dimensions.py
+
+      - name: Run dimensional contract tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest tests.test_energy_momentum_bridge_dimensions
+
+      - name: Run nonzero-pressure typed fixtures
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from data.pipelines.structure_d.energy_momentum_bridge import (
+              ENERGY_DENSITY_CONVENTION,
+              MASS_DENSITY_CONVENTION,
+              compute_a_transition,
+              compute_bridge_row,
+              energy_density_to_mass_density,
+          )
+
+          try:
+              compute_a_transition(9.0, 18.0, 27.0, 36.0, 9.0, c=3.0)
+          except ValueError as exc:
+              assert "explicit dimensional convention" in str(exc)
+          else:
+              raise AssertionError("nonzero pressure did not fail closed")
+
+          energy = compute_a_transition(
+              9.0, 18.0, 27.0, 36.0, 9.0, c=3.0,
+              convention=ENERGY_DENSITY_CONVENTION,
+          )
+          mass = compute_a_transition(
+              9.0, 18.0, 27.0, 36.0, 9.0, c=3.0,
+              convention=MASS_DENSITY_CONVENTION,
+          )
+          assert energy == 99.0
+          assert mass == 11.0
+          assert energy_density_to_mass_density(energy, c=3.0) == mass
+
+          row = {
+              "rho_before": 180.0,
+              "rho_rest_after": 81.0,
+              "rho_radiation": 9.0,
+              "rho_kinetic": 18.0,
+              "rho_thermal": 27.0,
+              "pressure": 36.0,
+              "rho_field": 9.0,
+          }
+          e = compute_bridge_row(
+              row, c_m_per_s=3.0,
+              convention=ENERGY_DENSITY_CONVENTION,
+          )
+          m = compute_bridge_row(
+              row, c_m_per_s=3.0,
+              convention=MASS_DENSITY_CONVENTION,
+          )
+          assert e["F_gap"] == 0.0
+          assert m["F_gap"] == 0.0
+          assert e["F_gap_unit"] == "J/m^3"
+          assert m["F_gap_unit"] == "kg/m^3"
+          assert e["A_transition"] / 9.0 == m["A_transition"]
+          print("WS24_TYPED_FIXTURES_PASS")
+          PY
+
+      - name: Execute dimensional validator
+        run: |
+          set -euo pipefail
+          python3 tools/validate_energy_momentum_bridge_dimensions.py --write
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(
+              Path("results/rll_energy_momentum_dimension_gate.json")
+              .read_text(encoding="utf-8")
+          )
+          assert p["state"] == "TYPED_EXECUTOR_READY_SCIENTIFIC_SELECTION_REQUIRED"
+          assert p["closed_gap"] == "SILENT_DIMENSIONAL_MIXING_FOR_NONZERO_PRESSURE"
+          assert p["open_gap"] == "SCIENTIFIC_STRESS_ENERGY_SEMANTICS_SELECTION"
+          assert p["claim_allowed"] is False
+          print("WS24_DIMENSIONAL_VALIDATOR_PASS")
+          PY
+
+      - name: Materialize CI receipt
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/ws24-energy-momentum-dimensional-v2
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          files = [
+              "data/pipelines/structure_d/energy_momentum_bridge.py",
+              "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V2.json",
+              "tools/validate_energy_momentum_bridge_dimensions.py",
+              "tests/test_energy_momentum_bridge_dimensions.py",
+          ]
+          payload = {
+              "schema": "rll.ws24-energy-momentum-dimensional-ci.v2",
+              "head_sha": "${{ github.event.pull_request.head.sha || github.sha }}",
+              "run_id": "${{ github.run_id }}",
+              "run_attempt": "${{ github.run_attempt }}",
+              "files": {
+                  f: hashlib.sha256(Path(f).read_bytes()).hexdigest()
+                  for f in files
+              },
+              "claim_allowed": False,
+              "scientific_selection": "TOKEN_VAZIO",
+              "boundary": (
+                  "CI validates dimensional software behavior only; "
+                  "it does not select physical stress-energy semantics."
+              ),
+          }
+          Path(
+              "artifacts/ws24-energy-momentum-dimensional-v2/receipt.json"
+          ).write_text(
+              json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload WS24 receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: ws24-energy-momentum-dimensional-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/ws24-energy-momentum-dimensional-v2/
+          retention-days: 30
+          if-no-files-found: error
