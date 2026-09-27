@@ -22,6 +22,8 @@ claim_allowed: false
 - G4 full-covariance chi2: LCDM 11.770259180500712; RLL 11.77025905554635;
 - cross-model max absolute prediction delta: 6.541668540194223e-9;
 - RLL recorded null boundary: Omega_s0=0.
+- committed joint real 64-observation recomparison: χ² LCDM=93.95354560099567, RLL=93.95983068903539, Δχ²=+0.006285088039717834, ΔAIC=+6.006285088039718, ΔBIC=+12.482934338118739;
+- joint blocks: H(z), DESI DR2 BAO, fσ8, CMB shift; this is artifact recomparison, not a fresh refit.
 
 ## Negative evidence
 
