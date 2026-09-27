@@ -1,29 +1,49 @@
 {
   "schema": "rll.energy_momentum_dimensional_receipt.v2",
   "date": "2026-09-27",
-  "state": "IMPLEMENTED_UNTESTED",
+  "state": "PASS_DIMENSIONAL_SOFTWARE_REPAIR_SCIENTIFIC_SELECTION_OPEN",
   "parent": "docs/evidence/RLL_ENERGY_MOMENTUM_DIMENSIONAL_BLOCKER_20260922.md",
   "implementation": "data/pipelines/structure_d/energy_momentum_bridge.py",
-  "contracts": [
-    "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json",
-    "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V2.json"
-  ],
+  "contract": "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V2.json",
+  "evidence": {
+    "tested_head_sha": "c81e2a4862f557873315e8ac5be4004be1bc4bec",
+    "focused_workflow": "WS24 Energy Momentum Dimensional V2",
+    "run_id": 36306055734,
+    "run_attempt": 1,
+    "conclusion": "success",
+    "artifact_id": 10926864403,
+    "artifact_digest": "sha256:bdfab7c5ae1e01418708eeefe8c7d59c3af3ed2f38008aeaf3d6d1c3852fee8b",
+    "causal_steps": {
+      "compile_changed_python": "PASS",
+      "dimensional_contract_tests": "PASS_3",
+      "nonzero_pressure_typed_fixtures": "PASS",
+      "cross_convention_c2_equivalence": "PASS",
+      "dimensional_validator_v2": "PASS",
+      "receipt_upload": "PASS"
+    },
+    "antecedent_failure": {
+      "run_id": 36305991310,
+      "classification": "ENVIRONMENT_DEPENDENCY_PREEXECUTION",
+      "detail": "package __init__ required numpy before fixture reached executor",
+      "dimensional_result": "NOT_RUN"
+    }
+  },
   "delta": {
-    "closed_target": "SILENT_DIMENSIONAL_MIXING_FOR_NONZERO_PRESSURE",
+    "closed_gap": "SILENT_DIMENSIONAL_MIXING_FOR_NONZERO_PRESSURE",
     "nonzero_pressure_default": "FAIL_CLOSED_EXPLICIT_CONVENTION_REQUIRED",
     "energy_density_convention": "J/m^3",
     "mass_density_convention": "kg/m^3",
     "cross_convention_invariant": "energy_density_scalar/c^2 == mass_density_scalar"
   },
   "selected_convention": "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
-  "physical_semantics": "TOKEN_VAZIO_STRESS_ENERGY_MECHANISM",
-  "execution": {
-    "unit_tests": "NOT_RUN",
-    "dimension_validator": "NOT_RUN",
-    "provider_ci": "TOKEN_VAZIO"
+  "physical_semantics": {
+    "scalar_pressure_addition": "TOKEN_VAZIO_MECHANISM_JUSTIFICATION",
+    "covariant_stress_energy_binding": "TOKEN_VAZIO",
+    "metric_frame": "TOKEN_VAZIO",
+    "conservation_law_binding": "TOKEN_VAZIO"
   },
   "claim_allowed": false,
-  "F_ok": "Typed executor and fail-closed nonzero-pressure guard are materialized.",
-  "F_gap": "Execution evidence and scientific stress-energy convention remain open.",
-  "F_next": "Run focused unit tests and dimensional validator; promote only software-dimensional closure if they pass."
+  "F_ok": "Focused exact-head execution closes the silent software dimensional-mixing defect for the typed executor.",
+  "F_gap": "Scientific stress-energy semantics remain unselected; broader regression suite and later promotion layers remain separate gates.",
+  "F_next": "Merge only through WORK→rll/lab; then propagate through rll/integration→rll/release→main with independent promotion receipts."
 }
