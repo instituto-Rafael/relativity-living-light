@@ -218,18 +218,28 @@ def compute_from_ledger(
     uncertainty_status = "complete" if all(value is not None for value in uncertainties.values()) else "incomplete"
     f_gap_uncertainty = None
     if uncertainty_status == "complete":
-        a_lost_unc = quadrature_uncertainty([uncertainties["rho_before"], uncertainties["rho_rest_after"]])  # type: ignore[list-item]
+        def density_uncertainty(value: float) -> float:
+            if active_convention == MASS_DENSITY_CONVENTION:
+                return energy_density_to_mass_density(value, c)
+            return value
+
+        a_lost_unc = quadrature_uncertainty(
+            [
+                density_uncertainty(uncertainties["rho_before"]),  # type: ignore[arg-type]
+                density_uncertainty(uncertainties["rho_rest_after"]),  # type: ignore[arg-type]
+            ]
+        )
         a_transition_unc = quadrature_uncertainty(
             [
-                uncertainties["rho_radiation"],  # type: ignore[list-item]
-                uncertainties["rho_kinetic"],  # type: ignore[list-item]
-                uncertainties["rho_thermal"],  # type: ignore[list-item]
+                density_uncertainty(uncertainties["rho_radiation"]),  # type: ignore[arg-type]
+                density_uncertainty(uncertainties["rho_kinetic"]),  # type: ignore[arg-type]
+                density_uncertainty(uncertainties["rho_thermal"]),  # type: ignore[arg-type]
                 (
                     uncertainties["pressure"]  # type: ignore[list-item]
                     if active_convention == ENERGY_DENSITY_CONVENTION
                     else pressure_density(uncertainties["pressure"], c)  # type: ignore[arg-type]
                 ),
-                uncertainties["rho_field"],  # type: ignore[list-item]
+                density_uncertainty(uncertainties["rho_field"]),  # type: ignore[arg-type]
             ]
         )
         f_gap_uncertainty = quadrature_uncertainty([a_lost_unc, a_transition_unc])
@@ -238,6 +248,7 @@ def compute_from_ledger(
         "status": "measured",
         "A_lost": a_lost,
         "A_transition": a_transition,
+        "pressure_density": pressure_density(values["pressure"], c),
         "pressure_term": (
             pressure_energy_density(values["pressure"])
             if active_convention == ENERGY_DENSITY_CONVENTION
@@ -297,6 +308,7 @@ def compute_bridge_row(
     return {
         "A_lost": a_lost,
         "A_transition": a_transition,
+        "pressure_density": pressure_density(values["pressure"], c_m_per_s),
         "pressure_term": (
             pressure_energy_density(values["pressure"])
             if active_convention == ENERGY_DENSITY_CONVENTION
@@ -312,7 +324,11 @@ def compute_bridge_row(
     }
 
 
-def summarize_f_gap(rows: Iterable[Mapping[str, Any]] | None) -> dict[str, Any]:
+def summarize_f_gap(
+    rows: Iterable[Mapping[str, Any]] | None,
+    *,
+    convention: str | None = None,
+) -> dict[str, Any]:
     if rows is None:
         return {
             "status": "not_measured",
@@ -320,7 +336,7 @@ def summarize_f_gap(rows: Iterable[Mapping[str, Any]] | None) -> dict[str, Any]:
             "F_gap": None,
             "note": "No transition ledger supplied; missing bridge term must be measured, not invented.",
         }
-    computed = [compute_bridge_row(row) for row in rows]
+    computed = [compute_bridge_row(row, convention=convention) for row in rows]
     if not computed:
         return {
             "status": "not_measured",
@@ -362,16 +378,35 @@ def build_fnext_gate(comparison_delta: dict | Iterable[Mapping[str, Any]], ledge
         baseline_model = str(ledger)
         candidate_model = str(legacy_args[0]) if legacy_args else str(legacy_kwargs.get("candidate_model"))
         bridge_rows = legacy_kwargs.get("bridge_rows", legacy_args[1] if len(legacy_args) > 1 else None)
+        dimensional_convention = legacy_kwargs.get("dimensional_convention")
         delta = _comparison_delta_from_rows(comparison_delta, baseline_model, candidate_model)
-        ledger_result = summarize_f_gap(bridge_rows)
+        ledger_result = summarize_f_gap(
+            bridge_rows,
+            convention=dimensional_convention,
+        )
         f_gap = ledger_result["F_gap"]
         status = "measured" if ledger_result["status"] == "measured" else "not_measured"
         f_gap_uncertainty = None
         uncertainty_status = "incomplete"
         reason = ledger_result.get("note", "Legacy measured bridge rows supplied.")
     else:
+        dimensional_convention = legacy_kwargs.get("dimensional_convention")
         delta = dict(comparison_delta)
-        ledger_result = compute_from_ledger(ledger) if ledger is not None else {"status": "not_measured", "F_gap": None, "F_gap_uncertainty": None, "uncertainty_status": "incomplete", "errors": ["ledger absent"]}
+        ledger_result = (
+            compute_from_ledger(
+                ledger,
+                convention=dimensional_convention,
+            )
+            if ledger is not None
+            else {
+                "status": "not_measured",
+                "F_gap": None,
+                "F_gap_uncertainty": None,
+                "uncertainty_status": "incomplete",
+                "errors": ["ledger absent"],
+                "dimensional_convention": dimensional_convention,
+            }
+        )
         f_gap = ledger_result["F_gap"]
         status = ledger_result["status"]
         f_gap_uncertainty = ledger_result.get("F_gap_uncertainty")
@@ -398,6 +433,10 @@ def build_fnext_gate(comparison_delta: dict | Iterable[Mapping[str, Any]], ledge
         "delta_bic_rll_minus_lcdm": dbic,
         "score": score,
         "score_status": score_status,
+        "dimensional_convention": ledger_result.get(
+            "dimensional_convention",
+            dimensional_convention or "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
+        ),
         "claim_boundary": CLAIM_BOUNDARY,
         "claim_allowed": False,
         "reason": reason,
