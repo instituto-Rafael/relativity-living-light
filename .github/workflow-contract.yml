@@ -1,8 +1,8 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-09-22"
+updated_at: "2026-09-27"
 
 inventory:
-  active_workflows: 108
+  active_workflows: 109
   inclusion: ".github/workflows/*.{yml,yaml}"
   exclusion:
     - ".github/To_add/**"
@@ -212,6 +212,7 @@ documented_checks:
     - {context: deterministic-gate, workflow: .github/workflows/rll-pipeline-linear-completo.yml, job_id: deterministic-gate}
     - {context: claim-allowed-gate, workflow: .github/workflows/claim-allowed-gate.yml, job_id: validate, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: test, workflow: .github/workflows/python-tests.yml, job_id: test}
+    - {context: ws24-dimensional-v2, workflow: .github/workflows/ws24-energy-momentum-dimensional-v2.yml, job_id: ws24-dimensional-v2, permissions: contents_read, certification_claim: false, conformity_claim: false}
     - {context: validate-workflow-architecture, workflow: .github/workflows/yml-syntax-validation.yml, job_id: validate-workflow-architecture}
     - {context: yaml-deep-audit, workflow: .github/workflows/yaml-deep-audit.yml, job_id: yaml-deep-audit}
     - {context: check-conventions, workflow: .github/workflows/convention-check.yml, job_id: check-conventions}
