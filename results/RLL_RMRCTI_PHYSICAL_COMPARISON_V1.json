@@ -1,0 +1,37 @@
+{
+  "schema": "rll.rmrcti_physical_comparison.v1",
+  "date": "2026-09-26",
+  "claim_allowed": false,
+  "physical_dataset": {
+    "name": "DESI DR2 BAO 2025",
+    "points": 13,
+    "anisotropic_pairs": 6
+  },
+  "LCDM": {
+    "standardized_residual_rms": 0.943563073605141,
+    "max_abs_single_residual_sigma": 1.8014934306845458,
+    "block_summary_chi2": 10.873115645602892,
+    "full_covariance_g4_chi2": 11.770259180500712,
+    "full_minus_block_summary_chi2": 0.8971435348978201
+  },
+  "RLL": {
+    "standardized_residual_rms": 0.943563074464895,
+    "max_abs_single_residual_sigma": 1.8014934274657979,
+    "block_summary_chi2": 10.87311567736063,
+    "full_covariance_g4_chi2": 11.77025905554635,
+    "full_minus_block_summary_chi2": 0.8971433781857208
+  },
+  "cross_model": {
+    "max_abs_prediction_difference": 6.541668540194223e-9,
+    "max_relative_prediction_difference": 3.0971114561850754e-10,
+    "recorded_rll_null_parameter": "Omega_s0=0",
+    "state": "NULL_SUBMANIFOLD_NO_DISCRIMINATION"
+  },
+  "rmrcti_delta_p": {
+    "synthetic_ci_reference": [0.17, 0.18, 0.19],
+    "direct_mapping_to_desi": "BLOCKED_NO_TYPED_STABLE_PEAK_PHYSICS_MAPPING",
+    "computed_on_desi": false,
+    "physical_claim": "NOT_ESTABLISHED"
+  },
+  "negative_result": "At the recorded G4 null boundary, RLL and LCDM DESI background-geometry predictions are indistinguishable at the quoted numerical scale. The RMRCTI Delta-P calibration cannot be applied directly to DESI without inventing stable/peak semantics."
+}
