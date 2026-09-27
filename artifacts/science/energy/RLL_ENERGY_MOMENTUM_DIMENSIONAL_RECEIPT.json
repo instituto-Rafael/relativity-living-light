@@ -1,0 +1,29 @@
+{
+  "schema": "rll.energy_momentum_dimensional_receipt.v2",
+  "date": "2026-09-27",
+  "state": "IMPLEMENTED_UNTESTED",
+  "parent": "docs/evidence/RLL_ENERGY_MOMENTUM_DIMENSIONAL_BLOCKER_20260922.md",
+  "implementation": "data/pipelines/structure_d/energy_momentum_bridge.py",
+  "contracts": [
+    "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json",
+    "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V2.json"
+  ],
+  "delta": {
+    "closed_target": "SILENT_DIMENSIONAL_MIXING_FOR_NONZERO_PRESSURE",
+    "nonzero_pressure_default": "FAIL_CLOSED_EXPLICIT_CONVENTION_REQUIRED",
+    "energy_density_convention": "J/m^3",
+    "mass_density_convention": "kg/m^3",
+    "cross_convention_invariant": "energy_density_scalar/c^2 == mass_density_scalar"
+  },
+  "selected_convention": "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
+  "physical_semantics": "TOKEN_VAZIO_STRESS_ENERGY_MECHANISM",
+  "execution": {
+    "unit_tests": "NOT_RUN",
+    "dimension_validator": "NOT_RUN",
+    "provider_ci": "TOKEN_VAZIO"
+  },
+  "claim_allowed": false,
+  "F_ok": "Typed executor and fail-closed nonzero-pressure guard are materialized.",
+  "F_gap": "Execution evidence and scientific stress-energy convention remain open.",
+  "F_next": "Run focused unit tests and dimensional validator; promote only software-dimensional closure if they pass."
+}
