@@ -26,6 +26,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install focused test dependency
+        run: python -m pip install --disable-pip-version-check pytest
       - name: Execute source-bound physical comparison
         run: |
           mkdir -p artifacts/rmrcti-physical-v1
