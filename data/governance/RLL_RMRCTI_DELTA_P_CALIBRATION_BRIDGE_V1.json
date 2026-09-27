@@ -1,0 +1,32 @@
+{
+  "schema": "rll.rmrcti_delta_p_calibration_bridge.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "source_repository": "rafaelmeloreisnovo/llamaRafaelia",
+  "source_pr": 129,
+  "source_head": "fb47a87c48f699f50c928c0a598710f01656f471",
+  "source_class": "SYNTHETIC_CI_CONTRACT_FIXTURES",
+  "materialized_ci_deltas": [0.17, 0.18, 0.19],
+  "reference_delta_p": 0.18,
+  "reference_tolerance": 0.02,
+  "reference_origin": "pre_existing_RMRCTI_contract_not_fit_from_physical_data",
+  "sensitivity_plan": {
+    "desired_95pct_half_width": 0.02,
+    "minimum_n_per_group_worst_case_independent": 4802,
+    "minimum_total_rows_balanced": 9604,
+    "serial_dependence_adjustment": "TOKEN_VAZIO_UNTIL_REAL_TRACE"
+  },
+  "physical_binding": {
+    "stable_any_mapping": "TOKEN_VAZIO_NO_TYPED_PHYSICAL_MAPPING",
+    "peak_mapping": "TOKEN_VAZIO_NO_TYPED_PHYSICAL_MAPPING",
+    "direct_delta_p_on_cosmology": "BLOCKED",
+    "allowed_use": "engineering/statistical calibration reference only"
+  },
+  "invariants": [
+    "SYNTHETIC_CI_FIXTURE != REAL_TRACE",
+    "DELTA_P != COSMOLOGICAL_PARAMETER",
+    "GEOMETRY_FEATURE != PHYSICAL_MECHANISM",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"
+  ]
+}
