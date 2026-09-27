@@ -1,0 +1,51 @@
+name: RLL RMRCTI Physical Comparison V1
+
+on:
+  pull_request:
+    paths:
+      - "tools/rll_rmrcti_physical_comparison_v1.py"
+      - "tests/test_rll_rmrcti_physical_comparison_v1.py"
+      - "data/governance/RLL_RMRCTI_DELTA_P_CALIBRATION_BRIDGE_V1.json"
+      - "results/RLL_RMRCTI_PHYSICAL_COMPARISON_V1.json"
+      - "docs/science/RLL_RMRCTI_PHYSICAL_COMPARISON_V1.md"
+      - "receipts/2026-09-26_RLL_RMRCTI_PHYSICAL_COMPARISON_V1.md"
+      - ".github/workflows/rll-rmrcti-physical-comparison-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install focused test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+      - name: Execute source-bound physical comparison
+        run: |
+          mkdir -p artifacts/rmrcti-physical-v1
+          python tools/rll_rmrcti_physical_comparison_v1.py             > artifacts/rmrcti-physical-v1/execution.json
+      - name: Focused tests
+        run: python -m pytest -q tests/test_rll_rmrcti_physical_comparison_v1.py
+      - name: Claim boundary gate
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("artifacts/rmrcti-physical-v1/execution.json"))
+          assert p["claim_allowed"] is False
+          assert p["direct_delta_p_physical_test"]["delta_p_computed_on_desi"] is False
+          assert p["result"]["physical_delta_p_claim"]=="NOT_ESTABLISHED"
+          print("RLL_RMRCTI_PHYSICAL_COMPARISON_GATE=PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rll-rmrcti-physical-comparison-v1
+          path: artifacts/rmrcti-physical-v1/
+          if-no-files-found: error
