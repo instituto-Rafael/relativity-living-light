@@ -1,0 +1,12 @@
+{
+  "schema": "rll.multiscale_heterogeneous_residual.input.v1",
+  "ordered": true,
+  "critical_value": 1.96,
+  "records": [
+    {"id":"A-01","group":"A","value":0.4,"prediction":0.5,"uncertainty":0.1,"residual_class":"DELTA_UNCLASSIFIED"},
+    {"id":"A-02","group":"A","value":0.6,"prediction":0.5,"uncertainty":0.1,"residual_class":"DELTA_MEASUREMENT"},
+    {"id":"B-01","group":"B","value":2.4,"prediction":1.5,"uncertainty":0.2,"residual_class":"DELTA_MODEL"},
+    {"id":"B-02","group":"B","value":2.6,"prediction":1.5,"uncertainty":0.2,"residual_class":"DELTA_UNCLASSIFIED"},
+    {"id":"B-03","group":"B","value":2.5,"prediction":1.5,"uncertainty":0.2,"residual_class":"DELTA_UNCLASSIFIED"}
+  ]
+}

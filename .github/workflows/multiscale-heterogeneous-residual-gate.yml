@@ -1,0 +1,75 @@
+name: Multiscale Heterogeneous Residual Gate
+
+on:
+  push:
+    branches:
+      - "work/multiscale-heterogeneous-residual-geometry-v1-20260928"
+    paths:
+      - "docs/science/RLL_MULTISCALE_HETEROGENEOUS_RESIDUAL_GEOMETRY_V1.md"
+      - "data/contracts/rll_multiscale_heterogeneous_residual.v1.json"
+      - "data/examples/rll_multiscale_heterogeneous_residual.example.json"
+      - "scripts/rll_multiscale_heterogeneous_residual.py"
+      - "tests/test_rll_multiscale_heterogeneous_residual.py"
+      - "scripts/verify_cal_maya_arithmetic.py"
+      - ".github/workflows/multiscale-heterogeneous-residual-gate.yml"
+  pull_request:
+    paths:
+      - "docs/science/RLL_MULTISCALE_HETEROGENEOUS_RESIDUAL_GEOMETRY_V1.md"
+      - "data/contracts/rll_multiscale_heterogeneous_residual.v1.json"
+      - "data/examples/rll_multiscale_heterogeneous_residual.example.json"
+      - "scripts/rll_multiscale_heterogeneous_residual.py"
+      - "tests/test_rll_multiscale_heterogeneous_residual.py"
+      - "scripts/verify_cal_maya_arithmetic.py"
+      - ".github/workflows/multiscale-heterogeneous-residual-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Parse contracts and example
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in [
+              Path("data/contracts/rll_multiscale_heterogeneous_residual.v1.json"),
+              Path("data/examples/rll_multiscale_heterogeneous_residual.example.json"),
+          ]:
+              json.loads(p.read_text(encoding="utf-8"))
+              print("PASS_JSON", p)
+          PY
+
+      - name: Run multiscale reference example
+        run: |
+          python scripts/rll_multiscale_heterogeneous_residual.py \
+            data/examples/rll_multiscale_heterogeneous_residual.example.json \
+            --output /tmp/rll_multiscale_receipt.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("/tmp/rll_multiscale_receipt.json").read_text())
+          assert d["claim_allowed"] is False
+          assert d["heterogeneity"]["closure_pass"] is True
+          assert d["residual_budget"]["partition_closure_pass"] is True
+          assert d["multiscale"]["weights_likelihood"] is False
+          print("PASS_REFERENCE", d["heterogeneity"]["between_group_fraction"])
+          PY
+
+      - name: Run focused tests
+        run: |
+          python -m pip install --disable-pip-version-check pytest
+          python -m pytest -q tests/test_rll_multiscale_heterogeneous_residual.py
+
+      - name: Verify Maya calendar arithmetic comparator
+        run: |
+          python scripts/verify_cal_maya_arithmetic.py

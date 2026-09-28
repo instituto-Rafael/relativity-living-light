@@ -1,0 +1,47 @@
+{
+  "schema": "rll.multiscale_heterogeneous_residual.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "input_schema": "rll.multiscale_heterogeneous_residual.input.v1",
+  "output_schema": "rll.multiscale_heterogeneous_residual.receipt.v1",
+  "variance_types": {
+    "population": "sum((x-mu)^2)/N",
+    "sample": "sum((x-xbar)^2)/(n-1)",
+    "must_not_be_silently_interchanged": true
+  },
+  "heterogeneity_identity": "TOTAL_SSE = WITHIN_SSE + BETWEEN_SSE",
+  "residual_classes": [
+    "DELTA_MEASUREMENT",
+    "DELTA_MODEL",
+    "DELTA_OMITTED_VARIABLE",
+    "DELTA_LATENT",
+    "DELTA_STOCHASTIC",
+    "DELTA_UNCLASSIFIED"
+  ],
+  "token_vazio_states": [
+    "TOKEN_VAZIO_GROUPING",
+    "TOKEN_VAZIO_UNCERTAINTY",
+    "TOKEN_VAZIO_ZERO_SCALE",
+    "TOKEN_VAZIO_CRITICAL_VALUE",
+    "TOKEN_VAZIO_ORDERING"
+  ],
+  "fibonacci": {
+    "role": "multiscale contiguous window sizes only",
+    "likelihood_weight": false,
+    "default_sizes": "2,3,5,8,13,... up to N"
+  },
+  "geometry_boundaries": {
+    "sqrt3_over_2_is_sigma": false,
+    "geometry_matrix_is_covariance": false,
+    "poincare_ball_equals_return_map": false,
+    "poincare_return_map_equals_conjecture": false,
+    "venturi_geometry_equals_fluid_mechanism": false,
+    "calendar_periodicity_equals_causal_mechanism": false
+  },
+  "promotion_gate": {
+    "residual_is_not_cause": true,
+    "classification_is_not_causal_ownership": true,
+    "missing_uncertainty_must_not_be_zero_filled": true,
+    "grouping_and_order_must_be_declared_before_interpretation": true
+  }
+}
