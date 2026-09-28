@@ -1,7 +1,7 @@
 # RLL — DESI DR2 Full-Covariance Whitened Residual × Fibonacci Multiscale V1
 
 **Date:** 2026-09-28  
-**State:** \`IMPLEMENTED_UNTESTED\` until provider CI for this successor completes  
+**State:** \`PASS_SOFTWARE_REPRODUCTION / claim_allowed=false\`  
 **Author/proponent:** Rafael Melo Reis  
 **Producer:** \`instituto-Rafael/relativity-living-light\`  
 **Claim gate:** \`claim_allowed=false\`
@@ -168,14 +168,42 @@ full-covariance whitening defined
 + geometry namespaces preserved
 
 F_gap =
-provider CI
-+ independent reproduction
+independent reproduction
 + non-null/held-out RLL profile for model discrimination
 + physical Poincare/Venturi/calendar binding
 
 F_next =
-run provider gate
--> record receipt
--> only after PASS apply the same frozen diagnostic to a preregistered
+apply the same frozen diagnostic to a preregistered
    non-null or held-out RLL profile without retuning scales/groups/covariance
 \`\`\`
+
+
+## Provider execution evidence — 2026-09-28
+
+Tested source head: \`adc67d49bd33e5e5ec5eb49b4a4860e654952f2a\`.
+
+Dedicated workflow:
+
+- \`DESI DR2 Covariance Whitened Multiscale Gate\`
+- run \`36491451759\`
+- job \`109160771657\`
+- conclusion: \`success\`
+
+Observed successful steps:
+
+1. contract parse;
+2. covariance-whitened reference execution;
+3. focused test suite.
+
+Provider log reports:
+
+\`\`\`text
+PASS_CONTRACT rll.desi_dr2.covariance_whitened_multiscale.contract.v1
+PASS_REFERENCE 11.770259055546353
+6 passed in 0.05s
+\`\`\`
+
+The PASS is bounded to source/order/covariance validation, positive-definite
+Cholesky whitening, chi-square reproduction, block closure and the declared
+Fibonacci-window boundary. It does not promote a physical or cosmological
+claim. \`claim_allowed=false\` remains.
