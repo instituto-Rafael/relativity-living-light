@@ -43,3 +43,22 @@ They only make the data/variance layer easier to audit before model-comparison o
 ## Next coherent step
 
 Wire the validator into a lightweight CI check after confirming it passes in the repository environment.
+
+
+## Heterogeneity / multiscale diagnostic successor
+
+Before using a global mean/variance as representative of a heterogeneous dataset, the governed diagnostic route is:
+
+`docs/science/RLL_MULTISCALE_HETEROGENEOUS_RESIDUAL_GEOMETRY_V1.md`
+
+Reference implementation:
+
+`scripts/rll_multiscale_heterogeneous_residual.py`
+
+This layer does not replace dataset covariance or likelihood. It exposes population/sample variance distinction, declared group heterogeneity, residual-class budgets and optional Fibonacci-sized diagnostic windows.
+
+```text
+GLOBAL_MEAN != INDIVIDUAL_OR_GROUP_REQUIREMENT
+DIAGNOSTIC_WINDOW != LIKELIHOOD_WEIGHT
+RESIDUAL != CAUSE
+```
