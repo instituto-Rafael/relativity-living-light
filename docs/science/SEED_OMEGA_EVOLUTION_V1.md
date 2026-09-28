@@ -203,3 +203,21 @@ AUTOMATIC_NOISE_ASSIGNMENT.
 `LATENT_RELATION_PROBE`
 `NOISE_RECLASSIFY`
 
+
+
+## Operational successor — heterogeneous residual decomposition
+
+The practice-theory residual above now has a bounded statistical successor:
+
+`docs/science/RLL_MULTISCALE_HETEROGENEOUS_RESIDUAL_GEOMETRY_V1.md`
+
+The successor adds population/sample variance typing, exact within/between-group decomposition, residual-class bookkeeping and Fibonacci-sized multiscale diagnostic windows.
+
+Hard boundaries remain:
+
+```text
+PRACTICE_THEORY_MISMATCH != AUTOMATIC_NOISE_ASSIGNMENT
+FIBONACCI_WINDOW != LIKELIHOOD_WEIGHT
+GEOMETRY_MATRIX != COVARIANCE_MATRIX
+RESIDUAL_CLASSIFICATION != CAUSAL_OWNERSHIP
+```
