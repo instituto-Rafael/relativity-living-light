@@ -57,7 +57,7 @@ jobs:
             --maxiter 3 \
             --integration-points 1024 \
             --output artifacts/omega_g/g4_baseline_smoke.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: omega-g-g4-background-smoke-${{ github.run_id }}
           path: artifacts/omega_g/g4_baseline_smoke.json
