@@ -329,3 +329,27 @@ F_next =
   -> freeze held-out/non-null profile
   -> compare diagnostic stability without retuning
 \`\`\`
+
+
+## 13. Provider execution evidence — 2026-09-28
+
+Provider workflow:
+
+- `RLL Residual Geometry Composite V2 Gate`
+- run `36503480317`
+- job `109199476930`
+- conclusion: `success`
+
+Observed log:
+
+```text
+PASS_CONTRACT
+PASS_REFERENCE 11.770259055546353
+11 passed in 0.09s
+```
+
+The tested PR merge ref was `f0671b189c7a094e67aea17d8ecdd4e9b988da0c`, combining branch head `726173d41ea6750b652ff27d24c47329bb059dcb` with base `094799c1529e365f0011f462e55db10804cb9ef2`.
+
+This PASS is bounded to contract parsing, deterministic diagnostic execution, exact preservation of the frozen whitened-residual chi-square identity, recurrence/window tests, Poincaré-ball membership, quadratic fixture recovery and retained Venturi/calendar gates.
+
+It does not promote a physical or cosmological claim. `claim_allowed=false` remains.
