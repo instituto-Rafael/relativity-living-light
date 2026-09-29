@@ -1,4 +1,6 @@
-# START HERE — Navigation Hub
+# Navigation Hub — Human Comfort Layer
+
+**Bootstrap operacional:** [`START HERE Ω V2.1 DISPATCH`](../presentation/00_START_HERE_RLL.md)
 
 **Objetivo:** chegar ao conteúdo certo em poucos cliques, sem precisar conhecer a árvore inteira do repositório.
 
@@ -63,6 +65,10 @@ Esse índice classifica cada arquivo sem movê-lo: entrada, governança, documen
 
 ```text
 README
+  ↓
+START HERE Ω V2.1 DISPATCH
+  ↓
+CURRENT_STATE / μREAD≤3
   ↓
 NAVIGATION_HUB  ← você está aqui
   ├─ ciência ─────────→ docs/science + docs/canonicos + data/real
