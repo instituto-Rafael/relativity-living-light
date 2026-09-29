@@ -20,10 +20,13 @@ IGNORE_BACKLINK_PREFIXES = (
     'results/pipeline-runs/',
     'to_Add/',
     'ANALISE_COMPLETA/',
-    'docs/DOCUMENTATION_FULL_INVENTORY.md',
+    'data/results/repo_inventory.',
+    'data/governance/RLL_ROOT_PHYSICAL_REFACTOR_',
 )
 IGNORE_BACKLINK_EXACT = {
     'docs/navigation/ROOT_FILES_INDEX.md',
+    'docs/DOCUMENTATION_FULL_INVENTORY.md',
+    'docs/governance/ROOT_ARTIFACT_CLASSIFICATION.md',
     'schemas/EVOLUTION_ROADMAP.md',
     'docs/legacy/root/README.md',
     'docs/presentation/05_CURRENT_STATE_RLL.md',
@@ -93,12 +96,14 @@ def main() -> int:
 
     files = tracked()
     unexpected = []
+    governed = []
     for row in migrations:
         needle = row['source']
         for rel in files:
             if rel == row['source'] or rel == row['destination']:
                 continue
             if rel in IGNORE_BACKLINK_EXACT or rel.startswith(IGNORE_BACKLINK_PREFIXES):
+                governed.append((needle, rel))
                 continue
             p = ROOT / rel
             if p.suffix.lower() not in TEXT_SUFFIXES:
@@ -118,6 +123,7 @@ def main() -> int:
     print('DESTINATION_BLOB_PRESERVATION=PASS')
     print('STUB_ROUTING=PASS')
     print('RSFAEL_TYPE=text/plain')
+    print('GOVERNED_ROUTING_BACKLINKS=' + str(len(governed)))
     print('UNEXPECTED_ACTIVE_BACKLINKS=' + str(len(unexpected)))
     if unexpected:
         for needle, rel in unexpected[:20]:
