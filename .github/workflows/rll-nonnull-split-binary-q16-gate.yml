@@ -30,13 +30,15 @@ jobs:
       - name: Preflight required toolchain
         run: |
           set -eu
-          for X in clang ld nm readelf sha256sum dd; do
+          for X in clang ld nm readelf sha256sum dd bash; do
             command -v "$X" >/dev/null 2>&1 || {
               echo "MISSING_TOOL=$X"
               exit 80
             }
           done
+          bash -n scripts/run_rll_nonnull_split_armv7_physical_v3.sh
           echo PASS_REQUIRED_TOOLCHAIN
+          echo PASS_PHYSICAL_RUNNER_SYNTAX
 
       - name: Build split static ELFs and shadow gate
         run: |
@@ -106,6 +108,9 @@ jobs:
           set -eu
           B=build/rll-split-v3
           sha256sum \
+            .github/workflows/rll-nonnull-split-binary-q16-gate.yml \
+            scripts/run_rll_nonnull_split_armv7_physical_v3.sh \
+            data/contracts/rll_nonnull_split_binary_q16.v3.json \
             core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c \
             core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c \
             "$B/g0.elf" \
