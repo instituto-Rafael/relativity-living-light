@@ -46,6 +46,14 @@ Encaminhamentos complementares:
 
 ---
 
+
+## 0) Apresentacao e navegacao
+
+- [`docs/presentation/00_START_HERE_RLL.md`](presentation/00_START_HERE_RLL.md) - entrada curta por objetivo e publico.
+- [`docs/presentation/10_EVIDENCE_RESULTS.md`](presentation/10_EVIDENCE_RESULTS.md) - rota para dados, resultados e limites.
+- [`docs/presentation/20_PAPERS_REPRODUCIBILITY.md`](presentation/20_PAPERS_REPRODUCIBILITY.md) - papers, maturidade e reproducibilidade.
+- [`docs/presentation/index.html`](presentation/index.html) - interface navegavel com selecao por objetivo; publicacao em GitHub Pages depende da configuracao do provedor e permanece separada do conteudo.
+
 ## 1) Nucleo cientifico oficial
 
 - [`README.md`](../README.md)

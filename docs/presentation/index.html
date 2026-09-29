@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RLL · Navegação de apresentação</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:980px;margin:0 auto;padding:24px;line-height:1.5}
+header{margin-bottom:24px}.card{border:1px solid #7775;border-radius:12px;padding:16px;margin:12px 0}
+select{width:100%;max-width:640px;padding:10px;font-size:1rem}a{word-break:break-word}
+small{opacity:.75}.status{font-family:ui-monospace,monospace}
+</style>
+</head>
+<body>
+<header>
+<h1>Relativity Living Light · Atlas de apresentação</h1>
+<p>Escolha o objetivo de leitura. Esta página é uma camada de navegação; não promove claims científicos.</p>
+<p class="status">SOURCE ≠ EXECUTION ≠ EVIDENCE ≠ CLAIM · TOKEN_VAZIO ≠ PASS</p>
+</header>
+
+<label for="route"><strong>Quero...</strong></label>
+<select id="route">
+<option value="overview">entender o projeto rapidamente</option>
+<option value="evidence">ver dados e resultados</option>
+<option value="audit">auditar proveniência e claims</option>
+<option value="papers">ver papers e maturidade</option>
+<option value="architecture">entender arquitetura e execução</option>
+</select>
+
+<div id="cards"></div>
+
+<script>
+const routes={
+overview:[
+["README","../../README.md","porta de entrada"],
+["Avaliação honesta","../AVALIACAO_HONESTA_ESTADO_ATUAL.md","estado atual e limites"],
+["Índice mestre","../INDICE_MESTRE.md","navegação documental completa"]
+],
+evidence:[
+["Evidence & Results","10_EVIDENCE_RESULTS.md","rota curta para resultados"],
+["Joint real likelihood","../../results/structure_d/joint_real_likelihood_readme.md","explicação do artefato"],
+["Current Results Paper Table","../RLL_CURRENT_RESULTS_PAPER_TABLE.md","dados e superfícies atuais"]
+],
+audit:[
+["Traceability Map","../RLL_TRACEABILITY_MAP.md","claims → evidência → próximo gate"],
+["V1 ancestry audit","../RLL_V1_TAG_ANCESTRALITY_AUDIT.md","anterioridade documental"],
+["Missing calculations","../RLL_MISSING_CALCULATIONS_LEDGER.md","lacunas explícitas"]
+],
+papers:[
+["Papers route","20_PAPERS_REPRODUCIBILITY.md","ordem de apresentação"],
+["PapersPub Index","../../PapersPub/INDEX.md","maturidade por trilha"],
+["Paper-ready route","../RLL_PAPER_READY_ROUTE.md","framing para revisão"]
+],
+architecture:[
+["ARCHITECTURE","../../ARCHITECTURE.md","arquitetura geral"],
+["Claim-gated architecture","../architecture/ARCHITECTURE_CLAIM_GATED.md","fronteiras de claim"],
+["Pipeline diagram","../RLL_PIPELINE_CLAIM_GATE_DIAGRAM.md","fluxo dado→likelihood→gate"]
+]};
+function render(){
+ const root=document.getElementById("cards"); root.innerHTML="";
+ for(const [name,href,desc] of routes[document.getElementById("route").value]){
+  const d=document.createElement("div"); d.className="card";
+  d.innerHTML='<strong><a href="'+href+'">'+name+'</a></strong><br><small>'+desc+'</small>';
+  root.appendChild(d);
+ }
+}
+document.getElementById("route").addEventListener("change",render);render();
+</script>
+</body>
+</html>
