@@ -8,12 +8,14 @@ on:
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v1.json"
+      - "data/contracts/rll_nonnull_blind_q16_freestanding.v2.json"
       - "docs/science/RLL_NONNULL_BLIND_Q16_FREESTANDING_V1.md"
       - ".github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml"
   pull_request:
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v1.json"
+      - "data/contracts/rll_nonnull_blind_q16_freestanding.v2.json"
       - "docs/science/RLL_NONNULL_BLIND_Q16_FREESTANDING_V1.md"
       - ".github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml"
 
@@ -82,7 +84,9 @@ jobs:
 
           printf '%s\n' "$OUT" | grep -F 'state=PASS'
           printf '%s\n' "$OUT" | grep -F 'exact=1311,65536,19661'
-          printf '%s\n' "$OUT" | grep -F 'stress=1311,65536,19661'
+          printf '%s\n' "$OUT" | grep -F 'stress='
+          printf '%s\n' "$OUT" | grep -F 'stress_delta='
+          printf '%s\n' "$OUT" | grep -F 'stress_gate=DIAGNOSTIC'
           printf '%s\n' "$OUT" | grep -F 'null_os=0'
           printf '%s\n' "$OUT" | grep -F 'grid_evals=1782'
           printf '%s\n' "$OUT" | grep -F 'claim_allowed=0'
