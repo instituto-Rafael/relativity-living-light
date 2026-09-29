@@ -34,14 +34,14 @@ jobs:
           CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections -fno-optimize-sibling-calls -Wshadow -Werror"
 
           for N in generator recovery; do
-            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_\${N}_freestanding.c"
-            clang $CFLAGS -c "$SRC" -o "build/q16-v3/\${N}.o"
-            ld -static --gc-sections -e _start -o "build/q16-v3/\${N}.elf" "build/q16-v3/\${N}.o"
-            test -z "$(nm -u "build/q16-v3/\${N}.elf")"
-            ! readelf -l "build/q16-v3/\${N}.elf" | grep -q INTERP
-            ! readelf -d "build/q16-v3/\${N}.elf" 2>/dev/null | grep -q NEEDED
-            ! nm "build/q16-v3/\${N}.elf" | grep -Ei 'stack_chk|shadow|malloc|free|printf|libc'
-            objdump -d "build/q16-v3/\${N}.elf" > "build/q16-v3/\${N}.asm"
+            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_${N}_freestanding.c"
+            clang $CFLAGS -c "$SRC" -o "build/q16-v3/${N}.o"
+            ld -static --gc-sections -e _start -o "build/q16-v3/${N}.elf" "build/q16-v3/${N}.o"
+            test -z "$(nm -u "build/q16-v3/${N}.elf")"
+            ! readelf -l "build/q16-v3/${N}.elf" | grep -q INTERP
+            ! readelf -d "build/q16-v3/${N}.elf" 2>/dev/null | grep -q NEEDED
+            ! nm "build/q16-v3/${N}.elf" | grep -Ei 'stack_chk|shadow|malloc|free|printf|libc'
+            objdump -d "build/q16-v3/${N}.elf" > "build/q16-v3/${N}.asm"
           done
 
           echo PASS_SHADOW_SOURCE_DIAGNOSTIC
@@ -80,11 +80,11 @@ jobs:
           CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections -fno-optimize-sibling-calls -Wshadow -Werror"
 
           for N in generator recovery; do
-            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_\${N}_freestanding.c"
-            clang --target=armv7-linux-gnueabihf -march=armv7-a -marm $CFLAGS -c "$SRC" -o "build/q16-v3/\${N}.armv7.o"
-            test -z "$(nm -u "build/q16-v3/\${N}.armv7.o")"
-            readelf -h "build/q16-v3/\${N}.armv7.o" | grep -F 'Class:' | grep -F ELF32
-            readelf -h "build/q16-v3/\${N}.armv7.o" | grep -F 'Machine:' | grep -F ARM
+            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_${N}_freestanding.c"
+            clang --target=armv7-linux-gnueabihf -march=armv7-a -marm $CFLAGS -c "$SRC" -o "build/q16-v3/${N}.armv7.o"
+            test -z "$(nm -u "build/q16-v3/${N}.armv7.o")"
+            readelf -h "build/q16-v3/${N}.armv7.o" | grep -F 'Class:' | grep -F ELF32
+            readelf -h "build/q16-v3/${N}.armv7.o" | grep -F 'Machine:' | grep -F ARM
           done
 
           echo PASS_ARMV7_SPLIT_OBJECTS
