@@ -63,5 +63,68 @@
     "SYNTHETIC_RECOVERY != REAL_DATA_MODEL_SELECTION",
     "PROVIDER_ARM_OBJECT_PASS != PHYSICAL_ARM_EXECUTION",
     "PHYSICAL_ARM_EXECUTION != COSMOLOGICAL_VALIDATION"
-  ]
+  ],
+  "hardening_requirements": {
+    "provenance": {
+      "trigger": "PR #1010 review after canonical V3 was merged through PR #1011",
+      "superseded_pr": 1010,
+      "canonical_merge_pr": 1011,
+      "canonical_base_commit": "88349e4aff5e7934d3cee129eee3d54b3d620ede"
+    },
+    "symbol_audit": {
+      "runner_nm_resolution": "FAIL_CLOSED_REQUIRE_LLVM_NM_OR_NM",
+      "nm_invocation_failure": "FAIL",
+      "undefined_symbols": "MUST_BE_ZERO"
+    },
+    "input_arithmetic": {
+      "decoded_observation_domain": "FULL_SIGNED_I32",
+      "residual_subtraction": "I64_SUBTRACT_THEN_SATURATE_TO_I32",
+      "provider_gate": "SIGNED_INTEGER_OVERFLOW_TRAP_WITH_INT32_MIN_FIXTURE"
+    },
+    "workflow_route": {
+      "push_branches": [
+        "work/**",
+        "rll/lab",
+        "rll/integration",
+        "rll/release",
+        "main"
+      ],
+      "pull_request_targets": [
+        "rll/lab",
+        "rll/integration",
+        "rll/release",
+        "main"
+      ]
+    },
+    "provider_receipt_schema": "rll.nonnull_split_provider_hardening.v3",
+    "physical_runner": {
+      "required_android_abi": "armeabi-v7a",
+      "producer_exit_codes": "ALL_ZERO",
+      "recovery_exit_codes": "ALL_ZERO",
+      "required_provenance": [
+        "ANDROID_ABI",
+        "ANDROID_SDK",
+        "GIT_HEAD_OR_TOKEN_VAZIO",
+        "CLANG_PATH_VERSION_SHA256",
+        "LD_LLD_PATH_VERSION_SHA256",
+        "NM_PATH_VERSION_SHA256",
+        "CONTRACT_SHA256",
+        "GENERATOR_SOURCE_SHA256",
+        "RECOVERY_SOURCE_SHA256",
+        "GENERATOR_ELF_SHA256",
+        "RECOVERY_ELF_SHA256",
+        "FIXTURE_SHA256",
+        "OUTPUT_SHA256",
+        "RUNNER_SHA256"
+      ],
+      "pass_rule": "ALL_EXECUTION_GATES_AND_ALL_EXIT_CODES_MUST_PASS",
+      "non_target_abi": "FAIL_CLOSED"
+    }
+  },
+  "open_evidence_gaps": {
+    "armv7_physical_execution": "TOKEN_VAZIO",
+    "independent_reimplementation": "TOKEN_VAZIO",
+    "held_out_real_data": "TOKEN_VAZIO",
+    "cosmological_validation": "TOKEN_VAZIO"
+  }
 }
