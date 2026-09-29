@@ -141,8 +141,6 @@ jobs:
           static_elf=PASS
           identifier_shadow=PASS
           signed_overflow_extreme_i32=PASS
-          armv7_object_no_undefined=NOT_RUN_YET
-          armv7_named_tail_branch_audit=NOT_RUN_YET
           armv7_physical_execution=TOKEN_VAZIO
           independent_reimplementation=TOKEN_VAZIO
           held_out_real_data=TOKEN_VAZIO
