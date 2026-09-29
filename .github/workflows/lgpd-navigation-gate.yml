@@ -1,0 +1,38 @@
+name: LGPD + Navigation Engineering Gate
+
+on:
+  push:
+    branches:
+      - "work/lgpd-navigation-root-refactor-v1-20260929"
+    paths:
+      - "README.md"
+      - "docs/INDICE_MESTRE.md"
+      - "docs/navigation/**"
+      - "docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md"
+      - "data/governance/RLL_LGPD_NAVIGATION_PRIVACY_V1.json"
+      - "tools/check_navigation_privacy.py"
+      - ".github/workflows/lgpd-navigation-gate.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "docs/INDICE_MESTRE.md"
+      - "docs/navigation/**"
+      - "docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md"
+      - "data/governance/RLL_LGPD_NAVIGATION_PRIVACY_V1.json"
+      - "tools/check_navigation_privacy.py"
+      - ".github/workflows/lgpd-navigation-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  navigation-privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Navigation and privacy engineering gate
+        run: |
+          set -eu
+          python3 tools/check_navigation_privacy.py
