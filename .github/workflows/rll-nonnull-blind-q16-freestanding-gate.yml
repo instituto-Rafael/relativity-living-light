@@ -10,6 +10,7 @@ on:
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v1.json"
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v2.json"
       - "docs/science/RLL_NONNULL_BLIND_Q16_FREESTANDING_V1.md"
+      - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
       - ".github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml"
   pull_request:
     paths:
@@ -17,6 +18,7 @@ on:
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v1.json"
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v2.json"
       - "docs/science/RLL_NONNULL_BLIND_Q16_FREESTANDING_V1.md"
+      - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
       - ".github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml"
 
 permissions:
@@ -52,6 +54,8 @@ jobs:
             exit 1
           fi
           echo "PASS_SOURCE_BOUNDARY"
+          echo "SHADOW_POLICY=-Wshadow_-Werror"
+          echo "TAIL_POLICY=-fno-optimize-sibling-calls"
 
       - name: Build and execute x86_64 static ELF
         run: |
@@ -60,10 +64,10 @@ jobs:
           mkdir -p build/non-null-q16
 
           clang \
-            -std=c11 -O2 \
+            -std=c11 -O2 -Wall -Wextra -Wshadow -Werror \
             -ffreestanding -fno-builtin -fno-stack-protector \
             -fno-unwind-tables -fno-asynchronous-unwind-tables \
-            -fomit-frame-pointer -fno-pic -fno-pie -nostdlib \
+            -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib \
             -ffunction-sections -fdata-sections \
             -c "$SRC" -o build/non-null-q16/x86_64.o
 
@@ -101,10 +105,10 @@ jobs:
           clang \
             --target=armv7-linux-gnueabihf \
             -march=armv7-a -marm \
-            -std=c11 -O2 \
+            -std=c11 -O2 -Wall -Wextra -Wshadow -Werror \
             -ffreestanding -fno-builtin -fno-stack-protector \
             -fno-unwind-tables -fno-asynchronous-unwind-tables \
-            -fomit-frame-pointer -fno-pic -fno-pie -nostdlib \
+            -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib \
             -ffunction-sections -fdata-sections \
             -c "$SRC" -o build/non-null-q16/armv7.o
 
