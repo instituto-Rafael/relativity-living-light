@@ -441,7 +441,8 @@ static u64 score(i32 os, i32 zt, i32 wt)
 
     while (i < N) {
         i32 p = model(D[i * DSTRIDE + DZ], os, zt, wt);
-        i32 n = qdiv(Y[i] - p, D[i * DSTRIDE + DS]);
+        i32 residual = sat((i64)Y[i] - (i64)p);
+        i32 n = qdiv(residual, D[i * DSTRIDE + DS]);
         i32 t = qmul(n, n);
 
         if (t < 0) {
