@@ -1,0 +1,98 @@
+{
+  "schema": "rll.nonnull_blind_q16_freestanding.contract.v1",
+  "date": "2026-09-28",
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "code": "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c",
+  "runtime_contract": {
+    "translation_units": 1,
+    "libc": false,
+    "hosted_headers": false,
+    "heap": false,
+    "malloc": false,
+    "free": false,
+    "garbage_collection": false,
+    "structs": false,
+    "classes": false,
+    "function_pointers": false,
+    "runtime_filesystem": false,
+    "runtime_parser": false,
+    "external_runtime_libraries": false,
+    "entrypoint": "_start",
+    "observable_boundary": "direct Linux write/exit syscalls",
+    "numeric": "Q16.16 integer fixed point",
+    "state_layout": "flat static arrays addressed by integer offsets"
+  },
+  "source_lineage": {
+    "profile_document": "docs/science/RLL_HZ_REAL_FREESTANDING_MODEL.md",
+    "dataset_materialization": "core/lowlevel_runtime/c/rll_canonical_hz_data.c",
+    "dataset_source": "data/real/Hz_data_real.csv",
+    "model_predecessor": "core/lowlevel_runtime/c/rll_hz_freestanding.c"
+  },
+  "frozen_injection_q16": {
+    "H0": 4417126,
+    "Omega_m": 20644,
+    "Omega_s0": 1311,
+    "z_t": 65536,
+    "w_t": 19661
+  },
+  "frozen_injection_decoded": {
+    "H0": 67.4,
+    "Omega_m": 0.315,
+    "Omega_s0": 0.02,
+    "z_t": 1,
+    "w_t": 0.3
+  },
+  "recovery_manifold": {
+    "omega_s0": "0 plus 21 positive Q16 cells: 1 + k*131, k=0..20",
+    "z_t_q16": [
+      39322,
+      45875,
+      52429,
+      58982,
+      65536,
+      72090,
+      78643,
+      85197,
+      91750
+    ],
+    "w_t_q16": [
+      13107,
+      14746,
+      16384,
+      18022,
+      19661,
+      21299,
+      22938,
+      24576,
+      26214
+    ],
+    "cells_per_scan": 1782,
+    "observations_per_cell": 33
+  },
+  "arms": [
+    {
+      "id": "A",
+      "kind": "EXACT_NONNULL",
+      "pass": "recover 1311,65536,19661 with chi2_q16=0"
+    },
+    {
+      "id": "B",
+      "kind": "DETERMINISTIC_PERTURBATION",
+      "noise": "sigma*{-2,-1,0,1,2}/32 repeating",
+      "pass": "recover 1311,65536,19661"
+    },
+    {
+      "id": "C",
+      "kind": "NULL_BOUNDARY",
+      "pass": "recover Omega_s0=0; z_t/w_t intentionally not asserted"
+    }
+  ],
+  "boundaries": [
+    "SYNTHETIC_RECOVERY != REAL_DATA_MODEL_SELECTION",
+    "SAME_BINARY_RECOVERY != INDEPENDENT_REPLICATION",
+    "OMEGA_S0_ZERO => Z_T/W_T_NON_IDENTIFIABLE",
+    "LOWLEVEL_PASS != PHYSICAL_COSMOLOGY_CLAIM",
+    "ARMV7_CROSS_BUILD != PHYSICAL_ARMV7_EXECUTION"
+  ]
+}
