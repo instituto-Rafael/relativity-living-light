@@ -1,5 +1,11 @@
 # Relativity Living Light (RLL/MCRP)
 
+> **🧭 Comece aqui:** para navegar por objetivo em vez de percorrer a árvore inteira, use o [Navigation Hub](docs/navigation/README.md).
+>
+> - arquivos soltos da raiz: [ROOT_FILES_INDEX](docs/navigation/ROOT_FILES_INDEX.md)
+> - privacidade/LGPD: [LGPD_PRIVACY_NAVIGATION_V1](docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md)
+> - documentação canônica: [INDICE_MESTRE](docs/INDICE_MESTRE.md)
+
 **Estado:** `REFERENCE`  
 **Proprietário lógico:** `research-governance`  
 **Repositório:** [`instituto-rafael/relativity-living-light`](https://github.com/instituto-rafael/relativity-living-light)
