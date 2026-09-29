@@ -241,3 +241,9 @@ run provider gate
 -> only after that separate the generator and recovery executables for
    materially independent replication
 \`\`\`
+
+
+## Routing receipt pointer
+
+Draft PR: `instituto-Rafael/relativity-living-light#1007`.
+Provider result remains `PENDING` until the exact-head gate terminates.
