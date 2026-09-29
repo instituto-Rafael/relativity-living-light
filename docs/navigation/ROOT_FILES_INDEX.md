@@ -11,6 +11,7 @@
 - `ROUTE_CODE`: fonte executável; navegar por código/ferramentas, não como documento de entrada.
 - `ROUTE_REGISTRY`: configuração/registro; navegar por governança/dados.
 - `LEGACY_REVIEW`: preservar, classificar e apontar sucessor canônico antes de mover.
+- `LEGACY_STUB`: corpo já migrado; caminho raiz existe apenas para compatibilidade/backlink.
 - `ARTIFACT_REVIEW`: binário/bundle; exigir provenance/hash/retention antes de publicação.
 - `MANUAL_REVIEW`: sem decisão automática.
 
@@ -26,12 +27,12 @@
 | [`ARCHITECTURE.md`](../../ARCHITECTURE.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`build.gradle`](../../build.gradle) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`CAMINHOS_VALIDACAO_NOVOS.yml`](../../CAMINHOS_VALIDACAO_NOVOS.yml) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
-| [`Códex1.md`](../../C%C3%B3dex1.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
-| [`Codex2.md`](../../Codex2.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
+| [`Códex1.md`](../../C%C3%B3dex1.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/prompts/Códex1.md` |
+| [`Codex2.md`](../../Codex2.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/prompts/Codex2.md` |
 | [`COMPREHENSIVE_REPOSITORY_ANALYSIS.md`](../../COMPREHENSIVE_REPOSITORY_ANALYSIS.md) | `DOCUMENT` | `INDEX_FIRST` |
 | [`CONSOLIDATION.md`](../../CONSOLIDATION.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`darkmatter.md`](../../darkmatter.md) | `DOCUMENT` | `INDEX_FIRST` |
-| [`docs_toroidal_knowledge.md`](../../docs_toroidal_knowledge.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
+| [`docs_toroidal_knowledge.md`](../../docs_toroidal_knowledge.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/concepts/docs_toroidal_knowledge.md` |
 | [`EXECUTIVE_SUMMARY.md`](../../EXECUTIVE_SUMMARY.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`FALSIFIABILITY_PROTOCOL.md`](../../FALSIFIABILITY_PROTOCOL.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`Geologia.md`](../../Geologia.md) | `DOCUMENT` | `INDEX_FIRST` |
@@ -47,7 +48,7 @@
 | [`NEXT_RLL_VALIDATION_STEP.md`](../../NEXT_RLL_VALIDATION_STEP.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`Numprimod.md`](../../Numprimod.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
 | [`PRODUCTO.json`](../../PRODUCTO.json) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
-| [`Provaw.md`](../../Provaw.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
+| [`Provaw.md`](../../Provaw.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/experiments/Provaw.md` |
 | [`pyproject.toml`](../../pyproject.toml) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`pytest.ini`](../../pytest.ini) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`Rafael te.md`](../../Rafael%20te.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
@@ -71,7 +72,7 @@
 | [`rll_reproducivel.zip`](../../rll_reproducivel.zip) | `BINARY_ARTIFACT` | `ARTIFACT_REVIEW` |
 | [`rll_vs_lcdm.py`](../../rll_vs_lcdm.py) | `EXECUTABLE_SOURCE` | `ROUTE_CODE` |
 | [`RLL_WANDERING_BLACK_HOLE_TEST.md`](../../RLL_WANDERING_BLACK_HOLE_TEST.md) | `DOCUMENT` | `INDEX_FIRST` |
-| [`Rsfael`](../../Rsfael) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
+| [`Rsfael`](../../Rsfael) | `LEGACY_STUB / TEXT_IDENTIFIED` | `MOVED → docs/legacy/root/raw/Rsfael.txt` |
 | [`runtime-lock.json`](../../runtime-lock.json) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
 | [`SCIENTIFIC_CLAIMS.md`](../../SCIENTIFIC_CLAIMS.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`SCIENTIFIC_CORE_SCOPE.md`](../../SCIENTIFIC_CORE_SCOPE.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
@@ -79,7 +80,7 @@
 | [`settings.gradle`](../../settings.gradle) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`temp.md`](../../temp.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
 | [`TEXTO_DESCRITIVO_ANALITICO_TECNICO.md`](../../TEXTO_DESCRITIVO_ANALITICO_TECNICO.md) | `DOCUMENT` | `INDEX_FIRST` |
-| [`Toadd01.md`](../../Toadd01.md) | `LEGACY_REVIEW` | `LEGACY_REVIEW` |
+| [`Toadd01.md`](../../Toadd01.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/prototypes/Toadd01.md` |
 | [`VALIDATION_STATUS.md`](../../VALIDATION_STATUS.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 
 ## Diretórios — mapa rápido
@@ -147,3 +148,10 @@
 - `TOKEN_VAZIO_BACKLINK_GRAPH_COMPLETE`: ainda não foi provado que todo arquivo raiz pode ser movido sem quebrar links.
 - `TOKEN_VAZIO_LEGAL_COMPLIANCE_REVIEW`: engenharia de privacidade não equivale a parecer jurídico.
 - `TOKEN_VAZIO_HUMAN_USABILITY`: navegação humana física ainda precisa de smoke test.
+
+
+## Wave 2A — migração física concluída
+
+Manifesto: [`RLL_ROOT_PHYSICAL_REFACTOR_WAVE2A_V1.json`](../../data/governance/RLL_ROOT_PHYSICAL_REFACTOR_WAVE2A_V1.json).
+
+Seis corpos legacy saíram da raiz e foram preservados em `docs/legacy/root/`; os seis caminhos antigos são stubs de compatibilidade. Remoção futura dos stubs depende de `TOKEN_VAZIO_STUB_REMOVAL_SAFE`.
