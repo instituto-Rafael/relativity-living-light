@@ -1,0 +1,66 @@
+{
+  "schema": "rll.nonnull_blind_q16_freestanding.contract.v2",
+  "date": "2026-09-28",
+  "supersedes": "rll.nonnull_blind_q16_freestanding.contract.v1",
+  "state": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "code": "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c",
+  "invariant": "V1_STRESS_SHIFT_IS_PRESERVED_NOT_RETUNED",
+  "hard_gates": [
+    "exact non-null arm recovers Omega_s0=1311,z_t=65536,w_t=19661 with chi2_q16=0",
+    "null arm recovers Omega_s0=0",
+    "static x86_64 ELF has no undefined symbols, INTERP or NEEDED"
+  ],
+  "diagnostics": [
+    "deterministic stress arm is measurement-only",
+    "stress result must be emitted with parameter deltas",
+    "stress mismatch must not be hidden by changing injection, noise, grid or covariance"
+  ],
+  "observed_v1": {
+    "exact_q16": [
+      1311,
+      65536,
+      19661
+    ],
+    "stress_q16": [
+      1311,
+      65536,
+      21299
+    ],
+    "stress_delta_q16": [
+      0,
+      0,
+      1638
+    ],
+    "null_omega_s0_q16": 0,
+    "interpretation": "fixed perturbation moved w_t by one grid cell while Omega_s0 and z_t stayed at the injected cell; this is sensitivity evidence, not a failed exact/no-null kernel"
+  },
+  "runtime_contract": {
+    "translation_units": 1,
+    "libc": false,
+    "hosted_headers": false,
+    "heap": false,
+    "malloc": false,
+    "free": false,
+    "garbage_collection": false,
+    "structs": false,
+    "classes": false,
+    "function_pointers": false,
+    "runtime_filesystem": false,
+    "runtime_parser": false,
+    "external_runtime_libraries": false,
+    "entrypoint": "_start",
+    "observable_boundary": "direct Linux write/exit syscalls",
+    "numeric": "Q16.16 integer fixed point",
+    "state_layout": "flat static arrays addressed by integer offsets"
+  },
+  "boundaries": [
+    "STRESS_DIAGNOSTIC != PROMOTION_GATE",
+    "SYNTHETIC_RECOVERY != REAL_DATA_MODEL_SELECTION",
+    "SAME_BINARY_RECOVERY != INDEPENDENT_REPLICATION",
+    "OMEGA_S0_ZERO => Z_T/W_T_NON_IDENTIFIABLE",
+    "ARMV7_OBJECT_PASS != ARMV7_STATIC_LINK",
+    "ARMV7_CROSS_BUILD != PHYSICAL_ARMV7_EXECUTION",
+    "claim_allowed=false"
+  ]
+}
