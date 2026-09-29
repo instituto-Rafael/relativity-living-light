@@ -1,0 +1,37 @@
+{
+  "schema": "rll.root_physical_refactor.wave2b.v1",
+  "date": "2026-09-29",
+  "source_base_commit": "5866d73aa3b02b02bdca3645a2d22eaab70f6bde",
+  "state": "IMPLEMENTED_UNTESTED",
+  "class": "INDEX_FIRST_TO_TYPED_ACTIVE_ROUTE",
+  "migrations": [
+    {
+      "source": "RLL_REAL_VALIDATION_PROMPT.md",
+      "destination": "docs/validation/prompts/RLL_REAL_VALIDATION_PROMPT.md",
+      "class": "ACTIVE_VALIDATION_PROMPT",
+      "original_git_blob": "e20d5e94bdfff6d776ddc195efbcaa52f964ddaf",
+      "stub": true
+    },
+    {
+      "source": "RLL_REAL_VALIDATION_REPORT_TARGET.md",
+      "destination": "docs/validation/targets/RLL_REAL_VALIDATION_REPORT_TARGET.md",
+      "class": "ACTIVE_VALIDATION_TARGET",
+      "original_git_blob": "8a5654a641e6c753482dc81b24ea1354af73bb2a",
+      "stub": true
+    },
+    {
+      "source": "RLL_WANDERING_BLACK_HOLE_TEST.md",
+      "destination": "docs/validation/cases/RLL_WANDERING_BLACK_HOLE_TEST.md",
+      "class": "ACTIVE_FALSIFIABLE_CASE",
+      "original_git_blob": "3bb7a7ca6b13ab938d3329450f43a7190e6110aa",
+      "stub": true
+    }
+  ],
+  "invariants": [
+    "ACTIVE_CONTENT_MOVES_TO_TYPED_DOCS_ROUTE",
+    "ROOT_STUB_PRESERVES_BACKLINK_COMPATIBILITY",
+    "DESTINATION_GIT_BLOB_EQUALS_ORIGINAL_GIT_BLOB",
+    "MOVE != DELETE",
+    "CLAIM_STATE_UNCHANGED_BY_FILE_MOVE"
+  ]
+}
