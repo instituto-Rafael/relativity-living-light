@@ -1,0 +1,118 @@
+name: RLL Non-null Split Binary Q16 Gate
+
+on:
+  push:
+    branches: ["work/rll-nonnull-split-physical-v3-20260928"]
+    paths:
+      - "core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c"
+      - "core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c"
+      - "scripts/run_rll_nonnull_split_armv7_physical_v3.sh"
+      - "data/contracts/rll_nonnull_split_binary_q16.v3.json"
+      - ".github/workflows/rll-nonnull-split-binary-q16-gate.yml"
+  pull_request:
+    paths:
+      - "core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c"
+      - "core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c"
+      - "scripts/run_rll_nonnull_split_armv7_physical_v3.sh"
+      - "data/contracts/rll_nonnull_split_binary_q16.v3.json"
+      - ".github/workflows/rll-nonnull-split-binary-q16-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build split static ELFs and shadow gate
+        run: |
+          set -eu
+          mkdir -p build/rll-split-v3
+          G=core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c
+          R=core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c
+          CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-pic -fno-pie -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -Wshadow -Werror=shadow -Wall -Wextra -Werror"
+          for M in 0 1 2; do
+            clang $CFLAGS -DGEN_MODE=$M -c "$G" -o build/rll-split-v3/g$M.o
+            ld -static --gc-sections -e _start -o build/rll-split-v3/g$M.elf build/rll-split-v3/g$M.o
+          done
+          clang $CFLAGS -c "$R" -o build/rll-split-v3/recovery.o
+          ld -static --gc-sections -e _start -o build/rll-split-v3/recovery.elf build/rll-split-v3/recovery.o
+
+          for E in build/rll-split-v3/g0.elf build/rll-split-v3/g1.elf build/rll-split-v3/g2.elf build/rll-split-v3/recovery.elf; do
+            test -z "$(nm -u "$E")"
+            ! readelf -l "$E" | grep -q INTERP
+            ! readelf -d "$E" 2>/dev/null | grep -q NEEDED
+          done
+          echo PASS_SPLIT_STATIC_ELF
+          echo PASS_IDENTIFIER_SHADOW_WERROR
+
+      - name: Execute separated producer-consumer route
+        run: |
+          set -eu
+          B=build/rll-split-v3
+          "$B/g0.elf" > "$B/exact.rlf"
+          "$B/recovery.elf" < "$B/exact.rlf" > "$B/exact.txt"
+          "$B/g1.elf" > "$B/stress.rlf"
+          "$B/recovery.elf" < "$B/stress.rlf" > "$B/stress.txt"
+          "$B/g2.elf" > "$B/null.rlf"
+          "$B/recovery.elf" < "$B/null.rlf" > "$B/null.txt"
+
+          cat "$B/exact.txt"
+          cat "$B/stress.txt"
+          cat "$B/null.txt"
+
+          grep -F 'best=1311,65536,19661' "$B/exact.txt"
+          grep -F 'best=1311,65536,21299' "$B/stress.txt"
+          grep -F 'best=0,' "$B/null.txt"
+          grep -F 'grid_evals=1782' "$B/exact.txt"
+          grep -F 'claim_allowed=0' "$B/exact.txt"
+
+          echo PASS_SPLIT_BINARY_RECOVERY
+
+      - name: Freeze provider hashes
+        run: |
+          set -eu
+          sha256sum \
+            core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c \
+            core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c \
+            build/rll-split-v3/g0.elf \
+            build/rll-split-v3/g1.elf \
+            build/rll-split-v3/g2.elf \
+            build/rll-split-v3/recovery.elf \
+            build/rll-split-v3/exact.rlf \
+            build/rll-split-v3/stress.rlf \
+            build/rll-split-v3/null.rlf \
+            build/rll-split-v3/exact.txt \
+            build/rll-split-v3/stress.txt \
+            build/rll-split-v3/null.txt
+
+      - name: ARMv7 object and tail-symbol audit
+        run: |
+          set -eu
+          B=build/rll-split-v3
+          G=core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c
+          R=core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c
+          CFLAGS="--target=armv7-linux-gnueabihf -march=armv7-a -marm -std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-pic -fno-pie -fno-unwind-tables -fno-asynchronous-unwind-tables -Wshadow -Werror=shadow -Wall -Wextra -Werror"
+
+          clang $CFLAGS -DGEN_MODE=0 -c "$G" -o "$B/g-arm.o"
+          clang $CFLAGS -c "$R" -o "$B/r-arm.o"
+          test -z "$(nm -u "$B/g-arm.o")"
+          test -z "$(nm -u "$B/r-arm.o")"
+          readelf -h "$B/g-arm.o" | grep -F 'ELF32'
+          readelf -h "$B/g-arm.o" | grep -F 'ARM'
+
+          clang $CFLAGS -DGEN_MODE=0 -S "$G" -o "$B/g-arm.s"
+          clang $CFLAGS -S "$R" -o "$B/r-arm.s"
+
+          GT=$(grep -Ec '^[[:space:]]*b[[:space:]]+[A-Za-z_][A-Za-z0-9_]*' "$B/g-arm.s" || true)
+          RT=$(grep -Ec '^[[:space:]]*b[[:space:]]+[A-Za-z_][A-Za-z0-9_]*' "$B/r-arm.s" || true)
+          echo "generator_named_tail_branches=$GT"
+          echo "recovery_named_tail_branches=$RT"
+          test "$GT" -eq 0
+          test "$RT" -eq 0
+
+          echo PASS_ARMV7_OBJECT_NO_UNDEFINED
+          echo PASS_ARMV7_NAMED_TAIL_BRANCH_AUDIT
+          echo ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO
