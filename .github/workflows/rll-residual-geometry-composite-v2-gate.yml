@@ -1,0 +1,62 @@
+name: RLL Residual Geometry Composite V2 Gate
+
+on:
+  pull_request:
+    paths:
+      - "scripts/rll_residual_geometry_composite_v2.py"
+      - "data/contracts/rll_residual_geometry_composite.v2.json"
+      - "tests/test_rll_residual_geometry_composite_v2.py"
+      - "docs/science/RLL_HETEROGENEOUS_RESIDUAL_GEOMETRY_COMPOSITE_V2.md"
+      - "receipts/2026-09-28_RLL_RESIDUAL_GEOMETRY_COMPOSITE_V2.md"
+      - ".github/workflows/rll-residual-geometry-composite-v2-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-residual-geometry-composite-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Parse contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("data/contracts/rll_residual_geometry_composite.v2.json")
+          d=json.loads(p.read_text())
+          assert d["schema"]=="rll.residual_geometry_composite.contract.v2"
+          assert d["claim_allowed"] is False
+          assert d["baseline"]["likelihood_mutation_allowed"] is False
+          print("PASS_CONTRACT")
+          PY
+
+      - name: Run composite reference
+        run: |
+          python scripts/rll_residual_geometry_composite_v2.py --output /tmp/composite.json
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/composite.json"))
+          assert d["state"]=="MEASURED_NUMERIC_LOCAL_OR_CI"
+          assert d["likelihood_mutated"] is False
+          assert d["claim_allowed"] is False
+          assert d["diagnostics"]["LCDM"]["chi2_identity_pass"]
+          assert d["diagnostics"]["RLL"]["chi2_identity_pass"]
+          print("PASS_REFERENCE", d["diagnostics"]["RLL"]["chi2_reconstructed"])
+          PY
+
+      - name: Focused tests
+        run: |
+          python -m pip install --disable-pip-version-check -q pytest
+          python -m pytest -q             tests/test_rll_residual_geometry_composite_v2.py             tests/test_rll_desi_dr2_covariance_multiscale.py
