@@ -64,3 +64,30 @@ LOW_LEVEL_EXECUTION != COSMOLOGICAL_VALIDATION
 ## Next
 
 Run the exact V3 physical runner on the moto e7/ARMv7, ingest the resulting receipt, compare provider and physical outputs byte-for-byte, and only then move the same frozen operator to held-out observational data.
+
+
+## Post-merge hardening / conflict reconciliation
+
+PR #1010 is not a safe merge source for V3: its head diverged by hundreds of commits, while the canonical seven V3 artifacts were already promoted byte-for-byte through PR #1011 into `rll/lab` at merge commit `88349e4aff5e7934d3cee129eee3d54b3d620ede`.
+
+The hardening successor is therefore based on the canonical `rll/lab` state rather than on the divergent PR #1010 history.
+
+Required deltas:
+
+- symbol audit fails closed unless `llvm-nm` or `nm` is actually resolvable and successfully executes
+- physical runner explicitly targets ARMv7 and verifies ELF32/ARM headers
+- Q16 residual subtraction is performed in i64 and saturated before qdiv
+- provider CI executes an INT32_MIN adversarial fixture under a signed-overflow trap build
+- workflow push coverage follows work/** -> rll/lab -> rll/integration -> rll/release -> main
+- provider evidence is emitted as a hash manifest plus `rll.nonnull_split_provider_hardening.v3` receipt
+
+These changes are not themselves evidence until a fresh provider run completes.
+
+## Open evidence gaps after hardening
+
+- ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO
+- INDEPENDENT_REIMPLEMENTATION=TOKEN_VAZIO
+- HELD_OUT_REAL_DATA=TOKEN_VAZIO
+- COSMOLOGICAL_VALIDATION=TOKEN_VAZIO
+
+No one of these tokens is promoted by provider CI.
