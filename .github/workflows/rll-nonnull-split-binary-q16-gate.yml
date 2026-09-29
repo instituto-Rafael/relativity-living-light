@@ -125,12 +125,20 @@ jobs:
           cat "$B/provider-sha256.txt"
 
       - name: Emit provider hardening receipt
+        env:
+          SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_BASE_SHA: ${{ github.event.pull_request.base.sha || 'TOKEN_VAZIO_NOT_PULL_REQUEST' }}
+          EVENT_SHA: ${{ github.sha }}
         run: |
           set -eu
           B=build/rll-split-v3
+          CHECKOUT_SHA=$(git rev-parse HEAD)
           cat > "$B/provider-hardening-receipt.txt" <<EOF
           schema=rll.nonnull_split_provider_hardening.v3
-          git_head=$GITHUB_SHA
+          source_head_sha=$SOURCE_HEAD_SHA
+          source_base_sha=$SOURCE_BASE_SHA
+          checkout_sha=$CHECKOUT_SHA
+          event_sha=$EVENT_SHA
           workflow_run_id=$GITHUB_RUN_ID
           workflow_run_attempt=$GITHUB_RUN_ATTEMPT
           provider_arch=$(uname -m)
