@@ -29,7 +29,9 @@ IGNORE_BACKLINK_EXACT = {
     'docs/governance/ROOT_ARTIFACT_CLASSIFICATION.md',
     'schemas/EVOLUTION_ROADMAP.md',
     'docs/legacy/root/README.md',
+    'docs/validation/README.md',
     'docs/presentation/05_CURRENT_STATE_RLL.md',
+    'tools/check_start_here_v2_1_root_wave2.py',
     'receipts/2026-09-29_START_HERE_V2_1_ROOT_WAVE2.md',
 }
 
