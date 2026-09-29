@@ -13,10 +13,18 @@ RECEIPT="$WORK/rll_nonnull_split_armv7_physical_v3_receipt.txt"
 for X in clang ld.lld readelf sha256sum; do
   command -v "$X" >/dev/null 2>&1 || { echo "MISSING_TOOL=$X"; exit 80; }
 done
-NM=llvm-nm
-command -v "$NM" >/dev/null 2>&1 || NM=nm
 
-CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-pic -fno-pie -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -Wshadow -Werror=shadow -Wall -Wextra -Werror"
+if command -v llvm-nm >/dev/null 2>&1; then
+  NM=llvm-nm
+elif command -v nm >/dev/null 2>&1; then
+  NM=nm
+else
+  echo "MISSING_TOOL=llvm-nm_or_nm"
+  exit 81
+fi
+NM_PATH=$(command -v "$NM") || exit 82
+
+CFLAGS="--target=armv7-linux-gnueabihf -march=armv7-a -marm -std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-pic -fno-pie -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -Wshadow -Werror=shadow -Wall -Wextra -Werror"
 
 for M in 0 1 2; do
   clang $CFLAGS -DGEN_MODE=$M -c "$G" -o "$WORK/g$M.o" || exit $((90+M))
@@ -27,14 +35,17 @@ clang $CFLAGS -c "$R" -o "$WORK/recovery.o" || exit 110
 ld.lld -m armelf_linux_eabi -static --gc-sections -e _start -o "$WORK/recovery.elf" "$WORK/recovery.o" || exit 111
 
 for E in "$WORK/g0.elf" "$WORK/g1.elf" "$WORK/g2.elf" "$WORK/recovery.elf"; do
-  test -z "$("$NM" -u "$E")" || exit 120
-  ! readelf -l "$E" | grep -q INTERP || exit 121
-  ! readelf -d "$E" 2>/dev/null | grep -q NEEDED || exit 122
+  UNDEFINED=$("$NM" -u "$E") || exit 120
+  test -z "$UNDEFINED" || exit 120
+  readelf -h "$E" | grep -Fq 'ELF32' || exit 121
+  readelf -h "$E" | grep -Fq 'ARM' || exit 121
+  ! readelf -l "$E" | grep -q INTERP || exit 122
+  ! readelf -d "$E" 2>/dev/null | grep -q NEEDED || exit 123
   chmod +x "$E"
 done
 
-clang $CFLAGS -DGEN_MODE=0 -S "$G" -o "$WORK/g-arm.s" || exit 123
-clang $CFLAGS -S "$R" -o "$WORK/r-arm.s" || exit 124
+clang $CFLAGS -DGEN_MODE=0 -S "$G" -o "$WORK/g-arm.s" || exit 124
+clang $CFLAGS -S "$R" -o "$WORK/r-arm.s" || exit 125
 GT=$(grep -Ec '^[[:space:]]*b[[:space:]]+[A-Za-z_][A-Za-z0-9_]*' "$WORK/g-arm.s" || true)
 RT=$(grep -Ec '^[[:space:]]*b[[:space:]]+[A-Za-z_][A-Za-z0-9_]*' "$WORK/r-arm.s" || true)
 
@@ -70,7 +81,13 @@ cat > "$RECEIPT" <<EOF
 schema=rll.nonnull_split_armv7_physical.v3
 timestamp=$(date -Iseconds)
 arch=$(uname -m)
+android_abi=$(getprop ro.product.cpu.abi 2>/dev/null || echo TOKEN_VAZIO)
 git_head=$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo TOKEN_VAZIO)
+nm_tool=$NM
+nm_path=$NM_PATH
+nm_version=$("$NM" --version 2>/dev/null | head -n 1 || echo TOKEN_VAZIO)
+clang_version=$(clang --version 2>/dev/null | head -n 1 || echo TOKEN_VAZIO)
+ld_lld_version=$(ld.lld --version 2>/dev/null | head -n 1 || echo TOKEN_VAZIO)
 
 generator_source_sha256=$(sha256sum "$G" | awk '{print $1}')
 recovery_source_sha256=$(sha256sum "$R" | awk '{print $1}')
@@ -93,6 +110,10 @@ stack_protector=DISABLED_BY_FLAG
 undefined_symbols=0
 interpreter_segments=0
 needed_entries=0
+symbol_audit=PASS_FAIL_CLOSED
+target_elf=ELF32_ARM
+independent_reimplementation=TOKEN_VAZIO
+held_out_real_data=TOKEN_VAZIO
 
 exact_exit=$EXACT_RC
 stress_exit=$STRESS_RC
