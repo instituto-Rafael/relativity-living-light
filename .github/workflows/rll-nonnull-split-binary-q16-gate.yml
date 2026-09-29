@@ -2,7 +2,7 @@ name: RLL Non-null Split Binary Q16 Gate
 
 on:
   push:
-    branches: ["work/rll-nonnull-split-physical-v3-20260928"]
+    branches: ["work/**", "rll/lab", "rll/integration", "rll/release", "main"]
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c"
       - "core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c"
@@ -10,6 +10,7 @@ on:
       - "data/contracts/rll_nonnull_split_binary_q16.v3.json"
       - ".github/workflows/rll-nonnull-split-binary-q16-gate.yml"
   pull_request:
+    branches: ["rll/lab", "rll/integration", "rll/release", "main"]
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c"
       - "core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c"
@@ -25,6 +26,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Preflight required toolchain
+        run: |
+          set -eu
+          for X in clang ld nm readelf sha256sum dd; do
+            command -v "$X" >/dev/null 2>&1 || {
+              echo "MISSING_TOOL=$X"
+              exit 80
+            }
+          done
+          echo PASS_REQUIRED_TOOLCHAIN
 
       - name: Build split static ELFs and shadow gate
         run: |
@@ -71,22 +83,73 @@ jobs:
 
           echo PASS_SPLIT_BINARY_RECOVERY
 
+      - name: Adversarial signed-overflow trap gate
+        run: |
+          set -eu
+          B=build/rll-split-v3
+          R=core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c
+          CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-pic -fno-pie -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -Wshadow -Werror=shadow -Wall -Wextra -Werror -fsanitize=signed-integer-overflow -fsanitize-trap=signed-integer-overflow"
+
+          clang $CFLAGS -c "$R" -o "$B/recovery-overflow-trap.o"
+          ld -static --gc-sections -e _start -o "$B/recovery-overflow-trap.elf" "$B/recovery-overflow-trap.o"
+          test -z "$(nm -u "$B/recovery-overflow-trap.elf")"
+
+          cp "$B/exact.rlf" "$B/extreme-i32.rlf"
+          printf '\000\000\000\200' | dd of="$B/extreme-i32.rlf" bs=1 seek=12 count=4 conv=notrunc status=none
+          "$B/recovery-overflow-trap.elf" < "$B/extreme-i32.rlf" > "$B/extreme-i32.txt"
+          grep -F 'RLLREC1 state=PASS' "$B/extreme-i32.txt"
+
+          echo PASS_SIGNED_OVERFLOW_TRAP_EXTREME_I32
+
       - name: Freeze provider hashes
         run: |
           set -eu
+          B=build/rll-split-v3
           sha256sum \
             core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c \
             core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c \
-            build/rll-split-v3/g0.elf \
-            build/rll-split-v3/g1.elf \
-            build/rll-split-v3/g2.elf \
-            build/rll-split-v3/recovery.elf \
-            build/rll-split-v3/exact.rlf \
-            build/rll-split-v3/stress.rlf \
-            build/rll-split-v3/null.rlf \
-            build/rll-split-v3/exact.txt \
-            build/rll-split-v3/stress.txt \
-            build/rll-split-v3/null.txt
+            "$B/g0.elf" \
+            "$B/g1.elf" \
+            "$B/g2.elf" \
+            "$B/recovery.elf" \
+            "$B/recovery-overflow-trap.elf" \
+            "$B/exact.rlf" \
+            "$B/stress.rlf" \
+            "$B/null.rlf" \
+            "$B/extreme-i32.rlf" \
+            "$B/exact.txt" \
+            "$B/stress.txt" \
+            "$B/null.txt" \
+            "$B/extreme-i32.txt" \
+            > "$B/provider-sha256.txt"
+          cat "$B/provider-sha256.txt"
+
+      - name: Emit provider hardening receipt
+        run: |
+          set -eu
+          B=build/rll-split-v3
+          cat > "$B/provider-hardening-receipt.txt" <<EOF
+          schema=rll.nonnull_split_provider_hardening.v3
+          git_head=$GITHUB_SHA
+          workflow_run_id=$GITHUB_RUN_ID
+          workflow_run_attempt=$GITHUB_RUN_ATTEMPT
+          provider_arch=$(uname -m)
+          clang_version=$(clang --version | head -n 1)
+          ld_version=$(ld --version | head -n 1)
+          nm_version=$(nm --version | head -n 1)
+          split_binary_recovery=PASS
+          static_elf=PASS
+          identifier_shadow=PASS
+          signed_overflow_extreme_i32=PASS
+          armv7_object_no_undefined=NOT_RUN_YET
+          armv7_named_tail_branch_audit=NOT_RUN_YET
+          armv7_physical_execution=TOKEN_VAZIO
+          independent_reimplementation=TOKEN_VAZIO
+          held_out_real_data=TOKEN_VAZIO
+          claim_allowed=false
+          EOF
+          cat "$B/provider-sha256.txt" >> "$B/provider-hardening-receipt.txt"
+          cat "$B/provider-hardening-receipt.txt"
 
       - name: ARMv7 object and tail-symbol audit
         run: |
@@ -116,3 +179,22 @@ jobs:
           echo PASS_ARMV7_OBJECT_NO_UNDEFINED
           echo PASS_ARMV7_NAMED_TAIL_BRANCH_AUDIT
           echo ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO
+
+          {
+            echo "armv7_object_no_undefined=PASS"
+            echo "armv7_named_tail_branch_audit=PASS"
+            echo "armv7_physical_execution=TOKEN_VAZIO"
+          } >> "$B/provider-hardening-receipt.txt"
+
+      - name: Upload provider hardening evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-nonnull-split-v3-provider-hardening
+          path: |
+            build/rll-split-v3/provider-hardening-receipt.txt
+            build/rll-split-v3/provider-sha256.txt
+            build/rll-split-v3/exact.txt
+            build/rll-split-v3/stress.txt
+            build/rll-split-v3/null.txt
+            build/rll-split-v3/extreme-i32.txt
+          if-no-files-found: error
