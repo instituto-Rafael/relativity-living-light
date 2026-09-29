@@ -241,3 +241,40 @@ run provider gate
 -> only after that separate the generator and recovery executables for
    materially independent replication
 \`\`\`
+
+---
+
+## Successor V2 — provider result
+
+V1's exact stress-recovery requirement was executed and produced a bounded counterexample: the deterministic perturbation moved only w_t by one frozen grid cell. The result was not retuned away.
+
+Successor contract:
+data/contracts/rll_nonnull_blind_q16_freestanding.v2.json
+
+Evidence:
+receipts/2026-09-28_RLL_NONNULL_BLIND_Q16_FREESTANDING_V2.md
+
+Provider:
+run=36502520567
+job=109196432925
+conclusion=success
+RLLNONNULLQ16V2 state=PASS
+exact=1311,65536,19661
+stress=1311,65536,21299
+stress_delta=0,0,1638
+null_os=0
+grid_evals=1782
+claim_allowed=0
+
+Current evidence state:
+X86_64_STATIC_EXECUTION=PASS
+ARMV7_FREESTANDING_OBJECT=PASS
+ARMV7_STATIC_LINK=TOKEN_VAZIO_TOOLCHAIN_LINKER
+ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO
+INDEPENDENT_REPLICATION=TOKEN_VAZIO
+CLAIM_ALLOWED=false
+
+R3:
+F_ok = one-unit freestanding Q16 kernel + exact non-null recovery + null recovery + x86_64 static execution + ARMv7 object audit.
+F_gap = ARMv7 static link/physical run + independent reimplementation + held-out real-data discrimination.
+F_next = execute the same source on physical ARMv7, freeze source/ELF hashes, then split generator/recovery for materially independent replication.
