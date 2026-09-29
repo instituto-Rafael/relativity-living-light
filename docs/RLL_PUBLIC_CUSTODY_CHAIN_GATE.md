@@ -152,7 +152,106 @@ claim_allowed = false
 
 because this gate verifies custody/provenance structure, not scientific, financial, political, or causal truth.
 
-## 8. Artifacts
+## 8. Multidimensional public-money and logistics layer
+
+The custody model now distinguishes accounting stages instead of treating every public number as cash.
+
+Brazil:
+
+```text
+empenho != liquidacao != pagamento
+```
+
+United States:
+
+```text
+appropriation != obligation != outlay
+```
+
+The gate rejects `cash_realized=true` before the jurisdiction-specific cash stage. Missing intermediate stages are not interpolated; they are emitted as `TOKEN_VAZIO_PUBLIC_MONEY_STAGE`.
+
+For a traceable ledger period, the neutral reconciliation observable is:
+
+```text
+residual = opening_balance + inflows - outflows - closing_balance
+```
+
+A non-zero residual outside a predeclared tolerance is an anomaly for investigation, not evidence of wrongdoing.
+
+### Directive-body history
+
+Each public director/officer/administrator role is an effective-dated object:
+
+```text
+entity + person + role + effective_from + effective_to + as_of + source_refs
+```
+
+A role described as current must have an explicit `as_of` date. An end date before the start date fails closed. This prevents a filing from one year being silently projected into another.
+
+### Shipment, receiving and schedule timing
+
+For public shipment records:
+
+```text
+sent_at <= arrived_at <= received_at
+```
+
+The gate derives:
+
+```text
+arrival_lapse     = arrived_at  - sent_at
+receiving_lapse   = received_at - arrived_at
+lead_time         = received_at - sent_at
+deadline_slip     = actual_end  - deadline_at
+```
+
+Positive `deadline_slip` means late; negative values mean completion before deadline. If the completion event is not publicly observed, it remains `TOKEN_VAZIO_COMPLETION`.
+
+### Bullwhip proxy
+
+For two matched public series over identical periods and units:
+
+```text
+BW = Var(upstream) / Var(downstream)
+```
+
+The gate requires at least four matched observations. A zero downstream variance leaves the ratio unresolved rather than manufacturing an infinite score. `BW > 1` is a variance-amplification observation; it is not by itself proof of the economic cause.
+
+### Quantified uncertainty
+
+The receipt exposes at least:
+
+```text
+source_hash_coverage
+event_source_coverage
+unhashed_sources
+warning_count
+error_count
+```
+
+Therefore the uncertainty budget can shrink monotonically as source snapshots and missing stages are materialized.
+
+## 9. Pre-registered falsifiers
+
+The seed contract now contains four hypothesis families:
+
+1. public-money trace closure;
+2. logistics timing stability;
+3. upstream/downstream bullwhip;
+4. effective-dated governance reconstruction.
+
+Each hypothesis must declare both `metric_or_observable` and at least one falsifier. A hypothesis without either fails the Gate structurally.
+
+The central interpretation rule remains:
+
+```text
+anomaly != causality
+residual != wrongdoing
+temporal coincidence != motive
+missing record != zero
+```
+
+## 10. Artifacts
 
 - `data/contracts/public_custody_chain_gate.v1.json`
 - `data/pipelines/audit/public_custody_chain_gate.py`
@@ -160,7 +259,7 @@ because this gate verifies custody/provenance structure, not scientific, financi
 
 Future generated evidence should be append-only and should include input/output hashes when source snapshots are materialized.
 
-## 9. R3
+## 11. R3
 
 ```text
 F_ok   = public-only custody schema + non-causal event graph + toro X7/X14 transform + fail-closed tests.
