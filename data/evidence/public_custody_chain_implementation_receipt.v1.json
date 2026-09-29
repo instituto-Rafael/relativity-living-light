@@ -1,0 +1,52 @@
+{
+  "schema": "rll.public-custody-chain.implementation-receipt/v1",
+  "generated_at": "2026-09-28",
+  "branch": "research/public-custody-chain-gate-v1-20260928",
+  "claim_allowed": false,
+  "implementation_state": "IMPLEMENTED_UNTESTED",
+  "publication_effect": "NONE",
+  "artifacts": [
+    {
+      "path": "data/pipelines/audit/public_custody_chain_gate.py",
+      "blob_sha": "7269be222ad37301e3b69ca6ca906351b8de34c0"
+    },
+    {
+      "path": "data/contracts/public_custody_chain_gate.v1.json",
+      "blob_sha": "c5fc6ac662e28ef9fc7dc1ee7bef27db287616cd"
+    },
+    {
+      "path": "tests/test_public_custody_chain_gate.py",
+      "blob_sha": "195565f741ef7539a1b71b200822058171051d55"
+    },
+    {
+      "path": "docs/RLL_PUBLIC_CUSTODY_CHAIN_GATE.md",
+      "blob_sha": "6c49dcc4b337bc19171bab323c28864266604d0c"
+    }
+  ],
+  "implemented_controls": [
+    "public-only source allowlist",
+    "public-money accounting-stage separation",
+    "effective-dated governance roles",
+    "shipment lead-time and deadline-slip validation",
+    "bullwhip variance-ratio proxy",
+    "ledger reconciliation residual",
+    "source/hash coverage metrics",
+    "pre-registered falsifiability hypotheses",
+    "toroidal X7 plus delta7 to X14 transform"
+  ],
+  "evidence_state": {
+    "source_snapshots": "TOKEN_VAZIO",
+    "source_sha256": "TOKEN_VAZIO",
+    "matched_public_money_trace": "TOKEN_VAZIO",
+    "matched_public_shipment_series": "TOKEN_VAZIO",
+    "matched_bullwhip_series": "TOKEN_VAZIO",
+    "historical_governance_intervals": "TOKEN_VAZIO",
+    "ci_terminal": "PENDING"
+  },
+  "invariant": "SOURCE != EVENT != ENTITY != MONEY/MASS != INFERENCE != CLAIM",
+  "r3": {
+    "F_ok": "implementation, tests, explicit evidence gaps and provenance blob SHAs materialized",
+    "F_gap": "external source snapshots/hashes, real joined time series and terminal CI",
+    "F_next": "run CI on valid WORK -> rll/lab transition; then materialize immutable public-source snapshots"
+  }
+}
