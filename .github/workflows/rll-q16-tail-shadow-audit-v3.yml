@@ -6,11 +6,15 @@ on:
       - "work/rll-q16-independent-split-tail-audit-v3-20260929"
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c"
       - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
       - ".github/workflows/rll-q16-tail-shadow-audit-v3.yml"
   pull_request:
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c"
       - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
       - ".github/workflows/rll-q16-tail-shadow-audit-v3.yml"
 
@@ -43,6 +47,38 @@ jobs:
           OUT="$(build/q16-v3/x86_64.elf)"
           printf '%s\n' "$OUT"
           printf '%s\n' "$OUT" | grep -F 'state=PASS'
+
+
+      - name: Split generator recovery executable gate
+        run: |
+          set -eu
+          G=core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c
+          R=core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c
+          F="-std=c11 -O2 -Wall -Wextra -Wshadow -Werror -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections"
+
+          clang $F -c "$G" -o build/q16-v3/generator.o
+          clang $F -c "$R" -o build/q16-v3/recovery.o
+          ld -static --gc-sections -e _start -o build/q16-v3/generator.elf build/q16-v3/generator.o
+          ld -static --gc-sections -e _start -o build/q16-v3/recovery.elf build/q16-v3/recovery.o
+
+          test -z "$(nm -u build/q16-v3/generator.elf)"
+          test -z "$(nm -u build/q16-v3/recovery.elf)"
+          ! readelf -l build/q16-v3/generator.elf | grep -q INTERP
+          ! readelf -l build/q16-v3/recovery.elf | grep -q INTERP
+          ! readelf -d build/q16-v3/generator.elf 2>/dev/null | grep -q NEEDED
+          ! readelf -d build/q16-v3/recovery.elf 2>/dev/null | grep -q NEEDED
+
+          build/q16-v3/generator.elf > build/q16-v3/matrix.bin
+          test "$(wc -c < build/q16-v3/matrix.bin)" -eq 132
+          OUT="$(build/q16-v3/recovery.elf < build/q16-v3/matrix.bin)"
+          printf '%s\n' "$OUT"
+          printf '%s\n' "$OUT" | grep -F 'state=PASS'
+          printf '%s\n' "$OUT" | grep -F 'best=1311,65536,19661'
+          echo "GENERATOR_SHA256=$(sha256sum build/q16-v3/generator.elf | cut -d' ' -f1)"
+          echo "MATRIX_SHA256=$(sha256sum build/q16-v3/matrix.bin | cut -d' ' -f1)"
+          echo "RECOVERY_SHA256=$(sha256sum build/q16-v3/recovery.elf | cut -d' ' -f1)"
+          echo "SPLIT_EXECUTABLES=PASS"
+          echo "INDEPENDENT_REIMPLEMENTATION=TOKEN_VAZIO"
 
       - name: ARMv7 object with same hard flags
         run: |
