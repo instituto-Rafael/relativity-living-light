@@ -18,6 +18,9 @@ Este arquivo e a **navegacao canonica** da documentacao do repositorio.
 - Nao substitui o README (porta de entrada) e nao tenta reproduzir o inventario bruto.
 
 Encaminhamentos complementares:
+- Hub de navegação por objetivo: [`docs/navigation/README.md`](navigation/README.md)
+- Arquivos soltos da raiz: [`docs/navigation/ROOT_FILES_INDEX.md`](navigation/ROOT_FILES_INDEX.md)
+- Privacidade/LGPD: [`docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md`](governance/LGPD_PRIVACY_NAVIGATION_V1.md)
 - Porta de entrada: [`README.md`](../README.md)
 - Mapa central de rastreabilidade: [`docs/RLL_TRACEABILITY_MAP.md`](RLL_TRACEABILITY_MAP.md)
 - Inventario bruto (`.md` e `.zip`): [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md)
