@@ -55,7 +55,8 @@ jobs:
           ld -static --gc-sections -e _start -o build/rll-split-v3/recovery.elf build/rll-split-v3/recovery.o
 
           for E in build/rll-split-v3/g0.elf build/rll-split-v3/g1.elf build/rll-split-v3/g2.elf build/rll-split-v3/recovery.elf; do
-            test -z "$(nm -u "$E")"
+            UNDEFINED=$(nm -u "$E") || exit 81
+            test -z "$UNDEFINED" || exit 82
             ! readelf -l "$E" | grep -q INTERP
             ! readelf -d "$E" 2>/dev/null | grep -q NEEDED
           done
@@ -94,7 +95,8 @@ jobs:
 
           clang $CFLAGS -c "$R" -o "$B/recovery-overflow-trap.o"
           ld -static --gc-sections -e _start -o "$B/recovery-overflow-trap.elf" "$B/recovery-overflow-trap.o"
-          test -z "$(nm -u "$B/recovery-overflow-trap.elf")"
+          UNDEFINED=$(nm -u "$B/recovery-overflow-trap.elf") || exit 83
+          test -z "$UNDEFINED" || exit 84
 
           cp "$B/exact.rlf" "$B/extreme-i32.rlf"
           printf '\000\000\000\200' | dd of="$B/extreme-i32.rlf" bs=1 seek=12 count=4 conv=notrunc status=none
@@ -172,8 +174,10 @@ jobs:
 
           clang $CFLAGS -DGEN_MODE=0 -c "$G" -o "$B/g-arm.o"
           clang $CFLAGS -c "$R" -o "$B/r-arm.o"
-          test -z "$(nm -u "$B/g-arm.o")"
-          test -z "$(nm -u "$B/r-arm.o")"
+          G_UNDEFINED=$(nm -u "$B/g-arm.o") || exit 85
+          R_UNDEFINED=$(nm -u "$B/r-arm.o") || exit 86
+          test -z "$G_UNDEFINED" || exit 87
+          test -z "$R_UNDEFINED" || exit 88
           readelf -h "$B/g-arm.o" | grep -F 'ELF32'
           readelf -h "$B/g-arm.o" | grep -F 'ARM'
 
