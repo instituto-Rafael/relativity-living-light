@@ -1,0 +1,90 @@
+{
+  "schema": "rll.root_physical_refactor.wave2a.v1",
+  "date": "2026-09-29",
+  "source_base_commit": "5866d73aa3b02b02bdca3645a2d22eaab70f6bde",
+  "state": "PASS_ROUTING_INTEGRITY",
+  "invariants": [
+    "START_HERE_IS_ROUTER_NOT_MONOLITH",
+    "INDEX_FIRST_BEFORE_PHYSICAL_MIGRATION",
+    "MOVE_CONTENT_PRESERVE_COMPATIBILITY_STUB",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0"
+  ],
+  "start_here": {
+    "active_version": "OMEGA_V2.1_DISPATCH",
+    "route": [
+      "INTENT",
+      "CURRENT_STATE",
+      "μREAD_MAX_3_ROOTS",
+      "ROUTE",
+      "SOURCE_MIN",
+      "AUTHORITY",
+      "ACT",
+      "EVIDENCE",
+      "μWRITE",
+      "R3"
+    ],
+    "historical_router": "START HERE — A-A auditar — RAFAELIA",
+    "historical_role": "ROLLBACK_PRECEDENT_NOT_ACTIVE_BOOTSTRAP"
+  },
+  "migrations": [
+    {
+      "source": "Códex1.md",
+      "destination": "docs/legacy/root/prompts/Códex1.md",
+      "class": "LEGACY_PROMPT",
+      "original_git_blob": "dfcbfc1596eb62683b8617141171ca0854ea0d44",
+      "stub": true
+    },
+    {
+      "source": "Codex2.md",
+      "destination": "docs/legacy/root/prompts/Codex2.md",
+      "class": "LEGACY_PROMPT",
+      "original_git_blob": "bd59776f77116710507d6f4ee03319cf6a399b71",
+      "stub": true
+    },
+    {
+      "source": "Provaw.md",
+      "destination": "docs/legacy/root/experiments/Provaw.md",
+      "class": "LEGACY_TERMUX_TRANSCRIPT",
+      "original_git_blob": "7da362a3d256dc3ff6cdb734c309fe64fad9cd39",
+      "stub": true
+    },
+    {
+      "source": "Toadd01.md",
+      "destination": "docs/legacy/root/prototypes/Toadd01.md",
+      "class": "LEGACY_AUDIT_PROTOTYPE",
+      "original_git_blob": "e484f2d31f385cb74a2a775ae680ec602281ec1b",
+      "stub": true
+    },
+    {
+      "source": "docs_toroidal_knowledge.md",
+      "destination": "docs/legacy/root/concepts/docs_toroidal_knowledge.md",
+      "class": "LEGACY_CONCEPT_NOTE",
+      "original_git_blob": "f33b53b3070f1581eaac9aacbf4fa216e81997de",
+      "stub": true
+    },
+    {
+      "source": "Rsfael",
+      "destination": "docs/legacy/root/raw/Rsfael.txt",
+      "class": "RAW_AUTHORIAL_TEXT",
+      "identified_type": "text/plain",
+      "original_git_blob": "b0630ba30d74efe1a131dec0bfb323a7f2ec37fa",
+      "stub": true
+    }
+  ],
+  "token_vazio": [
+    "TOKEN_VAZIO_BACKLINK_GRAPH_COMPLETE",
+    "TOKEN_VAZIO_STUB_REMOVAL_SAFE",
+    "TOKEN_VAZIO_HUMAN_USABILITY"
+  ],
+  "evidence": {
+    "workflow": "START HERE V2.1 + Root Wave 2 Gate",
+    "run_id": 36567214362,
+    "job_id": 109401991661,
+    "result": "success",
+    "migrations_verified": 9,
+    "destination_blob_preservation": "PASS",
+    "stub_routing": "PASS",
+    "unexpected_active_backlinks": 0
+  }
+}

@@ -36,3 +36,28 @@ Purpose: classify loose root-level artifacts without moving, deleting, renaming,
 - Do not change scientific equations when classifying artifacts.
 - Do not infer that a classified artifact is validated real-data evidence.
 - Use this table as a lightweight routing layer for future cleanup, inventory, and governance PRs.
+
+## Physical refactor Wave 2 — 2026-09-29
+
+START HERE authority for this repository now routes through `docs/presentation/00_START_HERE_RLL.md` as `Ω V2.1 DISPATCH`.
+
+### Wave 2A — legacy bodies
+
+| Root stub | Destination | State |
+|---|---|---|
+| `Códex1.md` | `docs/legacy/root/prompts/Códex1.md` | body moved, stub retained |
+| `Codex2.md` | `docs/legacy/root/prompts/Codex2.md` | body moved, stub retained |
+| `Provaw.md` | `docs/legacy/root/experiments/Provaw.md` | body moved, stub retained |
+| `Toadd01.md` | `docs/legacy/root/prototypes/Toadd01.md` | body moved, stub retained |
+| `docs_toroidal_knowledge.md` | `docs/legacy/root/concepts/docs_toroidal_knowledge.md` | body moved, stub retained |
+| `Rsfael` | `docs/legacy/root/raw/Rsfael.txt` | text/plain identified; body moved; stub retained |
+
+### Wave 2B — active validation routes
+
+| Root stub | Destination | State |
+|---|---|---|
+| `RLL_REAL_VALIDATION_PROMPT.md` | `docs/validation/prompts/RLL_REAL_VALIDATION_PROMPT.md` | active content moved, stub retained |
+| `RLL_REAL_VALIDATION_REPORT_TARGET.md` | `docs/validation/targets/RLL_REAL_VALIDATION_REPORT_TARGET.md` | active content moved, stub retained |
+| `RLL_WANDERING_BLACK_HOLE_TEST.md` | `docs/validation/cases/RLL_WANDERING_BLACK_HOLE_TEST.md` | active content moved, stub retained |
+
+Physical movement does not change scientific/epistemic status. Git blob preservation is verified by the dedicated Wave 2 gate before promotion.

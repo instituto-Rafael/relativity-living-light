@@ -1,39 +1,97 @@
-# 00 — RLL Presentation / Start Here
+# START HERE Ω V2.1 DISPATCH — RLL
 
-Status: `NAVIGATION_LAYER_V1`  
-Claim gate: `claim_allowed=false`
+**Version:** `Ω V2.1`  
+**State:** `ACTIVE_BOOTSTRAP_ROUTER`  
+**Claim gate:** `claim_allowed=false`
 
-This directory is a presentation and navigation layer. It does not replace the scientific sources, results, receipts, or provenance records.
+> Este arquivo é **roteador**, não depósito. O START HERE global/Drive continua sendo a autoridade de memória e despacho federado; este arquivo materializa a rota do produtor RLL dentro deste repositório.
 
-## Choose the reading path
+## Dispatch
 
-| Goal | Start | Then |
+```text
+INTENT
+  → CURRENT_STATE
+  → μREAD (≤3 raízes, depth=1)
+  → ROUTE / SOURCE_MIN
+  → AUTHORITY
+  → ACT
+  → EVIDENCE
+  → μWRITE
+  → R3
+  → STOP
+```
+
+## 1. CURRENT_STATE — leia primeiro
+
+- [`05_CURRENT_STATE_RLL.md`](05_CURRENT_STATE_RLL.md) — estado compacto; máximo de três nós ativos.
+
+Não comece pelo inventário completo. Não reconstrua estado varrendo o repositório inteiro.
+
+## 2. μREAD — escolha no máximo três raízes
+
+| Intenção | SOURCE_MIN | Autoridade nesta rota |
 |---|---|---|
-| Understand RLL in 5–10 minutes | `README.md` | `docs/AVALIACAO_HONESTA_ESTADO_ATUAL.md` |
-| Audit claims and provenance | `docs/RLL_TRACEABILITY_MAP.md` | `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` |
-| Inspect current quantitative evidence | `docs/presentation/10_EVIDENCE_RESULTS.md` | `results/structure_d/joint_real_likelihood.json` |
-| Review papers / publication readiness | `docs/presentation/20_PAPERS_REPRODUCIBILITY.md` | `PapersPub/INDEX.md` |
-| Navigate the full documentation corpus | `docs/INDICE_MESTRE.md` | `docs/DOCUMENTATION_FULL_INVENTORY.md` |
-| Understand architecture / execution | `ARCHITECTURE.md` | `docs/architecture/ARCHITECTURE_CLAIM_GATED.md` |
+| Entender/navegar | [`../navigation/README.md`](../navigation/README.md) | documentação RLL |
+| Auditar claim/evidência | [`../RLL_TRACEABILITY_MAP.md`](../RLL_TRACEABILITY_MAP.md) + [`../../receipts/`](../../receipts/) | source/receipt |
+| Executar/validar | [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md) + [`../../tests/`](../../tests/) | producer repo + CI |
+| Privacidade/LGPD | [`../governance/LGPD_PRIVACY_NAVIGATION_V1.md`](../governance/LGPD_PRIVACY_NAVIGATION_V1.md) | governança técnica; não parecer jurídico |
+| Arquivos soltos/legacy | [`../navigation/ROOT_FILES_INDEX.md`](../navigation/ROOT_FILES_INDEX.md) | índice + manifesto de migração |
 
-## Presentation order
+## 3. ROUTE / SOURCE_MIN
 
-1. **Question** — what RLL is trying to model.
-2. **Formalization** — equations, parameters and executable representations.
-3. **Data** — which observational inputs are actually materialized.
-4. **Comparison** — LCDM / wCDM / CPL / RLL under the same pipeline.
-5. **Evidence state** — what passed, what is preliminary and what is still TOKEN_VAZIO.
-6. **Reproducibility** — commands, receipts, SHAs, datasets and workflows.
-7. **Next falsifier** — the shortest experiment that can reduce uncertainty.
+Use a menor fonte suficiente. Uma tarefa não ganha autoridade por abrir mais arquivos.
 
-## High-value rule
+```text
+SOURCE_MIN ≤ 3
+missing SOURCE      → BLOCK
+missing AUTHORITY   → BLOCK
+missing EVIDENCE    → TOKEN_VAZIO / PENDING
+```
 
-The strongest presentation is not “the largest number of documents”. It is the shortest path that preserves:
+## 4. AUTHORITY
 
-`SOURCE != EXECUTION != EVIDENCE != CLAIM`
+```text
+Drive / START HERE global → memória, índices federados, receipts privados
+RLL GitHub producer       → implementação, schemas, testes, CI e artefatos públicos
+docs/INDICE_MESTRE        → navegação documental canônica do RLL
+docs/RLL_TRACEABILITY_MAP → claims/evidência/gaps
+```
 
-and makes every quantitative statement traceable to the exact artifact that produced it.
+## 5. ACT → EVIDENCE
 
-## Current boundary
+Executar não é provar claim:
 
-The repository itself describes the current joint-real comparison as preliminary/smoke-level and blocks strong scientific promotion. This navigation layer preserves that boundary.
+`SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM`
+
+Todo ACT material deve apontar para teste, run, receipt ou TOKEN_VAZIO explícito.
+
+## 6. μWRITE
+
+Após delta material:
+
+- atualizar apenas o índice/estado pertinente;
+- gravar receipt quando houver execução/evidência;
+- preservar histórico em vez de reescrever silenciosamente;
+- não transformar START HERE em log.
+
+## 7. R3
+
+Finalizar trabalhos materiais com:
+
+```text
+F_ok   = o que foi materializado/provado
+F_gap  = o que continua faltando
+F_next = próximo delta de maior valor
+```
+
+## 8. Histórico / rollback
+
+`START HERE — A-A auditar — RAFAELIA` e predecessores são **precedente/rollback**, não bootstrap ativo.
+
+## Rotas de apresentação secundárias
+
+- [`10_EVIDENCE_RESULTS.md`](10_EVIDENCE_RESULTS.md)
+- [`20_PAPERS_REPRODUCIBILITY.md`](20_PAPERS_REPRODUCIBILITY.md)
+- [`index.html`](index.html)
+
+Essas páginas ajudam apresentação; não substituem CURRENT_STATE, autoridade, source ou receipt.

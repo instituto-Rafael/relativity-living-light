@@ -52,7 +52,8 @@ Encaminhamentos complementares:
 
 ## 0) Apresentacao e navegacao
 
-- [`docs/presentation/00_START_HERE_RLL.md`](presentation/00_START_HERE_RLL.md) - entrada curta por objetivo e publico.
+- [`docs/presentation/00_START_HERE_RLL.md`](presentation/00_START_HERE_RLL.md) - **START HERE Ω V2.1 DISPATCH**, bootstrap ativo e curto; roteia por CURRENT_STATE/μREAD/SOURCE_MIN.
+- [`docs/presentation/05_CURRENT_STATE_RLL.md`](presentation/05_CURRENT_STATE_RLL.md) - HOTSTATE compacto; máximo de três nós ativos.
 - [`docs/presentation/10_EVIDENCE_RESULTS.md`](presentation/10_EVIDENCE_RESULTS.md) - rota para dados, resultados e limites.
 - [`docs/presentation/20_PAPERS_REPRODUCIBILITY.md`](presentation/20_PAPERS_REPRODUCIBILITY.md) - papers, maturidade e reproducibilidade.
 - [`docs/presentation/index.html`](presentation/index.html) - interface navegavel com selecao por objetivo; publicacao em GitHub Pages depende da configuracao do provedor e permanece separada do conteudo.
@@ -151,6 +152,8 @@ Encaminhamentos complementares:
 ---
 
 ## 4) Validacao observacional e matriz de dados reais
+
+- [`docs/validation/README.md`](validation/README.md) - rotas tipadas para prompts, targets e casos falsificáveis migrados da raiz.
 
 - [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md) - links de validacao cosmologica real: DESI, Pantheon, CMB, H(z), fσ8, ZML e workflows
 - [`docs/VALIDATION_DATA_MATRIX_RLL_MCRP.md`](VALIDATION_DATA_MATRIX_RLL_MCRP.md)
