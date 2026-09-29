@@ -1,8 +1,8 @@
 {
   "schema": "rll.public-custody-chain/v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "claim_allowed": false,
-  "purpose": "Public-record custody graph for supply-chain, finance, policy, travel, ownership and aerospace evidence. Descriptive evidence only; temporal association is not causality.",
+  "purpose": "Public-record custody graph for supply-chain, public-money, finance, policy, travel, ownership, governance, logistics and aerospace evidence. Descriptive evidence only; temporal association is not causality.",
   "source_policy": {
     "public_only": true,
     "private_tax_returns_forbidden": true,
@@ -121,6 +121,22 @@
       "url": "https://new.spacex.com/vehicles/starship",
       "retrieved_at": "2026-09-28",
       "sha256": null
+    },
+    {
+      "id": "BR-CGU-PORTAL-DESPESAS",
+      "public_record": true,
+      "source_kind": "official_public_spending_data",
+      "url": "https://portaldatransparencia.gov.br/download-de-dados/despesas",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-USASPENDING-DATA-SOURCES",
+      "public_record": true,
+      "source_kind": "official_public_spending_data",
+      "url": "https://www.usaspending.gov/data/data-sources-download.pdf",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
     }
   ],
   "events": [
@@ -131,8 +147,15 @@
       "jurisdiction": "US",
       "signatory": "Donald J. Trump",
       "instrument": "Executive Order 14257",
-      "legal_authorities": ["IEEPA", "National Emergencies Act", "Trade Act of 1974 section 604", "3 U.S.C. section 301"],
-      "source_refs": ["US-WH-EO14257-20250402"],
+      "legal_authorities": [
+        "IEEPA",
+        "National Emergencies Act",
+        "Trade Act of 1974 section 604",
+        "3 U.S.C. section 301"
+      ],
+      "source_refs": [
+        "US-WH-EO14257-20250402"
+      ],
       "claim_boundary": "documents the order and stated legal authorities; does not prove downstream economic causality"
     },
     {
@@ -140,7 +163,9 @@
       "event_type": "official_travel",
       "date": "2025-05-13",
       "place": "Riyadh, Saudi Arabia",
-      "source_refs": ["US-WH-RIYADH-20250513"],
+      "source_refs": [
+        "US-WH-RIYADH-20250513"
+      ],
       "claim_boundary": "presence/date only"
     },
     {
@@ -148,7 +173,9 @@
       "event_type": "official_travel",
       "date": "2025-05-14",
       "place": "Doha, Qatar",
-      "source_refs": ["US-WH-DOHA-20250514"],
+      "source_refs": [
+        "US-WH-DOHA-20250514"
+      ],
       "claim_boundary": "presence/date only"
     },
     {
@@ -156,7 +183,9 @@
       "event_type": "official_travel",
       "date": "2025-05-15",
       "place": "United Arab Emirates",
-      "source_refs": ["US-WH-UAE-20250515"],
+      "source_refs": [
+        "US-WH-UAE-20250515"
+      ],
       "claim_boundary": "presence/date only"
     },
     {
@@ -165,70 +194,126 @@
       "date": "2025-05-13",
       "reported_value_usd": 600000000000,
       "realized_cash": false,
-      "source_refs": ["US-WH-SAUDI-INVESTMENT-20250513"],
+      "source_refs": [
+        "US-WH-SAUDI-INVESTMENT-20250513"
+      ],
       "claim_boundary": "officially announced commitment; not booked or realized cash absent separate evidence"
     },
     {
       "id": "EV-US-POTUS-FINANCIAL-DISCLOSURE-2026",
       "event_type": "public_financial_disclosure",
       "date": "2026-06-30",
-      "source_refs": ["US-OGE-POTUS-DISCLOSURE-20260630"],
+      "source_refs": [
+        "US-OGE-POTUS-DISCLOSURE-20260630"
+      ],
       "claim_boundary": "OGE financial disclosure, not an income-tax return"
     },
     {
       "id": "EV-US-TAX-CONFIDENTIALITY",
       "event_type": "legal_rule",
-      "source_refs": ["US-IRS-IRC6103"],
+      "source_refs": [
+        "US-IRS-IRC6103"
+      ],
       "claim_boundary": "IRC 6103 generally protects tax-return information from IRS disclosure subject to exceptions"
     },
     {
       "id": "EV-BR-CNPJ-PUBLIC-FIELDS",
       "event_type": "company_registry_schema",
-      "source_refs": ["BR-RFB-CNPJ-LAYOUT"],
-      "public_fields": ["capital_social", "quadro_societario", "qualificacao_socios_administradores"],
+      "source_refs": [
+        "BR-RFB-CNPJ-LAYOUT"
+      ],
+      "public_fields": [
+        "capital_social",
+        "quadro_societario",
+        "qualificacao_socios_administradores"
+      ],
       "claim_boundary": "availability depends on the published dataset/version and applicable access rules"
     },
     {
       "id": "EV-BR-TAX-SECRECY",
       "event_type": "legal_rule",
-      "source_refs": ["BR-RFB-SIGILO-CTN198"],
+      "source_refs": [
+        "BR-RFB-SIGILO-CTN198"
+      ],
       "claim_boundary": "economic/financial tax information is generally protected by fiscal secrecy subject to statutory exceptions"
     },
     {
       "id": "EV-BR-TSE-2026-DISCLOSURE",
       "event_type": "electoral_public_disclosure",
       "date": "2026-09-15",
-      "source_refs": ["BR-TSE-CAMPANHA-2026"],
-      "public_fields": ["declared_assets", "campaign_revenue", "campaign_expenses", "financial_movements"],
+      "source_refs": [
+        "BR-TSE-CAMPANHA-2026"
+      ],
+      "public_fields": [
+        "declared_assets",
+        "campaign_revenue",
+        "campaign_expenses",
+        "financial_movements"
+      ],
       "claim_boundary": "campaign/electoral disclosure; not equivalent to full income-tax return"
     },
     {
       "id": "EV-BA-SPIRIT-ACQUISITION",
       "event_type": "corporate_transaction",
       "date": "2025-12-08",
-      "source_refs": ["US-SEC-BA-20251231"],
+      "source_refs": [
+        "US-SEC-BA-20251231"
+      ],
       "claim_boundary": "SEC-filed acquisition and consideration; supplier-level pass-through remains separate"
     },
     {
       "id": "EV-NASA-STARSHIP-HLS-STATUS",
       "event_type": "program_status",
-      "source_refs": ["US-NASA-HLS"],
+      "source_refs": [
+        "US-NASA-HLS"
+      ],
       "status": "development_for_artemis_iii_and_iv",
       "claim_boundary": "does not support a claim that Starship HLS has already landed astronauts on the Moon"
     },
     {
       "id": "EV-SPACEX-F9-PROPULSION",
       "event_type": "public_vehicle_spec",
-      "source_refs": ["SPACEX-FALCON9"],
+      "source_refs": [
+        "SPACEX-FALCON9"
+      ],
       "high_level_propellant_family": "liquid oxygen plus rocket-grade kerosene",
       "claim_boundary": "vehicle-level public specification only; supplier identities and hazardous procurement routes excluded"
     },
     {
       "id": "EV-SPACEX-STARSHIP-PROPULSION",
       "event_type": "public_vehicle_spec",
-      "source_refs": ["SPACEX-STARSHIP"],
+      "source_refs": [
+        "SPACEX-STARSHIP"
+      ],
       "high_level_propellant_family": "liquid oxygen plus liquid methane",
       "claim_boundary": "vehicle-level public specification only; supplier identities and hazardous procurement routes excluded"
+    },
+    {
+      "id": "EV-BR-PUBLIC-SPENDING-STAGES",
+      "event_type": "public_spending_schema",
+      "source_refs": [
+        "BR-CGU-PORTAL-DESPESAS"
+      ],
+      "stages": [
+        "empenho",
+        "liquidacao",
+        "pagamento"
+      ],
+      "refresh": "daily",
+      "claim_boundary": "public accounting stages are distinct evidence objects; payment must not be inferred from commitment or liquidation alone"
+    },
+    {
+      "id": "EV-US-PUBLIC-SPENDING-STAGES",
+      "event_type": "public_spending_schema",
+      "source_refs": [
+        "US-USASPENDING-DATA-SOURCES"
+      ],
+      "stages": [
+        "appropriation",
+        "obligation",
+        "outlay"
+      ],
+      "claim_boundary": "obligation and outlay are distinct; obligation must not be relabeled as actual cash outlay"
     }
   ],
   "edges": [
@@ -238,7 +323,10 @@
       "relation": "precedes",
       "state": "OBSERVED",
       "causal": false,
-      "source_refs": ["US-WH-EO14257-20250402", "US-WH-RIYADH-20250513"]
+      "source_refs": [
+        "US-WH-EO14257-20250402",
+        "US-WH-RIYADH-20250513"
+      ]
     },
     {
       "from": "EV-US-TRAVEL-RIYADH",
@@ -246,7 +334,10 @@
       "relation": "same_day_public_context",
       "state": "OBSERVED",
       "causal": false,
-      "source_refs": ["US-WH-RIYADH-20250513", "US-WH-SAUDI-INVESTMENT-20250513"]
+      "source_refs": [
+        "US-WH-RIYADH-20250513",
+        "US-WH-SAUDI-INVESTMENT-20250513"
+      ]
     },
     {
       "from": "EV-US-TRAVEL-RIYADH",
@@ -254,7 +345,10 @@
       "relation": "next_observed_stop",
       "state": "OBSERVED",
       "causal": false,
-      "source_refs": ["US-WH-RIYADH-20250513", "US-WH-DOHA-20250514"]
+      "source_refs": [
+        "US-WH-RIYADH-20250513",
+        "US-WH-DOHA-20250514"
+      ]
     },
     {
       "from": "EV-US-TRAVEL-DOHA",
@@ -262,7 +356,10 @@
       "relation": "next_observed_stop",
       "state": "OBSERVED",
       "causal": false,
-      "source_refs": ["US-WH-DOHA-20250514", "US-WH-UAE-20250515"]
+      "source_refs": [
+        "US-WH-DOHA-20250514",
+        "US-WH-UAE-20250515"
+      ]
     },
     {
       "from": "EV-BR-CNPJ-PUBLIC-FIELDS",
@@ -270,7 +367,9 @@
       "relation": "candidate_public_input",
       "state": "DERIVED",
       "causal": false,
-      "source_refs": ["BR-RFB-CNPJ-LAYOUT"]
+      "source_refs": [
+        "BR-RFB-CNPJ-LAYOUT"
+      ]
     },
     {
       "from": "EV-US-POTUS-FINANCIAL-DISCLOSURE-2026",
@@ -278,7 +377,9 @@
       "relation": "candidate_public_input",
       "state": "DERIVED",
       "causal": false,
-      "source_refs": ["US-OGE-POTUS-DISCLOSURE-20260630"]
+      "source_refs": [
+        "US-OGE-POTUS-DISCLOSURE-20260630"
+      ]
     },
     {
       "from": "EV-NASA-STARSHIP-HLS-STATUS",
@@ -286,17 +387,114 @@
       "relation": "does_not_support",
       "state": "OBSERVED",
       "causal": false,
-      "source_refs": ["US-NASA-HLS"]
+      "source_refs": [
+        "US-NASA-HLS"
+      ]
     }
   ],
   "stability": {
     "model": "toroidal_state7_plus_delta7",
-    "dimensions": ["mass_material", "production_delivery", "inventory_wip", "logistics_lead_time", "commodity_energy", "fx", "capital"],
+    "dimensions": [
+      "mass_material",
+      "production_delivery",
+      "inventory_wip",
+      "logistics_lead_time",
+      "commodity_energy",
+      "fx",
+      "capital"
+    ],
     "normalization": "each coordinate must be transformed to [0,1] by a predeclared source-specific rule",
     "author_parameters": {
-      "delta_p": {"status": "TOKEN_VAZIO", "value": null},
-      "k": {"status": "TOKEN_VAZIO", "value": null}
+      "delta_p": {
+        "status": "TOKEN_VAZIO",
+        "value": null
+      },
+      "k": {
+        "status": "TOKEN_VAZIO",
+        "value": null
+      }
     },
     "claim_boundary": "toroidal stability is an authored analytical transform; it is not by itself proof of causal or physical equivalence"
-  }
+  },
+  "governance_roles": [],
+  "public_money_flows": [],
+  "shipments": [],
+  "deadlines": [],
+  "bullwhip_series": [],
+  "ledger_reconciliations": [],
+  "falsifiability_hypotheses": [
+    {
+      "id": "H-CUSTODY-MONEY-01",
+      "state": "HYPOTHESIS",
+      "statement": "A public-money trace is considered closed only when its jurisdiction-specific accounting stages can be linked by public identifiers and the reconciled ledger residual is within a predeclared tolerance.",
+      "metric_or_observable": "stage_coverage + ledger_residual",
+      "falsifiers": [
+        "missing public trace identifier",
+        "missing mandatory public source for an asserted stage",
+        "ledger residual outside predeclared tolerance",
+        "cash realization asserted before the jurisdiction-specific cash stage"
+      ]
+    },
+    {
+      "id": "H-CUSTODY-LOGISTICS-01",
+      "state": "HYPOTHESIS",
+      "statement": "Logistics instability is observable as changes in public lead time, receiving lapse and deadline slip without inferring motive from timing alone.",
+      "metric_or_observable": "lead_time_hours + receiving_lapse_hours + deadline_slip_hours",
+      "falsifiers": [
+        "non-public shipment record",
+        "non-monotonic sent-arrived-received timestamps",
+        "deadline or completion timestamp not supported by a public source"
+      ]
+    },
+    {
+      "id": "H-CUSTODY-BULLWHIP-01",
+      "state": "HYPOTHESIS",
+      "statement": "A bullwhip proxy is present when the variance of a predeclared upstream public series exceeds the variance of its matched downstream public series over the same intervals.",
+      "metric_or_observable": "variance(upstream) / variance(downstream)",
+      "falsifiers": [
+        "series use different periods or units",
+        "fewer than four matched observations",
+        "downstream variance is zero",
+        "ratio is less than or equal to one"
+      ]
+    },
+    {
+      "id": "H-CUSTODY-GOVERNANCE-01",
+      "state": "HYPOTHESIS",
+      "statement": "Historical directive-body composition is reconstructable only as effective-dated public roles; present-tense role claims require an explicit as-of date.",
+      "metric_or_observable": "role interval coverage + source coverage",
+      "falsifiers": [
+        "role lacks effective start date",
+        "current role lacks as-of date",
+        "role interval contradicts its cited public record"
+      ]
+    }
+  ],
+  "evidence_gaps": [
+    {
+      "id": "GAP-SOURCE-HASHES",
+      "state": "TOKEN_VAZIO",
+      "description": "Public web sources are referenced but immutable source snapshots and SHA-256 hashes are not yet materialized."
+    },
+    {
+      "id": "GAP-MONEY-TRACE",
+      "state": "TOKEN_VAZIO",
+      "description": "No specific cross-system public-money trace has yet been bound end-to-end across all accounting stages."
+    },
+    {
+      "id": "GAP-SHIPMENT-TIMELINE",
+      "state": "TOKEN_VAZIO",
+      "description": "No public shipment series with sent/arrived/received/deadline timestamps is yet materialized in this seed."
+    },
+    {
+      "id": "GAP-BULLWHIP-SERIES",
+      "state": "TOKEN_VAZIO",
+      "description": "The gate can calculate bullwhip only after matched public upstream/downstream series are materialized."
+    },
+    {
+      "id": "GAP-GOVERNANCE-HISTORY",
+      "state": "TOKEN_VAZIO",
+      "description": "Historical director/officer role intervals still require entity-specific public filings and effective dates."
+    }
+  ]
 }
