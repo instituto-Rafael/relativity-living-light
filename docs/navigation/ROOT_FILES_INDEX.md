@@ -67,11 +67,11 @@
 | [`rll_inovacao_tecnologica_watch.yml`](../../rll_inovacao_tecnologica_watch.yml) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
 | [`RLL_JSON_EVOLUTION_WATCHER.yml`](../../RLL_JSON_EVOLUTION_WATCHER.yml) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
 | [`RLL_MATERIALIZACAO_CORE.md`](../../RLL_MATERIALIZACAO_CORE.md) | `DOCUMENT` | `INDEX_FIRST` |
-| [`RLL_REAL_VALIDATION_PROMPT.md`](../../RLL_REAL_VALIDATION_PROMPT.md) | `DOCUMENT` | `INDEX_FIRST` |
-| [`RLL_REAL_VALIDATION_REPORT_TARGET.md`](../../RLL_REAL_VALIDATION_REPORT_TARGET.md) | `DOCUMENT` | `INDEX_FIRST` |
+| [`RLL_REAL_VALIDATION_PROMPT.md`](../../RLL_REAL_VALIDATION_PROMPT.md) | `ROUTING_STUB` | `MOVED → docs/validation/prompts/RLL_REAL_VALIDATION_PROMPT.md` |
+| [`RLL_REAL_VALIDATION_REPORT_TARGET.md`](../../RLL_REAL_VALIDATION_REPORT_TARGET.md) | `ROUTING_STUB` | `MOVED → docs/validation/targets/RLL_REAL_VALIDATION_REPORT_TARGET.md` |
 | [`rll_reproducivel.zip`](../../rll_reproducivel.zip) | `BINARY_ARTIFACT` | `ARTIFACT_REVIEW` |
 | [`rll_vs_lcdm.py`](../../rll_vs_lcdm.py) | `EXECUTABLE_SOURCE` | `ROUTE_CODE` |
-| [`RLL_WANDERING_BLACK_HOLE_TEST.md`](../../RLL_WANDERING_BLACK_HOLE_TEST.md) | `DOCUMENT` | `INDEX_FIRST` |
+| [`RLL_WANDERING_BLACK_HOLE_TEST.md`](../../RLL_WANDERING_BLACK_HOLE_TEST.md) | `ROUTING_STUB` | `MOVED → docs/validation/cases/RLL_WANDERING_BLACK_HOLE_TEST.md` |
 | [`Rsfael`](../../Rsfael) | `LEGACY_STUB / TEXT_IDENTIFIED` | `MOVED → docs/legacy/root/raw/Rsfael.txt` |
 | [`runtime-lock.json`](../../runtime-lock.json) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
 | [`SCIENTIFIC_CLAIMS.md`](../../SCIENTIFIC_CLAIMS.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
@@ -155,3 +155,8 @@
 Manifesto: [`RLL_ROOT_PHYSICAL_REFACTOR_WAVE2A_V1.json`](../../data/governance/RLL_ROOT_PHYSICAL_REFACTOR_WAVE2A_V1.json).
 
 Seis corpos legacy saíram da raiz e foram preservados em `docs/legacy/root/`; os seis caminhos antigos são stubs de compatibilidade. Remoção futura dos stubs depende de `TOKEN_VAZIO_STUB_REMOVAL_SAFE`.
+
+
+## Wave 2B — INDEX_FIRST → typed validation routes
+
+Três documentos ativos de validação foram movidos para [`docs/validation/`](../validation/README.md), preservando stubs na raiz. Manifesto: [`RLL_ROOT_PHYSICAL_REFACTOR_WAVE2B_V1.json`](../../data/governance/RLL_ROOT_PHYSICAL_REFACTOR_WAVE2B_V1.json).
