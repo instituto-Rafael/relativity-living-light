@@ -2,7 +2,7 @@
   "schema": "rll.root_physical_refactor.wave2b.v1",
   "date": "2026-09-29",
   "source_base_commit": "5866d73aa3b02b02bdca3645a2d22eaab70f6bde",
-  "state": "IMPLEMENTED_UNTESTED",
+  "state": "PASS_ROUTING_INTEGRITY",
   "class": "INDEX_FIRST_TO_TYPED_ACTIVE_ROUTE",
   "migrations": [
     {
@@ -33,5 +33,15 @@
     "DESTINATION_GIT_BLOB_EQUALS_ORIGINAL_GIT_BLOB",
     "MOVE != DELETE",
     "CLAIM_STATE_UNCHANGED_BY_FILE_MOVE"
-  ]
+  ],
+  "evidence": {
+    "workflow": "START HERE V2.1 + Root Wave 2 Gate",
+    "run_id": 36567214362,
+    "job_id": 109401991661,
+    "result": "success",
+    "migrations_verified": 9,
+    "destination_blob_preservation": "PASS",
+    "stub_routing": "PASS",
+    "unexpected_active_backlinks": 0
+  }
 }
