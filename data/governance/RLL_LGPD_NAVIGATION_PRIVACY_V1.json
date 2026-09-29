@@ -1,0 +1,61 @@
+{
+  "schema": "rll.lgpd_navigation_privacy.v1",
+  "date": "2026-09-29",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "compliance_claim": false,
+  "navigation": {
+    "entry": "README.md",
+    "hub": "docs/navigation/README.md",
+    "canonical_index": "docs/INDICE_MESTRE.md",
+    "root_loose_files": "docs/navigation/ROOT_FILES_INDEX.md"
+  },
+  "data_default": {
+    "allowed": [
+      "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+      "PUBLIC_NON_PERSONAL_DOCUMENTATION",
+      "REPOSITORY_SOURCE_CODE",
+      "DERIVED_NON_PERSONAL_RESULTS"
+    ],
+    "blocked_or_review": [
+      "PERSONAL_DATA",
+      "SENSITIVE_PERSONAL_DATA",
+      "PRIVATE_THIRD_PARTY_DATA",
+      "PRECISE_PERSON_LOCATION",
+      "BIOMETRIC_DATA",
+      "PRIVATE_COMMUNICATIONS",
+      "UNKNOWN_DATA_CLASS"
+    ]
+  },
+  "lgpd_gates": {
+    "purpose_necessity": "IMPLEMENTED_GOVERNANCE",
+    "transparency": "PARTIAL",
+    "data_subject_rights_channel": "TOKEN_VAZIO_IF_PERSONAL_PROCESSING",
+    "processing_records": "PARTIAL_STRUCTURED",
+    "security_by_design": "IMPLEMENTED_TECHNICAL",
+    "incident_legal_notification": "HUMAN_LEGAL_REVIEW",
+    "controller_operator_role": "TOKEN_VAZIO",
+    "dpo_applicability": "TOKEN_VAZIO",
+    "international_transfer": "TOKEN_VAZIO",
+    "retention_unified": "PARTIAL",
+    "independent_legal_review": "TOKEN_VAZIO"
+  },
+  "file_refactor_policy": {
+    "move_requires": [
+      "canonicality_class",
+      "data_class",
+      "backlink_check",
+      "provenance_preservation"
+    ],
+    "personal_private_unknown": "FAIL_CLOSED_NO_AUTOMATIC_PUBLICATION",
+    "legacy": "PRESERVE_AND_ROUTE_BEFORE_MOVE",
+    "binary_artifact": "HASH_PURPOSE_RETENTION_REVIEW"
+  },
+  "invariants": [
+    "PRIVACY_BY_DESIGN != LEGAL_COMPLIANCE_CERTIFICATION",
+    "NO_SEARCH_HIT != NO_PERSONAL_DATA",
+    "TOKEN_VAZIO != COMPLIANT",
+    "MOVE != DELETE",
+    "INDEX_FIRST_BEFORE_PHYSICAL_MIGRATION"
+  ]
+}
