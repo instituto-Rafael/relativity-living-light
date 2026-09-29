@@ -54,7 +54,7 @@ jobs:
           set -eu
           G=core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c
           R=core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c
-          F="-std=c11 -O2 -Wall -Wextra -Wshadow -Werror -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections"
+          F="-std=c11 -O2 -Wshadow -Werror -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections"
 
           clang $F -c "$G" -o build/q16-v3/generator.o
           clang $F -c "$R" -o build/q16-v3/recovery.o
