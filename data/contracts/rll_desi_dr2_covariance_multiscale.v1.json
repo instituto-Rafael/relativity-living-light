@@ -1,0 +1,35 @@
+{
+  "schema": "rll.desi_dr2.covariance_whitened_multiscale.contract.v1",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "sources": {
+    "points": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+    "covariance": "data/real/desi_dr2_bao_covariance.csv",
+    "reproduction": "results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json"
+  },
+  "statistics": {
+    "primary_covariance": "full_13x13_committed_covariance",
+    "whitening": "C=L L^T; z=L^-1 r",
+    "chi2_identity": "chi2=r^T C^-1 r=sum(z_i^2)",
+    "population_stddev": "sqrt(sum((x-mu)^2)/N)",
+    "sample_stddev": "sqrt(sum((x-xbar)^2)/(n-1))"
+  },
+  "fibonacci": {
+    "role": "contiguous diagnostic window sizes on whitened residuals",
+    "sizes": "2,3,5,8,13,... up to N",
+    "likelihood_weight": false
+  },
+  "geometry_boundaries": {
+    "sqrt3_over_2_is_sigma": false,
+    "geometry_matrix_is_covariance": false,
+    "poincare_changes_bao_likelihood_without_typed_binding": false,
+    "venturi_changes_bao_likelihood_without_fluid_binding": false,
+    "calendar_periodicity_is_causal_cosmology": false
+  },
+  "promotion_gate": {
+    "full_covariance_must_be_preserved": true,
+    "whitened_residual_is_not_cause": true,
+    "g4_null_submanifold_is_not_model_separation": true,
+    "held_out_or_non_null_test_required_for_scientific_promotion": true
+  }
+}
