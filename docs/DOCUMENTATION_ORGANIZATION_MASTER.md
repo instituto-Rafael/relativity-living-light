@@ -1,8 +1,8 @@
 # Organização Integral de Documentação e Artefatos
 ## Relativity Living Light — estrutura técnica, canônica e auditável
 
-**Versão:** 1.2 (papéis explícitos de índices)
-**Data:** 2026-03-05
+**Versão:** 1.3 (hub de navegação + privacidade/LGPD)
+**Data:** 2026-09-29
 
 ---
 
@@ -21,6 +21,9 @@ Este documento define a **organização mestre** da documentação e a governan�
 | Índice | Finalidade | Público principal |
 |---|---|---|
 | [`README.md`](../README.md) | Porta de entrada: visão geral, contexto e encaminhamento inicial. | Novos leitores, colaboradores e revisores externos. |
+| [`docs/navigation/README.md`](navigation/README.md) | Hub por intenção/tarefa; reduz profundidade e evita depender da árvore física. | Todos os usuários, inclusive navegação rápida em mobile. |
+| [`docs/navigation/ROOT_FILES_INDEX.md`](navigation/ROOT_FILES_INDEX.md) | Índice completo dos arquivos soltos da raiz com papel e decisão de migração. | Curadoria, manutenção e usuários que encontram arquivos fora das pastas canônicas. |
+| [`docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md`](governance/LGPD_PRIVACY_NAVIGATION_V1.md) | Mapa técnico LGPD/privacidade e fronteiras de compliance. | Mantenedores, segurança, privacidade e revisão jurídica. |
 | [`docs/INDICE_MESTRE.md`](INDICE_MESTRE.md) | Navegação canônica por trilhas e caminhos oficiais. | Mantenedores, autores de documentação e usuários recorrentes. |
 | [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md) | Inventário bruto completo (`.md`/`.zip`) com metadados de varredura. | Auditoria documental, curadoria e manutenção técnica. |
 
