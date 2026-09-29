@@ -28,8 +28,8 @@ Este arquivo é estado operacional curto. Histórico, inventários extensos e na
 
 ## Current R3
 
-**F_ok:** Navigation Hub + LGPD gate merged; Wave 2A legacy destinations/stubs materialized; V2.1 dispatcher being bound to the repository.
+**F_ok:** Navigation Hub + LGPD gate merged; START HERE Ω V2.1 bound; Wave 2A + 2B migrated 9 bodies with exact Git-blob preservation; stubs routed; unexpected active backlinks = 0.
 
-**F_gap:** backlink graph is not yet complete; stub removal safety is not proven; human mobile/accessibility smoke remains TOKEN_VAZIO.
+**F_gap:** governed/historical backlinks remain intentionally present; stub removal safety is not yet proven as a separate cleanup gate; human mobile/accessibility smoke remains TOKEN_VAZIO.
 
-**F_next:** validate blob preservation + backlinks + V2.1 routing; then Wave 2B for `INDEX_FIRST` documents with explicit canonical destinations.
+**F_next:** Wave 2C: test stub-removal safety per path, then continue remaining `INDEX_FIRST` files only where canonical destinations and backlink updates are explicit.
