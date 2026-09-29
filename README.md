@@ -1,6 +1,6 @@
 # Relativity Living Light (RLL/MCRP)
 
-> **🧭 Comece aqui:** para navegar por objetivo em vez de percorrer a árvore inteira, use o [Navigation Hub](docs/navigation/README.md).
+> **🧭 Comece aqui:** use o [`START HERE Ω V2.1 DISPATCH`](docs/presentation/00_START_HERE_RLL.md). Ele lê primeiro o [`CURRENT_STATE`](docs/presentation/05_CURRENT_STATE_RLL.md) e limita `μREAD` a até 3 raízes. Para navegação humana por objetivo, use depois o [Navigation Hub](docs/navigation/README.md).
 >
 > - arquivos soltos da raiz: [ROOT_FILES_INDEX](docs/navigation/ROOT_FILES_INDEX.md)
 > - privacidade/LGPD: [LGPD_PRIVACY_NAVIGATION_V1](docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md)
