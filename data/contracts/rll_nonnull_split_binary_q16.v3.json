@@ -96,7 +96,30 @@
         "main"
       ]
     },
-    "provider_receipt_schema": "rll.nonnull_split_provider_hardening.v3"
+    "provider_receipt_schema": "rll.nonnull_split_provider_hardening.v3",
+    "physical_runner": {
+      "required_android_abi": "armeabi-v7a",
+      "producer_exit_codes": "ALL_ZERO",
+      "recovery_exit_codes": "ALL_ZERO",
+      "required_provenance": [
+        "ANDROID_ABI",
+        "ANDROID_SDK",
+        "GIT_HEAD_OR_TOKEN_VAZIO",
+        "CLANG_PATH_VERSION_SHA256",
+        "LD_LLD_PATH_VERSION_SHA256",
+        "NM_PATH_VERSION_SHA256",
+        "CONTRACT_SHA256",
+        "GENERATOR_SOURCE_SHA256",
+        "RECOVERY_SOURCE_SHA256",
+        "GENERATOR_ELF_SHA256",
+        "RECOVERY_ELF_SHA256",
+        "FIXTURE_SHA256",
+        "OUTPUT_SHA256",
+        "RUNNER_SHA256"
+      ],
+      "pass_rule": "ALL_EXECUTION_GATES_AND_ALL_EXIT_CODES_MUST_PASS",
+      "non_target_abi": "FAIL_CLOSED"
+    }
   },
   "open_evidence_gaps": {
     "armv7_physical_execution": "TOKEN_VAZIO",
