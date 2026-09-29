@@ -1,0 +1,67 @@
+{
+  "schema": "rll.nonnull_split_binary_q16.v3",
+  "date": "2026-09-28",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "purpose": "Separate synthetic fixture generation from parameter recovery into independently linked freestanding executables before physical ARMv7 replay.",
+  "source_lineage": {
+    "predecessor": "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c",
+    "generator": "core/lowlevel_runtime/c/rll_nonnull_fixture_generator_q16.c",
+    "recovery": "core/lowlevel_runtime/c/rll_nonnull_recovery_q16.c",
+    "physical_runner": "scripts/run_rll_nonnull_split_armv7_physical_v3.sh"
+  },
+  "runtime_invariants": [
+    "NO_HOSTED_HEADERS",
+    "NO_LIBC_STDLIB_STDIO_STRING_MATH",
+    "NO_HEAP_MALLOC_FREE_GC",
+    "NO_STRUCTS_CLASSES_FUNCTION_POINTERS",
+    "NO_RUNTIME_FILESYSTEM_API",
+    "DIRECT_SYSCALL_IO_ONLY",
+    "Q16_16_INTEGER_ONLY",
+    "STATIC_ELF_WHERE_LINKED",
+    "CLAIM_ALLOWED_FALSE"
+  ],
+  "separation": {
+    "generator_knows_injection": true,
+    "recovery_knows_generator_mode": false,
+    "recovery_contains_expected_result_check": false,
+    "recovery_receives_only": "RLF1 little-endian 33x i32 H(z) fixture on stdin",
+    "interpretation": "BINARY_SEPARATION_ONLY_NOT_INDEPENDENT_REIMPLEMENTATION"
+  },
+  "generator_modes": {
+    "exact": 0,
+    "stress": 1,
+    "null": 2
+  },
+  "expected_external_gate_results": {
+    "exact_q16": [
+      1311,
+      65536,
+      19661
+    ],
+    "stress_q16": [
+      1311,
+      65536,
+      21299
+    ],
+    "null_omega_s0_q16": 0
+  },
+  "assembly_audit": {
+    "compile_flag": "-fno-optimize-sibling-calls",
+    "identifier_shadow": "-Wshadow -Werror=shadow",
+    "named_tail_branch_pattern": "ARM assembly direct `b symbol` to non-local C symbol must count zero",
+    "stack_protector": "disabled by -fno-stack-protector",
+    "boundary": "TAIL_AUDIT_IS_COMPILER_OUTPUT_AUDIT_NOT_FORMAL_PROOF_OF_ALL_CONTROL_FLOW"
+  },
+  "physical_gate": {
+    "state": "TOKEN_VAZIO",
+    "reason": "No active GitHub self-hosted ARMv7 runner is registered; physical replay requires the existing Termux/ARMv7 execution surface.",
+    "required_receipt_schema": "rll.nonnull_split_armv7_physical.v3"
+  },
+  "epistemic_boundaries": [
+    "BINARY_SEPARATION_PASS != INDEPENDENT_REIMPLEMENTATION",
+    "SYNTHETIC_RECOVERY != REAL_DATA_MODEL_SELECTION",
+    "PROVIDER_ARM_OBJECT_PASS != PHYSICAL_ARM_EXECUTION",
+    "PHYSICAL_ARM_EXECUTION != COSMOLOGICAL_VALIDATION"
+  ]
+}
