@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "work/rll-nonnull-blind-q16-freestanding-v1-20260928"
+      - "fix/rll-nonnull-q16-runner-v2-20260928"
     paths:
       - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
       - "data/contracts/rll_nonnull_blind_q16_freestanding.v1.json"
@@ -31,9 +32,10 @@ jobs:
         run: |
           set -eu
           command -v clang
-          command -v ld.lld
+          command -v ld
           command -v nm
           command -v readelf
+          echo "PASS_TOOLCHAIN_MINIMAL"
 
       - name: Static source boundary
         run: |
@@ -54,6 +56,7 @@ jobs:
           set -eu
           SRC=core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c
           mkdir -p build/non-null-q16
+
           clang \
             -std=c11 -O2 \
             -ffreestanding -fno-builtin -fno-stack-protector \
@@ -61,7 +64,8 @@ jobs:
             -fomit-frame-pointer -fno-pic -fno-pie -nostdlib \
             -ffunction-sections -fdata-sections \
             -c "$SRC" -o build/non-null-q16/x86_64.o
-          ld.lld -static --gc-sections -e _start \
+
+          ld -static --gc-sections -e _start \
             -o build/non-null-q16/x86_64.elf \
             build/non-null-q16/x86_64.o
 
@@ -71,6 +75,7 @@ jobs:
 
           OUT="$(build/non-null-q16/x86_64.elf)"
           printf '%s\n' "$OUT"
+
           printf '%s\n' "$OUT" | grep -F 'state=PASS'
           printf '%s\n' "$OUT" | grep -F 'exact=1311,65536,19661'
           printf '%s\n' "$OUT" | grep -F 'stress=1311,65536,19661'
@@ -78,10 +83,13 @@ jobs:
           printf '%s\n' "$OUT" | grep -F 'grid_evals=1782'
           printf '%s\n' "$OUT" | grep -F 'claim_allowed=0'
 
-      - name: Cross-build ARMv7 static ELF and audit
+          echo "PASS_X86_64_STATIC_EXECUTION"
+
+      - name: Cross-build ARMv7 freestanding object and audit
         run: |
           set -eu
           SRC=core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c
+
           clang \
             --target=armv7-linux-gnueabihf \
             -march=armv7-a -marm \
@@ -92,14 +100,11 @@ jobs:
             -ffunction-sections -fdata-sections \
             -c "$SRC" -o build/non-null-q16/armv7.o
 
-          ld.lld -m armelf_linux_eabi -static --gc-sections -e _start \
-            -o build/non-null-q16/armv7.elf \
-            build/non-null-q16/armv7.o
+          test -z "$(nm -u build/non-null-q16/armv7.o)"
+          ! nm -u build/non-null-q16/armv7.o | grep -q '__aeabi_'
+          readelf -h build/non-null-q16/armv7.o | grep -F 'Class:' | grep -F 'ELF32'
+          readelf -h build/non-null-q16/armv7.o | grep -F 'Machine:' | grep -F 'ARM'
 
-          test -z "$(nm -u build/non-null-q16/armv7.elf)"
-          ! nm -u build/non-null-q16/armv7.elf | grep -q '__aeabi_'
-          ! readelf -l build/non-null-q16/armv7.elf | grep -q 'INTERP'
-          ! readelf -d build/non-null-q16/armv7.elf 2>/dev/null | grep -q 'NEEDED'
-          readelf -h build/non-null-q16/armv7.elf | grep -F 'Class:' | grep -F 'ELF32'
-          readelf -h build/non-null-q16/armv7.elf | grep -F 'Machine:' | grep -F 'ARM'
-          echo "PASS_ARMV7_STATIC_CROSS_BUILD"
+          echo "PASS_ARMV7_FREESTANDING_OBJECT"
+          echo "ARMV7_STATIC_LINK=TOKEN_VAZIO_TOOLCHAIN_LINKER"
+          echo "ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO"
