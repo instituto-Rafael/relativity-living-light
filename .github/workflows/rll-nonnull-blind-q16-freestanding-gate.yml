@@ -73,8 +73,12 @@ jobs:
           ! readelf -l build/non-null-q16/x86_64.elf | grep -q 'INTERP'
           ! readelf -d build/non-null-q16/x86_64.elf 2>/dev/null | grep -q 'NEEDED'
 
+          set +e
           OUT="$(build/non-null-q16/x86_64.elf)"
+          RC=$?
+          set -e
           printf '%s\n' "$OUT"
+          echo "PROGRAM_RC=$RC"
 
           printf '%s\n' "$OUT" | grep -F 'state=PASS'
           printf '%s\n' "$OUT" | grep -F 'exact=1311,65536,19661'
