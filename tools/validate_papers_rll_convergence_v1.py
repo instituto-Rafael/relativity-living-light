@@ -100,6 +100,25 @@ def validate(data: dict[str, Any]) -> list[str]:
         if "TOKEN_VAZIO" not in str(snapshot.get(gate, "")):
             errors.append(f"{gate}: expected TOKEN_VAZIO executor state in frozen snapshot")
 
+    topology = data.get("branch_topology_snapshot", {})
+    if topology.get("state") != "BRANCH_TOPOLOGY_GAP":
+        errors.append("branch topology gap must remain explicit until reconciled")
+    rules = set(topology.get("rules", []))
+    for rule in {
+        "NO_MASS_MERGE_TO_HIDE_DIVERGENCE",
+        "NO_DIRECT_MAIN_PROMOTION_FROM_WORK_BRANCH",
+        "RECONCILE_BRANCH_AUTHORITY_BEFORE_TRANSIT",
+    }:
+        if rule not in rules:
+            errors.append(f"missing branch-topology rule: {rule}")
+
+    if topology.get("state") == "BRANCH_TOPOLOGY_GAP":
+        for route in routes:
+            if isinstance(route, dict):
+                rll_state = str(route.get("rll_state", ""))
+                if rll_state.startswith("ROUTED") or rll_state in {"ACCEPTED", "ACTIVE", "PASS"}:
+                    errors.append(f"{route.get('id', '<missing>')}: routed candidate forbidden while BRANCH_TOPOLOGY_GAP is open")
+
     negative = set(data.get("negative_evidence_preserved", []))
     if "G6_observed_checkpoint_blocked_by_MCMC_convergence" not in negative:
         errors.append("G6 blocked convergence evidence must be preserved")
