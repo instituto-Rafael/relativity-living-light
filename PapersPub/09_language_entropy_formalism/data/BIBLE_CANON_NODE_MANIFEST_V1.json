@@ -1,0 +1,216 @@
+{
+  "schema": "rll.bible_canon_nodes.v1",
+  "date": "2026-09-30",
+  "state": "TOPOLOGY_MANIFEST_ONLY",
+  "claim_allowed": false,
+  "canon_policy": {
+    "baseline_navigation": "PROTESTANT_66_ORDERING",
+    "note": "Navigation convention only; canon family/order is typed and alternative canonical groupings must not overwrite source identity."
+  },
+  "nt27": [
+    "Matthew",
+    "Mark",
+    "Luke",
+    "John",
+    "Acts",
+    "Romans",
+    "1 Corinthians",
+    "2 Corinthians",
+    "Galatians",
+    "Ephesians",
+    "Philippians",
+    "Colossians",
+    "1 Thessalonians",
+    "2 Thessalonians",
+    "1 Timothy",
+    "2 Timothy",
+    "Titus",
+    "Philemon",
+    "Hebrews",
+    "James",
+    "1 Peter",
+    "2 Peter",
+    "1 John",
+    "2 John",
+    "3 John",
+    "Jude",
+    "Revelation"
+  ],
+  "ot39": [
+    "Genesis",
+    "Exodus",
+    "Leviticus",
+    "Numbers",
+    "Deuteronomy",
+    "Joshua",
+    "Judges",
+    "Ruth",
+    "1 Samuel",
+    "2 Samuel",
+    "1 Kings",
+    "2 Kings",
+    "1 Chronicles",
+    "2 Chronicles",
+    "Ezra",
+    "Nehemiah",
+    "Esther",
+    "Job",
+    "Psalms",
+    "Proverbs",
+    "Ecclesiastes",
+    "Song of Songs",
+    "Isaiah",
+    "Jeremiah",
+    "Lamentations",
+    "Ezekiel",
+    "Daniel",
+    "Hosea",
+    "Joel",
+    "Amos",
+    "Obadiah",
+    "Jonah",
+    "Micah",
+    "Nahum",
+    "Habakkuk",
+    "Zephaniah",
+    "Haggai",
+    "Zechariah",
+    "Malachi"
+  ],
+  "twelve_ministry": [
+    {
+      "id": "A01",
+      "label": "Simon Peter",
+      "aliases": [
+        "Simon",
+        "Cephas/Petros"
+      ]
+    },
+    {
+      "id": "A02",
+      "label": "Andrew",
+      "aliases": []
+    },
+    {
+      "id": "A03",
+      "label": "James son of Zebedee",
+      "aliases": []
+    },
+    {
+      "id": "A04",
+      "label": "John son of Zebedee",
+      "aliases": []
+    },
+    {
+      "id": "A05",
+      "label": "Philip",
+      "aliases": []
+    },
+    {
+      "id": "A06",
+      "label": "Bartholomew",
+      "aliases": [],
+      "boundary": "Nathanael identity not assumed"
+    },
+    {
+      "id": "A07",
+      "label": "Matthew",
+      "aliases": [],
+      "boundary": "Levi relation source-sensitive"
+    },
+    {
+      "id": "A08",
+      "label": "Thomas",
+      "aliases": [
+        "Didymus"
+      ]
+    },
+    {
+      "id": "A09",
+      "label": "James son of Alphaeus",
+      "aliases": []
+    },
+    {
+      "id": "A10",
+      "label": "Thaddaeus / Judas son of James",
+      "aliases": [
+        "Thaddaeus",
+        "Judas son of James"
+      ]
+    },
+    {
+      "id": "A11",
+      "label": "Simon the Zealot",
+      "aliases": [
+        "Simon the Cananaean"
+      ]
+    },
+    {
+      "id": "A12",
+      "label": "Judas Iscariot",
+      "aliases": [],
+      "state": "MINISTRY_TWELVE_THEN_VACANCY"
+    }
+  ],
+  "successors_and_other_apostolic_nodes": [
+    {
+      "id": "A13",
+      "label": "Matthias",
+      "state": "ACTS1_REPLACEMENT"
+    },
+    {
+      "id": "AP_PAUL",
+      "label": "Paul",
+      "state": "APOSTLE_NOT_OF_TWELVE"
+    }
+  ],
+  "language_axis": [
+    "hbo",
+    "arc",
+    "grc"
+  ],
+  "cell_states": [
+    "SOURCE_WITNESS",
+    "QUOTED_SOURCE",
+    "TRANSLATION_ALIGNED",
+    "RETROVERSION_MODEL",
+    "PHONEME_MODEL",
+    "CONTEXT_LANGUAGE_CANDIDATE",
+    "TOKEN_VAZIO_WITNESS_ABSENT"
+  ],
+  "vertex_classes": [
+    "BOOK",
+    "PERICOPE",
+    "VERSE",
+    "EVENT",
+    "PERSON",
+    "PLACE",
+    "LANGUAGE_FORM",
+    "LEMMA",
+    "CONCEPT",
+    "QUOTATION",
+    "PHONEME",
+    "AUDIO",
+    "METRIC",
+    "CONTAINER_BLOCK",
+    "SOURCE",
+    "RECEIPT"
+  ],
+  "edge_types": [
+    "OCCURS_IN",
+    "PARTICIPATES_IN",
+    "SPEAKS_IN",
+    "NAMED_AS",
+    "TEXTUALLY_QUOTES",
+    "ALIGNS_WITH",
+    "TRANSLATES",
+    "RETROVERTS_MODEL",
+    "DERIVED_FROM",
+    "STORED_IN",
+    "MEASURED_BY",
+    "SUPPORTED_BY",
+    "CONTRADICTED_BY"
+  ],
+  "priority": "NT27_FIRST_THEN_OT_QUOTATION_SOURCE_EDGES",
+  "execution": "NOT_RUN"
+}
