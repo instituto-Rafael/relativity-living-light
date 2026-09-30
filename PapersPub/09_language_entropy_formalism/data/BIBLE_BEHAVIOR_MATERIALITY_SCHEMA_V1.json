@@ -1,0 +1,57 @@
+{
+  "schema": "rll.bible_behavior_materiality.v1",
+  "date": "2026-09-30",
+  "state": "PROTOCOL_ONLY",
+  "claim_allowed": false,
+  "invariants": [
+    "TEXT_SIGNAL!=INNER_MENTAL_STATE",
+    "STYLOMETRIC_SIMILARITY!=AUTHOR_IDENTITY",
+    "SCRIBE_IDENTITY!=LITERARY_AUTHORSHIP",
+    "SPECTRAL_IMAGE!=AUTHORSHIP",
+    "MODERN_ARCHIVAL_RH!=ANCIENT_QUMRAN_RH"
+  ],
+  "feature_families": {
+    "behavioral_text": [
+      "lexical_choice",
+      "function_words",
+      "collocations",
+      "repetition",
+      "syntax",
+      "morphology",
+      "discourse_markers",
+      "quotation_patterns",
+      "semantic_fields",
+      "named_entities",
+      "register",
+      "orthography",
+      "rhetorical_structure"
+    ],
+    "scribal_hand": [
+      "contour_features",
+      "allograph_features",
+      "texture_features",
+      "spacing",
+      "line_geometry"
+    ],
+    "material": [
+      "site",
+      "cave",
+      "substrate",
+      "ink",
+      "damage",
+      "repair",
+      "jar_context",
+      "temperature_context",
+      "humidity_context",
+      "image_bands",
+      "radiocarbon",
+      "palaeography"
+    ]
+  },
+  "isaiah": {
+    "literary_composition": "HISTORICAL_CRITICAL_MODEL_CONTESTED_DETAILS",
+    "great_isaiah_scroll_scribes": "EVIDENCE_FOR_TWO_MAIN_SCRIBES_IN_2021_STUDY",
+    "ancient_relative_humidity_percent": "TOKEN_VAZIO",
+    "execution": "NOT_RUN"
+  }
+}

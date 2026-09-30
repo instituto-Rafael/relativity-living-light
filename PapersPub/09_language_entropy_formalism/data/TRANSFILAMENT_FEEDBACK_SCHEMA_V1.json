@@ -1,0 +1,66 @@
+{
+  "schema": "rll.transfilament.feedback.v1",
+  "date": "2026-09-30",
+  "state": "ARCHITECTURE_ONLY",
+  "claim_allowed": false,
+  "invariants": [
+    "SOURCE!=ARTIFACT!=INFERENCE!=EXECUTION!=EVIDENCE!=CLAIM",
+    "MODEL_CONTINUATION!=EXTERNAL_EVIDENCE",
+    "CANDIDATE_EDGE!=VALIDATED_RELATION",
+    "NUMBER_PATTERN!=HISTORICAL_CAUSALITY",
+    "SCALE_DOWN_MUST_NOT_INVENT_SEMANTICS",
+    "SCALE_UP_MUST_NOT_ERASE_DISAGREEMENT"
+  ],
+  "dimensions": [
+    "source",
+    "time",
+    "book",
+    "chapter",
+    "verse",
+    "person",
+    "event",
+    "language",
+    "genre",
+    "music_poetry",
+    "manuscript",
+    "scribe",
+    "material",
+    "place",
+    "behavior",
+    "metric",
+    "container",
+    "evidence_state"
+  ],
+  "branch_types": [
+    "SOURCE_WITNESS",
+    "TRANSLATION",
+    "RETROVERSION",
+    "LITERARY_STRATUM",
+    "SCRIBAL_HAND",
+    "INTERPRETATION",
+    "NULL",
+    "COUNTERMODEL"
+  ],
+  "relation_states": [
+    "SUPPORTED",
+    "CONTESTED",
+    "UNSOURCED",
+    "SPECULATIVE",
+    "NOT_RUN",
+    "TOKEN_VAZIO"
+  ],
+  "model_statement_states": [
+    "EXTRACTED_FROM_SOURCE",
+    "DERIVED_BY_DECLARED_RULE",
+    "MODEL_HYPOTHESIS",
+    "MODEL_CONTINUATION",
+    "TOKEN_VAZIO"
+  ],
+  "datasets": [
+    "D1_CANON_GRAPH",
+    "D2_LANGUAGE_WITNESS",
+    "D3_TEXT_BEHAVIOR",
+    "D4_MANUSCRIPT_MATERIAL"
+  ],
+  "execution": "NOT_RUN"
+}
