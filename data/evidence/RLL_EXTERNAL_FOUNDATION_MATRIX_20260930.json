@@ -1,0 +1,149 @@
+{
+  "schema": "rll.external-foundation-matrix.v1",
+  "observed_at": "2026-09-30",
+  "base_commit": "3a34d6f3841857d2a1802a2902cbb9176f026122",
+  "claim_allowed": false,
+  "boundaries": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "MATHEMATICAL_REPRESENTATION != PHYSICAL_MECHANISM",
+    "HOLOGRAPHIC_INFORMATION_GEOMETRY != GENERIC_SPACETIME_IS_INFORMATION",
+    "CROSS_LINGUAL_ALIGNMENT != UNIVERSAL_SEMANTIC_LAW",
+    "TRANSVERSAL_NUTRITION_CASE != RLL_COSMOLOGY_EVIDENCE"
+  ],
+  "records": [
+    {
+      "id": "EXTF-001",
+      "domain": "poincare_hierarchy",
+      "relation": "SUPPORTS_METHOD",
+      "sources": [
+        "alphaXiv:1705.08039",
+        "alphaXiv:1805.09112"
+      ],
+      "rll": [
+        "PapersPub/09_poincare_ball_7d_freestanding/claims.jsonl"
+      ],
+      "state": "COMPATIBLE_WITH_CURRENT_BOUNDARY",
+      "claim_allowed": false,
+      "next_gate": "Euclidean_x_Poincare_same_input_A_B"
+    },
+    {
+      "id": "EXTF-002",
+      "domain": "entanglement_geometry",
+      "relation": "SUPPORTS_BOUNDED_BRIDGE",
+      "sources": [
+        "alphaXiv:1005.3035",
+        "alphaXiv:hep-th/0603001"
+      ],
+      "rll": [
+        "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+      ],
+      "state": "REQUIRES_TYPED_HOLOGRAPHIC_ROUTE",
+      "claim_allowed": false,
+      "next_gate": "Explicit_AdS_CFT_assumptions_and_observables"
+    },
+    {
+      "id": "EXTF-003",
+      "domain": "inverse_information_to_geometry",
+      "relation": "CONTRADICTS_STRONG_FORM",
+      "sources": [
+        "alphaXiv:2604.05970"
+      ],
+      "rll": [
+        "docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md"
+      ],
+      "state": "NONIDENTIFIABILITY_GATE",
+      "claim_allowed": false,
+      "next_gate": "Rank_identifiability_plus_independent_observable"
+    },
+    {
+      "id": "EXTF-004",
+      "domain": "multilingual_structure",
+      "relation": "SUPPORTS_BOUNDED_BRIDGE",
+      "sources": [
+        "alphaXiv:2608.28924",
+        "alphaXiv:2608.27115"
+      ],
+      "rll": [
+        "PapersPub/09_language_entropy_formalism/draft.md",
+        "PapersPub/09_language_entropy_formalism/RECEIPT_G3_METHOD_CORRECTION_20260921.md"
+      ],
+      "state": "SUPPORTS_NEXT_TEST_DESIGN_NOT_G2",
+      "claim_allowed": false,
+      "next_gate": "Heldout_nonreligious_typology_shuffle_controls"
+    },
+    {
+      "id": "EXTF-005",
+      "domain": "language_compression",
+      "relation": "DOES_NOT_RESOLVE",
+      "sources": [
+        "RLL:SCD1_20260920"
+      ],
+      "rll": [
+        "PapersPub/09_language_entropy_formalism/draft.md"
+      ],
+      "state": "G2_FAIL_PRESERVED",
+      "claim_allowed": false,
+      "next_gate": "gzip_zstd_brotli_structural_codec_out_of_domain"
+    },
+    {
+      "id": "EXTF-006",
+      "domain": "chia_feed_transversal_case",
+      "relation": "TRANSVERSAL_CASE_STUDY",
+      "scope": "OUTSIDE_RLL_COSMOLOGY",
+      "sources": [
+        "doi:10.4081/ija.2019.1297",
+        "doi:10.1111/1541-4337.12423",
+        "doi:10.1093/nutrit/nuaf196"
+      ],
+      "rll": [
+        "SCIENTIFIC_CLAIMS.md"
+      ],
+      "state": "METHODOLOGY_EXAMPLE_ONLY",
+      "claim_allowed": false,
+      "next_gate": "No_cosmology_promotion"
+    },
+    {
+      "id": "EXTF-007",
+      "domain": "chia_composition",
+      "relation": "PARTIAL_SUPPORT_WITH_CORRECTION",
+      "scope": "OUTSIDE_RLL_COSMOLOGY",
+      "sources": [
+        "PMCID:PMC6627181",
+        "PMCID:PMC8877361"
+      ],
+      "rll": [
+        "SCIENTIFIC_CLAIMS.md"
+      ],
+      "state": "CORRECT_ORAL_NUMBERS",
+      "claim_allowed": false,
+      "next_gate": "Keep_unverified_subclaims_TOKEN_VAZIO"
+    },
+    {
+      "id": "EXTF-008",
+      "domain": "linseed_toxicology",
+      "relation": "PARTIAL_SUPPORT_WITH_CONTRADICTION",
+      "scope": "OUTSIDE_RLL_COSMOLOGY",
+      "sources": [
+        "doi:10.2903/j.efsa.2017.5004",
+        "PMID:12738187"
+      ],
+      "rll": [
+        "SCIENTIFIC_CLAIMS.md"
+      ],
+      "state": "HCN_SUPPORTED_FETAL_CLAIM_UNVERIFIED",
+      "claim_allowed": false,
+      "next_gate": "Primary_source_matching_species_dose_endpoint"
+    },
+    {
+      "id": "EXTF-009",
+      "domain": "researcher_identity",
+      "relation": "DOES_NOT_RESOLVE",
+      "scope": "OUTSIDE_RLL_COSMOLOGY",
+      "sources": [],
+      "rll": [],
+      "state": "TOKEN_VAZIO_IDENTITY_GIOVANI_TOSCO_UFV",
+      "claim_allowed": false,
+      "next_gate": "Direct_UFV_ORCID_CV_publication_pointer"
+    }
+  ]
+}
