@@ -1,0 +1,86 @@
+{
+  "schema": "papers_rll.convergence.v1",
+  "date": "2026-09-30",
+  "state": "AUDIT_FAIL_CLOSED",
+  "claim_allowed": false,
+  "source_cuts": {
+    "papers": {"repo": "rafaelmeloreisnovo/papers","commit": "b2131e8b75dc822b747c9ca690aae08cd26036c9","blobs_observed": 745},
+    "rll": {"repo": "instituto-Rafael/relativity-living-light","commit": "df28962cfb466050634efe47dd947b61013b06e9","blobs_observed": 3570}
+  },
+  "authority": {
+    "corpus": "NOVOexport/Drive",
+    "research_synthesis": "rafaelmeloreisnovo/papers",
+    "formal_math": "rafaelmeloreisnovo/Matem-tica-",
+    "scientific_cosmology": "instituto-Rafael/relativity-living-light"
+  },
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "SILENT_STEP = GAP",
+    "CROSS_REPO_POINTER != TRANSFERRED_PROOF",
+    "AUTHORIAL_CANDIDATE != SCIENTIFIC_VALIDATION",
+    "MATHEMATICAL_VALIDITY != COSMOLOGICAL_RELEVANCE",
+    "GEOMETRY_EXECUTION != RLL_EXECUTION"
+  ],
+  "lanes": [
+    {"id":"L0","name":"source_corpus","required":["exact_source_or_token_vazio","lineage","hash_when_available"]},
+    {"id":"L1","name":"authorship_provenance","required":["role","first_occurrence","parent_lineage","prior_art_state"]},
+    {"id":"L2","name":"formal_math","authority":"rafaelmeloreisnovo/Matem-tica-","required":["semantics","units","domain","proof_or_model_state","falsifier"]},
+    {"id":"L3","name":"rll_domain_relevance","required":["cosmology_role","observable_or_mechanism_binding","target_gate"]},
+    {"id":"L4","name":"rll_scientific_execution","required":["source_binding","executor","receipt","negative_controls"]},
+    {"id":"L5","name":"claim_publication","required":["claim_state","limitations","negative_results","replication_state"]}
+  ],
+  "rll_gate_snapshot": {
+    "G0":"PARTIAL_SOURCE_FREEZE_EXECUTOR","G1":"PARTIAL_EXECUTORS","G2":"PARTIAL_EXECUTORS","G3":"PARTIAL_EXECUTORS",
+    "G4":"FULL_DECLARED_BACKGROUND_EXECUTOR","G5":"FULL_DECLARED_BACKGROUND_MANIFEST_EXECUTOR",
+    "G6":"PREREGISTERED_CANONICAL_BACKGROUND_INFERENCE_EXECUTOR_SCIENTIFICALLY_BLOCKED_IN_OBSERVED_CHECKPOINT",
+    "G7":"TOKEN_VAZIO_ROBUSTNESS_EXECUTOR","G8":"BLOCKING_DERIVATION_AND_REGULARITY_EXECUTORS",
+    "G9":"TOKEN_VAZIO_PERTURBATIVE_OBSERVABLE_EXECUTOR","G10":"TOKEN_VAZIO_INDEPENDENT_REPLICATION_EXECUTOR",
+    "G11":"TOKEN_VAZIO_CLAIM_ROUTER_EXECUTOR"
+  },
+  "authorial_candidate_routes":[
+    {"id":"AC-01","expression":"C=(IQ*LI)/F","papers_state":"CANDIDATE_AUTHORIAL_STRONG","math_gate":"PENDING","domain_relevance":"NOT_ESTABLISHED","rll_state":"NOT_ROUTED_DOMAIN_RELEVANCE_UNPROVEN","claim_allowed":false},
+    {"id":"AC-02","expression":"T_fusion=T_hd/N","papers_state":"CANDIDATE_AUTHORIAL_STRONG","math_gate":"PENDING","domain_relevance":"NOT_ESTABLISHED","rll_state":"NOT_ROUTED_DOMAIN_RELEVANCE_UNPROVEN","claim_allowed":false},
+    {"id":"AC-03","expression":"E=sum_i(R_i*U_i/C_i)","papers_state":"CANDIDATE_AUTHORIAL_VERY_STRONG","math_gate":"PENDING","domain_relevance":"NOT_ESTABLISHED","rll_state":"NOT_ROUTED_DOMAIN_RELEVANCE_UNPROVEN","claim_allowed":false},
+    {"id":"AC-04","expression":"I=(E*C)/T","papers_state":"CANDIDATE_AUTHORIAL_STRONG","math_gate":"PENDING","domain_relevance":"NOT_ESTABLISHED","rll_state":"NOT_ROUTED_DOMAIN_RELEVANCE_UNPROVEN","claim_allowed":false}
+  ],
+  "transfer_rule":{"route_to_rll_only_if":["math_gate == PASS","domain_relevance == ESTABLISHED","exact_source_binding_present","target_rll_gate_declared","falsifier_present"],"otherwise":"NOT_ROUTED_OR_TOKEN_VAZIO"},
+  "negative_evidence_preserved":[
+    "historical_validation_LCDM_chi2_39.3823_vs_RLL_44.8893_45_points",
+    "G4_RLL_optimum_Omega_s0_zero_null_submanifold_in_recorded_scope",
+    "G6_observed_checkpoint_blocked_by_MCMC_convergence",
+    "GEOM_TO_RLL_EVIDENCE_TRANSFER_FORBIDDEN"
+  ],
+  "next":[
+    "record and reconcile branch authority/topology before any promotion transit",
+    "do not mass-merge rll/lab, rll/integration, rll/release and main merely to make the route linear",
+    "close only convergence-specific CI regressions; preserve unrelated scientific/governance negative results",
+    "build candidate-level crosswalk for existing RLL-linked Papers objects",
+    "do not route AC-01..AC-04 until domain relevance is established"
+  ],
+  "branch_topology_snapshot":{
+    "observed_at":"2026-09-30",
+    "intended_route":["rll/lab","rll/integration","rll/release","main"],
+    "comparisons":{
+      "rll/lab...rll/integration":{"status":"diverged","head_ahead_by":1,"head_behind_by":138,"merge_base":"de4099bbbb7c5adeb21eeeabc220aa803aaa5011"},
+      "rll/integration...rll/release":{"status":"behind","head_ahead_by":0,"head_behind_by":1473,"merge_base":"2cb3e3e88677ea9ac1f263377114b539db7bc47f"},
+      "rll/release...main":{"status":"ahead","head_ahead_by":2290,"head_behind_by":0,"merge_base":"2cb3e3e88677ea9ac1f263377114b539db7bc47f"},
+      "rll/lab...main":{"status":"diverged","head_ahead_by":969,"head_behind_by":289,"merge_base":"c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1"},
+      "rll/integration...main":{"status":"diverged","head_ahead_by":969,"head_behind_by":152,"merge_base":"c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1"},
+      "rll/release...rll/lab":{"status":"ahead","head_ahead_by":1610,"head_behind_by":0,"merge_base":"2cb3e3e88677ea9ac1f263377114b539db7bc47f"}
+    },
+    "state":"BRANCH_TOPOLOGY_GAP",
+    "rules":["NO_MASS_MERGE_TO_HIDE_DIVERGENCE","NO_DIRECT_MAIN_PROMOTION_FROM_WORK_BRANCH","RECONCILE_BRANCH_AUTHORITY_BEFORE_TRANSIT"]
+  },
+  "ci_causal_classification":{
+    "convergence_specific":{"Transit Tower":"BLOCKED_INVALID_BRANCH_TRANSITION_TO_MAIN","Branch Maturity Gate V2":"BLOCKED_PROMOTION_TOPOLOGY"},
+    "preexisting_or_not_caused_by_changed_paths":{
+      "RLL Governance Quality Gate":"FAIL_PREREGISTERED_DISTANCE_TOLERANCE",
+      "RLL FASE 24.1 schema contract":"60_OF_60_SCHEMA_PARSE_OK_BOUNDARY_VALIDATOR_FAIL_SCHEMAS_SCOPE_ONLY",
+      "Six Sigma Real Data Controls":"DOCUMENTATION_INVENTORY_DRIFT_MAIN_WIDE"
+    },
+    "observed_successes":["repo-real-inventory","formulas-artifacts","START HERE V2.1 + Root Wave 2 Gate","RLL Q16 Split + Assembly Audit V3","Real Data Contract CI","Convention Consistency Check","Claim Boundary Quality Gates","RLL Knowledge Matrix","GitHub Platform Assurance"],
+    "rule":"FIX_ONLY_CAUSAL_REGRESSIONS_PRESERVE_UNRELATED_NEGATIVE_RESULTS"
+  }
+}
