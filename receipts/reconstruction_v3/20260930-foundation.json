@@ -1,0 +1,49 @@
+{
+  "schema": "rafaelia.reconstruction-foundation-receipt/v1",
+  "muID": "MU-RV3-20260930-01",
+  "timestamp": "2026-09-30T09:32:32.329231+00:00",
+  "source_repository": "instituto-Rafael/relativity-living-light",
+  "source_base_commit": "df28962cfb466050634efe47dd947b61013b06e9",
+  "parent": "TOKEN_VAZIO",
+  "kind": "IMPLEMENTATION_AND_LOCAL_FIXTURE_EVIDENCE",
+  "delta_summary": "Bounded freestanding JSON kernel, private hosted scanner/SQLite adapter, provenance and candidate snapshot export.",
+  "routes": {
+    "L": "TOKEN_VAZIO",
+    "O": "kernel/host separation",
+    "T": "RLL→Mapa route",
+    "P": "source hashes",
+    "C": "user reconstruction request",
+    "R": "explicit token parents/literal references",
+    "I": "source SHA256 + token ID",
+    "E": "local fixtures only",
+    "A": "bounded capacities"
+  },
+  "gate": {
+    "command": "python3 -m unittest discover -s tests/reconstruction_v3 -v",
+    "exit_code": 0,
+    "status": "PASS",
+    "tests": 5,
+    "scope": "local synthetic fixtures; native compile; nm undefined-symbol check"
+  },
+  "environment": {
+    "machine": "x86_64",
+    "system": "Linux",
+    "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0"
+  },
+  "claim_allowed": false,
+  "corpus_execution": "NOT_RUN",
+  "arm_device_execution": "NOT_RUN",
+  "semantic_equivalence": "PENDING",
+  "external_patch_retrieval": "NOT_RUN",
+  "gap": "Original JSON schema/corpus unavailable; streaming and semantic graph stages pending.",
+  "next": "Bind one authorized real JSON to observed schema and verify inventory and reference-resolution gates.",
+  "hashes": {
+    "native/reconstruction_v3/README.md": "b675b064ab42005f9b45586b68d5a51b16c2e5a936125611eb1b963325aa0333",
+    "native/reconstruction_v3/rv3.c": "7c4969d5f9b5bece9a02dba7b826c5f1a7926766442cee255186ed1102e534ec",
+    "native/reconstruction_v3/rv3.h": "b9678a82569bd4dfcdce899246f02c3c6b5bd0e426ef286751ecd8aee3dcbf60",
+    "tests/reconstruction_v3/boundaries.c": "71c66743da618a374031a81abbd775623097b46873d5ebd202b47855e9279a66",
+    "tests/reconstruction_v3/test_reconstruction.py": "eb0fdcc270b946a8ff167f6ccc09e320857bedecd408e448bc3672d4b8a27d0c",
+    "tools/reconstruction_v3/ingest.py": "acdd08bda5fec2ce3d0a89698fa2f0456a559754cdc962fe46e105d4ac00bcb2",
+    "tools/reconstruction_v3/scan.c": "ee47fdf9470e1492d084ab450161a80dac8b55b73aedd14b633e6494f0bd329a"
+  }
+}
