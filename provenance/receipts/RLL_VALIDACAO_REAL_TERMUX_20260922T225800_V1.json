@@ -1,0 +1,63 @@
+{
+  "receipt_id": "RLL-VALIDACAO-REAL-TERMUX-20260922T225800-0300",
+  "timestamp": "2026-09-22T22:58:00-03:00",
+  "kind": "muwrite_validation_execution_receipt",
+  "source": {
+    "execution_origin": "user_provided_termux_terminal_output",
+    "repository": "instituto-Rafael/relativity-living-light",
+    "pipeline_path": "validacao_real/",
+    "compute_validation_blob_sha": "3883c2e41c5d85f30bff0a5e599c4670c6f3c534",
+    "observed_search_snapshot_commit": "f69d6827b0a35674de2fd8bad2477fcf8c827af2"
+  },
+  "execution": {
+    "fetch_real_data": "PASS",
+    "compute_validation": "PASS",
+    "make_figures": "PASS_WITH_SVG_FALLBACK",
+    "render_report": "PASS",
+    "n_points": 45,
+    "datasets": {
+      "desi_dr2_bao": 13,
+      "hz_cosmic_chronometers": 32
+    }
+  },
+  "evidence": {
+    "LCDM": {
+      "chi2": 39.38,
+      "chi2_per_dof": 0.938,
+      "AIC_reported": 45.38,
+      "BIC_reported": 50.80,
+      "falsified_bao_reported": false,
+      "falsified_hz_reported": false
+    },
+    "RLL": {
+      "chi2": 44.89,
+      "chi2_per_dof": 1.122,
+      "AIC_reported": 54.89,
+      "BIC_reported": 63.92,
+      "falsified_bao_reported": false,
+      "falsified_hz_reported": false
+    },
+    "delta_chi2_LCDM_minus_RLL": -5.51,
+    "delta_AIC_LCDM_minus_RLL": -9.51,
+    "delta_BIC_LCDM_minus_RLL": -13.12
+  },
+  "scientific_boundary": {
+    "claim_allowed": false,
+    "reason": [
+      "current compute_validation.py evaluates fixed cosmological parameter values rather than fitting maximum likelihood parameters",
+      "chi2 is diagonal and does not yet use the full DESI/CC covariance structure",
+      "reported AIC/BIC are therefore pipeline diagnostics, not publication-grade model-selection evidence",
+      "not crossing the custom mean-absolute-pull threshold does not validate either model"
+    ]
+  },
+  "gap": [
+    "fit LCDM and RLL under the same likelihood and priors",
+    "ingest and apply covariance matrices",
+    "preserve RLL nested limit Os=0 -> LCDM as a regression invariant",
+    "add Pantheon+ and then multi-probe joint likelihood",
+    "replace or supplement mean-absolute-pull falsification with likelihood/posterior and residual diagnostics"
+  ],
+  "next": "implement likelihood-parity gate with covariance-aware fitting before promoting AIC/BIC or any superiority claim",
+  "routes": ["L","P","C","R","I","E","A"],
+  "append_only": true
+}

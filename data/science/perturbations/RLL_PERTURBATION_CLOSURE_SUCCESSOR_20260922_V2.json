@@ -1,0 +1,34 @@
+{
+  "schema": "rll.perturbation_closure_successor.v2",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_contract": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
+  "parent_state": "SPECIFICATION_SATURATED_PHYSICAL_CHOICES_PENDING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "A1_1_CANDIDATE_INSTANTIATED_PARTIAL_CLOSURE_ONLY",
+  "candidate_contract": "data/science/perturbations/RLL_PERTURBATION_A1_RESTFRAME_CS1_CANDIDATE_20260922_V1.json",
+  "slot_delta": {
+    "C01_DELTA_S": "OPEN",
+    "C02_THETA_S": "OPEN",
+    "C03_CS2": "CANDIDATE_ASSIGNED_NOT_VALIDATED",
+    "C04_ENTROPY": "CANDIDATE_ASSIGNED_NOT_GAUGE_COMPLETED",
+    "C05_ANISOTROPIC_STRESS": "CANDIDATE_ASSIGNED_ZERO_NOT_VALIDATED",
+    "C06_Q_MU": "CANDIDATE_ASSIGNED_ZERO_FOR_A1_NOT_GLOBAL",
+    "C07_GAUGE_AND_INITIAL_CONDITIONS": "OPEN_CRITICAL",
+    "C08_TRANSITION_REGULARIZATION": "BACKGROUND_PARTIAL_PERTURBATION_OPEN",
+    "C09_NONLINEAR_SCOPE": "OUT_OF_SCOPE"
+  },
+  "hard_blockers_for_class_camb": [
+    "C01_DELTA_S full evolution equation",
+    "C02_THETA_S full momentum equation",
+    "C07 gauge and super-horizon initial conditions",
+    "C08 perturbation transition regularity",
+    "constraint/Bianchi residual test"
+  ],
+  "promotion_rule": "A1.1 may become VERSIONED_PHYSICAL_CLOSURE_WITH_LIMITING_TESTS_PASS only after all hard blockers are resolved and independent solver-ready equations are frozen.",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_state": "BLOCKED_BY_PARTIAL_CLOSURE",
+  "next_gate": "freeze gauge convention and derive C01/C02 plus super-horizon IC from the same A1.1 equations; then run conservation/regularity tests",
+  "rollback": "Revert this successor overlay without changing the 2026-08-08 V1 contract or A0 negative evidence."
+}

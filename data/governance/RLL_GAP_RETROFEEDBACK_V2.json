@@ -1,0 +1,1388 @@
+{
+  "schema": "rll.gap_retrofeedback.v2",
+  "generated_from": {
+    "base_head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+    "benchmark_workflow_run_id": 34709860843,
+    "benchmark_state": "VERIFIED_RLL_RS_CAMB_REFERENCE_BENCHMARK"
+  },
+  "claim_allowed": false,
+  "invariants": [
+    "SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "CONFIG_ACCEPTED != CONFIG_EFFECTIVE",
+    "NEGATIVE_EVIDENCE != GLOBAL_FALSIFICATION",
+    "RETRIEVAL_SCORE != TRUTH",
+    "FIT_SUCCESS != SCIENTIFIC_CLAIM"
+  ],
+  "transform_semantics": {
+    "direct": "forward effect or implementation unlocked by closing the gap",
+    "antiderivative_backtrace": "upstream evidence/provenance needed to reconstruct why the state exists",
+    "inverse_falsifier": "observation/test that rejects the candidate or closure",
+    "reverse_rollback": "smallest reversible action after failure",
+    "exclusive_boundary": "explicit inference that is forbidden",
+    "recursive_feedback": "new narrower gaps opened by a successful or failed gate"
+  },
+  "multilevel_permutation_policy": {
+    "rule": "topological dependency traversal; branch only across independent child gaps",
+    "blind_cartesian_product": "FORBIDDEN",
+    "endogenous_scope": "dependency-closed internal branches only",
+    "pruning": [
+      "invariants",
+      "units",
+      "provenance",
+      "failed prerequisite gates",
+      "exclusive boundaries"
+    ]
+  },
+  "logarithmic_priority_policy": {
+    "purpose": "operational triage only; never scientific evidence",
+    "allowed_factors": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "formula": "log2(impact) + log2(uncertainty_reduction) - log2(effort)",
+    "interpretation": "higher score means more uncertainty removed per bounded effort on the active dependency path"
+  },
+  "evolutionary_cycle": [
+    "OBSERVE",
+    "DECOMPOSE",
+    "RANK",
+    "ACT_MINIMAL_DELTA",
+    "EXECUTE",
+    "EVIDENCE",
+    "RECEIPT",
+    "RECOMPUTE_GAPS"
+  ],
+  "stop_rule": "stop expanding a branch when marginal evidence gain is lower than the next unresolved critical-path gap",
+  "critical_path": [
+    "GROWTH-CS2-001",
+    "GROWTH-QMU-001",
+    "GROWTH-SIGMA-001",
+    "GROWTH-GAUGE-001",
+    "GROWTH-IC-001",
+    "GROWTH-CONSERVATION-001",
+    "GROWTH-THEORY-001",
+    "GROWTH-D-001",
+    "GROWTH-F-001",
+    "GROWTH-FSIG8-001",
+    "GROWTH-BENCH-001",
+    "FIT-MULTISEED-001",
+    "FIT-POSTERIOR-001",
+    "FIT-MODELSEL-001"
+  ],
+  "best_next_step": {
+    "id": "GROWTH-CS2-001",
+    "rationale": "the minimal c_s^2=c_a^2 barotropic default is already falsified, so selecting a versioned rest-frame sound-speed/entropy candidate removes the largest immediate theory ambiguity with low implementation cost"
+  },
+  "items": [
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-CS2-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
+      "token_or_gap": "TOKEN_VAZIO_REST_FRAME_SOUND_SPEED_POLICY",
+      "urgency": "P0",
+      "priority_rank": 1,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 2,
+        "log2_priority_score": 5
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
+      ],
+      "gate": "candidate produces finite stable perturbations through transition",
+      "providencia": "choose an explicit rest-frame sound-speed/entropy candidate",
+      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
+      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
+      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "choose an explicit rest-frame sound-speed/entropy candidate",
+      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
+      "inverse_falsifier": "reject candidate if stability/causality/conservation fails",
+      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
+      "exclusive_boundary": "a modeling choice is not derived from the background",
+      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
+      "next_step": "choose an explicit rest-frame sound-speed/entropy candidate"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-QMU-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_INTERACTION_CURRENT_POLICY",
+      "token_or_gap": "TOKEN_VAZIO_INTERACTION_CURRENT_POLICY",
+      "urgency": "P0",
+      "priority_rank": 2,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 2,
+        "log2_priority_score": 5
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
+      ],
+      "gate": "background and perturbation energy-momentum accounting is consistent",
+      "providencia": "freeze Q_mu policy",
+      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
+      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
+      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "freeze Q_mu policy",
+      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
+      "inverse_falsifier": "reject on conservation mismatch",
+      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
+      "exclusive_boundary": "Q_mu=0 cannot be assumed solely because the background was written without an explicit interaction",
+      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
+      "next_step": "freeze Q_mu policy"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-SIGMA-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_ANISOTROPIC_STRESS_POLICY",
+      "token_or_gap": "TOKEN_VAZIO_ANISOTROPIC_STRESS_POLICY",
+      "urgency": "P0",
+      "priority_rank": 3,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
+      ],
+      "gate": "closure remains regular and observable mapping is defined",
+      "providencia": "freeze anisotropic-stress policy",
+      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
+      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
+      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "freeze anisotropic-stress policy",
+      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
+      "inverse_falsifier": "reject on inconsistent shear/source terms",
+      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
+      "exclusive_boundary": "sigma=0 is a candidate boundary, not a proven RLL property",
+      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
+      "next_step": "freeze anisotropic-stress policy"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-GAUGE-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_GAUGE_POLICY",
+      "token_or_gap": "TOKEN_VAZIO_GAUGE_POLICY",
+      "urgency": "P0",
+      "priority_rank": 4,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
+      ],
+      "gate": "gauge-mapped observables agree within tolerance",
+      "providencia": "freeze gauge and mapping contract",
+      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
+      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
+      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "freeze gauge and mapping contract",
+      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
+      "inverse_falsifier": "reject on gauge-dependent physical claim",
+      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
+      "exclusive_boundary": "a numerical gauge choice is not a physical observable",
+      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
+      "next_step": "freeze gauge and mapping contract"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-IC-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_SUPERHORIZON_INITIAL_CONDITIONS",
+      "token_or_gap": "TOKEN_VAZIO_SUPERHORIZON_INITIAL_CONDITIONS",
+      "urgency": "P0",
+      "priority_rank": 5,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "negative evidence rules out silently inheriting the minimal background-derived barotropic default"
+      ],
+      "gate": "regular initial mode evolves without hidden divergence",
+      "providencia": "freeze super-horizon initial conditions",
+      "mitigation": "treat each policy as versioned candidate with fail-closed tests",
+      "non_regression": "do not alter background/CMB successor while selecting perturbation policy",
+      "receipt": "TOKEN_VAZIO_CHILD_POLICY_RECEIPT",
+      "forward_dependency": "GROWTH-CONSERVATION-001",
+      "direct": "freeze super-horizon initial conditions",
+      "antiderivative_backtrace": "backtrace to falsified minimal closure and background contract",
+      "inverse_falsifier": "reject on singular/unstable initial mode",
+      "reverse_rollback": "remove only the candidate policy and restore TOKEN_VAZIO",
+      "exclusive_boundary": "initial-condition convenience is not empirical evidence",
+      "recursive_feedback": "successful candidate opens conservation/regularity testing, not model claims",
+      "next_step": "freeze super-horizon initial conditions"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-CONSERVATION-001",
+      "domain": "growth",
+      "state": "BLOCKED_BY_PERTURBATION_POLICY",
+      "token_or_gap": "conservation/transition/gauge validation",
+      "urgency": "P0",
+      "priority_rank": 6,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 4,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "requires frozen c_s^2/entropy, Q_mu, sigma, gauge and IC policies"
+      ],
+      "gate": "conservation residual + transition regularity + gauge mapping + numerical stability",
+      "providencia": "execute only after five policy children are frozen",
+      "mitigation": "fail closed on any singularity or residual outside tolerance",
+      "non_regression": "candidate tests are additive; no historical likelihood rewrite",
+      "receipt": "TOKEN_VAZIO_CONSERVATION_RECEIPT",
+      "forward_dependency": "GROWTH-THEORY-001",
+      "direct": "validate frozen perturbation contract",
+      "antiderivative_backtrace": "reconstruct from all five policy children",
+      "inverse_falsifier": "any conservation/regularity/gauge failure",
+      "reverse_rollback": "revert offending policy candidate",
+      "exclusive_boundary": "passing this gate still does not prove RLL empirically",
+      "recursive_feedback": "failure returns to the specific policy child instead of reopening all theory",
+      "next_step": "wait for policy children, then run conservation/regularity gates"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-THEORY-001",
+      "domain": "growth",
+      "state": "NEGATIVE_EVIDENCE_TOKEN_DECOMPOSED",
+      "token_or_gap": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "urgency": "P0",
+      "priority_rank": 7,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 4,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "0 of 9 declared barotropic/adiabatic cases passed"
+      ],
+      "gate": "all decomposed child policies plus conservation gate evidence-backed",
+      "providencia": "close child gaps rather than invent a monolithic theory token",
+      "mitigation": "preserve negative result and forbid background-only inference of perturbations",
+      "non_regression": "do not relabel candidate falsification as falsification of the RLL background",
+      "receipt": "artifacts/science/perturbations/RLL_BAROTROPIC_CLOSURE_CANDIDATE_CURRENT.json",
+      "forward_dependency": "GROWTH-D-001",
+      "direct": "assemble evidence-backed perturbation contract",
+      "antiderivative_backtrace": "sum child policy receipts and negative candidate evidence",
+      "inverse_falsifier": "any child remains TOKEN_VAZIO or fails its gate",
+      "reverse_rollback": "remove only unvalidated candidate additions",
+      "exclusive_boundary": "negative evidence for one closure != falsification of RLL background",
+      "recursive_feedback": "new failure decomposes back to the smallest child gap",
+      "next_step": "resolve child policy gaps"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-D-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_IMPLEMENTATION",
+      "token_or_gap": "TOKEN_VAZIO_IMPLEMENTATION",
+      "urgency": "P0",
+      "priority_rank": 8,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 4,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "dependency contract"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "blocked until upstream perturbation contract is evidence-backed"
+      ],
+      "gate": "D(a) normalization, ODE residual and bounded numerical stability",
+      "providencia": "solve and normalize D(z)",
+      "mitigation": "do not use legacy gamma=0.55 route as claim-bearing evidence",
+      "non_regression": "successor outputs use distinct stems and receipts",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "GROWTH-F-001",
+      "direct": "solve and normalize D(z)",
+      "antiderivative_backtrace": "trace to perturbation contract and predecessor growth state",
+      "inverse_falsifier": "fail on residual/tolerance/normalization breach",
+      "reverse_rollback": "revert successor-only growth artefact",
+      "exclusive_boundary": "D(z) under one closure is not universal RLL growth",
+      "recursive_feedback": "closure opens only the next dependency",
+      "next_step": "solve and normalize D(z)"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-F-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_IMPLEMENTATION",
+      "token_or_gap": "TOKEN_VAZIO_IMPLEMENTATION",
+      "urgency": "P0",
+      "priority_rank": 9,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "dependency contract"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "blocked until upstream perturbation contract is evidence-backed"
+      ],
+      "gate": "derivative consistency and normalization",
+      "providencia": "derive f=d ln D/d ln a and sigma8(z)",
+      "mitigation": "do not use legacy gamma=0.55 route as claim-bearing evidence",
+      "non_regression": "successor outputs use distinct stems and receipts",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "GROWTH-FSIG8-001",
+      "direct": "derive f=d ln D/d ln a and sigma8(z)",
+      "antiderivative_backtrace": "trace to perturbation contract and predecessor growth state",
+      "inverse_falsifier": "fail on residual/tolerance/normalization breach",
+      "reverse_rollback": "revert successor-only growth artefact",
+      "exclusive_boundary": "growth derivative does not validate observational fit",
+      "recursive_feedback": "closure opens only the next dependency",
+      "next_step": "derive f=d ln D/d ln a and sigma8(z)"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-FSIG8-001",
+      "domain": "growth",
+      "state": "BLOCKED_BY_DEPENDENCY",
+      "token_or_gap": "BLOCKED_BY_DEPENDENCY",
+      "urgency": "P0",
+      "priority_rank": 10,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 2,
+        "log2_priority_score": 5
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "dependency contract"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "blocked until upstream perturbation contract is evidence-backed"
+      ],
+      "gate": "f sigma8 constructed from validated D and f",
+      "providencia": "replace gamma=0.55 proxy only in successor path",
+      "mitigation": "do not use legacy gamma=0.55 route as claim-bearing evidence",
+      "non_regression": "successor outputs use distinct stems and receipts",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "GROWTH-BENCH-001",
+      "direct": "replace gamma=0.55 proxy only in successor path",
+      "antiderivative_backtrace": "trace to perturbation contract and predecessor growth state",
+      "inverse_falsifier": "fail on residual/tolerance/normalization breach",
+      "reverse_rollback": "revert successor-only growth artefact",
+      "exclusive_boundary": "legacy gamma proxy remains historical/non-claim-bearing",
+      "recursive_feedback": "closure opens only the next dependency",
+      "next_step": "replace gamma=0.55 proxy only in successor path"
+    },
+    {
+      "claim_allowed": false,
+      "id": "GROWTH-BENCH-001",
+      "domain": "growth",
+      "state": "TOKEN_VAZIO_BENCHMARK",
+      "token_or_gap": "TOKEN_VAZIO_BENCHMARK",
+      "urgency": "P1",
+      "priority_rank": 11,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 8,
+        "effort": 4,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "dependency contract"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "meaning": "falsifiability test of minimal background-derived closure"
+        },
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "0/9 cases passed; minimal barotropic/adiabatic Q_mu=0 shear-free closure falsified as global default"
+        }
+      ],
+      "evidence": [
+        "blocked until upstream perturbation contract is evidence-backed"
+      ],
+      "gate": "predeclared cross-engine tolerance",
+      "providencia": "benchmark matching assumptions against CLASS/CAMB",
+      "mitigation": "do not use legacy gamma=0.55 route as claim-bearing evidence",
+      "non_regression": "successor outputs use distinct stems and receipts",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "FIT-MULTISEED-001",
+      "direct": "benchmark matching assumptions against CLASS/CAMB",
+      "antiderivative_backtrace": "trace to perturbation contract and predecessor growth state",
+      "inverse_falsifier": "fail on residual/tolerance/normalization breach",
+      "reverse_rollback": "revert successor-only growth artefact",
+      "exclusive_boundary": "engine agreement is not observational model preference",
+      "recursive_feedback": "closure opens only the next dependency",
+      "next_step": "benchmark matching assumptions against CLASS/CAMB"
+    },
+    {
+      "claim_allowed": false,
+      "id": "FIT-MULTISEED-001",
+      "domain": "inference",
+      "state": "BLOCKED_BY_DEPENDENCY",
+      "token_or_gap": "FIT-MULTISEED-001",
+      "urgency": "P1",
+      "priority_rank": 12,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 4
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "inference dependency graph"
+        }
+      ],
+      "evidence": [
+        "not actionable before growth benchmark closure"
+      ],
+      "gate": "seed convergence/stability diagnostics",
+      "providencia": "run deterministic multi-seed optimization",
+      "mitigation": "forbid inference from incoherent mixed legacy/successor likelihoods",
+      "non_regression": "historical negative gate remains historical and is never overwritten",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "FIT-POSTERIOR-001",
+      "direct": "run deterministic multi-seed optimization",
+      "antiderivative_backtrace": "trace to CMB+growth evidence receipts",
+      "inverse_falsifier": "diagnostic/convergence failure blocks promotion",
+      "reverse_rollback": "discard successor run outputs, preserve inputs and logs",
+      "exclusive_boundary": "fit success != scientific claim",
+      "recursive_feedback": "each inference result can create a smaller diagnostic gap",
+      "next_step": "run deterministic multi-seed optimization"
+    },
+    {
+      "claim_allowed": false,
+      "id": "FIT-POSTERIOR-001",
+      "domain": "inference",
+      "state": "BLOCKED_BY_DEPENDENCY",
+      "token_or_gap": "FIT-POSTERIOR-001",
+      "urgency": "P2",
+      "priority_rank": 13,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 3
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "inference dependency graph"
+        }
+      ],
+      "evidence": [
+        "not actionable before growth benchmark closure"
+      ],
+      "gate": "convergence diagnostics and reproducible posterior",
+      "providencia": "run posterior/MCMC after deterministic reproducibility",
+      "mitigation": "forbid inference from incoherent mixed legacy/successor likelihoods",
+      "non_regression": "historical negative gate remains historical and is never overwritten",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "FIT-MODELSEL-001",
+      "direct": "run posterior/MCMC after deterministic reproducibility",
+      "antiderivative_backtrace": "trace to CMB+growth evidence receipts",
+      "inverse_falsifier": "diagnostic/convergence failure blocks promotion",
+      "reverse_rollback": "discard successor run outputs, preserve inputs and logs",
+      "exclusive_boundary": "fit success != scientific claim",
+      "recursive_feedback": "each inference result can create a smaller diagnostic gap",
+      "next_step": "run posterior/MCMC after deterministic reproducibility"
+    },
+    {
+      "claim_allowed": false,
+      "id": "FIT-MODELSEL-001",
+      "domain": "inference",
+      "state": "BLOCKED_BY_DEPENDENCY",
+      "token_or_gap": "FIT-MODELSEL-001",
+      "urgency": "P2",
+      "priority_rank": 14,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 8,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 3
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "inference dependency graph"
+        }
+      ],
+      "evidence": [
+        "not actionable before growth benchmark closure"
+      ],
+      "gate": "all upstream CMB/growth/inference gates PASS",
+      "providencia": "compute AIC/BIC/posterior comparison from coherent successor likelihoods",
+      "mitigation": "forbid inference from incoherent mixed legacy/successor likelihoods",
+      "non_regression": "historical negative gate remains historical and is never overwritten",
+      "receipt": "TOKEN_VAZIO_FUTURE_RECEIPT",
+      "forward_dependency": "publication/null-result decision",
+      "direct": "compute AIC/BIC/posterior comparison from coherent successor likelihoods",
+      "antiderivative_backtrace": "trace to CMB+growth evidence receipts",
+      "inverse_falsifier": "diagnostic/convergence failure blocks promotion",
+      "reverse_rollback": "discard successor run outputs, preserve inputs and logs",
+      "exclusive_boundary": "fit success != scientific claim",
+      "recursive_feedback": "each inference result can create a smaller diagnostic gap",
+      "next_step": "compute AIC/BIC/posterior comparison from coherent successor likelihoods"
+    },
+    {
+      "claim_allowed": false,
+      "id": "MAG-C09-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_INTERACTION_ENERGY",
+      "token_or_gap": "TOKEN_VAZIO_INTERACTION_ENERGY",
+      "urgency": "P2",
+      "priority_rank": 15,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Gravidade e magnetismo.txt",
+          "sha256": "c7df8b972be9e06f0bdc9c150ad16479e1e8a0d979c33e4dc97f50860781b2c7",
+          "meaning": "rotating magnetized plasma/cell context; conceptual only",
+          "authority": "context/provenance only; not execution evidence"
+        },
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Fenômenos magnéticos e atmosféricos.txt",
+          "sha256": "173f76c62bb675cf08c4658195d986016279737eed5b9a9262740aad27895479",
+          "meaning": "plasma and conventional electromagnetic confounder context",
+          "authority": "context/provenance only; not execution evidence"
+        }
+      ],
+      "evidence": [
+        "provenance/context identified; executable RLL evidence remains absent"
+      ],
+      "gate": "no double counting in stress-energy/background terms",
+      "providencia": "separate magnetic background energy from coupling/modulation",
+      "mitigation": "keep this branch outside the current CMB/growth critical path",
+      "non_regression": "no magneto-plasma hypothesis may alter validated background/CMB successor without its own PR/gate",
+      "receipt": "TOKEN_VAZIO_MAGNETO_PLASMA_RECEIPT",
+      "forward_dependency": "future magneto-plasma hypothesis track",
+      "direct": "separate magnetic background energy from coupling/modulation",
+      "antiderivative_backtrace": "backtrace to project corpus and explicit gap registry",
+      "inverse_falsifier": "reject on unit/conservation/confounder inconsistency",
+      "reverse_rollback": "remove only the hypothesis adapter, preserve corpus provenance",
+      "exclusive_boundary": "a magnetic analogy does not establish a cosmological energy component",
+      "recursive_feedback": "successful formalization creates observable-specific validation gaps",
+      "next_step": "separate magnetic background energy from coupling/modulation"
+    },
+    {
+      "claim_allowed": false,
+      "id": "MAG-C10-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_STRESS_ENERGY_CONVENTION",
+      "token_or_gap": "TOKEN_VAZIO_STRESS_ENERGY_CONVENTION",
+      "urgency": "P2",
+      "priority_rank": 16,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Fenômenos magnéticos e atmosféricos.txt",
+          "sha256": "173f76c62bb675cf08c4658195d986016279737eed5b9a9262740aad27895479",
+          "meaning": "plasma species, density, energy and state-vector context",
+          "authority": "context/provenance only; not execution evidence"
+        },
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Estrutura de Modelos Cosmológicos.txt",
+          "sha256": "1ac69f2041f7652e9c0ed32bed927b30652b2e3d8aa341fde6334aba09372e2a",
+          "meaning": "covariant stress-energy requirement for strong-gravity/plasma extension",
+          "authority": "context/provenance only; not execution evidence"
+        }
+      ],
+      "evidence": [
+        "provenance/context identified; executable RLL evidence remains absent"
+      ],
+      "gate": "units and T_mu_nu convention close consistently",
+      "providencia": "define mass-equivalent versus energy-density convention and averaging",
+      "mitigation": "keep this branch outside the current CMB/growth critical path",
+      "non_regression": "no magneto-plasma hypothesis may alter validated background/CMB successor without its own PR/gate",
+      "receipt": "TOKEN_VAZIO_MAGNETO_PLASMA_RECEIPT",
+      "forward_dependency": "future magneto-plasma hypothesis track",
+      "direct": "define mass-equivalent versus energy-density convention and averaging",
+      "antiderivative_backtrace": "backtrace to project corpus and explicit gap registry",
+      "inverse_falsifier": "reject on unit/conservation/confounder inconsistency",
+      "reverse_rollback": "remove only the hypothesis adapter, preserve corpus provenance",
+      "exclusive_boundary": "local plasma density convention does not imply homogeneous cosmological density",
+      "recursive_feedback": "successful formalization creates observable-specific validation gaps",
+      "next_step": "define mass-equivalent versus energy-density convention and averaging"
+    },
+    {
+      "claim_allowed": false,
+      "id": "MAG-C11-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_GEOMETRIC_DEFINITION",
+      "token_or_gap": "TOKEN_VAZIO_GEOMETRIC_DEFINITION",
+      "urgency": "P2",
+      "priority_rank": 17,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+          "meaning": "current explicit gap source"
+        },
+        {
+          "type": "negative_provenance_result",
+          "meaning": "project-corpus scan did not locate a precise canonical 1-form/surface definition; source remains open"
+        }
+      ],
+      "evidence": [
+        "provenance/context identified; executable RLL evidence remains absent"
+      ],
+      "gate": "typed differential-form/domain contract exists",
+      "providencia": "define 1-form, boundary/surface, units and topology before physical Stokes use",
+      "mitigation": "keep this branch outside the current CMB/growth critical path",
+      "non_regression": "no magneto-plasma hypothesis may alter validated background/CMB successor without its own PR/gate",
+      "receipt": "TOKEN_VAZIO_MAGNETO_PLASMA_RECEIPT",
+      "forward_dependency": "future magneto-plasma hypothesis track",
+      "direct": "define 1-form, boundary/surface, units and topology before physical Stokes use",
+      "antiderivative_backtrace": "backtrace to project corpus and explicit gap registry",
+      "inverse_falsifier": "reject on unit/conservation/confounder inconsistency",
+      "reverse_rollback": "remove only the hypothesis adapter, preserve corpus provenance",
+      "exclusive_boundary": "Stokes theorem identity alone does not supply a physical coupling",
+      "recursive_feedback": "successful formalization creates observable-specific validation gaps",
+      "next_step": "define 1-form, boundary/surface, units and topology before physical Stokes use"
+    },
+    {
+      "claim_allowed": false,
+      "id": "MAG-C12-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_OBSERVABLE_MAP",
+      "token_or_gap": "TOKEN_VAZIO_OBSERVABLE_MAP",
+      "urgency": "P2",
+      "priority_rank": 18,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Fenômenos magnéticos e atmosféricos.txt",
+          "sha256": "173f76c62bb675cf08c4658195d986016279737eed5b9a9262740aad27895479",
+          "meaning": "explicitly separates expansion from propagation and lists plasma/Faraday/instrumental confounders",
+          "authority": "context/provenance only; not execution evidence"
+        }
+      ],
+      "evidence": [
+        "provenance/context identified; executable RLL evidence remains absent"
+      ],
+      "gate": "observable map has units, nuisance terms and confounder controls",
+      "providencia": "separate H(z), growth, lensing, Faraday/RM and rotation-curve observables",
+      "mitigation": "keep this branch outside the current CMB/growth critical path",
+      "non_regression": "no magneto-plasma hypothesis may alter validated background/CMB successor without its own PR/gate",
+      "receipt": "TOKEN_VAZIO_MAGNETO_PLASMA_RECEIPT",
+      "forward_dependency": "future magneto-plasma hypothesis track",
+      "direct": "separate H(z), growth, lensing, Faraday/RM and rotation-curve observables",
+      "antiderivative_backtrace": "backtrace to project corpus and explicit gap registry",
+      "inverse_falsifier": "reject on unit/conservation/confounder inconsistency",
+      "reverse_rollback": "remove only the hypothesis adapter, preserve corpus provenance",
+      "exclusive_boundary": "local RM/dispersion effects cannot be promoted to cosmic expansion",
+      "recursive_feedback": "successful formalization creates observable-specific validation gaps",
+      "next_step": "separate H(z), growth, lensing, Faraday/RM and rotation-curve observables"
+    },
+    {
+      "claim_allowed": false,
+      "id": "MAG-C14-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_COVARIANT_SCALEUP",
+      "token_or_gap": "TOKEN_VAZIO_COVARIANT_SCALEUP",
+      "urgency": "P2",
+      "priority_rank": 19,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 4,
+        "effort": 4,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Estrutura de Modelos Cosmológicos.txt",
+          "sha256": "1ac69f2041f7652e9c0ed32bed927b30652b2e3d8aa341fde6334aba09372e2a",
+          "meaning": "states need for T_mu_nu^new, L_eff and discriminating observable",
+          "authority": "context/provenance only; not execution evidence"
+        },
+        {
+          "type": "project_corpus_external_to_repo",
+          "title": "Gravidade e magnetismo.txt",
+          "sha256": "c7df8b972be9e06f0bdc9c150ad16479e1e8a0d979c33e4dc97f50860781b2c7",
+          "meaning": "magnetized plasma/Kerr analogy is conceptual context only",
+          "authority": "context/provenance only; not execution evidence"
+        }
+      ],
+      "evidence": [
+        "provenance/context identified; executable RLL evidence remains absent"
+      ],
+      "gate": "covariant equations plus conservation and observable discriminator",
+      "providencia": "derive a covariant scale-up before laboratory-to-cosmology mapping",
+      "mitigation": "keep this branch outside the current CMB/growth critical path",
+      "non_regression": "no magneto-plasma hypothesis may alter validated background/CMB successor without its own PR/gate",
+      "receipt": "TOKEN_VAZIO_MAGNETO_PLASMA_RECEIPT",
+      "forward_dependency": "future magneto-plasma hypothesis track",
+      "direct": "derive a covariant scale-up before laboratory-to-cosmology mapping",
+      "antiderivative_backtrace": "backtrace to project corpus and explicit gap registry",
+      "inverse_falsifier": "reject on unit/conservation/confounder inconsistency",
+      "reverse_rollback": "remove only the hypothesis adapter, preserve corpus provenance",
+      "exclusive_boundary": "laboratory or analogy evidence is not cosmological validation",
+      "recursive_feedback": "successful formalization creates observable-specific validation gaps",
+      "next_step": "derive a covariant scale-up before laboratory-to-cosmology mapping"
+    },
+    {
+      "claim_allowed": false,
+      "id": "CMB-BENCH-001",
+      "domain": "cmb",
+      "state": "EVIDENCED_FOCUSED",
+      "token_or_gap": "CMB-BENCH-001",
+      "urgency": "P2",
+      "priority_rank": 20,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "all three cases pass predeclared tolerances"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_cmb_rs_camb_benchmark.py",
+          "meaning": "benchmark implementation"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_CMB_RS_CAMB_BENCHMARK_RECEIPT_20260912.md",
+          "meaning": "design receipt"
+        }
+      ],
+      "evidence": [
+        "all three cases pass predeclared tolerances"
+      ],
+      "gate": "bounded CAMB recombination benchmark PASS",
+      "providencia": "move critical path to growth theory",
+      "mitigation": "keep claim_allowed=false and preserve r_d != r_s",
+      "non_regression": "do not rewrite historical likelihoods",
+      "receipt": "artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json",
+      "forward_dependency": "CMB side of successor likelihood is no longer the P0 gap",
+      "direct": "consume bounded CMB evidence",
+      "antiderivative_backtrace": "trace to exact-head run and benchmark inputs",
+      "inverse_falsifier": "future benchmark exceeds predeclared tolerance",
+      "reverse_rollback": "revert successor wiring, preserve benchmark receipt",
+      "exclusive_boundary": "benchmark does not validate growth, perturbations or model selection",
+      "recursive_feedback": "new tighter precision requirement may reopen this gap",
+      "next_step": "move critical path to growth theory"
+    },
+    {
+      "claim_allowed": false,
+      "id": "CMB-RS-001",
+      "domain": "cmb",
+      "state": "EVIDENCED_FOCUSED",
+      "token_or_gap": "CMB-RS-001",
+      "urgency": "P2",
+      "priority_rank": 21,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "max r_s relative error 1.93e-05 at CAMB zstar; 0.1289% using RLL zstar"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_cmb_rs_camb_benchmark.py",
+          "meaning": "benchmark implementation"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_CMB_RS_CAMB_BENCHMARK_RECEIPT_20260912.md",
+          "meaning": "design receipt"
+        }
+      ],
+      "evidence": [
+        "max r_s relative error 1.93e-05 at CAMB zstar; 0.1289% using RLL zstar"
+      ],
+      "gate": "bounded CAMB recombination benchmark PASS",
+      "providencia": "wire only in successor CMB path",
+      "mitigation": "keep claim_allowed=false and preserve r_d != r_s",
+      "non_regression": "do not rewrite historical likelihoods",
+      "receipt": "artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json",
+      "forward_dependency": "CMB side of successor likelihood is no longer the P0 gap",
+      "direct": "consume bounded CMB evidence",
+      "antiderivative_backtrace": "trace to exact-head run and benchmark inputs",
+      "inverse_falsifier": "future benchmark exceeds predeclared tolerance",
+      "reverse_rollback": "revert successor wiring, preserve benchmark receipt",
+      "exclusive_boundary": "standard flat-LCDM reference benchmark is not RLL perturbation evidence",
+      "recursive_feedback": "new tighter precision requirement may reopen this gap",
+      "next_step": "wire only in successor CMB path"
+    },
+    {
+      "claim_allowed": false,
+      "id": "CMB-CS-001",
+      "domain": "cmb",
+      "state": "EVIDENCED_FOCUSED",
+      "token_or_gap": "CMB-CS-001",
+      "urgency": "P2",
+      "priority_rank": 22,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "sound-speed chain exercised through r_s output"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_cmb_rs_camb_benchmark.py",
+          "meaning": "benchmark implementation"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_CMB_RS_CAMB_BENCHMARK_RECEIPT_20260912.md",
+          "meaning": "design receipt"
+        }
+      ],
+      "evidence": [
+        "sound-speed chain exercised through r_s output"
+      ],
+      "gate": "bounded CAMB recombination benchmark PASS",
+      "providencia": "pointwise benchmark only if required",
+      "mitigation": "keep claim_allowed=false and preserve r_d != r_s",
+      "non_regression": "do not rewrite historical likelihoods",
+      "receipt": "artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json",
+      "forward_dependency": "CMB side of successor likelihood is no longer the P0 gap",
+      "direct": "consume bounded CMB evidence",
+      "antiderivative_backtrace": "trace to exact-head run and benchmark inputs",
+      "inverse_falsifier": "future benchmark exceeds predeclared tolerance",
+      "reverse_rollback": "revert successor wiring, preserve benchmark receipt",
+      "exclusive_boundary": "no independent pointwise c_s(a) certification",
+      "recursive_feedback": "new tighter precision requirement may reopen this gap",
+      "next_step": "pointwise benchmark only if required"
+    },
+    {
+      "claim_allowed": false,
+      "id": "CMB-ZSTAR-001",
+      "domain": "cmb",
+      "state": "EVIDENCED_FOCUSED",
+      "token_or_gap": "CMB-ZSTAR-001",
+      "urgency": "P2",
+      "priority_rank": 23,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "max zstar relative error 0.1875% across three cases"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_cmb_rs_camb_benchmark.py",
+          "meaning": "benchmark implementation"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_CMB_RS_CAMB_BENCHMARK_RECEIPT_20260912.md",
+          "meaning": "design receipt"
+        }
+      ],
+      "evidence": [
+        "max zstar relative error 0.1875% across three cases"
+      ],
+      "gate": "bounded CAMB recombination benchmark PASS",
+      "providencia": "use solver if future tolerance is tighter",
+      "mitigation": "keep claim_allowed=false and preserve r_d != r_s",
+      "non_regression": "do not rewrite historical likelihoods",
+      "receipt": "artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json",
+      "forward_dependency": "CMB side of successor likelihood is no longer the P0 gap",
+      "direct": "consume bounded CMB evidence",
+      "antiderivative_backtrace": "trace to exact-head run and benchmark inputs",
+      "inverse_falsifier": "future benchmark exceeds predeclared tolerance",
+      "reverse_rollback": "revert successor wiring, preserve benchmark receipt",
+      "exclusive_boundary": "approximate fit is not an exact recombination solver",
+      "recursive_feedback": "new tighter precision requirement may reopen this gap",
+      "next_step": "use solver if future tolerance is tighter"
+    },
+    {
+      "claim_allowed": false,
+      "id": "CMB-RADIATION-001",
+      "domain": "cmb",
+      "state": "EVIDENCED_FOCUSED",
+      "token_or_gap": "CMB-RADIATION-001",
+      "urgency": "P2",
+      "priority_rank": 24,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 4,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "github_actions",
+          "workflow": "CLASS CAMB Baseline Crosscheck",
+          "run_id": 34709860843,
+          "run_number": 49,
+          "head_sha": "356f26d67908a3e60ec5ca425e7e29f0f9a34d63",
+          "meaning": "radiation helper exercised by CAMB benchmark"
+        },
+        {
+          "type": "repository",
+          "path": "tools/rll_cmb_rs_camb_benchmark.py",
+          "meaning": "benchmark implementation"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_CMB_RS_CAMB_BENCHMARK_RECEIPT_20260912.md",
+          "meaning": "design receipt"
+        }
+      ],
+      "evidence": [
+        "radiation helper exercised by CAMB benchmark"
+      ],
+      "gate": "bounded CAMB recombination benchmark PASS",
+      "providencia": "maintenance",
+      "mitigation": "keep claim_allowed=false and preserve r_d != r_s",
+      "non_regression": "do not rewrite historical likelihoods",
+      "receipt": "artifacts/science/cmb/RLL_CMB_RS_CAMB_BENCHMARK_CURRENT.json",
+      "forward_dependency": "CMB side of successor likelihood is no longer the P0 gap",
+      "direct": "consume bounded CMB evidence",
+      "antiderivative_backtrace": "trace to exact-head run and benchmark inputs",
+      "inverse_falsifier": "future benchmark exceeds predeclared tolerance",
+      "reverse_rollback": "revert successor wiring, preserve benchmark receipt",
+      "exclusive_boundary": "does not validate massive-neutrino transition physics",
+      "recursive_feedback": "new tighter precision requirement may reopen this gap",
+      "next_step": "maintenance"
+    },
+    {
+      "claim_allowed": false,
+      "id": "ALPHAXIV-SCHEMA-001",
+      "domain": "literature",
+      "state": "TOKEN_VAZIO_RUNTIME_SCHEMA",
+      "token_or_gap": "TOKEN_VAZIO_RUNTIME_SCHEMA",
+      "urgency": "P3",
+      "priority_rank": 25,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 2,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "session_source",
+          "title": "AlphaXiv e RLL/rLLM: arquitetura, estado interno documentado, expansão segura e governança",
+          "source_hash": "TOKEN_VAZIO_SESSION_FILE_HASH",
+          "meaning": "directional governance source; external hidden internals remain unknown"
+        }
+      ],
+      "evidence": [
+        "runtime/per-source evidence still open"
+      ],
+      "gate": "runtime schema observed and version-pinned",
+      "providencia": "capture runtime MCP schema/version before any write integration",
+      "mitigation": "use alphaXiv for discovery/navigation; return decisive claims to primary sources",
+      "non_regression": "never overwrite primary-source provenance with retrieval score or generated summary",
+      "receipt": "TOKEN_VAZIO_LITERATURE_RECEIPT",
+      "forward_dependency": "literature provenance support; not direct model validation",
+      "direct": "capture runtime MCP schema/version before any write integration",
+      "antiderivative_backtrace": "backtrace to session source and imported artefact records",
+      "inverse_falsifier": "any source/license/schema mismatch blocks write/import",
+      "reverse_rollback": "remove integration/import, preserve source citation",
+      "exclusive_boundary": "public tool names do not reveal hidden ranking/index internals",
+      "recursive_feedback": "new imported source creates a per-source provenance/license child",
+      "next_step": "capture runtime MCP schema/version before any write integration"
+    },
+    {
+      "claim_allowed": false,
+      "id": "ALPHAXIV-LICENSE-001",
+      "domain": "literature",
+      "state": "TOKEN_VAZIO_PER_SOURCE",
+      "token_or_gap": "TOKEN_VAZIO_PER_SOURCE",
+      "urgency": "P2",
+      "priority_rank": 26,
+      "actionable_now": true,
+      "priority_factors": {
+        "impact": 2,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "session_source",
+          "title": "AlphaXiv e RLL/rLLM: arquitetura, estado interno documentado, expansão segura e governança",
+          "source_hash": "TOKEN_VAZIO_SESSION_FILE_HASH",
+          "meaning": "directional governance source; external hidden internals remain unknown"
+        }
+      ],
+      "evidence": [
+        "runtime/per-source evidence still open"
+      ],
+      "gate": "source+license+destination+derivation record complete",
+      "providencia": "record license/provenance independently for every imported paper/code/data artefact",
+      "mitigation": "use alphaXiv for discovery/navigation; return decisive claims to primary sources",
+      "non_regression": "never overwrite primary-source provenance with retrieval score or generated summary",
+      "receipt": "TOKEN_VAZIO_LITERATURE_RECEIPT",
+      "forward_dependency": "literature provenance support; not direct model validation",
+      "direct": "record license/provenance independently for every imported paper/code/data artefact",
+      "antiderivative_backtrace": "backtrace to session source and imported artefact records",
+      "inverse_falsifier": "any source/license/schema mismatch blocks write/import",
+      "reverse_rollback": "remove integration/import, preserve source citation",
+      "exclusive_boundary": "paper availability does not imply code/data reuse permission",
+      "recursive_feedback": "new imported source creates a per-source provenance/license child",
+      "next_step": "record license/provenance independently for every imported paper/code/data artefact"
+    },
+    {
+      "claim_allowed": false,
+      "id": "ALPHAXIV-PRIMARY-001",
+      "domain": "literature",
+      "state": "POLICY_IMPLEMENTED",
+      "token_or_gap": "POLICY_IMPLEMENTED",
+      "urgency": "P3",
+      "priority_rank": 27,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 2,
+        "uncertainty_reduction": 4,
+        "effort": 2,
+        "log2_priority_score": 2
+      },
+      "provenance": [
+        {
+          "type": "session_source",
+          "title": "AlphaXiv e RLL/rLLM: arquitetura, estado interno documentado, expansão segura e governança",
+          "source_hash": "TOKEN_VAZIO_SESSION_FILE_HASH",
+          "meaning": "directional governance source; external hidden internals remain unknown"
+        }
+      ],
+      "evidence": [
+        "policy already implemented in RLL gap registry"
+      ],
+      "gate": "primary-source page/full-text evidence attached",
+      "providencia": "verify decisive claims against primary paper/full text",
+      "mitigation": "use alphaXiv for discovery/navigation; return decisive claims to primary sources",
+      "non_regression": "never overwrite primary-source provenance with retrieval score or generated summary",
+      "receipt": "data/governance/RLL_GAP_DECOMPOSITION_V1.json",
+      "forward_dependency": "literature provenance support; not direct model validation",
+      "direct": "verify decisive claims against primary paper/full text",
+      "antiderivative_backtrace": "backtrace to session source and imported artefact records",
+      "inverse_falsifier": "any source/license/schema mismatch blocks write/import",
+      "reverse_rollback": "remove integration/import, preserve source citation",
+      "exclusive_boundary": "ranking or AI-generated report != scientific evidence",
+      "recursive_feedback": "new imported source creates a per-source provenance/license child",
+      "next_step": "verify decisive claims against primary paper/full text"
+    },
+    {
+      "claim_allowed": false,
+      "id": "COSMO-CLOSURE-001",
+      "domain": "background",
+      "state": "MERGED_EVIDENCED",
+      "token_or_gap": "flat closure normalization",
+      "urgency": "P3",
+      "priority_rank": 28,
+      "actionable_now": false,
+      "priority_factors": {
+        "impact": 2,
+        "uncertainty_reduction": 1,
+        "effort": 1,
+        "log2_priority_score": 1
+      },
+      "provenance": [
+        {
+          "type": "repository",
+          "path": "data/governance/RLL_FLAT_CLOSURE_SUCCESSOR_V1.json",
+          "meaning": "flat-closure contract"
+        },
+        {
+          "type": "repository",
+          "path": "docs/audit/RLL_FLAT_CLOSURE_SUCCESSOR_RECEIPT_20260912.md",
+          "meaning": "append-only receipt"
+        }
+      ],
+      "evidence": [
+        "E(0)=1 bounded flat-closure successor already merged and regression-tested"
+      ],
+      "gate": "regression only",
+      "providencia": "preserve closure invariant",
+      "mitigation": "never restore free Omega_Lambda in the flat successor",
+      "non_regression": "historical pipeline remains untouched",
+      "receipt": "docs/audit/RLL_FLAT_CLOSURE_SUCCESSOR_RECEIPT_20260912.md",
+      "forward_dependency": "CMB and growth successor backgrounds",
+      "direct": "maintain normalized background",
+      "antiderivative_backtrace": "trace to closure contract and tests",
+      "inverse_falsifier": "any E(0)!=1 in bounded successor",
+      "reverse_rollback": "revert successor-only changes, never rewrite historical outputs",
+      "exclusive_boundary": "closure evidence does not validate perturbations or model preference",
+      "recursive_feedback": "reopen only on observed regression",
+      "next_step": "none unless regression is observed"
+    }
+  ]
+}

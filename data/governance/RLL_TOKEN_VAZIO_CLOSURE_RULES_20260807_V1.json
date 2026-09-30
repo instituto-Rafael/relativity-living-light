@@ -1,0 +1,185 @@
+{
+  "schema": "rll.token_vazio_closure_rules.v1",
+  "claim_allowed": false,
+  "terminal_states": ["RESOLVED", "RESOLVED_NEGATIVE"],
+  "narrowing_state": "REDUCED",
+  "open_states": ["OPEN_INTERNAL", "OPEN_EXTERNAL", "OPEN_HUMAN", "OPEN_GOVERNANCE", "OPEN_MIXED"],
+  "rules": [
+    {
+      "token": "TOKEN_VAZIO_MODERN_SN_FULL_LIKELIHOOD",
+      "priority": "P0",
+      "target_state": "REDUCED",
+      "classification": "STALE_GENERIC_AFTER_MATERIALIZATION",
+      "evidence_path": "artifacts/science/sn_modern/SN_MODERN_EXECUTION_RECEIPT_20260807_RUN31215323284.json",
+      "assertions": [
+        {"path": "source_workflow.workflow_conclusion", "op": "eq", "value": "success"},
+        {"path": "evidence_state", "op": "eq", "value": "VERIFIED_LIMITED"},
+        {"path": "pantheon_plus.covariance.shape_selected", "op": "truthy"},
+        {"path": "des_dovekie.precision_matrix.positive_definite", "op": "eq", "value": true}
+      ],
+      "resolved_fact": "Pantheon+ full covariance and DES-Dovekie full precision likelihoods were materially executed; the generic full-likelihood void is stale.",
+      "successors": [
+        "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+        "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY"
+      ]
+    },
+    {
+      "token": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+      "priority": "P0",
+      "target_state": "RESOLVED",
+      "classification": "MATERIALIZED_COMMON_NUISANCE_ABLATION",
+      "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json",
+      "assertions": [
+        {"path": "source_workflow.conclusion", "op": "eq", "value": "success"},
+        {"path": "common_nuisance_ablation.state", "op": "eq", "value": "VERIFIED"},
+        {"path": "common_nuisance_ablation.same_nuisance_policy", "op": "eq", "value": true},
+        {"path": "common_nuisance_ablation.pantheon_hubbleflow.n_supernovae", "op": "eq", "value": 1580},
+        {"path": "common_nuisance_ablation.des_dovekie.n_supernovae", "op": "eq", "value": 1820}
+      ],
+      "resolved_fact": "Pantheon+ Hubble-flow and DES-Dovekie were compared under the same profiled-offset/fixed-reference-H0 nuisance logic. RLL remained effectively LCDM-like in SN-only, so nuisance-policy mismatch no longer explains the RLL null direction.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+      "priority": "P0",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "BOUNDARY_SENSITIVITY_CONFIRMED_AND_NARROWED",
+      "evidence_path": "artifacts/science/sn_modern/SN_GAP_CLOSURE_RECEIPT_20260807_RUN31225058309.json",
+      "assertions": [
+        {"path": "cpl_wa_boundary_sensitivity.state", "op": "eq", "value": "RESOLVED_NEGATIVE_WITH_SUCCESSOR"},
+        {"path": "cpl_wa_boundary_sensitivity.all_starts_converged", "op": "eq", "value": true},
+        {"path": "cpl_wa_boundary_sensitivity.historical_lower_bound", "op": "eq", "value": -3.0},
+        {"path": "cpl_wa_boundary_sensitivity.best_wa", "op": "eq", "value": -6.0},
+        {"path": "cpl_wa_boundary_sensitivity.bounded_95_on_grid", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "The historical wa=-3 optimum was boundary-sensitive: the expanded profile moved to wa≈-6 and remained unbounded on the lower side. The original boundary ambiguity is closed negatively; lower-profile closure remains a narrower successor gap.",
+      "successors": ["TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE"]
+    },
+    {
+      "token": "TOKEN_VAZIO_CPL_DOVEKIE_WA_LOWER_PROFILE_CLOSURE",
+      "priority": "P0",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "PROFILE_IDENTIFIABILITY_RESIDUAL",
+      "next_action": "Extend the fixed-wa profile below -8 using the same Dovekie full-precision likelihood until a left 95% exclusion is observed or an asymptotic/non-identifiable lower direction is explicitly characterized."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
+      "priority": "P0",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "EPISTEMIC_NEGATIVE_RESULT",
+      "evidence_path": "artifacts/science/sn_modern/SN_MODERN_EXECUTION_RECEIPT_20260807_RUN31215323284.json",
+      "assertions": [
+        {"path": "pantheon_plus.models.RLL.parameter_identifiability", "op": "eq", "value": "BLOCKED_SN_ONLY"},
+        {"path": "des_dovekie.models.RLL.parameter_identifiability", "op": "eq", "value": "BLOCKED_SN_ONLY"},
+        {"path": "interpretation.rll_sn_only_parameters_measured", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "RLL transition parameters are not identifiable from the two materialized SN-only likelihoods under the tested parameterization. This is a negative conclusion, not an unresolved uncertainty.",
+      "successors": ["TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK", "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION"]
+    },
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "priority": "P0",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "HIGH_COST_INFERENCE_GAP",
+      "next_action": "Execute real nested sampling for LCDM/CPL/RLL with identical materialized likelihood components, hashed priors, logZ errors and stopping criteria."
+    },
+    {
+      "token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+      "priority": "P0",
+      "target_state": "OPEN_HUMAN",
+      "classification": "INDEPENDENT_AUTHORITY_REQUIRED",
+      "next_action": "Obtain a genuinely independent rerun/review using the frozen artifacts and priors; self-repetition is insufficient."
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "priority": "P0",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "OFFICIAL_DATA_REPRODUCTION_REQUIRED",
+      "next_action": "Materialize official DESI DR2 products, reproduce LCDM/CPL reference outputs, then compare RLL under the same likelihood."
+    },
+    {
+      "token": "TOKEN_VAZIO_PHYSICAL_EXECUTION",
+      "priority": "P0",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "PHYSICAL_DEVICE_AUTHORITY_REQUIRED",
+      "next_action": "Run scripts/termux/rll_evidence_replay_v1.sh on an actual Android/Termux device and commit only the validated receipt/checksums, not a simulated CI substitute."
+    },
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "EXTERNAL_LIKELIHOOD_REQUIRED",
+      "next_action": "Materialize/version ACT DR6 TT/TE/EE likelihood data and reproduce the LCDM reference before enabling RLL comparison."
+    },
+    {
+      "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "EXTERNAL_LIKELIHOOD_REQUIRED",
+      "next_action": "Materialize/version DES Y6 3x2pt likelihood, scale cuts and nuisance contract; reproduce LCDM S8/Omega_m first."
+    },
+    {
+      "token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "priority": "P1",
+      "target_state": "OPEN_MIXED",
+      "classification": "THEORY_AND_RUNTIME_GAP",
+      "next_action": "Write an explicit RLL perturbation contract and benchmark LCDM/CPL across pinned CLASS/CAMB versions before comparing RLL growth/CMB outputs."
+    },
+    {
+      "token": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "priority": "P1",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "EXTERNAL_LIKELIHOOD_REQUIRED",
+      "next_action": "Materialize separate early- and late-time H0 likelihoods with explicit rd policy; do not infer H0 relief from SN-only fits."
+    },
+    {
+      "token": "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND",
+      "priority": "P1",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "GOVERNANCE_NEGATIVE_RESULT",
+      "evidence_path": "artifacts/governance/DES_SN5YR_LICENSE_AUDIT_20260807_V1.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_NEGATIVE_ROOT_LICENSE"},
+        {"path": "redistribution_allowed_by_this_audit", "op": "eq", "value": false},
+        {"path": "source_commit", "op": "eq", "value": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f"}
+      ],
+      "resolved_fact": "No explicit repository-root license grant was found at the pinned upstream commit; redistribution is blocked by policy until a separate applicable license/permission is verified.",
+      "successors": []
+    },
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "priority": "P1",
+      "target_state": "OPEN_GOVERNANCE",
+      "classification": "GITHUB_PLATFORM_SETTING_RECEIPT_REQUIRED",
+      "next_action": "Capture current rulesets, required checks, protected environments, secret-scanning and push-protection settings as fresh receipts."
+    },
+    {
+      "token": "TOKEN_VAZIO_PENDING_RELEASE_REFRESH",
+      "priority": "P1",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "BRANCH_MATURITY_GAP",
+      "next_action": "Refresh rll/release from the current validated maturity chain without blind-merging stale snapshots; require behind_by=0 before release-to-main promotion."
+    },
+    {
+      "token": "TOKEN_VAZIO_NOT_YET_CLASSIFIED_ALL_582_REFS",
+      "priority": "P2",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "BRANCH_AUDIT_BACKLOG",
+      "next_action": "Continue registry classification append-only until every relevant ref is classified or explicitly retired by evidence."
+    },
+    {
+      "token": "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION",
+      "priority": "P2",
+      "target_state": "OPEN_EXTERNAL",
+      "classification": "PHYSICAL_RUNTIME_REQUIRED",
+      "next_action": "Execute the UTM-185 mask implementation on the intended Termux runtime and capture a bounded receipt."
+    },
+    {
+      "token": "TOKEN_VAZIO_UTM185_REAL_MODEL_TRAINING",
+      "priority": "P2",
+      "target_state": "OPEN_INTERNAL",
+      "classification": "EMPIRICAL_MODEL_TRAINING_REQUIRED",
+      "next_action": "Train/evaluate UTM-185 against a declared baseline; do not infer quality gains from unit tests alone."
+    }
+  ]
+}

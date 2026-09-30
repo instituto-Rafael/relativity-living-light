@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rafaelia.local/contracts/late_time_cascade_observables.v1.json",
+  "title": "RLL Late-Time Cascade Observable Projection V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["template"],
+  "properties": {
+    "template": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amplitude", "damping_k"],
+      "properties": {
+        "amplitude": {"type": "number"},
+        "damping_k": {"type": "number", "exclusiveMinimum": 0},
+        "beta": {"type": "number", "default": 0},
+        "z_ref": {"type": "number", "exclusiveMinimum": -1, "default": 0}
+      }
+    },
+    "power_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["k", "z", "baseline_power"],
+        "properties": {
+          "k": {"type": "number", "minimum": 0},
+          "z": {"type": "number", "exclusiveMinimum": -1},
+          "baseline_power": {"type": "number", "minimum": 0}
+        }
+      },
+      "default": []
+    },
+    "bao_wiggles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["k", "wiggle", "sigma_c"],
+        "properties": {
+          "k": {"type": "number", "minimum": 0},
+          "wiggle": {"type": "number"},
+          "sigma_c": {"type": "number", "minimum": 0}
+        }
+      },
+      "default": []
+    },
+    "peculiar_velocity_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["z_cosmological", "v_parallel_m_s"],
+        "properties": {
+          "z_cosmological": {"type": "number", "exclusiveMinimum": -1},
+          "v_parallel_m_s": {
+            "type": "number",
+            "exclusiveMinimum": -299792458,
+            "exclusiveMaximum": 299792458
+          }
+        }
+      },
+      "default": []
+    }
+  },
+  "x-rll-boundary": {
+    "claim_allowed": false,
+    "background_modified": false,
+    "bao_origin_claimed": false,
+    "strain_to_trigger_energy": "TOKEN_VAZIO",
+    "event_population_to_template_amplitude": "TOKEN_VAZIO"
+  }
+}

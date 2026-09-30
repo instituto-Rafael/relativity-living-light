@@ -1,0 +1,61 @@
+schema: rll.github_external_setting_receipt.v1
+receipt_id: GH-DEPENDENCY-GRAPH-20260801-PR638
+observed_at: "2026-08-01T19:15:57-03:00"
+repository: instituto-Rafael/relativity-living-light
+setting_scope: repository
+capability: dependency_graph
+verified: true
+verification_method: successful_dependency_review_execution
+
+source:
+  pull_request: 638
+  base_ref: rll/integration
+  head_ref: rll/lab
+  head_sha: 01405fc2791892a17eae6d6ddca146c1ab55ce0a
+  workflow: GitHub Platform Assurance
+  workflow_run_id: 30720882430
+  job: Dependency review
+  job_id: 91424358840
+  action: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
+
+observation:
+  action_outcome: success
+  high_or_greater_vulnerabilities_detected: false
+  denied_packages_detected: false
+  dependency_changes_detected:
+    - actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+    - actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+    - actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+  receipt_artifact_id: 8824804981
+  receipt_artifact_sha256: 16386051b35902ec9ed7009cbc0ff3fe0d46a8fccb9a4651118aa1be897a43ab
+
+inference:
+  statement: >-
+    The repository Dependency Graph was operationally available to the GitHub
+    Dependency Review action for PR #638 at the observed time and scope.
+  basis: >-
+    The action completed its vulnerability, license, denied-package, scorecard,
+    and dependency-change analysis instead of returning the prior unsupported
+    repository error.
+
+boundaries:
+  proves:
+    - dependency_graph_available_to_dependency_review_for_pr_638
+    - dependency_review_action_executed_successfully
+  does_not_prove:
+    - branch_rulesets_configured
+    - required_status_checks_enforced
+    - secret_scanning_enabled
+    - push_protection_enabled
+    - protected_environments_configured
+    - absence_of_all_vulnerabilities
+    - external_compliance
+    - scientific_validity
+
+claim_allowed: false
+publication_effect: NONE
+supersedes:
+  - TOKEN_VAZIO_DEPENDENCY_GRAPH_DISABLED_OBSERVATION_FROM_PR633
+next_verification: >-
+  Re-execute Dependency Review on each promotion edge and preserve a new receipt
+  if the control-plane behavior changes.

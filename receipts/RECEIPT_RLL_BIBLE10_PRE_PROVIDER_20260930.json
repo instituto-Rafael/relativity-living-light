@@ -1,0 +1,16 @@
+{
+  "schema": "rll.bible10.pre-provider.receipt.v1",
+  "observed_at": "2026-09-30",
+  "state": "IMPLEMENTED_LOCAL_TESTS_PASS_PROVIDER_NOT_RUN",
+  "local_tests": {"tests":6,"passed":6,"failed":0},
+  "claim_allowed": false,
+  "gates_still_open": [
+    "10-language network ingestion on GitHub Actions",
+    "source ZIP SHA-256 lock from provider",
+    "real JHN/GEN/MAT entropy and compression results",
+    "synthetic G2P voice availability for all 10 languages",
+    "Euclidean x Poincare optimized paired baseline",
+    "calibrated human audio"
+  ],
+  "rollback": "close PR or revert eventual merge; no prior RLL evidence is overwritten"
+}

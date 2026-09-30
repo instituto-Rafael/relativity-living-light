@@ -1,0 +1,34 @@
+{
+  "schema": "rll.class_camb_implementation_successor.v2",
+  "generated_at": "2026-09-22",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_contract": "data/science/perturbations/RLL_CLASS_CAMB_IMPLEMENTATION_CONTRACT_20260808_V1.json",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "BLOCKED_BY_A1_1_GAUGE_IC_AND_EVOLUTION_EQUATIONS",
+  "closure_successor": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V2.json",
+  "candidate": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "progress": {
+    "background_semantics": "SEPARATELY_CONSERVED_EFFECTIVE_FLUID_CANDIDATE",
+    "C03_CS2": "CANDIDATE_ASSIGNED",
+    "C04_ENTROPY": "CANDIDATE_ASSIGNED_PARTIAL",
+    "C05_SIGMA": "CANDIDATE_ASSIGNED_ZERO",
+    "C06_QMU": "CANDIDATE_ASSIGNED_ZERO",
+    "C01_DELTA": "OPEN",
+    "C02_THETA": "OPEN",
+    "C07_GAUGE_IC": "OPEN_CRITICAL",
+    "C08_REGULARIZATION": "PERTURBATIVE_OPEN"
+  },
+  "class_path": {
+    "state": "NOT_IMPLEMENTED_RLL_PERTURBATIONS",
+    "next": "derive candidate equations in a frozen gauge/convention, then implement directly in CLASS without CAMB-generated inputs"
+  },
+  "camb_path": {
+    "state": "NOT_IMPLEMENTED_RLL_PERTURBATIONS",
+    "next": "derive the same frozen physical closure independently in CAMB conventions without CLASS-generated inputs"
+  },
+  "unlock_condition": "C01,C02,C07,C08 plus constraint/Bianchi and super-horizon IC gates PASS under frozen A1.1 contract",
+  "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+  "token_resolution": "NOT_RESOLVED",
+  "rollback": "Drop this successor and A1.1 candidate; preserve baseline CLASS/CAMB receipts and A0 negative evidence."
+}

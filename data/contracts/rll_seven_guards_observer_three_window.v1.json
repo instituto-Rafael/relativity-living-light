@@ -1,0 +1,167 @@
+{
+  "schema": "rll.seven_guards_observer_three_window.v1",
+  "version": 1,
+  "date": "2026-09-17",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "HYPOTHESIS_PROTOCOL",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "NEGATIVE_EVIDENCE != GLOBAL_FALSIFICATION",
+    "REPRODUCTION != UNIVERSAL_TRUTH",
+    "ROLLBACK_PRESERVES_CONTRADICTORY_EVIDENCE"
+  ],
+  "source_boundary": {
+    "author_state": "DECLARED_BY_AUTHOR",
+    "public_formalization": "docs/governance/RLL_SEVEN_GUARDS_OBSERVER_THREE_WINDOW_PROTOCOL_V1.md",
+    "private_drive_content_copied": false,
+    "canonical_private_pointers": [
+      "RAFAELIA START HERE router",
+      "RAFAELIA central implementation/papers memory book"
+    ],
+    "existing_public_bridges": [
+      "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json",
+      "knowledge_ecosystem/session_operating_system.yml"
+    ]
+  },
+  "guards": {
+    "provenance": {
+      "required": true,
+      "minimum": ["source", "version_or_commit", "time_or_window", "hash_when_applicable"]
+    },
+    "context": {
+      "required": true,
+      "minimum": ["scope", "domain", "units", "instrument_or_source", "boundary"]
+    },
+    "evidence": {
+      "required": true,
+      "minimum": ["observable_or_execution", "receipt_or_artifact", "evidence_state"]
+    },
+    "contradiction": {
+      "required": true,
+      "minimum": ["state", "conflicting_ref_or_NONE", "resolution_or_next"]
+    },
+    "uncertainty": {
+      "required": true,
+      "minimum": ["error_or_dispersion_or_TOKEN_VAZIO", "open_items"]
+    },
+    "reproduction": {
+      "required": true,
+      "minimum": ["procedure", "fixed_inputs", "configuration_or_seed_when_applicable", "evidence_ref_or_TOKEN_VAZIO"]
+    },
+    "rollback": {
+      "required": true,
+      "minimum": ["anchor", "procedure", "history_preserved"]
+    }
+  },
+  "observer_model": {
+    "equation": "y = M(x; theta_M, c) + epsilon",
+    "observer_definition": "measurement system + protocol + declared selection",
+    "consciousness_required_for_physical_claim": false,
+    "quantum_boundary": "measurement records may be windowed; no classical electron orbit or consciousness-collapse claim is implied"
+  },
+  "windows": [
+    {
+      "id": "W0",
+      "role": "entry_or_pre_event_or_preparation",
+      "predeclared": true,
+      "required_locator": true
+    },
+    {
+      "id": "W1",
+      "role": "middle_or_interaction_or_transition",
+      "predeclared": true,
+      "required_locator": true
+    },
+    {
+      "id": "W2",
+      "role": "exit_end_or_post_event_or_detection",
+      "predeclared": true,
+      "required_locator": true
+    }
+  ],
+  "window_required_fields": [
+    "locator",
+    "width",
+    "observable",
+    "unit",
+    "inclusion_exclusion_rule",
+    "instrument_or_source",
+    "selection_rationale"
+  ],
+  "statistics": {
+    "required": ["min", "median", "max"],
+    "recommended_robust": ["Q1", "Q3", "MAD"],
+    "comparisons": ["delta_01", "delta_12", "delta_02"],
+    "causal_claim_from_delta_alone": false
+  },
+  "selection_policy": {
+    "best_of_three_post_hoc_allowed": false,
+    "predeclared_selection_rule_required": true,
+    "violation_state": "POST_HOC_SELECTION_RISK"
+  },
+  "duality_bridge": {
+    "state": "HYPOTHESIS_METAPHOR",
+    "direct_view": "V+",
+    "counter_view": "V-",
+    "equidistance_requires_metric": true,
+    "metric_state": "TOKEN_VAZIO_EQUIDISTANCE_METRIC"
+  },
+  "unresolved_author_tokens": [
+    "TOKEN_VAZIO_TWINS_ON_DAGGER",
+    "TOKEN_VAZIO_4_OF_5_IN_THREE"
+  ],
+  "claim_blockers": [
+    "TOKEN_VAZIO_WINDOW_LOCATOR",
+    "POST_HOC_SELECTION_RISK",
+    "UNDECLARED_UNIT_OR_INSTRUMENT_CHANGE",
+    "TEMPORAL_SOURCE_MISALIGNMENT",
+    "DERIVED_AS_DIRECT_OBSERVATION",
+    "MISSING_UNCERTAINTY_TREATED_AS_ZERO",
+    "CLASSICAL_TRAJECTORY_ASSUMED_FOR_QUANTUM_OBSERVABLE",
+    "METAPHOR_PROMOTED_TO_PHYSICAL_MECHANISM",
+    "REPRODUCTION_CHANGED_INPUTS_WITHOUT_DELTA",
+    "ROLLBACK_ERASED_NEGATIVE_EVIDENCE"
+  ],
+  "falsifiers": [
+    "three windows cannot be defined without material arbitrariness",
+    "small locator perturbations dominate results without modeled explanation",
+    "declared state or order of magnitude is not reproducible within stated uncertainty",
+    "measurement function dominates signal and cannot be controlled or modeled",
+    "protocol increases post-hoc selection instead of reducing it"
+  ],
+  "allowed_domains": [
+    "environmental_time_series",
+    "METAR_Climate_Engine",
+    "fluid_field_diagnostics",
+    "instrumental_events",
+    "particle_detector_records",
+    "cosmological_computation",
+    "software_validation_pipeline"
+  ],
+  "cross_domain_boundary": "same protocol shape does not imply same physical mechanism",
+  "execution_cycle": ["DEFINE", "MEASURE", "ANALYZE", "IMPROVE", "CONTROL", "CLAIM_GATE"],
+  "required_round_output": [
+    "provenance",
+    "context",
+    "evidence",
+    "contradiction",
+    "uncertainty",
+    "reproduction",
+    "rollback",
+    "R3",
+    "claim_allowed"
+  ],
+  "R3": {
+    "F_ok": "seven guards are explicit and W0/W1/W2 is formalized as a predeclared observation protocol",
+    "F_gap": [
+      "TOKEN_VAZIO_EQUIDISTANCE_METRIC",
+      "TOKEN_VAZIO_TWINS_ON_DAGGER",
+      "TOKEN_VAZIO_4_OF_5_IN_THREE",
+      "TOKEN_VAZIO_FIRST_REAL_DATASET_TRIAL"
+    ],
+    "F_next": "instantiate the contract on one already-versioned dataset or artifact and produce a bounded receipt"
+  }
+}

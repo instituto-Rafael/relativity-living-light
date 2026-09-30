@@ -1,0 +1,41 @@
+{
+  "schema": "rll.f_gap_p0_semantic_governance.v1",
+  "cycle": 10,
+  "date": "2026-08-11",
+  "baseline_high": 16,
+  "targeted_high": 4,
+  "expected_high_after_audit_if_no_new_findings": 12,
+  "state": "OBSERVED_PENDING_CI",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "targets": [
+    {
+      "code": "JOB_WRITE_PERMISSION_UNGOVERNED",
+      "count": 2,
+      "resolution": "Introduce explicit security_analysis workflow class with least-privilege CodeQL permissions and classify both Platform Assurance workflows."
+    },
+    {
+      "code": "UNTRUSTED_EXPRESSION_IN_RUN",
+      "count": 1,
+      "resolution": "Route workflow_dispatch base choice through BASE_REF environment variable before shell execution."
+    },
+    {
+      "code": "VERSIONED_INVENTORY_STALE",
+      "count": 1,
+      "resolution": "Reconcile only the Deep-Audit-measured YAML/workflow counts to 183/76; unrelated inventory metrics are not remeasured in this cycle."
+    }
+  ],
+  "boundary": "Governance and orchestration semantics only. No formula, dataset, scientific parameter, fitted result, likelihood, posterior, or claim boundary is modified.",
+  "f_ok": [
+    "Cycle 9 merged to rll/lab with 16 HIGH, zero mutable action references and zero syntax failures.",
+    "Cycle 10 branch diff is limited to authority contract, input boundary, inventory counts and this governance receipt."
+  ],
+  "f_gap": [
+    "Deep YAML Audit for cycle 10 has not yet executed.",
+    "Twelve expected residual HIGH findings remain in failure semantics and scientific YAML externalization if this cycle passes."
+  ],
+  "f_next": [
+    "Run Deep YAML Audit, Workflow Architecture, Platform Assurance V1/V2 and contract reconciliation.",
+    "Promote only if HIGH falls from 16 to 12 without syntax errors or new authority findings."
+  ]
+}

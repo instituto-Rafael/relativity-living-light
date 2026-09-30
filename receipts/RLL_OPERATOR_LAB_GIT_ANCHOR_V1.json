@@ -1,0 +1,36 @@
+{
+  "schema": "rll.operator_lab.git_anchor.v1",
+  "receipt_id": "RLL-OPLAB-GIT-ANCHOR-V1",
+  "state": "VERIFIED_PROVIDER_IDENTITY",
+  "branch_head": {
+    "sha": "f7d1a4b0b9659b059be697f3f78512af6dcfb01b",
+    "tree_sha": "8a916343aa635832ac227ae7dcd298628f048cdf",
+    "parent_sha": "c45fac68fd3e37ee56730d1655a6e5da24531256",
+    "github_verification": {
+      "verified": false,
+      "reason": "unsigned"
+    }
+  },
+  "pull_request_merge_ref": {
+    "sha": "a045ffa1c3a3835cfb87fde9ecb3afd7b93f2608",
+    "tree_sha": "8a916343aa635832ac227ae7dcd298628f048cdf",
+    "parents": [
+      "7831d4b862779860e6d0fe70e7601631fd782e98",
+      "f7d1a4b0b9659b059be697f3f78512af6dcfb01b"
+    ],
+    "github_verification": {
+      "verified": true,
+      "reason": "valid",
+      "signer_role": "GitHub merge-ref provider"
+    }
+  },
+  "invariant": "merge-ref tree == tested branch-head tree",
+  "does_not_prove": [
+    "human author identity",
+    "ICP-Brasil/X.509 certificate validation",
+    "RFC3161 trusted timestamp",
+    "legal non-repudiation",
+    "scientific claim validity"
+  ],
+  "claim_allowed": false
+}

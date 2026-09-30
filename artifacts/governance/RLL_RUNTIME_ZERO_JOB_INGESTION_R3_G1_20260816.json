@@ -1,0 +1,38 @@
+{
+  "schema": "rll.r3.v1",
+  "generation": "G1_REMOTE_VERIFIED_AND_ROUTE_FAIL_CLOSED",
+  "F_ok": [
+    "remote runtime ingestion verified on run 31978075898",
+    "25 recent failures inspected with 24 zero-job and 1 jobbed failure separated",
+    "zero-job root causes remain TOKEN_VAZIO_ROOT_CAUSE",
+    "raw runs/jobs evidence hash-bound",
+    "workflow contract 82/82 PASS",
+    "21 focused tests PASS on first remote generation",
+    "full Python run 31978075944: 1221 passed + 12 subtests, zero failures",
+    "hotfix proposal path now fails closed when maturity route is unverified"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_ROOT_CAUSE_PER_ZERO_JOB_RUN",
+    "TOKEN_VAZIO_MATURITY_ROUTE",
+    "TOKEN_VAZIO_MAIN_RLL_LAB_RECONCILIATION",
+    "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    "TOKEN_VAZIO_PHYSICAL_EXECUTION"
+  ],
+  "F_next": [
+    "execute second CI wave with maturity-route adversarial tests",
+    "re-observe runtime failure stream",
+    "design main/rll-lab reconciliation as a separate audited cycle",
+    "keep PR 754 draft and do not bypass branch-maturity topology"
+  ],
+  "topology_evidence": {
+    "hotfix_branch_vs_rll_lab": {
+      "status": "diverged",
+      "ahead_by": 111,
+      "behind_by": 44,
+      "merge_base": "73894b9a3bc574849bf488f6f74f42692b236121"
+    }
+  },
+  "claim_allowed": false,
+  "publication_effect": "NONE"
+}

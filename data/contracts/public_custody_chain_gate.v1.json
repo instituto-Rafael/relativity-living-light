@@ -1,0 +1,302 @@
+{
+  "schema": "rll.public-custody-chain/v1",
+  "version": "1.0.0",
+  "claim_allowed": false,
+  "purpose": "Public-record custody graph for supply-chain, finance, policy, travel, ownership and aerospace evidence. Descriptive evidence only; temporal association is not causality.",
+  "source_policy": {
+    "public_only": true,
+    "private_tax_returns_forbidden": true,
+    "nonpublic_awb_or_bill_of_lading_forbidden": true,
+    "hazardous_procurement_routes_out_of_scope": true
+  },
+  "sources": [
+    {
+      "id": "US-WH-EO14257-20250402",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.whitehouse.gov/presidential-actions/2025/04/regulating-imports-with-a-reciprocal-tariff-to-rectify-trade-practices-that-contribute-to-large-and-persistent-annual-united-states-goods-trade-deficits/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-WH-RIYADH-20250513",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.whitehouse.gov/videos/president-trump-arrives-in-riyadh-saudi-arabia-and-is-greeted-by-crown-prince-mohammed-bin-salman/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-WH-DOHA-20250514",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.whitehouse.gov/videos/president-trump-arrives-in-doha-qatar-and-is-greeted-by-emir-of-qatar/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-WH-UAE-20250515",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.whitehouse.gov/videos/president-trump-welcomed-to-the-uae-by-his-highness-sheikh-mohammed-bin-zayed-al-nahyan/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-WH-SAUDI-INVESTMENT-20250513",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.whitehouse.gov/fact-sheets/2025/05/fact-sheet-president-donald-j-trump-secures-historic-600-billion-investment-commitment-in-saudi-arabia/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-OGE-POTUS-DISCLOSURE-20260630",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www2.oge.gov/web/oge.nsf/Resources/Now%2BAvailable%3A%2BThe%2BPresident%E2%80%99s%2Band%2BVice%2BPresident%E2%80%99s%2Bcertified%2Bannual%2Bfinancial%2Bdisclosure%2Breports",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-IRS-IRC6103",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.irs.gov/government-entities/federal-state-local-governments/disclosure-laws",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "BR-RFB-CNPJ-LAYOUT",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/convenios-e-transferencias/compartilhamento-de-bases-de-dados-2013-decreto-no-8-789-2016/leiaute-das-bases/dados-da-base-cnpj",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "BR-RFB-SIGILO-CTN198",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/sigilo-fiscal/sigilo-fiscal-excecoes-de-acordo-com-CTN",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "BR-TSE-CAMPANHA-2026",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/tse-disponibiliza-dados-da-prestacao-de-contas-parcial-das-campanhas-eleitorais",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-SEC-BA-20251231",
+      "public_record": true,
+      "source_kind": "regulatory_filing",
+      "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "US-NASA-HLS",
+      "public_record": true,
+      "source_kind": "official_government",
+      "url": "https://www.nasa.gov/humans-in-space/human-landing-system/",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "SPACEX-FALCON9",
+      "public_record": true,
+      "source_kind": "official_corporate",
+      "url": "https://new.spacex.com/vehicles/falcon-9",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    },
+    {
+      "id": "SPACEX-STARSHIP",
+      "public_record": true,
+      "source_kind": "official_corporate",
+      "url": "https://new.spacex.com/vehicles/starship",
+      "retrieved_at": "2026-09-28",
+      "sha256": null
+    }
+  ],
+  "events": [
+    {
+      "id": "EV-US-TARIFF-EO14257",
+      "event_type": "executive_order",
+      "date": "2025-04-02",
+      "jurisdiction": "US",
+      "signatory": "Donald J. Trump",
+      "instrument": "Executive Order 14257",
+      "legal_authorities": ["IEEPA", "National Emergencies Act", "Trade Act of 1974 section 604", "3 U.S.C. section 301"],
+      "source_refs": ["US-WH-EO14257-20250402"],
+      "claim_boundary": "documents the order and stated legal authorities; does not prove downstream economic causality"
+    },
+    {
+      "id": "EV-US-TRAVEL-RIYADH",
+      "event_type": "official_travel",
+      "date": "2025-05-13",
+      "place": "Riyadh, Saudi Arabia",
+      "source_refs": ["US-WH-RIYADH-20250513"],
+      "claim_boundary": "presence/date only"
+    },
+    {
+      "id": "EV-US-TRAVEL-DOHA",
+      "event_type": "official_travel",
+      "date": "2025-05-14",
+      "place": "Doha, Qatar",
+      "source_refs": ["US-WH-DOHA-20250514"],
+      "claim_boundary": "presence/date only"
+    },
+    {
+      "id": "EV-US-TRAVEL-UAE",
+      "event_type": "official_travel",
+      "date": "2025-05-15",
+      "place": "United Arab Emirates",
+      "source_refs": ["US-WH-UAE-20250515"],
+      "claim_boundary": "presence/date only"
+    },
+    {
+      "id": "EV-US-SAUDI-INVESTMENT-ANNOUNCEMENT",
+      "event_type": "investment_announcement",
+      "date": "2025-05-13",
+      "reported_value_usd": 600000000000,
+      "realized_cash": false,
+      "source_refs": ["US-WH-SAUDI-INVESTMENT-20250513"],
+      "claim_boundary": "officially announced commitment; not booked or realized cash absent separate evidence"
+    },
+    {
+      "id": "EV-US-POTUS-FINANCIAL-DISCLOSURE-2026",
+      "event_type": "public_financial_disclosure",
+      "date": "2026-06-30",
+      "source_refs": ["US-OGE-POTUS-DISCLOSURE-20260630"],
+      "claim_boundary": "OGE financial disclosure, not an income-tax return"
+    },
+    {
+      "id": "EV-US-TAX-CONFIDENTIALITY",
+      "event_type": "legal_rule",
+      "source_refs": ["US-IRS-IRC6103"],
+      "claim_boundary": "IRC 6103 generally protects tax-return information from IRS disclosure subject to exceptions"
+    },
+    {
+      "id": "EV-BR-CNPJ-PUBLIC-FIELDS",
+      "event_type": "company_registry_schema",
+      "source_refs": ["BR-RFB-CNPJ-LAYOUT"],
+      "public_fields": ["capital_social", "quadro_societario", "qualificacao_socios_administradores"],
+      "claim_boundary": "availability depends on the published dataset/version and applicable access rules"
+    },
+    {
+      "id": "EV-BR-TAX-SECRECY",
+      "event_type": "legal_rule",
+      "source_refs": ["BR-RFB-SIGILO-CTN198"],
+      "claim_boundary": "economic/financial tax information is generally protected by fiscal secrecy subject to statutory exceptions"
+    },
+    {
+      "id": "EV-BR-TSE-2026-DISCLOSURE",
+      "event_type": "electoral_public_disclosure",
+      "date": "2026-09-15",
+      "source_refs": ["BR-TSE-CAMPANHA-2026"],
+      "public_fields": ["declared_assets", "campaign_revenue", "campaign_expenses", "financial_movements"],
+      "claim_boundary": "campaign/electoral disclosure; not equivalent to full income-tax return"
+    },
+    {
+      "id": "EV-BA-SPIRIT-ACQUISITION",
+      "event_type": "corporate_transaction",
+      "date": "2025-12-08",
+      "source_refs": ["US-SEC-BA-20251231"],
+      "claim_boundary": "SEC-filed acquisition and consideration; supplier-level pass-through remains separate"
+    },
+    {
+      "id": "EV-NASA-STARSHIP-HLS-STATUS",
+      "event_type": "program_status",
+      "source_refs": ["US-NASA-HLS"],
+      "status": "development_for_artemis_iii_and_iv",
+      "claim_boundary": "does not support a claim that Starship HLS has already landed astronauts on the Moon"
+    },
+    {
+      "id": "EV-SPACEX-F9-PROPULSION",
+      "event_type": "public_vehicle_spec",
+      "source_refs": ["SPACEX-FALCON9"],
+      "high_level_propellant_family": "liquid oxygen plus rocket-grade kerosene",
+      "claim_boundary": "vehicle-level public specification only; supplier identities and hazardous procurement routes excluded"
+    },
+    {
+      "id": "EV-SPACEX-STARSHIP-PROPULSION",
+      "event_type": "public_vehicle_spec",
+      "source_refs": ["SPACEX-STARSHIP"],
+      "high_level_propellant_family": "liquid oxygen plus liquid methane",
+      "claim_boundary": "vehicle-level public specification only; supplier identities and hazardous procurement routes excluded"
+    }
+  ],
+  "edges": [
+    {
+      "from": "EV-US-TARIFF-EO14257",
+      "to": "EV-US-TRAVEL-RIYADH",
+      "relation": "precedes",
+      "state": "OBSERVED",
+      "causal": false,
+      "source_refs": ["US-WH-EO14257-20250402", "US-WH-RIYADH-20250513"]
+    },
+    {
+      "from": "EV-US-TRAVEL-RIYADH",
+      "to": "EV-US-SAUDI-INVESTMENT-ANNOUNCEMENT",
+      "relation": "same_day_public_context",
+      "state": "OBSERVED",
+      "causal": false,
+      "source_refs": ["US-WH-RIYADH-20250513", "US-WH-SAUDI-INVESTMENT-20250513"]
+    },
+    {
+      "from": "EV-US-TRAVEL-RIYADH",
+      "to": "EV-US-TRAVEL-DOHA",
+      "relation": "next_observed_stop",
+      "state": "OBSERVED",
+      "causal": false,
+      "source_refs": ["US-WH-RIYADH-20250513", "US-WH-DOHA-20250514"]
+    },
+    {
+      "from": "EV-US-TRAVEL-DOHA",
+      "to": "EV-US-TRAVEL-UAE",
+      "relation": "next_observed_stop",
+      "state": "OBSERVED",
+      "causal": false,
+      "source_refs": ["US-WH-DOHA-20250514", "US-WH-UAE-20250515"]
+    },
+    {
+      "from": "EV-BR-CNPJ-PUBLIC-FIELDS",
+      "to": "company_ownership_history",
+      "relation": "candidate_public_input",
+      "state": "DERIVED",
+      "causal": false,
+      "source_refs": ["BR-RFB-CNPJ-LAYOUT"]
+    },
+    {
+      "from": "EV-US-POTUS-FINANCIAL-DISCLOSURE-2026",
+      "to": "leader_financial_interests",
+      "relation": "candidate_public_input",
+      "state": "DERIVED",
+      "causal": false,
+      "source_refs": ["US-OGE-POTUS-DISCLOSURE-20260630"]
+    },
+    {
+      "from": "EV-NASA-STARSHIP-HLS-STATUS",
+      "to": "claim_starship_already_landed_humans_on_moon",
+      "relation": "does_not_support",
+      "state": "OBSERVED",
+      "causal": false,
+      "source_refs": ["US-NASA-HLS"]
+    }
+  ],
+  "stability": {
+    "model": "toroidal_state7_plus_delta7",
+    "dimensions": ["mass_material", "production_delivery", "inventory_wip", "logistics_lead_time", "commodity_energy", "fx", "capital"],
+    "normalization": "each coordinate must be transformed to [0,1] by a predeclared source-specific rule",
+    "author_parameters": {
+      "delta_p": {"status": "TOKEN_VAZIO", "value": null},
+      "k": {"status": "TOKEN_VAZIO", "value": null}
+    },
+    "claim_boundary": "toroidal stability is an authored analytical transform; it is not by itself proof of causal or physical equivalence"
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "schema": "rll.scientific_validation_orchestrator.v1",
+  "date": "2026-08-19",
+  "status": "PROPOSAL_INERT_FAIL_CLOSED",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "execution_effect": "NONE_UNTIL_EXPLICITLY_WIRED",
+  "purpose": "Prioritize and close scientific uncertainty through reproducible gates without converting missing evidence into claims.",
+  "invariants": [
+    "raw_observations_are_immutable",
+    "derived_data_require_source_transform_and_hash",
+    "same_data_same_covariance_same_nuisance_policy_across_model_tournament",
+    "negative_results_are_preserved",
+    "token_vazio_is_never_promoted_without_receipt",
+    "structural_pass_is_not_physical_validation",
+    "analogy_is_not_mechanism",
+    "independent_replication_is_not_the_same_pipeline_rerun",
+    "claim_language_is_derived_from_evidence_state",
+    "no_direct_main_mutation"
+  ],
+  "evidence_states": [
+    "TOKEN_VAZIO",
+    "DECLARED_BY_AUTHOR",
+    "OBSERVED_PENDING_REPLICATION",
+    "VERIFIED_LIMITED",
+    "VERIFIED_REPRODUCIBLE",
+    "CONTRADICTION",
+    "FALSIFIED_IN_SCOPE"
+  ],
+  "priority_formula": {
+    "name": "scientific_information_gain_priority",
+    "expression": "(uncertainty_reduction * scientific_leverage * independence * observability) / (execution_cost * regression_risk)",
+    "scale": "1_to_5_per_factor",
+    "rule": "higher_score_executes_first_when_prerequisites_are_satisfied"
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "name": "authority_provenance_and_freeze",
+      "priority": "P0",
+      "requires": [],
+      "must_produce": ["source_registry", "dataset_versions", "raw_checksums", "inclusion_exclusion_manifest", "rights_status", "token_vazio_snapshot"],
+      "pass_when": ["all consumed sources have authoritative origin", "raw inputs are hash-bound", "unknown rights remain fail-closed", "no unresolved source identity is silently substituted"],
+      "stop_when": ["source identity is ambiguous", "raw hash changes without a new version", "required covariance source cannot be identified"]
+    },
+    {
+      "id": "G1",
+      "name": "structural_math_and_null_limit",
+      "priority": "P0",
+      "requires": ["G0"],
+      "must_produce": ["formula_registry", "unit_domain_registry", "invariant_scan", "finite_difference_crosscheck", "lcdm_null_recovery_receipt"],
+      "pass_when": ["E2_at_z0_is_unity_within_declared_tolerance", "E2_positive_on_declared_domain", "analytic_and_numeric_derivatives_agree", "RLL extra sector off recovers declared baseline", "all equations declare units and domain"],
+      "stop_when": ["null limit fails", "unit ambiguity affects likelihood", "two implementations disagree without explanation"]
+    },
+    {
+      "id": "G2",
+      "name": "real_data_and_full_covariance_materialization",
+      "priority": "P0",
+      "requires": ["G0"],
+      "must_produce": ["DESI_DR2_BAO_materialization", "PantheonPlus_STAT_SYS_materialization", "CMB_source_manifest", "growth_data_manifest", "covariance_validation_receipts"],
+      "pass_when": ["data vectors and covariance dimensions agree", "ordering is deterministic and tested", "transformations are reversible or fully documented", "all exclusions have explicit reasons"],
+      "stop_when": ["covariance ordering cannot be proven", "diagonal errors are substituted for an available full covariance without a declared ablation"]
+    },
+    {
+      "id": "G3",
+      "name": "dataset_compatibility_before_joint_fit",
+      "priority": "P0",
+      "requires": ["G1", "G2"],
+      "must_produce": ["eta_z_gate", "F_AP_gate", "SN_sample_comparison", "reconstruction_sensitivity_report", "compatibility_decision"],
+      "pass_when": ["joint blocks are compatible under declared tests or explicitly branched", "calibration and reconstruction choices are recorded"],
+      "stop_when": ["joint likelihood would multiply blocks that failed compatibility without an explicit branch"]
+    },
+    {
+      "id": "G4",
+      "name": "fair_baseline_tournament",
+      "priority": "P0",
+      "requires": ["G1", "G2", "G3"],
+      "must_produce": ["LCDM_fit", "w0wa_CPL_fit", "GEDE_fit", "interacting_or_viscous_comparator_fit", "RLL_fit", "parameter_count_ledger"],
+      "pass_when": ["all models consume the same frozen data blocks appropriate to their domain", "parameter and nuisance counts are explicit", "AIC_AICc_BIC are recomputed from source likelihood outputs"],
+      "stop_when": ["a comparator receives privileged data or covariance", "parameter counting is inconsistent"]
+    },
+    {
+      "id": "G5",
+      "name": "canonical_joint_likelihood",
+      "priority": "P0",
+      "requires": ["G4"],
+      "must_produce": ["single_canonical_likelihood_manifest", "full_covariance_receipt", "nuisance_registry", "prior_registry", "best_fit_residuals"],
+      "pass_when": ["PantheonPlus STAT+SYS is in the same canonical route when used", "DESI covariance route is identical between models", "likelihood components are hash-bound"],
+      "stop_when": ["smoke settings are used for scientific model ranking", "likelihood components differ between competitors without justification"]
+    },
+    {
+      "id": "G6",
+      "name": "posterior_and_evidence_integrity",
+      "priority": "P0",
+      "requires": ["G5"],
+      "must_produce": ["MCMC_multichain_receipt", "nested_sampling_multiseed_receipt", "convergence_diagnostics", "logZ_and_uncertainty", "prior_sensitivity_matrix", "sampler_environment_lock"],
+      "pass_when": ["convergence thresholds are preregistered and met", "nested evidence uncertainty is recorded", "multiple seeds do not change the scientific conclusion beyond declared tolerance", "posterior collapse to null sector is explicitly diagnosed"],
+      "stop_when": ["nonconverged chains are used for claims", "Bayes evidence is reported without uncertainty", "single-seed instability is material"]
+    },
+    {
+      "id": "G7",
+      "name": "robustness_ablation_and_recovery",
+      "priority": "P1",
+      "requires": ["G6"],
+      "must_produce": ["dataset_ablation_matrix", "prior_ablation_matrix", "covariance_ablation_matrix", "synthetic_parameter_recovery", "posterior_predictive_checks", "false_positive_ledger"],
+      "pass_when": ["known injected parameters are recovered within declared coverage", "conclusions survive defensible variants or are explicitly scoped", "failed and null tests remain versioned"],
+      "stop_when": ["result exists only under one fragile prior or undocumented data choice"]
+    },
+    {
+      "id": "G8",
+      "name": "physical_closure_and_perturbations",
+      "priority": "P1",
+      "requires": ["G1"],
+      "must_produce": ["effective_fluid_or_covariant_mapping", "conservation_equations", "sound_speed_and_anisotropic_stress_definition", "stability_scan", "CLASS_or_CAMB_baseline_recovery"],
+      "pass_when": ["background extension has a perturbatively defined completion", "standard baseline is recovered before enabling RLL sector", "no unstable region is hidden by parameter masking"],
+      "stop_when": ["background-only fit is interpreted as a complete physical model", "perturbation prescription is implicit"]
+    },
+    {
+      "id": "G9",
+      "name": "growth_CMB_lensing_and_nonlinear_observables",
+      "priority": "P1",
+      "requires": ["G8"],
+      "must_produce": ["fsigma8_prediction_and_fit", "CMB_TT_TE_EE_lensing_comparison", "weak_lensing_comparison", "nonlinear_scope_decision"],
+      "pass_when": ["RLL predictions are generated from the same closed perturbation model", "observables include covariance and systematics"],
+      "stop_when": ["compressed CMB priors are presented as equivalent to full spectra", "nonlinear claims are made without an explicit nonlinear prescription"]
+    },
+    {
+      "id": "G10",
+      "name": "independent_replication",
+      "priority": "P0_AFTER_G6",
+      "requires": ["G6"],
+      "must_produce": ["clean_environment_replay", "independent_runner_receipt", "alternate_sampler_or_likelihood_crosscheck", "byte_level_input_manifest", "replication_delta_report"],
+      "pass_when": ["a clean environment reproduces core numerical outputs within declared tolerances", "at least one materially independent implementation or sampler crosschecks the model ranking"],
+      "stop_when": ["replication reuses hidden local state", "environment or input versions are unresolved"]
+    },
+    {
+      "id": "G11",
+      "name": "publication_and_claim_router",
+      "priority": "P1",
+      "requires": ["G7", "G10"],
+      "must_produce": ["reproducibility_bundle", "claims_ledger", "limitations", "negative_results_appendix", "machine_readable_receipt", "allowed_language"],
+      "pass_when": ["every promoted sentence maps to evidence", "TOKEN_VAZIO remains visible", "contradictions and unfavorable results are preserved"],
+      "stop_when": ["publication language exceeds evidence state"]
+    }
+  ],
+  "initial_high_value_queue": [
+    {
+      "rank": 1,
+      "target": "G2_G5_full_covariance_unification",
+      "reason": "Current repository documents DESI covariance and Pantheon+ posterior paths as partially separated; unifying them removes a major model-ranking ambiguity."
+    },
+    {
+      "rank": 2,
+      "target": "G6_reconcile_MCMC_dynesty_routes",
+      "reason": "Existing MCMC, dynesty and BIC-proxy results must be regenerated from one frozen likelihood/prior manifest before comparison."
+    },
+    {
+      "rank": 3,
+      "target": "G7_synthetic_recovery_and_ablation",
+      "reason": "Tests whether posterior collapse and model preference are pipeline behavior, prior behavior, or data-driven."
+    },
+    {
+      "rank": 4,
+      "target": "G8_perturbation_closure_CLASS_CAMB",
+      "reason": "Required before f_sigma8, CMB and lensing can test RLL as more than a background parametrization."
+    },
+    {
+      "rank": 5,
+      "target": "G10_independent_replication",
+      "reason": "Converts internal reproducibility into externally meaningful evidence and detects hidden implementation dependence."
+    }
+  ],
+  "receipt_minimum": [
+    "event_id",
+    "gate_id",
+    "repo_ref",
+    "commit_sha",
+    "input_paths_and_sha256",
+    "code_paths_and_sha256",
+    "environment_lock",
+    "command",
+    "seed_or_seed_set",
+    "stdout_stderr_digest",
+    "metrics",
+    "falsifier_outcome",
+    "token_vazio_before",
+    "token_vazio_after",
+    "contradictions",
+    "claim_allowed",
+    "next_observable_step"
+  ]
+}

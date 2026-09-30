@@ -1,0 +1,43 @@
+{
+  "schema": "rll.seven_guards_three_window.implementation_receipt.v1",
+  "date": "2026-09-17",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "docs/seven-guards-three-window-20260917",
+  "pull_request": 930,
+  "implementation_parent_sha": "69407d0d9676a43e9213c476289c71d59177a230",
+  "state": "IMPLEMENTED_UNTESTED",
+  "reason": "Dedicated CI workflow is committed but no dedicated execution was observable at receipt creation time.",
+  "implemented": [
+    "docs/governance/RLL_SEVEN_GUARDS_OBSERVER_THREE_WINDOW_PROTOCOL_V1.md",
+    "data/contracts/rll_seven_guards_observer_three_window.v1.json",
+    "tools/validate_rll_seven_guards_observer_three_window.py",
+    "tests/test_rll_seven_guards_observer_three_window.py",
+    ".github/workflows/rll-seven-guards-three-window.yml"
+  ],
+  "guards": [
+    "provenance",
+    "context",
+    "evidence",
+    "contradiction",
+    "uncertainty",
+    "reproduction",
+    "rollback"
+  ],
+  "observation_windows": ["W0_entry", "W1_middle", "W2_exit_end"],
+  "unresolved": [
+    "TOKEN_VAZIO_TWINS_ON_DAGGER",
+    "TOKEN_VAZIO_4_OF_5_IN_THREE",
+    "TOKEN_VAZIO_EQUIDISTANCE_METRIC",
+    "TOKEN_VAZIO_FIRST_REAL_DATASET_TRIAL",
+    "TOKEN_VAZIO_CI_EXECUTION"
+  ],
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "boundary": "IMPLEMENTED_UNTESTED != PASS",
+  "rollback": {
+    "mode": "additive_branch_revert",
+    "anchor_main_sha": "4475a98bc68b8c8260f2a059d2d95537cac19126",
+    "history_preserved": true
+  },
+  "next": "Obtain a dedicated CI execution receipt, then instantiate W0/W1/W2 against one already-versioned dataset without post-hoc window selection."
+}

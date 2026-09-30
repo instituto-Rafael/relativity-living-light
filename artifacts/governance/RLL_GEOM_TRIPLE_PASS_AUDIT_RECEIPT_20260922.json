@@ -1,0 +1,34 @@
+{
+  "schema": "rll.geom.triple_pass_audit.receipt.v1",
+  "date": "2026-09-22",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "audit_commit": "f3cba1d0acc0bf1bf572068c6d7f421522449317",
+  "joint65_physical_receipt_commit": "967ea6972be27731e6b5bfc868d2a4be6211f076",
+  "runner_hardening_commit": "8cc8a03f78fe496f938feee74c6a7f4447b58c62",
+  "joint65_recovery_doc_commit": "73e7d8c924e8d2498fd1c68d9115b4942a3d620c",
+  "joint65_gate_doc_commit": "0b5894227f66b32868ff5ea30e88b037491c4767",
+  "geom_rll_bridge_commit": "21adcf100d858baa861c1a7d4871db6f3a263eea",
+  "energy_momentum_dimensional_blocker_commit": "0e16a79894427e09a45b1469cda12fb81c3de2cc",
+  "mathematics_v5_state_supersession_commit": "e1e183357fd66617f0633c9d44e64bd8fe29d41c",
+  "joint65_physical": {
+    "state": "PASS_STATIC_BUILTINS",
+    "artifact_sha256": "4ea887b8a679dd0db6f5ad36ec63030a5fed6ed0affd7a8c6b229f3452020a2b",
+    "receipt_sha256": "db822ebf5152f21b9e57faa4af7c0df68299ec08a56aa7a3142fdad0a067639b",
+    "strict_zero_runtime": "TOKEN_VAZIO"
+  },
+  "material_gaps": [
+    "RLL_CANONICAL_33ROW_ENGINE_ARMV7_PHYSICAL",
+    "RLL_JOINT65_STRICT_NO_RUNTIME_PHYSICAL",
+    "GEOM_RXD_ARMV7_PHYSICAL",
+    "SECOND_PHYSICAL_DEVICE",
+    "BAREMETAL_PHYSICAL_RESET_BOOT",
+    "ENERGY_MOMENTUM_DIMENSIONAL_REPAIR",
+    "OBSERVABLE_EFFECT_AGGREGATION_MATRIX",
+    "Q16_VS_FLOAT64_ERROR_BOUND",
+    "RETARDED_SPACETIME_REAL_DATA_BINDING",
+    "EXTERNAL_INDEPENDENT_REPRODUCTION"
+  ],
+  "new_method_invariant": "CLASSIFY_OR_BIND_IN_NATIVE_CAUSAL_DOMAIN_BEFORE_LOSSY_NORMALIZATION_OR_PROJECTION",
+  "boundary": "AUDIT_PASS != SCIENTIFIC_CONFIRMATION"
+}

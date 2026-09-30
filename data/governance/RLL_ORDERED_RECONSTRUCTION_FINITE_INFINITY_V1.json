@@ -1,0 +1,65 @@
+{
+  "schema": "rll.ordered_reconstruction_finite_infinity.v1",
+  "date": "2026-09-22",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "drive_synthesis_id": "1d5Sl_ekhq_LCzcvtUAXSz-WKWUiY9ft-52w3QpMp5cs",
+  "invariants": [
+    "SOURCE!=ARTIFACT!=EXECUTION!=EVIDENCE!=CLAIM",
+    "TOKEN_VAZIO!=ZERO",
+    "ORDER!=CAUSALITY",
+    "FINITE_COORDINATE!=FINITE_INFORMATION_CONTENT",
+    "PROCEDURAL_GENERATION!=STORED_INFINITE_BITS"
+  ],
+  "ordered_reconstruction": {
+    "object": "G=(V,E,pi)",
+    "reconstruction": "x_i=Decode(D,S,R_i,Delta_i)",
+    "description_length": "L=|D|+|S|+sum_i(|R_i|+|Delta_i|)",
+    "information_boundary": "H(X_i|X_<i,G)<=H(X_i)",
+    "benchmark_required": [
+      "raw",
+      "generic_lossless",
+      "dedup",
+      "shared_dictionary",
+      "shuffled_order",
+      "canonical_order"
+    ],
+    "equal_decoder_budget": true
+  },
+  "finite_infinity": {
+    "arctan": {
+      "forward": "u=(2/pi)atan(x)",
+      "inverse": "x=tan(pi*u/2)",
+      "domain": "R -> (-1,1)"
+    },
+    "projective_line": "RP1 ~= R union {infinity}",
+    "riemann_sphere": "C_hat=C union {infinity} ~= S2",
+    "poincare_radial": {
+      "forward": "rho=tanh(d/2)",
+      "inverse": "d=2*atanh(rho)",
+      "limit": "d->infinity => rho->1-"
+    },
+    "fractal_iteration": "z_(n+1)=z_n^2+c"
+  },
+  "source_crosswalk": {
+    "novoexport_tiegrid": "small active context with reconstruction pointers",
+    "formula_index": "typed formula/derivative/inverse/gap memory",
+    "z42_bitgraph": "separate namespaces unless typed bridge",
+    "fibonacci": "classical vs authorial recurrence separation",
+    "voynich": "hypothesis/corpus-statistics route",
+    "vectors": "measured raster geometry with uncertainty",
+    "voo": "proof!=hypothesis!=metaphor!=product",
+    "quantum": "measurement boundary",
+    "verbo": "symbolic until numeric semantics",
+    "omni": "alias/provenance boundary",
+    "bbs": "runtime infrastructure",
+    "godex": "execution/security provenance",
+    "delta_lacuna": "typed gaps and exit criteria"
+  },
+  "open_gates": {
+    "joao_mateus_aligned_corpus": "NOT_RUN",
+    "ordered_vs_shuffled_benchmark": "NOT_RUN",
+    "finite_infinity_numeric_harness": "NOT_RUN",
+    "physical_mapping": "BLOCKED"
+  }
+}

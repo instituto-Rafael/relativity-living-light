@@ -104,6 +104,16 @@
       "blocked_claim": "RLL is validated by f_sigma8 or solves S8 tension",
       "next_test": "record backend_status and compare against LCDM with the same backend",
       "claim_allowed": false
+    },
+    {
+      "id": "NEG-011",
+      "route": "w0wa_structural_sign_domain",
+      "result_type": "structural_tension_not_yet_falsification",
+      "statement": "Canonical RLL under the current non-negative Omega_s0/Omega_Lambda and positive wt bounds maps locally to wa_eff>=0, while external CPL fits can prefer wa<0; a central-value sign mismatch is not by itself a likelihood-level falsification.",
+      "evidence_status": "analytic sign theorem plus finite-difference cross-check implemented; matched external posterior-overlap is not yet materialized",
+      "blocked_claim": "Canonical RLL is already falsified solely because a published CPL best-fit has wa<0",
+      "next_test": "materialize a public DESI posterior chain; compute coarse P(wa>=0|D), then decisive 2D posterior/HPD overlap with the full RLL-accessible local (w0_eff,wa_eff) domain under matched convention, datasets and priors",
+      "claim_allowed": false
     }
   ],
   "safe_conclusion": "The project explicitly records where it cannot claim victory. This protects future scientific value."

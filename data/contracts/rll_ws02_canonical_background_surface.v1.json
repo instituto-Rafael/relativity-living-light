@@ -1,0 +1,65 @@
+{
+  "schema": "rll.ws02.canonical_background_surface.v1",
+  "date": "2026-09-24",
+  "state": "EXECUTABLE_CONSISTENCY_CONTRACT",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "purpose": "Freeze one background H(z)+DESI DR2 BAO+Pantheon+ likelihood surface for WS02/WS23 consistency checks without selecting unresolved RX-PHYSICS-CANONICAL-V2 semantics.",
+  "scope": "background_only_DESI_DR2_PantheonPlus_pure_cosmic_chronometers",
+  "models": ["LCDM", "wCDM", "CPL", "GEDE", "IDE_QrhoLambda", "RLL"],
+  "blocks": {
+    "cosmic_chronometers": {
+      "path": "data/real/Hz_data_real.csv",
+      "selection": "source begins with CC_ and excludes labels containing BAO",
+      "covariance": "published_diagonal_sigma_per_selected_CC_row",
+      "observable": "H(z)",
+      "units": "km_s_Mpc"
+    },
+    "desi_dr2_bao": {
+      "points": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "covariance": "data/real/desi_dr2_bao_covariance.csv",
+      "order": "13 canonical primary observables in repository-local verified order",
+      "observables": ["DV_over_rd", "DM_over_rd", "DH_over_rd"],
+      "units": "dimensionless"
+    },
+    "pantheon_plus": {
+      "catalog": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat",
+      "covariance": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "selection": "(zHD > 0.01) OR IS_CALIBRATOR==1",
+      "nuisance": "M_B analytically profiled and counted in k",
+      "covariance_policy": "full_STAT+SYS"
+    }
+  },
+  "shared_policy": {
+    "same_observations": true,
+    "same_covariance_blocks": true,
+    "same_selection": true,
+    "same_nuisance_policy": true,
+    "negative_results_preserved": true,
+    "cross_survey_covariance": "TOKEN_VAZIO_ASSUMED_BLOCK_INDEPENDENT_UNTIL_EXTERNAL_CROSSBLOCK_AUTHORITY",
+    "growth": "EXCLUDED_UNTIL_WS03_WS04_WS05_WS06",
+    "cmb": "EXCLUDED_UNTIL_WS03_WS04_WS05_WS06",
+    "lensing": "EXCLUDED_UNTIL_WS06_WS09"
+  },
+  "authorities": {
+    "g4_contract": "data/contracts/rll_g4_background_tournament.v1.json",
+    "g5_contract": "data/contracts/rll_g5_canonical_background_likelihood.v1.json",
+    "g0_freeze_spec": "data/governance/RLL_CURRENT_RX_SOURCE_FREEZE_SPEC_V1.json",
+    "pantheon_materialization_receipt": "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json",
+    "physics_decision_authority": "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+  },
+  "pass_when": [
+    "all local block files exist and are hash-bound",
+    "dataset paths and selections agree with G4",
+    "scope and data policy agree with G5",
+    "growth/CMB/lensing remain excluded from background-only promotion",
+    "RX-PHYSICS-CANONICAL-V2 unresolved axes remain visible"
+  ],
+  "stop_when": [
+    "a block path silently changes",
+    "a covariance is downgraded without an explicit ablation",
+    "a competitor receives a different background data surface",
+    "unresolved physics semantics are auto-selected",
+    "claim_allowed becomes true"
+  ]
+}

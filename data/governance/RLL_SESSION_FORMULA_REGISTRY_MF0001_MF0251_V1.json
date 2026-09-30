@@ -1,0 +1,2535 @@
+{
+  "schema": "rll.session_formula_registry.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "upstream": {
+    "repository": "rafaelmeloreisnovo/Matem-tica-",
+    "directory": "docs/formal/session_formula_ledger",
+    "expected_range": "MF-0001..MF-0251",
+    "expected_count": 251
+  },
+  "import_summary": {
+    "imported_count": 251,
+    "missing_ids": [],
+    "duplicate_ids": [],
+    "complete": true
+  },
+  "rules": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "imported expression != executable scientific test",
+    "geometric relation != cosmological mechanism"
+  ],
+  "records": [
+    {
+      "mf_id": "MF-0001",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`14+14+14=42`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0002",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`Abraão→Davi=14`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0003",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`Davi→Exílio=14`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0004",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`Exílio→Cristo=14`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0005",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "HISTORICAL_INTERPRETIVE",
+      "expression": "`D=4, W/V=6, D=4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0006",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`4+6+4=14`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0007",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`70×7=490`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0008",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`perdão ≉ contador finito`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0009",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`10 000 talentos vs 100 denários`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0010",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`(5,2,1)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0011",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`5→10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0012",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`2→4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0013",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`1→1`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0014",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R=(V_f-V_i)/V_i=1=100%`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0015",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R=0`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0016",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`5 pães + 2 peixes`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0017",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`≈5000`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0018",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`12 cestos`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0019",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`7 pães + alguns peixes`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0020",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`≈4000`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0021",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`7 cestos`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0022",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`(5,5000,12)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0023",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`(7,4000,7)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0024",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`10=5+5`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0025",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`Número→Estrutura→Comparação→Memória→Significado`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0026",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`número escrito ≠ padrão literário ≠ simbolismo provável ≠ código provado`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0027",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`M_Mateus=G(14,7,12,5,2,1,10000,100,...)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0028",
+      "source_file": "01_A01_MATTHEW_NUMERIC_STRUCTURES.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`quantidade --contexto--> sentido`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0029",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "USER_REFERENCE",
+      "expression": "`1+1=2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0030",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "USER_REFERENCE",
+      "expression": "`1/3`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0031",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`TOKEN_VAZIO != 0`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0032",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET",
+      "expression": "`0=∅`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0033",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET",
+      "expression": "`1={0}={∅}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0034",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET",
+      "expression": "`2={0,1}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0035",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET",
+      "expression": "`3={0,1,2}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0036",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET",
+      "expression": "`0⊂1⊂2⊂3⊂...`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0037",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`?→ausência→existência→relação→configuração`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0038",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`d(P1,P1)=0`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0039",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`d(P1,P2)>0`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0040",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`(d12,d23,d31)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0041",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`1=entidade, 2=relação, 3=configuração`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0042",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`7_10=10_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0043",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`14_10=20_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0044",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`14_10+14_10+14_10=42_10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0045",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`20_7+20_7+20_7=60_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0046",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`60_7=6×7=42_10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0047",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`3×14_10=42_10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0048",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`3×20_7=60_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0049",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`14_10=2×7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0050",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`20_7=2×10_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0051",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`7_10=10_7=111_2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0052",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`14_7=1×7+4=11_10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0053",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`VALUE != DIGIT_STRING`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0054",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "ATOMIC_NOTATION",
+      "expression": "`(Z,N,e)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0055",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PHYSICS",
+      "expression": "`A=Z+N`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0056",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PHYSICS",
+      "expression": "`q=Z-e`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0057",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Ω0=TOKEN_VAZIO`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0058",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Ω1=∅`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0059",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Ω2={x}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0060",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Ω3={x,y,d(x,y)}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0061",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Ω4={x,y,z,d_xy,d_yz,d_zx}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0062",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`d_xy+d_yz≥d_xz`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0063",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`Σ7={0,1,2,3,4,5,6}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0064",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`...,7^3,7^2,7^1,7^0`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0065",
+      "source_file": "02_T02_A02_BASE7_ZERO_SET_ATOMIC_RELATIONS.md",
+      "source_commit_hint": null,
+      "source_class": "BASE_REPRESENTATION",
+      "expression": "`6_7+1=10_7`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0066",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`R=s/√2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0067",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "ROTATION",
+      "expression": "`0°→90°`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0068",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`θ=45°=π/4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0069",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`L=Rθ=Rπ/4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0070",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`c=2R sin(θ/2)=2R sin22.5°`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0071",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`sin22.5°=√(2-√2)/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0072",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`c=R√(2-√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0073",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`h=R cos22.5°=(R/2)√(2+√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0074",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`A_triangle=(1/2)R² sin45°=(√2/4)R²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0075",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`A_sector=(1/2)R²θ=(π/8)R²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0076",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_segment=A_sector-A_triangle`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0077",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`A_segment=R²(π/8-√2/4)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0078",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`45°=22.5°+22.5°`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0079",
+      "source_file": "03_A03_SQUARE_ROTATION_ARC_SECTOR.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`45°→22.5°→11.25°→5.625°→...`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0080",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`R_ext=a/√2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0081",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`R_int=a/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0082",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R_ext/R_int=√2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0083",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`a/2 ≤ r ≤ a/√2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0084",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`⋃_θ R_θ(S)=disk(a/√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0085",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`⋂_θ R_θ(S)=disk(a/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0086",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`Δθ=45°=π/4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0087",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`4 --45°--> 8`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0088",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`90°→45°→22.5°→...`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0089",
+      "source_file": "04_A05_PHOTO_GEOMETRY_SQUARE_CIRCLE_OCTAGON.md",
+      "source_commit_hint": null,
+      "source_class": "LIMIT_MODEL",
+      "expression": "`P_(2^n)→C as n→∞`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0090",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "USER_REFERENCE",
+      "expression": "`3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0091",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s_n=2R sin(π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0092",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r_n=R cos(π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0093",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_n=(n/2)R² sin(2π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0094",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`P_n=2nR sin(π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0095",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_LIMIT",
+      "expression": "`P_n→2πR, A_n→πR² as n→∞`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0096",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`h=(√3/2)a`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0097",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`(a/2,(√3/2)a,a)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0098",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`1:√3:2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0099",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`R=a/√3`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0100",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`a=√3R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0101",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`h=(3/2)R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0102",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r=R/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0103",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`h=R+r`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0104",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`r:R:h=1/2:1:3/2=1:2:3`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0105",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s_6=R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0106",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r_6=(√3/2)R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0107",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`120°/2=60°`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0108",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`3+3=6`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0109",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`3 --60°--> 6`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0110",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s_4=√2R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0111",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r_4=R/√2=(√2/2)R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0112",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R/r_4=√2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0113",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`4 --45°--> 8`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0114",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`Δθ=180°/n=π/n`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0115",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`n+n=2n`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0116",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`5 --36°--> 10`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0117",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`7 --(180°/7)--> 14`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0118",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`V(P_n) ∪ V(R_(π/n)P_n)=V(P_(2n))`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0119",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R_k=R_0(1/√2)^k`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0120",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_NOTATION",
+      "expression": "`T_3=1/2, T_4=1/√2, T_6=√3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0121",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`T_n=cos(π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0122",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`cos60°=1/2, cos45°=√2/2, cos30°=√3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0123",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`c=2R sin(θ/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0124",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`h=R cos(θ/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0125",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_triangle=(1/2)R² sinθ`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0126",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`L_arc=Rθ`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0127",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_sector=(1/2)R²θ`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0128",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_segment=(R²/2)(θ-sinθ)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0129",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`c=2R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0130",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`m=R`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0131",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R_(k+1)=R_k cos(π/n_k)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0132",
+      "source_file": "05_T06_A06_POLYGON_TRIANGLE_RADIUS_SYSTEM.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R_m=R_0 ∏_(k=0)^(m-1) cos(π/n_k)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0133",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s=Rθ`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0134",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`c=2R sin(θ/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0135",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`d=R cos(θ/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0136",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`f=R(1-cos(θ/2))`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0137",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`s/c=θ/[2 sin(θ/2)]`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0138",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`tan(θ/2)=(c/2)/d`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0139",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "TRIGONOMETRY",
+      "expression": "`f/(c/2)=tan(θ/4)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0140",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_LIMIT",
+      "expression": "`lim_(θ→0) s/c=1`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0141",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`s_45=πR/4`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0142",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`c_45=R√(2-√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0143",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`d_45=(R/2)√(2+√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0144",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`f_45=R[1-√(2+√2)/2]`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0145",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "NUMERIC",
+      "expression": "`s_45/c_45≈1.02617`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0146",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`x(θ)=R cosθ, y(θ)=R sinθ, x²+y²=R²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0147",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s_8=2R sin(π/8)=R√(2-√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0148",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r_8=R cos(π/8)=(R/2)√(2+√2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0149",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`α_p=2π/p`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0150",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`s_p=2R sin(π/p)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0151",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`r_p=R cos(π/p)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0152",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_p=(p/2)R² sin(2π/p)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0153",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`P_p=2pR sin(π/p)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0154",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`a_e=R, b_e=R|cos i|`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0155",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`b_e/a_e=|cos i|`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0156",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`e=√(1-b_e²/a_e²)=|sin i|`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0157",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`e²+(b_e/a_e)²=1`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0158",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_GEOMETRY",
+      "expression": "`A_c=πR²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0159",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`A_e=πa_e b_e=πR²|cos i|`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0160",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`A_e/A_c=|cos i|`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0161",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`x'=R cos t, y'=R cos i sin t`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0162",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PROJECTION",
+      "expression": "`x'^2/R² + y'^2/(R² cos²i)=1`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0163",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_CALCULUS",
+      "expression": "`ds_e=R√(1-sin²i cos²t) dt`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0164",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_CALCULUS",
+      "expression": "`S_e=R∫_[t1,t2] √(1-sin²i cos²t) dt`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0165",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_CALCULUS",
+      "expression": "`C_e=4aE(e)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0166",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`R_(k+1)=R_k sec(π/p_k)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0167",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`2, √2, 2/√3`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0168",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_TRIG",
+      "expression": "`1/2, √2/2, √3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0169",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_NOTATION",
+      "expression": "`λ_p=cos(π/p)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0170",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PHYSICS_MODEL",
+      "expression": "`r_n^(B)=(a_0/Z)n²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0171",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`r_(n+1)^(B)/r_n^(B)=((n+1)/n)²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0172",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`G_(k+1)/G_k=sec(π/p_k)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0173",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_NOTATION",
+      "expression": "`Q_(n+1)/Q_n=(1+1/n)²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0174",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "HYPOTHESIS_TEST",
+      "expression": "`sec(π/p_n)≈((n+1)/n)²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0175",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_PHYSICS",
+      "expression": "`N_n=2n²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0176",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`r_1:r_2:r_3:r_4=1:4:9:16`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0177",
+      "source_file": "06_A07_ARC_ELLIPSE_LAYER_QUANTUM_COMPARATOR.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`(sinθ,cosθ,θ)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0178",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "RECAP",
+      "expression": "`√3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0179",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "RECAP",
+      "expression": "`3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0180",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "RECAP",
+      "expression": "`r:R:h=1:2:3`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0181",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "RECAP",
+      "expression": "`r_n ∝ n²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0182",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "RECAP",
+      "expression": "`N_n=2n²`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0183",
+      "source_file": "07_A08_WRITE_CONFIRMATION_RECAP.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`geometria formal != mecanismo atômico provado`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0184",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`7 vezes?`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0185",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`77 vezes`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0186",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`3 dias/noites`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0187",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`30 moedas de prata`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0188",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`12 discípulos`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0189",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "TEXT_NUMERIC",
+      "expression": "`12 legiões de anjos`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0190",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`número ⇒ mistério` — explicitly rejected as the simplistic inference.",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0191",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "STANDARD_SET/PROJECT_BRIDGE",
+      "expression": "`indeterminado→∅→{∅}→{0,1}→{0,1,2}`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0192",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`número != representação do número`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0193",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_BRIDGE",
+      "expression": "`(Z,N,e)→(A,q,identidade nuclear)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0194",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`constituintes→relações→configuração→propriedades emergentes`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0195",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`padrão robusto = relação que sobrevive à mudança de representação`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0196",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`padrão dependente dos dígitos = possível artefato da base`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0197",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "GEOMETRIC_DEFINITION",
+      "expression": "`arco + dois raios = setor circular`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0198",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "GEOMETRIC_DEFINITION",
+      "expression": "`corda + dois raios = triângulo isósceles`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0199",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`reta→corda`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0200",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`curvatura→arco`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0201",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "ROTATION",
+      "expression": "`0°→45°→90°`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0202",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`quadrado→rotação→arcos→varredura contínua→circunferência`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0203",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`mesmos extremos: corda→reta; arco→curva`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0204",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SET_RELATION",
+      "expression": "`núcleo invariável ⊂ região variável ⊂ envoltória máxima`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0205",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`1 ponto→posição`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0206",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`2 pontos→distância`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0207",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`3 pontos→fechamento/área`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0208",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "ARITHMETIC",
+      "expression": "`4+4=8`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0209",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "LIMIT_MODEL",
+      "expression": "`4→8→16→32→...→limite circular`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0210",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`centro→raio→aresta→rotação→octógono→coroa→circunferência`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0211",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`√3/2 != 3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0212",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`h/a=√3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0213",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "DERIVED",
+      "expression": "`h/R=3/2`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0214",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`círculo⊃polígono⊃círculo⊃polígono⊃...`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0215",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`ESCALA ↔ cos(π/n)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0216",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`CORDA ↔ 2R sin(θ/2)`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0217",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`ROTAÇÃO ↔ π/n`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0218",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`DUPLICAÇÃO ↔ n→2n`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0219",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SET_RELATION",
+      "expression": "`núcleo ⊂ coroa ⊂ envoltória circular`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0220",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "CONCEPTUAL",
+      "expression": "`círculo→inclinação→cos i→elipse→integral elíptica`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0221",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "ORDER_RELATION",
+      "expression": "`R_1<R_2<R_3<...`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0222",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "BOUNDARY",
+      "expression": "`camadas poligonais != camadas quânticas automaticamente`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0223",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`G = camadas geométrico-trigonométricas`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0224",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "PROJECT_MODEL",
+      "expression": "`Q = camadas quântico-radiais`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0225",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`sin ↔ transversal/corda/excentricidade`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0226",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`cos ↔ radial/apótema/projeção`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0227",
+      "source_file": "09_REVIEW_DELTA_OMITTED_EXPRESSION_BLOCKS.md",
+      "source_commit_hint": null,
+      "source_class": "SYSTEM_MAP",
+      "expression": "`θ ↔ rotação/arco`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0228",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "ROTATION_MATRIX",
+      "expression": "\\`R_phi=[[cosφ,-sinφ],[sinφ,cosφ]]\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0229",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "ROTATION_MATRIX",
+      "expression": "\\`R_(π/4)=(1/√2)[[1,-1],[1,1]]\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0230",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "SET_MODEL",
+      "expression": "\\`Q0={|x|≤L/2,|y|≤L/2}\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0231",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "SET_MODEL",
+      "expression": "\\`Q45={|x|+|y|≤L/√2}\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0232",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "SET_MODEL",
+      "expression": "\\`O_cap=Q0∩Q45\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0233",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "SET_MODEL",
+      "expression": "\\`O_hull=conv(V(Q0)∪V(Q45))\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0234",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`Δθ=2π/8=π/4=45°\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0235",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`angle_internal=135°\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0236",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "TRIANGLE",
+      "expression": "\\`1:1:√2\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0237",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "TRUNCATION",
+      "expression": "\\`L-2x=x√2\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0238",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "TRUNCATION",
+      "expression": "\\`x=L/(2+√2)=L(2-√2)/2\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0239",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`s_cap=L(√2-1)\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0240",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`r_cap=L/2\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0241",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`R_cap=L/√(2+√2)\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0242",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`P_cap=8L(√2-1)\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0243",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON",
+      "expression": "\\`A_cap=2(√2-1)L²\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0244",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "AREA_RATIO",
+      "expression": "\\`A_cap/L²=2(√2-1)\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0245",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "HULL_OCTAGON",
+      "expression": "\\`R_hull=L/√2\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0246",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "HULL_OCTAGON",
+      "expression": "\\`s_hull=L√((2-√2)/2)\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0247",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "HULL_OCTAGON",
+      "expression": "\\`A_hull=√2L²\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0248",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "CROSS_RELATION",
+      "expression": "\\`R_cap=s_hull\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0249",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "PHASE",
+      "expression": "\\`phase(O_cap,O_hull)=π/8=22.5°\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0250",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "OCTAGON_TRIG",
+      "expression": "\\`s8/(2r8)=tan(π/8)=√2-1\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    },
+    {
+      "mf_id": "MF-0251",
+      "source_file": "11_CURRENT_OCTAGON_IMAGE_GEOMETRY_DELTA.md",
+      "source_commit_hint": null,
+      "source_class": "ROTATION_OPERATOR",
+      "expression": "\\`4 --π/4--> 8\\`",
+      "import_state": "IMPORTED_VERBATIM_NORMALIZED_LINE",
+      "executable_state": "UNCLASSIFIED",
+      "cosmology_crosswalk_state": "UNCLASSIFIED"
+    }
+  ]
+}

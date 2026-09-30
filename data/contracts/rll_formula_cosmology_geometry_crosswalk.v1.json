@@ -1,0 +1,69 @@
+{
+  "schema": "rll.formula_cosmology_geometry_crosswalk.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "formula_registry": "data/governance/RLL_SESSION_FORMULA_REGISTRY_MF0001_MF0251_V1.json",
+  "test_matrix": "data/governance/RLL_FORMULA_TEST_MATRIX_MF0001_MF0251_V1.json",
+  "formula_count": 251,
+  "datasets": {
+    "desi_dr2": {
+      "points": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "covariance": "data/real/desi_dr2_bao_covariance.csv",
+      "observables": [
+        "DV_over_rd",
+        "DM_over_rd",
+        "DH_over_rd"
+      ],
+      "geometry": [
+        "F_AP=DM/DH=DM*H/c",
+        "DV/rd=[z*(DH/rd)*(DM/rd)^2]^(1/3)"
+      ]
+    },
+    "pantheon_plus": {
+      "catalog": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat",
+      "covariance": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+      "geometry": [
+        "DL=(1+z)DM",
+        "mu=5log10(DL/Mpc)+25"
+      ],
+      "nuisance": "M_B profile per existing G4 policy"
+    }
+  },
+  "models": {
+    "LCDM": "FLCDM in data/contracts/cosmology_model_family_shadow.v1.json",
+    "RLL": "RLL in data/contracts/cosmology_model_family_shadow.v1.json",
+    "null_gate": "Os0=0 => RLL background equals FLCDM for common parameters"
+  },
+  "standard_geometry": {
+    "flat_FLRW": [
+      "DH=c/H",
+      "DM=(c/H0)*integral_0^z dz/E(z)",
+      "DA=DM/(1+z)",
+      "DL=(1+z)DM",
+      "DL=(1+z)^2 DA",
+      "dDM/dz=DH"
+    ],
+    "cone_extension": "docs/invariants/circle_triangle_cone_annulus_v1.md"
+  },
+  "execution_order": [
+    "coverage_251",
+    "deterministic_144",
+    "structural_16",
+    "boundary_11",
+    "hypothesis_33",
+    "geometry_candidates_130",
+    "DESI_covariance_geometry",
+    "Pantheon_covariance_distance",
+    "LCDM_RLL_null_limit",
+    "LCDM_RLL_residual_geometry",
+    "prior_art_gate",
+    "physical_claim_gate"
+  ],
+  "boundaries": [
+    "spatial_or_spacetime_geometry != Euclidean toy geometry",
+    "diagnostic embedding != physical mechanism",
+    "small residual != confirmation",
+    "all formulas tested != all formulas cosmologically relevant"
+  ]
+}

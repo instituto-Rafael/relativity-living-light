@@ -1,0 +1,64 @@
+{
+  "mu_id": "MU-RLL-SEM-SCAFFOLD-V1-20260920",
+  "timestamp": "2026-09-20T22:51:00-03:00",
+  "status": "ANALYSIS_RUN_HEURISTIC_LEXICAL",
+  "claim_allowed": false,
+  "scope": "John and Matthew, ENG/SPA/POR, lexical-concept anchors over normalized verse text",
+  "definition_boundary": {
+    "shannon_entropy": "not redefined",
+    "semantic_scaffolding_cost": "proposed operational construct: description/decoder/exceptions required to recover intended relations at declared fidelity",
+    "conditional_semantic_uncertainty": "H(M | expression, context), conceptual target for later estimation"
+  },
+  "per_language_structural_baseline": {
+    "eng": {"seed_vs_verbose_pct": 10.242, "seed_vs_plain_pct": 10.994},
+    "spa": {"seed_vs_verbose_pct": 10.428, "seed_vs_plain_pct": 11.242},
+    "por": {"seed_vs_verbose_pct": 10.567, "seed_vs_plain_pct": 11.428},
+    "seed_vs_verbose_mean_pct": 10.4123333333,
+    "seed_vs_verbose_range_pp": 0.325,
+    "seed_vs_verbose_population_sd_pp": 0.1331423632,
+    "interpretation": "tight clustering is expected to be strongly influenced by identical record count/reference schema; it is not evidence of a universal semantic constant"
+  },
+  "concept_bridge_average_verse_hits_over_three_languages": {
+    "word": {"john": 30.0, "matthew": 18.3},
+    "belief": {"john": 53.3, "matthew": 17.7},
+    "truth": {"john": 31.7, "matthew": 16.7},
+    "life": {"john": 38.0, "matthew": 11.7},
+    "love": {"john": 30.0, "matthew": 9.7},
+    "light": {"john": 16.3, "matthew": 9.0},
+    "serve": {"john": 5.7, "matthew": 19.0},
+    "kingdom": {"john": 3.0, "matthew": 53.3},
+    "forgiveness": {"john": 0.7, "matthew": 11.3},
+    "compassion": {"john": 0.0, "matthew": 4.0},
+    "mercy": {"john": 0.0, "matthew": 11.7}
+  },
+  "top_observed_cooccurrences": {
+    "john": [
+      ["belief","life",25],
+      ["belief","word",19],
+      ["life","love",12],
+      ["truth","word",8],
+      ["life","truth",7],
+      ["life","light",6]
+    ],
+    "matthew": [
+      ["kingdom","truth",5],
+      ["belief","serve",4],
+      ["belief","forgiveness",3],
+      ["kingdom","word",3],
+      ["life","serve",3],
+      ["belief","truth",3]
+    ]
+  },
+  "proposed_bridge": [
+    "WORD/LOGOS",
+    "BELIEF",
+    "LIFE",
+    "LOVE",
+    "TRUTH",
+    "SERVICE/FORGIVENESS",
+    "KINGDOM"
+  ],
+  "important_negative": "COMPASSION and MERCY are useful Matthew-side concepts but were not lexical cross-book anchors in John under this heuristic; forcing them as universal seeds would add decoder/inference cost.",
+  "linguistic_boundary": "multiword expressions and polysemy must be atomic or context-bound where needed: white spirit != spirit level != spirit drink; one-word dictionaries are insufficient.",
+  "next_gate": "manual/embedding annotation for latent compassion/mercy actions; phrase-level idiom dictionary; estimate MDL/scaffold cost and fidelity; remove fixed schema overhead before testing cross-language semantic invariance"
+}

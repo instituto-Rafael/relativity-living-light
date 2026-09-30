@@ -1,0 +1,184 @@
+{
+  "schema": "rll.sn_modern_execution_receipt.v1",
+  "created_at": "2026-08-07T20:19:54Z",
+  "source_workflow": {
+    "name": "Pantheon Covariance Materialization",
+    "run_id": 31215323284,
+    "head_branch": "audit/rll-modern-observation-gates-20260807-v1",
+    "head_sha": "539ad9f9e12adc4f077faa7fd451c3dcbba353b9",
+    "artifact_id": 9008272233,
+    "artifact_digest_sha256": "e599ed2897a1eced81bac6886ac47966fa14f6bfc7418ebc8c1c43df448800ba",
+    "workflow_conclusion": "success"
+  },
+  "claim_allowed": false,
+  "publication_ready": false,
+  "automatic_promotion_forbidden": true,
+  "evidence_state": "VERIFIED_LIMITED",
+  "closed_or_reduced_gaps": [
+    "Pantheon+ STAT+SYS full covariance was materialized from the pinned official source and executed, replacing the historical missing-covariance state for this workflow.",
+    "CPL was added as a mandatory third-model control under the same Pantheon+ full-covariance likelihood as LCDM and RLL.",
+    "DES-Dovekie HD and STAT+SYS precision inputs were materialized from immutable upstream Git objects and verified as 1820 ordered supernova rows plus an 1820x1820 positive-definite precision matrix.",
+    "DES-Dovekie LCDM/CPL/RLL full-precision fits were executed under one profiled magnitude-offset policy without claiming an H0 measurement.",
+    "First-run Dovekie SHA-256 and byte counts were obtained and subsequently pinned in the experiment contract."
+  ],
+  "pantheon_plus": {
+    "calibration_variant": "Pantheon+SH0ES",
+    "catalog": {
+      "rows_original": 1701,
+      "rows_selected": 1657,
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "observed_z_max": 2.26137
+    },
+    "covariance": {
+      "shape_selected": [1657, 1657],
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "max_raw_asymmetry": 3.0000000000038676e-08,
+      "accepted_roundoff_tolerance": 5e-08,
+      "symmetrization": "C <- (C + C.T) / 2",
+      "jitter": false
+    },
+    "models": {
+      "LCDM": {
+        "chi2": 1452.0172947103922,
+        "AIC": 1458.0172947103922,
+        "BIC": 1474.255586762672,
+        "Omega_m": 0.3316589835913158,
+        "H0": 73.53291334420634
+      },
+      "CPL": {
+        "chi2": 1451.6882843629787,
+        "AIC": 1461.6882843629787,
+        "BIC": 1488.7521044501116,
+        "Omega_m": 0.30770196445354164,
+        "H0": 73.42685044086888,
+        "w0": -0.9197805851736303,
+        "wa": -0.11856308129097347,
+        "delta_chi2_vs_LCDM": -0.32901034741348667,
+        "delta_BIC_vs_LCDM": 14.496517687439564,
+        "multiseed_chi2_span": 0.1004067271464919,
+        "best_fit_boundary_hit": false,
+        "one_multistart_hit_Omega_m_lower_bound": true
+      },
+      "RLL": {
+        "chi2": 1452.0172947103927,
+        "AIC": 1464.0172947103927,
+        "BIC": 1496.493878814952,
+        "Omega_m": 0.33165898355370776,
+        "H0": 73.53291334492758,
+        "Omega_s0": 0.0827818115946427,
+        "z_t": 9.337577769838262,
+        "w_t": 0.25440830985638785,
+        "delta_chi2_vs_LCDM": 4.547473508864641e-13,
+        "delta_BIC_vs_LCDM": 22.23829205228003,
+        "transition_outside_observed_redshift_support": true,
+        "null_nested_multistarts_with_Omega_s0_zero": 2,
+        "parameter_identifiability": "BLOCKED_SN_ONLY"
+      }
+    }
+  },
+  "des_dovekie": {
+    "calibration_variant": "DES-Dovekie",
+    "source_repository": "des-science/DES-SN5YR",
+    "source_commit": "c9a4fcafc4cbd19bd750dee47fc76194a45c181f",
+    "hubble_diagram": {
+      "rows": 1820,
+      "bytes": 148002,
+      "git_blob_sha1": "f80ec4e2795edcbf3442f460c539bea56226027a",
+      "sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+      "zHD_min": 0.02509,
+      "zHD_max": 1.14418,
+      "ordering_authority": true
+    },
+    "precision_matrix": {
+      "bytes": 6244951,
+      "git_blob_sha1": "4289666487f427782ec81c327ae7f7741f0f5fe5",
+      "sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+      "dimension": 1820,
+      "packed_upper_values": 1657110,
+      "semantics": "inverse_covariance_precision",
+      "positive_definite": true,
+      "precision_is_covariance": false
+    },
+    "nuisance_policy": "one additive SN magnitude offset analytically profiled; H0 fixed only as a reference distance scale and not inferred",
+    "models": {
+      "LCDM": {
+        "chi2": 1631.4219532890247,
+        "AIC": 1635.4219532890247,
+        "BIC": 1646.4351368491664,
+        "Omega_m": 0.3301614053297694
+      },
+      "CPL": {
+        "chi2": 1626.6295307860246,
+        "AIC": 1634.6295307860246,
+        "BIC": 1656.655897906308,
+        "Omega_m": 0.40967253841401396,
+        "w0": -0.7882882055160016,
+        "wa": -3.0,
+        "delta_chi2_vs_LCDM": -4.792422503000125,
+        "delta_AIC_vs_LCDM": -0.7924225030001253,
+        "delta_BIC_vs_LCDM": 10.220761057141544,
+        "multiseed_chi2_span": 0.4723913693899249,
+        "best_fit_boundary_hit": "wa_lower_bound",
+        "parameter_interpretation": "BLOCKED_BOUNDARY_SENSITIVITY"
+      },
+      "RLL": {
+        "chi2": 1631.4219532140078,
+        "AIC": 1641.4219532140078,
+        "BIC": 1668.954912114362,
+        "Omega_m": 0.3301614048788487,
+        "Omega_s0": 0.10600739234383795,
+        "z_t": 4.295158749539411,
+        "w_t": 0.19656010088249087,
+        "delta_chi2_vs_LCDM": -7.501694199163467e-08,
+        "delta_BIC_vs_LCDM": 22.519775265195676,
+        "transition_outside_observed_redshift_support": true,
+        "null_nested_multistarts_with_Omega_s0_zero": 3,
+        "parameter_identifiability": "BLOCKED_SN_ONLY"
+      }
+    }
+  },
+  "interpretation": {
+    "pantheon_rll_advantage": false,
+    "dovekie_rll_advantage": false,
+    "rll_sn_only_parameters_measured": false,
+    "cpl_dovekie_parameter_interpretation_allowed": false,
+    "bic_is_bayesian_evidence": false,
+    "scientific_summary": "On both materialized SN likelihoods, RLL collapses to an LCDM-like likelihood while carrying extra parameters. The Dovekie CPL maximum-likelihood improvement is real at the declared numerical fit level but its wa optimum lies on the lower bound, so parameter interpretation requires a bound/profile sensitivity analysis."
+  },
+  "diagnostic_provenance": {
+    "fit_metrics": "workflow artifact 9008272233",
+    "identifiability_assessment": "post-run audit from immutable fit runs and observed redshift support",
+    "diagnostic_script_added_after_source_run": "scripts/rll_sn_identifiability_diagnostics.py",
+    "diagnostic_script_was_not_claimed_as_generator_of_this_historical_run": true
+  },
+  "token_vazio": [
+    "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+    "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY",
+    "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY",
+    "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+    "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+    "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+    "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+    "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+    "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND"
+  ],
+  "F_ok": [
+    "Pantheon+ and DES-Dovekie now have materialized full matrix SN likelihood executions in the same PR branch.",
+    "CPL is present as a control model in both likelihoods.",
+    "Negative RLL results are preserved rather than optimized away or promoted.",
+    "Dovekie precision semantics, source ordering, hashes and byte counts are explicit and auditable."
+  ],
+  "F_gap": [
+    "Pantheon+SH0ES and Dovekie are not yet a clean calibration/sample ablation because their absolute-calibration/nuisance contracts differ.",
+    "Dovekie CPL wa is boundary-limited and requires a profile/bound sensitivity run.",
+    "SN-only RLL transition parameters are not identifiable when the solution hides outside observed redshift support or collapses to Omega_s0=0.",
+    "Real nested-sampling evidence, official DESI DR2 reproduction and physical perturbation/growth likelihoods remain open."
+  ],
+  "F_next": [
+    "Build a Pantheon+ Hubble-flow-only profiled-offset companion likelihood to match the Dovekie nuisance contract.",
+    "Run CPL wa bound/profile sensitivity before interpreting its Dovekie best-fit parameters.",
+    "Move the next validation gate to official DESI DR2 reproduction plus real nested-sampling evidence, followed by CLASS/CAMB and DES Y6 growth."
+  ]
+}

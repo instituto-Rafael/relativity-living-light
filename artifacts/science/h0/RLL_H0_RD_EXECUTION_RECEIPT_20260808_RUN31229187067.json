@@ -1,0 +1,103 @@
+{
+  "schema": "rll.h0_rd_execution_receipt.v1",
+  "observed_at": "2026-08-08T00:12:35Z",
+  "state": "VERIFIED_EXECUTED_CONVERGENCE_INCOMPLETE",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "source_workflow": {
+    "name": "H0 rd Ablation Gate",
+    "run_id": 31229187067,
+    "conclusion": "success",
+    "head_branch": "audit/token-vazio-closure-reconciler-20260807-v1",
+    "head_sha": "1197b1b37c5c5ededd3a0ad375510f3d57b7014b"
+  },
+  "artifact": {
+    "id": 9013226226,
+    "name": "h0-rd-ablation-31229187067",
+    "size_in_bytes": 26994,
+    "digest": "sha256:e6bb3fea84c9ae05b09cfbee1894143dc22005d903fbdfe806e0fc8fdc72f26f",
+    "expired": false
+  },
+  "execution": {
+    "declared_cells": 6,
+    "executed_cells": 6,
+    "models_per_cell": 4,
+    "total_model_fits": 24,
+    "finite_best_objectives": 24,
+    "best_attempt_success_true": 9,
+    "best_attempt_success_false": 15,
+    "runtime_seconds": 268.390692451,
+    "n_joint_data_coordinates": 65,
+    "matrix_sha256": "db0bf95b13441482884947903d0156e8f3ebe9416a9a537a0010248ac3fe9871",
+    "joint_likelihood_sha256": "0d92b3010272fa44baadff938cb14355962a7bc652b4edf2f1fd6667cd8b87f7"
+  },
+  "rll_minus_cpl_by_cell": [
+    {
+      "run_id": "h0_broad_free__rd_fixed_for_all",
+      "delta_objective": 19.156460507982928,
+      "delta_chi2_data": 19.156460507982928
+    },
+    {
+      "run_id": "h0_broad_free__rd_derived_for_all",
+      "delta_objective": 13.873910274020261,
+      "delta_chi2_data": 13.873910274020261
+    },
+    {
+      "run_id": "h0_planck_prior__rd_fixed_for_all",
+      "delta_objective": 14.55821152636861,
+      "delta_chi2_data": 14.783002950128093
+    },
+    {
+      "run_id": "h0_planck_prior__rd_derived_for_all",
+      "delta_objective": 18.894968758460834,
+      "delta_chi2_data": 19.46900516923776
+    },
+    {
+      "run_id": "h0_shoes_local_prior__rd_fixed_for_all",
+      "delta_objective": 7.597356960475267,
+      "delta_chi2_data": 13.600564673827492
+    },
+    {
+      "run_id": "h0_shoes_local_prior__rd_derived_for_all",
+      "delta_objective": 16.11800836835603,
+      "delta_chi2_data": 17.550326343738192
+    }
+  ],
+  "epistemic_boundary": {
+    "all_six_cells_were_numerically_evaluated": true,
+    "all_24_best_fits_converged": false,
+    "planck_h0_independent_of_existing_planck_cmb_shift": false,
+    "primary_external_h0_source_artifacts_frozen": false,
+    "derived_rd_full_boltzmann_recombination": false,
+    "h0_tension_resolution_claim_allowed": false,
+    "model_evidence_claim_allowed": false
+  },
+  "classification": {
+    "generic_execution_question": "RESOLVED_POSITIVE",
+    "optimization_convergence": "TOKEN_VAZIO",
+    "primary_prior_provenance": "TOKEN_VAZIO",
+    "full_boltzmann_rd": "TOKEN_VAZIO"
+  },
+  "reduces_token": "TOKEN_VAZIO_H0_RD_ABLATION_EXECUTION_PROVENANCE",
+  "successor_tokens": [
+    "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+    "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+    "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+  ],
+  "scientific_boundary": "The six-cell matrix was executed completely, but 15 of 24 selected minima did not report formal optimizer convergence. The numerical deltas are retained as diagnostic evidence only and must not be promoted until the convergence successor closes. Planck-H0 overlap and approximate derived-rd remain separate boundaries.",
+  "F_ok": [
+    "6/6 H0/r_d cells and 24/24 model fits produced finite objectives.",
+    "Data chi2 and H0 conditioning terms were separated.",
+    "RLL-minus-CPL diagnostics were materialized for every cell."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_H0_RD_OPTIMIZATION_CONVERGENCE",
+    "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+    "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION"
+  ],
+  "F_next": [
+    "Rerun with the hardened convergence gate and fallback optimizer.",
+    "Freeze primary Planck and SH0ES provenance separately from numerical priors.",
+    "Replace approximate derived-rd with pinned Boltzmann/recombination reproduction."
+  ]
+}

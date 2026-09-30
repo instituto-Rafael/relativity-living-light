@@ -1,0 +1,18 @@
+{
+  "receipt_id": "RLL-TRIANGLE-SIMPLEX-EMBEDDING-20260922-V1",
+  "date": "2026-09-22",
+  "execution_scope": "assistant_runtime_external_to_canonical_rll_ci",
+  "verifier": "tools/verify_triangle_simplex_embedding.py",
+  "result": {
+    "total": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  "claim_allowed": false,
+  "boundaries": [
+    "triangle_area_alone != complete_geometry",
+    "polygon_triangulation_exact != arbitrary_curve_exactness",
+    "mathematical_recursive_nesting != physical_infinity"
+  ],
+  "f_next": "canonical CI execution on PR #946"
+}

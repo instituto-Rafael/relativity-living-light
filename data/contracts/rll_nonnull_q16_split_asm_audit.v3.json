@@ -1,0 +1,38 @@
+{
+  "schema": "rll.nonnull_q16.split_asm_audit.contract.v3",
+  "date": "2026-09-29",
+  "claim_allowed": false,
+  "predecessor_merge": "2457391258ffa0d05037257fba521f4056b05d1a",
+  "transport": {
+    "generator_stdout": "33 signed Q16.16 values, native little-endian, 132 bytes",
+    "recovery_stdin": "exactly 132 bytes",
+    "metadata_transmitted": false,
+    "filesystem_required_by_runtime": false,
+    "parser": false
+  },
+  "executables": [
+    "core/lowlevel_runtime/c/rll_nonnull_q16_generator_freestanding.c",
+    "core/lowlevel_runtime/c/rll_nonnull_q16_recovery_freestanding.c"
+  ],
+  "hard_gates": [
+    "each source compiles with -Wshadow -Werror",
+    "each source compiles with -fno-optimize-sibling-calls",
+    "x86_64 generator/recovery link as static ELFs with no undefined symbols",
+    "x86_64 ELFs have no INTERP and no NEEDED",
+    "generator output size is exactly 132 bytes",
+    "recovery returns best=1311,65536,19661",
+    "ARMv7 generator/recovery compile to ELF32 ARM objects with no undefined symbols"
+  ],
+  "audit_semantics": {
+    "shadow": "source-level compiler diagnostic gate plus no stack protector/runtime shadow dependency",
+    "tail": "compiler sibling/tail-call optimization disabled; this is not a claim that all control-flow jumps disappear",
+    "overhead": "no heap, dynamic loader, hosted runtime or text parser; syscall transport remains observable overhead",
+    "independence": "separate executable artifacts and process address spaces; not independent scientific reimplementation because both derive from the same canonical model/primitives"
+  },
+  "token_vazio": [
+    "ARMv7 static link",
+    "ARMv7 physical execution on moto e7",
+    "independent reimplementation by a separate implementation path",
+    "held-out real-data discrimination"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "receipt_id": "RLL-MECHANICS-FUNCTIONING-20260923-V1",
+  "timestamp": "2026-09-23T00:08:00-03:00",
+  "kind": "architecture_muwrite",
+  "source_ref": "user request to structure the mechanics connecting what RLL is and how it functions",
+  "parent": "RLL-RX-ZERO-EXTERNAL-DEPENDENCY-20260923-V1",
+  "artifact": "docs/architecture/RLL_MECANICAS_LIGACAO_FUNCIONAMENTO_V1.md",
+  "artifact_commit": "e4dae33b9ba35399a59c6a1ae7af4b48987b4e1a",
+  "delta_summary": "Unified RLL model, observable, runtime, covariance, evidence, receipt and claim-gate mechanics across Rx, Structure-D and freestanding routes.",
+  "routes": [
+    "L",
+    "T",
+    "P",
+    "C",
+    "R",
+    "I",
+    "E",
+    "A"
+  ],
+  "evidence": [
+    "validacao_real/run_rx_pipeline.py",
+    "core/lowlevel_runtime/README.md",
+    "docs/science/RLL_HZ_REAL_FREESTANDING_MODEL.md",
+    "docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md",
+    "docs/canonical/RLL_CANONICAL_FREESTANDING_KERNEL.md",
+    "data/pipelines/structure_d/joint_real_likelihood.py",
+    "data/pipelines/structure_d/joint_real_likelihood_flat.py"
+  ],
+  "gap": [
+    "Rx multiprobe parity beyond H(z)+BAO",
+    "validated RLL perturbation/growth dynamics",
+    "full Planck likelihood",
+    "robust posterior parity",
+    "independent replication"
+  ],
+  "next": "Extend Rx from 45 observations to the 64-observation Structure-D surface using f_sigma8 and compressed CMB while preserving baseline and provenance gates.",
+  "claim_allowed": false,
+  "append_only": true
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "rll.real_data_validation_contract.v2",
+  "state": "ACTIVE",
+  "claim_allowed": false,
+  "data_partitions": {
+    "expansion_independent": {
+      "path": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "derived_from": "data/real/Hz_data_real.csv",
+      "filter": "source == CC_Moresco2022",
+      "expected_rows": 28,
+      "excludes": ["CC+BAO_BOSS", "BAO_Lya"],
+      "reason": "avoid obvious reuse of BAO-derived H(z) points inside a joint fit that already contains a BAO likelihood"
+    },
+    "bao": {
+      "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "expected_rows": 13,
+      "covariance_path": "data/real/desi_dr2_bao_covariance.csv",
+      "claim_role": "background_probe_candidate"
+    },
+    "growth": {
+      "path": "data/real/cosmology/fsigma8_growth_real.csv",
+      "claim_role": "exploratory_only",
+      "blocker": "heterogeneous covariance/overlap policy plus current pipeline growth-index proxy without D(z)"
+    },
+    "cmb": {
+      "path": "data/real/CMB_shift_real.json",
+      "claim_role": "exploratory_only",
+      "blocker": "current joint pipeline substitutes r_d for required r_s(z_star) in l_A"
+    },
+    "supernova": {
+      "path_if_materialized": "data/pantheon/",
+      "claim_role": "separate_validation_until_covariance_and_fit_contract_pass"
+    }
+  },
+  "comparability_rule": {
+    "internal_delta_aic_or_delta_bic_vs_published_sigma": "NOT_DIRECTLY_COMPARABLE",
+    "required_for_comparison": [
+      "same dataset combination",
+      "same covariance treatment",
+      "same cosmological parameterization",
+      "same prior domain or an explicit sensitivity analysis",
+      "same nuisance-parameter accounting"
+    ]
+  },
+  "promotion_gates": [
+    "RLL_COSMOLOGY_E0_GATE_V1 passes",
+    "data provenance bridge passes",
+    "no obvious probe double counting",
+    "growth and CMB are either physically upgraded or excluded from claim-bearing likelihood",
+    "historical artifacts remain immutable and are superseded by new versioned outputs"
+  ]
+}

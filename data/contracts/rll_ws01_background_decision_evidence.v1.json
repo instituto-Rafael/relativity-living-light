@@ -1,0 +1,62 @@
+{
+  "schema": "rll.ws01_background_decision_evidence.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "state": "PREREGISTERED_EXECUTABLE_FAIL_CLOSED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "target_contract": "RX-PHYSICS-CANONICAL-V2",
+  "purpose": "Measure the unresolved WS01 background semantics without selecting any option from model fit quality.",
+  "axes": {
+    "hz_dataset": {
+      "candidates": [
+        "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+        "data/real/Hz_data_real.csv"
+      ],
+      "selection_rule_for_33_surface": "source starts with CC_ and source label does not contain BAO",
+      "pass_when": [
+        "the selected pure-CC rows from the 33-row source equal the independent 28-row source exactly at row level",
+        "fixed-vector H(z) chi2 is identical on the two pure-CC selections",
+        "excluded rows are explicitly reported rather than silently consumed"
+      ],
+      "decision_semantics_if_pass": "independent_cosmic_chronometers_28 is evidence-supported for the canonical scientific surface; the 33-row file remains a named freestanding/parity projection"
+    },
+    "omega_r": {
+      "candidates": [0.00009, 0.0000918],
+      "models": ["LCDM", "RLL"],
+      "redshifts": [0.0, 0.5, 1.0, 2.33, 10.0, 1100.0],
+      "required_measurements": [
+        "relative delta H(z)",
+        "relative delta comoving distance",
+        "null-limit parity for RLL Omega_s0=0"
+      ],
+      "decision_semantics": "sensitivity evidence only; no option is selected without an explicit physical authority for the radiation-density convention"
+    },
+    "distance_integration": {
+      "method": "log1p_simpson",
+      "independent_reference": "scipy.integrate.quad over z",
+      "models": ["LCDM", "RLL"],
+      "redshifts": [0.07, 0.5, 1.0, 2.33, 10.0, 1100.0],
+      "step_sweep": [128, 256, 512, 1024, 2048, 4096],
+      "candidate_steps": 2048,
+      "preregistered_tolerances": {
+        "max_relative_error_vs_quad": 1e-8,
+        "max_relative_refinement_delta_2048_to_4096": 1e-8
+      },
+      "decision_semantics_if_pass": "log1p_simpson with 2048 steps is evidence-supported for this declared background-domain tolerance; stricter downstream probes may preregister tighter tolerances"
+    },
+    "growth_mode": {
+      "state": "TOKEN_VAZIO_UNTIL_WS06",
+      "reason": "WS01 evidence execution must not promote a background growth proxy to perturbation-derived f_sigma8."
+    }
+  },
+  "invariants": [
+    "no option is selected from chi2 preference",
+    "same model vectors are used across sensitivity arms",
+    "Omega_r is restored after every controlled perturbation",
+    "TOKEN_VAZIO != 0",
+    "negative or inconclusive results are preserved",
+    "claim_allowed remains false"
+  ],
+  "promotion_boundary": "This experiment may reduce WS01 decision uncertainty. RX-PHYSICS-CANONICAL-V2 remains TOKEN_VAZIO_CONTRACT until every required axis has terminal evidence-backed semantics."
+}

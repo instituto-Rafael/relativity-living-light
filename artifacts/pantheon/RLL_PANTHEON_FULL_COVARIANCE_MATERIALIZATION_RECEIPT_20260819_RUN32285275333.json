@@ -1,0 +1,42 @@
+{
+  "schema": "rll.pantheon_full_covariance_materialization_receipt.v1",
+  "event_id": "RLL-PANTHEON-FULL-COVARIANCE-20260819-RUN32285275333",
+  "observed_at_utc": "2026-08-19T18:04:54.544803+00:00",
+  "github_run_id": 32285275333,
+  "github_artifact_id": 9377364332,
+  "github_artifact_sha256": "eadf7e487c5dbfbd0bb09e7c95d15fb71c7cc162f8766b1949ac99fb8d0985d8",
+  "provider": "PantheonPlusSH0ES/DataRelease",
+  "source_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+  "source_git_blobs": {
+    "Pantheon+SH0ES.dat": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+    "Pantheon+SH0ES_STAT+SYS.cov": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1"
+  },
+  "canonical_directory": "data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR",
+  "files": {
+    "Pantheon+SH0ES.dat": {
+      "bytes": 579283,
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "rows": 1701,
+      "calibrator_rows": 77,
+      "cosmology_rows": 1624,
+      "status": "READY_DIAGONAL_DIAGNOSTIC"
+    },
+    "Pantheon+SH0ES_STAT+SYS.cov": {
+      "bytes": 33284960,
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "matrix_dimension": 1701,
+      "matrix_values": 2893401,
+      "checksum_verified": true,
+      "status": "READY_FULL_COVARIANCE"
+    }
+  },
+  "route_state": "FULL_COVARIANCE_LIKELIHOOD_READY",
+  "full_covariance_likelihood_ready": true,
+  "optional_statonly_state": "TOKEN_VAZIO_STAT_ONLY_COVARIANCE",
+  "f_ok": true,
+  "f_gap": [],
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "boundary": "materialized_verified_input != model_validation",
+  "provenance_note": "Persisted from GitHub Actions artifact pantheon-full-covariance-32285275333 after strict --require-full-covariance success. The 33 MB covariance bytes remain external/runtime materialization, not committed to Git."
+}

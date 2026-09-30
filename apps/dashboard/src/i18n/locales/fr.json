@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "dashboard": "Tableau de Bord",
+    "analysis": "Analyse",
+    "data": "Données",
+    "settings": "Paramètres",
+    "export": "Exporter"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "export": "Exporter",
+    "import": "Importer",
+    "download": "Télécharger",
+    "upload": "Envoyer",
+    "language": "Langue"
+  },
+  "dashboard": {
+    "title": "Rapports en Temps Réel",
+    "subtitle": "Analyse avancée des données avec visualisations intuitives",
+    "overview": "Vue d'ensemble",
+    "metrics": "Métriques",
+    "performance": "Performance",
+    "trends": "Tendances"
+  },
+  "analysis": {
+    "title": "Outils d'Analyse",
+    "advanced": "Analyse Avancée",
+    "comparative": "Analyse Comparative",
+    "predictive": "Analyse Prédictive",
+    "statistical": "Statistiques"
+  },
+  "export": {
+    "title": "Exporter les Données",
+    "formats": "Formats",
+    "pdf": "PDF",
+    "csv": "CSV",
+    "json": "JSON",
+    "excel": "Excel",
+    "selectFormat": "Sélectionnez le format d'export"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "theme": "Thème",
+    "language": "Langue",
+    "notifications": "Notifications",
+    "privacy": "Confidentialité",
+    "dark": "Sombre",
+    "light": "Clair",
+    "auto": "Auto"
+  }
+}

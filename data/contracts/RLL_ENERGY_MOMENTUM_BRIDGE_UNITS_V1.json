@@ -1,0 +1,40 @@
+{
+  "schema": "rll.energy_momentum_bridge_units.v1",
+  "date": "2026-09-23",
+  "claim_allowed": false,
+  "implementation": "data/pipelines/structure_d/energy_momentum_bridge.py",
+  "observed_legacy_contract": {
+    "rho_fields_unit": "J/m^3",
+    "pressure_unit": "Pa",
+    "pressure_transform": "pressure/c^2",
+    "pressure_transform_unit": "kg/m^3",
+    "sum_target": "rho_radiation + rho_kinetic + rho_thermal + pressure_density + rho_field",
+    "state": "DIMENSIONALLY_MIXED"
+  },
+  "identity": {
+    "Pa_equals_J_per_m3": true,
+    "pressure_is_energy_density_dimension": true
+  },
+  "options": [
+    {
+      "id": "ENERGY_DENSITY_CONVENTION",
+      "target_unit": "J/m^3",
+      "required_transform": "use pressure in Pa directly as J/m^3; do not divide only pressure by c^2",
+      "required_migration": "preserve legacy result separately and rerun dimensional/parity tests"
+    },
+    {
+      "id": "MASS_DENSITY_CONVENTION",
+      "target_unit": "kg/m^3",
+      "required_transform": "convert every energy-density term rho_* from J/m^3 to kg/m^3 by dividing by c^2, including pressure/c^2",
+      "required_migration": "rename quantities/units and rerun every dependent score/receipt"
+    }
+  ],
+  "selected_convention": "TOKEN_VAZIO_SCIENTIFIC_DIMENSIONAL_AUTHORITY",
+  "promotion_requirements": [
+    "one convention explicitly selected and versioned",
+    "all additive terms have identical dimensions",
+    "uncertainty propagation uses the same convention",
+    "legacy output preserved for before/after comparison",
+    "no physical claim promoted from dimensional repair alone"
+  ]
+}

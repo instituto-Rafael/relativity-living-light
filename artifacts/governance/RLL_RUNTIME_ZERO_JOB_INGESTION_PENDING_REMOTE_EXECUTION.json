@@ -1,0 +1,14 @@
+{
+  "schema": "rll.runtime_zero_job_remote_execution.v1",
+  "state": "TOKEN_VAZIO_REMOTE_EXECUTION_RECEIPT",
+  "reason": "branch implementation exists but no pull-request-triggered remote execution has been observed yet",
+  "required_closure": [
+    "RLL Operational Auto Hotfix run id",
+    "focused tests outcome",
+    "runtime ingestion outcome",
+    "runtime artifact id and SHA-256",
+    "workflow contract result",
+    "full Python test result"
+  ],
+  "claim_allowed": false
+}

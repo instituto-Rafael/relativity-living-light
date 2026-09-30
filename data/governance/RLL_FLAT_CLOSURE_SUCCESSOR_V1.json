@@ -1,0 +1,28 @@
+{
+  "schema": "rll.flat_closure_successor_policy.v1",
+  "state": "IMPLEMENTED_UNTESTED",
+  "base_authority": "rll/lab",
+  "historical_pipeline_mutation": false,
+  "successor_module": "data/pipelines/structure_d/joint_real_likelihood_flat.py",
+  "closure": {
+    "standard_models": "Omega_Lambda = 1 - Omega_r - Omega_m",
+    "RLL": "Omega_Lambda = 1 - Omega_r - Omega_m - Omega_s0",
+    "required_identity": "E(0)=1"
+  },
+  "promotion": {
+    "closure_only_claim_allowed": true,
+    "scientific_model_selection_claim_allowed": false,
+    "blocked_by": [
+      "TOKEN_VAZIO_IMPLEMENTATION:r_s(z_star)",
+      "TOKEN_VAZIO_IMPLEMENTATION:D(z)_perturbation_growth",
+      "TOKEN_VAZIO_EXECUTION:robust_successor_fit"
+    ]
+  },
+  "rollback": "delete successor-only files or close PR; historical result artifacts are untouched",
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "CLOSURE_PASS != MODEL_SELECTION_PASS"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "module_id": "geometry.triangle-crown-torus-840.v1",
+  "version": "1.1.0",
+  "title": "Triangle Crown Torus 840 Formal Geometry Bridge",
+  "domains": [
+    "geometry",
+    "topology",
+    "toroidal_geometry",
+    "finite_combinatorics",
+    "RLL"
+  ],
+  "state": "ARCHITECTURE_READY",
+  "scope": "Successor integration of exact equilateral, annular, toroidal, tangent, polygon-sweep and finite 840-cycle relations; no physical vortex or sphere-torus equivalence is promoted. Successor v1.1 also formalizes the triangle as a 2-simplex for barycentric coordinates, similarity/affine transport, polygon triangulation and recursive embeddings.",
+  "epistemic_status": "PROVADO",
+  "claim_allowed": false,
+  "certification_claim": false,
+  "evidence": {
+    "receipts": [
+      "results/audit/triangle_crown_torus_840_bridge_v1.json",
+      "results/audit/triangle_simplex_embedding_v1.json"
+    ],
+    "tests": [
+      "tools/verify_triangle_crown_torus_840_bridge.py",
+      "tests/test_triangle_crown_torus_840_bridge.py",
+      "tools/verify_triangle_simplex_embedding.py",
+      "tests/test_triangle_simplex_embedding.py"
+    ],
+    "sources": [
+      "docs/invariants/circle_triangle_cone_annulus_v1.md",
+      "docs/invariants/geometric_weave_invariants_v1.md",
+      "docs/invariants/sqrt3_2_kernel.md",
+      "rafaelmeloreisnovo/Matem-tica- PBIP/crown/toro lineage",
+      "rafaelmeloreisnovo/papers crown/Poincare/radial-5678 lineage"
+    ],
+    "limitations": [
+      "Recorded 21/21 receipt was executed outside canonical RLL CI.",
+      "Period/order 840 appears in two constructions with different semantics.",
+      "No physical vortex, cosmological mechanism, or global sphere-torus equivalence is established.",
+      "Planar hexagram and spherical geodesic constructions remain distinct.",
+      "Triangle area alone is insufficient to reconstruct arbitrary geometry; the simplex role requires vertices/transform/embedding rules.",
+      "Infinite recursive nesting is a mathematical limit construction, not evidence of physically realized infinity."
+    ]
+  },
+  "data_governance": {
+    "classification": "public_formal_math_no_personal_data",
+    "required_metadata": [
+      "origin",
+      "license",
+      "hash",
+      "version",
+      "collected_at",
+      "unit",
+      "uncertainty",
+      "provenance",
+      "update_policy",
+      "time"
+    ],
+    "retention": "append_only_via_git_history",
+    "update_policy": "successor deltas require source refs, tests/receipts, claim boundary and rollback route",
+    "legal_applicability": "mathematical documentation only; no personal, clinical or regulated dataset introduced"
+  },
+  "security": {
+    "least_privilege": true,
+    "secrets": "none",
+    "integrity": [
+      "git commit SHA",
+      "source blob/commit refs",
+      "deterministic verifier output"
+    ],
+    "incident_record": "record failed gates or provenance mismatch as F_gap; never overwrite prior receipts"
+  },
+  "quality": {
+    "metrics": [
+      "gate_pass_count",
+      "gate_fail_count",
+      "numerical_tolerance",
+      "source_provenance_coverage"
+    ],
+    "acceptance_criteria": [
+      "all scoped formal gates PASS",
+      "claim_allowed remains false for physical interpretation",
+      "sphere/torus topology boundary preserved",
+      "two 840 carriers remain semantically separated"
+    ],
+    "rejection_criteria": [
+      "any formal gate FAIL",
+      "same numeric 840 promoted as same semantics without mapping",
+      "physical mechanism asserted without measured variables/data"
+    ],
+    "change_control": "canonical branch/PR successor with Git rollback; preserve predecessor authority"
+  },
+  "risks": [
+    "conflating planar annulus with torus surface",
+    "conflating common numeric 840 with semantic identity",
+    "conflating formal torus geometry with physical vortex",
+    "conflating sphere and torus topology"
+  ],
+  "rollback": {
+    "trigger": "failed canonical verifier, provenance mismatch, or claim-boundary violation",
+    "procedure": "revert integration commits/PR; preserve predecessor documents and receipts",
+    "verification": "canonical main returns to pre-integration state and no physical claim is promoted"
+  },
+  "f_ok": [
+    "exact torus projection annulus relation derived",
+    "polygon sweep annulus to toroidal shell fraction derived",
+    "hexagonal torus approximation derived",
+    "parallel tangent separation derived",
+    "six-sector opposite-pair closure derived",
+    "30x45 period 24 and both 840 closures separated and testable",
+    "triangle simplex barycentric/affine/triangulation/recursive embedding layer added with separate verifier"
+  ],
+  "f_gap": [
+    "canonical semantic map between angular 840 and modular 840",
+    "canonical CI receipt until PR checks finish",
+    "hexagram planar-to-spherical geodesic map",
+    "physical vortex model with measured variables",
+    "general curved-shape exactness requires separate parametrization; triangulation is an approximation route"
+  ],
+  "f_next": [
+    "run triangle simplex verifier in canonical RLL CI",
+    "run verifier in canonical RLL CI",
+    "add u-v six-point sweep fixture",
+    "enumerate tangent/chord intersections",
+    "test 30/45/60/72 orbit combinations",
+    "keep physical interpretation blocked until domain-specific evidence exists"
+  ]
+}

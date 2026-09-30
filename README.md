@@ -1,10 +1,16 @@
 # Relativity Living Light (RLL/MCRP)
 
+> **🧭 Comece aqui:** use o [`START HERE Ω V2.1 DISPATCH`](docs/presentation/00_START_HERE_RLL.md). Ele lê primeiro o [`CURRENT_STATE`](docs/presentation/05_CURRENT_STATE_RLL.md) e limita `μREAD` a até 3 raízes. Para navegação humana por objetivo, use depois o [Navigation Hub](docs/navigation/README.md).
+>
+> - arquivos soltos da raiz: [ROOT_FILES_INDEX](docs/navigation/ROOT_FILES_INDEX.md)
+> - privacidade/LGPD: [LGPD_PRIVACY_NAVIGATION_V1](docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md)
+> - documentação canônica: [INDICE_MESTRE](docs/INDICE_MESTRE.md)
+
 **Estado:** `REFERENCE`  
 **Proprietário lógico:** `research-governance`  
 **Repositório:** [`instituto-rafael/relativity-living-light`](https://github.com/instituto-rafael/relativity-living-light)
 
-[![DOI](https://zenodo.org/badge/1046495816.svg)](https://doi.org/10.5281/zenodo.17188137)
+> **License authority notice — 2026-09-25:** the repository currently has a documented contradiction between the custom [LICENSE.md](LICENSE.md) surface and `pyproject.toml` MIT metadata. Do not infer one canonical repository-wide grant from either surface alone. See [RLL License Authority Reconciliation](docs/governance/RLL_LICENSE_AUTHORITY_RECONCILIATION_20260925.md). Scientific claim gates are unchanged.\n\n[![DOI](https://zenodo.org/badge/1046495816.svg)](https://doi.org/10.5281/zenodo.17188137)
 [![License](https://img.shields.io/github/license/instituto-Rafael/relativity-living-light)](./LICENSE.md)
 [![Last Commit](https://img.shields.io/github/last-commit/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/commits)
 [![Open Issues](https://img.shields.io/github/issues/instituto-Rafael/relativity-living-light)](https://github.com/instituto-Rafael/relativity-living-light/issues)
@@ -178,3 +184,12 @@ Este arquivo foi normalizado para **uso acadêmico-profissional** com linguagem 
 O conteúdo original permanece abaixo para preservar trilha de auditoria e contexto evolutivo.
 
 ---
+
+
+---
+
+## Cellular metabolic manifold bridge — 2026-09-18
+
+- Science bridge: `docs/science/RLL_CELLULAR_METABOLIC_MANIFOLD_BRIDGE_20260918.md`
+- Claims ledger: `data/science/rll_cellular_metabolic_manifold_claims_v1.json`
+- Boundary: cell biology/metabolism enters RLL only as measured observables, typed hypotheses and falsifiers; it is not cosmological evidence by analogy.

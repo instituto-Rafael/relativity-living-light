@@ -1,0 +1,54 @@
+{
+  "schema": "rll.geometric_weave_invariants.execution.v1",
+  "execution_state": "LOCAL_ISOLATED_EXECUTION_PASS",
+  "script_sha256": "f72185d974b81d21d9b3372e521d4c6e05a1b21822dbd4b9dfe6f4f8da371ceb",
+  "tolerance": 1e-12,
+  "runtime": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "summary": {
+    "checks": 10,
+    "pass": 10,
+    "fail": 0,
+    "claim_allowed": false,
+    "scope": "mathematical invariant checks only"
+  },
+  "checks": [
+    {"id":"RLL-GWI-001","status":"PASS","max_abs_error":1.7763568394002505e-15},
+    {"id":"RLL-GWI-002","status":"PASS","max_abs_error":1.1102230246251565e-16},
+    {"id":"RLL-GWI-003","status":"PASS","max_angle_error_rad":8.881784197001252e-16},
+    {"id":"RLL-GWI-004","status":"PASS","abs_error":5.551115123125783e-17},
+    {"id":"RLL-GWI-005","status":"PASS","abs_error":2.0816681711721685e-17},
+    {
+      "id":"RLL-GWI-006",
+      "status":"PASS",
+      "collinearity_det":0.0,
+      "parallel_det":0.0,
+      "angle_negative_control_cos":0.43145549730400484,
+      "length_ratio_negative_control":1.2747548783981961
+    },
+    {"id":"RLL-GWI-007","status":"PASS","max_abs_error":0.0},
+    {"id":"RLL-GWI-008","status":"PASS","max_abs_error":0.0},
+    {
+      "id":"RLL-GWI-009",
+      "status":"PASS",
+      "base_abs_diff":4.440892098500626e-16,
+      "similarity_abs_diff":1.7763568394002505e-15,
+      "anisotropic_negative_control_ratio":1.5728365464142842
+    },
+    {"id":"RLL-GWI-010","status":"PASS","max_pairwise_angle_diff_error":2.220446049250313e-16}
+  ],
+  "negative_controls": {
+    "affine_angle_not_preserved": "PASS",
+    "affine_length_ratio_not_preserved": "PASS",
+    "R_cap_equals_s_hull_not_preserved_by_selected_anisotropic_scale": "PASS"
+  },
+  "external_gates": {
+    "prior_art": "TOKEN_VAZIO",
+    "image_calibration": "TOKEN_VAZIO",
+    "independent_reproduction": "NOT_RUN",
+    "physical_binding": "TOKEN_VAZIO_BLOCKED",
+    "github_ci": "NOT_RUN"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "rll.token_vazio_closure_overrides.v1",
+  "claim_allowed": false,
+  "append_only_reason": "Apply only live GitHub REST evidence observed after V3. The unknown external-settings token closes as a negative fact, while the observed absence of platform enforcement becomes a new explicit P0 successor. V1/V2/V3 remain unchanged and reproducible.",
+  "overrides": [
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "priority": "P1",
+      "target_state": "RESOLVED_NEGATIVE",
+      "classification": "EXTERNAL_SETTINGS_OBSERVED_NO_BRANCH_PROTECTION_OR_RULESETS",
+      "evidence_path": "artifacts/governance/RLL_GITHUB_EXTERNAL_SETTINGS_RECEIPT_20260808_RUN31244716847.json",
+      "assertions": [
+        {"path": "state", "op": "eq", "value": "VERIFIED_EXTERNAL_SETTINGS_READONLY"},
+        {"path": "summary.branch_metadata_complete", "op": "eq", "value": true},
+        {"path": "summary.all_declared_branches_unprotected", "op": "eq", "value": true},
+        {"path": "summary.protected_branch_count", "op": "eq", "value": 0},
+        {"path": "summary.rulesets_observed", "op": "eq", "value": true},
+        {"path": "summary.ruleset_count", "op": "eq", "value": 0},
+        {"path": "summary.resolution_eligible", "op": "eq", "value": true},
+        {"path": "source.read_only", "op": "eq", "value": true},
+        {"path": "source.secret_material_persisted", "op": "eq", "value": false},
+        {"path": "claim_allowed", "op": "eq", "value": false}
+      ],
+      "resolved_fact": "GitHub external settings are no longer unknown: main, rll/release, rll/integration and rll/lab all reported protected=false, and repository rulesets were successfully observed as an empty list. This is a negative governance result, not a pass condition.",
+      "successors": ["TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT"]
+    },
+    {
+      "token": "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+      "priority": "P0",
+      "target_state": "OPEN_GOVERNANCE",
+      "classification": "PLATFORM_ENFORCEMENT_ABSENT",
+      "next_action": "Configure GitHub branch protection and/or active rulesets for the declared maturity topology, require the governed checks/reviews, block force-push/deletion/direct bypass as appropriate, then rerun the read-only settings probe and preserve the enforcement receipt.",
+      "successors": []
+    }
+  ]
+}

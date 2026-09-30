@@ -1,0 +1,89 @@
+schema: rll.github_actions_capabilities.v2
+status: ACTIVE_GOVERNANCE
+updated_at: "2026-08-07"
+claim_allowed: false
+publication_effect: NONE
+
+invariant: >-
+  Repository files prove repository-local implementation. GitHub control-plane
+  settings remain TOKEN_VAZIO until a fresh bounded execution or settings receipt
+  records what was observed and when.
+
+capabilities:
+  - id: workflow_syntax_and_events
+    state: IMPLEMENTED_REPOSITORY
+    evidence: [.github/workflow-contract.yml, tools/validate_workflow_docs.py]
+  - id: least_privilege_token
+    state: IMPLEMENTED_WORKFLOW
+    evidence: [.github/workflows/github-platform-assurance-v2.yml]
+  - id: immutable_action_pinning
+    state: PARTIAL
+    evidence: [.github/workflows/github-platform-assurance-v2.yml, tools/github_actions_capability_gate.py]
+    residual: legacy workflows may still contain mutable action references
+    f_next: migrate legacy mutable references by risk tier
+  - id: concurrency_and_timeouts
+    state: PARTIAL
+    evidence: [.github/workflows/github-platform-assurance-v2.yml]
+    residual: legacy workflows remain incremental migration surface
+  - id: reusable_workflows
+    state: PARTIAL
+    evidence: [.github/workflows/rll-pipeline-linear-completo.yml]
+    residual: full workflow estate is not normalized into reusable families
+  - id: artifacts_and_receipts
+    state: IMPLEMENTED_WORKFLOW
+    evidence: [.github/workflows/github-platform-assurance-v2.yml]
+  - id: dependency_review
+    state: PARTIAL
+    evidence: [.github/workflows/github-platform-assurance-v2.yml]
+    residual: fresh PR execution is required before any current control-plane conclusion
+    f_next: execute dependency review on this PR and record outcome
+  - id: codeql_actions_python
+    state: IMPLEMENTED_WORKFLOW
+    evidence: [.github/workflows/github-platform-assurance-v2.yml]
+  - id: dependabot_actions
+    state: IMPLEMENTED_REPOSITORY
+    evidence: [.github/dependabot.yml]
+  - id: code_ownership
+    state: IMPLEMENTED_REPOSITORY
+    evidence: [.github/CODEOWNERS]
+  - id: security_policy
+    state: IMPLEMENTED_REPOSITORY
+    evidence: [.github/SECURITY.md]
+  - id: branch_rulesets
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: inspect active rulesets and append a timestamped receipt
+  - id: required_status_checks
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: verify required checks for maturity branches and main
+  - id: protected_environments
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: inspect release/publication environments and reviewer restrictions
+  - id: secret_scanning_push_protection
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: repository
+    verified: false
+    evidence: []
+    f_next: inspect secret scanning and push protection settings
+  - id: artifact_attestations
+    state: PARTIAL
+    evidence: [.github/SECURITY.md]
+    residual: no fresh verified release attestation receipt is attached to this forward-port
+  - id: oidc_boundary
+    state: NOT_APPLICABLE_UNTIL_USED
+    evidence: []
+    residual: no cloud deployment is authorized by this PR
+  - id: audit_log_and_settings_evidence
+    state: TOKEN_VAZIO_EXTERNAL_SETTING
+    setting_scope: organization
+    verified: false
+    evidence: []
+    f_next: collect a redacted settings/audit receipt without secrets

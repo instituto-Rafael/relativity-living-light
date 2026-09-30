@@ -113,3 +113,16 @@ F_ok   = lacunas principais foram nomeadas sem inventar prova
 F_gap  = gates ainda precisam virar scripts, testes ou docs por camada
 F_next = iniciar por TV-003, TV-006, TV-009, TV-011 ou TV-019
 ```
+
+---
+
+## 7. Δ Append — RLL / QED vacuum-birefringence crosswalk — 2026-09-03
+
+| ID | Camada | Lacuna | Estado | Gate para resolver | Artefato esperado | Prioridade |
+|---|---|---|---|---|---|---|
+| `TV-021` | Fonte QED | Paper/preprint são referências bibliográficas; bytes, suplemento, termos e hashes de ingestão ainda não estão congelados no RLL | `TOKEN_VAZIO_PRIMARY_SOURCE_BYTES_AND_RIGHTS_RECEIPT` | Manifesto de fonte com URL, versão, termos, bytes e SHA-256 | source manifest + receipt | P1 |
+| `TV-022` | Reprodução QED | Não há reprodução RLL independente da polarimetria IXPE/NICER/Parkes de 1E 1547.0-5408 | `TOKEN_VAZIO_INDEPENDENT_POLARIMETRY_REPRODUCTION` | Inputs liberados, ephemeris, ambiente congelado e receipt comparável | pipeline + hashes + relatório | P1 |
+| `TV-023` | Fórmula RLL | Não existe fórmula RLL tipada que preveja polarimetria por fase/energia do magnetar | `TOKEN_VAZIO_NO_EXACT_RLL_QED_FORMULA` | Equação, unidades, limite aninhado, baseline e falsificador | novo ID de fórmula + contrato | P0 |
+| `TV-024` | Transferência cosmológica | Nenhuma derivação demonstra que o efeito QED local de magnetar transfira para a cosmologia de fundo RLL | `TOKEN_VAZIO_NO_MAGNETAR_TO_COSMOLOGY_DERIVATION` | Derivação explícita + observável distinto + likelihood paritário + reprodução | paper técnico + execução independente | P0 |
+
+**Invariante:** observação QED em magnetar `!=` confirmação RLL; analogia `!=` derivação física; CI com artifact `!=` escrita no repositório ou confirmação científica.

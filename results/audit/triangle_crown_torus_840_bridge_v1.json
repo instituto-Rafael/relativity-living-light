@@ -1,0 +1,22 @@
+{
+  "receipt_id": "RLL-TRIANGLE-CROWN-TORUS-840-20260922-V1",
+  "date": "2026-09-22",
+  "source_revision": "session-derived before canonical CI",
+  "execution_scope": "assistant_python_runtime_external_to_canonical_rll_ci",
+  "verifier": "tools/verify_triangle_crown_torus_840_bridge.py",
+  "result": {
+    "total": 21,
+    "pass": 21,
+    "fail": 0,
+    "exit_code": 0
+  },
+  "claim_allowed": false,
+  "promotion": "EXTERNAL_REPRODUCTION_RECEIPT_NOT_CANONICAL_CI",
+  "boundaries": [
+    "same_numeric_period_840 != same_semantics",
+    "planar_hexagram != spherical_geodesic_hexagram",
+    "sphere != torus",
+    "formal_torus_geometry != physical_vortex"
+  ],
+  "f_next": "canonical PR CI rerun"
+}

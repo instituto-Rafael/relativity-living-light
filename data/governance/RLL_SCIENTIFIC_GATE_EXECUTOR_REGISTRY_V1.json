@@ -1,0 +1,107 @@
+{
+  "schema": "rll.scientific_gate_executor_registry.v1",
+  "date": "2026-09-24",
+  "claim_allowed": false,
+  "execution_policy": {
+    "arbitrary_command_from_contract": false,
+    "internal_executor_allowlist_only": true,
+    "missing_executor_state": "TOKEN_VAZIO_EXECUTOR",
+    "partial_executor_does_not_close_gate": true
+  },
+  "gates": {
+    "G0": {
+      "qualified_id": "SCI_GATE:G0",
+      "executor_state": "PARTIAL_SOURCE_FREEZE_EXECUTOR",
+      "executors": [
+        "tools/rll_current_rx_source_freeze.py"
+      ],
+      "note": "Versioned source-freeze executor exists for both legacy Rx and canonical G4/G5 background surfaces. It freezes local bytes but does not close G0 while primary authority/rights blockers remain TOKEN_VAZIO."
+    },
+    "G1": {
+      "qualified_id": "SCI_GATE:G1",
+      "executor_state": "PARTIAL_EXECUTORS",
+      "executors": [
+        "tools/rx_selftest.py",
+        "tools/rx_sound_horizon_selftest.py"
+      ],
+      "note": "Covers only bounded structural/null checks, not the full declared G1 surface."
+    },
+    "G2": {
+      "qualified_id": "SCI_GATE:G2",
+      "executor_state": "PARTIAL_EXECUTORS",
+      "executors": [
+        "tools/validate_scientific_validation_orchestrator_v3.py",
+        "scripts/verify_pantheon_inputs.py",
+        "tools/rll_ws01_ws02_ws21_ws23_bridge.py"
+      ],
+      "note": "Pantheon materialization plus the WS01/WS02/WS21/WS23 bridge can verify the shared background surface. Full source authority and official cross-block covariance remain separate blockers."
+    },
+    "G3": {
+      "qualified_id": "SCI_GATE:G3",
+      "executor_state": "PARTIAL_EXECUTORS",
+      "executors": [
+        "tools/run_g3_dataset_compatibility.py"
+      ],
+      "note": "Current gate can emit limited compatibility with residual TOKEN_VAZIO."
+    },
+    "G4": {
+      "qualified_id": "SCI_GATE:G4",
+      "executor_state": "FULL_DECLARED_BACKGROUND_EXECUTOR",
+      "executors": [
+        "tools/run_g4_background_tournament.py",
+        "tools/run_dark_dimension_benchmark_v1.py"
+      ],
+      "note": "Canonical six-model fair background tournament remains authoritative. Dark Dimension runner is mapped only as an isolated external-comparator readiness benchmark; it cannot close G4 or enter G5 until same-data/same-covariance/same-nuisance likelihood parity exists."
+    },
+    "G5": {
+      "qualified_id": "SCI_GATE:G5",
+      "executor_state": "FULL_DECLARED_BACKGROUND_MANIFEST_EXECUTOR",
+      "executors": [
+        "tools/build_g5_canonical_background_manifest.py",
+        "tools/rll_ws01_ws02_ws21_ws23_bridge.py"
+      ],
+      "note": "Hash-bound G5 manifest builder remains canonical. The WS bridge is an auxiliary consistency gate proving that WS02 surface and WS23 bindings do not bypass unresolved WS01/WS21 prerequisites."
+    },
+    "G6": {
+      "qualified_id": "SCI_GATE:G6",
+      "executor_state": "PREREGISTERED_CANONICAL_BACKGROUND_INFERENCE_EXECUTOR",
+      "executors": [
+        "tools/run_g6_canonical_inference.py"
+      ],
+      "note": "Canonical background MCMC+nested executor exists; this does not equal final growth/CMB/lensing multiprobe closure or G10 replication."
+    },
+    "G7": {
+      "qualified_id": "SCI_GATE:G7",
+      "executor_state": "TOKEN_VAZIO_ROBUSTNESS_EXECUTOR",
+      "executors": [],
+      "note": "WS14 owns ablation/recovery closure."
+    },
+    "G8": {
+      "qualified_id": "SCI_GATE:G8",
+      "executor_state": "BLOCKING_DERIVATION_AND_REGULARITY_EXECUTORS",
+      "executors": [
+        "tools/rll_perturbation_a1_linear_fluid_regularity_v1.py",
+        "tools/rll_perturbation_solver_readiness.py"
+      ],
+      "note": "A1.1 equation-family regularity gate plus solver-readiness gate are mapped. The regularity gate can falsify naive direct-fluid double-precision handoff near 1+w≈0; neither executor derives missing gauge/IC physics or unlocks CLASS/CAMB."
+    },
+    "G9": {
+      "qualified_id": "SCI_GATE:G9",
+      "executor_state": "TOKEN_VAZIO_PERTURBATIVE_OBSERVABLE_EXECUTOR",
+      "executors": [],
+      "note": "Growth/CMB/lensing promotion waits on independent RLL CLASS/CAMB parity."
+    },
+    "G10": {
+      "qualified_id": "SCI_GATE:G10",
+      "executor_state": "TOKEN_VAZIO_INDEPENDENT_REPLICATION_EXECUTOR",
+      "executors": [],
+      "note": "WS15 requires materially independent implementation/sampler."
+    },
+    "G11": {
+      "qualified_id": "SCI_GATE:G11",
+      "executor_state": "TOKEN_VAZIO_CLAIM_ROUTER_EXECUTOR",
+      "executors": [],
+      "note": "WS20 is downstream of robustness and independent replication."
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "receipt_id": "RLL-SIGNED-GEOMETRY-POSITIONAL-LEDGER-20260922-V1",
+  "date": "2026-09-22",
+  "execution_scope": "assistant_runtime_external_to_canonical_rll_ci",
+  "verifier": "tools/verify_signed_geometry_positional_ledger.py",
+  "result": {
+    "total": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  "claim_allowed": false,
+  "boundaries": [
+    "negative oriented area != negative physical area",
+    "complex root != real intersection",
+    "zero digit != TOKEN_VAZIO",
+    "modulo-only state is lossy unless quotient/layer is retained"
+  ],
+  "f_next": "canonical CI execution on PR #947"
+}

@@ -1,33 +1,7 @@
-# RLL Real Validation Report — Target
+# Routing stub
 
-Required artifact:
-- data/results/model_comparison.json
+**Moved to:** [`docs/validation/targets/RLL_REAL_VALIDATION_REPORT_TARGET.md`](docs/validation/targets/RLL_REAL_VALIDATION_REPORT_TARGET.md)  
+**Class:** `ACTIVE_VALIDATION_TARGET`  
+**Original Git blob:** `8a5654a641e6c753482dc81b24ea1354af73bb2a`
 
-Required inputs:
-- Pantheon+ light-curve file
-- Pantheon+ covariance matrix
-- SHA256 for every real-data file
-- exact command used
-- git commit hash
-- Python/package versions
-
-Required metrics:
-- n_obs
-- k_rll = 5
-- k_lcdm = 2
-- chi2_rll
-- chi2_lcdm
-- AIC_rll
-- AIC_lcdm
-- BIC_rll
-- BIC_lcdm
-- delta_chi2_rll_minus_lcdm
-- delta_aic_rll_minus_lcdm
-- delta_bic_rll_minus_lcdm
-- interpretation_label
-
-Claim boundary:
-No superiority claim unless real-data metrics pass predefined thresholds.
-
-Publication language:
-RLL is a candidate effective dynamic-transition cosmology under real-data evaluation.
+The active content is preserved at the destination above. This root path remains only for compatibility and backlink continuity.

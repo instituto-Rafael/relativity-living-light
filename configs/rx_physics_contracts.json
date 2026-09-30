@@ -1,0 +1,74 @@
+{
+  "schema": "rll.rx.physics_contracts.v1",
+  "active_contract": "RX-STRUCTURE-D-PARITY-V1",
+  "training": false,
+  "ai_runtime": false,
+  "contracts": {
+    "RX-STRUCTURE-D-PARITY-V1": {
+      "state": "ACTIVE_ENGINEERING_PARITY",
+      "omega_r": 0.00009,
+      "hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "growth_mode": "structure_d_proxy",
+      "bao_sound_horizon": "rd_power_law",
+      "cmb_acoustic_mode": "structure_d_rd",
+      "distance_integration": "log1p_simpson",
+      "flat_closure": true,
+      "claim_allowed": false
+    },
+    "RX-FREESTANDING-PROJECTION-V1": {
+      "state": "PARTIAL_PROJECTION",
+      "omega_r": "9.18e-5_IN_FREESTANDING_NOT_RX_COMMON",
+      "hz_dataset": "data/real/Hz_data_real.csv",
+      "growth_mode": "freestanding_growth",
+      "bao_sound_horizon": "freestanding_profile_or_integrated",
+      "cmb_acoustic_mode": "freestanding_rs_star",
+      "flat_closure": true,
+      "claim_allowed": false,
+      "note": "Projection only; not exact binary parity because Omega_r and data surface differ."
+    },
+    "RX-PHYSICS-CANONICAL-V2": {
+      "state": "TOKEN_VAZIO_CONTRACT",
+      "omega_r": "TOKEN_VAZIO_DECISION",
+      "hz_dataset": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "growth_mode": "TOKEN_VAZIO_DECISION",
+      "bao_sound_horizon": "sound_horizon_integral_required",
+      "cmb_acoustic_mode": "rs_star_required",
+      "distance_integration": "log1p_simpson",
+      "flat_closure": true,
+      "claim_allowed": false,
+      "hz_dataset_state": "FROZEN_PURE_CC28_NO_DOUBLE_COUNT",
+      "hz_dataset_evidence": "RLL_WS01_BACKGROUND_DECISION_EVIDENCE_V1"
+    },
+    "RX-FREESTANDING65-PARITY-V1": {
+      "state": "VERIFIED_EXACT_Q16_PARITY",
+      "omega_r": 0.0000918,
+      "hz_dataset": "data/real/Hz_data_real.csv",
+      "hz_rows": 33,
+      "bao_dataset": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "bao_rows": 13,
+      "growth_dataset": "data/real/cosmology/fsigma8_growth_real.csv",
+      "growth_rows": 16,
+      "cmb_dataset": "data/real/CMB_shift_real.json",
+      "cmb_parameters": 3,
+      "N": 65,
+      "growth_mode": "freestanding_growth_with_Dz",
+      "bao_sound_horizon": "FASE18E_rd_profile_backed_by_rx_sound_horizon_gate",
+      "cmb_acoustic_mode": "FASE18E_rs_star_profile_backed_by_rx_sound_horizon_gate",
+      "observation_quantization": "Q16.16",
+      "model_quantization": "Q16.16",
+      "axis_quantization": "Q16.16",
+      "chi2_Hz_growth_BAO": "diagonal_Q16",
+      "chi2_CMB": "Q16_correlation_matrix",
+      "reference_receipt": "artifacts/canonical-coupling/joint-real-model-v2.json",
+      "parity_receipt": "results/rx_freestanding65_parity.json",
+      "parity_expected": {
+        "LCDM_chi2_q16": 4641555,
+        "RLL_chi2_q16": 4261420,
+        "delta_q16": -380135
+      },
+      "training": false,
+      "ai_runtime": false,
+      "claim_allowed": false
+    }
+  }
+}

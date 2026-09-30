@@ -1,0 +1,37 @@
+{
+  "schema": "rll.runtime_zero_job_ingestion_design_receipt.v1",
+  "date": "2026-08-16",
+  "base_main_sha": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+  "branch": "hotfix/runtime-zero-job-ingestion-20260816",
+  "gap": "RUNTIME_ZERO_JOB_FAILURE_API_INGESTION",
+  "implementation_state": "IMPLEMENTED_PENDING_REMOTE_EXECUTION",
+  "invariant": "failure && total_jobs == 0 => TOKEN_VAZIO_ROOT_CAUSE",
+  "root_cause_inference_from_zero_jobs": "FORBIDDEN",
+  "auto_fixable": false,
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "components": [
+    "tools/github_actions_runtime_ingest.py",
+    "tests/test_github_actions_runtime_ingest.py",
+    ".github/workflows/rll-operational-auto-hotfix.yml",
+    "data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json",
+    "data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl",
+    "docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md",
+    ".github/workflow-contract.yml"
+  ],
+  "required_remote_evidence": [
+    "focused tests pass",
+    "runtime_ingest_outcome=success",
+    "runtime_receipt.json emitted",
+    "raw runs snapshot hash-bound",
+    "per-run jobs snapshots hash-bound when available",
+    "workflow contract remains 82/82",
+    "full python tests show no regression"
+  ],
+  "residuals": [
+    "TOKEN_VAZIO_ROOT_CAUSE_PER_ZERO_JOB_RUN",
+    "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    "TOKEN_VAZIO_PHYSICAL_EXECUTION"
+  ]
+}

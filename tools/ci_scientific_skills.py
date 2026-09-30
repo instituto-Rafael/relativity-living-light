@@ -1,25 +1,23 @@
 #!/usr/bin/env python3
 """CI-verifiable scientific skills for RLL.
 
-This module deliberately separates three claim levels:
+Stdlib-only deterministic diagnostics. This module deliberately separates:
 - VERIFIED_METHOD: deterministic numerical checks pass;
 - EVIDENCED_ON_REPOSITORY_DATA: a repository data/result file was actually read;
 - TOKEN_VAZIO: required evidence is absent, so no conclusion is fabricated.
 
 It does not claim discovery, proof of a Millennium Problem, or physical validation of RLL.
 """
-
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import math
+import statistics
 from pathlib import Path
 from typing import Iterable
-
-import numpy as np
-import pandas as pd
 
 SCHEMA = "rll.ci_scientific_skills.v1"
 CLAIM_BOUNDARY = (
@@ -36,28 +34,63 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def robust_anomaly_scores(values: Iterable[float]) -> np.ndarray:
-    """Return median/MAD robust z scores.
-
-    CRC values are identifiers/integrity checks, not physical observables.  Anomaly
-    detection therefore operates on explicit numeric columns and records the column.
-    """
-    x = np.asarray(list(values), dtype=float)
-    if x.ndim != 1 or x.size < 3:
+def robust_anomaly_scores(values: Iterable[float]) -> list[float]:
+    """Return median/MAD robust z scores with NumPy-compatible fallback semantics."""
+    x = [float(value) for value in values]
+    if len(x) < 3:
         raise ValueError("anomaly scoring requires at least three scalar observations")
-    if not np.all(np.isfinite(x)):
+    if not all(math.isfinite(value) for value in x):
         raise ValueError("anomaly scoring received non-finite values")
-    median = float(np.median(x))
-    mad = float(np.median(np.abs(x - median)))
+
+    median = float(statistics.median(x))
+    absolute = [abs(value - median) for value in x]
+    mad = float(statistics.median(absolute))
     if mad == 0.0:
-        std = float(np.std(x))
+        std = float(statistics.pstdev(x))
         if std == 0.0:
-            return np.zeros_like(x)
-        return (x - float(np.mean(x))) / std
-    return 0.6744897501960817 * (x - median) / mad
+            return [0.0 for _ in x]
+        mean = float(statistics.fmean(x))
+        return [(value - mean) / std for value in x]
+    return [0.6744897501960817 * (value - median) / mad for value in x]
 
 
-def choose_numeric_column(frame: pd.DataFrame) -> str:
+def _read_csv_records(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames:
+            raise ValueError(f"CSV without header: {path}")
+        rows = list(reader)
+    if not rows:
+        raise ValueError(f"CSV without rows: {path}")
+    return [str(name) for name in reader.fieldnames], rows
+
+
+def _numeric_columns(fieldnames: list[str], rows: list[dict[str, str]]) -> tuple[list[str], dict[str, list[float]]]:
+    columns: list[str] = []
+    parsed: dict[str, list[float]] = {}
+    for name in fieldnames:
+        values: list[float] = []
+        valid = True
+        for row in rows:
+            raw = row.get(name)
+            if raw is None or str(raw).strip() == "":
+                continue
+            try:
+                value = float(raw)
+            except (TypeError, ValueError):
+                valid = False
+                break
+            if not math.isfinite(value):
+                valid = False
+                break
+            values.append(value)
+        if valid and values:
+            columns.append(name)
+            parsed[name] = values
+    return columns, parsed
+
+
+def choose_numeric_column(fieldnames: list[str], rows: list[dict[str, str]]) -> tuple[str, list[float]]:
     preferred = [
         "value",
         "H",
@@ -67,51 +100,84 @@ def choose_numeric_column(frame: pd.DataFrame) -> str:
         "DV_over_rs",
         "chi2",
     ]
-    numeric = list(frame.select_dtypes(include=[np.number]).columns)
+    numeric, parsed = _numeric_columns(fieldnames, rows)
     for name in preferred:
         if name in numeric:
-            return name
+            return name, parsed[name]
     if not numeric:
         raise ValueError("no numeric column available for anomaly diagnostics")
-    return numeric[0]
+    return numeric[0], parsed[numeric[0]]
 
 
 def anomaly_diagnostic(csv_path: Path, threshold: float = 3.5) -> dict:
-    frame = pd.read_csv(csv_path)
-    column = choose_numeric_column(frame)
-    values = frame[column].to_numpy(dtype=float)
+    fieldnames, rows = _read_csv_records(csv_path)
+    column, values = choose_numeric_column(fieldnames, rows)
     scores = robust_anomaly_scores(values)
-    indices = np.flatnonzero(np.abs(scores) >= threshold).astype(int).tolist()
+    indices = [index for index, score in enumerate(scores) if abs(score) >= threshold]
     return {
         "status": "EVIDENCED_ON_REPOSITORY_DATA",
         "method": "median_absolute_deviation_robust_z",
         "input": str(csv_path),
         "input_sha256": sha256_file(csv_path),
         "column": column,
-        "n": int(values.size),
+        "n": len(values),
         "threshold_abs_z": float(threshold),
         "anomaly_count": len(indices),
         "anomaly_indices": indices,
-        "max_abs_score": float(np.max(np.abs(scores))),
+        "max_abs_score": max(abs(score) for score in scores),
         "claim": "Rows are diagnostic outliers under this estimator, not discoveries.",
     }
+
+
+def _rfft_coefficients(signal: list[float]) -> list[complex]:
+    """Dependency-free real DFT with the same 1/N coefficient normalization used previously."""
+    n = len(signal)
+    result: list[complex] = []
+    for k in range(n // 2 + 1):
+        angle = -2.0 * math.pi * k / n
+        wr = math.cos(angle)
+        wi = math.sin(angle)
+        pr = 1.0
+        pi = 0.0
+        sr = 0.0
+        si = 0.0
+        for value in signal:
+            sr += value * pr
+            si += value * pi
+            pr, pi = pr * wr - pi * wi, pr * wi + pi * wr
+        result.append(complex(sr / n, si / n))
+    return result
 
 
 def fourier_torus_diagnostic(samples: int = 2048, max_mode: int = 32) -> dict:
     """Deterministic T^1 Fourier recovery test, the auditable base for T^d work."""
     if samples < 8 * max_mode:
         raise ValueError("samples must be at least eight times max_mode")
-    theta = np.arange(samples, dtype=float) / samples
-    signal = 1.25 + 0.70 * np.cos(2 * np.pi * 3 * theta) - 0.40 * np.sin(
-        2 * np.pi * 5 * theta
+    theta = [index / samples for index in range(samples)]
+    signal = [
+        1.25
+        + 0.70 * math.cos(2.0 * math.pi * 3.0 * value)
+        - 0.40 * math.sin(2.0 * math.pi * 5.0 * value)
+        for value in theta
+    ]
+    coeff = _rfft_coefficients(signal)
+    upper = min(max_mode, len(coeff) - 1)
+    reconstructed: list[float] = []
+    for value in theta:
+        estimate = coeff[0].real
+        for k in range(1, upper + 1):
+            phase = complex(
+                math.cos(2.0 * math.pi * k * value),
+                math.sin(2.0 * math.pi * k * value),
+            )
+            estimate += 2.0 * (coeff[k] * phase).real
+        reconstructed.append(estimate)
+
+    rmse = math.sqrt(
+        sum((observed - predicted) ** 2 for observed, predicted in zip(signal, reconstructed))
+        / samples
     )
-    coeff = np.fft.rfft(signal) / samples
-    reconstructed = np.full(samples, coeff[0].real)
-    upper = min(max_mode, coeff.size - 1)
-    for k in range(1, upper + 1):
-        reconstructed += 2.0 * np.real(coeff[k] * np.exp(2j * np.pi * k * theta))
-    rmse = float(np.sqrt(np.mean((signal - reconstructed) ** 2)))
-    tail_energy = float(np.sum(np.abs(coeff[6:]) ** 2))
+    tail_energy = sum(abs(value) ** 2 for value in coeff[6:])
     pass_condition = rmse < 1e-12 and tail_energy < 1e-24
     return {
         "status": "VERIFIED_METHOD" if pass_condition else "CONTRADICTION",
@@ -129,31 +195,39 @@ def fourier_torus_diagnostic(samples: int = 2048, max_mode: int = 32) -> dict:
 def bayes_proxy_diagnostic(comparison_csv: Path) -> dict:
     """Read BIC results and report a Laplace/BIC log-Bayes proxy.
 
-    log(B_10) ~= -0.5 * (BIC_1 - BIC_0).  This is explicitly not nested sampling.
+    log(B_10) ~= -0.5 * (BIC_1 - BIC_0). This is explicitly not nested sampling.
     """
-    frame = pd.read_csv(comparison_csv)
-    required = {"model", "BIC"}
-    missing = sorted(required - set(frame.columns))
+    fieldnames, rows = _read_csv_records(comparison_csv)
+    missing = sorted({"model", "BIC"} - set(fieldnames))
     if missing:
         raise ValueError(f"comparison file missing columns: {missing}")
-    if frame.shape[0] < 2:
-        raise ValueError("comparison file requires at least two model rows")
-    rows = frame.dropna(subset=["BIC"]).sort_values("BIC").reset_index(drop=True)
-    if rows.shape[0] < 2:
+
+    finite_rows = []
+    for row in rows:
+        raw = row.get("BIC")
+        if raw is None or str(raw).strip() == "":
+            continue
+        try:
+            bic = float(raw)
+        except ValueError:
+            continue
+        if math.isfinite(bic):
+            finite_rows.append((bic, str(row.get("model", ""))))
+    if len(finite_rows) < 2:
         raise ValueError("comparison file requires two finite BIC values")
-    preferred = rows.iloc[0]
-    alternative = rows.iloc[1]
-    delta_bic = float(alternative["BIC"] - preferred["BIC"])
-    log_bayes_proxy_preferred_vs_alternative = 0.5 * delta_bic
+    finite_rows.sort(key=lambda item: item[0])
+    preferred_bic, preferred_model = finite_rows[0]
+    alternative_bic, alternative_model = finite_rows[1]
+    delta_bic = alternative_bic - preferred_bic
     return {
         "status": "EVIDENCED_ON_REPOSITORY_DATA",
         "method": "BIC_Laplace_proxy",
         "input": str(comparison_csv),
         "input_sha256": sha256_file(comparison_csv),
-        "preferred_by_bic": str(preferred["model"]),
-        "alternative": str(alternative["model"]),
+        "preferred_by_bic": preferred_model,
+        "alternative": alternative_model,
         "delta_bic_alternative_minus_preferred": delta_bic,
-        "log_bayes_proxy_preferred_vs_alternative": log_bayes_proxy_preferred_vs_alternative,
+        "log_bayes_proxy_preferred_vs_alternative": 0.5 * delta_bic,
         "claim": "Approximation from BIC; not a nested-sampling evidence calculation.",
     }
 

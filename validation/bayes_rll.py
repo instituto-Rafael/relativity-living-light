@@ -1,6 +1,6 @@
 import numpy as np
 import emcee
-from validation.load_data import load_real_data
+from validation.load_data_numpy_legacy import load_real_data
 
 z, y, yerr = load_real_data()
 

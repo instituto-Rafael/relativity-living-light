@@ -1,0 +1,34 @@
+{
+  "schema": "rll.ws01_distance_integration_tolerance.v1",
+  "date": "2026-09-26",
+  "state": "PREREGISTERED_BEFORE_SUCCESSOR_EXECUTION",
+  "claim_allowed": false,
+  "canonical_candidate": "log1p_simpson",
+  "models": {
+    "LCDM": [67.4, 0.315, 0.02236, 0.811],
+    "RLL_NULL": [67.4, 0.315, 0.0, 1.0, 0.3, 0.02236, 0.811],
+    "RLL_PROBE": [67.4, 0.315, 0.001, 1.0, 0.3, 0.02236, 0.811]
+  },
+  "omega_r": 0.0000918,
+  "redshift_grid": [0.01,0.1,0.3,0.5,1.0,1.5,2.0,3.0,5.0,10.0,1100.0],
+  "steps": {
+    "coarse": 1024,
+    "fine": 4096,
+    "reference_trapezoid": 16384
+  },
+  "crosschecks": [
+    "log1p_simpson_fine_vs_log1p_trapezoid_reference",
+    "log1p_simpson_fine_vs_direct_z_simpson_fine",
+    "log1p_simpson_coarse_vs_log1p_simpson_fine"
+  ],
+  "tolerance": {
+    "formula": "abs(candidate-reference) <= atol_mpc + rtol*abs(reference)",
+    "rtol": 1e-6,
+    "atol_mpc": 0.001,
+    "applies_to": ["comoving_distance_mpc"]
+  },
+  "selection_rule": "PASS only if every declared model/redshift/crosscheck satisfies the preregistered tolerance. No threshold relaxation after execution.",
+  "on_pass": "distance_integration may be frozen to log1p_simpson for RX-PHYSICS-CANONICAL-V2 numerical background integration; this is numerical validation only.",
+  "on_fail": "preserve negative evidence; keep TOKEN_VAZIO_TOLERANCE_CONTRACT:distance_integration open.",
+  "boundary": "This contract validates numerical integration consistency, not cosmological model correctness or observational preference."
+}

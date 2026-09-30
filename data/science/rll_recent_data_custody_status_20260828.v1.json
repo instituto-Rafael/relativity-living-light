@@ -1,0 +1,54 @@
+{
+  "schema": "rll.recent_data_custody_status.v1",
+  "record_id": "RLL_RECENT_DATA_CUSTODY_STATUS_20260828_V1",
+  "mode": "APPEND_ONLY_SUCCESSOR",
+  "parent_crosswalk": "data/science/rll_recent_data_crosswalk_20260828.v1.json",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "observed_at": "2026-08-28",
+  "H54": {
+    "previous_state": "PRIORITY_INCREASED_TOKEN_VAZIO_JOINT_COVARIANCE",
+    "effective_state": "OPEN_EXTERNAL_PUBLIC_CUSTODY_BLOCKER",
+    "reason": "DESI public documentation states that underlying DR2 spectra/redshifts are not yet released; an official DESI Data Q&A states that DR2 correlation functions and covariances will be publicly released with the full DR2 release. Public BAO cosmology chains/posterior maximization products exist, but this does not establish executable custody of the new Ly-alpha full-shape AP+BAO covariance/likelihood required by H54.",
+    "public_now": [
+      "DESI DR2 cosmology publications",
+      "DR2 BAO cosmology chains",
+      "posterior maximization results",
+      "published Ly-alpha full-shape/AP parameter constraints"
+    ],
+    "not_established_public_custody": [
+      "DR2 underlying spectra/redshifts",
+      "Ly-alpha full-shape correlation-function bytes",
+      "Ly-alpha full-shape covariance bytes",
+      "authoritative executable joint AP+BAO likelihood package for H54"
+    ],
+    "resolution_condition": "Authoritative public release or directly citable supplementary product provides the exact correlation/covariance/likelihood inputs needed for a non-double-counted AP+BAO reproduction, followed by local hashing and official-reference replay.",
+    "falsifier_policy": "Website or paper discovery alone cannot close H54; availability != materialization != reference reproduction != RLL validation."
+  },
+  "atlas_effect": {
+    "G2": "PARTIAL_UNCHANGED",
+    "G3": "PARTIAL_UNCHANGED",
+    "G4": "PARTIAL_UNCHANGED",
+    "G6": "BLOCKED_UNCHANGED",
+    "G7": "BLOCKED"
+  },
+  "sources": [
+    {
+      "id": "DESI_DR2_PUBLICATION_INDEX",
+      "url": "https://data.desi.lbl.gov/doc/papers/",
+      "observed": "Underlying spectra and redshifts for DR2 have not yet been released; BAO cosmology chains and posterior maximization files are public."
+    },
+    {
+      "id": "DESI_DR2_PUBLIC_COVARIANCE_QA",
+      "url": "https://help.desi.lbl.gov/index.php?qa=179&qa_1=availability-of-desi-dr2-y3-bao-data-split-by-sky-region",
+      "observed": "Official DESI response states correlation functions and covariances will be publicly released alongside the full DR2 release."
+    }
+  ],
+  "invariants": [
+    "PUBLICATION_NE_EXECUTABLE_CUSTODY",
+    "CHAIN_NE_RAW_CORRELATION_COVARIANCE",
+    "AVAILABILITY_NE_MATERIALIZATION_NE_REPRODUCTION_NE_RLL_VALIDATION",
+    "OPEN_EXTERNAL_NE_RESOLVED",
+    "CLAIM_ALLOWED_FALSE"
+  ]
+}

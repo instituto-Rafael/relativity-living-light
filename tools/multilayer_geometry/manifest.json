@@ -1,0 +1,18 @@
+{
+  "id": "MULTILAYER-GEOMETRY-PORTABLE-C99-V1",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "date": "2026-09-22",
+  "source_sha256": "8a254f5ffefae6db246a5ae09b700f21dc3754d884f3b00c3da7142ea2f50388",
+  "local_pre_materialization_selftest": {
+    "status": "PASS",
+    "passed": 35,
+    "failed": 0
+  },
+  "provider_ci": "NOT_RUN",
+  "publication": "rafaelmeloreisnovo/papers/papers/multilayer_circle_polygon_geometry_v1/paper.md",
+  "rll_contract": "instituto-Rafael/relativity-living-light/data/contracts/rll_multilayer_circle_polygon_geometry_v1.yml",
+  "boundaries": {
+    "physical_binding": "TOKEN_VAZIO_EVIDENCE",
+    "android_jni_ui_binding": "TOKEN_VAZIO_NOT_WIRED"
+  }
+}

@@ -1,0 +1,143 @@
+schema: rll.hypothesis-instability-barometer.v1
+claim_allowed: false
+mode: FAST_FAIL_CLOSED_TRIAGE
+source_authority: data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv
+rule: formula!=mechanism!=implementation!=execution!=evidence!=claim
+unknown_rule: TOKEN_VAZIO!=0
+
+# Operational weights only. These are triage weights, not measurements or probabilities.
+weights:
+  formal: 110
+  dimensional: 110
+  mechanism: 130
+  observable: 120
+  data: 90
+  covariance: 90
+  nested_limit: 110
+  stability: 120
+  falsifier: 80
+  reproduction: 140
+
+# 0..1000 barometer. Lower means closer to an executable shadow test.
+thresholds:
+  execute_shadow_max: 360
+  formalize_max: 690
+  block_unknowns: 4
+
+# CLOSED=0, PARTIAL=500, OPEN=1000, TOKEN_VAZIO=1000 + unknown counter.
+# Initial nodes are the seven candidates already prioritized by the governed DESI intake.
+hypotheses:
+  - id: H03
+    family: V1_EXPANSION
+    formal: PARTIAL
+    dimensional: CLOSED
+    mechanism: PARTIAL
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: OPEN
+    stability: PARTIAL
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H46
+    family: V2_GROWTH
+    formal: PARTIAL
+    dimensional: PARTIAL
+    mechanism: PARTIAL
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: PARTIAL
+    stability: PARTIAL
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H08
+    family: V3_DARK_SECTOR
+    formal: PARTIAL
+    dimensional: PARTIAL
+    mechanism: PARTIAL
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: PARTIAL
+    stability: OPEN
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H29
+    family: V2_MODIFIED_GRAVITY
+    formal: PARTIAL
+    dimensional: PARTIAL
+    mechanism: OPEN
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: PARTIAL
+    stability: OPEN
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H40
+    family: V3_INTERACTING_DARK_SECTOR
+    formal: PARTIAL
+    dimensional: PARTIAL
+    mechanism: OPEN
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: PARTIAL
+    stability: OPEN
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H05
+    family: V4_BAO
+    formal: PARTIAL
+    dimensional: OPEN
+    mechanism: PARTIAL
+    observable: OPEN
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: PARTIAL
+    stability: PARTIAL
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+  - id: H01
+    family: V1_DYNAMIC_W
+    formal: OPEN
+    dimensional: OPEN
+    mechanism: OPEN
+    observable: PARTIAL
+    data: PARTIAL
+    covariance: PARTIAL
+    nested_limit: OPEN
+    stability: PARTIAL
+    falsifier: PARTIAL
+    reproduction: TOKEN_VAZIO
+
+# Edge weight is coupling strength in the author's instability topology, not evidence.
+edges:
+  - from: H03
+    to: H01
+    weight: 800
+  - from: H03
+    to: H40
+    weight: 450
+  - from: H03
+    to: H05
+    weight: 550
+  - from: H46
+    to: H29
+    weight: 750
+  - from: H46
+    to: H08
+    weight: 500
+  - from: H46
+    to: H05
+    weight: 350
+  - from: H08
+    to: H40
+    weight: 650

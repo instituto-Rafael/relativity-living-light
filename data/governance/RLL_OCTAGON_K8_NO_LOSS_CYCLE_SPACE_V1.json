@@ -1,0 +1,62 @@
+{
+  "id": "RLL-OCTAGON-K8-NO-LOSS-CYCLE-SPACE-V1",
+  "date": "2026-09-22",
+  "author": "RAFAEL MELO REIS",
+  "state": "MATHEMATICAL_CONSUMER_BRIDGE",
+  "authority": {
+    "mathematics_repo": "rafaelmeloreisnovo/Matem-tica-",
+    "mathematics_paper": "papers/2026-09-22_octogono_k8_no_loss_cycle_space_weights_v1.md",
+    "verifier": "src/verify_octagon_k8_no_loss_weights_v1.py",
+    "result": "results/octagon_k8_no_loss_weights_v1_verification.json",
+    "publication_repo": "rafaelmeloreisnovo/papers",
+    "publication_addendum": "papers/octagon_k8_complete_geometry_v1/no_loss_cycle_space_addendum.md"
+  },
+  "invariants": {
+    "planar_V": 57,
+    "planar_E": 136,
+    "planar_F": 81,
+    "bounded_elementary_faces": 80,
+    "cycle_rank": 80,
+    "cycle_space_cardinality": "1208925819614629174706176",
+    "original_line_mask_cardinality": "268435456",
+    "elementary_triangle_class_multiplicities": [
+      16,
+      16,
+      8,
+      8,
+      8
+    ],
+    "elementary_quadrilateral_class_multiplicities": [
+      8,
+      16
+    ]
+  },
+  "weight_vector": [
+    "w_L",
+    "w_F",
+    "w_E",
+    "n_sides",
+    "P",
+    "A",
+    "C",
+    "H",
+    "chi",
+    "h_k",
+    "h_alpha",
+    "D8_orbit_size",
+    "D8_stabilizer_size"
+  ],
+  "gaps": [
+    "TOKEN_VAZIO_SIMPLE_CYCLE_COUNT",
+    "TOKEN_VAZIO_D8_ORBIT_COUNT",
+    "TOKEN_VAZIO_FULL_WEIGHT_LEDGER",
+    "TOKEN_VAZIO_PHYSICAL_BINDING"
+  ],
+  "boundaries": [
+    "56+24=80 classifies elementary bounded faces only",
+    "2^80 is the complete closed-edge cycle-space cardinality, not the number of single simple polygons",
+    "symmetry canonicalization must preserve orbit/stabilizer/multiplicity",
+    "mathematical geometry does not imply RLL cosmological mechanism"
+  ],
+  "claim_allowed": false
+}

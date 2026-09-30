@@ -1,0 +1,69 @@
+{
+  "schema": "rll.implementation_receipt.v1",
+  "receipt_id": "RLL-AGENT-SEVEN-GUARDS-20260914",
+  "timestamp_utc": "2026-09-14T16:47:16.025Z",
+  "source_ref": "instituto-Rafael/relativity-living-light@2a6e80ad0efa182217aa76c55665a4c98a4e5523",
+  "parent": "RLL-EVIDENCE-EVOLUTION-MATRIX-V1-20260913",
+  "kind": "SECRET_MAPPING_AND_OPERATIONAL_SEVEN_GUARDS",
+  "delta": "Recognize owner-reported Agents names; bind Actions CLIMA; reuse seven-guard matrix; create exclusive receipts; reject demonstrated destructive command forms.",
+  "status": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "provenance": {
+    "authority": "instituto-Rafael/relativity-living-light",
+    "baseline_commit": "2a6e80ad0efa182217aa76c55665a4c98a4e5523",
+    "names_source": "OWNER_MESSAGE_2026-09-14",
+    "provider_metadata_verified": false,
+    "source_policies": [
+      "data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json",
+      "data/governance/rll_agent_authority.v1.json"
+    ]
+  },
+  "context": {
+    "scope": "Copilot cloud agent credential configuration and operational evidence",
+    "review_target": "rll/lab",
+    "runtime_scope": "preflight plus existing manual probes"
+  },
+  "evidence": {
+    "state": "SOURCE_PREPARED_NO_PYTHON_RUNTIME_EXECUTION_YET",
+    "local_python_execution": "TOKEN_VAZIO_NO_LOCAL_EXEC_TOOL",
+    "provider_ci": "TOKEN_VAZIO_NOT_OBSERVED",
+    "secret_values_accessed": false
+  },
+  "contradiction": {
+    "state": "RESOLVED_IN_PROPOSED_CODE_ONLY",
+    "previous_actions_climate_name": "RLL_CLIMATE_ENGINE_TRIAL_TOKEN",
+    "owner_actions_climate_name": "CLIMA",
+    "GIT_role": "TOKEN_VAZIO_ROLE"
+  },
+  "uncertainty": {
+    "state": "OPEN",
+    "open_items": [
+      "candidate provider role mapping",
+      "Agent/Actions runtime authentication",
+      "intrinsic PAT scopes",
+      "provider CI on change commit",
+      "scientific dataset/independence"
+    ]
+  },
+  "reproduction": {
+    "state": "NOT_EXECUTED",
+    "procedure": "python -m unittest -v tests.test_rll_agent_authority tests.test_rll_agent_seven_guards tests.test_rll_dual_api_real_climate_calibration tests.test_rll_credential_authority tests.test_rll_climate_engine_live_probe"
+  },
+  "rollback": {
+    "state": "READY",
+    "anchor": "2a6e80ad0efa182217aa76c55665a4c98a4e5523",
+    "procedure": "revert change commit on work branch; preserve historical receipts",
+    "executed": false
+  },
+  "routes": [
+    "L",
+    "P",
+    "C",
+    "R",
+    "I",
+    "E",
+    "A"
+  ],
+  "next": "Observe focused provider CI and publish successor evidence; keep PR draft until review.",
+  "hash_ref": "Git blob/commit returned by provider; receipt does not self-claim a commit hash"
+}

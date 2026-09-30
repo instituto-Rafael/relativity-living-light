@@ -125,3 +125,60 @@ uma tradução física possível ou um falsificador melhor.
 ---
 
 *Falsificador é aliado: ele protege o que for real.*
+
+---
+
+## 9. Sincronização sucessora — 2026-08-27
+
+A tabela histórica de 2026-07-17 permanece preservada. O caminho seguinte é adicionado sem renumerar ou reescrever os caminhos anteriores:
+
+| ID | Domínio | Prioridade | Observável | Dataset/Fonte | Estado |
+|---|---|---:|---|---|---|
+| C11 | strong gravity / black-hole thermodynamics / Mpemba | P0 evidencial | `T_H(M)`, `S_BH(M)`, `D(t)`, `tau(epsilon)`, slow modes, polarimetria/variabilidade | literatura 2025–2026 + EHT M87* | analítico/teoria implementados; observação Mpemba `TOKEN_VAZIO` |
+
+### C11 → B10
+
+Autoridade operacional:
+
+```text
+B10_black_hole_thermodynamics_mpemba_falsifier
+```
+
+Artefatos:
+
+- `data/pipelines/strong_gravity/mpemba_horizon_falsifier.py`
+- `data/contracts/mpemba_horizon_falsifier.v1.json`
+- `tests/strong_gravity/test_mpemba_horizon_falsifier.py`
+- `docs/RLL_MPEMBA_HORIZON_ATLAS.md`
+- `data/registries/rll_strong_gravity_calibration_registry.json`
+- `data/registries/rll_recent_primary_sources_2026.json`
+
+### Falsificadores mínimos adicionais C11
+
+C11 é bloqueado ou enfraquecido se qualquer uma destas condições ocorrer:
+
+- fórmula de observador estático for aplicada no horizonte/interior ou silenciosamente identificada com observador em queda livre;
+- matéria/informação observada em jato exigir propagação causal do interior do horizonte para o infinito;
+- um crossing sintético for apresentado como detecção natural;
+- a ordenação `far/near`, a distância `D` ou `epsilon` forem escolhidos depois de inspecionar o crossing;
+- o efeito desaparecer ao propagar covariância, calibração ou incerteza;
+- turbulência, GRMHD ou transferência radiativa padrão explicar a mesma relaxação;
+- seleção de janela/campanha/fonte não sobreviver a controle look-elsewhere e hold-out;
+- resultado não for reproduzido independentemente;
+- polarimetria/plasma EHT for relabelada como Hawking thermometry;
+- equivalência simbólica RAFAELIA/Exacordex ↔ Bekenstein–Hawking não recuperar dimensões, lei de área, primeira lei e tratamento covariante sem ajuste pós-hoc.
+
+### Ordem C11
+
+```text
+C11-G0  registrar papers/dados e preservar classe epistemológica
+C11-G1  materializar arquivos EHT + SHA256 + manifesto imutável
+C11-G2  preregistrar estado, alvo, D(t), epsilon, far/near e covariance treatment
+C11-G3  executar nulls GRMHD/turbulência/radiative-transfer
+C11-G4  executar witness + slow-mode ablation + negative controls
+C11-G5  controlar look-elsewhere/hold-out
+C11-G6  replicação independente
+C11-G7  somente então avaliar transição de BH-MP-06; até lá TOKEN_VAZIO
+```
+
+Nenhum resultado local de C11 promove automaticamente `H(z)`, BAO, SNe, CMB ou preferência RLL sobre ΛCDM. Esse salto exige um bridge cosmológico separado e falsificável.

@@ -1,0 +1,60 @@
+{
+  "schema": "rll.stratified_reservoir_aurora_bridge.v1",
+  "status": "FORMAL_BRIDGE_IMPLEMENTED_LOCAL_REFERENCE",
+  "claim_allowed": false,
+  "purpose": "Add a typed reservoir-confinement-threshold-transport-observable bridge to the existing Climate Engine x Juno comparative shadow without asserting cross-domain mechanism equivalence.",
+  "parent_routes": [
+    "data/contracts/rll_climate_juno_shadow.v1.json",
+    "data/juno/rll_juno_atmospheric_reference.v1.json",
+    "docs/architecture/RLL_PHOTONIC_MATRIX_LOGISTICS.md"
+  ],
+  "seven_guardians": ["provenance", "context", "evidence", "contradiction", "uncertainty", "reproduction", "rollback"],
+  "typed_systems": {
+    "limnic_co2": {
+      "source": "deep CO2 recharge into a stratified lake",
+      "reservoir": "dissolved CO2 in dense deep water/hypolimnion",
+      "confinement": ["hydrostatic pressure", "stable density stratification/meromixis"],
+      "threshold": "local dissolved-gas saturation/exsolution threshold under pressure-temperature-chemistry state",
+      "candidate_triggers": ["upward displacement", "internal wave", "seismic disturbance", "landslide/rockfall", "spontaneous approach to saturation"],
+      "positive_feedback": "ascent lowers pressure -> exsolution -> gas fraction rises -> mixture density falls -> further ascent",
+      "observable": ["dissolved gas profile", "pressure/saturation margin", "temperature/density profile", "surface gas flux"],
+      "direct_planetary_equivalence": false
+    },
+    "planetary_aurora": {
+      "source": "solar-wind and/or internally supplied magnetospheric plasma/energy, planet-dependent",
+      "reservoir": "magnetospheric charged-particle population and electromagnetic energy",
+      "confinement": ["magnetic topology", "electric potentials/current systems"],
+      "threshold": "particle acceleration/precipitation conditions sufficient for atmospheric excitation/ionization",
+      "transport": "charged-particle motion guided/accelerated by electromagnetic fields",
+      "observable": ["UV/visible/IR/X-ray spectral radiance", "particle spectra", "field/current signatures"],
+      "direct_limnic_equivalence": false
+    }
+  },
+  "reference_equations": [
+    {"id": "HYDROSTATIC-001", "expression": "P(z)=P0+rho*g*z", "role": "pressure baseline", "class": "ESTABLISHED"},
+    {"id": "SATURATION-001", "expression": "Sigma=C_CO2/C_sat(T,P,chemistry)", "role": "dimensionless saturation diagnostic; exsolution candidate when Sigma>1", "class": "MODEL_DIAGNOSTIC"},
+    {"id": "STRATIFICATION-001", "expression": "N2=-(g/rho)*d(rho)/dz", "role": "local buoyancy-frequency sign convention with z upward; N2>0 stable", "class": "ESTABLISHED_LOCAL_DIAGNOSTIC"},
+    {"id": "LORENTZ-001", "expression": "m*dv/dt=q*(E+v×B)", "role": "charged-particle transport kernel, not complete magnetosphere", "class": "ESTABLISHED"},
+    {"id": "EMISSION-001", "expression": "j_lambda=n_u*A_ul*h*c/(4*pi*lambda)", "role": "optically thin spontaneous-emission kernel before transfer/quenching corrections", "class": "ESTABLISHED_LIMITING_FORM"}
+  ],
+  "structural_crosswalk": {
+    "shared_topology": ["source", "reservoir", "confinement", "threshold", "transport_or_runaway", "observable"],
+    "mechanism_equivalence": false,
+    "allowed": ["STRUCTURAL_ANALOGY", "DIMENSIONLESS_DIAGNOSTIC", "MODEL_COMPETITION_PLAN", "TOKEN_VAZIO"],
+    "forbidden": ["LIMNIC_CO2_CAUSES_AURORA", "AURORA_IS_LIMNIC_DEGASSING", "SAME_THRESHOLD_TOPOLOGY_MEANS_SAME_PHYSICS", "ROCKFALL_IS_PROVEN_LAKE_NYOS_TRIGGER", "CO2_RELEASE_DIRECTLY_GENERATES_AURORAL_LIGHT", "RLL_COSMOLOGY_VALIDATED_BY_THIS_ANALOGY"]
+  },
+  "source_anchors": [
+    "USGS volcanic-lake monitoring summary on Lake Nyos and gas-saturated lakes",
+    "Zhang 1996 Nature, Dynamics of CO2-driven lake eruptions",
+    "NASA/Juno and NASA Science auroral references already routed by rll_juno_atmospheric_reference.v1.json"
+  ],
+  "gates": {
+    "lake_profile_data": "TOKEN_VAZIO_NOT_INGESTED",
+    "auroral_particle_field_data": "TOKEN_VAZIO_NOT_INGESTED_IN_THIS_BRIDGE",
+    "cross_domain_parameter_fit": "BLOCKED_UNTIL_TYPED_DATA_AND_UNITS",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "physical_mechanism_equivalence": "REFUTED_AS_DEFAULT",
+    "publication_claim": "BLOCKED"
+  },
+  "rollback": "Remove only this additive bridge and its successor receipt/tests; preserve Climate x Juno parents and all negative evidence."
+}

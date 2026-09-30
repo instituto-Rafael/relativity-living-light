@@ -52,10 +52,10 @@ def main() -> int:
     lines.append("  de transicao (zt, wt) podem ser ajustados e re-testados sem mudar o pipeline.\n")
 
     lines.append("## Figuras\n")
-    for fn, cap in [("hubble_diagram.png", "H(z): modelos vs cronometros cosmicos reais"),
-                    ("bao_distances.png", "Distancias BAO: DESI DR2 vs modelos"),
-                    ("residual_pulls.png", "Pulls residuais por ponto"),
-                    ("model_comparison_bars.png", "Comparacao chi2 / AIC / BIC")]:
+    for fn, cap in [("hubble_diagram.svg", "H(z): modelos vs cronometros cosmicos reais"),
+                    ("bao_distances.svg", "Distancias BAO: DESI DR2 vs modelos"),
+                    ("residual_pulls.svg", "Pulls residuais por ponto"),
+                    ("model_comparison.svg", "Comparacao chi2 / AIC / BIC")]:
         lines.append(f"### {cap}")
         lines.append(f"![{cap}](figures/{fn})\n")
 
@@ -63,7 +63,7 @@ def main() -> int:
     lines.append("- `results/validation_summary.json` — resumo completo + parametros")
     lines.append("- `results/model_comparison.csv` — uma linha por modelo")
     lines.append("- `results/per_point_predictions.csv` — predicao e pull por ponto")
-    lines.append("- `results/figures/*.png` — figuras\n")
+    lines.append("- `results/figures/*.svg` — figuras geradas pelo renderer Rx sem dependencias de terceiros\n")
 
     out = RESULTS / "RELATORIO_VALIDACAO.md"
     out.write_text("\n".join(lines), encoding="utf-8")

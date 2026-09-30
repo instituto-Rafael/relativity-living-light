@@ -1,0 +1,24 @@
+{
+  "actor": "developer",
+  "purpose": "run local deterministic RLL Rx validation",
+  "authority_level": "A0",
+  "data_classes": [
+    "D0",
+    "D1"
+  ],
+  "inputs": [
+    "committed cosmology datasets"
+  ],
+  "outputs": [
+    "local validation artifacts"
+  ],
+  "network_mode": "off",
+  "write_scope": [
+    "validacao_real/results_rx"
+  ],
+  "secrets_required": [],
+  "retention": "project_artifact_policy",
+  "audit_receipt": "required",
+  "rollback": "delete generated local artifacts; source inputs unchanged",
+  "expiry": "single_execution"
+}

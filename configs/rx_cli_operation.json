@@ -1,0 +1,60 @@
+{
+  "schema": "rll.development_operation.v1",
+  "operation_id": "RLL_RX_CLI_DEVELOPMENT_V1",
+  "program_type": "deterministic_scientific_runtime",
+  "purpose": "Run the reviewed deterministic Rx development chain, producing only repository-local non-personal development artifacts.",
+  "authority": {
+    "human_required": true,
+    "self_authorized": false,
+    "permitted_modes": [
+      "explicit_local_command",
+      "reviewed_ci_workflow"
+    ],
+    "default_runtime_mode": "explicit_local_command"
+  },
+  "autonomy": {
+    "goal_setting": false,
+    "scope_expansion": false,
+    "background_persistence": false
+  },
+  "capabilities": [
+    "repository.read",
+    "repository.write.results",
+    "scientific.compute",
+    "scientific.compare",
+    "provenance.hash",
+    "audit.receipt.write",
+    "process.git.readonly",
+    "network.public_read.declared_hosts"
+  ],
+  "data_classes": [
+    "PUBLIC_NON_PERSONAL_SCIENTIFIC_DATA",
+    "REPOSITORY_SOURCE_CODE",
+    "DERIVED_NON_PERSONAL_RESULTS"
+  ],
+  "personal_data_expected": false,
+  "secrets_required": false,
+  "destructive_actions": false,
+  "shell_free_text": false,
+  "writes": [
+    "validacao_real/fetched_rx/",
+    "validacao_real/results_rx/",
+    "results/"
+  ],
+  "network": {
+    "required": false,
+    "default_enabled": false,
+    "hosts": [
+      "arxiv.org",
+      "gitlab.com"
+    ],
+    "methods": [
+      "GET"
+    ],
+    "purpose": "Only inner declared source-probe route may use these hosts when explicitly enabled."
+  },
+  "retention": {
+    "repository_commit": "explicit opt-in or reviewed repository change only"
+  },
+  "claim_allowed": false
+}

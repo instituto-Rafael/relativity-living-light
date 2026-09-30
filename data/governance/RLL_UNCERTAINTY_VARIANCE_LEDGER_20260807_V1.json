@@ -1,0 +1,281 @@
+{
+  "schema": "rll.uncertainty_variance_ledger.v1",
+  "generated_at": "2026-08-07T20:32:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_pr": 651,
+  "source_head_sha": "c8c2970b62795b5d860dba7951bf4e773281c43c",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "policy": {
+    "token_vazio_is_valid_auditable_state": true,
+    "variance_must_name_its_axis": true,
+    "variance_not_estimable_must_name_next_experiment": true,
+    "negative_results_are_preserved": true,
+    "paper_context_is_not_materialized_evidence": true,
+    "optimizer_convergence_is_not_parameter_identifiability": true,
+    "bic_is_not_log_evidence": true,
+    "point_estimate_is_not_covariance": true,
+    "stale_receipts_are_not_deleted": true,
+    "supersession_is_append_only": true
+  },
+  "variance_axes": {
+    "observational_statistical": "Variance/covariance supplied by the observational data product or likelihood.",
+    "observational_systematic": "Calibration, selection, foreground, scale-cut, nuisance or covariance-model uncertainty.",
+    "sample_calibration": "Shift induced by changing named samples/calibrations while holding the scientific question fixed.",
+    "optimizer_multiseed": "Spread across optimizer starts/seeds; a numerical-stability diagnostic, not posterior uncertainty.",
+    "prior_boundary": "Sensitivity to prior ranges or fitted parameters landing on a declared bound.",
+    "identifiability_support": "Whether fitted parameters are constrained inside the redshift/scale support actually observed.",
+    "backend_numerical": "Differences caused by solver/backend/version/tolerance choices.",
+    "model_selection": "Differences among chi2/AIC/AICc/BIC/logZ/profile-likelihood conclusions.",
+    "provenance": "Uncertainty caused by missing hashes, release identifiers, licenses, ordering or source semantics."
+  },
+  "ci_receipts": [
+    {
+      "name": "modern_sn_fit",
+      "workflow_run": 31215759026,
+      "state": "VERIFIED_CI_SUCCESS",
+      "artifact_id": 9008428557,
+      "artifact_sha256": "88cf8b41a9ad1be5d7257aad6f23fec53509488248e6a7040d06765d7124700b"
+    },
+    {
+      "name": "modern_validation_gate",
+      "workflow_run": 31215758793,
+      "state": "VERIFIED_CI_SUCCESS",
+      "artifact_id": 9008414253,
+      "artifact_sha256": "b3a3ccc97095d7498e726a80247aa74bfa52a3b9a3df1908b1500c3a58d47693"
+    },
+    {
+      "name": "python_tests",
+      "workflow_run": 31215758869,
+      "state": "VERIFIED_CI_SUCCESS",
+      "artifact_id": 9008453591,
+      "artifact_sha256": "fa82801187c264eef71e6d5bb6a10fbca0b66b39568332089b3eba6ded704a90"
+    }
+  ],
+  "materialized_variance_observations": {
+    "pantheon_plus": {
+      "state": "VERIFIED_LIMITED",
+      "n_selected": 1657,
+      "covariance_sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "cpl_delta_chi2_vs_lcdm": -0.32901034741348667,
+      "cpl_delta_bic_vs_lcdm": 14.496517687439564,
+      "cpl_multiseed_chi2_span": 0.1004067271464919,
+      "rll_delta_chi2_vs_lcdm": 4.547473508864641e-13,
+      "rll_delta_bic_vs_lcdm": 22.23829205228003,
+      "rll_zt": 9.337577769838262,
+      "observed_z_max": 2.26137,
+      "rll_zt_over_observed_z_max": 4.129168499554811,
+      "interpretation": "RLL is numerically nested/LCDM-like in this SN-only likelihood; transition parameters are not identified by observed support."
+    },
+    "des_dovekie": {
+      "state": "VERIFIED_LIMITED",
+      "n_selected": 1820,
+      "hubble_diagram_sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+      "precision_sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+      "cpl_delta_chi2_vs_lcdm": -4.792422503000125,
+      "cpl_delta_aic_vs_lcdm": -0.7924225030001253,
+      "cpl_delta_bic_vs_lcdm": 10.220761057141544,
+      "cpl_multiseed_chi2_span": 0.4723913693899249,
+      "cpl_wa": -3.0,
+      "cpl_wa_boundary_state": "BOUND_HIT",
+      "rll_delta_chi2_vs_lcdm": -7.501694199163467e-08,
+      "rll_delta_bic_vs_lcdm": 22.519775265195676,
+      "rll_zt": 4.295158749539411,
+      "observed_z_max": 1.14418,
+      "rll_zt_over_observed_z_max": 3.753918744899763,
+      "interpretation": "CPL maximum lies on the wa lower bound; RLL is nested/LCDM-like and its transition lies outside SN support."
+    }
+  },
+  "file_states": [
+    {"path": ".github/workflow-contract.yml", "state": "VERIFIED_STRUCTURAL", "uncertainty": "LOW", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Keep workflow count synchronized when workflows are added or removed."},
+    {"path": ".github/workflows/pantheon-covariance-materialization.yml", "state": "VERIFIED_CI_SUCCESS", "uncertainty": "MEDIUM", "variance_axes": ["provenance", "backend_numerical"], "attention": "ACTIVE", "next": "Add identifiability/profile diagnostics as first-class outputs without rewriting historical receipts."},
+    {"path": ".github/workflows/rll-modern-validation-gate.yml", "state": "VERIFIED_CI_SUCCESS", "uncertainty": "MEDIUM", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Run the uncertainty/variance ledger gate alongside the original gap gate."},
+    {"path": ".gitignore", "state": "VERIFIED_POLICY", "uncertainty": "LOW", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Continue excluding large upstream matrices while committing sidecars/receipts."},
+    {"path": "artifacts/science/sn_modern/SN_MODERN_EXECUTION_RECEIPT_20260807_RUN31215323284.json", "state": "VERIFIED_LIMITED_HISTORICAL_RECEIPT", "uncertainty": "HIGH_SCIENTIFIC", "variance_axes": ["sample_calibration", "optimizer_multiseed", "prior_boundary", "identifiability_support", "model_selection"], "attention": "ACTIVE", "next": "Supersede only by append-only receipts with common-nuisance ablation and profile sensitivity."},
+    {"path": "data/governance/RLL_MODERN_VALIDATION_GAPS_20260807_V1.json", "state": "PARTIALLY_SUPERSEDED_BY_EVIDENCE", "uncertainty": "MEDIUM", "variance_axes": ["provenance"], "attention": "STALE_STATE_DETECTED", "next": "Do not delete; narrow the SN token from missing full likelihood to common-nuisance/identifiability/boundary gaps."},
+    {"path": "docs/science/RLL_MODERN_VALIDATION_GAPS_20260807_V1.md", "state": "PARTIALLY_SUPERSEDED_BY_EVIDENCE", "uncertainty": "MEDIUM", "variance_axes": ["provenance"], "attention": "STALE_STATE_DETECTED", "next": "Add a dated variance appendix instead of rewriting historical statements."},
+    {"path": "products/rll-evidence-runner/docs/MODERN_VALIDATION_GATE_MAPPING_20260807.md", "state": "VALID_MAPPING_LIMITED", "uncertainty": "MEDIUM", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Map new queue ids to concrete producer commands and receipts."},
+    {"path": "products/rll-evidence-runner/experiments/dovekie_full_precision_lcdm_cpl_rll_fit_v1.yml", "state": "VERIFIED_EXECUTED_LIMITED", "uncertainty": "HIGH", "variance_axes": ["observational_systematic", "optimizer_multiseed", "prior_boundary", "model_selection"], "attention": "URGENT", "next": "Run wa-bound expansion/profile likelihood and identical nuisance ablation."},
+    {"path": "products/rll-evidence-runner/experiments/pantheon_full_covariance_lcdm_cpl_rll_fit_v1.yml", "state": "VERIFIED_EXECUTED_LIMITED", "uncertainty": "HIGH", "variance_axes": ["observational_systematic", "optimizer_multiseed", "identifiability_support", "model_selection"], "attention": "URGENT", "next": "Create Hubble-flow-only profiled-offset companion matching Dovekie."},
+    {"path": "products/rll-evidence-runner/src/rll_evidence/dovekie_fit_three_model.py", "state": "TESTED_LIMITED", "uncertainty": "MEDIUM_HIGH", "variance_axes": ["backend_numerical", "prior_boundary", "model_selection"], "attention": "URGENT", "next": "Add profile scan and bound-sensitivity output; cross-check against an independent implementation."},
+    {"path": "products/rll-evidence-runner/src/rll_evidence/pantheon_fit_three_model.py", "state": "TESTED_LIMITED", "uncertainty": "MEDIUM_HIGH", "variance_axes": ["backend_numerical", "identifiability_support", "model_selection"], "attention": "URGENT", "next": "Add parameter profile/Hessian-or-posterior diagnostics before parameter interpretation."},
+    {"path": "scripts/fetch_dovekie_inputs.py", "state": "VERIFIED_SOURCE_PIN", "uncertainty": "LOW_DATA_HIGH_LICENSE", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Resolve explicit redistribution/license status; retain upstream commit/blob/SHA pins."},
+    {"path": "scripts/rll_modern_validation_gate.py", "state": "TESTED_FAIL_CLOSED", "uncertainty": "MEDIUM", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Keep original gate historical; new ledger gate tracks partial closure and stale-state supersession."},
+    {"path": "scripts/rll_sn_identifiability_diagnostics.py", "state": "TESTED_SYNTHETIC_NOT_HISTORICAL_GENERATOR", "uncertainty": "MEDIUM", "variance_axes": ["identifiability_support", "prior_boundary"], "attention": "URGENT", "next": "Run automatically on future real fit outputs and record generator SHA."},
+    {"path": "tests/test_fetch_dovekie_inputs.py", "state": "VERIFIED_CI", "uncertainty": "LOW", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Add adversarial NPZ ordering/shape corruption cases if absent."},
+    {"path": "tests/test_rll_dovekie_three_model_v1.py", "state": "VERIFIED_CI_SYNTHETIC", "uncertainty": "MEDIUM", "variance_axes": ["backend_numerical", "prior_boundary"], "attention": "ACTIVE", "next": "Add deterministic profile-scan fixtures."},
+    {"path": "tests/test_rll_modern_validation_gate.py", "state": "VERIFIED_CI", "uncertainty": "LOW", "variance_axes": ["provenance"], "attention": "ACTIVE", "next": "Add stale/partial/superseded receipt tests in the new ledger gate."},
+    {"path": "tests/test_rll_pantheon_three_model_cpl_v1.py", "state": "VERIFIED_CI_SYNTHETIC", "uncertainty": "MEDIUM", "variance_axes": ["backend_numerical", "model_selection"], "attention": "ACTIVE", "next": "Add common-nuisance Hubble-flow-only equivalence fixture."},
+    {"path": "tests/test_rll_sn_identifiability_diagnostics.py", "state": "VERIFIED_CI_SYNTHETIC", "uncertainty": "MEDIUM", "variance_axes": ["identifiability_support", "prior_boundary"], "attention": "ACTIVE", "next": "Add real-receipt schema fixture without claiming the test is independent replication."}
+  ],
+  "paper_adjustments": [
+    {
+      "id": "DESI_DR2_RESULTS_II_2503.14738",
+      "tier": "official_collaboration",
+      "date": "2025-03-19",
+      "state": "ACTIVE_REFERENCE",
+      "finding_relevant_to_rll": "DR2 BAO plus CMB/SN strengthens sensitivity to evolving dark energy and provides official LCDM/w0wa reference products.",
+      "variance_impact": ["sample_calibration", "model_selection", "provenance"],
+      "required_adjustments": ["Reproduce official chains/posterior maxima now that DR2 cosmology-chain products are public", "Store per-tracer residuals and exact rd convention", "Do not compare RLL until LCDM/CPL reproduction passes"],
+      "token_vazio": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION",
+      "priority": "P0"
+    },
+    {
+      "id": "DESI_DR2_GAL_QSO_VALIDATION_2503.14742",
+      "tier": "official_collaboration_validation",
+      "date": "2025-03-19",
+      "state": "ACTIVE_REFERENCE",
+      "finding_relevant_to_rll": "BAO robustness depends on tracer/data-vector/modeling validation; aggregate BAO chi2 can hide tracer-localized tension.",
+      "variance_impact": ["observational_systematic", "sample_calibration"],
+      "required_adjustments": ["Emit tracer-level residual and leave-one-tracer-out receipts", "Separate official covariance from block-summary fallback"],
+      "token_vazio": "TOKEN_VAZIO_DESI_DR2_TRACER_SENSITIVITY",
+      "priority": "P0"
+    },
+    {
+      "id": "DESI_DR2_EXTENDED_DE_2503.14743",
+      "tier": "official_supporting_analysis",
+      "date": "2025-03-19",
+      "state": "ACTIVE_REFERENCE",
+      "finding_relevant_to_rll": "Parametric and non-parametric reconstructions indicate low-redshift sensitivity; RLL transition claims require redshift-localized tests, not only global fit scores.",
+      "variance_impact": ["model_selection", "identifiability_support"],
+      "required_adjustments": ["Add redshift-window profile/ablation for z_t", "Compare RLL transition support against observed redshift leverage"],
+      "token_vazio": "TOKEN_VAZIO_RLL_REDSHIFT_LOCALIZATION",
+      "priority": "P0"
+    },
+    {
+      "id": "DES_DOVEKIE_MNRAS_2026",
+      "tier": "peer_reviewed_collaboration",
+      "date": "2026-05-01",
+      "state": "PARTIALLY_MATERIALIZED",
+      "finding_relevant_to_rll": "Recalibration shifts Omega_m and weakens the earlier dynamical-DE preference; calibration variance is a first-class scientific uncertainty.",
+      "variance_impact": ["observational_systematic", "sample_calibration", "model_selection"],
+      "required_adjustments": ["Pantheon+ Hubble-flow-only companion with same profiled offset as Dovekie", "Calibration/sample ablation receipt", "Preserve published and repository-specific nuisance differences"],
+      "token_vazio": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION",
+      "priority": "P0"
+    },
+    {
+      "id": "DYNAMIC_OR_SYSTEMATIC_MNRAS_2026",
+      "tier": "peer_reviewed_independent_analysis",
+      "date": "2026-03-28",
+      "state": "NEWLY_ADDED_REFERENCE",
+      "finding_relevant_to_rll": "A low-vs-high redshift magnitude offset can compete with dynamical dark energy in Bayesian evidence; systematics models must compete directly with cosmology extensions.",
+      "variance_impact": ["observational_systematic", "model_selection", "prior_boundary"],
+      "required_adjustments": ["Add explicit low/high-z magnitude-offset nuisance model", "Compare systematic model vs CPL vs RLL using real evidence", "Record Nested Bridge/SMC or nested-sampling cross-method variance"],
+      "token_vazio": "TOKEN_VAZIO_SN_SYSTEMATIC_VS_DYNAMIC_MODEL_SELECTION",
+      "priority": "P0"
+    },
+    {
+      "id": "BAYESIAN_VIEW_DESI_DR2_2603.05472",
+      "tier": "independent_preprint",
+      "date": "2026-05-15",
+      "state": "ACTIVE_REFERENCE",
+      "finding_relevant_to_rll": "Nested-sampling evidence can reverse Delta-chi2 impressions; DES-Dovekie reduces DESI/SN tension and can remove Bayesian preference for evolving DE.",
+      "variance_impact": ["model_selection", "sample_calibration", "prior_boundary"],
+      "required_adjustments": ["Run true logZ for LCDM/CPL/RLL", "Store logZ numerical error", "Run independent replication and dataset-tension diagnostics", "Run profile likelihood beside Bayesian posterior to expose prior-volume effects"],
+      "token_vazio": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "priority": "P0"
+    },
+    {
+      "id": "ACT_DR6_LIKELIHOODS_2503.14452",
+      "tier": "official_collaboration",
+      "date": "2025-06-24",
+      "state": "NOT_MATERIALIZED",
+      "finding_relevant_to_rll": "ACT DR6 TT/TE/EE plus lensing provides an independent high-precision CMB anchor and reports consistency with DESI DR2 under LCDM.",
+      "variance_impact": ["observational_systematic", "backend_numerical", "model_selection"],
+      "required_adjustments": ["Materialize official ACT likelihood/code/data release", "Reproduce LCDM reference before RLL", "Version foreground nuisance treatment"],
+      "token_vazio": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD",
+      "priority": "P1"
+    },
+    {
+      "id": "ACT_DR6_FOREGROUND_2506.06274",
+      "tier": "official_collaboration_method",
+      "date": "2025-06-06",
+      "state": "NEWLY_ADDED_REFERENCE",
+      "finding_relevant_to_rll": "Foreground-model extensions and variations are a material systematic axis for small-scale ACT spectra.",
+      "variance_impact": ["observational_systematic"],
+      "required_adjustments": ["Record foreground model/version and nuisance posterior", "Run baseline-vs-extended foreground sensitivity receipt"],
+      "token_vazio": "TOKEN_VAZIO_ACT_FOREGROUND_SENSITIVITY",
+      "priority": "P1"
+    },
+    {
+      "id": "ACT_DR6_EXTENDED_MODELS_2025",
+      "tier": "peer_reviewed_collaboration",
+      "date": "2025-11-19",
+      "state": "NEWLY_ADDED_REFERENCE",
+      "finding_relevant_to_rll": "Extended-model constraints depend on CMB/lensing/BAO/SN combinations and motivate explicit dataset-combination receipts rather than one aggregate claim.",
+      "variance_impact": ["model_selection", "sample_calibration"],
+      "required_adjustments": ["Store likelihood-component Delta-chi2/logL contributions", "Separate Planck/ACT/WMAP and DESI/BOSS substitutions"],
+      "token_vazio": "TOKEN_VAZIO_CMB_DATASET_COMBINATION_SENSITIVITY",
+      "priority": "P1"
+    },
+    {
+      "id": "DES_Y6_3X2PT_2601.14559",
+      "tier": "official_collaboration",
+      "date": "2026-01-21",
+      "state": "NOT_MATERIALIZED",
+      "finding_relevant_to_rll": "Y6 3x2pt directly constrains growth and S8, which SN/BAO background fits cannot validate.",
+      "variance_impact": ["observational_statistical", "observational_systematic", "backend_numerical"],
+      "required_adjustments": ["Materialize Y6 likelihood/covariance", "Record scale cuts and nuisance parameters", "Compute S8 with same perturbation backend as RLL", "Reproduce LCDM/wCDM references first"],
+      "token_vazio": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "priority": "P1"
+    },
+    {
+      "id": "DES_Y6_FRAMEWORK_2601.14859",
+      "tier": "official_collaboration_method",
+      "date": "2026-01-21",
+      "state": "NEWLY_ADDED_REFERENCE",
+      "finding_relevant_to_rll": "Scale cuts, baryonic feedback, galaxy bias and posterior projection effects are explicit validation dimensions.",
+      "variance_impact": ["observational_systematic", "prior_boundary", "backend_numerical"],
+      "required_adjustments": ["Add scale-cut sensitivity matrix", "Add posterior-projection validation", "Version baryonic and galaxy-bias nuisance contracts"],
+      "token_vazio": "TOKEN_VAZIO_DES_Y6_SYSTEMATICS_MATRIX",
+      "priority": "P1"
+    },
+    {
+      "id": "DES_Y6_DESI_INDEPENDENT_BAO_2601.14864",
+      "tier": "peer_reviewed_collaboration",
+      "date": "2026-06-11",
+      "state": "NEWLY_ADDED_REFERENCE",
+      "finding_relevant_to_rll": "A DESI-independent angular BAO sample provides a direct overlap/correlation robustness test; preference changes when correlations and Dovekie calibration are handled.",
+      "variance_impact": ["sample_calibration", "observational_systematic", "model_selection"],
+      "required_adjustments": ["Add optional DESI-independent BAO cross-check", "Never combine overlapping BAO samples without covariance/correlation accounting"],
+      "token_vazio": "TOKEN_VAZIO_BAO_OVERLAP_CORRELATION_CONTROL",
+      "priority": "P1"
+    },
+    {
+      "id": "CAMB_V2_2607.14854",
+      "tier": "primary_code_paper",
+      "date": "2026-07-16",
+      "state": "NOT_MATERIALIZED",
+      "finding_relevant_to_rll": "High-precision perturbation calculations and stabilized dark-energy evolution raise the numerical baseline beyond the repository's growth-index approximation.",
+      "variance_impact": ["backend_numerical", "model_selection"],
+      "required_adjustments": ["Cross-backend CLASS/CAMB benchmark", "Replace claim-level f-sigma8 growth-index approximation with explicit perturbation solution", "Define RLL sound speed/anisotropic stress or PPF mapping and stability conditions"],
+      "token_vazio": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+      "priority": "P1"
+    },
+    {
+      "id": "H0_CORRECTED_PANTHEON_DOVEKIE_2607.24443",
+      "tier": "independent_preprint_watch",
+      "date": "2026-07-27",
+      "state": "WATCH_NO_PROMOTION",
+      "finding_relevant_to_rll": "A very recent distance-ladder reanalysis uses corrected Pantheon+ and Dovekie; it is relevant to H0 bookkeeping but is not sufficient to define the canonical RLL H0 likelihood by itself.",
+      "variance_impact": ["sample_calibration", "observational_systematic", "model_selection"],
+      "required_adjustments": ["Track as watch input", "Require independently reproducible late-time likelihood and accepted calibration source before promotion", "Keep early-time and late-time H0 likelihoods separate"],
+      "token_vazio": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD",
+      "priority": "P2"
+    }
+  ],
+  "urgency_queue": [
+    {"rank": 1, "id": "DESI_DR2_OFFICIAL_REPRODUCTION", "priority": "P0", "urgency_score": 100, "token_vazio": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION", "reason": "Official chains/posterior products are public and directly unlock joint model comparison.", "next_test": "Materialize official DR2 chain/max-posterior products and reproduce LCDM/CPL references with per-tracer residuals."},
+    {"rank": 2, "id": "REAL_BAYES_AND_PROFILE", "priority": "P0", "urgency_score": 99, "token_vazio": "TOKEN_VAZIO_REAL_BAYES_INFERENCE", "reason": "BIC/Delta-chi2 are insufficient and modern analyses show prior-volume reversals.", "next_test": "Nested sampling LCDM/CPL/RLL plus profile likelihood and independent replication."},
+    {"rank": 3, "id": "SN_COMMON_NUISANCE_ABLATION", "priority": "P0", "urgency_score": 98, "token_vazio": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION", "reason": "Pantheon+ and Dovekie full matrices are executed but nuisance/calibration contracts are not yet matched.", "next_test": "Pantheon+ Hubble-flow-only profiled-offset fit matching Dovekie and redshift-binned residual comparison."},
+    {"rank": 4, "id": "RLL_IDENTIFIABILITY_PROFILE", "priority": "P0", "urgency_score": 97, "token_vazio": "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY", "reason": "RLL best transition redshifts lie 3.75-4.13 times beyond observed SN z support and null-nested starts exist.", "next_test": "Profile Omega_s0,z_t,w_t with support-aware constraints and report flat directions rather than point estimates."},
+    {"rank": 5, "id": "CPL_DOVEKIE_BOUNDARY", "priority": "P0", "urgency_score": 96, "token_vazio": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY", "reason": "Best wa=-3 is exactly the declared lower bound.", "next_test": "Expand wa bounds in staged scans and compute profile likelihood until the optimum is interior or non-identifiability is established."},
+    {"rank": 6, "id": "SN_SYSTEMATIC_VS_DYNAMIC", "priority": "P0", "urgency_score": 95, "token_vazio": "TOKEN_VAZIO_SN_SYSTEMATIC_VS_DYNAMIC_MODEL_SELECTION", "reason": "Modern Bayesian work shows a low/high-z magnitude offset can compete with dynamical DE.", "next_test": "Fit systematic-offset model, CPL and RLL under the same evidence engine and nuisance policy."},
+    {"rank": 7, "id": "CLASS_CAMB_PERTURBATIONS", "priority": "P1", "urgency_score": 89, "token_vazio": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK", "reason": "Growth-index approximations cannot validate RLL perturbations or DES Y6/ACT observables.", "next_test": "Benchmark LCDM/CPL in CLASS and CAMB, then implement an explicit stable RLL perturbation contract."},
+    {"rank": 8, "id": "DES_Y6_3X2PT", "priority": "P1", "urgency_score": 88, "token_vazio": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD", "reason": "Direct growth/S8 test and modern low-z structure reference.", "next_test": "Materialize Y6 likelihood with scale cuts/nuisance/covariance and reproduce LCDM/wCDM."},
+    {"rank": 9, "id": "ACT_DR6", "priority": "P1", "urgency_score": 86, "token_vazio": "TOKEN_VAZIO_ACT_DR6_LIKELIHOOD", "reason": "Independent high-precision CMB anchor with public data/code references.", "next_test": "Materialize ACT DR6 spectra/likelihood and foreground model; reproduce LCDM before extensions."},
+    {"rank": 10, "id": "BAO_OVERLAP_CONTROL", "priority": "P1", "urgency_score": 82, "token_vazio": "TOKEN_VAZIO_BAO_OVERLAP_CORRELATION_CONTROL", "reason": "DES Y6 DESI-independent BAO provides a clean correlation robustness test.", "next_test": "Run non-overlap BAO cross-check and record covariance/correlation assumptions."},
+    {"rank": 11, "id": "H0_FORMAL", "priority": "P1", "urgency_score": 78, "token_vazio": "TOKEN_VAZIO_MODERN_H0_FORMAL_LIKELIHOOD", "reason": "SN-only profiled magnitude cannot measure H0; early/late-time inference must be explicit.", "next_test": "Version late-time distance-ladder and early-time CMB/BAO likelihoods separately and compare under identical model choices."},
+    {"rank": 12, "id": "LICENSE_AND_REDISTRIBUTION", "priority": "P2", "urgency_score": 55, "token_vazio": "TOKEN_VAZIO_EXPLICIT_REPOSITORY_LICENSE_NOT_FOUND", "reason": "Does not block local scientific execution but blocks confident redistribution policy.", "next_test": "Resolve upstream DES-SN5YR/Dovekie license terms and record them in custody metadata."}
+  ]
+}

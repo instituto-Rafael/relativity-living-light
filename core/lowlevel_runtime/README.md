@@ -134,3 +134,20 @@ Contratos:
 
 - [`docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md`](../../docs/CANONICAL_REAL_INPUTS_FREESTANDING_V1.md) — fronteira de entrada e comportamento histórico;
 - [`docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md`](../../docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md) — ligação executável conjunta das 65 observações.
+
+
+## ARMv7 physical evidence gates
+
+Artifact-specific physical runners:
+
+```bash
+# 33-row canonical H(z) kernel
+./scripts/run_rll_canonical_armv7_physical_gate.sh
+
+# 65-observation joint route; raw committed data embedded into the static ELF
+./scripts/run_rll_joint65_armv7_freestanding_physical_gate.sh
+```
+
+The 65-row route embeds H(z), DESI DR2 BAO, fσ8 and CMB inputs using assembler `.incbin`, so runtime does not depend on libc/filesystem I/O. A PASS requires the pinned joint receipts, covariance use, `claim_allowed=0`, and zero dynamic/undefined/helper dependencies.
+
+These gates do not inherit PASS state from the separate geometry Q16 executable.

@@ -7,19 +7,184 @@ inventory:
   exclusion:
     - ".github/To_add/**"
     - ".github/workflow-orchestrator/**"
+  source_of_truth: executable_files
+  sync_tool: tools/workflow_contract_sync.py
 
 canonical_pipeline:
   path: .github/workflows/rll-pipeline-linear-completo.yml
-  triggers:
-    - workflow_dispatch
-    - workflow_call
-    - pull_request
+  triggers: [workflow_dispatch, workflow_call, pull_request]
   job_id: deterministic-gate
   github_actions_steps: 6
   logical_steps: 44
   logical_phases: 8
   pull_request_mode: dry_run
   claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
+
+branch_maturity:
+  workflow: .github/workflows/unified-workflow-session-orchestrator.yml
+  job_id: branch-maturity-gate
+  topology:
+    - "non-protected work branch -> rll/lab"
+    - "rll/lab -> rll/integration"
+    - "rll/integration -> rll/release"
+    - "rll/release -> main"
+  thresholds: {LAB: 40, INTEGRATION: 60, RELEASE: 80, MAIN: 90}
+  branch_protection_verified: false
+  claim_allowed: false
+  publication_effect: NONE
+
+github_platform_assurance:
+  workflow: .github/workflows/github-platform-assurance.yml
+  capability_matrix: .github/workflow-architecture/github-actions-capabilities.v1.yml
+  gate: tools/github_actions_capability_gate.py
+  jobs: [platform-capability-contract, dependency-review, codeql]
+  codeql_languages: [actions, python]
+  external_settings_verified: true
+  external_state: VERIFIED_LIMITED_ACTIVE_RULESET_NO_MATURITY_TOPOLOGY_ENFORCEMENT
+  external_evidence: artifacts/governance/RLL_GITHUB_PLATFORM_ENFORCEMENT_RECEIPT_20260924.json
+  external_successor: TOKEN_VAZIO_BRANCH_MATURITY_PLATFORM_ENFORCEMENT
+  branch_protection_observed: false
+  repository_ruleset_count_observed: 1
+  claim_allowed: false
+  publication_effect: NONE
+
+credential_authority:
+  policy: data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+  validator: tools/validate_rll_credential_authority.py
+  tests: tests/test_rll_credential_authority.py
+  documentation: docs/governance/RLL_CREDENTIAL_AUTHORITY_V1.md
+  receipt: receipts/2026-09-11_RLL_CREDENTIAL_AUTHORITY_V1_PREFLIGHT.md
+  repository_secrets:
+    github_pat:
+      secret: GITPAT
+      workflow: .github/workflows/rll-repository-pat-assurance.yml
+      allowed_execution: workflow_dispatch_read_only_assurance
+      repository_write_authority: NONE_IN_ASSURANCE_WORKFLOW
+      runtime_state: TOKEN_VAZIO_UNTIL_DISPATCH
+    climate_trial:
+      secret: CLIMA
+      process_binding: CLIMATE_ENGINE_API_KEY
+      workflow: .github/workflows/rll-climate-engine-trial-live.yml
+      allowed_execution: workflow_dispatch_guarded_provider_read
+      repository_write_authority: NONE
+      runtime_state: TOKEN_VAZIO_UNTIL_DISPATCH
+  agent_secret_relation: SEPARATE_AUTHORITY_PLANE
+  agent_secrets_declared_by_owner:
+    repository: [GIT]
+    organization: [CLIMATE, PATGITHUB]
+    runtime_state: TOKEN_VAZIO_AGENT_RUNTIME
+  external_binding_state: TOKEN_VAZIO_RUNTIME_UNTIL_DISPATCH
+  claim_allowed: false
+  publication_effect: NONE
+
+workflow_contract_reconciliation:
+  workflow: .github/workflows/workflow-contract-sync.yml
+  tool: tools/workflow_contract_sync.py
+  proposal_tool: tools/propose_workflow_contract_pr.py
+  tests: tests/test_workflow_contract_sync.py
+  local_hook: .githooks/pre-commit
+  installer: scripts/install_repo_hooks.sh
+  modes:
+    check: read_only_fail_closed
+    write: local_workspace_only
+    propose: workflow_dispatch_pull_request_to_rll_lab
+  direct_main_commit: FORBIDDEN
+  external_pr_permission_verified: false
+  external_pr_permission_state: TOKEN_VAZIO_EXTERNAL_SETTING
+  claim_allowed: false
+  publication_effect: NONE
+
+operational_auto_hotfix:
+  workflow: .github/workflows/rll-operational-auto-hotfix.yml
+  observer: tools/rll_auto_hotfix.py
+  runtime_ingester: tools/github_actions_runtime_ingest.py
+  proposal_tool: tools/propose_operational_hotfix_pr.py
+  policy: data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
+  ledger: data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
+  documentation: docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
+  runtime_documentation: docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md
+  tests:
+    - tests/test_rll_auto_hotfix.py
+    - tests/test_github_actions_runtime_ingest.py
+    - tests/test_propose_operational_hotfix_pr.py
+  cadence: [pull_request, push_main, schedule_6h, workflow_dispatch]
+  products:
+    - observations.jsonl
+    - state_vector.json
+    - receipt.json
+    - SUMMARY.md
+    - runtime_observations.jsonl
+    - runtime_state_vector.json
+    - runtime_receipt.json
+    - RUNTIME_SUMMARY.md
+    - proposal-receipt.json
+  safe_auto_fix_classes: [WORKFLOW_INVENTORY_DRIFT]
+  review_only_classes:
+    - FLOATING_ACTION_REF
+    - MISSING_LOCAL_WORKFLOW_DEPENDENCY
+    - EPISTEMIC_TOKEN
+    - UNCERTAINTY_TOKEN
+    - MAINTENANCE_MARKER
+    - RUNTIME_ZERO_JOB_FAILURE
+    - RUNTIME_JOB_SNAPSHOT_MISSING
+    - RUNTIME_API_RECORD_INVALID
+    - RUNTIME_API_INGESTION_FAILURE
+    - EXTERNAL_PLATFORM_SETTING
+    - HOTFIX_ROUTE_VS_BRANCH_MATURITY_TOPOLOGY
+  runtime_zero_job_rule: "failure && total_jobs == 0 => TOKEN_VAZIO_ROOT_CAUSE"
+  root_cause_inference_from_zero_jobs: FORBIDDEN
+  runtime_api_permission: actions_read
+  proposal_route_state: TOKEN_VAZIO_MATURITY_ROUTE
+  verified_proposal_base: TOKEN_VAZIO_MATURITY_ROUTE
+  proposal_behavior_without_verified_route: RECEIPT_ONLY_FAIL_CLOSED
+  canonical_topology_required: true
+  direct_main_commit: FORBIDDEN
+  delivery: REVIEWED_PROPOSAL_AFTER_ROUTE_VERIFICATION
+  auto_merge: false
+  claim_allowed: false
+  publication_effect: NONE
+
+branch_reconciliation:
+  main_to_maturity_content_forward_ported:
+    - .github/workflows/rare-events-evidence-gate.yml
+    - data/knowledge_forest/rare_events_claim_registry_v1.yml
+    - docs/canonicos/MATRIZ_EVIDENCIAS_EVENTOS_RAROS_V1.md
+    - docs/canonicos/PROTOCOLO_EVENTOS_RAROS_EVIDENCIA_V1.md
+    - scripts/validate_rare_events_registry.py
+    - tests/test_rare_events_registry.py
+  history_reconciliation: TOKEN_VAZIO_HISTORY_RECONCILIATION
+  invariant: >-
+    Content added directly to main must be forward-ported through the maturity
+    chain without deleting laboratory-only governance. Commit-history divergence
+    does not become equivalence without a new receipt.
+  current_release_promotion:
+    source_ref: rll/integration
+    target_ref: rll/release
+    source_sha: 888059a095600c50493d535c2ef5c2a685a453a8
+    source_prs: [672, 674]
+    evidence:
+      - artifacts/science/h0/RLL_H0_RD_CONVERGENCE_RECEIPT_20260808_RUN31229739077.json
+      - artifacts/science/perturbations/RLL_CLASS_CAMB_BASELINE_RECEIPT_20260808_RUN31231315944.json
+      - data/governance/RLL_TOKEN_VAZIO_CLOSURE_OVERRIDES_20260807_V1.json
+    ledger: {input_tokens: 30, terminal_resolved: 9, reduced_generic: 7, open: 14}
+    observed_validation:
+      python_tests: 1049
+      python_subtests: 3
+      class_camb_baseline: VERIFIED_BASELINE_ENGINE_CROSSCHECK
+      h0_rd_optimizer_convergence: VERIFIED_ALL_24_BEST_FITS_CONVERGED
+      pantheon_dovekie_modern_gate: PASS
+    residual_scientific_authorities:
+      - TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION
+      - TOKEN_VAZIO_ACT_DR6_CMBONLY_MATERIALIZATION_REPRODUCTION
+      - TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD
+      - TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE
+      - TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_REPRODUCTION
+      - TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS
+      - TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION
+      - TOKEN_VAZIO_INDEPENDENT_REPLICATION
+      - TOKEN_VAZIO_PHYSICAL_EXECUTION
+    claim_allowed: false
+    publication_effect: NONE
 
 aliases:
   - path: .github/workflows/RLL-CI.yml
@@ -32,7 +197,7 @@ aliases:
     modo: apenas_ciencia
 
 documented_checks:
-  evidence_scope: repository_local_only
+  evidence_scope: repository_local_plus_fresh_pr_execution
   branch_protection_verified: false
   checks:
     - context: deterministic-gate
@@ -78,12 +243,29 @@ documentation:
   authority_order:
     - .github/workflow-contract.yml
     - .github/workflow-architecture/invariants.v1.yml
+    - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json
+    - data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json
+    - tools/validate_rll_credential_authority.py
+    - docs/governance/RLL_CREDENTIAL_AUTHORITY_V1.md
+    - data/governance/branch_advance_registry.v2.json
+    - data/governance/RLL_OPERATIONAL_AUTO_HOTFIX_POLICY_V1.json
+    - data/governance/RLL_OPERATIONAL_GAP_LEDGER_20260816_V1.jsonl
     - tools/validate_workflow_docs.py
     - tools/workflow_architecture.py
+    - tools/github_actions_capability_gate.py
+    - tools/workflow_contract_sync.py
+    - tools/propose_workflow_contract_pr.py
+    - tools/rll_auto_hotfix.py
+    - tools/github_actions_runtime_ingest.py
+    - tools/propose_operational_hotfix_pr.py
     - tools/deep_yaml_audit.py
     - artifacts/workflow-docs/workflow_registry.json
     - docs/workflows/INDICE_CANONICO.md
+    - docs/workflows/WORKFLOW_CONTRACT_SYNC.md
+    - docs/governance/GITHUB_ACTIONS_OPERATING_MODEL.md
+    - docs/governance/RLL_OPERATIONAL_AUTO_HOTFIX_V1.md
+    - docs/governance/RLL_RUNTIME_ZERO_JOB_INGESTION_V1.md
   required_markers:
     .github/GUIA_WORKFLOWS.md:
       - "44 etapas lógicas"
@@ -100,6 +282,9 @@ documentation:
     docs/workflows/FASE_25_1_CONTRATO_EXECUTAVEL.md:
       - "fonte de verdade executável"
       - "TOKEN_VAZIO não apaga evidência histórica"
+    docs/workflows/WORKFLOW_CONTRACT_SYNC.md:
+      - "TOKEN_VAZIO_EXTERNAL_SETTING"
+      - "Commit direto em `main` é proibido"
     docs/governance/RLL_OPERATIONAL_GOVERNANCE.md:
       - "sem certificação"
       - "auditoria absoluta"

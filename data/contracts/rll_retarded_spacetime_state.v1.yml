@@ -1,0 +1,346 @@
+schema: rll.retarded_spacetime_state.v1
+version: 1
+date: "2026-09-22"
+authority: instituto-Rafael/relativity-living-light
+state: FORMAL_MODEL_SHADOW
+claim_allowed: false
+scientific_confirmation: false
+
+objective: >-
+  Represent each cosmological observation as an emission event on the past light
+  cone plus a propagation path through evolving gravitational/plasma regions,
+  while keeping the later matter worldline, source evolution, instrument model,
+  uncertainty, and global cosmological parameters distinct.
+
+source_bridges:
+  - PapersPub/06_source_state_lookback_rll/README.md
+  - data/contracts/rll_seven_guards_observer_three_window.v1.json
+  - data/governance/RLL_UNCERTAINTY_VARIANCE_LEDGER_20260807_V1.json
+  - data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json
+  - data/inputs/cosmology_joint/parameter_origin_registry.json
+  - data/contracts/frontier_research_composition.v1.yml
+
+semantic_boundaries:
+  position_age: >-
+    A spatial coordinate has no intrinsic age. Record instead the cosmological
+    age of the emission event, lookback time, source proper time/age estimate,
+    and any independently defined formation-age proxy.
+  plasma_gravity: >-
+    Plasma gravity is not promoted as a separate force. In standard physics the
+    plasma and electromagnetic fields contribute to stress-energy and matter
+    dynamics; photon propagation may also be dispersive/refractive. Strong
+    gravity plasma requires an explicit GRMHD/GRPIC or equivalent covariant model.
+  local_speed_of_light: >-
+    c is locally invariant for vacuum light in a local inertial frame. Coordinate
+    propagation time may differ in curved/expanding spacetime, and plasma group
+    velocity can be frequency dependent.
+  interference: >-
+    Use wave interference only when phase coherence is actually modeled.
+    Otherwise use foreground contamination, superposition, scattering, lensing,
+    absorption, or covariance terms.
+  convergence: >-
+    Generic convergence of evidence/trajectories is not gravitational-lensing
+    convergence. Use kappa only when a lensing model defines it.
+  quantum_boundary: >-
+    Quantum physics may govern emission, absorption and microscopic plasma
+    processes, but macroscopic source-worldline inference does not require a
+    quantum-coherence claim.
+  syntropy: TOKEN_VAZIO_PHYSICAL_DEFINITION
+
+invariants:
+  - SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM
+  - TOKEN_VAZIO != 0
+  - OBSERVATION_EVENT != PRESENT_SOURCE_STATE
+  - NULL_SIGNAL_PATH != TIMELIKE_MATTER_WORLDLINE
+  - GLOBAL_COSMOLOGICAL_PARAMETER != POST_HOC_PER_POINT_PARAMETER
+  - VACUUM_LOCAL_C_IS_INVARIANT
+  - PLASMA_DELAY_REQUIRES_FREQUENCY_AND_MEDIUM_MODEL
+  - NO_PATH_EFFECT_DOUBLE_COUNTING
+  - COVARIANCE_TERMS_REQUIRE_DECLARED_DEPENDENCE
+  - STRONG_GRAVITY_PLASMA_REQUIRES_COVARIANT_CLOSURE
+  - ROLLBACK_PRESERVES_NEGATIVE_EVIDENCE
+
+global_parameters:
+  policy: >-
+    Cosmological parameters remain globally governed by the parameter-origin
+    registry. Contextual differences are represented by declared nuisance,
+    latent, source-state, propagation, or hierarchical terms rather than
+    point-specific post-hoc parameter fitting.
+  registry: data/inputs/cosmology_joint/parameter_origin_registry.json
+  per_point_post_hoc_allowed: false
+
+event_state:
+  emission_event:
+    required: [event_id, observation_id, redshift_observed, observer_time]
+    optional_or_token_vazio:
+      - emission_coordinate_time
+      - cosmological_age_at_emission
+      - lookback_time
+      - scale_factor_at_emission
+      - comoving_distance
+      - angular_diameter_distance
+      - luminosity_distance
+      - source_proper_time
+      - source_age_estimate
+      - source_peculiar_velocity
+      - source_acceleration
+      - source_state
+      - environment_state
+      - formation_age_proxy
+    units_must_be_explicit: true
+  observer_event:
+    required: [observer_time, instrument_or_survey, selection_contract]
+    optional_or_token_vazio:
+      - observer_four_velocity
+      - calibration_state
+      - barycentric_or_reference_frame
+
+time_geometry:
+  formulas:
+    scale_factor:
+      expression: "a_e = 1 / (1 + z_cos)"
+      scope: FLRW_background
+    lookback_time:
+      expression: "t_L(z) = integral_0^z dz' / ((1+z') H(z'))"
+      scope: FLRW_background
+    cosmic_age:
+      expression: "t_U(z) = integral_z^infinity dz' / ((1+z') H(z'))"
+      scope: FLRW_background
+    redshift_general:
+      expression: "1 + z = (k_mu u^mu)_emit / (k_mu u^mu)_obs"
+      scope: covariant_geometric_optics
+    proper_time:
+      expression: "d_tau^2 = -g_mn dx^m dx^n / c^2"
+      scope: timelike_worldline
+    schwarzschild_static_clock:
+      expression: "d_tau/dt = sqrt(1 - r_s/r)"
+      scope: static_observer_Schwarzschild_only
+      warning: not_a_general_black_hole_or_infall_formula
+  temporal_ordering:
+    required_relation: "t_emit <= t_segment_entry <= t_segment_exit <= t_observe"
+    source_proper_time_is_coordinate_time: false
+
+signal_path:
+  vacuum_baseline:
+    equation: "g_mn k^m k^n = 0"
+    applicability: vacuum_geometric_optics
+  plasma_path:
+    equation: "D(x,k; plasma_state, electromagnetic_field, metric) = 0"
+    applicability: dispersive_or_refractive_medium
+    cold_unmagnetized_limit:
+      plasma_frequency: "omega_p^2 = n_e e^2 / (epsilon_0 m_e)"
+      group_velocity: "v_g = c sqrt(1 - omega_p^2/omega^2)"
+      assumptions: [cold_plasma, unmagnetized_or_magnetic_effects_neglected, omega_greater_than_omega_p]
+  path_functional:
+    expression: "P_path = integral K(x(lambda), k(lambda), medium(lambda), metric(lambda), velocity(lambda)) d_lambda"
+    status: FORMAL_CONTAINER
+
+matter_worldline:
+  equation: "g_mn u^m u^n = -c^2"
+  state_transition: "X_present ~ P(X_present | X_emit, dynamics, environment, Delta_tau)"
+  required_separation_from_signal_path: true
+  contextual_terms:
+    - peculiar_velocity
+    - acceleration
+    - tidal_field
+    - merger_or_accretion_state
+    - local_density
+    - environment_class
+    - plasma_or_mhd_state
+    - gravitational_potential_or_metric_state
+
+foreground_segments:
+  segment_required: [segment_id, order_index, entry_locator, exit_locator, medium_class, provenance]
+  segment_optional_or_token_vazio:
+    - redshift_entry
+    - redshift_exit
+    - coordinate_time_entry
+    - coordinate_time_exit
+    - crossing_time
+    - medium_displacement_during_crossing
+    - gravitational_potential
+    - metric_model
+    - lensing_convergence_kappa
+    - lensing_shear
+    - geometric_lens_delay
+    - shapiro_delay
+    - electron_density
+    - plasma_temperature
+    - ionization_fraction
+    - magnetic_field_parallel
+    - dispersion_measure
+    - rotation_measure
+    - scattering_measure
+    - optical_depth
+    - plasma_group_delay
+    - foreground_velocity
+  dynamic_segment_rule: >-
+    A foreground region may evolve while the photon traverses it. Entry and exit
+    states must therefore be allowed to differ; do not replace the segment by one
+    timeless scalar unless that approximation is explicitly tested.
+
+arrival_time_budget:
+  baseline: FLRW_or_declared_background_lightcone
+  corrections_optional_or_token_vazio:
+    - geometric_lensing_delay
+    - shapiro_delay
+    - plasma_dispersion_delay
+    - moving_medium_or_kinematic_correction
+    - instrument_time_reference
+  rule: >-
+    Corrections must be derived relative to one declared baseline. Expansion,
+    curvature, lensing and gravitational delay must not be counted twice.
+
+redshift_budget:
+  components_optional_or_token_vazio:
+    - cosmological
+    - peculiar_kinematic
+    - gravitational
+    - medium_or_line_transfer
+  combination_rule: >-
+    Multiplicative or additive decompositions are allowed only under their stated
+    approximation; the covariant emitter/observer formula is the reference.
+  post_hoc_component_choice_allowed: false
+
+plasma_and_gravity:
+  stress_energy_route:
+    equation: "G_mn = (8 pi G / c^4) T_mn"
+    required_if_backreaction_claimed: true
+    stress_energy_components:
+      - matter_or_fluid
+      - electromagnetic_field
+      - plasma_internal_energy_and_pressure
+      - other_declared_sector
+  conservation_if_closed:
+    - "nabla_mu T^mu_nu = 0"
+    - "nabla_mu J^mu = 0 when charge-current sector is modeled"
+  strong_gravity_plasma_authority: data/contracts/frontier_research_composition.v1.yml#STRONG_GRAVITY_PLASMA
+  strong_gravity_plasma_state: ROUTED_SEPARATE_AUTHORITY
+  no_new_force_claim: true
+
+observation_model:
+  equation: "D_i = R_instrument o S_selection o P_path [ Source_State_i(t_emit) ] + epsilon_i"
+  present_state_inference: >-
+    P(X_i(t_present) | D_i, model) = integral P(X_present | Z_i, model)
+    P(Z_i | D_i, model) dZ_i
+  latent_context:
+    - source_state
+    - lookback_or_epoch
+    - peculiar_velocity
+    - foreground_state
+    - environment
+    - instrument
+    - selection
+    - propagation_state
+  posterior_entropy:
+    expression: "H[X_present|D] = - integral p(x|D) log p(x|D) dx"
+    interpretation: uncertainty_of_inferred_present_state
+  information_gain:
+    expression: "IG = H_prior - H_posterior"
+    physical_syntropy_equivalence: false
+
+uncertainty:
+  authority: data/governance/RLL_UNCERTAINTY_VARIANCE_LEDGER_20260807_V1.json
+  axes:
+    - observational_statistical
+    - observational_systematic
+    - sample_calibration
+    - optimizer_multiseed
+    - prior_boundary
+    - identifiability_support
+    - backend_numerical
+    - model_selection
+    - provenance
+  added_contextual_axes:
+    - source_state
+    - lightcone_epoch
+    - peculiar_velocity
+    - dynamic_foreground
+    - lensing_path
+    - plasma_propagation
+    - time_reference
+  covariance_rule: >-
+    Use C_total = J C_latent J^T + C_measurement + C_systematic only when the
+    corresponding Jacobian/covariances are defined. Cross terms are not zero by default.
+
+geometry_relational_layer:
+  role: representation_of_state_relations_not_asserted_universe_shape
+  node_example: "(z, t_lookback, source_state, environment, survey, scale, path_state)"
+  distance_example: "d_ij^2 = (c_i-c_j)^T Sigma_c^-1 (c_i-c_j)"
+  weight_example: "w_ij = exp(-d_ij^2/(2 ell^2))"
+  laplacian: "L = D - W"
+  regularizer: "R_G = Z^T L Z"
+  physical_metric_claim: false
+
+statistics:
+  seven_guards_authority: data/contracts/rll_seven_guards_observer_three_window.v1.json
+  S7_obs: [min, Q1, median, Q3, max, MAD, covariance_or_correlation]
+  S7_model: [chi2, log_likelihood, AICc, BIC, logZ, posterior_predictive_check, window_or_context_stability]
+  guards_are_statistics: false
+
+falsification:
+  null_hypothesis: "After declared propagation/source/instrument effects, residuals are context independent."
+  primary_test: "P(r | context) approximately equals P(r)"
+  failure_modes_to_separate:
+    - instrument_or_calibration_systematic
+    - selection_effect
+    - source_population_evolution
+    - foreground_or_plasma_model_error
+    - gravitational_or_lensing_model_error
+    - cosmological_model_incompleteness
+  mandatory_ablations:
+    - remove_context_layer
+    - remove_dynamic_foreground
+    - remove_plasma_terms
+    - remove_lensing_terms
+    - swap_instrument_or_survey
+    - hold_global_parameters_fixed
+  promotion_forbidden_if:
+    - post_hoc_parameter_adaptation
+    - unit_or_dimension_mismatch
+    - unmodeled_required_covariance
+    - path_effect_double_counting
+    - plasma_gravity_promoted_without_covariant_model
+    - residual_structure_not_reproduced_out_of_sample
+    - claim_depends_on_single_survey_only
+
+validation_plan:
+  - {id: V0_SCHEMA, state: IMPLEMENTED_BY_CONTRACT, gate: YAML parses and required epistemic invariants exist}
+  - {id: V1_SYNTHETIC_LIGHTCONE, state: TOKEN_VAZIO, gate: recover injected emission/lookback/source-state parameters}
+  - {id: V2_DYNAMIC_FOREGROUND, state: TOKEN_VAZIO, gate: recover path delay and moving-medium perturbations in mocks}
+  - {id: V3_LENS_TIME_DELAY, state: TOKEN_VAZIO, gate: multiple paths reconstruct one compatible source history after declared delays}
+  - {id: V4_PLASMA_PROPAGATION, state: TOKEN_VAZIO, gate: frequency-dependent delays/rotation recover injected plasma state}
+  - {id: V5_REAL_DATA_ABLATION, state: TOKEN_VAZIO, gate: context residual signal survives declared survey/systematic controls}
+  - {id: V6_CROSS_SURVEY_REPRODUCTION, state: TOKEN_VAZIO, gate: independent surveys/instruments preserve compatible effect direction and scale}
+  - {id: V7_CLAIM_GATE, state: BLOCKED, gate: all required upstream gates plus parameter penalty and independent reproduction}
+
+R3:
+  F_ok:
+    - past-lightcone observation and present-state inference are explicitly separated
+    - proper time, cosmological epoch, dynamic foreground, plasma propagation and gravity are represented orthogonally
+    - geometry is assigned to state relations without asserting the Universe has the pictured geometry
+  F_gap:
+    - TOKEN_VAZIO_SYNTHETIC_LIGHTCONE_RECEIPT
+    - TOKEN_VAZIO_DYNAMIC_FOREGROUND_RECEIPT
+    - TOKEN_VAZIO_LENS_TIME_DELAY_RECEIPT
+    - TOKEN_VAZIO_PLASMA_PROPAGATION_RECEIPT
+    - TOKEN_VAZIO_REAL_DATA_CONTEXT_ABLATION
+    - TOKEN_VAZIO_CROSS_SURVEY_REPRODUCTION
+  F_next: >-
+    Validate the schema, generate deterministic synthetic lightcone/foreground
+    fixtures, then run ablations before connecting the layer to any cosmological claim.
+
+
+typed_extensions:
+  - path: data/contracts/rll_retarded_spacetime_region_context.v1.yaml
+    relation: ordered_intervening_region_context
+    scope:
+      - photon_crossing_epoch
+      - moving_region_state
+      - relativistic_gravity_segment_terms
+      - plasma_mhd_segment_terms
+      - matter_environment_segment_terms
+      - causal_before_after_rule
+      - segment_covariance_and_provenance
+    authority_rule: this_parent_governs_shared_retarded_spacetime_semantics
+    claim_allowed: false

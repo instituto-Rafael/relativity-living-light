@@ -1,0 +1,86 @@
+{
+  "schema": "rll.giza_torus_geodesic_academic_object_map.v1",
+  "date": "2026-09-06",
+  "claim_allowed": false,
+  "formal_math_authority": "rafaelmeloreisnovo/Matem-tica-/data/registries/GIZA_TORUS_GEODESIC_ACADEMIC_OBJECT_LEDGER_V1.json",
+  "publication_authority": "rafaelmeloreisnovo/papers/governance/giza_torus_geodesic_academic_statement_ledger_20260906.v1.json",
+  "execution_authority": "rafaelmeloreisnovo/ChipQuantum/src/geometry/sqrt3_geometry_matrix/academic_truth_contract.py",
+  "consumption_policy": {
+    "DEFINITION": "CONSUME_AS_NOTATION_ONLY",
+    "EXACT_IDENTITY": "CONSUME_AS_EXACT_MATHEMATICS",
+    "PROVED_THEOREM": "CONSUME_WITH_DOMAIN_AND_ASSUMPTIONS",
+    "FINITE_OR_COMPUTATIONAL_VERIFICATION": "CONSUME_AS_SCOPE_BOUNDED_EXECUTION_EVIDENCE",
+    "MODEL_EXACT_CONDITIONAL": "CONSUME_WITH_INPUT_ASSUMPTIONS_EXPLICIT",
+    "EMPIRICAL_MEASUREMENT": "REQUIRE_SOURCE_UNIT_METHOD_UNCERTAINTY_PROVENANCE",
+    "STATISTICAL_INFERENCE": "REQUIRE_DATA_METHOD_UNCERTAINTY_NULL_OR_COMPARATOR",
+    "HYPOTHESIS": "REQUIRE_FALSIFIER_AND_KEEP_CLAIM_BLOCKED",
+    "INDEPENDENT_REPRODUCTION": "REQUIRE_INDEPENDENT_RECEIPT",
+    "PUBLICATION_CANDIDATE": "NO_AUTOMATIC_CLAIM_PROMOTION",
+    "CLAIM_ALLOWED": "CLAIM_SPECIFIC_ONLY"
+  },
+  "families": {
+    "exact_modular_radix": [
+      "modular_global_period",
+      "half_cycle_involution",
+      "half_scale_7_14_144k_288k",
+      "ternary_chain_14_42_126",
+      "base3_chain",
+      "base3_repunits",
+      "base5_neighbors_125",
+      "mod13_plus_minus_one",
+      "large_scale_factorization",
+      "large_scale_common_2000"
+    ],
+    "exact_geometry": [
+      "isosceles_operator",
+      "equilateral_gate_30",
+      "circle_chord_pythagoras",
+      "bhaskara_chord_discriminant"
+    ],
+    "exact_torus_poincare_topology": [
+      "torus_surface_parameterization",
+      "torus_radial_norm",
+      "toroid_solid_domain",
+      "torus_meridian_section",
+      "torus_line_quadratic",
+      "torus_discriminant_gate",
+      "tangent_family_plus_minus_30",
+      "torus_poincare_linear_flow",
+      "poincare_section_u0",
+      "poincare_return_map_linear_torus",
+      "radial_projection_to_sphere",
+      "torus_sphere_euler_characteristic",
+      "icosphere_counts_general",
+      "icosphere_f2_counts"
+    ],
+    "conditional_giza_models": [
+      "giza_ideal_dimensions_440_280",
+      "giza_face_edge_near_equilateral",
+      "giza_apothem_phi_comparison",
+      "giza_queen_king_integer_compass",
+      "giza_north_passage_gate_proxy",
+      "giza_north_shaft_pair_proxy",
+      "giza_south_shaft_pair_proxy",
+      "giza_h8_uniform_indent_proxy"
+    ],
+    "empirical_open": [
+      "giza_survey_dataset",
+      "giza_shaft_polylines_3d"
+    ],
+    "hypothesis_open": [
+      "giza_shaft_star_alignment",
+      "giza_common_precessional_timestamp",
+      "giza_42_geodesic_42_intent",
+      "giza_h8_original_intent",
+      "petra_hydraulic_comparison"
+    ]
+  },
+  "token_vazio": [
+    "TOKEN_VAZIO_FULL_SOURCE_BOUND_DATASET",
+    "TOKEN_VAZIO_SHAFT_POLYLINE_3D",
+    "TOKEN_VAZIO_SEGMENT_SPECIFIC_SURVEY_BINDING",
+    "TOKEN_VAZIO_MECHANISM",
+    "TOKEN_VAZIO_H8_INTENT"
+  ],
+  "hard_boundary": "RLL may consume exact mathematics as exact, but cannot infer empirical or historical truth from mathematical exactness alone."
+}

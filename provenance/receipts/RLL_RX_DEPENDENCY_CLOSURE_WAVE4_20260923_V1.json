@@ -1,0 +1,43 @@
+{
+  "receipt_id": "RLL-RX-DEPENDENCY-CLOSURE-WAVE4-20260923-V1",
+  "timestamp": "2026-09-23T01:38:00-03:00",
+  "kind": "engineering_dependency_migration_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "head_sha": "8320c51892fb8bbf43a1b922ab5e666d7f13faac",
+  "ci": {
+    "validacao_real": {
+      "run_id": 35819060010,
+      "job_id": 107046838491,
+      "conclusion": "success"
+    }
+  },
+  "migration_metrics": {
+    "files_with_external_imports": 269,
+    "token_vazio_replacements": 193,
+    "closed_families": 8
+  },
+  "closed_families": [
+    "validacao_real_yaml_matplotlib",
+    "requests_public_read_fetchers",
+    "guarded_import_data_stdlib",
+    "credential_authority_pyyaml_stdlib",
+    "technology_watch_yaml_jsonschema_stdlib",
+    "calc_data_numpy_pandas_stdlib",
+    "docs_inventory_config_yaml",
+    "rll_real_run_plotting"
+  ],
+  "new_in_this_wave": {
+    "calc_data_numpy_pandas_stdlib": {
+      "gate": "results/calc_data_stdlib_migration.json",
+      "workflow": ".github/workflows/calc-data.yml",
+      "replacement": "csv/json/statistics/math stdlib",
+      "sample_std_contract": "ddof=1",
+      "network_requests_performed": 0
+    }
+  },
+  "aggregate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES",
+  "scientific_semantics_changed": false,
+  "claim_allowed": false,
+  "rollback": "Revert calc-data family commits independently; inputs and physics contracts were not rewritten.",
+  "append_only": true
+}

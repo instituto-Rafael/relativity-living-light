@@ -1,0 +1,95 @@
+{
+  "schema": "rll.agent_authority.v1",
+  "status": "IMPLEMENTED_UNTESTED_RUNTIME",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "authority": {
+    "runtime": "COPILOT_CLOUD_AGENT_SECRET_AUTHORITY_DECLARED_BY_OWNER",
+    "pat_selector_variable": "PATGITHUB",
+    "pat_aliases": [
+      "GIT"
+    ],
+    "secret_value_must_not_be_logged": true,
+    "secret_value_must_not_be_persisted": true,
+    "secret_value_must_not_be_hashed": true,
+    "token_scope_must_not_be_inferred_from_repository_collaborator_permission": true,
+    "canonical_for_repository_secrets": false
+  },
+  "routing": {
+    "work_branch_prefixes": [
+      "agent/",
+      "work/"
+    ],
+    "protected_branches": [
+      "main",
+      "rll/release",
+      "rll/integration",
+      "rll/lab"
+    ],
+    "review_target": "rll/lab",
+    "direct_protected_branch_push": false,
+    "force_push": false,
+    "auto_merge": false,
+    "fresh_branch_per_mutation": true,
+    "explicit_pr_base": "rll/lab",
+    "pr_head_matches_work_branch": true
+  },
+  "allowed_operations": [
+    "github_read",
+    "work_branch_push",
+    "pull_request_create_edit_comment_read",
+    "issue_create_edit_comment_read",
+    "workflow_dispatch_manual",
+    "failed_run_rerun",
+    "workflow_run_read"
+  ],
+  "forbidden_operations": [
+    "delete",
+    "force_push",
+    "pull_request_merge",
+    "direct_protected_branch_push",
+    "secret_mutation",
+    "variable_mutation",
+    "repository_settings_mutation",
+    "branch_protection_mutation",
+    "ruleset_mutation",
+    "visibility_mutation",
+    "organization_permission_mutation"
+  ],
+  "climate_engine": {
+    "bridge_pr": 854,
+    "bridge_merge_commit": "778ecaa779687aafdcc960dd849ca87a3ed974a6",
+    "credential_selector_variable": "CLIMATE",
+    "credential_aliases": [],
+    "provider_result_state": "EXTERNAL_COMPUTE_PRODUCT",
+    "claim_allowed": false
+  },
+  "evidence": {
+    "probe_is_read_only": true,
+    "write_capability_requires_observed_allowed_write": true,
+    "destructive_capability_must_not_be_probed": true,
+    "missing_authority_state": "TOKEN_VAZIO_SEPARATE_AGENT_AUTHORITY"
+  },
+  "repository_secret_boundary": {
+    "canonical_repository_secrets": [
+      "GITPAT",
+      "CLIMA"
+    ],
+    "direct_agent_access": "NOT_APPLICABLE_SEPARATE_AGENT_SURFACE",
+    "repository_secrets_are_not_agent_secrets": true,
+    "repository_secret_runtime_probes": [
+      ".github/workflows/rll-repository-pat-assurance.yml",
+      ".github/workflows/rll-climate-engine-trial-live.yml"
+    ]
+  },
+  "program_mode": {
+    "kind": "OPERATIONAL_PROGRAM_NOT_TRAINING",
+    "mutation_unit": "ONE_REVERSIBLE_DELTA_PER_BRANCH_AND_PR",
+    "fresh_work_branch_required": true,
+    "explicit_pr_base_required": "rll/lab",
+    "pr_head_must_match_current_work_branch": true,
+    "main_route": "agent_or_work_branch -> rll/lab -> rll/integration -> rll/release -> main",
+    "approval_required": true,
+    "auto_merge": false
+  }
+}

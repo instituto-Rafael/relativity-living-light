@@ -1,0 +1,43 @@
+{
+  "schema": "rll.observability_window_claims.v1",
+  "date": "2026-09-15",
+  "claim_allowed": false,
+  "claims": [
+    {
+      "id": "RLL-OW-001",
+      "state": "CONVENTION",
+      "statement": "Sigma_W_star is a coverage-corrected information-gain score named observational syntropy inside this project.",
+      "gate": "fixed entropy estimator + fixed coverage definition"
+    },
+    {
+      "id": "RLL-OW-002",
+      "state": "PASS_EXTERNAL",
+      "statement": "NASA classifies 3I/ATLAS as interstellar with a hyperbolic non-closed heliocentric path.",
+      "source": "NASA Science 3I/ATLAS"
+    },
+    {
+      "id": "RLL-OW-003",
+      "state": "PASS_EXTERNAL",
+      "statement": "ESA reports Mars-based TGO data improved the predicted position of 3I/ATLAS by about a factor of 10.",
+      "source": "ESA Planetary Defence 2025-11-14"
+    },
+    {
+      "id": "RLL-OW-004",
+      "state": "PASS_EXTERNAL",
+      "statement": "NASA describes 1P/Halley as periodic with an average period near 76 years.",
+      "source": "NASA Science 1P/Halley"
+    },
+    {
+      "id": "RLL-OW-005",
+      "state": "TOKEN_VAZIO_TEST",
+      "statement": "Coverage correction reduces false apparent organization under window masking.",
+      "gate": "synthetic benchmark + held-out comparison"
+    },
+    {
+      "id": "RLL-OW-006",
+      "state": "BLOCKED",
+      "statement": "3I/ATLAS will return to the Solar System on a periodic orbit.",
+      "reason": "contradicted by current hyperbolic/non-closed classification; no return model provided"
+    }
+  ]
+}

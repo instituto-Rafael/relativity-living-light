@@ -1,0 +1,41 @@
+schema: rll.rx.execution_plan.v1
+claim_allowed: false
+run:
+  id: engineering-parity-g5-v1
+  mode: engineering_parity
+physics_contract: RX-STRUCTURE-D-PARITY-V1
+region:
+  domain: cosmology
+  metric_or_approximation: FLRW
+  characteristic_scale: cosmological
+  cosmological: true
+  observational_projection: true
+  weak_field: false
+  strong_gravity: false
+  plasma: false
+  redshift: TOKEN_VAZIO_RUNTIME_INPUT
+  coordinate_system: comoving
+  line_of_sight: declared_by_dataset
+  selection_function: declared_by_dataset
+observables: ["H", "E", "BAO", "DH", "DM", "DV", "FS8", "CMB"]
+dispersion:
+  distribution: dataset_declared
+  covariance_mode: dataset_contract
+  heteroscedasticity: true
+  spatial_correlation: false
+  temporal_correlation: false
+  anisotropy: false
+  outliers: false
+  measurement_error: true
+  selection_function: true
+formula_registry: data/governance/RLL_RX_FORMULA_BINDINGS_V1.json
+execution:
+  routes:
+    - rx_validation
+    - rx_multiprobe
+    - structure_d_rx
+governance:
+  canonical_v2_required_for_claim: true
+  direct_geometry_to_cosmology_binding_forbidden: true
+  preserve_negative_results: true
+  preserve_rejected_formulas: true

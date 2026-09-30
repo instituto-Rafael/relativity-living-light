@@ -1,0 +1,115 @@
+{
+  "schema": "rll.perturbation_closure_contract.v1",
+  "state": "SPECIFICATION_SATURATED_PHYSICAL_CHOICES_PENDING",
+  "generated_at": "2026-08-08T05:48:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "purpose": "Turn TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS into an explicit falsifiable theory-interface contract without inventing the missing RLL physics.",
+  "background_authority": {
+    "implementation": "src/rll/class_rll_background.c",
+    "internal_growth_approximation": "src/rll/rll_perturbation_kernel.py",
+    "boundary_audit": "artifacts/science/perturbations/RLL_CLASS_CAMB_BOUNDARY_AUDIT_20260807_V1.json",
+    "known_limit": "The current RK4 matter-growth path is a GR matter-growth approximation on the RLL background and is not a full Boltzmann implementation."
+  },
+  "required_closure_slots": [
+    {
+      "id": "C01_DELTA_S",
+      "quantity": "delta_s",
+      "role": "RLL effective-component density perturbation",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["gauge transformation behavior", "linear evolution/constraint relation", "coupling to metric and other species", "initial-condition value or derivation"],
+      "falsifiers": ["undefined gauge behavior", "nonfinite evolution in declared domain", "failure to recover declared background/zero-perturbation limit"]
+    },
+    {
+      "id": "C02_THETA_S",
+      "quantity": "theta_s",
+      "role": "RLL effective-component velocity divergence",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["linear Euler/momentum relation", "gauge convention", "metric-source terms", "initial conditions"],
+      "falsifiers": ["missing momentum closure", "gauge-inconsistent velocity definition", "singular evolution not covered by regularization"]
+    },
+    {
+      "id": "C03_CS2",
+      "quantity": "c_s^2",
+      "role": "effective rest-frame sound speed or equivalent pressure closure",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["frame in which it is defined", "domain/range or functional law", "relationship to pressure perturbation", "stability/causality interpretation where applicable"],
+      "falsifiers": ["frame left implicit", "pressure perturbation underdetermined", "declared stability condition violated"]
+    },
+    {
+      "id": "C04_ENTROPY",
+      "quantity": "delta_p_nonadiabatic_or_entropy_policy",
+      "role": "nonadiabatic pressure/entropy perturbation closure",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["adiabatic vs nonadiabatic policy", "relation to c_a^2 and c_s^2", "regularity through RLL transition"],
+      "falsifiers": ["double-counted pressure degrees of freedom", "undefined entropy source", "transition singularity"]
+    },
+    {
+      "id": "C05_ANISOTROPIC_STRESS",
+      "quantity": "sigma_s",
+      "role": "anisotropic stress/shear closure",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["zero/nonzero policy", "if nonzero: constitutive/evolution law", "metric coupling"],
+      "falsifiers": ["stress assumed both zero and nonzero in different code paths", "unclosed shear evolution"]
+    },
+    {
+      "id": "C06_Q_MU",
+      "quantity": "Q_mu",
+      "role": "energy-momentum transfer or explicit no-interaction declaration",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["Q_mu=0 or covariant transfer law", "background consistency", "perturbed energy and momentum transfer", "conservation accounting"],
+      "falsifiers": ["total energy-momentum nonconservation without declared external source", "background and perturbation transfer laws inconsistent"]
+    },
+    {
+      "id": "C07_GAUGE_AND_INITIAL_CONDITIONS",
+      "quantity": "gauge_initial_conditions",
+      "role": "solver gauge and primordial initial-condition contract",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["supported gauge(s)", "adiabatic/isocurvature policy", "super-horizon initial expansion", "mapping between CLASS and CAMB conventions"],
+      "falsifiers": ["gauge left implicit", "CLASS/CAMB initial states not mathematically equivalent", "initial condition violates constraints"]
+    },
+    {
+      "id": "C08_TRANSITION_REGULARIZATION",
+      "quantity": "transition_and_crossing_regularization",
+      "role": "regular evolution through the RLL transition and any equation-of-state crossing",
+      "decision_state": "UNASSIGNED_PHYSICAL_ASSUMPTION",
+      "must_define": ["problematic denominator/crossing inventory", "regularization or variable choice", "continuity/differentiability target", "numerical tolerance study"],
+      "falsifiers": ["NaN/Inf at transition", "solution depends materially on arbitrary epsilon", "discontinuous observable without model justification"]
+    },
+    {
+      "id": "C09_NONLINEAR_SCOPE",
+      "quantity": "nonlinear_or_screening_prescription",
+      "role": "scope boundary for nonlinear P(k) and screening",
+      "decision_state": "EXPLICITLY_OUT_OF_LINEAR_CLOSURE_SCOPE_UNTIL_SEPARATE_MODEL_EXISTS",
+      "must_define": ["linear validity range", "nonlinear claims forbidden until separate prescription is versioned"],
+      "falsifiers": ["nonlinear prediction emitted from a linear-only closure without separate authority"]
+    }
+  ],
+  "global_invariants": [
+    "All variables and equations must have declared dimensions/normalizations.",
+    "The perturbed conservation/Bianchi accounting must close under the declared interaction policy.",
+    "The homogeneous limit must reproduce the versioned RLL background implementation.",
+    "Gauge conventions and initial conditions must be explicit and map consistently between independent solvers.",
+    "No numerical epsilon may silently substitute for a missing physical relation.",
+    "Negative or unstable limiting tests are retained as evidence and block promotion."
+  ],
+  "required_tests_before_token_resolution": [
+    "schema/field completeness for C01-C09",
+    "dimensional and normalization audit",
+    "zero-RLL or declared limiting-model recovery",
+    "background consistency test",
+    "constraint/conservation residual test",
+    "super-horizon initial-condition test",
+    "transition regularity sweep",
+    "gauge mapping test",
+    "linear stability/finite-evolution test over the declared parameter box"
+  ],
+  "implementation_handoff": {
+    "blocked_successor": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+    "unlock_condition": "C01-C08 must move from UNASSIGNED_PHYSICAL_ASSUMPTION to versioned equations/rules and all required analytic/limiting tests must pass.",
+    "independence_rule": "CLASS and CAMB implementations must be written as independent solver integrations against the same frozen closure contract; generated outputs may not be shared as implementation inputs."
+  },
+  "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+  "token_resolution": "NOT_RESOLVED",
+  "resolved_content": "The missing degrees of freedom, required decisions, falsifiers, solver handoff and test gates are fully enumerated. The physical closure equations themselves remain intentionally unassigned rather than invented."
+}

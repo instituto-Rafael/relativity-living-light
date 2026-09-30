@@ -1,0 +1,50 @@
+name: BLAKE3 RLL Falsifiability
+
+on:
+  pull_request:
+    paths:
+      - "tools/blake3_rll_falsifiability.py"
+      - "tests/test_blake3_rll_falsifiability.py"
+      - "docs/evidence/BLAKE3_RLL_FALSIFIABILITY_2026-09-24.md"
+      - ".github/workflows/blake3-rll-falsifiability.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blake3-rll-falsifiability-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  falsifiability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.11"
+
+      - name: Compile gate
+        run: python -m py_compile tools/blake3_rll_falsifiability.py tests/test_blake3_rll_falsifiability.py
+
+      - name: Run falsifiability tests
+        run: python tests/test_blake3_rll_falsifiability.py
+
+      - name: Emit deterministic report
+        run: python tools/blake3_rll_falsifiability.py > /tmp/blake3_rll_falsifiability.json
+
+      - name: Assert fail-closed claim state
+        run: |
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/blake3_rll_falsifiability.json", encoding="utf-8"))
+          assert data["claim_allowed"] is False
+          assert data["falsifiability"]["rll_real_recurrence_period_42"]["state"] == "FAIL_FALSIFIED"
+          assert data["falsifiability"]["bitomega_period_42_attributed_to_blake3_rmr"]["state"] == "TOKEN_VAZIO_PROVENANCE_CONFLICT"
+          print("BLAKE3_RLL_FALSIFIABILITY=PASS_FAIL_CLOSED")
+          PY

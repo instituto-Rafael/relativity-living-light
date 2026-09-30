@@ -1,0 +1,55 @@
+{
+  "schema": "rll.causal_scenario_ensemble.v1",
+  "date": "2026-09-15",
+  "parent": "docs/canonicos/34_RMRCTI_OMEGA_WORLDLINE_CASCADE_ROUTER.md",
+  "claim_allowed": false,
+  "body_y_identity": "TOKEN_VAZIO",
+  "gates": {
+    "nbody": "MODEL_DEFINED",
+    "collision": "MODEL_DEFINED",
+    "ejecta_4pi": "MODEL_DEFINED_NONUNIFORM",
+    "black_hole_formation": "BLOCKED_BY_ENERGY_DENSITY",
+    "cascade": "MODEL_DEFINED_DATA_TOKEN_VAZIO",
+    "physical_multiverse": "NO_EVIDENCE_CLAIM_BLOCKED"
+  },
+  "claims": [
+    {
+      "id": "CSE-001",
+      "state": "CONVENTION",
+      "statement": "Parallel realities are represented as counterfactual worldline branches."
+    },
+    {
+      "id": "CSE-002",
+      "state": "PASS_EXACT",
+      "statement": "Full 3D angular domain is 4pi steradians."
+    },
+    {
+      "id": "CSE-003",
+      "state": "PASS_EXTERNAL",
+      "statement": "Gravity assists can alter trajectory and heliocentric orbital energy.",
+      "source": "NASA Basics of Space Flight"
+    },
+    {
+      "id": "CSE-004",
+      "state": "PASS_EXTERNAL",
+      "statement": "DART ejecta materially enhanced momentum transfer.",
+      "source": "NASA DART / ESA Hera"
+    },
+    {
+      "id": "CSE-005",
+      "state": "BLOCKED_BY_ENERGY_DENSITY",
+      "statement": "An ordinary small-body collision forms a black hole."
+    },
+    {
+      "id": "CSE-006",
+      "state": "PASS_EXTERNAL_REGIME_SPECIFIC",
+      "statement": "Collisional cascading is physically realized in sufficiently dense orbital-debris regimes.",
+      "source": "NASA MMOD/Kessler"
+    },
+    {
+      "id": "CSE-007",
+      "state": "TOKEN_VAZIO_TEST",
+      "statement": "The proposed scenario posterior and cascade graph reproduce synthetic N-body/collision benchmarks."
+    }
+  ]
+}

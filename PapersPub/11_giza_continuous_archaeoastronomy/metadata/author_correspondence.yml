@@ -1,0 +1,129 @@
+schema: rll.giza_academic_correspondence.v1
+version: 1
+recorded_at: 2026-09-06
+status: NOT_SENT
+claim_allowed: false
+publication_allowed: false
+privacy_boundary:
+  publish_personal_email_addresses: false
+  contact_route: DOI_OR_PUBLISHER_ORCID_ONLY
+  automated_outreach: false
+purpose: >-
+  Preserve source-bound author, DOI, venue and correspondence routes for scholarly
+  questions about Great Pyramid shaft geometry, orientation, precession and model
+  criticism. This manifest does not authorize bulk or unsolicited automated email.
+
+sources:
+  - id: spence2000
+    author_display: Kate Spence
+    title: Ancient Egyptian Chronology and the Astronomical Orientation of Pyramids
+    venue: Nature
+    year: 2000
+    doi: 10.1038/35042510
+    source_role: SUPPORTIVE_ORIENTATION_CHRONOLOGY_MODEL
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER
+      intended_question: >-
+        Which uncertainty terms and observational assumptions should be preserved
+        when adapting the simultaneous-transit/precession method to a separate
+        multi-shaft hypothesis without implying that the original paper endorsed it?
+
+  - id: rawlins_pickering2001
+    author_display: Dennis Rawlins; Keith Pickering
+    title: Astronomical Orientation of the Pyramids
+    venue: Nature
+    year: 2001
+    doi: 10.1038/35089138
+    source_role: DIRECT_CRITIQUE
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER
+      intended_question: >-
+        Which failure modes in stellar-pair selection or chronology inference should
+        be mandatory adversarial tests in a modern multi-target reconstruction?
+
+  - id: belmonte2001
+    author_display: Juan Antonio Belmonte
+    title: On the Orientation of Old Kingdom Egyptian Pyramids
+    venue: Journal for the History of Astronomy
+    year: 2001
+    doi: 10.1177/002182860103202601
+    source_role: INDEPENDENT_ORIENTATION_CRITIQUE
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER_OR_ORCID_IF_VERIFIED
+      intended_question: >-
+        What archaeological and precision constraints should prevent astronomical
+        orientation models from overclaiming intentional exactness?
+
+  - id: wall2007
+    author_display: John J. Wall
+    title: The Star Alignment Hypothesis for the Great Pyramid Shafts
+    venue: Journal for the History of Astronomy
+    year: 2007
+    doi: 10.1177/002182860703800204
+    source_role: SHAFT_ALIGNMENT_ADVERSARIAL_TEST
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER
+      intended_question: >-
+        Which parts of the star-alignment hypothesis remain most vulnerable to
+        geometric or selection-bias criticism when all four shafts are tested jointly?
+
+  - id: richardson2013
+    author_display: Robert Richardson et al.
+    title: The Djedi Robot Exploration of the Southern Shaft of the Queen's Chamber in the Great Pyramid of Giza, Egypt
+    venue: Journal of Field Robotics
+    year: 2013
+    doi: 10.1002/rob.21451
+    source_role: PRIMARY_INSTRUMENTED_SHAFT_EVIDENCE
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER
+      intended_question: >-
+        Are machine-readable centerline, segment-angle or uncertainty data from the
+        Djedi exploration publicly available for independent geometric reconstruction?
+
+  - id: miatello2020
+    author_display: Luca Miatello
+    title: On the Pairs of Shafts in the Pyramid of Khufu as Means for the Ascent to the Akhet
+    venue: Journal of the American Research Center in Egypt
+    year: 2020
+    doi: 10.5913/jarce.56.2020.a008
+    source_role: GEOMETRIC_AND_RITUAL_INTERPRETATION
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER_OR_ORCID_IF_VERIFIED
+      intended_question: >-
+        Which shaft dimensions and reconstructed lengths in the article are direct
+        survey observations versus geometric reconstruction assumptions?
+
+  - id: vondrak2011
+    author_display: Jan Vondrak; Nicole Capitaine; Patrick Wallace
+    title: New Precession Expressions, Valid for Long Time Intervals
+    venue: Astronomy and Astrophysics
+    year: 2011
+    doi: 10.1051/0004-6361/201117274
+    corrigendum_doi: 10.1051/0004-6361/201117274e
+    source_role: LONG_TERM_PRECESSION_METHOD
+    correspondence:
+      status: NOT_SENT
+      route: DOI_PUBLISHER_OR_ORCID_IF_VERIFIED
+      intended_question: >-
+        Which implementation details and corrigendum terms are essential for robust
+        propagation to third-millennium-BCE epochs in an archaeoastronomical test?
+
+contact_gate:
+  prerequisites:
+    - exact paper and DOI source-bound
+    - one concrete scholarly question per message
+    - project hypothesis explicitly distinguished from source author's claims
+    - no attachment unless requested
+    - no claim of endorsement
+    - human review before send
+  forbidden:
+    - bulk unsolicited mail
+    - automatic author enrollment
+    - publishing private email addresses in the repository
+    - wording that implies the author validated RLL

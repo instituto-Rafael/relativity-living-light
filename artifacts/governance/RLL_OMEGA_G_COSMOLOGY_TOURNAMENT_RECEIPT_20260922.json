@@ -1,0 +1,53 @@
+{
+  "schema": "rll.omega_g_cosmology_tournament.implementation_receipt.v1",
+  "date": "2026-09-22",
+  "state": "MATERIALIZED_NOT_EXECUTED",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "authority": {
+    "canonical_math": "rafaelmeloreisnovo/Matem-tica-/operators/omega_g_geometric_operator.v1.yaml",
+    "rll_consumer": "data/contracts/rll_geometric_operator_omega_g.v1.yaml",
+    "background_likelihood": "tools/run_g4_background_tournament.py"
+  },
+  "materialized": {
+    "tournament_contract_commit": "8ee4a70d824fedfdd4b0fd30ffbe2e4ca63e485c",
+    "binding_registry_commit": "9ca76caa349109f154039d83793fe7d976de9ada",
+    "runner_commit": "2e577eaafa9e7552eb6a25acb2edacf04428cd57",
+    "tests_commit": "b8b8d69c05966b34614d3b67d43ece76a529a557",
+    "documentation_commit": "c7221472762e3612fc351bad7856187e047b8f0c",
+    "workflow_commit": "80bfbafc0520deec1f7c955ef9b4daf528910e73",
+    "consumer_route_commit": "b69c0e90a0b0aeb917c77fa5c44ff97d441cb7ed"
+  },
+  "comparison_surface": {
+    "models": ["LCDM", "wCDM", "CPL", "RLL"],
+    "additional_g4_controls": ["GEDE", "IDE_QrhoLambda"],
+    "background_datasets": ["cosmic_chronometers_Hz", "DESI_DR2_BAO", "PantheonPlus_SH0ES"],
+    "perturbation_datasets": {
+      "fsigma8": "BLOCKED_UNTIL_MODEL_SPECIFIC_PERTURBATION_CLOSURE",
+      "CMB": "BLOCKED_FROM_BACKGROUND_ONLY_BINDING"
+    }
+  },
+  "experimental_arms": [
+    "ARM0_BASELINE",
+    "ARM1_NULL_BINDING",
+    "ARM2_BOUND_CANDIDATE",
+    "ARM3_ABLATION",
+    "ARM4_HOLDOUT"
+  ],
+  "gates": {
+    "G0_contract": "PASS_MATERIALIZED",
+    "G1_null_parity": "TOKEN_VAZIO_NOT_RUN",
+    "G2_single_binding_synthetic_recovery": "TOKEN_VAZIO",
+    "G3_real_background_tournament": "TOKEN_VAZIO",
+    "G4_ablation": "TOKEN_VAZIO",
+    "G5_holdout": "TOKEN_VAZIO",
+    "G6_independent_reproduction": "TOKEN_VAZIO",
+    "scientific_claim": "BLOCKED"
+  },
+  "boundary": "MATERIALIZED_STRUCTURE != EXECUTED_TEST != SCIENTIFIC_CONFIRMATION",
+  "R3": {
+    "F_ok": "Omega_G is now connected to the existing fair LCDM/wCDM/CPL/RLL background tournament with H(z), DESI DR2 BAO and Pantheon+.",
+    "F_gap": "No approved geometry-to-observable physical mechanism exists yet; null parity and background runs have not been executed through the new bridge.",
+    "F_next": "Run null parity; then approve exactly one mechanism-complete binding, recover it in synthetic data, and only then run real-data tournament/ablation/holdout."
+  }
+}

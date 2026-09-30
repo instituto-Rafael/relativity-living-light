@@ -1,0 +1,39 @@
+{
+  "schema": "rll.perturbation_p0_status_delta.v2",
+  "generated_at": "2026-09-24",
+  "parent": "data/governance/RLL_PERTURBATION_P0_STATUS_20260922_V1.json",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "state": "A1_1_EQUATION_FAMILY_MATERIALIZED_DIRECT_HANDOFF_REGULARITY_BLOCKED",
+  "candidate_id": "A1_1_CONSERVED_CS2REST_1_Q0_SIGMA0",
+  "delta": {
+    "C01_DELTA_S": "CANDIDATE_GENERAL_GAUGE_CONSERVATION_EQUATION_MATERIALIZED_NOT_CANONICAL",
+    "C02_THETA_S": "CANDIDATE_GENERAL_GAUGE_MOMENTUM_EQUATION_MATERIALIZED_NOT_CANONICAL",
+    "C07_GAUGE_IC": "TOKEN_VAZIO_CRITICAL",
+    "C08_REGULARIZATION": "DIRECT_STANDARD_FLUID_DOUBLE_PRECISION_REGULARITY_BLOCKED",
+    "RLL_CLASS_CAMB_IMPLEMENTATION": "BLOCKED"
+  },
+  "equation_contract": "data/science/perturbations/RLL_PERTURBATION_A1_LINEAR_FLUID_EQUATION_FAMILY_20260924_V1.json",
+  "regularity_executor": "tools/rll_perturbation_a1_linear_fluid_regularity_v1.py",
+  "expected_falsification": {
+    "term": "1/(1+w)",
+    "case": {"z_t": 10.0, "w_t": 0.05, "z": 0.0},
+    "stable_1_plus_w_order": "approximately 1.38e-87",
+    "direct_subtraction_behavior": "can round to zero in binary64 when f is first rounded to 1 and 1-f is then formed",
+    "effect": "block naive direct standard-fluid solver handoff; do not infer failure of every stable or PPF representation"
+  },
+  "remaining_hard_blockers": [
+    "select/freeze a gauge and variable normalization by scientific authority",
+    "derive model-consistent super-horizon initial conditions from the frozen equation system",
+    "choose and validate a cancellation-resistant or otherwise justified regular representation for C08",
+    "run perturbed conservation/Einstein-constraint/Bianchi residual tests",
+    "run large-scale stability sweep",
+    "freeze solver-neutral equation and IC contract",
+    "implement independently in CLASS and CAMB"
+  ],
+  "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+  "token_resolution": "NOT_RESOLVED",
+  "class_camb_unlock": false,
+  "boundary": "C01/C02 equation-family materialization narrows the problem but is not a canonical RLL perturbation closure; the newly exposed regularity problem is preserved as negative evidence."
+}

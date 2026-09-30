@@ -1,0 +1,2 @@
+# Rx runtime intentionally has no third-party Python package requirements.
+# Python standard library only.

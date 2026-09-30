@@ -1,0 +1,51 @@
+{
+  "schema": "rll.main_lab_divergence_snapshot.v1",
+  "observed_at": "2026-08-16",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "main": {
+    "sha": "8a8c5d20e41a6de1052c1ea2d8d82154f907ef48",
+    "commits_not_in_rll_lab": 98
+  },
+  "rll_lab": {
+    "sha": "5b3cddd4b1770b0f8be946a6291ea4c7398d2fdb",
+    "commits_not_in_main": 44
+  },
+  "merge_base": "73894b9a3bc574849bf488f6f74f42692b236121",
+  "status": "DIVERGED",
+  "history_reconciliation": "TOKEN_VAZIO_MAIN_RLL_LAB_RECONCILIATION",
+  "observed_main_side_examples": [
+    ".github/workflow-contract.yml",
+    ".github/workflows/rll-operational-auto-hotfix.yml",
+    ".github/workflows/rll-homeostatic-field-gate.yml",
+    ".github/workflows/rll-observer-mirror-photon-gate.yml",
+    ".github/workflows/rll-biophoton-metabolic-transduction-gate.yml",
+    "apps/dashboard/",
+    "src/rll/geophysical_systematics_bridge.py"
+  ],
+  "observed_lab_side_examples": [
+    ".github/workflow-architecture/invariants.v1.yml",
+    ".github/workflows/rll-pipeline-linear-completo.yml",
+    ".github/workflows/workflow-contract-sync.yml",
+    "data/contracts/desi_50_hypothesis_intake.v1.json",
+    "data/contracts/rll_formula_test_matrix_24_source_binding.v1.json",
+    "data/inputs/cosmology_joint/desi_50_hypothesis_intake.v1.csv",
+    "docs/cosmology/DESI_50_HYPOTHESIS_INTAKE_20260815.md"
+  ],
+  "unsafe_shortcuts": [
+    "retarget an existing main-based hotfix PR directly to rll/lab",
+    "force-update rll/lab to main",
+    "merge main into rll/lab without path-level overlap inventory",
+    "disable branch-maturity topology to make a hotfix green"
+  ],
+  "required_next_evidence": [
+    "path-level changes from merge base to main",
+    "path-level changes from merge base to rll/lab",
+    "intersection/conflict-risk set",
+    "ordered forward-port batches",
+    "per-batch tests and receipts",
+    "reviewed decision for a verified operational proposal base"
+  ],
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false
+}

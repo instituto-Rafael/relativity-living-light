@@ -1,0 +1,18 @@
+{
+  "schema": "rll.validacao_real.sources.rx.v1",
+  "claim_boundary": "Committed local fallback payloads are provenance anchors only. Remote reachability or fallback materialization does not validate RLL, does not prove superiority over LCDM/CPL, and does not replace a full likelihood with baseline, metric, uncertainty/covariance and report.",
+  "sources": [
+    {
+      "id": "desi_dr2_bao",
+      "domain": "cosmology_bao",
+      "embedded_fallback": "data/desi_dr2_bao_rx.json",
+      "portal": "https://arxiv.org/abs/2503.14738"
+    },
+    {
+      "id": "hz_cosmic_chronometers",
+      "domain": "cosmology_expansion",
+      "embedded_fallback": "data/hz_cosmic_chronometers_rx.json",
+      "portal": "https://gitlab.com/mmoresco/CCcovariance"
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "schema": "rll.open_work_mechanism_registry.v1",
+  "generated_at": "2026-08-08T05:37:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_view": "RLL_TOKEN_VAZIO_RECONCILIATION_V2_APPEND_ONLY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "purpose": "Convert every currently open TOKEN_VAZIO into a non-empty, auditable mechanism contract without falsely resolving external, physical, human, governance or scientific dependencies.",
+  "invariants": [
+    "open does not mean ignored",
+    "no token may be closed by prose alone",
+    "every open token must have urgency, attention state, mechanism, deliverable, verification, falsifier, close_when and claim boundary",
+    "external and physical dependencies remain open until their own authority is observed",
+    "negative evidence is retained and may close uncertainty without promoting a positive claim",
+    "claim_allowed remains false"
+  ],
+  "expected_open_denominator": 14,
+  "expected_priority_counts": {"P0": 4, "P1": 7, "P2": 3},
+  "tokens": [
+    {
+      "token": "TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE",
+      "priority": "P0",
+      "domain": "bayesian_inference",
+      "state": "OPEN_MIXED",
+      "urgency": "URGENT_BLOCKS_GLOBAL_MODEL_EVIDENCE",
+      "attention_state": "ACTIVE",
+      "dependencies": [
+        "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+        "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+        "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION"
+      ],
+      "mechanism": {
+        "id": "M01_JOINT_MULTI_PROBE_BAYES",
+        "class": "MIXED_DEPENDENCY_ORCHESTRATION",
+        "driver": "products/rll-evidence-runner/src/rll_evidence/dovekie_nested_evidence.py",
+        "trigger": "Build one frozen LCDM/CPL/RLL joint likelihood only after every included component has an immutable receipt, covariance/overlap policy, prior lock and executable reference reproduction.",
+        "deliverable": "artifacts/science/bayes/RLL_JOINT_MULTIPROBE_EVIDENCE_RECEIPT_<RUN>.json",
+        "verification": "Independent per-component loglike reproduction, prior manifest hash, sampler/version/seed receipt, convergence/evidence uncertainty and overlap matrix.",
+        "falsifier": "Any double-counted dataset, unresolved cross-covariance, prior mismatch, missing component receipt, or unstable logZ keeps the token open."
+      },
+      "close_when": [
+        "all included component gates are RESOLVED or explicitly excluded with rationale",
+        "joint covariance/overlap contract is frozen",
+        "LCDM/CPL/RLL use identical data support and declared priors",
+        "nested evidence uncertainty and convergence criteria pass"
+      ],
+      "claim_boundary": "Joint evidence may compare declared models under the frozen data/prior contract; it does not establish a universal cosmological theory."
+    },
+    {
+      "token": "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+      "priority": "P0",
+      "domain": "replication",
+      "state": "OPEN_HUMAN",
+      "urgency": "URGENT_BLOCKS_INDEPENDENT_VALIDATION",
+      "attention_state": "NEEDS_HUMAN",
+      "dependencies": ["TOKEN_VAZIO_REAL_BAYES_JOINT_MULTI_PROBE"],
+      "mechanism": {
+        "id": "M02_INDEPENDENT_REPLICATION",
+        "class": "INDEPENDENT_AUTHORITY",
+        "driver": "external independent operator/repository",
+        "trigger": "Freeze a release candidate, inputs, environment manifest, commands and checksums; provide them to an operator who did not author the result path.",
+        "deliverable": "external replication receipt with environment, commands, hashes, outputs, deviations and signed/identifiable provenance",
+        "verification": "Recompute at least the predeclared primary metrics from clean checkout without reusing generated outputs.",
+        "falsifier": "Same-author rerun, copied artifacts, undocumented manual intervention, environment drift or material metric disagreement keeps the token open."
+      },
+      "close_when": [
+        "replicator is independent of the producing execution",
+        "clean-checkout reproduction is documented",
+        "input/output hashes and environment are frozen",
+        "primary metrics agree within predeclared tolerances or disagreement is preserved as negative evidence"
+      ],
+      "claim_boundary": "Internal reruns and CI are reproducibility evidence, not independent replication."
+    },
+    {
+      "token": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "priority": "P0",
+      "domain": "bao",
+      "state": "OPEN_EXTERNAL",
+      "urgency": "URGENT_EXTERNAL_LIKELIHOOD_AUTHORITY",
+      "attention_state": "BLOCKED_EXTERNAL",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M03_DESI_DR2_OFFICIAL_JOINT",
+        "class": "EXTERNAL_ACQUISITION_AND_REPRODUCTION",
+        "driver": "official DESI DR2 joint/cross-block likelihood products",
+        "trigger": "Materialize immutable official products and license/provenance metadata, then reproduce official LCDM/CPL reference values before evaluating RLL.",
+        "deliverable": "artifacts/science/desi/RLL_DESI_DR2_OFFICIAL_JOINT_REPRODUCTION_<RUN>.json",
+        "verification": "Source hash, release/version identifier, covariance shape/order, observable mapping, official reference reproduction and local numerical tolerance receipt.",
+        "falsifier": "Local 13-point/block-diagonal substitutes, missing cross-block covariance, unverifiable provenance or failed official reference reproduction keep the token open."
+      },
+      "close_when": [
+        "official joint/cross-block products are available and materialized",
+        "covariance ordering and observable mapping are verified",
+        "official LCDM/CPL reference reproduction passes",
+        "license/provenance allows the executed use"
+      ],
+      "claim_boundary": "Existing local DESI comparisons are not relabeled as the official joint likelihood."
+    },
+    {
+      "token": "TOKEN_VAZIO_PHYSICAL_EXECUTION",
+      "priority": "P0",
+      "domain": "termux",
+      "state": "OPEN_EXTERNAL",
+      "urgency": "URGENT_PHYSICAL_AUTHORITY",
+      "attention_state": "PHYSICAL_REQUIRED",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M04_PHYSICAL_TERMUX_EXECUTION",
+        "class": "PHYSICAL_DEVICE_REPLAY",
+        "driver": "physical Android/Termux device",
+        "trigger": "Run the frozen repository command set on the target no-root device and capture uname/pkg/toolchain, git SHA, stdout/stderr, exit codes, hashes and timing.",
+        "deliverable": "physical-device execution receipt bound to device/runtime metadata and repository SHA",
+        "verification": "Receipt must prove physical Android/Termux authority; container, emulator-only or copied logs are rejected.",
+        "falsifier": "No physical-device metadata, dirty/unidentified checkout, missing command transcript, mismatched hashes or nonzero required exit code keeps the token open."
+      },
+      "close_when": [
+        "physical device authority is recorded",
+        "repository SHA and environment are frozen",
+        "required commands complete under declared no-root constraints",
+        "outputs and checksums are persisted"
+      ],
+      "claim_boundary": "CI/container success cannot substitute for a physical Termux execution claim."
+    },
+    {
+      "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+      "priority": "P1",
+      "domain": "cmb",
+      "state": "OPEN_INTERNAL",
+      "urgency": "HIGH_NEXT_EXECUTABLE",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M05_ACT_DR6_LCDM_POSTERIOR",
+        "class": "INTERNAL_SCIENCE_EXECUTION",
+        "driver": ".github/workflows/act-dr6-cmbonly-materialization.yml",
+        "trigger": "Reuse the verified pinned ACT DR6 materialization/runtime to run a frozen LCDM posterior with explicit priors, sampler, versions, seeds and convergence diagnostics.",
+        "deliverable": "artifacts/science/act/RLL_ACT_DR6_LCDM_POSTERIOR_REPRODUCTION_<RUN>.json",
+        "verification": "Chain diagnostics, posterior summary, reference parameter comparison, exact config hash and upstream likelihood/runtime hashes.",
+        "falsifier": "Nonconverged chains, unstated priors, runtime drift, missing chain custody or reference mismatch beyond declared tolerance keeps the token open."
+      },
+      "close_when": [
+        "pinned likelihood/runtime hashes match the verified materialization",
+        "posterior chain converges under predeclared diagnostics",
+        "priors/config/sampler/seed policy are immutable",
+        "reference posterior summary is reproduced within declared tolerances"
+      ],
+      "claim_boundary": "LCDM posterior reproduction validates the ACT execution path, not an RLL CMB prediction."
+    },
+    {
+      "token": "TOKEN_VAZIO_DES_Y6_3X2PT_LIKELIHOOD",
+      "priority": "P1",
+      "domain": "lss",
+      "state": "OPEN_EXTERNAL",
+      "urgency": "HIGH_EXTERNAL_LSS_AUTHORITY",
+      "attention_state": "BLOCKED_EXTERNAL",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M06_DES_Y6_3X2PT",
+        "class": "EXTERNAL_ACQUISITION_AND_REPRODUCTION",
+        "driver": "official DES Y6 3x2pt likelihood/data products",
+        "trigger": "Materialize the official release with provenance/license, reproduce its declared reference cosmology and freeze nuisance/covariance conventions.",
+        "deliverable": "artifacts/science/lss/RLL_DES_Y6_3X2PT_REPRODUCTION_<RUN>.json",
+        "verification": "Data-vector order, covariance, nuisance priors, scale cuts, reference loglike/posterior and software version hashes.",
+        "falsifier": "Approximate/mock data, missing covariance/nuisance policy, unsupported scale cuts or failed reference reproduction keeps the token open."
+      },
+      "close_when": [
+        "official products are available and immutable",
+        "reference likelihood/posterior reproduction passes",
+        "nuisance priors and scale cuts are frozen",
+        "provenance/license are recorded"
+      ],
+      "claim_boundary": "No RLL LSS claim is allowed from placeholder or nonofficial Y6 inputs."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "priority": "P1",
+      "domain": "perturbations",
+      "state": "OPEN_MIXED",
+      "urgency": "HIGH_SCIENTIFIC_CRITICAL_PATH",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M07_RLL_PERTURBATION_CLOSURE",
+        "class": "THEORY_CONTRACT_AND_FALSIFICATION",
+        "driver": "src/rll/rll_perturbation_kernel.py",
+        "trigger": "Version an explicit covariant or explicitly phenomenological closure covering delta_s, theta_s, rest-frame sound speed, entropy/nonadiabatic pressure, anisotropic stress, Q_mu, gauge/initial conditions and transition regularization.",
+        "deliverable": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json plus analytic/limiting tests",
+        "verification": "Dimensional consistency, background limit, conservation equations, gauge declaration, stability/causality checks where applicable, smooth transition behavior and recovery of declared limiting models.",
+        "falsifier": "Undefined degree of freedom, singular crossing, gauge ambiguity, broken conservation, dimension mismatch or unstable/ill-posed evolution keeps the token open."
+      },
+      "close_when": [
+        "every required perturbation degree of freedom has an explicit rule",
+        "initial/gauge conditions and transitions are specified",
+        "analytic limiting tests pass",
+        "the closure is reviewable without inferring missing physics"
+      ],
+      "claim_boundary": "A closure contract is a model assumption subject to falsification; it is not empirical validation."
+    },
+    {
+      "token": "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+      "priority": "P1",
+      "domain": "perturbations",
+      "state": "OPEN_MIXED",
+      "urgency": "HIGH_BLOCKED_BY_CLOSURE",
+      "attention_state": "BLOCKED_DEPENDENCY",
+      "dependencies": ["TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS"],
+      "mechanism": {
+        "id": "M08_RLL_CLASS_CAMB_DUAL_IMPLEMENTATION",
+        "class": "INDEPENDENT_DUAL_ENGINE_IMPLEMENTATION",
+        "driver": "CLASS and CAMB independent RLL code paths",
+        "trigger": "After M07 is versioned, implement the same closure independently in CLASS and CAMB without sharing generated numerical outputs.",
+        "deliverable": "dual-engine receipt for CMB Cl, transfer functions, growth and linear P(k) with parameter/config hashes",
+        "verification": "Identical cosmological vectors, declared solver precision, convergence with lmax/k grids and predeclared cross-engine tolerances.",
+        "falsifier": "Shared hidden implementation, unresolved closure, cutoff artifact, gauge mismatch or tolerance failure keeps the token open."
+      },
+      "close_when": [
+        "M07 closure is frozen and tests pass",
+        "CLASS RLL path executes",
+        "CAMB RLL path executes independently",
+        "cross-engine observables agree within predeclared tolerances or discrepancy is preserved as negative evidence"
+      ],
+      "claim_boundary": "Dual-engine agreement is numerical implementation evidence, not observational confirmation."
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_PRIOR_PRIMARY_SOURCE_PROVENANCE",
+      "priority": "P1",
+      "domain": "h0",
+      "state": "OPEN_EXTERNAL",
+      "urgency": "HIGH_PROVENANCE_BLOCKER",
+      "attention_state": "BLOCKED_EXTERNAL",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M09_H0_PRIMARY_SOURCE_CUSTODY",
+        "class": "PRIMARY_SOURCE_PROVENANCE",
+        "driver": "primary published H0 prior/likelihood sources used by the 6x4 matrix",
+        "trigger": "Freeze bibliographic authority, exact numerical prior/likelihood definition, version/date, units, covariance if applicable and mapping into repository cells.",
+        "deliverable": "artifacts/science/h0/RLL_H0_PRIMARY_SOURCE_PROVENANCE_<DATE>.json",
+        "verification": "Each used H0 prior traces to a primary source and exact repository parameterization; secondary summaries alone are insufficient.",
+        "falsifier": "Untraceable number, ambiguous Gaussianization, missing covariance/units, or mismatch between source and executed prior keeps the token open."
+      },
+      "close_when": [
+        "every executed H0 prior has primary-source custody",
+        "numeric mapping and units are exact",
+        "transformations/approximations are disclosed",
+        "source identifiers and retrieval/version dates are frozen"
+      ],
+      "claim_boundary": "A declared prior is not an independently executed H0 likelihood unless its likelihood/data contract is actually reproduced."
+    },
+    {
+      "token": "TOKEN_VAZIO_H0_RD_FULL_BOLTZMANN_INFERENCE_INTEGRATION",
+      "priority": "P1",
+      "domain": "h0",
+      "state": "OPEN_INTERNAL",
+      "urgency": "HIGH_NEXT_EXECUTABLE",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M10_H0_FULL_BOLTZMANN_INFERENCE",
+        "class": "INTERNAL_NUMERICAL_INTEGRATION",
+        "driver": ".github/workflows/h0-rd-ablation.yml",
+        "trigger": "Replace or selectable-route the lightweight r_d approximation with validated CLASS/CAMB-backed direct evaluation or a prevalidated interpolation cache in the formal 6x4 inference.",
+        "deliverable": "artifacts/science/h0/RLL_H0_RD_FULL_BOLTZMANN_INFERENCE_<RUN>.json",
+        "verification": "Direct-solver/cache agreement, interpolation error bound, compute policy, identical 24-cell optimizer gates, convergence and delta-to-approximation report.",
+        "falsifier": "Unbounded interpolation error, silent fallback to approximation, changed optimization fairness, nonconvergence or engine disagreement keeps the token open."
+      },
+      "close_when": [
+        "full-Boltzmann route is wired into the formal inference",
+        "direct/cache error is bounded and recorded",
+        "all 24 cells rerun under identical gates",
+        "results explicitly compare against the former approximation"
+      ],
+      "claim_boundary": "Integrating full-Boltzmann r_drag removes one numerical approximation; it does not validate RLL perturbations."
+    },
+    {
+      "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+      "priority": "P1",
+      "domain": "github_governance",
+      "state": "OPEN_GOVERNANCE",
+      "urgency": "HIGH_PLATFORM_ASSURANCE",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M11_GITHUB_EXTERNAL_SETTINGS",
+        "class": "PLATFORM_STATE_VERIFICATION",
+        "driver": ".github/workflows/github-platform-assurance.yml",
+        "trigger": "Read and record actual repository branch protection/rulesets, required checks, merge policy and Actions permissions from GitHub platform state.",
+        "deliverable": "platform settings receipt with repository, branch/ruleset identifiers, required checks and observation timestamp",
+        "verification": "Observed platform API/settings must match repository-local policy; local YAML alone cannot close this token.",
+        "falsifier": "Unverified settings, missing required check, bypass-capable rule, permissive write token or mismatch with documented topology keeps the token open."
+      },
+      "close_when": [
+        "branch/ruleset state is directly observed",
+        "required checks include maturity/governance gates as intended",
+        "merge/bypass policy is recorded",
+        "Actions permissions are bounded and observed"
+      ],
+      "claim_boundary": "Repository files describe intended policy; only platform-state observation proves external enforcement."
+    },
+    {
+      "token": "TOKEN_VAZIO_DIVERGED_OR_DESCENDANT_REF_SEMANTIC_REVIEW",
+      "priority": "P2",
+      "domain": "branch_audit",
+      "state": "OPEN_INTERNAL",
+      "urgency": "NORMAL_BOUNDED_REVIEW_QUEUE",
+      "attention_state": "ACTIVE",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M12_DIVERGED_REF_SEMANTIC_REVIEW",
+        "class": "INTERNAL_PATCH_SEMANTIC_TRIAGE",
+        "driver": "tools/audit_diverged_ref_patches_v1.py",
+        "trigger": "Review the frozen unique-patch cohort after patch-equivalence, classify technical applicability and preserve evidence for every decision.",
+        "deliverable": "data/governance/RLL_DIVERGED_REF_SEMANTIC_DECISIONS_<DATE>.json",
+        "verification": "Every unique ref receives one of UNIQUE_APPLICABLE, SUPERSEDED_SEMANTICALLY, OBSOLETE, NEGATIVE_EVIDENCE_ONLY or NEEDS_HUMAN_REVIEW with evidence paths.",
+        "falsifier": "Anonymous remainder, decision without inspected diff/lineage, automatic forward-port based only on ahead count, or dropped ref keeps the token open."
+      },
+      "close_when": [
+        "all 32 unique-patch refs receive a semantic decision",
+        "applicable patches are separately tested before forward-port",
+        "superseded/obsolete decisions cite evidence",
+        "zero anonymous/unclassified remainder remains"
+      ],
+      "claim_boundary": "Git topology and patch uniqueness do not prove scientific or technical value."
+    },
+    {
+      "token": "TOKEN_VAZIO_UTM185_TERMUX_EXECUTION",
+      "priority": "P2",
+      "domain": "utm185",
+      "state": "OPEN_EXTERNAL",
+      "urgency": "NORMAL_PHYSICAL_REPLAY",
+      "attention_state": "PHYSICAL_REQUIRED",
+      "dependencies": [],
+      "mechanism": {
+        "id": "M13_UTM185_TERMUX_REPLAY",
+        "class": "PHYSICAL_DEVICE_REPLAY",
+        "driver": "tests/test_utm185_void_mask_attention.py",
+        "trigger": "Execute the existing UTM185 void-mask test contract on the target physical Termux environment and bind the receipt to repository SHA and device/runtime metadata.",
+        "deliverable": "data/results/utm185_void_mask_termux_receipt.json",
+        "verification": "Same 7 local software assertions plus physical Termux authority, command transcript and output hashes.",
+        "falsifier": "Container-only pass, missing physical metadata, different test contract or failed assertion keeps the token open."
+      },
+      "close_when": [
+        "physical Termux execution is recorded",
+        "the frozen UTM185 tests pass",
+        "repository/environment hashes are preserved",
+        "receipt distinguishes software correctness from model-training claims"
+      ],
+      "claim_boundary": "Void-mask unit tests do not prove training stability, task quality or superiority."
+    },
+    {
+      "token": "TOKEN_VAZIO_UTM185_REAL_MODEL_TRAINING",
+      "priority": "P2",
+      "domain": "utm185",
+      "state": "OPEN_MIXED",
+      "urgency": "NORMAL_AFTER_PHYSICAL_REPLAY",
+      "attention_state": "BLOCKED_DEPENDENCY",
+      "dependencies": ["TOKEN_VAZIO_UTM185_TERMUX_EXECUTION"],
+      "mechanism": {
+        "id": "M14_UTM185_REAL_MODEL_TRAINING",
+        "class": "CONTROLLED_MODEL_ABLATION",
+        "driver": "UTM185 explicit void-mask implementation plus a real tokenizer/model training harness",
+        "trigger": "After physical replay, train matched baseline vs UTM185-mask runs with fixed dataset split, seed policy, optimizer, budget and evaluation metrics.",
+        "deliverable": "UTM185 training ablation receipt with configs, seeds, curves, task metrics, resource use and statistical comparison",
+        "verification": "Multiple seeds or justified deterministic protocol, matched compute budget, held-out evaluation and uncertainty/effect-size reporting.",
+        "falsifier": "Single cherry-picked run, unmatched compute/data, train-set-only metric, missing seeds/configs or no improvement under predeclared metric keeps superiority claims closed."
+      },
+      "close_when": [
+        "real tokenizer/model path is integrated",
+        "matched baseline and UTM185 runs complete",
+        "evaluation protocol and uncertainty are frozen",
+        "results are preserved whether positive, null or negative"
+      ],
+      "claim_boundary": "Training evidence may characterize the implementation; superiority requires the predeclared ablation to support it."
+    }
+  ]
+}

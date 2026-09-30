@@ -18,11 +18,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-try:
-    import yaml
-except ImportError:  # pragma: no cover - dependency is installed in CI workflows.
-    yaml = None  # type: ignore[assignment]
-
 TABLE_SEPARATOR = "|---|---:|---|---|---:|---|---|"
 SUMMARY_SEPARATOR = "|---|---:|"
 DEFAULT_OUTPUTS = {
@@ -112,10 +107,10 @@ def rel_posix(path: Path, root: Path) -> str:
 
 
 def load_config(root: Path) -> InventoryConfig:
-    config_path = root / "tools" / "inventory_config.yml"
+    config_path = root / "tools" / "inventory_config.json"
     data: dict[str, Any] = {}
-    if config_path.exists() and yaml is not None:
-        loaded = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    if config_path.exists():
+        loaded = json.loads(config_path.read_text(encoding="utf-8"))
         if isinstance(loaded, dict):
             data = loaded
 

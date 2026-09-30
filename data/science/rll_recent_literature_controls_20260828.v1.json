@@ -1,0 +1,63 @@
+{
+  "schema": "rll.recent_literature_controls.v1",
+  "record_id": "RLL_RECENT_LITERATURE_CONTROLS_20260828_V1",
+  "mode": "APPEND_ONLY_NO_DATA_WEIGHT_INCREMENT",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "purpose": "Route publications released after the primary DESI/DES measurements as methodological controls or adversarial comparator candidates without counting reanalysis of the same datasets as independent new data.",
+  "controls": [
+    {
+      "id": "MNRAS_DDE_20260826",
+      "published": "2026-08-26",
+      "doi": "10.1093/mnras/stag1607",
+      "title": "Dynamical Dark Energy from DESI DR2 and DES Year 6 BAO, Supernovae and Cosmic Chronometers: A 3σ Preference Without Decisive Bayesian Evidence",
+      "role": "G6_METHODOLOGY_CONTROL",
+      "independence_credit": false,
+      "data_weight_increment": false,
+      "reused_data_classes": ["DESI_DR2_BAO", "DES_Y6_BAO", "Planck_CMB", "SNIa", "cosmic_chronometers"],
+      "crosswalk": "A frequentist-scale preference and Bayesian model evidence can disagree; RLL must not promote sigma-level preference into Bayes support.",
+      "rll_effect": "STRENGTHENS_INVARIANT_PREFERENCE_SIGMA_NE_DECISIVE_BAYES; DOES_NOT_SUPPORT_RLL"
+    },
+    {
+      "id": "PRD_COUPLED_DE_20260824",
+      "published": "2026-08-24",
+      "doi": "10.1103/x8kc-zqzl",
+      "title": "Constraints on coupled dark energy in the DESI era",
+      "role": "G4_ADVERSARIAL_COMPARATOR_CANDIDATE",
+      "independence_credit": false,
+      "data_weight_increment": false,
+      "crosswalk": "Interacting/coupled dark-energy alternatives remain relevant comparators when the same frozen likelihood can be reproduced; their published fit is not evidence for an RLL interaction sector.",
+      "rll_effect": "COMPARATOR_CANDIDATE_ONLY"
+    },
+    {
+      "id": "PRD_ANTON_SCHMIDT_20260817",
+      "published": "2026-08-17",
+      "doi": "10.1103/ft7g-gxzf",
+      "title": "Testing the Anton-Schmidt dark energy model with the DESI DR2 measurements",
+      "role": "G4_G6_ADVERSARIAL_COMPARATOR_CANDIDATE",
+      "independence_credit": false,
+      "data_weight_increment": false,
+      "crosswalk": "Published Bayesian preference for another dynamical-DE model is an adversarial model-selection target; no Bayes factor is imported until its likelihood, priors and evidence computation are independently reproducible under the RLL parity contract.",
+      "rll_effect": "COMPARATOR_AND_REPLICATION_TARGET_ONLY"
+    }
+  ],
+  "invariants": [
+    "NEW_PAPER_NE_NEW_DATA",
+    "SAME_DATA_REANALYSIS_NE_INDEPENDENT_REPLICATION",
+    "PREFERENCE_SIGMA_NE_DECISIVE_BAYES",
+    "COMPARATOR_RESULT_NE_RLL_SUPPORT",
+    "PUBLISHED_BAYES_NE_REPRODUCED_BAYES",
+    "CLAIM_ALLOWED_FALSE"
+  ],
+  "F_ok": [
+    "August 2026 reanalyses are routed without duplicate evidence weight",
+    "frequentist preference is explicitly separated from Bayesian evidence",
+    "new comparator classes are visible to G4/G6 without being promoted"
+  ],
+  "F_gap": [
+    "executable equal-treatment reproduction of comparator likelihoods",
+    "prior/evidence parity for any imported Bayes comparison",
+    "independent data or held-out data for confirmatory credit"
+  ],
+  "F_next": "Use these papers to prioritize comparator implementation and prior-sensitivity tests only; do not add their numerical conclusions as independent observations."
+}

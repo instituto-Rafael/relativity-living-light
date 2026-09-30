@@ -1,0 +1,389 @@
+{
+  "schema": "rll.evidence_evolution_matrix.v1",
+  "generated_at": "2026-09-13",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "projection_only": true,
+  "source_registries": [
+    "data/governance/RLL_GAP_RETROFEEDBACK_V2.json",
+    "data/governance/RLL_GAP_DECOMPOSITION_V1.json"
+  ],
+  "claim_allowed": false,
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "NEGATIVE_EVIDENCE != GLOBAL_FALSIFICATION",
+    "REPRODUCTION != UNIVERSAL_TRUTH",
+    "ROLLBACK_PRESERVES_CONTRADICTORY_EVIDENCE"
+  ],
+  "guards": [
+    "provenance",
+    "context",
+    "evidence",
+    "contradiction",
+    "uncertainty",
+    "reproduction",
+    "rollback"
+  ],
+  "workstreams": [
+    {
+      "id": "RLL-EVOL-BACKGROUND-001",
+      "domain": "background",
+      "state": "EVIDENCED_FOCUSED",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "docs/audit/RLL_FLAT_CLOSURE_SUCCESSOR_RECEIPT_20260912.md",
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#COSMO-CLOSURE-001"
+        ]
+      },
+      "context": {
+        "scope": "flat-closure successor normalizes the bounded background contract so E(0)=1 by construction",
+        "boundary": "does not validate growth, CMB precision, posterior inference or model preference"
+      },
+      "evidence": {
+        "state": "SOURCE_REPORTED_EVIDENCED",
+        "refs": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#COSMO-CLOSURE-001"
+        ],
+        "summary": "COSMO-CLOSURE-001 is recorded MERGED_EVIDENCED; historical pipeline remains preserved"
+      },
+      "contradiction": {
+        "state": "RESOLVED_SCOPED",
+        "refs": [
+          "receipts/2026-09-12_RLL_COSMOLOGY_E0_PREFLIGHT.md"
+        ],
+        "summary": "legacy free Om+OL without Ok/closure admitted E(0)!=1; successor removes that ambiguity only in the bounded flat path"
+      },
+      "uncertainty": {
+        "state": "OPEN_DOWNSTREAM",
+        "open_items": [
+          "validated growth perturbations",
+          "posterior/model-selection successor"
+        ]
+      },
+      "reproduction": {
+        "state": "SOURCE_REPORTED_PASS_SCOPED",
+        "procedure": "run flat-closure focused tests and E0 preflight on the exact successor revision",
+        "evidence_refs": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#COSMO-CLOSURE-001"
+        ]
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "historical joint_real_likelihood path and artifacts remain immutable",
+        "procedure": "remove/revert successor-only flat-closure path; preserve legacy outputs and receipts"
+      },
+      "next_step": "maintenance only unless regression; downstream priority is growth perturbation policy"
+    },
+    {
+      "id": "RLL-EVOL-CMB-001",
+      "domain": "cmb",
+      "state": "VERIFIED_LIMITED",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "docs/audit/RLL_GAP_RETROFEEDBACK_RECEIPT_20260912.md",
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#CMB-BENCH-001",
+          "github-actions:CLASS CAMB Baseline Crosscheck/run/34709860843"
+        ]
+      },
+      "context": {
+        "scope": "three pinned standard-background cases benchmark RLL recombination/sound-horizon path against CAMB",
+        "boundary": "benchmark is bounded; it does not validate RLL perturbations, growth, MCMC or model preference"
+      },
+      "evidence": {
+        "state": "REPRODUCED_PROVIDER",
+        "refs": [
+          "github-actions:34709860843",
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#CMB-BENCH-001"
+        ],
+        "summary": "max relative error: zstar≈0.1875%; rstar at RLL zstar≈0.1289%; rstar at CAMB zstar≈0.00193%"
+      },
+      "contradiction": {
+        "state": "NONE_OPEN_IN_SCOPE",
+        "refs": [],
+        "summary": "no contradiction to the bounded benchmark is recorded; precision limitation is isolated to zstar approximation"
+      },
+      "uncertainty": {
+        "state": "BOUNDED",
+        "open_items": [
+          "tighter recombination solver if precision below observed zstar residual is required"
+        ]
+      },
+      "reproduction": {
+        "state": "PASS_PROVIDER",
+        "procedure": "rerun CLASS CAMB Baseline Crosscheck on pinned backgrounds and compare predeclared tolerances",
+        "evidence_refs": [
+          "github-actions:34709860843"
+        ]
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "historical CMB path and distinct successor outputs",
+        "procedure": "revert successor-only CMB/recombination artifacts without rewriting historical outputs"
+      },
+      "next_step": "keep bounded benchmark stable; do not reopen unless regression or tighter precision is required"
+    },
+    {
+      "id": "RLL-EVOL-GROWTH-001",
+      "domain": "growth",
+      "state": "NEGATIVE_EVIDENCE_DECOMPOSED",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "tools/rll_perturbation_barotropic_candidate_v1.py",
+          "data/governance/RLL_GAP_RETROFEEDBACK_V2.json",
+          "github-actions:CLASS CAMB Baseline Crosscheck/run/34709860843"
+        ]
+      },
+      "context": {
+        "scope": "minimal separately conserved barotropic/adiabatic Q_mu=0 shear-free perturbation closure tested as a global default candidate",
+        "boundary": "failure of this candidate is not falsification of the RLL background model"
+      },
+      "evidence": {
+        "state": "REPRODUCED_NEGATIVE",
+        "refs": [
+          "github-actions:34709860843",
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#GROWTH-THEORY-001"
+        ],
+        "summary": "0 of 9 declared cases passed; candidate falsified as global default"
+      },
+      "contradiction": {
+        "state": "OPEN_MODEL_POLICY",
+        "refs": [
+          "data/governance/RLL_GAP_RETROFEEDBACK_V2.json#GROWTH-CS2-001"
+        ],
+        "summary": "silent c_s^2=c_a^2 inheritance conflicts with observed negative sweep and must not be treated as derived RLL physics"
+      },
+      "uncertainty": {
+        "state": "OPEN_CRITICAL",
+        "open_items": [
+          "GROWTH-CS2-001",
+          "GROWTH-QMU-001",
+          "GROWTH-SIGMA-001",
+          "GROWTH-GAUGE-001",
+          "GROWTH-IC-001",
+          "GROWTH-CONSERVATION-001"
+        ]
+      },
+      "reproduction": {
+        "state": "PASS_NEGATIVE_RESULT",
+        "procedure": "rerun barotropic candidate sweep under the declared stability/causality gate",
+        "evidence_refs": [
+          "github-actions:34709860843"
+        ]
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "background/CMB successor remains unchanged; each perturbation policy is additive",
+        "procedure": "remove only the failing candidate policy and restore its TOKEN_VAZIO state; preserve negative evidence"
+      },
+      "next_step": "resolve the continuity-semantics prerequisite in PR #901; only then instantiate GROWTH-CS2-001 as a versioned rest-frame sound-speed/entropy candidate with explicit falsifiers"
+    },
+    {
+      "id": "RLL-EVOL-REALDATA-001",
+      "domain": "real_data",
+      "state": "VERIFIED_LIMITED",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "receipts/2026-09-12_RLL_REAL_DATA_EVIDENCE_BRIDGE_V1.md",
+          "data/real/Hz_cosmic_chronometers_independent.csv"
+        ]
+      },
+      "context": {
+        "scope": "pins real-data identities and separates an independent cosmic-chronometer H(z) partition for successor fits",
+        "boundary": "published benchmark numbers are context-only; growth/CMB remain claim-blocked until physics gates close"
+      },
+      "evidence": {
+        "state": "SOURCE_REPORTED_MACHINE_CHECKABLE",
+        "refs": [
+          "receipts/2026-09-12_RLL_REAL_DATA_EVIDENCE_BRIDGE_V1.md"
+        ],
+        "summary": "source identities, hashes, covariance shape and obvious probe-overlap are recorded as machine-checkable"
+      },
+      "contradiction": {
+        "state": "RESOLVED_BY_SUPERSESSION",
+        "refs": [
+          "receipts/2026-09-12_RLL_REAL_DATA_EVIDENCE_BRIDGE_V1.md"
+        ],
+        "summary": "historical growth DOI stw1614 is unrelated; active provenance anchor supersedes it with stv1478 without rewriting history"
+      },
+      "uncertainty": {
+        "state": "OPEN_DOWNSTREAM",
+        "open_items": [
+          "Pantheon+ full-fit surface",
+          "growth covariance/overlap policy",
+          "physics-gated successor inference"
+        ]
+      },
+      "reproduction": {
+        "state": "TOKEN_VAZIO_SUCCESSOR_FIT",
+        "procedure": "rerun successor fit on pinned independent H(z)+DESI background inputs and compare against historical artifact",
+        "evidence_refs": []
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "legacy Hz_data_real.csv remains immutable",
+        "procedure": "discard successor-only fit outputs and routing change; retain legacy dataset, new partition and provenance receipt"
+      },
+      "next_step": "execute the coherent successor fit only after upstream physics gates are satisfied"
+    },
+    {
+      "id": "RLL-EVOL-INFERENCE-001",
+      "domain": "inference",
+      "state": "BLOCKED_BY_DEPENDENCY",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#FIT-MULTISEED-001",
+          "data/governance/RLL_GAP_RETROFEEDBACK_V2.json"
+        ]
+      },
+      "context": {
+        "scope": "deterministic multiseed fit, posterior/MCMC and model-selection chain",
+        "boundary": "fit success, lower chi-square or sampler output alone cannot promote a scientific claim"
+      },
+      "evidence": {
+        "state": "BLOCKING_EVIDENCE",
+        "refs": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#GROWTH-BENCH-001"
+        ],
+        "summary": "inference remains downstream of unresolved growth benchmark and deterministic reproducibility"
+      },
+      "contradiction": {
+        "state": "NONE_OPEN_IN_SCOPE",
+        "refs": [],
+        "summary": "no model-selection contradiction is evaluated while the lane remains blocked"
+      },
+      "uncertainty": {
+        "state": "BLOCKED",
+        "open_items": [
+          "FIT-MULTISEED-001",
+          "FIT-POSTERIOR-001",
+          "FIT-MODELSEL-001"
+        ]
+      },
+      "reproduction": {
+        "state": "BLOCKED",
+        "procedure": "run multiseed optimization only after CMB+growth evidence are coherent; MCMC only after deterministic reproduction",
+        "evidence_refs": []
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "frozen inputs, logs and historical negative gates",
+        "procedure": "discard successor run outputs while preserving inputs/logs and all predecessor receipts"
+      },
+      "next_step": "do not run claim-bearing MCMC/model selection before GROWTH-BENCH-001 closes"
+    },
+    {
+      "id": "RLL-EVOL-MAGNETO-001",
+      "domain": "magneto_plasma",
+      "state": "TOKEN_VAZIO_FORMALIZATION",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#MAG-C09-001",
+          "docs/audit/RLL_GAP_RETROFEEDBACK_RECEIPT_20260912.md"
+        ]
+      },
+      "context": {
+        "scope": "magneto-plasma material is maintained as provenance/context and decomposed into separate formalization gaps",
+        "boundary": "contextual corpus is not execution evidence and does not imply cosmological mechanism"
+      },
+      "evidence": {
+        "state": "CONTEXT_ONLY",
+        "refs": [
+          "docs/audit/RLL_GAP_RETROFEEDBACK_RECEIPT_20260912.md"
+        ],
+        "summary": "project corpus snapshots are content-hashed; no magneto-plasma physical claim is promoted"
+      },
+      "contradiction": {
+        "state": "NONE_RESOLVED_AS_SUPPORT",
+        "refs": [],
+        "summary": "no contextual analogy is allowed to override missing physical definitions or observable mapping"
+      },
+      "uncertainty": {
+        "state": "OPEN",
+        "open_items": [
+          "MAG-C09-001",
+          "MAG-C10-001",
+          "MAG-C11-001",
+          "MAG-C12-001",
+          "MAG-C14-001"
+        ]
+      },
+      "reproduction": {
+        "state": "TOKEN_VAZIO",
+        "procedure": "requires formal equations, units, data mapping and declared falsifier before a reproducible experiment exists",
+        "evidence_refs": []
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "context-only corpus and gap ledger",
+        "procedure": "remove only candidate formalization/experiment artifacts; preserve source corpus and gap history"
+      },
+      "next_step": "define one bounded mechanism with units and one observable/falsifier before any empirical lane"
+    },
+    {
+      "id": "RLL-EVOL-LITERATURE-001",
+      "domain": "literature",
+      "state": "POLICY_IMPLEMENTED_WITH_OPEN_GAPS",
+      "claim_allowed": false,
+      "provenance": {
+        "authority": "instituto-Rafael/relativity-living-light",
+        "sources": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#ALPHAXIV-PRIMARY-001",
+          "docs/audit/RLL_SAFE_EXPANSION_RECEIPT_20260912.md"
+        ]
+      },
+      "context": {
+        "scope": "literature retrieval/ranking/reporting supports discovery and source routing",
+        "boundary": "retrieval score or AI-generated report is not primary scientific evidence"
+      },
+      "evidence": {
+        "state": "POLICY_EVIDENCE",
+        "refs": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#ALPHAXIV-PRIMARY-001"
+        ],
+        "summary": "primary-source verification policy is implemented; per-source runtime/license evidence remains separate"
+      },
+      "contradiction": {
+        "state": "NONE_OPEN_IN_SCOPE",
+        "refs": [],
+        "summary": "a contradictory/null literature edge is preserved as uncertainty-reducing evidence rather than filtered out"
+      },
+      "uncertainty": {
+        "state": "OPEN",
+        "open_items": [
+          "ALPHAXIV-SCHEMA-001",
+          "ALPHAXIV-LICENSE-001"
+        ]
+      },
+      "reproduction": {
+        "state": "PARTIAL",
+        "procedure": "re-fetch decisive primary sources and compare identifiers/claims; runtime schema must be pinned before write integration",
+        "evidence_refs": [
+          "data/governance/RLL_GAP_DECOMPOSITION_V1.json#ALPHAXIV-PRIMARY-001"
+        ]
+      },
+      "rollback": {
+        "state": "READY",
+        "anchor": "source pointers and per-source provenance records",
+        "procedure": "remove imported/ranked derivative artifact from active route; retain source identity and supersession history"
+      },
+      "next_step": "pin runtime schema/version and per-source license/provenance before any write-capable integration"
+    }
+  ],
+  "r3": {
+    "F_ok": "seven major RLL workstreams projected onto provenance/context/evidence/contradiction/uncertainty/reproduction/rollback without replacing producer ledgers",
+    "F_gap": "growth policy, successor fit, inference, magneto-plasma formalization and literature runtime/license gates remain open",
+    "F_next": "advance GROWTH-CS2-001 as the smallest high-value scientific delta; keep all downstream promotion fail-closed"
+  }
+}

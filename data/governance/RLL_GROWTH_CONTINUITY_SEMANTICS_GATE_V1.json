@@ -1,0 +1,78 @@
+{
+  "schema": "rll.growth_continuity_semantics_gate.v1",
+  "generated_at": "2026-09-13",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "BLOCKED_UNRESOLVED_PHYSICAL_SEMANTICS",
+  "claim_allowed": false,
+  "purpose": "Resolve the routing contradiction between the current GROWTH-CS2-001 priority and the older exact continuity audit before assigning a perturbative sound-speed policy.",
+  "sources": [
+    {
+      "path": "docs/science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md",
+      "finding": "documented rho_s,p_s pair fails separate continuity during the transition; canonical EFT closure remains blocked"
+    },
+    {
+      "path": "data/governance/RLL_GAP_RETROFEEDBACK_V2.json",
+      "finding": "GROWTH-CS2-001 is currently ranked as the best next perturbation delta"
+    },
+    {
+      "path": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
+      "finding": "C03_CS2 and C04_ENTROPY are unassigned physical assumptions and C06_Q_MU remains a separate closure decision"
+    }
+  ],
+  "routing_contradiction": {
+    "id": "RLL-GROWTH-ROUTE-CONTRADICTION-001",
+    "state": "OPEN_TYPED",
+    "statement_a": "Advance GROWTH-CS2-001 as the next minimal perturbation delta.",
+    "statement_b": "Choose conserved-fluid, interacting-sector, or phenomenological-background semantics before deriving dark-sector perturbations.",
+    "resolution_rule": "Statement B is a prerequisite boundary, not a rejection of Statement A. GROWTH-CS2-001 becomes actionable only after one physical-semantics route is selected and tested."
+  },
+  "current_documented_pair": {
+    "rho_factor": "R(a)=f(a)+(1-f(a))*a^-3",
+    "pressure_normalized": "p_doc/(Omega_s0*rho_c0)=-f(a)",
+    "separate_conservation_residual": "C(a)=dR/dln(a)+3*(R+p_doc)=f_prime*(1-a^-3)",
+    "f_prime_definition": "f_prime=df/dln(a)=(1+z)/w_t*f*(1-f)",
+    "state": "FAIL_SEPARATE_CONSERVATION_DURING_TRANSITION"
+  },
+  "allowed_semantics": [
+    {
+      "id": "CONSERVED_EFFECTIVE_FLUID",
+      "status": "CANDIDATE_NOT_SELECTED",
+      "required_relation": "p_cons=-rho_s-(1/3)*d rho_s/dln(a)",
+      "effect_on_cs2": "rest-frame sound-speed/entropy policy may be proposed only after conserved pressure/equation-of-state contract is frozen",
+      "falsifier": "nonzero continuity residual under the selected conserved contract"
+    },
+    {
+      "id": "INTERACTING_SECTOR",
+      "status": "CANDIDATE_NOT_SELECTED",
+      "required_relation": "Q_s/H = Omega_s0*rho_c0*f_prime*(1-a^-3) for the currently documented p_s, plus equal-and-opposite receiving-sector accounting",
+      "effect_on_cs2": "sound-speed/entropy policy must be defined jointly with perturbed energy/momentum transfer",
+      "falsifier": "total stress-energy conservation fails or receiving-sector transfer is missing/inconsistent"
+    },
+    {
+      "id": "PHENOMENOLOGICAL_BACKGROUND",
+      "status": "CANDIDATE_NOT_SELECTED",
+      "required_relation": "no closed dark-sector stress-energy/perturbation interpretation is claimed",
+      "effect_on_cs2": "GROWTH-CS2-001 remains TOKEN_VAZIO for claim-bearing physics",
+      "falsifier": "a downstream claim treats the phenomenological H(z) map as a closed perturbation theory"
+    }
+  ],
+  "selected_semantics": "TOKEN_VAZIO",
+  "tests_required_before_cs2_unblock": [
+    "exact/numeric continuity residual gate",
+    "selected semantics pinned with equations and version",
+    "background consistency",
+    "conservation accounting",
+    "transition regularity boundary",
+    "rollback anchor"
+  ],
+  "routing_effect": {
+    "GROWTH-CS2-001": "BLOCKED_BY_CONTINUITY_SEMANTICS",
+    "GROWTH-QMU-001": "COUPLED_PREREQUISITE_IF_INTERACTING",
+    "GROWTH-CONSERVATION-001": "REMAINS_BLOCKED"
+  },
+  "rollback": {
+    "anchor": "main before this additive gate; no historical result or gap ledger is rewritten",
+    "procedure": "remove this successor gate/route overlay and restore prior routing while preserving this contradiction receipt"
+  },
+  "next_step": "select exactly one semantics route with explicit equations and falsifier; only then instantiate a versioned GROWTH-CS2-001 candidate"
+}

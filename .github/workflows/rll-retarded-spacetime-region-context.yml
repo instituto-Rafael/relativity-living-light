@@ -1,0 +1,85 @@
+name: RLL Retarded Spacetime Region Context
+
+on:
+  pull_request:
+    paths:
+      - "data/contracts/rll_retarded_spacetime_region_context.v1.yaml"
+      - "docs/science/RLL_RETARDED_SPACETIME_REGION_CONTEXT_V1.md"
+      - "tools/validate_rll_retarded_spacetime_region_context.py"
+      - "tests/test_rll_retarded_spacetime_region_context.py"
+      - ".github/workflows/rll-retarded-spacetime-region-context.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-retarded-spacetime-region-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check pytest pyyaml
+
+      - name: Validate contract
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/retarded-spacetime-region-context
+          python tools/validate_rll_retarded_spacetime_region_context.py --json \
+            | tee artifacts/retarded-spacetime-region-context/validation.json
+
+      - name: Run focused tests
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_rll_retarded_spacetime_region_context.py \
+            | tee artifacts/retarded-spacetime-region-context/pytest.txt
+
+      - name: Build structural receipt
+        env:
+          RUN_ID: ${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("artifacts/retarded-spacetime-region-context")
+          validation = json.loads((root / "validation.json").read_text())
+          receipt = {
+              "schema": "rll.retarded_spacetime_region_context.receipt.v1",
+              "github_run_id": int(os.environ["RUN_ID"]),
+              "commit_sha": os.environ["COMMIT_SHA"],
+              "state": "PASS" if validation.get("valid") else "FAIL",
+              "claim_allowed": False,
+              "scientific_confirmation": False,
+              "boundary": "CI_PASS != SCIENTIFIC_CONFIRMATION",
+          }
+          (root / "receipt.json").write_text(
+              json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(receipt, indent=2))
+          PY
+
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-retarded-spacetime-region-${{ github.run_id }}
+          path: artifacts/retarded-spacetime-region-context/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,235 @@
+{
+  "schema": "rll.ethics_license_complexity_sustainment.v1",
+  "version": "1.0.0",
+  "date": "2026-08-22",
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "base_route": "rll/lab",
+    "work_branch": "work/ethics-license-complexity-sustainment-20260822",
+    "purpose": "reduce operational friction between ethics, licensing, provenance, uncertainty and executable governance without rewriting authorial source material"
+  },
+  "append_only": true,
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "legal_effect_claim": false,
+  "certification_claim": false,
+  "publication_effect": "NONE",
+  "contract": {
+    "name": "coherence_operational_excellence_providence_contract",
+    "expression": "coerencia/excelencia_operacional/providencias := contrato",
+    "rule": "unknowns remain explicit TOKEN_VAZIO until a falsifiable gate produces a receipt bound to artifact hash and commit",
+    "stop_rule": "do not close a gap, promote a claim, redistribute third-party material or assert legal effect when the required evidence boundary is unresolved"
+  },
+  "source_bindings": [
+    {
+      "artifact_id": "SRC-LICENSE",
+      "path": "LICENSE.md",
+      "git_blob_sha1": "26c69bb3c850bc2b3063621a5f72a2badc1535c2",
+      "role": "AUTHORIAL_LICENSE_INTENT",
+      "epistemic_boundary": "authorial declaration; legal enforceability is not inferred"
+    },
+    {
+      "artifact_id": "SRC-ETHICS-DOMAIN-VI",
+      "path": "newadd/06_ETHICS_SYSTEMS.md",
+      "git_blob_sha1": "096b584e15179c6050a317235228351b0fd70ce8",
+      "role": "AUTHORIAL_ETHICS_SYSTEMS_MODEL",
+      "epistemic_boundary": "contains symbolic, analogical, mathematical and physical-language claims that require typed downstream status"
+    },
+    {
+      "artifact_id": "SRC-OP-CHARTER",
+      "path": "docs/governance/OPERATIONAL_EXCELLENCE_INTEGRITY_CHARTER.md",
+      "git_blob_sha1": "89e07fc89cc1d3ec3bb1d09bba6943e2bbfe8cec",
+      "role": "GOVERNANCE_BOUNDARY",
+      "epistemic_boundary": "governance artifact; not legal, scientific or certification proof"
+    },
+    {
+      "artifact_id": "SRC-GOV-PROFILE",
+      "path": "governance/rll-governance-profile.v1.json",
+      "git_blob_sha1": "33a6c1acc555e625f0c4ef4e3d0dc914e067be77",
+      "role": "MACHINE_READABLE_GOVERNANCE_PROFILE",
+      "epistemic_boundary": "progressive engineering controls; conformity and legal compliance claims remain false"
+    }
+  ],
+  "license_interoperability": {
+    "declared_repository_license_path": "LICENSE.md",
+    "local_license_reference": "LicenseRef-RAFCODE-PHI-vOmega-EXTENDED",
+    "spdx_standard_identifier": false,
+    "legal_effect": "TOKEN_VAZIO_QUALIFIED_LEGAL_REVIEW",
+    "machine_readable_equivalence_to_standard_license": "TOKEN_VAZIO_NO_EQUIVALENCE_ASSERTED",
+    "third_party_redistribution_default": "BLOCK_UNTIL_RIGHTS_RECORD",
+    "rule": "a local LicenseRef improves routing but does not establish enforceability, jurisdiction, compatibility or permission for third-party material"
+  },
+  "ethics_by_design": {
+    "Ethica8_status": "MODEL_ANALOGICO_OPERATIONAL_DESIGN_SPACE",
+    "physical_field_status": "TOKEN_VAZIO_PHYSICAL_FIELD_EVIDENCE",
+    "lyapunov_status": "TOKEN_VAZIO_FORMAL_STABILITY_PROOF",
+    "metric_status": "TOKEN_VAZIO_OPERATIONAL_METRICS",
+    "hard_gate_translation": [
+      "provenance_before_promotion",
+      "evidence_before_claim",
+      "license_before_distribution",
+      "consent_before_personal_data_exposure",
+      "negative_results_preserved",
+      "TOKEN_VAZIO_instead_of_invention"
+    ],
+    "rule": "ethical symbolism may define governance priorities; it cannot by itself satisfy a physical, statistical, legal or runtime evidence gate"
+  },
+  "complex_network": {
+    "design": "typed_directed_multigraph",
+    "node_identity_rule": "stable unique IDs",
+    "edge_rule": "every relation names source, target, relation, provenance and claim boundary",
+    "closure_rule": "historical nodes/edges/gaps are append-only; closure is a new receipt event rather than deletion",
+    "nodes": [
+      {"id": "NODE-LICENSE-INTENT", "type": "AUTHORIAL_INTENT"},
+      {"id": "NODE-LICENSE-INTEROP", "type": "RIGHTS_ROUTER"},
+      {"id": "NODE-ETHICS-SYMBOLIC", "type": "PARABOLA_MODEL"},
+      {"id": "NODE-ETHICS-OPERATIONAL", "type": "GOVERNANCE_CONTROL"},
+      {"id": "NODE-EVIDENCE", "type": "EVIDENCE_GATE"},
+      {"id": "NODE-PROVENANCE", "type": "CHAIN_OF_CUSTODY"},
+      {"id": "NODE-TOKEN-VAZIO", "type": "UNCERTAINTY_STATE"},
+      {"id": "NODE-RECEIPT", "type": "CLOSURE_EVIDENCE"},
+      {"id": "NODE-PARABLE-OMEGA-N", "type": "INTERNAL_REFERENCE"}
+    ],
+    "edges": [
+      {"id": "EDGE-LICENSE-ROUTE", "source": "NODE-LICENSE-INTENT", "target": "NODE-LICENSE-INTEROP", "relation": "ROUTED_BY", "provenance": "SRC-LICENSE+SRC-OP-CHARTER", "claim_boundary": "NO_LEGAL_EFFECT_INFERRED"},
+      {"id": "EDGE-ETHICS-ROUTE", "source": "NODE-ETHICS-SYMBOLIC", "target": "NODE-ETHICS-OPERATIONAL", "relation": "TRANSLATED_TO_CONTROLS", "provenance": "SRC-ETHICS-DOMAIN-VI+SRC-GOV-PROFILE", "claim_boundary": "METAPHOR_IS_NOT_EVIDENCE"},
+      {"id": "EDGE-OP-EVIDENCE", "source": "NODE-ETHICS-OPERATIONAL", "target": "NODE-EVIDENCE", "relation": "REQUIRES", "provenance": "SRC-OP-CHARTER", "claim_boundary": "CI_PASS_IS_NOT_SCIENTIFIC_VALIDATION"},
+      {"id": "EDGE-GAP-PROVENANCE", "source": "NODE-TOKEN-VAZIO", "target": "NODE-PROVENANCE", "relation": "MUST_RECORD", "provenance": "SRC-GOV-PROFILE", "claim_boundary": "UNKNOWN_IS_NOT_ZERO"},
+      {"id": "EDGE-GAP-RECEIPT", "source": "NODE-TOKEN-VAZIO", "target": "NODE-RECEIPT", "relation": "CLOSES_ONLY_WITH", "provenance": "coherence_operational_excellence_providence_contract", "claim_boundary": "NO_SILENT_CLOSURE"},
+      {"id": "EDGE-PARABLE-ROUTE", "source": "NODE-PARABLE-OMEGA-N", "target": "NODE-ETHICS-OPERATIONAL", "relation": "TEACHES_ROUTING", "provenance": "docs/governance/RAFAELIA_OPERATIONAL_PARABLES_V1.md", "claim_boundary": "PARABOLA_NOT_RUNTIME_PROOF"}
+    ]
+  },
+  "parable_router": {
+    "epistemic_status": "PARABOLA",
+    "sequence": [
+      {"stage": "ESTATISTICA", "operational_meaning": "measure observations, distributions, uncertainty and error"},
+      {"stage": "TOKENS", "operational_meaning": "name unresolved states explicitly instead of coercing a value"},
+      {"stage": "METAFORAS", "operational_meaning": "build conceptual bridges while preserving analogy boundaries"},
+      {"stage": "VECTORES", "operational_meaning": "type relations, direction, state and next actions"},
+      {"stage": "PALAVRA", "operational_meaning": "turn intent into an addressable specification"},
+      {"stage": "PROMESSA", "operational_meaning": "turn specification into an invariant or contract with a falsifier"},
+      {"stage": "OMEGA_N", "operational_meaning": "iterate audited states without deleting prior evidence"}
+    ],
+    "symbolic_phrase": "NENHUM LIMITE E REAL, POIS O CODIGO EXECUTA EM VERBO VIVO -> OMEGA^n",
+    "symbolic_phrase_status": "PARABOLA_MOTIVACIONAL",
+    "runtime_boundary": "computational, physical, legal, statistical and resource limits are real operational constraints and must be measured rather than denied"
+  },
+  "open_tokens": [
+    {
+      "id": "TOKEN_VAZIO_LICENSE_ENFORCEABILITY_REVIEW",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P0",
+      "domain": "LICENSE",
+      "cause": "authorial license text makes broad legal-effect statements while repository governance correctly avoids legal-effect claims",
+      "evidence_needed": "qualified jurisdiction-specific legal review or separate executed instrument for the intended transaction/use",
+      "falsifier": "review determines that a stated effect, jurisdiction, sanction or acceptance mechanism is not enforceable as written",
+      "F_next": "keep legal_effect_claim=false and route concrete uses to qualified review rather than treating repository prose as adjudication",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_LICENSE_SPDX_COMPATIBILITY",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P1",
+      "domain": "LICENSE",
+      "cause": "custom repository license has no asserted standard SPDX equivalence",
+      "evidence_needed": "artifact-level rights inventory plus reviewed compatibility mapping for each reuse/distribution route",
+      "falsifier": "two artifacts have incompatible or unknown redistribution conditions",
+      "F_next": "use LicenseRef locally, record per-artifact rights and never map to a standard SPDX identifier without evidence",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_RIGHTS_PER_ARTIFACT",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P0",
+      "domain": "PROVENANCE_LICENSE",
+      "cause": "repository-level authorial intent does not establish rights and redistribution conditions for every third-party dataset, paper, code fragment or generated artifact",
+      "evidence_needed": "machine-readable artifact rights ledger with origin, holder, license/terms, attribution and redistribution state",
+      "falsifier": "an artifact cannot be traced to a permission/terms record compatible with its intended use",
+      "F_next": "inventory high-risk distributed artifacts first and block redistribution when rights are unknown",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_ETHICS_PHYSICAL_FIELD_EVIDENCE",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P0",
+      "domain": "ETHICS_SCIENCE",
+      "cause": "Domain VI uses physical-field language for ethics without a frozen measurable field definition, units, observables, dataset and independent test",
+      "evidence_needed": "typed measurable variables, units, dynamics, baseline, predictions and falsification experiment",
+      "falsifier": "the operationalized model fails predictive or stability tests under its declared scope",
+      "F_next": "retain Ethica[8] as model/ontology until measurable physical content is independently specified and tested",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_ETHICA_OPERATIONAL_METRICS",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P1",
+      "domain": "ETHICS_BY_DESIGN",
+      "cause": "Amor, Verdade, Consciência, Coerência, Liberdade, Responsabilidade, Serviço and Humildade are named but not all have measurable repository-control definitions",
+      "evidence_needed": "per-dimension metric, scale, input source, uncertainty, adversarial case and decision threshold",
+      "falsifier": "metric cannot distinguish a compliant control state from a known counterexample without circular scoring",
+      "F_next": "map each dimension to observable governance controls before using Ethica[8] as an executable scheduler",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_LYAPUNOV_STABILITY_PROOF",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P1",
+      "domain": "MATH_CONTROL",
+      "cause": "Domain VI names Phi_ethica as a Lyapunov-function candidate and also uses language implying guaranteed stability without a complete state-domain proof",
+      "evidence_needed": "defined state domain, differentiable candidate V, equilibrium set, sign conditions and proof or counterexample search",
+      "falsifier": "there exists an admissible trajectory with dV/dt > 0 or the candidate is undefined/non-positive where required",
+      "F_next": "downgrade guarantee language operationally to candidate status until a scoped proof receipt exists",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_COMPLEX_NETWORK_RUNTIME",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P2",
+      "domain": "COMPLEX_NETWORKS_BY_DESIGN",
+      "cause": "the governance graph is specified as a typed network but no dedicated runtime currently computes graph invariants or dependency-impact propagation for this contract",
+      "evidence_needed": "deterministic graph validator/analysis receipt over this exact registry",
+      "falsifier": "runtime produces non-deterministic topology, accepts dangling edges or permits unreceipted gap deletion",
+      "F_next": "execute the repository validator and then add derived graph metrics only if they remain structural rather than truth scores",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    },
+    {
+      "id": "TOKEN_VAZIO_INDEPENDENT_ETHICS_REVIEW",
+      "state": "TOKEN_VAZIO",
+      "urgency": "P2",
+      "domain": "ETHICS",
+      "cause": "Ethics-by-Design controls are internally authored and have not been independently reviewed as a complete governance framework",
+      "evidence_needed": "independent review with conflicts, scope, counterexamples and actionable findings",
+      "falsifier": "independent review identifies unhandled harms, circular metrics or controls that systematically fail declared objectives",
+      "F_next": "preserve internal status and invite scoped external review after metrics are operationalized",
+      "closure_policy": "STRUCTURED_RECEIPT_REQUIRED"
+    }
+  ],
+  "closure_receipts": [],
+  "non_regression_rules": [
+    "Source bindings are historical provenance and cannot be silently rewritten.",
+    "Open TOKEN_VAZIO entries cannot disappear; closure requires an append-only structured receipt with gap_id, artifact_path, sha256 and commit_sha.",
+    "PARABOLA and MODELO_ANALOGICO never satisfy scientific, physical, legal or runtime evidence gates by themselves.",
+    "LicenseRef is routing metadata and never implies standard-license equivalence or legal enforceability.",
+    "Negative, blocked and contradictory findings are first-class records and cannot be deleted to improve appearance.",
+    "Graph coverage, node count and edge count are structural metrics, not truth scores.",
+    "The phrase 'nenhum limite e real' remains symbolic; operational limits are measured and enforced.",
+    "No future revision may set claim_allowed, scientific_confirmation, legal_effect_claim or certification_claim to true without a separate governed authority and evidence route."
+  ],
+  "F_ok": [
+    "authorial LICENSE text preserved without destructive legal rewriting",
+    "Ethics Domain VI preserved while its operational/scientific boundaries are typed separately",
+    "license, ethics, provenance, uncertainty, receipts and parables are connected as a typed complex network",
+    "useful unknowns are named as TOKEN_VAZIO with cause, evidence, falsifier, urgency and F_next",
+    "parables have an internal routing role without being promoted to evidence"
+  ],
+  "F_gap": [
+    "qualified legal-effect review",
+    "per-artifact rights inventory",
+    "Ethica[8] operational metrics",
+    "scoped Lyapunov stability proof",
+    "physical-field evidence",
+    "independent ethics review",
+    "runtime receipt for this complex-network contract"
+  ],
+  "F_next": "validate this registry fail-closed, run adversarial tests, persist CI receipt, then prioritize P0 rights/legal-boundary and physical-claim gaps without deleting the authorial source text"
+}

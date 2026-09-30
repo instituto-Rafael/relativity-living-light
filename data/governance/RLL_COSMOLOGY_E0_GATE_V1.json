@@ -1,0 +1,27 @@
+{
+  "schema": "rll.cosmology_e0_gate.v1",
+  "state": "ACTIVE_FAIL_CLOSED",
+  "scope": "joint real-data cosmology model-selection pipeline",
+  "source": "data/pipelines/structure_d/joint_real_likelihood.py",
+  "gate": {
+    "required_before_mcmc_or_model_selection_promotion": [
+      "E(0)=1 for every fitted background model",
+      "flat closure derived by construction OR Omega_k fitted consistently with curved distance branches",
+      "f_sigma8 uses validated D(z)/perturbation treatment rather than an unlabelled growth-index proxy",
+      "CMB acoustic scale uses validated r_s(z_star), not r_d(z_drag)"
+    ],
+    "current_expected_state": "BLOCKED_FAIL_CLOSED",
+    "claim_allowed": false
+  },
+  "historical_results": {
+    "mutate": false,
+    "interpretation": "historical exploratory artifacts remain provenance evidence; they are not promoted by this gate"
+  },
+  "promotion_command": "python tools/rll_cosmology_e0_preflight.py --require-ready",
+  "invariants": [
+    "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "optimizer boundary != physical measurement"
+  ]
+}

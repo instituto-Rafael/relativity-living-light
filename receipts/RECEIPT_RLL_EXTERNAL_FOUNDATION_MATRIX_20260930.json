@@ -1,0 +1,48 @@
+{
+  "schema": "rll.external-foundation-matrix.receipt.v1",
+  "observed_at": "2026-09-30",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "research/external-foundation-matrix-20260930",
+  "base_commit": "3a34d6f3841857d2a1802a2902cbb9176f026122",
+  "persisted_readback": {
+    "matrix": {
+      "path": "data/evidence/RLL_EXTERNAL_FOUNDATION_MATRIX_20260930.json",
+      "blob_sha": "224694e144676fbfb9376f790ae579f5a95d6988"
+    },
+    "validator": {
+      "path": "scripts/validate_external_foundation_matrix_20260930.py",
+      "blob_sha": "aa3504b1771ecc89567d51030aeff75529c3ee30"
+    },
+    "document": {
+      "path": "docs/science/RLL_EXTERNAL_FOUNDATION_MATRIX_20260930.md",
+      "blob_sha": "68d54e61118be3e4a2374eea9ebd17db4e4fe29c"
+    }
+  },
+  "validation": {
+    "schema": "rll.external-foundation-matrix.validation.v1",
+    "records": 9,
+    "status": "PASS",
+    "errors": [],
+    "claim_allowed": false
+  },
+  "alphaxiv_library": {
+    "folder_id": "01a0f394-9870-7741-86b9-965c21f8bb5b",
+    "folder_name": "RLL External Foundations — Information, Geometry & Language",
+    "paper_ids": [
+      "1705.08039",
+      "1005.3035",
+      "hep-th/0603001",
+      "1805.09112",
+      "2604.05970",
+      "2608.28924",
+      "2608.27115"
+    ]
+  },
+  "claim_allowed": false,
+  "limits": [
+    "alphaXiv does not cover the biomedical/life-science chia and linseed literature; those sources are typed separately",
+    "PASS validates the evidence-matrix contract, not RLL cosmology",
+    "Giovani Tosco / UFV identity remains TOKEN_VAZIO until a direct institutional or publication pointer is found"
+  ],
+  "rollback": "Close the PR or revert the eventual merge commit; existing RLL evidence is not overwritten."
+}

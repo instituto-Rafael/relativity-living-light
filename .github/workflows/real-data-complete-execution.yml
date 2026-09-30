@@ -1,6 +1,65 @@
 name: Real Data Complete Execution
 
-on:
+"on":
+  pull_request:
+    paths:
+      - "rx/**"
+      - "configs/rll_execution_plan.v1.yml"
+      - "configs/rx_physics_contracts.json"
+      - "data/governance/RLL_RX_FORMULA_BINDINGS_V1.json"
+      - "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json"
+      - "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json"
+      - "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+      - "data/governance/RLL_GATE_NAMESPACE_REGISTRY_V1.json"
+      - "tools/rll_closure_queue.py"
+      - "tools/validate_rx_dha.py"
+      - "tests/test_rll_closure_queue.py"
+      - "tools/rll_closure_work_packets.py"
+      - "tests/test_rll_closure_work_packets.py"
+      - "scripts/termux/rll_execution_fabric_replay_v1.sh"
+      - "tools/validate_rll_execution_fabric_termux_replay.py"
+      - "tools/compare_rll_execution_fabric_receipts.py"
+      - "tests/test_rll_execution_fabric_termux_replay.py"
+      - "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+      - "tools/rx_physics_v2_decision_packet.py"
+      - "tests/test_rx_physics_v2_decision_packet.py"
+      - "tools/rll_perturbation_solver_readiness.py"
+      - "tests/test_rll_perturbation_solver_readiness.py"
+      - "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json"
+      - "tools/validate_rll_alphaxiv_literature_action_matrix.py"
+      - "tests/test_rll_alphaxiv_literature_action_matrix.py"
+      - "PapersPub/01_cosmology_pantheon_desi/references.bib"
+      - "PapersPub/01_cosmology_pantheon_desi/references.md"
+      - "PapersPub/02_cosmology_growth_structure_d/references.bib"
+      - "PapersPub/02_cosmology_growth_structure_d/references.md"
+      - "docs/science/RLL_ALPHAXIV_LITERATURE_ACTIONS_20260923.md"
+      - "data/governance/RLL_SCIENTIFIC_GATE_EXECUTOR_REGISTRY_V1.json"
+      - "rx/scientific_gates.py"
+      - "tests/test_rx_scientific_gate_graph.py"
+      - "data/governance/RLL_CURRENT_RX_SOURCE_FREEZE_SPEC_V1.json"
+      - "tools/rll_current_rx_source_freeze.py"
+      - "tests/test_rll_current_rx_source_freeze.py"
+      - "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json"
+      - "tools/validate_energy_momentum_bridge_dimensions.py"
+      - "tests/test_energy_momentum_bridge_dimensions.py"
+      - "data/governance/RLL_BRANCH_MATURITY_RECONCILIATION_DECISION_V1.json"
+      - "tools/rll_branch_maturity_decision_packet.py"
+      - "tests/test_rll_branch_maturity_decision_packet.py"
+      - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
+      - "tests/test_rx_execution_fabric_stdlib.py"
+      - "scripts/download_real_cosmology_inputs.sh"
+      - "scripts/verify_pantheon_inputs.py"
+      - "tools/validate_scientific_validation_orchestrator_v3.py"
+      - "tools/run_g3_dataset_compatibility.py"
+      - "data/contracts/rll_g3_dataset_compatibility.v1.json"
+      - "artifacts/pantheon/RLL_PANTHEON_FULL_COVARIANCE_MATERIALIZATION_RECEIPT_20260819_RUN32285275333.json"
+      - "tests/test_pantheon_materialization_route_v3.py"
+      - "tests/test_scientific_validation_orchestrator_v3.py"
+      - "tests/test_g3_dataset_compatibility.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit_ascii.py"
+      - "products/rll-evidence-runner/src/rll_evidence/pantheon_fit_three_model.py"
+      - ".github/workflows/real-data-complete-execution.yml"
   workflow_dispatch:
     inputs:
       execution_mode:
@@ -8,11 +67,7 @@ on:
         required: true
         default: audit_only
         type: choice
-        options:
-          - audit_only
-          - materialize
-          - validate
-          - full
+        options: [audit_only, materialize, validate, full]
       materialize_pantheon:
         description: "Download Pantheon+SH0ES official files from the public DataRelease repository."
         required: true
@@ -38,11 +93,7 @@ on:
         required: true
         default: "30"
         type: choice
-        options:
-          - "7"
-          - "14"
-          - "30"
-          - "90"
+        options: ["7", "14", "30", "90"]
 
 permissions:
   contents: read
@@ -52,7 +103,289 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  rx-execution-fabric-pr-gate:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: .
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Rx execution-fabric stdlib tests
+        run: python3 -m unittest tests.test_rx_execution_fabric_stdlib
+
+      - name: RLL closure dependency-graph tests
+        run: python3 -m unittest tests.test_rll_closure_queue
+
+      - name: Build discipline-oriented closure work packets
+        run: |
+          python3 -m unittest tests.test_rll_closure_work_packets
+          python3 tools/rll_closure_work_packets.py --write
+
+      - name: Validate Termux Execution Fabric capsule contract
+        run: |
+          sh -n scripts/termux/rll_execution_fabric_replay_v1.sh
+          python3 -m unittest tests.test_rll_execution_fabric_termux_replay tests.test_compare_rll_execution_fabric_actions_termux
+
+      - name: Build canonical V2 scientific decision packet
+        run: |
+          python3 -m unittest tests.test_rx_physics_v2_decision_packet
+          python3 tools/rx_physics_v2_decision_packet.py --write
+
+      - name: Enforce perturbation solver handoff boundary
+        run: |
+          python3 -m unittest tests.test_rll_perturbation_a1_linear_fluid_regularity_v1
+          python3 tools/rll_perturbation_a1_linear_fluid_regularity_v1.py --write
+          python3 -m unittest tests.test_rll_perturbation_solver_readiness
+          python3 tools/rll_perturbation_solver_readiness.py --write
+
+      - name: Validate alphaXiv literature action matrix
+        run: |
+          python3 -m unittest tests.test_rll_alphaxiv_literature_action_matrix
+          python3 tools/validate_rll_alphaxiv_literature_action_matrix.py --write
+
+      - name: Validate fail-closed SCI_GATE execution graph
+        run: python3 -m unittest tests.test_rx_scientific_gate_graph
+
+      - name: Reconcile current TOKEN_VAZIO authority view
+        run: |
+          python3 -m unittest tests.test_rll_token_vazio_reconcile_v4
+          python3 tools/rll_token_vazio_reconcile_v4.py             --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
+
+      - name: Freeze current Rx source bytes and provenance gaps
+        run: |
+          python3 -m unittest tests.test_rll_current_rx_source_freeze
+          python3 tools/rll_current_rx_source_freeze.py --write
+
+      - name: Audit energy-momentum bridge dimensional boundary
+        run: |
+          python3 -m unittest tests.test_energy_momentum_bridge_dimensions
+          python3 tools/validate_energy_momentum_bridge_dimensions.py --write
+
+      - name: Materialize branch maturity reconciliation decision
+        run: |
+          python3 -m unittest tests.test_rll_branch_maturity_decision_packet
+          python3 tools/rll_branch_maturity_decision_packet.py --write
+
+      - name: Validate Rx DHA angular-frequency baseline
+        run: python3 tools/validate_rx_dha.py
+
+      - name: Build RLL closure queue receipt
+        run: python3 tools/rll_closure_queue.py --write
+
+      - name: Rx no-AI runtime gate
+        run: python3 tools/rx_no_ai_gate.py
+
+      - name: Rx zero-third-party gate
+        run: python3 tools/rx_zero_dependency_gate.py
+
+      - name: Execute canonical Rx engineering plan
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+        run: python3 -m rx orchestrate --plan configs/rll_execution_plan.v1.yml
+
+      - name: Execute aggregate Rx development closure
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+          RLL_LEGACY_NETWORK_PROBE: "0"
+        run: python3 -m rx develop
+
+      - name: Cross-runtime semantic parity gate
+        run: python3 tools/rx_semantic_parity.py
+
+      - name: Upload Rx execution receipt bundle
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-execution-fabric-${{ github.run_id }}
+          path: |
+            results/rll-execution/
+            results/rx_dha_angular_frequency_gate.json
+            results/rll_closure_queue.json
+            results/rll_closure_queue.md
+            results/rll_closure_work_packets.json
+            results/rll_closure_work_packets.md
+            results/rx_physics_v2_decision_packet.json
+            results/rll_perturbation_solver_readiness.json
+            artifacts/science/perturbations/RLL_A1_LINEAR_FLUID_REGULARITY_RECEIPT.json
+            artifacts/science/integration/RLL_WS01_WS02_WS21_WS23_BRIDGE_RECEIPT.json
+            results/rll_alphaxiv_literature_action_matrix.json
+            artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
+            artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json
+            results/rll_energy_momentum_dimension_gate.json
+            results/rll_branch_maturity_decision_packet.json
+          retention-days: 30
+          if-no-files-found: error
+
+  pantheon-full-covariance-pr-gate:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+
+      - name: Install bounded scientific dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy scipy
+
+      - name: Materialize pinned Pantheon+ full covariance
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/pantheon-full-covariance
+          bash scripts/download_real_cosmology_inputs.sh | tee artifacts/pantheon-full-covariance/materialize.log
+
+      - name: Re-run strict full-covariance verifier
+        run: |
+          set -euo pipefail
+          python3 scripts/verify_pantheon_inputs.py \
+            --require-full-covariance \
+            --json > artifacts/pantheon-full-covariance/readiness.json
+          cp data/real/pantheon_full_covariance_materialization_receipt.json \
+            artifacts/pantheon-full-covariance/materialization_receipt.json
+          cp data/real/pantheon_full_covariance_readiness.json \
+            artifacts/pantheon-full-covariance/readiness_from_materializer.json
+
+      - name: Assert G2 receipt-aware readiness
+        run: |
+          set -euo pipefail
+          python3 tools/validate_scientific_validation_orchestrator_v3.py \
+            --require-g2 --json > artifacts/pantheon-full-covariance/g2_readiness_v3.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          receipt = json.loads(Path('artifacts/pantheon-full-covariance/materialization_receipt.json').read_text())
+          readiness = json.loads(Path('artifacts/pantheon-full-covariance/readiness.json').read_text())
+          v3 = json.loads(Path('artifacts/pantheon-full-covariance/g2_readiness_v3.json').read_text())
+          assert receipt['f_ok'] is True
+          assert receipt['claim_allowed'] is False
+          assert receipt['scientific_confirmation'] is False
+          assert readiness['full_covariance_likelihood_ready'] is True
+          assert readiness['claim_allowed'] is False
+          assert v3['g2_ready'] is True
+          assert v3['claim_allowed'] is False
+          assert v3['scientific_confirmation'] is False
+          print('G2 receipt-aware materialization VERIFIED; no scientific claim promoted')
+          PY
+
+      - name: Execute G3 DESI plus Pantheon compatibility gate
+        run: |
+          set -euo pipefail
+          python3 tools/run_g3_dataset_compatibility.py \
+            --require-pass \
+            --output artifacts/pantheon-full-covariance/g3_compatibility.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          g3 = json.loads(Path('artifacts/pantheon-full-covariance/g3_compatibility.json').read_text())
+          assert g3['state'] == 'PASS_LIMITED_COMPATIBILITY_BRANCH'
+          assert g3['compatibility_decision']['allowed'] is True
+          assert g3['claim_allowed'] is False
+          assert 'TOKEN_VAZIO_INDEPENDENT_DESI_RECONSTRUCTION_ABLATION' in g3['F_gap']
+          assert 'TOKEN_VAZIO_EXPLICIT_CROSS_SURVEY_COVARIANCE_MATRIX' in g3['F_gap']
+          print('G3 PASS_LIMITED_COMPATIBILITY_BRANCH with residuals preserved')
+          PY
+
+      - name: Execute G4 Pantheon full-covariance fairness subgate
+        env:
+          PYTHONPATH: products/rll-evidence-runner/src
+        run: |
+          set -euo pipefail
+          CATALOG='data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat'
+          COV='data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov'
+          OUT='artifacts/pantheon-full-covariance/g4_pantheon_lcdm_cpl_rll.json'
+          python -m rll_evidence.pantheon_fit_three_model \
+            --catalog "$CATALOG" \
+            --covariance "$COV" \
+            --output "$OUT" \
+            --seeds 11,23,37,53,71 \
+            --maxiter 250 \
+            --ftol 1e-10 \
+            --integration-points 4096 \
+            --z-min 0.01 | tee artifacts/pantheon-full-covariance/g4_pantheon_fit.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('artifacts/pantheon-full-covariance/g4_pantheon_lcdm_cpl_rll.json')
+          result = json.loads(p.read_text())
+          assert result['status'] == 'PASS_LIMITED'
+          assert set(result['models']) == {'LCDM_pantheon_full', 'CPL_pantheon_full', 'RLL_pantheon_full'}
+          assert result['comparison']['baseline'] == 'LCDM_pantheon_full'
+          receipt = {
+              'schema': 'rll.g4_pantheon_fairness_subgate.v1',
+              'state': 'PASS_LIMITED_PANTHEON_FULL_COVARIANCE_FAIRNESS',
+              'models': list(result['models']),
+              'comparison': result['comparison'],
+              'method': result['method'],
+              'scientific_boundary': result['scientific_boundary'],
+              'claim_allowed': False,
+              'scientific_confirmation': False,
+              'F_ok': result.get('F_ok', []),
+              'F_gap': result.get('F_gap', []) + ['G4 overall still requires reconciliation with the DESI/H(z)/growth/CMB fair tournament before G5.'],
+              'F_next': 'reconcile this Pantheon subgate with the existing four-model joint-real route under one G4 manifest',
+          }
+          Path('artifacts/pantheon-full-covariance/g4_pantheon_fairness_receipt.json').write_text(
+              json.dumps(receipt, indent=2, ensure_ascii=False) + '\n'
+          )
+          print('G4 Pantheon subgate PASS_LIMITED; overall G4 not yet promoted')
+          PY
+
+      - name: Execute complete six-model G4 background tournament
+        run: |
+          set -euo pipefail
+          python3 tools/run_g4_background_tournament.py \
+            --output artifacts/pantheon-full-covariance/g4_background_tournament.json \
+            --seeds 11,23,37,53,71 \
+            --maxiter 250 \
+            --ftol 1e-10 \
+            --integration-points 4096 \
+            --require-pass
+
+      - name: Freeze G5 canonical background likelihood manifest
+        run: |
+          set -euo pipefail
+          python3 tools/build_g5_canonical_background_manifest.py \
+            --g4-receipt artifacts/pantheon-full-covariance/g4_background_tournament.json \
+            --output artifacts/pantheon-full-covariance/g5_canonical_background_likelihood.json \
+            --require-ready
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          g4 = json.loads(Path('artifacts/pantheon-full-covariance/g4_background_tournament.json').read_text())
+          g5 = json.loads(Path('artifacts/pantheon-full-covariance/g5_canonical_background_likelihood.json').read_text())
+          assert g4['state'] == 'PASS_LIMITED_G4_BACKGROUND_TOURNAMENT'
+          assert g4['claim_allowed'] is False
+          assert g5['state'] == 'READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD'
+          assert g5['claim_allowed'] is False
+          assert g5['scientific_confirmation'] is False
+          print('G4 complete background tournament PASS; G5 manifest frozen; claim_allowed=false')
+          PY
+
+      - name: Upload G2 G3 G4 evidence bundle
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pantheon-g2-g3-g4-${{ github.run_id }}
+          path: artifacts/pantheon-full-covariance/
+          retention-days: 30
+          if-no-files-found: error
+
   real-data-complete:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -63,14 +396,20 @@ jobs:
       STRUCTURE_D_MAXITER_LCDM: "80"
       STRUCTURE_D_MAXITER_RLL: "120"
       STRUCTURE_D_TOL: "1e-5"
+      EXECUTION_MODE: ${{ inputs.execution_mode }}
+      MATERIALIZE_PANTHEON: ${{ inputs.materialize_pantheon }}
+      RUN_STRUCTURE_D: ${{ inputs.run_structure_d }}
+      RUN_PANTHEON_VALIDATION: ${{ inputs.run_pantheon_validation }}
+      STRICT_REAL_DATA: ${{ inputs.strict_real_data }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
           python-version: "3.11"
 
@@ -87,11 +426,11 @@ jobs:
           cat > "$RUN_DIR/EXECUTION_PLAN.md" <<PLAN
           # Real Data Complete Execution
 
-          - execution_mode: ${{ inputs.execution_mode }}
-          - materialize_pantheon: ${{ inputs.materialize_pantheon }}
-          - run_structure_d: ${{ inputs.run_structure_d }}
-          - run_pantheon_validation: ${{ inputs.run_pantheon_validation }}
-          - strict_real_data: ${{ inputs.strict_real_data }}
+          - execution_mode: $EXECUTION_MODE
+          - materialize_pantheon: $MATERIALIZE_PANTHEON
+          - run_structure_d: $RUN_STRUCTURE_D
+          - run_pantheon_validation: $RUN_PANTHEON_VALIDATION
+          - strict_real_data: $STRICT_REAL_DATA
           - commit_policy: artifact_only_reviewed_pr_required
           - claim_boundary: $CLAIM_BOUNDARY
 
@@ -100,7 +439,7 @@ jobs:
           - Download only from documented public primary sources.
           - Write new run artifacts under $RUN_DIR first.
           - This workflow does not push to the repository. Commit artifacts through a reviewed PR.
-          - If a required real input is missing and strict mode is true, fail the workflow instead of fabricating data.
+          - If a required real input is missing and strict mode is true, fail instead of fabricating data.
           PLAN
           find . -maxdepth 5 -type f \
             -not -path './.git/*' \
@@ -113,7 +452,7 @@ jobs:
       - name: Validate real-data registry without rewriting committed data
         run: |
           set -euo pipefail
-          python - <<'PY' | tee "artifacts/real-data-complete/reports/real_data_policy_check.log"
+          python - <<'PY' | tee "$RUN_DIR/reports/real_data_policy_check.log"
           from pathlib import Path
           required = [
               Path('docs/real_data/REAL_DATA_REQUIRED_INPUTS.md'),
@@ -141,7 +480,7 @@ jobs:
         if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'full' }}
         run: |
           set -euo pipefail
-          if [ "${{ inputs.materialize_pantheon }}" = "true" ]; then
+          if [ "$MATERIALIZE_PANTHEON" = "true" ]; then
             bash scripts/download_real_cosmology_inputs.sh | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
           else
             echo "Pantheon+ materialization disabled by workflow input." | tee "$RUN_DIR/reports/download_real_cosmology_inputs.log"
@@ -151,13 +490,18 @@ jobs:
         if: ${{ inputs.execution_mode == 'materialize' || inputs.execution_mode == 'validate' || inputs.execution_mode == 'full' }}
         run: |
           set -euo pipefail
-          if python scripts/verify_pantheon_inputs.py --json > "$RUN_DIR/reports/pantheon_inputs.json"; then
+          REQUIRE_MODE=""
+          if [ "$MATERIALIZE_PANTHEON" = "true" ]; then
+            REQUIRE_MODE="--require-full-covariance"
+          fi
+          if python scripts/verify_pantheon_inputs.py $REQUIRE_MODE --json > "$RUN_DIR/reports/pantheon_inputs.json"; then
             echo "Pantheon+ verification OK" | tee "$RUN_DIR/reports/pantheon_inputs.status"
           else
             echo "Pantheon+ verification failed or files are missing." | tee "$RUN_DIR/reports/pantheon_inputs.status"
-            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+            if [ "$STRICT_REAL_DATA" = "true" ]; then
               exit 2
             fi
+            printf '%s\n' 'TOKEN_VAZIO_PANTHEON_INPUTS_NON_STRICT' > "$RUN_DIR/reports/pantheon_inputs.residual"
           fi
 
       - name: Run real-source signature verification and materialization audit
@@ -165,9 +509,16 @@ jobs:
           set -euo pipefail
           python tools/verify_real_source_signatures.py | tee "$RUN_DIR/reports/real_source_signature_verification.log"
           python tools/real_data_materialization_audit.py | tee "$RUN_DIR/reports/real_data_materialization_audit.log"
-          cp results/audit/real_source_signature_verification.md "$RUN_DIR/reports/" || true
-          cp results/audit/real_data_materialization_audit.md "$RUN_DIR/reports/" || true
-          cp results/audit/real_data_materialization_audit.json "$RUN_DIR/reports/" || true
+          for source in \
+            results/audit/real_source_signature_verification.md \
+            results/audit/real_data_materialization_audit.md \
+            results/audit/real_data_materialization_audit.json; do
+            if [ -f "$source" ]; then
+              cp "$source" "$RUN_DIR/reports/"
+            else
+              printf 'TOKEN_VAZIO_OPTIONAL_REPORT %s\n' "$source" >> "$RUN_DIR/reports/materialization_optional_reports.residual"
+            fi
+          done
 
       - name: Package canonical real inputs for downstream pipelines
         if: always()
@@ -178,51 +529,43 @@ jobs:
           import json
           import shutil
           from pathlib import Path
-
           import yaml
 
-          root = Path(".")
-          artifact_root = Path("artifacts/real-data-complete/inputs")
-          contract = yaml.safe_load(
-              Path("data/real/cosmology/real_cosmology_inputs.yml").read_text(
-                  encoding="utf-8"
-              )
-          )
+          root = Path('.')
+          artifact_root = Path('artifacts/real-data-complete/inputs')
+          contract = yaml.safe_load(Path('data/real/cosmology/real_cosmology_inputs.yml').read_text(encoding='utf-8'))
           paths = {
-              "data/real/rll_real_sources_manifest_2026.yml",
-              "data/real/cosmology/real_cosmology_inputs.yml",
-              "data/real/cosmology/real_source_signatures.json",
+              'data/real/rll_real_sources_manifest_2026.yml',
+              'data/real/cosmology/real_cosmology_inputs.yml',
+              'data/real/cosmology/real_source_signatures.json',
           }
-          for entry in contract["inputs"]:
-              paths.add(entry["local_path"])
-              if entry.get("covariance_path"):
-                  paths.add(entry["covariance_path"])
+          for entry in contract['inputs']:
+              paths.add(entry['local_path'])
+              if entry.get('covariance_path'):
+                  paths.add(entry['covariance_path'])
 
           records = []
           for relative in sorted(paths):
               source = root / relative
               if not source.is_file():
-                  raise SystemExit(f"canonical real input missing: {relative}")
+                  raise SystemExit(f'canonical real input missing: {relative}')
               destination = artifact_root / relative
               destination.parent.mkdir(parents=True, exist_ok=True)
               shutil.copy2(source, destination)
-              records.append(
-                  {
-                      "path": relative,
-                      "artifact_path": str(destination.relative_to(Path("artifacts/real-data-complete"))),
-                      "sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
-                  }
-              )
+              records.append({
+                  'path': relative,
+                  'artifact_path': str(destination.relative_to(Path('artifacts/real-data-complete'))),
+                  'sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+              })
 
           manifest = {
-              "schema": "rll.canonical_real_input_artifacts.v1",
-              "contract": "data/real/cosmology/real_cosmology_inputs.yml",
-              "claim_boundary": "Input provenance only; no scientific endorsement.",
-              "records": records,
+              'schema': 'rll.canonical_real_input_artifacts.v1',
+              'contract': 'data/real/cosmology/real_cosmology_inputs.yml',
+              'claim_boundary': 'Input provenance only; no scientific endorsement.',
+              'records': records,
           }
-          (artifact_root / "REAL_INPUTS.json").write_text(
-              json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
-              encoding="utf-8",
+          (artifact_root / 'REAL_INPUTS.json').write_text(
+              json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
           )
           PY
 
@@ -231,10 +574,17 @@ jobs:
         run: |
           set -euo pipefail
           python -m data.pipelines.structure_d.run_all_real | tee "$RUN_DIR/reports/structure_d_real_validation.log"
-          cp results/structure_d/model_comparison_real.csv "$RUN_DIR/reports/" || true
-          cp results/structure_d/model_comparison_real_fit_metadata.json "$RUN_DIR/reports/" || true
-          cp results/structure_d/execution_timing_real.csv "$RUN_DIR/reports/" || true
-          cp results/structure_d/error_mode_usage.csv "$RUN_DIR/reports/" || true
+          for source in \
+            results/structure_d/model_comparison_real.csv \
+            results/structure_d/model_comparison_real_fit_metadata.json \
+            results/structure_d/execution_timing_real.csv \
+            results/structure_d/error_mode_usage.csv; do
+            if [ -f "$source" ]; then
+              cp "$source" "$RUN_DIR/reports/"
+            else
+              printf '%s\n' "TOKEN_VAZIO_OPTIONAL_REPORT $source" >> "$RUN_DIR/reports/structure_d_optional_reports.residual"
+            fi
+          done
 
       - name: Run Pantheon+ real validation
         if: ${{ inputs.run_pantheon_validation && (inputs.execution_mode == 'validate' || inputs.execution_mode == 'full') }}
@@ -242,13 +592,18 @@ jobs:
           set -euo pipefail
           if python scripts/run_real_pantheon_validation.py > "$RUN_DIR/reports/run_real_pantheon_validation.log" 2>&1; then
             echo "Pantheon+ real validation OK" | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
-            cp data/results/model_comparison.json "$RUN_DIR/reports/" || true
+            if [ -f data/results/model_comparison.json ]; then
+              cp data/results/model_comparison.json "$RUN_DIR/reports/"
+            else
+              printf '%s\n' 'TOKEN_VAZIO_MODEL_COMPARISON_OUTPUT' > "$RUN_DIR/reports/run_real_pantheon_validation.residual"
+            fi
           else
             cat "$RUN_DIR/reports/run_real_pantheon_validation.log"
             echo "Pantheon+ real validation failed." | tee "$RUN_DIR/reports/run_real_pantheon_validation.status"
-            if [ "${{ inputs.strict_real_data }}" = "true" ]; then
+            if [ "$STRICT_REAL_DATA" = "true" ]; then
               exit 3
             fi
+            printf '%s\n' 'TOKEN_VAZIO_PANTHEON_VALIDATION_NON_STRICT' > "$RUN_DIR/reports/run_real_pantheon_validation.residual"
           fi
 
       - name: Build final report, checksums, and rollback manifest
@@ -277,20 +632,12 @@ jobs:
           }
           (root / 'MANIFEST.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
           lines = [
-              '# Real Data Complete Execution Report',
-              '',
+              '# Real Data Complete Execution Report', '',
               f"Claim boundary: `{payload['claim_boundary']}`",
-              f"Commit policy: `{payload['commit_policy']}`",
-              '',
-              '## Reports',
-              *[f'- `{item}`' for item in reports],
-              '',
-              '## Checks',
-              *[f'- `{item}`' for item in checks],
-              '',
-              '## Failsafe / failover / rollback',
-              *[f"- {item}" for item in payload['failsafe']],
-              '',
+              f"Commit policy: `{payload['commit_policy']}`", '',
+              '## Reports', *[f'- `{item}`' for item in reports], '',
+              '## Checks', *[f'- `{item}`' for item in checks], '',
+              '## Failsafe / failover / rollback', *[f"- {item}" for item in payload['failsafe']], '',
           ]
           (root / 'PIPELINE_REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
           PY
@@ -298,8 +645,9 @@ jobs:
 
       - name: Upload complete real-data artifact without committing
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: real-data-complete-${{ github.run_id }}
           path: artifacts/real-data-complete/
           retention-days: ${{ fromJSON(inputs.retention_days) }}
+          if-no-files-found: warn

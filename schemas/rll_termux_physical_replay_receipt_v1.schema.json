@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://instituto-rafael.invalid/schemas/rll_termux_physical_replay_receipt_v1.schema.json",
+  "title": "RLL Termux Physical Replay Receipt V1",
+  "description": "Structural contract for a physical Android/Termux replay receipt that closes only the execution gap, preserves claim_allowed=false, and remains compatible with the append-only effective execution queue.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_at",
+    "repository",
+    "supersedes_queue_item",
+    "evidence_class",
+    "state",
+    "promotion",
+    "next_gate",
+    "git",
+    "runtime",
+    "inputs",
+    "output",
+    "claim_allowed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.termux_physical_replay_receipt.v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "repository": {
+      "const": "instituto-Rafael/relativity-living-light"
+    },
+    "supersedes_queue_item": {
+      "const": "RLL-P0-TERMUX-PHYSICAL-REPLAY"
+    },
+    "evidence_class": {
+      "const": "E"
+    },
+    "state": {
+      "const": "PASS_PHYSICAL_TERMUX_REPLAY"
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": {
+        "from": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidence_class", "state"],
+          "properties": {
+            "evidence_class": {"const": "P"},
+            "state": {"const": "TOKEN_VAZIO_PHYSICAL_EXECUTION"}
+          }
+        },
+        "to": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["evidence_class", "state"],
+          "properties": {
+            "evidence_class": {"const": "E"},
+            "state": {"const": "PASS_PHYSICAL_TERMUX_REPLAY"}
+          }
+        }
+      }
+    },
+    "next_gate": {
+      "const": "RLL-P0-PANTHEON-SUCCESSOR-RUN"
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code_commit"],
+      "properties": {
+        "code_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uname", "android_release", "device_model", "python"],
+      "properties": {
+        "uname": {
+          "type": "string",
+          "minLength": 8,
+          "pattern": "Android"
+        },
+        "android_release": {
+          "type": "string",
+          "minLength": 1
+        },
+        "device_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "python": {
+          "type": "string",
+          "minLength": 6
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pantheon_zip_sha256",
+        "pantheon_zip_size_bytes",
+        "bayes_zip_sha256",
+        "bayes_zip_size_bytes"
+      ],
+      "properties": {
+        "pantheon_zip_sha256": {
+          "const": "c7b192cfa624dde19d5628781e120ba60d8628c792f3d7037e43c1092094f7e6"
+        },
+        "pantheon_zip_size_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bayes_zip_sha256": {
+          "const": "6f5e11105d8cdd23586bd9b36238f705bf198f01f8dd662b34ea51cd29127078"
+        },
+        "bayes_zip_size_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replay_sha256",
+        "repeat_byte_identical",
+        "run_log_sha256"
+      ],
+      "properties": {
+        "replay_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "repeat_byte_identical": {
+          "const": true
+        },
+        "run_log_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "claim_allowed": {
+      "const": false
+    }
+  }
+}

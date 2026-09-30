@@ -1,0 +1,78 @@
+{
+  "schema": "rll.residual_geometry_composite.contract.v2",
+  "status": "ACTIVE_GOVERNED_DRAFT",
+  "claim_allowed": false,
+  "producer": "instituto-Rafael/relativity-living-light",
+  "baseline": {
+    "script": "scripts/rll_desi_dr2_covariance_multiscale.py",
+    "contract": "data/contracts/rll_desi_dr2_covariance_multiscale.v1.json",
+    "covariance_authority": "data/real/desi_dr2_bao_covariance.csv",
+    "likelihood_mutation_allowed": false
+  },
+  "scale_families": {
+    "classical_fibonacci": {
+      "recurrence": "F_(n+1)=F_n+F_(n-1)",
+      "matrix": [[1,1],[1,0]],
+      "window_sizes": [2,3,5,8,13],
+      "role": "diagnostic_only"
+    },
+    "rafael_affine_plus_one": {
+      "recurrence": "R_(n+1)=R_n+R_(n-1)+1",
+      "closed_relation": "R_n=F_(n+3)-1",
+      "matrix_homogeneous": [[1,1,1],[1,0,0],[0,0,1]],
+      "window_sizes_up_to_13": [2,4,7,12],
+      "role": "diagnostic_only"
+    }
+  },
+  "diagnostics": {
+    "statistics": ["mean","population_variance","sum_squares","rms"],
+    "difference": ["first_difference","second_difference","endpoint_tangent"],
+    "quadratic": ["least_squares_a_b_c","bhaskara_discriminant_descriptor"],
+    "triangle": ["pythagoras_defect","equilateral_deviation","isosceles_deviation","signed_area"],
+    "poincare": ["generic_nD_unit_ball_lift","7D_prefix_when_available","origin_distance"],
+    "geodesic_sphere": ["unit_direction","great_circle_angle_to_uniform_reference"]
+  },
+  "typed_adapters": {
+    "venturi": {
+      "default_state": "TOKEN_VAZIO_FLUID_BINDING",
+      "required": ["geometry","fluid","units","boundary_conditions","viscosity","temperature","covariance","falsifier"]
+    },
+    "calendar": {
+      "default_state": "TOKEN_VAZIO_TEMPORAL_BINDING",
+      "required": ["time_coordinate","period_definition","preregistered_hypothesis","falsifier"]
+    }
+  },
+  "source_authorities": {
+    "formal_math": "rafaelmeloreisnovo/Matem-tica-",
+    "publication_ledger": "rafaelmeloreisnovo/papers",
+    "runtime_science": "instituto-Rafael/relativity-living-light",
+    "documentary_memory": [
+      "Drive:1D5BiFz50W-nHD1Qeo8meZXZd_4tUWe0pLWuqeUly6YQ",
+      "Drive:1Wrkcwhf7YRDCbcG5biP1DDqLI43CtuMzlb-yknIicJk",
+      "Drive:1bcF3RlvPrLMyKn2MNLtFEzYWtAflKSW34jm5DWEEdtE",
+      "Drive:1vaLvqB-lWSGaIXzUYSFXjLWvA54yicRVy_PanN_SH7U",
+      "Drive:18g4LXbZjA-LmgiLIjFLDTbD1dtl5EJF_GTXiWQvjXPI",
+      "Drive:1wSCyqfdmUd17aeRoj6mT34Iw37q6SA8n3_6hl2eB7KE"
+    ]
+  },
+  "hard_boundaries": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "FULL_COVARIANCE_PRECEDES_GEOMETRY_DIAGNOSTICS",
+    "STANDARD_DEVIATION_IS_NOT_REPLACED",
+    "FIBONACCI_WINDOW != LIKELIHOOD_WEIGHT",
+    "RAFAEL_AFFINE_WINDOW != LIKELIHOOD_WEIGHT",
+    "SQRT3_OVER_2 != SIGMA",
+    "GEOMETRY_MATRIX != COVARIANCE_MATRIX",
+    "POINCARE_BALL != POINCARE_RETURN_MAP != POINCARE_CONJECTURE",
+    "VENTURI_PHYSICAL != VENTURI_COMPUTATIONAL",
+    "CALENDAR_PERIODICITY != ASTROPHYSICAL_MECHANISM",
+    "WHITENED_RESIDUAL != CAUSE"
+  ],
+  "promotion_gate": {
+    "provider_test_required": true,
+    "chi2_must_remain_identical_to_baseline": true,
+    "held_out_or_non_null_profile_required_for_scientific_discrimination": true,
+    "physical_bindings_require_domain_specific_evidence": true
+  }
+}

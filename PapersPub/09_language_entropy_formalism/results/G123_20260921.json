@@ -1,0 +1,275 @@
+{
+  "G1_seed_reconstruction": {
+    "baseline_sha256": "960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f",
+    "exact_reconstruction": true,
+    "expected_baseline_sha256": "960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f",
+    "intersection": 3483,
+    "normalized_records": 10449,
+    "reconstructed_sha256": "960d1c6601229ff5dee138e21e826724e94ef4952536dcf97db5b46b70e82c8f",
+    "source_sha256": {
+      "eng_genesis": {
+        "actual": "baa15bae8af292936e53dcbca4c112c92ea719aca0e5b0c17f6ee9cc479fa9ec",
+        "expected": "baa15bae8af292936e53dcbca4c112c92ea719aca0e5b0c17f6ee9cc479fa9ec",
+        "match": true
+      },
+      "eng_john": {
+        "actual": "0b84fcc0879399b485070fce00f96342e0ae2cda8d1afe1687e2940cfc9ab451",
+        "expected": "0b84fcc0879399b485070fce00f96342e0ae2cda8d1afe1687e2940cfc9ab451",
+        "match": true
+      },
+      "eng_matthew": {
+        "actual": "6fc380cec5f27bc7465cebd48105f5666b1a406179898f9dec1e813f9da2dbd5",
+        "expected": "6fc380cec5f27bc7465cebd48105f5666b1a406179898f9dec1e813f9da2dbd5",
+        "match": true
+      },
+      "por_genesis": {
+        "actual": "7b68f7013cb30efa5f8ba7da24fb2750564abcad7a04227c50bbb3f1d9ed0a56",
+        "expected": "7b68f7013cb30efa5f8ba7da24fb2750564abcad7a04227c50bbb3f1d9ed0a56",
+        "match": true
+      },
+      "por_john": {
+        "actual": "f1b0bee2eec49ea280bce8d73c983af81701325ad5f8d0dc6ed3204d8b52aa16",
+        "expected": "f1b0bee2eec49ea280bce8d73c983af81701325ad5f8d0dc6ed3204d8b52aa16",
+        "match": true
+      },
+      "por_matthew": {
+        "actual": "6781b2cd50d60c598fa9bb06c6e85b448d10447a6c0c0ea67ee41e380093e1a9",
+        "expected": "6781b2cd50d60c598fa9bb06c6e85b448d10447a6c0c0ea67ee41e380093e1a9",
+        "match": true
+      },
+      "spa_genesis": {
+        "actual": "ba394ce6ff66d0e5c23b9cc6379ce7d01842a10a1714fbb943eabcf9e30e8248",
+        "expected": "ba394ce6ff66d0e5c23b9cc6379ce7d01842a10a1714fbb943eabcf9e30e8248",
+        "match": true
+      },
+      "spa_john": {
+        "actual": "cf00867fb8cdcbdf9fc0fe278662d0ea0f59a937b4ad3473f645a4c7b647f05b",
+        "expected": "cf00867fb8cdcbdf9fc0fe278662d0ea0f59a937b4ad3473f645a4c7b647f05b",
+        "match": true
+      },
+      "spa_matthew": {
+        "actual": "e2fd6e64c5e9c4563e8bd1171804d83b2e14cc167644d84db1107354e52484c1",
+        "expected": "e2fd6e64c5e9c4563e8bd1171804d83b2e14cc167644d84db1107354e52484c1",
+        "match": true
+      }
+    },
+    "status": "PASS"
+  },
+  "G2_total_cost_compression": {
+    "accounting": {
+      "best_plain_compressed_payload_bytes": 317003,
+      "best_seed_compressed_payload_bytes": 320306,
+      "best_seed_plus_custom_overhead_bytes": 324771,
+      "decoder_implementation_bytes": 4281,
+      "external_generic_codec_runtime_bytes": "TOKEN_VAZIO_EXTERNAL_RUNTIME",
+      "mode": "artifact_specific_total_with_repository_local_decoder_upper_bound",
+      "schema_contract_bytes": 184
+    },
+    "representations": {
+      "plain": {
+        "brotli_11": 317003,
+        "gzip_9": 378330,
+        "raw": 1213948,
+        "zstd_19": 324564
+      },
+      "seed": {
+        "brotli_11": 320306,
+        "gzip_9": 389332,
+        "raw": 1273254,
+        "zstd_19": 327723
+      },
+      "verbose": {
+        "brotli_11": 366235,
+        "gzip_9": 468012,
+        "raw": 1642359,
+        "zstd_19": 374427
+      }
+    },
+    "strong_claim": "SCD1 custom representation beats the best generic-compressed plain-text baseline after counted repository-local schema+decoder overhead.",
+    "strong_claim_pass": false
+  },
+  "G3_null_shuffle": {
+    "nonreligious_parallel_control": {
+      "aligned_segments": 90,
+      "bytes": {
+        "plain": {
+          "brotli_11": 9254,
+          "gzip_9": 11033,
+          "raw": 33064,
+          "zstd_19": 10506
+        },
+        "seed": {
+          "brotli_11": 9493,
+          "gzip_9": 11399,
+          "raw": 34417,
+          "zstd_19": 10829
+        },
+        "verbose": {
+          "brotli_11": 10134,
+          "gzip_9": 12262,
+          "raw": 43326,
+          "zstd_19": 11502
+        }
+      },
+      "exact_reconstruction": true,
+      "normalized_records": 270,
+      "selected_rows": {
+        "eng": "eng",
+        "por": "por_BR",
+        "spa": "spa"
+      },
+      "sha256": {
+        "baseline": "10083f07fc785be7811dd9d06d1620bbf3689729a2e5985f2116d1b409deba32",
+        "reconstructed": "10083f07fc785be7811dd9d06d1620bbf3689729a2e5985f2116d1b409deba32"
+      },
+      "status": "ANALYSIS_RUN"
+    },
+    "nulls": {
+      "common_order_shuffle": {
+        "canonical_zstd_bytes": 327723,
+        "empirical_p_one_sided": 0.030303,
+        "n": 32,
+        "null_le_canonical_count": 0,
+        "null_max": 348924,
+        "null_median": 348539,
+        "null_min": 348233,
+        "samples": [
+          348466,
+          348333,
+          348342,
+          348825,
+          348469,
+          348454,
+          348780,
+          348769,
+          348256,
+          348338,
+          348355,
+          348868,
+          348233,
+          348620,
+          348575,
+          348727,
+          348800,
+          348266,
+          348292,
+          348499,
+          348497,
+          348588,
+          348561,
+          348517,
+          348770,
+          348399,
+          348616,
+          348843,
+          348924,
+          348644,
+          348595,
+          348385
+        ]
+      },
+      "independent_language_shuffle": {
+        "canonical_zstd_bytes": 327723,
+        "empirical_p_one_sided": 0.030303,
+        "n": 32,
+        "null_le_canonical_count": 0,
+        "null_max": 341924,
+        "null_median": 341710.5,
+        "null_min": 341519,
+        "samples": [
+          341519,
+          341614,
+          341711,
+          341806,
+          341889,
+          341710,
+          341802,
+          341605,
+          341767,
+          341620,
+          341700,
+          341747,
+          341878,
+          341852,
+          341656,
+          341549,
+          341618,
+          341636,
+          341660,
+          341924,
+          341845,
+          341808,
+          341772,
+          341677,
+          341551,
+          341540,
+          341730,
+          341660,
+          341800,
+          341804,
+          341578,
+          341831
+        ]
+      },
+      "label_permutation": {
+        "canonical_zstd_bytes": 327723,
+        "empirical_p_one_sided": 0.030303,
+        "n": 32,
+        "null_le_canonical_count": 0,
+        "null_max": 343122,
+        "null_median": 342894.5,
+        "null_min": 342607,
+        "samples": [
+          342940,
+          342959,
+          342720,
+          342905,
+          342885,
+          343023,
+          342825,
+          343122,
+          343010,
+          342893,
+          342837,
+          342607,
+          342893,
+          342822,
+          342897,
+          342969,
+          342699,
+          342955,
+          342846,
+          343007,
+          342886,
+          343111,
+          342871,
+          342867,
+          342880,
+          342885,
+          343009,
+          342945,
+          343019,
+          342896,
+          342823,
+          342998
+        ]
+      }
+    },
+    "status": "PASS"
+  },
+  "boundaries": [
+    "SINTROPIA_OPERACIONAL != ENTROPIA_TERMODINAMICA_NEGATIVA",
+    "TOKEN_VAZIO != ZERO",
+    "compression payload != total system cost",
+    "single-corpus null result != universal semantic law"
+  ],
+  "claim_allowed": false,
+  "mu_id": "MU-RLL-G123-SEED-COMPRESSION-NULL-20260921",
+  "preregistered": {
+    "n_permutations": 32,
+    "null_gate": "canonical must beat >=95% of each null family",
+    "null_metric": "zstd_19 compressed bytes of SCD1 seed",
+    "seed": 20260921
+  },
+  "status": "ANALYSIS_RUN"
+}

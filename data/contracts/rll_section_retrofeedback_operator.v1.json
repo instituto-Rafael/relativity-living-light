@@ -1,0 +1,77 @@
+{
+  "schema": "rll.section_retrofeedback_operator.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "purpose": "Make §Retroalimentação an executable fail-closed state-transition contract that composes existing RLL evidence, gaps, gates, provenance, receipts, rollback and uncertainty controls without replacing their producer authorities.",
+  "operator": {
+    "symbol": "§",
+    "canonical_name": "SECTION_RETROFEEDBACK",
+    "equation": "§Ω(Xn)=V(Xn,En,Δn,Gn,Pn,Rn,Fn,Tn)->Xn+1",
+    "six_sigma_extension": "DMAIC+R",
+    "R": "RETROFEEDBACK"
+  },
+  "symbols": [
+    {"id":"§E","name":"EXECUTION","meaning":"observable execution with command/environment/input/output/exit state"},
+    {"id":"§Δ","name":"DELTA","meaning":"bounded change between before and after state"},
+    {"id":"§I","name":"UNCERTAINTY","meaning":"named uncertainty transition with evidence"},
+    {"id":"§T","name":"TOKEN_VAZIO","meaning":"known absence of evidence, decision, implementation or authority; never coerced to zero or PASS"},
+    {"id":"§L","name":"GAP","meaning":"explicit open question with next providence"},
+    {"id":"§F","name":"FALSIFIER","meaning":"condition that blocks or falsifies the scoped hypothesis"},
+    {"id":"§G","name":"GATE","meaning":"formal transition authorization condition"},
+    {"id":"§R","name":"RECEIPT","meaning":"replayable evidence of execution and result"},
+    {"id":"§P","name":"PROVENANCE","meaning":"source/version/hash/authority/transformation lineage"},
+    {"id":"§C","name":"CONTRACT","meaning":"frozen semantics and scope"},
+    {"id":"§A","name":"AUDIT","meaning":"verification distinct from producer assertion"},
+    {"id":"§Q","name":"QUALITY","meaning":"repeatability/stability/tolerance/Six-Sigma control"},
+    {"id":"§H","name":"HUMAN","meaning":"dignity/safety/autonomy/child-protection and rights non-regression boundary"},
+    {"id":"§S","name":"ZERO_TRUST_SECURITY","meaning":"inputs and authorities are verified rather than presumed trusted"},
+    {"id":"§V","name":"VALIDATION","meaning":"comparison with baseline/reference/falsifier"},
+    {"id":"§X","name":"ROLLBACK","meaning":"reversible state transition with preserved historical evidence"},
+    {"id":"§M","name":"MATURITY","meaning":"technical/evidence maturity without equating maturity to scientific truth"},
+    {"id":"§U","name":"URGENCY","meaning":"priority may reorder work but may not lower truth/evidence thresholds"},
+    {"id":"§B","name":"BOUNDARY","meaning":"explicit statement of what the result does and does not establish"},
+    {"id":"§N","name":"NEGATIVE_EVIDENCE","meaning":"adverse result preserved as information"},
+    {"id":"§K","name":"KNOWLEDGE","meaning":"information with provenance, test and declared boundary"},
+    {"id":"§O","name":"OBSERVATION","meaning":"observed datum separated from interpretation"},
+    {"id":"§D","name":"DECISION","meaning":"human/contractual decision separated from automatic inference"},
+    {"id":"§μ","name":"MUWRITE","meaning":"smallest persistent write that records progress without rewriting history"},
+    {"id":"§Ω","name":"ATLAS","meaning":"typed position and dependencies inside the whole system"},
+    {"id":"§∞","name":"CONTINUITY","meaning":"result feeds the next bounded delta rather than terminating evolution"}
+  ],
+  "event_required_fields": [
+    "§ID","§ANTES","§INTENÇÃO","§ENTRADA","§EXECUÇÃO","§OBSERVAÇÃO","§RESULTADO","§Δ",
+    "§INCERTEZA_ANTES","§INCERTEZA_DEPOIS","§FALSIFICADOR","§TOKEN_VAZIO","§PROVENIÊNCIA",
+    "§HASH","§RECEIPT","§GATE","§BOUNDARY","§ROLLBACK","§URGÊNCIA","§F_NEXT","§DEPOIS"
+  ],
+  "uncertainty_directions": ["REDUCED","UNCHANGED","INCREASED","TOKEN_VAZIO"],
+  "outcomes": ["PASS","FAIL","BLOCKED","TOKEN_VAZIO","PENDING","ERROR"],
+  "promotion_rule": {
+    "expression": "ΔI>=0 AND provenance=PASS AND receipt!=empty AND gate=PASS AND falsifier_violated=false AND human_rights_regression=false AND auditability_regression=false AND rollback_ready=true",
+    "scientific_claim_promotion": "SEPARATE_GATE_REQUIRED",
+    "negative_outcome_promotion": "FORBIDDEN",
+    "token_vazio_promotion": "FORBIDDEN"
+  },
+  "negative_evidence_rule": {
+    "expression": "FAIL + uncertainty_reduced -> epistemic_evolution",
+    "requirements": ["negative_evidence_preserved=true","promotion_authorized=false","F_next nonempty"]
+  },
+  "non_regression": [
+    "TOKEN_VAZIO != 0",
+    "FAIL != PASS",
+    "NEGATIVE_EVIDENCE != GLOBAL_FALSIFICATION",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "URGENCY_CHANGES_ORDER_NOT_TRUTH",
+    "SAME_AUTHOR_REPLAY != INDEPENDENT_REPLICATION",
+    "HISTORICAL_EVIDENCE_IS_APPEND_ONLY",
+    "RIGHTS_AUDITABILITY_REVERSIBILITY_MAY_NOT_REGRESS_ON_PROMOTION"
+  ],
+  "consumes_existing_authorities": [
+    "data/governance/RLL_ATLAS_CONTINUOUS_EVOLUTION_ENVELOPE_20260827_V2.json",
+    "data/governance/RLL_EVIDENCE_EVOLUTION_MATRIX_V1.json",
+    "data/governance/RLL_GAP_RETROFEEDBACK_V2.json",
+    "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+  ],
+  "boundary": "§ is a project governance/state-transition operator. It does not certify physics, legal compliance, ethics compliance, Six-Sigma certification or independent replication by itself."
+}

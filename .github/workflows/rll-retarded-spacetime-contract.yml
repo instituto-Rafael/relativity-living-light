@@ -1,0 +1,28 @@
+name: rll-retarded-spacetime-contract
+
+on:
+  push:
+    paths:
+      - "data/contracts/rll_retarded_spacetime_state.v1.yml"
+      - "tools/validate_rll_retarded_spacetime_state.py"
+      - "tests/test_rll_retarded_spacetime_state.py"
+      - ".github/workflows/rll-retarded-spacetime-contract.yml"
+  pull_request:
+    paths:
+      - "data/contracts/rll_retarded_spacetime_state.v1.yml"
+      - "tools/validate_rll_retarded_spacetime_state.py"
+      - "tests/test_rll_retarded_spacetime_state.py"
+      - ".github/workflows/rll-retarded-spacetime-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check pyyaml pytest
+      - run: python tools/validate_rll_retarded_spacetime_state.py
+      - run: pytest -q tests/test_rll_retarded_spacetime_state.py

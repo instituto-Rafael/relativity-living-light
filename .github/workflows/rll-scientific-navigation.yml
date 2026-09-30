@@ -87,6 +87,9 @@ jobs:
           python -m pytest -q tests/test_scientific_navigation_bundle.py
 
       - name: Build read-only navigation bundle
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          STRICT_REPOSITORY_SOURCES: ${{ inputs.strict_repository_sources }}
         run: |
           set -euo pipefail
           STRICT=""

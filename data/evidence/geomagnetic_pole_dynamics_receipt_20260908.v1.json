@@ -1,0 +1,64 @@
+{
+  "schema": "rll.geomagnetism.pole_dynamics.receipt.v1",
+  "date": "2026-09-08",
+  "claim_allowed": false,
+  "epistemic_state": "SYNTHETIC_AND_LITERATURE_DERIVED_ONLY",
+  "implementation": {
+    "module": "data/pipelines/geomagnetism/pole_dynamics_gate.py",
+    "contract": "data/contracts/geomagnetic_pole_dynamics.v1.json",
+    "atlas": "docs/RLL_GEOMAGNETIC_POLE_DYNAMICS_ATLAS.md",
+    "tests": "tests/test_geomagnetic_pole_dynamics_gate.py"
+  },
+  "derived_cross_paper_witness": {
+    "inputs": {
+      "cmb_radius_km": 3485.0,
+      "azimuthal_wavenumber": 13,
+      "phase_speed_km_per_year": 200.0
+    },
+    "outputs": {
+      "azimuthal_wavelength_km": 1684.3769842708352,
+      "crest_passage_period_year": 8.421884921354176,
+      "angular_speed_rad_per_year": 0.05738880918220947,
+      "angular_speed_deg_per_year": 3.288136557422228
+    },
+    "comparison": "Madsen et al. 2026 report a Swarm toroidal flow-acceleration period distribution peaking around 8-9 years",
+    "state": "NUMERICAL_CONSISTENCY_NOT_MODE_IDENTITY"
+  },
+  "synthetic_mechanics": {
+    "implicit_zero_velocity": [3.0, 1.6],
+    "implicit_zero_acceleration": [0.0, 0.8],
+    "canada_source_sensitivity_example": [-2.0, 1.0],
+    "siberia_source_sensitivity_example": [0.5, -1.5],
+    "frozen_flux_residual": 0.0,
+    "sinusoid_true_period_year": 8.4,
+    "sinusoid_recovered_period_year": 8.4,
+    "sqrt3_over_2_exact_fixture_log_rms": 0.0
+  },
+  "real_data_gates": {
+    "WMM2025_coefficients_sha256": "TOKEN_VAZIO",
+    "IGRF14_coefficients_sha256": "TOKEN_VAZIO",
+    "CHAOS8_coefficients_sha256": "TOKEN_VAZIO",
+    "official_test_values_reproduced": "TOKEN_VAZIO",
+    "north_dip_pole_trajectory_reconstructed": "TOKEN_VAZIO",
+    "canada_siberia_source_decomposition": "TOKEN_VAZIO",
+    "real_sqrt3_over_2_result": "TOKEN_VAZIO",
+    "real_phi_result": "TOKEN_VAZIO",
+    "remote_ci": "TOKEN_VAZIO_PENDING_PR",
+    "claim_allowed": false
+  },
+  "F_ok": [
+    "modern geomagnetic literature converted into bounded deterministic operators",
+    "implicit zero drift/acceleration and source-sensitivity formulas implemented",
+    "frozen-flux residual implemented",
+    "m-v-T cross-paper consistency derivation materialized",
+    "sinusoidal acceleration period scan implemented",
+    "sqrt(3)/2 comparison pre-registered and non-fitted"
+  ],
+  "F_gap": [
+    "official coefficient bytes and checksums not yet bound",
+    "real pole trajectory has not yet been executed in this branch",
+    "Canada/Siberia lobe fields are not yet source-decomposed",
+    "no real geomagnetic evidence for sqrt(3)/2 or phi has been established"
+  ],
+  "F_next": "bind one official coefficient product, reproduce its official reference values, reconstruct the dip-pole path and run all pre-registered tests without post-hoc observable or threshold changes"
+}

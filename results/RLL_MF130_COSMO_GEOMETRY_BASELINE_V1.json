@@ -1,0 +1,133 @@
+{
+  "schema": "rll.mf130.cosmology_geometry_baseline.v1",
+  "date": "2026-09-21",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "candidate_count": 130,
+  "candidate_state_counts": {
+    "PASS": 125,
+    "PENDING_PER_EXPRESSION": 2,
+    "PASS_CONDITIONAL": 1,
+    "TOKEN_VAZIO_SEMANTICS": 1,
+    "FAIL": 1
+  },
+  "desi_dr2": {
+    "point_count": 13,
+    "anisotropic_pairs": 6,
+    "observable_geometry": "F_AP=(DM/rd)/(DH/rd)=DM/DH=DM*H/c",
+    "pairs": [
+      {
+        "tracer": "LRG1",
+        "z": 0.51,
+        "DM_over_rd": 13.588,
+        "DH_over_rd": 21.863,
+        "F_AP": 0.6215066550793578,
+        "sigma_F_AP_delta_method": 0.017109418847238912,
+        "covariance_block": "DESI_DR2_LRG1_DM_DH"
+      },
+      {
+        "tracer": "LRG2",
+        "z": 0.706,
+        "DM_over_rd": 17.351,
+        "DH_over_rd": 19.455,
+        "F_AP": 0.8918529940889232,
+        "sigma_F_AP_delta_method": 0.020777022616435714,
+        "covariance_block": "DESI_DR2_LRG2_DM_DH"
+      },
+      {
+        "tracer": "LRG3_PLUS_ELG1",
+        "z": 0.934,
+        "DM_over_rd": 21.576,
+        "DH_over_rd": 17.641,
+        "F_AP": 1.223059917238252,
+        "sigma_F_AP_delta_method": 0.01916126576560986,
+        "covariance_block": "DESI_DR2_LRG3_ELG1_DM_DH"
+      },
+      {
+        "tracer": "ELG2",
+        "z": 1.321,
+        "DM_over_rd": 27.601,
+        "DH_over_rd": 14.176,
+        "F_AP": 1.947023137697517,
+        "sigma_F_AP_delta_method": 0.0451430692772829,
+        "covariance_block": "DESI_DR2_ELG2_DM_DH"
+      },
+      {
+        "tracer": "QSO",
+        "z": 1.484,
+        "DM_over_rd": 30.512,
+        "DH_over_rd": 12.817,
+        "F_AP": 2.3805882811890458,
+        "sigma_F_AP_delta_method": 0.13588249085923065,
+        "covariance_block": "DESI_DR2_QSO_DM_DH"
+      },
+      {
+        "tracer": "Lya",
+        "z": 2.33,
+        "DM_over_rd": 38.988,
+        "DH_over_rd": 8.632,
+        "F_AP": 4.516682113067655,
+        "sigma_F_AP_delta_method": 0.2834407816975368,
+        "covariance_block": "DESI_DR2_LYA_DM_DH"
+      }
+    ],
+    "source_paths": [
+      "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "data/real/desi_dr2_bao_covariance.csv"
+    ]
+  },
+  "pantheon_plus": {
+    "state": "PASS_LIMITED_PANTHEON_FULL_COVARIANCE_FAIRNESS",
+    "N": 1657,
+    "covariance": "full_STAT+SYS",
+    "lcdm": {
+      "chi2": 1452.0172947103933,
+      "k": 3,
+      "AIC": 1458.0172947103933,
+      "AICc": 1458.0318137666547,
+      "BIC": 1474.255586762673,
+      "H0": 73.53291334644892,
+      "Omega_m": 0.3316589839229259
+    },
+    "rll": {
+      "chi2": 1452.0172947103936,
+      "k": 6,
+      "AIC": 1464.0172947103936,
+      "AICc": 1464.0682038013026,
+      "BIC": 1496.493878814953,
+      "H0": 73.53291285367531,
+      "Omega_m": 0.3316589769006009,
+      "Omega_s0": 0,
+      "z_t": 1.0071420952911838,
+      "w_t": 0.3050826926814155,
+      "boundary_hits": [
+        "Omega_s0"
+      ]
+    },
+    "comparison_rll_vs_lcdm": {
+      "delta_chi2": 2.2737367544323206e-13,
+      "delta_AIC": 6.000000000000227,
+      "delta_AICc": 6.036390034647866,
+      "delta_BIC": 22.23829205228003
+    },
+    "geometry_interpretation": "RLL Pantheon best fit sits on Omega_s0=0; its background distance curve collapses to the LCDM family in this scoped fit."
+  },
+  "canonical_g4_background": {
+    "state": "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT",
+    "rll_Omega_s0": 0,
+    "delta_chi2_vs_LCDM": 5.229594535194337e-12,
+    "delta_BIC_vs_LCDM": 22.311619100619055,
+    "interpretation": "In this frozen background tournament RLL collapses to its null boundary and does not improve chi2 over LCDM; this is unfavorable evidence in scope, not universal falsification."
+  },
+  "geometry_residual_boundary": {
+    "statement": "At the recorded G4 RLL best fit, Omega_s0=0 places RLL on its LCDM null submanifold. Background-only geometric residuals are therefore null-limit residuals, not evidence for a distinct RLL geometry.",
+    "per_mf_mapping": "PENDING_PREDECLARED_MAPPING",
+    "multiple_testing_control": "REQUIRED_BEFORE_130_WAY_SEARCH"
+  },
+  "next": [
+    "resolve/test MF-0089 and MF-0209 regular-polygon limit conditions",
+    "preserve MF-0219 FAIL and MF-0130 TOKEN_VAZIO",
+    "predeclare non-adaptive mappings from eligible MF ratios/transforms to DESI F_AP and Pantheon/LCDM/RLL distance residual features",
+    "run covariance-aware tests with multiple-testing correction; do not mine 130 expressions for post-hoc coincidences"
+  ]
+}

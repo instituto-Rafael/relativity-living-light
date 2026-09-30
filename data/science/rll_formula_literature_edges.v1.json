@@ -1,0 +1,275 @@
+{
+  "schema": "rll.formula_literature_edges.v1",
+  "date": "2026-08-22",
+  "authority": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "base_route": "rll/lab",
+    "work_branch": "work/formula-literature-edge-vectors-20260822",
+    "purpose": "bibliographic evidence routing; not scientific claim promotion"
+  },
+  "append_only": true,
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "source_inventory": {
+    "extracted_formula_manifest": 486,
+    "extracted_formula_sources": 53,
+    "desi_hypothesis_intake": 50,
+    "raw_union_upper_bound_before_dedup": 536,
+    "deduplicated_total": "TOKEN_VAZIO_DEDUP_COUNT",
+    "full_formula_import": "TOKEN_VAZIO_FULL_FORMULAS_JSON_NOT_MATERIALIZED",
+    "chipquantum_E1_E300": "TOKEN_VAZIO_FORMULAS_NOT_MATERIALIZED"
+  },
+  "classification_rules": {
+    "PAIR_A": ">=2 distinct independence groups, exact-formula relevance, explicit false-positive/systematics controls; does not itself promote a claim",
+    "PAIR_B": ">=2 author groups but materially shared data/pipeline/systematics; weaker than PAIR_A",
+    "CLASS_MATCH": "literature tests a physical/model class only; cannot close an exact-formula gate",
+    "CONTRADICTED_EXTERNAL_2PLUS": ">=2 sufficiently independent observational paths contradict the exact prediction under the declared interpretation",
+    "TOKEN_VAZIO_EXACT_TEST": "exact expression has no frozen, executable test against the cited observables",
+    "MALFORMED": "mathematical, type, normalization or dimensional contradiction precedes observational fitting",
+    "REJECTED_NON_FALSIFIABLE": "no observable falsifier can be stated"
+  },
+  "reference_groups": [
+    {"id": "IG_ACT_CMB_LENSING", "modality": "CMB lensing", "instrument": "Atacama Cosmology Telescope DR6"},
+    {"id": "IG_DES_Y6_LSS", "modality": "galaxy clustering + cosmic shear + galaxy-galaxy lensing", "instrument": "Dark Energy Survey Y6"},
+    {"id": "IG_ACT_PRIMARY_CMB", "modality": "primary CMB temperature/polarization", "instrument": "ACT DR6"},
+    {"id": "IG_PLANCK_CMB_BAO", "modality": "satellite CMB + BAO", "instrument": "Planck 2018 + BAO"},
+    {"id": "IG_BBN_LIGHT_ELEMENTS", "modality": "BBN light-element abundance inference", "instrument": "abundance compilation + nuclear-rate marginalization"},
+    {"id": "IG_LLR", "modality": "Solar-system ranging", "instrument": "Lunar Laser Ranging"},
+    {"id": "IG_PULSAR_TIMING", "modality": "strong-field binary timing", "instrument": "PSR J1713+0747 NANOGrav+EPTA"},
+    {"id": "IG_DESI_DR2_BAO", "modality": "BAO distance-redshift", "instrument": "DESI DR2"}
+  ],
+  "references": [
+    {
+      "reference_id": "REF_ACT_DR6_LENSING_2304.05202",
+      "title": "The Atacama Cosmology Telescope: A Measurement of the DR6 CMB Lensing Power Spectrum and its Implications for Structure Growth",
+      "year": 2023,
+      "group": "ACT Collaboration",
+      "independence_group": "IG_ACT_CMB_LENSING",
+      "dataset_or_instrument": "ACT DR6 CMB lensing, 9400 deg^2",
+      "method": "CMB lensing power spectrum; blinded analysis",
+      "persistent_id": "arXiv:2304.05202",
+      "url": "https://arxiv.org/abs/2304.05202",
+      "false_positive_controls": ["extensive null tests", "consistency tests", "systematic-error estimates", "blinded analysis", "foreground-minimizing pipeline"]
+    },
+    {
+      "reference_id": "REF_ACT_DR6_FOREGROUNDS_2304.05196",
+      "title": "The Atacama Cosmology Telescope: Mitigating the impact of extragalactic foregrounds for the DR6 CMB lensing analysis",
+      "year": 2023,
+      "group": "ACT Collaboration",
+      "independence_group": "IG_ACT_CMB_LENSING",
+      "dataset_or_instrument": "ACT DR6 + independent microwave-sky simulations",
+      "method": "foreground bias tests and mitigation",
+      "persistent_id": "arXiv:2304.05196",
+      "url": "https://arxiv.org/abs/2304.05196",
+      "false_positive_controls": ["two independent sky simulations", "profile bias-hardening", "source/cluster subtraction", "frequency null tests", "CIB-deprojected cross-check"]
+    },
+    {
+      "reference_id": "REF_DES_Y6_3X2PT_2601.14559",
+      "title": "Dark Energy Survey Year 6 Results: Cosmological Constraints from Galaxy Clustering and Weak Lensing",
+      "year": 2026,
+      "group": "DES Collaboration",
+      "independence_group": "IG_DES_Y6_LSS",
+      "dataset_or_instrument": "DES Y6; 140 million source shapes and 9 million lens galaxies",
+      "method": "3x2pt cosmic shear + clustering + galaxy-galaxy lensing",
+      "persistent_id": "arXiv:2601.14559",
+      "url": "https://arxiv.org/abs/2601.14559",
+      "false_positive_controls": ["joint 3x2pt cross-probe analysis", "nuisance/systematic marginalization in collaboration likelihood", "separate Y6 calibration and masking validation program"]
+    },
+    {
+      "reference_id": "REF_DES_Y6_REDSHIFT_2509.07964",
+      "title": "Dark Energy Survey Year 6 Results: Redshift Calibration of the MagLim++ Lens Sample",
+      "year": 2025,
+      "group": "DES Collaboration",
+      "independence_group": "IG_DES_Y6_LSS",
+      "dataset_or_instrument": "DES Y6 MagLim++",
+      "method": "SOMPZ + Balrog + independent clustering-redshift calibration",
+      "persistent_id": "arXiv:2509.07964",
+      "url": "https://arxiv.org/abs/2509.07964",
+      "false_positive_controls": ["dominant redshift uncertainties propagated through O(1e8) realizations", "independent clustering-redshift importance sampling", "nuisance-mode marginalization"]
+    },
+    {
+      "reference_id": "REF_DES_Y6_MASKING_2509.07943",
+      "title": "Dark Energy Survey Year 6 Results: improved mitigation of spatially varying observational systematics with masking",
+      "year": 2025,
+      "group": "DES Collaboration",
+      "independence_group": "IG_DES_Y6_LSS",
+      "dataset_or_instrument": "DES Y6 footprint",
+      "method": "observational-systematics masking and Iterative Systematics Decontamination",
+      "persistent_id": "arXiv:2509.07943",
+      "url": "https://arxiv.org/abs/2509.07943",
+      "false_positive_controls": ["extreme-condition masking", "non-linear contaminant detection", "comparison of masking and decontamination impact"]
+    },
+    {
+      "reference_id": "REF_ACT_DR6_EXTENDED_2503.14454",
+      "title": "The Atacama Cosmology Telescope: DR6 Constraints on Extended Cosmological Models",
+      "year": 2025,
+      "group": "ACT Collaboration",
+      "independence_group": "IG_ACT_PRIMARY_CMB",
+      "dataset_or_instrument": "ACT DR6 primary CMB with external combinations",
+      "method": "extended cosmological-model inference",
+      "persistent_id": "arXiv:2503.14454",
+      "url": "https://arxiv.org/abs/2503.14454",
+      "false_positive_controls": ["ACT-only and Planck-combined analyses", "lensing and BAO degeneracy breaking", "explicit tests of multiple extended-model alternatives"]
+    },
+    {
+      "reference_id": "REF_PLANCK2018_PARAMS_1807.06209",
+      "title": "Planck 2018 results. VI. Cosmological parameters",
+      "year": 2018,
+      "group": "Planck Collaboration",
+      "independence_group": "IG_PLANCK_CMB_BAO",
+      "dataset_or_instrument": "Planck full mission CMB + BAO",
+      "method": "CMB likelihood with cosmological extensions",
+      "persistent_id": "arXiv:1807.06209",
+      "url": "https://arxiv.org/abs/1807.06209",
+      "false_positive_controls": ["temperature/polarization/lensing consistency checks", "extension-model stability checks", "BAO cross-check"]
+    },
+    {
+      "reference_id": "REF_BBN_2024_2401.15054",
+      "title": "The 2024 BBN baryon abundance update",
+      "year": 2024,
+      "group": "Schoneberg",
+      "independence_group": "IG_BBN_LIGHT_ELEMENTS",
+      "dataset_or_instrument": "primordial light-element abundance compilation",
+      "method": "BBN inference with robust nuclear-rate marginalization",
+      "persistent_id": "arXiv:2401.15054",
+      "url": "https://arxiv.org/abs/2401.15054",
+      "false_positive_controls": ["comparison of theoretical and experimentally determined deuterium-burning rates", "robust marginalization over nuclear rates"]
+    },
+    {
+      "reference_id": "REF_LLR_0411113",
+      "title": "Progress in Lunar Laser Ranging Tests of Relativistic Gravity",
+      "year": 2004,
+      "group": "Williams-Turyshev-Boggs",
+      "independence_group": "IG_LLR",
+      "dataset_or_instrument": "Lunar Laser Ranging",
+      "method": "long-baseline lunar ranging and relativistic ephemeris fit",
+      "persistent_id": "arXiv:gr-qc/0411113",
+      "url": "https://arxiv.org/abs/gr-qc/0411113",
+      "false_positive_controls": ["simultaneous relativistic-parameter and ephemeris modeling", "independent equivalence-principle and geodetic-precession consistency tests"]
+    },
+    {
+      "reference_id": "REF_PULSAR_GDOT_1802.09206",
+      "title": "Tests of Gravitational Symmetries with Pulsar Binary J1713+0747",
+      "year": 2018,
+      "group": "NANOGrav+EPTA pulsar timing collaboration authors",
+      "independence_group": "IG_PULSAR_TIMING",
+      "dataset_or_instrument": "PSR J1713+0747 timing",
+      "method": "binary-period/eccentricity timing tests in strong gravity",
+      "persistent_id": "arXiv:1802.09206",
+      "url": "https://arxiv.org/abs/1802.09206",
+      "false_positive_controls": ["combined NANOGrav and EPTA timing data", "simultaneous tests of multiple SEP/gravitational-symmetry effects"]
+    },
+    {
+      "reference_id": "REF_DESI_DR2_BAO_2503.14738",
+      "title": "DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints",
+      "year": 2025,
+      "group": "DESI Collaboration",
+      "independence_group": "IG_DESI_DR2_BAO",
+      "dataset_or_instrument": "DESI DR2 >14 million galaxies and quasars + Ly-alpha BAO",
+      "method": "BAO distances and cosmological likelihood combinations",
+      "persistent_id": "arXiv:2503.14738",
+      "url": "https://arxiv.org/abs/2503.14738",
+      "false_positive_controls": ["DR1 and SDSS consistency comparisons", "multiple supernova-sample combinations", "explicit caveat for unknown dataset systematics"]
+    }
+  ],
+  "edges": [
+    {"edge_id":"EDGE-H15-ACT-LENS","formula_id":"H15","reference_id":"REF_ACT_DR6_LENSING_2304.05202","relation":"CONTRADICTS_EXACT","independence_group":"IG_ACT_CMB_LENSING","scope":"conventional sigma8 clustering-amplitude interpretation; ACT finds non-zero structure amplitude","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H15-ACT-SYS","formula_id":"H15","reference_id":"REF_ACT_DR6_FOREGROUNDS_2304.05196","relation":"SYSTEMATICS_CONTROL","independence_group":"IG_ACT_CMB_LENSING","scope":"false-positive control for CMB lensing structure result","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H15-DESY6","formula_id":"H15","reference_id":"REF_DES_Y6_3X2PT_2601.14559","relation":"CONTRADICTS_EXACT","independence_group":"IG_DES_Y6_LSS","scope":"independent low-redshift galaxy/weak-lensing structure amplitude is non-zero","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H15-DES-Z","formula_id":"H15","reference_id":"REF_DES_Y6_REDSHIFT_2509.07964","relation":"SYSTEMATICS_CONTROL","independence_group":"IG_DES_Y6_LSS","scope":"redshift-calibration control for DES Y6 3x2pt","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H15-DES-MASK","formula_id":"H15","reference_id":"REF_DES_Y6_MASKING_2509.07943","relation":"SYSTEMATICS_CONTROL","independence_group":"IG_DES_Y6_LSS","scope":"spatial-systematics control for DES Y6 clustering","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H21-ACT","formula_id":"H21","reference_id":"REF_ACT_DR6_EXTENDED_2503.14454","relation":"CONTRADICTS_EXACT","independence_group":"IG_ACT_PRIMARY_CMB","scope":"under conventional Neff interpretation, ACT DR6 gives Neff=2.86+-0.13, far from H21 approx 4.86","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H21-PLANCK","formula_id":"H21","reference_id":"REF_PLANCK2018_PARAMS_1807.06209","relation":"CONTRADICTS_EXACT","independence_group":"IG_PLANCK_CMB_BAO","scope":"Planck+BAO gives Neff=2.99+-0.17, far from H21 approx 4.86","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H21-BBN","formula_id":"H21","reference_id":"REF_BBN_2024_2401.15054","relation":"CONTRADICTS_EXACT","independence_group":"IG_BBN_LIGHT_ELEMENTS","scope":"BBN light elements constrain DeltaNeff=-0.10+-0.21, independent early-universe abundance route","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H25-LLR","formula_id":"H25","reference_id":"REF_LLR_0411113","relation":"CONTRADICTS_EXACT","independence_group":"IG_LLR","scope":"LLR reports Gdot/G=(4+-9)e-13 yr^-1, inconsistent in scale with H25 approx -9e-12 yr^-1 for standard H0","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H25-PULSAR","formula_id":"H25","reference_id":"REF_PULSAR_GDOT_1802.09206","relation":"CONTRADICTS_EXACT","independence_group":"IG_PULSAR_TIMING","scope":"pulsar timing reports Gdot/G=(-0.1+-0.9)e-12 yr^-1 in a strong-field system","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H01-DESI","formula_id":"H01","reference_id":"REF_DESI_DR2_BAO_2503.14738","relation":"CLASS_MATCH","independence_group":"IG_DESI_DR2_BAO","scope":"DESI DR2 tests evolving w0-wa dark-energy class; does not test H01 exact spiral expression","provenance":"external_primary_arxiv","immutable_event":true},
+    {"edge_id":"EDGE-H03-DESI","formula_id":"H03","reference_id":"REF_DESI_DR2_BAO_2503.14738","relation":"CLASS_MATCH","independence_group":"IG_DESI_DR2_BAO","scope":"DESI DR2 constrains distance-redshift expansion and dynamical-DE class; does not validate H03 exact H(z)","provenance":"external_primary_arxiv","immutable_event":true}
+  ],
+  "formula_states": [
+    {
+      "formula_id":"H15",
+      "expression":"sigma8(z) = sigma8_0 * [1 - (sqrt(3)/2)^(-z)]",
+      "interpretation":"sigma8 is the conventional matter-clustering amplitude normalized by sigma8_0 at z=0",
+      "falsifier":"Any robust non-zero sigma8 at z=0 or nearby epochs contradicts the expression's sigma8(0)=0 normalization; sign behavior for z>0 must also remain physically admissible.",
+      "state":"CONTRADICTED_EXTERNAL_2PLUS",
+      "evidence_vector":{"math_defined":true,"units_closed":true,"exact_prediction":true,"independent_groups":2,"false_positive_controls":5,"external_concordance":"CONTRADICT","contradiction_strength":"TWO_PLUS_INDEPENDENT","reproducibility":"MULTI_GROUP","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["The state applies only to the written conventional-sigma8 interpretation; a redefined observable requires a new formula/version ID."],
+      "token_vazio":[],
+      "next_test":"Freeze a successor growth law under a new ID and compare it in the same growth likelihood; never overwrite H15."
+    },
+    {
+      "formula_id":"H21",
+      "expression":"N_eff = 3.046 + pi*sin(30 deg)/(sqrt(3)/2) ~= 4.86",
+      "interpretation":"N_eff is the conventional effective number of relativistic species used in CMB/BBN cosmology",
+      "falsifier":"Independent CMB and/or BBN constraints excluding N_eff~=4.86 under the same conventional definition.",
+      "state":"CONTRADICTED_EXTERNAL_2PLUS",
+      "evidence_vector":{"math_defined":true,"units_closed":true,"exact_prediction":true,"independent_groups":3,"false_positive_controls":6,"external_concordance":"CONTRADICT","contradiction_strength":"TWO_PLUS_INDEPENDENT","reproducibility":"MULTI_GROUP","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["If H21 intended a quantity other than conventional cosmological N_eff, that alternative quantity must be defined and receives a new version."],
+      "token_vazio":[],
+      "next_test":"No fit promotion. Preserve contradiction and derive any successor from an explicit particle/radiation mechanism before retesting."
+    },
+    {
+      "formula_id":"H25",
+      "expression":"G_dot/G = -H0 * [1 - sqrt(3)/2]",
+      "interpretation":"secular fractional time variation of Newton's gravitational constant",
+      "falsifier":"Local and strong-field bounds on |Gdot/G| substantially below the predicted magnitude, using independent physical systems.",
+      "state":"CONTRADICTED_EXTERNAL_2PLUS",
+      "evidence_vector":{"math_defined":true,"units_closed":true,"exact_prediction":true,"independent_groups":2,"false_positive_controls":4,"external_concordance":"CONTRADICT","contradiction_strength":"TWO_PLUS_INDEPENDENT","reproducibility":"MULTI_GROUP","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["Exact numeric prediction depends on the H0 value and unit conversion, but the predicted order remains around 1e-11/yr for standard H0."],
+      "token_vazio":[],
+      "next_test":"If a scale-dependent G is intended, define G(t,x,environment) and a screening mechanism under a new ID; H25 remains append-only."
+    },
+    {
+      "formula_id":"H35",
+      "expression":"R_curv = A_s (k/k*)^(n_s-1) * exp(pi i)",
+      "interpretation":"written as a real auto-power-spectrum-like quantity",
+      "falsifier":"A real auto-power spectrum must be non-negative; exp(pi i)=-1 makes the written positive-amplitude spectrum negative.",
+      "state":"MALFORMED",
+      "evidence_vector":{"math_defined":true,"units_closed":true,"exact_prediction":true,"independent_groups":0,"false_positive_controls":0,"external_concordance":"NOT_APPLICABLE","contradiction_strength":"INTERNAL_MATH","reproducibility":"REFERENCE_ONLY","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["A complex mode amplitude can contain a phase; that would be a different object and needs a new typed expression before |.|^2."],
+      "token_vazio":[],
+      "next_test":"Type the object as amplitude versus power; create a successor ID rather than repairing H35 in place."
+    },
+    {
+      "formula_id":"H01",
+      "expression":"w(z) = -1 + sin(theta_999) * Spiral_(sqrt(3)/2)^z",
+      "interpretation":"candidate evolving dark-energy equation of state",
+      "falsifier":"Frozen exact H01 prediction must lose to or be excluded by ΛCDM/w0wa under the same DESI DR2+CMB+SN likelihood and priors.",
+      "state":"TOKEN_VAZIO_EXACT_TEST",
+      "evidence_vector":{"math_defined":false,"units_closed":false,"exact_prediction":false,"independent_groups":1,"false_positive_controls":3,"external_concordance":"UNKNOWN","contradiction_strength":"NONE","reproducibility":"REFERENCE_ONLY","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["theta_999 undefined","Spiral normalization undefined","qualitative resemblance to dynamical dark energy is not validation"],
+      "token_vazio":[{"id":"TOKEN_VAZIO_H01_EXACT_LIKELIHOOD","cause":"exact parameterization not numerically closed","evidence_needed":"theta_999 and Spiral definition plus frozen likelihood/prior","falsifier":"worse evidence/fit or excluded posterior under equal pipeline","F_next":"define parameters, nested standard-model limit and run exact DESI DR2+CMB+SN comparison"}],
+      "next_test":"Materialize H01 as a numerically closed nested model before any support edge can be exact."
+    },
+    {
+      "formula_id":"H03",
+      "expression":"H(z)^2 = H0^2 [Omega_m(1+z)^3 + Omega_Lambda (sqrt(3)/2)^z]",
+      "interpretation":"candidate modified background-expansion law",
+      "falsifier":"Exact H03 likelihood is disfavored relative to matched ΛCDM/wCDM baselines using the same BAO, SN, CMB data, covariance, nuisance treatment and priors.",
+      "state":"TOKEN_VAZIO_EXACT_TEST",
+      "evidence_vector":{"math_defined":true,"units_closed":true,"exact_prediction":true,"independent_groups":1,"false_positive_controls":3,"external_concordance":"UNKNOWN","contradiction_strength":"NONE","reproducibility":"REFERENCE_ONLY","claim_boundary":"claim_allowed=false"},
+      "uncertainties":["effective density/pressure interpretation and conservation closure are not yet linked to this bibliographic graph","DESI dynamical-DE evidence is only CLASS_MATCH"],
+      "token_vazio":[{"id":"TOKEN_VAZIO_H03_EXACT_LIKELIHOOD","cause":"no edge to a frozen exact-H03 external likelihood result","evidence_needed":"same-data covariance-aware H03 vs baselines receipt","falsifier":"Bayes/likelihood evidence or posterior predictive failure under equal treatment","F_next":"route through canonical G4/G5/G6 background-validation chain with exact H03 model ID"}],
+      "next_test":"Execute exact H03 against canonical background likelihood; preserve negative outcomes."
+    }
+  ],
+  "open_gaps": [
+    {"id":"TOKEN_VAZIO_FULL_FORMULA_MATERIALIZATION","cause":"486-formula manifest exists but full formulas.json/zip is not materialized in repository/release","evidence_needed":"immutable formulas artifact with verified hash","falsifier":"hash/count/schema mismatch","F_next":"materialize and validate before claiming full per-formula coverage"},
+    {"id":"TOKEN_VAZIO_DEDUP_COUNT","cause":"486 extracted formulas and 50 hypothesis intake may overlap","evidence_needed":"expression/source/version-aware dedup receipt","falsifier":"non-deterministic IDs or unresolved semantic aliases","F_next":"run deterministic dedup after full formula materialization"},
+    {"id":"TOKEN_VAZIO_REMAINING_FORMULA_EDGES","cause":"this V1 seeds high-value falsifiable formulas only","evidence_needed":"per-formula bibliography groups, falsifier and exact-test status","falsifier":"coverage claim exceeds materialized edge registry","F_next":"expand by highest-value testable family without changing prior events"},
+    {"id":"TOKEN_VAZIO_INDEPENDENT_REPLICATION_RLL","cause":"external papers test observables/classes, not an independently implemented RLL pipeline","evidence_needed":"independent code/data team reproduces exact RLL prediction and test","falsifier":"same code/pipeline presented as independent replication","F_next":"keep external-observable agreement separate from independent RLL replication"}
+  ],
+  "non_regression_rules": [
+    "Evidence events are append-only; adverse, contradictory, null and uncertain edges are never deleted to improve appearance.",
+    "A new edge may increase provenance and coverage while decreasing support; coverage is not a truth score.",
+    "Bibliography/reference count must never be used directly as scientific evidence strength.",
+    "PAIR_A requires at least two distinct independence groups and explicit false-positive/systematics controls.",
+    "CLASS_MATCH can never close TOKEN_VAZIO_EXACT_TEST.",
+    "A superseded or repaired formula receives a new ID/version; failed historical expressions remain addressable.",
+    "TOKEN_VAZIO closure requires explicit evidence/receipt and preserves the former gap as history.",
+    "Shared datasets/pipelines/systematics reduce independence and may cap a relation at PAIR_B.",
+    "No graph state changes claim_allowed=false or publication_effect=NONE.",
+    "Negative scientific results and model collapse to a null limit are first-class evidence, not regressions."
+  ]
+}

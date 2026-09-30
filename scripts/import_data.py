@@ -10,7 +10,7 @@ Uso esperado no workflow guardado:
 
 Configuração:
 - Usa REAL_DATA_URL (env) ou argumento --url;
-- Opcional: REAL_DATA_API_KEY (env) para autorização Bearer;
+- REAL_DATA_API_KEY: bloqueado nesta rota pública; credenciais exigem rota revisada separada;
 - Opcional: REAL_DATA_MAX_BYTES (env) para limitar o tamanho baixado
   (padrão: 50 MiB).
 
@@ -20,16 +20,22 @@ matéria escura, energia escura ou qualquer hipótese cosmológica.
 """
 
 import argparse
+import csv
+import io
 import ipaddress
 import json
 import os
+import math
 from pathlib import Path
 import socket
 import sys
 from urllib.parse import urlparse
 
-import pandas as pd
-import requests
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from rx.http import RxHttpError, get_response
 
 DEFAULT_MAX_BYTES = 50 * 1024 * 1024
 BLOCKED_HOSTS = {"localhost", "localhost.localdomain"}
@@ -107,34 +113,27 @@ def validate_public_https_url(url: str) -> str:
 
 def fetch(url: str, api_key: str | None = None, max_bytes: int = DEFAULT_MAX_BYTES):
     validate_public_https_url(url)
-    headers = {"Accept": "application/json, text/csv, text/plain;q=0.9, */*;q=0.1"}
     if api_key:
-        headers["Authorization"] = f"Bearer {api_key}"
+        raise ImportDataError(
+            "REAL_DATA_API_KEY não é permitido nesta rota pública; use uma rota de credencial revisada separadamente"
+        )
+    hostname = urlparse(url).hostname
+    try:
+        response = get_response(
+            url,
+            allowed_hosts={hostname},
+            timeout=30,
+            max_bytes=max_bytes,
+            user_agent="RLL-import-data/2.0",
+            accept="application/json, text/csv, text/plain;q=0.9, */*;q=0.1",
+        )
+    except RxHttpError as exc:
+        raise ImportDataError(str(exc)) from exc
 
-    with requests.get(url, headers=headers, timeout=30, stream=True) as resp:
-        resp.raise_for_status()
-        content_type = resp.headers.get("Content-Type", "")
-        content_length = resp.headers.get("Content-Length")
-        if content_length and int(content_length) > max_bytes:
-            raise ImportDataError(
-                f"Arquivo remoto excede REAL_DATA_MAX_BYTES ({content_length} > {max_bytes})"
-            )
-
-        chunks: list[bytes] = []
-        total = 0
-        for chunk in resp.iter_content(chunk_size=1024 * 1024):
-            if not chunk:
-                continue
-            total += len(chunk)
-            if total > max_bytes:
-                raise ImportDataError(
-                    f"Download excedeu REAL_DATA_MAX_BYTES ({total} > {max_bytes})"
-                )
-            chunks.append(chunk)
-
-    payload = b"".join(chunks)
+    payload = response["payload"]
     text = payload.decode("utf-8-sig")
-    return text, content_type, total
+    return text, response.get("content_type", ""), int(response.get("content_length", len(payload)))
+
 
 
 def save_json(obj, out_path):
@@ -144,19 +143,36 @@ def save_json(obj, out_path):
         json.dump(obj, f, ensure_ascii=False, indent=2, allow_nan=False)
 
 
+def _coerce_csv_scalar(value):
+    if value is None:
+        return None
+    text = str(value).strip()
+    if text.lower() in {"", "na", "nan", "null", "none"}:
+        return None
+    try:
+        if text.isdigit() or (text.startswith(("+", "-")) and text[1:].isdigit()):
+            return int(text)
+        number = float(text)
+        return number if math.isfinite(number) else None
+    except ValueError:
+        return text
+
+
 def try_parse_text_as_json_or_csv(text, out_path):
     try:
         data = json.loads(text)
         save_json(data, out_path)
         return "json"
-    except Exception:
-        from io import StringIO
-
-        out = Path(out_path)
-        out.parent.mkdir(parents=True, exist_ok=True)
-        df = pd.read_csv(StringIO(text))
-        df.to_json(out, orient="records", force_ascii=False, indent=2)
+    except json.JSONDecodeError:
+        reader = csv.DictReader(io.StringIO(text))
+        if not reader.fieldnames:
+            raise ImportDataError("CSV sem cabeçalho reconhecível")
+        rows = []
+        for row in reader:
+            rows.append({str(k): _coerce_csv_scalar(v) for k, v in row.items()})
+        save_json(rows, out_path)
         return "csv"
+
 
 
 def main():
@@ -192,7 +208,7 @@ def main():
         else:
             parsed_as = try_parse_text_as_json_or_csv(text, out)
             print(f"Dados salvos como {parsed_as} em {out} ({total_bytes} bytes)")
-    except (ImportDataError, requests.RequestException, UnicodeDecodeError, pd.errors.ParserError) as exc:
+    except (ImportDataError, UnicodeDecodeError, csv.Error) as exc:
         print(f"ERRO: {exc}", file=sys.stderr)
         sys.exit(1)
 

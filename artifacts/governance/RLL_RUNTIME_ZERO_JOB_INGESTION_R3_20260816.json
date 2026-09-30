@@ -1,0 +1,26 @@
+{
+  "schema": "rll.r3.v1",
+  "F_ok": [
+    "runtime ingester implemented",
+    "deterministic snapshot tests authored",
+    "live GitHub Actions API path wired",
+    "raw snapshots hash-bound by design",
+    "zero-job root cause inference forbidden",
+    "append-only gap successor recorded"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_REMOTE_EXECUTION_RECEIPT",
+    "TOKEN_VAZIO_ROOT_CAUSE_PER_ZERO_JOB_RUN",
+    "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+    "TOKEN_VAZIO_PHYSICAL_EXECUTION"
+  ],
+  "F_next": [
+    "open draft pull request",
+    "execute focused and full CI",
+    "inspect runtime receipt and raw hashes",
+    "classify observed zero-job runs without guessing cause"
+  ],
+  "claim_allowed": false,
+  "publication_effect": "NONE"
+}

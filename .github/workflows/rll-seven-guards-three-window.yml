@@ -1,0 +1,88 @@
+name: RLL Seven Guards — Observer Three Window
+
+on:
+  pull_request:
+    paths:
+      - "docs/governance/RLL_SEVEN_GUARDS_OBSERVER_THREE_WINDOW_PROTOCOL_V1.md"
+      - "data/contracts/rll_seven_guards_observer_three_window.v1.json"
+      - "tools/validate_rll_seven_guards_observer_three_window.py"
+      - "tests/test_rll_seven_guards_observer_three_window.py"
+      - ".github/workflows/rll-seven-guards-three-window.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-seven-guards-three-window-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: "3.11"
+
+      - name: Install test runner
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Validate machine-readable contract
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/seven-guards-three-window
+          python tools/validate_rll_seven_guards_observer_three_window.py --json \
+            | tee artifacts/seven-guards-three-window/validation.json
+
+      - name: Run focused tests
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_rll_seven_guards_observer_three_window.py \
+            | tee artifacts/seven-guards-three-window/pytest.txt
+
+      - name: Build execution receipt
+        env:
+          RUN_ID: ${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path("artifacts/seven-guards-three-window")
+          validation = json.loads((root / "validation.json").read_text(encoding="utf-8"))
+          receipt = {
+              "schema": "rll.seven_guards_observer_three_window.receipt.v1",
+              "github_run_id": int(os.environ["RUN_ID"]),
+              "commit_sha": os.environ["COMMIT_SHA"],
+              "state": "PASS" if validation.get("valid") else "FAIL",
+              "structural_validation": validation,
+              "claim_allowed": False,
+              "scientific_confirmation": False,
+              "boundary": "CI_PASS != SCIENTIFIC_CONFIRMATION",
+              "rollback": "revert additive protocol commits; preserve PR and CI evidence"
+          }
+          (root / "receipt.json").write_text(
+              json.dumps(receipt, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(receipt, indent=2, ensure_ascii=False))
+          PY
+
+      - name: Upload validation receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-seven-guards-three-window-${{ github.run_id }}
+          path: artifacts/seven-guards-three-window/
+          retention-days: 30
+          if-no-files-found: error

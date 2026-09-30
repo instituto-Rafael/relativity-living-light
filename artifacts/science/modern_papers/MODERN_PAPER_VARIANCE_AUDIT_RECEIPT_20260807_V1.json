@@ -1,0 +1,118 @@
+{
+  "schema": "rll.modern_paper_variance_audit_receipt.v1",
+  "created_at": "2026-08-07T20:32:00Z",
+  "state": "VERIFIED_LIMITED_AUDIT",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "automatic_promotion_forbidden": true,
+  "source_pr": 651,
+  "source_branch": "audit/rll-modern-observation-gates-20260807-v1",
+  "ledger": "data/governance/RLL_UNCERTAINTY_VARIANCE_LEDGER_20260807_V1.json",
+  "human_readable_matrix": "docs/science/RLL_MODERN_PAPER_VARIANCE_MATRIX_20260807_V1.md",
+  "pre_ledger_ci_evidence": {
+    "head_sha": "c8c2970b62795b5d860dba7951bf4e773281c43c",
+    "workflows_all_observed_success": true,
+    "modern_sn_artifact": {
+      "run_id": 31215759026,
+      "artifact_id": 9008428557,
+      "sha256": "88cf8b41a9ad1be5d7257aad6f23fec53509488248e6a7040d06765d7124700b"
+    },
+    "modern_gate_artifact": {
+      "run_id": 31215758793,
+      "artifact_id": 9008414253,
+      "sha256": "b3a3ccc97095d7498e726a80247aa74bfa52a3b9a3df1908b1500c3a58d47693"
+    },
+    "python_test_artifact": {
+      "run_id": 31215758869,
+      "artifact_id": 9008453591,
+      "sha256": "fa82801187c264eef71e6d5bb6a10fbca0b66b39568332089b3eba6ded704a90"
+    }
+  },
+  "paper_review": {
+    "count": 14,
+    "official_or_collaboration_sources": 10,
+    "independent_or_watch_sources": 4,
+    "papers_are_materialized_rll_evidence": false,
+    "purpose": "Change test design, variance bookkeeping and urgency; never promote an RLL claim by citation alone."
+  },
+  "key_variance_findings": [
+    {
+      "id": "SN_CALIBRATION_VARIANCE",
+      "state": "MATERIALIZED_PARTIAL",
+      "finding": "Pantheon+ and DES-Dovekie full-matrix fits exist, but a clean sample/calibration ablation requires identical nuisance and Hubble-flow selection contracts.",
+      "token_vazio": "TOKEN_VAZIO_SN_COMMON_NUISANCE_ABLATION"
+    },
+    {
+      "id": "RLL_SN_IDENTIFIABILITY",
+      "state": "BLOCKED_PARAMETER_INTERPRETATION",
+      "finding": "RLL best z_t lies outside observed SN support in both current full-matrix fits; null-nested Omega_s0=0 starts exist.",
+      "pantheon_zt_over_zmax": 4.129168499554811,
+      "dovekie_zt_over_zmax": 3.753918744899763,
+      "token_vazio": "TOKEN_VAZIO_RLL_SN_ONLY_PARAMETER_IDENTIFIABILITY"
+    },
+    {
+      "id": "CPL_BOUNDARY_VARIANCE",
+      "state": "BLOCKED_PARAMETER_INTERPRETATION",
+      "finding": "DES-Dovekie CPL best fit has wa=-3.0 exactly on the current lower bound.",
+      "token_vazio": "TOKEN_VAZIO_CPL_DOVEKIE_WA_BOUNDARY_SENSITIVITY"
+    },
+    {
+      "id": "MODEL_SELECTION_VARIANCE",
+      "state": "TOKEN_VAZIO_REAL_EVIDENCE",
+      "finding": "Delta-chi2/AIC/BIC are present, but modern Bayesian analyses demonstrate prior-volume/Ockham effects; real logZ and profile likelihood remain required.",
+      "token_vazio": "TOKEN_VAZIO_REAL_BAYES_INFERENCE"
+    },
+    {
+      "id": "DESI_REPRODUCTION_VARIANCE",
+      "state": "TOKEN_VAZIO_OFFICIAL_REPRODUCTION",
+      "finding": "DESI DR2 cosmology chains/posterior-maximization products are publicly available; the remaining uncertainty is reproduction and tracer-level attribution, not source availability.",
+      "token_vazio": "TOKEN_VAZIO_DESI_DR2_OFFICIAL_REPRODUCTION"
+    },
+    {
+      "id": "PERTURBATION_BACKEND_VARIANCE",
+      "state": "TOKEN_VAZIO_PHYSICAL_CLOSURE",
+      "finding": "Growth-index f-sigma8 is an approximation. CLASS/CAMB importability is insufficient without an explicit stable RLL perturbation contract and cross-backend residuals.",
+      "token_vazio": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK"
+    }
+  ],
+  "newly_recovered_ignored_or_left_items": [
+    "DESI DR2 cosmology-chain release and posterior-maximization products",
+    "low-z/high-z supernova magnitude-offset systematic as a competing model",
+    "DESI-independent DES Y6 angular BAO overlap/correlation control",
+    "DES Y6 posterior-projection and scale-cut sensitivity",
+    "ACT DR6 foreground-model sensitivity",
+    "explicit distinction between optimizer convergence and parameter identifiability",
+    "explicit separation of SN-only Hubble-diagram shape from calibrated H0 likelihood"
+  ],
+  "urgency": {
+    "P0": [
+      "DESI_DR2_OFFICIAL_REPRODUCTION",
+      "REAL_BAYES_AND_PROFILE",
+      "SN_COMMON_NUISANCE_ABLATION",
+      "RLL_IDENTIFIABILITY_PROFILE",
+      "CPL_DOVEKIE_BOUNDARY",
+      "SN_SYSTEMATIC_VS_DYNAMIC"
+    ],
+    "P1": [
+      "CLASS_CAMB_PERTURBATIONS",
+      "DES_Y6_3X2PT",
+      "ACT_DR6",
+      "BAO_OVERLAP_CONTROL",
+      "H0_FORMAL"
+    ],
+    "P2": ["LICENSE_AND_REDISTRIBUTION"]
+  },
+  "F_ok": [
+    "Current Pantheon+ and DES-Dovekie full-matrix numerical evidence is preserved with hashes and negative RLL results.",
+    "Modern papers are mapped to concrete variance axes and executable next tests.",
+    "Previously stale/ignored operational gaps are explicitly surfaced instead of silently overwritten."
+  ],
+  "F_gap": [
+    "The new ledger/gate changes require their own post-commit CI receipt before being called CI-verified.",
+    "DESI DR2 official reproduction, real Bayes/profile, common-nuisance SN ablation, perturbations, DES Y6, ACT DR6 and formal H0 remain open."
+  ],
+  "F_next": [
+    "Run the uncertainty-variance gate in CI and persist its generated artifact digest.",
+    "Execute P0 queue in rank order, preserving each result as append-only receipts even when negative."
+  ]
+}

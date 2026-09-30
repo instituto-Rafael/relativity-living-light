@@ -1,0 +1,65 @@
+{
+  "schema": "rll.borsanyi_full_sm_gstar.v1",
+  "description": "Exact transcription of Supplementary Table S3 from Borsanyi et al. (2016), providing full-Standard-Model effective degrees of freedom for energy and entropy. Values are source data; interpolation is a repository reconstruction governed separately.",
+  "claim_allowed": false,
+  "source": {
+    "authors": "Sz. Borsanyi et al.",
+    "title": "Calculation of the axion mass based on high-temperature lattice quantum chromodynamics",
+    "journal": "Nature 539, 69-71 (2016)",
+    "doi": "10.1038/nature20115",
+    "arxiv": "1606.07494",
+    "supplement_section": "S6.3 The Standard Model",
+    "supplement_table": "S3",
+    "source_role": "PRIMARY_PEER_REVIEWED_NUMERIC_TABLE"
+  },
+  "definitions": {
+    "g_rho": "rho(T) * 30 / (pi^2 T^4)",
+    "g_s": "s(T) * 45 / (2 pi^2 T^3)",
+    "stored_ratio": "g_rho/g_s",
+    "derived_g_s": "g_rho / (g_rho/g_s)"
+  },
+  "interpolation_contract": {
+    "independent_variable": "log10(T/MeV)",
+    "source_instruction": "simple cubic spline interpolation",
+    "reported_typical_deviation_g_rho": "about 1%",
+    "reported_typical_deviation_ratios": "about 0.3%",
+    "repository_boundary_condition": "NATURAL_CUBIC_SPLINE",
+    "boundary_condition_status": "REPOSITORY_RECONSTRUCTION_NOT_EXPLICIT_IN_PAPER",
+    "extrapolation_default": "FORBIDDEN"
+  },
+  "rows": [
+    {"log10_T_MeV": 0.000, "g_rho": 10.681, "g_rho_over_g_s": 1.00264},
+    {"log10_T_MeV": 0.300, "g_rho": 10.727, "g_rho_over_g_s": 1.00071},
+    {"log10_T_MeV": 0.700, "g_rho": 10.751, "g_rho_over_g_s": 1.00016},
+    {"log10_T_MeV": 1.050, "g_rho": 10.786, "g_rho_over_g_s": 1.00055},
+    {"log10_T_MeV": 1.100, "g_rho": 10.822, "g_rho_over_g_s": 1.00103},
+    {"log10_T_MeV": 1.250, "g_rho": 11.100, "g_rho_over_g_s": 1.00518},
+    {"log10_T_MeV": 1.537, "g_rho": 13.125, "g_rho_over_g_s": 1.01986},
+    {"log10_T_MeV": 1.800, "g_rho": 15.469, "g_rho_over_g_s": 1.01997},
+    {"log10_T_MeV": 2.000, "g_rho": 17.599, "g_rho_over_g_s": 1.02267},
+    {"log10_T_MeV": 2.070, "g_rho": 19.275, "g_rho_over_g_s": 1.03161},
+    {"log10_T_MeV": 2.178, "g_rho": 26.529, "g_rho_over_g_s": 1.06705},
+    {"log10_T_MeV": 2.250, "g_rho": 35.759, "g_rho_over_g_s": 1.08461},
+    {"log10_T_MeV": 2.350, "g_rho": 44.400, "g_rho_over_g_s": 1.07079},
+    {"log10_T_MeV": 2.500, "g_rho": 52.855, "g_rho_over_g_s": 1.04679},
+    {"log10_T_MeV": 3.000, "g_rho": 73.713, "g_rho_over_g_s": 1.01900},
+    {"log10_T_MeV": 3.500, "g_rho": 81.460, "g_rho_over_g_s": 1.00524},
+    {"log10_T_MeV": 4.000, "g_rho": 83.254, "g_rho_over_g_s": 1.00143},
+    {"log10_T_MeV": 4.300, "g_rho": 85.527, "g_rho_over_g_s": 1.00374},
+    {"log10_T_MeV": 4.600, "g_rho": 92.144, "g_rho_over_g_s": 1.00876},
+    {"log10_T_MeV": 5.000, "g_rho": 101.937, "g_rho_over_g_s": 1.00755},
+    {"log10_T_MeV": 5.180, "g_rho": 104.508, "g_rho_over_g_s": 1.00510},
+    {"log10_T_MeV": 5.190, "g_rho": 104.664, "g_rho_over_g_s": 1.00513},
+    {"log10_T_MeV": 5.196, "g_rho": 104.816, "g_rho_over_g_s": 1.00524},
+    {"log10_T_MeV": 5.202, "g_rho": 104.909, "g_rho_over_g_s": 1.00524},
+    {"log10_T_MeV": 5.210, "g_rho": 104.919, "g_rho_over_g_s": 1.00499},
+    {"log10_T_MeV": 5.300, "g_rho": 104.781, "g_rho_over_g_s": 1.00244},
+    {"log10_T_MeV": 5.450, "g_rho": 104.802, "g_rho_over_g_s": 1.00090}
+  ],
+  "epistemic_boundary": {
+    "table_transcription": "PRIMARY_NUMERIC_EVIDENCE",
+    "natural_spline_boundary_choice": "IMPLEMENTATION_CHOICE",
+    "use_for_RLL_claim": "INPUT_ONLY",
+    "publication_effect": "NONE"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "schema": "rll.growth_semantics_final_consolidation.v1",
+  "generated_at": "2026-09-13",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "state": "CONSOLIDATED_FAIL_CLOSED",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "physical_semantics_selected": false,
+  "selected_semantics": "TOKEN_VAZIO",
+  "operational_baseline": {
+    "id": "C_PHENOMENOLOGICAL_BACKGROUND",
+    "status": "ACTIVE_BACKGROUND_ONLY",
+    "reason": "This is the narrowest currently supported operational boundary: the logistic RLL background may be confronted as a phenomenological H(z) family while microphysical identity and exact new-sector perturbations remain open.",
+    "allowed_scope": [
+      "background expansion calculations already covered by existing RLL contracts",
+      "background-distance comparisons under their existing data/covariance boundaries",
+      "background-response growth diagnostics explicitly labelled approximate/non-claim-bearing"
+    ],
+    "forbidden_promotions": [
+      "physical rest-frame c_s^2 claim for the RLL sector",
+      "exact RLL dark-sector perturbation claim",
+      "canonical-scalar completion claim",
+      "validated interacting-dark-sector claim",
+      "CMB transfer-function/nonlinear P(k) claim from the background-response solver",
+      "model-selection promotion that depends on unresolved growth physics"
+    ]
+  },
+  "route_status": {
+    "A0_CONSERVED_BAROTROPIC_ADIABATIC": {
+      "state": "FALSIFIED_AS_GLOBAL_DEFAULT",
+      "evidence": [
+        "tools/rll_perturbation_barotropic_candidate_v1.py",
+        "data/governance/RLL_GAP_DECOMPOSITION_V1.json#GROWTH-THEORY-001",
+        "github-actions:34709860843"
+      ],
+      "result": "0/9 declared transition cases passed the stability/causality gate",
+      "boundary": "Failure of A0 is not falsification of the RLL background or of all separately-conserved nonadiabatic closures."
+    },
+    "A1_CONSERVED_INDEPENDENT_REST_FRAME_CLOSURE": {
+      "state": "OPEN_BOUNDED_NECESSARY_CONDITIONS_PASS",
+      "necessary_conditions": [
+        "separate-continuity reconstruction closes algebraically",
+        "declared A/B/C sweep observed no w_cons<-1 condition",
+        "canonical-scalar subroute would use c_s,rest^2=1 only if that subroute is explicitly selected"
+      ],
+      "still_required": [
+        "versioned pressure-perturbation/entropy closure",
+        "gauge contract",
+        "super-horizon initial conditions",
+        "transition/crossing regularization",
+        "perturbed conservation/Bianchi residual",
+        "independent solver integration/parity",
+        "observational confrontation with growth/lensing"
+      ],
+      "boundary": "Necessary background conditions do not establish a canonical scalar, stable perturbation theory, or empirical preference."
+    },
+    "B_INTERACTING_SECTOR": {
+      "state": "FORMAL_Q_PASS_PHYSICS_BLOCKED",
+      "formal_result": "Q_s/H = Omega_s0*rho_c0*f_prime*(1-a^-3) reproduces the background residual and an equal/opposite receiver closes background accounting algebraically.",
+      "still_required": [
+        "recipient sector",
+        "covariant Q_mu",
+        "momentum-transfer prescription",
+        "receiver background evolution",
+        "perturbation equations",
+        "initial conditions",
+        "stability and growth/lensing confrontation"
+      ],
+      "boundary": "A derived background source function is not a validated physical interaction."
+    },
+    "C_PHENOMENOLOGICAL_BACKGROUND": {
+      "state": "SURVIVES_AS_OPERATIONAL_BASELINE",
+      "result": "Background-only semantics is internally compatible with the repository's existing claim boundaries.",
+      "physical_cs2": "TOKEN_VAZIO",
+      "exact_dark_sector_perturbations": "BLOCKED"
+    }
+  },
+  "growth_chain": {
+    "linear_background_response": "AVAILABLE_SEPARATE_SOLVER",
+    "exact_rll_perturbations": "TOKEN_VAZIO",
+    "GROWTH_CS2_001": "BLOCKED_BY_UNASSIGNED_PHYSICAL_CLOSURE",
+    "GROWTH_QMU_001": "BLOCKED_UNLESS_INTERACTING_ROUTE_SELECTED",
+    "GROWTH_SIGMA_001": "TOKEN_VAZIO",
+    "GROWTH_GAUGE_001": "TOKEN_VAZIO",
+    "GROWTH_IC_001": "TOKEN_VAZIO",
+    "GROWTH_CONSERVATION_001": "BLOCKED_BY_UPSTREAM_POLICY",
+    "GROWTH_D_001": "BLOCKED_BY_UPSTREAM_POLICY",
+    "GROWTH_F_001": "BLOCKED_BY_UPSTREAM_POLICY",
+    "GROWTH_FSIG8_001": "BLOCKED_BY_UPSTREAM_POLICY",
+    "GROWTH_BENCH_001": "BLOCKED_BY_UPSTREAM_POLICY",
+    "FIT_MULTISEED_001": "BLOCKED_BY_DEPENDENCY",
+    "FIT_POSTERIOR_001": "BLOCKED_BY_DEPENDENCY",
+    "FIT_MODELSEL_001": "BLOCKED_BY_DEPENDENCY"
+  },
+  "contradictions_consolidated": [
+    {
+      "id": "ROUTE_A0_VS_A1",
+      "resolution": "A0 is rejected as global default; A1 remains a distinct nonadiabatic/independent-rest-frame research family."
+    },
+    {
+      "id": "CS2_NEXT_VS_CONTINUITY_FIRST",
+      "resolution": "Continuity/semantics is a prerequisite; CS2 cannot be promoted directly."
+    },
+    {
+      "id": "ABC_OPERATIONAL_ORDER_VS_PHYSICAL_SELECTION",
+      "resolution": "Operational ordering is not physical selection; physical_semantics_selected remains false."
+    }
+  ],
+  "provenance": {
+    "main_lineage": [
+      "PR#900 evidence-evolution matrix",
+      "PR#901 continuity-semantics prerequisite gate",
+      "PR#902 append-only route correction"
+    ],
+    "restored_from_non_main_lineage": {
+      "pr": 903,
+      "head_sha": "e073c1ead1901c1a1ea4ce062e815c13b542bee8",
+      "files_restored": 5,
+      "reason": "PR #903 merged into the scientific parent branch rather than main; content is restored byte-for-byte by source blob on this consolidation branch."
+    }
+  },
+  "rollback": {
+    "operational": "Revert only this consolidation overlay and restored A/B/C comparator files; preserve #900-#903 history and negative evidence.",
+    "scientific": "If new evidence later selects A1 or B, supersede this operational baseline with a new version; never rewrite this receipt."
+  },
+  "final_decision": {
+    "operational": "USE_C_BACKGROUND_ONLY",
+    "scientific": "NO_UNIQUE_PHYSICAL_WINNER",
+    "claim": "BLOCKED",
+    "next_research": "A1 may proceed only through an explicit versioned perturbation closure with gauge/IC/regularity/conservation falsifiers; B remains independent alternative; C remains safe baseline."
+  },
+  "r3": {
+    "F_ok": "background operational boundary is consolidated; A0 negative evidence is preserved; A1/B/C are distinctly classified; A/B/C comparator custody is restored onto a branch based on main",
+    "F_gap": "physical closure and exact perturbations remain unresolved by evidence",
+    "F_next": "no further claim promotion. Future work must add genuinely new physical assumptions/evidence in a new successor version; until then use C as background-only operational baseline"
+  }
+}

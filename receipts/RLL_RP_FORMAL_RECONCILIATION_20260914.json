@@ -1,0 +1,50 @@
+{
+  "receipt_id": "RLL-RP-FORMAL-RECONCILIATION-20260914",
+  "parent": "RLL-RP-FORMAL-001",
+  "state": "STRUCTURAL_SCHEMA_PASS_SCIENTIFIC_BLOCKED",
+  "claim_allowed": false,
+  "source_commits": {
+    "RLL": "46a277562d5f79e5e24f64af58d66f89d392f3b0",
+    "RafPolimata": "6940862c1bc1879e74d7f295bd885a9053bbf788"
+  },
+  "sources": {
+    "manifest": {
+      "path": "examples/rll_formal_experiment_manifest.v1.json",
+      "sha256": "9b950bf99eb5730d3a8060a359cae7e08426e4df74023fba569ecd5f7591292f"
+    },
+    "schema": {
+      "path": "schemas/formal_experiment_manifest.v1.schema.json",
+      "sha256": "ce4d955c32127b23c6a3b7ab8de8d2c82dacf56eeac896eb5d48d9095660937e"
+    },
+    "registry": {
+      "path": "knowledge_ecosystem/rll_cross_repo_entrelaces_v2.json",
+      "sha256": "3eedbad6b724f31d01bb73513aeb9507a3cbd21807a0de33db4ea3a03da70f9b"
+    }
+  },
+  "contract_comparison": {
+    "requested": "rll.formal_experiment_manifest.v1",
+    "observed": "rafaelia.formal_experiment_manifest.v1",
+    "equal": false
+  },
+  "scientific_evidence": {
+    "status": "TOKEN_VAZIO",
+    "artifact_sha256": "TOKEN_VAZIO",
+    "environment": "TOKEN_VAZIO",
+    "observed_at": "2026-07-17T00:00:00Z"
+  },
+  "routes": {
+    "L": "historical registry preserved; successor receipt",
+    "O": "RLL observational owner to RafPolimata formal owner",
+    "C": "recover existing contract before implementing a duplicate",
+    "P": "commit and byte hashes above"
+  },
+  "gap": [
+    "schema namespace/ownership reconciliation",
+    "stable equation IDs",
+    "canonical experiment command and frozen data",
+    "scientific execution and independent reproduction"
+  ],
+  "next": "Resolve schema identity explicitly before emitting a real experiment manifest; retain existing example as an example.",
+  "rollback": "Revert this additive reconciliation script and receipt only; preserve both source documents and all negative evidence.",
+  "boundary": "JSON Schema validation is not execution of the scientific experiment or dual repository scientific approval."
+}

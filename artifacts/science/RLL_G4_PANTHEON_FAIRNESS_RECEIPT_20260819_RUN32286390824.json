@@ -1,0 +1,80 @@
+{
+  "schema": "rll.g4_pantheon_fairness_subgate.v1",
+  "event_id": "RLL-G4-PANTHEON-20260819-RUN32286390824",
+  "github_run_id": 32286390824,
+  "github_artifact_id": 9377780862,
+  "github_artifact_sha256": "b17760818e865468fbc49305f63d1bfc8f07b1bb77128730854d6ac64f5ee2a1",
+  "state": "PASS_LIMITED_PANTHEON_FULL_COVARIANCE_FAIRNESS",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "dataset": {
+    "name": "Pantheon+SH0ES",
+    "N": 1657,
+    "covariance": "full_STAT+SYS",
+    "selection": "(zHD > 0.01) OR IS_CALIBRATOR==1",
+    "nuisance": "M_B analytically profiled and counted"
+  },
+  "method": {
+    "optimizer": "multi-start L-BFGS-B",
+    "seeds": [11,23,37,53,71],
+    "maxiter": 250,
+    "ftol": 1e-10,
+    "integration_points": 4096,
+    "model_fairness": "same catalog, full covariance, nuisance treatment, H0/Omega_m common bounds, seeds, optimizer and integration grid"
+  },
+  "models": {
+    "LCDM_pantheon_full": {
+      "chi2": 1452.0172947103933,
+      "k": 3,
+      "AIC": 1458.0172947103933,
+      "AICc": 1458.0318137666547,
+      "BIC": 1474.255586762673,
+      "H0": 73.53291334644892,
+      "Omega_m": 0.3316589839229259
+    },
+    "CPL_pantheon_full": {
+      "chi2": 1451.6882843629749,
+      "k": 5,
+      "AIC": 1461.6882843629749,
+      "AICc": 1461.7246259741196,
+      "BIC": 1488.7521044501077,
+      "H0": 73.42685055736992,
+      "Omega_m": 0.30770195191108934,
+      "w0": -0.9197805710686601,
+      "wa": -0.11856297213006631
+    },
+    "RLL_pantheon_full": {
+      "chi2": 1452.0172947103936,
+      "k": 6,
+      "AIC": 1464.0172947103936,
+      "AICc": 1464.0682038013026,
+      "BIC": 1496.493878814953,
+      "H0": 73.53291285367531,
+      "Omega_m": 0.3316589769006009,
+      "Omega_s0": 0.0,
+      "z_t": 1.0071420952911838,
+      "w_t": 0.3050826926814155,
+      "boundary_hits": ["Omega_s0"]
+    }
+  },
+  "comparison_vs_LCDM": {
+    "CPL": {"delta_chi2": -0.3290103474184889,"delta_AIC":3.670989652581511,"delta_AICc":3.69281220746484,"delta_BIC":14.496517687434789},
+    "RLL": {"delta_chi2":2.2737367544323206e-13,"delta_AIC":6.000000000000227,"delta_AICc":6.036390034647866,"delta_BIC":22.23829205228003}
+  },
+  "negative_evidence": {
+    "preserved": true,
+    "interpretation": "On this single full-covariance Pantheon+ likelihood, RLL collapses to the Omega_s0=0 boundary and gains no chi2 over LCDM; information criteria penalize its additional parameters. This is unfavorable evidence in this scope, not a universal falsification."
+  },
+  "F_ok": [
+    "full-covariance single-likelihood fairness executed",
+    "all five seeds converged for LCDM and RLL",
+    "negative model-selection result preserved"
+  ],
+  "F_gap": [
+    "Pantheon alone does not test BAO, growth or CMB",
+    "DES-Dovekie calibration/covariance ablation remains TOKEN_VAZIO",
+    "AIC/AICc/BIC do not replace nested-sampling evidence",
+    "G4 overall requires GEDE and interacting/viscous comparator plus frozen multi-dataset background tournament"
+  ],
+  "F_next": "execute expanded G4 background tournament; do not promote G5 until all mandatory comparators are present"
+}

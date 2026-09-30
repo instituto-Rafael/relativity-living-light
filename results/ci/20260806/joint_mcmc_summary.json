@@ -1,0 +1,19 @@
+{
+  "pipeline": "rll-validacao-cientifica-completa",
+  "job": "joint_mcmc_p0",
+  "timestamp_utc": "2026-08-06T02:37:24.827563+00:00",
+  "walkers": 32,
+  "steps": 1000,
+  "profile": "structure_d_real_validation",
+  "model_comparison_present": true,
+  "bayes_evidence_present": false,
+  "token_vazio_p0": null,
+  "models_found": [
+    "LCDM",
+    "RLL_like+AGN"
+  ],
+  "chi2_lcdm": "123.68110537963588",
+  "aic_lcdm": "131.68110537963588",
+  "chi2_rll_like+agn": "123.59765608298896",
+  "aic_rll_like+agn": "137.59765608298898"
+}

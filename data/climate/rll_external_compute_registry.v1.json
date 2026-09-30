@@ -1,0 +1,35 @@
+{
+  "schema": "rll.external_compute_registry.v1",
+  "updated_at": "2026-09-10",
+  "claim_allowed": false,
+  "providers": [
+    {
+      "id": "climate_engine",
+      "role": "EXTERNAL_COMPUTE_AND_VISUALIZATION",
+      "authority": "CLIMATE_ENGINE",
+      "base_url": "https://api.climateengine.org",
+      "allowed_host": "api.climateengine.org",
+      "auth": {
+        "type": "api_key_header",
+        "header": "Authorization",
+        "environment_variable": "CLIMATE_ENGINE_API_KEY",
+        "secret_must_not_be_logged": true,
+        "runtime_state": "TOKEN_VAZIO_CLIMATE_ENGINE_API_KEY"
+      },
+      "operations": {
+        "metadata_dates": "/metadata/dataset_dates",
+        "metadata_variables": "/metadata/dataset_variables",
+        "timeseries_coordinates": "/timeseries/native/coordinates",
+        "map_values": "/raster/mapid/values"
+      },
+      "epistemic_boundary": {
+        "provider_is_not_primary_sensor": true,
+        "provider_output_is_not_source_authority": true,
+        "visualization_is_not_evidence": true,
+        "residual_is_not_cause": true,
+        "cross_provider_agreement_is_not_independence": true,
+        "claim_allowed": false
+      }
+    }
+  ]
+}

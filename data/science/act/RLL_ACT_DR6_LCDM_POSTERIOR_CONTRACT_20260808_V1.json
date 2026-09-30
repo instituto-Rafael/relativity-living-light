@@ -1,0 +1,59 @@
+{
+  "schema": "rll.act_dr6_lcdm_posterior_contract.v1",
+  "state": "EXECUTION_CONTRACT_READY_CHAIN_NOT_YET_RUN",
+  "generated_at": "2026-08-08T05:49:00Z",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "token": "TOKEN_VAZIO_ACT_DR6_LCDM_POSTERIOR_CHAIN_REPRODUCTION",
+  "authority": {
+    "materialization_receipt": "artifacts/science/act/RLL_ACT_DR6_MATERIALIZATION_RECONCILIATION_20260808_V1.json",
+    "act_repository": "ACTCollaboration/DR6-ACT-lite",
+    "act_commit": "627aeafb88ae5ad1aa66b406bea2d65cfa66a27d",
+    "effective_camb_commit": "ecd375bff3cd736b3590a22c8f9663b9e6180ee2",
+    "effective_camb_reported_version": "1.5.8",
+    "reference_predicate_state": "VERIFIED_PINNED_UPSTREAM_REFERENCE_PREDICATE"
+  },
+  "execution_preconditions": [
+    "The ACT and CAMB authorities must match the materialization receipt exactly.",
+    "The exact LCDM parameter/prior configuration must be persisted before sampling begins.",
+    "Sampler implementation/version, random seed policy, number of chains or equivalent live-state policy, and stopping/convergence criteria must be persisted before interpreting outputs.",
+    "Raw chain or sampler-state custody must be uploaded, not only posterior summaries.",
+    "Any reference posterior used for comparison must have explicit source/version and parameter-convention mapping."
+  ],
+  "required_configuration_fields": {
+    "cosmological_parameters": "PREDECLARE_BEFORE_EXECUTION",
+    "prior_bounds_or_distributions": "PREDECLARE_BEFORE_EXECUTION",
+    "nuisance_parameters": "PREDECLARE_BEFORE_EXECUTION",
+    "sampler": "PREDECLARE_BEFORE_EXECUTION",
+    "sampler_version": "PREDECLARE_BEFORE_EXECUTION",
+    "seed_policy": "PREDECLARE_BEFORE_EXECUTION",
+    "convergence_diagnostics": "PREDECLARE_BEFORE_EXECUTION",
+    "convergence_thresholds": "PREDECLARE_BEFORE_EXECUTION",
+    "posterior_reference_authority": "PREDECLARE_BEFORE_EXECUTION"
+  },
+  "required_outputs": [
+    "immutable input/config manifest with SHA-256",
+    "ACT/CAMB/runtime package versions and hashes",
+    "raw chain or sampler-state artifact",
+    "convergence diagnostic receipt",
+    "posterior marginal summary with uncertainty",
+    "reference-comparison table with parameter convention mapping",
+    "failure/exception logs if execution does not converge"
+  ],
+  "falsifiers": [
+    "ACT or CAMB authority differs from the verified materialization without a new materialization receipt",
+    "priors or sampler settings are chosen after seeing the posterior",
+    "convergence criteria are absent or fail",
+    "only a best fit is produced instead of a posterior chain/state",
+    "reference posterior convention cannot be mapped",
+    "raw chain/state custody is missing"
+  ],
+  "close_when": [
+    "all required configuration fields are frozen",
+    "the chain/state is actually executed",
+    "predeclared convergence diagnostics pass",
+    "posterior/reference comparison is stored with immutable custody"
+  ],
+  "claim_boundary": "This contract and its future execution concern LCDM posterior reproduction through the verified ACT DR6 stack. They do not validate RLL CMB perturbations.",
+  "token_resolution": "NOT_RESOLVED"
+}

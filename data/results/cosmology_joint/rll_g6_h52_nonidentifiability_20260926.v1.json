@@ -1,0 +1,82 @@
+{
+  "schema": "rll.g6_h52_nonidentifiability_observation.v1",
+  "date": "2026-09-26",
+  "author": "RAFAEL MELO REIS",
+  "state": "LONGER_CHAIN_SUFFICIENT_H52_NOT_REQUIRED_FOR_CONVERGENCE",
+  "evidence_state": "VERIFIED_LIMITED_CI",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "publication_effect": "NONE",
+  "source": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "pr": 992,
+    "branch": "science/g6-h52-nonidentifiability-20260926",
+    "tested_head_sha": "a3ee19d0a1a6deb54289ca38e5cbc59ee6c10558",
+    "workflow": "G6 H52 Nonidentifiability Audit",
+    "workflow_run_id": 36233516529,
+    "job_id": 108381067490,
+    "artifact_id": 10903273097,
+    "artifact_name": "g6-h52-nonidentifiability-36233516529",
+    "artifact_sha256": "d8c03a113a979793dfcb7093723b6e39679fd30635e16eb0da35f6a48baef703"
+  },
+  "preregistered_gate": {
+    "max_split_Rhat": 1.1,
+    "ensembles": 4,
+    "walkers_per_ensemble": 16,
+    "steps": 1200,
+    "burn": 400,
+    "seeds": [
+      1103,
+      2207,
+      3301,
+      4409
+    ],
+    "same_likelihood": true,
+    "same_controls_between_arms": true,
+    "threshold_relaxed_after_observation": false
+  },
+  "observed": {
+    "free_shape": {
+      "max_Rhat": 1.0216841816427273,
+      "convergence_pass": true,
+      "Omega_s0_q95": 0.23072812929043746
+    },
+    "fixed_shape_diagnostic": {
+      "fixed": {
+        "z_t": 1,
+        "w_t": 0.3
+      },
+      "max_Rhat": 1.0045413066141087,
+      "convergence_pass": true,
+      "Omega_s0_q95": 0.008143719741424868
+    },
+    "absolute_max_Rhat_reduction": 0.017142875028618665,
+    "excess_over_one_reduction_fraction": 0.7905705325231038,
+    "uncertainty_reduction_observed": true,
+    "convergence_gate_recovered_by_fixed_shape": false
+  },
+  "interpretation": {
+    "H52_required_for_convergence": false,
+    "longer_chain_sufficient_for_preregistered_Rhat_gate": true,
+    "fixed_shape_improves_mixing_diagnostic": true,
+    "Omega_s0_q95_comparison_is_model_restriction_diagnostic_only": true,
+    "primary_reduction_of_uncertainty": "The prior G6 MCMC convergence failure is no longer evidence that null-only z_t/w_t freedom must be fixed; the longer free-shape chain itself passes Rhat<=1.10.",
+    "mcmc_convergence_gap": "RESOLVED_LIMITED_SUCCESSOR_BACKGROUND_G4_G5",
+    "g6_overall_state": "BLOCKED_REMAINING_NESTED_AND_PHYSICS_GAPS"
+  },
+  "remaining_gaps": [
+    "TOKEN_VAZIO_NESTED_SEED_STABILITY",
+    "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE",
+    "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION",
+    "TOKEN_VAZIO_INDEPENDENT_REPLICATION"
+  ],
+  "next_measure": "Run the preregistered nested-evidence seed-stability successor on the same hash-bound G5 likelihood without changing evidence thresholds.",
+  "not_claimed": [
+    "RLL is physically validated",
+    "RLL is observationally preferred",
+    "H52 is a physical mechanism",
+    "fixed-shape RLL is a preferred model",
+    "nested evidence stability is closed",
+    "CLASS/CAMB RLL is unlocked"
+  ]
+}

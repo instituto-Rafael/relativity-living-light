@@ -12,7 +12,7 @@ rll_real_data_write_claim_boundary() {
   cat > "$out_dir/CLAIM_BOUNDARY.md" <<BOUNDARY
 # Claim Boundary
 
-- Canonical workflow policy: \\`$CANONICAL_REAL_DATA_WORKFLOW\\`
+- Canonical workflow policy: \`$CANONICAL_REAL_DATA_WORKFLOW\`
 - Boundary: $CLAIM_BOUNDARY
 - Synthetic boundary: mock, synthetic, demo, fixture, example, placeholder, and generated test payloads must not be promoted as real observational evidence.
 BOUNDARY

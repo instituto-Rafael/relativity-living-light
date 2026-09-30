@@ -1,0 +1,73 @@
+{
+  "receipt_schema": "rll.provenance.receipt.v1",
+  "receipt_id": "RLL-MPEMBA-HORIZON-CLOSURE-20260827",
+  "recorded_at": "2026-08-27",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "base_branch": "rll/lab",
+  "base_commit": "c1fb7aed64bfec5be68713e3dcf3e9a3ea8823b2",
+  "work_branch": "science/mpemba-horizon-closure-20260827",
+  "parent_head_before_receipt": "0cb6842a3380fc67115358203ad483a03a846e4a",
+  "claim_allowed": false,
+  "operation": "Complete operational closure of B10/C11 gaps identified after PR #778 without fabricating unavailable external evidence.",
+  "result": {
+    "operational_tracking_complete": true,
+    "no_untracked_gaps": true,
+    "scientific_claims_promoted": false,
+    "BH_MP_06": "TOKEN_VAZIO",
+    "BH_MP_08": "TOKEN_VAZIO",
+    "external_dependencies_explicit": true
+  },
+  "artifacts": [
+    "data/registries/rll_mpemba_horizon_closure_registry.v1.json",
+    "data/real/strong_gravity/eht_2026_d01_01_manifest.json",
+    "data/contracts/eht_mpemba_observational_protocol.v1.json",
+    "tools/validate_mpemba_horizon_closure.py",
+    "tests/strong_gravity/test_mpemba_horizon_closure.py",
+    "docs/science/TOKEN_VAZIO_PRIORITY_LEDGER.md",
+    "data/registries/rll_strong_gravity_calibration_registry.json"
+  ],
+  "external_provenance_observed": [
+    {
+      "authority": "Event Horizon Telescope",
+      "locator": "https://eventhorizontelescope.org/for-astronomers/data",
+      "observation": "Product 2026-D01-01 is listed as 2018 and 2021 Calibrated polarimetric data, last updated 2026-06-29, with CyVerse access and reference EHT Collaboration et al. 2025, A&A 704 A91."
+    },
+    {
+      "authority": "CyVerse Data Commons",
+      "locator": "https://datacommons.cyverse.org/browse/iplant/home/ckc/EHTC_M87-2018%2B2021_Jul2026",
+      "observation": "Official EHT catalog link resolves to this public browser location. Raw file inventory/bytes were not exposed to the current execution path, so no file SHA256 was asserted."
+    },
+    {
+      "authority": "Astronomy & Astrophysics",
+      "locator": "DOI:10.1051/0004-6361/202555855",
+      "observation": "The reference reports horizon-scale M87* variability/polarimetry across 2017, 2018 and 2021; this is not automatically a controlled Mpemba relaxation experiment."
+    }
+  ],
+  "hard_boundaries": [
+    "file-level EHT SHA256 cannot be invented when bytes are not materialized",
+    "a covariance matrix cannot be inferred from marginal credible intervals without an authority/model",
+    "already public outcomes cannot be called prospectively preregistered by a later protocol",
+    "sparse multi-epoch variability cannot be relabelled as matched relaxation toward a common equilibrium without a physical design",
+    "same-author CI cannot satisfy independent replication"
+  ],
+  "external_work_tracking": [
+    {
+      "issue": 781,
+      "covers": ["B10-CLOSE-P0-001", "B10-CLOSE-P0-002", "B10-CLOSE-P0-003", "B10-CLOSE-P1-001", "B10-CLOSE-P1-002"]
+    },
+    {
+      "issue": 782,
+      "covers": ["B10-CLOSE-P0-005"]
+    }
+  ],
+  "non_regression_targets": [
+    "BH-MP-06 remains TOKEN_VAZIO",
+    "BH-MP-08 remains TOKEN_VAZIO",
+    "EHT-2026-D01-01 remains metadata_verified until byte custody closes",
+    "historical H1-H8 strong-gravity heuristics remain present and ordered",
+    "2026-07-17 committed numeric strong-gravity calibration remains unchanged",
+    "global_scientific_claim_allowed remains false"
+  ],
+  "validation_command": "python tools/validate_mpemba_horizon_closure.py && python -m pytest -q tests/strong_gravity/test_mpemba_horizon_closure.py tests/strong_gravity/test_mpemba_horizon_falsifier.py tests/test_structural_integration.py tests/test_strong_gravity_calibration.py",
+  "promotion_boundary": "Operational closure may be merged into rll/lab when CI passes. It must not be interpreted as observational closure of BH-MP-06/BH-MP-08."
+}

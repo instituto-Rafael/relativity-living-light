@@ -1,0 +1,401 @@
+{
+  "schema": "rll.execution_queue.v1",
+  "generated_at": "2026-08-06T04:52:00Z",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "source_main_commit": "e7997693d4038f379aa0d960a3485f61e94d454b",
+  "merged_prs": {
+    "645": "73872e3e8aa036d0973a2078f94b87bff2293992",
+    "646": "e7997693d4038f379aa0d960a3485f61e94d454b"
+  },
+  "claim_allowed": false,
+  "invariants": [
+    "catalog_or_checkpoint_is_not_materialized_evidence",
+    "existing_implemented_architecture_must_not_be_duplicated",
+    "derived_value_does_not_replace_source_bytes",
+    "physical_execution_requires_physical_receipt",
+    "BIC_proxy_is_not_real_Bayesian_evidence",
+    "private_corpus_stays_in_private_custody",
+    "negative_results_remain_visible",
+    "TOKEN_VAZIO_does_not_authorize_invention"
+  ],
+  "already_present": [
+    {
+      "id": "RLL-EXISTING-EVIDENCE-CLASSES",
+      "state": "DONE",
+      "evidence_class": "E",
+      "summary": "Contrato E/C/H/P, schema fail-closed, reconciliador da run 31066012098 e fronteira de publicação foram integrados pela PR 646.",
+      "source_refs": [
+        "docs/governance/RLL_EVIDENCE_CLASSES_V1.md",
+        "schemas/rll_evidence_result_v1.schema.json",
+        "tools/rll_evidence_reconcile.py",
+        "data/governance/rll_publication_boundary_v1.json"
+      ]
+    },
+    {
+      "id": "RLL-EXISTING-W0WA-COMPARATOR",
+      "state": "IMPLEMENTED_CLAIM_BLOCKED",
+      "evidence_class": "C",
+      "summary": "CPL/w0waCDM já participa do pipeline conjunto com o mesmo vetor observacional e política de covariância dos demais modelos.",
+      "source_refs": [
+        "src/rll/cosmology_fairness.py",
+        "data/pipelines/structure_d/joint_real_likelihood.py",
+        "results/structure_d/joint_real_likelihood.csv",
+        "docs/RLL_MISSING_CALCULATIONS_LEDGER.md"
+      ]
+    },
+    {
+      "id": "RLL-EXISTING-DESI-13D-BLOCK-MATRIX",
+      "state": "PARTIALLY_RESOLVED",
+      "evidence_class": "E",
+      "summary": "A matriz ordenada 13x13 construída a partir dos seis blocos 2x2 declarados já é reproduzível e testada; não equivale à covariância oficial joint/cross-block.",
+      "source_refs": [
+        "docs/real_data/RLL_DESI_DR2_COVARIANCE_BLOCK_AUDIT.md",
+        "tools/audit_desi_dr2_covariance_blocks.py",
+        "tests/test_desi_dr2_covariance_blocks.py"
+      ]
+    },
+    {
+      "id": "RLL-EXISTING-NEURO-LANGUAGE-BOUNDARY",
+      "state": "IMPLEMENTED_CLAIM_BLOCKED",
+      "evidence_class": "E",
+      "summary": "A camada neuro/física/linguística já distingue fatos, convenções, hipóteses e vazios; falta reforço bibliográfico primário, não nova separação estrutural.",
+      "source_refs": [
+        "docs/canonicos/17_ONDA_VERBO_FISICA_NEURO_LINGUAGEM.md"
+      ]
+    }
+  ],
+  "queue": [
+    {
+      "id": "RLL-P0-POSTMERGE-CI-RECEIPT",
+      "urgency": "P0",
+      "state": "TOKEN_VAZIO_POSTMERGE_FULL_SUITE_RECEIPT",
+      "evidence_class": "P",
+      "authority": "github_actions",
+      "depends_on": [],
+      "facts": [
+        "PR 645 foi mesclada no commit 73872e3e8aa036d0973a2078f94b87bff2293992.",
+        "PR 646 foi mesclada no commit e7997693d4038f379aa0d960a3485f61e94d454b.",
+        "A suíte da PR 646 registrou 918 testes aprovados e uma falha histórica 51/60, posteriormente corrigida pela PR 645."
+      ],
+      "gap": "Não há receipt único observado da suíte completa executada sobre a main contendo simultaneamente os dois merges.",
+      "next_action": "Executar a suíte completa e os gates de schema/governança sobre a main pós-merge e materializar logs, JUnit e SHA-256.",
+      "acceptance": [
+        "pytest completo sem falhas",
+        "schema contracts PASS",
+        "governance gate PASS",
+        "deterministic gate PASS",
+        "receipt associado ao commit e7997693d4038f379aa0d960a3485f61e94d454b ou sucessor explícito"
+      ],
+      "must_not": [
+        "inferir verde apenas pela soma de duas PRs",
+        "apagar falhas históricas"
+      ]
+    },
+    {
+      "id": "RLL-P0-TERMUX-PHYSICAL-REPLAY",
+      "urgency": "P0",
+      "state": "TOKEN_VAZIO_PHYSICAL_EXECUTION",
+      "evidence_class": "P",
+      "authority": "termux_physical_device",
+      "depends_on": ["RLL-P0-POSTMERGE-CI-RECEIPT"],
+      "facts": [
+        "O runner scripts/termux/rll_evidence_replay_v1.sh está materializado no repositório.",
+        "O runner exige dois ciclos byte-idênticos antes de emitir receipt."
+      ],
+      "gap": "Nenhum TERMUX_RECEIPT proveniente de aparelho físico foi materializado.",
+      "next_action": "Executar o runner em Termux físico com os ZIPs canônicos autorizados e retornar TERMUX_RECEIPT.json, CHECKSUMS.sha256 e log bruto.",
+      "acceptance": [
+        "device/model e uname registrados",
+        "SHA-256 dos ZIPs de entrada conferidos",
+        "duas execuções byte-idênticas",
+        "SHA-256 dos outputs registrado",
+        "timestamp UTC e commit do código registrados"
+      ],
+      "must_not": [
+        "simular receipt físico em container",
+        "promover execução x86_64 como Android/ARM"
+      ]
+    },
+    {
+      "id": "RLL-P0-PANTHEON-SUCCESSOR-RUN",
+      "urgency": "P0",
+      "state": "TOKEN_VAZIO_NEW_RUN",
+      "evidence_class": "P",
+      "authority": "github_actions",
+      "depends_on": ["RLL-P0-TERMUX-PHYSICAL-REPLAY"],
+      "facts": [
+        "A rota legada foi corrigida para usar models_pantheon e caminhos portáveis.",
+        "A run 31066012098 permanece historicamente falha para Pantheon e não deve ser reatribuída."
+      ],
+      "gap": "Ainda não existe nova execução científica que prove a rota corrigida em GitHub Actions.",
+      "next_action": "Disparar uma nova run científica na main e preservar run_id, head_sha, inputs, logs, artifacts e checksums.",
+      "acceptance": [
+        "novo run_id distinto de 31066012098",
+        "sem ModuleNotFoundError",
+        "artefato Pantheon com checksums internos",
+        "resultado classificado E/C/H/P",
+        "nenhum valor histórico promovido silenciosamente"
+      ],
+      "must_not": [
+        "editar o artefato histórico da run 31066012098",
+        "chamar resultado diagonal de full covariance"
+      ]
+    },
+    {
+      "id": "RLL-P0-PANTHEON-FULL-COVARIANCE",
+      "urgency": "P0",
+      "state": "BLOCKED_BY_EXTERNAL_EVIDENCE",
+      "evidence_class": "P",
+      "authority": "drive_private_then_github_receipt",
+      "depends_on": ["RLL-P0-PANTHEON-SUCCESSOR-RUN"],
+      "facts": [
+        "O código de likelihood full covariance existe.",
+        "Os bytes brutos Pantheon+SH0ES e STAT+SYS não estão materializados no repositório público."
+      ],
+      "gap": "Faltam bytes autorizados, hashes e receipt de proveniência para o dataset e a matriz oficial.",
+      "next_action": "Materializar os arquivos no Drive privado, registrar provider ID, tamanho e SHA-256, e publicar no GitHub apenas manifest/receipt sanitizado.",
+      "acceptance": [
+        "payloads privados localizados",
+        "SHA-256 e tamanho registrados",
+        "dimensão da matriz compatível com o vetor",
+        "chi2 full-covariance reproduzido",
+        "comparação diagonal versus full-covariance emitida"
+      ],
+      "must_not": [
+        "publicar corpus restrito sem licença/autorização",
+        "substituir matriz ausente por diagonal sem marcar"
+      ]
+    },
+    {
+      "id": "RLL-P0-BAYES-NESTED-SAMPLING",
+      "urgency": "P0",
+      "state": "TOKEN_VAZIO_REAL_BAYES_INFERENCE",
+      "evidence_class": "P",
+      "authority": "github_actions_and_independent_review",
+      "depends_on": ["RLL-P0-PANTHEON-FULL-COVARIANCE"],
+      "facts": [
+        "O proxy BIC calculado para a run histórica é ln(B10)=-5.6682695 e F-COS-04=FAIL.",
+        "Proxy BIC não é evidência Bayes real."
+      ],
+      "gap": "Não há nested sampling materializado nem validação posterior independente.",
+      "next_action": "Executar nested sampling com priors versionados, seeds, stopping criteria e posterior receipts.",
+      "acceptance": [
+        "priors versionados",
+        "evidências logZ por modelo",
+        "incerteza de logZ",
+        "convergência documentada",
+        "reprodução independente"
+      ],
+      "must_not": [
+        "renomear proxy BIC como Bayes real",
+        "omitir resultado desfavorável"
+      ]
+    },
+    {
+      "id": "RLL-P1-DESI-VECTOR-LIKELIHOOD",
+      "urgency": "P1",
+      "state": "PARTIALLY_RESOLVED",
+      "evidence_class": "P",
+      "authority": "github_plus_official_source_receipt",
+      "depends_on": ["RLL-P0-POSTMERGE-CI-RECEIPT"],
+      "facts": [
+        "Os treze observáveis e os seis blocos 2x2 declarados já geram matriz 13x13 block-diagonal positiva definida.",
+        "O repositório já possui fórmulas DM/rd, DH/rd e DV/rd."
+      ],
+      "gap": "Faltam auditoria independente da transcrição, covariância oficial cross-block quando disponível e fechamento do adapter vetorial no fit.",
+      "next_action": "Implementar adapter isolado de predição na ordem canônica e comparar chi2 diagonal versus matricial, sem substituir a rota atual até os gates passarem.",
+      "acceptance": [
+        "ordem dos treze observáveis provada",
+        "unidades e política r_d fixadas",
+        "resíduo vetorial reproduzível",
+        "chi2=rT C^-1 r",
+        "regressão diagonal versus matricial",
+        "source receipt independente"
+      ],
+      "must_not": [
+        "chamar matriz block-diagonal de covariância joint oficial",
+        "inferir impacto em AIC/BIC antes do fit"
+      ]
+    },
+    {
+      "id": "RLL-P1-H0-FORMAL-LIKELIHOOD",
+      "urgency": "P1",
+      "state": "TOKEN_VAZIO_H0_FORMAL_TEST",
+      "evidence_class": "P",
+      "authority": "github_plus_versioned_external_priors",
+      "depends_on": ["RLL-P0-PANTHEON-FULL-COVARIANCE"],
+      "facts": [
+        "Há diagnósticos parciais de H0 e valores em outputs.",
+        "Não há likelihood formal conjunta Planck/SH0ES com covariância e métrica fechada."
+      ],
+      "gap": "A afirmação de aliviar H0 permanece bloqueada.",
+      "next_action": "Versionar priors/fontes, implementar delta_H0/sigma e executar ablações com política r_d explícita.",
+      "acceptance": [
+        "fontes e versões dos priors registradas",
+        "likelihood formal",
+        "delta_H0/sigma",
+        "ablação de r_d e CMB",
+        "comparação RLL/LCDM/CPL sob os mesmos dados"
+      ],
+      "must_not": [
+        "afirmar resolução da tensão por valor pontual",
+        "misturar prior e observação sem classe"
+      ]
+    },
+    {
+      "id": "RLL-P1-S8-WEAK-LENSING",
+      "urgency": "P1",
+      "state": "TOKEN_VAZIO_WEAK_LENSING_PRIOR",
+      "evidence_class": "P",
+      "authority": "drive_private_or_licensed_data_then_github_receipt",
+      "depends_on": ["RLL-P1-FSIGMA8-BACKEND"],
+      "facts": [
+        "A função S8=sigma8*sqrt(Omega_m/0.3) existe.",
+        "Não há prior/likelihood externo de lentes fracas versionado no fechamento atual."
+      ],
+      "gap": "Sem DES/KiDS ou fonte equivalente materializada, não existe teste de tensão S8 em sigma.",
+      "next_action": "Escolher fonte licenciada, preservar bytes/hashes no Drive privado e implementar adapter de likelihood com receipt público sanitizado.",
+      "acceptance": [
+        "dataset e licença identificados",
+        "hashes e provider IDs registrados",
+        "likelihood/prior versionado",
+        "delta_S8/sigma",
+        "comparação sob o mesmo backend de crescimento"
+      ],
+      "must_not": [
+        "usar apenas um valor S8 sem covariância/contexto",
+        "publicar bytes sem autorização"
+      ]
+    },
+    {
+      "id": "RLL-P1-FSIGMA8-BACKEND",
+      "urgency": "P1",
+      "state": "TOKEN_VAZIO_CLASS_CAMB_BENCHMARK",
+      "evidence_class": "P",
+      "authority": "github_actions_or_reproducible_external_runtime",
+      "depends_on": ["RLL-P0-POSTMERGE-CI-RECEIPT"],
+      "facts": [
+        "O crescimento linear e fσ8 existem em rota aproximada.",
+        "O joint real ainda usa proxy Omega_m^0.55 e mantém claim bloqueado."
+      ],
+      "gap": "Falta benchmark CLASS/CAMB e migração comprovada do proxy para o backend físico.",
+      "next_action": "Executar benchmark fixado por versões, comparar curvas e só então trocar o consumidor conjunto.",
+      "acceptance": [
+        "versão e configuração CLASS/CAMB registradas",
+        "curvas D+(z) e fσ8 reproduzíveis",
+        "erro relativo contra referência",
+        "teste de regressão",
+        "claim permanece bloqueado até revisão"
+      ],
+      "must_not": [
+        "tratar proxy gamma=0.55 como backend completo",
+        "trocar implementação sem comparação"
+      ]
+    },
+    {
+      "id": "RLL-P1-MAGNETIC-OBSERVABLE-BRIDGE",
+      "urgency": "P1",
+      "state": "HYPOTHESIS_ONLY",
+      "evidence_class": "H",
+      "authority": "theory_then_observational_adapters",
+      "depends_on": ["RLL-P0-POSTMERGE-CI-RECEIPT"],
+      "facts": [
+        "Birefringência, FRB e Faraday aparecem como rotas de falsificação e integração.",
+        "O próprio ledger mantém TOKEN_VAZIO_BIREFRINGENCE."
+      ],
+      "gap": "Não existe mapa dimensional e causal fechado de alpha_B/beta para RM, DM, EB/TB ou espectro magnético.",
+      "next_action": "Escrever primeiro o contrato dimensional e as equações observáveis; somente depois criar adapters de dados.",
+      "acceptance": [
+        "unidades e domínios de alpha_B/beta",
+        "equações para observáveis",
+        "limite nulo",
+        "priors e degenerescências",
+        "predições falsificáveis datadas",
+        "fontes primárias verificadas"
+      ],
+      "must_not": [
+        "usar analogia magnética como evidência cosmológica",
+        "ajustar depois de observar sem predição datada"
+      ]
+    },
+    {
+      "id": "RLL-P2-NEURO-LANGUAGE-PRIMARY-SOURCES",
+      "urgency": "P2",
+      "state": "PARTIALLY_RESOLVED",
+      "evidence_class": "P",
+      "authority": "bibliographic_registry",
+      "depends_on": [],
+      "facts": [
+        "O documento já separa som material, transdução, analogias matemáticas e hipóteses simbólicas.",
+        "A identidade física direta entre camadas é explicitamente bloqueada."
+      ],
+      "gap": "As afirmações marcadas E/E-C ainda precisam de referências primárias item a item e receipt bibliográfico.",
+      "next_action": "Criar registro de fontes primárias por claim, DOI/arXiv/ISBN, trecho suportado e classe de evidência, mantendo hipóteses sem promoção.",
+      "acceptance": [
+        "cada claim E possui fonte primária",
+        "fonte suporta exatamente o texto",
+        "analogias permanecem C/H",
+        "nenhuma ponte cosmológica inferida",
+        "registro bibliográfico versionado"
+      ],
+      "must_not": [
+        "reclassificar analogia como fato",
+        "usar fonte secundária como prova exclusiva quando há fonte primária"
+      ]
+    },
+    {
+      "id": "RLL-P2-INDEPENDENT-REVIEW",
+      "urgency": "P2",
+      "state": "TOKEN_VAZIO_EXTERNAL_REVIEW",
+      "evidence_class": "P",
+      "authority": "independent_human_reviewer",
+      "depends_on": [
+        "RLL-P0-BAYES-NESTED-SAMPLING",
+        "RLL-P1-DESI-VECTOR-LIKELIHOOD",
+        "RLL-P1-H0-FORMAL-LIKELIHOOD",
+        "RLL-P1-S8-WEAK-LENSING"
+      ],
+      "facts": [
+        "O repositório possui gates internos e linguagem de não certificação."
+      ],
+      "gap": "Não foi materializada revisão científica independente dos resultados sucessores.",
+      "next_action": "Preparar pacote mínimo reproduzível e solicitar revisão com conflitos de interesse e versão do material registrados.",
+      "acceptance": [
+        "revisor independente identificado",
+        "versão/commit revisado",
+        "comentários e respostas preservados",
+        "resultados negativos não removidos",
+        "decisão de claim separada da decisão de merge"
+      ],
+      "must_not": [
+        "tratar CI como peer review",
+        "fundir aprovação de código com validação científica"
+      ]
+    }
+  ],
+  "closure": {
+    "F_ok": [
+      "PR 645 integrada",
+      "PR 646 integrada",
+      "contrato E/C/H/P integrado",
+      "w0wa comparator já existente identificado",
+      "matriz DESI 13x13 block-diagonal existente identificada",
+      "camada neuro/linguística já separada epistemicamente"
+    ],
+    "F_gap": [
+      "receipt único da suíte pós-merge",
+      "TERMUX_RECEIPT físico",
+      "nova run Pantheon",
+      "Pantheon full covariance com bytes e hashes",
+      "nested sampling real",
+      "DESI official joint/cross-block e adapter vetorial fechado",
+      "likelihood formal H0",
+      "weak-lensing/S8",
+      "CLASS/CAMB para crescimento",
+      "ponte magnética observável",
+      "fontes primárias neuro/linguística",
+      "revisão humana independente"
+    ],
+    "F_next": "materialize evidence in dependency order; never fill P/H with assumptions"
+  }
+}

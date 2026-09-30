@@ -1,0 +1,61 @@
+{
+  "schema": "rll.implementation_evidence.v1",
+  "receipt_id": "RLL-AGENT-SEVEN-GUARDS-20260914-CI1",
+  "timestamp_utc": "2026-09-14T16:50:11.535Z",
+  "parent": "RLL-AGENT-SEVEN-GUARDS-20260914",
+  "observed_commit": "1a203591971ec9157647e95fd5abe6878da3ea53",
+  "claim_allowed": false,
+  "state": "FOCUSED_AGENT_PASS_CALIBRATION_TEST_CORRECTION_PENDING",
+  "evidence": {
+    "agent": {
+      "run_id": 34870884472,
+      "job_id": 104066171227,
+      "tests_passed": 25,
+      "tests_total": 25,
+      "receipt_id": "RLL-AGENT-7G-24d4fba26552450591ae11cc023178a4",
+      "structural_status": "PASS",
+      "runtime_readiness": "BLOCKED_BINDING",
+      "auth_present": false,
+      "authenticated": false,
+      "artifact_id": 10359540023,
+      "artifact_sha256": "503d47c14128990af4a1f72f8761c1ef5210eb87f66c43b75d4eba4c3e5502fa"
+    },
+    "credential_governance": {
+      "run_id": 34870884533,
+      "job_id": 104066171212,
+      "state": "PASS"
+    },
+    "climate_bridge_static": {
+      "run_id": 34870884595,
+      "job_id": 104066171684,
+      "state": "PASS"
+    },
+    "calibration": {
+      "run_id": 34870884451,
+      "job_id": 104066170937,
+      "tests_passed": 9,
+      "tests_total": 10,
+      "failure": "assertIs(value, stateless) compares object identity of an os.environ-derived string"
+    },
+    "inventory": {
+      "run_id": 34870845281,
+      "job_id": 104066043438,
+      "state": "FAIL_GENERATED_INVENTORY_DRIFT",
+      "source_diff_available": true
+    }
+  },
+  "delta": "Replace inherited assertIs with assertEqual for opaque token content preservation; test objective retained.",
+  "gaps": [
+    "successor calibration tests",
+    "generated inventory sync",
+    "global suite",
+    "Agents/Actions real credential authentication",
+    "intrinsic PAT permissions"
+  ],
+  "reproduction": "Replay focused test workflows on successor commit; generated inventory comes from tools/docs_inventory.py via provider CI.",
+  "rollback": {
+    "anchor": "2a6e80ad0efa182217aa76c55665a4c98a4e5523",
+    "procedure": "revert work-branch commits in reverse order; preserve receipts",
+    "executed": false
+  }
+}

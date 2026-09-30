@@ -1,0 +1,25 @@
+{
+  "schema": "rll.mpemba_horizon.source_crosswalk.v1",
+  "updated_at": "2026-08-27",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "contract": "data/contracts/mpemba_horizon_falsifier.v1.json",
+  "canonical_source_registry": "data/registries/rll_recent_primary_sources_2026.json",
+  "claim_allowed": false,
+  "mappings": [
+    {"local_id": "SRC-BH-THERMO-REVIEW-2026", "canonical_id": "BH-THERMODYNAMICS-REVIEW-2026"},
+    {"local_id": "SRC-MPEMBA-PRX-2026", "canonical_id": "MPEMBA-PRX-2026"},
+    {"local_id": "SRC-MPEMBA-THERMOMAJOR-2025", "canonical_id": "MPEMBA-THERMOMAJORIZATION-2025"},
+    {"local_id": "SRC-UNRUH-MPEMBA-2026", "canonical_id": "UNRUH-MPEMBA-2026"},
+    {"local_id": "SRC-HOLOGRAPHIC-MPEMBA-2026", "canonical_id": "HOLOGRAPHIC-MPEMBA-2026"},
+    {"local_id": "DATA-EHT-2026-D01-01", "canonical_id": "EHT-2026-D01-01"}
+  ],
+  "context_only_global_sources": [
+    "EHT-M87-VARIABILITY-2025",
+    "EHT-M87-JET-BASE-2026"
+  ],
+  "internal_only_sources": [
+    {"local_id": "DRIVE-CRIPTTRES", "scope": "internal_drive_symbolic_hypothesis", "canonical_id": null},
+    {"local_id": "DRIVE-RAFAELIA-TREATISE", "scope": "internal_drive_symbolic_hypothesis", "canonical_id": null}
+  ],
+  "invariant": "A local contract source and a canonical source may use different identifiers, but evidence class, locator and safe-use boundary must not diverge. Internal Drive hypotheses are not promoted into the public recent-source registry as external evidence."
+}

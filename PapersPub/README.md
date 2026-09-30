@@ -55,7 +55,7 @@ Não declarar superioridade científica, técnica ou estatística sobre ΛCDM, m
 | 06 | [`06_heliosphere_solar_wind/`](06_heliosphere_solar_wind/) | Heliosfera: Vento Solar e Plasma | `planned` |
 | 07 | [`07_heliosphere_radiation_transmission/`](07_heliosphere_radiation_transmission/) | Heliosfera: Transmissão de Radiação | `planned` |
 | 08 | [`08_multiscale_validation_methods/`](08_multiscale_validation_methods/) | Formalismo epistemológico-computacional 7D, 42 hiperformas, tensores, grafos e validação | `analysis_run` |
-| 09 | [`09_language_entropy_formalism/`](09_language_entropy_formalism/) | Formalismo de Linguagem, Entropia e Metáforas | `planned` |
+| 09 | [`09_language_entropy_formalism/`](09_language_entropy_formalism/) | Formalismo de Linguagem, Entropia e Metáforas | `analysis_run` |
 | 10 | [`10_lowlevel_reproducibility_kernels/`](10_lowlevel_reproducibility_kernels/) | Kernels e Reprodutibilidade Low-Level | `planned` |
 
 A trilha 08 contém 44 verificações exatas reproduzidas e preserva `claim_allowed=false` para alegações físicas, causais e criptográficas.

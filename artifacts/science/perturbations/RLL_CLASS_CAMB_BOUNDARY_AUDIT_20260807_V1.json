@@ -1,0 +1,68 @@
+{
+  "schema": "rll.class_camb_boundary_audit.v1",
+  "audited_at": "2026-08-07T23:42:00Z",
+  "state": "VERIFIED_PARTIAL_BACKGROUND_AND_INTERNAL_GROWTH_ONLY",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "existing_implementation": {
+    "background_c_path": "src/rll/class_rll_background.c",
+    "background_c_blob_sha": "39fbfe9a7ba299d49bdbfda20865d08685c8b17a",
+    "internal_growth_kernel_path": "src/rll/rll_perturbation_kernel.py",
+    "internal_growth_kernel_blob_sha": "c146f981df8b5c23d0dd3dbb62192aa125af31f3",
+    "growth_contract_path": "data/real/cosmology/fsigma8_perturbation_test.yml",
+    "growth_contract_blob_sha": "ddae58a5e1905adeef152676c55ff47654124592",
+    "real_fsigma8_points": 16,
+    "growth_equation": "d2delta/dlna2 + (2+dlnH/dlna) ddelta/dlna = (3/2) Omega_m(a) delta",
+    "mode": "GR matter-growth approximation on the RLL background"
+  },
+  "what_is_already_defined": [
+    "RLL homogeneous background H(a)/H0",
+    "RLL effective background density factor and w_eff",
+    "Omega_m(a) and dlnH/dlna",
+    "matter-only linear-growth RK4 approximation",
+    "a real 16-point f sigma8 comparison input with diagonal errors"
+  ],
+  "what_is_not_defined_and_must_not_be_invented": {
+    "rll_component_density_perturbation_delta_s": "TOKEN_VAZIO",
+    "rll_component_velocity_divergence_theta_s": "TOKEN_VAZIO",
+    "effective_rest_frame_sound_speed_cs2": "TOKEN_VAZIO",
+    "adiabatic_sound_speed_or_entropy_perturbation_policy": "TOKEN_VAZIO",
+    "anisotropic_stress_sigma_s": "TOKEN_VAZIO",
+    "interaction_or_energy_momentum_transfer_Q_mu": "TOKEN_VAZIO",
+    "gauge_initial_conditions_and_crossing_regularization": "TOKEN_VAZIO",
+    "nonlinear_or_screening_prescription": "TOKEN_VAZIO"
+  },
+  "benchmark_boundary": {
+    "lcdm_class_camb_crosscheck_possible_without_new_rll_physics": true,
+    "cpl_class_camb_crosscheck_possible_without_new_rll_physics": true,
+    "rll_full_class_camb_implementation_possible_without_closure_relations": false,
+    "current_internal_growth_kernel_is_equivalent_to_full_boltzmann_solver": false,
+    "current_internal_growth_kernel_can_authorize_cmb_cl_claims": false,
+    "current_internal_growth_kernel_can_authorize_nonlinear_pk_claims": false
+  },
+  "classification": {
+    "generic_token": "TOKEN_VAZIO_CLASS_CAMB_PERTURBATION_BENCHMARK",
+    "action": "REDUCE_TO_BASELINE_AND_RLL_CLOSURE_SUCCESSORS",
+    "successor_tokens": [
+      "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+      "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+      "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
+    ]
+  },
+  "scientific_boundary": "A background function does not uniquely determine linear perturbations of a new effective component. Full RLL CLASS/CAMB predictions require an explicit covariant or phenomenological perturbation closure. Until then, the RK4 matter-growth route is an approximation and CMB Cl / transfer-function / nonlinear P(k) claims remain blocked.",
+  "F_ok": [
+    "The RLL background and internal matter-growth approximation are already implemented.",
+    "The missing physical degrees of freedom are now enumerated explicitly rather than hidden inside one generic CLASS/CAMB token.",
+    "LCDM/CPL baseline engine crosschecks can proceed independently of choosing RLL perturbation physics."
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_LCDM_CPL_CLASS_CAMB_BASELINE_CROSSCHECK",
+    "TOKEN_VAZIO_RLL_PERTURBATION_CLOSURE_RELATIONS",
+    "TOKEN_VAZIO_RLL_CLASS_CAMB_IMPLEMENTATION"
+  ],
+  "F_next": [
+    "Cross-check identical LCDM/CPL parameter vectors in pinned CLASS and CAMB versions and store tolerance receipts.",
+    "Define and falsify an explicit RLL perturbation closure before wiring RLL into either Boltzmann engine.",
+    "Only after both steps compare RLL CMB Cl, transfer functions, growth and matter power."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "rll_geophysical_systematics_link_v1",
+  "claim_allowed": false,
+  "mode": "diagnostic_only",
+  "local_geophysics_is_cosmological_evidence": false,
+  "likelihood_mutation_allowed": false,
+  "cosmological_parameter_mutation_allowed": false,
+  "receipt_use_class": "LOCAL_CONTEXT_DATA_READY",
+  "provenance": {
+    "producer_repo": "rafaelmeloreisnovo/Fisica",
+    "producer_commit": "829d8511e33a14eed70f357e7fbdd39846ef8467",
+    "receipt_sha256": "TOKEN_VAZIO",
+    "rll_preregistration_id": "TOKEN_VAZIO"
+  },
+  "target": {
+    "dataset_id": "TOKEN_VAZIO",
+    "observation_index_sha256": "TOKEN_VAZIO",
+    "time_basis": "TOKEN_VAZIO",
+    "location_basis": "TOKEN_VAZIO"
+  },
+  "join": {
+    "method": "TOKEN_VAZIO",
+    "max_time_offset_s": "TOKEN_VAZIO",
+    "matched_observations": "TOKEN_VAZIO",
+    "total_observations": "TOKEN_VAZIO"
+  },
+  "analysis": {
+    "metric_id": "TOKEN_VAZIO",
+    "baseline_id": "TOKEN_VAZIO",
+    "uncertainty_model": "TOKEN_VAZIO",
+    "multiple_testing_control": "TOKEN_VAZIO",
+    "falsifier": "TOKEN_VAZIO",
+    "residual_mutation_allowed": false
+  }
+}

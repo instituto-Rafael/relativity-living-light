@@ -1,0 +1,20 @@
+# RLL workflow contract inventory delta — 2026-09-03
+# SOURCE: Actions run 33779445274 / artifact 9902939103
+# artifact digest: sha256:d73945d0f1eb75ca4321d2866e9770b1821b2b70cc2ddd7ffef688acb6c9a0d7
+# receipt inputs_sha256: 1d485ce7700b28b1f8e7502a99a44df71b6df0aff892fdf9a585a58b30dba332
+# measured: expected=84 actual=85 decision=MISMATCH residual=WORKFLOW_INVENTORY_DRIFT
+# PR #805 added .github/workflows/workflow-preflight-repair-20260903.yml
+# This is a reviewable delta only. It does not modify main and does not assert scientific claims.
+
+--- a/.github/workflow-contract.yml
++++ b/.github/workflow-contract.yml
+@@
+ inventory:
+-  active_workflows: 84
++  active_workflows: 85
+
+# closure gate:
+# 1. apply reviewed one-line contract update on an authorized non-default branch;
+# 2. run tools/workflow_contract_sync.py --check (or equivalent canonical gate);
+# 3. require receipt decision=MATCH, expected=85, actual=85;
+# 4. claim_allowed remains false; publication_effect remains NONE.

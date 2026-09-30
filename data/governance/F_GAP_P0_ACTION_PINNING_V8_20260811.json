@@ -1,0 +1,39 @@
+{
+  "schema": "rll.f_gap_p0_action_pinning.v1",
+  "cycle": 8,
+  "date": "2026-08-11",
+  "baseline_high": 95,
+  "baseline_mutable_action_reference": 79,
+  "first_tranche": {
+    "targeted_mutable_action_reference": 58,
+    "targeted_workflows": 20,
+    "observed_high_after_audit": 37,
+    "observed_mutable_action_reference_after_audit": 21,
+    "audit_run_id": 31455591531,
+    "audit_artifact_id": 9087893201,
+    "audit_artifact_digest": "sha256:4ed0558acfdf52938158afcc7caf14b7c990c1294ce77a93018f9ccf3ab2ffd9",
+    "state": "OBSERVED"
+  },
+  "second_tranche": {
+    "additional_targeted_mutable_action_reference": 13,
+    "additional_targeted_workflows": 6,
+    "cumulative_targeted_mutable_action_reference": 71,
+    "cumulative_targeted_workflows": 26,
+    "expected_high_after_audit_if_no_new_findings": 24,
+    "expected_mutable_action_reference_after_audit": 8,
+    "state": "OBSERVED_PENDING_CI"
+  },
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "pins": {
+    "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "actions/setup-python": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+    "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+  },
+  "remaining_supply_chain_boundary": {
+    "act_dr6_cmbonly_materialization_mutable_refs": 5,
+    "pantheon_covariance_materialization_mutable_refs": 3,
+    "reason": "isolated into later scientific-dense supply-chain tranche"
+  },
+  "boundary": "Supply-chain pinning only. No scientific formula, dataset, parameter, threshold, result, claim boundary, or domain test is intentionally modified."
+}

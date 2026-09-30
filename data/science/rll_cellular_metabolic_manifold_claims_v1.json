@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "RLL-CELLULAR-METABOLIC-MANIFOLD-V1",
+  "date": "2026-09-18",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "predecessors": [
+    "docs/research/RLL_BIOPHOTON_METABOLIC_TRANSDUCTION_GATE_20260815.md",
+    "docs/science/SESSION_CAPTURE_RELATIONAL_MANIFOLD_20260915.md"
+  ],
+  "boundaries": {
+    "biological_model_is_cosmological_evidence": false,
+    "external_literature_is_local_replication": false,
+    "ordinary_biology_generates_tribo_xray": false,
+    "melanin_is_universal_radiation_battery": false
+  },
+  "claims": [
+    {
+      "id": "RLL-CMM-001",
+      "state": "MODEL_SPEC",
+      "claim": "Compartment-resolved pool and flux variables can be represented in a typed cellular state."
+    },
+    {
+      "id": "RLL-CMM-002",
+      "state": "CORRECTED",
+      "claim": "Ethanol is the normal mitochondrial product of glucose plus oxygen.",
+      "replacement": "Aerobic mitochondria oxidize carbon through TCA/OXPHOS; ethanolic fermentation is a distinct route."
+    },
+    {
+      "id": "RLL-CMM-003",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "Plant hypoxia promotes fermentative NAD+ regeneration when OXPHOS is constrained."
+    },
+    {
+      "id": "RLL-CMM-004",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "Golgi trafficking/glycosylation and plant polysaccharide functions are distinct organellar channels."
+    },
+    {
+      "id": "RLL-CMM-005",
+      "state": "EXTERNAL_SUPPORTED",
+      "claim": "N/P/S and Na+/Cl- have separable biological transport/metabolic roles."
+    },
+    {
+      "id": "RLL-CMM-006",
+      "state": "EXTERNAL_SUPPORTED_LIMITED",
+      "claim": "Melanization can alter fungal radiation survival/growth/redox response."
+    },
+    {
+      "id": "RLL-CMM-007",
+      "state": "TOKEN_VAZIO",
+      "claim": "Melanin quantitatively harvests ionizing radiation with a defined biological energy yield.",
+      "gap": "Need calorimetry/electron/redox energy balance and replication."
+    },
+    {
+      "id": "RLL-CMM-008",
+      "state": "EXTERNAL_SUPPORTED_PHYSICAL",
+      "claim": "Triboluminescent adhesive-tape experiments can emit X-rays under controlled vacuum/material conditions."
+    },
+    {
+      "id": "RLL-CMM-009",
+      "state": "BLOCKED_NO_EVIDENCE",
+      "claim": "Ordinary animal/plant cellular deformation emits triboluminescent X-rays."
+    },
+    {
+      "id": "RLL-CMM-010",
+      "state": "HYPOTHESIS",
+      "claim": "Flux-resolved N/P/S/redox models outperform static carbon/ATP pools.",
+      "falsifier": "No reproducible out-of-sample improvement after complexity penalty."
+    },
+    {
+      "id": "RLL-CMM-011",
+      "state": "CORRECTED",
+      "claim": "Chernobyl radiotropism/melanin evidence can be treated as a generic radiotrophic-bacteria mechanism.",
+      "replacement": "Melanized fungi provide the classic melanin/radiotropism evidence; radioresistant bacteria require a separate mechanism and evidence chain."
+    },
+    {
+      "id": "RLL-CMM-012",
+      "state": "REGULATORY_FACT",
+      "claim": "Arcalion is sulbutiamine, synthetic B1 derivative; fatigue/asthenia indication does not establish a will/motivation mechanism."
+    },
+    {
+      "id": "RLL-CMM-013",
+      "state": "TOKEN_VAZIO_CAUSAL",
+      "claim": "Sulbutiamine independently changes human effort/vigor/action selection after placebo and fatigue controls."
+    },
+    {
+      "id": "RLL-CMM-014",
+      "state": "SUPPORTED_SYSTEMS",
+      "claim": "Dopamine/basal-ganglia circuits contribute to effort allocation, action selection and vigor, distinct from cellular ATP sufficiency."
+    },
+    {
+      "id": "RLL-CMM-015",
+      "state": "BLOCKED_COLLAPSE",
+      "claim": "RO, ED and RED are one reversible process.",
+      "replacement": "Preserve pressure, electrical and salinity-gradient driving forces separately."
+    },
+    {
+      "id": "RLL-CMM-016",
+      "state": "BLOCKED_COLLAPSE",
+      "claim": "EC, KH/alkalinity and pH are equivalent observables."
+    },
+    {
+      "id": "RLL-CMM-017",
+      "state": "EXTERNAL_SUPPORTED_LIMITED",
+      "claim": "Cold-induced BAT activation can raise energy expenditure and improve glucose handling in selected human studies."
+    },
+    {
+      "id": "RLL-CMM-018",
+      "state": "NOT_ESTABLISHED",
+      "claim": "BAT activation universally reverses insulin resistance."
+    },
+    {
+      "id": "RLL-CMM-019",
+      "state": "HETEROGENEOUS",
+      "claim": "Magnesium supplementation improves insulin resistance; effect depends on population/baseline and is not universal."
+    },
+    {
+      "id": "RLL-CMM-020",
+      "state": "SUPPORTED_DEFICIENCY_SPECIFIC",
+      "claim": "B12 deficiency affects mitochondrial/one-carbon and neurological function; replacement evidence is strongest for deficiency."
+    },
+    {
+      "id": "RLL-CMM-021",
+      "state": "SUPPORTED_LIMITED",
+      "claim": "Omega-3 may alter stress/cortisol/anxiety endpoints in some trials, with low-certainty heterogeneous evidence."
+    },
+    {
+      "id": "RLL-CMM-022",
+      "state": "NOT_SUPPORTED",
+      "claim": "Omega-3/omega-6 ratio is a universal insulin-sensitivity controller."
+    },
+    {
+      "id": "RLL-CMM-023",
+      "state": "CONTEXT_SUPPORTED",
+      "claim": "Fat-quality substitution may matter more than a simple omega ratio."
+    }
+  ]
+}

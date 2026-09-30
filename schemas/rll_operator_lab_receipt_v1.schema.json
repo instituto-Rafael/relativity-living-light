@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rll.operator_lab.suite_receipt.v1",
+  "title": "RLL Operator Lab Suite Receipt V1",
+  "type": "object",
+  "required": [
+    "schema",
+    "suite_id",
+    "state",
+    "negative_gate",
+    "physics_binding",
+    "scientific_gate_effect",
+    "claim_allowed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rll.operator_lab.suite_receipt.v1"
+    },
+    "suite_id": {
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "FAIL_CLOSED"
+      ]
+    },
+    "negative_gate": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "positive_phase": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "NOT_RUN"
+      ]
+    },
+    "negative_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "positive_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "physics_binding": {
+      "const": false
+    },
+    "scientific_gate_effect": {
+      "const": "NONE"
+    },
+    "training": {
+      "const": false
+    },
+    "ai_runtime": {
+      "const": false
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "receipt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": true
+}

@@ -7,10 +7,10 @@ Arithmetic checks [E]:
 
 Astrophysical candidates [H] (no ephemeris data — qualitative comparison):
   - Schwabe solar cycle: ~11 years → 5×11 = 55 years (|52-55|=3)
-  - Hale solar cycle: ~22 years → 2.36×22 ≈ 52 (|52-52|≈0 but irrational multiple)
+  - Hale solar cycle: ~22 years → 52/22 = 26/11 ≈ 2.36 (non-integer rational ratio)
   - Jupiter-Saturn conjunction: ~19.859 years (sidereal synodic)
     - 2×19.859 = 39.7 (|52-39.7|=12.3)
-    - 2.62×19.859 = 52.03 (|52-52.03|=0.03 years — very close, but 2.62 is irrational)
+    - 2.62×19.859 = 52.03 (illustrative decimal multiplier; proximity alone is not a cycle correspondence)
   - Jupiter orbital period: ~11.862 years → 4×11.862 = 47.45 (|52-47.45|=4.55)
   - Venus synodic period: 583.92 days → 65×583.92 = 37955 days = 103.9 years (2×=207.8; too large)
     Actually: 18980/583.92 = 32.50 Venus synodic periods (also rational near-integer)
@@ -90,7 +90,7 @@ def run_maya_calendar_check() -> dict:
         "multiple_of_52": round(multiple_jup_sat, 4),
         "nearest_integer_multiple": round(multiple_jup_sat),
         "residual_years": round(residual_closest, 4),
-        "note": "2.62 is irrational — not a clean integer; |52.03-52|=0.03yr algebraically close",
+        "note": "2.62 is a rational decimal approximation and a non-integer multiplier; numerical proximity alone is not evidence of a cycle correspondence",
     })
 
     # Hale solar cycle (double Schwabe)
@@ -103,7 +103,7 @@ def run_maya_calendar_check() -> dict:
         "multiple_of_52": round(multiple_hale, 4),
         "nearest_integer_multiple": round(multiple_hale),
         "residual_years": round(abs(calendar_round_julian - round(multiple_hale) * hale), 4),
-        "note": "52/22 = 2.36... (irrational); not a close integer match",
+        "note": "52/22 = 26/11 ≈ 2.3636; rational but non-integer, so it is not a clean integer-cycle match",
     })
 
     # Venus synodic period (important in Maya astronomy [E])

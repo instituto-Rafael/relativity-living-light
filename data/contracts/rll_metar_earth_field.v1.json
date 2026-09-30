@@ -1,0 +1,50 @@
+{
+  "schema": "rll.metar_earth_field.contract.v1",
+  "status": "ACTIVE_EXPERIMENTAL",
+  "claim_allowed": false,
+  "provider": {
+    "authority": "NOAA/NWS Aviation Weather Center",
+    "product": "METAR",
+    "role": "PRIMARY_OBSERVATION_AGGREGATOR",
+    "base_url": "https://aviationweather.gov/api/data/metar",
+    "allowed_host": "aviationweather.gov",
+    "documentation": "https://aviationweather.gov/data/api/",
+    "authentication": "NONE",
+    "rate_limit_note": "Bound requests; current provider documentation states 100 requests/minute and max-result limits."
+  },
+  "default_scope": {
+    "station_ids": ["SBGR", "SBSP", "SBKP", "SBSJ"],
+    "hours": 2,
+    "grid_nx": 24,
+    "grid_ny": 18
+  },
+  "source_units": {
+    "temp": "degC",
+    "wdir": "degrees_from_true_north_meteorological",
+    "wspd": "knots",
+    "slp": "hPa",
+    "altim": "hPa_in_current_AWC_JSON; values_below_100_are_treated_as_inHg_for_compatibility"
+  },
+  "derived_units": {
+    "u": "m/s eastward",
+    "v": "m/s northward",
+    "pressure": "hPa",
+    "pressure_gradient": "Pa/m",
+    "divergence": "1/s",
+    "vertical_vorticity": "1/s"
+  },
+  "method": {
+    "station_selection": "latest observation per ICAO station",
+    "spatial_interpolation": "inverse_distance_weighting_power_2",
+    "geometry": "local equirectangular distance approximation",
+    "derivatives": "finite_difference_on_interpolated_grid",
+    "classification": "DIAGNOSTIC_FIELD_NOT_ASSIMILATION_NOT_CFD"
+  },
+  "boundaries": [
+    "METAR point observations are not a complete atmospheric state.",
+    "IDW interpolation is a visualization/diagnostic transform, not numerical weather prediction or data assimilation.",
+    "Derived divergence, vorticity and pressure gradients inherit sparse-station and interpolation uncertainty.",
+    "Climate Engine products remain a separate source/compute path and are not silently fused with METAR.",
+    "Cross-planet morphology does not establish common mechanism."
+  ]
+}

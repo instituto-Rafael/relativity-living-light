@@ -1,0 +1,93 @@
+# KNOWS_BY_ON_FIRST_LINE: YAML contract -> tested math runner -> bounded artifacts; no theorem/physical promotion.
+name: Ω Mathematics Explorer — formal shadow
+run-name: Ω Math Explorer · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  pull_request:
+    branches: [main, rll/lab]
+    paths: &omega_math_paths
+      - "data/contracts/omega_math_explorer.v1.yml"
+      - "rll_equation_registry.yml"
+      - "schemas/omega_math_explorer.schema.json"
+      - "tools/run_omega_math_explorer.py"
+      - "tests/test_omega_math_explorer.py"
+      - ".github/workflows/omega-math-explorer.yml"
+      - ".github/workflow-architecture/invariants.v1.yml"
+      - ".github/workflow-contract.yml"
+  push:
+    branches: [main]
+    paths: *omega_math_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: omega-math-explorer-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+  RECEIPT_DIR: artifacts/omega-math-explorer
+  CLAIM_ALLOWED: "false"
+  PUBLICATION_EFFECT: "NONE"
+
+jobs:
+  omega-math-shadow:
+    name: YAML contract, exact gates, exploration, receipts
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install bounded dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml jsonschema pytest
+
+      - name: Execute YAML-driven formal mathematics explorer
+        run: |
+          set -euo pipefail
+          python tools/run_omega_math_explorer.py --strict
+
+      - name: Run focused regression tests
+        run: |
+          set -euo pipefail
+          pytest -q tests/test_omega_math_explorer.py --junitxml="$RECEIPT_DIR/junit.xml"
+
+      - name: Seal environment and claim boundary
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$RECEIPT_DIR"
+          python -VV > "$RECEIPT_DIR/python-version.txt"
+          python -m pip freeze --all > "$RECEIPT_DIR/pip-freeze.txt"
+          printf '%s\n' 'claim_allowed=false' 'publication_effect=NONE' 'workflow_pass!=theory_confirmed' > "$RECEIPT_DIR/CLAIM_BOUNDARY.txt"
+          (cd "$RECEIPT_DIR" && sha256sum * > WORKFLOW_CHECKSUMS.sha256)
+
+      - name: Publish bounded report
+        if: always()
+        run: |
+          if [ -f "$RECEIPT_DIR/report.md" ]; then
+            cat "$RECEIPT_DIR/report.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_OMEGA_MATH_REPORT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload complete Ω math receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: omega-math-explorer-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/omega-math-explorer/
+          retention-days: 30
+          if-no-files-found: error

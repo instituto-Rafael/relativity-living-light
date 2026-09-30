@@ -1,0 +1,31 @@
+{
+  "schema": "rll.fgap.review_supersession.v1",
+  "state": "DRAFT_FAIL_CLOSED",
+  "claim_allowed": false,
+  "canonical_repository": "instituto-Rafael/relativity-living-light",
+  "operational_maturity_path": ["feature/research", "rll/lab", "rll/integration", "rll/release", "main"],
+  "scientific_authority": {
+    "canonical_ref": "TOKEN_VAZIO",
+    "supersedes": "TOKEN_VAZIO",
+    "superseded_by": "TOKEN_VAZIO",
+    "effective_from": "TOKEN_VAZIO",
+    "authority_owner": "TOKEN_VAZIO",
+    "closure_gate": "versioned authority record + evidence chain + independent review"
+  },
+  "independent_scientific_review": {
+    "state": "TOKEN_VAZIO",
+    "reviewer_identity_or_process": "TOKEN_VAZIO",
+    "scope": "TOKEN_VAZIO",
+    "review_receipt": "TOKEN_VAZIO",
+    "revision_response": "TOKEN_VAZIO",
+    "falsifier": "qualified independent review identifies material defect or unsupported inference"
+  },
+  "realdata_covariance": {
+    "state": "PARTIALLY_RESOLVED",
+    "isolated_vector_likelihood_adapter": "tools/desi_dr2_vector_likelihood_adapter.py",
+    "fit_level_integration": "TOKEN_VAZIO",
+    "full_official_cross_block_covariance": "TOKEN_VAZIO",
+    "independent_source_verification": "TOKEN_VAZIO",
+    "claim_boundary": "adapter execution does not establish a cosmological fit, model superiority, or physical confirmation"
+  }
+}

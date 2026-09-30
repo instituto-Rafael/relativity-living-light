@@ -1,0 +1,47 @@
+{
+  "schema": "rll.class_camb_lmax_boundary_closure.v1",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "workflow_run": 31230687125,
+  "job_id": 93033790555,
+  "head_sha": "51efe86552a61517fcdd9484fd60b4d1d7eaa668",
+  "token_before": "TOKEN_VAZIO_ENGINE_MISMATCH",
+  "state": "RESOLVED_NUMERICAL_LMAX_BOUNDARY_IN_TESTED_BASELINE",
+  "invariant": "comparison tolerances and cosmological parameter vectors were not relaxed or changed",
+  "evaluated_ell": 700,
+  "sweep": [
+    {
+      "compute_lmax": 700,
+      "state": "TOKEN_VAZIO_ENGINE_MISMATCH",
+      "lcdm_tt_relative_error_at_ell700": 0.08656798592924228,
+      "cpl_tt_relative_error_at_ell700": 0.07662143245589012,
+      "tt_tolerance": 0.08
+    },
+    {
+      "compute_lmax": 900,
+      "state": "VERIFIED_BASELINE_ENGINE_CROSSCHECK",
+      "lcdm_tt_relative_error_at_ell700": 0.020452481727504534,
+      "cpl_tt_relative_error_at_ell700": 0.018175986011852722,
+      "tt_tolerance": 0.08
+    },
+    {
+      "compute_lmax": 1200,
+      "state": "VERIFIED_BASELINE_ENGINE_CROSSCHECK",
+      "lcdm_tt_relative_error_at_ell700": 0.002371770361734484,
+      "cpl_tt_relative_error_at_ell700": 0.0018454543626682531,
+      "tt_tolerance": 0.08
+    }
+  ],
+  "background_checks": {
+    "H": "PASS",
+    "D_A": "PASS",
+    "P_k": "PASS",
+    "note": "These families already passed at compute_lmax=700 with errors far below their declared tolerances."
+  },
+  "interpretation": "Within this exact CAMB/CLASS baseline setup, evaluating ell=700 at the computation boundary lmax=700 produced a non-converged edge comparison. Adding internal multipole margin resolves the mismatch without changing physics or tolerances.",
+  "scientific_boundary": "This closes only the standard LCDM/CPL backend baseline mismatch. It does not implement, validate, or independently reproduce RLL perturbations.",
+  "falsifier": "Re-running the same pinned engine ranges and parameter vectors with compute_lmax>=900 must keep ell=700 within the predeclared 8% TT tolerance; compute_lmax=1200 is the stronger reference point in this receipt.",
+  "F_ok": "CLASS/CAMB baseline plumbing is verified when ell=700 is not evaluated at the lmax boundary; lmax=1200 yields sub-0.24% TT disagreement for LCDM and sub-0.19% for CPL.",
+  "F_gap": "RLL perturbation closure relations and truly independent RLL engine implementations remain absent; workflow inventory contract drift is a separate governance residual.",
+  "F_next": "Preserve a computation margin for CMB multipoles and advance this diagnostic through rll/lab only after workflow contract reconciliation passes."
+}

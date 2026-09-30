@@ -182,7 +182,7 @@ python tools/generate_yml_audit_docs.py \
 | `Rafael te.md` | orphan_outside_canonical_track | verificar conteúdo → promover |
 | `Rafafinsnce.md` | orphan_outside_canonical_track | verificar conteúdo → promover |
 | `temp.md` | orphan_staging | avaliar se conteúdo merece canonização |
-| `Rsfael` (sem ext) | orphan_no_extension | identificar tipo → renomear |
+| `Rsfael` (sem ext) | **migrated_text_stub** | identificado como `text/plain`; corpo preservado em `docs/legacy/root/raw/Rsfael.txt`; raiz = stub |
 | `to_Add/` | staging_directory_pending_promotion | inventariar item por item |
 
 **Protocolo de promoção:**
@@ -262,3 +262,8 @@ TOKEN_VAZIO ──(fetch OK + gates pass)──► DECLARED_BY_AUTHOR
 | *Barrabás, o Beijo e o Galo* | dois tipos de falha (Judas vs Pedro) | CONTRADICTION (fraude de dados / método) vs TOKEN_VAZIO (ausência honesta de evidência) |
 | Quatro estados epistêmicos | recusa do par binário verdadeiro/falso | VERIFIED / DECLARED_BY_AUTHOR / TOKEN_VAZIO / CONTRADICTION — quatro, não dois |
 | Fadiga metálica (Comet) | acúmulo invisível | schema drift: cada fingerprint diferente é um ciclo de pressurização — só visível pela trilha acumulada |
+
+
+### Wave 2A — 2026-09-29
+
+A promoção de órfãos deixou de significar necessariamente `docs/canonicos/`: itens sem autoridade científica suficiente podem ser movidos para `docs/legacy/root/<classe>/`, preservando o corpo original e um stub de compatibilidade. `Rsfael` foi identificado como texto bruto e migrado para `.txt`; isso resolve o **tipo do arquivo**, não promove seu conteúdo epistemicamente.

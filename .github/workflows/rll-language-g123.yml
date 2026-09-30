@@ -1,0 +1,68 @@
+name: RLL language G1-G3
+
+on:
+  pull_request:
+    paths:
+      - "PapersPub/09_language_entropy_formalism/**"
+      - ".github/workflows/rll-language-g123.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  g123:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned codec dependencies
+        run: python -m pip install --disable-pip-version-check brotli==1.1.0 zstandard==0.22.0
+
+      - name: Materialize pinned source corpora
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none https://github.com/BibleAquifer/WorldEnglishBible.git /tmp/web
+          git -C /tmp/web checkout bcb8b3edfb302863c241e3d1d2062cf51042d694
+
+          git clone --filter=blob:none https://github.com/BibleAquifer/ReinaValera1909.git /tmp/rv
+          git -C /tmp/rv checkout 84a071324be17c7c66db17dd204d7804e66d728b
+
+          git clone --filter=blob:none https://github.com/blivre/BibliaLivre.git /tmp/bl
+          git -C /tmp/bl checkout a315a15e9f4d01883b62206fe441d57762f126b3
+
+          git clone --filter=blob:none https://github.com/thammegowda/014-udhr-dataset.git /tmp/udhr
+          git -C /tmp/udhr checkout 281fb4d07b442d2da95ca057e47c2809c56f68f3
+
+      - name: Run G1 reconstruction, G2 total-cost compression, G3 null controls
+        run: |
+          python PapersPub/09_language_entropy_formalism/run_g123_seed_compression_null.py \
+            --eng-root /tmp/web \
+            --spa-root /tmp/rv \
+            --por-root /tmp/bl \
+            --reference PapersPub/09_language_entropy_formalism/results/SCD1_20260920.json \
+            --udhr /tmp/udhr/UDHR-align.v2.tsv \
+            --out results/G123_20260921.json
+
+      - name: Print compact gate summary
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open("results/G123_20260921.json",encoding="utf-8"))
+          print("G1",x["G1_seed_reconstruction"]["status"])
+          print("G2 strong_claim_pass",x["G2_total_cost_compression"]["strong_claim_pass"])
+          print("G3",x["G3_null_shuffle"]["status"])
+          print("UDHR",x["G3_null_shuffle"]["nonreligious_parallel_control"]["status"])
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rll-language-g123-20260921
+          path: results/G123_20260921.json
+          if-no-files-found: error

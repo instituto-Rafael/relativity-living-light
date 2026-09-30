@@ -1,0 +1,60 @@
+{
+  "schema": "rll.runtime_zero_job_ingestion_remote_receipt.v1",
+  "date": "2026-08-16",
+  "run_id": 31978075898,
+  "tested_head_sha": "f9fd0bdc0f66bf17b3b1e12050d927c60e94e84f",
+  "pull_request_merge_sha": "a34aa0135ffe85fd1ef2879d7f35eb365089bab1",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "focused_tests": {
+    "passed": 21,
+    "outcome": "success"
+  },
+  "runtime_ingestion": {
+    "failure_runs": 25,
+    "zero_job_failures": 24,
+    "jobbed_failures": 1,
+    "missing_job_snapshots": 0,
+    "observations": 24,
+    "api_error": false,
+    "root_cause_inference_from_zero_jobs": "FORBIDDEN"
+  },
+  "workflow_contract": {
+    "expected": 82,
+    "actual": 82,
+    "decision": "PASS"
+  },
+  "local_operational_vector": {
+    "observations": 351,
+    "P0": 0,
+    "P1": 107,
+    "P2": 244
+  },
+  "artifact": {
+    "id": 9271593151,
+    "files": 39,
+    "sha256": "5410d7a7357c0a53e3183037c77862feaff8aed55c94fa8141b68bde919e9cf5"
+  },
+  "runtime_receipt_hashes": {
+    "raw_runs_sha256": "ba764de20b7bf86877b3b70f364464f4337434e2c84e11a08ebcbcf746ca65ba",
+    "empty_jobs_snapshot_sha256": "81fad6e0b8c5e61b09d89c058a469316f5b3b72e1c8aeca03a4495974b1ce443",
+    "jobbed_run_31978075904_sha256": "0af9ad53396ee1676998fa7a7fceb5192c7f42ef669f2ecc7301d38d9ba40c67",
+    "runtime_observations_sha256": "443bea4cddf3039b7b0ace57f0eab6ee1dcb7e7c89c8d4a0a2c441212cd66284"
+  },
+  "full_python_suite": {
+    "run_id": 31978075944,
+    "passed": 1221,
+    "subtests_passed": 12,
+    "failures": 0,
+    "artifact_id": 9271608838,
+    "artifact_sha256": "7801603515e2d9cb9ace905c3c2cbc437ba2cde2f7f2b4c42df046fa90b2ac84"
+  },
+  "topology_residual": {
+    "state": "TOKEN_VAZIO_MATURITY_ROUTE",
+    "branch_maturity_run": 31978075904,
+    "transit_tower_run": 31978075892,
+    "observed_rule": "main accepts only rll/release",
+    "not_a_code_regression": true
+  },
+  "claim_allowed": false,
+  "publication_effect": "NONE"
+}

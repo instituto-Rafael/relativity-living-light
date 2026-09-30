@@ -1,0 +1,86 @@
+{
+  "source": {
+    "name": "Inovação Tecnológica",
+    "role": "radar_divulgacao_cientifica",
+    "academic_weight": "secondary_source",
+    "primary_source_required": true,
+    "evidence_level": "radar",
+    "last_reviewed": "2026-05-21"
+  },
+  "vectors": [
+    {
+      "id": "desi_dark_energy",
+      "rll_module": "model_comparison",
+      "status": "watching",
+      "datasets": [
+        "DESI_DR2_BAO",
+        "Pantheon+",
+        "CMB"
+      ],
+      "required_metrics": [
+        "chi2",
+        "AIC",
+        "BIC",
+        "delta_AIC",
+        "delta_BIC"
+      ],
+      "validation_output": "data/results/model_comparison.json",
+      "claim_boundary": "No superiority claim without real-data thresholds"
+    },
+    {
+      "id": "photon_negative_time",
+      "rll_module": "photon_logistics",
+      "status": "conceptual_mapping",
+      "variables": [
+        "tau_effective",
+        "weak_value",
+        "phase_delay",
+        "atom_excitation_time"
+      ],
+      "warning": "not time travel; quantum weak-measurement/interaction-time effect",
+      "primary_source_required": true
+    },
+    {
+      "id": "photonic_topology",
+      "rll_module": "light_matter_topology",
+      "status": "watching",
+      "variables": [
+        "chern_index",
+        "hall_drift",
+        "frequency_lattice",
+        "coherence"
+      ],
+      "primary_source_required": true
+    },
+    {
+      "id": "thermodynamic_cosmology",
+      "rll_module": "entropy_coherence_field",
+      "status": "hypothesis_bridge",
+      "variables": [
+        "entropy",
+        "temperature",
+        "coherence",
+        "expansion_rate"
+      ],
+      "primary_source_required": true
+    },
+    {
+      "id": "laptop_cosmology",
+      "rll_module": "low_resource_cosmo_emulator",
+      "status": "engineering_target",
+      "targets": [
+        "Termux",
+        "ARM32",
+        "Python",
+        "Julia",
+        "C_freestanding"
+      ],
+      "validation_output": "data/results/low_resource_benchmark.json"
+    }
+  ],
+  "consumed_by": [
+    "tools/generate_yml_audit_docs.py",
+    "tools/docs_inventory.py",
+    "docs/yml/YML_PIPELINE_EXECUTION_READINESS.md"
+  ]
+}

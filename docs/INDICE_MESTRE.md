@@ -17,6 +17,9 @@ Este arquivo e a **navegacao canonica** da documentacao do repositorio.
 - Nao substitui o README (porta de entrada) e nao tenta reproduzir o inventario bruto.
 
 Encaminhamentos complementares:
+- Hub de navegação por objetivo: [`docs/navigation/README.md`](navigation/README.md)
+- Arquivos soltos da raiz: [`docs/navigation/ROOT_FILES_INDEX.md`](navigation/ROOT_FILES_INDEX.md)
+- Privacidade/LGPD: [`docs/governance/LGPD_PRIVACY_NAVIGATION_V1.md`](governance/LGPD_PRIVACY_NAVIGATION_V1.md)
 - Porta de entrada: [`README.md`](../README.md)
 - Mapa central de rastreabilidade: [`docs/RLL_TRACEABILITY_MAP.md`](RLL_TRACEABILITY_MAP.md)
 - Inventario bruto (`.md` e `.zip`): [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md)
@@ -44,6 +47,15 @@ Encaminhamentos complementares:
 3. Confirmar no cabecalho do inventario: data/hora, commit de referencia e total.
 
 ---
+
+
+## 0) Apresentacao e navegacao
+
+- [`docs/presentation/00_START_HERE_RLL.md`](presentation/00_START_HERE_RLL.md) - **START HERE Ω V2.1 DISPATCH**, bootstrap ativo e curto; roteia por CURRENT_STATE/μREAD/SOURCE_MIN.
+- [`docs/presentation/05_CURRENT_STATE_RLL.md`](presentation/05_CURRENT_STATE_RLL.md) - HOTSTATE compacto; máximo de três nós ativos.
+- [`docs/presentation/10_EVIDENCE_RESULTS.md`](presentation/10_EVIDENCE_RESULTS.md) - rota para dados, resultados e limites.
+- [`docs/presentation/20_PAPERS_REPRODUCIBILITY.md`](presentation/20_PAPERS_REPRODUCIBILITY.md) - papers, maturidade e reproducibilidade.
+- [`docs/presentation/index.html`](presentation/index.html) - interface navegavel com selecao por objetivo; publicacao em GitHub Pages depende da configuracao do provedor e permanece separada do conteudo.
 
 ## 1) Nucleo cientifico oficial
 
@@ -83,6 +95,13 @@ Encaminhamentos complementares:
 - [`docs/cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md`](cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md)
 - [`docs/cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md`](cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md)
 
+## 1.2) Métodos matemáticos e pontes claim-gated
+
+- [`docs/science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md`](science/FIBONACCI_MODULAR_ICOSAHEDRAL_PHASE_LATTICE_BRIDGE_20260905.md) - método modular/icosaédrico; sem promoção cosmológica.
+- [`docs/science/RLL_RETARDED_SPACETIME_STATE_V1.md`](science/RLL_RETARDED_SPACETIME_STATE_V1.md) - contrato light-cone/source-state: época, tempo próprio, trajetória da matéria, foreground dinâmico, lenteamento e propagação em plasma; claim-gated.
+- [`data/contracts/rll_retarded_spacetime_state.v1.yml`](../data/contracts/rll_retarded_spacetime_state.v1.yml) - contrato executável associado.
+
+
 ## 2) Governanca, organizacao e auditoria
 
 - [`docs/DOCUMENTATION_ORGANIZATION_MASTER.md`](DOCUMENTATION_ORGANIZATION_MASTER.md)
@@ -92,6 +111,7 @@ Encaminhamentos complementares:
 - [`docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md`](RLL_NEXT_WORK_DOCUMENTATION_PLAN.md) - plano operacional para inventario da tag, imagens, CSVs, estacoes de dados e non-post-hoc
 - [`docs/RLL_1234_CHUNK_TEXT_AUDIT.md`](RLL_1234_CHUNK_TEXT_AUDIT.md) - auditoria textual dos chunks do `1234.zip`
 - [`docs/governance/OPERATIONAL_EXCELLENCE_EXECUTION_FRAMEWORK.md`](governance/OPERATIONAL_EXCELLENCE_EXECUTION_FRAMEWORK.md) - framework de execucao para excelencia operacional, governanca continua, auditoria e pipelines
+- [`docs/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.md`](governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.md) - topologia append-only, fail-closed e de dependencias para dados cosmologicos/propagacao
 - [`docs/governance/RLL_VECTRAS_SQRT3_2_GOVERNANCE_MATRIX.md`](governance/RLL_VECTRAS_SQRT3_2_GOVERNANCE_MATRIX.md) - matriz de governanca RLL ↔ Vectras ↔ sqrt3_2: separacao de responsabilidades, fricoes, guardas epistemologicas e criterios de decisao para PRs
 - [`docs/CANONICAL_SOURCES.md`](CANONICAL_SOURCES.md)
 - [`docs/POLITICA_REPOSITORIO_TEXTO_E_ARTEFATOS.md`](POLITICA_REPOSITORIO_TEXTO_E_ARTEFATOS.md) **(fonte oficial para formatos no core e publicacao de artefatos externos)**
@@ -134,8 +154,11 @@ Encaminhamentos complementares:
 
 ## 4) Validacao observacional e matriz de dados reais
 
+- [`docs/validation/README.md`](validation/README.md) - rotas tipadas para prompts, targets e casos falsificáveis migrados da raiz.
+
 - [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md) - links de validacao cosmologica real: DESI, Pantheon, CMB, H(z), fσ8, ZML e workflows
 - [`docs/VALIDATION_DATA_MATRIX_RLL_MCRP.md`](VALIDATION_DATA_MATRIX_RLL_MCRP.md)
+- [`data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json`](../data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json) - registro executavel da topologia e dos gates de promocao
 - [`docs/cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md`](cases/OBSERVATIONAL_ASTROPHYSICAL_CASES_INDEX.md)
 - [`docs/cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md`](cases/AMAS_SOUTH_ATLANTIC_MAGNETIC_ANOMALY_RLL.md)
 - [`docs/cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md`](cases/SN2017egm_SUPERLUMINOUS_SUPERNOVA_MAGNETAR_ENGINE_RLL.md)

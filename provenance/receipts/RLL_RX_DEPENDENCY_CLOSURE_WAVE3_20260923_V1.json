@@ -1,0 +1,49 @@
+{
+  "receipt_id": "RLL-RX-DEPENDENCY-CLOSURE-WAVE3-20260923-V1",
+  "timestamp": "2026-09-23T01:34:00-03:00",
+  "kind": "engineering_dependency_migration_receipt",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "head_sha": "79dcd3d969cc950f4167d3bf24463f053629eaf5",
+  "ci": {
+    "validacao_real": {
+      "run_id": 35818815506,
+      "job_id": 107046055627,
+      "conclusion": "success"
+    }
+  },
+  "migration_metrics": {
+    "files_with_external_imports": 270,
+    "token_vazio_replacements": 193,
+    "closed_families": 6
+  },
+  "closed_families": [
+    "validacao_real_yaml_matplotlib",
+    "requests_public_read_fetchers",
+    "guarded_import_data_stdlib",
+    "credential_authority_pyyaml_stdlib",
+    "docs_inventory_config_yaml",
+    "rll_real_run_plotting"
+  ],
+  "evidence": {
+    "credential_authority_stdlib": "PASS",
+    "plot_migration": "PASS",
+    "dependency_migration_plan": "PASS",
+    "aggregate": "PASS_WITH_OPEN_CONTRACT_DIVERGENCES"
+  },
+  "security_boundary": [
+    "credential workflow scanner remains narrow, not a general YAML parser",
+    "no secret values observed, persisted or hashed by migration gate",
+    "network writes remain forbidden in governed Rx routes",
+    "claim_allowed=false"
+  ],
+  "scientific_semantics_changed": false,
+  "open_contract_divergences": [
+    "Omega_r contract divergence",
+    "growth/D(z) contract divergence",
+    "r_d versus r_s(z*) contract divergence",
+    "H(z) data surface divergence"
+  ],
+  "rollback": "Revert family-specific migration commits independently; preserved legacy artifacts and versioned physics contracts remain authoritative for rollback.",
+  "claim_allowed": false,
+  "append_only": true
+}

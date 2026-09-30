@@ -1,0 +1,82 @@
+{
+  "schema": "rll.bitraf64.phase1.implementation_receipt.v1",
+  "observed_at": "2026-08-08T16:07:09Z",
+  "global_state": "OBSERVED_LIMITED",
+  "claim_allowed": false,
+  "production_ready": false,
+  "source_artifact": {
+    "repository": "rafaelmeloreisnovo/termux-packages",
+    "branch": "claude/sistema-nucleo-autoral-2bju50",
+    "commit": "4f8ef8e5f566982de35c096f9dc6f1de0e17d993"
+  },
+  "source_implementation_findings": {
+    "manifest_v2_entry_bytes": 200,
+    "manifest_v2_reserved_bits": 32,
+    "declared_diagnostic_signature_bits": 33,
+    "declared_packed_metadata_bits": 48,
+    "silent_width_mismatch_present": true,
+    "phase1_ecc_is_full_33x33_matrix_implementation": false,
+    "phase1_single_error_correction_proven": false,
+    "phase1_projected_layer_is_real_package_dag_depth": false,
+    "phase1_distance_is_symmetric_metric": false,
+    "phase1_structural_tests_are_production_proof": false
+  },
+  "hotfix": {
+    "repository": "rafaelmeloreisnovo/termux-packages",
+    "pull_request": 30,
+    "branch": "audit/bitraf64-phase1-proof-gate-20260808",
+    "head_sha": "095a9036c93959594ef4e289a0c319a125a53d1f",
+    "state": "MERGED_EXTERNALLY_OBSERVED",
+    "merged_at": "2026-08-08T16:05:43Z",
+    "merge_commit": "1b54444a2b106c2b160864b31f411fcbb84be092",
+    "manifest_v2_abi_changed": false,
+    "sidecar_added": true,
+    "reserved_field_semantics": "recomputable_32_bit_tag_only",
+    "full_33_bit_diagnostic_signature_location": "sidecar",
+    "claim_gate": "FAIL_CLOSED"
+  },
+  "lifecycle_reconciliation": {
+    "superseded_pull_request": 31,
+    "superseded_pull_request_state": "CLOSED_UNMERGED",
+    "reason": "PR 30 merged externally while reconciliation branch 31 was being prepared; PR 31 was closed to avoid duplicate/conflicting application."
+  },
+  "corrected_exact_values": {
+    "gcd_6000_2057": 1,
+    "gcd_42_60": 6,
+    "r_corr_formula_value_approx": 0.1839415,
+    "declared_r_corr": 0.963999,
+    "redundancy_53_bits_per_1024_bytes": 0.0517578125
+  },
+  "validation": {
+    "mode": "LOCAL_EQUIVALENT_SOURCE_COMPILE",
+    "compiler_contract": "cc -std=c11 -O2 -Wall -Wextra -Werror ... -lm",
+    "observed_marker": "BITRAF64_PHASE1_PROOF_GATE_PASS",
+    "limitations": "Not a physical Termux/ARM receipt, GitHub Actions receipt, or independent replication."
+  },
+  "token_vazio": [
+    "GF2_ACTUAL_TRANSFORM_FULL_RANK",
+    "ECC_DMIN_OR_UNIQUE_SYNDROME_PROOF",
+    "ECC_EXHAUSTIVE_8192_ERROR_INJECTION",
+    "REAL_TERMUX_PACKAGE_DAG_EMBEDDING",
+    "PSI_CHI_RHO_DELTA_SIGMA_OMEGA_STABILITY",
+    "ENTROPY_AUTOCORRELATION_MEASUREMENT",
+    "PHYSICAL_NEON_SIMD_BENCHMARK",
+    "INDEPENDENT_REPLICATION"
+  ],
+  "F_ok": [
+    "source width mismatch identified",
+    "Manifest V2 200-byte ABI preserved",
+    "sidecar prevents silent 33/48-to-32 truncation",
+    "exact arithmetic corrections encoded",
+    "structural proof gate fails closed",
+    "authoritative hotfix merged into termux-packages main",
+    "redundant reconciliation PR closed unmerged"
+  ],
+  "F_gap": [
+    "mathematical ECC proof",
+    "real DAG mapping",
+    "empirical statistics",
+    "physical ARM benchmark and independent replication"
+  ],
+  "F_next": "Promote claims independently only after evidence-producing gates and hashed receipts."
+}

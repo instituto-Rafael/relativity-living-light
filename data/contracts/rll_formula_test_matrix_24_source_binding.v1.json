@@ -1,0 +1,49 @@
+{
+  "schema": "rll.formula_test_matrix_source_binding.v1",
+  "matrix_path": "data/inputs/cosmology_joint/rll_formula_test_matrix_24.v1.csv",
+  "matrix_source_registry": {
+    "registry_id": "USER_REGISTRY_A_001_123_20260815",
+    "coverage_observed": "001-123",
+    "identity_rule": "source_registry_id + source_id + source_formula",
+    "claim_allowed": false
+  },
+  "newly_observed_distinct_registry": {
+    "registry_id": "USER_OMEGA300_20260815_FULL_001_300",
+    "coverage_observed": "001-300",
+    "missing_tail": null,
+    "completion_state": "SOURCE_TEXT_COMPLETE_IN_CONVERSATION",
+    "must_not_be_joined_by_numeric_id_only": true,
+    "claim_allowed": false
+  },
+  "hard_invariants": [
+    "numeric formula ids are local to a registry version",
+    "same numeric id with different formula is a semantic collision, not an update",
+    "the 24-formula RLL matrix remains bound to USER_REGISTRY_A_001_123_20260815",
+    "USER_OMEGA300_20260815_FULL_001_300 requires an independent routing/audit before any RLL integration",
+    "source completeness does not imply mathematical correctness, physical validity, implementation, execution, evidence, or claim",
+    "claim_allowed=false"
+  ],
+  "collision_examples": [
+    {
+      "source_id": "005",
+      "registry_a_formula": "s = sqrt(3)/2",
+      "omega300_formula": "V_5 = cos(3*pi/7)"
+    },
+    {
+      "source_id": "006",
+      "registry_a_formula": "M_n = s^n * F_n",
+      "omega300_formula": "V_6 = sin(3*pi/7)"
+    }
+  ],
+  "tail_290_300_audit": {
+    "R_290": "R_10 = sin(10*pi/2)*exp(-10) = 0",
+    "R_family_identity": "R_n = sin(n*pi/2)*exp(-n); even n -> 0; odd n alternate +exp(-n), -exp(-n)",
+    "U_291_298": "well-typed as 3-vector dot products only if Phi_ethica is explicitly the 3-vector (1/sqrt(3),1/sqrt(3),1/sqrt(3)) and T namespace is fixed",
+    "U_299": "well-typed only after P namespace is fixed; source text suggests protection P_1..P_3 rather than earlier projection P_1..P_3",
+    "U_300": "implicit self-referential equation because U_10 occurs inside sum k=1..10; not an ordinary explicit closure",
+    "U_300_if_E10_nonzero": "Let A=sum_{k=1}^9 U_k/(1+E_k). Then U_10=A*(1+E_10)/E_10. Unique finite solution only when E_10 != 0.",
+    "namespace_gaps": ["E_k is reused across spectra I and III", "P_k is reused across spectra I and III", "T_k origin must be fixed for U_1..U_8", "Phi_ethica vector identity must be explicit"]
+  },
+  "status": "PROVENANCE_COLLISION_GUARDED_SOURCE_COMPLETE_300",
+  "claim_allowed": false
+}

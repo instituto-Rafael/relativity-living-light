@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rll.formula_literature_edges.v1",
+  "title": "RLL Formula Literature Evidence Graph V1",
+  "description": "Fail-closed, append-only structural contract for formula-to-literature evidence edges, independence groups, falsifiers, false-positive controls, non-scalar evidence vectors, TOKEN_VAZIO gaps, and non-regression rules. It is a provenance and validation-routing contract only; claim_allowed remains false and publication_effect remains NONE.",
+  "type": "object",
+  "required": ["schema", "append_only", "claim_allowed", "publication_effect", "source_inventory", "classification_rules", "references", "edges", "formula_states", "open_gaps", "non_regression_rules"],
+  "properties": {
+    "schema": {"const": "rll.formula_literature_edges.v1"},
+    "append_only": {"const": true},
+    "claim_allowed": {"const": false},
+    "publication_effect": {"const": "NONE"},
+    "source_inventory": {"type": "object"},
+    "classification_rules": {"type": "object"},
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["reference_id", "title", "year", "group", "independence_group", "dataset_or_instrument", "method", "persistent_id", "url", "false_positive_controls"],
+        "properties": {
+          "reference_id": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "year": {"type": "integer", "minimum": 1900},
+          "group": {"type": "string", "minLength": 1},
+          "independence_group": {"type": "string", "minLength": 1},
+          "dataset_or_instrument": {"type": "string", "minLength": 1},
+          "method": {"type": "string", "minLength": 1},
+          "persistent_id": {"type": "string", "minLength": 1},
+          "url": {"type": "string", "minLength": 1},
+          "false_positive_controls": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["edge_id", "formula_id", "reference_id", "relation", "independence_group", "scope", "provenance", "immutable_event"],
+        "properties": {
+          "edge_id": {"type": "string", "minLength": 1},
+          "formula_id": {"type": "string", "minLength": 1},
+          "reference_id": {"type": "string", "minLength": 1},
+          "relation": {"enum": ["SUPPORTS_EXACT", "CONTRADICTS_EXACT", "CLASS_MATCH", "METHOD_ONLY", "SYSTEMATICS_CONTROL", "BACKGROUND"]},
+          "independence_group": {"type": "string", "minLength": 1},
+          "scope": {"type": "string", "minLength": 1},
+          "provenance": {"type": "string", "minLength": 1},
+          "immutable_event": {"const": true}
+        }
+      }
+    },
+    "formula_states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["formula_id", "expression", "interpretation", "falsifier", "state", "evidence_vector", "uncertainties", "token_vazio", "next_test"],
+        "properties": {
+          "formula_id": {"type": "string", "minLength": 1},
+          "expression": {"type": "string", "minLength": 1},
+          "interpretation": {"type": "string", "minLength": 1},
+          "falsifier": {"type": "string", "minLength": 1},
+          "state": {"enum": ["PAIR_A", "PAIR_B", "CLASS_MATCH", "CONTRADICTED_EXTERNAL_2PLUS", "TOKEN_VAZIO_EXACT_TEST", "MALFORMED", "REJECTED_NON_FALSIFIABLE"]},
+          "evidence_vector": {
+            "type": "object",
+            "required": ["math_defined", "units_closed", "exact_prediction", "independent_groups", "false_positive_controls", "external_concordance", "contradiction_strength", "reproducibility", "claim_boundary"],
+            "properties": {
+              "math_defined": {"type": "boolean"},
+              "units_closed": {"type": "boolean"},
+              "exact_prediction": {"type": "boolean"},
+              "independent_groups": {"type": "integer", "minimum": 0},
+              "false_positive_controls": {"type": "integer", "minimum": 0},
+              "external_concordance": {"enum": ["SUPPORT", "MIXED", "CONTRADICT", "UNKNOWN", "NOT_APPLICABLE"]},
+              "contradiction_strength": {"enum": ["NONE", "SINGLE_PATH", "TWO_PLUS_INDEPENDENT", "INTERNAL_MATH"]},
+              "reproducibility": {"enum": ["NONE", "REFERENCE_ONLY", "MULTI_GROUP", "EXACT_RLL_PIPELINE"]},
+              "claim_boundary": {"const": "claim_allowed=false"}
+            }
+          },
+          "uncertainties": {"type": "array", "items": {"type": "string"}},
+          "token_vazio": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "cause", "evidence_needed", "falsifier", "F_next"],
+              "properties": {
+                "id": {"type": "string", "minLength": 1},
+                "cause": {"type": "string", "minLength": 1},
+                "evidence_needed": {"type": "string", "minLength": 1},
+                "falsifier": {"type": "string", "minLength": 1},
+                "F_next": {"type": "string", "minLength": 1}
+              }
+            }
+          },
+          "next_test": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "open_gaps": {"type": "array"},
+    "non_regression_rules": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  }
+}
