@@ -1,0 +1,113 @@
+{
+  "schema": "rll.branch_genealogy_reconciliation.v2",
+  "date": "2026-09-30",
+  "state": "B0_RECONCILIATION_CANDIDATE",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "authority_event": {
+    "papers_rll_main_merge": "f142206269cd9d86027d3cd7d6379f98c02b1dcf",
+    "current_main_observed": "3a34d6f3841857d2a1802a2902cbb9176f026122",
+    "note": "PR #1021 was merged directly to main; this successor does not erase that event."
+  },
+  "frozen_refs": {
+    "main": "3a34d6f3841857d2a1802a2902cbb9176f026122",
+    "rll/lab": "90ca23949df579d99018814dd1c6856f2b38214b",
+    "rll/integration": "2f30179ebebf91e7514ffdffb61609a3cf12ef0b",
+    "rll/release": "2cb3e3e88677ea9ac1f263377114b539db7bc47f"
+  },
+  "recursive_tree_integrity": {
+    "main": {
+      "entries": 4069,
+      "blobs": 3582,
+      "truncated": false
+    },
+    "rll/lab": {
+      "entries": 3870,
+      "blobs": 3403,
+      "truncated": false
+    },
+    "rll/integration": {
+      "entries": 3790,
+      "blobs": 3329,
+      "truncated": false
+    },
+    "rll/release": {
+      "entries": 2889,
+      "blobs": 2492,
+      "truncated": false
+    }
+  },
+  "exact_path_delta_from_merge_bases": {
+    "main_vs_rll_lab": {
+      "merge_base": "c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1",
+      "main_changed_paths": 533,
+      "lab_changed_paths": 300,
+      "overlapping_changed_paths": 168,
+      "state": "HIGH_SEMANTIC_CONFLICT_RISK"
+    },
+    "rll_lab_vs_rll_integration": {
+      "merge_base": "de4099bbbb7c5adeb21eeeabc220aa803aaa5011",
+      "lab_changed_paths": 84,
+      "integration_changed_paths": 0,
+      "note": "Commit-count divergence may include tree-neutral/merge history; path identity is evaluated by recursive blob tree."
+    },
+    "rll_integration_vs_rll_release": {
+      "merge_base": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "integration_changed_paths": 949,
+      "release_changed_paths": 0,
+      "state": "RELEASE_STALE_RELATIVE_TO_INTEGRATION"
+    },
+    "rll_release_vs_main": {
+      "merge_base": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "release_changed_paths": 0,
+      "main_changed_paths": 1251,
+      "state": "RELEASE_STALE_RELATIVE_TO_MAIN"
+    }
+  },
+  "convergence_blobs": {
+    "data/governance/PAPERS_RLL_CONVERGENCE_V1.json": "658432d8694b35a1a9ddb072838c82062e317386",
+    "docs/governance/PAPERS_RLL_CONVERGENCE_V1.md": "847e1ff7bacb3948118ea512f367c03fc1bd977d",
+    "tests/test_papers_rll_convergence_v1.py": "25651491c8c6c99228d4a29b59735a7f074e8d2e",
+    "tools/validate_papers_rll_convergence_v1.py": "5d070cdf652598ac7f0b849d4faa3e124af7998f"
+  },
+  "route_decision": {
+    "work_to_lab": "ALLOWED_BY_CANONICAL_TOPOLOGY",
+    "work_to_integration": "BLOCKED_INVALID_BRANCH_TRANSITION",
+    "work_to_release": "BLOCKED_INVALID_BRANCH_TRANSITION",
+    "lab_to_integration_bulk": "FORBIDDEN_PENDING_BATCH_RECONCILIATION",
+    "integration_to_release_bulk": "FORBIDDEN_PENDING_BATCH_RECONCILIATION",
+    "release_to_main_bulk": "FORBIDDEN_PENDING_BATCH_RECONCILIATION"
+  },
+  "preserved_negative_states": [
+    "FAIL_PREREGISTERED_DISTANCE_TOLERANCE",
+    "DOCUMENTATION_INVENTORY_DRIFT",
+    "G6_MCMC_CONVERGENCE_BLOCKER",
+    "G7_TOKEN_VAZIO",
+    "G9_TOKEN_VAZIO",
+    "G10_TOKEN_VAZIO",
+    "G11_TOKEN_VAZIO"
+  ],
+  "invariants": [
+    "NO_FORCE_UPDATE",
+    "NO_BULK_MERGE",
+    "NO_GATE_WEAKENING",
+    "EXACT_BLOB_IDENTITY_FOR_CONVERGENCE_DELTA",
+    "COMMIT_TOPOLOGY != CONTENT_TOPOLOGY",
+    "NEGATIVE_RESULTS_APPEND_ONLY"
+  ],
+  "F_ok": [
+    "four convergence blobs are byte-identical to main authority on the work->lab candidate",
+    "all six recursive trees used in the reconciliation audit were untruncated",
+    "current path-overlap risk is quantified instead of inherited from the August snapshot"
+  ],
+  "F_gap": [
+    "B0/B1 dependency graph for the 168 overlapping main/lab paths",
+    "repository documentation inventory drift",
+    "verified route for selective lab->integration and integration->release batches without bulk history merge"
+  ],
+  "F_next": [
+    "merge only the work->lab B0 candidate after its required checks complete acceptably",
+    "partition the 168 main/lab overlap paths by governance/science/runtime dependency",
+    "do not reopen integration/release transplant PRs until a verified selective promotion route exists"
+  ]
+}
