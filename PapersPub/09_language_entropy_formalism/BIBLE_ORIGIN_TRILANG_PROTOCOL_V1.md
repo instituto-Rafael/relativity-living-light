@@ -1,7 +1,7 @@
 # RLL — Bible Origin-Language Entropy / Coherence / ZIPRAF Protocol V1
 
 **Date:** 2026-09-30  
-**State:** `PROTOCOL_MATERIALIZED / DATA_NOT_INGESTED / EXECUTION_NOT_RUN / claim_allowed=false`  
+**State:** `PROTOCOL_MATERIALIZED / DATA_NOT_INGESTED / SELFTEST_GATE_MATERIALIZED / EXECUTION_NOT_OBSERVED / claim_allowed=false`  
 **Authority:** RLL experiment/protocol only. This file does not redefine ZIPRAF ABI, BitRAF semantics, biblical textual criticism, phonological reconstruction, or physical theory.
 
 ## 0. Invariants
@@ -272,7 +272,7 @@ Input JSONL row:
 {"ref":"JHN.1.1","book":"John","language":"grc","text":"...","source_id":"grc_tischendorf"}
 ```
 
-No source text is committed by this protocol.
+CI gate: `.github/workflows/rll-bible-origin-v1.yml` performs syntax compilation plus deterministic synthetic `--selftest`; this is implementation evidence only and cannot promote corpus/scientific gates.\n\nNo source text is committed by this protocol.
 
 ## 13. Rollback
 
