@@ -45,3 +45,21 @@ def test_negative_evidence_cannot_disappear() -> None:
     errors = module.validate(data)
     assert any("G6 blocked" in e for e in errors)
     assert any("geometry-to-RLL" in e for e in errors)
+
+
+def test_branch_topology_gap_cannot_be_erased_or_bypassed() -> None:
+    module = load_validator()
+    data = module.load_contract()
+    data["branch_topology_snapshot"]["state"] = "RESOLVED"
+    errors = module.validate(data)
+    assert any("branch topology gap" in e for e in errors)
+
+    data = module.load_contract()
+    data["authorial_candidate_routes"][0]["math_gate"] = "PASS"
+    data["authorial_candidate_routes"][0]["domain_relevance"] = "ESTABLISHED"
+    data["authorial_candidate_routes"][0]["exact_source_binding"] = "SRC-TEST"
+    data["authorial_candidate_routes"][0]["target_rll_gate"] = "G1"
+    data["authorial_candidate_routes"][0]["falsifier"] = "TEST-FALSIFIER"
+    data["authorial_candidate_routes"][0]["rll_state"] = "ROUTED_TO_G1"
+    errors = module.validate(data)
+    assert any("forbidden while BRANCH_TOPOLOGY_GAP" in e for e in errors)
