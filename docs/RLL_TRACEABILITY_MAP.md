@@ -43,6 +43,9 @@ RLL v1.0.0 tag / 2025 formula
 | magnetic term `Ω_B0 a^-4` | VERIFIED in README tag | `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` | determine whether it remained active or became latent |
 | plasma term `Ω_P0 a^-4` | VERIFIED in README tag | `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` | determine whether it remained active or became latent |
 | H(z), Δμ, w_eff, fσ8, rotation, lensing observables | VERIFIED as planned observables in README tag | `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` | locate actual images, CSVs and scripts |
+| `E=mc²`, `ΣE`, fission mass defect and residual rest mass | VERIFIED physics core / RLL semantic node documented | `docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md`, `rll_equation_registry.yml` | bind to a specific reaction/dataset if quantitative nuclear validation is added |
+| Matter↔field entanglement hypothesis `H_MF` | TOKEN_VAZIO / claim_allowed=false | `docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md` | define M\|F bipartition, dynamics, state, witness, baseline and reproducible data/simulation |
+| Sound↔radiation bridge | VERIFIED as spectral/mathematical bridge; physical identity rejected | `docs/canonicos/17_ONDA_VERBO_FISICA_NEURO_LINGUAGEM.md`, `docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md` | promote only a concrete physical coupling/transduction mechanism |
 | Images from early tag/project | TOKEN_VAZIO | future `docs/RLL_V1_IMAGE_CSV_PROVENANCE.md` | inventory tag and DOI files |
 | CSVs for models, entropy, growth, curves | TOKEN_VAZIO | future `docs/RLL_V1_IMAGE_CSV_PROVENANCE.md` | locate paths and hashes |
 | Data stations | DECLARED_BY_AUTHOR / TOKEN_VAZIO | future `docs/RLL_DATA_STATIONS_MAP.md` | define station nodes formula→input→script→output |
@@ -117,6 +120,16 @@ Do not use:
 
 > The uploaded Bayes package proves RLL or declares cosmological superiority.
 
+### If speaking about `ΣE` / fission / matter-field
+
+Use:
+
+> In a nuclear event, `ΣE` denotes the total-energy ledger. The final products retain rest mass; the released reaction energy is associated with the mass defect through `Q=Δmc²`. Matter-field entanglement remains a separate hypothesis requiring a non-separability witness.
+
+Do not use:
+
+> Residual mass proves that matter is entangled with the field.
+
 ### If speaking about `1234.zip`
 
 Use:
@@ -139,11 +152,12 @@ Do not use:
 
 ## 7. Current summary
 
-The project now has four active documentation layers:
+The project now has five active documentation layers:
 
 1. `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` — what the 2025 tag proves.
 2. `docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md` — what remains to prove about mobile/Termux execution.
 3. `docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md` — what documents must be built next.
 4. `results/coerente/2026-07-09_uploaded_validation_bayes/` — what the uploaded validation/Bayes package proves as artifact custody, and what it does not prove scientifically.
+5. `docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md` — what is established in the mass-energy/fission ledger and what remains TOKEN_VAZIO in the matter↔field entanglement hypothesis.
 
 This map binds those layers and prevents the project from scattering claims across unrelated files.

@@ -1,0 +1,28 @@
+{
+  "schema": "RLL.external_evidence_merge_receipt.v1",
+  "date": "2026-09-06",
+  "repository": "rafaelmeloreisnovo/relativity-living-light",
+  "pull_request": 31,
+  "source_branch": "rafaelia/rll-external-evidence-20260906",
+  "source_head_sha": "e780ae1cf3397908d8041a216412fc27f402d81c",
+  "dossier_creation_commit": "f5c58b8954a71bec32c1282885db37dc462c0b65",
+  "provenance_receipt_commit": "e780ae1cf3397908d8041a216412fc27f402d81c",
+  "merge_commit": "fb045c9dffebb809410d557f9b904cf197ef82e3",
+  "merge_result": "MERGED_MAIN",
+  "change_mode": "append-only",
+  "changed_existing_scientific_claims": false,
+  "rll_validation_status_changed": false,
+  "custody": "SOURCE_REVIEWED->SYNTHESIZED->REPO_BRANCH_STAGED->PR_REVIEW->MERGED_MAIN",
+  "artifacts": [
+    "docs/research/RLL_EXTERNAL_EVIDENCE_DOSSIER_2026-09-06__plasma-seawater-materials-hydrogen.md",
+    "docs/research/RLL_EXTERNAL_EVIDENCE_RECEIPT_2026-09-06.json",
+    "docs/research/RLL_EXTERNAL_EVIDENCE_MERGE_RECEIPT_2026-09-06.json"
+  ],
+  "epistemic_invariants": [
+    "external literature != RLL validation",
+    "analogue gravity != demonstrated Einstein curvature",
+    "simulation != experimental proof",
+    "null results are retained",
+    "TOKEN_VAZIO is preserved where evidence is insufficient"
+  ]
+}

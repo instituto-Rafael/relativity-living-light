@@ -19,6 +19,14 @@
 
 > **Edição profissional (2026):** organização formal para leitura acadêmica, rastreabilidade metodológica e elegaância editorial, **sem remoção de acervo**.
 
+### Licenciamento e fronteira jurídica
+
+O conteúdo acadêmico autoral segue **CC BY-SA 4.0**, conforme `data/CITATION.cff`.
+Software/scripts e materiais de terceiros obedecem às licenças específicas que
+lhes forem aplicáveis; visibilidade pública, DOI, hashes e selos não substituem
+permissão jurídica nem prova científica. O antigo manifesto RAFCODE-Φ foi
+preservado como histórico não normativo. Veja [`LICENSE.md`](LICENSE.md).
+
 ---
 
 ## Pacote canônico RAFAELIA/RLL — conhecimento, publicação e validação

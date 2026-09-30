@@ -1,0 +1,153 @@
+{
+  "schema": "RLL.external_evidence_receipt.v1",
+  "created_at": "2026-09-06T21:44:00-03:00",
+  "repository": "rafaelmeloreisnovo/relativity-living-light",
+  "branch": "rafaelia/rll-external-evidence-20260906",
+  "integration_mode": "append-only",
+  "existing_scientific_files_modified": false,
+  "claim_policy": {
+    "external_literature_is_rll_validation": false,
+    "token_vazio_preserved": true,
+    "analogy_is_mechanism": false,
+    "simulation_is_experimental_proof": false,
+    "null_results_retained": true
+  },
+  "artifacts": [
+    {
+      "path": "docs/research/RLL_EXTERNAL_EVIDENCE_DOSSIER_2026-09-06__plasma-seawater-materials-hydrogen.md",
+      "role": "human-navigable interdisciplinary evidence dossier",
+      "commit_sha_at_creation": "f5c58b8954a71bec32c1282885db37dc462c0b65"
+    },
+    {
+      "path": "docs/research/RLL_EXTERNAL_EVIDENCE_RECEIPT_2026-09-06.json",
+      "role": "machine-readable provenance and custody receipt"
+    }
+  ],
+  "axes": [
+    "magnetized-plasma-gravity-boundary",
+    "marine-materials-coatings-rotor",
+    "seawater-electrolysis-hydrogen",
+    "microplastics-heavy-metals-brine-recovery",
+    "closed-loop-life-support-scaling",
+    "falsifiable-rll-adjacent-experiments"
+  ],
+  "primary_sources": [
+    {
+      "year": 2025,
+      "title": "Direct seawater electrolysis for hydrogen production",
+      "venue": "Nature Reviews Materials",
+      "doi": "10.1038/s41578-025-00826-x",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2025,
+      "title": "10,000-h-stable intermittent alkaline seawater electrolysis",
+      "venue": "Nature",
+      "doi": "10.1038/s41586-025-08610-1",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2024,
+      "title": "Redox-mediated decoupled seawater direct splitting for H2 production",
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-024-53335-w",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2025,
+      "title": "Nonlinear kinetic simulations of Jeans instability in a magnetized dusty plasma",
+      "venue": "Physical Review E",
+      "doi": "10.1103/wpmj-ks1j",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2025,
+      "title": "Complete Gravitational-Wave Spectrum of the Sun",
+      "venue": "Physical Review Letters",
+      "doi": "10.1103/gtwg-pr41",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2024,
+      "title": "Chiral magnetovortical instability",
+      "venue": "Physical Review D",
+      "doi": "10.1103/PhysRevD.109.L121302",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2024,
+      "title": "In-depth experimental search for a coupling between gravity and electromagnetism with steady fields",
+      "venue": "Scientific Reports",
+      "doi": "10.1038/s41598-024-70286-w",
+      "evidence_class": "E1_NULL_BOUNDARY"
+    },
+    {
+      "year": 2026,
+      "title": "Analogue gravity",
+      "venue": "Living Reviews in Relativity",
+      "doi": "10.1007/s41114-026-00064-9",
+      "evidence_class": "E1_BOUNDARY_REVIEW"
+    },
+    {
+      "year": 2025,
+      "title": "Corrosion of commercial pure titanium and two titanium alloys in extremely high-chloride and high-alkali seawater electrolysis environment",
+      "venue": "Journal of Alloys and Compounds",
+      "doi": "10.1016/j.jallcom.2025.179431",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2024,
+      "title": "Atmospheric cold plasma as a novel approach to remediating microplastics pollution in water",
+      "venue": "Environmental Pollution",
+      "doi": "10.1016/j.envpol.2024.124390",
+      "evidence_class": "E1"
+    },
+    {
+      "year": 2025,
+      "title": "A critical review of microplastics and nanoplastics in wastewater: Insights into adsorbent-based remediation strategies",
+      "venue": "Environmental Pollution",
+      "doi": "10.1016/j.envpol.2025.126658",
+      "evidence_class": "E1_REVIEW"
+    },
+    {
+      "year": 2026,
+      "title": "Global Hydrogen Review 2026",
+      "venue": "International Energy Agency",
+      "evidence_class": "E2"
+    },
+    {
+      "title": "Technical Targets for Liquid Alkaline Electrolysis",
+      "venue": "U.S. Department of Energy",
+      "evidence_class": "E2"
+    }
+  ],
+  "token_vazio": [
+    "TV-GRAV-PLASMA-LAB-GAIN",
+    "TV-GRAV-DYNAMIC-EM-REGIME",
+    "TV-DSE-MVP-SUPERIORITY",
+    "TV-PLASMA-MP-NET-ENERGY",
+    "TV-MW-MP-NET-ENERGY",
+    "TV-AU-COATING-STACK-QUALIFICATION",
+    "TV-N55M-ROTOR-DESIGN",
+    "TV-H2-CAPEX-SITE",
+    "TV-HEAVY-METAL-SPECIATION",
+    "TV-LIFE-SUPPORT-CLOSURE"
+  ],
+  "candidate_experiments": [
+    "RLL-X01-magnetized-plasma-geometry",
+    "RLL-X02-dynamic-em-force-residual",
+    "RLL-X03-gravity-model-consistency",
+    "RLL-X04-direct-seawater-electrolysis-baseline",
+    "RLL-X05-plasma-microplastic-concentrate",
+    "RLL-X06-microwave-residue-treatment",
+    "RLL-X07-marine-coating-stack",
+    "RLL-X08-titanium-wet-side-materials",
+    "RLL-X09-rotor-sleeve-losses"
+  ],
+  "custody": {
+    "state": "SOURCE_REVIEWED->SYNTHESIZED->REPO_BRANCH_STAGED",
+    "source_window": "2024-2026 prioritized; older established engineering principles summarized without novelty claims",
+    "web_verification_date": "2026-09-06",
+    "rll_validation_status_changed": false
+  }
+}

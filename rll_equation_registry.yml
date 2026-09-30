@@ -274,6 +274,42 @@ equations:
     real_data_validators: []
     claim_boundary: "Explicit A1.1 rest-frame candidate assumption; not derived from the RLL background, not a validated RLL property, and not sufficient to unlock CLASS/CAMB."
 
+  - id: mass_energy_equivalence
+    equation: "E_rest = m c^2"
+    domain: ["relativity", "nuclear_physics", "RLL"]
+    status: "known_physics"
+    source_doc: "docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md"
+    methodology_phase: "physical_accounting"
+    real_data_validators: []
+    claim_boundary: "Rest-energy relation; does not imply that all rest mass in a nuclear event is converted into released energy."
+
+  - id: sigma_e_event_conservation
+    equation: "Sigma E_in = Sigma E_out"
+    domain: ["energy_conservation", "nuclear_physics", "RLL"]
+    status: "known_physics"
+    source_doc: "docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md"
+    methodology_phase: "physical_accounting"
+    real_data_validators: []
+    claim_boundary: "Event-level energy ledger. SigmaE is bookkeeping across rest, kinetic, radiative and other/field sectors; it is not a new physical law."
+
+  - id: fission_mass_defect_q
+    equation: "Delta m = M_rest,in - sum_j m_j,rest ; Q = Delta m c^2"
+    domain: ["nuclear_physics", "fission", "relativity", "RLL"]
+    status: "known_physics"
+    source_doc: "docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md"
+    methodology_phase: "physical_accounting"
+    real_data_validators: []
+    claim_boundary: "Residual final rest mass is not evidence of matter-field entanglement; Q tracks the reaction mass defect under a complete energy balance."
+
+  - id: matter_field_mutual_information
+    equation: "I(M:F) = S(rho_M) + S(rho_F) - S(rho_MF)"
+    domain: ["quantum_information", "matter_field", "RLL"]
+    status: "known_information_measure"
+    source_doc: "docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md"
+    methodology_phase: "claim_gate"
+    real_data_validators: []
+    claim_boundary: "Mutual information measures total correlation and is not, by itself, an entanglement witness. H_MF remains TOKEN_VAZIO until a state, bipartition, dynamics and non-separability witness are specified."
+
 # Operational documentation consumers for metadata-only YAML.
 consumed_by:
   - tools/generate_yml_audit_docs.py

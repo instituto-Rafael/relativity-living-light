@@ -1,0 +1,75 @@
+schema_id: atlas.gpt.project.v1
+atlas_id: ATLAS-GPT-PROJECT-000001-V1
+cutoff: 2026-09-22
+identity:
+  unit: canonical_id
+  legacy_address: numbered_item
+prefixes:
+  EXP: expression
+  THM: theorem
+  REL: relation
+  GEO: geometry
+  HYP: hypothesis
+  IDX: index
+  EVID: evidence
+  GAP: gap
+statuses:
+  - EXATO
+  - TEOREMA
+  - TEORIA
+  - MODELO
+  - HIPOTESE
+  - DERIVADO
+  - CONSTRUCAO
+  - EXECUTADO
+  - REFUTADO
+  - REGRA
+  - INDICE
+  - ARQUITETURA
+  - SIMBOLICO
+  - TOKEN_VAZIO
+  - GAP
+  - QUESTAO
+relations:
+  - same_as
+  - derived_from
+  - equivalent_to
+  - generalizes
+  - specializes
+  - constrains
+  - uses
+  - tested_by
+  - evidenced_by
+  - contradicted_by
+  - contradicts
+  - supersedes
+  - superseded_by
+  - has_gap
+  - source_of
+  - routed_by
+required_fields:
+  - id
+  - kind
+  - status
+  - statement
+  - provenance
+provenance_fields:
+  - source_ref
+  - source_kind
+  - observed_at
+  - artifact_ref
+  - evidence_ref
+  - commit_or_hash
+  - uncertainty
+  - gap
+gates:
+  token_vazio_is_zero: false
+  implemented_untested_is_pass: false
+  source_equals_claim: false
+  failed_gate_allows_claim: false
+  correction_policy: append_only_supersedes
+scale:
+  S7: [token, bloco, arquivo, projeto, ecossistema, corpus, manifold]
+routing:
+  L9: [L, O, T, P, C, R, I, E, A]
+  Omega7: [direta, inversa, derivativa, antiderivativa, recursiva, ortogonal, integrativa]

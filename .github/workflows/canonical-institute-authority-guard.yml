@@ -1,0 +1,53 @@
+name: Canonical Institute Authority Guard
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canonical-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Declare canonical authority
+        run: |
+          echo 'canonical_repository=instituto-Rafael/relativity-living-light'
+          echo 'workspace_fork=rafaelmeloreisnovo/relativity-living-light'
+          echo 'policy=changes belong upstream through an Instituto branch/PR; fork main is not a scientific authority'
+
+      - name: Block PRs into fork main
+        if: github.event_name == 'pull_request'
+        run: |
+          echo '::error::This repository is a convenience/workspace fork. Do not promote new scientific state into its main branch.'
+          echo '::error::Rebase/transplant the coherent delta onto instituto-Rafael/relativity-living-light and open a draft PR there.'
+          exit 1
+
+      - name: Audit current divergence on manual run
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compare fork against canonical on manual run
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git remote add canonical https://github.com/instituto-Rafael/relativity-living-light.git
+          git fetch --no-tags canonical main
+          read behind ahead < <(git rev-list --left-right --count canonical/main...HEAD)
+          echo "canonical_ahead_of_workspace=${behind}"
+          echo "workspace_ahead_of_canonical=${ahead}"
+          if [ "$ahead" -gt 0 ]; then
+            echo '::warning::Workspace contains candidate contribution commits not present in canonical main. Classify and upstream them; do not treat them as canonical.'
+          fi
+
+# Invariants:
+# - canonical authority: instituto-Rafael/relativity-living-light
+# - personal fork: access/convenience/workspace only
+# - fork commit != canonical scientific state
+# - ahead commits are contribution candidates, not automatic upstream state
+# - no force-sync, no destructive history rewrite, no claim promotion

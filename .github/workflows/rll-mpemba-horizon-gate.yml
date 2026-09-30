@@ -1,0 +1,60 @@
+name: RLL Mpemba Horizon Gate
+
+on:
+  pull_request:
+    paths:
+      - "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py"
+      - "data/contracts/mpemba_horizon_falsifier.v1.json"
+      - "tests/strong_gravity/test_mpemba_horizon_falsifier.py"
+      - "docs/RLL_MPEMBA_HORIZON_ATLAS.md"
+      - "FALSIFIABILITY_PROTOCOL.md"
+      - ".github/workflows/rll-mpemba-horizon-gate.yml"
+  push:
+    paths:
+      - "data/pipelines/strong_gravity/mpemba_horizon_falsifier.py"
+      - "data/contracts/mpemba_horizon_falsifier.v1.json"
+      - "tests/strong_gravity/test_mpemba_horizon_falsifier.py"
+      - "docs/RLL_MPEMBA_HORIZON_ATLAS.md"
+      - "FALSIFIABILITY_PROTOCOL.md"
+      - ".github/workflows/rll-mpemba-horizon-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  falsifiability-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Unit falsifiers
+        run: python -m unittest tests.strong_gravity.test_mpemba_horizon_falsifier -v
+
+      - name: Materialize deterministic bounded baseline
+        run: |
+          mkdir -p results/audit
+          python data/pipelines/strong_gravity/mpemba_horizon_falsifier.py \
+            > results/audit/rll_mpemba_horizon_gate.json
+
+      - name: Fail closed on claim-boundary regression
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("results/audit/rll_mpemba_horizon_gate.json")
+          data = json.loads(p.read_text())
+          assert data["decision"] == "BOUNDED_PASS"
+          assert data["global_scientific_claim_allowed"] is False
+          claims = {item["id"]: item for item in data["claim_ledger"]}
+          assert claims["BH-MP-04"]["state"] == "FALSIFIED_BY_CAUSAL_BOUNDARY"
+          assert claims["BH-MP-06"]["state"] == "TOKEN_VAZIO"
+          assert claims["BH-MP-08"]["state"] == "TOKEN_VAZIO"
+          assert data["synthetic_relaxation"]["astrophysical_evidence"] is False
+          print("RLL Mpemba horizon claim boundary: PASS")
+          PY

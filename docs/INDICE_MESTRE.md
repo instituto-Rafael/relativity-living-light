@@ -3,8 +3,7 @@
 
 **Atualizado em:** 2026-06-20
 **Atualizado em:** 2026-06-26
-**Atualizado em:** 2026-08-08
-**Atualizado em:** 2026-09-05
+**Atualizado em:** 2026-08-24
 **Regra:** secao principal lista apenas caminhos canonicos oficiais.
 
 ---
@@ -87,6 +86,7 @@ Encaminhamentos complementares:
 - [`docs/CONVERGENCIA_ETH_HLS_TRANSICOES_FASE.md`](CONVERGENCIA_ETH_HLS_TRANSICOES_FASE.md) - convergência independente ETH/HLS para ruído-dissipação como variável de estado, sem promoção automática de claim
 - [`docs/C09_TRANSMUTACAO_NUCLEAR_CHRYSOPOEIA_MAPA_ROTAS.md`](C09_TRANSMUTACAO_NUCLEAR_CHRYSOPOEIA_MAPA_ROTAS.md) - C09 candidata: transmutação nuclear/chrysopoeia via nêutrons de fusão, mapa de rotas e pendências
 - [`docs/RLL_PRE_MOVEMENT_SCALE_BRIDGE.md`](RLL_PRE_MOVEMENT_SCALE_BRIDGE.md) - ponte de escala para pre-movimento, impactos vetoriais, memoria dinamica e limites de promocao cosmologica
+- [`docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md`](canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md) - ΣE, defeito de massa na fissão, radiação, ponte espectral do som e hipótese claim-gated matéria↔campo
 - [`rll_equation_registry.yml`](../rll_equation_registry.yml)
 
 ## 1.1) Casos observacionais
@@ -148,6 +148,7 @@ Encaminhamentos complementares:
 - [`docs/canonicos/20_CHECKLIST_PUBLICACAO_RAFAELIA_RLL.md`](canonicos/20_CHECKLIST_PUBLICACAO_RAFAELIA_RLL.md) - checklist publico de documentos, governanca, seguranca e citabilidade
 - [`docs/canonicos/21_LIMITE_NULO_AION_E_CANCELAMENTO_DIFERENCIAL_RLL.md`](canonicos/21_LIMITE_NULO_AION_E_CANCELAMENTO_DIFERENCIAL_RLL.md) - limite nulo `Ωs0=0`, degenerescencia com ΛCDM e analogia metodologica com AION
 - [`docs/canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md`](canonicos/21_MODELO_VETORIAL_INFORMACIONAL.md) - vetor V_info tipado, equacao de observacao (F_prop/F_med/T), FSM com falsificadores Popper, Fisher/Shannon, integracao claim_state
+- [`docs/canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md`](canonicos/24_SIGMA_E_FISSAO_MATERIA_CAMPO.md) - balanço ΣE, `E=mc²`, defeito de massa, radiação e `H_MF` com TOKEN_VAZIO
 
 ---
 

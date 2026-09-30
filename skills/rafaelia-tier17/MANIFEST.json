@@ -1,0 +1,21 @@
+{
+  "claim_allowed": false,
+  "generated_at": "2026-08-14T23:53:00-03:00",
+  "invariants": [
+    "IDEIA != IMPLEMENTACAO != EXECUCAO != EVIDENCIA != CLAIM",
+    "TOKEN_VAZIO is valid",
+    "append-only provenance",
+    "claim_allowed=false by default"
+  ],
+  "package": "rafaelia-skills-complete-2026-08-14",
+  "provenance": {
+    "prior_14_skill_zip": "not used as source for this Tier17 package",
+    "skill_1_and_9_to_17": "generated completion from user-declared names and RAFAELIA invariants",
+    "skills_2_to_8": "user protocol supplied in conversation; normalized with evidence-first gates"
+  },
+  "schema": "rafaelia.skills.manifest.v1",
+  "signature": {"state": "TOKEN_VAZIO_NO_PRIVATE_KEY","valid_openpgp_signature": false},
+  "skills_count": 17,"state": "MATERIALIZED",
+  "tiers": {"tier-1-mestres":4,"tier-2-verificacao":3,"tier-3-computacao":3,"tier-4-aplicado":4,"tier-5-meta":3},
+  "version": "1.0.0-tier17"
+}

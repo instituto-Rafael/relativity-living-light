@@ -1,0 +1,63 @@
+source_id	relation	target_id	evidence_or_note
+ITEM-000001	equivalent_to	ITEM-000003	h/a=sqrt(3)/2; trig identity
+ITEM-000002	equivalent_to	ITEM-000003	sqrt(3)/2=cos30=sin60
+ITEM-000012	derived_from	ITEM-000002	Spiral uses q=sqrt(3)/2
+ITEM-000032	derived_from	ITEM-000029	Rafaeliana recurrence crosswalk
+ITEM-000033	derived_from	ITEM-000032	closed form under stated initialization
+ITEM-000034	derived_from	ITEM-000033	discrete increment
+ITEM-000035	uses	ITEM-000036	modular folded distance m=7
+ITEM-000037	uses	ITEM-000029	Pisano period Fibonacci mod7
+ITEM-000038	routed_by	ITEM-000039	420 as lcm(60,7)
+ITEM-000043	derived_from	ITEM-000042	rotation/scale matrix
+ITEM-000044	derived_from	ITEM-000043	metric scaling identity
+ITEM-000045	derived_from	ITEM-000043	determinant
+ITEM-000049	derived_from	ITEM-000043	recursive side scale
+ITEM-000050	derived_from	ITEM-000049	recursive area
+ITEM-000061	uses	ITEM-000070	K8 planarization obeys Euler
+ITEM-000067	uses	ITEM-000070	V component
+ITEM-000068	uses	ITEM-000070	E component
+ITEM-000069	uses	ITEM-000070	F component
+ITEM-000075	derived_from	ITEM-000067	beta1=E-V+1
+ITEM-000076	derived_from	ITEM-000075	cycle space rank
+ITEM-000077	derived_from	ITEM-000076	cardinality 2^80
+ITEM-000080	derived_from	ITEM-000076	facial cycle basis convention
+ITEM-000083	uses	ITEM-000087	icosphere Euler consistency
+ITEM-000093	contradicts	ITEM-000105	torus is not sphere
+ITEM-000096	uses	ITEM-000097	Poincare ball in validated roundtrip
+ITEM-000097	evidenced_by	ITEM-000098	19/19 tests recorded
+ITEM-000103	has_gap	ITEM-000144	mathematical embedding not cosmology validation
+ITEM-000124	constrains	ITEM-000125	Shannon boundary
+ITEM-000125	uses	ITEM-000126	ordering/reference/dedup interpretation
+ITEM-000128	contradicted_by	ITEM-000129	strong compression claim failed
+ITEM-000130	evidenced_by	ITEM-000132	reconstruction with control
+ITEM-000131	evidenced_by	ITEM-000132	order/structure effect control
+ITEM-000133	constrains	ITEM-000237	claim gate
+ITEM-000139	uses	ITEM-000140	RLL background sector
+ITEM-000140	uses	ITEM-000141	transition model
+ITEM-000142	derived_from	ITEM-000140	effective EOS relation
+ITEM-000143	has_gap	ITEM-000144	conservation/interaction closure
+ITEM-000145	evidenced_by	ITEM-000146	BIC comparison
+ITEM-000148	evidenced_by	ITEM-000149	BIC comparison
+ITEM-000167	same_as	REGISTRY-OMEGA300	historical registry namespace
+ITEM-000170	contradicts	ITEM-000173	does not replace Omega300
+ITEM-000181	supersedes	LEGACY-RCORR-0963999	audited formula gives ~0.18394
+ITEM-000185	uses	ITEM-000002	Q16 quantization of sqrt(3)/2
+ITEM-000186	evidenced_by	ITEM-000187	coherence test
+ITEM-000197	has_gap	ITEM-000198	projection quadratica needs axioms
+ITEM-000212	generalizes	ITEM-000213	evidence-first pipeline
+ITEM-000216	generalizes	ITEM-000212	separation invariant
+ITEM-000219	routed_by	ITEM-000228	L9 via ATLAS
+ITEM-000220	routed_by	ITEM-000222	typed relation families
+ITEM-000221	routed_by	ITEM-000222	scale levels
+ITEM-000223	uses	ITEM-000224	cognitive loop closes with R3
+ITEM-000225	uses	ITEM-000226	Control via append-only delta
+ITEM-000227	uses	ITEM-000228	START HERE routes into ATLAS
+ITEM-000237	tested_by	ITEM-000238	seed reconstruction
+ITEM-000237	contradicted_by	ITEM-000239	no universal compression conclusion
+ITEM-000240	has_gap	ITEM-000241	meaning metric undefined
+ITEM-000243	has_gap	ITEM-000245	D8 quotient may reduce cycle enumeration
+ITEM-000259	routed_by	ITEM-000264	invariants under symmetry/action
+ITEM-000263	routed_by	ITEM-000264	avoid brute force via equivalence classes
+ITEM-000268	tested_by	ITEM-000145	RLL identifiability via observational fit
+ITEM-000278	generalizes	ITEM-000279	workflow as graph
+ITEM-000279	generalizes	ITEM-000280	conversation graph to typed object graph

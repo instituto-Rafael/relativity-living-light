@@ -1,0 +1,23 @@
+{
+  "schema": "rafaelia.skills.rll-integration-receipt.v1",
+  "generated_at": "2026-08-14T23:53:00-03:00",
+  "repository": "rafaelmeloreisnovo/relativity-living-light",
+  "branch": "audit/rafaelia-skills-tier17-20260814",
+  "package": "rafaelia-skills-complete-2026-08-14",
+  "skills_count": 17,
+  "expanded_source_state": "MATERIALIZED",
+  "local_zip_state": "MATERIALIZED_STRUCTURAL_PASS",
+  "local_zip_sha256": "24a3bbd35f8207843fd69a7f22a19dba8ed36c53d285196c6b42fa310d31056b",
+  "local_zip_files": 82,
+  "repository_expanded_tree_byte_identity_to_local_zip": "TOKEN_VAZIO_NOT_GATED",
+  "repository_expanded_tree_sha256_ledger": "TOKEN_VAZIO_NOT_RECOMPUTED",
+  "tests_execution_state": "TOKEN_VAZIO_NOT_EXECUTED",
+  "signature_state": "TOKEN_VAZIO_NO_PRIVATE_KEY",
+  "claim_allowed": false,
+  "invariants": [
+    "IDEIA != IMPLEMENTACAO != EXECUCAO != EVIDENCIA != CLAIM",
+    "TOKEN_VAZIO is valid",
+    "append-only provenance",
+    "no fabricated cryptographic signature"
+  ]
+}

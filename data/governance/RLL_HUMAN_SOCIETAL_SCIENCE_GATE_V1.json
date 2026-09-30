@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "artifact": "RLL_HUMAN_SOCIETAL_SCIENCE_GATE_V1",
+  "date": "2026-08-30",
+  "claim_allowed": false,
+  "scope": "RLL research, models, datasets, papers, public claims and downstream human-impact interpretations",
+  "invariants": [
+    "MATHEMATICAL_MODEL != PHYSICAL_VALIDATION",
+    "PHYSICAL_HYPOTHESIS != CLINICAL_AUTHORITY",
+    "COSMOLOGICAL_MODEL != HUMAN_WORTH_MODEL",
+    "SCIENTIFIC_NOVELTY != SOCIAL_PERMISSION",
+    "CULTURAL_ANALOGY != EMPIRICAL_PROOF",
+    "TOKEN_VAZIO != PASS",
+    "UNKNOWN_RISK != SAFE",
+    "DATASET_PRESENCE != REPRESENTATIVENESS",
+    "FIT_QUALITY != CAUSAL_TRUTH"
+  ],
+  "hard_boundaries": {
+    "health_or_medical_use": {
+      "rll_model_alone_may_authorize": false,
+      "independent_domain_review_required": true,
+      "applicable_regulatory_or_clinical_evidence_required": true
+    },
+    "children_or_education": {
+      "exclusive_algorithmic_high_impact_decision_allowed": false,
+      "child_best_interest_required_when_applicable": true,
+      "age_and_context_appropriate_review_required": true
+    },
+    "culture_belief_identity": {
+      "personal_worth_ranking_allowed": false,
+      "belief_truth_scoring_for_personal_worth_allowed": false,
+      "metaphor_must_be_separated_from_empirical_claim": true
+    },
+    "privacy": {
+      "personal_data_use_requires_declared_purpose": true,
+      "data_minimization_required": true,
+      "sensitive_data_default_hold": true
+    },
+    "public_policy_or_essential_resources": {
+      "single_model_output_may_be_final_authority": false,
+      "plural_review_required_when_high_impact": true,
+      "distributional_impact_required": true,
+      "appeal_or_contestation_path_required": true
+    }
+  },
+  "research_claim_states": [
+    "FORMAL_MATH",
+    "SIMULATION_ONLY",
+    "OBSERVED_DATA",
+    "REPRODUCED_INTERNAL",
+    "EXTERNAL_REPLICATION_TOKEN_VAZIO",
+    "HYPOTHESIS",
+    "CONTESTED",
+    "FALSIFIED",
+    "TOKEN_VAZIO"
+  ],
+  "human_impact_states": [
+    "NOT_APPLICABLE",
+    "LOW_IMPACT_MONITOR",
+    "REQUIRE_PLURAL_REVIEW",
+    "REQUIRE_AFFECTED_GROUP_REVIEW",
+    "FAILSAFE_HOLD",
+    "BLOCKED_BY_RIGHTS",
+    "TOKEN_VAZIO"
+  ],
+  "anti_regression": {
+    "latest_wins": false,
+    "scientific_claim_may_not_be_upgraded_without_stronger_evidence": true,
+    "human_protection_may_not_be_weakened_by_performance_gain": true,
+    "rollback_or_correction_path_required_for_public_claim_promotion": true
+  },
+  "required_downstream_record_for_human_impact": [
+    "source_model_or_result",
+    "exact_revision",
+    "scientific_claim_state",
+    "human_impact_scope",
+    "affected_groups",
+    "known_harms",
+    "unknown_risks",
+    "privacy_surface",
+    "child_health_education_culture_flags",
+    "distributional_effects",
+    "review_roles",
+    "appeal_or_contestation_path",
+    "evidence_refs",
+    "falsifier",
+    "decision_state"
+  ],
+  "open_gaps": [
+    "TOKEN_VAZIO_EXTERNAL_HUMAN_RIGHTS_REVIEW_WHEN_APPLICABLE",
+    "TOKEN_VAZIO_CLINICAL_OR_REGULATORY_REVIEW_FOR_ANY_HEALTH_USE",
+    "TOKEN_VAZIO_CHILD_SAFETY_REVIEW_FOR_ANY_CHILD_FACING_USE",
+    "TOKEN_VAZIO_AFFECTED_COMMUNITY_REVIEW_FOR_HIGH_IMPACT_DEPLOYMENT"
+  ]
+}

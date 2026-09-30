@@ -1,65 +1,98 @@
 # RLL MPEMBA HORIZON ATLAS
 
-Status: **implemented bounded falsification module; astrophysical Mpemba detection remains `TOKEN_VAZIO`**.
+Status: **implemented bounded falsification gate; astrophysical Mpemba detection remains `TOKEN_VAZIO`**.
 
-Date: 2026-08-27  
-Authority: `instituto-Rafael/relativity-living-light`  
-Maturity route: `work branch -> rll/lab -> rll/integration -> rll/release -> main`
+Date: 2026-08-27
 
-## 1. Purpose and executable surface
+## 1. Purpose
 
-This ATLAS decomposes the heuristic — compression/heating, black-hole thermodynamics, observer time/redshift, plasma/jets and anomalous relaxation — into claim fragments that survive or fail independently. Structural resemblance is never promoted to observation.
+This module converts the session heuristic — compression/heating, black-hole thermodynamics, redshift, jets and anomalous relaxation — into independent claims that can survive or fail separately.
 
-Artifacts:
+It deliberately does **not** define “gravitational Mpemba” by analogy alone. A real-data Mpemba claim requires an operational relaxation observable and a reproducible crossing/first-passage witness.
 
-- `data/pipelines/strong_gravity/mpemba_horizon_falsifier.py`
-- `data/contracts/mpemba_horizon_falsifier.v1.json`
-- `tests/strong_gravity/test_mpemba_horizon_falsifier.py`
-- `FALSIFIABILITY_PROTOCOL.md` section 7
+Canonical implementation:
 
-The regression tests run through the repository's **existing canonical Python-test CI**; no extra workflow is introduced solely for this hypothesis.
+```text
+data/pipelines/strong_gravity/mpemba_horizon_falsifier.py
+```
 
-## 2. Three quantities and three observer classes
+Evidence/falsifier contract:
 
-Never collapse:
+```text
+data/contracts/mpemba_horizon_falsifier.v1.json
+```
 
-1. matter/plasma temperature in the exterior accretion/jet environment;
-2. semiclassical Hawking temperature of the black hole;
-3. observer-dependent redshift/Tolman quantities in a stationary exterior spacetime.
+Tests:
 
-Static exterior, freely falling and asymptotic observers are distinct.
+```text
+tests/strong_gravity/test_mpemba_horizon_falsifier.py
+```
 
-For Schwarzschild,
+## 2. Scientific separation: three temperatures and three observers
+
+The original intuition mixes quantities that must be kept apart:
+
+1. **plasma/matter temperature** in the accretion/jet environment;
+2. **Hawking temperature** of the black hole in semiclassical thermodynamics;
+3. **observer-dependent redshift/Tolman quantities** in a stationary exterior geometry.
+
+The gate prohibits silently identifying these quantities.
+
+Likewise it separates:
+
+- a static exterior observer;
+- a freely falling observer;
+- a distant observer at infinity.
+
+The static Schwarzschild redshift factor used here is
 
 \[
-r_s=\frac{2GM}{c^2},\qquad
-\alpha(r)=\sqrt{1-\frac{r_s}{r}},\quad r>r_s,
+\alpha(r)=\sqrt{1-\frac{r_s}{r}},\qquad r_s=\frac{2GM}{c^2},\qquad r>r_s.
 \]
 
-and for static equilibrium
+The static-equilibrium Tolman relation is represented as
 
 \[
-T_{loc}=\frac{T_\infty}{\alpha(r)}.
+T_{\rm loc}=\frac{T_\infty}{\alpha(r)}.
 \]
 
-This expression is not a freely falling thermometer reading.
+This expression is **not** promoted to a freely falling thermometer reading and the implementation rejects `r <= r_s` for the static-observer formula.
 
-## 3. Direct / inverse / derivative / antiderivative
+## 3. Direct, inverse, derivative and antiderivative structure
+
+For a Schwarzschild black hole,
 
 \[
 T_H(M)=\frac{\hbar c^3}{8\pi Gk_BM},
-\qquad
-\frac{dT_H}{dM}=-\frac{T_H}{M}<0,
 \]
 
+so
+
 \[
-C_{BH}=\frac{d(Mc^2)}{dT_H}
-=-\frac{8\pi Gk_BM^2}{\hbar c}<0,
-\qquad
+\frac{dT_H}{dM}=-\frac{T_H}{M}<0.
+\]
+
+With `E=Mc^2`,
+
+\[
+C_{BH}=\frac{dE}{dT_H}
+=-\frac{8\pi G k_B M^2}{\hbar c}<0.
+\]
+
+Thus, in the Schwarzschild semiclassical domain,
+
+```text
+M up -> T_H down
+M down -> T_H up
+```
+
+while the Bekenstein-Hawking entropy is
+
+\[
 S_{BH}=\frac{4\pi k_BG M^2}{\hbar c}.
 \]
 
-Deterministic probes:
+The implementation checks the exact scaling probes
 
 ```text
 T_H(2M)/T_H(M) = 1/2
@@ -68,172 +101,287 @@ C_BH < 0
 dT_H/dM < 0
 ```
 
-These are analytic/semi-classical checks, not an astrophysical Hawking-radiation measurement.
+within the stated model domain.
 
-## 4. F-gap ledger
+These analytic identities are not observational measurements of Hawking radiation.
 
-| ID | fragment | state |
-|---|---|---|
-| BH-MP-01 | Schwarzschild `T_H ~ M^-1`, `S ~ M^2`, negative heat capacity | `SUPPORTED_ANALYTIC_SEMICLASSICAL` |
-| BH-MP-02 | static Tolman temperature = free-fall local temperature | `FALSIFIED_AS_EQUIVALENCE` |
-| BH-MP-03 | past/present/future literally form one local thermodynamic reading at the horizon | `REJECT_LITERAL_CLAIM` |
-| BH-MP-04 | observed jet matter escapes from inside the horizon | `FALSIFIED_BY_CAUSAL_BOUNDARY` |
-| BH-MP-05 | exterior magnetized plasma + spin/flux are relevant to jet launching | `LITERATURE_OBSERVATION_SUPPORTED_BOUNDED` |
-| BH-MP-06 | astrophysical black hole directly exhibits a Mpemba relaxation | `TOKEN_VAZIO` |
-| BH-MP-07 | Mpemba-like relaxation has relativistic-QFT/holographic precedents | `LITERATURE_SUPPORTED_THEORY` |
-| BH-MP-08 | Hawking temperature directly measured for M87* or Sgr A* | `TOKEN_VAZIO` |
-| BH-MP-09 | generic curved spacetime has one universal global scalar energy conservation law | `REJECT_OVERGENERALIZATION` |
+## 4. F-gap materialized
+
+| ID | claim fragment | state | reason |
+|---|---|---|---|
+| BH-MP-01 | Schwarzschild `T_H ~ M^-1`, `S ~ M^2`, negative heat capacity | `SUPPORTED_ANALYTIC_SEMICLASSICAL` | analytic black-hole thermodynamics |
+| BH-MP-02 | static Tolman temperature = freely falling local temperature | `FALSIFIED_AS_EQUIVALENCE` | observer classes differ |
+| BH-MP-03 | past/present/future literally form one measured thermodynamic state at the horizon | `REJECT_LITERAL_CLAIM` | not an operational GR thermodynamic observable |
+| BH-MP-04 | observed jet matter escapes from inside the horizon | `FALSIFIED_BY_CAUSAL_BOUNDARY` | event horizon is causal boundary |
+| BH-MP-05 | exterior magnetized plasma + spin/flux can participate in jet launching | `LITERATURE_OBSERVATION_SUPPORTED_BOUNDED` | BZ/MAD class mechanisms + EHT constraints |
+| BH-MP-06 | astrophysical black hole directly exhibits a Mpemba relaxation | `TOKEN_VAZIO` | no matched trajectory analysis ingested |
+| BH-MP-07 | Mpemba-like relaxation has relativistic/holographic precedents | `LITERATURE_SUPPORTED_THEORY` | Unruh and holographic work exists |
+| BH-MP-08 | Hawking temperature directly measured for M87* or Sgr A* | `TOKEN_VAZIO` | no direct astrophysical Hawking thermometry registered |
+| BH-MP-09 | generic curved spacetime guarantees one global scalar energy conservation law | `REJECT_OVERGENERALIZATION` | local covariant conservation and symmetry-specific charges are the safe formulation |
+
+The key epistemic transition is therefore:
+
+```text
+analogy -> decomposed claims -> independent falsifiers -> bounded survivors
+```
+
+not
+
+```text
+analogy -> global confirmation
+```
 
 ## 5. F-next: operational Mpemba witness
 
-Fix before inspecting the claimed outcome
+Let `X(t)` be an observable state vector and `X_eq` its target equilibrium. Define **before inspecting the result** a distance
 
 \[
 D(t)=D[X(t),X_{eq}].
 \]
 
-The v1 witness requires all three:
+For two initial states, `far` and `near`, the v1 witness requires all three:
 
 \[
 D_{far}(0)>D_{near}(0),
 \]
 
 \[
-\exists t>0: D_{far}(t)<D_{near}(t),
+\exists t>0:\;D_{far}(t)<D_{near}(t),
 \]
+
+and for a preregistered threshold `epsilon`,
 
 \[
 \tau_{far}(\epsilon)<\tau_{near}(\epsilon),
-\qquad
+\]
+
+where
+
+\[
 \tau(\epsilon)=\inf\{t:D(t)\le\epsilon\}.
 \]
 
-`mpemba_witness(...)` implements this. `epsilon`, observable, preprocessing, covariance treatment and admissible distance family must be preregistered for a real-data claim.
+The code implements this as `mpemba_witness(...)`.
 
-A slow-mode mechanism probe uses
+### Slow-mode mechanism probe
 
-```text
-|A_slow,far| / |A_slow,near|
-```
-
-but suppression below one is only mechanistic evidence, not a detection by itself.
-
-## 6. Recent theory provenance
-
-- Mann, **Black-hole thermodynamics**, *Nature Reviews Physics* 8, 425–436 (2026), DOI `10.1038/s42254-026-00942-9`, published 2026-05-11.
-- Summer et al., **Resource-Theoretical Unification of Mpemba Effects: Classical and Quantum**, *Physical Review X* 16, 011065 (2026), DOI `10.1103/rbt4-psfd`, published 2026-03-25. The initially more resourceful state can relax faster when it overlaps less with the slowest relevant channel.
-- Vu & Hayakawa, **Thermomajorization Mpemba Effect**, *Physical Review Letters* 134, 107101 (2025), DOI `10.1103/PhysRevLett.134.107101`.
-- Wang et al., **Quantum Mpemba-like effect in Unruh thermalization**, *JHEP* 2026, 183, DOI `10.1007/JHEP06(2026)183`, published 2026-06-17. Relativistic-QFT thermalization precedent only.
-- Ge, Ishigaki, Lei & Tian, **Quantum Mpemba effect in holography**, arXiv:`2607.20899`, submitted 2026-07-23. Horizon-energy-flux/shifted-free-energy and quasinormal-mode precedent; retained as `preprint_theory`.
-
-## 7. Real observational anchors
-
-### M87* variability
-
-EHT Collaboration, **Horizon-scale variability of M87* from 2017–2021 EHT observations**, *A&A* 704, A91 (2025), DOI `10.1051/0004-6361/202555855`.
-
-It anchors real horizon-scale variability/plasma information. It neither measures Hawking temperature nor establishes a Mpemba trajectory without a dedicated preregistered analysis.
-
-### M87* jet base
-
-EHT Collaboration, **Probing jet base emission of M87* with the 2021 Event Horizon Telescope observations**, *A&A* 706, A27 (2026), DOI `10.1051/0004-6361/202557022`.
-
-It constrains an exterior black-hole-scale jet-base component. The causal rejection of matter escaping from inside the event horizon comes from GR; the observation is an exterior jet/plasma anchor.
-
-### Public products
-
-The EHT portal lists `2026-D01-01 — 2018 and 2021 Calibrated polarimetric data`, last updated `2026-06-29`, referencing A&A 704 A91.
+Recent Mpemba literature emphasizes suppression/overlap of the slowest relaxation mode. The bridge therefore also exposes
 
 ```text
-EHT_2026_D01_01_IDENTIFIED = true
-FILE_LEVEL_SHA256_VERIFIED_IN_RLL = false
-NUMERIC_INGEST_COMPLETE = false
-ASTROPHYSICAL_MPEMBA_INFERENCE = TOKEN_VAZIO
+slow_mode_suppression_ratio = |A_slow,far| / |A_slow,near|
 ```
 
-## 8. Falsifier cascade
+as a diagnostic. A ratio below one is **not** by itself a Mpemba detection; it is a mechanism probe to be combined with the trajectory witness.
 
-A real astrophysical claim must survive, at minimum:
+## 6. Synthetic fixture vs nature
 
-1. domain of the metric/formula;
-2. observer-class separation;
-3. causal-horizon boundary;
-4. physically defensible observable/equilibrium target;
-5. distance-family robustness and no post-hoc metric choice;
-6. preregistered first-passage threshold;
-7. covariance/calibration/noise propagation;
-8. ordinary turbulence/GRMHD/radiative-transfer nulls;
-9. slow-mode ablation where meaningful;
-10. look-elsewhere/post-selection control;
-11. hold-out data;
-12. independent reproduction.
+The runtime `baseline()` contains a deterministic synthetic pair of relaxation curves that intentionally satisfies the witness. Its only purpose is to test the gate.
 
-No finite list is claimed to contain every logically possible falsifier. New independent falsifiers are appended and may invalidate descendants.
+It always emits:
 
-## 9. ATLAS total
+```json
+{
+  "evidence_grade": "SYNTHETIC_GATE_FIXTURE_PLUS_ANALYTIC_IDENTITIES",
+  "global_scientific_claim_allowed": false
+}
+```
+
+Therefore a passing unit test cannot be cited as an astrophysical result.
+
+## 7. Recent literature bridge
+
+### Black-hole thermodynamics
+
+- Mann, R. B. (2026), **Black-hole thermodynamics**, *Nature Reviews Physics* 8, 425-436, DOI `10.1038/s42254-026-00942-9`. Used as a current review of the established thermodynamic framework and open non-equilibrium problems.
+
+### Mpemba definitions and mechanism
+
+- Vu & Hayakawa (2025), **Thermomajorization Mpemba Effect**, *Physical Review Letters* 134, 107101, DOI `10.1103/PhysRevLett.134.107101`. Used to guard against dependence on an arbitrary single distance measure.
+- **Resource-Theoretical Unification of Mpemba Effects: Classical and Quantum** (2026), *Physical Review X* 16, 011065, DOI `10.1103/rbt4-psfd`. Used for the slow-mode/relaxation organization.
+- Wang et al. (2026), **Quantum Mpemba-like effect in Unruh thermalization**, *JHEP* 2026, 183, DOI `10.1007/JHEP06(2026)183`, arXiv:2509.05756. This is a relativistic-QFT thermalization precedent, not an astrophysical black-hole observation.
+- Ge, Ishigaki, Lei & Tian (2026), **Quantum Mpemba effect in holography**, arXiv:2607.20899. This preprint uses a shifted free energy built from energy flux into a black-hole horizon as a monotonic distance and relates the anomalous relaxation to quasinormal-mode competition. It is retained as `preprint_theory` until publication status changes.
+
+## 8. Real observational anchors
+
+### M87* polarimetry
+
+The EHT 2017/2018/2021 analysis published in 2025 reports a stable ring scale but changing polarization structure and improved constraints on 230 GHz emission near the jet base:
+
+```text
+DOI 10.1051/0004-6361/202555855
+```
+
+These data constrain **magnetized plasma dynamics**. They do not measure Hawking temperature.
+
+### M87* jet-base localization
+
+A 2026 EHT analysis uses radio intensity across baseline scales plus modeling to localize a likely compact jet-base region:
+
+```text
+DOI 10.1051/0004-6361/202557022
+```
+
+This is an exterior accretion/jet anchor and directly blocks the narrative that observed jet material must emerge from inside the event horizon.
+
+### Public products identified for the next numerical cycle
+
+The EHT data portal lists:
+
+```text
+2026-D01-01 — 2018 and 2021 calibrated polarimetric data
+released 2026-06-29
+```
+
+The source has been identified but **not numerically ingested or SHA256-verified in this RLL gate yet**, therefore:
+
+```text
+EHT_TIME_DOMAIN_NUMERIC_INGEST = TOKEN_VAZIO
+```
+
+## 9. Falsifier cascade
+
+A real astrophysical Mpemba claim must survive, at minimum:
+
+1. **Domain falsifier** — no static-horizon formula outside its domain.
+2. **Observer falsifier** — no static/free-fall equivalence by notation.
+3. **Causal falsifier** — no material propagation from inside horizon to infinity.
+4. **Distance falsifier** — effect must not be an artifact of one post-hoc distance choice.
+5. **Threshold falsifier** — `epsilon` cannot be selected after inspecting crossings.
+6. **Covariance falsifier** — calibration/noise covariance must be propagated.
+7. **Null-model falsifier** — ordinary turbulent/GRMHD/radiative-transfer relaxation must be compared.
+8. **Slow-mode falsifier** — candidate mode suppression must be tested/ablated where a mode decomposition is meaningful.
+9. **Look-elsewhere falsifier** — campaign/source/time-window selection cannot be outcome-driven.
+10. **Replication falsifier** — independent rerun must recover the result within declared tolerance.
+
+Failure of an ancestor produces:
+
+```text
+QUARANTINE_FROM_DESCENDANTS
+```
+
+while the historical receipt remains append-only.
+
+## 10. ATLAS total routing
 
 ### `ATLAS:X`
 
+Canonical route for this subject:
+
 ```text
-heuristic -> existing strong_gravity bridges -> claim ledger
--> source-class provenance -> analytic/negative tests
--> real-data ingest -> preregistered inference -> falsifier cascade
--> bounded claim transition
+session heuristic
+ -> strong_gravity existing bridges
+ -> mpemba_horizon_falsifier
+ -> evidence contract
+ -> public-data ingest
+ -> matched relaxation analysis
+ -> falsifier cascade
+ -> bounded claim ledger
 ```
 
-### `L:X`
-Every claim transition is longitudinal and append-only; failed/superseded states remain citable.
+### `L:X` — longitudinal
 
-### `O:X`
-Independent axes: `thermodynamics | observer | plasma | jet | relaxation | observation | cosmology`.
+Preserve every transition of each `BH-MP-*` claim. A failed or superseded state is not deleted.
 
-### `T:X`
-Permitted bridges include BH thermodynamics↔non-equilibrium relaxation, QFT/Unruh↔Mpemba precedent, holography↔horizon-flux distance, EHT variability↔exterior plasma, EHT jet-base↔jet constraints. Every bridge has `does_not_support` boundaries.
+### `O:X` — orthogonal
+
+Keep independent axes for:
+
+```text
+thermodynamics | observer/coordinates | plasma | jet | relaxation | observation | cosmological relevance
+```
+
+A pass on one axis cannot automatically promote another.
+
+### `T:X` — transversal
+
+Permitted bridges include:
+
+```text
+black-hole thermodynamics <-> non-equilibrium relaxation
+QFT/Unruh <-> Mpemba precedent
+holography <-> horizon-flux distance
+EHT polarimetry <-> exterior plasma dynamics
+EHT jet base <-> jet-launching constraints
+```
+
+Every bridge carries a `does_not_support` boundary.
 
 ### `REL:X`
-`DERIVES | SUPPORTS | CONSTRAINS | ANALOGY_ONLY | FALSIFIES | DOES_NOT_SUPPORT | TOKEN_VAZIO`.
+
+Relations are typed as:
+
+```text
+DERIVES | SUPPORTS | CONSTRAINS | ANALOGY_ONLY | FALSIFIES | DOES_NOT_SUPPORT | TOKEN_VAZIO
+```
 
 ### `SCALE:X`
-Do not collapse `open-system -> QFT detector -> holographic bulk -> horizon-scale plasma -> astrophysical jet -> cosmology`.
+
+Never collapse scales:
+
+```text
+quantum/open-system -> QFT detector -> holographic bulk -> horizon-scale plasma -> astrophysical jet
+```
+
+A structural resemblance is not a scale-transfer proof.
 
 ### `EVID:X`
-Explicit source classes: analytic identity, peer-reviewed theory/review, preprint theory, observational publication, public numerical product, checksum-verified local ingest, reproduced covariance-aware inference.
+
+Evidence ordering:
+
+```text
+analytic identity
+peer-reviewed theory
+preprint theory
+public observational metadata
+checksum-verified numerical observational data
+covariance-aware reproduced inference
+```
+
+The labels describe source class, not a universal ranking of truth.
 
 ### `GAP:X`
 
+Current protected gaps:
+
 ```text
-direct astrophysical Hawking thermometry = TOKEN_VAZIO
+direct Hawking thermometry = TOKEN_VAZIO
 astrophysical Mpemba witness = TOKEN_VAZIO
-EHT 2026-D01-01 numeric ingest + SHA256 = TOKEN_VAZIO
-preregistered EHT D(t)/epsilon = TOKEN_VAZIO
-covariance-aware matched fit = TOKEN_VAZIO
+EHT time-domain numeric ingest + SHA256 = TOKEN_VAZIO
+preregistered D(t) for EHT = TOKEN_VAZIO
+covariance-aware fit = TOKEN_VAZIO
 independent reproduction = TOKEN_VAZIO
 ```
 
 ### `LEARN:X`
-A gap closes only through a receipt containing source identity, checksums where applicable, exact command/parameters, uncertainty/covariance treatment, falsifier outcomes and exact claim transition.
 
-## 10. Next evidence cycle
+A gap closes only by a receipt carrying source identity, checksum where applicable, command, parameters, result, uncertainty, falsifier outcomes and exact claim transition.
 
-1. materialize EHT 2018/2021 public products;
-2. record DOI/source/access/license, filenames and SHA256;
-3. freeze immutable input manifest;
-4. choose a defensible time-resolved observable and target state;
-5. preregister `D(t)`, admissible alternatives and `epsilon`;
-6. define far/near ordering independently of the outcome;
+## 11. Next executable evidence cycle
+
+The strongest next cycle is not another synthetic formula. It is:
+
+1. materialize the public EHT 2018/2021 calibrated polarimetric products;
+2. record source URLs/DOIs, local filenames, license/access context and SHA256;
+3. freeze an immutable input manifest;
+4. select one time-resolved observable that has a physically defensible target state;
+5. preregister the admissible `D(t)` family and `epsilon` rule;
+6. define far/near initial ordering without using the later crossing;
 7. propagate calibration/covariance uncertainty;
-8. compare standard relaxation/turbulence/GRMHD-compatible nulls;
-9. run witness, negative controls, ablations, hold-out and look-elsewhere controls;
-10. issue append-only receipt;
-11. promote `BH-MP-06` only after the complete gate and independent reproduction.
+8. compare ordinary relaxation/turbulence/GRMHD-compatible nulls before any Mpemba interpretation;
+9. run the witness and all negative controls;
+10. write an append-only receipt;
+11. promote `BH-MP-06` only if the complete gate passes.
 
-Until then:
+Until step 11:
 
 ```text
 BH-MP-06 = TOKEN_VAZIO
-global_scientific_claim_allowed = false
 ```
 
-## 11. Cosmology boundary
+## 12. Boundary with RLL cosmology
 
-A local strong-gravity/Mpemba-like anomaly does not imply a modified cosmological background, `H(z)`, BAO/CMB/growth prediction or RLL-over-ΛCDM preference. Any such bridge requires its own equation, likelihood, provenance and falsification gate.
+This strong-gravity module does **not** connect a local Mpemba-like relaxation to an RLL cosmological-background modification. Any path to `H(z)`, BAO, CMB, growth or an RLL-vs-LambdaCDM preference requires an explicit independent bridge and its own likelihood/falsification gate.
+
+```text
+local strong-gravity anomaly != cosmological model validation
+```

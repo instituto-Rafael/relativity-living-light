@@ -1,0 +1,73 @@
+{
+  "schema": "rll.qcd_bridge_manifest.v1",
+  "updated_at": "2026-08-26",
+  "claim_boundary": "Collider collective-flow observables are QCD/hydrodynamic bridge evidence only. They are not direct RLL cosmological likelihood terms.",
+  "qgp_collectivity_bridge": [
+    {
+      "id": "alice-oo-nene-flow-2025",
+      "organization": "ALICE Collaboration",
+      "title": "Evidence of nuclear geometry-driven anisotropic flow in OO and Ne-Ne collisions at sqrt(s_NN)=5.36 TeV",
+      "year": 2025,
+      "arxiv": "2509.06428",
+      "url": "https://arxiv.org/abs/2509.06428",
+      "observables": ["v2", "v3"],
+      "role": "QGP collectivity and initial-geometry validation context",
+      "direct_rll_likelihood": false,
+      "status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "cms-hin-25-009",
+      "organization": "CMS Collaboration",
+      "title": "Collective flow in OO and NeNe collisions at sqrt(s_NN)=5.36 TeV",
+      "year": 2025,
+      "reference": "CMS-PAS-HIN-25-009",
+      "url": "https://cms.cern/news/collective-motion-tiny-systems-oxygen-and-neon-collisions-window-nuclear-structure",
+      "observables": ["v2", "v3"],
+      "role": "independent light-ion collective-flow cross-check",
+      "direct_rll_likelihood": false,
+      "status": "REFERENCE_ONLY"
+    }
+  ],
+  "eos_candidates": [
+    {
+      "id": "hotqcd-eos-2014",
+      "authors": "Bazavov et al. (HotQCD Collaboration)",
+      "title": "The equation of state in (2+1)-flavor QCD",
+      "journal": "Physical Review D 90, 094503",
+      "year": 2014,
+      "doi": "10.1103/PhysRevD.90.094503",
+      "arxiv": "1407.6387",
+      "temperature_range": "130-400 MeV",
+      "role": "candidate continuum lattice-QCD EoS source for the crossover regime",
+      "numeric_table_ingested": false,
+      "status": "TOKEN_VAZIO_NUMERIC_INGEST"
+    },
+    {
+      "id": "bresciani-qcd-eos-2025",
+      "authors": "Bresciani, Dalla Brida, Giusti, Pepe",
+      "title": "QCD Equation of State with Nf=3 Flavors up to the Electroweak Scale",
+      "journal": "Physical Review Letters 134, 201904",
+      "year": 2025,
+      "doi": "10.1103/PhysRevLett.134.201904",
+      "temperature_range": "3-165 GeV",
+      "role": "high-temperature QCD EoS coverage; not a replacement for the crossover table",
+      "numeric_table_ingested": false,
+      "status": "REFERENCE_ONLY"
+    }
+  ],
+  "cosmology_constraint_layer": {
+    "verified_temperature_resolved_delta_h_bound": null,
+    "status": "TOKEN_VAZIO",
+    "reason": "No checksum-verified temperature-resolved BBN/CMB constraint on the gate's max_abs_delta_h has yet been materialized in this repository. The gate must not invent one."
+  },
+  "implementation": {
+    "tool": "tools/rll_qcd_primordial_gate.py",
+    "receipt": "results/audit/rll_qcd_primordial_gate.json",
+    "statuses": ["PASS", "FALSIFIED", "TOKEN_VAZIO"],
+    "pspi_actions": [
+      "ALLOW_LOCAL_RESULT_ONLY",
+      "QUARANTINE_FROM_DESCENDANTS",
+      "HOLD_MISSING_EVIDENCE"
+    ]
+  }
+}

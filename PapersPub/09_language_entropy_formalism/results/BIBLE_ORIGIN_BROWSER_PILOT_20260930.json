@@ -1,0 +1,98 @@
+{
+  "schema": "rll.bible_origin_browser_pilot.v1",
+  "mu_id": "MU-RLL-BIBLE-ORIGIN-BROWSER-PILOT-20260930",
+  "date": "2026-09-30",
+  "state": "OBSERVED_UNPROMOTED",
+  "claim_allowed": false,
+  "execution_surface": "isolated_python_analysis_harness",
+  "normalization": {
+    "unicode": "NFC",
+    "whitespace": "collapsed",
+    "window_codepoints": 1200,
+    "note": "Browser-visible chapter text was transcribed into the local harness. Sample SHA-256 values identify those local normalized windows, not the official source files."
+  },
+  "sources": {
+    "hbo_genesis_1": {
+      "url": "https://ebible.org/hbo/GEN01.htm",
+      "edition": "Hebrew Masoretic OT",
+      "license": "Public Domain",
+      "source_file_sha256": "TOKEN_VAZIO"
+    },
+    "grc_matthew_1": {
+      "url": "https://ebible.org/grc-tisch/MAT01.htm",
+      "edition": "Tischendorf Greek NT",
+      "license": "Public Domain",
+      "source_file_sha256": "TOKEN_VAZIO"
+    },
+    "grc_john_1": {
+      "url": "https://ebible.org/grc-tisch/JHN01.htm",
+      "edition": "Tischendorf Greek NT",
+      "license": "Public Domain",
+      "source_file_sha256": "TOKEN_VAZIO"
+    },
+    "arc_daniel_2": {
+      "url": "https://ebible.org/hbo/DAN02.htm",
+      "edition": "Hebrew Masoretic OT",
+      "license": "Public Domain",
+      "source_body_state": "TOKEN_VAZIO_SOURCE_BODY",
+      "reason": "The official hbo page route was resolved, but the current parser did not expose the chapter body. A search result from /heb/ was rejected because it was not the pinned hbo witness."
+    }
+  },
+  "metrics": {
+    "hbo_genesis_1_window": {
+      "codepoints": 1200,
+      "utf8_bytes": 2282,
+      "alphabet_codepoints": 53,
+      "h0_char_bits_per_symbol": 5.039935870592881,
+      "h1_cond_char_bits_per_symbol": 2.736320779124791,
+      "c1_local_predictability": 0.4570723022309212,
+      "gzip9_ratio": 0.33654688869412797,
+      "bz2_9_ratio": 0.2900964066608238,
+      "lzma9_ratio": 0.3470639789658195,
+      "local_window_sha256": "a32c94182be7cc21b38184fdcce1d6d33cac36428b328e34c3631ef3747844e7"
+    },
+    "grc_matthew_1_window": {
+      "codepoints": 1200,
+      "utf8_bytes": 2379,
+      "alphabet_codepoints": 62,
+      "h0_char_bits_per_symbol": 4.865523253915967,
+      "h1_cond_char_bits_per_symbol": 2.023797738717378,
+      "c1_local_predictability": 0.5840534238350326,
+      "gzip9_ratio": 0.2551492223623371,
+      "bz2_9_ratio": 0.23245060949978982,
+      "lzma9_ratio": 0.28415300546448086,
+      "local_window_sha256": "822fd1eab2e18a5bcbd9daff115e24fb18e683303adedf7e461be8d863250337"
+    },
+    "grc_john_1_window": {
+      "codepoints": 1200,
+      "utf8_bytes": 2351,
+      "alphabet_codepoints": 73,
+      "h0_char_bits_per_symbol": 4.985082380389182,
+      "h1_cond_char_bits_per_symbol": 2.7074642290915376,
+      "c1_local_predictability": 0.45688676284620033,
+      "gzip9_ratio": 0.3619736282433007,
+      "bz2_9_ratio": 0.3173117822203318,
+      "lzma9_ratio": 0.3879200340280732,
+      "local_window_sha256": "b54751142aed0ca07d13b8aa9dd45e60ccf850b84c4da1eee836bc4c33ca60f2"
+    }
+  },
+  "same_edition_greek_observation": {
+    "comparison": "Tischendorf Matthew 1 vs John 1, first 1200 normalized codepoints",
+    "john_minus_matthew_h0": 0.11955912647321482,
+    "john_minus_matthew_h1": 0.6836664903741596,
+    "john_minus_matthew_c1": -0.1271666609888323,
+    "john_less_compressible_all_three_codecs": true,
+    "interpretation": "This pilot is directionally compatible with John being less locally predictable/more difficult to compress than Matthew in this window.",
+    "confound": "Matthew 1 is a highly repetitive genealogy. This is not evidence for whole-book ordering or a universal property."
+  },
+  "cross_script_boundary": {
+    "state": "NO_PROMOTION",
+    "reason": "Raw code-point and UTF-8 statistics across Hebrew and Greek are affected by alphabet, diacritics, normalization and encoding. Cross-language claims require matched representation and resampling."
+  },
+  "reconstruction": {
+    "gzip": true,
+    "bz2": true,
+    "lzma": true
+  },
+  "next_gate": "Automated ingestion of pinned source artifacts with source SHA-256, exact verse segmentation, Aramaic range extraction, then equal-window resampling across complete books/passages."
+}

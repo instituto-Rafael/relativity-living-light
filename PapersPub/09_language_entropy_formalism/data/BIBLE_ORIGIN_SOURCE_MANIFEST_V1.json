@@ -1,0 +1,66 @@
+{
+  "schema": "rll.bible_origin_sources.v1",
+  "date": "2026-09-30",
+  "state": "SOURCE_CANDIDATES_LICENSE_VERIFIED_DOWNLOAD_NOT_PINNED",
+  "claim_allowed": false,
+  "license_registry": {
+    "authority": "eBible.org Bible copyright information",
+    "url": "https://ebible.org/Scriptures/copyright.php",
+    "observed_2026_09_30": true
+  },
+  "sources": [
+    {
+      "source_id": "hbo_masoretic_ot_ebible",
+      "language": "hbo",
+      "label": "Hebrew Masoretic OT",
+      "registry_code": "hboMTeb",
+      "license_state": "PUBLIC_DOMAIN_REGISTRY_OBSERVED",
+      "scope": "Old Testament Hebrew witness; includes passages linguistically classified as Biblical Aramaic",
+      "download_ref": "TOKEN_VAZIO_PIN_EXACT_DOWNLOAD_ARTIFACT",
+      "sha256": "TOKEN_VAZIO",
+      "notes": "Use raw text and language-region classification separately; do not label the whole witness Aramaic."
+    },
+    {
+      "source_id": "hbo_wlc_ebible",
+      "language": "hbo",
+      "label": "Westminster Leningrad Codex Hebrew OT",
+      "registry_code": "hboWLCeb",
+      "license_state": "PUBLIC_DOMAIN_REGISTRY_OBSERVED",
+      "scope": "Alternative/public-domain Hebrew textual witness",
+      "download_ref": "TOKEN_VAZIO_PIN_EXACT_DOWNLOAD_ARTIFACT",
+      "sha256": "TOKEN_VAZIO",
+      "notes": "If Open Scriptures morphology is used, annotation licensing is separate from the underlying public-domain WLC text."
+    },
+    {
+      "source_id": "grc_tischendorf_ebible",
+      "language": "grc",
+      "label": "Tischendorf Greek NT",
+      "registry_code": "grcTischeb",
+      "license_state": "PUBLIC_DOMAIN_REGISTRY_OBSERVED",
+      "scope": "Ancient/Koine Greek New Testament witness",
+      "download_ref": "TOKEN_VAZIO_PIN_EXACT_DOWNLOAD_ARTIFACT",
+      "sha256": "TOKEN_VAZIO",
+      "notes": "Primary V1 candidate for Matthew and John."
+    }
+  ],
+  "aramaic_passage_policy": {
+    "state": "REFERENCE_LIST_REQUIRES_SOURCE_LEVEL_VERIFICATION",
+    "candidate_ranges": [
+      "Genesis 31:47",
+      "Jeremiah 10:11",
+      "Daniel 2:4b-7:28",
+      "Ezra 4:8-6:18",
+      "Ezra 7:12-7:26"
+    ],
+    "rule": "Do not ingest as ARC until the exact source witness and verse segmentation are verified."
+  },
+  "predecessor_parallel_corpus": {
+    "rll_commit": "3a34d6f3841857d2a1802a2902cbb9176f026122",
+    "books": ["Genesis", "Matthew", "John"],
+    "languages": ["eng", "spa", "por"],
+    "status": "EXECUTED_PREDECESSOR_SCOPE",
+    "strong_compression_claim": "FAIL",
+    "reconstruction_gate": "PASS",
+    "corrected_null_gate": "PASS_SCOPED"
+  }
+}

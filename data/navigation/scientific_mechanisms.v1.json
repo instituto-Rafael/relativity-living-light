@@ -112,7 +112,7 @@
         "run.log"
       ],
       "allowed_claims": [
-        "Tier 1 numerical diagnostics executed under their declared inputs"
+        "Tier 1 workflow, implementation and tests were located and hashed"
       ],
       "blocked_claims": [
         "a theorem was proved by CI",

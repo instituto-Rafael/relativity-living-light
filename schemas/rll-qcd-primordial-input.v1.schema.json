@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rafaelmeloreisnovo/relativity-living-light/schemas/rll-qcd-primordial-input.v1.schema.json",
+  "title": "RLL QCD Primordial Gate Input v1",
+  "description": "Structural contract for QCD-era RLL gate inputs; schema validation does not establish scientific validity or authorize a scientific claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "evidence", "constraint", "reference", "rows"],
+  "properties": {
+    "schema": {"const": "rll.qcd_primordial_input.v1"},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_kind", "checksum_verified", "baseline_equivalent", "eos_provenance_verified"],
+      "properties": {
+        "source_kind": {"type": "string", "enum": ["real_data", "synthetic_fixture", "TOKEN_VAZIO"]},
+        "checksum_verified": {"type": "boolean"},
+        "baseline_equivalent": {"type": "boolean"},
+        "eos_provenance_verified": {"type": "boolean"}
+      }
+    },
+    "constraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_abs_delta_h", "verified"],
+      "properties": {
+        "max_abs_delta_h": {"type": ["number", "null"], "minimum": 0},
+        "verified": {"type": "boolean"},
+        "source": {"type": ["string", "null"]}
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["T_MeV", "g_star_s"],
+      "properties": {
+        "T_MeV": {"type": "number", "exclusiveMinimum": 0},
+        "g_star_s": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["T_MeV", "epsilon_background_GeV_fm3", "epsilon_rll_GeV_fm3", "g_star_s"],
+        "properties": {
+          "T_MeV": {"type": "number", "exclusiveMinimum": 0},
+          "epsilon_background_GeV_fm3": {"type": "number", "exclusiveMinimum": 0},
+          "epsilon_rll_GeV_fm3": {"type": "number"},
+          "g_star_s": {"type": "number", "exclusiveMinimum": 0}
+        }
+      }
+    }
+  }
+}

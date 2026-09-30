@@ -13,7 +13,10 @@ def test_workflow_documentation_contract_matches_repository() -> None:
     assert payload["passed"] is True
 
     contract = yaml.safe_load(DEFAULT_CONTRACT.read_text(encoding="utf-8"))
-    assert payload["active_workflows"] == contract["inventory"]["active_workflows"]
+
+    expected_count = int(contract["inventory"]["active_workflows"])
+    assert payload["active_workflows"] == expected_count
+    assert payload["active_workflows"] == len(payload["registry"])
     assert payload["canonical_pipeline"] == ".github/workflows/rll-pipeline-linear-completo.yml"
 
     paths = {row["path"] for row in payload["registry"]}
