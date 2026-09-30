@@ -1,0 +1,95 @@
+name: RLL Bible10 Multilingual Evidence Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "configs/bible10-public-domain.v1.json"
+      - "scripts/bible10_*.py"
+      - "tests/test_bible10_pipeline.py"
+      - "docs/science/RLL_BIBLE10_MULTILINGUAL_ACOUSTIC_GEOMETRY_PROTOCOL_V1.md"
+      - ".github/workflows/rll-bible10-multilingual.yml"
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUNBUFFERED: "1"
+  CLAIM_ALLOWED: "false"
+
+jobs:
+  bible10:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install bounded analysis dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check brotli zstandard
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends espeak-ng
+
+      - name: Unit gates
+        run: python -m unittest tests/test_bible10_pipeline.py -v
+
+      - name: Ingest 10 public-domain translations — John, Genesis, Matthew
+        run: |
+          set -euo pipefail
+          mkdir -p .rafaelia-artifacts/bible10
+          python scripts/bible10_ingest.py \
+            --registry configs/bible10-public-domain.v1.json \
+            --books JHN,GEN,MAT \
+            --cache .rafaelia-artifacts/bible10/source-cache \
+            --out .rafaelia-artifacts/bible10/corpus
+
+      - name: Entropy compression number and geometry analysis
+        run: |
+          python scripts/bible10_analyze.py \
+            --corpus .rafaelia-artifacts/bible10/corpus \
+            --out .rafaelia-artifacts/bible10/BIBLE10_ANALYSIS.json
+
+      - name: Synthetic phoneme and waveform probe
+        run: |
+          python scripts/bible10_g2p.py \
+            --registry configs/bible10-public-domain.v1.json \
+            --corpus .rafaelia-artifacts/bible10/corpus \
+            --books JHN,GEN,MAT \
+            --limit-per-book 12 \
+            --render-jhn11 \
+            --out .rafaelia-artifacts/bible10/g2p
+          mkdir -p .rafaelia-artifacts/bible10/acoustics
+          find .rafaelia-artifacts/bible10/g2p -name 'JHN_1_1.synthetic.wav' -print0 | while IFS= read -r -d '' wav; do
+            lang="$(basename "$(dirname "$wav")")"
+            python scripts/bible10_acoustics.py "$wav" \
+              --out ".rafaelia-artifacts/bible10/acoustics/${lang}.JHN_1_1.json"
+          done
+
+      - name: Evidence boundary assertions
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('.rafaelia-artifacts/bible10')
+          a=json.loads((p/'BIBLE10_ANALYSIS.json').read_text())
+          i=json.loads((p/'corpus/INGEST_RECEIPT.json').read_text())
+          assert i['languages']==10
+          assert a['claim_allowed'] is False
+          assert len(a['languages'])==10
+          for f in (p/'acoustics').glob('*.json'):
+              x=json.loads(f.read_text())
+              assert x['physical']['state']=='TOKEN_VAZIO_NO_PRESSURE_CALIBRATION'
+          print(json.dumps({'status':'PASS_BOUNDED','languages':10,'claim_allowed':False},sort_keys=True))
+          PY
+
+      - name: Upload corpus and evidence receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-bible10-${{ github.run_id }}
+          path: .rafaelia-artifacts/bible10/
+          if-no-files-found: error

@@ -1,0 +1,35 @@
+{
+  "schema": "rll.bible10.sources.v1",
+  "claim_allowed": false,
+  "source_policy": {
+    "redistribution": "PUBLIC_DOMAIN_ONLY",
+    "source_provider": "eBible.org",
+    "download_format": "USFM ZIP",
+    "initial_analysis_books": ["JHN", "GEN", "MAT"],
+    "full_corpus_supported_when_source_complete": true,
+    "panel_definition": "10-language experimental panel selected for script/family diversity plus reproducible redistribution rights; not a global speaker-count ranking",
+    "phoneme_state": "SYNTHETIC_G2P_ALLOWED_BUT_NOT_GROUND_TRUTH",
+    "audio_state": "SYNTHETIC_AUDIO_ALLOWED_BUT_PHYSICAL_ENERGY_REQUIRES_CALIBRATION"
+  },
+  "languages": [
+    {"lang":"eng","name":"English","voice":"en","ebible_id":"engwebp","title":"World English Bible","license":"Public Domain","license_url":"https://ebible.org/engwebp/copyright.htm"},
+    {"lang":"spa","name":"Spanish","voice":"es","ebible_id":"spaRV1909","title":"Reina Valera 1909","license":"Public Domain","license_url":"https://ebible.org/spaRV1909/copyright.htm"},
+    {"lang":"por","name":"Portuguese","voice":"pt-br","ebible_id":"porbrbsl","title":"Bíblia Portuguesa Mundial","license":"Public Domain","license_url":"https://ebible.org/porbrbsl/copyright.htm"},
+    {"lang":"fra","name":"French","voice":"fr-fr","ebible_id":"fraLSG","title":"Louis Segond 1910","license":"Public Domain","license_url":"https://ebible.org/fraLSG/copyright.htm"},
+    {"lang":"deu","name":"German","voice":"de","ebible_id":"deu1912","title":"Lutherbibel 1912","license":"Public Domain","license_url":"https://ebible.org/deu1912/copyright.htm"},
+    {"lang":"ita","name":"Italian","voice":"it","ebible_id":"ita1885","title":"Diodati Bibbia 1885","license":"Public Domain","license_url":"https://ebible.org/ita1885/copyright.htm"},
+    {"lang":"rus","name":"Russian","voice":"ru","ebible_id":"russyn","title":"Russian Synodal Bible","license":"Public Domain","license_url":"https://ebible.org/russyn/copyright.htm"},
+    {"lang":"cmn","name":"Mandarin Chinese (simplified)","voice":"cmn","ebible_id":"cmn-cu89s","title":"Chinese Union Version (simplified)","license":"Public Domain","license_url":"https://ebible.org/cmn-cu89s/copyright.htm"},
+    {"lang":"arb","name":"Arabic","voice":"ar","ebible_id":"arb-vd","title":"Arabic Van Dyck","license":"Public Domain","license_url":"https://ebible.org/arb-vd/copyright.htm"},
+    {"lang":"srp","name":"Serbian (Latin)","voice":"sr","ebible_id":"srp1865","title":"Serbian DK Bible (Latin)","license":"Public Domain","license_url":"https://ebible.org/srp1865/copyright.htm"}
+  ],
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TEXT != PHONEME != SYNTHETIC_G2P != AUDIO_WAVEFORM != CALIBRATED_ACOUSTIC_ENERGY",
+    "PRIME_INDEXING != PRIME_CAUSATION",
+    "NUMEROLOGY_EXPLORATION != PHYSICAL_CAUSATION",
+    "POINCARE_EMBEDDING != PHYSICAL_SPACETIME",
+    "E_MC2_REST_ENERGY != ACOUSTIC_ENERGY_FORMULA",
+    "PRIVATE_USER_CORPUS != PUBLIC_RLL_CORPUS"
+  ]
+}
