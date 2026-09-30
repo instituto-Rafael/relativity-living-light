@@ -80,6 +80,50 @@ GEOMETRY_EXECUTION != RLL_EXECUTION
 SILENT_STEP = GAP
 ```
 
+
+## Branch-topology convergence audit — 2026-09-30
+
+The nominal transit route is:
+
+`rll/lab -> rll/integration -> rll/release -> main`.
+
+Observed Git ancestry does not form a simple linear promotion chain:
+
+| compare | status | head ahead | head behind |
+|---|---|---:|---:|
+| rll/lab...rll/integration | diverged | 1 | 138 |
+| rll/integration...rll/release | behind | 0 | 1473 |
+| rll/release...main | ahead | 2290 | 0 |
+| rll/lab...main | diverged | 969 | 289 |
+| rll/integration...main | diverged | 969 | 152 |
+| rll/release...rll/lab | ahead | 1610 | 0 |
+
+Therefore:
+
+```text
+BRANCH_TOPOLOGY = GAP
+DIRECT_WORK_BRANCH_TO_MAIN = BLOCKED
+MASS_MERGE_TO_HIDE_DIVERGENCE = FORBIDDEN
+```
+
+The PR created against `main` is retained as diagnostic evidence; Transit Tower correctly reported `main accepts only rll/release`. Retargeting that main-based branch to `rll/lab` would import hundreds of unrelated commits, so it is not a valid correction.
+
+### CI causal separation
+
+Observed on the convergence PR:
+
+- convergence-specific blocker: invalid branch transition / branch-maturity topology;
+- preserved pre-existing scientific negative gate: `FAIL_PREREGISTERED_DISTANCE_TOLERANCE`;
+- schema-contract runner: 60/60 JSON schemas structurally parse, while the separate schema claim-boundary validator fails on its own `schemas/` boundary;
+- Six Sigma real-data control: validation passes, but repository documentation inventory is materially stale relative to the current tracked tree;
+- multiple independent checks pass, including real-data contract, claim-boundary, formula artifacts, Q16 split/assembly and repository inventory.
+
+No unrelated failing gate may be rewritten or weakened to make this convergence green.
+
+## Updated convergence decision
+
+The correct next operation is branch-authority reconciliation, followed by a minimal semantic transplant through the authorized ladder. Until that exists, the RLL convergence artifact is `IMPLEMENTED_UNTESTED/BLOCKED_BRANCH_TOPOLOGY`, not merged scientific authority.
+
 ## R3
 
 F_ok = authority split + intake rules + current gate snapshot materialized.  
