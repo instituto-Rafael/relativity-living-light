@@ -1,0 +1,207 @@
+{
+  "schema": "rll.leverage-frontier.v1",
+  "generated_at": "2026-10-01",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "purpose": "Pin the smallest reversible actions that reduce the largest scientific and operational uncertainties without treating artifacts, execution, evidence, or claims as equivalent.",
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "BRANCH_DIVERGENCE != TECHNICAL_VALUE",
+    "HASH_AUTHENTICATES_REPRESENTATION_NOT_TRUTH",
+    "NO_SECRET_VALUE_PERSISTENCE",
+    "NO_DEFAULT_BRANCH_MUTATION_FROM_THIS_ROUTE"
+  ],
+  "exact_refs": {
+    "rll_main": "4308b1b7670176e449239b4b17681e728c66b9a3",
+    "rll_lab": "b4f6059e5ade5f1bc2efce876435369b015ae3da",
+    "rll_integration": "2f30179ebebf91e7514ffdffb61609a3cf12ef0b",
+    "mapa_main": "d93e4d8ff27644f190830a976b42f2839177557c",
+    "rafgittools_main": "f1f3ea396f5b33efd87005383b7ef90a23fba8c2"
+  },
+  "branch_frontier": {
+    "main_vs_lab": {
+      "state": "DIVERGED",
+      "main_unique_commits": 1106,
+      "lab_unique_commits": 297,
+      "merge_base": "c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1",
+      "decision": "NO_BULK_MERGE_OR_RESET",
+      "safe_method": "exact-ref semantic microtransplant after patch-equivalence review"
+    },
+    "perturbation_closure_branch": {
+      "branch": "science/rll-perturbation-closure-v2-20260925",
+      "relative_to_main": {"ahead": 216, "behind": 1106},
+      "decision": "DO_NOT_MERGE_WHOLE_BRANCH"
+    },
+    "class_camb_branch": {
+      "branch": "science/rll-class-camb-dual-v1-20260925",
+      "relative_to_main": {"ahead": 216, "behind": 1106},
+      "decision": "DO_NOT_MERGE_WHOLE_BRANCH"
+    }
+  },
+  "orphan_candidate": {
+    "source_branch": "science/rll-perturbation-closure-v2-20260925",
+    "path": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_SUCCESSOR_20260922_V3.json",
+    "blob_sha": "eeebb67c5a4a5bb49153b1d1fb7bd8a561c0af84",
+    "state_in_source": "A1_2_GAUGE_FORM_CANDIDATE_REGULARIZATION_PENDING_CI",
+    "key_candidate": "conformal_newtonian_reference + U_s=(1+w_s)theta_s",
+    "main_presence_check": "NO_MATCH_FOR_conformal_newtonian_reference",
+    "promotion_state": "SEMANTIC_REVIEW_REQUIRED_NOT_PROMOTED",
+    "reason": "The candidate is absent from current main, but current main contains a later P0 status record; copying V3 as current state could regress chronology and authority.",
+    "remaining_blockers": [
+      "super-horizon initial conditions",
+      "independent CLASS variable/gauge map",
+      "independent CAMB variable/gauge map",
+      "perturbed Einstein/Bianchi residual",
+      "full ODE integration and convergence",
+      "cross-engine observable parity"
+    ]
+  },
+  "priority_method": {
+    "type": "HEURISTIC_NOT_SCIENTIFIC_METRIC",
+    "formula": "leverage=(uncertainty_reduction+risk_reduction+1.5*unlock_multiplier+1.25*token_vazio_criticality+reversibility)/effort",
+    "scale": "1..5 per factor",
+    "rule": "score routes search order only; evidence gates still decide promotion"
+  },
+  "priority_actions": [
+    {
+      "rank": 1,
+      "id": "L1_PERTURBATION_GOLDEN_FALSIFIER",
+      "action": "Freeze one solver-neutral linear perturbation contract: gauge, variables, super-horizon ICs, cancellation-resistant transition regularization, Einstein/Bianchi residuals and LCDM-off limit; then independently map to CLASS and CAMB.",
+      "effort": 3,
+      "uncertainty_reduction": 5,
+      "risk_reduction": 5,
+      "unlock_multiplier": 5,
+      "token_vazio_criticality": 5,
+      "reversibility": 5,
+      "claim_allowed": false,
+      "unlocks": ["CLASS/CAMB", "f_sigma8", "CMB_TT_TE_EE", "CMB_lensing", "P_k", "physical_model_discrimination"],
+      "falsifier": "Failure to recover constraints/conservation, stable super-horizon behavior, LCDM limit, or cross-engine parity blocks the RLL perturbation sector."
+    },
+    {
+      "rank": 2,
+      "id": "L2_CANONICAL_LIKELIHOOD_FREEZE",
+      "action": "Run DESI DR2 full covariance + Pantheon+ STAT+SYS + identical priors/nuisances through one frozen manifest and reconcile MCMC, nested evidence and information criteria; precede promotion with synthetic recovery/null injection.",
+      "effort": 3,
+      "uncertainty_reduction": 5,
+      "risk_reduction": 5,
+      "unlock_multiplier": 4,
+      "token_vazio_criticality": 5,
+      "reversibility": 5,
+      "claim_allowed": false
+    },
+    {
+      "rank": 3,
+      "id": "L3_BRANCH_AUTHORITY_SUCCESSOR",
+      "action": "Pin exact main/lab/integration refs and classify unique patches by semantic equivalence before any transplant; never use commit count as evidence of value.",
+      "effort": 1,
+      "uncertainty_reduction": 4,
+      "risk_reduction": 5,
+      "unlock_multiplier": 4,
+      "token_vazio_criticality": 4,
+      "reversibility": 5,
+      "claim_allowed": false
+    },
+    {
+      "rank": 4,
+      "id": "L4_COMPATIBILITY_BEFORE_JOINT",
+      "action": "Execute eta(z), F_AP, calibration and reconstruction-sensitivity gates before multiplying likelihoods.",
+      "effort": 2,
+      "uncertainty_reduction": 4,
+      "risk_reduction": 5,
+      "unlock_multiplier": 3,
+      "token_vazio_criticality": 4,
+      "reversibility": 5,
+      "claim_allowed": false
+    },
+    {
+      "rank": 5,
+      "id": "L5_R2_INDEPENDENT_COMPUTATIONAL_CROSSCHECK",
+      "action": "After L1/L2 freeze, reproduce with an alternate sampler/likelihood implementation or independent solver path before stronger language.",
+      "effort": 4,
+      "uncertainty_reduction": 5,
+      "risk_reduction": 5,
+      "unlock_multiplier": 5,
+      "token_vazio_criticality": 5,
+      "reversibility": 5,
+      "claim_allowed": false
+    },
+    {
+      "rank": 6,
+      "id": "L6_INDEPENDENT_FALSIFIERS",
+      "action": "Keep FRB and magneto-optical C10 as independent lanes with field/Faraday/instrument nulls; do not let them substitute for central perturbation closure.",
+      "effort": 4,
+      "uncertainty_reduction": 4,
+      "risk_reduction": 3,
+      "unlock_multiplier": 3,
+      "token_vazio_criticality": 3,
+      "reversibility": 5,
+      "claim_allowed": false
+    }
+  ],
+  "modern_literature_method_links": [
+    {
+      "arxiv": "2607.14854",
+      "role": "CAMB v2 numerical validation methodology",
+      "adoptable_method": "deterministic accuracy boosting, fixed-reference regression, matched-assumption CLASS crosscheck, targeted precision controls",
+      "model_physics_imported": false
+    },
+    {
+      "arxiv": "2609.40176",
+      "role": "DESI DR2 background-degeneracy and perturbation-discrimination example",
+      "adoptable_method": "CMB-calibrated predictive holdout, prior-sensitive evidence reporting, growth/lensing/ISW discrimination, explicit perturbation caveat",
+      "model_physics_imported": false
+    },
+    {
+      "arxiv": "2608.18229",
+      "role": "independent growth solver + CLASS hybrid cross-validation example",
+      "adoptable_method": "derive linear perturbation equations, recover standard limit, independently integrate growth, cross-check with CLASS, defer nonlinear claims until linear closure",
+      "model_physics_imported": false
+    }
+  ],
+  "pat_capability_boundary": {
+    "canonical_environment_display": "PAT_ENVIRONMENTS",
+    "canonical_secret_ids": ["PAT_ACTIONS", "PAT_AGENTS", "PAT_CODESPACES", "PAT_DEPENDABOT", "PAT_ENV"],
+    "secret_values": "NEVER_READ_OR_PERSIST",
+    "current_contract_authority": "rafaelmeloreisnovo/RafGitTools@f1f3ea396f5b33efd87005383b7ef90a23fba8c2:contracts/PAT_CAPABILITY_MATRIX_V1.json",
+    "states": {
+      "PAT_ACTIONS": "WIRED_MAIN_ONESHOT_READ_ONLY",
+      "PAT_AGENTS": "REGISTERED_NOT_WIRED",
+      "PAT_CODESPACES": "REGISTERED_NOT_WIRED",
+      "PAT_DEPENDABOT": "REGISTERED_NOT_WIRED",
+      "PAT_ENV": "WIRED_MANUAL_ONLY"
+    },
+    "rule": "CAPABILITY != PERMISSION; REGISTERED != WIRED; WIRED != EXECUTED; EXECUTED != PASS_WITHOUT_READBACK"
+  },
+  "quality_discipline": {
+    "DMAIC": {
+      "define": "one question and one authority per gate",
+      "measure": "exact refs, hashes, raw/derived lineage, expected/actual observables",
+      "analyze": "falsifier, residuals, sensitivity, adversarial baselines",
+      "improve": "small reversible successor only",
+      "control": "CI/receipt/replay/rollback and independent crosscheck"
+    },
+    "normative_mapping_state": "TOKEN_VAZIO_NORMATIVE_CLAUSE_LEVEL",
+    "note": "ISO/IEC 27000, ISO 8000, ISO 9001, IEEE/RFC practices are used here as engineering discipline themes only; no certification or clause-level conformance is claimed by this artifact."
+  },
+  "drive_backlog_pointer": {
+    "sheet_id": "1x_12LhCfljY02n4QpblLJgS_G0x-kktyRpE57V3wXHU",
+    "title": "RAFAELIA Omega177 Current Gap Ledger + Closure Roadmap 2026-09-09",
+    "state": "HISTORICAL_BACKLOG_NOT_CURRENT_TRUTH",
+    "rule": "Create successors for closed/changed gaps; do not overwrite historical rows."
+  },
+  "write_scope": {
+    "branch": "analysis/rll-leverage-frontier-20261001",
+    "default_branch_changed": false,
+    "merge_requested": false,
+    "release_requested": false,
+    "deletion_requested": false,
+    "claim_allowed": false
+  },
+  "R3": {
+    "F_ok": ["current exact refs pinned", "divergence quantified", "orphan perturbation candidate located", "PAT canonical naming resolved", "modern methodology crosswalk materialized"],
+    "F_gap": ["super-horizon IC", "Bianchi residual", "ODE convergence", "independent CLASS/CAMB maps", "canonical joint likelihood reconciliation", "independent R2/R3 replication", "clause-level normative verification"],
+    "F_next": "Execute L1 and L2 under frozen manifests; use L3 continuously to prevent branch regression."
+  },
+  "claim_allowed": false
+}
