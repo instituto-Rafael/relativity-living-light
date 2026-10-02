@@ -8,46 +8,58 @@ on:
 permissions:
   contents: read
 
+env:
+  CANONICAL_REPOSITORY: instituto-Rafael/relativity-living-light
+  WORKSPACE_FORK: rafaelmeloreisnovo/relativity-living-light
+
 jobs:
   canonical-authority:
     runs-on: ubuntu-latest
     steps:
       - name: Declare canonical authority
         run: |
-          echo 'canonical_repository=instituto-Rafael/relativity-living-light'
-          echo 'workspace_fork=rafaelmeloreisnovo/relativity-living-light'
+          echo "canonical_repository=${CANONICAL_REPOSITORY}"
+          echo "workspace_fork=${WORKSPACE_FORK}"
           echo 'policy=changes belong upstream through an Instituto branch/PR; fork main is not a scientific authority'
 
-      - name: Block PRs into fork main
+      - name: Enforce PR routing by repository identity
         if: github.event_name == 'pull_request'
+        shell: bash
         run: |
-          echo '::error::This repository is a convenience/workspace fork. Do not promote new scientific state into its main branch.'
-          echo '::error::Rebase/transplant the coherent delta onto instituto-Rafael/relativity-living-light and open a draft PR there.'
-          exit 1
+          set -euo pipefail
+          echo "observed_repository=${GITHUB_REPOSITORY}"
+          if [ "${GITHUB_REPOSITORY}" != "${CANONICAL_REPOSITORY}" ]; then
+            echo '::error::This repository is not the canonical scientific repository. Do not promote new scientific state into its main branch.'
+            echo "::error::Rebase/transplant the coherent delta onto ${CANONICAL_REPOSITORY} and open a draft PR there."
+            exit 1
+          fi
+          echo 'PASS canonical authority: PR targets the declared canonical repository.'
 
       - name: Audit current divergence on manual run
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
 
-      - name: Compare fork against canonical on manual run
+      - name: Compare current repository against canonical on manual run
         if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           set -euo pipefail
-          git remote add canonical https://github.com/instituto-Rafael/relativity-living-light.git
+          git remote add canonical "https://github.com/${CANONICAL_REPOSITORY}.git" 2>/dev/null || git remote set-url canonical "https://github.com/${CANONICAL_REPOSITORY}.git"
           git fetch --no-tags canonical main
           read behind ahead < <(git rev-list --left-right --count canonical/main...HEAD)
-          echo "canonical_ahead_of_workspace=${behind}"
-          echo "workspace_ahead_of_canonical=${ahead}"
-          if [ "$ahead" -gt 0 ]; then
+          echo "canonical_ahead_of_current=${behind}"
+          echo "current_ahead_of_canonical=${ahead}"
+          if [ "${GITHUB_REPOSITORY}" = "${WORKSPACE_FORK}" ] && [ "$ahead" -gt 0 ]; then
             echo '::warning::Workspace contains candidate contribution commits not present in canonical main. Classify and upstream them; do not treat them as canonical.'
           fi
 
 # Invariants:
 # - canonical authority: instituto-Rafael/relativity-living-light
 # - personal fork: access/convenience/workspace only
+# - PR into canonical main: allowed to proceed to the remaining gates
+# - PR into non-canonical copy carrying this workflow: fail closed
 # - fork commit != canonical scientific state
 # - ahead commits are contribution candidates, not automatic upstream state
 # - no force-sync, no destructive history rewrite, no claim promotion
