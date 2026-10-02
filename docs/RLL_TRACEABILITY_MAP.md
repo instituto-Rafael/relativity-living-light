@@ -147,3 +147,14 @@ The project now has four active documentation layers:
 4. `results/coerente/2026-07-09_uploaded_validation_bayes/` — what the uploaded validation/Bayes package proves as artifact custody, and what it does not prove scientifically.
 
 This map binds those layers and prevents the project from scattering claims across unrelated files.
+
+## 8. Research fragments, citations and page preview
+
+| Artifact | State | Canonical route | Next verification |
+|---|---|---|---|
+| Curated DESI/Planck bibliography anchors | bibliographic context; `claim_allowed=false` | `data/research_fragments/academic_correlation_sources.yml` | capture official source snapshots and hashes in a future update |
+| Manual arXiv intake | public metadata response hashed; raw Atom retained in run artifact | `.github/workflows/validate-academic-correlation-package.yml` | inspect one run receipt and version match |
+| Candidate graph edges | `RELATIONAL_PENDING`; no claim promotion | `tools/ingest_arxiv_candidate.py` and `results/relational_validation/packages/ACADEMIC_CORR_001/` | human review with context, baseline and contradiction test |
+| Jekyll preview | build artifact only; not a Pages deployment | `pages/rll-research/` | verify Pages source and branch before any deploy route |
+
+Source, artifact, execution, evidence and claim stay separate. This route records references and candidate links; it does not infer researcher identity or send external messages.

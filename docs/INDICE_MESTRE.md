@@ -5,6 +5,7 @@
 **Atualizado em:** 2026-06-26
 **Atualizado em:** 2026-08-08
 **Atualizado em:** 2026-09-05
+**Atualizado em:** 2026-10-02
 **Regra:** secao principal lista apenas caminhos canonicos oficiais.
 
 ---
@@ -20,6 +21,7 @@ Este arquivo e a **navegacao canonica** da documentacao do repositorio.
 Encaminhamentos complementares:
 - Porta de entrada: [`README.md`](../README.md)
 - Mapa central de rastreabilidade: [`docs/RLL_TRACEABILITY_MAP.md`](RLL_TRACEABILITY_MAP.md)
+- Rota de pesquisa: [`docs/workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md`](workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md) — bibliografia, intake arXiv rastreável, relações pendentes e preview Pages.
 - Inventario bruto (`.md` e `.zip`): [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md)
 - Mapa Dark Matter/RLL: [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md)
 - Nota Dark Matter/nome/inventario: [`docs/DARKMATTER_NAMING_AND_INVENTORY_NOTE.md`](DARKMATTER_NAMING_AND_INVENTORY_NOTE.md)

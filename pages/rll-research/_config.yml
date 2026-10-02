@@ -1,0 +1,6 @@
+title: RLL Research Fragments
+description: Candidate relations, bibliographic anchors, and provenance receipts for RLL research.
+markdown: kramdown
+permalink: pretty
+exclude:
+  - README.md

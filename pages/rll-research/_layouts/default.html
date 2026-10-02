@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | escape }} · {{ site.title | escape }}</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, sans-serif; line-height: 1.55; }
+      body { max-width: 68rem; margin: 0 auto; padding: 2rem 1rem 4rem; color: #17212b; }
+      h1, h2, h3 { line-height: 1.2; }
+      .boundary { padding: 1rem; border-left: .35rem solid #b7791f; background: #fff8e7; }
+      .card { border: 1px solid #d7dee5; border-radius: .5rem; padding: 1rem; margin: 1rem 0; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid #d7dee5; padding: .5rem; text-align: left; vertical-align: top; }
+      code { overflow-wrap: anywhere; }
+      a { color: #1457a6; }
+    </style>
+  </head>
+  <body>
+    <header><h1>{{ site.title | escape }}</h1></header>
+    <main>{{ content }}</main>
+  </body>
+</html>
