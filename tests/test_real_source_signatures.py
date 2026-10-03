@@ -61,18 +61,27 @@ def test_signature_outputs_are_atomic_with_backups(tmp_path, monkeypatch) -> Non
 
 
 def test_joint_manifest_points_to_source_signature_artifacts() -> None:
-    import json
-
-    manifest = json.loads(open("data/inputs/cosmology_joint/joint_real_inputs_manifest.json", encoding="utf-8").read())
+    manifest = json.loads(
+        Path("data/inputs/cosmology_joint/joint_real_inputs_manifest.json").read_text(encoding="utf-8")
+    )
 
     assert manifest["source_signature_manifest"] == "data/real/cosmology/real_source_signatures.json"
     assert "results/audit/real_source_signature_verification.json" in manifest["source_signature_outputs"]
 
+
 def test_structure_d_and_joint_real_inputs_use_canonical_source_ids() -> None:
-    canonical = json.loads(Path("data/real/cosmology/observational_sources_manifest.json").read_text(encoding="utf-8"))
-    canonical_by_id = {entry["source_id"]: entry for entry in canonical["canonical_local_real_sources"]}
-    config = json.loads(Path("data/pipelines/structure_d/datasets_config.json").read_text(encoding="utf-8"))
-    joint = json.loads(Path("data/inputs/cosmology_joint/joint_real_inputs_manifest.json").read_text(encoding="utf-8"))
+    canonical = json.loads(
+        Path("data/real/cosmology/observational_sources_manifest.json").read_text(encoding="utf-8")
+    )
+    canonical_by_id = {
+        entry["source_id"]: entry for entry in canonical["canonical_local_real_sources"]
+    }
+    config = json.loads(
+        Path("data/pipelines/structure_d/datasets_config.json").read_text(encoding="utf-8")
+    )
+    joint = json.loads(
+        Path("data/inputs/cosmology_joint/joint_real_inputs_manifest.json").read_text(encoding="utf-8")
+    )
 
     for dataset_id in config["profiles"]["structure_d_real_growth_validation"]["active_datasets"]:
         entry = config["datasets"][dataset_id]
@@ -81,12 +90,47 @@ def test_structure_d_and_joint_real_inputs_use_canonical_source_ids() -> None:
         assert entry["sha256"] == source["sha256"]
         assert entry["local_path"] == source["local_path"]
 
-    assert joint["canonical_observational_sources_manifest"] == "data/real/cosmology/observational_sources_manifest.json"
+    assert (
+        joint["canonical_observational_sources_manifest"]
+        == "data/real/cosmology/observational_sources_manifest.json"
+    )
     assert set(joint["source_ids"]) <= set(canonical_by_id)
     assert joint["source_ids"] == [entry["source_id"] for entry in joint["inputs"]]
+
     for entry in joint["inputs"]:
-        assert entry["source_id"] in canonical_by_id
+        source_id = entry["source_id"]
+        assert source_id in canonical_by_id
         assert "sha256" not in entry
         assert "local_path" not in entry
         assert "dataset_type" not in entry
-        assert entry["canonical_source_fields"] == "resolved from canonical_observational_sources_manifest by source_id"
+        assert entry["execution_path"]
+        assert entry["execution_sha256"]
+
+        parent_source_id = entry.get("parent_source_id")
+        if parent_source_id is None:
+            source = canonical_by_id[source_id]
+            assert entry["canonical_source_fields"] == (
+                "resolved from canonical_observational_sources_manifest by source_id"
+            )
+            assert entry["execution_path"] == source["local_path"]
+            assert entry["execution_sha256"] == source["sha256"]
+            assert "derivation" not in entry
+            continue
+
+        assert parent_source_id == source_id
+        assert parent_source_id in canonical_by_id
+        parent = canonical_by_id[parent_source_id]
+        assert entry["canonical_source_fields"] == (
+            "parent source resolved from canonical_observational_sources_manifest "
+            "by parent_source_id; execution bytes verified independently"
+        )
+        assert entry["parent_path"] == parent["local_path"]
+        assert entry["execution_path"] != parent["local_path"]
+        assert entry["execution_sha256"] != parent["sha256"]
+
+        derivation = entry["derivation"]
+        assert derivation["type"] == "row_filter"
+        assert derivation["predicate"] == "source == CC_Moresco2022"
+        assert derivation["preserve_columns"] == ["z", "H_obs", "sigma_H", "source"]
+        assert derivation["expected_rows"] == 28
+        assert derivation["order_policy"] == "preserve_parent_order"
