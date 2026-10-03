@@ -5,11 +5,11 @@ publication_effect: NONE
 
 profiles:
   transit_refactor:
-    description: "Eight specialty gates in one sequential fail-closed transit."
+    description: "Six bounded operational gates; science shadow runs remain isolated."
     include_tags: [tower]
   full_session:
-    description: "Compatibility alias for the governed transit tower."
-    include_tags: [tower]
+    description: "All bounded operational and real-data workflows; excludes science shadow runs."
+    include_tags: [tower, real_data]
   quick_session:
     description: "Structural, contract, regression, and governance gates."
     include_tags: [core]
@@ -19,6 +19,12 @@ profiles:
   science_shadow_session:
     description: "Non-publishing deterministic and frontier shadow gates."
     include_tags: [science_shadow]
+  literature_session:
+    description: "Validate an academic relation package and build a Jekyll preview artifact."
+    include_tags: [literature]
+  pages_preview_session:
+    description: "Build the research-fragment Jekyll preview artifact without deploying Pages."
+    include_tags: [pages_preview]
 
 execution:
   mode: sequential
@@ -35,3 +41,4 @@ workflow_inventory:
 
 workflow_catalog_dirs:
   - workflows/tower
+  - workflows/research

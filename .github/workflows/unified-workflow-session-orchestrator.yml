@@ -23,6 +23,8 @@ run-name: Transit Tower Ω · ${{ github.event_name }} · ${{ github.ref_name }}
           - quick_session
           - real_data_session
           - science_shadow_session
+          - literature_session
+          - pages_preview_session
       dry_run:
         description: "Validate and receipt the complete plan without dispatching children"
         required: true

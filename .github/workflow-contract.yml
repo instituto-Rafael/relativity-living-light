@@ -1,5 +1,5 @@
 schema: rll.workflow_contract.v1
-updated_at: "2026-09-27"
+updated_at: "2026-10-02"
 
 inventory:
   active_workflows: 110
@@ -19,6 +19,36 @@ canonical_pipeline:
   logical_phases: 8
   pull_request_mode: dry_run
   claim_boundary: "A execução estrutural do gate não comprova afirmações científicas."
+
+workflow_session:
+  orchestrator: .github/workflows/unified-workflow-session-orchestrator.yml
+  catalog: .github/workflow-orchestrator/session.yml
+  dispatch_discovery: explicit_catalog_manifests
+  inventory_scan: exhaustive_read_only
+  catalog_manifest_directories:
+    - workflows/tower
+    - workflows/research
+  manifest_file_count: 2
+  catalog_item_count: 15
+  enabled_catalog_item_count: 12
+  sequential: true
+  stage_barrier: true
+  fail_fast: true
+  max_in_flight: 1
+  parent_timeout_minutes: 360
+  profile_budget_minutes:
+    full_session: 305
+    transit_refactor: 190
+    quick_session: 120
+    real_data_session: 185
+    science_shadow_session: 190
+    literature_session: 15
+    pages_preview_session: 15
+  max_profile_budget_minutes: 305
+  parent_budget_buffer_minutes: 55
+  full_session_excludes: [science_shadow]
+  claim_allowed: false
+  publication_effect: NONE
 
 branch_maturity:
   workflow: .github/workflows/unified-workflow-session-orchestrator.yml
@@ -236,6 +266,8 @@ documented_checks:
 documentation:
   authority_order:
     - .github/workflow-contract.yml
+    - .github/workflow-orchestrator/session.yml
+    - docs/workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md
     - .github/workflow-architecture/invariants.v1.yml
     - .github/workflow-architecture/github-actions-capabilities.v1.yml
     - governance/rll-governance-profile.v1.json

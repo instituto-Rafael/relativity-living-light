@@ -1,4 +1,4 @@
-name: Validate Academic Correlation Package
+name: Validate Academic Correlation Package and Build Research Preview
 
 on:
   pull_request:
@@ -12,6 +12,17 @@ on:
       - 'schemas/relational_validation_package.schema.json'
       - 'schemas/relation_graph.schema.json'
       - 'tools/validate_academic_correlation_package.py'
+      - '.github/workflow-orchestrator/session.yml'
+      - '.github/workflow-orchestrator/workflows/tower/00-transit-tower.yml'
+      - '.github/workflow-orchestrator/workflows/research/**'
+      - '.github/workflows/unified-workflow-session-orchestrator.yml'
+      - 'docs/workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md'
+      - 'data/research_fragments/academic_correlation_sources.yml'
+      - 'pages/rll-research/**'
+      - 'tools/ingest_arxiv_candidate.py'
+      - 'tools/build_research_fragment_site_data.py'
+      - 'tests/test_workflow_orchestrator_profiles.py'
+      - 'tests/test_research_fragment_pipeline.py'
       - 'tests/test_academic_correlation_package_validator.py'
       - 'tests/test_numeric_representation_semantics.py'
       - '.github/workflows/validate-academic-correlation-package.yml'
@@ -28,22 +39,49 @@ on:
       - 'schemas/relational_validation_package.schema.json'
       - 'schemas/relation_graph.schema.json'
       - 'tools/validate_academic_correlation_package.py'
+      - '.github/workflow-orchestrator/session.yml'
+      - '.github/workflow-orchestrator/workflows/tower/00-transit-tower.yml'
+      - '.github/workflow-orchestrator/workflows/research/**'
+      - '.github/workflows/unified-workflow-session-orchestrator.yml'
+      - 'docs/workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md'
+      - 'data/research_fragments/academic_correlation_sources.yml'
+      - 'pages/rll-research/**'
+      - 'tools/ingest_arxiv_candidate.py'
+      - 'tools/build_research_fragment_site_data.py'
+      - 'tests/test_workflow_orchestrator_profiles.py'
+      - 'tests/test_research_fragment_pipeline.py'
       - 'tests/test_academic_correlation_package_validator.py'
       - 'tests/test_numeric_representation_semantics.py'
       - '.github/workflows/validate-academic-correlation-package.yml'
   workflow_dispatch:
+    inputs:
+      arxiv_id:
+        description: "Optional arXiv ID or versioned abstract/PDF URL; fetches one public metadata record."
+        required: false
+        default: ""
+        type: string
+      related_node_ids:
+        description: "Optional comma-separated existing graph node IDs for human-declared candidate relations."
+        required: false
+        default: ""
+        type: string
+      relation_note:
+        description: "Short reason for the candidate relation; required when targets are supplied."
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: academic-research-preview-${{ github.run_id }}
+  cancel-in-progress: false
 
 jobs:
-  validate-academic-correlation-package:
+  validate-and-preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -64,3 +102,56 @@ jobs:
           python -m pytest -q
           tests/test_academic_correlation_package_validator.py
           tests/test_numeric_representation_semantics.py
+          tests/test_research_fragment_pipeline.py
+
+      - name: Fetch one arXiv metadata record and create a pending relation candidate
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.arxiv_id != '' }}
+        env:
+          ARXIV_ID: ${{ inputs.arxiv_id }}
+          RELATED_NODE_IDS: ${{ inputs.related_node_ids }}
+          RELATION_NOTE: ${{ inputs.relation_note }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: >-
+          python tools/ingest_arxiv_candidate.py
+          --arxiv-id "$ARXIV_ID"
+          --relation-targets "$RELATED_NODE_IDS"
+          --relation-note "$RELATION_NOTE"
+          --output-dir artifacts/research-fragments/intake
+
+      - name: Build source-hashed relation graph data
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          candidate_args=()
+          if [ -f artifacts/research-fragments/intake/candidate.json ]; then
+            candidate_args+=(--candidate-intake artifacts/research-fragments/intake/candidate.json)
+          fi
+          python tools/build_research_fragment_site_data.py \
+            --output pages/rll-research/_data/research_graph.json \
+            "${candidate_args[@]}"
+
+      - name: Build Jekyll research-fragment preview
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./pages/rll-research
+          destination: ./_site/research-fragments
+
+      - name: Upload relation intake receipt
+        if: ${{ success() && github.event_name == 'workflow_dispatch' && inputs.arxiv_id != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-research-intake-${{ github.run_id }}
+          path: artifacts/research-fragments/intake/
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Upload Jekyll preview artifact
+        if: success()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-research-fragments-pages-preview-${{ github.run_id }}
+          path: ./_site/research-fragments/
+          retention-days: 90
+          if-no-files-found: error

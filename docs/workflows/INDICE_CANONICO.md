@@ -2,8 +2,8 @@
 
 > **Gerado**: 2026-07-20 | **Workflows totais**: 44 | **Branch**: `claude/rll-cronologia-auditoria-qyvn83`
 >
-> Este índice substitui `docs/YML_WORKFLOWS_INDEX.md` como referência humana primária.
-> A tabela de SHA256 bruta é mantida em `YML_WORKFLOWS_INDEX.md` (auto-gerada por `tools/docs_inventory.py`).
+> Este é um snapshot histórico datado de 2026-07-20 (44 workflows), não o inventário executável atual.
+> A referência de estado é `.github/workflow-contract.yml`; a tabela de hashes gerada é `docs/YML_WORKFLOWS_INDEX.md`.
 
 ---
 
