@@ -54,10 +54,25 @@ def test_legacy_route_gap_is_explicit_and_cannot_authorize_claim(receipt: dict[s
     assert by_id["F-COVERAGE-05"]["claim_allowed"] is False
 
 
+def test_axis_coverage_does_not_imply_source_identity(receipt: dict[str, object]) -> None:
+    by_id = {row["id"]: row for row in receipt["falsifiers"]}
+    source_gate = by_id["F-COVERAGE-06"]
+    assert source_gate["state"] == "KNOWN_GAP"
+    assert source_gate["claim_allowed"] is False
+
+    rows = {row["dataset_id"]: row for row in source_gate["sources"]}
+    assert rows["real_hz"]["state"] == "KNOWN_GAP"
+    assert rows["real_bao"]["state"] == "KNOWN_GAP"
+    assert rows["real_fsigma8"]["state"] == "PASS"
+    assert rows["real_cmb_shift"]["state"] == "PASS"
+    assert rows["real_hz"]["same_content_sha256"] is False
+    assert rows["real_bao"]["same_content_sha256"] is False
+
+
 def test_receipt_is_pass_limited_not_scientific_confirmation(receipt: dict[str, object]) -> None:
     assert receipt["state"] == "PASS_LIMITED"
     assert receipt["blocking_falsifiers"] == []
-    assert receipt["known_gaps"] == ["F-COVERAGE-05"]
+    assert receipt["known_gaps"] == ["F-COVERAGE-05", "F-COVERAGE-06"]
     assert receipt["claim_allowed"] is False
     assert receipt["scientific_confirmation"] is False
     assert receipt["fit_executed"] is False
