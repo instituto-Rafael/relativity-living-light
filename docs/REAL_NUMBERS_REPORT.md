@@ -22,3 +22,5 @@ tracked_files_total é a contagem bruta de `git ls-files`. cataloged_files é o 
 ## Lacunas
 
 - Nenhuma lacuna de leitura encontrada.
+
+<!-- PENDING_CI: regenerate this file from tools/docs_inventory.py in the reconciliation commit. -->
