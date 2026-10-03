@@ -19,13 +19,52 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
       - name: Install ripgrep
         run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Install bounded Structure-D falsifier runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy pandas scipy pytest
       - name: Check structure_d required outputs
         run: bash scripts/check_structure_d_required_outputs.sh
       - name: Check structure_d dataset/model coverage
         run: bash scripts/check_structure_d_model_dataset_coverage.sh
+      - name: Run Structure-D falsifier coverage tests
+        run: python -m pytest -q tests/test_rll_structure_d_falsifier_coverage.py
+      - name: Materialize Structure-D falsifier coverage receipt
+        run: |
+          set -euo pipefail
+          python tools/rll_structure_d_falsifier_coverage.py \
+            --output artifacts/structure-d-falsifier-coverage/receipt.json
+          test -s artifacts/structure-d-falsifier-coverage/receipt.json
+      - name: Prove legacy full-profile route remains fail-closed
+        run: |
+          set +e
+          python tools/rll_structure_d_falsifier_coverage.py \
+            --strict-legacy \
+            --output artifacts/structure-d-falsifier-coverage/strict-legacy-receipt.json
+          code=$?
+          set -e
+          if [ "$code" -ne 3 ]; then
+            echo "expected strict legacy coverage gate to exit 3 while known dataset-consumption gap exists; got $code"
+            exit 1
+          fi
+          echo "PASS: strict legacy full-profile route is explicitly blocked by the known coverage gap."
       - name: Validate canonical convention consistency
         run: scripts/check_convention_conflicts.sh
+      - name: Upload Structure-D falsifier receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: structure-d-falsifier-coverage-${{ github.run_id }}
+          path: artifacts/structure-d-falsifier-coverage/
+          retention-days: 30
+          if-no-files-found: warn
       #- name: Check documentation inventory count consistency
        # run: python3 tools/docs_inventory.py --check
