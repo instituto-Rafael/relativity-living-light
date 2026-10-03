@@ -43,7 +43,14 @@ jobs:
           python tools/rll_structure_d_falsifier_coverage.py \
             --output artifacts/structure-d-falsifier-coverage/receipt.json
           test -s artifacts/structure-d-falsifier-coverage/receipt.json
-      - name: Prove legacy full-profile route remains fail-closed
+      - name: Validate joint real execution source contract
+        run: |
+          set -euo pipefail
+          python -m pytest -q tests/test_joint_real_execution_contract.py
+          python tools/validate_joint_real_execution_contract.py \
+            --output artifacts/structure-d-falsifier-coverage/joint-input-contract.json
+          test -s artifacts/structure-d-falsifier-coverage/joint-input-contract.json
+      - name: Prove unresolved full-profile gaps remain fail-closed
         run: |
           set +e
           python tools/rll_structure_d_falsifier_coverage.py \
@@ -52,10 +59,10 @@ jobs:
           code=$?
           set -e
           if [ "$code" -ne 3 ]; then
-            echo "expected strict legacy coverage gate to exit 3 while known dataset-consumption gap exists; got $code"
+            echo "expected strict coverage gate to exit 3 while known dataset-consumption/source-parity gaps exist; got $code"
             exit 1
           fi
-          echo "PASS: strict legacy full-profile route is explicitly blocked by the known coverage gap."
+          echo "PASS: unresolved full-profile gaps remain explicitly fail-closed."
       - name: Validate canonical convention consistency
         run: scripts/check_convention_conflicts.sh
       - name: Upload Structure-D falsifier receipts
