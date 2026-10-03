@@ -5,15 +5,15 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3340 |
-| `cataloged_files` | 3329 |
+| `tracked_files_total` | 3427 |
+| `cataloged_files` | 3416 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 54670885 |
-| `total_text_lines` | 505199 |
-| `markdown_files` | 1123 |
-| `yml_yaml_files` | 237 |
-| `github_workflow_yml_files` | 107 |
-| `data_or_result_files` | 918 |
+| `total_bytes` | 55152467 |
+| `total_text_lines` | 519277 |
+| `markdown_files` | 1146 |
+| `yml_yaml_files` | 240 |
+| `github_workflow_yml_files` | 110 |
+| `data_or_result_files` | 948 |
 
 ## Contrato operacional
 
@@ -22,5 +22,3 @@ tracked_files_total é a contagem bruta de `git ls-files`. cataloged_files é o 
 ## Lacunas
 
 - Nenhuma lacuna de leitura encontrada.
-
-<!-- PENDING_CI: regenerate this file from tools/docs_inventory.py in the reconciliation commit. -->
