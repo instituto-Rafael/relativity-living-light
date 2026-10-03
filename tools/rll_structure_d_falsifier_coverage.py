@@ -7,6 +7,10 @@ observational axes declared for the canonical real profile, that every model
 produces finite chi-square components at a deterministic in-bounds probe point,
 and that covariance prerequisites are numerically usable.
 
+Axis coverage and exact source identity are separate invariants. The joint route
+may cover the same physical observable with a different materialized source;
+that difference is preserved as a typed gap rather than inferred as equivalence.
+
 The legacy ``run_all_real.py`` route is inspected separately. Any active dataset
 that it does not consume is preserved as an explicit gap rather than being
 reported as used.
@@ -48,6 +52,13 @@ AXIS_BY_DATASET_ID = {
     "real_fsigma8": "fsigma8",
     "real_cmb_shift": "CMB_shift",
 }
+JOINT_SOURCE_BY_DATASET_ID = {
+    "real_hz": joint.HZ_PATH,
+    "real_bao": joint.DESI_POINTS_PATH,
+    "real_desi_dr2_bao": joint.DESI_POINTS_PATH,
+    "real_fsigma8": joint.FSIGMA8_PATH,
+    "real_cmb_shift": joint.CMB_SHIFT_PATH,
+}
 
 
 def _sha256(path: Path) -> str:
@@ -83,7 +94,7 @@ def _legacy_consumed_dataset_ids(path: Path = LEGACY_RUNNER_PATH) -> list[str]:
     return sorted(dataset_ids)
 
 
-def _canonical_profile() -> tuple[list[str], list[str], list[str]]:
+def _canonical_profile() -> tuple[dict[str, object], list[str], list[str], list[str]]:
     cfg = load_run_config(str(CONFIG_PATH))
     profile = cfg.get("profiles", {}).get(REAL_PROFILE)
     if not isinstance(profile, dict):
@@ -91,7 +102,7 @@ def _canonical_profile() -> tuple[list[str], list[str], list[str]]:
     active = list(profile.get("active_datasets", []))
     axes = sorted({AXIS_BY_DATASET_ID[item] for item in active if item in AXIS_BY_DATASET_ID})
     unknown = sorted(item for item in active if item not in AXIS_BY_DATASET_ID)
-    return active, axes, unknown
+    return cfg, active, axes, unknown
 
 
 def _joint_source_records() -> list[dict[str, object]]:
@@ -117,8 +128,97 @@ def _joint_source_records() -> list[dict[str, object]]:
     return records
 
 
+def _source_parity(cfg: dict[str, object], active_dataset_ids: list[str]) -> tuple[list[dict[str, object]], str]:
+    datasets = cfg.get("datasets", {})
+    if not isinstance(datasets, dict):
+        raise RuntimeError("datasets_config.json has no datasets mapping")
+
+    rows: list[dict[str, object]] = []
+    has_missing = False
+    has_mismatch = False
+    for dataset_id in active_dataset_ids:
+        descriptor = datasets.get(dataset_id)
+        joint_path = JOINT_SOURCE_BY_DATASET_ID.get(dataset_id)
+        if not isinstance(descriptor, dict) or joint_path is None:
+            has_missing = True
+            rows.append(
+                {
+                    "dataset_id": dataset_id,
+                    "state": "FAIL",
+                    "canonical_path": None,
+                    "joint_path": str(joint_path.relative_to(ROOT)) if joint_path is not None else None,
+                    "same_path": False,
+                    "same_content_sha256": False,
+                }
+            )
+            continue
+
+        canonical_raw = descriptor.get("path")
+        if not isinstance(canonical_raw, str):
+            has_missing = True
+            rows.append(
+                {
+                    "dataset_id": dataset_id,
+                    "state": "FAIL",
+                    "canonical_path": None,
+                    "joint_path": str(joint_path.relative_to(ROOT)),
+                    "same_path": False,
+                    "same_content_sha256": False,
+                }
+            )
+            continue
+
+        canonical_path = ROOT / canonical_raw
+        canonical_exists = canonical_path.is_file()
+        joint_exists = joint_path.is_file()
+        if not canonical_exists or not joint_exists:
+            has_missing = True
+            rows.append(
+                {
+                    "dataset_id": dataset_id,
+                    "state": "FAIL",
+                    "canonical_path": canonical_raw,
+                    "joint_path": str(joint_path.relative_to(ROOT)),
+                    "canonical_exists": canonical_exists,
+                    "joint_exists": joint_exists,
+                    "same_path": False,
+                    "same_content_sha256": False,
+                }
+            )
+            continue
+
+        canonical_sha = _sha256(canonical_path)
+        joint_sha = _sha256(joint_path)
+        same_path = canonical_path.resolve() == joint_path.resolve()
+        same_content = canonical_sha == joint_sha
+        source_equivalent = same_path or same_content
+        if not source_equivalent:
+            has_mismatch = True
+        rows.append(
+            {
+                "dataset_id": dataset_id,
+                "state": "PASS" if source_equivalent else "KNOWN_GAP",
+                "canonical_path": canonical_raw,
+                "joint_path": str(joint_path.relative_to(ROOT)),
+                "canonical_sha256": canonical_sha,
+                "joint_sha256": joint_sha,
+                "same_path": same_path,
+                "same_content_sha256": same_content,
+                "source_equivalent": source_equivalent,
+            }
+        )
+
+    if has_missing:
+        overall = "FAIL"
+    elif has_mismatch:
+        overall = "KNOWN_GAP"
+    else:
+        overall = "PASS"
+    return rows, overall
+
+
 def build_receipt() -> dict[str, object]:
-    active_dataset_ids, profile_axes, unknown_dataset_ids = _canonical_profile()
+    cfg, active_dataset_ids, profile_axes, unknown_dataset_ids = _canonical_profile()
     expected_axes = sorted(EXPECTED_AXES)
 
     inputs = joint.load_joint_inputs()
@@ -161,6 +261,7 @@ def build_receipt() -> dict[str, object]:
     legacy_consumed = _legacy_consumed_dataset_ids()
     legacy_unconsumed = sorted(set(active_dataset_ids) - set(legacy_consumed))
     legacy_extra = sorted(set(legacy_consumed) - set(active_dataset_ids))
+    source_parity, source_parity_state = _source_parity(cfg, active_dataset_ids)
 
     falsifiers = [
         {
@@ -200,6 +301,17 @@ def build_receipt() -> dict[str, object]:
             "legacy_extra_dataset_ids": legacy_extra,
             "claim_allowed": False,
         },
+        {
+            "id": "F-COVERAGE-06",
+            "name": "canonical_profile_vs_joint_route_source_identity",
+            "state": source_parity_state,
+            "sources": source_parity,
+            "claim_allowed": False,
+            "meaning": (
+                "PASS requires each canonical profile dataset to resolve to the same path or identical SHA-256 bytes "
+                "as the corresponding joint-route source. Axis coverage alone is not source equivalence."
+            ),
+        },
     ]
 
     blocking = [row["id"] for row in falsifiers if row["state"] == "FAIL"]
@@ -215,7 +327,7 @@ def build_receipt() -> dict[str, object]:
         "fit_executed": False,
         "purpose": (
             "Execution-path falsifier: prove observational-axis reachability, finite chi-square decomposition, "
-            "and covariance readiness without treating infrastructure success as theory validation."
+            "covariance readiness, and source-identity boundaries without treating infrastructure success as theory validation."
         ),
         "canonical_profile": {
             "profile": REAL_PROFILE,
@@ -227,6 +339,7 @@ def build_receipt() -> dict[str, object]:
             "components": sorted(joint_components),
             "models": list(joint.MODEL_ORDER),
             "dataset_type": "real_observational",
+            "scope": "four_axis_observable_coverage_not_automatic_source_identity_equivalence",
         },
         "legacy_route": {
             "module": "data.pipelines.structure_d.run_all_real",
@@ -238,6 +351,7 @@ def build_receipt() -> dict[str, object]:
                 "full canonical-profile consumption while active datasets remain unconsumed."
             ),
         },
+        "source_parity": source_parity,
         "input_sources": _joint_source_records(),
         "input_counts": {
             "hz_rows": int(len(inputs["hz"])),
@@ -254,19 +368,28 @@ def build_receipt() -> dict[str, object]:
         "blocking_falsifiers": blocking,
         "known_gaps": gaps,
         "F_ok": (
-            "Full joint route reaches H(z), DESI DR2 BAO, fσ8 and CMB; four-model deterministic probes are finite "
+            "Joint route reaches H(z), DESI DR2 BAO, fσ8 and CMB; four-model deterministic probes are finite "
             "and component-additive; covariance prerequisites are checked."
             if not blocking
             else None
         ),
-        "F_gap": (
-            "Legacy run_all_real does not consume every active dataset in structure_d_real_validation."
-            if "F-COVERAGE-05" in gaps
-            else None
-        ),
+        "F_gap": [
+            message
+            for condition, message in [
+                (
+                    "F-COVERAGE-05" in gaps,
+                    "Legacy run_all_real does not consume every active dataset in structure_d_real_validation.",
+                ),
+                (
+                    "F-COVERAGE-06" in gaps,
+                    "Joint route covers the same observational axes but is not byte-identical to every canonical-profile source.",
+                ),
+            ]
+            if condition
+        ],
         "F_next": (
-            "Promote the joint real-likelihood route as the canonical full-profile falsifier, or explicitly narrow "
-            "the legacy runner profile; do not label unconsumed datasets as used."
+            "Separate the legacy three-axis background profile from the full scientific route, then either align canonical-profile "
+            "source bytes with the joint route or declare a distinct source contract. Do not infer source equivalence from axis coverage."
         ),
     }
     return receipt
@@ -287,7 +410,7 @@ def main() -> int:
     parser.add_argument(
         "--strict-legacy",
         action="store_true",
-        help="Treat the known legacy dataset-consumption gap as blocking.",
+        help="Treat known legacy/source-parity gaps as blocking for promotion checks.",
     )
     args = parser.parse_args()
 
