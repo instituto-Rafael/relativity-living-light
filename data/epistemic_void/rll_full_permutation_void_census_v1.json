@@ -1,0 +1,98 @@
+{
+  "atoms": [
+    {"family": "prime", "name": "2", "value": 2.0},
+    {"family": "prime_repdigit_seed", "name": "3", "value": 3.0},
+    {"family": "prime_pentagonal", "name": "5", "value": 5.0},
+    {"family": "prime_repdigit_seed", "name": "7", "value": 7.0},
+    {"family": "prime_mold", "name": "11", "value": 11.0},
+    {"family": "prime_mold", "name": "13", "value": 13.0},
+    {"family": "prime_repunit_factor", "name": "37", "value": 37.0},
+    {"family": "base10_mold", "name": "10", "value": 10.0},
+    {"family": "dodeca_mold", "name": "12", "value": 12.0},
+    {"family": "composite", "name": "14", "value": 14.0},
+    {"family": "composite", "name": "18", "value": 18.0},
+    {"family": "crt_3x7", "name": "21", "value": 21.0},
+    {"family": "angular_composite", "name": "30", "value": 30.0},
+    {"family": "crt_2x3x7", "name": "42", "value": 42.0},
+    {"family": "composite", "name": "50", "value": 50.0},
+    {"family": "composite", "name": "70", "value": 70.0},
+    {"family": "repdigit_3", "name": "33", "value": 33.0},
+    {"family": "repdigit_7", "name": "77", "value": 77.0},
+    {"family": "repdigit_3", "name": "333", "value": 333.0},
+    {"family": "repdigit_7", "name": "777", "value": 777.0},
+    {"family": "repdigit_9", "name": "999", "value": 999.0},
+    {"family": "irrational", "name": "pi", "value": 3.141592653589793},
+    {"family": "irrational", "name": "phi", "value": 1.618033988749895},
+    {"family": "radical", "name": "sqrt5", "value": 2.23606797749979},
+    {"family": "radical", "name": "sqrt_pi", "value": 1.7724538509055159},
+    {"family": "radical", "name": "sqrt_phi", "value": 1.272019649514069},
+    {"family": "spiral_contraction", "name": "sqrt3_over_2", "value": 0.8660254037844386},
+    {"family": "distinct_expansion", "name": "sqrt_3_over_2", "value": 1.224744871391589},
+    {"family": "rational_expansion_control", "name": "three_over_2", "value": 1.5},
+    {"family": "derived_scalar", "name": "sqrt5_over_pi", "value": 0.7117625434171772},
+    {"family": "pentagonal_half_angle_scalar", "name": "sqrt_pi_over_5", "value": 0.7926654595212022},
+    {"family": "dodecagonal_half_angle_scalar", "name": "sqrt_pi_over_12", "value": 0.5116633539732443},
+    {"family": "derived_scalar", "name": "sqrt_pi_over_pi", "value": 0.5641895835477563},
+    {"family": "derived_scalar", "name": "sqrt_phi_over_pi", "value": 0.4048964298603686},
+    {"family": "derived_scalar", "name": "sqrt_pi_over_phi", "value": 1.0954367233502473},
+    {"family": "reciprocal_pair", "name": "sqrt_phi_over_sqrt_pi", "value": 0.7176602363239055},
+    {"family": "reciprocal_pair", "name": "sqrt_pi_over_sqrt_phi", "value": 1.3934170369008219}
+  ],
+  "boundary": "Numeric closeness, zero, shared digits, shared cardinality, or modular closure do not establish physical identity or causal mechanism.",
+  "claim_allowed": false,
+  "counts": {
+    "atoms": 37,
+    "integer_mod_candidates": 315,
+    "ordered_binary_candidates": 5328,
+    "unary_candidates": 111,
+    "void_relations": 100,
+    "void_states": 10
+  },
+  "date": "2026-10-04",
+  "master_mod_period": 900900,
+  "operators": {
+    "moduli": [2, 3, 5, 7, 10, 11, 12, 13, 14, 18, 21, 30, 42, 50, 70],
+    "ordered_binary": ["sum", "difference", "product", "ratio"],
+    "unary": ["square", "inverse", "sqrt"]
+  },
+  "recovery_classes": {
+    "NEGATIVE_EVIDENCE": [
+      "sqrt(5)/pi approx sqrt(phi/pi) but not equal",
+      "77/33 and 777/333 ratio invariance",
+      "sqrt(3)/2 != sqrt(3/2) != 3/2",
+      "polygon != star polygon"
+    ],
+    "OBSERVED_UNINDEXED_IN_THIS_PR_BEFORE": [
+      "complete typed-void taxonomy",
+      "full bounded operator grammar",
+      "master modular carrier"
+    ],
+    "TOKEN_VAZIO": [
+      "physical z binding",
+      "cosmological scalar binding",
+      "causal modular role",
+      "canonical log(log(999)) base",
+      "physical G14->RLL mapping"
+    ],
+    "USER_REINTRODUCED": [
+      "sqrt(pi)/pi",
+      "sqrt(phi)/z",
+      "sqrt/pi/phi/z permutations"
+    ]
+  },
+  "schema": "rll.full_permutation_void_census.manifest.v1",
+  "scope": "bounded_current_thread_plus_source_anchors",
+  "source_policy": "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+  "void_states": [
+    "NUMERIC_ZERO",
+    "RESIDUE_ZERO",
+    "EMPTY_SET",
+    "NULL_VALUE",
+    "TOKEN_VAZIO",
+    "UNDEFINED",
+    "NO_REAL_SOLUTION",
+    "MISSING_OBSERVATION",
+    "NOT_APPLICABLE",
+    "APPROX_ZERO"
+  ]
+}
