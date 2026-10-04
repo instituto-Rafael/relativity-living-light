@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_family_theory_bridge_v1.schema.json",
+  "title": "RLL Family Theory Bridge V1",
+  "description": "Claim-bounded contract for set, number, prime, graph, base, modular, geometry and fluid families derived from the bounded permutation census.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "date",
+    "scope",
+    "claim_allowed",
+    "source_boundary",
+    "families",
+    "exact_invariants",
+    "fluid_binding",
+    "physical_boundaries",
+    "r3"
+  ],
+  "properties": {
+    "schema": {"const": "rll.family_theory_bridge.manifest.v1"},
+    "date": {"const": "2026-10-04"},
+    "scope": {"const": "bounded_current_thread_plus_source_anchors"},
+    "claim_allowed": {"const": false},
+    "source_boundary": {"const": "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"},
+    "families": {
+      "type": "array",
+      "minItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["family_id", "domain", "status", "statement", "boundary"],
+        "properties": {
+          "family_id": {"type": "string", "pattern": "^[A-Z]+-[0-9]{2}$"},
+          "domain": {"type": "string", "minLength": 1},
+          "status": {"enum": ["MATH_FORMAL", "FORMAL_UNDER_ASSUMPTIONS", "TOKEN_VAZIO"]},
+          "statement": {"type": "string", "minLength": 1},
+          "boundary": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "exact_invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repunit6_factorization",
+        "crt_21",
+        "crt_42",
+        "rep7_mod3_cycles",
+        "rep3_mod7_cycles",
+        "zero_not_empty"
+      ],
+      "properties": {
+        "repunit6_factorization": {"type": "string"},
+        "crt_21": {"type": "string"},
+        "crt_42": {"type": "string"},
+        "rep7_mod3_cycles": {"type": "string"},
+        "rep3_mod7_cycles": {"type": "string"},
+        "zero_not_empty": {"type": "string"}
+      }
+    },
+    "fluid_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formal_state", "physical_state", "required_inputs"],
+      "properties": {
+        "formal_state": {"const": "FORMAL_UNDER_ASSUMPTIONS"},
+        "physical_state": {"const": "TOKEN_VAZIO_FLUID_BINDING"},
+        "required_inputs": {
+          "type": "array",
+          "minItems": 12,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "physical_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fluid", "cosmology", "promotion_rule"],
+      "properties": {
+        "fluid": {"const": "TOKEN_VAZIO_FLUID_BINDING"},
+        "cosmology": {"const": "TOKEN_VAZIO_COSMOLOGY_BINDING"},
+        "promotion_rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "r3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["F_ok", "F_gap", "F_next"],
+      "properties": {
+        "F_ok": {"type": "string", "minLength": 1},
+        "F_gap": {"type": "string", "minLength": 1},
+        "F_next": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
