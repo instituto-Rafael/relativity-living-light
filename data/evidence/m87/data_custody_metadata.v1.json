@@ -1,0 +1,101 @@
+{
+  "schema": "rll.sgpt.m87.data-custody-metadata/v1",
+  "id": "SGPT_M87_DATA_CUSTODY_METADATA_V1",
+  "source": "M87*",
+  "claim_allowed": false,
+  "official_catalog": "https://eventhorizontelescope.org/for-astronomers/data",
+  "rights_boundary": "Dataset-level licensing is recorded only where an official dataset page states it. Repository/public availability is not generalized into unspecified redistribution or ML-training rights.",
+  "products": {
+    "EHT_2019_D01_01": {
+      "role": "DEVELOPMENT_CALIBRATED_2017_VLBI",
+      "doi": "10.25739/g85n-f134",
+      "license_at_dataset_level": "Open Data Commons Public Domain Dedication and License (PDDL)",
+      "license_evidence": "official CyVerse Data Commons dataset record",
+      "resource_id_observed": "a2e68543-f311-4c3a-9911-e8b14d8fb78b",
+      "file_sha256": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED",
+      "ingestion_state": "BLOCKED_BY_CYVERSE_DATASTORE_IP_VERIFICATION",
+      "boundary": "DOI and dataset license are evidence of dataset identity/terms, not a substitute for file-level custody."
+    },
+    "EHT_2023_D01_01": {
+      "role": "DEVELOPMENT_CALIBRATED_2017_POLARIMETRIC_VLBI",
+      "doi": "10.25739/q46m-m857",
+      "license_at_dataset_level": "Open Data Commons Public Domain Dedication and License (PDDL)",
+      "license_evidence": "official CyVerse Data Commons dataset record",
+      "resource_id_observed": "TOKEN_VAZIO_NOT_REQUIRED_FOR_IDENTITY",
+      "file_sha256": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED",
+      "ingestion_state": "BLOCKED_BY_CYVERSE_DATASTORE_IP_VERIFICATION"
+    },
+    "EHT_2021_D02_01": {
+      "role": "DEVELOPMENT_MULTI_WAVELENGTH_2017",
+      "doi": "10.25739/mhh2-cw46",
+      "license_at_dataset_level": "Open Data Commons Public Domain Dedication and License (PDDL)",
+      "license_evidence": "official CyVerse Data Commons dataset record",
+      "official_public_repository": "eventhorizontelescope/2021-D02-01",
+      "repository_commit": "1ed2f8bb947336b11c04767cebcbcf7888f86494",
+      "primary_small_file": {
+        "path": "m87_2017_mwl_spectrum.csv",
+        "git_blob_sha1": "160859ba23f0d0c9158bde7531cbcb2524be969c",
+        "file_sha256": "TOKEN_VAZIO_RAW_BYTE_MATERIALIZATION_NOT_COMPLETED",
+        "content_read_state": "READ_THROUGH_GITHUB_CONTENT_API",
+        "columns": ["band_min_Hz", "band_center_Hz", "band_max_Hz", "flux_density_Jy", "flux_density_uncertainty_Jy", "dataset_index"],
+        "upper_limit_rule": "rows with zero flux-density uncertainty are upper limits",
+        "parse_state": "BLOCKED_PENDING_SOURCE_ANOMALY_POLICY"
+      },
+      "source_format_anomalies": [
+        {
+          "id": "MWL_SWIFT_XRT_FIELD_SEPARATOR_001",
+          "state": "SOURCE_FORMAT_ANOMALY_CONFIRMED",
+          "source_file": "m87_2017_mwl_spectrum.csv",
+          "source_blob_sha1": "160859ba23f0d0c9158bde7531cbcb2524be969c",
+          "declared_column_count": 6,
+          "observed_record": "4.84e+17,1.08e+18 2.42e+18,2.08e-07,0.00e+00,13",
+          "issue": "missing comma between the apparent band-center and band-maximum values yields fewer CSV fields than declared",
+          "silent_repair": "FORBIDDEN",
+          "supporting_source_file": "m87_2017_swiftxrt.csv",
+          "supporting_source_blob_sha1": "c00729aa7626cfb080e011118d9559b81b81c64a",
+          "supporting_file_role": "independent source table for Swift-XRT observations; does not by itself authorize rewriting the broadband record",
+          "resolution": "TOKEN_VAZIO_REQUIRE_AUTHORITATIVE_CORRECTION_OR_PREDECLARED_TRANSFORM_WITH_RECEIPT"
+        }
+      ],
+      "repository_readme_blob_sha1": "8b458a939bc1fd9a4b9a0c2ff05920f814dba11f",
+      "boundary": "Git commit+blob identity is frozen; SHA-256 remains absent until exact raw bytes are materialized by the execution environment. The confirmed source-format anomaly must not be silently repaired."
+    },
+    "EHT_2017_L1": {
+      "role": "RAW_CALIBRATION_CUSTODY_REFERENCE",
+      "doi": "10.25739/kat4-na03",
+      "project_code": "2016.1.01154.V",
+      "license_at_dataset_level": "Open Data Commons Public Domain Dedication and License (PDDL)",
+      "official_checksum_resource": {
+        "name": "2016.1.01154.V.sha256sums",
+        "resource_id": "940eea05-06b8-413f-a729-619f670a9b66",
+        "checksum_content": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED"
+      },
+      "file_sha256": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED",
+      "ingestion_state": "BLOCKED_BY_CYVERSE_DATASTORE_IP_VERIFICATION"
+    },
+    "EHT_2024_D01_01": {
+      "role": "RETROSPECTIVE_REPLICATION_SET_NOT_BLIND",
+      "doi": "10.25739/epm5-r371",
+      "file_sha256": "TOKEN_VAZIO_NOT_INGESTED",
+      "ingestion_state": "WITHHELD_FROM_DEVELOPMENT_EXECUTION",
+      "boundary": "Already-public scientific result; cannot be represented as a blind prospective prediction."
+    }
+  },
+  "provider_observation": {
+    "provider": "CyVerse Data Store",
+    "state": "ACCESS_BARRIER_OBSERVED",
+    "barrier": "IP verification / anti-bot challenge prevented raw datastore-byte retrieval in this execution environment",
+    "scientific_interpretation": "NONE",
+    "fallback_allowed": "official metadata and content-addressed public GitHub products only; no invented file hashes"
+  },
+  "current_custody_state": {
+    "official_product_identity": "PARTIAL_PASS",
+    "dataset_level_rights": "PARTIAL_PASS_PDDL_WHERE_OBSERVED",
+    "file_level_sha256": "TOKEN_VAZIO",
+    "large_VLBI_bytes_ingested": false,
+    "MWL_GitHub_content_identity": "PASS_COMMIT_AND_BLOB_SHA1_WITH_SOURCE_FORMAT_ANOMALY",
+    "MWL_parse_ready": false,
+    "comparison_likelihood_ready": false
+  },
+  "status": "PARTIAL_CUSTODY_METADATA_BOUND_NO_RESULT_PRODUCING_INGESTION"
+}
