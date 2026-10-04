@@ -1,0 +1,66 @@
+schema: rll.geometric_mutation_matrix.v1
+version: 1
+claim_allowed: false
+publication_effect: NONE
+semantics:
+  fold_shortcut: EXTRINSIC_EMBEDDING_ONLY
+  physical_wormhole_claim: false
+  cross_domain_bridge: SENSITIVITY_ONLY_NO_CAUSAL_CLAIM
+  correlation: ASSOCIATION_ONLY
+baseline:
+  reference_points:
+    p: [0.15, 0.10, 0.05]
+    q: [0.65, 0.35, 0.20]
+  rll:
+    omega_m: 0.315
+    omega_s0: 0.02
+    z_t: 1.0
+    w_t: 0.30
+    h0: 67.4
+    z_samples: [0.0, 0.5, 1.0, 2.0]
+mutations:
+  geometry_families:
+    - flat
+    - spherical
+    - hyperbolic
+    - toroidal
+  projections:
+    - identity
+    - anisotropic
+    - shear
+    - extrinsic_fold
+  fragments:
+    segment: 1
+    triangle: 2
+    tetrahedron: 3
+  scales: [0.5, 1.0, 2.0]
+  max_cases: 576
+projection_parameters:
+  anisotropic: [1.15, 0.85, 1.0]
+  shear_xy: 0.20
+  fold_pivot_x: 0.40
+geometry_parameters:
+  spherical_radius: 1.0
+  hyperbolic_radius: 1.0
+  torus_major_radius: 2.0
+  torus_minor_radius: 0.5
+sensitivity_projection:
+  # Maps normalized geometric mutation features to bounded RLL parameter deltas.
+  # This is a sensitivity experiment, not a physical coupling law.
+  feature_order: [curvature_code, distance_delta, log_measure_ratio, log_condition, noninjective]
+  parameter_order: [omega_s0, z_t, w_t]
+  matrix_mutations: [baseline, swap_curvature_distance, sign_flip_distance, sparse]
+  matrix:
+    - [0.006, 0.004, 0.002, 0.001, 0.000]
+    - [0.040, 0.080, 0.020, 0.010, 0.000]
+    - [0.010, 0.015, 0.010, 0.005, 0.000]
+  bounds:
+    omega_s0: [0.0, 0.10]
+    z_t: [0.20, 2.50]
+    w_t: [0.05, 1.00]
+gates:
+  require_finite: true
+  require_baseline_recovery: true
+  reject_physical_shortcut_claim: true
+  correlation_min_cases: 8
+  correlation_abs_threshold: 0.85
