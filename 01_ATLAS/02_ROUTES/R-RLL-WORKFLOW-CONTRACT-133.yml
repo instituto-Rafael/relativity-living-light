@@ -1,0 +1,43 @@
+route_id: R-RLL-WORKFLOW-CONTRACT-133
+source_ref: "main@9b5796df23d33550767b130f6c580068b58d255b:.github/workflows/*.{yml,yaml}"
+target_ref: ".github/workflow-contract.yml#inventory.active_workflows"
+relation_type: EXECUTABLE_WORKFLOW_INVENTORY_RECONCILIATION
+owner: RLL
+authority: ".github/workflow-contract.yml#inventory.source_of_truth=executable_files"
+predecessor: R-RLL-WORKFLOW-CONTRACT-132
+supersedes: TOKEN_VAZIO_WORKFLOW_INVENTORY_MISMATCH_125_127
+dependency_edges:
+  - ".github/workflows/jekyll-gh-pages.yml"
+  - ".github/workflows/symlink-integrity.yml"
+  - "tools/workflow_contract_sync.py"
+evidence_ref: "127 executable workflow files measured at main@9b5796df23d33550767b130f6c580068b58d255b"
+receipt_ref: "commit_self"
+replay_recipe: "enumerate executable .github/workflows/*.yml|*.yaml; expect 127; run python tools/workflow_contract_sync.py --check; run focused falsifiers; run global suite"
+rollback_ref: "git revert commit_self"
+reconstruction_minimum:
+  - "base=9b5796df23d33550767b130f6c580068b58d255b"
+  - "before=125"
+  - "after=127"
+  - ".github/workflow-contract.yml"
+privacy_class: PUBLIC_REPOSITORY_METADATA
+retention_class: APPEND_ONLY
+standards_refs:
+  - DMAIC_METHOD_ONLY
+rights_refs:
+  - NO_NEW_PERSONAL_DATA
+human_impact: auditability
+child_safety_relevance: TOKEN_VAZIO_APPLICABILITY
+environmental_relevance: TOKEN_VAZIO
+claim_allowed: false
+before_state: 125
+after_state: 127
+exact_ref: "main@9b5796df23d33550767b130f6c580068b58d255b"
+environment_ref: "GitHub repository tree a5b039599241d721eed4ac8a4017496bfc80a573"
+command_or_action: "atomic Git commit: workflow contract scalar reconciliation plus append-only route"
+expected_observable: "contract inventory equals executable workflow count (127)"
+actual_observable: TOKEN_VAZIO_UNTIL_CI
+falsifier: "workflow_contract_sync.py --check or focused workflow-contract tests fail"
+rollback_procedure: "revert the single reconciliation commit"
+rollback_test: TOKEN_VAZIO_UNTIL_COMMIT
+reconstruction_state: PREPARED_FOR_EXECUTION
+hash_ref: TOKEN_VAZIO_UNTIL_COMMIT
