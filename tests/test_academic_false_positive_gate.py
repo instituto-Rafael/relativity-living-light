@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import importlib.util
 import math
 import unittest
+from pathlib import Path
 
 from rll.academic_false_positive_gate import (
     CONFIRMATORY_BOOLEAN_REQUIREMENTS,
@@ -23,6 +25,18 @@ from rll.academic_false_positive_gate import (
     variance_of_mean,
     venturi_reference,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
+VALIDATOR = ROOT / "tools" / "validate_academic_false_positive_gate.py"
+
+
+def load_validator():
+    spec = importlib.util.spec_from_file_location("validate_academic_false_positive_gate", VALIDATOR)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class AcademicFalsePositiveDiagnosticsTests(unittest.TestCase):
@@ -125,6 +139,30 @@ class AcademicFalsePositiveDiagnosticsTests(unittest.TestCase):
 
         no_screen = academic_false_positive_gate(False, complete)
         self.assertFalse(bool(no_screen["confirmatory_ready"]))
+
+    def test_nested_real_claim_cannot_evade_validator(self) -> None:
+        validator = load_validator()
+        payload = {
+            "container": [
+                {
+                    "dataset_type": "real_observational",
+                    "interpretation_label": "rll_preferred_strong",
+                    "claim_allowed": True,
+                }
+            ]
+        }
+        found = list(validator.walk_real_results(payload))
+        self.assertEqual(len(found), 1)
+        mapping, location = found[0]
+        self.assertEqual(location, "$.container[0]")
+        errors = validator.validate_real_result(ROOT / "results" / "nested_fixture.json", mapping, location)
+        self.assertTrue(errors)
+        self.assertIn("confirmatory evidence", errors[0])
+
+    def test_technical_readiness_true_without_real_dataset_type_is_not_scientific_claim(self) -> None:
+        validator = load_validator()
+        payload = {"bao_covariance_policy": {"claim_allowed": True, "mode": "official_full"}}
+        self.assertEqual(list(validator.walk_real_results(payload)), [])
 
 
 if __name__ == "__main__":
