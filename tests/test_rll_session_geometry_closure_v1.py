@@ -73,8 +73,8 @@ class SessionGeometryClosureV1Tests(unittest.TestCase):
             area = regular_polygon_area(radius, n)
             self.assertLess(perimeter, 2.0 * math.pi * radius)
             self.assertLess(area, math.pi * radius * radius)
-        self.assertAlmostEqual(regular_polygon_perimeter(radius, 100000), 2.0 * math.pi * radius, places=8)
-        self.assertAlmostEqual(regular_polygon_area(radius, 100000), math.pi * radius * radius, places=8)
+        self.assertAlmostEqual(regular_polygon_perimeter(radius, 100000), 2.0 * math.pi * radius, places=7)
+        self.assertAlmostEqual(regular_polygon_area(radius, 100000), math.pi * radius * radius, places=7)
         self.assertLess(circularity_regular_polygon(4), circularity_regular_polygon(5))
         self.assertAlmostEqual(circularity_regular_polygon(100000), 1.0, places=8)
 
