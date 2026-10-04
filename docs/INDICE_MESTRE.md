@@ -6,6 +6,7 @@
 **Atualizado em:** 2026-08-08
 **Atualizado em:** 2026-09-05
 **Atualizado em:** 2026-10-02
+**Atualizado em:** 2026-10-04
 **Regra:** secao principal lista apenas caminhos canonicos oficiais.
 
 ---
@@ -21,6 +22,9 @@ Este arquivo e a **navegacao canonica** da documentacao do repositorio.
 Encaminhamentos complementares:
 - Porta de entrada: [`README.md`](../README.md)
 - Mapa central de rastreabilidade: [`docs/RLL_TRACEABILITY_MAP.md`](RLL_TRACEABILITY_MAP.md)
+- Estado de validacao atual: [`VALIDATION_STATUS.md`](../VALIDATION_STATUS.md)
+- Tabela atual espelhada do artefato: [`docs/RLL_CURRENT_RESULTS_PAPER_TABLE.md`](RLL_CURRENT_RESULTS_PAPER_TABLE.md)
+- Intake/custodia Drive: [`data/source_intake/2026-10-04/RAFAELIA_SOURCE_INTAKE_V1.md`](../data/source_intake/2026-10-04/RAFAELIA_SOURCE_INTAKE_V1.md)
 - Rota de pesquisa: [`docs/workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md`](workflows/RLL_RESEARCH_FRAGMENT_ROUTE_V1.md) — bibliografia, intake arXiv rastreável, relações pendentes e preview Pages.
 - Inventario bruto (`.md` e `.zip`): [`docs/DOCUMENTATION_FULL_INVENTORY.md`](DOCUMENTATION_FULL_INVENTORY.md)
 - Mapa Dark Matter/RLL: [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md)
@@ -94,6 +98,9 @@ Encaminhamentos complementares:
 
 - [`docs/DOCUMENTATION_ORGANIZATION_MASTER.md`](DOCUMENTATION_ORGANIZATION_MASTER.md)
 - [`docs/RLL_TRACEABILITY_MAP.md`](RLL_TRACEABILITY_MAP.md) - mapa central: cada claim/artifacto aponta para seu documento, status e proxima prova
+- [`data/source_intake/2026-10-04/RAFAELIA_SOURCE_INTAKE_V1.md`](../data/source_intake/2026-10-04/RAFAELIA_SOURCE_INTAKE_V1.md) - registro claim-gated dos pacotes sob custodia Drive
+- [`data/source_intake/2026-10-04/DRIVE_BINDINGS_V1.md`](../data/source_intake/2026-10-04/DRIVE_BINDINGS_V1.md) - IDs, tamanhos, hashes declarados/verificados e TOKEN_VAZIO de readback
+- [`receipts/2026-10-04_RLL_SOURCE_INTAKE_CUSTODY_RECONCILIATION.md`](../receipts/2026-10-04_RLL_SOURCE_INTAKE_CUSTODY_RECONCILIATION.md) - receipt do hotfix, gates e rollback
 - [`docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md`](RLL_V1_TAG_ANCESTRALITY_AUDIT.md) - auditoria da tag `v1.0.0`, anterioridade da formula e observaveis
 - [`docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md`](RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md) - ledger de proveniencia celular/Termux e estados VERIFIED/DECLARED/TOKEN_VAZIO
 - [`docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md`](RLL_NEXT_WORK_DOCUMENTATION_PLAN.md) - plano operacional para inventario da tag, imagens, CSVs, estacoes de dados e non-post-hoc
@@ -141,6 +148,8 @@ Encaminhamentos complementares:
 
 ## 4) Validacao observacional e matriz de dados reais
 
+- [`VALIDATION_STATUS.md`](../VALIDATION_STATUS.md) - estado atual separado entre artefato cientifico, CI e lacunas
+- [`docs/RLL_CURRENT_RESULTS_PAPER_TABLE.md`](RLL_CURRENT_RESULTS_PAPER_TABLE.md) - espelho exato do joint-real canônico, com claim gate e contradicao de label
 - [`docs/DARKMATTER_RLL_LINK_MAP.md`](DARKMATTER_RLL_LINK_MAP.md) - links de validacao cosmologica real: DESI, Pantheon, CMB, H(z), fσ8, ZML e workflows
 - [`docs/VALIDATION_DATA_MATRIX_RLL_MCRP.md`](VALIDATION_DATA_MATRIX_RLL_MCRP.md)
 - [`data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json`](../data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json) - registro executavel da topologia e dos gates de promocao
