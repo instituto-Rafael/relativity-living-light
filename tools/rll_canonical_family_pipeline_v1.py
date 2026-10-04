@@ -12,8 +12,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from tools import rll_family_theory_bridge_v1 as bridge
 from tools import rll_full_permutation_void_census_v1 as census
@@ -21,7 +26,6 @@ from tools import rll_prime_base_abscissa_curve_v1 as abscissa
 
 CLAIM_ALLOWED = False
 SOURCE_BOUNDARY = "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"
-ROOT = Path(__file__).resolve().parents[1]
 
 SOURCE_PATHS = (
     "tools/rll_full_permutation_void_census_v1.py",
