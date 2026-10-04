@@ -2,7 +2,8 @@
 """Validate bounded external evidence for the M87* SGPT fire test.
 
 This validates provenance/rights/custody structure only. It deliberately accepts
-provider-blocked file SHA-256 fields as unresolved and rejects invented hashes.
+provider-blocked file SHA-256 fields as unresolved, rejects invented hashes, and
+forbids silent repair of confirmed upstream source-format anomalies.
 """
 from __future__ import annotations
 
@@ -72,6 +73,18 @@ def validate_custody(d: dict) -> None:
     require(f.get("git_blob_sha1") == "160859ba23f0d0c9158bde7531cbcb2524be969c", "MWL blob drift")
     require(token(f.get("file_sha256")), "MWL SHA-256 cannot be invented without raw-byte materialization")
     require(f.get("content_read_state") == "READ_THROUGH_GITHUB_CONTENT_API", "MWL read state drift")
+    require(f.get("parse_state") == "BLOCKED_PENDING_SOURCE_ANOMALY_POLICY", "MWL parser must remain blocked while source anomaly is unresolved")
+
+    anomalies = mwl.get("source_format_anomalies", [])
+    require(len(anomalies) == 1, "confirmed MWL source anomaly must remain explicit")
+    a = anomalies[0]
+    require(a.get("id") == "MWL_SWIFT_XRT_FIELD_SEPARATOR_001", "MWL anomaly id drift")
+    require(a.get("state") == "SOURCE_FORMAT_ANOMALY_CONFIRMED", "MWL anomaly state drift")
+    require(a.get("declared_column_count") == 6, "MWL declared-column evidence drift")
+    require(a.get("observed_record") == "4.84e+17,1.08e+18 2.42e+18,2.08e-07,0.00e+00,13", "MWL anomalous record drift")
+    require(a.get("silent_repair") == "FORBIDDEN", "silent upstream-data repair cannot be enabled")
+    require(a.get("supporting_source_blob_sha1") == "c00729aa7626cfb080e011118d9559b81b81c64a", "supporting Swift-XRT blob drift")
+    require(token(a.get("resolution")), "upstream anomaly resolution cannot be invented")
 
     l1 = products["EHT_2017_L1"]
     checksum = l1.get("official_checksum_resource", {})
@@ -87,6 +100,7 @@ def validate_custody(d: dict) -> None:
     require(provider.get("scientific_interpretation") == "NONE", "provider access failure cannot become scientific evidence")
     state = d.get("current_custody_state", {})
     require(state.get("large_VLBI_bytes_ingested") is False, "VLBI ingestion falsely claimed")
+    require(state.get("MWL_parse_ready") is False, "MWL parse readiness cannot be promoted while source anomaly is unresolved")
     require(state.get("comparison_likelihood_ready") is False, "likelihood readiness falsely claimed")
     require(state.get("file_level_sha256") == "TOKEN_VAZIO", "global SHA-256 state falsely promoted")
 
@@ -97,54 +111,45 @@ def validate_all(source: dict, custody: dict) -> None:
 
 
 def selftest(source: dict, custody: dict) -> list[str]:
-    cases: list[tuple[str, str]] = []
+    cases: list[tuple[str, object]] = []
 
     s = copy.deepcopy(source)
     s["deliberately_unbound_source_parameters"]["a_star"] = 0.94
-    try:
-        validate_all(s, custody)
-    except EvidenceError:
-        cases.append(("invent-spin", "REJECTED"))
-    else:
-        raise EvidenceError("invent-spin accepted")
+    cases.append(("invent-spin", s))
 
     c = copy.deepcopy(custody)
     c["products"]["EHT_2019_D01_01"]["file_sha256"] = "0" * 64
-    try:
-        validate_all(source, c)
-    except EvidenceError:
-        cases.append(("invent-vlbi-sha256", "REJECTED"))
-    else:
-        raise EvidenceError("invent-vlbi-sha256 accepted")
+    cases.append(("invent-vlbi-sha256", c))
 
     c = copy.deepcopy(custody)
     c["products"]["EHT_2021_D02_01"]["primary_small_file"]["git_blob_sha1"] = "0" * 40
-    try:
-        validate_all(source, c)
-    except EvidenceError:
-        cases.append(("change-official-git-blob", "REJECTED"))
-    else:
-        raise EvidenceError("changed Git blob accepted")
+    cases.append(("change-official-git-blob", c))
 
     c = copy.deepcopy(custody)
     c["products"]["EHT_2024_D01_01"]["role"] = "BLIND_PROSPECTIVE_PREDICTION"
-    try:
-        validate_all(source, c)
-    except EvidenceError:
-        cases.append(("relabel-2018-blind", "REJECTED"))
-    else:
-        raise EvidenceError("blind relabel accepted")
+    cases.append(("relabel-2018-blind", c))
 
     c = copy.deepcopy(custody)
     c["provider_observation"]["scientific_interpretation"] = "SUPPORTS_SGPT"
-    try:
-        validate_all(source, c)
-    except EvidenceError:
-        cases.append(("provider-gap-as-science", "REJECTED"))
-    else:
-        raise EvidenceError("provider gap scientific promotion accepted")
+    cases.append(("provider-gap-as-science", c))
 
-    return [name for name, _ in cases]
+    c = copy.deepcopy(custody)
+    c["products"]["EHT_2021_D02_01"]["source_format_anomalies"][0]["silent_repair"] = "APPLY_COMMA_AUTOMATICALLY"
+    c["products"]["EHT_2021_D02_01"]["primary_small_file"]["parse_state"] = "READY"
+    cases.append(("silent-repair-upstream-csv", c))
+
+    rejected: list[str] = []
+    for name, candidate in cases:
+        try:
+            if name == "invent-spin":
+                validate_all(candidate, custody)
+            else:
+                validate_all(source, candidate)
+        except EvidenceError:
+            rejected.append(name)
+        else:
+            raise EvidenceError(f"illegal mutation accepted: {name}")
+    return rejected
 
 
 def main() -> int:
@@ -161,12 +166,13 @@ def main() -> int:
     rejected = selftest(source, custody) if args.selftest else []
     receipt = {
         "schema": "rll.sgpt.m87.external-evidence-preflight-receipt/v1",
-        "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL",
+        "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL_WITH_SOURCE_ANOMALY",
         "source_binding": "PASS_MODEL_DEPENDENCE_EXPLICIT",
-        "custody_metadata": "PASS_PARTIAL",
+        "custody_metadata": "PASS_PARTIAL_SOURCE_ANOMALY_PRESERVED",
         "rejected_illegal_mutations": rejected,
         "raw_VLBI_byte_custody": "TOKEN_VAZIO_PROVIDER_ACCESS_BARRIER",
         "file_level_sha256": "TOKEN_VAZIO",
+        "MWL_parse_ready": False,
         "likelihood_ready": False,
         "scientific_validation": "TOKEN_VAZIO",
         "claim_allowed": False,
