@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rafaelia.example/schemas/delta-empty-omega-pi-mu.v1.schema.json",
+  "title": "RAFAELIA Delta Empty Omega Pi Mu V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "omega_id",
+    "generation",
+    "mu_id",
+    "source_ref",
+    "claim_allowed",
+    "token_vazio",
+    "deltas",
+    "projections"
+  ],
+  "properties": {
+    "schema_version": {"const": "delta-empty-omega-pi-mu/v1"},
+    "omega_id": {"type": "string", "minLength": 1},
+    "generation": {"type": "integer", "minimum": 0},
+    "mu_id": {"type": "string", "minLength": 1},
+    "source_ref": {"type": "string", "minLength": 1},
+    "source_hash_sha256": {
+      "anyOf": [
+        {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        {"type": "string", "const": "TOKEN_VAZIO"}
+      ]
+    },
+    "evidence_ref": {"type": "string"},
+    "claim_allowed": {"type": "boolean"},
+    "token_vazio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["open", "reason", "expected_ref", "closure_route"],
+      "properties": {
+        "open": {"type": "boolean"},
+        "reason": {"type": "string"},
+        "expected_ref": {"type": "string"},
+        "closure_route": {"type": "string"}
+      }
+    },
+    "deltas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["delta_id", "kind", "mu_id", "source_ref"],
+        "properties": {
+          "delta_id": {"type": "string", "minLength": 1},
+          "kind": {
+            "enum": [
+              "SOURCE_DISCOVERED",
+              "NODE_ADDED",
+              "EDGE_ADDED",
+              "PROJECTION_ADDED",
+              "TOKEN_VAZIO_OPEN",
+              "TOKEN_VAZIO_CLOSE",
+              "EVIDENCE_BOUND",
+              "RECEIPT"
+            ]
+          },
+          "mu_id": {"type": "string", "minLength": 1},
+          "source_ref": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "projections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["projection_id", "from_domain", "to_domain", "source_ref"],
+        "properties": {
+          "projection_id": {"type": "string", "minLength": 1},
+          "from_domain": {"type": "string", "minLength": 1},
+          "to_domain": {"type": "string", "minLength": 1},
+          "source_ref": {"type": "string", "minLength": 1},
+          "evidence_ref": {"type": "string"},
+          "claim_allowed": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}
