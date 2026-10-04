@@ -1,0 +1,63 @@
+name: SGPT M87 Fire Test Preregistration
+
+on:
+  pull_request:
+    paths:
+      - 'data/contracts/sgpt_m87_firetest.v1.json'
+      - 'tools/validate_sgpt_m87_firetest.py'
+      - 'tests/strong_gravity/test_sgpt_m87_firetest.py'
+      - 'docs/strong_gravity/SGPT_M87_FIRETEST_V1.md'
+      - '.github/workflows/sgpt-m87-firetest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sgpt-m87-firetest-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  preregistration-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+      - name: Validate frozen contract and reject illegal mutations
+        run: |
+          set -euo pipefail
+          mkdir -p build/sgpt-m87
+          python3 tools/validate_sgpt_m87_firetest.py \
+            --selftest \
+            --receipt build/sgpt-m87/preregistration-receipt.json
+          python3 -m json.tool data/contracts/sgpt_m87_firetest.v1.json >/dev/null
+          python3 -m json.tool build/sgpt-m87/preregistration-receipt.json >/dev/null
+      - name: Focused unit tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest -v tests.strong_gravity.test_sgpt_m87_firetest
+          python3 -m py_compile tools/validate_sgpt_m87_firetest.py tests/strong_gravity/test_sgpt_m87_firetest.py
+      - name: Assert no scientific promotion occurred
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          receipt = json.loads(Path('build/sgpt-m87/preregistration-receipt.json').read_text())
+          assert receipt['status'] == 'PASS_PREREGISTRATION_CONTRACT_ONLY'
+          assert receipt['scientific_validation'] == 'TOKEN_VAZIO'
+          assert receipt['claim_allowed'] is False
+          assert len(receipt['rejected_illegal_mutations']) >= 11
+          PY
+      - name: Preserve preregistration receipt
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: sgpt-m87-preregistration-${{ github.run_id }}
+          path: build/sgpt-m87/
+          if-no-files-found: error
+          retention-days: 30

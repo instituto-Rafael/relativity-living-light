@@ -1,0 +1,34 @@
+{
+  "schema": "rll.sgpt.m87.claim-ladder/v1",
+  "id": "SGPT_M87_CLAIM_LADDER_V1",
+  "source": "M87*",
+  "claim_allowed": false,
+  "current_level": "L1_SOFTWARE_IMPLEMENTATION_PASS",
+  "levels": [
+    {"id": "L0_ALGEBRAICALLY_VALID_DIAGNOSTIC", "requires": ["definition", "units/domain consistency"], "permits": "mathematical/diagnostic statement only"},
+    {"id": "L1_SOFTWARE_IMPLEMENTATION_PASS", "requires": ["focused deterministic software receipt"], "permits": "software implementation statement only"},
+    {"id": "L2_PREDICTIVE_DIAGNOSTIC_UTILITY", "requires": ["frozen target", "out-of-sample gain", "negative controls", "uncertainty/complexity penalty"], "permits": "diagnostic utility claim only"},
+    {"id": "L3_SOURCE_SPECIFIC_REPRODUCIBLE_ASSOCIATION", "requires": ["source-bound data", "reproduction", "stable association"], "permits": "source-specific empirical association"},
+    {"id": "L4_MECHANISTIC_IMPROVEMENT_OVER_STANDARD_BASELINES", "requires": ["mandatory baselines", "mechanistic residual", "robust comparison"], "permits": "mechanistic extension candidate"},
+    {"id": "L5_INDEPENDENT_HELD_OUT_PREDICTION", "requires": ["genuinely independent/future holdout", "predeclared tolerance", "successful prediction"], "permits": "independent predictive claim"},
+    {"id": "L6_NEW_PHYSICS_CLAIM_ELIGIBLE", "requires": ["L0-L5", "external/independent replication", "baseline exhaustion", "explicit human authorization"], "permits": "eligibility for cautious new-physics claim, not automatic truth"}
+  ],
+  "forbidden_jumps": [
+    "L1->L6",
+    "contract_PASS->physics_claim",
+    "diagnostic_utility->fundamental_interaction",
+    "retrospective_replication->blind_prediction"
+  ],
+  "hypothesis_ceiling": {
+    "H_down": "L1_SOFTWARE_IMPLEMENTATION_PASS",
+    "H_logistic_photonic": "L1_SOFTWARE_IMPLEMENTATION_PASS",
+    "H_temporal_ordering": "L0_ALGEBRAICALLY_VALID_DIAGNOSTIC"
+  },
+  "rules": [
+    "A composite feature can be scientifically useful without constituting new physics.",
+    "No level is inherited from another repository without revision-bound evidence.",
+    "The strongest statement is the lowest level whose requirements are all closed.",
+    "claim_allowed remains false until explicit G7 authorization."
+  ],
+  "status": "LOCKED"
+}

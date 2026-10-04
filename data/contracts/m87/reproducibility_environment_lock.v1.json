@@ -1,0 +1,43 @@
+{
+  "schema": "rll.sgpt.m87.reproducibility-environment-lock/v1",
+  "id": "SGPT_M87_REPRODUCIBILITY_ENVIRONMENT_LOCK_V1",
+  "source": "M87*",
+  "claim_allowed": false,
+  "execution_environment": {
+    "repository_commit": "TOKEN_VAZIO",
+    "workflow_run_id": "TOKEN_VAZIO",
+    "os_image": "TOKEN_VAZIO",
+    "python_runtime": "TOKEN_VAZIO",
+    "compiler_runtime": "TOKEN_VAZIO",
+    "dependency_lock_hash": "TOKEN_VAZIO",
+    "container_digest": "TOKEN_VAZIO",
+    "blas_backend": "TOKEN_VAZIO",
+    "gpu_backend": "TOKEN_VAZIO",
+    "random_seed_manifest": "TOKEN_VAZIO",
+    "input_manifest_hash": "TOKEN_VAZIO",
+    "config_hash": "TOKEN_VAZIO",
+    "output_manifest_hash": "TOKEN_VAZIO",
+    "operator_identity": "TOKEN_VAZIO",
+    "provider_identity": "TOKEN_VAZIO"
+  },
+  "independent_reproduction": {
+    "state": "TOKEN_VAZIO",
+    "must_differ_in_at_least_one": [
+      "operator",
+      "repository_or_workspace",
+      "implementation",
+      "compute_environment",
+      "data_reduction_path"
+    ],
+    "selected_independence_axis": "TOKEN_VAZIO",
+    "agreement_tolerance": "TOKEN_VAZIO",
+    "comparison_receipt": "TOKEN_VAZIO"
+  },
+  "rules": [
+    "The word independent is insufficient without an operational difference axis.",
+    "Agreement tolerance must be frozen before comparing reproductions.",
+    "Repository SHA alone does not fully define the numerical environment.",
+    "A provider-access failure is operational evidence, not astrophysical evidence."
+  ],
+  "status": "LOCKED_UNRESOLVED"
+}
