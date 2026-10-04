@@ -1,0 +1,114 @@
+name: RLL Canonical Family Pipeline V1
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/rll-canonical-family-pipeline-v1.yml"
+      - "tools/rll_canonical_family_pipeline_v1.py"
+      - "tools/rll_family_theory_bridge_v1.py"
+      - "tools/rll_full_permutation_void_census_v1.py"
+      - "tools/rll_prime_base_abscissa_curve_v1.py"
+      - "tools/rll_repdigit_geometry_molds_v1.py"
+      - "tools/rll_geometric_dispersion_false_positive_gate.py"
+      - "tests/test_rll_canonical_family_pipeline_v1.py"
+      - "schemas/rll_canonical_family_pipeline_receipt_v1.schema.json"
+      - "data/epistemic_void/rll_family_theory_bridge_v1.json"
+      - "data/epistemic_void/rll_full_permutation_void_census_v1.json"
+      - "docs/research/RLL_*"
+  push:
+    branches: ["rll/lab"]
+    paths:
+      - ".github/workflows/rll-canonical-family-pipeline-v1.yml"
+      - "tools/rll_canonical_family_pipeline_v1.py"
+      - "tests/test_rll_canonical_family_pipeline_v1.py"
+      - "schemas/rll_canonical_family_pipeline_receipt_v1.schema.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  canonical-family-pipeline:
+    name: canonical-family-pipeline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up deterministic Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+          check-latest: false
+
+      - name: Install bounded validation dependencies
+        run: python -m pip install pytest 'jsonschema[format]'
+
+      - name: Execute canonical family pipeline
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python tools/rll_canonical_family_pipeline_v1.py \
+            --strict \
+            --output-dir artifacts/rll-canonical-family-pipeline \
+            --head-sha "${HEAD_SHA}" \
+            --run-id "${RUN_ID}"
+
+      - name: Validate final receipt schema
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+          schema = json.loads(Path("schemas/rll_canonical_family_pipeline_receipt_v1.schema.json").read_text())
+          receipt = json.loads(Path("artifacts/rll-canonical-family-pipeline/07_final_receipt.json").read_text())
+          Draft202012Validator.check_schema(schema)
+          Draft202012Validator(schema).validate(receipt)
+          print("PASS: final receipt matches structural contract")
+          PY
+
+      - name: Run focused cross-family tests
+        run: python -m pytest -q tests/test_rll_canonical_family_pipeline_v1.py
+
+      - name: Enforce receipt and gate closure
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("artifacts/rll-canonical-family-pipeline")
+          required = {
+              "01_source_receipt.json", "02_permutation_void_receipt.json",
+              "03_family_receipt.json", "04_prime_base_abscissa_receipt.json",
+              "05_cross_family_receipt.json", "06_gate_receipt.json",
+              "07_final_receipt.json", "R3.md",
+          }
+          observed = {p.name for p in root.iterdir() if p.is_file()}
+          if required != observed:
+              raise SystemExit(f"receipt set mismatch: missing={sorted(required-observed)} extra={sorted(observed-required)}")
+          final = json.loads((root / "07_final_receipt.json").read_text())
+          if final["pipeline_state"] != "PASS_FAIL_CLOSED" or final["claim_allowed"] is not False:
+              raise SystemExit("pipeline or claim boundary failed")
+          failed = [g["gate_id"] for g in final["gates"] if g["state"] != "PASS"]
+          if failed or len(final["gates"]) != 12:
+              raise SystemExit(f"gate closure failed: {failed}")
+          print("PASS: 8 receipts/R3 present; 12/12 gates PASS; physical claims remain fail-closed")
+          PY
+
+      - name: Upload canonical custody receipts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-canonical-family-pipeline-${{ github.run_id }}
+          path: artifacts/rll-canonical-family-pipeline/
+          retention-days: 30
+          if-no-files-found: error
