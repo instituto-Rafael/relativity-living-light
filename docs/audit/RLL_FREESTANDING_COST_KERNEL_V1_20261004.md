@@ -65,3 +65,43 @@ Until CI compiles the freestanding object, proves no unresolved external symbols
 `TOKEN_VAZIO_EXECUTION`
 
 SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM.
+
+## First observed execution — 2026-10-04
+
+Head observed: `5daa6a395460d3fd9d0a6cdd79df40f2185d0ac2`.
+
+GitHub Actions Python tests run `37196355533`, job `111418944780` reported:
+
+- checkout: `PASS`;
+- `Build and execute freestanding cost kernel`: `PASS`;
+- freestanding compile path executed before the hosted Python test environment;
+- no scientific claim promotion was introduced.
+
+Therefore the kernel execution token advances from:
+
+`TOKEN_VAZIO_EXECUTION`
+
+for the initial authored state to:
+
+`FREESTANDING_KERNEL_EXECUTION_OBSERVED_PASS`
+
+for that exact head and job only.
+
+This does **not** close the PR-level non-regression gate. On the same head the workflow architecture/reconciliation gates found a separate repository workflow-inventory drift:
+
+- contract expected active workflows: `110`;
+- executable workflows discovered independently by strict validators: `111`;
+- architecture YAML parsing itself: `PASS`;
+- workflow inventory reconciliation: `MISMATCH`.
+
+The repository synchronizer contract states that its write mode edits only `inventory.active_workflows`; it does not modify claims, branch settings, commits, or other workflow semantics.
+
+Overall PR state after this first observation:
+
+`TOKEN_VAZIO_FINAL_HEAD_NON_REGRESSION`
+
+Energy remains:
+
+`ENERGY_MEASUREMENT = TOKEN_VAZIO_MEASUREMENT`
+
+until actual power telemetry is supplied by a measured source.
