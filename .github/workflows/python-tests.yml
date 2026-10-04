@@ -26,6 +26,43 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Build and execute freestanding cost kernel
+        run: |
+          set -euo pipefail
+          OUT="artifacts/python-tests/freestanding"
+          OBJ="$OUT/rll_freestanding_cost_kernel.o"
+          BIN="$OUT/rll_freestanding_cost_kernel_verify"
+          mkdir -p "$OUT"
+
+          cc -std=c11 -O2 -Wall -Wextra -Werror \
+            -ffreestanding -fno-builtin -fno-stack-protector \
+            -fno-unwind-tables -fno-asynchronous-unwind-tables \
+            -nostdinc \
+            -c tools/ci/rll_freestanding_cost_kernel.c \
+            -o "$OBJ"
+
+          if nm -u "$OBJ" | grep -q .; then
+            echo "FAIL: freestanding kernel has unresolved external symbols" >&2
+            nm -u "$OBJ" >&2
+            exit 2
+          fi
+
+          cc -std=c11 -O2 -Wall -Wextra -Werror \
+            tests/rll_freestanding_cost_kernel_host.c \
+            "$OBJ" \
+            -o "$BIN"
+          "$BIN"
+
+          {
+            echo "kernel_compile=PASS"
+            echo "kernel_external_symbols=0"
+            echo "hosted_verifier=PASS"
+            echo "kernel_sha256=$(sha256sum "$OBJ" | awk '{print $1}')"
+            echo "kernel_bytes=$(wc -c < "$OBJ")"
+            echo "energy_measurement=TOKEN_VAZIO_MEASUREMENT"
+            echo "claim_allowed=false"
+          } | tee "$OUT/receipt.txt"
+
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
         with:
