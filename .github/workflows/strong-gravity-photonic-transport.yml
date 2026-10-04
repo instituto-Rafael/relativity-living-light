@@ -1,0 +1,33 @@
+name: Strong Gravity Photonic Transport
+
+on:
+  pull_request:
+    paths:
+      - 'src/rll/strong_gravity_photonic_transport.py'
+      - 'tests/test_strong_gravity_photonic_transport.py'
+      - 'docs/strong_gravity/STRONG_GRAVITY_PHOTONIC_TRANSPORT_V1.md'
+      - 'data/registries/rll_strong_gravity_photonic_transport_v1.json'
+      - '.github/workflows/strong-gravity-photonic-transport.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic-unit-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test runner
+        run: python -m pip install --upgrade pytest
+      - name: Run focused tests
+        env:
+          PYTHONPATH: src
+        run: python -m pytest -q tests/test_strong_gravity_photonic_transport.py
+      - name: Compile module
+        run: python -m py_compile src/rll/strong_gravity_photonic_transport.py
+      - name: Validate registry JSON
+        run: python -m json.tool data/registries/rll_strong_gravity_photonic_transport_v1.json >/dev/null
