@@ -1,0 +1,61 @@
+{
+  "schema": "rll.family_theory_bridge.manifest.v1",
+  "date": "2026-10-04",
+  "scope": "bounded_current_thread_plus_source_anchors",
+  "claim_allowed": false,
+  "source_boundary": "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+  "families": [
+    {"family_id":"SET-01","domain":"set_theory","status":"MATH_FORMAL","statement":"Finite carriers, subsets, products, equivalence classes and typed emptiness.","boundary":"Equal cardinality does not imply equal typed objects."},
+    {"family_id":"NUM-01","domain":"number_theory","status":"MATH_FORMAL","statement":"Divisibility, gcd/lcm, factorization, repdigits, repunits and base representations.","boundary":"Equal numeric value does not imply equal representation provenance."},
+    {"family_id":"PRIME-01","domain":"prime_theory","status":"MATH_FORMAL","statement":"Prime factors, Euler phi and multiplicative order of base 10 modulo selected primes.","boundary":"Decimal-cycle structure is arithmetic, not a physical cycle."},
+    {"family_id":"BASE-01","domain":"positional_systems","status":"MATH_FORMAL","statement":"Digit strings are interpreted relative to a declared base; 10_b=b.","boundary":"Digit 0 is not semantic absence."},
+    {"family_id":"MOD-01","domain":"modular_arithmetic","status":"MATH_FORMAL","statement":"Residues, residue-zero, phase carriers and functional remainder maps.","boundary":"Residue zero is a valid class, not EMPTY_SET or TOKEN_VAZIO."},
+    {"family_id":"CRT-01","domain":"product_arithmetic","status":"MATH_FORMAL","statement":"Pairwise-coprime residue coordinates reconstruct a unique class modulo the product.","boundary":"CRT coordinates do not establish physical independent axes."},
+    {"family_id":"GRAPH-01","domain":"functional_graphs","status":"MATH_FORMAL","statement":"Remainder recurrences define finite directed functional graphs with cycles and basins.","boundary":"Graph topology is not automatically spatial geometry."},
+    {"family_id":"GRAPH-02","domain":"factor_graphs","status":"MATH_FORMAL","statement":"Composite molds and prime factors define a bipartite incidence graph.","boundary":"Shared factor means arithmetic relation only."},
+    {"family_id":"GRAPH-03","domain":"cayley_graphs","status":"MATH_FORMAL","statement":"Z_m with additive step defines a cycle/Cayley carrier when the step generates the group.","boundary":"Carrier period is not a cosmological period."},
+    {"family_id":"GEOM-01","domain":"regular_geometry","status":"MATH_FORMAL","statement":"Polygon and star-polygon molds use declared n and step k.","boundary":"Polygon and star polygon remain distinct typed objects."},
+    {"family_id":"RAD-01","domain":"radicals_ratios","status":"MATH_FORMAL","statement":"Radicals, reciprocal pairs and exact/near equalities are separately classified.","boundary":"Approximate equality never upgrades to identity."},
+    {"family_id":"VOID-01","domain":"typed_void","status":"MATH_FORMAL","statement":"Numeric zero, residue zero, empty set, null, undefined and TOKEN_VAZIO are typed separately.","boundary":"TOKEN_VAZIO != 0."},
+    {"family_id":"FLUID-01","domain":"continuity","status":"FORMAL_UNDER_ASSUMPTIONS","statement":"Mass conservation uses rho*A*v in steady one-dimensional flow.","boundary":"Requires declared density, geometry, velocity and regime."},
+    {"family_id":"FLUID-02","domain":"bernoulli_venturi","status":"FORMAL_UNDER_ASSUMPTIONS","statement":"Bernoulli and ideal Venturi relations are available under their stated assumptions.","boundary":"Viscous, compressible and loss terms cannot be silently ignored."},
+    {"family_id":"FLUID-03","domain":"graph_flow","status":"MATH_FORMAL","statement":"Directed edge flows induce node balances; zero balance is conservation, not missingness.","boundary":"Discrete graph flow is not automatically a continuum fluid."},
+    {"family_id":"RLL-01","domain":"physical_binding","status":"TOKEN_VAZIO","statement":"Geometry, prime, graph and fluid families may become diagnostic covariates only after an explicit physical contract.","boundary":"No numeric coincidence promotes a cosmological claim."}
+  ],
+  "exact_invariants": {
+    "repunit6_factorization": "111111 = 3*7*11*13*37",
+    "crt_21": "Z_21 ~= Z_3 x Z_7 because gcd(3,7)=1",
+    "crt_42": "Z_42 ~= Z_2 x Z_3 x Z_7 because 2,3,7 are pairwise coprime",
+    "rep7_mod3_cycles": "r -> 10r+7 mod 3 has the cycle 0->1->2->0",
+    "rep3_mod7_cycles": "r -> 10r+3 mod 7 has one fixed point {2} and one directed 6-cycle {0,3,5,4,1,6}",
+    "zero_not_empty": "[0]_m is a non-empty residue class; numeric/residue zero is not EMPTY_SET, NULL_VALUE, or TOKEN_VAZIO"
+  },
+  "fluid_binding": {
+    "formal_state": "FORMAL_UNDER_ASSUMPTIONS",
+    "physical_state": "TOKEN_VAZIO_FLUID_BINDING",
+    "required_inputs": [
+      "geometry",
+      "fluid_identity",
+      "density",
+      "viscosity",
+      "temperature",
+      "compressibility_regime",
+      "units",
+      "boundary_conditions",
+      "measurement_source",
+      "uncertainty",
+      "covariance_or_error_model",
+      "falsifier"
+    ]
+  },
+  "physical_boundaries": {
+    "fluid": "TOKEN_VAZIO_FLUID_BINDING",
+    "cosmology": "TOKEN_VAZIO_COSMOLOGY_BINDING",
+    "promotion_rule": "Formal identities and graph conservation may pass independently; physical promotion requires a source-bound observable contract, units, boundary conditions, uncertainty, falsifier and reproducible evidence."
+  },
+  "r3": {
+    "F_ok": "Set, number, prime, base, modular, CRT, graph, geometry, radical, typed-void and formal fluid families are implemented as bounded executable mathematics.",
+    "F_gap": "Physical fluid identity, continuum geometry, real boundary conditions, measurements, uncertainty/covariance and any cosmological coupling remain unbound.",
+    "F_next": "Run CI; after PASS, use the family manifest only as a preregistered feature/control registry before any held-out observational binding."
+  }
+}
