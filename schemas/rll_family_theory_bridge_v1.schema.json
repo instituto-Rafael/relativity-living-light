@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/instituto-Rafael/relativity-living-light/schemas/rll_family_theory_bridge_v1.schema.json",
   "title": "RLL Family Theory Bridge V1",
-  "description": "Claim-bounded contract for set, number, prime, graph, base, modular, geometry and fluid families derived from the bounded permutation census.",
+  "description": "Structural contract, claim-bounded, for set, number, prime, graph, base, modular, geometry and fluid families derived from the bounded permutation census.",
   "type": "object",
   "additionalProperties": false,
   "required": [
