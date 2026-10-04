@@ -1,0 +1,134 @@
+{
+  "schema": "rll.academic_false_positive_feature_roles.v1",
+  "claim_allowed": false,
+  "source_boundary": "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+  "promotion_boundary": "diagnostic_or_feature != physical_parameter != scientific_evidence",
+  "existing_rll_fit_parameters_unchanged": [
+    "H0",
+    "Om",
+    "OL",
+    "Os0",
+    "zt",
+    "wt",
+    "Ob_h2",
+    "sigma8"
+  ],
+  "roles": [
+    {
+      "id": "STAT_SAMPLE_VARIANCE",
+      "expression": "s2=sum((x-xbar)^2)/(n-1)",
+      "role": "statistical_diagnostic",
+      "allowed_use": ["dispersion", "uncertainty_audit", "residual_diagnostics"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "STAT_VARIANCE_MEAN",
+      "expression": "Var(xbar)~=s2/n",
+      "role": "statistical_diagnostic",
+      "allowed_use": ["standard_error_estimation"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "STAT_PAIRED_DIFFERENCE",
+      "expression": "d_i=x_i-y_i; s_d2=sum((d_i-dbar)^2)/(n-1); Var(dbar)~=s_d2/n",
+      "role": "statistical_diagnostic",
+      "allowed_use": ["paired_design", "same_unit_pre_post_or_two_condition_comparison"],
+      "forbidden_substitution": "independent_sample_variance_formula_without_design_justification",
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "STAT_INDEPENDENT_MEAN_DIFFERENCE",
+      "expression": "Var(xbar-ybar)~=s_x2/n_x+s_y2/n_y",
+      "role": "statistical_diagnostic",
+      "allowed_use": ["independent_group_comparison"],
+      "forbidden_substitution": "paired_difference_formula_without_paired_design",
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "STAT_OLS",
+      "expression": "y=intercept+slope*x+residual",
+      "role": "statistical_diagnostic",
+      "allowed_use": ["trend_diagnostic", "residual_dispersion"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "STAT_DISPERSION_BUFFER",
+      "expression": "buffer=z*s",
+      "role": "statistical_analogy",
+      "allowed_use": ["uncertainty_guard", "sensitivity_margin"],
+      "forbidden_use": ["cosmological_law", "celestial_body_physics_without_observational_contract"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "GEOM_PYTHAGOREAN_DIFFERENCE",
+      "expression": "c2=a2+b2=2ab+(a-b)^2",
+      "role": "geometric_diagnostic",
+      "allowed_use": ["distance_decomposition", "difference_term_audit"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "GEOM_BHASKARA_DISCRIMINANT",
+      "expression": "Delta=B^2-4AC",
+      "role": "geometric_diagnostic",
+      "allowed_use": ["intersection_classification", "tangency_gate", "signed_quadratic_audit"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "GEOM_ISOSCELES_30",
+      "expression": "base=2L*sin(alpha); h=L*cos(alpha); alpha=30deg => base=L and h=sqrt(3)/2*L",
+      "role": "geometric_diagnostic",
+      "distinct_from": "inscribed_equilateral_height=3/2*r",
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "GEOM_RATIONAL_SCALE",
+      "expression": "G(p,q)=(p/q,primitive_vector,gcd_scale,orientation)",
+      "role": "geometric_diagnostic",
+      "examples": {
+        "77_over_33": {"primitive": [7, 3], "gcd_scale": 11},
+        "777_over_333": {"primitive": [7, 3], "gcd_scale": 111}
+      },
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "MOD_SIGNATURE",
+      "expression": "n -> (n mod m) for m in {3,5,7,10,14,30,50,70}",
+      "role": "exploratory_feature",
+      "invariant": "numeric_modular_zero != TOKEN_VAZIO",
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "VENTURI_REFERENCE",
+      "expression": "A1*v1=A2*v2; p1-p2=0.5*rho*(v2^2-v1^2) under ideal incompressible same-height assumptions",
+      "role": "reference_model",
+      "required_before_physical_binding": ["units", "fluid_regime", "density", "geometry", "boundary_conditions", "observables", "falsifier"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    },
+    {
+      "id": "AUTHORIAL_SCALAR_PROBES",
+      "expressions": ["(3/2)^n", "pi*phi", "ln(ln(999))", "sqrt(3)/2", "sin(30deg)"],
+      "role": "exploratory_feature",
+      "equality_asserted": false,
+      "required_before_physical_binding": ["dimension_definition", "unit_definition", "observable_mapping", "predeclared_prediction", "negative_control", "falsifier"],
+      "model_parameter_binding": "TOKEN_VAZIO",
+      "physical_claim_allowed": false
+    }
+  ],
+  "source_routes": [
+    "Google Drive: START HERE — MATEMATICA E GEOMETRIA — EXPRESSOES / 1GjCnyvGoZJLxTLdr9vlZ7aK1maOpScilzTmZLWETwwg",
+    "rafaelmeloreisnovo/Matem-tica-/docs/formal/PITAGORAS_BHASKARA_ISOSCELES_POINCARE_CROSSWALK_V1.md",
+    "rafaelmeloreisnovo/Matem-tica-/papers/2026-08-18_omega7_modular_geodesic_toroidal_focus.md"
+  ]
+}
