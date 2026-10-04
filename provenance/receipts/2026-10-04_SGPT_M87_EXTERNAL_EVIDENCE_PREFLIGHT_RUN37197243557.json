@@ -1,0 +1,25 @@
+{
+  "schema": "rll.sgpt.m87.external-evidence-preflight-preserved-receipt/v1",
+  "source_receipt_schema": "rll.sgpt.m87.external-evidence-preflight-receipt/v1",
+  "run_id": 37197243557,
+  "run_head_sha": "6431525852f1a42ff0acef1451d35711438fdff4",
+  "workflow": ".github/workflows/sgpt-m87-source-regime-evidence.yml",
+  "artifact_id": 11301601577,
+  "artifact_digest": "sha256:076055cf2acdeb21b0725a159bc6a3f95d956aa7b49774a80986d78a42f6311d",
+  "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL",
+  "source_binding": "PASS_MODEL_DEPENDENCE_EXPLICIT",
+  "custody_metadata": "PASS_PARTIAL",
+  "rejected_illegal_mutations": [
+    "invent-spin",
+    "invent-vlbi-sha256",
+    "change-official-git-blob",
+    "relabel-2018-blind",
+    "provider-gap-as-science"
+  ],
+  "raw_VLBI_byte_custody": "TOKEN_VAZIO_PROVIDER_ACCESS_BARRIER",
+  "file_level_sha256": "TOKEN_VAZIO",
+  "likelihood_ready": false,
+  "scientific_validation": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "preservation_rule": "This file preserves the executed workflow receipt; it does not upgrade scientific claim state."
+}
