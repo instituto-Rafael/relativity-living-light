@@ -15,6 +15,7 @@ from rll.academic_false_positive_gate import (
     leg_asymmetry,
     modular_signature,
     ols_line,
+    paired_difference_stats,
     pythagorean_difference,
     quadratic_discriminant,
     sample_variance,
@@ -31,11 +32,23 @@ class AcademicFalsePositiveDiagnosticsTests(unittest.TestCase):
         self.assertAlmostEqual(variance_of_mean(values) or -1.0, 1.0 / 3.0)
         self.assertIsNone(sample_variance([1.0]))
 
-    def test_difference_of_means_propagates_sample_variances(self) -> None:
+    def test_difference_of_means_propagates_independent_sample_variances(self) -> None:
         out = difference_of_means([1, 2, 3], [2, 3, 4])
         self.assertAlmostEqual(float(out["mean_difference"]), -1.0)
         self.assertAlmostEqual(float(out["variance_of_difference"]), 2.0 / 3.0)
         self.assertAlmostEqual(float(out["standard_error_of_difference"]), math.sqrt(2.0 / 3.0))
+
+    def test_paired_difference_uses_variance_of_pairwise_differences(self) -> None:
+        out = paired_difference_stats([2, 5, 9, 10], [1, 3, 8, 6])
+        # d=[1,2,1,4], mean=2, unbiased sample variance=2, Var(mean)=2/4.
+        self.assertEqual(out["design"], "PAIRED")
+        self.assertEqual(out["n_pairs"], 4)
+        self.assertAlmostEqual(float(out["mean_difference"]), 2.0)
+        self.assertAlmostEqual(float(out["sample_variance_of_differences"]), 2.0)
+        self.assertAlmostEqual(float(out["variance_of_mean_difference"]), 0.5)
+        self.assertAlmostEqual(float(out["standard_error_of_mean_difference"]), math.sqrt(0.5))
+        with self.assertRaises(ValueError):
+            paired_difference_stats([1, 2], [1])
 
     def test_ols_line_and_dispersion_buffer(self) -> None:
         fit = ols_line([1, 2, 3, 4], [2, 4, 6, 8])
