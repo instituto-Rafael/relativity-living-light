@@ -7,6 +7,7 @@ run-name: Geometry Ω · ${{ github.event_name }} · ${{ github.ref_name }}
     branches: [main, rll/lab, "feature/**", "research/**", "science/**", "engineering/**"]
     paths: &geometry_paths
       - "data/contracts/geometric_mutation_matrix.v1.yml"
+      - "docs/cosmology/GEOMETRIC_MUTATION_MATRIX_V1.md"
       - "scripts/run_geometric_mutation_matrix.py"
       - "tests/test_geometric_mutation_matrix.py"
       - "src/rll/cosmology_fairness.py"
@@ -107,7 +108,7 @@ jobs:
         with:
           name: geometric-mutation-shard-${{ matrix.shard }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/geometric-mutation/shard-${{ matrix.shard }}/
-          retention-days: 30
+          retention-days: ${{ fromJSON(env.ARTIFACT_RETENTION_DAYS) }}
           if-no-files-found: error
 
   aggregate:
@@ -156,7 +157,75 @@ jobs:
             'correlation_semantics=ASSOCIATION_ONLY' \
             'fold_semantics=EXTRINSIC_EMBEDDING_ONLY' \
             > "$out/CLAIM_BOUNDARY.txt"
-          (cd "$out" && sha256sum * > CHECKSUMS.sha256)
+
+          python - "$out" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          out = Path(sys.argv[1])
+          root = Path.cwd()
+
+          def digest(path: Path) -> str:
+              h = hashlib.sha256()
+              with path.open("rb") as fh:
+                  for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
+          inputs = {
+              "contract": Path(os.environ["CONTRACT"]),
+              "runner": Path("scripts/run_geometric_mutation_matrix.py"),
+              "tests": Path("tests/test_geometric_mutation_matrix.py"),
+              "requirements": Path("requirements/ci-frontier.txt"),
+              "workflow": Path(".github/workflows/geometric-mutation-matrix.yml"),
+              "navigation": Path("docs/cosmology/GEOMETRIC_MUTATION_MATRIX_V1.md"),
+          }
+          receipt = {
+              "schema": "rll.geometric_mutation_matrix.provenance.v1",
+              "source": {
+                  "repository": os.environ.get("GITHUB_REPOSITORY", "TOKEN_VAZIO"),
+                  "sha": os.environ.get("GITHUB_SHA", "TOKEN_VAZIO"),
+                  "ref": os.environ.get("GITHUB_REF", "TOKEN_VAZIO"),
+                  "ref_name": os.environ.get("GITHUB_REF_NAME", "TOKEN_VAZIO"),
+                  "event_name": os.environ.get("GITHUB_EVENT_NAME", "TOKEN_VAZIO"),
+              },
+              "execution": {
+                  "workflow": os.environ.get("GITHUB_WORKFLOW", "TOKEN_VAZIO"),
+                  "run_id": os.environ.get("GITHUB_RUN_ID", "TOKEN_VAZIO"),
+                  "run_number": os.environ.get("GITHUB_RUN_NUMBER", "TOKEN_VAZIO"),
+                  "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", "TOKEN_VAZIO"),
+              },
+              "inputs": {
+                  name: {"path": str(path), "sha256": digest(root / path)}
+                  for name, path in inputs.items()
+              },
+              "result": {
+                  "case_count": summary["case_count"],
+                  "gate_status": summary["gate"]["status"],
+                  "failure_count": summary["gate"]["failure_count"],
+                  "strong_cross_correlation_count": len(summary["cross_correlations"]),
+                  "claim_allowed": False,
+                  "publication_effect": "NONE",
+              },
+              "semantics": {
+                  "source_artifact_execution_evidence_claim_are_distinct": True,
+                  "correlation": "ASSOCIATION_ONLY",
+                  "bridge": "SENSITIVITY_ONLY_NO_CAUSAL_CLAIM",
+                  "fold": "EXTRINSIC_EMBEDDING_ONLY",
+                  "physical_wormhole_claim": False,
+              },
+          }
+          (out / "PROVENANCE.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          (cd "$out" && rm -f CHECKSUMS.sha256 && sha256sum * > CHECKSUMS.sha256)
           cat "$out/REPORT.md" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload aggregate receipt
@@ -165,5 +234,5 @@ jobs:
         with:
           name: geometric-mutation-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/geometric-mutation/aggregate/
-          retention-days: 30
+          retention-days: ${{ fromJSON(env.ARTIFACT_RETENTION_DAYS) }}
           if-no-files-found: error
