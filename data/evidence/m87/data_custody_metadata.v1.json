@@ -38,10 +38,27 @@
         "file_sha256": "TOKEN_VAZIO_RAW_BYTE_MATERIALIZATION_NOT_COMPLETED",
         "content_read_state": "READ_THROUGH_GITHUB_CONTENT_API",
         "columns": ["band_min_Hz", "band_center_Hz", "band_max_Hz", "flux_density_Jy", "flux_density_uncertainty_Jy", "dataset_index"],
-        "upper_limit_rule": "rows with zero flux-density uncertainty are upper limits"
+        "upper_limit_rule": "rows with zero flux-density uncertainty are upper limits",
+        "parse_state": "BLOCKED_PENDING_SOURCE_ANOMALY_POLICY"
       },
+      "source_format_anomalies": [
+        {
+          "id": "MWL_SWIFT_XRT_FIELD_SEPARATOR_001",
+          "state": "SOURCE_FORMAT_ANOMALY_CONFIRMED",
+          "source_file": "m87_2017_mwl_spectrum.csv",
+          "source_blob_sha1": "160859ba23f0d0c9158bde7531cbcb2524be969c",
+          "declared_column_count": 6,
+          "observed_record": "4.84e+17,1.08e+18 2.42e+18,2.08e-07,0.00e+00,13",
+          "issue": "missing comma between the apparent band-center and band-maximum values yields fewer CSV fields than declared",
+          "silent_repair": "FORBIDDEN",
+          "supporting_source_file": "m87_2017_swiftxrt.csv",
+          "supporting_source_blob_sha1": "c00729aa7626cfb080e011118d9559b81b81c64a",
+          "supporting_file_role": "independent source table for Swift-XRT observations; does not by itself authorize rewriting the broadband record",
+          "resolution": "TOKEN_VAZIO_REQUIRE_AUTHORITATIVE_CORRECTION_OR_PREDECLARED_TRANSFORM_WITH_RECEIPT"
+        }
+      ],
       "repository_readme_blob_sha1": "8b458a939bc1fd9a4b9a0c2ff05920f814dba11f",
-      "boundary": "Git commit+blob identity is frozen; SHA-256 remains absent until exact raw bytes are materialized by the execution environment."
+      "boundary": "Git commit+blob identity is frozen; SHA-256 remains absent until exact raw bytes are materialized by the execution environment. The confirmed source-format anomaly must not be silently repaired."
     },
     "EHT_2017_L1": {
       "role": "RAW_CALIBRATION_CUSTODY_REFERENCE",
@@ -76,7 +93,8 @@
     "dataset_level_rights": "PARTIAL_PASS_PDDL_WHERE_OBSERVED",
     "file_level_sha256": "TOKEN_VAZIO",
     "large_VLBI_bytes_ingested": false,
-    "MWL_GitHub_content_identity": "PASS_COMMIT_AND_BLOB_SHA1",
+    "MWL_GitHub_content_identity": "PASS_COMMIT_AND_BLOB_SHA1_WITH_SOURCE_FORMAT_ANOMALY",
+    "MWL_parse_ready": false,
     "comparison_likelihood_ready": false
   },
   "status": "PARTIAL_CUSTODY_METADATA_BOUND_NO_RESULT_PRODUCING_INGESTION"
