@@ -4,7 +4,7 @@ run-name: Geometry Ω · ${{ github.event_name }} · ${{ github.ref_name }}
 
 "on":
   push:
-    branches: [main]
+    branches: [main, rll/lab, "feature/**", "research/**", "science/**", "engineering/**"]
     paths: &geometry_paths
       - "data/contracts/geometric_mutation_matrix.v1.yml"
       - "scripts/run_geometric_mutation_matrix.py"
@@ -13,7 +13,7 @@ run-name: Geometry Ω · ${{ github.event_name }} · ${{ github.ref_name }}
       - "requirements/ci-frontier.txt"
       - ".github/workflows/geometric-mutation-matrix.yml"
   pull_request:
-    branches: [main]
+    branches: [main, rll/lab]
     paths: *geometry_paths
   workflow_dispatch:
 
