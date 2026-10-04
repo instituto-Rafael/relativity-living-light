@@ -68,10 +68,20 @@
       "official_checksum_resource": {
         "name": "2016.1.01154.V.sha256sums",
         "resource_id": "940eea05-06b8-413f-a729-619f670a9b66",
-        "checksum_content": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED"
+        "checksum_content": "TOKEN_VAZIO_CYVERSE_CHECKSUM_BYTES_NOT_ACQUIRED"
       },
-      "file_sha256": "TOKEN_VAZIO_PROVIDER_BYTES_NOT_ACQUIRED",
-      "ingestion_state": "BLOCKED_BY_CYVERSE_DATASTORE_IP_VERIFICATION"
+      "official_alma_provider": {
+        "provider": "ALMA Science Portal at ESO",
+        "directory_url": "https://almascience.eso.org/almadata/ec/eht/2016.1.01154.V/",
+        "release_page": "https://almascience.eso.org/alma-data/eht-2017",
+        "readme_url": "https://almascience.eso.org/almadata/ec/eht/2016.1.01154.V/group.uid___A001_X11a7_X37.ec_eht.README.txt",
+        "directory_state": "ACCESSIBLE_METADATA_AND_PACKAGE_INDEX",
+        "project_code_verified": "2016.1.01154.V",
+        "documented_product_types": ["FITS", "HOPS", "4FIT", "DiFX_input", "HAXP", "PolConversion_input", "PolConversion_artifacts", "SWIN", "processing_logs", "ALMA_QA2", "observing_metadata"],
+        "byte_custody_state": "TOKEN_VAZIO_LARGE_PACKAGES_NOT_DOWNLOADED"
+      },
+      "file_sha256": "TOKEN_VAZIO_LARGE_PACKAGES_NOT_ACQUIRED",
+      "ingestion_state": "NOT_INGESTED_ALMA_OFFICIAL_ROUTE_AVAILABLE_CYVERSE_CHECKSUM_BLOCKED"
     },
     "EHT_2024_D01_01": {
       "role": "RETROSPECTIVE_REPLICATION_SET_NOT_BLIND",
@@ -83,19 +93,27 @@
   },
   "provider_observation": {
     "provider": "CyVerse Data Store",
-    "state": "ACCESS_BARRIER_OBSERVED",
-    "barrier": "IP verification / anti-bot challenge prevented raw datastore-byte retrieval in this execution environment",
+    "state": "ACCESS_BARRIER_OBSERVED_FOR_CYVERSE_BYTES",
+    "barrier": "IP verification / anti-bot challenge prevented datastore-byte retrieval in this execution environment",
     "scientific_interpretation": "NONE",
-    "fallback_allowed": "official metadata and content-addressed public GitHub products only; no invented file hashes"
+    "alternative_official_provider": {
+      "provider": "ALMA Science Portal at ESO",
+      "scope": "2017_L1_M87_PROJECT_2016.1.01154.V",
+      "state": "DIRECTORY_AND_TEXT_METADATA_ACCESSIBLE",
+      "limitation": "Large package bytes were not downloaded or hashed in this execution. This does not provide the calibrated 2019/2023 CyVerse products."
+    },
+    "fallback_allowed": "official metadata, ALMA L1 package index, and content-addressed public GitHub products only; no invented file hashes"
   },
   "current_custody_state": {
     "official_product_identity": "PARTIAL_PASS",
     "dataset_level_rights": "PARTIAL_PASS_PDDL_WHERE_OBSERVED",
     "file_level_sha256": "TOKEN_VAZIO",
     "large_VLBI_bytes_ingested": false,
+    "L1_ALMA_provider_access": "PASS_DIRECTORY_AND_METADATA_ONLY",
+    "calibrated_CyVerse_byte_access": "TOKEN_VAZIO_PROVIDER_BARRIER",
     "MWL_GitHub_content_identity": "PASS_COMMIT_AND_BLOB_SHA1_WITH_SOURCE_FORMAT_ANOMALY",
     "MWL_parse_ready": false,
     "comparison_likelihood_ready": false
   },
-  "status": "PARTIAL_CUSTODY_METADATA_BOUND_NO_RESULT_PRODUCING_INGESTION"
+  "status": "PARTIAL_CUSTODY_METADATA_BOUND_ALMA_L1_ROUTE_KNOWN_NO_RESULT_PRODUCING_INGESTION"
 }
