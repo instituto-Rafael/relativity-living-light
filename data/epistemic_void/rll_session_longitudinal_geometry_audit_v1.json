@@ -1,0 +1,105 @@
+{
+  "contract": "RLL_SESSION_LONGITUDINAL_GEOMETRY_AUDIT_V1",
+  "version": 1,
+  "scope": "current_session_opening_through_latest_rotated_square_image_analysis",
+  "claim_allowed": false,
+  "scientific_boundary": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "FORMAL_COHERENCE != PHYSICAL_BINDING",
+    "DRAWING_TOPOLOGY != METRIC_MEASUREMENT",
+    "APPROXIMATION != IDENTITY"
+  ],
+  "canonical_predecessors": [
+    {
+      "pr": 1057,
+      "role": "geometric_dispersion_false_positive_and_family_materialization",
+      "merge_sha": "b4d49aa25c673e51ade006de23fc7fa94b8b81e5",
+      "state": "MERGED"
+    },
+    {
+      "pr": 1058,
+      "role": "canonical_cross_family_pipeline_gates_receipts",
+      "merge_sha": "944a031adf4da0410ebb18905dd865ad6e29f639",
+      "state": "MERGED"
+    }
+  ],
+  "audit": {
+    "enumerated_items": 35,
+    "newly_canonicalized_recent_families": [
+      "tangent_radian_chord_annulus",
+      "curvature_error_gates",
+      "rotation_projection",
+      "chord_index_lambda_n",
+      "polygon_circle_circularity",
+      "arc_chord_index",
+      "regular_polygon_moment_index_kappa_n",
+      "rotated_square_4N_intersection_family",
+      "single_rotated_square_boundary_projection"
+    ],
+    "corrections": [
+      {
+        "id": "FINITE_PHASE_NOTATION",
+        "before": "informal S^1_p shorthand",
+        "after": "finite roots-of-unity carrier mu_p embedded in S^1",
+        "state": "CORRECTED_APPEND_ONLY"
+      },
+      {
+        "id": "ANNULUS_K_NORMALIZATION",
+        "before": "mixed shorthand K=R^2-r^2 with /2 versus K=(R^2-r^2)/2",
+        "after": "K=(R^2-r^2)/2 everywhere in the successor audit",
+        "state": "CORRECTED_APPEND_ONLY"
+      },
+      {
+        "id": "FREEHAND_METRIC_BOUNDARY",
+        "before": "qualitative visual interpretation",
+        "after": "DRAWING_TOPOLOGY_ONLY; exact metric measurement requires calibration/vectorization",
+        "state": "BOUNDARY_EXPLICIT"
+      }
+    ]
+  },
+  "typed_gaps": [
+    {
+      "token": "TOKEN_VAZIO_CALIBRATION",
+      "meaning": "freehand images have no declared physical or metric scale",
+      "blocks": "exact image lengths angles areas circle fits"
+    },
+    {
+      "token": "TOKEN_VAZIO_LOG_BASE",
+      "meaning": "no canonical authority in this session selects a base for historical log(log(999)) semantics",
+      "blocks": "semantic promotion of one iterated-log chain"
+    },
+    {
+      "token": "TOKEN_VAZIO_PHYSICAL_BINDING",
+      "meaning": "formal geometry/arithmetic has no demonstrated causal RLL cosmological binding",
+      "blocks": "physical claim"
+    },
+    {
+      "token": "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION",
+      "meaning": "any future physical binding needs source-specific independent reproduction",
+      "blocks": "claim promotion"
+    }
+  ],
+  "image_policy": {
+    "role": "DRAWING_TOPOLOGY_ONLY",
+    "allowed": [
+      "visible incidence",
+      "candidate square triangle star crossing families",
+      "qualitative layering",
+      "disconnected component identification"
+    ],
+    "not_allowed_without_calibration": [
+      "exact lengths",
+      "exact angles",
+      "exact area",
+      "exact circle fit",
+      "physical scale"
+    ]
+  },
+  "closure": {
+    "math_session_expansion_after_ci": "NONE_REQUIRED",
+    "next_if_requested": "separate preregistered held-out physical binding",
+    "rollback": "revert successor merge without altering PR1057 or PR1058 predecessor receipts"
+  }
+}
