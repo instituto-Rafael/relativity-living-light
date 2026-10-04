@@ -2,8 +2,9 @@
 """Validate bounded external evidence for the M87* SGPT fire test.
 
 This validates provenance/rights/custody structure only. It deliberately accepts
-provider-blocked file SHA-256 fields as unresolved, rejects invented hashes, and
-forbids silent repair of confirmed upstream source-format anomalies.
+unacquired file SHA-256 fields as unresolved, rejects invented hashes, preserves
+an official ALMA L1 fallback route, and forbids silent repair of confirmed
+upstream source-format anomalies.
 """
 from __future__ import annotations
 
@@ -91,15 +92,29 @@ def validate_custody(d: dict) -> None:
     require(checksum.get("name") == "2016.1.01154.V.sha256sums", "L1 checksum resource name drift")
     require(checksum.get("resource_id") == "940eea05-06b8-413f-a729-619f670a9b66", "L1 checksum resource id drift")
     require(token(checksum.get("checksum_content")), "L1 checksum content cannot be invented")
+    alma = l1.get("official_alma_provider", {})
+    require(alma.get("provider") == "ALMA Science Portal at ESO", "ALMA provider identity drift")
+    require(alma.get("directory_url") == "https://almascience.eso.org/almadata/ec/eht/2016.1.01154.V/", "ALMA M87 L1 directory drift")
+    require(alma.get("project_code_verified") == "2016.1.01154.V", "ALMA project-code drift")
+    require(alma.get("directory_state") == "ACCESSIBLE_METADATA_AND_PACKAGE_INDEX", "ALMA directory accessibility evidence lost")
+    require(token(alma.get("byte_custody_state")), "ALMA large-package byte custody cannot be fabricated")
+    require(l1.get("ingestion_state") == "NOT_INGESTED_ALMA_OFFICIAL_ROUTE_AVAILABLE_CYVERSE_CHECKSUM_BLOCKED", "L1 ingestion/provider state drift")
 
     holdout = products["EHT_2024_D01_01"]
     require(holdout.get("role") == "RETROSPECTIVE_REPLICATION_SET_NOT_BLIND", "2018 semantics weakened")
     require(holdout.get("ingestion_state") == "WITHHELD_FROM_DEVELOPMENT_EXECUTION", "2018 development isolation weakened")
 
     provider = d.get("provider_observation", {})
-    require(provider.get("scientific_interpretation") == "NONE", "provider access failure cannot become scientific evidence")
+    require(provider.get("scientific_interpretation") == "NONE", "provider access state cannot become scientific evidence")
+    require(provider.get("state") == "ACCESS_BARRIER_OBSERVED_FOR_CYVERSE_BYTES", "CyVerse access observation drift")
+    alt = provider.get("alternative_official_provider", {})
+    require(alt.get("provider") == "ALMA Science Portal at ESO", "alternative provider missing")
+    require(alt.get("state") == "DIRECTORY_AND_TEXT_METADATA_ACCESSIBLE", "ALMA alternative-provider evidence drift")
+
     state = d.get("current_custody_state", {})
     require(state.get("large_VLBI_bytes_ingested") is False, "VLBI ingestion falsely claimed")
+    require(state.get("L1_ALMA_provider_access") == "PASS_DIRECTORY_AND_METADATA_ONLY", "ALMA L1 access state drift")
+    require(state.get("calibrated_CyVerse_byte_access") == "TOKEN_VAZIO_PROVIDER_BARRIER", "calibrated CyVerse state drift")
     require(state.get("MWL_parse_ready") is False, "MWL parse readiness cannot be promoted while source anomaly is unresolved")
     require(state.get("comparison_likelihood_ready") is False, "likelihood readiness falsely claimed")
     require(state.get("file_level_sha256") == "TOKEN_VAZIO", "global SHA-256 state falsely promoted")
@@ -138,6 +153,10 @@ def selftest(source: dict, custody: dict) -> list[str]:
     c["products"]["EHT_2021_D02_01"]["primary_small_file"]["parse_state"] = "READY"
     cases.append(("silent-repair-upstream-csv", c))
 
+    c = copy.deepcopy(custody)
+    del c["products"]["EHT_2017_L1"]["official_alma_provider"]
+    cases.append(("erase-alma-official-route", c))
+
     rejected: list[str] = []
     for name, candidate in cases:
         try:
@@ -168,9 +187,11 @@ def main() -> int:
         "schema": "rll.sgpt.m87.external-evidence-preflight-receipt/v1",
         "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL_WITH_SOURCE_ANOMALY",
         "source_binding": "PASS_MODEL_DEPENDENCE_EXPLICIT",
-        "custody_metadata": "PASS_PARTIAL_SOURCE_ANOMALY_PRESERVED",
+        "custody_metadata": "PASS_PARTIAL_SOURCE_ANOMALY_PRESERVED_ALMA_L1_ROUTE_BOUND",
         "rejected_illegal_mutations": rejected,
-        "raw_VLBI_byte_custody": "TOKEN_VAZIO_PROVIDER_ACCESS_BARRIER",
+        "raw_L1_provider_access": "PASS_ALMA_DIRECTORY_AND_METADATA_ONLY",
+        "raw_VLBI_byte_custody": "TOKEN_VAZIO_LARGE_BYTES_NOT_ACQUIRED_ALMA_L1_ROUTE_AVAILABLE",
+        "calibrated_VLBI_byte_custody": "TOKEN_VAZIO_CYVERSE_BYTES_NOT_ACQUIRED",
         "file_level_sha256": "TOKEN_VAZIO",
         "MWL_parse_ready": False,
         "likelihood_ready": False,
