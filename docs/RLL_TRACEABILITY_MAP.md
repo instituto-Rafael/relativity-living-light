@@ -26,6 +26,7 @@ RLL v1.0.0 tag / 2025 formula
 → early images / CSVs / data stations
 → possible mobile-Termux execution provenance
 → 2026 DESI/CPL/AICc validation
+→ Drive-bound source intake and bounded custody readback
 → joint-real likelihood and claim gate
 → uploaded validation/Bayes artifact custody
 → presentation / academic framing
@@ -55,6 +56,7 @@ RLL v1.0.0 tag / 2025 formula
 | DESI linkage | VERIFIED as 2026 work | existing and future DESI docs | map first DESI commit and materialization commits |
 | CPL/wCDM/AICc fairness | VERIFIED in 2026 code/docs | existing missing-calculations and fairness docs | preserve distinction from 2025 tag |
 | Joint-real result and claim gate | VERIFIED in current result files | current result docs and future summary | keep `claim_allowed=false` where appropriate |
+| Drive-bound source intake, 2026-10-04 | PARTIALLY VERIFIED custody; not evidence | `data/source_intake/2026-10-04/RAFAELIA_SOURCE_INTAKE_V1.md`, `data/source_intake/2026-10-04/DRIVE_BINDINGS_V1.md` and `receipts/2026-10-04_RLL_SOURCE_INTAKE_CUSTODY_RECONCILIATION.md` | independently rehash sources 001/002; define source 003 semantics and source-to-RLL mapping |
 | Uploaded validation/Bayes package, 2026-07-09 | VERIFIED as uploaded artifact custody / CLAIM_BOUNDED | `results/coerente/2026-07-09_uploaded_validation_bayes/README.md` and `results/coerente/2026-07-09_uploaded_validation_bayes/audit_manifest.json` | add raw observational data, covariance, priors, likelihood, script, environment and convergence diagnostics before scientific validation claims |
 | False positives | DECLARED_BY_AUTHOR / TOKEN_VAZIO | future `docs/RLL_FALSE_POSITIVE_LEDGER.md` | locate failed outputs/logs/rejected hypotheses |
 | Non-post-hoc formulation | PARTIALLY VERIFIED | future `docs/RLL_NON_POSTHOC_FORMULATION_AUDIT.md` | connect formula date → data date → result date |
@@ -117,6 +119,16 @@ Do not use:
 
 > The uploaded Bayes package proves RLL or declares cosmological superiority.
 
+### If speaking about the 2026-10-04 source intake
+
+Use:
+
+> Drive metadata binds all three packages to stable custody identities. Source 003 additionally has an independently verified byte hash and 7777 x 128 data shape; its semantics and scientific mapping remain TOKEN_VAZIO.
+
+Do not use:
+
+> The source packages validate RLL or constitute scientific evidence.
+
 ### If speaking about `1234.zip`
 
 Use:
@@ -139,14 +151,16 @@ Do not use:
 
 ## 7. Current summary
 
-The project now has four active documentation layers:
+The project now has six active documentation layers:
 
 1. `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` — what the 2025 tag proves.
 2. `docs/RLL_MOBILE_TERMUX_PROVENANCE_LEDGER.md` — what remains to prove about mobile/Termux execution.
 3. `docs/RLL_NEXT_WORK_DOCUMENTATION_PLAN.md` — what documents must be built next.
 4. `results/coerente/2026-07-09_uploaded_validation_bayes/` — what the uploaded validation/Bayes package proves as artifact custody, and what it does not prove scientifically.
+5. `results/structure_d/joint_real_likelihood.json`, `docs/RLL_CURRENT_RESULTS_PAPER_TABLE.md` and `VALIDATION_STATUS.md` — current numerical artifact, exact documentation mirror and evidence boundary.
+6. `data/source_intake/2026-10-04/` plus its receipt — Drive-bound source custody, byte-readback scope and unresolved semantics.
 
-This map binds those layers and prevents the project from scattering claims across unrelated files.
+This map binds those layers and prevents the project from scattering claims across unrelated files. The JSON label-versus-metrics mismatch remains explicit as `CONTRADICTION`; it is not auto-resolved.
 
 ## 8. Research fragments, citations and page preview
 
