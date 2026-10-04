@@ -65,3 +65,35 @@ Until CI compiles the freestanding object, proves no unresolved external symbols
 `TOKEN_VAZIO_EXECUTION`
 
 SOURCE != CONFIG != ARTEFACT != EXECUTION != EVIDENCE != CLAIM.
+
+## Post-merge revalidation target — append-only
+
+Merged implementation authority:
+
+- PR: `#1050`
+- `rll/lab` merge SHA: `ff5f06613051b5e39874816f003277be39d01e7f`
+- merge parents:
+  - current governed base at merge time: `2666fe99a843ba66887b90548ce01d54437f35fc`
+  - freestanding implementation head: `5daa6a395460d3fd9d0a6cdd79df40f2185d0ac2`
+- workflow contract observed on the merged base: `inventory.active_workflows = 113`.
+
+This append-only delta intentionally changes documentation only. Its pull-request CI is used to re-execute the already-merged freestanding kernel against the governed post-merge tree.
+
+Required evidence before promoting this validation receipt:
+
+- freestanding object compilation: `PASS`;
+- unresolved external symbols: `0`;
+- hosted arithmetic verifier: `PASS`;
+- canonical Python suite: `PASS`;
+- workflow contract reconciliation: `PASS`;
+- workflow architecture gates: `PASS`.
+
+Until those checks are observed on the validation head:
+
+`POST_MERGE_REVALIDATION = TOKEN_VAZIO_EXECUTION`
+
+Energy remains:
+
+`ENERGY_MEASUREMENT = TOKEN_VAZIO_MEASUREMENT`
+
+No timing value, CPU model, or runner duration is converted to joules without an actual power measurement source.
