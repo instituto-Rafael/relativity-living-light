@@ -1,0 +1,75 @@
+{
+  "schema": "rll.sgpt.m87.source-regime-preserved-receipt/v1",
+  "source_receipt_schema": "rll.sgpt.m87.source-regime-execution-receipt/v1",
+  "run_id": 37197243557,
+  "run_head_sha": "6431525852f1a42ff0acef1451d35711438fdff4",
+  "workflow": ".github/workflows/sgpt-m87-source-regime-evidence.yml",
+  "artifact_id": 11301601577,
+  "artifact_digest": "sha256:076055cf2acdeb21b0725a159bc6a3f95d956aa7b49774a80986d78a42f6311d",
+  "status": "PARTIAL_REGIME_EXECUTION_EVIDENCE_BOUND",
+  "source": "M87*",
+  "source_values": {
+    "M_Msun": 6500000000.0,
+    "dot_M_Msun_per_yr": [0.0003, 0.002],
+    "B_G": [1.0, 30.0],
+    "T_e_K": [10000000000.0, 120000000000.0],
+    "n_e_cm3": [10000.0, 10000000.0],
+    "a_star": "TOKEN_VAZIO",
+    "T_i": "TOKEN_VAZIO",
+    "Y_e": "TOKEN_VAZIO",
+    "compactness": "TOKEN_VAZIO"
+  },
+  "derived_diagnostics": {
+    "rho_proxy_pure_H_kg_m3": [1.67262192369e-17, 1.67262192369e-14],
+    "rho_proxy_pure_H_g_cm3": [1.67262192369e-20, 1.6726219236900003e-17],
+    "fermi_energy_max_eV": 1.6925321878667828e-10,
+    "theta_deg_min_kT_over_EF": 5091385158828920.0,
+    "chi_spin_range": [5.597615130215332e-16, 2.0151414468775189e-13],
+    "chi_L_range": [1.119523025364617e-15, 4.0302828913126204e-13],
+    "B_over_B_Q_range": [2.2655188038060718e-14, 6.796556411418215e-13],
+    "pycnonuclear_density_gap_min_factor": 5.978637406556783e28
+  },
+  "regimes": {
+    "ionized_plasma": {
+      "state": "APPLICABLE",
+      "rationale": "Published EHT development models describe hot ionized emitting plasma; T_e is 1e10--1.2e11 K."
+    },
+    "MAD_reconnection": {
+      "state": "APPLICABLE",
+      "rationale": "MAD is supported as a viable/favored GRMHD model family by EHT polarimetric comparisons; reconnection timescale itself remains unresolved."
+    },
+    "pair_relevant": {
+      "state": "TOKEN_VAZIO",
+      "rationale": "T_e can exceed m_e c^2/k_B, but compactness, pair balance and source size are not frozen; pair dominance cannot be inferred from temperature alone."
+    },
+    "electron_degenerate": {
+      "state": "OUT_OF_DOMAIN",
+      "rationale": "Minimum kT/E_F over the sourced n_e,T_e box is 5.091e+15 >> 1."
+    },
+    "electron_capture": {
+      "state": "TOKEN_VAZIO",
+      "rationale": "Composition, ion temperature and weak-interaction rate network are not frozen; thermal electron energy alone is insufficient to promote this channel."
+    },
+    "nuclear_network": {
+      "state": "TOKEN_VAZIO",
+      "rationale": "No source-bound ion composition/temperature or nuclear reaction network has been frozen."
+    },
+    "pycnonuclear": {
+      "state": "OUT_OF_DOMAIN",
+      "rationale": "Pure-H density proxy upper bound is 1.673e-17 g/cm^3; reference pycnonuclear crust scale is ~1e12 g/cm^3, a gap >= 5.979e+28."
+    },
+    "spin_Landau_QED": {
+      "state": "OUT_OF_DOMAIN",
+      "rationale": "max chi_spin=2.015e-13, max chi_L=4.030e-13, max B/B_Q=6.797e-13; all are far below unity."
+    }
+  },
+  "scientific_boundaries": {
+    "model_inferred_ranges_are_direct_measurements": false,
+    "MAD_applicability_proves_reconnection_rate": false,
+    "pair_dominance_claimed": false,
+    "nuclear_network_claimed": false,
+    "SGPT_validated": false,
+    "claim_allowed": false
+  },
+  "preservation_rule": "Executed domain-admissibility evidence only; G4-G7 and SGPT validation remain unresolved."
+}
