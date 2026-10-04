@@ -1,0 +1,40 @@
+{
+  "receipt_id": "RLL-SESSION-GEOMETRY-CLOSURE-V1-20261004",
+  "parent_lab": "944a031adf4da0410ebb18905dd865ad6e29f639",
+  "predecessor_prs": [1057, 1058],
+  "route": [
+    "SESSION_HISTORY",
+    "ITEM_AUDIT",
+    "CORRECTION",
+    "EXECUTABLE_GATES",
+    "CI",
+    "R3"
+  ],
+  "state": "IMPLEMENTED_UNTESTED_CI",
+  "claim_allowed": false,
+  "physical_binding": "TOKEN_VAZIO_PHYSICAL_BINDING",
+  "image_metric_role": "TOKEN_VAZIO_CALIBRATION",
+  "enumerated_items": 35,
+  "required_gates": [
+    "SESSION_INVENTORY_35",
+    "FINITE_PHASE_NOTATION_CORRECTED",
+    "ANNULUS_K_NORMALIZED",
+    "DRAWING_TOPOLOGY_ONLY",
+    "LAMBDA_FAMILY_EXACT",
+    "KAPPA_LAMBDA_IDENTITY",
+    "ROTATED_SQUARE_4N_EXACT_CASES",
+    "ROTATED_SQUARE_CIRCLE_LIMIT",
+    "SIN_RAD_TAN_ACUTE_DOMAIN",
+    "PENTAGRAM_WINDING_DISTINCT_FROM_PHI",
+    "ITERATED_LOG_BASE_EXPLICIT",
+    "RESIDUE_ZERO_DEFINED",
+    "CLAIM_ALLOWED_FALSE",
+    "PHYSICAL_BINDING_FAIL_CLOSED"
+  ],
+  "rollback": "revert successor merge only; preserve PR1057 and PR1058 receipts",
+  "r3": {
+    "F_ok": "longitudinal audit, corrections, executable successor materialized",
+    "F_gap": "CI receipt pending; physical binding remains TOKEN_VAZIO",
+    "F_next": "run CI, repair only observed failures, merge only to rll/lab after green"
+  }
+}
