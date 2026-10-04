@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -40,7 +40,19 @@ def _is_real_result(mapping: dict[str, Any]) -> bool:
     return mapping.get("dataset_type") == "real_observational"
 
 
-def validate_real_result(path: Path, mapping: dict[str, Any]) -> list[str]:
+def walk_real_results(value: Any, location: str = "$") -> Iterator[tuple[dict[str, Any], str]]:
+    """Yield every explicitly real-observational mapping, including nested ones."""
+    if isinstance(value, dict):
+        if _is_real_result(value):
+            yield value, location
+        for key, child in value.items():
+            yield from walk_real_results(child, f"{location}.{key}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from walk_real_results(child, f"{location}[{index}]")
+
+
+def validate_real_result(path: Path, mapping: dict[str, Any], location: str = "$") -> list[str]:
     errors: list[str] = []
     if not _is_real_result(mapping):
         return errors
@@ -52,17 +64,16 @@ def validate_real_result(path: Path, mapping: dict[str, Any]) -> list[str]:
     positive_screen = label in POSITIVE_LABELS or top_claim or policy_claim
 
     gate = academic_false_positive_gate(positive_screen, mapping.get("confirmatory_evidence"))
+    identity = f"{path.relative_to(ROOT)}::{location}"
 
     if (top_claim or policy_claim) and not gate["confirmatory_ready"]:
         errors.append(
-            f"{path.relative_to(ROOT)} promotes claim_allowed=true without confirmatory evidence: "
+            f"{identity} promotes claim_allowed=true without confirmatory evidence: "
             f"{gate['missing_or_failed']}"
         )
 
     if label in POSITIVE_LABELS and not gate["confirmatory_ready"] and top_claim:
-        errors.append(
-            f"{path.relative_to(ROOT)} treats a favorable screening label as a confirmed claim"
-        )
+        errors.append(f"{identity} treats a favorable screening label as a confirmed claim")
 
     return errors
 
@@ -75,9 +86,9 @@ def main() -> int:
             payload = load_json(path)
         except (OSError, json.JSONDecodeError):
             continue
-        if isinstance(payload, dict) and _is_real_result(payload):
+        for mapping, location in walk_real_results(payload):
             checked += 1
-            errors.extend(validate_real_result(path, payload))
+            errors.extend(validate_real_result(path, mapping, location))
 
     if errors:
         print("ACADEMIC_FALSE_POSITIVE_GATE=FAIL")
