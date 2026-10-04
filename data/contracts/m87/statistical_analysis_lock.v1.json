@@ -1,0 +1,41 @@
+{
+  "schema": "rll.sgpt.m87.statistical-analysis-lock/v1",
+  "id": "SGPT_M87_STATISTICAL_ANALYSIS_LOCK_V1",
+  "source": "M87*",
+  "claim_allowed": false,
+  "primary_observable_vector": "TOKEN_VAZIO",
+  "covariance_model": "TOKEN_VAZIO",
+  "likelihood": "TOKEN_VAZIO",
+  "priors": "TOKEN_VAZIO",
+  "primary_metric": "TOKEN_VAZIO",
+  "complexity_penalty": "TOKEN_VAZIO",
+  "multiplicity_rule": "TOKEN_VAZIO",
+  "stopping_rule": "TOKEN_VAZIO",
+  "accept_reject_threshold": "TOKEN_VAZIO",
+  "numerical_failure_policy": "TOKEN_VAZIO",
+  "retrospective_2018_semantics": "RETROSPECTIVE_REPLICATION_SET_OR_PROCEDURAL_HOLDOUT_NOT_BLIND",
+  "post_hoc_parameter_tuning": "FORBIDDEN",
+  "result_inspection_before_lock": "FORBIDDEN",
+  "mandatory_comparisons": [
+    "ideal_GRMHD",
+    "resistive_GRMHD",
+    "two_temperature_GRRMHD",
+    "GRPIC",
+    "general_relativistic_radiative_transfer",
+    "baseline_only",
+    "drop_Theta",
+    "drop_M_f",
+    "drop_R_ram",
+    "flip_Theta_sign",
+    "shuffle_predictor_variables",
+    "permute_temporal_targets"
+  ],
+  "rules": [
+    "Freeze this lock before first result-producing fit.",
+    "A procedural retrospective holdout is not a blind prospective prediction.",
+    "Missing covariance cannot be replaced by an identity matrix for convenience.",
+    "A better in-sample fit does not close G4-G6.",
+    "Model selection must include uncertainty propagation and the frozen complexity rule."
+  ],
+  "status": "LOCKED_UNRESOLVED"
+}
