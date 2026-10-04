@@ -47,7 +47,7 @@ geometry_parameters:
 sensitivity_projection:
   # Maps normalized geometric mutation features to bounded RLL parameter deltas.
   # This is a sensitivity experiment, not a physical coupling law.
-  feature_order: [curvature_code, distance_delta, log_measure_ratio, log_condition, noninjective]
+  feature_order: [curvature_proxy, distance_delta, log_measure_ratio, log_condition, noninjective]
   parameter_order: [omega_s0, z_t, w_t]
   matrix_mutations: [baseline, swap_curvature_distance, sign_flip_distance, sparse]
   matrix:
