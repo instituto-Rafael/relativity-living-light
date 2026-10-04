@@ -1,0 +1,70 @@
+{
+  "schema": "RLL_MEDIAN_MULTICARRIER_THEOREM_CANDIDATES_V1",
+  "base_sha": "d7bcf03632f2a44235d2e429b53726e07d9c75f3",
+  "claim_allowed": false,
+  "physical_binding": "TOKEN_VAZIO_PHYSICAL_BINDING",
+  "image_metric_status": "IMAGE_PIXEL_EVIDENCE_ONLY",
+  "latest_image": {
+    "sha256": "3785622ae7603e66c9e53439f6ef03d77aacc334a631b31c488a0a50e01d775a",
+    "width_px": 1024,
+    "height_px": 1365,
+    "dominant_orientation_clusters_deg": [
+      {"center": 0, "weighted_estimate": -0.5265, "rms_deg": 1.0783},
+      {"center": 60, "weighted_estimate": 57.7571, "rms_deg": 2.3932},
+      {"center": 120, "weighted_estimate": 122.1877, "rms_deg": 2.9961}
+    ],
+    "interpretation": "supports a triangular/60-degree pixel-orientation basis only; does not prove exact medians, equilateral geometry, or physical dimensions"
+  },
+  "theorems": [
+    {
+      "id": "T1",
+      "name": "Iterated medial contraction",
+      "state": "KNOWN_CLASSICAL",
+      "expression": "V_k-G=(-1/2)^k(V_0-G); area_k=4^-k area_0",
+      "novelty_claim": false
+    },
+    {
+      "id": "T2",
+      "name": "Cyclic side-division centroid/area map",
+      "state": "DERIVED_KNOWN_FAMILY",
+      "expression": "q(t)=1-3t+3t^2; area_{k+1}=q(t) area_k",
+      "novelty_claim": false
+    },
+    {
+      "id": "T3",
+      "name": "Non-void zero-measure centroid limit",
+      "state": "DERIVED_CLASSICAL_COROLLARY",
+      "expression": "intersection_k T_k={G}, while area(T_k)->0",
+      "novelty_claim": false
+    },
+    {
+      "id": "T4",
+      "name": "Stroboscopic median-residue multicarrier relation",
+      "state": "CANDIDATE_NEW_COMPOSITION",
+      "expression": "L=lcm(m_i); R(k+L)=R(k); V_{k+L}-G=(-1/2)^L(V_k-G); area_{k+L}=4^-L area_k",
+      "prior_art_status": "INCOMPLETE",
+      "novelty_claim": false
+    },
+    {
+      "id": "T5",
+      "name": "Typed product-carrier dynamics",
+      "state": "ENGINEERING_COMPOSITION",
+      "expression": "Omega=Geometry x Numeric x Graph x Set, with typed independent/coupled transforms",
+      "novelty_claim": false
+    }
+  ],
+  "prior_art_routes": [
+    "cevian geometry",
+    "affine triangle maps",
+    "medial triangle homothety",
+    "fixed points of affine maps",
+    "cevian simplexes"
+  ],
+  "gates": [
+    "KNOWN_CLASSICAL must not be relabeled as authorial",
+    "CANDIDATE_NEW_COMPOSITION requires broader prior-art search",
+    "image pixels are not calibrated physical measurements",
+    "formal proof is not physical evidence",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"
+  ]
+}
