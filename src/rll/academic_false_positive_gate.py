@@ -17,6 +17,7 @@ from typing import Iterable, Mapping, Sequence
 TOKEN_VAZIO = "TOKEN_VAZIO"
 DEFAULT_MODULI = (3, 5, 7, 10, 14, 30, 50, 70)
 PHI = (1.0 + sqrt(5.0)) / 2.0
+RLL_EXISTING_FIT_PARAMETERS = frozenset({"H0", "Om", "OL", "Os0", "zt", "wt", "Ob_h2", "sigma8"})
 
 
 def _finite_values(values: Iterable[float]) -> tuple[float, ...]:
@@ -87,6 +88,46 @@ def paired_difference_stats(left: Iterable[float], right: Iterable[float]) -> di
         "standard_error_of_mean_difference": None if variance is None else sqrt(variance),
         "design": "PAIRED",
     }
+
+
+def summarize_existing_rll_parameter_samples(
+    samples: Mapping[str, Iterable[float]],
+) -> dict[str, dict[str, float | int | None | str]]:
+    """Apply dispersion diagnostics only to the RLL parameters already fitted.
+
+    This intentionally refuses unknown names so exploratory geometric scalars
+    cannot become free cosmological parameters through a diagnostics helper.
+    """
+    unknown = sorted(set(samples) - RLL_EXISTING_FIT_PARAMETERS)
+    if unknown:
+        raise ValueError(f"unknown/non-authorized RLL fit parameter(s): {unknown}")
+    out: dict[str, dict[str, float | int | None | str]] = {}
+    for name, values in samples.items():
+        xs = _finite_values(values)
+        s2 = sample_variance(xs)
+        var_mean = None if s2 is None else s2 / len(xs)
+        out[name] = {
+            "n": len(xs),
+            "mean": sum(xs) / len(xs),
+            "sample_variance": s2,
+            "variance_of_mean": var_mean,
+            "standard_error_of_mean": None if var_mean is None else sqrt(var_mean),
+            "role": "EXISTING_FIT_PARAMETER_DIAGNOSTIC_ONLY",
+        }
+    return out
+
+
+def paired_existing_rll_parameter_deltas(
+    left: Mapping[str, Iterable[float]],
+    right: Mapping[str, Iterable[float]],
+) -> dict[str, dict[str, float | int | None | str]]:
+    """Paired seed/run comparison for existing RLL fit parameters only."""
+    if set(left) != set(right):
+        raise ValueError("paired parameter mappings must have identical keys")
+    unknown = sorted(set(left) - RLL_EXISTING_FIT_PARAMETERS)
+    if unknown:
+        raise ValueError(f"unknown/non-authorized RLL fit parameter(s): {unknown}")
+    return {name: paired_difference_stats(left[name], right[name]) for name in sorted(left)}
 
 
 def ols_line(x: Iterable[float], y: Iterable[float]) -> dict[str, float | int | None]:
