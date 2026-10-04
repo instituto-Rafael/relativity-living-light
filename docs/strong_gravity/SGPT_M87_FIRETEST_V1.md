@@ -1,5 +1,7 @@
 # SGPT M87* Fire Test V1
 
+> **Canonical navigation:** start at `docs/strong_gravity/START_HERE_SGPT_M87.md`. It routes humans and AI agents through preregistration -> regime admissibility -> timescales -> data custody -> statistics -> reproducibility -> claim ladder -> execution/receipts. Do not bypass unresolved locks.
+
 **Status:** `PREREGISTERED_UNEXECUTED`  
 **Parent:** `B08_SGPT_V1` on `rll/lab@e287ef13be4d5e6d366f29e234c8a5d113d21729`  
 **Claim:** `claim_allowed=false`
@@ -123,10 +125,13 @@ Passing the preregistration workflow means only that this design remains interna
 
 ```bash
 python3 tools/validate_sgpt_m87_firetest.py --selftest
+python3 tools/validate_sgpt_m87_execution_locks.py --selftest
 python3 -m unittest -v tests.strong_gravity.test_sgpt_m87_firetest
 ```
 
-The selftest deliberately mutates the preregistration and must reject attempts to invent source mass, invent file hashes, remove GRPIC, remove a negative control, pre-run the temporal hypothesis, invent covariance, preselect a model metric, mark G4 PASS, promote a claim, or pretend the holdout was executed.
+The preregistration selftest rejects attempts to invent source mass, file hashes, remove GRPIC, remove a negative control, pre-run the temporal hypothesis, invent covariance, preselect a model metric, mark G4 PASS, promote a claim, or pretend the holdout was executed.
+
+The execution-lock selftest rejects attempts to invent source-regime applicability, process rates, custody hashes/rights, statistical choices, independent reproduction or a direct jump from software success to a new-physics claim.
 
 ## Next admissible mutation
 
@@ -141,6 +146,8 @@ official bytes
  -> only then freeze primary observable/covariance/likelihood
 ```
 
+Before any dense/nuclear/spin-QED process is enabled, `source_regime_admissibility.v1.json` must establish source-domain applicability. Before any process is timed, `process_timescale_registry.v1.json` must bind a physical rate model, units, source and domain.
+
 After the first result-producing execution, this V1 protocol must not be rewritten to fit the result. Corrections require a successor protocol preserving this lock.
 
-R3 = <F_ok: source, baselines, negative controls and non-promotion rules frozen; F_gap: bytes, hashes, rights, priors, covariance, likelihood and G0-G7 evidence are absent; F_next: acquire official M87 products with custody hashes and terms, then freeze the exact primary likelihood before fitting.>
+R3 = <F_ok: source, baselines, negative controls, six pre-execution locks and non-promotion rules frozen; F_gap: bytes, hashes, rights, source-regime evidence, process rates, priors, covariance, likelihood and G0-G7 scientific evidence are absent; F_next: validate locks, acquire official M87 products with custody hashes and terms, then freeze the exact primary likelihood before fitting.>
