@@ -60,12 +60,15 @@ jobs:
           r=json.loads(Path('build/sgpt-m87-source-regime/regime-receipt.json').read_text())
           t=json.loads(Path('build/sgpt-m87-source-regime/timescale-readiness-receipt.json').read_text())
           assert e['status']=='PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL_WITH_SOURCE_ANOMALY'
-          assert e['raw_VLBI_byte_custody']=='TOKEN_VAZIO_PROVIDER_ACCESS_BARRIER'
+          assert e['raw_L1_provider_access']=='PASS_ALMA_DIRECTORY_AND_METADATA_ONLY'
+          assert e['raw_VLBI_byte_custody']=='TOKEN_VAZIO_LARGE_BYTES_NOT_ACQUIRED_ALMA_L1_ROUTE_AVAILABLE'
+          assert e['calibrated_VLBI_byte_custody']=='TOKEN_VAZIO_CYVERSE_BYTES_NOT_ACQUIRED'
           assert e['file_level_sha256']=='TOKEN_VAZIO'
           assert e['MWL_parse_ready'] is False
           assert e['likelihood_ready'] is False
           assert e['claim_allowed'] is False
           assert 'silent-repair-upstream-csv' in e['rejected_illegal_mutations']
+          assert 'erase-alma-official-route' in e['rejected_illegal_mutations']
           assert r['status']=='PARTIAL_REGIME_EXECUTION_EVIDENCE_BOUND'
           assert r['regimes']['ionized_plasma']['state']=='APPLICABLE'
           assert r['regimes']['MAD_reconnection']['state']=='APPLICABLE'
