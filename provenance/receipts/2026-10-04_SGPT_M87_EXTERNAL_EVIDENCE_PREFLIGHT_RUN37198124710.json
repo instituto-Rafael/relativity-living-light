@@ -1,0 +1,27 @@
+{
+  "schema": "rll.sgpt.m87.external-evidence-preflight-preserved-receipt/v1",
+  "source_receipt_schema": "rll.sgpt.m87.external-evidence-preflight-receipt/v1",
+  "run_id": 37198124710,
+  "run_head_sha": "6fe54061176ec3432325b5f16699a1ea9b0bc3f8",
+  "workflow": ".github/workflows/sgpt-m87-source-regime-evidence.yml",
+  "artifact_id": 11302430118,
+  "artifact_digest": "sha256:05dc17bfdda41d65b7963c032204144fbb136e2826f40b7c23939209efe04bc1",
+  "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL_WITH_SOURCE_ANOMALY",
+  "source_binding": "PASS_MODEL_DEPENDENCE_EXPLICIT",
+  "custody_metadata": "PASS_PARTIAL_SOURCE_ANOMALY_PRESERVED",
+  "rejected_illegal_mutations": [
+    "invent-spin",
+    "invent-vlbi-sha256",
+    "change-official-git-blob",
+    "relabel-2018-blind",
+    "provider-gap-as-science",
+    "silent-repair-upstream-csv"
+  ],
+  "raw_VLBI_byte_custody": "TOKEN_VAZIO_PROVIDER_ACCESS_BARRIER",
+  "file_level_sha256": "TOKEN_VAZIO",
+  "MWL_parse_ready": false,
+  "likelihood_ready": false,
+  "scientific_validation": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "preservation_rule": "Executed anomaly-aware external-evidence preflight only; no source repair, model fit or claim promotion is implied."
+}
