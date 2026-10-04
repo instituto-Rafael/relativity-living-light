@@ -11,7 +11,7 @@ SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import gcd, isfinite, log, pi, sin, sqrt
+from math import cos, gcd, isfinite, log, pi, sin, sqrt
 from typing import Iterable, Mapping, Sequence
 
 TOKEN_VAZIO = "TOKEN_VAZIO"
@@ -178,7 +178,7 @@ def isosceles_projection(equal_side: float, alpha_deg: float = 30.0) -> dict[str
         raise ValueError("equal_side must be non-negative")
     return {
         "base": 2.0 * side * sin(alpha),
-        "height": side * __import__("math").cos(alpha),
+        "height": side * cos(alpha),
         "apex_angle_deg": 2.0 * float(alpha_deg),
     }
 
