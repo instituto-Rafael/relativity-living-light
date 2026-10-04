@@ -7,6 +7,7 @@ from pathlib import Path
 
 from rll.academic_false_positive_gate import (
     CONFIRMATORY_BOOLEAN_REQUIREMENTS,
+    RLL_EXISTING_FIT_PARAMETERS,
     academic_false_positive_gate,
     circular_section_width,
     difference_of_means,
@@ -18,10 +19,12 @@ from rll.academic_false_positive_gate import (
     modular_signature,
     ols_line,
     paired_difference_stats,
+    paired_existing_rll_parameter_deltas,
     pythagorean_difference,
     quadratic_discriminant,
     sample_variance,
     signed_quadratic,
+    summarize_existing_rll_parameter_samples,
     variance_of_mean,
     venturi_reference,
 )
@@ -63,6 +66,41 @@ class AcademicFalsePositiveDiagnosticsTests(unittest.TestCase):
         self.assertAlmostEqual(float(out["standard_error_of_mean_difference"]), math.sqrt(0.5))
         with self.assertRaises(ValueError):
             paired_difference_stats([1, 2], [1])
+
+    def test_existing_rll_parameter_dispersion_does_not_create_new_fit_parameters(self) -> None:
+        self.assertEqual(
+            RLL_EXISTING_FIT_PARAMETERS,
+            frozenset({"H0", "Om", "OL", "Os0", "zt", "wt", "Ob_h2", "sigma8"}),
+        )
+        summary = summarize_existing_rll_parameter_samples(
+            {
+                "H0": [60.0, 61.0, 62.0],
+                "Os0": [0.0, 0.01, 0.02],
+            }
+        )
+        self.assertAlmostEqual(float(summary["H0"]["mean"]), 61.0)
+        self.assertAlmostEqual(float(summary["H0"]["sample_variance"]), 1.0)
+        self.assertAlmostEqual(float(summary["H0"]["variance_of_mean"]), 1.0 / 3.0)
+        self.assertEqual(summary["H0"]["role"], "EXISTING_FIT_PARAMETER_DIAGNOSTIC_ONLY")
+
+        with self.assertRaises(ValueError):
+            summarize_existing_rll_parameter_samples({"pi_phi": [5.0, 5.1, 5.2]})
+        with self.assertRaises(ValueError):
+            summarize_existing_rll_parameter_samples({"mod14": [0.0, 1.0, 2.0]})
+
+    def test_paired_existing_rll_parameter_deltas_require_same_authorized_parameter_set(self) -> None:
+        out = paired_existing_rll_parameter_deltas(
+            {"H0": [60.0, 61.0, 62.0], "wt": [0.2, 0.3, 0.4]},
+            {"H0": [59.0, 60.0, 61.0], "wt": [0.1, 0.2, 0.3]},
+        )
+        self.assertAlmostEqual(float(out["H0"]["mean_difference"]), 1.0)
+        self.assertAlmostEqual(float(out["wt"]["mean_difference"]), 0.1)
+        self.assertEqual(out["H0"]["design"], "PAIRED")
+
+        with self.assertRaises(ValueError):
+            paired_existing_rll_parameter_deltas({"H0": [60.0]}, {"Om": [0.3]})
+        with self.assertRaises(ValueError):
+            paired_existing_rll_parameter_deltas({"pi_phi": [5.0, 5.1]}, {"pi_phi": [5.0, 5.1]})
 
     def test_ols_line_and_dispersion_buffer(self) -> None:
         fit = ols_line([1, 2, 3, 4], [2, 4, 6, 8])
