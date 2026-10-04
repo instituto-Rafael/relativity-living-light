@@ -1,0 +1,35 @@
+{
+  "schema": "rll.sgpt.m87.alma-l1-custody-preserved-receipt/v1",
+  "source_receipt_schema": "rll.sgpt.m87.external-evidence-preflight-receipt/v1",
+  "run_id": 37198745088,
+  "run_head_sha": "efc0f92c76aeafa4e02ea378fda30f04b580b345",
+  "workflow": ".github/workflows/sgpt-m87-source-regime-evidence.yml",
+  "artifact_id": 11301594908,
+  "artifact_digest": "sha256:629b385f531ba91b69420df29cce8411c15970f406d0bb2fab06752f6dffedfa",
+  "status": "PASS_EXTERNAL_EVIDENCE_PREFLIGHT_PARTIAL_WITH_SOURCE_ANOMALY",
+  "source_binding": "PASS_MODEL_DEPENDENCE_EXPLICIT",
+  "custody_metadata": "PASS_PARTIAL_SOURCE_ANOMALY_PRESERVED_ALMA_L1_ROUTE_BOUND",
+  "rejected_illegal_mutations": [
+    "invent-spin",
+    "invent-vlbi-sha256",
+    "change-official-git-blob",
+    "relabel-2018-blind",
+    "provider-gap-as-science",
+    "silent-repair-upstream-csv",
+    "erase-alma-official-route"
+  ],
+  "raw_L1_provider_access": "PASS_ALMA_DIRECTORY_AND_METADATA_ONLY",
+  "raw_VLBI_byte_custody": "TOKEN_VAZIO_LARGE_BYTES_NOT_ACQUIRED_ALMA_L1_ROUTE_AVAILABLE",
+  "calibrated_VLBI_byte_custody": "TOKEN_VAZIO_CYVERSE_BYTES_NOT_ACQUIRED",
+  "file_level_sha256": "TOKEN_VAZIO",
+  "MWL_parse_ready": false,
+  "likelihood_ready": false,
+  "scientific_validation": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "provenance": {
+    "official_ALMA_release_page": "https://almascience.eso.org/alma-data/eht-2017",
+    "official_M87_L1_directory": "https://almascience.eso.org/almadata/ec/eht/2016.1.01154.V/",
+    "project_code": "2016.1.01154.V"
+  },
+  "preservation_rule": "Provider-route identity is closed; large byte custody, calibrated CyVerse acquisition, hashes, likelihood and all scientific promotion remain unresolved."
+}
