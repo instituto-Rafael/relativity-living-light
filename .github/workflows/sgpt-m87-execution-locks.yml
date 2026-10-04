@@ -1,0 +1,66 @@
+name: SGPT M87 Execution Locks
+
+on:
+  pull_request:
+    paths:
+      - 'docs/strong_gravity/START_HERE_SGPT_M87.md'
+      - 'data/contracts/m87/*.json'
+      - 'tools/validate_sgpt_m87_execution_locks.py'
+      - '.github/workflows/sgpt-m87-execution-locks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sgpt-m87-execution-locks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  execution-locks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+
+      - name: Validate six fail-closed locks and adversarial mutations
+        run: |
+          set -euo pipefail
+          mkdir -p build/sgpt-m87-locks
+          python3 tools/validate_sgpt_m87_execution_locks.py \
+            --selftest \
+            --receipt build/sgpt-m87-locks/receipt.json
+          python3 -m py_compile tools/validate_sgpt_m87_execution_locks.py
+          for f in data/contracts/m87/*.json; do python3 -m json.tool "$f" >/dev/null; done
+
+      - name: Assert evidence ceiling
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('build/sgpt-m87-locks/receipt.json').read_text())
+          assert r['status'] == 'PASS_LOCKS_CONTRACT_ONLY'
+          assert len(r['locks']) == 6
+          assert len(r['rejected_illegal_mutations']) >= 14
+          for key in (
+              'source_regime_execution', 'process_timescale_execution',
+              'data_ingestion', 'statistical_fit', 'independent_reproduction',
+              'G4_BASELINE', 'G5_REPRODUCTION', 'G6_PREDICTION',
+              'G7_CLAIM_PROMOTION', 'scientific_validation'):
+              assert r[key] == 'TOKEN_VAZIO'
+          assert r['claim_allowed'] is False
+          PY
+
+      - name: Preserve bounded execution-lock receipt
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: sgpt-m87-execution-locks-${{ github.run_id }}
+          path: build/sgpt-m87-locks/
+          if-no-files-found: error
+          retention-days: 30
