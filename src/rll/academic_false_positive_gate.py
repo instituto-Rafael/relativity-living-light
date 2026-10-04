@@ -65,6 +65,30 @@ def difference_of_means(left: Iterable[float], right: Iterable[float]) -> dict[s
     }
 
 
+def paired_difference_stats(left: Iterable[float], right: Iterable[float]) -> dict[str, float | int | None | str]:
+    """Paired difference statistics for one interaction/unit observed twice.
+
+    For d_i=x_i-y_i, estimate s_d^2 with n-1 and Var(mean(d)) as s_d^2/n.
+    This must not be substituted by the independent-samples formula.
+    """
+    a = _finite_values(left)
+    b = _finite_values(right)
+    if len(a) != len(b):
+        raise ValueError("paired observations must have equal length")
+    differences = tuple(x - y for x, y in zip(a, b))
+    mean_difference = sum(differences) / len(differences)
+    s2 = sample_variance(differences)
+    variance = None if s2 is None else s2 / len(differences)
+    return {
+        "n_pairs": len(differences),
+        "mean_difference": mean_difference,
+        "sample_variance_of_differences": s2,
+        "variance_of_mean_difference": variance,
+        "standard_error_of_mean_difference": None if variance is None else sqrt(variance),
+        "design": "PAIRED",
+    }
+
+
 def ols_line(x: Iterable[float], y: Iterable[float]) -> dict[str, float | int | None]:
     """Ordinary least-squares line with residual variance when n>2."""
     xs = _finite_values(x)
