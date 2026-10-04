@@ -1,0 +1,38 @@
+{
+  "schema": "rll.sgpt.m87.timescale-readiness-preserved-receipt/v1",
+  "source_receipt_schema": "rll.sgpt.m87.timescale-readiness-receipt/v1",
+  "run_id": 37198124710,
+  "run_head_sha": "6fe54061176ec3432325b5f16699a1ea9b0bc3f8",
+  "workflow": ".github/workflows/sgpt-m87-source-regime-evidence.yml",
+  "artifact_id": 11302430118,
+  "artifact_digest": "sha256:05dc17bfdda41d65b7963c032204144fbb136e2826f40b7c23939209efe04bc1",
+  "status": "PASS_TIMESCALE_READINESS_NO_PROCESS_RATE_PROMOTION",
+  "source": "M87*",
+  "source_mass_Msun": 6500000000.0,
+  "derived_gravitational_units": {
+    "r_g_m": 9598352991717.354,
+    "t_g_s": 32016.65931074675,
+    "t_g_hours": 8.89351647520743,
+    "boundary": "r_g and t_g are gravitational units derived from M, not process-specific timescales."
+  },
+  "process_readiness": {
+    "Alfven": {"state": "TOKEN_VAZIO_RELATIVISTIC_ENTHALPY_AND_LENGTH_SCALE_NOT_FROZEN", "requires": ["relativistic_enthalpy", "field_geometry_length_scale"], "tau_filled": false},
+    "collisional_thermalization": {"state": "TOKEN_VAZIO_SPECIES_TEMPERATURES_COMPOSITION_AND_COLLISION_CLOSURE_NOT_FROZEN", "requires": ["T_i", "composition", "Coulomb_log_or_collision_operator"], "tau_filled": false},
+    "cooling": {"state": "TOKEN_VAZIO_ENERGY_DENSITY_AND_COOLING_FUNCTION_NOT_FROZEN", "requires": ["internal_energy_or_enthalpy", "emissivity_absorption_Compton_closure"], "tau_filled": false},
+    "electron_capture": {"state": "TOKEN_VAZIO_COMPOSITION_CHEMICAL_POTENTIAL_AND_WEAK_NETWORK_NOT_FROZEN", "requires": ["composition", "electron_chemical_potential", "weak_rate_network"], "tau_filled": false},
+    "heating": {"state": "TOKEN_VAZIO_DISSIPATION_AND_ELECTRON_HEATING_PARTITION_NOT_FROZEN", "requires": ["dissipation_model", "electron_ion_heating_partition"], "tau_filled": false},
+    "inflow": {"state": "TOKEN_VAZIO_GEOMETRY_AND_RADIAL_VELOCITY_NOT_FROZEN", "requires": ["source_radius_or_radial_grid", "v_r_or_GRMHD_trajectory"], "tau_filled": false},
+    "ionization": {"state": "NOT_REQUIRED_FOR_BASELINE_STATE_ALREADY_MODELED_AS_HOT_IONIZED_PLASMA", "requires": [], "tau_filled": false, "boundary": "A transient ionization calculation would require a separate nonequilibrium-ionization preregistration."},
+    "nuclear": {"state": "TOKEN_VAZIO_ION_TEMPERATURE_COMPOSITION_AND_NETWORK_NOT_FROZEN", "requires": ["T_i", "composition_or_Y_e", "nuclear_network"], "tau_filled": false},
+    "outflow": {"state": "TOKEN_VAZIO_OUTFLOW_GEOMETRY_AND_VELOCITY_NOT_FROZEN", "requires": ["outflow_launch_region", "velocity_field"], "tau_filled": false},
+    "pair_annihilation": {"state": "TOKEN_VAZIO_PAIR_DENSITY_AND_DISTRIBUTION_NOT_FROZEN", "requires": ["n_e_plus", "n_e_minus", "pair_distribution"], "tau_filled": false},
+    "pair_creation": {"state": "TOKEN_VAZIO_COMPACTNESS_PHOTON_FIELD_AND_PAIR_BALANCE_NOT_FROZEN", "requires": ["compactness", "photon_distribution", "source_size", "pair_kinetic_closure"], "tau_filled": false},
+    "phase_change": {"state": "NOT_REQUIRED_FOR_CONVENTIONAL_SOLID_LIQUID_GAS_BASELINE_HOT_PLASMA", "requires": [], "tau_filled": false, "boundary": "Any plasma phase transition or critical phenomenon would require its own EOS/order-parameter definition."},
+    "reconnection": {"state": "TOKEN_VAZIO_CURRENT_SHEET_SCALE_AND_RECONNECTION_RATE_NOT_FROZEN", "requires": ["current_sheet_length", "v_A", "reconnection_rate_or_resistive_kinetic_closure"], "tau_filled": false}
+  },
+  "Da_i_execution": "TOKEN_VAZIO_NO_PROCESS_HAS_BOTH_TAU_RESIDENCE_AND_TAU_I_FROZEN",
+  "G4_baseline": "TOKEN_VAZIO",
+  "scientific_validation": "TOKEN_VAZIO",
+  "claim_allowed": false,
+  "preservation_rule": "Readiness receipt only; no process-specific tau, Damkohler number, G4 result or scientific validation is promoted."
+}
