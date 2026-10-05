@@ -32,6 +32,13 @@ SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SAFE_NAME_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 
 
+class _RejectCredentialedRedirect(urllib.request.HTTPRedirectHandler):
+    """Fail closed before an Authorization-bearing request can follow a redirect."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        raise ValueError("credentialed redirects are forbidden")
+
+
 def load_json(path: Path) -> dict[str, Any]:
     obj = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(obj, dict):
@@ -43,6 +50,8 @@ def validate_manifest(doc: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if doc.get("schema") != SCHEMA:
         errors.append(f"schema must be {SCHEMA}")
+    if doc.get("claim_allowed") is not False:
+        errors.append("claim_allowed must be false for source-ingress manifests")
     sources = doc.get("sources")
     if not isinstance(sources, list) or not sources:
         errors.append("sources must be a non-empty list")
@@ -180,11 +189,19 @@ def acquire_source(
         headers["Accept"] = "application/vnd.github+json"
 
     request = urllib.request.Request(url, headers=headers, method="GET")
-    with urllib.request.urlopen(request, timeout=30) as response:
+    if credential != "none":
+        opener = urllib.request.build_opener(_RejectCredentialedRedirect())
+        response_context = opener.open(request, timeout=30)
+    else:
+        response_context = urllib.request.urlopen(request, timeout=30)
+
+    with response_context as response:
         final_url = response.geturl()
         parsed_final = urllib.parse.urlparse(final_url)
         if parsed_final.scheme != "https":
             raise ValueError(f"{source['id']}: redirect left https")
+        if credential != "none" and parsed_final.hostname != GITHUB_API_HOST:
+            raise ValueError(f"{source['id']}: credentialed response left api.github.com")
         payload = _read_bounded(response, int(source["max_bytes"]))
     data = _decode_github_contents(payload) if credential != "none" else payload
 
