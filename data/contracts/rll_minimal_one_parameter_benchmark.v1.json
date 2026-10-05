@@ -36,6 +36,13 @@
     "bayesian_evidence": "NOT_RUN",
     "cmb_joint_same_parameterization": "NOT_RUN"
   },
+  "ci_route": {
+    "target": "rll/lab",
+    "head_prefix": "work/",
+    "uses_existing_repository_ci": true,
+    "dedicated_workflow_added": false,
+    "workflow_inventory_delta": 0
+  },
   "invariants": [
     "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
     "TOKEN_VAZIO != 0",
@@ -46,5 +53,5 @@
   ],
   "claim_allowed": false,
   "publication_ready": false,
-  "rollback": "remove/revert only benchmark script, test, workflow, contract and benchmark documentation; preserve canonical data and prior results"
+  "rollback": "revert only the benchmark script, benchmark test, machine contract and benchmark documentation; preserve workflow inventory, canonical data and prior results"
 }
