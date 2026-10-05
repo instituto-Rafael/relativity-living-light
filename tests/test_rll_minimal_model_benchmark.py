@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "run_rll_minimal_model_benchmark.py"
+CONTRACT = ROOT / "data" / "contracts" / "rll_minimal_one_parameter_benchmark.v1.json"
 
 spec = importlib.util.spec_from_file_location("rll_min_benchmark", SCRIPT)
 assert spec is not None and spec.loader is not None
@@ -17,6 +19,20 @@ def _inputs():
     covariance = m.load_covariance(m.DEFAULT_COVARIANCE)
     inv_cov = m.invert_matrix(covariance)
     return measurements, covariance, inv_cov
+
+
+def test_contract_matches_executable_constants():
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    frozen = contract["rll_min"]["frozen"]
+    gates = contract["promotion_gates"]
+    assert frozen["z_t"] == m.ZT_FIXED
+    assert frozen["w_t"] == m.WT_FIXED
+    assert frozen["Omega_r"] == m.OMEGA_R
+    assert gates["delta_chi2_primary_max"] == -8.0
+    assert gates["delta_chi2_strong_max"] == -10.0
+    assert gates["max_rll_only_extra_parameters"] == 1
+    assert contract["claim_allowed"] is False
+    assert contract["publication_ready"] is False
 
 
 def test_current_desi_materialization_shape_and_symmetry():
