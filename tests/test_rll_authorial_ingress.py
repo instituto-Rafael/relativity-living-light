@@ -14,6 +14,7 @@ class TestRllAuthorialIngress(unittest.TestCase):
     def good(self):
         return {
             "schema": mod.SCHEMA,
+            "claim_allowed": False,
             "sources": [
                 {
                     "id": "x",
@@ -31,6 +32,13 @@ class TestRllAuthorialIngress(unittest.TestCase):
 
     def test_good_manifest(self):
         self.assertEqual(mod.validate_manifest(self.good()), [])
+
+    def test_claim_boundary_must_be_false(self):
+        doc = self.good()
+        doc["claim_allowed"] = True
+        self.assertTrue(
+            any("claim_allowed" in error for error in mod.validate_manifest(doc))
+        )
 
     def test_http_rejected(self):
         doc = self.good()
@@ -50,6 +58,18 @@ class TestRllAuthorialIngress(unittest.TestCase):
         self.assertTrue(
             any("api.github.com" in error for error in mod.validate_manifest(doc))
         )
+
+    def test_credentialed_redirect_is_rejected_before_follow(self):
+        handler = mod._RejectCredentialedRedirect()
+        with self.assertRaisesRegex(ValueError, "credentialed redirects are forbidden"):
+            handler.redirect_request(
+                None,
+                None,
+                302,
+                "Found",
+                {},
+                "https://example.org/leak-target",
+            )
 
     def test_kind_signatures(self):
         self.assertTrue(mod._kind_check("pdf", b"%PDF-1.7\n"))
