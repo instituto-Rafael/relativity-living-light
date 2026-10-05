@@ -1,0 +1,78 @@
+# KNOWS_BY_ON_FIRST_LINE: non-publishing one-parameter RLL-min falsifier.
+name: RLL Minimal One-Parameter Benchmark
+run-name: RLL-min BAO falsifier · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  push:
+    branches: [main]
+    paths: &rll_min_paths
+      - "scripts/run_rll_minimal_model_benchmark.py"
+      - "tests/test_rll_minimal_model_benchmark.py"
+      - "data/real/desi_dr2_bao_measurements.csv"
+      - "data/real/desi_dr2_bao_covariance.csv"
+      - "docs/science/RLL_MINIMAL_ONE_PARAMETER_BENCHMARK_V1.md"
+      - ".github/workflows/rll-minimal-model-benchmark.yml"
+  pull_request:
+    branches: [main]
+    paths: *rll_min_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-minimal-one-param-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  benchmark:
+    name: Profile BAO + falsification gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Run adversarial benchmark tests
+        run: |
+          set -euo pipefail
+          pytest -q tests/test_rll_minimal_model_benchmark.py
+
+      - name: Materialize benchmark receipt
+        run: |
+          set -euo pipefail
+          out="artifacts/rll-minimal-benchmark"
+          python scripts/run_rll_minimal_model_benchmark.py --output-dir "$out"
+          python -VV > "$out/python-version.txt"
+          printf '%s\n' \
+            'claim_allowed=false' \
+            'publication_ready=false' \
+            'profile_likelihood_is_not_bayesian_evidence=true' \
+            'lya_bao_is_not_lya_full_shape=true' \
+            'growth_gate_requires_perturbation_model=true' \
+            > "$out/CLAIM_BOUNDARY.txt"
+          (cd "$out" && sha256sum * > CHECKSUMS.sha256)
+          cat "$out/REPORT.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload benchmark receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-minimal-benchmark-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/rll-minimal-benchmark/
+          retention-days: 30
+          if-no-files-found: error
