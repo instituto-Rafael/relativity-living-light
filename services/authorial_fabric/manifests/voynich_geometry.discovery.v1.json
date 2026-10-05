@@ -1,0 +1,38 @@
+{
+  "schema": "rll.science_ingress_manifest.v1",
+  "version": "1.0.0",
+  "date": "2026-10-05",
+  "purpose": "Voynich geometric/angular hypothesis source discovery; no decipherment claim",
+  "claim_allowed": false,
+  "hypothesis": "page/diagram orientation, radius and graph adjacency may contain relational information beyond linear text order",
+  "null_hypothesis": "orientation is explained by layout and scribal ergonomics without inter-page coding",
+  "sources": [
+    {
+      "id": "voynich_yale_ms408_catalog",
+      "kind": "webpage",
+      "url": "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms408.htm",
+      "filename": "voynich_yale_ms408_catalog.html",
+      "authority": "Yale University, Beinecke Rare Book and Manuscript Library",
+      "license": "TOKEN_VAZIO_RIGHTS_REVIEW_REQUIRED_FOR_DERIVATIVE_BULK_USE",
+      "expected_sha256": "TOKEN_VAZIO",
+      "max_bytes": 2000000,
+      "credential_profile": "none",
+      "role": "PRIMARY_SOURCE_LOCATOR_AND_STRUCTURAL_METADATA"
+    }
+  ],
+  "observed_primary_structure": {
+    "ms": "Beinecke MS 408",
+    "foldout_note": "catalog describes multiple double/triple/quadruple foldouts and one sextuple-folio folding leaf",
+    "astronomical_section": "ff. 67r-73v; circular/concentric/radiating diagrams",
+    "nine_medallion_section": "ff. 85r-86v; sextuple-folio folding leaf with nine linked medallions",
+    "source_state": "PRIMARY_CATALOG_OBSERVED_2026-10-05"
+  },
+  "source_resolution_gaps": [
+    "TOKEN_VAZIO_DIRECT_CURRENT_HIGH_RES_IMAGE_ENDPOINTS",
+    "TOKEN_VAZIO_FOLIO_LEVEL_SHA256",
+    "TOKEN_VAZIO_IMAGE_REUSE_RIGHTS_FOR_BULK_DERIVATIVES",
+    "TOKEN_VAZIO_CANONICAL_FOLIO_ORIENTATION_COORDINATES",
+    "TOKEN_VAZIO_TRANSCRIPTION_ALIGNMENT_TO_PIXEL_COORDINATES"
+  ],
+  "experiment_next": "resolve authoritative folio image endpoints; acquire without geometric preprocessing; pin hashes; preregister coordinate/orientation extraction before testing cross-folio rotations"
+}
