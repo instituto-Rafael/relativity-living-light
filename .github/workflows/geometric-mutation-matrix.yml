@@ -1,0 +1,277 @@
+# KNOWS_BY_ON_FIRST_LINE: non-publishing geometric mutation/sensitivity receipts.
+name: Geometric Mutation Ω Matrix
+run-name: Geometry Ω · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  push:
+    branches: [main, rll/lab, "feature/**", "research/**", "science/**", "engineering/**"]
+    paths: &geometry_paths
+      - "data/contracts/geometric_mutation_matrix.v1.yml"
+      - "docs/cosmology/GEOMETRIC_MUTATION_MATRIX_V1.md"
+      - "scripts/run_geometric_mutation_matrix.py"
+      - "tests/test_geometric_mutation_matrix.py"
+      - "src/rll/cosmology_fairness.py"
+      - "requirements/ci-frontier.txt"
+      - ".github/workflows/geometric-mutation-matrix.yml"
+  pull_request:
+    branches: [main, rll/lab]
+    paths: *geometry_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: geometric-mutation-omega-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+  CONTRACT: data/contracts/geometric_mutation_matrix.v1.yml
+  ARTIFACT_RETENTION_DAYS: "30"
+
+jobs:
+  contract-and-tests:
+    name: Contract + adversarial invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Run geometric mutation contract tests
+        run: |
+          set -euo pipefail
+          pytest -q tests/test_geometric_mutation_matrix.py
+
+  mutate:
+    name: Mutation shard ${{ matrix.shard }}
+    needs: contract-and-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Explore deterministic geometry/projection/fragment mutations
+        run: |
+          set -euo pipefail
+          out="artifacts/geometric-mutation/shard-${{ matrix.shard }}"
+          python scripts/run_geometric_mutation_matrix.py \
+            --contract "$CONTRACT" \
+            --output-dir "$out" \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count 4
+          printf '%s\n' \
+            'claim_allowed=false' \
+            'publication_effect=NONE' \
+            'cross_domain_bridge=SENSITIVITY_ONLY_NO_CAUSAL_CLAIM' \
+            'physical_wormhole_claim=false' \
+            > "$out/CLAIM_BOUNDARY.txt"
+          (cd "$out" && sha256sum * > CHECKSUMS.sha256)
+
+      - name: Upload mutation shard
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: geometric-mutation-shard-${{ matrix.shard }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/shard-${{ matrix.shard }}/
+          retention-days: ${{ fromJSON(env.ARTIFACT_RETENTION_DAYS) }}
+          if-no-files-found: error
+
+  aggregate:
+    name: Aggregate geometry × cosmology sensitivity receipt
+    needs: mutate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Download all mutation shards
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: geometric-mutation-shard-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/input
+          merge-multiple: false
+
+      - name: Aggregate matrices, correlations, and bridge sensitivity
+        run: |
+          set -euo pipefail
+          out="artifacts/geometric-mutation/aggregate"
+          python scripts/run_geometric_mutation_matrix.py \
+            --contract "$CONTRACT" \
+            --output-dir "$out" \
+            --aggregate-root artifacts/geometric-mutation/input
+          python -VV > "$out/python-version.txt"
+          python -m pip freeze --all > "$out/pip-freeze.txt"
+          printf '%s\n' \
+            'claim_allowed=false' \
+            'publication_effect=NONE' \
+            'correlation_semantics=ASSOCIATION_ONLY' \
+            'fold_semantics=EXTRINSIC_EMBEDDING_ONLY' \
+            > "$out/CLAIM_BOUNDARY.txt"
+
+          python - "$out" <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          out = Path(sys.argv[1])
+          root = Path.cwd()
+
+          def digest(path: Path) -> str:
+              h = hashlib.sha256()
+              with path.open("rb") as fh:
+                  for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          def nz(value: object) -> str:
+              text = str(value or "").strip()
+              return text if text else "TOKEN_VAZIO"
+
+          summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
+          event_path = Path(os.environ.get("GITHUB_EVENT_PATH", ""))
+          event = {}
+          if event_path.is_file():
+              event = json.loads(event_path.read_text(encoding="utf-8"))
+          pr = event.get("pull_request") or {}
+          pr_head = (pr.get("head") or {}).get("sha")
+          pr_base = (pr.get("base") or {}).get("sha")
+          event_name = os.environ.get("GITHUB_EVENT_NAME", "TOKEN_VAZIO")
+          event_sha = os.environ.get("GITHUB_SHA", "TOKEN_VAZIO")
+          checkout_sha = subprocess.check_output(
+              ["git", "rev-parse", "HEAD"], text=True
+          ).strip()
+
+          identity_errors = []
+          if checkout_sha != event_sha:
+              identity_errors.append("checked-out HEAD differs from GITHUB_SHA")
+          if event_name == "pull_request":
+              if not pr_head:
+                  identity_errors.append("pull_request head SHA missing")
+              if not pr_base:
+                  identity_errors.append("pull_request base SHA missing")
+
+          inputs = {
+              "contract": Path(os.environ["CONTRACT"]),
+              "runner": Path("scripts/run_geometric_mutation_matrix.py"),
+              "tests": Path("tests/test_geometric_mutation_matrix.py"),
+              "requirements": Path("requirements/ci-frontier.txt"),
+              "workflow": Path(".github/workflows/geometric-mutation-matrix.yml"),
+              "navigation": Path("docs/cosmology/GEOMETRIC_MUTATION_MATRIX_V1.md"),
+          }
+          receipt = {
+              "schema": "rll.geometric_mutation_matrix.provenance.v1",
+              "source": {
+                  "repository": os.environ.get("GITHUB_REPOSITORY", "TOKEN_VAZIO"),
+                  "event_name": event_name,
+                  "ref": os.environ.get("GITHUB_REF", "TOKEN_VAZIO"),
+                  "ref_name": os.environ.get("GITHUB_REF_NAME", "TOKEN_VAZIO"),
+                  "github_event_sha": event_sha,
+                  "execution_checkout_sha": checkout_sha,
+                  "pull_request_head_sha": nz(pr_head),
+                  "pull_request_base_sha": nz(pr_base),
+                  "identity_semantics": (
+                      "PULL_REQUEST_SYNTHETIC_MERGE_PLUS_HEAD_AND_BASE"
+                      if event_name == "pull_request"
+                      else "EVENT_SHA_CHECKOUT"
+                  ),
+              },
+              "execution": {
+                  "workflow": os.environ.get("GITHUB_WORKFLOW", "TOKEN_VAZIO"),
+                  "run_id": os.environ.get("GITHUB_RUN_ID", "TOKEN_VAZIO"),
+                  "run_number": os.environ.get("GITHUB_RUN_NUMBER", "TOKEN_VAZIO"),
+                  "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", "TOKEN_VAZIO"),
+              },
+              "inputs": {
+                  name: {"path": str(path), "sha256": digest(root / path)}
+                  for name, path in inputs.items()
+              },
+              "result": {
+                  "case_count": summary["case_count"],
+                  "gate_status": summary["gate"]["status"],
+                  "failure_count": summary["gate"]["failure_count"],
+                  "strong_cross_correlation_count": len(summary["cross_correlations"]),
+                  "identity_status": "PASS" if not identity_errors else "FAIL",
+                  "identity_errors": identity_errors,
+                  "claim_allowed": False,
+                  "publication_effect": "NONE",
+              },
+              "semantics": {
+                  "source_artifact_execution_evidence_claim_are_distinct": True,
+                  "correlation": "ASSOCIATION_ONLY",
+                  "bridge": "SENSITIVITY_ONLY_NO_CAUSAL_CLAIM",
+                  "fold": "EXTRINSIC_EMBEDDING_ONLY",
+                  "physical_wormhole_claim": False,
+              },
+          }
+          (out / "PROVENANCE.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          if identity_errors:
+              raise SystemExit("provenance identity gate failed: " + "; ".join(identity_errors))
+          PY
+
+          (cd "$out" && rm -f CHECKSUMS.sha256 && sha256sum * > CHECKSUMS.sha256)
+          cat "$out/REPORT.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload aggregate receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: geometric-mutation-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/aggregate/
+          retention-days: ${{ fromJSON(env.ARTIFACT_RETENTION_DAYS) }}
+          if-no-files-found: error
