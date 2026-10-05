@@ -8,6 +8,7 @@ run-name: RLL-min BAO falsifier · ${{ github.event_name }} · ${{ github.ref_na
     paths: &rll_min_paths
       - "scripts/run_rll_minimal_model_benchmark.py"
       - "tests/test_rll_minimal_model_benchmark.py"
+      - "data/contracts/rll_minimal_one_parameter_benchmark.v1.json"
       - "data/real/desi_dr2_bao_measurements.csv"
       - "data/real/desi_dr2_bao_covariance.csv"
       - "docs/science/RLL_MINIMAL_ONE_PARAMETER_BENCHMARK_V1.md"
@@ -57,6 +58,7 @@ jobs:
           set -euo pipefail
           out="artifacts/rll-minimal-benchmark"
           python scripts/run_rll_minimal_model_benchmark.py --output-dir "$out"
+          cp data/contracts/rll_minimal_one_parameter_benchmark.v1.json "$out/contract.json"
           python -VV > "$out/python-version.txt"
           printf '%s\n' \
             'claim_allowed=false' \
