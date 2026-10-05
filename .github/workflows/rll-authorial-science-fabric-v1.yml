@@ -1,0 +1,224 @@
+name: RLL Authorial Science Fabric V1
+
+"on":
+  pull_request:
+    branches:
+      - rll/lab
+    paths:
+      - "services/authorial_fabric/**"
+      - "tools/rll_authorial_ingress.py"
+      - "tests/test_rll_authorial_ingress.py"
+      - "tests/test_rll_capability_secret_router.py"
+      - "data/governance/RLL_CAPABILITY_SECRET_ROUTER_V1.json"
+      - ".github/workflows/rll-authorial-science-fabric-v1.yml"
+  workflow_dispatch:
+    inputs:
+      manifest:
+        description: "Manifest under services/authorial_fabric/manifests/"
+        required: true
+        default: "services/authorial_fabric/manifests/voynich_geometry.discovery.v1.json"
+        type: string
+      credential_profile:
+        description: "Optional bounded GitHub read credential profile"
+        required: true
+        default: none
+        type: choice
+        options:
+          - none
+          - pat_actions
+          - pat_agents
+          - pat_env
+          - pat_environments
+      allow_unpinned:
+        description: "Discovery only: permit TOKEN_VAZIO expected hash; result is OBSERVED_UNPINNED, never PASS_PINNED"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-authorial-science-fabric-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Audit bundled discovery manifest
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/authorial-fabric-contract
+          python3 tools/rll_authorial_ingress.py audit \
+            services/authorial_fabric/manifests/voynich_geometry.discovery.v1.json \
+            | tee artifacts/authorial-fabric-contract/manifest-audit.json
+
+      - name: Execute stdlib falsifiers
+        run: |
+          set -euo pipefail
+          {
+            python3 tests/test_rll_authorial_ingress.py -v
+            python3 tests/test_rll_capability_secret_router.py -v
+          } 2>&1 | tee artifacts/authorial-fabric-contract/unittest.log
+
+      - name: Validate fabric JSON contracts
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' | tee artifacts/authorial-fabric-contract/contract-check.json
+          import json
+          from pathlib import Path
+
+          fabric = json.loads(Path('services/authorial_fabric/fabric.v1.json').read_text())
+          policy = json.loads(Path('data/governance/RLL_CAPABILITY_SECRET_ROUTER_V1.json').read_text())
+          assert fabric['schema'] == 'rll.authorial_fabric.v1'
+          assert fabric['claim_allowed'] is False
+          assert policy['schema'] == 'rll.capability_secret_router.v1'
+          assert policy['claim_allowed'] is False
+          assert policy['workflow_boundary']['write_authority'] == 'NONE_IN_V1'
+          assert policy['workflow_boundary']['delete_authority'] == 'FORBIDDEN'
+          assert policy['same_value_across_names'] == 'TOKEN_VAZIO_EXTERNAL_SETTING_NOT_TESTED'
+          lanes = {item['id']: item for item in fabric['lanes']}
+          assert lanes['freestanding_native']['class'] == 'EXECUTION_CORE'
+          for adapter in ['science_ingress', 'github_actions', 'android_ndk', 'jni_bridge', 'android_sdk_buildtools', 'r8_dex_optimizer', 'art_jit_aot', 'python_factory']:
+              assert lanes[adapter]['runtime_dependency'] is False
+          print(json.dumps({'decision': 'PASS_STATIC', 'claim_allowed': False, 'lane_count': len(lanes)}, indent=2))
+          PY
+
+      - name: Upload contract evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-authorial-fabric-contract-${{ github.run_id }}
+          path: artifacts/authorial-fabric-contract/
+          retention-days: 14
+          if-no-files-found: error
+
+  acquire:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      MANIFEST: ${{ inputs.manifest }}
+      ALLOW_UNPINNED: ${{ inputs.allow_unpinned }}
+      RUN_DIR: artifacts/authorial-fabric-network
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Bound manifest path and initialize receipt area
+        run: |
+          set -euo pipefail
+          case "$MANIFEST" in
+            services/authorial_fabric/manifests/*.json) ;;
+            *) echo "manifest must remain under services/authorial_fabric/manifests/" >&2; exit 2 ;;
+          esac
+          test -f "$MANIFEST"
+          mkdir -p "$RUN_DIR/downloads" "$RUN_DIR/receipts"
+          printf '%s\n' "${GITHUB_SHA}" > "$RUN_DIR/source-head.txt"
+          printf '%s\n' "${{ inputs.credential_profile }}" > "$RUN_DIR/credential-profile.txt"
+
+      - name: Materialize public HTTPS sources
+        if: ${{ inputs.credential_profile == 'none' }}
+        run: |
+          set -euo pipefail
+          EXTRA=""
+          if [ "$ALLOW_UNPINNED" = "true" ]; then EXTRA="--allow-unpinned"; fi
+          python3 tools/rll_authorial_ingress.py materialize "$MANIFEST" \
+            --out "$RUN_DIR/downloads" \
+            --receipt "$RUN_DIR/receipts/network-receipt.json" \
+            --credential-profile none $EXTRA
+
+      - name: Materialize with PAT_ACTIONS
+        if: ${{ inputs.credential_profile == 'pat_actions' }}
+        env:
+          CAPABILITY_PAT: ${{ secrets.PAT_ACTIONS }}
+        run: |
+          set -euo pipefail
+          if [ -z "$CAPABILITY_PAT" ]; then
+            printf '%s\n' '{"decision":"FAIL_CLOSED","gap":"TOKEN_VAZIO_PAT_ACTIONS_RUNTIME_BINDING","claim_allowed":false}' > "$RUN_DIR/receipts/network-receipt.json"
+            exit 4
+          fi
+          EXTRA=""; if [ "$ALLOW_UNPINNED" = "true" ]; then EXTRA="--allow-unpinned"; fi
+          export RLL_INGRESS_TOKEN="$CAPABILITY_PAT"
+          python3 tools/rll_authorial_ingress.py materialize "$MANIFEST" --out "$RUN_DIR/downloads" --receipt "$RUN_DIR/receipts/network-receipt.json" --credential-profile pat_actions $EXTRA
+          unset RLL_INGRESS_TOKEN CAPABILITY_PAT
+
+      - name: Materialize with PAT_AGENTS
+        if: ${{ inputs.credential_profile == 'pat_agents' }}
+        env:
+          CAPABILITY_PAT: ${{ secrets.PAT_AGENTS }}
+        run: |
+          set -euo pipefail
+          if [ -z "$CAPABILITY_PAT" ]; then
+            printf '%s\n' '{"decision":"FAIL_CLOSED","gap":"TOKEN_VAZIO_PAT_AGENTS_RUNTIME_BINDING","claim_allowed":false}' > "$RUN_DIR/receipts/network-receipt.json"
+            exit 4
+          fi
+          EXTRA=""; if [ "$ALLOW_UNPINNED" = "true" ]; then EXTRA="--allow-unpinned"; fi
+          export RLL_INGRESS_TOKEN="$CAPABILITY_PAT"
+          python3 tools/rll_authorial_ingress.py materialize "$MANIFEST" --out "$RUN_DIR/downloads" --receipt "$RUN_DIR/receipts/network-receipt.json" --credential-profile pat_agents $EXTRA
+          unset RLL_INGRESS_TOKEN CAPABILITY_PAT
+
+      - name: Materialize with PAT_ENV
+        if: ${{ inputs.credential_profile == 'pat_env' }}
+        env:
+          CAPABILITY_PAT: ${{ secrets.PAT_ENV }}
+        run: |
+          set -euo pipefail
+          if [ -z "$CAPABILITY_PAT" ]; then
+            printf '%s\n' '{"decision":"FAIL_CLOSED","gap":"TOKEN_VAZIO_PAT_ENV_RUNTIME_BINDING","claim_allowed":false}' > "$RUN_DIR/receipts/network-receipt.json"
+            exit 4
+          fi
+          EXTRA=""; if [ "$ALLOW_UNPINNED" = "true" ]; then EXTRA="--allow-unpinned"; fi
+          export RLL_INGRESS_TOKEN="$CAPABILITY_PAT"
+          python3 tools/rll_authorial_ingress.py materialize "$MANIFEST" --out "$RUN_DIR/downloads" --receipt "$RUN_DIR/receipts/network-receipt.json" --credential-profile pat_env $EXTRA
+          unset RLL_INGRESS_TOKEN CAPABILITY_PAT
+
+      - name: Materialize with PAT_ENVIRONMENTS and legacy typo fallback
+        if: ${{ inputs.credential_profile == 'pat_environments' }}
+        env:
+          CAPABILITY_PAT_CANONICAL: ${{ secrets.PAT_ENVIRONMENTS }}
+          CAPABILITY_PAT_LEGACY: ${{ secrets.PAT_ENVIOREMENTS }}
+        run: |
+          set -euo pipefail
+          CAPABILITY_PAT="$CAPABILITY_PAT_CANONICAL"
+          if [ -z "$CAPABILITY_PAT" ]; then CAPABILITY_PAT="$CAPABILITY_PAT_LEGACY"; fi
+          if [ -z "$CAPABILITY_PAT" ]; then
+            printf '%s\n' '{"decision":"FAIL_CLOSED","gap":"TOKEN_VAZIO_PAT_ENVIRONMENTS_RUNTIME_BINDING","claim_allowed":false}' > "$RUN_DIR/receipts/network-receipt.json"
+            exit 4
+          fi
+          EXTRA=""; if [ "$ALLOW_UNPINNED" = "true" ]; then EXTRA="--allow-unpinned"; fi
+          export RLL_INGRESS_TOKEN="$CAPABILITY_PAT"
+          python3 tools/rll_authorial_ingress.py materialize "$MANIFEST" --out "$RUN_DIR/downloads" --receipt "$RUN_DIR/receipts/network-receipt.json" --credential-profile pat_environments $EXTRA
+          unset RLL_INGRESS_TOKEN CAPABILITY_PAT CAPABILITY_PAT_CANONICAL CAPABILITY_PAT_LEGACY
+
+      - name: Build artifact hash inventory
+        if: always()
+        run: |
+          set -euo pipefail
+          TMP_SUMS="$RUN_DIR/receipts/.SHA256SUMS.tmp"
+          find "$RUN_DIR" -type f \
+            ! -name 'SHA256SUMS.txt' \
+            ! -name '.SHA256SUMS.tmp' \
+            -print0 \
+            | sort -z \
+            | xargs -0 -r sha256sum > "$TMP_SUMS"
+          mv "$TMP_SUMS" "$RUN_DIR/receipts/SHA256SUMS.txt"
+
+      - name: Upload source custody bundle
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-authorial-science-ingress-${{ github.run_id }}
+          path: artifacts/authorial-fabric-network/
+          retention-days: 14
+          if-no-files-found: error
