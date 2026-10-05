@@ -202,7 +202,7 @@ jobs:
           } >> "$B/provider-hardening-receipt.txt"
 
       - name: Upload provider hardening evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: rll-nonnull-split-v3-provider-hardening
           path: |
