@@ -1,0 +1,50 @@
+{
+  "schema": "rll.minimal_one_parameter_benchmark.contract.v1",
+  "status": "EXECUTABLE_FALSIFIER_CLAIM_BLOCKED",
+  "dataset": {
+    "measurements": "data/real/desi_dr2_bao_measurements.csv",
+    "covariance": "data/real/desi_dr2_bao_covariance.csv",
+    "expected_n_obs": 13,
+    "covariance_shape": [13, 13]
+  },
+  "shared_profiled_parameters": [
+    "Omega_m",
+    "q=c/(H0*r_d)"
+  ],
+  "lcdm": {
+    "extra_parameters": []
+  },
+  "rll_min": {
+    "extra_parameters": ["Omega_s0"],
+    "frozen": {
+      "z_t": 1.0,
+      "w_t": 0.3,
+      "Omega_r": 0.000092
+    },
+    "nesting_condition": "Omega_s0=0 => LCDM background"
+  },
+  "promotion_gates": {
+    "delta_chi2_primary_max": -8.0,
+    "delta_chi2_strong_max": -10.0,
+    "aic_must_improve": true,
+    "bic_must_improve": true,
+    "max_rll_only_extra_parameters": 1
+  },
+  "successor_gates": {
+    "desi_lya_full_shape": "NOT_RUN",
+    "growth_fsigma8": "TOKEN_VAZIO",
+    "bayesian_evidence": "NOT_RUN",
+    "cmb_joint_same_parameterization": "NOT_RUN"
+  },
+  "invariants": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO != 0",
+    "IMPLEMENTED_UNTESTED != PASS",
+    "PROFILE_LIKELIHOOD != BAYESIAN_EVIDENCE",
+    "LYA_BAO != LYA_FULL_SHAPE",
+    "BETTER_CHI2 != BETTER_MODEL"
+  ],
+  "claim_allowed": false,
+  "publication_ready": false,
+  "rollback": "remove/revert only benchmark script, test, workflow, contract and benchmark documentation; preserve canonical data and prior results"
+}
