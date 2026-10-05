@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +12,7 @@ CONTRACT = ROOT / "data" / "contracts" / "rll_minimal_one_parameter_benchmark.v1
 spec = importlib.util.spec_from_file_location("rll_min_benchmark", SCRIPT)
 assert spec is not None and spec.loader is not None
 m = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = m
 spec.loader.exec_module(m)
 
 
