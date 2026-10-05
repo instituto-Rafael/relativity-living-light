@@ -63,10 +63,10 @@ jobs:
       - name: Execute stdlib falsifiers
         run: |
           set -euo pipefail
-          python3 -m unittest \
-            tests.test_rll_authorial_ingress \
-            tests.test_rll_capability_secret_router -v \
-            2>&1 | tee artifacts/authorial-fabric-contract/unittest.log
+          {
+            python3 tests/test_rll_authorial_ingress.py -v
+            python3 tests/test_rll_capability_secret_router.py -v
+          } 2>&1 | tee artifacts/authorial-fabric-contract/unittest.log
 
       - name: Validate fabric JSON contracts
         run: |
