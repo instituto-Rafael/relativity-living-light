@@ -1,0 +1,108 @@
+{
+  "schema": "rll.authorial_fabric.v1",
+  "version": "1.0.0",
+  "date": "2026-10-05",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "design_rule": "ADAPTERS_PREPARE_OR_MEASURE; FREESTANDING_CORE_COMPUTES_WITHOUT_THEM",
+  "lanes": [
+    {
+      "id": "freestanding_native",
+      "class": "EXECUTION_CORE",
+      "producer": "core/lowlevel_runtime",
+      "runtime_dependency": false,
+      "factory_dependencies_allowed": ["C compiler", "linker"],
+      "runtime_dependencies_forbidden": ["libc", "heap allocator", "Python", "JVM", "Android SDK", "Android NDK runtime", "JNI", "R8", "ART JIT", "external native libraries"],
+      "evidence_ceiling": "SOFTWARE_FREESTANDING_EXECUTION_RECEIPT"
+    },
+    {
+      "id": "science_ingress",
+      "class": "SOURCE_CUSTODY_FACTORY",
+      "producer": "tools/rll_authorial_ingress.py",
+      "runtime_dependency": false,
+      "factory_dependencies_allowed": ["Python standard library", "HTTPS"],
+      "purpose": "bounded acquisition, hashing, provenance and receipt generation for images, PDFs, data, text and archives",
+      "evidence_ceiling": "SOURCE_AND_ARTIFACT_CUSTODY"
+    },
+    {
+      "id": "github_actions",
+      "class": "HOSTED_ORCHESTRATOR",
+      "producer": ".github/workflows/rll-authorial-science-fabric-v1.yml",
+      "runtime_dependency": false,
+      "external_provider": true,
+      "purpose": "manual acquisition and CI contract validation",
+      "evidence_ceiling": "HOSTED_CI_ONLY"
+    },
+    {
+      "id": "android_ndk",
+      "class": "FACTORY_TOOLCHAIN_ADAPTER",
+      "runtime_dependency": false,
+      "status": "ROUTED_NOT_REQUIRED_BY_CORE",
+      "evidence_ceiling": "ANDROID_NATIVE_BUILD_OR_BENCHMARK_ONLY"
+    },
+    {
+      "id": "jni_bridge",
+      "class": "HOSTED_BRIDGE_ADAPTER",
+      "runtime_dependency": false,
+      "status": "ROUTED_NOT_REQUIRED_BY_CORE",
+      "evidence_ceiling": "JNI_BRIDGE_BEHAVIOR_ONLY"
+    },
+    {
+      "id": "android_sdk_buildtools",
+      "class": "FACTORY_TOOLCHAIN_ADAPTER",
+      "runtime_dependency": false,
+      "status": "ROUTED_NOT_REQUIRED_BY_CORE",
+      "evidence_ceiling": "ANDROID_PACKAGE_BUILD_ONLY"
+    },
+    {
+      "id": "r8_dex_optimizer",
+      "class": "FACTORY_TRANSFORM_ADAPTER",
+      "runtime_dependency": false,
+      "status": "ROUTED_NOT_REQUIRED_BY_CORE",
+      "evidence_ceiling": "DEX_TRANSFORM_ONLY"
+    },
+    {
+      "id": "art_jit_aot",
+      "class": "HOSTED_RUNTIME_MEASUREMENT_ADAPTER",
+      "runtime_dependency": false,
+      "status": "ROUTED_NOT_REQUIRED_BY_CORE",
+      "evidence_ceiling": "ANDROID_RUNTIME_MEASUREMENT_ONLY"
+    },
+    {
+      "id": "python_factory",
+      "class": "FACTORY_VALIDATION_ADAPTER",
+      "runtime_dependency": false,
+      "status": "STDLIB_ONLY_FOR_INGRESS_V1",
+      "evidence_ceiling": "FACTORY_VALIDATION_ONLY"
+    },
+    {
+      "id": "physical_termux_native",
+      "class": "PHYSICAL_EVIDENCE_ADAPTER",
+      "runtime_dependency": false,
+      "status": "SEPARATE_GATE",
+      "evidence_ceiling": "PHYSICAL_USERSPACE_EXECUTION_ONLY"
+    },
+    {
+      "id": "baremetal_firmware",
+      "class": "PHYSICAL_BARE_METAL_GATE",
+      "runtime_dependency": false,
+      "status": "TOKEN_VAZIO",
+      "evidence_ceiling": "PHYSICAL_BARE_METAL_ONLY"
+    }
+  ],
+  "source_classes": ["image", "pdf", "data", "text", "webpage", "archive"],
+  "artifact_policy": {
+    "repository_stores": ["manifest", "algorithm", "tests", "small receipts"],
+    "ci_artifact_stores": ["downloaded bytes", "hash inventory", "network receipt"],
+    "forbidden_promotion": "downloaded bytes do not become evidence or claim solely because download/hash succeeded"
+  },
+  "boundaries": [
+    "CI_PASS != PHYSICAL_PASS",
+    "PHYSICAL_USERSPACE_PASS != BAREMETAL_PASS",
+    "NDK_BUILD != FREESTANDING_RUNTIME",
+    "JNI_BRIDGE != NATIVE_CORE_AUTHORITY",
+    "SDK_OR_R8_TRANSFORM != RUNTIME_DEPENDENCY",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM"
+  ],
+  "next": "materialize one source manifest, pin observed hashes in a reviewed successor, then feed only normalized mathematical features into freestanding computation"
+}
