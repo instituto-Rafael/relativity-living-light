@@ -205,7 +205,14 @@ jobs:
         if: always()
         run: |
           set -euo pipefail
-          find "$RUN_DIR" -type f -print0 | sort -z | xargs -0 sha256sum > "$RUN_DIR/receipts/SHA256SUMS.txt"
+          TMP_SUMS="$RUN_DIR/receipts/.SHA256SUMS.tmp"
+          find "$RUN_DIR" -type f \
+            ! -name 'SHA256SUMS.txt' \
+            ! -name '.SHA256SUMS.tmp' \
+            -print0 \
+            | sort -z \
+            | xargs -0 -r sha256sum > "$TMP_SUMS"
+          mv "$TMP_SUMS" "$RUN_DIR/receipts/SHA256SUMS.txt"
 
       - name: Upload source custody bundle
         if: always()
