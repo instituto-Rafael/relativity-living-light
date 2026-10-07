@@ -26,6 +26,11 @@ OM = 0.30
 OL = 0.70
 RD_MPC = 147.09
 
+COMPARISON_STATUS = "LEGACY_QUICKCHECK_NONCANONICAL"
+COMPARISON_SCOPE = "H(z) diagonal + legacy BAO DV/rs diagonal with fixed H0/OM/OL/rd"
+CANONICAL_JOINT_PIPELINE = "data/pipelines/structure_d/joint_real_likelihood.py"
+CANONICAL_JOINT_RESULT = "results/structure_d/joint_real_likelihood.json"
+
 
 def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -287,6 +292,31 @@ def validation_status_payload() -> dict[str, object]:
         ),
     }
 
+def comparison_boundary_payload(hz_rows: int, bao_rows: int) -> dict[str, object]:
+    """Type this fast comparison as a non-canonical engineering quickcheck.
+
+    The quickcheck uses diagonal H(z) plus the legacy isotropic BAO DV/rs table.
+    It does not consume the DESI DR2 primary observable vector/full covariance,
+    growth block, or the CMB covariance in its model-comparison chi2. Scientific
+    ranking belongs to the canonical joint likelihood pipeline instead.
+    """
+
+    return {
+        "status": COMPARISON_STATUS,
+        "claim_allowed": False,
+        "comparison_scope": COMPARISON_SCOPE,
+        "hz_rows": int(hz_rows),
+        "bao_rows": int(bao_rows),
+        "cmb_in_model_comparison": False,
+        "desi_dr2_primary_in_model_comparison": False,
+        "desi_full_covariance_in_model_comparison": False,
+        "growth_in_model_comparison": False,
+        "canonical_joint_pipeline": CANONICAL_JOINT_PIPELINE,
+        "canonical_joint_result": CANONICAL_JOINT_RESULT,
+        "scientific_ranking_requires_canonical_joint": True,
+    }
+
+
 def chi2_from_pulls(pulls: pd.Series) -> float:
     return float(np.square(pulls.astype(float)).sum())
 
@@ -343,6 +373,8 @@ def main() -> int:
             "AIC": chi2 + 2 * k,
             "BIC": chi2 + k * math.log(n),
             "data_status": "real_non_synthetic",
+            "comparison_status": COMPARISON_STATUS,
+            "claim_allowed": False,
         })
     writes.append(atomic_write_csv(pd.DataFrame(models), tables / "model_comparison.csv"))
 
@@ -368,6 +400,7 @@ def main() -> int:
         source_records.append({"name": label, "path": str(path), "sha256": sha256_file(path), "status": "used_real_non_synthetic"})
 
     validation_status = validation_status_payload()
+    comparison_boundary = comparison_boundary_payload(len(hz), len(bao))
     report = [
         "# COMPUTE_REPORT",
         "",
@@ -377,7 +410,14 @@ def main() -> int:
         f"- Hz real points: {len(hz)}",
         f"- BAO real points: {len(bao)}",
         f"- CMB reference: {cmb.get('survey', 'unknown')} ({cmb.get('reference', 'no reference')})",
+        f"- comparison_status: {comparison_boundary['status']}",
+        f"- comparison_scope: {comparison_boundary['comparison_scope']}",
+        "- model_comparison_claim_allowed: false",
+        "- cmb_in_model_comparison: false",
+        "- desi_dr2_primary_in_model_comparison: false",
+        f"- canonical_joint_pipeline: {comparison_boundary['canonical_joint_pipeline']}",
         f"- best_by_bic: {min(models, key=lambda row: row['BIC'])['model']}",
+        "- best_by_bic_scope: legacy_quickcheck_noncanonical",
         "- geomagnetic: pending_real_parser, not fabricated",
         "- scale_bridge_claim_boundary: " + str(validation_status["claim_boundary"]),
     ]
@@ -396,6 +436,8 @@ def main() -> int:
         "input_files": source_records,
         "fallback_policy": "fail if required real inputs are absent; repo real data allowed only as explicit fallback/source",
         "validation_status": validation_status,
+        "comparison_boundary": comparison_boundary,
+        "claim_allowed": False,
         "execution_tags": tag_payload,
         "watchdog": watchdog,
         "rollback_writes": writes,
