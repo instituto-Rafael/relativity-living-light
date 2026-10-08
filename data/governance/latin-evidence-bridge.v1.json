@@ -52,7 +52,7 @@
     "secret_fallback": false,
     "administration_called": false
   },
-  "replay": "python3 -m unittest discover -s tests/latin -p 'test_*.py' -v; python3 scripts/latin/validate_latin_evidence_bridge.py",
+  "replay": "python3 -m unittest discover -s tests/latin -p 'test_*.py' -v && python3 scripts/latin/validate_latin_evidence_bridge.py",
   "governance": {
     "no_network": true,
     "no_admin": true,
