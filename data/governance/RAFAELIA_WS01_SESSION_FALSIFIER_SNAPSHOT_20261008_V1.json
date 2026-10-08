@@ -235,5 +235,117 @@
     "claim_allowed": false,
     "rollback": "Revert only this append-only successor field; original #1076 scientific receipt must remain immutable.",
     "F_next": "Independently reproduce original receipt in isolated exact-head checkout; then use a held-out direct-z step-convergence matrix before any code change."
+  },
+  "independent_numerical_successor_omega_20261008": {
+    "id": "WS01_LCDM_INDEPENDENT_SIMPSON_CONVERGENCE_20261008",
+    "kind": "INDEPENDENT_NUMERICAL_IMPLEMENTATION_LCDM_ONLY",
+    "execution": "LOCAL_BOUNDED_NUMERICAL_TEST_EXECUTED",
+    "validation_scope": "FLAT_LCDM_DISTANCE_INTEGRAL_NUMERICS_ONLY",
+    "source_contract": "RLL#1076@67140f891a7cfabd929f010e0a3940fda50ceaaa",
+    "original_ci_receipt_sha256": "c14a112bf0690803d5125212f061ea1e6fe874bd65a37ad9f07c1de616c613c9",
+    "original_ci_zip_sha256": "ff800e9f0b245f0f38640878b977d07db23beb7d4327d5dd9e931fb53b4dd3b2",
+    "parameters": {
+      "H0_km_s_Mpc": 67.4,
+      "Omega_m": 0.315,
+      "Omega_r": 0.0000918,
+      "Omega_lambda": 0.6849082,
+      "c_km_s": 299792.458,
+      "z": 1100
+    },
+    "model": "E(z)=sqrt(Ωm*(1+z)^3 + Ωr*(1+z)^4 + ΩΛ) ; flat ΛCDM",
+    "methods": {
+      "direct": "composite Simpson of 1/E(z) on [0,1100] with n uniform redshift steps",
+      "transformed": "composite Simpson of exp(x)/E(exp(x)-1) on [0,ln(1101)]",
+      "common_prefactor": "c/H0",
+      "algorithm": "Simpson S_n=h/3*[f(a)+f(b)+4*sum(f(a+(2k-1)h))+2*sum(f(a+2kh)]",
+      "implementation": "Independent pure Python stdlib math implementation executed outside GitHub repository; no RLL source code imported."
+    },
+    "observed": [
+      {
+        "n": 1024,
+        "direct_mpc": 13837.288404049326,
+        "log_mpc": 13866.398395785778,
+        "abs_delta_mpc": 29.109991736452,
+        "gate": "FAIL"
+      },
+      {
+        "n": 2048,
+        "direct_mpc": 13862.678798865745,
+        "log_mpc": 13866.398395660897,
+        "abs_delta_mpc": 3.719596795152,
+        "gate": "FAIL"
+      },
+      {
+        "n": 4096,
+        "direct_mpc": 13866.18618482763,
+        "log_mpc": 13866.398395653096,
+        "abs_delta_mpc": 0.212210825466,
+        "gate": "FAIL"
+      },
+      {
+        "n": 8192,
+        "direct_mpc": 13866.386099537083,
+        "log_mpc": 13866.398395652608,
+        "abs_delta_mpc": 0.012296115525,
+        "gate": "PASS_IN_DIAGNOSTIC_ONLY"
+      },
+      {
+        "n": 16384,
+        "direct_mpc": 13866.397641696758,
+        "log_mpc": 13866.398395652577,
+        "abs_delta_mpc": 0.000753955819,
+        "gate": "PASS_IN_DIAGNOSTIC_ONLY"
+      },
+      {
+        "n": 32768,
+        "direct_mpc": 13866.398348751985,
+        "log_mpc": 13866.398395652574,
+        "abs_delta_mpc": 0.000046900588,
+        "gate": "PASS_IN_DIAGNOSTIC_ONLY"
+      },
+      {
+        "n": 65536,
+        "direct_mpc": 13866.398392724726,
+        "log_mpc": 13866.398395652574,
+        "abs_delta_mpc": 0.000002927847,
+        "gate": "PASS_IN_DIAGNOSTIC_ONLY"
+      }
+    ],
+    "preregistered_tolerance": {
+      "rtol": 0.000001,
+      "atol_mpc": 0.001,
+      "mutated": false,
+      "budget_at_1100_mpc": 0.014866398396
+    },
+    "original_exact_check": {
+      "n": 4096,
+      "source_direct_mpc": 13866.186184827617,
+      "independent_direct_mpc": 13866.18618482763,
+      "absolute_difference_mpc": 1.3e-11
+    },
+    "numeric_rate": {
+      "n4096_to_n8192": 17.25836,
+      "n8192_to_n16384": 16.3088,
+      "n16384_to_n32768": 16.07562,
+      "expectation": "~16 for Simpson 4th order in asymptotic smooth regime"
+    },
+    "conclusion": "Under the explicitly defined flat LCDM inputs, insufficient uniform redshift resolution at n=4096 reproduces the CI divergence; method error decreases at Simpson-like fourth order when n increases.",
+    "no_claims": [
+      "RLL_PROBE numerical error independently reproduced",
+      "RLL physical model validated or falsified",
+      "scientific observational comparison accepted",
+      "license and originality adjudicated"
+    ],
+    "claim_allowed": false,
+    "publication_allowed": false,
+    "physical_runtime_proof": false,
+    "missing": [
+      "independent RLL_PROBE convergence",
+      "systematic robustness beyond this 1D integral",
+      "observational validation",
+      "peer review"
+    ],
+    "falsifier": "Reject step-resolution explanation for a model if its mismatch fails to converge under independent fixed-model refinements or if baseline parameters differ.",
+    "rollback": "Revert only this successor field from draft; preserve original CI artifact, frozen preregistered contract and negative evidence."
   }
 }
