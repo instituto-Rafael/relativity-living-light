@@ -29,6 +29,7 @@
 - [Carta de integridade operacional](../governance/OPERATIONAL_EXCELLENCE_INTEGRITY_CHARTER.md)
 - [Modelo operacional de GitHub Actions](../governance/GITHUB_ACTIONS_OPERATING_MODEL.md)
 - [Receipt do fechamento](../../receipts/2026-10-08_RLL_OPERATIONAL_COHESION_CLOSURE_V1.json)
+- [Correção de proveniência e observação CI — PR #1076](../../receipts/2026-10-08_RLL_PR1076_PROVENANCE_CI_OBSERVATION_V2.json)
 
 ## Quero auditar segurança, privacidade ou LGPD
 

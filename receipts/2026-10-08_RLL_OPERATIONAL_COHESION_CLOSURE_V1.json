@@ -5,7 +5,6 @@
   "repository": "instituto-Rafael/relativity-living-light",
   "branch": "codex/rll-operational-cohesion-closure-20261008",
   "artifact_path": "docs/governance/RLL_OPERATIONAL_COHESION_CLOSURE_20261008.md",
-  "artifact_commit_sha": "09246fa088cdccbbcc85bfb86ac1935e386f3721",
   "intent": "Fechar coesao operacional, proveniencia, metodologia de pesquisa e desenvolvimento, pipeline, orquestracao, gates e receipts sem promover claim cientifico.",
   "skills_route": [
     "roteador-universo-rafaelia",
@@ -28,8 +27,9 @@
     },
     {
       "path": "docs/navigation/README.md",
-      "sha": "9fe208335c488dbd1052aafd3d42bb077b0ebb21",
-      "state": "DOCUMENTED"
+      "sha": "d9882721ddac66151d15875e8f90490253c81682",
+      "state": "DOCUMENTED",
+      "sha_before_provenance_correction": "9fe208335c488dbd1052aafd3d42bb077b0ebb21"
     },
     {
       "path": "docs/RLL_TRACEABILITY_MAP.md",
@@ -93,5 +93,10 @@
   },
   "F_ok": "Operational cohesion closure materialized with source minimum, evidence boundary, gates, orchestration lanes and receipt.",
   "F_gap": "No scientific pipeline was executed in this delta; external GitHub settings and real-data run IDs remain outside this receipt.",
-  "F_next": "Observe PR CI, attach run ID when available, and promote scientific claims only after reproducible data, baseline, covariance, environment, logs, metrics and receipts are present."
+  "F_next": "Observe PR CI, attach run ID when available, and promote scientific claims only after reproducible data, baseline, covariance, environment, logs, metrics and receipts are present.",
+  "artifact_reference_kind": "git_blob_sha1",
+  "artifact_blob_sha": "c87c323d90a7dc2d6bc75785cae6beb551de113f",
+  "invalidated_unreachable_artifact_commit_sha": "09246fa088cdccbbcc85bfb86ac1935e386f3721",
+  "provenance_correction_receipt": "receipts/2026-10-08_RLL_PR1076_PROVENANCE_CI_OBSERVATION_V2.json",
+  "provenance_correction_reason": "Replaced unreachable temporary commit reference with content-addressed Git blob SHA. Historical incorrect field is retained as invalidated reference, not an artifact provenance claim."
 }

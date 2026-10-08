@@ -1,0 +1,104 @@
+{
+  "schema": "rll.pr_review_provenance_ci_observation.v2",
+  "id": "RLL-PR1076-PROVENANCE-CI-20261008",
+  "observed_date_utc": "2026-10-08",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "pr_number": 1076,
+  "observed_head_sha": "3c749f08f3ee1f8ffb330d243e212d918d899510",
+  "kind": "append_only_correction_and_ci_observation",
+  "parent_receipt": "receipts/2026-10-08_RLL_OPERATIONAL_COHESION_CLOSURE_V1.json",
+  "supersedes_reference": {
+    "field": "artifact_commit_sha",
+    "value": "09246fa088cdccbbcc85bfb86ac1935e386f3721",
+    "disposition": "INVALID_UNREACHABLE_FROM_PUBLISHED_PR_HISTORY"
+  },
+  "authoritative_artifact": {
+    "path": "docs/governance/RLL_OPERATIONAL_COHESION_CLOSURE_20261008.md",
+    "reference_type": "git_blob_sha1",
+    "sha": "c87c323d90a7dc2d6bc75785cae6beb551de113f",
+    "verified_via": "GitHub fetch_file on observed PR branch",
+    "claim_allowed": false
+  },
+  "receipt_v1_correction": {
+    "path": "receipts/2026-10-08_RLL_OPERATIONAL_COHESION_CLOSURE_V1.json",
+    "expected_state": "artifact_blob_sha + invalidated_unreachable_artifact_commit_sha",
+    "source_min_nav_git_blob_sha": "d9882721ddac66151d15875e8f90490253c81682"
+  },
+  "github_review": {
+    "thread": "https://github.com/instituto-Rafael/relativity-living-light/pull/1076#discussion_r4221401700",
+    "finding": "P2 unreachable artifact_commit_sha",
+    "correction": "content address artifact by Git blob SHA; preserve invalidated historic SHA"
+  },
+  "ci_observation": {
+    "observation_scope": "PR head workflow_runs first-page, not standalone scientific reexecution",
+    "successful": [
+      "GitHub Platform Assurance",
+      "RLL Knowledge Matrix",
+      "START HERE V2.1 + Root Wave 2 Gate",
+      "formulas-artifacts",
+      "RLL Human Societal Science Gate V1",
+      "Canonical Institute Authority Guard",
+      "LGPD + Navigation Engineering Gate",
+      "repo-real-inventory",
+      "Convention Consistency Check",
+      "RLL Q16 Split + Assembly Audit V3"
+    ],
+    "failed": [
+      {
+        "name": "GitHub Platform Assurance V2",
+        "run_id": 37807010164,
+        "gate": "EXTERNAL_AUTHORITY_NOT_CLEARED"
+      },
+      {
+        "name": "Python tests",
+        "run_id": 37807010403,
+        "gate": "FAIL",
+        "passed": 2059,
+        "failed_count": 4,
+        "failed_tests": [
+          "tests/test_schemas_claim_boundary.py::test_schema_claim_boundary_validator_passes",
+          "tests/test_structural_integration.py::test_mpemba_source_crosswalk_resolves_local_and_canonical_ids",
+          "tests/test_sustainment_provenance_bindings.py::test_all_declared_provenance_matches_actual_git_blob_bytes",
+          "tests/test_sustainment_provenance_bindings.py::test_registry_bindings_are_not_just_hex_placeholders"
+        ],
+        "observed_causes": [
+          "missing description in schemas/delta-empty-omega-pi-mu.v1.schema.json",
+          "missing DRIVE-CRIPTTRES crosswalk ID",
+          "LICENSE.md git blob expected 26c69bb3c850bc2b3063621a5f72a2badc1535c2; observed 09735ecfbc52903f654b87d260d96f5b7c67c9f1"
+        ]
+      },
+      {
+        "name": "Branch Maturity Gate V2",
+        "run_id": 37807010199,
+        "gate": "INVALID_BRANCH_TRANSITION"
+      },
+      {
+        "name": "Transit Tower Omega",
+        "run_id": 37807010187,
+        "gate": "BRANCH_TOPOLOGY_FAIL_CLOSED"
+      },
+      {
+        "name": "Six Sigma Real Data Controls",
+        "run_id": 37807010426,
+        "gate": "MATERIALIZE_DOCUMENTATION_INVENTORY_DELTA_FAIL"
+      },
+      {
+        "name": "RLL Governance Quality Gate - non-certification",
+        "run_id": 37807010052,
+        "gate": "WS01_SCIENTIFIC_TOLERANCE_FAIL_CLOSED"
+      }
+    ]
+  },
+  "unchanged_gates": [
+    "claim_allowed=false",
+    "scientific_confirmation=false",
+    "branch maturity unchanged",
+    "physical/cosmological validation not promoted"
+  ],
+  "action": "Correct documentation receipt provenance only and attach auditable CI observations; do not weaken checks or rerun scientific pipelines as a substitute for fixes.",
+  "R3": {
+    "F_ok": "Content-addressed artifact reference and review/CI evidence appended.",
+    "F_gap": "Six failed workflows at observed head; independently verified passing CI after new commit remains PENDING.",
+    "F_next": "Observe new commit CI; isolate source-side failures versus policy/provider gates, preserve blocking states; decide branch promotion only via configured topology."
+  }
+}
