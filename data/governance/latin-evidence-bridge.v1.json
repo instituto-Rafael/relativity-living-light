@@ -11,9 +11,9 @@
     },
     "governance": {
       "repo": "rafaelmeloreisnovo/RafGitTools",
-      "commit": "22911280b68cd746fe162cde76845ea55595a589",
+      "commit": "fe32ac37b55bfc9374158e7fba6e8630377825c6",
       "path": "contracts/latin/latin-authority.v1.json",
-      "workflow": "555_10_latin_authority.yml"
+      "workflow": "START.yml"
     }
   },
   "baseline_science_pr": "https://github.com/instituto-Rafael/relativity-living-light/pull/1076",
@@ -40,7 +40,8 @@
     "independent_rll_falsifier": "NOT_RUN",
     "copyright_translation_edition": "TOKEN_VAZIO",
     "rll_pr1076_independent_validation": "HOLD_SEPARATE_FROM_THIS_BRIDGE",
-    "privacy_legal_review": "TOKEN_VAZIO"
+    "privacy_legal_review": "TOKEN_VAZIO",
+    "rll_workflow_inventory": "PENDING_READBACK_AFTER_ACTIVE_WORKFLOW_REMOVAL"
   },
   "secrets_boundary": {
     "GITPAT": "RLL_MANUAL_READ_ASSURANCE_ONLY",
