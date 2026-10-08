@@ -1,0 +1,169 @@
+{
+  "schema": "rafaelia.rll.session_falsifier_snapshot.v1",
+  "schema_role": "BOUNDED_OBSERVATION_NOT_PROOF",
+  "snapshot_date": "2026-10-08",
+  "claim_allowed": false,
+  "base_context": {
+    "target_branch": "rll/lab",
+    "starting_sha": "5b641510afd62abab5a98ad17019d361d621478c",
+    "notes_are_executable": false
+  },
+  "source": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "pr": 1076,
+    "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1076",
+    "head_sha": "67140f891a7cfabd929f010e0a3940fda50ceaaa",
+    "state": "OPEN",
+    "head_origin": "PR_HEAD_EXACT",
+    "branch_maturity": "BLOCKED"
+  },
+  "method": {
+    "contract_path": "data/contracts/rll_ws01_distance_integration_tolerance.v1.json",
+    "execution_path": "tools/rll_ws01_distance_integration_tolerance.py",
+    "sources_ref": "67140f891a7cfabd929f010e0a3940fda50ceaaa",
+    "source_availability_on_rll_lab": "NOT_CLAIMED",
+    "integral": "D_C(z)=(c/H0)*int_0^z [1/E(z')] dz'",
+    "transformed_integral": "D_C(z)=(c/H0)*int_0^ln(1+z) [exp(xi)/E(exp(xi)-1)] dxi",
+    "e_definition": "E(z)=sqrt(cosmology.e2(model,z,parameters))",
+    "models": [
+      "LCDM",
+      "RLL_NULL",
+      "RLL_PROBE"
+    ],
+    "z_values": [
+      0.01,
+      0.1,
+      0.3,
+      0.5,
+      1,
+      1.5,
+      2,
+      3,
+      5,
+      10,
+      1100
+    ],
+    "integration_steps": {
+      "log1p_simpson_coarse": 1024,
+      "log1p_simpson_fine": 4096,
+      "direct_z_simpson": 4096,
+      "log1p_trapezoid_ref": 16384
+    },
+    "crosschecks": [
+      "fine_vs_trapezoid_reference",
+      "fine_vs_direct_z_simpson",
+      "coarse_vs_fine"
+    ],
+    "rtol": 0.000001,
+    "atol_mpc": 0.001,
+    "pass_formula": "abs(candidate-reference) <= atol_mpc + rtol*abs(reference)",
+    "rule": "PASS only when each declared model × redshift × crosscheck is within pre-registered mixed tolerance; FAIL preserved otherwise"
+  },
+  "observed": {
+    "commit_runs_first_page": 22,
+    "success": 17,
+    "failure": 5,
+    "other": 0,
+    "ratio_per_mille": {
+      "success": 772.73,
+      "failure": 227.27,
+      "denominator_scope": "22 first-page commit-associated workflow runs"
+    },
+    "python_tests": {
+      "run_id": 37845204668,
+      "conclusion": "SUCCESS"
+    },
+    "ws01": {
+      "run_id": 37845205220,
+      "job_id": 113544244444,
+      "state": "FAIL_PREREGISTERED_DISTANCE_TOLERANCE",
+      "row_count": 33,
+      "max_relative_fine_vs_direct": 0.00001530850273969348,
+      "exit_code": 2
+    },
+    "gates": [
+      {
+        "name": "Branch Maturity Gate V2",
+        "run_id": 37845205864,
+        "job_id": 113544247812,
+        "conclusion": "FAILURE",
+        "residual": "INVALID_BRANCH_TRANSITION",
+        "type": "TOPOLOGY"
+      },
+      {
+        "name": "RLL Governance Quality Gate",
+        "run_id": 37845205220,
+        "job_id": 113544244444,
+        "conclusion": "FAILURE",
+        "residual": "FAIL_PREREGISTERED_DISTANCE_TOLERANCE",
+        "type": "SOURCE_SIDE_NUMERIC"
+      },
+      {
+        "name": "Six Sigma Real Data Controls",
+        "run_id": 37845204939,
+        "job_id": 113544244136,
+        "conclusion": "FAILURE",
+        "residual": "DOCUMENTATION_INVENTORY_DIFF",
+        "type": "DERIVED_ARTIFACT"
+      },
+      {
+        "name": "GitHub Platform Assurance V2",
+        "run_id": 37845204702,
+        "job_id": 113544528817,
+        "conclusion": "FAILURE",
+        "residual": "PARTIAL_EXTERNAL_SETTINGS_OBSERVED",
+        "type": "PROVIDER_AUTHORITY"
+      },
+      {
+        "name": "Transit Tower Omega",
+        "run_id": 37845204789,
+        "job_id": 113544244161,
+        "conclusion": "FAILURE",
+        "residual": "GOVERNANCE_CONTRACT_TOUCH_REQUIRED",
+        "type": "PROMOTION"
+      }
+    ],
+    "review_threads": {
+      "observed": 1,
+      "unresolved": 1
+    },
+    "rafpolimata_crossrepo": {
+      "repository": "rafaelmeloreisnovo/RafPolimata",
+      "pr": 426,
+      "head_sha": "4cb7c305d26dd0decba244901981c3cf87864f90",
+      "merged": true,
+      "observed_workflow_successes": 5,
+      "physical_android_receipt": "TOKEN_VAZIO"
+    }
+  },
+  "typed_operators": {
+    "Π": "evidence/test family; does not equal a mathematical proof by label",
+    "Δ": "observed state change",
+    "μ": "minimum source-bound evidence unit",
+    "‰": "(numerator / observed denominator) * 1000; NOT_APPLICABLE if missing denominator",
+    "‡": "gate/evidence threshold",
+    "†": "falsifier or explicit blocker",
+    "★": "priority P0/P1/P2; independent of outcome"
+  },
+  "rights": {
+    "root_license_on_rll_lab": "LICENSE.md sha 26c69bb3c850bc2b3063621a5f72a2badc1535c2",
+    "main_pr_license": "LICENSE.md sha 09735ecfbc52903f654b87d260d96f5b7c67c9f1",
+    "branch_license_compatibility": "TOKEN_VAZIO_HUMAN_REVIEW_REQUIRED",
+    "copies_of_external_licensed_content": "NONE",
+    "legal_claim_allowed": false
+  },
+  "evidence_gaps": [
+    "WS01_NUMERICAL_TOLERANCE",
+    "INVALID_BRANCH_TRANSITION",
+    "DOCUMENTATION_INVENTORY_DIFF",
+    "EXTERNAL_ENFORCEMENT_PARTIAL",
+    "TRANSIT_GOVERNANCE_CONTRACT",
+    "REVIEW_THREAD_UNRESOLVED",
+    "ASSET_LICENSE_COMPATIBILITY",
+    "INDEPENDENT_SCIENTIFIC_REPLICATION",
+    "PHYSICAL_EXACT_BYTE_DEVICE_RECEIPT"
+  ],
+  "next": "Reproduce individual failing WS01 row(s) at exact PR head without changing thresholds; independently resolve provider, topology, inventory, review and rights gates.",
+  "rollback": "Remove only additive draft-branch documentation via normal PR/revert; preserve failed historical receipts.",
+  "scientific_publication_authorized": false
+}
