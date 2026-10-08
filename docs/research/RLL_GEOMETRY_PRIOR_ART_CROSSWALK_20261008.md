@@ -29,7 +29,7 @@ The existing `data/governance/rll_publication_boundary_v1.json` must remain effe
 Run stdlib-only:
 ```sh
 python3 tools/validate_geometry_prior_art_crosswalk.py
-python3 -m unittest tests.test_geometry_prior_art_crosswalk
+python3 -m unittest discover -s tests -p test_geometry_prior_art_crosswalk.py
 ```
 
 Expected: chronology/claim-boundary gate passes only for the pinned record; reversed date ordering, unexpected schema, missing SHA or publication promotion fail closed. This check cannot authenticate private source bytes or establish mathematical novelty. A separate private-custody gate must read the raw shard by exact SHA, message id, role and timestamp, and separate independent mathematical review must compare theorems and algorithms.
