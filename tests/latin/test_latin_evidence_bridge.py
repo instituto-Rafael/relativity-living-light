@@ -8,6 +8,11 @@ ROOT=Path(__file__).resolve().parents[2]
 BASE=json.loads((ROOT/"data/governance/latin-evidence-bridge.v1.json").read_text())
 
 class TestLatinEvidenceBoundary(unittest.TestCase):
+    def test_documented_pins_match_current_contract(self):
+        doc = (ROOT / "docs/governance/LATIN_555_EVIDENCE_BRIDGE_V1.md").read_text(encoding="utf-8")
+        self.assertIn(BASE["source_producers"]["graph"]["commit"], doc)
+        self.assertIn(BASE["source_producers"]["governance"]["commit"], doc)
+
     def test_scope(self):
         self.assertEqual(validate(BASE)["state"],"PASS_EVIDENCE_BOUNDARY_STRUCTURE_ONLY")
     def test_science_promotion_denied(self):
