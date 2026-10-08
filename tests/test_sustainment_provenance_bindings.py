@@ -16,14 +16,24 @@ spec.loader.exec_module(mod)
 
 def test_all_declared_provenance_matches_actual_git_blob_bytes():
     report = mod.build_report(ROOT)
-    assert report["state"] == "PASS_EXACT_GIT_BLOB_BINDINGS"
+    assert report["state"] == "PASS_CURRENT_BLOBS_WITH_HISTORICAL_BOUNDARY"
     assert report["claim_allowed"] is False
     assert report["scientific_confirmation"] is False
     assert report["legal_effect_claim"] is False
     assert report["binding_count"] == 8
-    assert report["F_gap"] == []
+    assert len(report["F_gap"]) == 1
+    assert "historic 2026-08-22 LICENSE bytes" in report["F_gap"][0]
     for binding in report["bindings"]:
         assert binding["expected_git_blob_sha1"] == binding["actual_git_blob_sha1"]
+    historical = next(
+        item for item in report["bindings"]
+        if item["binding_id"] == "ROOT-LICENSE-OBSERVED-20260822"
+    )
+    assert historical["binding_class"] == "HISTORICAL_EVENT_CURRENT_READBACK"
+    assert historical["historical_git_blob_sha1"] == "26c69bb3c850bc2b3063621a5f72a2badc1535c2"
+    assert historical["actual_git_blob_sha1"] == "09735ecfbc52903f654b87d260d96f5b7c67c9f1"
+    assert historical["historical_bytes_verified"] == "TOKEN_VAZIO"
+    assert historical["successor_binding_id"] == "SRC-LICENSE"
 
 
 def test_git_blob_hash_detects_content_mutation(tmp_path):
