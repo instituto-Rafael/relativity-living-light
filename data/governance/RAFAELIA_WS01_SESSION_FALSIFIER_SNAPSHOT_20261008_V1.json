@@ -165,5 +165,75 @@
   ],
   "next": "Reproduce individual failing WS01 row(s) at exact PR head without changing thresholds; independently resolve provider, topology, inventory, review and rights gates.",
   "rollback": "Remove only additive draft-branch documentation via normal PR/revert; preserve failed historical receipts.",
-  "scientific_publication_authorized": false
+  "scientific_publication_authorized": false,
+  "evidence_successor_omega_ws01_artifact_20261008": {
+    "kind": "ORIGINAL_CI_ARTIFACT_READBACK_NOT_INDEPENDENT_REPLICATION",
+    "source_repository": "instituto-Rafael/relativity-living-light",
+    "source_pr": 1076,
+    "source_head": "67140f891a7cfabd929f010e0a3940fda50ceaaa",
+    "run_id": 37845205220,
+    "artifact_id": 11579072886,
+    "artifact_name": "rll-governance-receipt-37845205220",
+    "zip_sha256": "ff800e9f0b245f0f38640878b977d07db23beb7d4327d5dd9e931fb53b4dd3b2",
+    "github_artifact_digest": "sha256:ff800e9f0b245f0f38640878b977d07db23beb7d4327d5dd9e931fb53b4dd3b2",
+    "inner_path": "science/background/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.json",
+    "inner_sha256": "c14a112bf0690803d5125212f061ea1e6fe874bd65a37ad9f07c1de616c613c9",
+    "metadata_integrity": "ZIP_DIGEST_MATCHES_GITHUB_ARTIFACT_METADATA",
+    "observed_model_z_rows": 33,
+    "failed_model_z_rows": 3,
+    "other_model_z_rows": 30,
+    "failed_comparison": "fine_vs_direct_z_simpson",
+    "other_comparisons_in_failed_rows": [
+      "coarse_vs_fine",
+      "fine_vs_trapezoid_reference"
+    ],
+    "other_comparisons_state": "PASS",
+    "failing_z": 1100,
+    "failed_rows": [
+      {
+        "model": "LCDM",
+        "z": 1100,
+        "fail": "fine_vs_direct_z_simpson",
+        "absolute_difference_mpc": 0.212210825486,
+        "allowable_mpc": 0.014866186185,
+        "excess_factor": 14.274732
+      },
+      {
+        "model": "RLL_NULL",
+        "z": 1100,
+        "fail": "fine_vs_direct_z_simpson",
+        "absolute_difference_mpc": 0.212210825486,
+        "allowable_mpc": 0.014866186185,
+        "excess_factor": 14.274732
+      },
+      {
+        "model": "RLL_PROBE",
+        "z": 1100,
+        "fail": "fine_vs_direct_z_simpson",
+        "absolute_difference_mpc": 0.212033228339,
+        "allowable_mpc": 0.014850683633,
+        "excess_factor": 14.277675
+      }
+    ],
+    "frozen_tolerance": {
+      "rtol": 0.000001,
+      "atol_mpc": 0.001,
+      "formula": "abs(candidate-reference) <= atol_mpc + rtol*abs(reference)"
+    },
+    "interpretation": "Numerical comparison at z=1100 fails for LCDM, RLL_NULL and RLL_PROBE; not RLL-specific empirical refutation and no claim of fraud or fabrication.",
+    "suspected_cause": "DIRECT_Z_STEP_RESOLUTION_HYPOTHESIS_ONLY",
+    "why_suspected": "The discrepancy appears only in direct-z versus log1p-Simpson at z=1100, while log1p-Simpson fine/coarse and trapezoid crosschecks pass; independent convergence study NOT_RUN.",
+    "falsifier_for_cause": "Reproduce method-by-method convergence under fixed physics/contract with finer direct-z step schedules; reject suspected direct-z discretization cause if divergence remains unchanged under convergence.",
+    "missing_evidence": [
+      "INDEPENDENT_EXECUTION",
+      "ROWWISE_GENERATOR_REPRODUCTION",
+      "STEP_CONVERGENCE_EXPERIMENT",
+      "MODEL_PHYSICS_VALIDATION"
+    ],
+    "no_threshold_mutation": true,
+    "scientific_claim_allowed": false,
+    "claim_allowed": false,
+    "rollback": "Revert only this append-only successor field; original #1076 scientific receipt must remain immutable.",
+    "F_next": "Independently reproduce original receipt in isolated exact-head checkout; then use a held-out direct-z step-convergence matrix before any code change."
+  }
 }
