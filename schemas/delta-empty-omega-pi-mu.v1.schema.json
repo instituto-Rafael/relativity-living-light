@@ -51,7 +51,7 @@
       "type": "string"
     },
     "claim_allowed": {
-      "type": "boolean"
+      "const": false
     },
     "token_vazio": {
       "type": "object",
@@ -154,5 +154,5 @@
       }
     }
   },
-  "description": "Append-only delta envelope for empty omega/pi/mu projection events; keeps source references, TOKEN_VAZIO state and claim boundaries explicit."
+  "description": "Structural contract for append-only empty omega/pi/mu projection events. This schema validates metadata shape and explicit TOKEN_VAZIO and provenance fields; structural contract acceptance is not scientific, physical or legal evidence and does not authorize claims."
 }
