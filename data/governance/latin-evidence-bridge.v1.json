@@ -5,7 +5,7 @@
   "source_producers": {
     "graph": {
       "repo": "rafaelmeloreisnovo/RafPolimata",
-      "commit": "7ba0e2dfee4491ef727a362d2db4052974e9ffa4",
+      "commit": "073822fa5d2fc418f4c8798e5fe13d2b0cfba66d",
       "path": "research/LATIN/seed.v1.json",
       "workflow": "555_20_latin_graph.yml"
     },
