@@ -16,28 +16,65 @@
     "projections"
   ],
   "properties": {
-    "schema_version": {"const": "delta-empty-omega-pi-mu/v1"},
-    "omega_id": {"type": "string", "minLength": 1},
-    "generation": {"type": "integer", "minimum": 0},
-    "mu_id": {"type": "string", "minLength": 1},
-    "source_ref": {"type": "string", "minLength": 1},
+    "schema_version": {
+      "const": "delta-empty-omega-pi-mu/v1"
+    },
+    "omega_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mu_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
     "source_hash_sha256": {
       "anyOf": [
-        {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        {"type": "string", "const": "TOKEN_VAZIO"}
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "string",
+          "const": "TOKEN_VAZIO"
+        }
       ]
     },
-    "evidence_ref": {"type": "string"},
-    "claim_allowed": {"type": "boolean"},
+    "evidence_ref": {
+      "type": "string"
+    },
+    "claim_allowed": {
+      "type": "boolean"
+    },
     "token_vazio": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["open", "reason", "expected_ref", "closure_route"],
+      "required": [
+        "open",
+        "reason",
+        "expected_ref",
+        "closure_route"
+      ],
       "properties": {
-        "open": {"type": "boolean"},
-        "reason": {"type": "string"},
-        "expected_ref": {"type": "string"},
-        "closure_route": {"type": "string"}
+        "open": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "expected_ref": {
+          "type": "string"
+        },
+        "closure_route": {
+          "type": "string"
+        }
       }
     },
     "deltas": {
@@ -45,9 +82,17 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["delta_id", "kind", "mu_id", "source_ref"],
+        "required": [
+          "delta_id",
+          "kind",
+          "mu_id",
+          "source_ref"
+        ],
         "properties": {
-          "delta_id": {"type": "string", "minLength": 1},
+          "delta_id": {
+            "type": "string",
+            "minLength": 1
+          },
           "kind": {
             "enum": [
               "SOURCE_DISCOVERED",
@@ -60,8 +105,14 @@
               "RECEIPT"
             ]
           },
-          "mu_id": {"type": "string", "minLength": 1},
-          "source_ref": {"type": "string", "minLength": 1}
+          "mu_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
@@ -70,16 +121,38 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["projection_id", "from_domain", "to_domain", "source_ref"],
+        "required": [
+          "projection_id",
+          "from_domain",
+          "to_domain",
+          "source_ref"
+        ],
         "properties": {
-          "projection_id": {"type": "string", "minLength": 1},
-          "from_domain": {"type": "string", "minLength": 1},
-          "to_domain": {"type": "string", "minLength": 1},
-          "source_ref": {"type": "string", "minLength": 1},
-          "evidence_ref": {"type": "string"},
-          "claim_allowed": {"type": "boolean"}
+          "projection_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from_domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to_domain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_ref": {
+            "type": "string"
+          },
+          "claim_allowed": {
+            "type": "boolean"
+          }
         }
       }
     }
-  }
+  },
+  "description": "Append-only delta envelope for empty omega/pi/mu projection events; keeps source references, TOKEN_VAZIO state and claim boundaries explicit."
 }
