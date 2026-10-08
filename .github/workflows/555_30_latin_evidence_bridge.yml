@@ -1,0 +1,33 @@
+name: 555 30 LATIN scientific evidence boundary (no RLL engine)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/555_30_latin_evidence_bridge.yml'
+      - 'data/governance/latin-evidence-bridge.v1.json'
+      - 'scripts/latin/**'
+      - 'tests/latin/**'
+      - 'docs/governance/LATIN_555_EVIDENCE_BRIDGE_V1.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Fail closed on evidence or credential escalation
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests/latin -p 'test_*.py' -v
+          python3 scripts/latin/validate_latin_evidence_bridge.py
+      - name: Upload scoped evidence-boundary receipt
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: rll-latin-boundary-${{ github.run_id }}-${{ github.run_attempt }}
+          path: results/latin/latin-bridge-receipt.v1.json
+          retention-days: 14
+          if-no-files-found: error
