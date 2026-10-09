@@ -42,15 +42,15 @@ public final class RealDataLabView {
         p.setPadding(16,12,16,16);p.setBackgroundColor(0xff1f2937);
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
         lp.setMargins(0,0,0,16);root.addView(p,lp);
-        TextView title=new TextView(host);title.setText("07  Dados reais • BAO DR2 • pacote de provas");
+        TextView title=new TextView(host);title.setText("00  Ω • ZIP canônico completo — fazer tudo");
         title.setTextSize(19);title.setTextColor(0xfff9fafb);p.addView(title);
         TextView detail=new TextView(host);
-        detail.setText("Um toque: baixar 13 medidas DESI DR2 e matriz 13×13, calcular 4 modelos, sensibilidade de parâmetros, recibos de instalação e abrir salvamento de ZIP.\n"
-            +"O Android solicitará onde salvar. Sem dados pessoais enviados. Nenhum parâmetro é ajustado para forçar um resultado.");
+        detail.setText("Um toque executa TODOS os diagnósticos JNI, as fórmulas de 4 modelos, 11 pontos por modelo, DESI DR2, covariância 13×13, parâmetros, geometria do toro, gates e receipts.\n"
+            +"Mesmo sem rede, o ZIP guarda os testes locais e os TOKEN_VAZIO. O Android solicitará apenas onde salvar. Nada é enviado pelo app além do download solicitado.");
         detail.setTextColor(0xffd1d5db);detail.setTextSize(14);p.addView(detail);
-        Button run=new Button(host);run.setText("Baixar dados reais + calcular + gerar ZIP");run.setAllCaps(false);p.addView(run);
+        Button run=new Button(host);run.setText("GERAR ZIP CANÔNICO Ω — FAZER TUDO");run.setAllCaps(false);p.addView(run);
         status=new TextView(host);status.setTextColor(0xffd1d5db);
-        status.setText("Nenhum download efetuado. Gate de ciência: não validado.");p.addView(status);
+        status.setText("Pronto para gerar uma única evidência canônica; validação física independente não atestada.");p.addView(status);
         run.setOnClickListener(v->runOnce());
     }
     private void state(String s){host.runOnUiThread(()->status.setText(s));}
@@ -79,6 +79,8 @@ public final class RealDataLabView {
     private String installedReceipt() {
         StringBuilder s=new StringBuilder();
         s.append("source=APP_OWN_PACKAGE_MANAGER_NOT_INDEPENDENT_DEVICE_ATTESTATION\n");
+        s.append("source_git_head_build_label=").append(BuildConfig.RLL_GITHUB_HEAD).append("\n");
+        s.append("provider_ci_run_id_build_label=").append(BuildConfig.RLL_GITHUB_RUN_ID).append("\n");
         s.append("sdk=").append(Build.VERSION.SDK_INT).append("\n");
         s.append("device_abi=").append(Build.SUPPORTED_ABIS.length==0?"TOKEN_VAZIO":Build.SUPPORTED_ABIS[0]).append("\n");
         s.append("manufacturer=").append(Build.MANUFACTURER).append("\nmodel=").append(Build.MODEL).append("\n");
@@ -119,102 +121,109 @@ public final class RealDataLabView {
         zip.putNextEntry(entry);zip.write(data);zip.closeEntry();
     }
     private static byte[] utf(String s){return s.getBytes(StandardCharsets.UTF_8);}
+    private String nativeReceipt(){
+        StringBuilder s=new StringBuilder("RLL_NATIVE_ANDROID_JNI_SELF_TEST\n"
+          +"source=APP_RUNTIME_LOCAL_JNI_NOT_INDEPENDENT_DEVICE_ATTESTATION\n");
+        try{
+            int arch=KernelBridge.archDetect();
+            int[][] vectors={{0,0},{7,11},{1,1},{12,21}};
+            int pass=0;
+            for(int[] v:vectors){
+                int actual=KernelBridge.kernelScore(v[0],v[1]);
+                int expected=((v[0]*31)^(v[1]*17))+arch;
+                boolean same=expected==actual && (arch==32||arch==64);
+                if(same)pass++;
+                s.append("vector=").append(v[0]).append(',').append(v[1])
+                 .append(";C=").append(actual).append(";Java=").append(expected)
+                 .append(";pass=").append(same).append('\n');
+            }
+            s.append("arch=").append(arch).append("\nandroid_abi=")
+             .append(Build.SUPPORTED_ABIS.length==0?"TOKEN_VAZIO":Build.SUPPORTED_ABIS[0])
+             .append("\ngate=").append(pass==4?"PASS_SCOPED":"FAIL_SCOPED")
+             .append("\npass_count=").append(pass).append("/4\n");
+        }catch(LinkageError|RuntimeException ex){
+            s.append("gate=FAIL_JNI\nerror_class=").append(ex.getClass().getSimpleName()).append('\n');
+        }
+        s.append("scientific_validation=TOKEN_VAZIO_NOT_RUN\n");
+        return s.toString();
+    }
+    private String releaseReceipt(){
+        StringBuilder out=new StringBuilder("source=OFFICIAL_GITHUB_RELEASE_API\n"
+                 +"release_asset_expected=rll-android-release.apk\n");
+        try{
+            android.content.pm.PackageInfo p=host.getPackageManager()
+                .getPackageInfo(host.getPackageName(),0);
+            int installed=Build.VERSION.SDK_INT>=28?(int)p.getLongVersionCode():p.versionCode;
+            ReleaseGateView.Candidate candidate=ReleaseGateView.select(ReleaseGateView.fetch(),installed);
+            out.append("installed_version_code=").append(installed).append('\n');
+            if(candidate==null){
+                out.append("gate=CHECKED_NO_NEW_ANDROID_RELEASE\n")
+                   .append("new_release=NONE_MATCHING_SIGNED_DIGEST_CONTRACT\n");
+            }else{
+                out.append("gate=CHECKED_NEW_ANDROID_RELEASE_METADATA\n")
+                    .append("tag=").append(candidate.tag)
+                    .append("\nversion_code=").append(candidate.version)
+                    .append("\npublic_digest=").append(candidate.sha).append('\n')
+                    .append("url=").append(candidate.url).append('\n')
+                    .append("signer_compatibility=TOKEN_VAZIO_NOT_ATTESTED\n");
+            }
+        }catch(Exception ex){
+            out.append("gate=TOKEN_VAZIO_PROVIDER_RELEASE_DISCOVERY\n")
+               .append("failure_type=").append(ex.getClass().getSimpleName()).append('\n');
+        }
+        out.append("auto_install=false\n");
+        return out.toString();
+    }
     private void runOnce(){
         if(running)return;
-        running=true;state("Baixando dados reais DESI DR2 de revisão Git imutável...");
+        running=true;
+        stagedZip=null;
+        state("Ω • Iniciando todos os gates locais, JNI, instalação, fórmulas, dados e estabilidade...");
         new Thread(()->{
             try{
-                byte[] mean=download(RealBaoEngine.MEAN),cov=download(RealBaoEngine.COV);
-                RealBaoEngine.Data d=RealBaoEngine.parse(mean,cov);
-                state("Fonte verificada. Calculando χ² com covariância completa (4 modelos) ...");
-                StringBuilder summary=new StringBuilder("model,chi2_cov_13,dchi2_dOmega_m_abs,dchi2_dH0_abs,dchi2_dzt_abs,torus_loop_close,claim\n");
-                StringBuilder residual=new StringBuilder("model,index,z,observable,observed,predicted,model_minus_observed\n");
-                int ok=0;
-                for(FormulaEngine.Model m:FormulaEngine.Model.values()){
-                    RealBaoEngine.Score score=RealBaoEngine.score(d,m);
-                    summary.append(score.csv()).append("\n");
-                    for(int i=0;i<RealBaoEngine.N;i++){
-                        RealBaoEngine.Datum p=d.points.get(i);
-                        residual.append(String.format(Locale.US,"%s,%d,%.8g,%s,%.12g,%.12g,%.12g\n",
-                            m.name(),i,p.z,p.kind,p.observed,score.prediction[i],score.residual[i]));
-                    }
-                    ok++;
-                }
+                // These stages run regardless of the network state: never lose local receipts.
                 String install=installedReceipt();
-                StringBuilder meta=new StringBuilder();
-                meta.append("schema=rll.android.real-bao-archive.v1\n");
-                meta.append("provenance=GITHUB_PINNED_PUBLIC_DESI_DR2_MEAN_COV\n");
-                meta.append("source=").append(RealBaoEngine.SOURCE).append("\n");
-                meta.append("mean_source_url=").append(RealBaoEngine.RAW_BASE).append(RealBaoEngine.MEAN).append("\n");
-                meta.append("cov_source_url=").append(RealBaoEngine.RAW_BASE).append(RealBaoEngine.COV).append("\n");
-                meta.append("mean_sha256=").append(d.meanSha256).append("\ncov_sha256=").append(d.covSha256).append("\n");
-                meta.append("mean_git_blob_sha1=").append(RealBaoEngine.MEAN_BLOB).append("\n");
-                meta.append("cov_git_blob_sha1=").append(RealBaoEngine.COV_BLOB).append("\n");
-                meta.append("data_points=13\ncovariance_shape=13x13\n");
-                meta.append("models_completed=").append(ok).append("\n");
-                meta.append("objective=(prediction-observation)^T C^-1 (prediction-observation)\n");
-                meta.append("parameters=FIXED_EXPLICIT_PRESET_NOT_FITTED\n");
-                meta.append("lambda_closure=E2_Z0_EQUALS_ONE_BY_MODEL\n");
-                meta.append("rd=EMPIRICAL_PROXY_NOT_BOLTZMANN_DERIVED\n");
-                meta.append("omega_m_step=0.005\nH0_step=0.5\nRLL_zt_step=0.05\n");
-                meta.append("Poincare_recurrence=TOKEN_VAZIO_NOT_APPLICABLE_NO_DYNAMICAL_TRAJECTORY\n");
-                meta.append("RMRCTI_DeltaP=TOKEN_VAZIO_NO_STABLE_ANY_PEAK_TRACE\n");
-                meta.append("toroid_R=2.0\ntoroid_r=0.7\ntoroid_check=PARAMETRIC_GEOMETRIC_CLOSURE_ONLY\n");
-                meta.append("data_redistribution_license=TOKEN_VAZIO_VERIFY_RIGHTS_BEFORE_REPUBLISH\n");
-                meta.append("claim_allowed=false\nindependent_scientific_validation=TOKEN_VAZIO_NOT_RUN\n");
-                StringBuilder readme=new StringBuilder();
-                readme.append("RLL REAL DESI DR2 BAO SOURCE-FIRST ARCHIVE\n\n");
-                readme.append("Dataset: 13 correlated BAO data points and full 13x13 covariance.\n");
-                readme.append("Source: CobayaSampler/bao_data pinned git commit ").append(RealBaoEngine.DATA_COMMIT).append("\n");
-                readme.append("The data source is cited; redistribution rights must be reviewed before publication.\n");
-                readme.append("CSV: measured vs predicted and covariance chi2 for four FIXED parameter choices.\n");
-                readme.append("Sensitivity: numeric finite differences, not model calibration or an optimizer.\n");
-                readme.append("Toroidal closure is geometry of parameterization only; no Poincare recurrence or CTI DeltaP is inferred from cosmology.\n");
-                readme.append("Physical install is self-reported by app PackageManager; not hardware-attested.\n");
-                readme.append("Full physical model comparison requires Boltzmann sound horizon, official priors, likelihood + validation.\n");
-                readme.append("ZIP is standard Android/Java, not a RAR archive. Export requests system document approval.\n");
-                Map<String,byte[]> entries=new LinkedHashMap<>();
-                entries.put("README.txt",utf(readme.toString()));
-                entries.put("raw/"+RealBaoEngine.MEAN,mean);
-                entries.put("raw/"+RealBaoEngine.COV,cov);
-                entries.put("results/model_scores.csv",utf(summary.toString()));
-                entries.put("results/observed_vs_predicted.csv",utf(residual.toString()));
-                entries.put("receipts/source_and_scope.txt",utf(meta.toString()));
-                entries.put("receipts/android_install_self_report.txt",utf(install));
-                entries.put("references/primary_sources.txt",utf(
-                   "DESI DR2 primary: https://arxiv.org/abs/2503.14738\n"+
-                   "Dynamical DE DR2 analysis: https://arxiv.org/abs/2504.06118\n"+
-                   "CMBComp late-universe likelihood benchmark: https://arxiv.org/abs/2606.18455\n"+
-                   "RMRCTI stable_any DeltaP source: llamaRafaelia/rmrCti/RMRCTI_DELTA_P_STABILITY_CONTRACT.md\n"+
-                   "No external paper is evidence of RLL physical validation.\n"));
-                StringBuilder hashes=new StringBuilder("sha256  path\n");
-                for(Map.Entry<String,byte[]> entry:entries.entrySet())
-                    hashes.append(RealBaoEngine.sha256(entry.getValue())).append("  ").append(entry.getKey()).append("\n");
-                entries.put("MANIFEST_SHA256.txt",utf(hashes.toString()));
-                File out=new File(host.getCacheDir(),"rll_real_desi_dr2_evidence.zip");
-                try(ZipOutputStream zip=new ZipOutputStream(new FileOutputStream(out))){
-                    for(Map.Entry<String,byte[]> entry:entries.entrySet())put(zip,entry.getKey(),entry.getValue());
+                String jni=nativeReceipt();
+                byte[] mean=null,cov=null;
+                String downloadStatus="PASS_SOURCE_BYTES_RETRIEVED";
+                try{
+                    state("Ω • Download DESI DR2: fonte pública e covariância fixadas...");
+                    mean=download(RealBaoEngine.MEAN);
+                    cov=download(RealBaoEngine.COV);
+                }catch(Exception failure){
+                    mean=null;cov=null;
+                    downloadStatus="TOKEN_VAZIO_DOWNLOAD_"+failure.getClass().getSimpleName();
+                }
+                state("Ω • Executando as quatro famílias e todos os pontos, cálculos e gates...");
+                state("Ω • Conferindo metadados da revisão Android no GitHub...");
+                String release=releaseReceipt();
+                CanonicalOmegaBundle.Result result=CanonicalOmegaBundle.build(
+                    mean,cov,downloadStatus,jni,install,release);
+                File out=new File(host.getCacheDir(),"rll_canonical_omega_evidence.zip");
+                try(FileOutputStream stream=new FileOutputStream(out)){
+                    stream.write(result.zip);
+                    stream.getFD().sync();
                 }
                 stagedZip=out;
-                try(InputStream in=new FileInputStream(out)){
-                    MessageDigest dig=MessageDigest.getInstance("SHA-256");
-                    byte[] bytes=new byte[4096];int n;while((n=in.read(bytes))!=-1)dig.update(bytes,0,n);
-                    zipDigest=RealBaoEngine.hex(dig.digest());
-                }
-                state("SUCESSO ESCOPO COMPUTACIONAL • 13 pontos BAO reais, 13×13 covariância, 4 modelos.\n"
-                     +"ZIP SHA-256: "+zipDigest+"\nAguardando escolha de local de salvamento.");
+                zipDigest=result.sha256;
+                state("ZIP Ω pronto ("+result.files+" arquivos) • DESI: "+result.dataState
+                    +"\nSHA-256: "+zipDigest+"\nAbrindo salvamento do ZIP único...");
                 host.runOnUiThread(()->{
                     Intent save=new Intent(Intent.ACTION_CREATE_DOCUMENT);
                     save.addCategory(Intent.CATEGORY_OPENABLE);
                     save.setType("application/zip");
-                    save.putExtra(Intent.EXTRA_TITLE,"RLL_DESI_DR2_EVIDENCE.zip");
-                    host.startActivityForResult(save,SAVE_REQUEST);
+                    save.putExtra(Intent.EXTRA_TITLE,"RLL_CANONICAL_OMEGA_ALL_EVIDENCE.zip");
+                    try{host.startActivityForResult(save,SAVE_REQUEST);}
+                    catch(RuntimeException ex){
+                        state("TOKEN_VAZIO_SAVE_PICKER_UNAVAILABLE: "+ex.getClass().getSimpleName());
+                    }
                 });
             }catch(Exception ex){
-                stagedZip=null;state("FALHA TIPADA: "+ex.getClass().getSimpleName()+": "+ex.getMessage()
-                    +"\nNenhum χ² publicado sem fonte, integridade e covariância válidas.");
+                stagedZip=null;
+                state("FALHA_CANONICAL_ZIP: "+ex.getClass().getSimpleName()
+                     +" (nenhum PASS inventado).");
             }finally{running=false;}
-        },"rll-real-desi-zip").start();
+        },"rll-canonical-omega-one-tap").start();
     }
     public void writeTo(Uri uri){
         if(uri==null||stagedZip==null){state("TOKEN_VAZIO_SAVE_CANCELLED");return;}

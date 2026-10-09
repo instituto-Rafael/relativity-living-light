@@ -68,6 +68,9 @@ jobs:
       - name: Full covariance DESI DR2 numerical self-test (hosted Java)
         run: sh app/verify_real_bao_engine.sh
 
+      - name: Canonical Omega 1-click ZIP integrity adversarial test
+        run: sh app/verify_canonical_omega.sh
+
       - name: Generate Gradle Wrapper JAR
         run: scripts/bootstrap-gradle-wrapper.sh
 

@@ -112,6 +112,8 @@ public final class MainActivity extends Activity {
         root.setPadding(dp(16), dp(20), dp(16), dp(24));
         scroll.addView(root);
 
+        realDataLab = new RealDataLabView(this,root);
+
         label(root, "RLL • Diagnóstico nativo", 25, TEXT, true);
         label(root, "Java ↔ JNI ↔ núcleo C  |  ARM32 / ARM64", 14, MUTED, false);
 
@@ -139,7 +141,6 @@ public final class MainActivity extends Activity {
 
         new FormulaLabView(this).attach(root);
         new ReleaseGateView(this).attach(root);
-        realDataLab = new RealDataLabView(this,root);
         setContentView(scroll);
         runDiagnostics();
     }
