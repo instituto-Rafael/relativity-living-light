@@ -38,6 +38,7 @@ public final class OmegaScientificChecks {
             double e0=FormulaEngine.e2(0,m,p);
             c.measure(m+"_E2_AT_Z0",Double.isFinite(e0)&&Math.abs(e0-1)<1e-12,
                 Math.abs(e0-1),1e-12,"ALGEBRAIC_NORMALIZATION_ONLY");
+            p.z=0.0; // H(z=0) must equal the input H0 after E²(0) closure.
             FormulaEngine.Result r=FormulaEngine.compute(p,m);
             c.measure(m+"_H0_AT_Z0",Math.abs(entry(r,"COS-HZ")-p.h0)<1e-10,
                 Math.abs(entry(r,"COS-HZ")-p.h0),1e-10,"BACKGROUND_NUMERIC");
