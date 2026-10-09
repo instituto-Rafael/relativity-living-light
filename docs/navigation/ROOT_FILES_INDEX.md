@@ -15,7 +15,7 @@
 - `ARTIFACT_REVIEW`: binário/bundle; exigir provenance/hash/retention antes de publicação.
 - `MANUAL_REVIEW`: sem decisão automática.
 
-**Total de arquivos na raiz nesta varredura:** 60  
+**Total de arquivos na raiz nesta varredura:** 61  
 **Total de diretórios na raiz:** 47
 
 ## Arquivos
@@ -25,6 +25,7 @@
 | [`.gitignore`](../../.gitignore) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`ARCHITECTURE_CLAIM_GATED.md`](../../ARCHITECTURE_CLAIM_GATED.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
 | [`ARCHITECTURE.md`](../../ARCHITECTURE.md) | `ENTRY_GOVERNANCE` | `KEEP_ROOT` |
+| [`ATLAS_CANONICO.md`](../../ATLAS_CANONICO.md) | `ENTRY_ATLAS` | `KEEP_ROOT` |
 | [`build.gradle`](../../build.gradle) | `BUILD_TOOLING` | `KEEP_ROOT` |
 | [`CAMINHOS_VALIDACAO_NOVOS.yml`](../../CAMINHOS_VALIDACAO_NOVOS.yml) | `REGISTRY_CONFIG` | `ROUTE_REGISTRY` |
 | [`Códex1.md`](../../C%C3%B3dex1.md) | `LEGACY_STUB` | `MOVED → docs/legacy/root/prompts/Códex1.md` |

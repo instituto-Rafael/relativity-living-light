@@ -24,9 +24,11 @@
     {
       "artifact_id": "SRC-LICENSE",
       "path": "LICENSE.md",
-      "git_blob_sha1": "26c69bb3c850bc2b3063621a5f72a2badc1535c2",
-      "role": "AUTHORIAL_LICENSE_INTENT",
-      "epistemic_boundary": "authorial declaration; legal enforceability is not inferred"
+      "git_blob_sha1": "09735ecfbc52903f654b87d260d96f5b7c67c9f1",
+      "role": "CURRENT_LICENSE_NOTICE_WITH_HISTORICAL_AUTHORIAL_INTENT",
+      "epistemic_boundary": "current LICENSE.md notice is bound for exact tree validation; previous RAFCODE authorial declaration remains preserved as historical/non-normative provenance and legal enforceability is not inferred",
+      "previous_git_blob_sha1": "26c69bb3c850bc2b3063621a5f72a2badc1535c2",
+      "historical_reference": "docs/governance/RLL_LICENSE_AUTHORITY_RECONCILIATION_20260925.md"
     },
     {
       "artifact_id": "SRC-ETHICS-DOMAIN-VI",
@@ -80,35 +82,125 @@
     "edge_rule": "every relation names source, target, relation, provenance and claim boundary",
     "closure_rule": "historical nodes/edges/gaps are append-only; closure is a new receipt event rather than deletion",
     "nodes": [
-      {"id": "NODE-LICENSE-INTENT", "type": "AUTHORIAL_INTENT"},
-      {"id": "NODE-LICENSE-INTEROP", "type": "RIGHTS_ROUTER"},
-      {"id": "NODE-ETHICS-SYMBOLIC", "type": "PARABOLA_MODEL"},
-      {"id": "NODE-ETHICS-OPERATIONAL", "type": "GOVERNANCE_CONTROL"},
-      {"id": "NODE-EVIDENCE", "type": "EVIDENCE_GATE"},
-      {"id": "NODE-PROVENANCE", "type": "CHAIN_OF_CUSTODY"},
-      {"id": "NODE-TOKEN-VAZIO", "type": "UNCERTAINTY_STATE"},
-      {"id": "NODE-RECEIPT", "type": "CLOSURE_EVIDENCE"},
-      {"id": "NODE-PARABLE-OMEGA-N", "type": "INTERNAL_REFERENCE"}
+      {
+        "id": "NODE-LICENSE-INTENT",
+        "type": "AUTHORIAL_INTENT"
+      },
+      {
+        "id": "NODE-LICENSE-INTEROP",
+        "type": "RIGHTS_ROUTER"
+      },
+      {
+        "id": "NODE-ETHICS-SYMBOLIC",
+        "type": "PARABOLA_MODEL"
+      },
+      {
+        "id": "NODE-ETHICS-OPERATIONAL",
+        "type": "GOVERNANCE_CONTROL"
+      },
+      {
+        "id": "NODE-EVIDENCE",
+        "type": "EVIDENCE_GATE"
+      },
+      {
+        "id": "NODE-PROVENANCE",
+        "type": "CHAIN_OF_CUSTODY"
+      },
+      {
+        "id": "NODE-TOKEN-VAZIO",
+        "type": "UNCERTAINTY_STATE"
+      },
+      {
+        "id": "NODE-RECEIPT",
+        "type": "CLOSURE_EVIDENCE"
+      },
+      {
+        "id": "NODE-PARABLE-OMEGA-N",
+        "type": "INTERNAL_REFERENCE"
+      }
     ],
     "edges": [
-      {"id": "EDGE-LICENSE-ROUTE", "source": "NODE-LICENSE-INTENT", "target": "NODE-LICENSE-INTEROP", "relation": "ROUTED_BY", "provenance": "SRC-LICENSE+SRC-OP-CHARTER", "claim_boundary": "NO_LEGAL_EFFECT_INFERRED"},
-      {"id": "EDGE-ETHICS-ROUTE", "source": "NODE-ETHICS-SYMBOLIC", "target": "NODE-ETHICS-OPERATIONAL", "relation": "TRANSLATED_TO_CONTROLS", "provenance": "SRC-ETHICS-DOMAIN-VI+SRC-GOV-PROFILE", "claim_boundary": "METAPHOR_IS_NOT_EVIDENCE"},
-      {"id": "EDGE-OP-EVIDENCE", "source": "NODE-ETHICS-OPERATIONAL", "target": "NODE-EVIDENCE", "relation": "REQUIRES", "provenance": "SRC-OP-CHARTER", "claim_boundary": "CI_PASS_IS_NOT_SCIENTIFIC_VALIDATION"},
-      {"id": "EDGE-GAP-PROVENANCE", "source": "NODE-TOKEN-VAZIO", "target": "NODE-PROVENANCE", "relation": "MUST_RECORD", "provenance": "SRC-GOV-PROFILE", "claim_boundary": "UNKNOWN_IS_NOT_ZERO"},
-      {"id": "EDGE-GAP-RECEIPT", "source": "NODE-TOKEN-VAZIO", "target": "NODE-RECEIPT", "relation": "CLOSES_ONLY_WITH", "provenance": "coherence_operational_excellence_providence_contract", "claim_boundary": "NO_SILENT_CLOSURE"},
-      {"id": "EDGE-PARABLE-ROUTE", "source": "NODE-PARABLE-OMEGA-N", "target": "NODE-ETHICS-OPERATIONAL", "relation": "TEACHES_ROUTING", "provenance": "docs/governance/RAFAELIA_OPERATIONAL_PARABLES_V1.md", "claim_boundary": "PARABOLA_NOT_RUNTIME_PROOF"}
+      {
+        "id": "EDGE-LICENSE-ROUTE",
+        "source": "NODE-LICENSE-INTENT",
+        "target": "NODE-LICENSE-INTEROP",
+        "relation": "ROUTED_BY",
+        "provenance": "SRC-LICENSE+SRC-OP-CHARTER",
+        "claim_boundary": "NO_LEGAL_EFFECT_INFERRED"
+      },
+      {
+        "id": "EDGE-ETHICS-ROUTE",
+        "source": "NODE-ETHICS-SYMBOLIC",
+        "target": "NODE-ETHICS-OPERATIONAL",
+        "relation": "TRANSLATED_TO_CONTROLS",
+        "provenance": "SRC-ETHICS-DOMAIN-VI+SRC-GOV-PROFILE",
+        "claim_boundary": "METAPHOR_IS_NOT_EVIDENCE"
+      },
+      {
+        "id": "EDGE-OP-EVIDENCE",
+        "source": "NODE-ETHICS-OPERATIONAL",
+        "target": "NODE-EVIDENCE",
+        "relation": "REQUIRES",
+        "provenance": "SRC-OP-CHARTER",
+        "claim_boundary": "CI_PASS_IS_NOT_SCIENTIFIC_VALIDATION"
+      },
+      {
+        "id": "EDGE-GAP-PROVENANCE",
+        "source": "NODE-TOKEN-VAZIO",
+        "target": "NODE-PROVENANCE",
+        "relation": "MUST_RECORD",
+        "provenance": "SRC-GOV-PROFILE",
+        "claim_boundary": "UNKNOWN_IS_NOT_ZERO"
+      },
+      {
+        "id": "EDGE-GAP-RECEIPT",
+        "source": "NODE-TOKEN-VAZIO",
+        "target": "NODE-RECEIPT",
+        "relation": "CLOSES_ONLY_WITH",
+        "provenance": "coherence_operational_excellence_providence_contract",
+        "claim_boundary": "NO_SILENT_CLOSURE"
+      },
+      {
+        "id": "EDGE-PARABLE-ROUTE",
+        "source": "NODE-PARABLE-OMEGA-N",
+        "target": "NODE-ETHICS-OPERATIONAL",
+        "relation": "TEACHES_ROUTING",
+        "provenance": "docs/governance/RAFAELIA_OPERATIONAL_PARABLES_V1.md",
+        "claim_boundary": "PARABOLA_NOT_RUNTIME_PROOF"
+      }
     ]
   },
   "parable_router": {
     "epistemic_status": "PARABOLA",
     "sequence": [
-      {"stage": "ESTATISTICA", "operational_meaning": "measure observations, distributions, uncertainty and error"},
-      {"stage": "TOKENS", "operational_meaning": "name unresolved states explicitly instead of coercing a value"},
-      {"stage": "METAFORAS", "operational_meaning": "build conceptual bridges while preserving analogy boundaries"},
-      {"stage": "VECTORES", "operational_meaning": "type relations, direction, state and next actions"},
-      {"stage": "PALAVRA", "operational_meaning": "turn intent into an addressable specification"},
-      {"stage": "PROMESSA", "operational_meaning": "turn specification into an invariant or contract with a falsifier"},
-      {"stage": "OMEGA_N", "operational_meaning": "iterate audited states without deleting prior evidence"}
+      {
+        "stage": "ESTATISTICA",
+        "operational_meaning": "measure observations, distributions, uncertainty and error"
+      },
+      {
+        "stage": "TOKENS",
+        "operational_meaning": "name unresolved states explicitly instead of coercing a value"
+      },
+      {
+        "stage": "METAFORAS",
+        "operational_meaning": "build conceptual bridges while preserving analogy boundaries"
+      },
+      {
+        "stage": "VECTORES",
+        "operational_meaning": "type relations, direction, state and next actions"
+      },
+      {
+        "stage": "PALAVRA",
+        "operational_meaning": "turn intent into an addressable specification"
+      },
+      {
+        "stage": "PROMESSA",
+        "operational_meaning": "turn specification into an invariant or contract with a falsifier"
+      },
+      {
+        "stage": "OMEGA_N",
+        "operational_meaning": "iterate audited states without deleting prior evidence"
+      }
     ],
     "symbolic_phrase": "NENHUM LIMITE E REAL, POIS O CODIGO EXECUTA EM VERBO VIVO -> OMEGA^n",
     "symbolic_phrase_status": "PARABOLA_MOTIVACIONAL",

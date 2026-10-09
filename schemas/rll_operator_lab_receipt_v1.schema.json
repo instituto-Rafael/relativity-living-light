@@ -67,5 +67,6 @@
       "pattern": "^[0-9a-f]{64}$"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "description": "Structural contract for the RLL operator lab suite receipt. This contract validates execution-metadata shape and fixed negative scientific claim boundaries only; structural PASS does not establish physical measurements, empirical confirmation, or scientific validity."
 }

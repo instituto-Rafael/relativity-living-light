@@ -64,10 +64,27 @@ def build_report(root: Path = ROOT) -> dict[str, Any]:
     result["binding_class"] = "APPEND_ONLY_PREDECESSOR"
     bindings.append(result)
 
+    # A historical event binds the LICENSE bytes observed in August, not the
+    # current repository path forever. Preserve that hash as a historical
+    # reference; only the successor's current blob receives a readback PASS.
+    sources_by_id = {item["artifact_id"]: item for item in registry["source_bindings"]}
     for event in rights["later_evidence"]:
-        result = _verify(event["path"], event["git_blob_sha1"], event["event_id"], root)
+        if event["event_id"] == "ROOT-LICENSE-OBSERVED-20260822":
+            successor = sources_by_id["SRC-LICENSE"]
+            if (
+                event["path"] != successor["path"]
+                or successor.get("previous_git_blob_sha1") != event["git_blob_sha1"]
+            ):
+                raise ValueError("historical LICENSE provenance successor mismatch")
+            result = _verify(event["path"], successor["git_blob_sha1"], event["event_id"], root)
+            result["binding_class"] = "HISTORICAL_EVENT_CURRENT_READBACK"
+            result["historical_git_blob_sha1"] = event["git_blob_sha1"]
+            result["historical_bytes_verified"] = "TOKEN_VAZIO"
+            result["successor_binding_id"] = "SRC-LICENSE"
+        else:
+            result = _verify(event["path"], event["git_blob_sha1"], event["event_id"], root)
+            result["binding_class"] = "LATER_EVIDENCE"
         result["binding_id"] = event["event_id"]
-        result["binding_class"] = "LATER_EVIDENCE"
         bindings.append(result)
 
     ids = [item["binding_id"] for item in bindings]
@@ -76,7 +93,7 @@ def build_report(root: Path = ROOT) -> dict[str, Any]:
 
     return {
         "schema": "rll.sustainment_provenance_binding_receipt.v1",
-        "state": "PASS_EXACT_GIT_BLOB_BINDINGS",
+        "state": "PASS_CURRENT_BLOBS_WITH_HISTORICAL_BOUNDARY",
         "claim_allowed": False,
         "scientific_confirmation": False,
         "legal_effect_claim": False,
@@ -84,12 +101,12 @@ def build_report(root: Path = ROOT) -> dict[str, Any]:
         "bindings": sorted(bindings, key=lambda item: item["binding_id"]),
         "boundary": "exact Git blob identity proves which repository bytes were bound; it does not prove scientific truth, authorship entitlement, third-party permission or legal enforceability",
         "F_ok": [
-            "all declared source bindings match actual Git blob identities",
+            "all current source bindings match exact Git blob identities",
             "rights predecessor identity is exact",
-            "later rights evidence identities are exact"
+            "non-superseded later evidence identities are exact; historic LICENSE event matches a declared successor chain"
         ],
-        "F_gap": [],
-        "F_next": "retain exact bindings in every successor; if a source changes, add/version a new binding instead of silently relabeling the historical one"
+        "F_gap": ["historic 2026-08-22 LICENSE bytes are not independently read back from the current checkout; historical hash is retained as metadata only"],
+        "F_next": "retain current-tree identities and historical pointers separately; verify the old blob from an immutable reachable historical snapshot before making historical byte-existence claims"
     }
 
 

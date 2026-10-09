@@ -22,6 +22,15 @@
 - [Scripts](../../scripts/)
 - [Tests](../../tests/)
 
+## Quero auditar coesão operacional
+
+- [Fechamento de coesão operacional RLL](../governance/RLL_OPERATIONAL_COHESION_CLOSURE_20261008.md)
+- [Excelência operacional](../governance/OPERATIONAL_EXCELLENCE_EXECUTION_FRAMEWORK.md)
+- [Carta de integridade operacional](../governance/OPERATIONAL_EXCELLENCE_INTEGRITY_CHARTER.md)
+- [Modelo operacional de GitHub Actions](../governance/GITHUB_ACTIONS_OPERATING_MODEL.md)
+- [Receipt do fechamento](../../receipts/2026-10-08_RLL_OPERATIONAL_COHESION_CLOSURE_V1.json)
+- [Correção de proveniência e observação CI — PR #1076](../../receipts/2026-10-08_RLL_PR1076_PROVENANCE_CI_OBSERVATION_V2.json)
+
 ## Quero auditar segurança, privacidade ou LGPD
 
 - [Mapa LGPD / privacidade V1](../governance/LGPD_PRIVACY_NAVIGATION_V1.md)
