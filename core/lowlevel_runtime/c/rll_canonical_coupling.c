@@ -204,18 +204,56 @@ static rll_i64 rll_sat_add_nonnegative_i64(rll_i64 a, rll_i64 b) {
     return a + b;
 }
 
+/*
+ * 64-bit unsigned quotient, 64 bounded bit steps: freestanding ARMv7 cannot
+ * silently link __aeabi_ldivmod. No libc, compiler runtime or OS services.
+ * Precondition: denominator > 0; caller enforces it.
+ */
+static rll_u64 rll_u64_div_nonzero(rll_u64 numerator, rll_u64 denominator) {
+    rll_u64 quotient = 0ull;
+    rll_u64 remainder = 0ull;
+    rll_u32 i;
+    for (i = 0u; i < 64u; ++i) {
+        rll_u32 shift = 63u - i;
+        remainder = (remainder << 1u) | ((numerator >> shift) & 1ull);
+        if (remainder >= denominator) {
+            remainder -= denominator;
+            quotient |= 1ull << shift;
+        }
+    }
+    return quotient;
+}
+
+static rll_i64 rll_i64_div_positive_nonzero(rll_i64 numerator, rll_i64 denominator) {
+    rll_u64 magnitude = (rll_u64)numerator;
+    rll_u64 quotient;
+    if (numerator < 0ll) {
+        magnitude = ~magnitude + 1ull;
+    }
+    quotient = rll_u64_div_nonzero(magnitude, (rll_u64)denominator);
+    if (numerator < 0ll) {
+        if (quotient == (1ull << 63)) {
+            return RLL_I64_MIN;
+        }
+        return -(rll_i64)quotient;
+    }
+    return quotient > (rll_u64)RLL_I64_MAX ? RLL_I64_MAX : (rll_i64)quotient;
+}
+
 static rll_i64 rll_residual_q16(const rll_canonical_observation *o) {
     rll_i64 delta = rll_sat_sub_i64(o->value_q16, o->model_q16);
+    /* The bounds make delta*65536 representable even at INT64_MIN. */
+    const rll_i64 min_scaled_input = -(RLL_I64_MAX >> 16) - 1ll;
     if (o->sigma_q16 <= 0ll) {
         return RLL_I64_MAX;
     }
     if (delta > (RLL_I64_MAX >> 16)) {
         return RLL_I64_MAX;
     }
-    if (delta < (RLL_I64_MIN >> 16)) {
+    if (delta < min_scaled_input) {
         return RLL_I64_MIN;
     }
-    return (delta << 16) / o->sigma_q16;
+    return rll_i64_div_positive_nonzero(delta * RLL_Q16_ONE, o->sigma_q16);
 }
 
 static rll_i64 rll_square_q16_sat(rll_i64 x_q16) {
