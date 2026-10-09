@@ -33,6 +33,18 @@ class PriorArtChronologyTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(x)
 
+    def test_notation_conflation_fails_closed(self):
+        x = copy.deepcopy(self.source)
+        x["notation_ambiguity"]["values_equivalent"] = True
+        with self.assertRaises(ValueError):
+            validate(x)
+
+    def test_notation_wrong_square_fails_closed(self):
+        x = copy.deepcopy(self.source)
+        x["notation_ambiguity"]["interpretation_B"]["square"] = "3/4"
+        with self.assertRaises(ValueError):
+            validate(x)
+
     def test_false_publication_promotion_fails_closed(self):
         x = copy.deepcopy(self.source)
         x["publication_ready"] = True
