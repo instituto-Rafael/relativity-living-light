@@ -34,6 +34,8 @@ RLL v1.0.0 tag / 2025 formula
 
 ## 3. Where each thing is treated
 
+**LATIN 555 (evidence boundary only):** [RLL LATIN metadata/LowFala candidate bridge](governance/LATIN_555_EVIDENCE_BRIDGE_V1.md) → [typed source/governance locators](../data/governance/latin-evidence-bridge.v1.json). This is an indexed *hypothesis and rights/provenance route*, not validated translation, provider authority, LowFala runtime or RLL cosmology (`claim_allowed=false`). Source producers: RafPolimata #427 and RafGitTools #662. Consumer review: RLL #1079; RLL #1076 scientific gates remain independent.
+
 | Thing / question | Status now | Treated in | What to verify next |
 |---|---|---|---|
 | Public anteriority of RLL | VERIFIED | `docs/RLL_V1_TAG_ANCESTRALITY_AUDIT.md` | compare tag with DOI/Zenodo package |
