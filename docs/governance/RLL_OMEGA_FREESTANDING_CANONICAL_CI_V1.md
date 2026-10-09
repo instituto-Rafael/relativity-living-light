@@ -56,3 +56,15 @@ Recibo só é evidência quando a execução realmente ocorre. O artefato Action
 - **F_ok da implementação:** contrato e gate canônico aditivos, fontes explicitadas, falsificadores definíveis, `claim_allowed=false`.
 - **F_gap:** execução real do job, status de proteção/enforcement, eventual símbolo ARM32, WS01, dispositivo físico e validação científica independente permanecem condicionados aos recibos.
 - **F_next:** primeira execução com exato HEAD e download dos artefatos. Se houver falha de compilação/símbolo, reproduzir o problema no source e propor hotfix mínimo em PR separado, sem afrouxar os testes.
+
+## Sucessor source-side do primeiro run (sem apagar evidência negativa)
+
+**Falsificador executado no PR #1084:** run [37883348347](https://github.com/instituto-Rafael/relativity-living-light/actions/runs/37883348347) terminou `FAIL_CLOSED` na etapa `20_SYMBOLS_ELF_AND_ABI`, `exit_code=31`, com símbolo indefinido `__aeabi_ldivmod` em `armv7.o`. O artifact foi publicado no próprio run. `PASS` dos passos 00 e 10 não substitui `PASS` de 20/30/90.
+
+**Causa source-side identificada:** `rll_residual_q16` em `core/lowlevel_runtime/c/rll_canonical_coupling.c` usava divisão assinada de 64 bits `(delta << 16) / sigma_q16`. Além de potencial chamada a helper ABI ARM32, deslocar inteiro negativo assinado tem comportamento indefinido em C.
+
+**Hotfix mínimo e autoral, preservado na mesma branch de CI:** quociente unsigned por divisão binária de 64 iterações, sinal aplicado com magnitude unsigned, guarda de limites Q16 e multiplicação assinada apenas depois de checar a faixa representável. Não introduz header libc, dependência externa ou syscall. O algoritmo de divisão é aritmética binária clássica, não nova descoberta matemática.
+
+**Contraexemplos de regressão:** novo `tests/c/rll_omega_canonical_signed_division_vectors.c` testa sinal ±, divisão não exata, zero observado versus `TOKEN_VAZIO`, sigma zero bloqueado e saturação. É um teste hospedado dos objetos do módulo; não execução ARM física.
+
+**Critério do sucessor:** somente promover `PASS_SCOPED` depois que o novo run, no novo exato `GITHUB_SHA`, produzir zero símbolos indefinidos para os três objetos, executar os dois harnesses e publicar recibo SHA-256. O run 37883348347 continuará classificado como `FAIL` histórico, sem rewrite ou relaxamento. O WS01 é outro falsificador e continua independente.
