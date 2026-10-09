@@ -66,7 +66,7 @@ public final class ReleaseGateView {
         if(Build.VERSION.SDK_INT>=28)return (int)info.getLongVersionCode();
         return info.versionCode;
     }
-    private static String fetch() throws Exception {
+    static String fetch() throws Exception {
         HttpURLConnection conn=(HttpURLConnection)new URL(API).openConnection();
         conn.setConnectTimeout(4000);conn.setReadTimeout(4000);
         conn.setRequestProperty("Accept","application/vnd.github+json");
