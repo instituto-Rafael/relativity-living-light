@@ -136,6 +136,8 @@ public final class MainActivity extends Activity {
         label(evidencePanel, "Nenhuma conexão de rede, permissão adicional ou envio automático de dados.", 13, ACCENT, false);
         action(evidencePanel, "Copiar recibo local", v -> copyReceipt());
 
+        new FormulaLabView(this).attach(root);
+        new ReleaseGateView(this).attach(root);
         setContentView(scroll);
         runDiagnostics();
     }
