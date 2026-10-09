@@ -57,8 +57,23 @@
     ]
   },
   "R3": {
-    "F_ok": "preprint dates and scoped private index pointer separated",
-    "F_gap": "full shards 000..050 and byte-level user-message provenance remain unverified in this audit",
+    "F_ok": "preprint dates and scoped private index pointer separated; raw shard hash and source message verified privately; exact notation disambiguation checked",
+    "F_gap": "full corpus lexical frontier, original authorship and formal theorem equivalence unverified; raw message private",
     "F_next": "compare exact theorem/algorithm formalizations, verify original shard hashes and provider readback"
+  },
+  "notation_ambiguity": {
+    "source_message_rechecked_privately": true,
+    "raw_source_sha256_verified_privately": true,
+    "private_message_body_exported": false,
+    "interpretation_A": {
+      "notation": "sqrt(3)/2",
+      "square": "3/4"
+    },
+    "interpretation_B": {
+      "notation": "sqrt(3/2)",
+      "square": "3/2"
+    },
+    "values_equivalent": false,
+    "source_boundary": "NOTATIONAL_AMBIGUITY_DETECTED_NOT_A_POLYGON_RECONSTRUCTION_THEOREM"
   }
 }
