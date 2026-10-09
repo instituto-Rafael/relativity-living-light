@@ -20,7 +20,8 @@ STAGE=00_SOURCE_AND_RIGHTS
 
 printf '%s\n' \
   'schema=rll.omega.canonical_freestanding_receipt.v1' \
-  "source_head=${GITHUB_SHA:-LOCAL_UNVERIFIED_HEAD}" \
+  "source_head=${RLL_SOURCE_HEAD_SHA:-${GITHUB_SHA:-LOCAL_UNVERIFIED_HEAD}}" \
+  "event_sha=${GITHUB_SHA:-LOCAL_UNVERIFIED_EVENT}" \
   "run_id=${GITHUB_RUN_ID:-LOCAL_RUN}" \
   'claim_allowed=false' \
   'scientific_confirmation=false' \
