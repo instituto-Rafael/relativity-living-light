@@ -1,0 +1,47 @@
+name: RLL Formula Receipt Source Gate
+
+on:
+  push:
+    branches:
+      - 'fix/rll-android-receipt-*'
+    paths:
+      - 'app/src/main/java/org/rafaelia/rll/FormulaEngine.java'
+      - 'app/src/main/java/org/rafaelia/rll/FormulaLabView.java'
+      - 'app/src/test/java/org/rafaelia/rll/FormulaEngineSelfTest.java'
+      - 'tests/test_rll_android_formula_receipt_integrity.py'
+      - '.github/workflows/rll-formula-receipt-source-gate.yml'
+  pull_request:
+    paths:
+      - 'app/src/main/java/org/rafaelia/rll/FormulaEngine.java'
+      - 'app/src/main/java/org/rafaelia/rll/FormulaLabView.java'
+      - 'app/src/test/java/org/rafaelia/rll/FormulaEngineSelfTest.java'
+      - 'tests/test_rll_android_formula_receipt_integrity.py'
+      - '.github/workflows/rll-formula-receipt-source-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  receipt-source-falsifiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact-HEAD Python source invariants without pip or external packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import runpy
+
+          assert Path("tests/test_rll_android_formula_receipt_integrity.py").is_file()
+          ns = runpy.run_path("tests/test_rll_android_formula_receipt_integrity.py")
+          checks = sorted(name for name in ns if name.startswith("test_") and callable(ns[name]))
+          assert len(checks) == 5, f"Expected five source-side falsifiers, got {len(checks)}"
+          for name in checks:
+              ns[name]()
+              print(f"PASS {name}")
+          print(f"RLL_FORMULA_RECEIPT_SOURCE_GATE_PASS checks={len(checks)}")
+          PY
