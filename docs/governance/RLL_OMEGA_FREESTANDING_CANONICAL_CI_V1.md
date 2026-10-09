@@ -68,3 +68,9 @@ Recibo só é evidência quando a execução realmente ocorre. O artefato Action
 **Contraexemplos de regressão:** novo `tests/c/rll_omega_canonical_signed_division_vectors.c` testa sinal ±, divisão não exata, zero observado versus `TOKEN_VAZIO`, sigma zero bloqueado e saturação. É um teste hospedado dos objetos do módulo; não execução ARM física.
 
 **Critério do sucessor:** somente promover `PASS_SCOPED` depois que o novo run, no novo exato `GITHUB_SHA`, produzir zero símbolos indefinidos para os três objetos, executar os dois harnesses e publicar recibo SHA-256. O run 37883348347 continuará classificado como `FAIL` histórico, sem rewrite ou relaxamento. O WS01 é outro falsificador e continua independente.
+
+## Distinção exata de HEAD (refinamento de proveniência)
+
+Em evento `pull_request`, `GITHUB_SHA` pode apontar para o **merge sintético** gerado pelo provedor; isso não é igual ao commit da branch produtora. O workflow sucessor executa agora `actions/checkout` explicitamente no `github.event.pull_request.head.sha` quando existir, e registra separadamente `source_head` e `event_sha`. Para disparo manual, ambos resolvem para o `github.sha` selecionado. Um `PASS` no merge sintético anterior continua válido **somente naquele checkout**; o requisito de `EXACT_HEAD` do produtor só fecha depois do novo run.
+
+A correção do source e os novos vetores não precisam do serviço GitHub para serem executados localmente, mas seu comprovante local precisa informar o commit correspondente e os bytes de entrada. O GitHub Actions continua fronteira hospedada, jamais freestanding.
