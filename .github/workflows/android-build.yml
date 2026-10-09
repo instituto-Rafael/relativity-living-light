@@ -62,6 +62,9 @@ jobs:
         run: |
           sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" "build-tools;35.0.0" "ndk;${ANDROID_NDK_VERSION}" "cmake;${ANDROID_CMAKE_VERSION}"
 
+      - name: Formula engine standalone JVM falsifiers
+        run: sh app/verify_formula_engine.sh
+
       - name: Generate Gradle Wrapper JAR
         run: scripts/bootstrap-gradle-wrapper.sh
 
