@@ -99,6 +99,44 @@ public final class CanonicalOmegaBundleSelfTest {
         ok(s(enhancedFiles,"02_GATES.tsv").contains("INDEPENDENT_INSTALL_WITNESS\tTOKEN_VAZIO_NOT_ATTESTED"),
            "no false physical witness");
         manifest(enhancedFiles);
+        // Full 0.7 path: all individual formula controls, deep JNI and kernel build receipt.
+        java.util.Map<String,String> inputs=new java.util.LinkedHashMap<>();
+        FormulaEngine.Input p=new FormulaEngine.Input();
+        inputs.put("z",Double.toString(p.z));inputs.put("H0",Double.toString(p.h0));
+        inputs.put("Om",Double.toString(p.om));inputs.put("OL",Double.toString(p.ol));
+        inputs.put("Os0",Double.toString(p.os0));inputs.put("zt",Double.toString(p.zt));
+        inputs.put("wt",Double.toString(p.wt));inputs.put("w",Double.toString(p.w));
+        inputs.put("w0",Double.toString(p.w0));inputs.put("wa",Double.toString(p.wa));
+        inputs.put("Obh2",Double.toString(p.obh2));
+        inputs.put("sigma8",Double.toString(p.sigma8));
+        OmegaUiEvidence.Result uiEvidence=OmegaUiEvidence.replay(
+           new OmegaUiEvidence.Snapshot("RLL","COS-HZ",inputs,1791580000000L));
+        CanonicalOmegaBundle.Result newFull=CanonicalOmegaBundle.build(null,null,
+            "TOKEN_VAZIO_NO_NETWORK",jni,install,"gate=CHECKED_NO_NEW_ANDROID_RELEASE\n",
+            "schema=rll.omega.runtime-trace.v1\n",
+            "schema=rll.omega.runtime-context.v1\n",
+            "gate=TOKEN_VAZIO_LOGCAT_RESTRICTED\n",controls.tsv,
+            "gate=TOKEN_VAZIO_BINARY_INSPECTION_NOT_RUN\n",
+            "gate=TOKEN_VAZIO_HARDWARE_PROBE_NOT_RUN\n",
+            "schema=rll.omega.kernel-platform-build.v1\ngate=RECORDED_SCOPED_KERNEL_AND_BUILD_CONTEXT\n",
+            "schema=rll.omega.jni-c-boundary.v1\ngate=PASS_SCOPED_JNI_BOUNDARIES\n",
+            uiEvidence);
+        Map<String,byte[]> newFiles=unzip(newFull.zip);
+        ok(s(newFiles,"02_GATES.tsv").contains("REPLAY_ALL_FORMULA_UI_ACTIONS\tPASS_SCOPED_UI_ACTIONS_REPLAY"),
+            "all UI controls are bound in same archive");
+        ok(s(newFiles,"02_GATES.tsv").contains("JNI_80_BOUNDARIES_AND_MANUAL\tPASS_SCOPED"),
+            "extended real JNI scope in ZIP");
+        ok(s(newFiles,"12_BINARY/kernel_and_compilation_context.txt").contains("kernel-platform-build.v1"),
+            "kernel release and build context");
+        ok(s(newFiles,"22_UI/current_RLL/individual/COS-HZ.receipt.txt").contains("id=COS-HZ"),
+            "individual formula exported, not only full text");
+        ok(s(newFiles,"22_UI/current_LCDM/individual/COS-HZ.receipt.txt").contains("model=LCDM"),
+            "all models independently exported");
+        ok(s(newFiles,"22_UI/copy_equivalent.txt").contains("clipboard_mutation=false"),
+            "copy-equivalent is not hidden clipboard mutation");
+        ok(s(newFiles,"02_GATES.tsv").contains("INDEPENDENT_INSTALL_WITNESS\tTOKEN_VAZIO_NOT_ATTESTED"),
+            "no fake external hardware witness");
+        manifest(newFiles);
         ok(s(items,"01_ATLAS.tsv").contains("20_FORMULAS/LCDM/grid.csv"),"Atlas points");
         ok(s(items,"00_START_HERE.txt").contains("SOURCE != ARTIFACT"),"governance");
         System.out.println("RLL_CANONICAL_OMEGA_ONE_CLICK_ZIP_PASS assertions="+checks+" files="+items.size()+" model_runs=44");
