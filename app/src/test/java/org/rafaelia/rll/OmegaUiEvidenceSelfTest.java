@@ -25,7 +25,7 @@ public final class OmegaUiEvidenceSelfTest {
             throw new AssertionError("hash copy equivalence missing");
         if(!good.files.get("22_UI/current_RLL/sweep.csv").contains("0.00000000"))
             throw new AssertionError("sweep not persisted");
-        if(!good.files.get("22_UI/current_RLL/closure_preview.txt").contains("NO_UI_MUTATION"))
+        if(!good.files.get("22_UI/current_RLL/closure_preview.txt").contains("NOT_UI_MUTATION"))
             throw new AssertionError("normalization cannot silently mutate UI");
         if(!good.files.get("22_UI/frozen_inputs.txt").contains("utc_ms=123456789"))
             throw new AssertionError("timestamp missing");
