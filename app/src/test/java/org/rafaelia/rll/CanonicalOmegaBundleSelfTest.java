@@ -67,6 +67,24 @@ public final class CanonicalOmegaBundleSelfTest {
         ok(!bad.containsKey("30_DATA/raw/"+RealBaoEngine.MEAN),"do not bundle corrupted source");
         ok(!bad.containsKey("31_REAL_DATA_CALCULATIONS/observed_vs_predicted.csv"),"do not fake predictions");
         manifest(bad);
+        OmegaScientificChecks.Result controls=OmegaScientificChecks.run();
+        ok(controls.failed==0 && controls.passed>=24,"expanded selfchecks");
+        CanonicalOmegaBundle.Result enhanced=CanonicalOmegaBundle.build(null,null,
+            "TOKEN_VAZIO_NO_NETWORK",jni,install,"gate=CHECKED_NO_NEW_ANDROID_RELEASE\n",
+            "schema=rll.omega.runtime-trace.v1\n",
+            "schema=rll.omega.runtime-context.v1\n",
+            "scope=OWN_PROCESS_PID_ONLY\ngate=TOKEN_VAZIO_LOGCAT_RESTRICTED\n",
+            controls.tsv);
+        Map<String,byte[]> enhancedFiles=unzip(enhanced.zip);
+        ok(s(enhancedFiles,"02_GATES.tsv").contains("EXPANDED_FORMULA_FALSIFIERS\tPASS_SCOPED_NUMERIC"),
+           "new expanded checks gate");
+        ok(s(enhancedFiles,"02_GATES.tsv").contains("TOKEN_VAZIO_RESTRICTED_OR_NOT_RUN"),
+           "logcat denied is typed");
+        ok(s(enhancedFiles,"11_DIAGNOSTICS/expanded_formula_selfchecks.tsv").contains("RLL_CONSERVED_IDENTITY"),
+           "expanded scientific selfchecks included");
+        ok(s(enhancedFiles,"11_DIAGNOSTICS/own_pid_logcat.txt").contains("TOKEN_VAZIO"),
+           "logcat never fabricated");
+        manifest(enhancedFiles);
         ok(s(items,"01_ATLAS.tsv").contains("20_FORMULAS/LCDM/grid.csv"),"Atlas points");
         ok(s(items,"00_START_HERE.txt").contains("SOURCE != ARTIFACT"),"governance");
         System.out.println("RLL_CANONICAL_OMEGA_ONE_CLICK_ZIP_PASS assertions="+checks+" files="+items.size()+" model_runs=44");

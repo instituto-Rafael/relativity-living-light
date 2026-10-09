@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class CanonicalOmegaBundle {
     private CanonicalOmegaBundle(){}
-    public static final String SCHEMA="rll.canonical.omega.zip.v1";
+    public static final String SCHEMA="rll.canonical.omega.zip.v2";
     public static final class Result {
         public final byte[] zip;
         public final String sha256, gateRegister, dataState;
@@ -61,6 +61,15 @@ public final class CanonicalOmegaBundle {
     }
     public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
                  String nativeReceipt,String installationReceipt,String releaseReceipt)throws Exception {
+        return build(mean,cov,downloadDiagnostic,nativeReceipt,installationReceipt,releaseReceipt,
+              "gate=TOKEN_VAZIO_RUNTIME_TRACE_NOT_RUN\n",
+              "gate=TOKEN_VAZIO_OS_CONTEXT_NOT_RUN\n",
+              "gate=TOKEN_VAZIO_OWN_LOGCAT_NOT_RUN\n",
+              "gate=TOKEN_VAZIO_EXTENDED_NUMERIC_NOT_RUN\n");
+    }
+    public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
+                 String nativeReceipt,String installationReceipt,String releaseReceipt,
+                 String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks)throws Exception {
         Map<String,byte[]> e=new LinkedHashMap<>();
         StringBuilder gates=new StringBuilder("gate\tstatus\tscope\tevidence\n");
         StringBuilder events=new StringBuilder("schema=").append(SCHEMA)
@@ -69,7 +78,7 @@ public final class CanonicalOmegaBundle {
         put(e,"00_START_HERE.txt",
           "RLL CANONICAL OMEGA ONE-CLICK EVIDENCE ARCHIVE\n"+
           "A single command executes every available local diagnostic; unavailable stages are typed, never silently removed.\n"+
-          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results.\n"+
+          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat.\n"+
           "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM.\n"+
           "USER_DEVICE_REPORT != INDEPENDENT_HARDWARE_ATTESTATION.\n"+
           "NUMERIC_SELF_CHECK != COSMOLOGICAL_PROOF.\n"+
@@ -87,6 +96,27 @@ public final class CanonicalOmegaBundle {
         gate(gates,"INSTALL_SELF_REPORT",
             installationReceipt.contains("package=")?"OBSERVED_SELF_REPORT":"TOKEN_VAZIO",
             "PACKAGE_MANAGER_ONLY","10_DEVICE/installed_package_self_report.txt");
+        if(stageTrace==null)stageTrace="gate=TOKEN_VAZIO_RUNTIME_TRACE_NOT_RUN\n";
+        if(runtimeContext==null)runtimeContext="gate=TOKEN_VAZIO_OS_CONTEXT_NOT_RUN\n";
+        if(ownLogcat==null)ownLogcat="gate=TOKEN_VAZIO_OWN_LOGCAT_NOT_RUN\n";
+        if(expandedChecks==null)expandedChecks="gate=TOKEN_VAZIO_EXTENDED_NUMERIC_NOT_RUN\n";
+        put(e,"11_DIAGNOSTICS/app_stage_trace.tsv",stageTrace);
+        put(e,"11_DIAGNOSTICS/runtime_context.txt",runtimeContext);
+        put(e,"11_DIAGNOSTICS/own_pid_logcat.txt",ownLogcat);
+        put(e,"11_DIAGNOSTICS/expanded_formula_selfchecks.tsv",expandedChecks);
+        gate(gates,"APP_STAGE_TRACE",
+            stageTrace.contains("schema=rll.omega.runtime-trace.v1")?"RECORDED_LOCAL":"TOKEN_VAZIO",
+            "TIMINGS_SELF_REPORTED","11_DIAGNOSTICS/app_stage_trace.tsv");
+        gate(gates,"OS_PROCESS_CONTEXT",
+            runtimeContext.contains("schema=rll.omega.runtime-context.v1")?"RECORDED_SELF_REPORT":"TOKEN_VAZIO",
+            "ANDROID_APP_OWN_PROCESS","11_DIAGNOSTICS/runtime_context.txt");
+        gate(gates,"OWN_PID_LOGCAT",
+            ownLogcat.contains("gate=CAPTURED_OWN_PROCESS_BEST_EFFORT")?"CAPTURED_SCOPED":"TOKEN_VAZIO_RESTRICTED_OR_NOT_RUN",
+            "ANDROID_PROCESS_PID_ONLY","11_DIAGNOSTICS/own_pid_logcat.txt");
+        gate(gates,"EXPANDED_FORMULA_FALSIFIERS",
+            expandedChecks.contains("FAIL_NUMERIC")?"FAIL_NUMERIC":(
+                expandedChecks.contains("PASS_SCOPED")?"PASS_SCOPED_NUMERIC":"TOKEN_VAZIO_NOT_RUN"),
+            "ALGEBRAIC_NUMERIC_NOT_PHYSICAL_PROOF","11_DIAGNOSTICS/expanded_formula_selfchecks.tsv");
         gate(gates,"INDEPENDENT_INSTALL_WITNESS","TOKEN_VAZIO_NOT_ATTESTED",
             "ADB_HARDWARE_SIGNER_NOT_IN_APP","Needs external trusted witness");
         gate(gates,"CI_EXACT_HEAD","TOKEN_VAZIO_INDEPENDENT_CI_VERIFICATION",

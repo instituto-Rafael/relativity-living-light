@@ -14,8 +14,8 @@ android {
         minSdk 23
         targetSdk 35
         // Monotone Android release revision. CI can inject an approved greater integer.
-        versionCode providers.environmentVariable('RLL_ANDROID_VERSION_CODE').map { Integer.parseInt(it) }.getOrElse(4)
-        versionName providers.environmentVariable('RLL_ANDROID_VERSION_NAME').getOrElse('0.4.0')
+        versionCode providers.environmentVariable('RLL_ANDROID_VERSION_CODE').map { Integer.parseInt(it) }.getOrElse(5)
+        versionName providers.environmentVariable('RLL_ANDROID_VERSION_NAME').getOrElse('0.5.0')
 
         // Exact build-origin labels; evidence must still be checked at the provider.
         def rllCiSha = providers.environmentVariable('GITHUB_SHA').getOrElse('')
