@@ -12,7 +12,7 @@ public final class FormulaEngine {
     public static final double C_KMS = 299792.458;
     public static final String SOURCE_JOINT = "data/pipelines/structure_d/joint_real_likelihood.py";
     public static final String SOURCE_BACKGROUND = "scripts/check_rll_background.py";
-    public static final String SCHEMA = "rll.android.formula-lab.v1";
+    public static final String SCHEMA = "rll.android.formula-lab.v2";
     public enum Model { LCDM, WCDM, CPL, RLL }
     public static final class Input {
         public double z=0.57, h0=67.4, om=0.315, os0=0.059, zt=1.164, wt=0.405;
@@ -55,9 +55,27 @@ public final class FormulaEngine {
             sb.append("schema=").append(SCHEMA).append("\nmodel=").append(model)
               .append("\nstate=").append(state).append("\nclaim_allowed=false\n")
               .append("provenance=USER_INPUT_NOT_REAL_OBSERVATION\n");
-            sb.append(String.format(Locale.US,
-              "z=%.12g;H0=%.12g;Om=%.12g;OL=%.12g;Os0=%.12g;zt=%.12g;wt=%.12g;w=%.12g;w0=%.12g;wa=%.12g;Obh2=%.12g;sigma8=%.12g\n",
-              a.z,a.h0,a.om,a.ol,a.os0,a.zt,a.wt,a.w,a.w0,a.wa,a.obh2,a.sigma8));
+            // Double.toString round-trips the exact inputs; v1 did not record Hobs/Hsigma.
+            sb.append("z=").append(a.z).append(";H0=").append(a.h0)
+              .append(";Om=").append(a.om).append(";OL=").append(a.ol)
+              .append(";Os0=").append(a.os0).append(";zt=").append(a.zt)
+              .append(";wt=").append(a.wt).append(";w=").append(a.w)
+              .append(";w0=").append(a.w0).append(";wa=").append(a.wa)
+              .append(";Obh2=").append(a.obh2).append(";sigma8=").append(a.sigma8).append("\n");
+            final boolean observationPair=Double.isFinite(a.hObserved) && Double.isFinite(a.hSigma)
+                    && a.hObserved>0 && a.hSigma>0;
+            if(observationPair) {
+                sb.append("observation_status=USER_ENTERED_UNVERIFIED\n");
+                sb.append("Hobs=").append(a.hObserved)
+                  .append(";Hsigma=").append(a.hSigma).append("\n");
+            } else {
+                String missing=Double.isNaN(a.hObserved) && Double.isNaN(a.hSigma)
+                  ? "TOKEN_VAZIO_NOT_PROVIDED" : "TOKEN_VAZIO_INVALID_PAIR";
+                sb.append("observation_status=").append(missing).append("\n")
+                  .append("Hobs=").append(Double.isFinite(a.hObserved)?Double.toString(a.hObserved):"TOKEN_VAZIO")
+                  .append(";Hsigma=").append(Double.isFinite(a.hSigma)?Double.toString(a.hSigma):"TOKEN_VAZIO")
+                  .append("\n");
+            }
             for (Entry item:entries) {
                 sb.append("formula=").append(item.id).append(";state=").append(item.state)
                   .append(";value=").append(item.value==null?"TOKEN_VAZIO":Double.toString(item.value))

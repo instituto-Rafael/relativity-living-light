@@ -29,6 +29,7 @@ public final class FormulaLabView {
     private TextView output;
     private TextView state;
     private String lastReceipt="";
+    private String lastBaseReceipt="";
     private static final int FG=Color.rgb(244,246,251), SECOND=Color.rgb(203,213,225);
     public FormulaLabView(Activity host){this.host=host;}
     private int px(int value){return (int)(value*host.getResources().getDisplayMetrics().density+0.5f);}
@@ -94,39 +95,55 @@ public final class FormulaLabView {
             screen.append("Limite: ").append(r.warning).append("\n");
             output.setText(screen.toString());
             state.setText(r.state+" · "+r.computed+" fórmulas");
-            lastReceipt=r.receipt(a)+"version_gate=SEE_RELEASE_CHECK\n";
+            lastBaseReceipt=r.receipt(a)+"version_gate=SEE_RELEASE_CHECK\n";
+            lastReceipt=lastBaseReceipt;
         }catch(NumberFormatException e){
             state.setText("TOKEN_VAZIO_DOMAIN_INPUT");
             output.setText("Número inválido. Use decimal com vírgula ou ponto.");
-            lastReceipt="";
+            lastReceipt="";lastBaseReceipt="";lastResult=null;
         }catch(IllegalArgumentException e){
             state.setText("TOKEN_VAZIO_DOMAIN_INPUT");
-            output.setText(e.getMessage());lastReceipt="";
+            output.setText(e.getMessage());lastReceipt="";lastBaseReceipt="";lastResult=null;
         }
     }
+    private boolean inputsMatchLastCalculation() {
+        if(lastResult==null || lastBaseReceipt.isEmpty()) return false;
+        try {
+            FormulaEngine.Input now=read();
+            String current=FormulaEngine.compute(now,selected()).receipt(now)+"version_gate=SEE_RELEASE_CHECK\n";
+            return current.equals(lastBaseReceipt);
+        }catch(RuntimeException error){return false;}
+    }
     private void showSelected() {
+        if(!inputsMatchLastCalculation()){
+            state.setText("TOKEN_VAZIO_STALE_INPUT");
+            output.setText("Parâmetros alterados: execute novamente antes de ver uma fórmula ou copiar evidências.");
+            return;
+        }
         if(lastResult==null||lastResult.entries.isEmpty())return;
         int index=formulaPicker.getSelectedItemPosition();
         if(index<0||index>=lastResult.entries.size())return;
         FormulaEngine.Entry e=lastResult.entries.get(index);
         String value=e.value==null?e.state:Double.toString(e.value)+" "+e.unit;
-        output.setText("FÓRMULA: "+e.id+"\\n"+e.expression
-          +"\\nValor: "+value+"\\nUnidade: "+e.unit
-          +"\\nFonte: "+e.source+"\\nEstado: "+e.state
-          +"\\nLimite: "+e.note+"\\n\\nclaim_allowed=false");
+        output.setText("FÓRMULA: "+e.id+"\n"+e.expression
+          +"\nValor: "+value+"\nUnidade: "+e.unit
+          +"\nFonte: "+e.source+"\nEstado: "+e.state
+          +"\nLimite: "+e.note+"\n\nclaim_allowed=false");
     }
     private void sweep(){
         try{
+            calculate();
             FormulaEngine.Input p=read();
-            StringBuilder lines=new StringBuilder("Varredura numérica 0 ≤ z ≤ 3, passo 0,3\\n");
-            lines.append("z;E²;H(z) [km/s/Mpc]\\n");
+            if(!inputsMatchLastCalculation())return;
+            StringBuilder lines=new StringBuilder("Varredura numérica 0 ≤ z ≤ 3, passo 0,3\n");
+            lines.append("z;E²;H(z) [km/s/Mpc]\n");
             StringBuilder evidence=new StringBuilder();
             for(int i=0;i<=10;i++){
                 p.z=0.3*i;
                 FormulaEngine.Result result=FormulaEngine.compute(p,selected());
                 if(!"SOURCE_SCOPED_DIAGNOSTIC".equals(result.state)){
-                    lines.append(p.z).append(";TOKEN_VAZIO;").append(result.state).append("\\n");
-                    evidence.append("z=").append(p.z).append(";state=").append(result.state).append("\\n");
+                    lines.append(p.z).append(";TOKEN_VAZIO;").append(result.state).append("\n");
+                    evidence.append("z=").append(p.z).append(";state=").append(result.state).append("\n");
                     continue;
                 }
                 Double e2=null,hz=null;
@@ -134,11 +151,11 @@ public final class FormulaLabView {
                     if(entry.id.startsWith("COS-E2-")&&!entry.id.equals("COS-E2-ZERO"))e2=entry.value;
                     if(entry.id.equals("COS-HZ"))hz=entry.value;
                 }
-                String row=String.format(Locale.US,"%.2f;%.9g;%.9g\\n",p.z,e2,hz);
+                String row=String.format(Locale.US,"%.2f;%.9g;%.9g\n",p.z,e2,hz);
                 lines.append(row);evidence.append("grid_").append(row);
             }
-            output.setText(lines.toString()+"\\nSem dados observacionais: isto é uma curva calculada, não ajuste.");
-            lastReceipt+=evidence.toString()+"grid_scope=MODEL_ONLY_NO_OBSERVATIONS\\n";
+            output.setText(lines.toString()+"\nSem dados observacionais: isto é uma curva calculada, não ajuste.");
+            lastReceipt=lastBaseReceipt+evidence.toString()+"grid_scope=MODEL_ONLY_NO_OBSERVATIONS\n";
         }catch(RuntimeException ex){
             output.setText("TOKEN_VAZIO_DOMAIN_INPUT: não foi possível executar varredura.");
         }
@@ -160,11 +177,16 @@ public final class FormulaLabView {
         }catch(java.security.NoSuchAlgorithmException impossible){return "TOKEN_VAZIO_SHA256_UNAVAILABLE";}
     }
     private void copy(){
+        if(!inputsMatchLastCalculation()){
+            Toast.makeText(host,"Parâmetros alterados: recalcule antes de copiar",Toast.LENGTH_LONG).show();
+            return;
+        }
         if(lastReceipt.isEmpty()){
             Toast.makeText(host,"Execute as fórmulas antes",Toast.LENGTH_SHORT).show();
             return;
         }
-        String receipt=lastReceipt+"receipt_sha256="+sha256(lastReceipt)+"\n";
+        String scope=lastReceipt+"receipt_hash_scope=FORMULA_LAB_PAYLOAD_UTF8_ONLY\n";
+        String receipt=scope+"receipt_sha256="+sha256(scope)+"\n";
         ClipboardManager manager=(ClipboardManager)host.getSystemService(Activity.CLIPBOARD_SERVICE);
         if(manager==null){Toast.makeText(host,"Clipboard indisponível",Toast.LENGTH_SHORT).show();return;}
         manager.setPrimaryClip(ClipData.newPlainText("RLL formula evidence v1",receipt));
