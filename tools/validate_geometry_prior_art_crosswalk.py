@@ -4,6 +4,7 @@ import datetime as dt
 import json
 import pathlib
 import sys
+from fractions import Fraction
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT = ROOT / "data/governance/RLL_GEOMETRY_PRIOR_ART_CROSSWALK_20261008_V1.json"
@@ -37,6 +38,19 @@ def validate(payload):
     for field in ("index_commit", "index_blob_sha"):
         if any(c not in "0123456789abcdef" for c in obs[field]):
             raise ValueError("invalid git SHA")
+    ambiguity = payload.get("notation_ambiguity")
+    if not isinstance(ambiguity, dict):
+        raise ValueError("missing notation disambiguation")
+    if ambiguity.get("private_message_body_exported") is not False:
+        raise ValueError("private text is not allowed")
+    a = ambiguity.get("interpretation_A", {})
+    b = ambiguity.get("interpretation_B", {})
+    if (a.get("notation") != "sqrt(3)/2" or
+            b.get("notation") != "sqrt(3/2)" or
+            Fraction(a.get("square")) != Fraction(3, 4) or
+            Fraction(b.get("square")) != Fraction(3, 2) or
+            ambiguity.get("values_equivalent") is not False):
+        raise ValueError("distinct square roots were conflated")
     papers = payload.get("papers", [])
     if len(papers) != 2 or len({p["arxiv_id"] for p in papers}) != 2:
         raise ValueError("two distinct paper references required")
