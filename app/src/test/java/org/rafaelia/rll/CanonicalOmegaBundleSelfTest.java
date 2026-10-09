@@ -74,7 +74,9 @@ public final class CanonicalOmegaBundleSelfTest {
             "schema=rll.omega.runtime-trace.v1\n",
             "schema=rll.omega.runtime-context.v1\n",
             "scope=OWN_PROCESS_PID_ONLY\ngate=TOKEN_VAZIO_LOGCAT_RESTRICTED\n",
-            controls.tsv);
+            controls.tsv,
+            "schema=rll.omega.apk-binary-inspection.v1\ngate=PASS_SCOPED_APK_DEX_ELF_CRC\n",
+            "schema=rll.omega.hw-process-probe.v1\ngate=RECORDED_APP_SCOPED\n");
         Map<String,byte[]> enhancedFiles=unzip(enhanced.zip);
         ok(s(enhancedFiles,"02_GATES.tsv").contains("EXPANDED_FORMULA_FALSIFIERS\tPASS_SCOPED_NUMERIC"),
            "new expanded checks gate");
@@ -84,6 +86,18 @@ public final class CanonicalOmegaBundleSelfTest {
            "expanded scientific selfchecks included");
         ok(s(enhancedFiles,"11_DIAGNOSTICS/own_pid_logcat.txt").contains("TOKEN_VAZIO"),
            "logcat never fabricated");
+        ok(s(enhancedFiles,"02_GATES.tsv").contains("OWN_APK_DEX_ELF\\tPASS_SCOPED_SELF_INSPECTION"),
+           "APK ELF DEX diagnostic gate in same ZIP");
+        ok(s(enhancedFiles,"02_GATES.tsv").contains("HW_CPU_RAM_STORAGE_NUMA\\tRECORDED_SELF_REPORT"),
+           "hardware probe preserved without claiming physical attestation");
+        ok(s(enhancedFiles,"12_BINARY/apk_dex_elf_integrity.txt").contains("PASS_SCOPED_APK_DEX_ELF_CRC"),
+           "APK source report archived");
+        ok(s(enhancedFiles,"21_CROSS_MODEL/six_pairwise_model_differences.csv").split("\\n").length==67,
+           "66 differential comparisons in archive");
+        ok(s(enhancedFiles,"21_CROSS_MODEL/nested_model_falsifiers.csv").contains("PASS_SCOPED_NESTED"),
+           "33 nested scientific falsifiers");
+        ok(s(enhancedFiles,"02_GATES.tsv").contains("INDEPENDENT_INSTALL_WITNESS\\tTOKEN_VAZIO_NOT_ATTESTED"),
+           "no false physical witness");
         manifest(enhancedFiles);
         ok(s(items,"01_ATLAS.tsv").contains("20_FORMULAS/LCDM/grid.csv"),"Atlas points");
         ok(s(items,"00_START_HERE.txt").contains("SOURCE != ARTIFACT"),"governance");
