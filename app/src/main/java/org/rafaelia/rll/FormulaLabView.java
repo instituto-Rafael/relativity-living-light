@@ -192,6 +192,21 @@ public final class FormulaLabView {
         manager.setPrimaryClip(ClipData.newPlainText("RLL formula evidence v1",receipt));
         Toast.makeText(host,"Recibo de cálculo copiado",Toast.LENGTH_SHORT).show();
     }
+    /** Called only on the UI thread at the moment the one-click command is pressed. */
+    public OmegaUiEvidence.Snapshot evidenceSnapshot() {
+        Map<String,String> values=new LinkedHashMap<>();
+        for(String key:OmegaUiEvidence.KEYS) {
+            EditText e=fields.get(key);
+            values.put(key,e==null?"":e.getText().toString());
+        }
+        Object model=selector==null?null:selector.getSelectedItem();
+        Object selectedFormula=formulaPicker==null?null:formulaPicker.getSelectedItem();
+        return new OmegaUiEvidence.Snapshot(
+            model==null?null:model.toString(),
+            selectedFormula==null?null:selectedFormula.toString(),
+            values,System.currentTimeMillis());
+    }
+
     public void attach(LinearLayout outer){
         LinearLayout root=new LinearLayout(host);root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(px(16),px(16),px(16),px(16));root.setBackgroundColor(Color.rgb(31,41,55));

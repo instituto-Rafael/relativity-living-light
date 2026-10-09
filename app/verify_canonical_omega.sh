@@ -10,6 +10,11 @@ javac -encoding UTF-8 -d "$out" \
   app/src/main/java/org/rafaelia/rll/OmegaScientificChecks.java \
   app/src/main/java/org/rafaelia/rll/OmegaCrossModelComparison.java \
   app/src/main/java/org/rafaelia/rll/OmegaBinaryInspector.java \
+  app/src/main/java/org/rafaelia/rll/OmegaUiEvidence.java \
+  app/src/main/java/org/rafaelia/rll/KernelBridge.java \
+  app/src/main/java/org/rafaelia/rll/OmegaNativeBoundary.java \
+  app/src/test/java/org/rafaelia/rll/OmegaUiEvidenceSelfTest.java \
+  app/src/test/java/org/rafaelia/rll/OmegaNativeBoundarySelfTest.java \
   app/src/test/java/org/rafaelia/rll/OmegaCrossModelComparisonSelfTest.java \
   app/src/test/java/org/rafaelia/rll/OmegaBinaryInspectorSelfTest.java \
   app/src/test/java/org/rafaelia/rll/OmegaScientificChecksSelfTest.java \
@@ -20,3 +25,6 @@ java -cp "$out" org.rafaelia.rll.OmegaScientificChecksSelfTest
 
 java -cp "$out" org.rafaelia.rll.OmegaCrossModelComparisonSelfTest
 java -cp "$out" org.rafaelia.rll.OmegaBinaryInspectorSelfTest
+
+java -cp "$out" org.rafaelia.rll.OmegaUiEvidenceSelfTest
+java -cp "$out" org.rafaelia.rll.OmegaNativeBoundarySelfTest
