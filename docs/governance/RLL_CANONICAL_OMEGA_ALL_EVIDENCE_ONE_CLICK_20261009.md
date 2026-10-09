@@ -13,7 +13,7 @@ Não é uma promessa de gerar dados impossíveis, executar CLASS/CAMB não insta
 5. Com dados reais válidos: χ² correlacionado para quatro fundos fixos, previsão × observação em cada um dos 13 pontos, sensibilidade por diferença finita pré-declarada (Ωm±0.005, H0±0.5, RLL zt±0.05). r_drag continua **proxy empírico**, não modelo físico independente.
 6. Aferição da geometria paramétrica T² (R=2, r=0.7), **não** de um atrator ou teorema de recorrência dinâmico. A definição autoral RMRCTI DeltaP=P(stable_any|peak)-P(stable_any|nonpeak) depende de traços CTI que dados BAO não incluem.
 7. Consulta do gate oficial de releases Android no GitHub: ausência, candidata com SHA-256 publicado ou falha de provider entram no mesmo ZIP. Consulta não instala releases e não verifica compatibilidade de assinatura.
-8. Encadeia INDEX/ATLAS (caminhos, byte counts e SHA-256), gates TSV, source contract, receipts, CSV, referências e MANIFEST_SHA256. Hash do ZIP total é exibido após exportação (não pode ser colocado dentro de si mesmo). Todo arquivo dentro do ZIP é verificado pelo manifesto.
+8. Encadeia INDEX/ATLAS (caminhos, byte counts e SHA-256), gates TSV, source contract, receipts, CSV, referências e MANIFEST_SHA256. Hash do ZIP total é exibido após serialização (não pode ser colocado dentro de si mesmo). Após o usuário escolher o destino, o app reabre a URI fornecida pelo Android e compara os bytes salvos por SHA-256; divergência recebe FAIL_SAVE_READBACK_SHA256, ausência de permissão para reabrir recebe TOKEN_VAZIO e não é classificada como PASS. Todo arquivo dentro do ZIP é verificado pelo manifesto.
 
 ## Estrutura de saída
 - `00_START_HERE.txt`: governança, separação SOURCE/ARTIFACT/EXECUTION/EVIDENCE/CLAIM e limites;

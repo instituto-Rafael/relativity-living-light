@@ -227,13 +227,29 @@ public final class RealDataLabView {
     }
     public void writeTo(Uri uri){
         if(uri==null||stagedZip==null){state("TOKEN_VAZIO_SAVE_CANCELLED");return;}
+        // The system provider owns the target. Verify exported bytes after close.
         try(InputStream input=new FileInputStream(stagedZip);
-            OutputStream output=host.getContentResolver().openOutputStream(uri)){
+            OutputStream output=host.getContentResolver().openOutputStream(uri,"wt")){
             if(output==null)throw new IllegalStateException("no destination stream");
             byte[] buf=new byte[8192];int n;while((n=input.read(buf))!=-1)output.write(buf,0,n);
             output.flush();
-            state("ZIP SALVO • conteúdo rastreável\nSHA-256: "+zipDigest
-                +"\nNão é prova científica independente; instalação autoatestada pelo app.");
-        }catch(Exception ex){state("TOKEN_VAZIO_SAVE_FAILED: "+ex.getClass().getSimpleName());}
+        }catch(Exception ex){
+            state("TOKEN_VAZIO_SAVE_FAILED: "+ex.getClass().getSimpleName());return;
+        }
+        try(InputStream saved=host.getContentResolver().openInputStream(uri)){
+            if(saved==null)throw new IllegalStateException("no readback stream");
+            MessageDigest dig=MessageDigest.getInstance("SHA-256");
+            byte[] buf=new byte[8192];int n;while((n=saved.read(buf))!=-1)dig.update(buf,0,n);
+            String observed=RealBaoEngine.hex(dig.digest());
+            if(!observed.equals(zipDigest)){
+                state("FALHA_SAVE_READBACK_SHA256: arquivo exportado diverge da origem!");
+                return;
+            }
+            state("PASS_SAVE_READBACK_SHA256 • ZIP CANÔNICO SALVO\nSHA-256: "+observed
+                 +"\nRecibos físicos são auto-relato do app, não atestado independente.");
+        }catch(Exception ex){
+            state("ZIP ENVIADO AO DESTINO • TOKEN_VAZIO_SAVE_READBACK_"
+                  +ex.getClass().getSimpleName()+"\nSHA-256 local: "+zipDigest);
+        }
     }
 }
