@@ -91,6 +91,19 @@ public final class OmegaUiEvidence {
                 FormulaEngine.Input current=copy(values);
                 FormulaEngine.Result result=FormulaEngine.compute(current,model);
                 out.files.put(base+"computed.receipt.txt",result.receipt(current));
+                // One receipt per individual formula, not merely the combined model text.
+                for(FormulaEngine.Entry formula:result.entries) {
+                    String individual=
+                        "schema=rll.omega.individual-formula-receipt.v1\n"+
+                        "source=FORMULA_LAB_CLICK_TIME_INPUT\n"+
+                        "model="+model+"\nz="+current.z+"\n"+
+                        "id="+formula.id+"\nequation="+formula.expression+"\n"+
+                        "value="+(formula.value==null?"TOKEN_VAZIO":formula.value)+"\n"+
+                        "unit="+formula.unit+"\nsource="+formula.source+"\n"+
+                        "state="+formula.state+"\nnote="+formula.note+"\n"+
+                        "claim_allowed=false\n";
+                    out.files.put(base+"individual/"+formula.id+".receipt.txt",individual);
+                }
                 out.formulas++;
                 if(model==active)selection=result;
                 StringBuilder grid=new StringBuilder("z,e2,h_km_s_mpc,state\n");
@@ -153,7 +166,8 @@ public final class OmegaUiEvidence {
         out.files.put("22_UI/UI_GATE.txt",
             "gate="+out.gate+"\nmodels="+out.formulas+"\nsweep_points="+out.sweeps
             +"\nclosure_previews="+out.normalized+"\nfailed="+out.failed
-            +"\nexported_formulas_do_not_assert_scientific_validation=true\n");
+            +"\nexported_formulas_do_not_assert_scientific_validation=true\n"+
+            "ui_revision_history_prior_to_click=TOKEN_VAZIO_NOT_CAPTURED\n");
         return out;
     }
 }
