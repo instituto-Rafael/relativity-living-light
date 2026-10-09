@@ -41,6 +41,7 @@ public final class MainActivity extends Activity {
     private EditText inputY;
     private String diagnosticReceipt = "";
     private String manualReceipt = "";
+    private RealDataLabView realDataLab;
 
     private int dp(int value) {
         return (int) (value * getResources().getDisplayMetrics().density + 0.5f);
@@ -138,8 +139,17 @@ public final class MainActivity extends Activity {
 
         new FormulaLabView(this).attach(root);
         new ReleaseGateView(this).attach(root);
+        realDataLab = new RealDataLabView(this,root);
         setContentView(scroll);
         runDiagnostics();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==RealDataLabView.SAVE_REQUEST && realDataLab!=null) {
+            realDataLab.writeTo(resultCode==RESULT_OK && data!=null?data.getData():null);
+        }
     }
 
     private static int expectedScore(int arch, int x, int y) {
