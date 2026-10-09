@@ -20,7 +20,7 @@ public final class OmegaNativeBoundary {
         return rows;
     }
     public static int oracle(int x,int y,int arch){
-        if(Math.abs(x)>LIMIT||Math.abs(y)>LIMIT)
+        if(x < -LIMIT || x > LIMIT || y < -LIMIT || y > LIMIT)
             throw new IllegalArgumentException("OUT_OF_SAFE_BOUNDARY");
         return ((x*31)^(y*17))+arch;
     }
@@ -57,7 +57,7 @@ public final class OmegaNativeBoundary {
             }
             try {
                 int x=Integer.parseInt(uiX.trim()),y=Integer.parseInt(uiY.trim());
-                if(Math.abs(x)>LIMIT||Math.abs(y)>LIMIT)
+                if(x < -LIMIT || x > LIMIT || y < -LIMIT || y > LIMIT)
                     throw new IllegalArgumentException("UI_INPUT_OUT_OF_SAFE_RANGE");
                 int value=KernelBridge.kernelScore(x,y),ref=oracle(x,y,arch);
                 boolean ok=value==ref;
