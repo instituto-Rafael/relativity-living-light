@@ -50,7 +50,8 @@ def test_release_detection_is_signed_release_discovery_not_unattended_install():
     assert 'android.permission.INTERNET' in manifest
     assert 'android:usesCleartextTraffic="false"' in manifest
     assert "RLL_ANDROID_VERSION_CODE" in gradle
-    assert "getOrElse(2)" in gradle
+    # Version is monotone: pinning 2 breaks on every approved Android bump.
+    assert re.search(r"RLL_ANDROID_VERSION_CODE.*getOrElse\([1-9][0-9]*\)", gradle)
 
 def test_no_new_dsp_dependency_and_independent_java_gate():
     action=ACTION.read_text(encoding="utf-8")
