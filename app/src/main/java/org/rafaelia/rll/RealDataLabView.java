@@ -42,13 +42,13 @@ public final class RealDataLabView {
         p.setPadding(16,12,16,16);p.setBackgroundColor(0xff1f2937);
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
         lp.setMargins(0,0,0,16);root.addView(p,lp);
-        TextView title=new TextView(host);title.setText("00  Ω • ZIP canônico completo — fazer tudo");
+        TextView title=new TextView(host);title.setText("00  Ω v0.6 • TESTAR TUDO EM UM CLIQUE");
         title.setTextSize(19);title.setTextColor(0xfff9fafb);p.addView(title);
         TextView detail=new TextView(host);
-        detail.setText("Um toque executa TODOS os diagnósticos JNI, as fórmulas de 4 modelos, 11 pontos por modelo, DESI DR2, covariância 13×13, parâmetros, geometria do toro, gates e receipts.\n"
+        detail.setText("Um toque: JNI/C, 4 modelos × 11 pontos, 6 diferenças pareadas × 11, falsificadores, DESI DR2, APK/DEX/ELF, CPU, RAM, armazenamento, NUMA quando permitido, gates e ZIP SHA-256.\n"
             +"Mesmo sem rede, o ZIP guarda os testes locais e os TOKEN_VAZIO. O Android solicitará apenas onde salvar. Logs coletados: somente processo RLL, se permitido. Sem READ_LOGS/root; nada é enviado, além do download solicitado.");
         detail.setTextColor(0xffd1d5db);detail.setTextSize(14);p.addView(detail);
-        Button run=new Button(host);run.setText("GERAR ZIP Ω COMPLETO: MODELOS + LOGCAT + EVIDÊNCIAS");run.setAllCaps(false);p.addView(run);
+        Button run=new Button(host);run.setText("UM CLIQUE Ω v0.6: TESTAR MODELOS + HW + APK + GERAR ZIP");run.setAllCaps(false);p.addView(run);
         status=new TextView(host);status.setTextColor(0xffd1d5db);
         status.setText("Pronto para gerar uma única evidência canônica; validação física independente não atestada.");p.addView(status);
         run.setOnClickListener(v->runOnce());
@@ -196,6 +196,31 @@ public final class RealDataLabView {
                 String osContext=trace.context(host);
                 trace.event("OS_PROCESS_CONTEXT","RECORDED_LOCAL",
                     android.os.SystemClock.elapsedRealtime()-stage);
+                stage=android.os.SystemClock.elapsedRealtime();
+                state("Ω • Medindo hardware acessível e verificando APK, DEX e ELF...");
+                String hardwareProbe;
+                try { hardwareProbe=OmegaDeepDiagnostics.capture(host); }
+                catch(Exception ex){
+                    hardwareProbe="gate=TOKEN_VAZIO_HW_PROBE_"+ex.getClass().getSimpleName()+"\\n";
+                }
+                trace.event("HW_CPU_RAM_STORAGE_NUMA",
+                    hardwareProbe.contains("gate=RECORDED_APP_SCOPED")
+                      ?"RECORDED_APP_SCOPED":"TOKEN_VAZIO_RESTRICTED",
+                    android.os.SystemClock.elapsedRealtime()-stage);
+                stage=android.os.SystemClock.elapsedRealtime();
+                String binaryInspection;
+                try {
+                    String ownApk=host.getApplicationInfo().sourceDir;
+                    binaryInspection=OmegaBinaryInspector.inspect(
+                        ownApk==null?null:new File(ownApk));
+                }catch(Exception ex){
+                    binaryInspection="gate=TOKEN_VAZIO_APK_INSPECT_"
+                        +ex.getClass().getSimpleName()+"\\n";
+                }
+                trace.event("OWN_APK_DEX_ELF",
+                    binaryInspection.contains("gate=PASS_SCOPED_APK_DEX_ELF_CRC")
+                     ?"PASS_SCOPED_SELF_INSPECTION":"FAIL_OR_TOKEN_VAZIO",
+                    android.os.SystemClock.elapsedRealtime()-stage);
                 byte[] mean=null,cov=null;
                 String downloadStatus="PASS_SOURCE_BYTES_RETRIEVED";
                 stage=android.os.SystemClock.elapsedRealtime();
@@ -234,7 +259,7 @@ public final class RealDataLabView {
                 state("Ω • Gerando os 44 recibos, todas as fórmulas e o ZIP único...");
                 CanonicalOmegaBundle.Result result=CanonicalOmegaBundle.build(
                     mean,cov,downloadStatus,jni,install,release,trace.trace(),
-                    osContext,logcat,controls.tsv);
+                    osContext,logcat,controls.tsv,binaryInspection,hardwareProbe);
                 File out=new File(host.getCacheDir(),"rll_canonical_omega_evidence.zip");
                 try(FileOutputStream stream=new FileOutputStream(out)){
                     stream.write(result.zip);
@@ -261,7 +286,7 @@ public final class RealDataLabView {
                 state("FALHA_CANONICAL_ZIP: "+ex.getClass().getSimpleName()
                     +". Nenhuma aprovação presumida.");
             }finally{running=false;}
-        },"rll-canonical-omega-v05").start();
+        },"rll-canonical-omega-v06").start();
     }
     public void writeTo(Uri uri){
         if(uri==null||stagedZip==null){state("TOKEN_VAZIO_SAVE_CANCELLED");return;}
