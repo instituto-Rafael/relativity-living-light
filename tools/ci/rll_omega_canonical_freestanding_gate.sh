@@ -13,6 +13,8 @@ RECEIPT="$OUT/receipt.txt"
 CORE=core/lowlevel_runtime/c/rll_canonical_coupling.c
 HEADER=core/lowlevel_runtime/include/rll_canonical_coupling.h
 HARNESS=tests/c/rll_canonical_coupling_vectors.c
+SIGNED_VECTORS=tests/c/rll_omega_canonical_signed_division_vectors.c
+TRANSITIVE_HEADER=core/lowlevel_runtime/include/pantheon_freestanding.h
 LICENSE=LICENSE.md
 STAGE=00_SOURCE_AND_RIGHTS
 
@@ -33,15 +35,15 @@ finalize() {
   trap - 0
   if [ "$rc" -eq 0 ]; then state=PASS_SCOPED; else state=FAIL_CLOSED; fi
   printf 'state=%s\nfailed_or_last_stage=%s\nexit_code=%s\n' "$state" "$STAGE" "$rc" >> "$RECEIPT"
-  if [ -f "$CORE" ] && [ -f "$HEADER" ] && [ -f "$HARNESS" ]; then
-    sha256sum "$CORE" "$HEADER" "$HARNESS" "$LICENSE" > "$OUT/source_checksums.sha256" || :
+  if [ -f "$CORE" ] && [ -f "$HEADER" ] && [ -f "$HARNESS" ] && [ -f "$SIGNED_VECTORS" ] && [ -f "$TRANSITIVE_HEADER" ] && [ -f "$LICENSE" ]; then
+    sha256sum "$CORE" "$HEADER" "$TRANSITIVE_HEADER" "$HARNESS" "$SIGNED_VECTORS" "$LICENSE" > "$OUT/source_checksums.sha256" || :
   fi
   cat "$RECEIPT"
   exit "$rc"
 }
 trap finalize 0
 
-for f in "$CORE" "$HEADER" "$HARNESS" "$LICENSE"; do
+for f in "$CORE" "$HEADER" "$TRANSITIVE_HEADER" "$HARNESS" "$SIGNED_VECTORS" "$LICENSE"; do
   if [ ! -f "$f" ]; then
     printf 'gap=TOKEN_VAZIO_MISSING_SOURCE:%s\n' "$f" >> "$RECEIPT"
     exit 21
@@ -54,7 +56,7 @@ grep -Fq 'CC-BY-SA-4.0' "$LICENSE" || {
   exit 22
 }
 # No libc headers, hosted function calls or in-source OS calls in the PURE core.
-if grep -nE '^[[:space:]]*#[[:space:]]*include[[:space:]]*<' "$CORE" "$HEADER" ; then
+if grep -nE '^[[:space:]]*#[[:space:]]*include[[:space:]]*<' "$CORE" "$HEADER" "$TRANSITIVE_HEADER" ; then
   printf '%s\n' 'gap=FAIL_HOSTED_INCLUDE_IN_FREESTANDING_CORE' >> "$RECEIPT"
   exit 23
 fi
@@ -107,6 +109,10 @@ clang -std=c11 -O2 -Wall -Wextra -Werror -fno-builtin \
   -Icore/lowlevel_runtime/include "$HARNESS" "$CORE" \
   -o "$OUT/hosted_c_vectors"
 "$OUT/hosted_c_vectors"
+clang -std=c11 -O2 -Wall -Wextra -Werror -fno-builtin \
+  -Icore/lowlevel_runtime/include "$SIGNED_VECTORS" "$CORE" \
+  -o "$OUT/hosted_signed_vectors"
+"$OUT/hosted_signed_vectors"
 printf '%s\n' '30_hosted_vector_test=PASS_SCOPED' '30_token_vazio_ne_numeric_zero=ASSERTED_BY_EXISTING_HARNESS' >> "$RECEIPT"
 
 STAGE=90_EVIDENCE_AND_RECEIPT
