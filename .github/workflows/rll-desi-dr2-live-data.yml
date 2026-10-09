@@ -1,0 +1,34 @@
+name: RLL DESI DR2 Live Source Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'feat/rll-android-real-data-*'
+    paths:
+      - 'scripts/rll_desi_dr2_real_data_gate.py'
+      - '.github/workflows/rll-desi-dr2-live-data.yml'
+  pull_request:
+    paths:
+      - 'scripts/rll_desi_dr2_real_data_gate.py'
+      - '.github/workflows/rll-desi-dr2-live-data.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  live-source-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Fetch and independently check pinned DESI DR2 bytes
+        run: python3 scripts/rll_desi_dr2_real_data_gate.py
+      - name: Upload source SHA256 and covariance-only receipt (no dataset bytes)
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-desi-dr2-live-source-receipt
+          path: artifacts/rll-desi-dr2-source-receipt.json
+          if-no-files-found: error
+          retention-days: 30

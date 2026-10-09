@@ -12,8 +12,8 @@ android {
         minSdk 23
         targetSdk 35
         // Monotone Android release revision. CI can inject an approved greater integer.
-        versionCode providers.environmentVariable('RLL_ANDROID_VERSION_CODE').map { Integer.parseInt(it) }.getOrElse(2)
-        versionName providers.environmentVariable('RLL_ANDROID_VERSION_NAME').getOrElse('0.2.0')
+        versionCode providers.environmentVariable('RLL_ANDROID_VERSION_CODE').map { Integer.parseInt(it) }.getOrElse(3)
+        versionName providers.environmentVariable('RLL_ANDROID_VERSION_NAME').getOrElse('0.3.0')
 
         externalNativeBuild {
             cmake {
