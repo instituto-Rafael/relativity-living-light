@@ -9,6 +9,15 @@
 
 The private `CONVERSATIONS_CHUNKS_PRIVATE` report `memory_bridge/reports/NOVOEXPORT_TOKEN_GENEALOGY_RETRO_000_010_V1.md` records a `USER_INPUT` container occurrence of `√3/2` at **2025-10-16 08:36:51.144650 UTC**, scoped to shards `000..010`. It explicitly warns that input-container role does not prove original lexical authorship. The index was committed on **2026-09-28 11:00:25 UTC** at `865e1d13d7d962168f6121ea1267c6e242ed3361`, blob SHA `490d956c8b487641acc9f67820149dfb236f2790`. These are **distinct timestamps**. They do not establish third-party timestamp notarization of the 2025 message.
 
+## Exact notation falsifier — scope-limited source verification
+
+A private raw-source readback confirmed the shard SHA-256 against a historical Drive custody receipt and matched one user-role source message and UTC timestamp, with no message text published. The original source contains two mathematical forms:
+
+- `sqrt(3)/2`, with squared value `3/4`.
+- `sqrt(3/2)`, with squared value `3/2`.
+
+They are distinct positive real values. Treating them as a single expression would create a false identity. A scoped validator and two negative tests now reject that confusion. This does not prove an original polygon reconstruction theorem or publication priority.
+
 ## Reviewed external literature
 
 | arXiv | First posted (arXiv v1) | Chronology versus indexed 2025 token | Specific mathematical connection |
