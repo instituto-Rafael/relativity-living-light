@@ -38,21 +38,25 @@ jobs:
     # the compiled core objects, never to GitHub runner or test process.
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      RLL_SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: "00 | Exact event HEAD and source custody"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pinned official GitHub action
         with:
           persist-credentials: false
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: "00 | Canonical repo and HEAD identity"
         shell: bash
         run: |
           set -euo pipefail
           test "$GITHUB_REPOSITORY" = "instituto-Rafael/relativity-living-light"
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$RLL_SOURCE_HEAD_SHA"
           echo "canonical_repository=$GITHUB_REPOSITORY"
-          echo "exact_event_head=$GITHUB_SHA"
+          echo "tested_source_head=$RLL_SOURCE_HEAD_SHA"
+          echo "event_merge_or_dispatch_sha=$GITHUB_SHA"
           echo "claim_allowed=false"
           echo "provider_enforcement=TOKEN_VAZIO_EXTERNAL_SETTING"
 
@@ -92,19 +96,22 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.ws01_diagnostic }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      RLL_SOURCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: "Checkout exact selected HEAD"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: "Re-run the original pre-registered WS01 tolerance without relaxation"
         shell: bash
         run: |
           set -euo pipefail
           test "$GITHUB_REPOSITORY" = "instituto-Rafael/relativity-living-light"
-          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$RLL_SOURCE_HEAD_SHA"
           mkdir -p artifacts/ci/rll-omega-ws01
           # Hosted Python/stdlib is a separate executor; no third-party pip install.
           set +e
@@ -115,7 +122,8 @@ jobs:
           cat artifacts/ci/rll-omega-ws01/stdout.txt
           {
             echo "schema=rll.omega.ws01.hosted_diagnostic.v1"
-            echo "exact_head=$GITHUB_SHA"
+            echo "tested_source_head=$RLL_SOURCE_HEAD_SHA"
+            echo "event_merge_or_dispatch_sha=$GITHUB_SHA"
             echo "executor=HOSTED_PYTHON_STDLIB"
             echo "claim_allowed=false"
             echo "scientific_confirmation=false"
