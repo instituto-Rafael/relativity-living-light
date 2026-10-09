@@ -22,7 +22,11 @@ def test_user_can_select_models_and_individual_formulas():
     assert "Exibir apenas a fórmula selecionada" in ui
     assert "Varredura z = 0 até 3 (11 pontos)" in ui
     assert "Calcular todas as fórmulas deste modelo" in ui
-    assert "new FormulaLabView(this).attach(root)" in ACTIVITY.read_text(encoding="utf-8")
+    activity=ACTIVITY.read_text(encoding="utf-8")
+    # The v0.7 one-click exporter must share the actual attached FormulaLab instance.
+    assert "FormulaLabView formulaLab=new FormulaLabView(this);" in activity
+    assert "formulaLab.attach(root);" in activity
+    assert "realDataLab.bindEvidenceInputs(formulaLab,inputX,inputY);" in activity
 
 def test_source_data_claim_separation_and_negative_domains():
     s=ENGINE.read_text(encoding="utf-8")
