@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class CanonicalOmegaBundle {
     private CanonicalOmegaBundle(){}
-    public static final String SCHEMA="rll.canonical.omega.zip.v2";
+    public static final String SCHEMA="rll.canonical.omega.zip.v3";
     public static final class Result {
         public final byte[] zip;
         public final String sha256, gateRegister, dataState;
@@ -70,6 +70,15 @@ public final class CanonicalOmegaBundle {
     public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
                  String nativeReceipt,String installationReceipt,String releaseReceipt,
                  String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks)throws Exception {
+        return build(mean,cov,downloadDiagnostic,nativeReceipt,installationReceipt,
+                releaseReceipt,stageTrace,runtimeContext,ownLogcat,expandedChecks,
+                "gate=TOKEN_VAZIO_BINARY_INSPECTION_NOT_RUN\n",
+                "gate=TOKEN_VAZIO_HARDWARE_PROBE_NOT_RUN\n");
+    }
+    public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
+                 String nativeReceipt,String installationReceipt,String releaseReceipt,
+                 String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks,
+                 String binaryInspection,String hardwareProbe)throws Exception {
         Map<String,byte[]> e=new LinkedHashMap<>();
         StringBuilder gates=new StringBuilder("gate\tstatus\tscope\tevidence\n");
         StringBuilder events=new StringBuilder("schema=").append(SCHEMA)
@@ -78,7 +87,7 @@ public final class CanonicalOmegaBundle {
         put(e,"00_START_HERE.txt",
           "RLL CANONICAL OMEGA ONE-CLICK EVIDENCE ARCHIVE\n"+
           "A single command executes every available local diagnostic; unavailable stages are typed, never silently removed.\n"+
-          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat.\n"+
+          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat. 12_BINARY contains APK/DEX/ELF scoped inspection and Android hardware/process probes; 21_CROSS_MODEL contains 4-model pairwise and nested falsifiers.\n"+
           "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM.\n"+
           "USER_DEVICE_REPORT != INDEPENDENT_HARDWARE_ATTESTATION.\n"+
           "NUMERIC_SELF_CHECK != COSMOLOGICAL_PROOF.\n"+
@@ -117,6 +126,23 @@ public final class CanonicalOmegaBundle {
             expandedChecks.contains("FAIL_NUMERIC")?"FAIL_NUMERIC":(
                 expandedChecks.contains("PASS_SCOPED")?"PASS_SCOPED_NUMERIC":"TOKEN_VAZIO_NOT_RUN"),
             "ALGEBRAIC_NUMERIC_NOT_PHYSICAL_PROOF","11_DIAGNOSTICS/expanded_formula_selfchecks.tsv");
+        if(binaryInspection==null||binaryInspection.isEmpty())
+            binaryInspection="gate=TOKEN_VAZIO_BINARY_INSPECTION_NOT_RUN\n";
+        if(hardwareProbe==null||hardwareProbe.isEmpty())
+            hardwareProbe="gate=TOKEN_VAZIO_HARDWARE_PROBE_NOT_RUN\n";
+        put(e,"12_BINARY/apk_dex_elf_integrity.txt",binaryInspection);
+        put(e,"12_BINARY/hardware_process_numa.txt",hardwareProbe);
+        gate(gates,"OWN_APK_DEX_ELF",
+             binaryInspection.contains("gate=PASS_SCOPED_APK_DEX_ELF_CRC")
+               ?"PASS_SCOPED_SELF_INSPECTION":
+             (binaryInspection.contains("gate=TOKEN_VAZIO")?"TOKEN_VAZIO_NOT_RUN_OR_DENIED":"FAIL_BINARY_STRUCTURE"),
+             "OWN_APK_RUNTIME_NOT_INDEPENDENT_WITNESS","12_BINARY/apk_dex_elf_integrity.txt");
+        gate(gates,"HW_CPU_RAM_STORAGE_NUMA",
+             hardwareProbe.contains("gate=RECORDED_APP_SCOPED")
+               ?"RECORDED_SELF_REPORT":"TOKEN_VAZIO_NOT_RUN_OR_DENIED",
+             "ANDROID_PUBLIC_API_AND_OWN_PROC","12_BINARY/hardware_process_numa.txt");
+        gate(gates,"APK_V2_V3_CRYPTO_SIGNATURE","TOKEN_VAZIO_NOT_VERIFIED",
+             "EXTERNAL_APKSIGNER_REQUIRED","No privileged signer inference");
         gate(gates,"INDEPENDENT_INSTALL_WITNESS","TOKEN_VAZIO_NOT_ATTESTED",
             "ADB_HARDWARE_SIGNER_NOT_IN_APP","Needs external trusted witness");
         gate(gates,"CI_EXACT_HEAD","TOKEN_VAZIO_INDEPENDENT_CI_VERIFICATION",
@@ -150,6 +176,21 @@ public final class CanonicalOmegaBundle {
             put(e,"20_FORMULAS/"+m.name()+"/grid.csv",sweep.toString());
         }
         put(e,"20_FORMULAS/formula_catalog.tsv",catalog.toString());
+        OmegaCrossModelComparison.Result comparison=OmegaCrossModelComparison.run();
+        put(e,"21_CROSS_MODEL/fixed_parameter_model_grid.csv",comparison.modelRows);
+        put(e,"21_CROSS_MODEL/six_pairwise_model_differences.csv",comparison.pairRows);
+        put(e,"21_CROSS_MODEL/nested_model_falsifiers.csv",comparison.nestedChecks);
+        put(e,"21_CROSS_MODEL/source_boundary.txt",
+            "origin=LOCAL_JAVA_FIXED_PARAMETERS\n"
+           +"pairwise_comparisons="+comparison.comparisons+"\n"
+           +"checks_passed="+comparison.passed+"\nchecks_failed="+comparison.failed+"\n"
+           +"independent_science=TOKEN_VAZIO_NOT_RUN\n"
+           +"scope=MATHEMATICAL_NUMERIC_CONSISTENCY_NOT_COSMOLOGICAL_VALIDATION\n");
+        gate(gates,"CROSS_MODEL_PAIRS_AND_NESTED",
+            comparison.failed==0&&comparison.comparisons==66
+              ?"PASS_SCOPED_NUMERIC":"FAIL_NUMERIC_OR_INCOMPLETE",
+            "SIX_PAIRS_X_11_POINTS_AND_33_NESTED_CHECKS",
+            "21_CROSS_MODEL (not posterior or physics proof)");
         gate(gates,"FOUR_MODELS_ALL_FORMULAS","PASS_SCOPED_NUMERIC",
              "ALGEBRAIC_AND_PROXY_ONLY",formulaRuns+" point receipts; includes typed absences");
         String sourceState="TOKEN_VAZIO_DATA_NOT_AVAILABLE";
