@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class CanonicalOmegaBundle {
     private CanonicalOmegaBundle(){}
-    public static final String SCHEMA="rll.canonical.omega.zip.v3";
+    public static final String SCHEMA="rll.canonical.omega.zip.v4";
     public static final class Result {
         public final byte[] zip;
         public final String sha256, gateRegister, dataState;
@@ -79,6 +79,17 @@ public final class CanonicalOmegaBundle {
                  String nativeReceipt,String installationReceipt,String releaseReceipt,
                  String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks,
                  String binaryInspection,String hardwareProbe)throws Exception {
+        return build(mean,cov,downloadDiagnostic,nativeReceipt,installationReceipt,
+             releaseReceipt,stageTrace,runtimeContext,ownLogcat,expandedChecks,
+             binaryInspection,hardwareProbe,
+             "gate=TOKEN_VAZIO_KERNEL_CONTEXT_NOT_RUN\n",
+             "gate=TOKEN_VAZIO_JNI_BOUNDARIES_NOT_RUN\n",null);
+    }
+    public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
+                 String nativeReceipt,String installationReceipt,String releaseReceipt,
+                 String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks,
+                 String binaryInspection,String hardwareProbe,
+                 String kernelContext,String nativeBoundaries,OmegaUiEvidence.Result uiEvidence)throws Exception {
         Map<String,byte[]> e=new LinkedHashMap<>();
         StringBuilder gates=new StringBuilder("gate\tstatus\tscope\tevidence\n");
         StringBuilder events=new StringBuilder("schema=").append(SCHEMA)
@@ -87,7 +98,7 @@ public final class CanonicalOmegaBundle {
         put(e,"00_START_HERE.txt",
           "RLL CANONICAL OMEGA ONE-CLICK EVIDENCE ARCHIVE\n"+
           "A single command executes every available local diagnostic; unavailable stages are typed, never silently removed.\n"+
-          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat. 12_BINARY contains APK/DEX/ELF scoped inspection and Android hardware/process probes; 21_CROSS_MODEL contains 4-model pairwise and nested falsifiers.\n"+
+          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat. 12_BINARY contains APK/DEX/ELF scoped inspection and Android hardware/process probes; 21_CROSS_MODEL compares four fixed models; 22_UI replays each FormulaLab action from frozen inputs, 13_NATIVE contains JNI/C boundary measurements, 12_BINARY contains own-APK, system/kernel and build context. Copy action recreates receipt, not clipboard.\n"+
           "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM.\n"+
           "USER_DEVICE_REPORT != INDEPENDENT_HARDWARE_ATTESTATION.\n"+
           "NUMERIC_SELF_CHECK != COSMOLOGICAL_PROOF.\n"+
@@ -141,6 +152,35 @@ public final class CanonicalOmegaBundle {
              hardwareProbe.contains("gate=RECORDED_APP_SCOPED")
                ?"RECORDED_SELF_REPORT":"TOKEN_VAZIO_NOT_RUN_OR_DENIED",
              "ANDROID_PUBLIC_API_AND_OWN_PROC","12_BINARY/hardware_process_numa.txt");
+        if(kernelContext==null||kernelContext.isEmpty())
+            kernelContext="gate=TOKEN_VAZIO_KERNEL_CONTEXT_NOT_RUN\n";
+        if(nativeBoundaries==null||nativeBoundaries.isEmpty())
+            nativeBoundaries="gate=TOKEN_VAZIO_JNI_BOUNDARIES_NOT_RUN\n";
+        put(e,"12_BINARY/kernel_and_compilation_context.txt",kernelContext);
+        put(e,"13_NATIVE/jni_c_80_boundaries_and_user_manual.txt",nativeBoundaries);
+        gate(gates,"KERNEL_COMPILATION_CONTEXT",
+             kernelContext.contains("gate=RECORDED_SCOPED_KERNEL_AND_BUILD_CONTEXT")?
+               "RECORDED_SCOPED":"TOKEN_VAZIO_NOT_RUN_OR_RESTRICTED",
+             "KERNEL_OS_READ_ONLY_AND_BUILD_LABEL_NOT_ATTESTATION",
+             "12_BINARY/kernel_and_compilation_context.txt");
+        gate(gates,"JNI_80_BOUNDARIES_AND_MANUAL",
+             nativeBoundaries.contains("gate=PASS_SCOPED_JNI_BOUNDARIES")?
+               "PASS_SCOPED":"FAIL_OR_TOKEN_VAZIO",
+             "LIVE_APP_JNI_C_VS_JAVA_ORACLE",
+             "13_NATIVE/jni_c_80_boundaries_and_user_manual.txt");
+        if(uiEvidence==null) {
+            put(e,"22_UI/TOKEN_VAZIO_NO_UI_SNAPSHOT.txt",
+                "gate=TOKEN_VAZIO_UI_CAPTURE_NOT_RUN\n"
+               +"no_user_input_fabricated=true\n");
+            gate(gates,"REPLAY_ALL_FORMULA_UI_ACTIONS","TOKEN_VAZIO_NOT_RUN",
+                 "NO_UI_SNAPSHOT","22_UI/TOKEN_VAZIO_NO_UI_SNAPSHOT.txt");
+        }else {
+            for(Map.Entry<String,String> item:uiEvidence.files.entrySet())
+                put(e,item.getKey(),item.getValue());
+            gate(gates,"REPLAY_ALL_FORMULA_UI_ACTIONS",
+                 uiEvidence.gate,"FROZEN_CLICK_TIME_PARAMETERS_NO_UI_CLIPBOARD_MUTATION",
+                 "22_UI/UI_GATE.txt");
+        }
         gate(gates,"APK_V2_V3_CRYPTO_SIGNATURE","TOKEN_VAZIO_NOT_VERIFIED",
              "EXTERNAL_APKSIGNER_REQUIRED","No privileged signer inference");
         gate(gates,"INDEPENDENT_INSTALL_WITNESS","TOKEN_VAZIO_NOT_ATTESTED",
