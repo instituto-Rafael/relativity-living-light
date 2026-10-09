@@ -1,0 +1,140 @@
+# RLL Ω canonical diagnostic CI. Not a promotion workflow.
+# CORE = authorial freestanding C; Actions/Shell/Clang/Git are HOSTED BOUNDARY.
+# No apt/pip/npm install, no generated source overwrite, no claim promotion.
+name: "555 | RLL Ω Freestanding Canonical Evidence"
+on:
+  workflow_dispatch:
+    inputs:
+      ws01_diagnostic:
+        description: "Run isolated HOSTED WS01 numerical falsifier (may FAIL)"
+        type: boolean
+        default: false
+        required: false
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/555_00_10_20_30_90_rll_omega_freestanding_canonical.yml"
+      - "tools/ci/rll_omega_canonical_freestanding_gate.sh"
+      - "core/lowlevel_runtime/c/rll_canonical_coupling.c"
+      - "core/lowlevel_runtime/include/rll_canonical_coupling.h"
+      - "core/lowlevel_runtime/include/pantheon_freestanding.h"
+      - "tests/c/rll_canonical_coupling_vectors.c"
+      - "LICENSE.md"
+      - "docs/governance/RLL_OMEGA_FREESTANDING_CANONICAL_CI_V1.md"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-555-freestanding-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  core-freestanding:
+    name: "00→10→20→30→90 | freestanding C / bounded hosted test"
+    # GitHub Actions is an OS-hosted service. No hosted CI can itself be an
+    # executable lacking all OS/runtime dependencies. Freestanding applies to
+    # the compiled core objects, never to GitHub runner or test process.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: "00 | Exact event HEAD and source custody"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pinned official GitHub action
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "00 | Canonical repo and HEAD identity"
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "instituto-Rafael/relativity-living-light"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          echo "canonical_repository=$GITHUB_REPOSITORY"
+          echo "exact_event_head=$GITHUB_SHA"
+          echo "claim_allowed=false"
+          echo "provider_enforcement=TOKEN_VAZIO_EXTERNAL_SETTING"
+
+      - name: "10/20/30/90 | Compile, audit and falsify the authorial C core"
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh tools/ci/rll_omega_canonical_freestanding_gate.sh
+
+      - name: "90 | Human-readable terminal receipt"
+        if: always()
+        shell: bash
+        run: |
+          if test -f artifacts/ci/rll-omega-freestanding/receipt.txt; then
+            cat artifacts/ci/rll-omega-freestanding/receipt.txt
+            {
+              echo "## RLL Ω: freestanding C core only"
+              echo '~~~text'
+              cat artifacts/ci/rll-omega-freestanding/receipt.txt
+              echo '~~~'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "TOKEN_VAZIO_NO_EXECUTION_RECEIPT"
+          fi
+
+      - name: "90 | Append-only run artifact (even on FAIL)"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # pinned official GitHub action
+        with:
+          name: rll-omega-freestanding-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/ci/rll-omega-freestanding/
+          if-no-files-found: warn
+          retention-days: 30
+
+  ws01-hosted-diagnostic:
+    name: "WS01 | separated diagnostic, non-freestanding"
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.ws01_diagnostic }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: "Checkout exact selected HEAD"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "Re-run the original pre-registered WS01 tolerance without relaxation"
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "instituto-Rafael/relativity-living-light"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir -p artifacts/ci/rll-omega-ws01
+          # Hosted Python/stdlib is a separate executor; no third-party pip install.
+          set +e
+          python3 tools/rll_ws01_distance_integration_tolerance.py --write \
+            > artifacts/ci/rll-omega-ws01/stdout.txt 2>&1
+          rc=$?
+          set -e
+          cat artifacts/ci/rll-omega-ws01/stdout.txt
+          {
+            echo "schema=rll.omega.ws01.hosted_diagnostic.v1"
+            echo "exact_head=$GITHUB_SHA"
+            echo "executor=HOSTED_PYTHON_STDLIB"
+            echo "claim_allowed=false"
+            echo "scientific_confirmation=false"
+            echo "return_code=$rc"
+            echo "state=$([ "$rc" -eq 0 ] && echo NUMERICAL_PASS_SCOPED || echo FAIL_PRESERVED)"
+            echo "rollback=NOTHING_MUTATED_EXCEPT_EPHEMERAL_RECEIPT"
+          } > artifacts/ci/rll-omega-ws01/receipt.txt
+          test -f artifacts/science/background/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.json \
+            && cp artifacts/science/background/RLL_WS01_DISTANCE_INTEGRATION_TOLERANCE_RECEIPT.json \
+              artifacts/ci/rll-omega-ws01/rows.json || :
+          sha256sum data/contracts/rll_ws01_distance_integration_tolerance.v1.json \
+            tools/rll_ws01_distance_integration_tolerance.py \
+            > artifacts/ci/rll-omega-ws01/source_checksums.sha256
+          exit "$rc"
+
+      - name: "Keep WS01 negative evidence even on failure"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-omega-ws01-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/ci/rll-omega-ws01/
+          if-no-files-found: warn
+          retention-days: 30
