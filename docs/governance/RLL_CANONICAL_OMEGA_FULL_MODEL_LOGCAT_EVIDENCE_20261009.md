@@ -1,0 +1,19 @@
+# RLL Ω 0.5.0 — todos os modelos + fórmulas + logcat próprio + proveniência em um ZIP
+
+**Operação:** botão único `GERAR ZIP Ω COMPLETO: MODELOS + LOGCAT + EVIDÊNCIAS`. O app 0.5.0 executa 4 modelos × 11 redshifts = 44 recibos individuais, a suíte independente de verificações de fonte, matrizes DESI DR2 com covariância real quando acessível, quatro vetores JNI/C e coleta de provas de PackageManager. O Android solicita só a localização do ZIP, depois tenta comparar o SHA-256 da gravação usando a URI retornada.
+
+**Diferença para v0.4:** adiciona `11_DIAGNOSTICS/`:
+- `app_stage_trace.tsv`: sequência e durações por estágio relativas ao relógio monotônico, timestamps de início; os registros são auto-instrumentados, não assinados por terceiro;
+- `runtime_context.txt`: PID/UID do **próprio processo**, SDK/ABI, relógios, memória Java, bateria quando o OS fornece; não acessa IMEI/serial/GPS/contatos;
+- `own_pid_logcat.txt`: tentativa limitada a 150 linhas do PID atual, filtro RLL_OMEGA, timeout 1.8s e limite 48k caracteres; `TOKEN_VAZIO` se não houver acesso. Não solicita `READ_LOGS`, não lê logs globais nem desativa segurança Android;
+- `expanded_formula_selfchecks.tsv`: >=24 verificações falsificáveis da álgebra e implementação (E²(0), H0, Hubble pequeno-z, modelos aninhados, pressão documentada versus conservada do RLL, quadratura Simpson, domínios inválidos, fechamento **geométrico** T²). Cinco ausências tipadas para r_s Boltzmann, Poincaré, ΔP CTI, posterior DESI e atestação externa do hardware.
+
+As fontes continuam separadas de artefatos, execução, evidências e hipóteses. `SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM`. **A execução independente do aparelho não pode ser provada pelo próprio aplicativo;** PackageManager/logcat/clock são evidências locais autodeclaradas. A identidade de dispositivo exige verificador externo ADB/PKI/atestado compatível. O hash do ZIP salvo no SAF só existe após o ZIP estar fechado e, portanto, é mostrado na tela, não gravado nele retroativamente.
+
+**Dados científicos:** DESI DR2 13 medidas e covariância 13×13, fontes publicadas e Git commit imutável; se não houver rede ou houver erro de hash, o ZIP ainda gera JNI/formulas/diagnósticos com `TOKEN_VAZIO_DATA`. O χ² implementado usa valores fixos e proxy empírico de r_drag; **não** é posterior cosmológico, comprovação da energia escura RLL, nem cálculo CLASS/CAMB. `ΔP=P(stable_any|peak)-P(stable_any|nonpeak)` não é observável a partir de BAO sem traços reais RMRCTI e hipótese de recorrência de Poincaré não pode ser inferida de um toro paramétrico. Direitos de redistribuição P0 continuam em avaliação.
+
+**Testes:** `sh app/verify_formula_engine.sh`, `sh app/verify_real_bao_engine.sh`, e `sh app/verify_canonical_omega.sh` atualizado para verificar a versão v2 do esquema canônico, os dados de diagnóstico presentes, os gates de logcat restrito, negação segura de logcat, autochecagens ampliadas e manifesto SHA-256. CI Android gera APKs debug + validation unsigned ARMv7/AArch64. O versionCode passa a 5, versionName 0.5.0; **não** há assinatura estável de produção garantida nem instalação silenciosa.
+
+**Direitos e rollback:** apenas componentes Java novos e restritos do próprio RLL, testes, versão e documentação; não se copia código de terceiros, não altera fontes de equações RLL, RMRCTI/llamaRafaelia ou históricos. Rollback por reversão do commit isolado; a versão 0.4.0/PR #1093 já mesclada permanece intacta.
+
+**Logcat:** conforme documentação Android, a leitura geral de registros exige privilégios inacessíveis a apps convencionais; acesso de terceiros aos próprios registros é limitado pela implementação/versão. O recibo preserva o estado real, `TOKEN_VAZIO_LOGCAT_RESTRICTED` quando necessário. Informações locais podem conter metadados; o usuário controla o arquivo e não há envio automático.
