@@ -19,6 +19,7 @@ on:
       - "core/lowlevel_runtime/include/rll_canonical_coupling.h"
       - "core/lowlevel_runtime/include/pantheon_freestanding.h"
       - "tests/c/rll_canonical_coupling_vectors.c"
+      - "tests/c/rll_omega_canonical_signed_division_vectors.c"
       - "LICENSE.md"
       - "docs/governance/RLL_OMEGA_FREESTANDING_CANONICAL_CI_V1.md"
 
