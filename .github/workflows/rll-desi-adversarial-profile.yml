@@ -1,0 +1,51 @@
+name: RLL DESI DR2 adversarial profile (non-claim gate)
+on:
+  pull_request:
+    paths:
+      - 'docs/research/RLL_DESI_DR2_FALSIFICATION_FIXED_VS_PROFILE_20261009.md'
+      - 'scripts/rll_desi_adversarial.py'
+      - 'tests/test_rll_desi_adversarial.py'
+      - '.github/workflows/rll-desi-adversarial-profile.yml'
+      - 'data/real/desi_dr2_bao_measurements.csv'
+      - 'data/real/desi_dr2_bao_covariance.csv'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  profile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing scientific dependencies (fixed CI environment)
+        run: python -m pip install numpy==1.26.4 scipy==1.13.1
+      - name: Run adversarial regression and fail-closed controls
+        run: python -m unittest discover -s tests -p test_rll_desi_adversarial.py -v
+      - name: Run pinned 3-model profiling, heldout diagnostic and null-bootstrap smoke
+        run: |
+          python scripts/rll_desi_adversarial.py \
+            --output-dir artifacts/rll-desi-profile \
+            --seed 1748365262 --starts 8 --bootstrap 16 --leave-tracer-out
+      - name: Verify immutable output digest and claim boundary
+        run: |
+          cd artifacts/rll-desi-profile
+          sha256sum -c ./*.json.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a, = Path('.').glob('*.json')
+          d = json.loads(a.read_text())
+          assert d['claim_allowed'] is False
+          assert d['provenance_verified'] is True
+          assert d['null_bootstrap']['reliable_tail_inference'] is False
+          assert all(m in d['fit'] for m in ('LCDM', 'CPL', 'RLL'))
+          PY
+      - name: Upload scoped receipts (not physical cosmology validation)
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-desi-adversarial-profile
+          path: artifacts/rll-desi-profile/
+          retention-days: 14
