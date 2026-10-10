@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class CanonicalOmegaBundle {
     private CanonicalOmegaBundle(){}
-    public static final String SCHEMA="rll.canonical.omega.zip.v4";
+    public static final String SCHEMA="rll.canonical.omega.zip.v5";
     public static final class Result {
         public final byte[] zip;
         public final String sha256, gateRegister, dataState;
@@ -29,7 +29,7 @@ public final class CanonicalOmegaBundle {
     static void putBytes(Map<String,byte[]> entries,String path,byte[] data){
         if(path.startsWith("/")||path.contains("..")||path.indexOf('\\')>=0||
             !path.matches("[A-Za-z0-9_./-]+")||entries.containsKey(path)||
-            data==null||data.length>300000)
+            data==null||data.length==0||data.length>300000)
             throw new IllegalArgumentException("CANONICAL_PATH_OR_SIZE");
         entries.put(path,data);
     }
@@ -90,6 +90,16 @@ public final class CanonicalOmegaBundle {
                  String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks,
                  String binaryInspection,String hardwareProbe,
                  String kernelContext,String nativeBoundaries,OmegaUiEvidence.Result uiEvidence)throws Exception {
+        return build(mean,cov,downloadDiagnostic,nativeReceipt,installationReceipt,releaseReceipt,
+          stageTrace,runtimeContext,ownLogcat,expandedChecks,binaryInspection,hardwareProbe,
+          kernelContext,nativeBoundaries,uiEvidence,null);
+    }
+    public static Result build(byte[] mean,byte[] cov,String downloadDiagnostic,
+                 String nativeReceipt,String installationReceipt,String releaseReceipt,
+                 String stageTrace,String runtimeContext,String ownLogcat,String expandedChecks,
+                 String binaryInspection,String hardwareProbe,
+                 String kernelContext,String nativeBoundaries,OmegaUiEvidence.Result uiEvidence,
+                 OmegaInputOutputParity.Result parity)throws Exception {
         Map<String,byte[]> e=new LinkedHashMap<>();
         StringBuilder gates=new StringBuilder("gate\tstatus\tscope\tevidence\n");
         StringBuilder events=new StringBuilder("schema=").append(SCHEMA)
@@ -98,7 +108,7 @@ public final class CanonicalOmegaBundle {
         put(e,"00_START_HERE.txt",
           "RLL CANONICAL OMEGA ONE-CLICK EVIDENCE ARCHIVE\n"+
           "A single command executes every available local diagnostic; unavailable stages are typed, never silently removed.\n"+
-          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat. 12_BINARY contains APK/DEX/ELF scoped inspection and Android hardware/process probes; 21_CROSS_MODEL compares four fixed models; 22_UI replays each FormulaLab action from frozen inputs, 13_NATIVE contains JNI/C boundary measurements, 12_BINARY contains own-APK, system/kernel and build context. Copy action recreates receipt, not clipboard.\n"+
+          "READ FIRST: 01_ATLAS.tsv then 02_GATES.tsv and 03_RECEIPT.txt; verify MANIFEST_SHA256.txt before considering results. 11_DIAGNOSTICS contains local times, model falsifiers and own-PID logcat. 12_BINARY contains APK/DEX/ELF scoped inspection and Android hardware/process probes; 21_CROSS_MODEL compares four fixed models; 22_UI contains every individual formula; 23_IO_PARITY reconciles 14 inputs with every output and computes replay-stable SHA-256; 24_COMPLETENESS enumerates system domains. 13_NATIVE contains JNI/C boundaries; 12_BINARY contains own-APK, system/kernel and build context. Copy action recreates receipt, not clipboard.\n"+
           "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM.\n"+
           "USER_DEVICE_REPORT != INDEPENDENT_HARDWARE_ATTESTATION.\n"+
           "NUMERIC_SELF_CHECK != COSMOLOGICAL_PROOF.\n"+
@@ -180,6 +190,20 @@ public final class CanonicalOmegaBundle {
             gate(gates,"REPLAY_ALL_FORMULA_UI_ACTIONS",
                  uiEvidence.gate,"FROZEN_CLICK_TIME_PARAMETERS_NO_UI_CLIPBOARD_MUTATION",
                  "22_UI/UI_GATE.txt");
+        }
+        if(parity==null){
+            put(e,"23_IO_PARITY/NO_RECONCILIATION.txt",
+                "gate=NOT_RECONCILED_LEGACY_CALLER\n"
+               +"reason=NO_CLICK_TIME_SNAPSHOT_FOR_THIS_CALL\n"
+               +"next_evidence=ONE_CLICK_USER_INPUT_SNAPSHOT\n");
+            gate(gates,"INPUT_OUTPUT_PARITY","NOT_RECONCILED_LEGACY",
+                "NO_ACTUAL_SNAPSHOT","23_IO_PARITY/NO_RECONCILIATION.txt");
+        }else {
+            for(Map.Entry<String,String> item:parity.files.entrySet())
+                put(e,item.getKey(),item.getValue());
+            gate(gates,"INPUT_OUTPUT_PARITY",parity.gate,
+                "STRUCTURAL_PARITY_NEVER_PHYSICAL_SCIENCE_PROOF",
+                "23_IO_PARITY/closure_receipt.txt");
         }
         gate(gates,"APK_V2_V3_CRYPTO_SIGNATURE","TOKEN_VAZIO_NOT_VERIFIED",
              "EXTERNAL_APKSIGNER_REQUIRED","No privileged signer inference");
@@ -331,6 +355,33 @@ public final class CanonicalOmegaBundle {
             "Nonparametric curvature sensitivity https://arxiv.org/abs/2609.22470\n"+
             "RMRCTI DeltaP source rafaelemeloreisnovo/llamaRafaelia/rmrCti/RMRCTI_DELTA_P_STABILITY_CONTRACT.md\n"+
             "No publication independently endorses or validates RLL by this archive alone.\n");
+        String[] sourceDomains={"10_DEVICE/","11_DIAGNOSTICS/","12_BINARY/",
+             "13_NATIVE/","20_FORMULAS/","21_CROSS_MODEL/","22_UI/","23_IO_PARITY/",
+             "30_DATA/","31_REAL_DATA_CALCULATIONS/","40_STABILITY/","50_REFERENCES/"};
+        StringBuilder sourceCoverage=new StringBuilder("domain\tfiles\tbytes\tstructural_state\tboundary\n");
+        int absentDomains=0,emptyFiles=0;
+        for(String prefix:sourceDomains){
+            int count=0;long total=0;
+            for(Map.Entry<String,byte[]> entry:e.entrySet()){
+                if(!entry.getKey().startsWith(prefix))continue;
+                count++;total+=entry.getValue().length;
+                if(entry.getValue().length==0)emptyFiles++;
+            }
+            boolean present=count>0&&total>0;
+            if(!present)absentDomains++;
+            sourceCoverage.append(prefix).append('\t').append(count).append('\t')
+                .append(total).append('\t')
+                .append(present?"PRESENT_NONEMPTY":"FAIL_DOMAIN_OMITTED").append('\t')
+                .append("PRESENCE_NOT_NUMERIC_OR_PHYSICAL_ATTESTATION").append('\n');
+        }
+        sourceCoverage.append("source_domains=").append(sourceDomains.length).append('\n')
+                      .append("missing_domains=").append(absentDomains).append('\n')
+                      .append("empty_files=").append(emptyFiles).append('\n');
+        put(e,"24_COMPLETENESS/observed_domain_matrix.tsv",sourceCoverage.toString());
+        gate(gates,"SYSTEM_DOMAIN_OUTPUT_COVERAGE",absentDomains==0&&emptyFiles==0?
+              "PASS_NO_SILENT_DOMAIN_OMISSIONS":"FAIL_MISSING_OUTPUT_DOMAIN",
+              "ALL_SOURCE_DOMAINS_REPRESENTED_NOT_ALL_CLAIMS_VALIDATED",
+              "24_COMPLETENESS/observed_domain_matrix.tsv");
         put(e,"02_GATES.tsv",gates.toString());
         put(e,"03_RECEIPT.txt",events.toString()+
            "state="+sourceState+"\nmodel_runs="+formulaRuns+"\n"+

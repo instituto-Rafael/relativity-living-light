@@ -11,6 +11,8 @@ javac -encoding UTF-8 -d "$out" \
   app/src/main/java/org/rafaelia/rll/OmegaCrossModelComparison.java \
   app/src/main/java/org/rafaelia/rll/OmegaBinaryInspector.java \
   app/src/main/java/org/rafaelia/rll/OmegaUiEvidence.java \
+  app/src/main/java/org/rafaelia/rll/OmegaInputOutputParity.java \
+  app/src/test/java/org/rafaelia/rll/OmegaInputOutputParitySelfTest.java \
   app/src/main/java/org/rafaelia/rll/KernelBridge.java \
   app/src/main/java/org/rafaelia/rll/OmegaNativeBoundary.java \
   app/src/test/java/org/rafaelia/rll/OmegaUiEvidenceSelfTest.java \
@@ -28,3 +30,5 @@ java -cp "$out" org.rafaelia.rll.OmegaBinaryInspectorSelfTest
 
 java -cp "$out" org.rafaelia.rll.OmegaUiEvidenceSelfTest
 java -cp "$out" org.rafaelia.rll.OmegaNativeBoundarySelfTest
+
+java -cp "$out" org.rafaelia.rll.OmegaInputOutputParitySelfTest
