@@ -42,6 +42,13 @@ fail() {
   exit 3
 }
 
+# Input gate precedes all device access: no digest, no ADB observations.
+if [ -z "$EXPECTED" ]; then
+  printf 'apk_identity=TOKEN_VAZIO_EXPECTED_HASH_NOT_SUPPLIED\n' >> "$OUT/receipt.txt"
+  printf 'ROUTE_STATE=HOLD_EXPECTED_HASH_NOT_SUPPLIED\n' > "$OUT/STATUS.txt"
+  exit 4
+fi
+
 command -v adb >/dev/null 2>&1 || fail MISSING_ADB
 command -v sha256sum >/dev/null 2>&1 || fail MISSING_SHA256SUM
 adb devices > "$OUT/adb_devices.txt" || fail ADB_DEVICES_FAILED
@@ -55,6 +62,12 @@ tr -d '\r' < "$OUT/sdk.raw" | sed 's/^/sdk=/' >> "$OUT/receipt.txt"
 tr -d '\r' < "$OUT/abi.raw" | sed 's/^/abi=/' >> "$OUT/receipt.txt"
 adb shell pm path "$PKG" > "$OUT/pm_path.raw" || fail PM_PATH_FAILED
 tr -d '\r' < "$OUT/pm_path.raw" > "$OUT/pm_path.txt"
+# Byte identity of base.apk cannot attest the complete installed package if
+# splits exist. Fail before any pull rather than silently reporting partial PASS.
+PM_PATH_LINES=$(awk 'NF {n++} END {print n+0}' "$OUT/pm_path.txt")
+PM_APKS=$(awk '/^package:\// {n++} END {print n+0}' "$OUT/pm_path.txt")
+[ "$PM_PATH_LINES" = "$PM_APKS" ] || fail PM_PATH_UNEXPECTED_FORMAT
+[ "$PM_APKS" -le 1 ] || fail SPLIT_APKS_REQUIRE_FULL_MANIFEST
 # An Android split-package may list multiple APKs; require a single base.apk.
 BASE_MATCHES=$(sed -n 's/^package:\(.*\/base[.]apk\)$/\1/p' "$OUT/pm_path.txt")
 [ -n "$BASE_MATCHES" ] || fail PM_BASE_APK_ABSENT
@@ -72,11 +85,6 @@ adb pull "$BASE_MATCHES" "$OUT/installed_base.apk" > "$OUT/adb_pull.log" 2>&1 ||
 H=$(sha256sum "$OUT/installed_base.apk" | awk '{print $1}')
 printf 'installed_base_apk_sha256=%s\n' "$H" >> "$OUT/receipt.txt"
 
-if [ -z "$EXPECTED" ]; then
-  printf 'apk_identity=TOKEN_VAZIO_EXPECTED_HASH_NOT_SUPPLIED\n' >> "$OUT/receipt.txt"
-  printf 'ROUTE_STATE=HOLD_EXPECTED_HASH_NOT_SUPPLIED\n' > "$OUT/STATUS.txt"
-  exit 4
-fi
 printf 'expected_apk_sha256=%s\n' "$EXPECTED" >> "$OUT/receipt.txt"
 if [ "$H" != "$EXPECTED" ]; then
   printf 'apk_identity=MISMATCH_EXPECTED_APK\n' >> "$OUT/receipt.txt"
