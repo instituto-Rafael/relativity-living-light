@@ -29,8 +29,12 @@ public final class OmegaInputOutputParity {
     private static String number(String original) {
         if(original==null||original.trim().isEmpty())return "NOT_PROVIDED";
         try {
-            return new BigDecimal(original.trim().replace(',','.'))
-                .stripTrailingZeros().toPlainString();
+            BigDecimal decimal=new BigDecimal(original.trim().replace(',','.'));
+            // toPlainString of 1e1000000000 would exhaust memory. Never expand
+            // an untrusted exponent beyond the bounded, auditable input domain.
+            if(decimal.scale()<-80||decimal.scale()>80||decimal.precision()>80)
+                return "INVALID_NUMBER:MAGNITUDE_OR_PRECISION_BOUND";
+            return decimal.stripTrailingZeros().toPlainString();
         }catch(NumberFormatException problem){
             return "INVALID_NUMBER:"+text(original.trim());
         }
@@ -95,7 +99,14 @@ public final class OmegaInputOutputParity {
             canonical.append(key).append('=').append(normalized).append('\n');
             record(r,output,"INPUT_"+key,"22_UI/frozen_inputs.txt",outcome,
                     required?"USER_DEFINED_INPUT":"USER_OBSERVATION_UNVERIFIED",
-                    ui!=null && ui.files.containsKey("22_UI/frozen_inputs.txt"));
+                    ui!=null && ui.files.containsKey("22_UI/frozen_inputs.txt")
+                     && ui.files.get("22_UI/frozen_inputs.txt").contains(
+                        "\n"+key+"="+(raw==null||raw.isEmpty()?
+                            "TOKEN_VAZIO_NOT_PROVIDED":raw)+"\n")
+                     && ui.files.get("22_UI/frozen_inputs.txt").contains(
+                        "\nselected_model="+snap.model+"\n")
+                     && ui.files.get("22_UI/frozen_inputs.txt").contains(
+                        "\nselected_formula="+snap.formula+"\n"));
             if(required&&!outcome.equals("PRESENT"))inputRequired=false;
         }
         r.files.put("23_IO_PARITY/inputs.tsv",input.toString());
