@@ -65,7 +65,7 @@ tr -d '\r' < "$OUT/pm_path.raw" > "$OUT/pm_path.txt"
 # Byte identity of base.apk cannot attest the complete installed package if
 # splits exist. Fail before any pull rather than silently reporting partial PASS.
 PM_PATH_LINES=$(awk 'NF {n++} END {print n+0}' "$OUT/pm_path.txt")
-PM_APKS=$(awk '/^package:\/\// {n++} END {print n+0}' "$OUT/pm_path.txt")
+PM_APKS=$(awk '/^package:\// {n++} END {print n+0}' "$OUT/pm_path.txt")
 [ "$PM_PATH_LINES" = "$PM_APKS" ] || fail PM_PATH_UNEXPECTED_FORMAT
 [ "$PM_APKS" -le 1 ] || fail SPLIT_APKS_REQUIRE_FULL_MANIFEST
 # An Android split-package may list multiple APKs; require a single base.apk.
