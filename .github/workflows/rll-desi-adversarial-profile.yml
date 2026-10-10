@@ -2,6 +2,7 @@ name: RLL DESI DR2 adversarial profile (non-claim gate)
 on:
   pull_request:
     paths:
+      - 'docs/research/RLL_DESI_DR2_FALSIFICATION_FIXED_VS_PROFILE_20261009.md'
       - 'scripts/rll_desi_adversarial.py'
       - 'tests/test_rll_desi_adversarial.py'
       - '.github/workflows/rll-desi-adversarial-profile.yml'
