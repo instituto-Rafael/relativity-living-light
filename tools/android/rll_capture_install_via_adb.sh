@@ -1,57 +1,88 @@
 #!/bin/sh
-# RLL identity capture outside the app: only on a user-authorized ADB device.
-# Does not install/update the app, change system state, or assert hardware attestation.
+# External, read-only Android installation receipt; NEVER installs/uninstalls.
+# This is an ADB host observation, not a hardware attestation.
 set -eu
-PKG=org.rafaelia.rll.debug
+umask 077
+export LC_ALL=C
+
+PKG='org.rafaelia.rll.debug'
+if [ "$#" -gt 2 ]; then
+  printf 'Usage: %s OUTPUT_DIR EXPECTED_APK_SHA256\n' "$0" >&2
+  exit 2
+fi
 OUT="${1:-./rll_install_capture_$(date -u +%Y%m%dT%H%M%SZ)}"
+EXPECTED="${2:-}"
+if [ -n "$EXPECTED" ]; then
+  case "$EXPECTED" in
+    *[!0123456789abcdef]* )
+      printf 'ERROR: EXPECTED_APK_SHA256 must be lowercase hexadecimal\n' >&2
+      exit 2
+      ;;
+  esac
+  if [ "${#EXPECTED}" -ne 64 ]; then
+    printf 'ERROR: EXPECTED_APK_SHA256 must contain 64 hexadecimal characters\n' >&2
+    exit 2
+  fi
+fi
+
+# Do not accidentally overwrite earlier forensic evidence.
+if [ -e "$OUT" ]; then
+  printf 'ERROR: output path already exists, preserving predecessor: %s\n' "$OUT" >&2
+  exit 2
+fi
 mkdir -p "$OUT"
-if ! command -v adb >/dev/null 2>&1; then
-  printf 'ROUTE_STATE=BLOCKED MISSING_ADB\n' > "$OUT/STATUS.txt"
-  exit 2
-fi
-N=$(adb devices | awk '$2=="device" {n++} END{print n+0}')
-if [ "$N" != "1" ]; then
-  printf 'ROUTE_STATE=BLOCKED EXPECT_ONE_AUTHORIZED_DEVICE\n' > "$OUT/STATUS.txt"
-  exit 2
-fi
-printf 'schema=rll.android.external_install_witness.v1\nsource=ADB_HOST_OUTSIDE_APP\npackage=%s\n' "$PKG" > "$OUT/receipt.txt"
-adb shell getprop ro.build.version.sdk | tr -d '\r' | sed 's/^/sdk=/' >> "$OUT/receipt.txt"
-adb shell getprop ro.product.cpu.abi | tr -d '\r' | sed 's/^/abi=/' >> "$OUT/receipt.txt"
-adb shell dumpsys package "$PKG" > "$OUT/dumpsys_package.txt" || :
-adb shell pm path "$PKG" | tr -d '\r' > "$OUT/pm_path.txt"
-REMOTE=$(sed -n 's/^package://p' "$OUT/pm_path.txt" | grep '/base[.]apk
-if [ -z "$REMOTE" ]; then
-  printf 'installation=TOKEN_VAZIO_PM_PATH\n' >> "$OUT/receipt.txt"
+printf 'schema=rll.android.external_install_witness.v2\n' > "$OUT/receipt.txt"
+printf 'source=ADB_HOST_OUTSIDE_APP\npackage=%s\n' "$PKG" >> "$OUT/receipt.txt"
+printf 'scope=EXTERNAL_ADB_OBSERVATION_NOT_HARDWARE_ATTESTATION\n' >> "$OUT/receipt.txt"
+printf 'device_mutation=NONE\n' >> "$OUT/receipt.txt"
+
+fail() {
+  printf 'ROUTE_STATE=BLOCKED %s\n' "$1" > "$OUT/STATUS.txt"
+  printf 'installation=TOKEN_VAZIO_%s\n' "$1" >> "$OUT/receipt.txt"
   exit 3
-fi
-if ! adb pull "$REMOTE" "$OUT/installed_base.apk" >/dev/null 2>&1; then
-  printf 'installation=TOKEN_VAZIO_APK_PULL_DENIED\n' >> "$OUT/receipt.txt"
-  exit 4
-fi
+}
+
+command -v adb >/dev/null 2>&1 || fail MISSING_ADB
+command -v sha256sum >/dev/null 2>&1 || fail MISSING_SHA256SUM
+adb devices > "$OUT/adb_devices.txt" || fail ADB_DEVICES_FAILED
+# Do not guess which device is authoritative if more than one is connected.
+N=$(awk '$2=="device" {n++} END {print n+0}' "$OUT/adb_devices.txt")
+[ "$N" = 1 ] || fail EXPECT_ONE_AUTHORIZED_DEVICE
+
+adb shell getprop ro.build.version.sdk > "$OUT/sdk.raw" || fail SDK_QUERY_FAILED
+adb shell getprop ro.product.cpu.abi > "$OUT/abi.raw" || fail ABI_QUERY_FAILED
+tr -d '\r' < "$OUT/sdk.raw" | sed 's/^/sdk=/' >> "$OUT/receipt.txt"
+tr -d '\r' < "$OUT/abi.raw" | sed 's/^/abi=/' >> "$OUT/receipt.txt"
+adb shell pm path "$PKG" > "$OUT/pm_path.raw" || fail PM_PATH_FAILED
+tr -d '\r' < "$OUT/pm_path.raw" > "$OUT/pm_path.txt"
+# An Android split-package may list multiple APKs; require a single base.apk.
+BASE_MATCHES=$(sed -n 's/^package:\(.*\/base[.]apk\)$/\1/p' "$OUT/pm_path.txt")
+[ -n "$BASE_MATCHES" ] || fail PM_BASE_APK_ABSENT
+case "$BASE_MATCHES" in
+  *'
+'* ) fail PM_AMBIGUOUS_BASE_APK ;;
+esac
+# Prevent option injection through untrusted device output.
+case "$BASE_MATCHES" in
+  /* ) : ;;
+  * ) fail PM_BASE_PATH_NOT_ABSOLUTE ;;
+esac
+adb pull "$BASE_MATCHES" "$OUT/installed_base.apk" > "$OUT/adb_pull.log" 2>&1 || fail APK_PULL_DENIED
+[ -s "$OUT/installed_base.apk" ] || fail APK_PULL_EMPTY
 H=$(sha256sum "$OUT/installed_base.apk" | awk '{print $1}')
 printf 'installed_base_apk_sha256=%s\n' "$H" >> "$OUT/receipt.txt"
-if [ "$H" = 'f10aa018ecabb941a13fe0c1c09ac35fa266029cd4fc9c982e52874bcda4b8b5' ]; then
-  printf 'apk_identity=MATCH_UPLOADED_DEBUG\n' >> "$OUT/receipt.txt"
-else
-  printf 'apk_identity=DIFFERENT_OR_UPDATED_APK_REQUIRES_PROVENANCE\n' >> "$OUT/receipt.txt"
-fi
-printf 'scope=EXTERNAL_ADB_WITNESS_NOT_HARDWARE_ATTESTATION\n' >> "$OUT/receipt.txt"
-printf 'DONE: %s\n' "$OUT"
- | head -n 1 || :)
-if [ -z "$REMOTE" ]; then
-  printf 'installation=TOKEN_VAZIO_PM_PATH\n' >> "$OUT/receipt.txt"
-  exit 3
-fi
-if ! adb pull "$REMOTE" "$OUT/installed_base.apk" >/dev/null 2>&1; then
-  printf 'installation=TOKEN_VAZIO_APK_PULL_DENIED\n' >> "$OUT/receipt.txt"
+
+if [ -z "$EXPECTED" ]; then
+  printf 'apk_identity=TOKEN_VAZIO_EXPECTED_HASH_NOT_SUPPLIED\n' >> "$OUT/receipt.txt"
+  printf 'ROUTE_STATE=HOLD_EXPECTED_HASH_NOT_SUPPLIED\n' > "$OUT/STATUS.txt"
   exit 4
 fi
-H=$(sha256sum "$OUT/installed_base.apk" | awk '{print $1}')
-printf 'installed_base_apk_sha256=%s\n' "$H" >> "$OUT/receipt.txt"
-if [ "$H" = 'f10aa018ecabb941a13fe0c1c09ac35fa266029cd4fc9c982e52874bcda4b8b5' ]; then
-  printf 'apk_identity=MATCH_UPLOADED_DEBUG\n' >> "$OUT/receipt.txt"
-else
-  printf 'apk_identity=DIFFERENT_OR_UPDATED_APK_REQUIRES_PROVENANCE\n' >> "$OUT/receipt.txt"
+printf 'expected_apk_sha256=%s\n' "$EXPECTED" >> "$OUT/receipt.txt"
+if [ "$H" != "$EXPECTED" ]; then
+  printf 'apk_identity=MISMATCH_EXPECTED_APK\n' >> "$OUT/receipt.txt"
+  printf 'ROUTE_STATE=FAIL_APK_HASH_MISMATCH\n' > "$OUT/STATUS.txt"
+  exit 5
 fi
-printf 'scope=EXTERNAL_ADB_WITNESS_NOT_HARDWARE_ATTESTATION\n' >> "$OUT/receipt.txt"
+printf 'apk_identity=MATCH_EXPECTED_APK\n' >> "$OUT/receipt.txt"
+printf 'ROUTE_STATE=PASS_SCOPED_EXTERNAL_ADB_APK_HASH\n' > "$OUT/STATUS.txt"
 printf 'DONE: %s\n' "$OUT"
