@@ -26,6 +26,9 @@ case "$1" in
                     printf 'package:/data/app/split_config.apk\r\n'
                 else
                     printf 'package:/data/app/example/base.apk\r\n'
+                    if [ "${ADB_TEST_SPLITS:-0}" = 1 ]; then
+                        printf 'package:/data/app/example/split_config.arm64_v8a.apk\r\n'
+                    fi
                 fi
                 ;;
             *) exit 77 ;;
@@ -40,7 +43,7 @@ esac
 '''
 
 
-def _execute(sha_kind="match", *, device_state="one", no_base=False):
+def _execute(sha_kind="match", *, device_state="one", no_base=False, split_paths=False):
     with tempfile.TemporaryDirectory() as temp:
         folder = Path(temp)
         bin_path = folder / "bin"
@@ -61,7 +64,8 @@ def _execute(sha_kind="match", *, device_state="one", no_base=False):
         env = dict(os.environ, PATH=f"{bin_path}:{os.environ['PATH']}",
                    ADB_TEST_CALLS=str(calls), ADB_TEST_APK=str(apk),
                    ADB_TEST_DEVICES=device_state,
-                   ADB_TEST_NO_BASE="1" if no_base else "0")
+                   ADB_TEST_NO_BASE="1" if no_base else "0",
+                   ADB_TEST_SPLITS="1" if split_paths else "0")
         result = subprocess.run(["sh", str(SCRIPT), str(output), digest],
                                 env=env, capture_output=True, text=True,
                                 timeout=10)
@@ -97,10 +101,12 @@ def test_apk_hash_mismatch_is_negative():
 
 
 def test_missing_expected_hash_never_passes():
-    result, receipt, status, _, _, _ = _execute("missing")
+    result, receipt, status, calls, _, _ = _execute("missing")
     assert result.returncode == 4
     assert "TOKEN_VAZIO_EXPECTED_HASH_NOT_SUPPLIED" in receipt
     assert "HOLD_EXPECTED_HASH_NOT_SUPPLIED" in status
+    # Input gate must precede all ADB commands, not merely reject after adb pull.
+    assert not calls, "Missing expected digest must not access the device"
 
 
 def test_bad_expected_hash_fails_before_device_access():
@@ -121,6 +127,15 @@ def test_missing_base_apk_is_typed_gap():
     assert result.returncode == 3
     assert "TOKEN_VAZIO_PM_BASE_APK_ABSENT" in receipt
     assert "pull" not in calls
+
+
+def test_split_package_fails_before_any_apk_pull():
+    result, receipt, status, calls, _, _ = _execute(split_paths=True)
+    assert result.returncode == 3
+    assert "TOKEN_VAZIO_SPLIT_APKS_REQUIRE_FULL_MANIFEST" in receipt
+    assert "ROUTE_STATE=BLOCKED SPLIT_APKS_REQUIRE_FULL_MANIFEST" in status
+    assert "shell pm path org.rafaelia.rll.debug" in calls
+    assert not any(line.startswith("pull ") for line in calls.splitlines())
 
 
 def test_privacy_no_default_dumpsys_or_install():
