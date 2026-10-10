@@ -109,8 +109,13 @@ public final class CanonicalOmegaBundleSelfTest {
         inputs.put("w0",Double.toString(p.w0));inputs.put("wa",Double.toString(p.wa));
         inputs.put("Obh2",Double.toString(p.obh2));
         inputs.put("sigma8",Double.toString(p.sigma8));
-        OmegaUiEvidence.Result uiEvidence=OmegaUiEvidence.replay(
-           new OmegaUiEvidence.Snapshot("RLL","COS-HZ",inputs,1791580000000L));
+        OmegaUiEvidence.Snapshot clicked=
+            new OmegaUiEvidence.Snapshot("RLL","COS-HZ",inputs,1791580000000L);
+        OmegaUiEvidence.Result uiEvidence=OmegaUiEvidence.replay(clicked);
+        OmegaInputOutputParity.Result parity=OmegaInputOutputParity.reconcile(clicked,uiEvidence);
+        ok(parity.gate.equals("PASS_ZERO_OMITTED_OUTPUT_RECEIPTS"),
+             "full input/output parity gate");
+        ok(parity.missing==0&&parity.expected==109,"every 14 input and 95 result contracts");
         CanonicalOmegaBundle.Result newFull=CanonicalOmegaBundle.build(null,null,
             "TOKEN_VAZIO_NO_NETWORK",jni,install,"gate=CHECKED_NO_NEW_ANDROID_RELEASE\n",
             "schema=rll.omega.runtime-trace.v1\n",
@@ -120,7 +125,7 @@ public final class CanonicalOmegaBundleSelfTest {
             "gate=TOKEN_VAZIO_HARDWARE_PROBE_NOT_RUN\n",
             "schema=rll.omega.kernel-platform-build.v1\ngate=RECORDED_SCOPED_KERNEL_AND_BUILD_CONTEXT\n",
             "schema=rll.omega.jni-c-boundary.v1\ngate=PASS_SCOPED_JNI_BOUNDARIES\n",
-            uiEvidence);
+            uiEvidence,parity);
         Map<String,byte[]> newFiles=unzip(newFull.zip);
         ok(s(newFiles,"02_GATES.tsv").contains("REPLAY_ALL_FORMULA_UI_ACTIONS\tPASS_SCOPED_UI_ACTIONS_REPLAY"),
             "all UI controls are bound in same archive");
@@ -134,6 +139,18 @@ public final class CanonicalOmegaBundleSelfTest {
             "all models independently exported");
         ok(s(newFiles,"22_UI/copy_equivalent.txt").contains("clipboard_mutation=false"),
             "copy-equivalent is not hidden clipboard mutation");
+        ok(s(newFiles,"02_GATES.tsv").contains("INPUT_OUTPUT_PARITY\tPASS_ZERO_OMITTED_OUTPUT_RECEIPTS"),
+            "100 percent per-input output coverage is a first-class gate");
+        ok(s(newFiles,"23_IO_PARITY/closure_receipt.txt").contains("omitted_output_receipts=0"),
+            "zero silent output omission");
+        ok(s(newFiles,"23_IO_PARITY/closure_receipt.txt").contains("source_bound_numeric_unknowns=16"),
+            "scientific unknowns explicit, no invented values");
+        ok(s(newFiles,"24_COMPLETENESS/observed_domain_matrix.tsv").contains("missing_domains=0"),
+            "twelve system evidence domains are indexed");
+        ok(s(newFiles,"02_GATES.tsv").contains("SYSTEM_DOMAIN_OUTPUT_COVERAGE\tPASS_NO_SILENT_DOMAIN_OMISSIONS"),
+            "all system domains represented with receipts");
+        ok(s(newFiles,"03_RECEIPT.txt").contains("archive_schema=rll.canonical.omega.zip.v5"),
+            "new APK produces schema v5");
         ok(s(newFiles,"02_GATES.tsv").contains("INDEPENDENT_INSTALL_WITNESS\tTOKEN_VAZIO_NOT_ATTESTED"),
             "no fake external hardware witness");
         manifest(newFiles);
