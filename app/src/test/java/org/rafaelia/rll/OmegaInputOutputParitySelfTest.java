@@ -50,6 +50,19 @@ public final class OmegaInputOutputParitySelfTest {
         OmegaInputOutputParity.Result missing=OmegaInputOutputParity.reconcile(a,truncated);
         ok(missing.gate.equals("FAIL_MISSING_OUTPUT_RECEIPTS")&&missing.missing==1,
             "a single missing individual formula must fail the parity gate");
+        OmegaUiEvidence.Result switched=OmegaUiEvidence.replay(a);
+        switched.files.put("22_UI/frozen_inputs.txt",
+             switched.files.get("22_UI/frozen_inputs.txt").replace("z=0.57","z=0.58"));
+        OmegaInputOutputParity.Result tampered=OmegaInputOutputParity.reconcile(a,switched);
+        ok(tampered.gate.equals("FAIL_MISSING_OUTPUT_RECEIPTS")&&tampered.missing>=1,
+            "tampered frozen input must fail even when all formula files still exist");
+        Map<String,String> exponent=fields();exponent.put("z","1e1000000000");
+        OmegaInputOutputParity.Result huge=parity(
+            new OmegaUiEvidence.Snapshot("RLL","COS-HZ",exponent,4));
+        ok(!huge.gate.startsWith("PASS"),"untrusted huge exponent must fail safely");
+        ok(huge.files.get("23_IO_PARITY/inputs.tsv").contains(
+            "INVALID_NUMBER:MAGNITUDE_OR_PRECISION_BOUND"),
+            "huge exponent normalized as bounded invalid input, not OOM");
         Map<String,String> bad=fields();bad.put("Hobs","93.4");bad.put("Hsigma","");
         OmegaInputOutputParity.Result invalid=parity(
             new OmegaUiEvidence.Snapshot("RLL","COS-HZ",bad,3L));
