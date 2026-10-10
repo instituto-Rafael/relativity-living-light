@@ -106,3 +106,11 @@ Geometry and wave-function analogies should never be interpreted as evidence of 
 - F_gap: external full-likelihood, null-calibrated p-value, prior sensitivity, CLASS/CAMB, blinded heldout, independent referee, calibrated global minimization.
 - F_next: run exact-source, archival, versioned output of the profiled/heldout test in governed CI; challenge RLL against CPL and real independent RSD growth. No existing code/production artifact changed.
 - `claim_allowed=false`, `SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM`, `IMPLEMENTED_UNTESTED != PASS`.
+
+## Implementation successor — 2026-10-09
+
+- Draft PR #1100 contains the isolated executor `scripts/rll_desi_adversarial.py`, focused tests, and `.github/workflows/rll-desi-adversarial-profile.yml`.
+- 9/9 focused unit tests passed locally. Full pinned dataset, CPL adversary, RLL profile, seed-controlled 16-replicate null smoke, and seven leave-tracer-out diagnostics ran locally.
+- Exact-branch dedicated workflow run 38011339061 completed SUCCESS; other repository-global failures must be evaluated separately.
+- New source/data/physical model/APK changes: only the three test-harness files; historical computations remain untouched.
+- Full scientific significance and physical confirmation remain NOT_ESTABLISHED. `claim_allowed=false`; PR DRAFT_UNMERGED; calibrated null tails and independent replication remain pending.
