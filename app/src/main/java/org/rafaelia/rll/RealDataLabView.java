@@ -45,13 +45,13 @@ public final class RealDataLabView {
         p.setPadding(16,12,16,16);p.setBackgroundColor(0xff1f2937);
         LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);
         lp.setMargins(0,0,0,16);root.addView(p,lp);
-        TextView title=new TextView(host);title.setText("00  Ω v0.7 • TODAS AS TELAS + SISTEMA + ZIP");
+        TextView title=new TextView(host);title.setText("00  Ω v0.8 • MESMAS ENTRADAS → TODAS AS SAÍDAS");
         title.setTextSize(19);title.setTextColor(0xfff9fafb);p.addView(title);
         TextView detail=new TextView(host);
-        detail.setText("Um toque inclui TODOS os controles: valores atuais da tela, fórmula selecionada, calcular quatro modelos, exibir, varrer, prévia de preencher ΩΛ, recibo SHA-256, revisão, 80 fronteiras JNI+C, kernel, compilação, APK/DEX/ELF, CPU/RAM e DESI.\n"
+        detail.setText("Um toque associa cada entrada à saída individual: 78 recibos de fórmulas, 14 campos, 4 modelos, revisões, 80 fronteiras JNI+C, kernel, APK/DEX/ELF, CPU/RAM e DESI. Confere omissões, calcula hashes de entradas e saídas determinísticas; observações inexistentes continuam explicitamente indisponíveis.\n"
             +"Mesmo sem rede, o ZIP guarda os testes locais e os TOKEN_VAZIO. O Android solicitará apenas onde salvar. Logs coletados: somente processo RLL, se permitido. Sem READ_LOGS/root; nada é enviado, além do download solicitado.");
         detail.setTextColor(0xffd1d5db);detail.setTextSize(14);p.addView(detail);
-        Button run=new Button(host);run.setText("Ω v0.7 • TESTAR TUDO, INCLUSIVE FÓRMULAS INDIVIDUAIS + ZIP");run.setAllCaps(false);p.addView(run);
+        Button run=new Button(host);run.setText("Ω v0.8 • TESTAR + CONFERIR 100% SAÍDAS + ZIP");run.setAllCaps(false);p.addView(run);
         status=new TextView(host);status.setTextColor(0xffd1d5db);
         status.setText("Pronto para gerar uma única evidência canônica; validação física independente não atestada.");p.addView(status);
         run.setOnClickListener(v->runOnce());
@@ -212,6 +212,12 @@ public final class RealDataLabView {
                     android.os.SystemClock.elapsedRealtime()-stage);
                 stage=android.os.SystemClock.elapsedRealtime();
                 OmegaUiEvidence.Result uiEvidence=OmegaUiEvidence.replay(uiSnapshot);
+                OmegaInputOutputParity.Result parity=
+                    OmegaInputOutputParity.reconcile(uiSnapshot,uiEvidence);
+                trace.event("INPUT_OUTPUT_PARITY",
+                    parity.gate.equals("PASS_ZERO_OMITTED_OUTPUT_RECEIPTS")?
+                      "PASS_SCOPED_NO_OMITTED_OUTPUTS":"FAIL_OR_MISSING_INPUT",
+                    android.os.SystemClock.elapsedRealtime()-stage);
                 trace.event("FORMULA_UI_ACTIONS",
                     uiEvidence.gate.equals("PASS_SCOPED_UI_ACTIONS_REPLAY")?"PASS_SCOPED":"TOKEN_VAZIO_OR_FAIL",
                     android.os.SystemClock.elapsedRealtime()-stage);
@@ -285,11 +291,11 @@ public final class RealDataLabView {
                         ?"CAPTURED_SCOPED":"TOKEN_VAZIO_RESTRICTED",
                     android.os.SystemClock.elapsedRealtime()-stage);
                 trace.event("CANONICAL_ZIP_ASSEMBLY","START",0);
-                state("Ω • Unindo fórmulas individuais, ações, JNI, kernel e todas as evidências no ZIP...");
+                state("Ω • Conferindo todas as entradas versus saídas, JNI, kernel e ZIP SHA-256...");
                 CanonicalOmegaBundle.Result result=CanonicalOmegaBundle.build(
                     mean,cov,downloadStatus,jni,install,release,trace.trace(),
                     osContext,logcat,controls.tsv,binaryInspection,hardwareProbe,
-                    kernel,boundary.receipt,uiEvidence);
+                    kernel,boundary.receipt,uiEvidence,parity);
                 File out=new File(host.getCacheDir(),"rll_canonical_omega_evidence.zip");
                 try(FileOutputStream stream=new FileOutputStream(out)){
                     stream.write(result.zip);
@@ -298,6 +304,10 @@ public final class RealDataLabView {
                 stagedZip=out;
                 zipDigest=result.sha256;
                 state("ZIP Ω GERADO: "+result.files+" arquivos. Dados: "+result.dataState
+                    +"\nParidade "+parity.verified+"/"+parity.expected+
+                    " saídas com recibo; omitidas "+parity.missing+
+                    "; sem valor científico "+parity.unknownNumeric+
+                    " ("+parity.gate+")"
                     +"\nChecagens "+controls.passed+" PASS / "+controls.failed+" FAIL."
                     +"\nSHA-256: "+zipDigest
                     +"\nEscolha apenas onde salvar o único ZIP.");
@@ -316,7 +326,7 @@ public final class RealDataLabView {
                 state("FALHA_CANONICAL_ZIP: "+ex.getClass().getSimpleName()
                     +". Nenhuma aprovação presumida.");
             }finally{running=false;}
-        },"rll-canonical-omega-v07").start();
+        },"rll-canonical-omega-v08").start();
     }
     public void writeTo(Uri uri){
         if(uri==null||stagedZip==null){state("TOKEN_VAZIO_SAVE_CANCELLED");return;}
