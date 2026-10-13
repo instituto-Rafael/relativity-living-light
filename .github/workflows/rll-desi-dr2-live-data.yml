@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Fetch and independently check pinned DESI DR2 bytes
         run: python3 scripts/rll_desi_dr2_real_data_gate.py
       - name: Upload source SHA256 and covariance-only receipt (no dataset bytes)
