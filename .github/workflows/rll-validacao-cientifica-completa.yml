@@ -568,7 +568,7 @@ jobs:
       - name: Instalar dependências
         run: pip install numpy scipy matplotlib pandas PyYAML jsonschema
       - name: Baixar artefatos MCMC
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -686,7 +686,7 @@ jobs:
       - name: Instalar dependências
         run: pip install numpy
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -793,7 +793,7 @@ jobs:
       - name: Instalar dependências
         run: pip install numpy
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -887,7 +887,7 @@ jobs:
           persist-credentials: false
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/
