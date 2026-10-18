@@ -1,0 +1,65 @@
+{
+  "schema": "rll.qrel_dorau_much_gate.receipt.v1",
+  "receipt_id": "MU-RLL-QREL-20261015-FORMAL-SURROGATE",
+  "timestamp": "2026-10-15T05:15:04-03:00",
+  "source": {
+    "article": "Dorau and Much, Phys. Rev. Lett. 136, 091602 (2026)",
+    "doi": "10.1103/lmq8-nsty",
+    "license": "CC-BY-4.0",
+    "repo": "instituto-Rafael/relativity-living-light",
+    "base_head": "81b55362b2b5c62265aa07d9e35cc976ab5622f4",
+    "branch": "research/qrel-dorau-much-gate-20261015",
+    "documentary_predecessor": "Drive:1DAGt1xhm0ULnIrvzfIehvXuCBT1cFPM-PejbWTvqinQ"
+  },
+  "scope": "additive exact rational surrogate and conditional null-flux/area algebra; no cosmological model mutation",
+  "artifacts": [
+    {
+      "path": "tools/qrel_horizon_gate.py",
+      "github_blob_sha": "2c4670cae764b02505c87282d78825ec95e80022",
+      "local_sha256": "0438ff4cb5c6c66d60f50dad1dcda971473e3e03459d6c8a6a03e8ccfe7ac492"
+    },
+    {
+      "path": "tests/test_qrel_horizon_gate.py",
+      "github_blob_sha": "85d5e1a273493d8a4d8dc58898e4b3fb58ace48d",
+      "local_sha256": "d26bc21274dc94e8d9319d969fc5ad8f5e19f2a3fb711620aaf44885538f32b6"
+    },
+    {
+      "path": "docs/science/QREL_DORAU_MUCH_GATE_V1.md",
+      "github_blob_sha": "f5a70b69a70ef8e5999f57438221bbae0a9077fc"
+    }
+  ],
+  "evidence": {
+    "local_unittest": {
+      "command": "python -m unittest discover -s tests -p 'test_qrel_horizon_gate.py' -v",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "state": "PASS_LOCAL_ONLY"
+    },
+    "local_compileall": "PASS_LOCAL_ONLY",
+    "remote_file_readback": "PASS_3_OF_3",
+    "remote_ci": "TOKEN_VAZIO_NOT_OBSERVED",
+    "independent_qft_derivation": "NOT_PERFORMED",
+    "physical_validation": "NOT_PERFORMED"
+  },
+  "witness": {
+    "flux": "1/105",
+    "s_rel_over_pi": "2/105",
+    "area_over_pi": "8/105 ASSUMED_BH",
+    "alpha_over_pi": "8 CONDITIONAL"
+  },
+  "epistemic": {
+    "modular_theory_proven": false,
+    "bh_area_assumption_explicit": true,
+    "claim_allowed": false,
+    "rll_deviation": "TOKEN_VAZIO"
+  },
+  "risks": [
+    "Finite C1 surrogate is not the paper's C-infinity horizon test-function class",
+    "8*pi is conditional on assumed area law and supplied flux identity",
+    "No dynamical curved-spacetime metric or observer-algebra computation",
+    "Local tests do not imply provider CI or observational confirmation"
+  ],
+  "rollback": "Close draft PR and delete only the new branch/files if separately authorized; preserve historical receipts",
+  "next": "Run exact-head CI; check reviewer/provider gates; independently construct smooth QFT test-function/algebra and metric response."
+}
