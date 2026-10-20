@@ -1,0 +1,324 @@
+{
+  "schema": "rll.observer-observation-science-routing/v1",
+  "governing_closure": "CLOSURE_L13",
+  "status": "SOURCE_CONTRACT_NOT_EXECUTION_PROOF",
+  "claim_allowed": false,
+  "purpose": "Route each new observation through epistemic state, conduct, science disciplines, complex-network relations, gaps, gates and receipts without converting novelty or uncertainty into truth.",
+  "epistemic_states": [
+    "OBSERVED",
+    "NEW_OBSERVED",
+    "UNCERTAIN",
+    "UNKNOWN",
+    "OPPORTUNITY",
+    "CONTRADICTION",
+    "ANOMALY",
+    "REJECTED",
+    "VERIFIED_LIMITED",
+    "SUPERSEDED"
+  ],
+  "phenomenon_tags": [
+    "POSSIBLE",
+    "VERBAL",
+    "ATEMPORAL",
+    "IGNORED_PREVIOUSLY",
+    "NONVERBAL",
+    "INCONSISTENCY",
+    "FORGOTTEN_RECOVERED",
+    "PARADOX",
+    "NONLINEAR",
+    "MULTIFILAMENT_PATH_RELATION"
+  ],
+  "conduct": [
+    "ATTENTION",
+    "ATTEND",
+    "ACT",
+    "UPDATE",
+    "REVIEW",
+    "REFUSE",
+    "BUG",
+    "ERROR",
+    "EDIT",
+    "THINK",
+    "PERMUTE",
+    "ANOMALY",
+    "DELTA",
+    "EMPTY_OR_GAP"
+  ],
+  "science_routes": [
+    {
+      "id": "SCI-OBS-COSMO",
+      "name": "observational_cosmology",
+      "course_family": "physics_astronomy",
+      "gate_focus": [
+        "observable",
+        "covariance",
+        "selection_effects",
+        "model_comparison"
+      ]
+    },
+    {
+      "id": "SCI-BAYES-STAT",
+      "name": "statistics_bayesian_inference",
+      "course_family": "statistics_data_science",
+      "gate_focus": [
+        "posterior",
+        "coverage",
+        "ELPD",
+        "priors",
+        "multiple_testing"
+      ]
+    },
+    {
+      "id": "SCI-MATH-PHYS",
+      "name": "mathematical_physics",
+      "course_family": "physics_mathematics",
+      "gate_focus": [
+        "units",
+        "symmetry",
+        "invariants",
+        "well_posedness"
+      ]
+    },
+    {
+      "id": "SCI-GEOM-TOPO",
+      "name": "geometry_topology",
+      "course_family": "mathematics",
+      "gate_focus": [
+        "metric",
+        "topology",
+        "projection",
+        "rank",
+        "invariance"
+      ]
+    },
+    {
+      "id": "SCI-NETWORK",
+      "name": "complex_network_science",
+      "course_family": "complex_systems",
+      "gate_focus": [
+        "nodes",
+        "edges",
+        "causality",
+        "multiplex_layers",
+        "centrality_bias"
+      ]
+    },
+    {
+      "id": "SCI-PLASMA-MHD",
+      "name": "plasma_physics_mhd",
+      "course_family": "physics",
+      "gate_focus": [
+        "field_equations",
+        "transport",
+        "reconnection",
+        "boundary_conditions"
+      ]
+    },
+    {
+      "id": "SCI-EM",
+      "name": "electromagnetism",
+      "course_family": "physics",
+      "gate_focus": [
+        "field_source",
+        "gauge",
+        "units",
+        "boundary_conditions"
+      ]
+    },
+    {
+      "id": "SCI-QUANTUM-PHOTON",
+      "name": "quantum_optics_photonics",
+      "course_family": "physics",
+      "gate_focus": [
+        "state",
+        "measurement",
+        "coherence",
+        "decoherence"
+      ]
+    },
+    {
+      "id": "SCI-ACOUSTIC",
+      "name": "acoustics_wave_physics",
+      "course_family": "physics_engineering",
+      "gate_focus": [
+        "dispersion",
+        "boundary_conditions",
+        "SNR",
+        "nonlinearity"
+      ]
+    },
+    {
+      "id": "SCI-THERMO",
+      "name": "thermodynamics_statistical_mechanics",
+      "course_family": "physics",
+      "gate_focus": [
+        "state_variables",
+        "equilibrium",
+        "entropy_definition",
+        "transport"
+      ]
+    },
+    {
+      "id": "SCI-PARTICLE",
+      "name": "particle_astroparticle_physics",
+      "course_family": "physics",
+      "gate_focus": [
+        "interaction_channel",
+        "cross_section",
+        "background",
+        "detector_response"
+      ]
+    },
+    {
+      "id": "SCI-NUMERICAL",
+      "name": "computational_science_numerical_analysis",
+      "course_family": "applied_mathematics_computing",
+      "gate_focus": [
+        "convergence",
+        "conditioning",
+        "precision",
+        "reproducibility"
+      ]
+    },
+    {
+      "id": "SCI-SWE-FORMAL",
+      "name": "software_engineering_formal_methods",
+      "course_family": "computer_science",
+      "gate_focus": [
+        "specification",
+        "tests",
+        "rollback",
+        "exact_head",
+        "state_machine"
+      ]
+    },
+    {
+      "id": "SCI-INFO-SIGNAL",
+      "name": "information_theory_signal_processing",
+      "course_family": "engineering_computing",
+      "gate_focus": [
+        "entropy_definition",
+        "filtering",
+        "aliasing",
+        "information_loss"
+      ]
+    },
+    {
+      "id": "SCI-METROLOGY",
+      "name": "metrology_provenance_data_quality",
+      "course_family": "measurement_information_science",
+      "gate_focus": [
+        "calibration",
+        "traceability",
+        "uncertainty_budget",
+        "custody"
+      ]
+    },
+    {
+      "id": "SCI-EPISTEMOLOGY",
+      "name": "epistemology_philosophy_of_science",
+      "course_family": "philosophy_science_studies",
+      "gate_focus": [
+        "claim_boundary",
+        "falsifiability",
+        "underdetermination",
+        "analogy_vs_evidence"
+      ]
+    },
+    {
+      "id": "SCI-BIOPHYS",
+      "name": "biophysics_neuroscience",
+      "course_family": "life_sciences_physics",
+      "gate_focus": [
+        "physiology",
+        "mechanism",
+        "measurement",
+        "confounders"
+      ]
+    },
+    {
+      "id": "SCI-GOVERNANCE",
+      "name": "research_governance_reproducibility",
+      "course_family": "research_methods",
+      "gate_focus": [
+        "ethics",
+        "provenance",
+        "independent_review",
+        "publication_boundary"
+      ]
+    }
+  ],
+  "complex_network": {
+    "node_types": [
+      "OBSERVER",
+      "OBSERVATION",
+      "SCIENCE_ROUTE",
+      "CONDUCT",
+      "EVIDENCE",
+      "GAP",
+      "CONTRADICTION",
+      "GATE",
+      "RECEIPT",
+      "ARTIFACT",
+      "ROUTE"
+    ],
+    "edge_types": [
+      "OBSERVED_BY",
+      "CLASSIFIED_AS",
+      "ROUTED_TO",
+      "ACTED_AS",
+      "SUPPORTED_BY",
+      "CONTRADICTS",
+      "DEPENDS_ON",
+      "FALSIFIED_BY",
+      "REQUIRES_GATE",
+      "PRODUCES_RECEIPT",
+      "CLOSES_GAP",
+      "SUPERSEDES",
+      "ROLLBACK_TO",
+      "BRIDGES_TO"
+    ],
+    "edge_rule": "Every material edge requires provenance_ref and cannot inherit PASS from another edge."
+  },
+  "required_observation_fields": [
+    "observation_id",
+    "observer_id",
+    "observed_at",
+    "source_ref",
+    "epistemic_state",
+    "conduct",
+    "phenomenon_tags",
+    "science_routes",
+    "summary",
+    "evidence_refs",
+    "contradictions",
+    "typed_gaps",
+    "required_gates",
+    "next_action",
+    "rollback"
+  ],
+  "routing_rules": [
+    "NEW_OBSERVED requires at least one science route and one next_action.",
+    "UNCERTAIN or UNKNOWN requires at least one typed gap with closure.",
+    "CONTRADICTION requires at least two evidence/source refs or an explicit MISSING_COUNTERPART gap.",
+    "ANOMALY cannot be promoted to mechanism without baseline, falsifier and independent evidence.",
+    "OPPORTUNITY is a routing state, not evidence of truth.",
+    "REFUSE must record reason and preserved source pointer.",
+    "BUG or ERROR affecting program source routes to RafGitTools only after deterministic reproducer/root-cause evidence.",
+    "Scientific claim promotion requires domain-specific gates in addition to this routing contract."
+  ],
+  "invariants": [
+    "OBSERVER != OBSERVATION",
+    "NEW != TRUE",
+    "UNKNOWN != ZERO",
+    "UNCERTAIN != FALSE",
+    "ANOMALY != MECHANISM",
+    "OPPORTUNITY != EVIDENCE",
+    "VERBAL != MEASURED",
+    "NONVERBAL != UNOBSERVABLE",
+    "PARADOX != CONTRADICTION",
+    "MULTIFILAMENT_RELATION != CAUSALITY",
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "TOKEN_VAZIO_GOVERNANCE != PASS"
+  ]
+}
