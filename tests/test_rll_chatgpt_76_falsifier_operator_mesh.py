@@ -20,7 +20,7 @@ class T(unittest.TestCase):
   x=copy.deepcopy(M); x["operators"][4]["falsifier"]=""
   self.assertTrue(any(v.startswith("missing_falsifier") for v in m.validate(x)))
  def test_void_typing_required(self):
-  x=copy.deepcopy(M); x["token_vazios"][0]["close_when"]=""
+  x=copy.deepcopy(M); x["typed_gaps"][0]["close_when"]=""
   self.assertIn("untyped_token_vazio",m.validate(x))
  def test_cannot_self_promote(self):
   x=copy.deepcopy(M); x["claim_allowed"]=True
