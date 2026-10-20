@@ -23,7 +23,7 @@ def validate(m):
   if o.get("claim_effect")!="NONE_UNTIL_EXECUTED": e.append(f"claim_effect:{o.get('id')}")
  p0=[o for o in ops if o.get("urgency")=="P0"]
  if not p0: e.append("no_p0")
- for tv in m.get("token_vazios",[]):
+ for tv in m.get("typed_gaps",[]):
   if not str(tv.get("id","")).startswith("TOKEN_VAZIO_") or not tv.get("type") or not tv.get("close_when"):
    e.append("untyped_token_vazio")
  if m.get("claim_allowed") is not False or m.get("publication_ready") is not False: e.append("premature_promotion")
