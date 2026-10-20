@@ -1,0 +1,51 @@
+{
+  "schema": "rll.chatgpt-76-falsifier-mesh.receipt/v1",
+  "date": "2026-10-20",
+  "source_interactions": [
+    "I1",
+    "I2",
+    "I3"
+  ],
+  "source_bundle": "RafPolimata:data/evidence/chatgpt/2026-10-20_three_interaction_bundle.v1.json",
+  "branch": "work/chatgpt-76-falsifier-mesh-20261020",
+  "state": "IMPLEMENTED_SOURCE_ONLY",
+  "operator_count": 76,
+  "p0_count": 27,
+  "urgency_provenance": {
+    "URG-P0-SCI-FALSE-POSITIVE": [
+      "I1",
+      "I2"
+    ],
+    "URG-P0-SESSION-MISCLASSIFICATION": [
+      "I3"
+    ],
+    "URG-P0-AUTO-CORRECT-SAFETY": [
+      "I1",
+      "I2",
+      "I3"
+    ]
+  },
+  "claim_allowed": false,
+  "publication_ready": false,
+  "F_ok": [
+    "76 uniquely addressed operators",
+    "P0/P1/P2 urgency typed",
+    "falsifier and close_when bound",
+    "TOKEN_VAZIO closure typed"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_OP_EXECUTION_RECEIPTS",
+    "TOKEN_VAZIO_PSI_ELPD_RLL",
+    "TOKEN_VAZIO_DESI_LYA_FULL_SHAPE",
+    "TOKEN_VAZIO_RLL_GROWTH_PERTURBATIONS",
+    "TOKEN_VAZIO_RLL_BAYES_EVIDENCE",
+    "TOKEN_VAZIO_PMF_PERTURBATIVE_LIKELIHOOD",
+    "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION_76_MESH"
+  ],
+  "F_next": [
+    "exact-head CI",
+    "execute smallest P0 uncertainty-reduction sequence",
+    "independent reproduction before promotion"
+  ],
+  "rollback": "Revert only additive mesh/doc/validator/test/receipt."
+}
