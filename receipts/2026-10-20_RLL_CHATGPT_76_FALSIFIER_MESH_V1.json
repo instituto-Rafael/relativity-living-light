@@ -34,18 +34,19 @@
     "TOKEN_VAZIO closure typed"
   ],
   "F_gap": [
-    "TOKEN_VAZIO_OP_EXECUTION_RECEIPTS",
-    "TOKEN_VAZIO_PSI_ELPD_RLL",
-    "TOKEN_VAZIO_DESI_LYA_FULL_SHAPE",
-    "TOKEN_VAZIO_RLL_GROWTH_PERTURBATIONS",
-    "TOKEN_VAZIO_RLL_BAYES_EVIDENCE",
-    "TOKEN_VAZIO_PMF_PERTURBATIVE_LIKELIHOOD",
-    "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION_76_MESH"
+    "TOKEN_VAZIO_LOG_OP_EXECUTION_RECEIPTS",
+    "TOKEN_VAZIO_REPRODUCTION_PSI_ELPD_RLL",
+    "TOKEN_VAZIO_REPRODUCTION_DESI_LYA_FULL_SHAPE",
+    "TOKEN_VAZIO_GOVERNANCE_RLL_GROWTH_PERTURBATIONS",
+    "TOKEN_VAZIO_REPRODUCTION_RLL_BAYES_EVIDENCE",
+    "TOKEN_VAZIO_GOVERNANCE_PMF_PERTURBATIVE_LIKELIHOOD",
+    "TOKEN_VAZIO_REPRODUCTION_INDEPENDENT_76_MESH"
   ],
   "F_next": [
     "exact-head CI",
     "execute smallest P0 uncertainty-reduction sequence",
     "independent reproduction before promotion"
   ],
-  "rollback": "Revert only additive mesh/doc/validator/test/receipt."
+  "rollback": "Revert only additive mesh/doc/validator/test/receipt.",
+  "governing_closure": "CLOSURE_L13"
 }
