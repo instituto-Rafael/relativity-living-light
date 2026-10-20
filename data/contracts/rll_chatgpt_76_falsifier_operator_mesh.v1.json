@@ -1018,42 +1018,43 @@
   "non_compensation": "No number of P1/P2 PASS results can compensate for an unresolved P0 gate.",
   "token_vazios": [
     {
-      "id": "TOKEN_VAZIO_OP_EXECUTION_RECEIPTS",
+      "id": "TOKEN_VAZIO_LOG_OP_EXECUTION_RECEIPTS",
       "type": "NOT_EXECUTED",
       "close_when": "Run operators and bind exact-head receipts."
     },
     {
-      "id": "TOKEN_VAZIO_PSI_ELPD_RLL",
+      "id": "TOKEN_VAZIO_REPRODUCTION_PSI_ELPD_RLL",
       "type": "NOT_EXECUTED",
       "close_when": "Run posterior leave-redshift-block-out/PSIS-LOO or equivalent ELPD."
     },
     {
-      "id": "TOKEN_VAZIO_DESI_LYA_FULL_SHAPE",
+      "id": "TOKEN_VAZIO_REPRODUCTION_DESI_LYA_FULL_SHAPE",
       "type": "NOT_EXECUTED",
       "close_when": "Bind non-overlapping DESI Lyα full-shape/AP likelihood."
     },
     {
-      "id": "TOKEN_VAZIO_RLL_GROWTH_PERTURBATIONS",
+      "id": "TOKEN_VAZIO_GOVERNANCE_RLL_GROWTH_PERTURBATIONS",
       "type": "MISSING_MODEL",
       "close_when": "Derive perturbation/growth model before fσ8."
     },
     {
-      "id": "TOKEN_VAZIO_RLL_BAYES_EVIDENCE",
+      "id": "TOKEN_VAZIO_REPRODUCTION_RLL_BAYES_EVIDENCE",
       "type": "NOT_EXECUTED",
       "close_when": "Define physical priors and compute lnZ with algorithm cross-check."
     },
     {
-      "id": "TOKEN_VAZIO_PMF_PERTURBATIVE_LIKELIHOOD",
+      "id": "TOKEN_VAZIO_GOVERNANCE_PMF_PERTURBATIVE_LIKELIHOOD",
       "type": "MISSING_LIKELIHOOD",
       "close_when": "Bind PMF amplitude/spectrum/helicity/Faraday/CMB perturbation likelihood."
     },
     {
-      "id": "TOKEN_VAZIO_INDEPENDENT_REPRODUCTION_76_MESH",
+      "id": "TOKEN_VAZIO_REPRODUCTION_INDEPENDENT_76_MESH",
       "type": "MISSING_REPRODUCTION",
       "close_when": "Independent implementation executes the promoted P0 subset."
     }
   ],
   "claim_allowed": false,
   "publication_ready": false,
-  "rollback": "Remove/revert only this additive mesh, validator, test and receipt; preserve predecessor RLL data/results."
+  "rollback": "Remove/revert only this additive mesh, validator, test and receipt; preserve predecessor RLL data/results.",
+  "governing_closure": "CLOSURE_L13"
 }
