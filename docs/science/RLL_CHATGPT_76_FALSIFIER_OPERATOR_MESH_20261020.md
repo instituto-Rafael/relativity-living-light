@@ -1,5 +1,7 @@
 # RLL — 76-Operator Falsification Mesh from Three ChatGPT Interactions
 
+**Governing closure:** `CLOSURE_L13`
+
 **State:** `PROPOSED_NOT_EXECUTED / claim_allowed=false / publication_ready=false`
 
 ## Why this exists
@@ -129,20 +131,20 @@ The mesh does **not** claim that any operator result has passed. Its job is to p
 
 ## Typed gaps
 
-- `TOKEN_VAZIO_OP_EXECUTION_RECEIPTS` = `NOT_EXECUTED`; close when: Run operators and bind exact-head receipts.
-- `TOKEN_VAZIO_PSI_ELPD_RLL` = `NOT_EXECUTED`; close when: Run posterior leave-redshift-block-out/PSIS-LOO or equivalent ELPD.
-- `TOKEN_VAZIO_DESI_LYA_FULL_SHAPE` = `NOT_EXECUTED`; close when: Bind non-overlapping DESI Lyα full-shape/AP likelihood.
-- `TOKEN_VAZIO_RLL_GROWTH_PERTURBATIONS` = `MISSING_MODEL`; close when: Derive perturbation/growth model before fσ8.
-- `TOKEN_VAZIO_RLL_BAYES_EVIDENCE` = `NOT_EXECUTED`; close when: Define physical priors and compute lnZ with algorithm cross-check.
-- `TOKEN_VAZIO_PMF_PERTURBATIVE_LIKELIHOOD` = `MISSING_LIKELIHOOD`; close when: Bind PMF amplitude/spectrum/helicity/Faraday/CMB perturbation likelihood.
-- `TOKEN_VAZIO_INDEPENDENT_REPRODUCTION_76_MESH` = `MISSING_REPRODUCTION`; close when: Independent implementation executes the promoted P0 subset.
+- `TOKEN_VAZIO_LOG_OP_EXECUTION_RECEIPTS` = `NOT_EXECUTED`; close when: Run operators and bind exact-head receipts.
+- `TOKEN_VAZIO_REPRODUCTION_PSI_ELPD_RLL` = `NOT_EXECUTED`; close when: Run posterior leave-redshift-block-out/PSIS-LOO or equivalent ELPD.
+- `TOKEN_VAZIO_REPRODUCTION_DESI_LYA_FULL_SHAPE` = `NOT_EXECUTED`; close when: Bind non-overlapping DESI Lyα full-shape/AP likelihood.
+- `TOKEN_VAZIO_GOVERNANCE_RLL_GROWTH_PERTURBATIONS` = `MISSING_MODEL`; close when: Derive perturbation/growth model before fσ8.
+- `TOKEN_VAZIO_REPRODUCTION_RLL_BAYES_EVIDENCE` = `NOT_EXECUTED`; close when: Define physical priors and compute lnZ with algorithm cross-check.
+- `TOKEN_VAZIO_GOVERNANCE_PMF_PERTURBATIVE_LIKELIHOOD` = `MISSING_LIKELIHOOD`; close when: Bind PMF amplitude/spectrum/helicity/Faraday/CMB perturbation likelihood.
+- `TOKEN_VAZIO_REPRODUCTION_INDEPENDENT_76_MESH` = `MISSING_REPRODUCTION`; close when: Independent implementation executes the promoted P0 subset.
 
 ## Non-compensation rule
 
 ```text
 P1/P2 PASS != closure of P0
 PROPOSED_NOT_EXECUTED != PASS
-TOKEN_VAZIO != 0
+TOKEN_VAZIO_GOVERNANCE != 0
 BETTER_CHI2 != BETTER_MODEL
 SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM
 ```
