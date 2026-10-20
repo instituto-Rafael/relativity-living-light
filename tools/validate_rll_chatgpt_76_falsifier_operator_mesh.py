@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse,json,re
 from pathlib import Path
+GOVERNING_CLOSURE="CLOSURE_L13"
 ROOT=Path(__file__).resolve().parents[1]
 DEFAULT=ROOT/"data/contracts/rll_chatgpt_76_falsifier_operator_mesh.v1.json"
 OP_RE=re.compile(r"^OP(\d{2})$")
