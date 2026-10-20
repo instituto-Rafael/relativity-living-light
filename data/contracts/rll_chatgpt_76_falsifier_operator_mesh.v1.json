@@ -1016,7 +1016,7 @@
   ],
   "p0_rule": "P0 operators can directly falsify a current interpretation, reveal false-positive/overfit/address error, or block unsafe promotion.",
   "non_compensation": "No number of P1/P2 PASS results can compensate for an unresolved P0 gate.",
-  "token_vazios": [
+  "typed_gaps": [
     {
       "id": "TOKEN_VAZIO_LOG_OP_EXECUTION_RECEIPTS",
       "type": "NOT_EXECUTED",
