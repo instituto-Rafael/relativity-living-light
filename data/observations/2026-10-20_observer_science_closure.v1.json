@@ -1,0 +1,90 @@
+{
+  "schema": "rll.observer-observation-instance/v1",
+  "governing_closure": "CLOSURE_L13",
+  "observation_id": "OBS-20261020-CLOSURE-SCIENCE-ROUTING-001",
+  "observer_id": "CHATGPT_OPERATIONAL_OBSERVER",
+  "observed_at": "2026-10-20",
+  "source_ref": "CHATGPT_CURRENT_SESSION/semantic-pointer-only",
+  "raw_session_text_stored": false,
+  "epistemic_state": "NEW_OBSERVED",
+  "conduct": [
+    "ATTENTION",
+    "UPDATE",
+    "REVIEW",
+    "THINK",
+    "PERMUTE",
+    "DELTA",
+    "EMPTY_OR_GAP"
+  ],
+  "phenomenon_tags": [
+    "POSSIBLE",
+    "IGNORED_PREVIOUSLY",
+    "FORGOTTEN_RECOVERED",
+    "PARADOX",
+    "NONLINEAR",
+    "MULTIFILAMENT_PATH_RELATION"
+  ],
+  "science_routes": [
+    {
+      "id": "SCI-NETWORK",
+      "role": "PRIMARY"
+    },
+    {
+      "id": "SCI-EPISTEMOLOGY",
+      "role": "PRIMARY"
+    },
+    {
+      "id": "SCI-METROLOGY",
+      "role": "PRIMARY"
+    },
+    {
+      "id": "SCI-SWE-FORMAL",
+      "role": "SECONDARY"
+    },
+    {
+      "id": "SCI-BAYES-STAT",
+      "role": "SECONDARY"
+    }
+  ],
+  "summary": "New closure requirement: every observation, uncertainty, unknown, contradiction, anomaly or opportunity must be explicitly routed through observer identity, epistemic state, conduct, science disciplines, complex-network relations, gates, receipts and rollback.",
+  "evidence_refs": [
+    "RafPolimata PR #438 three-interaction operational evidence bundle",
+    "RafGitTools PR #697 bounded correction gate V2",
+    "RLL PR #1123 76-operator falsification mesh"
+  ],
+  "contradictions": [
+    {
+      "id": "CTR-001",
+      "statement_a": "A new observation may be operationally valuable.",
+      "statement_b": "A new observation is not automatically true, causal, reproducible or promotable.",
+      "state": "RESOLVED_BY_NON_COMPENSATORY_GATES"
+    }
+  ],
+  "typed_gaps": [
+    {
+      "id": "TOKEN_VAZIO_GOVERNANCE_SCIENCE_ROUTE_AUTOTAG_REVIEW",
+      "type": "MISSING_REVIEW",
+      "closure": "Human reviewer confirms or edits primary/secondary science-route tags before promotion."
+    },
+    {
+      "id": "TOKEN_VAZIO_REPRODUCTION_OBSERVER_GRAPH_EXECUTION",
+      "type": "NOT_EXECUTED",
+      "closure": "Execute graph validator against at least one successor observation and emit exact-head receipt."
+    },
+    {
+      "id": "TOKEN_VAZIO_GOVERNANCE_CROSS_REPO_OBSERVER_CONSUMER",
+      "type": "MISSING_BINDING",
+      "closure": "Bind validated observation envelope to RafPolimata intake and RafGitTools correction router without automatic merge."
+    }
+  ],
+  "required_gates": [
+    "GATE_OBSERVER_OBSERVATION_SEPARATION",
+    "GATE_SCIENCE_ROUTE_PRESENT",
+    "GATE_EPISTEMIC_STATE_NON_PROMOTION",
+    "GATE_TYPED_GAPS_WITH_CLOSURE",
+    "GATE_COMPLEX_NETWORK_EDGE_PROVENANCE",
+    "GATE_ROLLBACK_RECEIPT"
+  ],
+  "next_action": "Validate this observation contract, then consume it in RafPolimata and RafGitTools while keeping scientific/domain promotion gates independent.",
+  "rollback": "Revert only the additive observer-routing contract, instance, validator, test, documentation and receipt; preserve predecessor evidence."
+}
