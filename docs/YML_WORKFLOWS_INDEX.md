@@ -38,7 +38,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | `github_workflow_yml` | 5056 | 106 | `42737997a975956d99ce2870bcb21c113d0c042b06b45e56315699ad41c6e5e3` |
 | `.github/workflows/act-dr6-reference-chain-custody.yml` | `github_workflow_yml` | 4791 | 106 | `00870201da7da9b99f78961a515cfb244eefd11010b5a2cd3a04c289574c3a26` |
 | `.github/workflows/all-ref-topology-census.yml` | `github_workflow_yml` | 7114 | 154 | `fda61a7783d81125f93cf86969dd25864ff05f76c4fee49917de454cff14a6b2` |
-| `.github/workflows/android-build.yml` | `github_workflow_yml` | 4922 | 133 | `507fed5dc830ff2bef36df63250013cb6f517873a42198f9749b14780af416bc` |
+| `.github/workflows/android-build.yml` | `github_workflow_yml` | 4922 | 133 | `3f7bccd122bc8640cb9436d9899f3f11812972d924fa44b3ac4b5f34530bdab3` |
 | `.github/workflows/bayes_analysis.yml` | `github_workflow_yml` | 394 | 18 | `46d56752d2dbe030389906ce1c1a4d8be4c4b092e87546c98b2edf63b5b508f4` |
 | `.github/workflows/branch-maturity-v2.yml` | `github_workflow_yml` | 1485 | 46 | `98fb2e173a2fb14e2fc78ea8084115b38d0ac8f169ed4d574fcbe085ec3f6b0d` |
 | `.github/workflows/calc-data.yml` | `github_workflow_yml` | 5302 | 130 | `a5d808cb992f3737c0dd731b975f548998043445395bf4aa599f7fc6d5264bd1` |
@@ -61,8 +61,8 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/formulas-artifacts.yml` | `github_workflow_yml` | 1029 | 40 | `ae3b748eb951149bc01e35f7b3d2ea96014b986f3a7ee768ffae5648923a11ec` |
 | `.github/workflows/frontier-research-composition.yml` | `github_workflow_yml` | 11476 | 265 | `1e7917599f1aab1cef6a53044c183574d321787b9f85b487b9d8b5db465e88df` |
 | `.github/workflows/geometric-mutation-matrix.yml` | `github_workflow_yml` | 11066 | 277 | `b8e0bf24ace09fac3d4ee8e335e0181aa8c050029e1ef41c6bf8869a40f5b68f` |
-| `.github/workflows/github-platform-assurance-v2.yml` | `github_workflow_yml` | 7310 | 179 | `2e1a2a64934a3975719fa5049ca38716981384d38fe61052ca24b8ed77aeb84b` |
-| `.github/workflows/github-platform-assurance.yml` | `github_workflow_yml` | 5787 | 172 | `57bb118dfb18df93a306b1313aa3c35fdd02e4e0b1390feb5e0b5659bf69fdd1` |
+| `.github/workflows/github-platform-assurance-v2.yml` | `github_workflow_yml` | 7310 | 179 | `8d9d3a1d1f3ebd392de6683e1972047d8f79a6afab8fccb703ccbcd72ceb2021` |
+| `.github/workflows/github-platform-assurance.yml` | `github_workflow_yml` | 5787 | 172 | `8d2104e35a4256922c124ebe6fb49b8d875934a103a412ae4497aea869277dc0` |
 | `.github/workflows/giza-academic-intake-4h.yml` | `github_workflow_yml` | 4015 | 106 | `28c0b668c2db91294e78941f03f3d5c2ca0eb6c229ec6f33eabd9d3e91954887` |
 | `.github/workflows/h0-rd-ablation.yml` | `github_workflow_yml` | 6476 | 147 | `c058dc7b845b7ebdda2d44f30ddd2c1ca41d55450f00867097f5791347b2bfa0` |
 | `.github/workflows/hypothesis-instability-orchestrator.yml` | `github_workflow_yml` | 3909 | 110 | `b342702ae11f4bd24d33911efc304e808a869208fa0d0a45c0265c928ca1412a` |
