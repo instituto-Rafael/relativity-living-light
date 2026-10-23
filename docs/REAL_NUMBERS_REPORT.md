@@ -5,7 +5,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3613 |
+| `tracked_files_total` | 3620 |
 | `cataloged_files` | 3609 |
 | `uncataloged_or_error_files` | 0 |
 | `total_bytes` | 56230633 |
