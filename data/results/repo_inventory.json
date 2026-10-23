@@ -491,7 +491,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 133,
-    "sha256": "507fed5dc830ff2bef36df63250013cb6f517873a42198f9749b14780af416bc",
+    "sha256": "3f7bccd122bc8640cb9436d9899f3f11812972d924fa44b3ac4b5f34530bdab3",
     "flags": ""
   },
   {
@@ -698,7 +698,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 179,
-    "sha256": "2e1a2a64934a3975719fa5049ca38716981384d38fe61052ca24b8ed77aeb84b",
+    "sha256": "8d9d3a1d1f3ebd392de6683e1972047d8f79a6afab8fccb703ccbcd72ceb2021",
     "flags": "token_vazio_declared"
   },
   {
@@ -707,7 +707,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 172,
-    "sha256": "57bb118dfb18df93a306b1313aa3c35fdd02e4e0b1390feb5e0b5659bf69fdd1",
+    "sha256": "8d2104e35a4256922c124ebe6fb49b8d875934a103a412ae4497aea869277dc0",
     "flags": "token_vazio_declared"
   },
   {
@@ -1144,11 +1144,11 @@
   },
   {
     "path": ".github/workflows/rll-pipeline-linear-completo.yml",
-    "bytes": 6182,
+    "bytes": 6252,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 167,
-    "sha256": "25c88c3eefffdbd5e2ab47c2d64a70724f43c934a24eaa9609005c0da7707ece",
+    "linhas": 168,
+    "sha256": "077e6659b6b16da52ee9cf44b3c779e369c36ebddd305bfec8bef6254bfb214d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -6372,6 +6372,15 @@
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
+    "path": "data/contracts/rll_chatgpt_76_falsifier_operator_mesh.v1.json",
+    "bytes": 48685,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 1060,
+    "sha256": "24fd9dec9e33c627bf792351e2f1354f85c7dd2777f69deba6ad40ab0dc216db",
+    "flags": "mentions_mock_or_placeholder,token_vazio_declared"
+  },
+  {
     "path": "data/contracts/rll_climate_engine_bridge.v1.json",
     "bytes": 2123,
     "ext": ".json",
@@ -6532,6 +6541,15 @@
     "linhas": 130,
     "sha256": "ae042782bcf39fa542f9ec24d58619a61da844ae5b06083549987a19e26656b2",
     "flags": "mentions_synthetic,token_vazio_declared"
+  },
+  {
+    "path": "data/contracts/rll_observer_observation_science_routing.v1.json",
+    "bytes": 7875,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 324,
+    "sha256": "80ba426abc9c89adae25f1f9ec3b2be01a7b967701c94408981aa4a03d4b37e0",
+    "flags": "token_vazio_declared"
   },
   {
     "path": "data/contracts/rll_omega_g_cosmology_tournament.v1.yaml",
@@ -8350,6 +8368,15 @@
     "linhas": 137,
     "sha256": "2158f7340434eeb20e28251dfab96e11f4a94471a43158065f4898ec8e621d23",
     "flags": ""
+  },
+  {
+    "path": "data/observations/2026-10-20_observer_science_closure.v1.json",
+    "bytes": 3084,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 90,
+    "sha256": "668b82f78d57387851d80f011a7418133df6f6e56cc9f57ad10c00effe0d014c",
+    "flags": "token_vazio_declared"
   },
   {
     "path": "data/omega_operational/rll_omega7_operational.json",
@@ -15489,6 +15516,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/research/RLL_CONSUMER_PORTFOLIO300_20261015.md",
+    "bytes": 8295,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 31,
+    "sha256": "e259282e2ac6b682add577b0f5826e61080764c76ef0d1b8d36ece22579e5acb",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/research/RLL_FULL_PERMUTATION_VOID_CENSUS_V1.md",
     "bytes": 10721,
     "ext": ".md",
@@ -15558,6 +15594,15 @@
     "tipo": "documentation_md",
     "linhas": 359,
     "sha256": "41b7f6c9ad74ff26653dab88a6de01ebdc85033b07259ee17ddf8eadf996089b",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/research/RLL_SESSION_10x7_INTERFACE_PHOTONICS_REDOX_20261015.md",
+    "bytes": 14573,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 149,
+    "sha256": "55388ae441321f5d291798fb0258a0c822b4a0f6630afed01bb9660ba7fd4ded",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -15631,6 +15676,15 @@
     "linhas": 180,
     "sha256": "488594ee779c10c04f50f9db0a99aebcce4ce410466837700e5832e4e9f5f92d",
     "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/research/RLL_TOP5_THREE_CONTINUOUS_CYCLES_20261015.md",
+    "bytes": 1667,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 11,
+    "sha256": "f6fc6287def58183315fdd9e1790ece04792fb9cf78142caaa12ab286feb0e3f",
+    "flags": "mentions_synthetic,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "docs/rll_audit_gap_report.py",
@@ -16155,6 +16209,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "docs/science/QREL_DORAU_MUCH_GATE_V1.md",
+    "bytes": 5296,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 65,
+    "sha256": "7e8ae086f5ec83fdb18288e03e48ff984fe7c2967aaa8033691e75a98129d3f1",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/science/RAFAELIA_CLASSICAL_MATH_FORMULA_AUDIT_20260808.md",
     "bytes": 14799,
     "ext": ".md",
@@ -16315,6 +16378,15 @@
     "linhas": 314,
     "sha256": "959dcc1f728c657dbfc31bbbcdd4db216e8a838237692e257a6c34ab4b61e744",
     "flags": "mentions_synthetic,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/science/RLL_CHATGPT_76_FALSIFIER_OPERATOR_MESH_20261020.md",
+    "bytes": 20253,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 158,
+    "sha256": "649f45aefe6c7929489f9ff29994379a4752c44a3f381dd813d3b60a6c19ede0",
+    "flags": "mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "docs/science/RLL_CLIMATE_ENGINE_BRIDGE_V1.md",
@@ -16710,6 +16782,15 @@
     "tipo": "documentation_md",
     "linhas": 71,
     "sha256": "30d8a6ad4a1ac7c21ca4385335319e2e6281536e01ce26e7fdd60f4c19134958",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "docs/science/RLL_OBSERVER_OBSERVATION_COMPLEX_NETWORK_ROUTING_V1.md",
+    "bytes": 2675,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 82,
+    "sha256": "960bbba47abb80d46dc820a6372dc74baa684c715abba9e7615fc2a3400a43d5",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -19458,6 +19539,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "provenance/receipts/qrel_dorau_much_gate_20261015.json",
+    "bytes": 2638,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 65,
+    "sha256": "5f4b96ef21f0cc3dd785a65403f23ea4f62bf2e243b455cdd152b402d263d0fa",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "provenance/receipts/rll_mpemba_horizon_atlas_20260827.json",
     "bytes": 4722,
     "ext": ".json",
@@ -20013,6 +20103,24 @@
     "tipo": "documentation_md",
     "linhas": 57,
     "sha256": "352babe689a647dd63b15e7adfcb6831a29670f311825e48f69bdc6841587ce9",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "receipts/2026-10-20_RLL_CHATGPT_76_FALSIFIER_MESH_V1.json",
+    "bytes": 1454,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 52,
+    "sha256": "bcbca9d8a1cbedad6179dfd2b67efd9637920fdeb715441e62351c32fc656b0d",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "receipts/2026-10-20_RLL_OBSERVER_SCIENCE_ROUTING_V1.json",
+    "bytes": 1202,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 33,
+    "sha256": "bf7b2d3ee50531fdbe7c18b4e34b7fffba8bd3b44d18047574b9d35669d76658",
     "flags": "token_vazio_declared"
   },
   {
@@ -27801,6 +27909,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_qrel_horizon_gate.py",
+    "bytes": 3815,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 86,
+    "sha256": "d26bc21274dc94e8d9319d969fc5ad8f5e19f2a3fb711620aaf44885538f32b6",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_quality_execution_monitor.py",
     "bytes": 2149,
     "ext": ".py",
@@ -28185,6 +28302,15 @@
     "tipo": "source_code",
     "linhas": 67,
     "sha256": "26dceeaff1fbddb63596d843ca2479dbb2f8da696847e2a162d49877c4cf5eb1",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_chatgpt_76_falsifier_operator_mesh.py",
+    "bytes": 1417,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 28,
+    "sha256": "66d17adf4e1f167422bf3d368474265333228735c35356f7de1633644e0b6545",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -28708,6 +28834,15 @@
     "linhas": 98,
     "sha256": "ce0f78f771e69cb07056b81c29437cf5980dde12f537131d9be3a1a6cb4e6d5e",
     "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_observer_observation_science_routing.py",
+    "bytes": 1406,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 21,
+    "sha256": "e333ab9ab33ddf1f2033cd1031e8860d7d60ad221e962887f243d3b892b36414",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_omega_residual_audit.py",
@@ -29305,11 +29440,11 @@
   },
   {
     "path": "tests/test_scientific_workflow_path_filters.py",
-    "bytes": 5910,
+    "bytes": 6795,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 166,
-    "sha256": "ab980a37aee0e61aed45f441a301f5899e0d77f3d400cd64a714ad82d5c856ba",
+    "linhas": 183,
+    "sha256": "2ad6a2ca2b49df01505f67ae9d7c203712a457e047e0828557c0a920e4367e67",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -30483,6 +30618,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "tools/qrel_horizon_gate.py",
+    "bytes": 4147,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 95,
+    "sha256": "0438ff4cb5c6c66d60f50dad1dcda971473e3e03459d6c8a6a03e8ccfe7ac492",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "tools/real_data_materialization_audit.py",
     "bytes": 9306,
     "ext": ".py",
@@ -31500,6 +31644,15 @@
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
+    "path": "tools/validate_rll_chatgpt_76_falsifier_operator_mesh.py",
+    "bytes": 1891,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 34,
+    "sha256": "2e31a0f8342b2050070292e607216ba83ef27393200109f73d425c870b6d8de0",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "tools/validate_rll_credential_authority.py",
     "bytes": 15553,
     "ext": ".py",
@@ -31569,6 +31722,15 @@
     "tipo": "source_code",
     "linhas": 449,
     "sha256": "f9904bcc87f65f984a1a8d1902cf07f02d29c56fb98989bd59b813e9a1b8bf5c",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "tools/validate_rll_observer_observation_science_routing.py",
+    "bytes": 2442,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 47,
+    "sha256": "b485e5d006b1bfea98555064204036bcf85b88493cc10cc079584723d0f9ce56",
     "flags": "token_vazio_declared"
   },
   {
