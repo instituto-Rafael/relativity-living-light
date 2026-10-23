@@ -22,7 +22,8 @@ on:
         type: string
         default: dry_run
   pull_request:
-    branches: [main]
+    # Cobrir WORK -> rll/lab sem liberar promoção em main.
+    branches: [main, rll/lab]
     paths:
       - ".github/workflows/rll-pipeline-linear-completo.yml"
       - ".github/workflows/RLL-CI.yml"
