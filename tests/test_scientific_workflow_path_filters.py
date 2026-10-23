@@ -164,3 +164,20 @@ def test_canonical_gate_runs_light_dry_run_for_science_changes(changed_path: str
     assert _matches_any(changed_path, patterns), (
         f"canonical gate should observe {changed_path}; patterns={patterns}"
     )
+
+
+def test_canonical_gate_observes_lab_prs_without_granting_claims() -> None:
+    """The WORK -> LAB edge must not bypass the canonical science dry-run."""
+    workflow = _workflow(CANONICAL_WORKFLOW)
+    triggers = _workflow_on(CANONICAL_WORKFLOW)
+    assert triggers["pull_request"]["branches"] == ["main", "rll/lab"]
+    assert "push" not in triggers
+    assert "workflow_call" in triggers
+    assert workflow["permissions"] == {"contents": "read"}
+    assert workflow["env"]["CLAIM_ALLOWED"] == "false"
+    steps = workflow["jobs"]["deterministic-gate"]["steps"]
+    gate = next(step for step in steps if step.get("id") == "gate")
+    run_script = gate["run"]
+    assert 'if [ "$EVENT_NAME" = "pull_request" ]; then' in run_script
+    assert 'MODE="dry_run"' in run_script
+    assert 'EVENT_NAME: "${{ github.event_name }}"' in Path(CANONICAL_WORKFLOW).read_text(encoding="utf-8")

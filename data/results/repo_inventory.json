@@ -1144,11 +1144,11 @@
   },
   {
     "path": ".github/workflows/rll-pipeline-linear-completo.yml",
-    "bytes": 6182,
+    "bytes": 6252,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 167,
-    "sha256": "25c88c3eefffdbd5e2ab47c2d64a70724f43c934a24eaa9609005c0da7707ece",
+    "linhas": 168,
+    "sha256": "077e6659b6b16da52ee9cf44b3c779e369c36ebddd305bfec8bef6254bfb214d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -29440,11 +29440,11 @@
   },
   {
     "path": "tests/test_scientific_workflow_path_filters.py",
-    "bytes": 5910,
+    "bytes": 6795,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 166,
-    "sha256": "ab980a37aee0e61aed45f441a301f5899e0d77f3d400cd64a714ad82d5c856ba",
+    "linhas": 183,
+    "sha256": "2ad6a2ca2b49df01505f67ae9d7c203712a457e047e0828557c0a920e4367e67",
     "flags": "cosmology_validation_marker"
   },
   {

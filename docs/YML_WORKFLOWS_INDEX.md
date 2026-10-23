@@ -111,7 +111,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-omega-g-cosmology-tournament.yml` | `github_workflow_yml` | 2268 | 64 | `8da6ab6c2f44f300ff06d374cbc447e36f9a1adf9733d295ba9eb71ee424a3f2` |
 | `.github/workflows/rll-omega-g-real-background.yml` | `github_workflow_yml` | 3978 | 100 | `6d9485efbc45322e130c82f0070d7a6701c838092a8282bc762235c25fc9caa3` |
 | `.github/workflows/rll-operational-auto-hotfix.yml` | `github_workflow_yml` | 8623 | 223 | `08912ccfc627d72953ecbdac29ff5c7fe502c0871e0add6745cf5bb877f8dad5` |
-| `.github/workflows/rll-pipeline-linear-completo.yml` | `github_workflow_yml` | 6182 | 167 | `25c88c3eefffdbd5e2ab47c2d64a70724f43c934a24eaa9609005c0da7707ece` |
+| `.github/workflows/rll-pipeline-linear-completo.yml` | `github_workflow_yml` | 6252 | 168 | `077e6659b6b16da52ee9cf44b3c779e369c36ebddd305bfec8bef6254bfb214d` |
 | `.github/workflows/rll-quantum-vacuum-birefringence-audit.yml` | `github_workflow_yml` | 5096 | 127 | `ca68386dd66496bf96ccd035ad4a7aeefa1a95267d8c320038e0d2c9aef98925` |
 | `.github/workflows/rll-real-data-evidence-bridge.yml` | `github_workflow_yml` | 3381 | 91 | `8fe5437d7487eb684ec5c9f80c189d966f4ce48d740f82d983782406700420c9` |
 | `.github/workflows/rll-real-data-orchestrator.yml` | `github_workflow_yml` | 19062 | 421 | `74a24248a28a993ddd91df53317824a0fb6b82520f7e29373d030837af175504` |
