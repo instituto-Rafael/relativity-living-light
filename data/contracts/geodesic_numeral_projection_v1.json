@@ -1,0 +1,34 @@
+{
+  "schema": "rll.geodesic_numeral_projection.v1",
+  "source": "rafaelmeloreisnovo/Matem-tica-/data/registries/GEODESIC_NUMERAL_RELATIONS_V1.json",
+  "producer": "instituto-Rafael/relativity-living-light",
+  "role": "SCOPED_GEOMETRY_CONSUMER",
+  "state": "CANDIDATE_HOLD",
+  "claim_allowed": false,
+  "math": [
+    {
+      "id": "H",
+      "eq": "h²=3/4"
+    },
+    {
+      "id": "SQ",
+      "eq": "d²=2"
+    },
+    {
+      "id": "MID",
+      "eq": "A_midpoints=1/2"
+    },
+    {
+      "id": "SPH",
+      "eq": "V_sphere=pi/6"
+    },
+    {
+      "id": "CONE",
+      "eq": "V_cone=pi*sqrt(3)/24"
+    }
+  ],
+  "number_rule": "NUMERAL_WORD!=RATIONAL_NORMAL_FORM; TOKEN_VAZIO!=0",
+  "geodesic_metric": "TOKEN_VAZIO_SEPARATE_TOPOLOGY",
+  "physical_claim": "FORBIDDEN_WITHOUT_METRIC_AND_MODEL",
+  "tests": "NOT_RUN"
+}
