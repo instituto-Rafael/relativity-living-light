@@ -1,0 +1,39 @@
+---
+layout: null
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>RAFAELIA · Revisão pública RafGitTools · 2026-10-26</title>
+<style>
+:root{color-scheme:light dark}body{font:16px/1.6 system-ui,-apple-system,sans-serif;max-width:960px;margin:0 auto;padding:2rem 1rem;color:CanvasText;background:Canvas}h1{line-height:1.18}a{color:LinkText}a:focus-visible{outline:3px solid currentColor;outline-offset:3px}table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}th,td{border:1px solid GrayText;text-align:left;padding:.6rem;vertical-align:top}caption{text-align:left;font-weight:700;margin-bottom:.5rem}code{overflow-wrap:anywhere}section{margin:2rem 0}footer{border-top:1px solid GrayText;padding-top:1rem}p{max-width:80ch}
+</style>
+</head>
+<body>
+<main>
+<h1>RAFAELIA · Revisão pública dos candidatos RafGitTools</h1>
+<p><strong>Recorte de observação:</strong> 26 de outubro de 2026. Este painel é uma <strong>proposta de revisão humana</strong>, não uma aprovação, atestação criptográfica, certificação, execução privada ou autorização de publicação de corpus.</p>
+<p>Fonte de autoridade: <a href="https://github.com/rafaelmeloreisnovo/RafGitTools">RafGitTools</a> (orquestração), <a href="https://github.com/rafaelmeloreisnovo/actions">Actions autoral</a> (ações hospedadas) e <a href="https://github.com/instituto-Rafael/relativity-living-light">RLL</a> (superfície pública de leitura, sem autoridade automática de promoção).</p>
+<section aria-labelledby="candidates"><h2 id="candidates">Candidatos e limites de evidência</h2>
+<table><caption>Estado capturado, sujeito a alterações no GitHub</caption><thead><tr><th>PR</th><th>Escopo e estado observado</th><th>Recibo remoto observado</th><th>Bloqueios de aprovação</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/rafaelmeloreisnovo/RafGitTools/pull/707">#707</a></td><td>Pré-validação anterior; fechado, não mesclado.<br><code>51a828731f32e5aae3c7edf1c086d1c55164cf91</code></td><td>Arquivo histórico, sem promover execução.</td><td>Não incorporar em paralelo o validador Python como runtime do L0.</td></tr>
+<tr><td><a href="https://github.com/rafaelmeloreisnovo/RafGitTools/pull/709">#709</a></td><td>Gate de fonte e recibo SHA-256 por Actions autoral; aberto em Draft.<br><code>8e66b9b633fb5dac3eff64450a5ec2a81765ee64</code></td><td><a href="https://github.com/rafaelmeloreisnovo/RafGitTools/actions/runs/40285947009">Run 40285947009</a>: completed/success. Topologia e coerência passaram; Python, CodeQL, Android e ponte privada foram pulados.</td><td>SHA-base divergente de main; revisão independente; confirmação de escopos do provedor; testes de domínio.</td></tr>
+<tr><td><a href="https://github.com/rafaelmeloreisnovo/RafGitTools/pull/710">#710</a></td><td>Núcleo nativo freestanding L0; aberto em Draft.<br><code>4f8a6337e233da0b9349472a96b60889f4d2bd41</code></td><td><a href="https://github.com/rafaelmeloreisnovo/RafGitTools/actions/runs/40283101129">Run 40283101129</a>: completed/success; gate de coerência passou. Execução física ARM32/ARM64 não comprovada.</td><td>Verificação física, corpus adversarial ampliado, revisão independente e reconciliação com o mesmo START.yml do #709.</td></tr>
+</tbody></table></section>
+<section aria-labelledby="review"><h2 id="review">Critérios obrigatórios antes de qualquer promoção</h2>
+<ol><li>Confirmar HEAD exato, base atual e alterações do GitHub no momento da revisão; não herdar PASS de outro SHA.</li>
+<li>Reconciliar os dois patches de <code>.github/workflows/START.yml</code> dos PRs #709 e #710 em branch de integração isolada, sem force-push, e executar CI no HEAD resultante.</li>
+<li>Comprovar somente as permissões mínimas necessárias para cada ação, com autoridade do provedor; não revelar, imprimir nem reutilizar tokens globalmente.</li>
+<li>Separar testes sintéticos hospedados de execução física, CI privada, segurança, autoria, licenças e prova científica.</li>
+<li>Exigir revisão humana independente, rollback e recibo com run ID, SHA de commit, hash de artefato e falsificador antes de liberar qualquer promoção.</li></ol></section>
+<section aria-labelledby="privacy"><h2 id="privacy">Privacidade, proveniência e fronteiras</h2>
+<p>Esta página contém apenas caminhos públicos do GitHub, hashes de commits e estados de revisão. Não contém materiais de sessão isolada, valores de PAT, chaves, documentos de custódia privados ou dados financeiros. GitHub Pages serve à leitura da revisão; não substitui branch protection, revisão humana nem assinatura verificável.</p>
+<p><strong>Condição padrão:</strong> <code>claim_allowed=false</code>, <code>PROMOTION=HOLD</code>, <code>PRIVATE_CI=NOT_ATTESTED</code>. SHA-256 identifica bytes; não autentica sozinho a origem. ZIPRAF não é mecanismo de criptografia autenticada.</p>
+</section>
+<footer><p>Fonte ≠ artefato ≠ execução ≠ evidência ≠ alegação. Este documento é candidato em PR Draft; a publicação no Pages depende de aprovação e configuração efetiva do provedor.</p></footer>
+</main>
+</body></html>
