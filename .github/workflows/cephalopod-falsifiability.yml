@@ -1,0 +1,29 @@
+name: "RLL | Cefalopodes | Falsificabilidade estrutural"
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/cephalopod_falsifiability/**'
+      - '.github/workflows/cephalopod-falsifiability.yml'
+permissions:
+  contents: read
+concurrency:
+  group: cephalopod-falsifiability-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  adversarial-structural:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run dependency-free adversarial gates
+        run: python3 research/cephalopod_falsifiability/test_gates.py
+      - name: Publish auditable receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cephalopod-falsifiability-receipts
+          path: artifacts/cephalopod_falsifiability/
+          if-no-files-found: warn
