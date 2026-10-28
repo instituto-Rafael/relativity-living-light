@@ -55,3 +55,55 @@ F_ok   = custody identities and source 003 byte/shape readback are bound to the 
 F_gap  = hashes 001/002, semantic schema, source-to-RLL mapping, reproduction and CI remain open.
 F_next = accept only reproducible receipts; keep claim promotion blocked.
 ```
+
+---
+
+## Successor — provider merge and correct placement readback
+
+Readback reference: `2026-10-28`, provider state only.
+
+### Provider facts
+
+- PR #1046: `MERGED` into `rll/lab`;
+- accepted head: `89f718fe83b121e98e4bd23780c0a821c9bddb94`;
+- merge commit: `52701b31a246c426ea398a5625234b1726969270`;
+- exact-head gates recorded on PR #1046: 11/11 workflows `SUCCESS`;
+- Python receipt: `2068 passed + 42 subtests passed` in `276.87s`;
+- current `rll/lab` head: `7569b30617468a37584872c093ff3b3959e3a161`;
+- ancestry check: current `rll/lab` is 345 commits ahead of the merge commit and 0 behind.
+
+### Correct placement matrix
+
+| Knowledge class | Canonical placement | State |
+|---|---|---|
+| raw ZIP source bytes | Drive folder `13B9hxoGZB5P552fF6DsOVl3vbrsYVmeW` | preserved outside Git history |
+| stable source IDs, size, bounded hash/shape observations | `data/source_intake/2026-10-04/` on `rll/lab` | documented |
+| custody/provenance contract | this GitHub receipt on `rll/lab` | successor appended |
+| mutable operational state and provider events | Drive μWRITE ledger and CURRENT_STATE | successor required/read back separately |
+| code, formulas, likelihoods and canonical scientific JSON | producer-owned GitHub paths | untouched |
+| `rll/integration`, `rll/release`, `main` | maturity-gated destinations | no promotion inferred or performed by this successor |
+
+### Promotion boundary
+
+Provider branch comparison does not prove that this merge reached later maturity layers:
+
+- `rll/integration`: diverged from the #1046 merge lineage at readback;
+- `rll/release`: behind the merge lineage;
+- `main`: diverged and retains its own older intake history;
+- direct `lab -> main` promotion remains forbidden.
+
+`CI_PASS != SCIENTIFIC_VALIDATION`. The scientific gaps remain unchanged:
+
+- sources 001/002 independent byte rehash: `TOKEN_VAZIO_HASH_READBACK`;
+- source 003 semantic schema and producer rule: `TOKEN_VAZIO`;
+- source-to-RLL scientific mapping: `TOKEN_VAZIO_SOURCE_TO_RLL`;
+- independent scientific reproduction: `TOKEN_VAZIO_REPRODUCTION`;
+- global `claim_allowed=false`.
+
+## Successor R3
+
+```text
+F_ok   = PR #1046 merge and exact-head CI are now provider-bound; knowledge classes are routed to GitHub or Drive by authority.
+F_gap  = later maturity promotion, hashes 001/002, source 003 semantics/mapping and independent reproduction remain open.
+F_next = review this successor through work -> rll/lab; never infer release/main or scientific promotion from custody success.
+```
