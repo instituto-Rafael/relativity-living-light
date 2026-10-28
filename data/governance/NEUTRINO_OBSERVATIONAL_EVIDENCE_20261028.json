@@ -1,0 +1,78 @@
+{
+  "schema_version": "rll-neutrino-evidence-v1",
+  "as_of_utc": "2026-10-28",
+  "purpose": "Metadata-only bridge; no raw observations downloaded and no likelihood performed",
+  "claim_allowed": false,
+  "joint_likelihood_executed": false,
+  "independent_replication": false,
+  "astrophysical_to_cosmological_bridge": "TOKEN_VAZIO_UNMODELLED",
+  "cross_dataset_event_merge_authorized": false,
+  "sources": [
+    {
+      "id": "ICETRACKS_DR2_2026",
+      "domain": "astrophysical_source_search",
+      "source": "IceCube Collaboration",
+      "url": "https://doi.org/10.7910/DVN/MMIIZA",
+      "release_date": "2026-05-21",
+      "version": "V3.1",
+      "sample_period": "2008-04..2022-05",
+      "download_size_note": "approximately 3.4 GB (publisher dataset page)",
+      "materialization": "METADATA_ONLY",
+      "raw_sha256": null,
+      "analysis_status": "NOT_RUN",
+      "caveat": "Supersedes 10-year DR1; IceCube explicitly instructs not combining its events with other IceCube public releases"
+    },
+    {
+      "id": "KM3_230213A_2025",
+      "domain": "astrophysical_single_event",
+      "source": "KM3NeT Collaboration",
+      "url": "https://doi.org/10.1038/s41586-024-08543-1",
+      "release_date": "2025-02-12",
+      "version": "Nature 2025 paper",
+      "sample_period": "2023-02-13",
+      "materialization": "METADATA_ONLY",
+      "raw_sha256": null,
+      "analysis_status": "NOT_RUN",
+      "caveat": "220 PeV is median parent-neutrino energy conditional on assumed E^-2 spectrum; 68% simulated range 110–790 PeV; do not treat as exact measurement or as a catalog"
+    },
+    {
+      "id": "PLANCK18_PARAMS",
+      "domain": "cosmological_neutrino_constraints",
+      "source": "Planck Collaboration",
+      "url": "https://doi.org/10.1051/0004-6361/201833910",
+      "release_date": "2020 (publication year; day not asserted)",
+      "version": "Planck 2018 results VI",
+      "sample_period": "2018 analysis",
+      "materialization": "METADATA_ONLY",
+      "raw_sha256": null,
+      "analysis_status": "NOT_RUN",
+      "caveat": "N_eff=2.99±0.17 and sum m_nu<0.12 eV (95% CL) are model/dataset conditional (Planck+BAO); not an IceCube event limit"
+    },
+    {
+      "id": "DESI_DR2_2026",
+      "domain": "cosmological_expansion",
+      "source": "DESI Collaboration",
+      "url": "https://data.desi.lbl.gov/doc/papers/dr2/",
+      "release_date": "2026-07-30",
+      "version": "DR2 publications through July 2026",
+      "sample_period": "first 3 survey years",
+      "materialization": "METADATA_ONLY",
+      "raw_sha256": null,
+      "analysis_status": "NOT_RUN",
+      "caveat": "Geometric/cosmological reference; DR2 spectra/redshifts not publicly available as of cited publisher index; posterior chains are not raw neutrino event data"
+    },
+    {
+      "id": "DES_Y6_2026",
+      "domain": "cosmological_neutrino_constraints",
+      "source": "Dark Energy Survey Collaboration",
+      "url": "https://doi.org/10.48550/ARXIV.2601.14559",
+      "release_date": "2026-01 (preprint month; day not asserted)",
+      "version": "DES Year 6 joint constraints preprint",
+      "sample_period": "DES Y6",
+      "materialization": "METADATA_ONLY",
+      "raw_sha256": null,
+      "analysis_status": "NOT_RUN",
+      "caveat": "sum m_nu<0.14 eV (95% CL) belongs to a specified multi-probe LCDM combination; do not compare limits without aligned priors and likelihoods"
+    }
+  ]
+}
