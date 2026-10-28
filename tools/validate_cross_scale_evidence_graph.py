@@ -7,7 +7,14 @@ import json
 from pathlib import Path
 
 PATH = Path(__file__).resolve().parents[1] / "data/governance/RLL_CROSS_SCALE_EVIDENCE_GRAPH_20261028.json"
+# All edge statuses are versioned: no undocumented scientific promotion.
+# New evidence edges require an explicit schema/version review.
 GATED = {
+    "E01": "ESTABLISHED",
+    "E02": "PREPRINT_OBSERVATION",
+    "E03": "ESTABLISHED",
+    "E04": "ESTABLISHED",
+    "E05": "ESTABLISHED_WITH_FORECAST_LIMITATIONS",
     "E06": "REQUIRES_SPECIFIC_EXPERIMENT",
     "E07": "THEORETICAL_ONLY",
     "E08": "UNSUPPORTED",
@@ -24,6 +31,8 @@ REQUIRED_BENCHMARKS = {
 
 def check(g):
     issues = []
+    if not isinstance(g, dict):
+        return ["manifest_not_object"]
     if g.get("schema") != "rll.cross_scale_evidence_graph.v1":
         issues.append("bad_schema")
     if g.get("claim_allowed") is not False or g.get("scientific_fit_performed") is not False:
@@ -31,6 +40,14 @@ def check(g):
     for key in ("sources", "nodes", "edges", "benchmarks"):
         if not isinstance(g.get(key), list):
             return issues + ["missing_or_bad_" + key]
+    # Invalid containers/IDs must return a HOLD receipt instead of raising.
+    for key in ("sources", "nodes", "edges", "benchmarks"):
+        if not all(isinstance(x, dict) and isinstance(x.get("id"), str) and bool(x["id"]) for x in g[key]):
+            return issues + ["malformed_" + key]
+    if not isinstance(g.get("constraints"), dict):
+        return issues + ["missing_or_bad_constraints"]
+    if not all(isinstance(b.get("measured"), dict) for b in g["benchmarks"]):
+        return issues + ["malformed_benchmark_measurement"]
     ids = {}
     for key in ("sources", "nodes", "edges", "benchmarks"):
         found = [x.get("id") for x in g[key] if isinstance(x, dict)]
@@ -55,6 +72,8 @@ def check(g):
             issues.append("missing_source")
         if not e.get("type") or not e.get("relation") or not e.get("gate"):
             issues.append("incomplete_edge_contract")
+    if ids["edges"] != set(GATED):
+        issues.append("unexpected_or_missing_edge_ids")
     for eid, state in GATED.items():
         rows = [e for e in g["edges"] if isinstance(e, dict) and e.get("id") == eid]
         if len(rows) != 1 or rows[0].get("status") != state:
@@ -89,6 +108,8 @@ def negatives(base):
         lambda g: g["edges"][0].update(evidence="unobserved_source"),
         lambda g: next(x for x in g["edges"] if x["id"] == "E08").update(status="ESTABLISHED"),
         lambda g: next(x for x in g["edges"] if x["id"] == "E10").update(status="ESTABLISHED"),
+        lambda g: next(x for x in g["edges"] if x["id"] == "E02").update(status="ESTABLISHED"),
+        lambda g: g["edges"].append(dict(g["edges"][0], id="E12", status="ESTABLISHED")),
         lambda g: next(x for x in g["benchmarks"] if x["id"] == "CIV_BAO_DV_RD_Z1P92")["measured"].update(DV_over_rd=42.0),
         lambda g: next(x for x in g["benchmarks"] if x["id"] == "RB87_SPIN_ANGLE0")["measured"].update(isotope="88Rb"),
     ]
