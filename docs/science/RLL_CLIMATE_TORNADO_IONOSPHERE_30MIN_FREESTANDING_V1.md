@@ -56,3 +56,9 @@ The separate `rll_climate_8x8.h/.c` core preserves the full 64-cell storage cont
 **Scope boundary:** this is a structural/validity port of the registry matrix; it is NOT a port of the full Python H7/Poincaré lift, Fibonacci scheduling policy, network ingest, physical sensor models, or event-by-event tornado classifier. No data-level performance is claimed.
 
 Test entrypoints: `tests/c/test_rll_climate_8x8_native.c` and the existing `tests/test_rll_climate_30min_freestanding.py`. Host native ABI and both ARM freestanding objects are included in the same CI wrapper; no additional YAML.
+
+## S2: apparent movement of ionospheric TEC disturbances
+
+`rll_tec_phase.h/.c` estimates an integer *apparent* phase speed from two **already-projected** GNSS station observations, if separation (1–500 km) and positive arrival lag (1–60 min) are independently measured and provenance-validated. The test vector 100 km / 10 min gives integer 166 m/s; 60 km / 10 min gives 100 m/s. The 32-step unsigned division avoids hidden ARM32 `__aeabi_uidiv` dependencies, with deliberately bounded input.
+
+This is not an estimate of tornado position, vortex motion, wave direction or causality. Two stations cannot uniquely reconstruct a 2-D wavefront direction; at least three geometrically suitable receivers and propagation analysis are required. A 30-min TID period, observation window and forecast lead time remain separate. The code returns a diagnostic with `is_tornado_predictor=0` and `direction_identifiable=0`. Case-driven observational phase-speed inference remains `TOKEN_VAZIO_REAL_GNSS_TEC`.
