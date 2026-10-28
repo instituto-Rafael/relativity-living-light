@@ -1,0 +1,128 @@
+{
+  "schema": "rll.geocycle_51y.source_registry.v1",
+  "claim_allowed": false,
+  "status": "SOURCE_CATALOG_ONLY_NOT_INGESTED",
+  "scope": {
+    "initial_window_start": "1975-01-01",
+    "initial_window_end": "2025-12-31",
+    "years_inclusive": 51,
+    "periodicity_conclusion": "TOKEN_VAZIO_UNIDENTIFIABLE_FROM_ONE_51Y_WINDOW",
+    "extended_comparison": "historical series longer than 153 years preferred; source-specific gaps retained",
+    "allow_partial_2026": "separate prospectively frozen holdout only"
+  },
+  "scientific_rules": {
+    "calendar": "UTC dates and JD_TDB/TT for orbital ephemerides, explicit conversion; historical Julian/Gregorian and Japanese era calendar metadata separate",
+    "epistemic": "SOURCE != IMAGE != MEASUREMENT != MODEL != INFERRED_CAUSE != PREDICTION",
+    "51y_hypothesis": "test alongside 50y and 52y and physical alternatives; never pre-label as true",
+    "null_controls": [
+      "AR1/red-noise Monte Carlo",
+      "block bootstrap by year/storm/quake",
+      "seasonal deseasonalization without leaking test windows",
+      "lag-shift and random-phase controls",
+      "multiple-testing correction",
+      "no spatial/time pooling without comparability"
+    ],
+    "promotion": "DENY without independent held-out multicycle evidence",
+    "safeguards": [
+      "never use quake or storm derived outcome time to select predictor after the fact",
+      "planetary gravitational acceleration differs from local tidal gradient",
+      "photographs are shape/coverage context, not gravity measurement",
+      "weather and gravity coupling separate unless quantified",
+      "hydrologic extreme events need wind, pressure, tide and river flow controls",
+      "Juno Jupiter dynamical analog is not Earth predictor"
+    ]
+  },
+  "sources": [
+    {
+      "id": "jpl_horizons",
+      "authority": "NASA JPL",
+      "url": "https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+      "type": "ephemeris_vectors",
+      "time_span": "configurable multi-century",
+      "use": "Earth Moon Sun planets barycentric positions velocities; tide tensor from Earth-relative vectors",
+      "state": "TOKEN_VAZIO_RAW_EPHEMERIDES"
+    },
+    {
+      "id": "era5",
+      "authority": "ECMWF Copernicus",
+      "url": "https://www.ecmwf.int/en/forecasts/datasets/complete-era5-global-atmospheric-reanalysis",
+      "type": "atmospheric_reanalysis",
+      "time_span": "1940 to present",
+      "use": "3D winds temperature humidity sea-level pressure atmospheric tides synoptic lows",
+      "state": "TOKEN_VAZIO_RAW_REANALYSIS"
+    },
+    {
+      "id": "uk_bodc_tides",
+      "authority": "British Oceanographic Data Centre",
+      "url": "https://www.bodc.ac.uk/data/hosted_data_systems/sea_level/uk_tide_gauge_network/",
+      "type": "gauge_timeseries",
+      "time_span": "station-specific; many pre-1975, processed through Aug 2026 at listing",
+      "use": "UK tide residual storm surges; datum and station changes",
+      "access": "registration may be required",
+      "state": "TOKEN_VAZIO_RAW_TIDE_GAUGES"
+    },
+    {
+      "id": "uk_met_office_nao",
+      "authority": "UK Met Office",
+      "url": "https://www.metoffice.gov.uk/research/climate/seasonal-to-decadal/gpc-outlooks/ens-mean/nao-description",
+      "type": "index_definition",
+      "time_span": "varies by NAO product",
+      "use": "Icelandic low Azores high synoptic weather controls",
+      "state": "TOKEN_VAZIO_NAO_SERIES"
+    },
+    {
+      "id": "jma_earthquakes",
+      "authority": "Japan Meteorological Agency",
+      "url": "https://www.data.jma.go.jp/eqev/data/index.html",
+      "type": "earthquake_catalog",
+      "time_span": "records since 1919 in JMA historical data",
+      "use": "event onset magnitude depth uncertainty no forecast assumed",
+      "state": "TOKEN_VAZIO_JMA_EVENT_DATA"
+    },
+    {
+      "id": "usgs_fdsn",
+      "authority": "USGS",
+      "url": "https://earthquake.usgs.gov/fdsnws/event/1/",
+      "type": "earthquake_catalog_api",
+      "time_span": "catalog-dependent multi-decade",
+      "use": "cross-check earthquake time magnitude magnitude completeness",
+      "state": "TOKEN_VAZIO_USGS_EVENT_DATA"
+    },
+    {
+      "id": "tokyo_urban_history",
+      "authority": "Tokyo Metropolitan Government",
+      "url": "https://www.toshiseibi.metro.tokyo.lg.jp/about/chousa/ayumi/english",
+      "type": "historical_maps_documents",
+      "time_span": "Edo to modern",
+      "use": "land reclamation administrative and urban history; not tectonic displacement proxy",
+      "state": "TOKEN_VAZIO_HISTORICAL_MAP_REGISTRATION"
+    },
+    {
+      "id": "nasa_landsat",
+      "authority": "NASA USGS",
+      "url": "https://science.nasa.gov/mission/landsat/data-overview/",
+      "type": "earth_imagery",
+      "time_span": "1972 to present",
+      "use": "land cover coast urban change with sensor correction/geo-registration",
+      "state": "TOKEN_VAZIO_REAL_IMAGE_TILES"
+    },
+    {
+      "id": "nasa_juno",
+      "authority": "NASA JPL SwRI",
+      "url": "https://science.nasa.gov/gallery/junocam-images/",
+      "type": "jupiter_images",
+      "time_span": "mission imaging since 2016; verify coverage by target",
+      "use": "independent Jupiter vortex morphology not terrestrial gravitational forcing",
+      "state": "TOKEN_VAZIO_JUNOCAM_IMAGE_SERIES"
+    },
+    {
+      "id": "noaa_barometric_tides",
+      "authority": "NOAA",
+      "url": "https://prod-01-alb-www-noaa.woc.noaa.gov/jetstream/atmosphere/air-pressure",
+      "type": "physical_reference",
+      "time_span": "educational physical reference",
+      "use": "solar semidiurnal pressure maxima near 10 and 22 local solar time",
+      "state": "REFERENCE_ONLY"
+    }
+  ]
+}
