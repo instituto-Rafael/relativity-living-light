@@ -62,3 +62,40 @@ Test entrypoints: `tests/c/test_rll_climate_8x8_native.c` and the existing `test
 `rll_tec_phase.h/.c` estimates an integer *apparent* phase speed from two **already-projected** GNSS station observations, if separation (1–500 km) and positive arrival lag (1–60 min) are independently measured and provenance-validated. The test vector 100 km / 10 min gives integer 166 m/s; 60 km / 10 min gives 100 m/s. The 32-step unsigned division avoids hidden ARM32 `__aeabi_uidiv` dependencies, with deliberately bounded input.
 
 This is not an estimate of tornado position, vortex motion, wave direction or causality. Two stations cannot uniquely reconstruct a 2-D wavefront direction; at least three geometrically suitable receivers and propagation analysis are required. A 30-min TID period, observation window and forecast lead time remain separate. The code returns a diagnostic with `is_tornado_predictor=0` and `direction_identifiable=0`. Case-driven observational phase-speed inference remains `TOKEN_VAZIO_REAL_GNSS_TEC`.
+
+## S3: air-mass stability, vapor density and convection — primary investigation axis
+
+**Research axis revised:** the target is the evolving stability/mass transport of the *lower atmosphere*: pressure, temperature, moisture, density, buoyancy, vertical profile and wind-vector shear. Ionopheric TEC is an *optional cross-layer consequence/control* and must not be called the mechanism that creates tornadoes. The 8x8 registry already contains sectors 1 (thermodynamics), 2 (dynamics), 6 (ionosphere), 7 (extremes).
+
+The freestanding `rll_air_mass.{h,c}` is a gas-phase Q-format/integer **equation-of-state and dry-screen building block**, not a numerical weather prediction model. It includes:
+- validated pressure (Pa), temperature (centikelvin), water vapor mole/volume fraction (parts per million, 0..40000), phase state and validity mask (missing is not zero);
+- moist-air and dry-air density (mg/m³), virtual temperature and water vapor mass fraction (parts per million by **mass**);
+- same-pressure parcel buoyancy (milli-m/s²), including the density effect of vapor;
+- approximate unsaturated screening of environmental vertical thermal stratification relative to the dry adiabatic lapse (~9.8 K/km); NOT full moist static stability, Brunt-Väisälä N², CAPE or CIN.
+
+For a gas-only ideal mixture under equal pressure and temperature:
+
+```text
+x_v = e / P                             water vapor mole fraction (volume fraction)
+rho = (P - e)/(R_d T) + e/(R_v T)
+rho/rho_dry ≈ 1 - 0.378 x_v
+T_virtual = T/(1 - 0.378 x_v)
+q_mass ≈ (0.622 x_v)/(1 - 0.378 x_v)
+buoyancy = g*(rho_environment - rho_parcel)/rho_environment
+hydrostatic: dp/dz = -rho*g              NOT solved in this kernel
+mass transport: rho * wind_velocity     NOT solved in this kernel
+```
+
+At `P=101325 Pa`, `T=303.15 K`, `x_v=0.04`, the fixed-point kernel yields dry 1.164398 kg/m³, moist 1.146792 kg/m³, virtual temperature 307.80 K and vapor mass fraction 0.025261. The density reduction is ~1.512% relative to the same-P,T dry mixture. **4% is an approximate high tropical atmospheric water-vapor fraction by volume, not a global constant and not 4% by mass.** Moist air is lighter *as a gas mixture* at fixed P/T. Cloud droplets, ice and rain add condensate loading; condensation also releases latent heat. The current kernel refuses those phase states rather than silently giving a wrong result.
+
+The simple two-layer dry-screen assumes input height separation ≥100 m, vapor-only ideal air, and compares a finite-difference virtual temperature lapse to 9.8 K/km. It is a **diagnostic under restricted assumptions**, not a cloud-bearing-layer stability classification. Never infer tornado occurrence from its sign.
+
+Upstream credible measurements must be station/radiosonde/sounding P,T,Td/RH plus height, radar reflectivity/velocity, wind u/v at multiple heights, Kp/F10.7 and optional GNSS TEC; each sample requires observation timestamp, *available-as-of* timestamp, location, altitude, units, calibration and source hash. Without vapor observed and time-aligned, use `RLLA_MISSING`, not assumed 4%.
+
+Future falsifiers: vapor density monotonic at fixed P/T; mass-vs-volume fraction confusion; condensate rejection; wrong-pressure buoyancy comparisons; dry/mixed/fully saturated vertical-profile counterexamples; CAPE/CIN and vertical shear comparisons against Skew-T and conventional nowcast; sensitivity to terrain, boundary-layer entrainment, pressure gradients and downward precipitation loading. If full thermodynamic equations and moisture transport do not improve held-out storm reconstruction, reject the RLL-specific add-on for that test set.
+
+Authorities: NOAA JetStream *The Atmosphere* (water vapor up to ~4% by volume, not constant) https://www.noaa.gov/jetstream/atmosphere ; NOAA *Parcel Theory* https://www.noaa.gov/jetstream/upperair/parcel-theory ; AMS Glossary *Virtual Temperature* https://glossary.ametsoc.org/wiki/virtual-temperature/ ; NOAA *Severe Weather* https://www.noaa.gov/jetstream/upperair/severe-weather . No dataset from these references was ingested as sensor observations.
+
+Local pure-C tests: `tests/c/test_rll_air_mass_native.c` includes 40,001 vapor-volume levels, fixed dry/moist density vectors, parcel sign reversal, phase/missing-data checks, and stable/neutral/unstable *dry screens*. GCC/Clang+ASan/UBSan host tested, Clang ARMv7/AArch64 object undefined symbols=0. The existing Python tests/CI are responsible for exact head reproducibility. Still missing the actual physical wind/continuity/momentum solver, latent heat/rain, true moist stability, storm-wise historical dataset, and real tornado forecast validation.
+
+**PROMOTION=HOLD, claim_allowed=false, is_weather_warning=0**. No authority for public warnings.
