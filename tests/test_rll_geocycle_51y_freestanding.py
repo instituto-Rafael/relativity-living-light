@@ -24,6 +24,17 @@ class Geocycle51Falsification(unittest.TestCase):
         ids=[x["id"] for x in obj["sources"]]
         self.assertEqual(len(ids),len(set(ids)))
 
+    def test_jpl_gm_reference_is_not_ephemeris_or_tide(self):
+        obj=json.loads((ROOT/"data/climate/rll_planetary_gm_jpl_reference.v1.json").read_text(encoding="utf-8"))
+        self.assertIs(obj["claim_allowed"],False)
+        self.assertEqual(obj["units"],"km^3/s^2")
+        names=[v["body"] for v in obj["body_GM"]]
+        self.assertEqual(len(names),len(set(names)))
+        self.assertTrue({"sun","moon","earth","mercury","venus","mars",
+                         "jupiter","saturn","uranus","neptune"}.issubset(set(names)))
+        self.assertTrue(all(v["gm"]>0 for v in obj["body_GM"]))
+        self.assertTrue(any("ephemeris" in x.lower() for x in obj["notes"]))
+        
     def test_existing_rll_8x8_compatibility(self):
         registry=json.loads((ROOT/"data/climate/rll_climate_multiphysics_registry.v1.json").read_text(encoding="utf-8"))
         self.assertEqual(registry["matrix_contract"]["shape"],[8,8])
