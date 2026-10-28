@@ -69,6 +69,16 @@
       "id": "RLL_BP",
       "url": "https://github.com/instituto-Rafael/relativity-living-light/blob/main/tools/rll_bp_physical_contract.py",
       "kind": "producer_source"
+    },
+    {
+      "id": "HYREC2_RECOMBINATION",
+      "url": "https://doi.org/10.1103/PhysRevD.102.083517",
+      "kind": "2020_peer_reviewed_code_physics"
+    },
+    {
+      "id": "PDG_ASTRO_CONSTANTS",
+      "url": "https://pdg.lbl.gov/2025/reviews/rpp2024-rev-astrophysical-constants.pdf",
+      "kind": "peer_reviewed_constants"
     }
   ],
   "nodes": [
@@ -194,7 +204,7 @@
       "from": "periodic_atomic_structure",
       "to": "recombination_photon_baryon",
       "type": "physical_scattering",
-      "evidence": "NIST_ASD",
+      "evidence": "HYREC2_RECOMBINATION",
       "status": "ESTABLISHED",
       "relation": "Gamma=n_e*sigma_T*c; recombination history determines scattering opacity",
       "gate": "recombination kinetics and free electron density model required"
