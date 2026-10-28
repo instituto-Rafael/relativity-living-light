@@ -1,0 +1,504 @@
+{
+  "schema": "rll.synaptic_evidence_feedback.v1",
+  "created_at": "2026-10-28",
+  "parent_scoped_branch": "research/typed-chem-water-session-tokenizer-20261028-v1",
+  "parent_typed_graph": "data/governance/RLL_TYPED_CHEM_WATER_SESSION_TOKENS_V1.json",
+  "role": "research_priority_graph_not_new_physics",
+  "claim_allowed": false,
+  "physical_fit_executed": false,
+  "transformer_heads_observed": false,
+  "source_count": 12,
+  "sources": [
+    {
+      "id": "HI21",
+      "url": "https://www.nature.com/articles/s41550-025-02575-x",
+      "status": "PEER_REVIEWED_ANALYSIS"
+    },
+    {
+      "id": "HI_BAO",
+      "url": "https://arxiv.org/abs/2607.17141",
+      "status": "PREPRINT_FORECAST"
+    },
+    {
+      "id": "HE_RATIO",
+      "url": "https://arxiv.org/abs/2605.00122",
+      "status": "PREPRINT_MODEL_INFERENCE"
+    },
+    {
+      "id": "N_EFF",
+      "url": "https://doi.org/10.1103/5vk8-v1rb",
+      "status": "PEER_REVIEWED_DATA_ANALYSIS"
+    },
+    {
+      "id": "CIV_BAO",
+      "url": "https://doi.org/10.3847/1538-4357/ae9ec1",
+      "status": "PEER_REVIEWED_DATA_ANALYSIS"
+    },
+    {
+      "id": "H3_CR",
+      "url": "https://arxiv.org/abs/2601.11761",
+      "status": "PREPRINT_ASTROCHEMICAL_MODEL"
+    },
+    {
+      "id": "ICE_RAD",
+      "url": "https://arxiv.org/abs/2602.19996",
+      "status": "PREPRINT_SIMULATION"
+    },
+    {
+      "id": "H2O3_LAB",
+      "url": "https://doi.org/10.1126/sciadv.adw5720",
+      "status": "PEER_REVIEWED_LAB_EXPERIMENT"
+    },
+    {
+      "id": "WATER_TOPO",
+      "url": "https://doi.org/10.1063/5.0337533",
+      "status": "PEER_REVIEWED_SIMULATION"
+    },
+    {
+      "id": "SKY_AI",
+      "url": "https://arxiv.org/abs/2610.37596",
+      "status": "PREPRINT_SIMULATED_ML"
+    },
+    {
+      "id": "HE_BBN",
+      "url": "https://arxiv.org/abs/2609.13140",
+      "status": "PREPRINT_COSMOLOGICAL_ANALYSIS"
+    },
+    {
+      "id": "RLL_PREVIOUS",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/blob/research/typed-chem-water-session-tokenizer-20261028-v1/data/governance/RLL_TYPED_CHEM_WATER_SESSION_TOKENS_V1.json",
+      "status": "LOCAL_UNMERGED_SOURCE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "H1",
+      "d": "atomic",
+      "q": "neutral_H_spin_hyperfine",
+      "units": "MHz"
+    },
+    {
+      "id": "H21",
+      "d": "photon_radio",
+      "q": "lambda_21cm_rest",
+      "units": "MHz"
+    },
+    {
+      "id": "LSS21",
+      "d": "observational_cosmology",
+      "q": "HI_intensity_mapping_clustering",
+      "units": "z,P(k)"
+    },
+    {
+      "id": "CIV",
+      "d": "ion_atomic",
+      "q": "C_3plus",
+      "units": "ion charge +3"
+    },
+    {
+      "id": "CIVS",
+      "d": "photon_optical",
+      "q": "CIV_doublet_redshift",
+      "units": "angstrom,z"
+    },
+    {
+      "id": "BAO",
+      "d": "observational_cosmology",
+      "q": "DV_over_rd",
+      "units": "dimensionless"
+    },
+    {
+      "id": "HE3",
+      "d": "nuclear_isotope",
+      "q": "helium_3",
+      "units": "number fraction"
+    },
+    {
+      "id": "HE4",
+      "d": "nuclear_isotope",
+      "q": "helium_4",
+      "units": "mass fraction"
+    },
+    {
+      "id": "HER",
+      "d": "astrochemical_observable",
+      "q": "He3_to_He4_inferred_primordial_ratio",
+      "units": "dimensionless"
+    },
+    {
+      "id": "NEFF",
+      "d": "early_cosmology",
+      "q": "effective_relativistic_species",
+      "units": "dimensionless"
+    },
+    {
+      "id": "H2",
+      "d": "molecular",
+      "q": "H2",
+      "units": "species"
+    },
+    {
+      "id": "H3P",
+      "d": "molecular_ion",
+      "q": "H3_plus",
+      "units": "species charge +1"
+    },
+    {
+      "id": "CR",
+      "d": "astrochemical_environment",
+      "q": "cosmic_ray_ionization",
+      "units": "s^-1"
+    },
+    {
+      "id": "ICE",
+      "d": "solid_chemistry",
+      "q": "H2O_and_O2_ice_under_irradiation",
+      "units": "K,fluence"
+    },
+    {
+      "id": "H2O3",
+      "d": "molecular",
+      "q": "trioxidane",
+      "units": "formula H2O3"
+    },
+    {
+      "id": "WNET",
+      "d": "liquid_network",
+      "q": "H2O_hydrogen_bond_topology",
+      "units": "rings"
+    },
+    {
+      "id": "WX",
+      "d": "scattering_observable",
+      "q": "water_structure_factor",
+      "units": "q^-1"
+    },
+    {
+      "id": "RADSYS",
+      "d": "observational_instrument",
+      "q": "radio_beam_spectral_ripple",
+      "units": "calibration"
+    },
+    {
+      "id": "ML",
+      "d": "statistical_model",
+      "q": "latent_sky_instrument_separation",
+      "units": "R2"
+    },
+    {
+      "id": "RLL",
+      "d": "proposed_cosmological_model",
+      "q": "rll_prediction",
+      "units": "TOKEN_VAZIO_UNMODELLED"
+    }
+  ],
+  "edges": [
+    {
+      "id": "S01",
+      "src": "H1",
+      "dst": "H21",
+      "mechanism": "H-I electron/proton hyperfine spin state transition",
+      "class": "PHYSICAL_RADIATIVE",
+      "status": "ESTABLISHED_MECHANISM",
+      "evidence": "HI21",
+      "test": "rest-frame frequency ~1420.4 MHz with hyperfine degeneracies and selection"
+    },
+    {
+      "id": "S02",
+      "src": "H21",
+      "dst": "LSS21",
+      "mechanism": "redshift of 21cm line + H-I radiative transfer; astrophysical/instrumental selection",
+      "class": "OBSERVATIONAL_MAPPING",
+      "status": "ESTABLISHED_METHOD_FORECAST_APPLICATION",
+      "evidence": "HI_BAO",
+      "test": "frequency-redshift consistency and foreground injection/recovery; no new 21cm BAO detection claimed"
+    },
+    {
+      "id": "S03",
+      "src": "LSS21",
+      "dst": "BAO",
+      "mechanism": "correlation and cross-power of H-I intensity maps and galaxies",
+      "class": "INFERENTIAL_STATISTICS",
+      "status": "PREPRINT_FORECAST",
+      "evidence": "HI_BAO",
+      "test": "full mock with foreground loss and covariance; held-out redshift block"
+    },
+    {
+      "id": "S04",
+      "src": "CIV",
+      "dst": "CIVS",
+      "mechanism": "C IV ionic absorption doublet; C^3+ has one C atom",
+      "class": "PHYSICAL_SPECTROSCOPY",
+      "status": "ESTABLISHED_MECHANISM",
+      "evidence": "CIV_BAO",
+      "test": "rest wavelengths and ion identification vs carbon C3 trimer"
+    },
+    {
+      "id": "S05",
+      "src": "CIVS",
+      "dst": "BAO",
+      "mechanism": "measured C IV absorption cross-correlated with QSO and ELG",
+      "class": "OBSERVATIONAL_INFERENCE",
+      "status": "PEER_REVIEWED_SURVEY_RESULT",
+      "evidence": "CIV_BAO",
+      "test": "DV/rd at z=1.92 30.3±0.9 and z=1.47 24.6±1.0 from source, not re-fit"
+    },
+    {
+      "id": "S06",
+      "src": "HE3",
+      "dst": "HER",
+      "mechanism": "helium isotope ratio inferred from spectroscopic absorbers and galactic chemical evolution",
+      "class": "MODEL_DEPENDENT_INFERENCE",
+      "status": "PREPRINT_INFERRED_NOT_DIRECT_PRIMORDIAL_MEASUREMENT",
+      "evidence": "HE_RATIO",
+      "test": "use 3He/4He ratio (1.15+0.24-0.21)e-4, check isotope shifts, model priors and stellar enrichment"
+    },
+    {
+      "id": "S07",
+      "src": "HE4",
+      "dst": "HER",
+      "mechanism": "He-4 denominator of 3He/4He isotope ratio, NOT primordial helium mass fraction Yp",
+      "class": "DENOMINATOR_LINK",
+      "status": "ESTABLISHED_DISTINCTION",
+      "evidence": "HE_RATIO",
+      "test": "do not substitute 3He/4He for Yp"
+    },
+    {
+      "id": "S08",
+      "src": "HE4",
+      "dst": "NEFF",
+      "mechanism": "primordial helium Yp and deuterium with BBN/CMB/BAO joint likelihood",
+      "class": "COSMOLOGICAL_MODEL_INFERENCE",
+      "status": "PEER_REVIEWED_MODEL_DEPENDENT",
+      "evidence": "N_EFF",
+      "test": "reproduce likelihood including Yp/DH priors and covariance; reported Neff=2.990±0.070 68% CL"
+    },
+    {
+      "id": "S09",
+      "src": "H2",
+      "dst": "H3P",
+      "mechanism": "ionization H2 -> H2+ and H2+ + H2 -> H3+ + H",
+      "class": "CHEMICAL_REACTION_CHAIN",
+      "status": "ESTABLISHED_MECHANISM",
+      "evidence": "H3_CR",
+      "test": "charge and H nuclei conservation; ionization rate context"
+    },
+    {
+      "id": "S10",
+      "src": "CR",
+      "dst": "H3P",
+      "mechanism": "cosmic rays ionize H2 creating H3+, environment/attenuation determines abundance",
+      "class": "ENVIRONMENT_CHEMISTRY",
+      "status": "ESTABLISHED_WITH_MODELLING_ASSUMPTIONS",
+      "evidence": "H3_CR",
+      "test": "spectroscopy and chemical network predict zeta not from H3 bare string"
+    },
+    {
+      "id": "S11",
+      "src": "CR",
+      "dst": "ICE",
+      "mechanism": "energetic particle radiolysis in H2O/O2 ice chemistry",
+      "class": "LAB_TO_ASTROCHEMICAL_ANALOGUE",
+      "status": "PREPRINT_SIMULATION_CONDITIONAL",
+      "evidence": "ICE_RAD",
+      "test": "fluence, phase, temperature and branching ratios; simulation has residual disagreements"
+    },
+    {
+      "id": "S12",
+      "src": "ICE",
+      "dst": "H2O3",
+      "mechanism": "HOOOH produced in lab irradiated H2O/O2 ice analogue",
+      "class": "PHYSICAL_LAB_CHEMISTRY",
+      "status": "PEER_REVIEWED_LAB_CONDITIONAL",
+      "evidence": "H2O3_LAB",
+      "test": "mass spectra and isotopic labeling; not a ubiquitous component of liquid water"
+    },
+    {
+      "id": "S13",
+      "src": "WNET",
+      "dst": "WX",
+      "mechanism": "medium range H bond ring topology affects liquid-water structure-factor peak",
+      "class": "NETWORK_TO_SCATTERING",
+      "status": "PEER_REVIEWED_SIMULATION",
+      "evidence": "WATER_TOPO",
+      "test": "compare ring decomposition and scattering curves under T/P changes; not H2O3"
+    },
+    {
+      "id": "S14",
+      "src": "RADSYS",
+      "dst": "ML",
+      "mechanism": "self-supervised radio instrument state/sky latent separation from simulations",
+      "class": "COMPUTATIONAL_DECONFOUNDING",
+      "status": "PREPRINT_SIMULATION_NOT_REAL_SKY_PROOF",
+      "evidence": "SKY_AI",
+      "test": "15 held-out instrument states R2=0.9975 (reported), sky purity remains incomplete"
+    },
+    {
+      "id": "S15",
+      "src": "BAO",
+      "dst": "RLL",
+      "mechanism": "RLL/CPL/LCDM common covariances and held-out prediction NOT computed",
+      "class": "CANDIDATE_MODEL_TEST",
+      "status": "TOKEN_VAZIO_NOT_EXECUTED",
+      "evidence": "RLL_PREVIOUS",
+      "test": "compare RLL and LCDM on same data with full covariances, fair priors and preregistered WS01 numerical gates"
+    }
+  ],
+  "anti_false_edges": [
+    {
+      "id": "X01",
+      "left": "surface:He3",
+      "right": "nuclear:isotope:He-3",
+      "reason": "flattened isotope vs helium-trimer ambiguity; require domain"
+    },
+    {
+      "id": "X02",
+      "left": "surface:C3",
+      "right": "spectroscopy:C-IV",
+      "reason": "three carbon atoms vs one C atom triply ionized"
+    },
+    {
+      "id": "X03",
+      "left": "chem:molecule:H2O3",
+      "right": "water:network_anomaly",
+      "reason": "trioxidane formula not density anomaly of ordinary H2O"
+    },
+    {
+      "id": "X04",
+      "left": "WNET",
+      "right": "BAO",
+      "reason": "two scattering/correlation peaks ≠ same physical acoustic origin"
+    },
+    {
+      "id": "X05",
+      "left": "statistical:ML_latents",
+      "right": "model:real_GPT_heads",
+      "reason": "instrument/sky latent separation does not expose hidden transformer attention tensors"
+    },
+    {
+      "id": "X06",
+      "left": "HER",
+      "right": "Yp",
+      "reason": "primordial 3He/4He isotope ratio and 4He mass fraction are different quantities"
+    },
+    {
+      "id": "X07",
+      "left": "H3P",
+      "right": "surface:H3",
+      "reason": "H3+ ion charge must not be dropped"
+    },
+    {
+      "id": "X08",
+      "left": "21cm_radio_clustering",
+      "right": "CIV_BAO",
+      "reason": "same large scale physics in principle but tracer biases, z bins, covariance and foregrounds must be controlled"
+    }
+  ],
+  "invariant_of_invariants": {
+    "identity": "canonical form + isotope + electric charge + stoichiometry must survive text transformations",
+    "dimensions": "all units must match every mechanistic edge and observational likelihood",
+    "scale": "quantum/atomic, molecular, instrumental, astrophysical and cosmological context do not collapse",
+    "source": "every edge has literature source, status, gate and explicit negative test",
+    "statistical": "do not compare fits with incommensurate redshifts, selection, foregrounds or covariance",
+    "reversibility": "derive typed reference from raw token without deleting raw Unicode",
+    "heads": "only visible model outputs are observable; hidden attention weights/activations TOKEN_VAZIO_NOT_ACCESSIBLE",
+    "null": "unknown/ambiguous/contradictory is different from zero or a negative measurement",
+    "promotion": "only causal model with units, falsifier, data and independent receipt can become scientific claim",
+    "model": "RLL not validated and original global WS01 distance tolerance must not be relaxed"
+  },
+  "priority_policy": "Heuristic priority by independently observed physical mapping, falsifiability, uncertainty reduction, cost, and avoidance of circular data reuse; not an empirical entropy measurement.",
+  "ranked_next": [
+    {
+      "rank": 1,
+      "id": "N1",
+      "task": "Use 21-cm H I spin and C IV spectral tracer as distinct routes to cosmological clustering; evaluate common redshift bins only when overlapping and matched covariance actually exist.",
+      "blocking": "raw HI intensity maps and C IV spectroscopic covariance not jointly materialized",
+      "state": "TOKEN_VAZIO_NOT_EXECUTED"
+    },
+    {
+      "rank": 2,
+      "id": "N2",
+      "task": "Independently reproduce 2026 primordial 4He/deuterium BBN+CMB+BAO Neff inference; test 3He/4He alternate isotope observable WITHOUT replacing Yp.",
+      "blocking": "posterior chains/priors and stellar chemical evolution uncertainty not independently replicated",
+      "state": "TOKEN_VAZIO_NOT_EXECUTED"
+    },
+    {
+      "rank": 3,
+      "id": "N3",
+      "task": "Reproduce 2026 H2+ to H3+ reaction/CR rate and H2O/O2 ice radiolysis product ratios with strict atom/charge conservation, then separate H2O3 lab evidence from water liquid topology.",
+      "blocking": "network reaction coefficients lab raw data and experimental spectra not ingested",
+      "state": "TOKEN_VAZIO_NOT_EXECUTED"
+    },
+    {
+      "rank": 4,
+      "id": "N4",
+      "task": "Radio 21cm systematic/sky disambiguation negative controls; assess signal injection/recovery, not just held-out instrument-state R2.",
+      "blocking": "real interferometric visibilities and independent sky truth not supplied",
+      "state": "TOKEN_VAZIO_NOT_EXECUTED"
+    },
+    {
+      "rank": 5,
+      "id": "N5",
+      "task": "Compare RLL vs LCDM/CPL held-out data under unchanged numerical WS01 and scientific claim gates.",
+      "blocking": "WS01 exact-head governance mismatch and full physical likelihood gap",
+      "state": "TOKEN_VAZIO_NOT_EXECUTED"
+    }
+  ],
+  "observational_benchmarks": [
+    {
+      "id": "B1",
+      "source": "HI21",
+      "name": "HI 21cm rest hyperfine transition",
+      "value": 1420.40575177,
+      "unit": "MHz",
+      "state": "ESTABLISHED_REFERENCE"
+    },
+    {
+      "id": "B2",
+      "source": "HE_RATIO",
+      "name": "primordial 3He/4He, model-inferred",
+      "value": 0.000115,
+      "lower_error": 0.000021,
+      "upper_error": 0.000024,
+      "unit": "dimensionless",
+      "state": "PREPRINT_MODEL_DEPENDENT"
+    },
+    {
+      "id": "B3",
+      "source": "N_EFF",
+      "name": "N_eff from primordial 4He deuterium CMB BAO",
+      "value": 2.99,
+      "error": 0.07,
+      "confidence": "68% CL",
+      "unit": "dimensionless",
+      "state": "PEER_REVIEWED_MODEL_DEPENDENT"
+    },
+    {
+      "id": "B4",
+      "source": "CIV_BAO",
+      "name": "CIV x QSO Dv/rd at z=1.92",
+      "value": 30.3,
+      "error": 0.9,
+      "unit": "dimensionless",
+      "state": "PEER_REVIEWED_SURVEY"
+    },
+    {
+      "id": "B5",
+      "source": "CIV_BAO",
+      "name": "CIV x ELG Dv/rd at z=1.47",
+      "value": 24.6,
+      "error": 1,
+      "unit": "dimensionless",
+      "state": "PEER_REVIEWED_SURVEY"
+    },
+    {
+      "id": "B6",
+      "source": "SKY_AI",
+      "name": "simulated held-out instrument-state prediction R2",
+      "value": 0.9975,
+      "unit": "dimensionless",
+      "state": "PREPRINT_SIMULATED_NOT_SKY_DISENTANGLEMENT"
+    }
+  ],
+  "scientific_conclusion": "GRAPH_EDGES_ARE_RESEARCH_MAP_ONLY_AND_DO_NOT_VALIDATE_RLL"
+}
