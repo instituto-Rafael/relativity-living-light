@@ -48,3 +48,11 @@ python3 -m unittest -v tests.test_rll_climate_30min_freestanding
 The Python wrapper uses only stdlib plus an installed C compiler, and automatically participates in existing `python-tests.yml` pytest discovery (no new YML). On ARM32/AArch64 it compiles freestanding objects and checks undefined symbols; **cross-compilation does not constitute execution on a real Android device**.
 
 Receipt class: `SYNTHETIC_CODE_VALIDATION`. All historical/out-of-sample tornado prediction skill, real TEC/cross-planet correlation, latency and independent validation are `TOKEN_VAZIO_UNMEASURED`. `PROMOTION=HOLD`, `claim_allowed=false`, `ROLLBACK=delete candidate branch; original climate patch unchanged`. Do not issue safety alerts from this experiment.
+
+## S1: 8×8 freestanding structural adapter
+
+The separate `rll_climate_8x8.h/.c` core preserves the full 64-cell storage contract (eight sector gates + 56 physical coordinates) as signed Q16.16 values with an eight-bit gate mask and seven-bit physical mask per sector. It returns explicit `RLL8_INCOMPLETE` if any gate or physical coordinate is absent; zero is a valid measured value only if its bit is valid. Outputs include counts of valid and missing coordinates and the number of normalized |z|≥3 candidates. No physiological/meteorological alarm is inferred, and `is_operational_warning=0` is forced.
+
+**Scope boundary:** this is a structural/validity port of the registry matrix; it is NOT a port of the full Python H7/Poincaré lift, Fibonacci scheduling policy, network ingest, physical sensor models, or event-by-event tornado classifier. No data-level performance is claimed.
+
+Test entrypoints: `tests/c/test_rll_climate_8x8_native.c` and the existing `tests/test_rll_climate_30min_freestanding.py`. Host native ABI and both ARM freestanding objects are included in the same CI wrapper; no additional YAML.
