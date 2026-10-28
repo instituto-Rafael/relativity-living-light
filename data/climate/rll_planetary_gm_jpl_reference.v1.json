@@ -1,0 +1,70 @@
+{
+  "schema": "rll.gravity_constants.jpl_de440_reference.v1",
+  "source": "https://ssd.jpl.nasa.gov/astro_par.html",
+  "provenance": "NASA/JPL planetary masses (DE440) and astrodynamic parameters; manually transcribed reference constants, not downloaded ephemeris vectors",
+  "units": "km^3/s^2",
+  "claim_allowed": false,
+  "body_GM": [
+    {
+      "body": "sun",
+      "gm": 132712440041.27942,
+      "scope": "sun"
+    },
+    {
+      "body": "mercury",
+      "gm": 22031.868551,
+      "scope": "planet"
+    },
+    {
+      "body": "venus",
+      "gm": 324858.592,
+      "scope": "planet"
+    },
+    {
+      "body": "earth",
+      "gm": 398600.435507,
+      "scope": "planet"
+    },
+    {
+      "body": "moon",
+      "gm": 4902.800118,
+      "scope": "natural_satellite"
+    },
+    {
+      "body": "mars",
+      "gm": 42828.375816,
+      "scope": "planet_system"
+    },
+    {
+      "body": "jupiter",
+      "gm": 126712764.1,
+      "scope": "planet_system_barycenter"
+    },
+    {
+      "body": "saturn",
+      "gm": 37940584.8418,
+      "scope": "planet_system_barycenter"
+    },
+    {
+      "body": "uranus",
+      "gm": 5794556.4,
+      "scope": "planet_system_barycenter"
+    },
+    {
+      "body": "neptune",
+      "gm": 6836527.10058,
+      "scope": "planet_system_barycenter"
+    },
+    {
+      "body": "pluto",
+      "gm": 975.5,
+      "scope": "dwarf_planet_system"
+    }
+  ],
+  "notes": [
+    "GM alone cannot produce any local acceleration or tide without instantaneous Earth-relative position vector and frame; actual Horizons ephemerides not yet ingested.",
+    "Planet and planetary-system barycenter units/scopes differ by object. NASA/JPL DE440 and object identifiers must match ephemeris convention.",
+    "Earth's own GM belongs to local baseline, not additional external Earth-source tidal perturbation on itself.",
+    "A 51-year recurrence hypothesis has no established observational signal or physical period in this catalog."
+  ]
+}
