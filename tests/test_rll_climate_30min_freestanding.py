@@ -69,6 +69,22 @@ class ClimateTornadoIonosphere(unittest.TestCase):
             p = subprocess.run([out], capture_output=True, text=True, timeout=15)
             self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
 
+    def test_vapor_air_mass_and_stability(self):
+        compiler = shutil.which("cc") or shutil.which("clang")
+        self.assertIsNotNone(compiler)
+        with tempfile.TemporaryDirectory() as d:
+            out = str(Path(d) / "rlla")
+            subprocess.run(
+                [compiler, "-std=c11", "-O2", "-Wall", "-Wextra",
+                 "-Werror", "-pedantic",
+                 str(ROOT / "native/climate_tornado_ionosphere/rll_air_mass.c"),
+                 str(ROOT / "tests/c/test_rll_air_mass_native.c"),
+                 "-o", out],
+                check=True, capture_output=True, text=True, timeout=90,
+            )
+            p = subprocess.run([out], capture_output=True, text=True, timeout=60)
+            self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+
     def test_arm32_arm64_pure_objects(self):
         clang = shutil.which("clang")
         nm = shutil.which("nm")
@@ -115,6 +131,19 @@ class ClimateTornadoIonosphere(unittest.TestCase):
                         [nm, "-u", phase], check=True, capture_output=True, text=True,
                     ).stdout
                     self.assertEqual(missing.strip(), "", missing)
+                    air = str(Path(d) / (target + "-air.o"))
+                    subprocess.run(
+                        [clang, "--target=" + target, "-std=c11", "-O2",
+                         "-ffreestanding", "-fno-builtin", "-fno-stack-protector",
+                         "-Wall", "-Wextra", "-Werror", "-c",
+                         str(ROOT / "native/climate_tornado_ionosphere/rll_air_mass.c"),
+                         "-o", air],
+                        check=True, capture_output=True, text=True, timeout=60,
+                    )
+                    missing_air = subprocess.run(
+                        [nm, "-u", air], check=True, capture_output=True, text=True,
+                    ).stdout
+                    self.assertEqual(missing_air.strip(), "", missing_air)
 
 
 if __name__ == "__main__":
