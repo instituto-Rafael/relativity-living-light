@@ -1,0 +1,75 @@
+{
+  "schema": "rll.stability_locator_s1.v1",
+  "claim_allowed": false,
+  "promotion": "HOLD",
+  "data_status": "SOURCE_POINTERS_ONLY",
+  "forecast_horizon_minutes_max": 20160,
+  "rapid_observation_minutes_max": 30,
+  "tiles_max": 16,
+  "forecast_features": [
+    "sst_z100",
+    "moisture_z100",
+    "relative_vorticity_z100",
+    "deep_layer_shear_z100",
+    "slp_z100"
+  ],
+  "feature_semantics": "Standardized z-scores*100 from a pinned upstream meteorological baseline, directions for deterministic test only; source and baseline not implemented",
+  "score": "candidate_score_0_600 (experimental ranking, not probability)",
+  "time_gate": "Each forecast component must have issue_time and available_time <= model evaluation issue; valid_target=issue+horizon. Observations also available <= issue",
+  "sources": [
+    {
+      "id": "ECMWF_ENS",
+      "role": "ensemble/longer-range tropical activity guidance",
+      "uri": "https://www.ecmwf.int/en/forecasts/charts/latest-tropical-cyclones-forecast",
+      "state": "TOKEN_VAZIO_RAW_ENSEMBLE",
+      "license": "verify before redistributing"
+    },
+    {
+      "id": "NHC",
+      "role": "official storm forecast 5d and tropical outlook 7d benchmark",
+      "uri": "https://www.nhc.noaa.gov/",
+      "state": "TOKEN_VAZIO_ARCHIVED_AS_ISSUED_FORECAST"
+    },
+    {
+      "id": "IBTrACS",
+      "role": "event truth labels post-issue only",
+      "uri": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+      "state": "TOKEN_VAZIO_EVENT_OUTCOMES"
+    },
+    {
+      "id": "ERA5",
+      "role": "retrospective 3D physical fields subject to data availability latency",
+      "uri": "https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5",
+      "state": "TOKEN_VAZIO_REANALYSIS"
+    },
+    {
+      "id": "GOES_ABI",
+      "role": "cloud top rapid imagery and nowcast exploratory",
+      "uri": "https://www.goes-r.gov/spacesegment/abi.html",
+      "state": "TOKEN_VAZIO_IMAGERY"
+    },
+    {
+      "id": "NOAA_OISST",
+      "role": "sea surface temperature",
+      "uri": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
+      "state": "TOKEN_VAZIO_OCEAN"
+    }
+  ],
+  "gates": {
+    "G0": "strict source custody, data rights, acquisition and availability times; reject missing as zero",
+    "G1": "14d probabilistic regional climate favorability versus ECMWF/NHC/climatology and historical independent outcomes",
+    "G2": "train/validation/test split by storm/basin/season/year, avoid same-storm contamination",
+    "G3": "Brier/CRPS/log score, reliability, uncertainty intervals, false alarms vs climatology",
+    "G4": "ablate 51/52y, lunar/planetary, archaeological clock, Juno, TEC and information features; retain only independent gains",
+    "G5": "30min pressure/wind tendencies need real sensor as-of latency and separate event validation",
+    "G6": "independent meteorological review and no operational/public warnings"
+  },
+  "epistemic_boundary": "Compression from SCD1 is an information science analogy; no atmospheric physical-coupling; 52yr calendar != 52yr gravity period",
+  "predecessors": [
+    "PapersPub/09_language_entropy_formalism/results/SCD1_20260920.json",
+    "PapersPub/09_language_entropy_formalism/results/G123_20260921.json",
+    "docs/science/RLL_CLIMATE_MULTIPHYSICS_CYCLE_V1.md",
+    "PR #1138 draft: air mass/tornado/ionosphere native",
+    "PR #1139 draft: 51-year gravity-climate trial"
+  ]
+}
