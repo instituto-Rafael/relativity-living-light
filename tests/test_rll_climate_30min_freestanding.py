@@ -37,6 +37,22 @@ class ClimateTornadoIonosphere(unittest.TestCase):
             p = subprocess.run([str(out)], capture_output=True, text=True, timeout=15)
             self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
 
+    def test_complete_8x8_matrix_structural_masks(self):
+        compiler = shutil.which("cc") or shutil.which("clang")
+        self.assertIsNotNone(compiler, "C compiler required")
+        with tempfile.TemporaryDirectory() as d:
+            out = str(Path(d) / "rll8")
+            subprocess.run(
+                [compiler, "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",
+                 "-pedantic",
+                 str(ROOT / "native/climate_tornado_ionosphere/rll_climate_8x8.c"),
+                 str(ROOT / "tests/c/test_rll_climate_8x8_native.c"),
+                 "-o", out],
+                check=True, capture_output=True, text=True, timeout=90,
+            )
+            p = subprocess.run([out], capture_output=True, text=True, timeout=15)
+            self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+
     def test_arm32_arm64_pure_objects(self):
         clang = shutil.which("clang")
         nm = shutil.which("nm")
@@ -57,6 +73,19 @@ class ClimateTornadoIonosphere(unittest.TestCase):
                         [nm, "-u", output], check=True, capture_output=True, text=True,
                     ).stdout
                     self.assertEqual(undefined.strip(), "", undefined)
+                    other = str(Path(d) / (target + "-matrix.o"))
+                    subprocess.run(
+                        [clang, "--target=" + target, "-std=c11", "-O2",
+                         "-ffreestanding", "-fno-builtin", "-fno-stack-protector",
+                         "-Wall", "-Wextra", "-Werror", "-c",
+                         str(ROOT / "native/climate_tornado_ionosphere/rll_climate_8x8.c"),
+                         "-o", other],
+                        check=True, capture_output=True, text=True, timeout=60,
+                    )
+                    undefined2 = subprocess.run(
+                        [nm, "-u", other], check=True, capture_output=True, text=True,
+                    ).stdout
+                    self.assertEqual(undefined2.strip(), "", undefined2)
 
 
 if __name__ == "__main__":
