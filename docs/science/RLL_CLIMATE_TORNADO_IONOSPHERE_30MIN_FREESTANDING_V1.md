@@ -99,3 +99,21 @@ Authorities: NOAA JetStream *The Atmosphere* (water vapor up to ~4% by volume, n
 Local pure-C tests: `tests/c/test_rll_air_mass_native.c` includes 40,001 vapor-volume levels, fixed dry/moist density vectors, parcel sign reversal, phase/missing-data checks, and stable/neutral/unstable *dry screens*. GCC/Clang+ASan/UBSan host tested, Clang ARMv7/AArch64 object undefined symbols=0. The existing Python tests/CI are responsible for exact head reproducibility. Still missing the actual physical wind/continuity/momentum solver, latent heat/rain, true moist stability, storm-wise historical dataset, and real tornado forecast validation.
 
 **PROMOTION=HOLD, claim_allowed=false, is_weather_warning=0**. No authority for public warnings.
+
+## S4: mass currents, wind shear, and the vertical weight of air
+
+The new independent `rll_air_flow.{h,c}` is a vector transport diagnostic for three wind components, east/north/up, with individually typed validity flags, units in cm/s, and mass-density input in mg/m³ from a separately checked thermodynamic calculation. It calculates three **instantaneous flux-density** components (g/m²/s), three finite-difference vertical wind shears (cm/s/km), and one shallow constant-density hydrostatic pressure drop (Pa).
+
+```text
+mass_flux_vector = rho * (u, v, w)             [g m^-2 s^-1]
+wind_shear(z)   = [velocity(z+dz)-velocity(z)]/dz
+hydrostatic_drop = rho * g * dz                [Pa] (constant-rho, shallow layer)
+```
+
+These are necessary *diagnostic operands*, not solutions to the compressible Navier–Stokes equations, moisture continuity, terrain forcing, geostrophic balance, moist parcel ascent or atmospheric vortex dynamics. Momentum budgets require pressure-gradient forces, Coriolis acceleration, friction, turbulent stress, entrainment, latent heating and boundary conditions; observing mass flux does not establish a closed cyclone/tornado. Missing wind coordinates are not assumed zero.
+
+Known fixture: 1.2 kg/m³, 10 m/s east, 2 m/s north, -0.5 m/s vertical yields (12000, 2400, -600) g/m²/s; a 100-m constant-density layer carries ~1176 Pa hydrostatic pressure drop. Two synthetic levels 1 km apart, (10,2,-0.5) and (20,-8,1) m/s, yield vertical shear components (1000,-1000,150) cm/s/km. This is unit arithmetic, not atmospheric measurement. The 30,001 velocity-vector sign/domain checks, zero/missing/invalid cases, ASan/UBSan and ARM32/AArch64 pure-object compilation were run locally. Source custody and exact remote CI conclusion must be checked separately.
+
+**Cross-sector integration design:** RLL Climate 8×8 sector 1 provides thermodynamics/barometry; sector 2 wind, vorticity, convection and vertical shear; sector 6 solar/ionospheric confounder and optional downstream disturbance; sector 7 independent event labels/verification. A serious stability observer will need P,T,dew point, vapor-specific humidity, vertical wind profiles, sub-grid mixing, LCL, LFC, CAPE, CIN, environmental lapse rate, virtual potential temperature gradient / N², latent heat, droplet/rain loading and sensor-timing uncertainty. The new native code does **not** claim these omitted physics implemented.
+
+**P0 typed gaps:** `TOKEN_VAZIO_SATURATION_VALIDITY` (4% near cold temperatures can be physically supersaturated), `TOKEN_VAZIO_CONDENSATE_LOADING`, `TOKEN_VAZIO_LATENT_HEAT`, `TOKEN_VAZIO_MOIST_PROFILE_AND_CAPE_CIN`, `TOKEN_VAZIO_3D_PRESSURE_GRADIENT`, `TOKEN_VAZIO_NAVIER_STOKES_BUDGET`, `TOKEN_VAZIO_REAL_WIND_MEASUREMENTS`. No manufactured observations; `PROMOTION=HOLD` remains.
