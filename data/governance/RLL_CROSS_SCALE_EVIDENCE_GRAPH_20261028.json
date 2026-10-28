@@ -1,0 +1,338 @@
+{
+  "schema": "rll.cross_scale_evidence_graph.v1",
+  "as_of": "2026-10-28",
+  "purpose": "Typed and reversible research graph. No survey likelihood, atomic spectroscopy fit, RLL physical validation or cross-scale causal claim executed.",
+  "claim_allowed": false,
+  "scientific_fit_performed": false,
+  "sources": [
+    {
+      "id": "NIST_PERIODIC",
+      "url": "https://www.nist.gov/pml/periodic-table-elements",
+      "kind": "official_reference"
+    },
+    {
+      "id": "NIST_ASD",
+      "url": "https://www.nist.gov/pml/atomic-spectra-database",
+      "kind": "official_reference"
+    },
+    {
+      "id": "DESI_DR2",
+      "url": "https://data.desi.lbl.gov/doc/papers/dr2/",
+      "kind": "official_release_index"
+    },
+    {
+      "id": "CIV_BAO",
+      "url": "https://arxiv.org/abs/2601.08103",
+      "kind": "2026_preprint"
+    },
+    {
+      "id": "RYDBERG_SPIN",
+      "url": "https://arxiv.org/abs/2608.23711",
+      "kind": "2026_preprint_experiment"
+    },
+    {
+      "id": "RYDBERG_OPTICS",
+      "url": "https://arxiv.org/abs/2608.02992",
+      "kind": "2026_review"
+    },
+    {
+      "id": "NEUTRINO_PHASE",
+      "url": "https://doi.org/10.1088/1475-7516/2026/03/064",
+      "kind": "2026_journal_forecast"
+    },
+    {
+      "id": "CPL_PREDICTIVE",
+      "url": "https://arxiv.org/abs/2609.04334",
+      "kind": "2026_preprint_analysis"
+    },
+    {
+      "id": "STERILE_COSMO",
+      "url": "https://arxiv.org/abs/2606.21518",
+      "kind": "2026_preprint_analysis"
+    },
+    {
+      "id": "NEUTRINO_RENP",
+      "url": "https://arxiv.org/abs/2306.12953",
+      "kind": "2023_theory"
+    },
+    {
+      "id": "MAVAN",
+      "url": "https://arxiv.org/abs/2609.25090",
+      "kind": "2026_preprint_analysis"
+    },
+    {
+      "id": "RLL_CODE",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/blob/main/src/rll/cosmology_radiation.py",
+      "kind": "producer_source"
+    },
+    {
+      "id": "RLL_BP",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/blob/main/tools/rll_bp_physical_contract.py",
+      "kind": "producer_source"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "periodic_atomic_structure",
+      "scale": "atomic",
+      "quantities": [
+        "Z",
+        "A_isotope",
+        "mean_atomic_weight_u",
+        "n",
+        "l",
+        "j",
+        "m_j",
+        "electron_count"
+      ],
+      "status": "ESTABLISHED_MODEL"
+    },
+    {
+      "id": "atomic_spectral_forest",
+      "scale": "intergalactic_atomic_optical",
+      "quantities": [
+        "lambda_rest_A",
+        "lambda_obs_A",
+        "z",
+        "absorber_bias"
+      ],
+      "status": "OBSERVED_TRACER"
+    },
+    {
+      "id": "rydberg_electron_spin",
+      "scale": "lab_micro",
+      "quantities": [
+        "d_um",
+        "theta_deg",
+        "Jxy_over_h_MHz",
+        "B_gauss"
+      ],
+      "status": "PREPRINT_EXPERIMENT"
+    },
+    {
+      "id": "rydberg_polariton_photon",
+      "scale": "lab_optical",
+      "quantities": [
+        "EIT_transmission",
+        "g2_0",
+        "group_delay",
+        "optical_depth"
+      ],
+      "status": "REVIEWED_FIELD_NOT_A_SPECIFIC_EXPERIMENT"
+    },
+    {
+      "id": "recombination_photon_baryon",
+      "scale": "early_universe",
+      "quantities": [
+        "n_e_m-3",
+        "sigma_T_m2",
+        "Gamma_s-1",
+        "c_s_m_s",
+        "H_s-1"
+      ],
+      "status": "ESTABLISHED_MODEL"
+    },
+    {
+      "id": "neutrino_background",
+      "scale": "early_universe",
+      "quantities": [
+        "N_eff",
+        "sum_m_nu_eV",
+        "anisotropic_stress",
+        "acoustic_phase"
+      ],
+      "status": "ESTABLISHED_PHYSICAL_MECHANISM"
+    },
+    {
+      "id": "bao_distance",
+      "scale": "cosmic",
+      "quantities": [
+        "r_d_Mpc",
+        "D_M_over_r_d",
+        "D_H_over_r_d",
+        "D_V_over_r_d",
+        "z"
+      ],
+      "status": "SURVEY_OBSERVABLE"
+    },
+    {
+      "id": "rll_background",
+      "scale": "cosmic_candidate",
+      "quantities": [
+        "Omega_s0",
+        "z_t",
+        "w_t",
+        "Omega_B0",
+        "Omega_P0"
+      ],
+      "status": "MODEL_UNDER_TEST"
+    }
+  ],
+  "edges": [
+    {
+      "id": "E01",
+      "from": "periodic_atomic_structure",
+      "to": "atomic_spectral_forest",
+      "type": "physical_spectral",
+      "evidence": "NIST_ASD",
+      "status": "ESTABLISHED",
+      "relation": "lambda_observed=lambda_rest*(1+z)",
+      "gate": "calibrate rest wavelengths; identify ion and line, blending/metal contamination"
+    },
+    {
+      "id": "E02",
+      "from": "atomic_spectral_forest",
+      "to": "bao_distance",
+      "type": "observational_tracer",
+      "evidence": "CIV_BAO",
+      "status": "PREPRINT_OBSERVATION",
+      "relation": "DESI C IV triply-ionized carbon absorption cross-correlations trace BAO",
+      "gate": "reproduce published covariance and selection; 4.2 sigma C IV x QSO belongs to this paper only"
+    },
+    {
+      "id": "E03",
+      "from": "periodic_atomic_structure",
+      "to": "recombination_photon_baryon",
+      "type": "physical_scattering",
+      "evidence": "NIST_ASD",
+      "status": "ESTABLISHED",
+      "relation": "Gamma=n_e*sigma_T*c; recombination history determines scattering opacity",
+      "gate": "recombination kinetics and free electron density model required"
+    },
+    {
+      "id": "E04",
+      "from": "recombination_photon_baryon",
+      "to": "bao_distance",
+      "type": "physical_acoustic",
+      "evidence": "DESI_DR2",
+      "status": "ESTABLISHED",
+      "relation": "r_d=integral_{z_d}^infinity c_s(z)/H(z) dz",
+      "gate": "Boltzmann-recombination solver and parameter-dependent r_d required"
+    },
+    {
+      "id": "E05",
+      "from": "neutrino_background",
+      "to": "bao_distance",
+      "type": "cosmological_phase",
+      "evidence": "NEUTRINO_PHASE",
+      "status": "ESTABLISHED_WITH_FORECAST_LIMITATIONS",
+      "relation": "free-streaming relativistic neutrinos shift acoustic phase; self-interaction forecast not new detection",
+      "gate": "CMB+BAO joint likelihood, perturbations and priors required"
+    },
+    {
+      "id": "E06",
+      "from": "rydberg_electron_spin",
+      "to": "rydberg_polariton_photon",
+      "type": "related_lab_platforms_not_same_sample",
+      "evidence": "RYDBERG_SPIN",
+      "status": "REQUIRES_SPECIFIC_EXPERIMENT",
+      "relation": "Rydberg spin-exchange and Rydberg-mediated EIT-photons both exist, but one experiment does not validate their joint use",
+      "gate": "same apparatus joint transfer experiment required"
+    },
+    {
+      "id": "E07",
+      "from": "periodic_atomic_structure",
+      "to": "neutrino_background",
+      "type": "proposed_RENP",
+      "evidence": "NEUTRINO_RENP",
+      "status": "THEORETICAL_ONLY",
+      "relation": "excited atom -> photon + neutrino pair proposed to probe neutrino electromagnetic form factors",
+      "gate": "no laboratory observation established by cited paper"
+    },
+    {
+      "id": "E08",
+      "from": "rydberg_electron_spin",
+      "to": "bao_distance",
+      "type": "symbolic_analogy_only",
+      "evidence": "RYDBERG_SPIN",
+      "status": "UNSUPPORTED",
+      "relation": "angular dependence in lab spin exchange does not imply analogous BAO dynamics",
+      "gate": "must supply physical bridge and cosmological observable; no claim"
+    },
+    {
+      "id": "E09",
+      "from": "rll_background",
+      "to": "bao_distance",
+      "type": "model_candidate",
+      "evidence": "RLL_CODE",
+      "status": "MODEL_NOT_REFITTED",
+      "relation": "RLL must predict observable distances/phase via full solver and compete with LCDM/CPL",
+      "gate": "CMB/BAO/SNe covariance, priors, held-out predictive tests"
+    },
+    {
+      "id": "E10",
+      "from": "rll_background",
+      "to": "neutrino_background",
+      "type": "background_density_equivalence_only",
+      "evidence": "RLL_BP",
+      "status": "BACKGROUND_ONLY",
+      "relation": "a^-4 density equivalence to Delta_N_eff is not matching neutrino perturbation phase or scattering",
+      "gate": "physical perturbation collision operator, anisotropic stress and Boltzmann closure required"
+    },
+    {
+      "id": "E11",
+      "from": "rydberg_polariton_photon",
+      "to": "rll_background",
+      "type": "logistic_label_analogy_only",
+      "evidence": "RYDBERG_OPTICS",
+      "status": "UNSUPPORTED",
+      "relation": "sigmoid f(z) in RLL is not optical photon transport equation merely because both can have nonlinear response",
+      "gate": "dimensioned dynamics, initial conditions and measured predictions required"
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "CIV_BAO_DV_RD_Z1P92",
+      "source": "CIV_BAO",
+      "measured": {
+        "z_effective": 1.92,
+        "DV_over_rd": 30.3,
+        "sigma": 0.9,
+        "BAO_detection_sigma": 4.2
+      },
+      "scope": "paper analysis, not an RLL fit"
+    },
+    {
+      "id": "CIV_BAO_DV_RD_Z1P47",
+      "source": "CIV_BAO",
+      "measured": {
+        "z_effective": 1.47,
+        "DV_over_rd": 24.6,
+        "sigma": 1,
+        "BAO_detection_sigma": 2.5
+      },
+      "scope": "paper analysis, not an RLL fit"
+    },
+    {
+      "id": "RB87_SPIN_ANGLE0",
+      "source": "RYDBERG_SPIN",
+      "measured": {
+        "isotope": "87Rb",
+        "d_um": 9.66,
+        "theta_deg": 0,
+        "Jxy_over_h_MHz": 0.236,
+        "sigma_reported_MHz": 0.002
+      },
+      "scope": "paper value, error-bar convention 2-sigma in figure; model for theta is not independent data"
+    },
+    {
+      "id": "LRG2_PREDICTIVE_PREPRINT",
+      "source": "CPL_PREDICTIVE",
+      "measured": {
+        "z_effective": 0.706,
+        "conclusion": "authors find main BAO predictive advantage localized in LRG2"
+      },
+      "scope": "preprint result; requires independent reanalysis"
+    }
+  ],
+  "constraints": {
+    "atomic_levels": "n>=1; 0<=l<n; -l<=m_l<=l; m_s in {-1/2,1/2}; isolated J-degeneracy g_J=2J+1 only before Zeeman splitting",
+    "ionization": "C IV means C^{3+} (triply ionized): 6 protons, 3 bound electrons; isotope mass A differs from standard atomic weight",
+    "dimension_guard": "frequency (Hz) * h gives energy (J), not neutrino mass or BAO distance; compare dimensionless observables only after explicit model",
+    "RLL_priors": "Omega_s0/z_t/w_t, N_eff and sum_m_nu cannot be inferred from lab spin J/h or atomic weight alone",
+    "holdouts": "Remove entire correlated redshift blocks; preserve covariance and correct conditional predictive likelihood",
+    "promotion": "ONLY after versioned raw inputs, physically justified mapping, full covariance, null tests, source- and parameter-level refits, independent replication"
+  },
+  "alphaXiv_folder_id": "01a184c2-4993-7725-b8c8-1af192e9dfe6",
+  "related_draft": "https://github.com/instituto-Rafael/relativity-living-light/pull/1142"
+}
