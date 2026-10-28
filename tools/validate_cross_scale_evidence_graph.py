@@ -129,11 +129,12 @@ def main():
     g = json.loads(payload)
     errors = check(g)
     n = negatives(g) if args.self_test and not errors else 0
+    counts = g if isinstance(g, dict) else {}
     print(json.dumps({
         "status":"PASS_SCOPED_METADATA_ONLY" if not errors else "HOLD_INVALID",
         "manifest_sha256":hashlib.sha256(payload).hexdigest(),
-        "nodes":len(g.get("nodes",[])),
-        "edges":len(g.get("edges",[])),
+        "nodes":len(counts.get("nodes",[])),
+        "edges":len(counts.get("edges",[])),
         "negative_tests":n,
         "errors":errors,
         "data_fit_executed":False,
