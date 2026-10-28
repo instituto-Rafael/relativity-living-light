@@ -1,0 +1,28 @@
+# RLL Ω · Archaeoastronomical Clock 12×4×3 + Maya Calendar Round (research V1)
+
+**EXPERIMENTAL / GEOMETRIC ONLY / claim_allowed=false / PROMOTION=HOLD.**
+This is an additive, reversible candidate adjacent to PR #1139 (51-year geocycle); it does not modify the original RLL Climate 8×8 and does not merge 51, 52, 260, 360, 365 or 12 angular sectors into one purported ancient system.
+
+## Site identities and sources
+- Oral name *Chichical* is AMBIGUOUS: **Chichén Itzá, Kukulcán** (Yucatán) or **Xochicalco** (Morelos) are distinct, retained separately. INAH records sunlight and shadow on the El Castillo pyramid, and records Xochicalco cave's vertical solar observation duct of ~8.95 m. See https://www.inah.gob.mx/zonas/146-zona-arqueologica-de-chichen-itza and https://lugares.inah.gob.mx/es/pagina-de-elemento/2835
+- **Stonehenge**: documented midsummer sunrise / midwinter sunset axial alignments; individual stone shadows not pre-certified as 12-month calendar. https://www.english-heritage.org.uk/visit/places/stonehenge/history-and-stories/understanding-stonehenge/
+- **Twelve-Angled Stone**: Hatun Rumiyoc, Cusco; polygonal Inca masonry, NOT proved to be annual clock or preserve 12 solar direction marks. https://target2.promperu.gob.pe/destinos/cusco/ciudad-de-cusco/palacio-arzobispal-y-piedra-de-los-doce-angulos
+- **Trilha do Dólmen da Oração**: Morro da Galheta / Barra da Lagoa, Florianópolis. Local site reports astronomical alignments; no independent field azimuth/pixel calibration was inspected. https://www.trilhadolmendaoracao.com/blank-3-1-2
+- **Great Pyramid of Khufu**: Giza, Egypt. The southern King's Chamber shaft is inclined around 45°, but competing functions exist (stellar, solar, ventilation/ritual), and no exact date or personal death/succession event can be inferred. Original external polished casing was **WHITE Tura limestone**, not red marble; reddish granite is found inside. https://egymonuments.gov.eg/monuments/the-great-pyramid/ ; https://www.nms.ac.uk/discover-catalogue/casing-stone-from-the-great-pyramid-of-giza ; https://archives.palarch.nl/index.php/jae/article/view/6706
+
+## Implemented separate cores
+1. Pure C11 freestanding `native/astroclock52/rll_astroclock_calendar.{c,h}` computes **relative** indices modulo Tzolk'in 260, Haab 365, Calendar Round 18,980, Long Count k'in/winal/tun (20 k'in/winal, 18 winal/tun). Validity mask rejects unknown epoch instead of treating unknown as zero. It also emits an explicitly NON-HISTORIC 12-sector overlay. No libc/heap/FPU/OS.
+2. Hosted stdlib-only `scripts/rll_astroclock_52.py` computes six approximate site centres × 12 ecliptic longitudes λ=0..330° in 30° steps = 72 solar geometry points. Formula: δ=asin(sin23.44° sinλ); noon altitude 90°−abs(latitude−δ); ideal-horizon geometric rising azimuth acos(sinδ/cos(latitude)); 1-m shadow = cot(noon altitude). Model lacks terrain, survey orientation, refraction, ancient obliquity, calendar-era offset or archaeological purpose. Precision of the site coordinates is not established as field accurate.
+3. `tests/test_rll_astroclock_52.py` attaches to the pre-existing Python test workflow, no new YAML. `tests/c/test_rll_astroclock_calendar.c` checks 200,000 day inputs and edge cases.
+
+## Registered falsifiers
+The Maya Calendar Round = LCM(260,365) = **18,980 days = 52 Haab years = 73 Tzolk'in cycles**. **52 solar tropical years ≈18,992.59388 days**, so its season returns ~**12.59388 days** later than the 52-Haab count. The 18×20 structure is true for 360-day Long Count tun; 365-day Haab adds 5 Wayeb. Neither fact proves 'two parity units', 12 k'in, 12 monthly shadow markers, 52-year orbital resonance or shared ancient cultural origin. https://old.maa.org/press/periodicals/convergence/maya-cycles-of-time-the-long-count
+
+**Geometry of Giza is CONDITIONAL:** with latitude ~29.979°N, hypothetical shaft altitude 45° and due south meridian, a target would require δ≈−15.021°. Does not identify Orion uniquely. Need exact internal shaft geometry incl bends, optical obstruction, azimuth, calibrated construction era, stellar positions after precession/nutation/proper motion. 'Glissagem' is an exploratory user term: periapsis, apsidal precession, libration and orbital decay are different phenomena; cannot imply spiral inward. Muography, ground photogrammetry, 3D scans and spectroscopy measure different things.
+
+Future actual calibration: three-dimensional surveys, compass true-north reference, local horizons, time-stamped measured sunlight/shadows, instrument uncertainty and randomized orientation nulls. For Giza test Orion vs solar and other competing sightline candidates without selecting epoch post-hoc. For 52-year stability compare against 50/51 and known celestial, volcanic, seismic cycles with preregistered data and red-noise controls. Respect the independent identities and living communities of each culture; no unsupported transmission/sacred interpretation.
+
+## Evidence gate
+Host GCC and Clang ASan/UBSan local PASS; 200k C day inputs, 6 geometry unit tests; ARMv7a/AArch64 Android C objects show no external undefined symbols. **Not** physical Android execution; no actual monument measurements. Site geometry: Stonehenge model sunrise λ=90° ≈50.614°, λ=270° ≈129.386°; Florianópolis general area ≈63.329°/116.671°. Those are NOT measured stone axes.
+`TOKEN_VAZIO_SITE_SURVEYS | TOKEN_VAZIO_52Y_GRAVITY | TOKEN_VAZIO_STONE_SHADOW_DATA | TOKEN_VAZIO_STAR_EPOCH | TOKEN_VAZIO_CULTURAL_INTENT | TOKEN_VAZIO_PHYSICAL_ARM`.
+Rollback: close DRAFT PR, discard only the candidate branch. No original records mutated, no release or warning claims.
