@@ -1,0 +1,690 @@
+{
+  "schema": "rafaelia.contextual_chem_token.v1",
+  "date_utc": "2026-10-28",
+  "scope": "session scientific chemical nomenclature + RLL physics context; not a tokenizer for hidden model internals",
+  "claim_allowed": false,
+  "model_hidden_attention_heads_accessible": false,
+  "raw_conversation_dump_materialized": false,
+  "surface_records": [
+    {
+      "surface": "H",
+      "candidates": [
+        {
+          "id": "chem:atom:H",
+          "kind": "atom",
+          "stoichiometry": {
+            "H": 1
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Neutral atomic hydrogen",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H2",
+      "candidates": [
+        {
+          "id": "chem:molecule:H2",
+          "kind": "molecule",
+          "stoichiometry": {
+            "H": 2
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Dihydrogen",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H3",
+      "candidates": [
+        {
+          "id": "chem:cluster:H3",
+          "kind": "transient_molecular_species",
+          "stoichiometry": {
+            "H": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Neutral triatomic hydrogen; conditions-dependent",
+          "status": "CONDITIONAL"
+        },
+        {
+          "id": "nuclear:isotope:H-3",
+          "kind": "isotope",
+          "stoichiometry": {
+            "H": 1
+          },
+          "charge": 0,
+          "isotope": 3,
+          "label": "Tritium 3H; nonstandard flattened alias",
+          "status": "AMBIGUOUS_ALIAS"
+        }
+      ]
+    },
+    {
+      "surface": "H3+",
+      "candidates": [
+        {
+          "id": "chem:ion:H3+",
+          "kind": "molecular_ion",
+          "stoichiometry": {
+            "H": 3
+          },
+          "charge": 1,
+          "isotope": null,
+          "label": "Trihydrogen cation H3+",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "³H",
+      "candidates": [
+        {
+          "id": "nuclear:isotope:H-3",
+          "kind": "isotope",
+          "stoichiometry": {
+            "H": 1
+          },
+          "charge": 0,
+          "isotope": 3,
+          "label": "Tritium, hydrogen-3",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "He",
+      "candidates": [
+        {
+          "id": "chem:atom:He",
+          "kind": "atom",
+          "stoichiometry": {
+            "He": 1
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Helium atom; isotope unspecified",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "He2",
+      "candidates": [
+        {
+          "id": "chem:molecule:He2",
+          "kind": "molecule",
+          "stoichiometry": {
+            "He": 2
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Helium dimer; state/binding must be specified",
+          "status": "CONDITIONAL"
+        },
+        {
+          "id": "nuclear:isotope:He-2",
+          "kind": "isotope",
+          "stoichiometry": {
+            "He": 1
+          },
+          "charge": 0,
+          "isotope": 2,
+          "label": "Helium-2; notation must use superscript and nuclear context; unbound",
+          "status": "AMBIGUOUS_ALIAS"
+        }
+      ]
+    },
+    {
+      "surface": "He3",
+      "candidates": [
+        {
+          "id": "chem:cluster:He3",
+          "kind": "molecular_cluster",
+          "stoichiometry": {
+            "He": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Helium trimer",
+          "status": "ESTABLISHED"
+        },
+        {
+          "id": "nuclear:isotope:He-3",
+          "kind": "isotope",
+          "stoichiometry": {
+            "He": 1
+          },
+          "charge": 0,
+          "isotope": 3,
+          "label": "Helium-3; flattened alias",
+          "status": "AMBIGUOUS_ALIAS"
+        }
+      ]
+    },
+    {
+      "surface": "³He",
+      "candidates": [
+        {
+          "id": "nuclear:isotope:He-3",
+          "kind": "isotope",
+          "stoichiometry": {
+            "He": 1
+          },
+          "charge": 0,
+          "isotope": 3,
+          "label": "Stable helium-3 isotope",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "He²⁺",
+      "candidates": [
+        {
+          "id": "chem:ion:He+2",
+          "kind": "atomic_ion",
+          "stoichiometry": {
+            "He": 1
+          },
+          "charge": 2,
+          "isotope": null,
+          "label": "Doubly ionized helium (alpha particle if nucleus ^4He)",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "O",
+      "candidates": [
+        {
+          "id": "chem:atom:O",
+          "kind": "atom",
+          "stoichiometry": {
+            "O": 1
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Atomic oxygen",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "O2",
+      "candidates": [
+        {
+          "id": "chem:molecule:O2",
+          "kind": "molecule",
+          "stoichiometry": {
+            "O": 2
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Dioxygen",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "O3",
+      "candidates": [
+        {
+          "id": "chem:molecule:O3",
+          "kind": "molecule",
+          "stoichiometry": {
+            "O": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Ozone",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C",
+      "candidates": [
+        {
+          "id": "chem:atom:C",
+          "kind": "atom",
+          "stoichiometry": {
+            "C": 1
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Atomic carbon",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C2",
+      "candidates": [
+        {
+          "id": "chem:molecule:C2",
+          "kind": "molecule",
+          "stoichiometry": {
+            "C": 2
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Dicarbon",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C3",
+      "candidates": [
+        {
+          "id": "chem:cluster:C3",
+          "kind": "molecular_cluster",
+          "stoichiometry": {
+            "C": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Carbon trimer; not a carbon 3+ ion",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C3+",
+      "candidates": [
+        {
+          "id": "chem:ion:C+3",
+          "kind": "atomic_ion",
+          "stoichiometry": {
+            "C": 1
+          },
+          "charge": 3,
+          "isotope": null,
+          "label": "Triply ionized carbon C3+; spectroscopic notation C IV",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C³⁺",
+      "candidates": [
+        {
+          "id": "chem:ion:C+3",
+          "kind": "atomic_ion",
+          "stoichiometry": {
+            "C": 1
+          },
+          "charge": 3,
+          "isotope": null,
+          "label": "Triply ionized carbon C3+",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "C IV",
+      "candidates": [
+        {
+          "id": "spectroscopy:ion:C-IV",
+          "kind": "spectroscopic_label",
+          "stoichiometry": {
+            "C": 1
+          },
+          "charge": 3,
+          "isotope": null,
+          "label": "Carbon IV lines; ionization C3+",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H2O",
+      "candidates": [
+        {
+          "id": "chem:molecule:H2O",
+          "kind": "molecule",
+          "stoichiometry": {
+            "H": 2,
+            "O": 1
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Water; state/temperature/pressure separately typed",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H2O2",
+      "candidates": [
+        {
+          "id": "chem:molecule:H2O2",
+          "kind": "molecule",
+          "stoichiometry": {
+            "H": 2,
+            "O": 2
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Hydrogen peroxide; not water",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H2O3",
+      "candidates": [
+        {
+          "id": "chem:molecule:H2O3",
+          "kind": "molecule",
+          "stoichiometry": {
+            "H": 2,
+            "O": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "Trioxidane HOOOH, distinct from water and HO3",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "HO3",
+      "candidates": [
+        {
+          "id": "chem:radical:HO3",
+          "kind": "radical",
+          "stoichiometry": {
+            "H": 1,
+            "O": 3
+          },
+          "charge": 0,
+          "isotope": null,
+          "label": "HO3 radical; not H2O3",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H(z)",
+      "candidates": [
+        {
+          "id": "cosmology:function:Hubble",
+          "kind": "cosmological_function",
+          "stoichiometry": null,
+          "charge": null,
+          "isotope": null,
+          "label": "Expansion rate as a function of redshift",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "h",
+      "candidates": [
+        {
+          "id": "physics:constant:Planck_h",
+          "kind": "physical_constant",
+          "stoichiometry": null,
+          "charge": null,
+          "isotope": null,
+          "label": "Planck constant; distinct from element H",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "spin",
+      "candidates": [
+        {
+          "id": "physics:property:spin",
+          "kind": "physics_concept",
+          "stoichiometry": null,
+          "charge": null,
+          "isotope": null,
+          "label": "Spin observable; must specify particle and state",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "head",
+      "candidates": [
+        {
+          "id": "ml:attention_head:metadata_only",
+          "kind": "model_architecture_concept",
+          "stoichiometry": null,
+          "charge": null,
+          "isotope": null,
+          "label": "Transformer attention head as abstract mechanism; hidden weights inaccessible",
+          "status": "ESTABLISHED"
+        },
+        {
+          "id": "document:heading",
+          "kind": "text_structure",
+          "stoichiometry": null,
+          "charge": null,
+          "isotope": null,
+          "label": "Document heading",
+          "status": "ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "surface": "H2O_anomaly",
+      "candidates": [
+        {
+          "id": "water:anomaly:thermodynamic_network",
+          "kind": "collective_material_property",
+          "stoichiometry": {
+            "H": 2,
+            "O": 1
+          },
+          "charge": null,
+          "isotope": null,
+          "label": "Collective water network anomaly, NOT a different molecular formula",
+          "status": "ESTABLISHED"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "NIST_ISOTOPES",
+      "url": "https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ascii=ascii&isotype=all",
+      "type": "official_atomic_isotopic_reference"
+    },
+    {
+      "id": "NIST_H2O3",
+      "url": "https://cccbdb.nist.gov/exp2x.asp?casno=14699991&charge=0",
+      "type": "official_compound_entry"
+    },
+    {
+      "id": "SCI_ADV_H2O3_2025",
+      "url": "https://doi.org/10.1126/sciadv.adw5720",
+      "type": "peer_reviewed_experimental_astrochemistry"
+    },
+    {
+      "id": "NATCOM_WATER_2026",
+      "url": "https://www.nature.com/articles/s41467-026-69356-6",
+      "type": "peer_reviewed_simulation_and_experimental_context"
+    },
+    {
+      "id": "WATER_DENSITY_2026",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13215172/",
+      "type": "peer_reviewed_machine_learned_simulation"
+    },
+    {
+      "id": "ALPHAXIV_OZONE_2026",
+      "url": "https://www.alphaxiv.org/abs/2605.10918",
+      "type": "preprint"
+    },
+    {
+      "id": "ALPHAXIV_HE2_2026",
+      "url": "https://www.alphaxiv.org/abs/2609.34713",
+      "type": "preprint"
+    },
+    {
+      "id": "ALPHAXIV_H3P_2024",
+      "url": "https://www.alphaxiv.org/abs/2412.02206",
+      "type": "preprint"
+    },
+    {
+      "id": "ALPHAXIV_H2O_2026",
+      "url": "https://www.alphaxiv.org/abs/2601.05891",
+      "type": "preprint"
+    },
+    {
+      "id": "RLL_ATLAS_PR1143",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1143",
+      "type": "existing_research_draft"
+    },
+    {
+      "id": "RLL_NEUTRINO_PR1142",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1142",
+      "type": "existing_research_draft"
+    }
+  ],
+  "invariant_of_invariants": [
+    {
+      "id": "I01",
+      "name": "RAW_IDENTITY",
+      "rule": "Preserve raw surface string, exact case, Unicode superscripts and charge signs; H!=h; H3!=³H."
+    },
+    {
+      "id": "I02",
+      "name": "TYPE_AND_DOMAIN",
+      "rule": "One resolved identifier requires explicit kind or canonical id when aliases collide."
+    },
+    {
+      "id": "I03",
+      "name": "COMPOSITION_AND_CHARGE",
+      "rule": "Stoichiometry and integer charge are independent; C3 (3 carbons) != C3+ (1 carbon 3+)."
+    },
+    {
+      "id": "I04",
+      "name": "ISOTOPE_INDEPENDENCE",
+      "rule": "Isotope mass number is not molecule atom count; He3 ambiguous without type."
+    },
+    {
+      "id": "I05",
+      "name": "PHASE_AND_CONDITIONS",
+      "rule": "Specify phase, pressure, temperature, lifetime when claiming stability or water anomalies."
+    },
+    {
+      "id": "I06",
+      "name": "DIMENSIONAL_VALIDITY",
+      "rule": "Do not identify units of energy, spin, frequency, density, redshift, log-likelihood."
+    },
+    {
+      "id": "I07",
+      "name": "CAUSAL_BRIDGE",
+      "rule": "No BAO/ΛCDM/neutrino effect is inferred from a name, charge count or water anomaly."
+    },
+    {
+      "id": "I08",
+      "name": "SCIENTIFIC_STATUS",
+      "rule": "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM; prohibit unsupported promotion."
+    },
+    {
+      "id": "I09",
+      "name": "AI_HEAD_BOUNDARY",
+      "rule": "Only response text and public source are available; no claims about actual model layer/head tensors or hidden weights."
+    },
+    {
+      "id": "I10",
+      "name": "REVERSIBLE_VERSIONING",
+      "rule": "Literal source survives normalization; derived id and context are separately auditable."
+    },
+    {
+      "id": "I11",
+      "name": "ABSENCE_AND_UNCERTAINTY",
+      "rule": "Unresolved collisions produce TOKEN_VAZIO_AMBIGUOUS, not zero or guessed chemical species."
+    },
+    {
+      "id": "I12",
+      "name": "NULL_VS_ZERO",
+      "rule": "Unknown (null) != 0; no atom count, charge, or mass may be filled from absence."
+    },
+    {
+      "id": "I13",
+      "name": "SYMMETRY_NOT_IDENTITY",
+      "rule": "A shared geometry, spin index, graph pattern or transformer head analogy is not a physical coupling."
+    },
+    {
+      "id": "I14",
+      "name": "SOURCE_PROVENANCE",
+      "rule": "Scientific assertions link to source and method; raw data hashes and runs are empty until verified."
+    }
+  ],
+  "session_context_links": [
+    {
+      "id": "water:anomaly:thermodynamic_network",
+      "source": "NATCOM_WATER_2026",
+      "status": "PUBLISHED_PHYSICAL_RESEARCH",
+      "statement": "H2O network competition and hydrogen bonds, not a new stoichiometry."
+    },
+    {
+      "id": "chem:molecule:H2O3",
+      "source": "SCI_ADV_H2O3_2025",
+      "status": "PUBLISHED_EXPERIMENT_SPECIAL_CONDITIONS",
+      "statement": "Irradiated H2O/O2 ice formation, not regular bulk-water anomaly."
+    },
+    {
+      "id": "chem:ion:H3+",
+      "source": "ALPHAXIV_H3P_2024",
+      "status": "ESTABLISHED_ION_WITH_RESEARCH",
+      "statement": "Reaction rates in cold reactive ion systems; not the isotope 3H."
+    },
+    {
+      "id": "chem:molecule:He2",
+      "source": "ALPHAXIV_HE2_2026",
+      "status": "SPECIAL_MOLECULAR_STATE",
+      "statement": "Helium dimer metastable triplet state, not isotope helium-2."
+    },
+    {
+      "id": "chem:molecule:O3",
+      "source": "ALPHAXIV_OZONE_2026",
+      "status": "PREPRINT_STUDY",
+      "statement": "Ozone ionization does not imply a cosmological term."
+    },
+    {
+      "id": "chem:ion:C+3",
+      "source": "RLL_ATLAS_PR1143",
+      "status": "REFERENCE_ONLY",
+      "statement": "Spectroscopic ion C IV traces BAO; carbon trimer C3 does not."
+    },
+    {
+      "id": "cosmology:function:Hubble",
+      "source": "RLL_NEUTRINO_PR1142",
+      "status": "MODEL_RESEARCH_ONLY",
+      "statement": "H(z), BAO, neutrinos and ΛCDM require independently validated likelihood."
+    }
+  ],
+  "unverified_cross_scale_claims": [
+    "water-anomaly-causes-BAO",
+    "H2O3-verifies-RLL",
+    "He3-is-identical-to-3He-without-context",
+    "carbon-trimer-is-carbon-IV",
+    "transformer-heads-are-electron-spins",
+    "RLL-physical-validation"
+  ],
+  "tokenizer_contract": {
+    "encoding": "UTF-8 without lossy normalization",
+    "id_type": "typed canonical id",
+    "on_collision": "TOKEN_VAZIO_AMBIGUOUS",
+    "on_missing": "TOKEN_VAZIO_UNKNOWN",
+    "context_fields": [
+      "kind",
+      "canonical_id"
+    ],
+    "on_unsourced_physical_claim": "BLOCKED",
+    "model_heads": "NOT_OBSERVABLE"
+  }
+}
