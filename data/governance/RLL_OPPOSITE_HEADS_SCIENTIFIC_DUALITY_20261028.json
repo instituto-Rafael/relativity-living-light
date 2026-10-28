@@ -1,0 +1,267 @@
+{
+  "schema": "rll.opposite_heads_scientific_duality.v1",
+  "as_of_utc": "2026-10-28",
+  "parent_ref": "research/typed-chem-water-session-tokenizer-20261028-v1",
+  "intent": "study the opposite: suppression, anti-alignment, reversed intervention, inverse inference, missing invariants and adversarial nulls",
+  "claim_allowed": false,
+  "measured_gpt6_heads": false,
+  "neural_physics_equivalence_claimed": false,
+  "physical_cmb_bao_likelihood_executed": false,
+  "sources": [
+    {
+      "id": "ACL_COPY_SUPPRESSION",
+      "url": "https://aclanthology.org/2024.blackboxnlp-1.22/",
+      "evidence": "PEER_REVIEWED_HEAD_INTERVENTION"
+    },
+    {
+      "id": "CHG_NEURIPS",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a7f530e11fa19e9551b7a51dbd0f336f-Abstract-Conference.html",
+      "evidence": "PEER_REVIEWED_CAUSAL_HEAD_GATE"
+    },
+    {
+      "id": "ABLAT_PREPRINT",
+      "url": "https://arxiv.org/abs/2610.00373",
+      "evidence": "PREPRINT_MODEL_EXPERIMENT"
+    },
+    {
+      "id": "MEDIATORS_PREPRINT",
+      "url": "https://arxiv.org/abs/2606.27510",
+      "evidence": "PREPRINT_CAUSAL_METHODS"
+    },
+    {
+      "id": "NULL_GUARDS_PREPRINT",
+      "url": "https://arxiv.org/abs/2610.22445",
+      "evidence": "PREPRINT_NEGATIVE_CONTROLS"
+    },
+    {
+      "id": "BRAIN_HEADS_PREPRINT",
+      "url": "https://arxiv.org/abs/2609.37991",
+      "evidence": "PREPRINT_EEG_INTERVENTION"
+    },
+    {
+      "id": "EVIDENCE_HEADS_PREPRINT",
+      "url": "https://arxiv.org/abs/2610.36524",
+      "evidence": "PREPRINT_SYMBOLIC_CAUSAL_ABLATION"
+    },
+    {
+      "id": "NIST_HF",
+      "url": "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=H+I",
+      "evidence": "OFFICIAL_ATOMIC_SPECTROSCOPY_REFERENCE"
+    },
+    {
+      "id": "HI21_TEACH",
+      "url": "https://pages.astro.umd.edu/~rmushotz/ASTRO421/A421_GAS_lec7.pdf",
+      "evidence": "ACADEMIC_PHYSICS_TEACHING_MATERIAL"
+    },
+    {
+      "id": "CHEM_SOURCE",
+      "url": "https://arxiv.org/abs/2601.11761",
+      "evidence": "PREPRINT_CHEMICAL_NETWORK"
+    },
+    {
+      "id": "RLL_PARENT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/blob/research/typed-chem-water-session-tokenizer-20261028-v1/data/governance/RLL_SYNAPTIC_MULTIDIMENSIONAL_FEEDBACK_20261028.json",
+      "evidence": "PARENT_RESEARCH_DRAFT_NOT_EXECUTION"
+    },
+    {
+      "id": "PDG_2026",
+      "url": "https://arxiv.org/abs/2602.13523",
+      "evidence": "REVIEW_COSMOLOGICAL_MODEL"
+    }
+  ],
+  "contrasts": [
+    {
+      "id": "O01",
+      "kind": "FUNCTIONAL_ANTAGONISM",
+      "lhs": "promoting_head",
+      "rhs": "copy_suppression_head",
+      "mechanism": "heads may contribute opposing signed logit directions after value/output projections; attention probabilities themselves remain non-negative",
+      "source": "ACL_COPY_SUPPRESSION",
+      "status": "DEMONSTRATED_ON_GPT2_SMALL_NOT_THIS_MODEL",
+      "null_test": "ablate pre-W_O, compare log-prob with matched head/layer and patching controls",
+      "scope": "transformer"
+    },
+    {
+      "id": "O02",
+      "kind": "SYM_REPARAMETERIZATION",
+      "lhs": "h @ W_O",
+      "rhs": "(h @ P) @ (P^T @ W_O)",
+      "mechanism": "permutation of complete head outputs together with the matching output-projection blocks leaves the multihead attention output unchanged",
+      "source": "CHG_NEURIPS",
+      "status": "MATHEMATICAL_IDENTITY",
+      "null_test": "permutation without output-projection coupling must NOT generally preserve output",
+      "scope": "transformer"
+    },
+    {
+      "id": "O03",
+      "kind": "NOT_UNIQUE_ANTIPODE",
+      "lhs": "row-stochastic attention weights A",
+      "rhs": "unnormalized complement 1-A",
+      "mechanism": "for n keys, row sum of 1-A is n-1; complement cannot generally be interpreted as inverse attention, and when renormalized is a heuristic change in routing",
+      "source": "ABLAT_PREPRINT",
+      "status": "MATHEMATICAL_COUNTEREXAMPLE",
+      "null_test": "test n>=3, row-sum and matching output effect",
+      "scope": "transformer"
+    },
+    {
+      "id": "O04",
+      "kind": "INTERVENTION_REVERSAL",
+      "lhs": "clean head activation injected into contrast",
+      "rhs": "contrast activation injected into clean",
+      "mechanism": "restoration and disruption measure non-equivalent causal questions; interactions and downstream compensation change outcome",
+      "source": "EVIDENCE_HEADS_PREPRINT",
+      "status": "METHOD_TESTED_PREPRINT",
+      "null_test": "pairwise patching both directions and random/control replacements",
+      "scope": "causal_impact"
+    },
+    {
+      "id": "O05",
+      "kind": "HIDDEN_INTERACTION",
+      "lhs": "single-head ablation",
+      "rhs": "multihead/pairwise ablation",
+      "mechanism": "interacting heads, residual paths and bypasses mean individually inferred effects do not necessarily add",
+      "source": "MEDIATORS_PREPRINT",
+      "status": "RESEARCH_SUPPORTED_PREPRINT",
+      "null_test": "pre-projection ablation, held-out metrics, pairwise intervention vs additive prediction",
+      "scope": "causal_attribution"
+    },
+    {
+      "id": "O06",
+      "kind": "REPRESENTATION_VS_CAUSATION",
+      "lhs": "brain-aligned_head",
+      "rhs": "functionally_causal_head",
+      "mechanism": "EEG alignment and direct contribution to computation can dissociate; neither is proof that AI heads mimic neural circuitry",
+      "source": "BRAIN_HEADS_PREPRINT",
+      "status": "PREPRINT_SPECIFIC_TASK",
+      "null_test": "compare brain-alignment-selected heads with attribution-selected ablations",
+      "scope": "brain_vs_ai"
+    },
+    {
+      "id": "O07",
+      "kind": "HYPERFINE_STATES",
+      "lhs": "hydrogen_ground_hyperfine_F1",
+      "rhs": "hydrogen_ground_hyperfine_F0",
+      "mechanism": "for I=J=1/2, spin-coupled triplet F=1 (3 substates) vs singlet F=0 (1 substate); hyperfine transition ~1420.4 MHz",
+      "source": "HI21_TEACH",
+      "status": "ESTABLISHED_ATOMIC_PHYSICS",
+      "null_test": "check F degeneracy, selection, line energy; spin states not attention heads",
+      "scope": "quantum_physics"
+    },
+    {
+      "id": "O08",
+      "kind": "RADIATIVE_DUALITY",
+      "lhs": "stimulated_or_spontaneous_emission",
+      "rhs": "absorption",
+      "mechanism": "two directions of a radiative transition, but intensity and rates depend on level populations, line-of-sight, optical depth and radiation environment",
+      "source": "NIST_HF",
+      "status": "ESTABLISHED_PHYSICAL_METHOD",
+      "null_test": "compare radiative transfer, population inversion/thermal regime, no unconditional equality",
+      "scope": "spectroscopy"
+    },
+    {
+      "id": "O09",
+      "kind": "FORWARD_REVERSE_REACTIONS",
+      "lhs": "H2plus_plus_H2_to_H3plus_plus_H",
+      "rhs": "H3plus_plus_H_to_H2plus_plus_H2",
+      "mechanism": "formal chemical reversal conserves charge and nuclei but kinetic reversibility and rate are environment-dependent, not assured equal",
+      "source": "CHEM_SOURCE",
+      "status": "FORMAL_STOICHIOMETRIC_INVERSE_ONLY",
+      "null_test": "compare threshold/rate at specified T, density, plasma and energy, never infer detailed balance from writing reverse arrow",
+      "scope": "astrochemistry"
+    },
+    {
+      "id": "O10",
+      "kind": "STATISTICAL_INVERSION",
+      "lhs": "forward_model_parameters_to_data",
+      "rhs": "inverse_inference_data_to_parameters",
+      "mechanism": "inverse is often nonidentifiable; distinct physical models can produce similar observations after nuisance/selection effects",
+      "source": "PDG_2026",
+      "status": "METHODOLOGICAL_PRINCIPLE",
+      "null_test": "fit ΛCDM, CPL, RLL matched covariance and held-out data; posterior predictive checks; no model confirmed",
+      "scope": "cosmology"
+    },
+    {
+      "id": "O11",
+      "kind": "REJECTION_OF_TRIVIAL_INVARIANT",
+      "lhs": "dynamical_closure_of_reduced_observable",
+      "rhs": "zero_map_that_passes_closure_without_variation",
+      "mechanism": "constant map can trivially pass some consistency/closure rules while discarding all physical information",
+      "source": "NULL_GUARDS_PREPRINT",
+      "status": "PREPRINT_COUNTEREXAMPLE",
+      "null_test": "require both closure AND observable preservation/nonzero recoverable variation",
+      "scope": "mathematical_model_reduction"
+    },
+    {
+      "id": "O12",
+      "kind": "COSMOLOGICAL_NEGATIVE_EVIDENCE",
+      "lhs": "supporting_rll_model_by_similar_BAO_pattern",
+      "rhs": "null_LCDM_benchmark_and_out_of_sample_loss",
+      "mechanism": "same spectral/correlation pattern in different systems does not establish shared cause; test RLL vs LCDM with independent data and full covariance",
+      "source": "RLL_PARENT",
+      "status": "TOKEN_VAZIO_PHYSICAL_LIKELIHOOD_NOT_EXECUTED",
+      "null_test": "strict WS01, blind holdout, systematic injection, risk of false positives",
+      "scope": "rll"
+    },
+    {
+      "id": "O13",
+      "kind": "ATTENTION_ABLATION_SEMANTICS",
+      "lhs": "pre_output_projection_head_perturbation",
+      "rhs": "post_mixing_channel_zero",
+      "mechanism": "zeroing arbitrary output channels after W_O is not equal to ablating a single head before mixing",
+      "source": "ABLAT_PREPRINT",
+      "status": "PREPRINT_CAUSAL_METHOD",
+      "null_test": "compare top-head rankings, layer-matched controls, correct intervention and continuous metrics",
+      "scope": "transformer"
+    },
+    {
+      "id": "O14",
+      "kind": "SAME_PATTERN_DIFFERENT_CAUSE",
+      "lhs": "water_network_structure_factor_peak",
+      "rhs": "BAO_primordial_acoustic_peak",
+      "mechanism": "both may be represented as correlation/spectral peaks; different physical systems, scales, and dynamical mechanisms",
+      "source": "RLL_PARENT",
+      "status": "ANTI_ANALOGY_NOT_A_PHYSICAL_EQUIVALENCE",
+      "null_test": "mechanism-derived spectrum, units, dynamics and independently calibrated measurement of each system",
+      "scope": "water_vs_cosmology"
+    }
+  ],
+  "governance": {
+    "scope": "graph and deterministic synthetic tests; no real language-model internals, lab spectra or RLL likelihood",
+    "invariants": [
+      "RAW_TEXT_PRESERVED",
+      "TYPED_PHYSICAL_IDENTITIES",
+      "INTERVENTION_POINT_EXPLICIT",
+      "MATHEMATICAL_SYMMETRY_VS_FUNCTIONAL_ANTAGONISM",
+      "OBSERVABLE_DIMENSION",
+      "SOURCE_AND_STATUS",
+      "CONTROLS_AND_HELDOUT",
+      "CAUSAL_NOT_CORRELATIONAL",
+      "FAIL_CLOSED_TOKEN_VAZIO",
+      "MODEL_PRIVATE_INTERNALS_NOT_OBSERVED",
+      "NO_POSTHOC_TOLERANCE_RELAXATION"
+    ],
+    "typed_gaps": [
+      "TOKEN_VAZIO_MODEL_HEAD_ACCESS",
+      "TOKEN_VAZIO_RLL_PHYSICAL_LIKELIHOOD",
+      "TOKEN_VAZIO_INDEPENDENT_REPLICATION",
+      "TOKEN_VAZIO_WS01_NUMERICAL_CLOSURE"
+    ],
+    "null_rule": "a null may be accepted only when its target consequence is checked; all-zero degeneracy fails observable preservation"
+  },
+  "related_graphs": [
+    "data/governance/RLL_TYPED_CHEM_WATER_SESSION_TOKENS_V1.json",
+    "data/governance/RLL_SYNAPTIC_MULTIDIMENSIONAL_FEEDBACK_20261028.json"
+  ],
+  "simulation_contract": {
+    "math_demo_only": true,
+    "expected_case_count": 14,
+    "only_reading_documented_source": true,
+    "model_head_weight_access": false
+  },
+  "r3": {
+    "f_ok": "mechanistic contrasts and fully typed negative controls, plus local deterministic synthetic tests when executed",
+    "f_gap": "real instrument/actual model controlled interventions and RLL physical likelihood",
+    "f_next": "run exact-head suite, independent head-ablation on a permissible open model with proper matched controls, reconcile cosmology WS01 with preregistered tolerances"
+  },
+  "status": "RESEARCH_HOLD_NO_PROMOTION"
+}
