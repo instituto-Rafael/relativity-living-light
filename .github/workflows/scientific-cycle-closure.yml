@@ -43,7 +43,7 @@ jobs:
           assert value['claim_allowed'] is False
           assert len(value['token_vazio']) == 2
           PY
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: scientific-cycle-closure-receipt
           path: artifacts/scientific-cycle/closure-receipt.json
