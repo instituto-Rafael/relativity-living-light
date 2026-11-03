@@ -1,6 +1,9 @@
 from pathlib import Path
+import subprocess
 from tools.branch_maturity_gate_v2 import (
     contains_claim_true,
+    changed,
+    deleted,
     evaluate,
     file_has_claim_true,
     valid_transition,
@@ -91,3 +94,59 @@ def test_release_requires_evidence_or_gap(tmp_path: Path):
     (tmp_path / "tools/x.py").write_text("pass\n", encoding="utf-8")
     data = evaluate(tmp_path, "rll/integration", "rll/release", ["tools/x.py"])
     assert "RELEASE_REQUIRES_EVIDENCE_OR_EXPLICIT_GAP" in data["residuals"]
+
+
+def test_lab_to_main_shortcut_stays_blocked(tmp_path: Path):
+    data = evaluate(tmp_path, "rll/lab", "main", ["docs/receipt.md"])
+    assert data["decision"] == "BLOCKED"
+    assert "INVALID_BRANCH_TRANSITION" in data["residuals"]
+
+
+def test_final_stage_core_deletion_requires_review_even_with_receipt(tmp_path: Path):
+    for base, head in [("rll/release", "rll/integration"), ("main", "rll/release")]:
+        data = evaluate(
+            tmp_path, head, base,
+            ["data/cosmology.csv", "governance/receipts/review.md"],
+            deleted_files=["data/cosmology.csv"],
+        )
+        assert data["decision"] == "BLOCKED"
+        assert "CRITICAL_DELETION_REQUIRES_REVIEW:data/cosmology.csv" in data["residuals"]
+        assert data["deleted_files"] == ["data/cosmology.csv"]
+        assert data["claim_allowed"] is False
+
+
+def test_noncritical_document_retirement_remains_allowed(tmp_path: Path):
+    data = evaluate(
+        tmp_path, "rll/release", "main", ["docs/retired.md"],
+        deleted_files=["docs/retired.md"],
+    )
+    assert data["decision"] == "PASS"
+    assert data["deleted_files"] == ["docs/retired.md"]
+
+
+def test_lab_stage_retains_experimental_change_freedom(tmp_path: Path):
+    data = evaluate(
+        tmp_path, "work/scoped", "rll/lab", ["data/fixture.csv"],
+        deleted_files=["data/fixture.csv"],
+    )
+    assert data["decision"] == "PASS"
+
+
+def test_git_diff_exposes_deleted_source_in_both_lists(tmp_path: Path):
+    def git(*args: str) -> str:
+        return subprocess.run(
+            ["git", *args], cwd=tmp_path, check=True, text=True,
+            capture_output=True,
+        ).stdout.strip()
+
+    git("init", "-q")
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data/source.txt").write_text("frozen source\n", encoding="utf-8")
+    git("add", "data/source.txt")
+    git("-c", "user.name=CI", "-c", "user.email=ci@example.org", "commit", "-qm", "base")
+    base = git("rev-parse", "HEAD")
+    git("rm", "-q", "data/source.txt")
+    git("-c", "user.name=CI", "-c", "user.email=ci@example.org", "commit", "-qm", "remove")
+    head = git("rev-parse", "HEAD")
+    assert "data/source.txt" in changed(base, head)
+    assert deleted(base, head) == ["data/source.txt"]
