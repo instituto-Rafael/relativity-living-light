@@ -1,0 +1,24 @@
+# RLL LAB→MAIN — promoção segura / preflight 2026-11-03
+
+- schema: rll.promotion_preflight.receipt.v1
+- kind: scoped_governance_hotfix
+- source_repo: instituto-Rafael/relativity-living-light
+- main_observed: 6b1b9740769cf75800612befab854c03707fabe0
+- rll_lab_observed: 2250c4fa599b21d469335855be3c6de7277c16d9
+- rll_integration_observed: 2f30179ebebf91e7514ffdffb61609a3cf12ef0b
+- rll_release_observed: 2cb3e3e88677ea9ac1f263377114b539db7bc47f
+- source: GitHub compare_commits(main...rll/lab), GitHub branch refs, repository maturity gate v2
+- observation: lab/main diverged (ahead 684, behind 1276). Compare API returned 300 file entries; completeness of file enumeration is TOKEN_VAZIO.
+- release/main: release ahead 0, behind 2597 at observation; direct release→main has no change set.
+- authority: .github/workflow-orchestrator/BRANCH_MATURITY.md; tools/branch_maturity_gate_v2.py
+- topology: WORK→rll/lab→rll/integration→rll/release→main
+- blocked_route: rll/lab→main (INVALID_BRANCH_TRANSITION)
+- risk: silent deletion from git diff --diff-filter=ACMRTUXB; large non-atomic divergent promotion
+- delta: include deleted paths in changed(); inspect removal/renames via --no-renames; block critical source/test/governance/CI deletions at release/main; preserve lab experiment freedom; add adversarial tests
+- boundary: no source datasets or physical model parameters modified; no new scientific finding
+- evidence: GitHub source commits and pending exact-head PR CI; no independent operational/physical confirmation at receipt creation
+- stage: IMPLEMENTED_UNTESTED pending exact-head CI/readback
+- claim_allowed: false
+- publication_effect: NONE
+- next: run scoped Python tests and maturity gate on a work→lab draft PR; reconcile divergence through reviewed, bounded promotions rather than bulk lab→main
+- rollback: close draft PR; revert only its isolated code/test/governance commits, preserving historic receipts

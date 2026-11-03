@@ -41,7 +41,17 @@ def valid_transition(head:str,base:str)->bool:
 
 
 def changed(base_sha:str,head_sha:str)->list[str]:
-    p=subprocess.run(["git","diff","--name-only","--diff-filter=ACMRTUXB",base_sha,head_sha],check=True,capture_output=True,text=True)
+    p=subprocess.run(["git","diff","--name-only","--diff-filter=ACDMRTUXB",base_sha,head_sha],check=True,capture_output=True,text=True)
+    return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
+
+
+
+def deleted(base_sha:str,head_sha:str)->list[str]:
+    """Include removals and rename sources; never silently hide deleted inputs."""
+    p=subprocess.run(
+        ["git","diff","--name-only","--no-renames","--diff-filter=D",base_sha,head_sha],
+        check=True,capture_output=True,text=True,
+    )
     return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
 
 
@@ -84,8 +94,16 @@ def file_has_claim_true(path: Path) -> bool:
     return _claim_allowed_true(_load_structured(path))
 
 
-def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
+def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str],deleted_files:list[str]|None=None)->dict:
     residuals=[]
+    deleted_files=sorted(set(deleted_files or []))
+    # Final-stage promotions must never silently retire source, tests or CI gates.
+    # This is a local hold; it is not evidence of external human/provider approval.
+    if norm(base_ref) in {"rll/release","main"}:
+        critical=("src/","rx/","rll_core/","tools/","scripts/","data/","configs/","tests/","governance/",".github/workflows/")
+        for rel in deleted_files:
+            if rel.startswith(critical):
+                residuals.append(f"CRITICAL_DELETION_REQUIRES_REVIEW:{rel}")
     if not valid_transition(head_ref,base_ref): residuals.append("INVALID_BRANCH_TRANSITION")
     if not files: residuals.append("EMPTY_CHANGESET")
     for rel in files:
@@ -106,12 +124,12 @@ def evaluate(root:Path,head_ref:str,base_ref:str,files:list[str])->dict:
         has_evidence=any(any(k in x.lower() for k in ("receipt","evidence","manifest","provenance","ledger")) for x in files)
         has_gap=any("token_vazio" in x.lower() for x in files)
         if not (has_evidence or has_gap): residuals.append("RELEASE_REQUIRES_EVIDENCE_OR_EXPLICIT_GAP")
-    return {"schema":"rll.branch_maturity_gate.v2","head_ref":norm(head_ref),"base_ref":base,"changed_files":files,"decision":"PASS" if not residuals else "BLOCKED","residuals":residuals,"claim_allowed":False,"publication_effect":"NONE","external_settings":"TOKEN_VAZIO_EXTERNAL_SETTINGS"}
+    return {"schema":"rll.branch_maturity_gate.v2","head_ref":norm(head_ref),"base_ref":base,"changed_files":files,"deleted_files":deleted_files,"decision":"PASS" if not residuals else "BLOCKED","residuals":residuals,"claim_allowed":False,"publication_effect":"NONE","external_settings":"TOKEN_VAZIO_EXTERNAL_SETTINGS"}
 
 
 def main()->int:
     p=argparse.ArgumentParser(); p.add_argument("--head-ref",required=True); p.add_argument("--base-ref",required=True); p.add_argument("--base-sha",required=True); p.add_argument("--head-sha",required=True); p.add_argument("--output",default="artifacts/branch-maturity-v2/receipt.json"); args=p.parse_args()
-    root=Path.cwd(); data=evaluate(root,args.head_ref,args.base_ref,changed(args.base_sha,args.head_sha)); out=Path(args.output); out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(data,indent=2)+"\n",encoding="utf-8"); print(json.dumps(data,indent=2)); return 0 if data["decision"]=="PASS" else 1
+    root=Path.cwd(); data=evaluate(root,args.head_ref,args.base_ref,changed(args.base_sha,args.head_sha),deleted(args.base_sha,args.head_sha)); out=Path(args.output); out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(data,indent=2)+"\n",encoding="utf-8"); print(json.dumps(data,indent=2)); return 0 if data["decision"]=="PASS" else 1
 
 
 if __name__=="__main__": sys.exit(main())
