@@ -26,6 +26,24 @@
 - **Compatível com Modelo Padrão**. Nenhuma partícula de matéria escura, nova força ou nova cosmologia foi observada nesse resultado.
 - Status do artigo: preprint disponibilizado e submetido para publicação; revisão/publicação final não verificada nesta triagem.
 
+## Resultados numéricos da publicação primária (v1)
+
+Fonte: LHCb-PAPER-2026-053 / CERN-EP-2026-287, seção *Results* do texto integral, [arXiv HTML v1](https://arxiv.org/html/2611.00230), publicado em 2026-10-30 (versão submetida a *Physical Review X*). Estes números são medições **da colaboração**, transcritas para referência, e **não** resultados calculados pelo RLL.
+
+| Observável | Run 3 (2024–2025) | Combinação Run 1+2+3 |
+|---|---|---|
+| B(B0 -> μ+μ−) | (1.26 +0.51/+0.06; −0.47/−0.05) × 10^-10 | (1.14 +0.42/+0.06; −0.39/−0.05) × 10^-10 |
+| B(Bs0 -> μ+μ−) | (3.31 +0.31/+0.15; −0.30/−0.13) × 10^-9 | (3.25 +0.26/+0.13; −0.25/−0.12) × 10^-9 |
+| Razão R_mumu = B(B0)/B(Bs0) | 0.038 (+0.016/−0.014) ±0.002 | 0.035 (+0.014/+0.002; −0.012/−0.001) |
+| Significância B0 -> μμ | 3.0 sigma | 3.2 sigma |
+| Vida efetiva Bs0 -> μμ | 1.42 ±0.18 ±0.02 ps | 1.60 ±0.16 ±0.01 ps |
+
+**Notação:** valores assimétricos na forma (`central +estat/+sist; −estat/−sist`) distinguem duas fontes de incerteza; o primeiro termo é **estatístico**, o segundo **sistemático**, conforme a seção Results do artigo. Nenhum arredondamento ou combinação quadrática de incertezas foi feito aqui. A correlação linear entre as duas frações de ramificação é relatada como **−3%**, mas esse coeficiente **não substitui** uma matriz de covariância/likelihood independente.
+
+Previsões de referência do Modelo Padrão citadas na introdução do artigo: B(B0 -> μμ) = (1.03 ±0.05) × 10^-10; B(Bs0 -> μμ) = (3.66 ±0.14) × 10^-9. Medidas permanecem compatíveis com essas previsões. A significância do excesso B0 foi derivada por razão de verossimilhanças sob a aproximação de Wilks e validada pela colaboração com pseudoexperimentos; **não** reproduzimos esses pseudoexperimentos.
+
+**Falsificador direto:** se uma atualização oficial do artigo alterar parâmetros, unidades ou incertezas, criar um sucessor de registro com versão e referência; não reescrever retroativamente o resultado v1. Na ausência do material estatístico completo, `TOKEN_VAZIO_PUBLIC_LIKELIHOOD` permanece.
+
 ## Checagem da escala “zeptoverso”
 
 - 1 zeptômetro = 10^-21 m; tamanho atômico característico ~10^-10 m, razão de ordens de grandeza ~10^11.
