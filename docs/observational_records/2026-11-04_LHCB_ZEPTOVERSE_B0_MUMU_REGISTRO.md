@@ -13,11 +13,12 @@
 1. **Preprint primário:** LHCb Collaboration, *Evidence for the decay B0 → μ+ μ− and improved measurements of the decay Bs0 → μ+ μ−*, arXiv:2611.00230, submetido 2026-10-30. https://arxiv.org/abs/2611.00230
 2. **Divulgação da colaboração, 2026-11-03:** https://lhcb-outreach.web.cern.ch/2026/11/03/evidence-for-the-decay-b0%E2%86%92%CE%BC%CE%BC-and-improved-measurements-of-bs0%E2%86%92%CE%BC%CE%BC/
 3. **Comunicado CERN, 2026-11-03:** https://home.cern/lhcb-finds-evidence-of-one-in-ten-billion-particle-decay/
-4. **Jornalismo:** recorte BBC News Brasil fornecido pelo usuário, 2026-11-04, título “O que é o zeptoverso descoberto por cientistas, mundo 100 bilhões de vezes menor que um átomo”. O título não representa descoberta literal de um universo separado.
+4. **Nomenclatura de hádrons:** Particle Data Group (PDG), composição B0 = d anti-b e anti-B0 = anti-d b. https://pdgprod.lbl.gov/pdgprod/pdgLiveJson/Particle.action?home=sumtabM&init=0&node=S042
+5. **Jornalismo:** recorte BBC News Brasil fornecido pelo usuário, 2026-11-04, título “O que é o zeptoverso descoberto por cientistas, mundo 100 bilhões de vezes menor que um átomo”. O título não representa descoberta literal de um universo separado.
 
 ## Fatos observacionais versus hipóteses
 
-- Canal: decaimento de méson B0 (quark beauty/bottom + antiquark down) em dois múons de cargas opostas.
+- Canal: decaimento de méson B0 (d + anti-b, convenção PDG) e seu conjugado anti-B0 (anti-d + b) em dois múons de cargas opostas; o canal experimental normalmente agrega os estados conjugados.
 - Evidência para B0 → μ+ μ−: 3,0 sigma em Run 3 (2024–2025) e 3,2 sigma combinando Run 1+2+3; **não** atingiu 5 sigma de observação consolidada.
 - O Modelo Padrão prevê ramificação de ordem 1/10 bilhões desses decaimentos, o que não é contagem direta de 10 bilhões de ocorrências vistas.
 - Dados Run 3: luminosidade integrada de 18 fb^-1 a energia de colisão de 13,6 TeV, segundo o abstract arXiv.
