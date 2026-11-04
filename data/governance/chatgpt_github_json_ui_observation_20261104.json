@@ -1,0 +1,99 @@
+{
+  "schema": "rll.interface_tool_json_observation.v1",
+  "observed_date_local": "2026-11-04",
+  "source_type": "USER_SUPPLIED_CHATGPT_ANDROID_SCREENSHOT",
+  "source_scope": "VISIBLE_UI_ONLY",
+  "source_payload_persisted_in_repo": false,
+  "capture_completeness": "PARTIAL_TRUNCATED_BY_VIEWPORT",
+  "exact_provider_operation_confirmed": false,
+  "provider_correspondence": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "path": ".github/workflow-contract.yml",
+    "main_file_blob_sha": "c97cf0ba6a11f73d0bf3df7d305854b38d0b07cd",
+    "evidence_level": "GITHUB_FILE_READBACK_ONLY",
+    "caveat": "Matching file identity/blob does not establish that every UI tool action was executed."
+  },
+  "visible_json_keys": [
+    "repository_full_name",
+    "path",
+    "ref",
+    "branch_name",
+    "sha",
+    "content",
+    "message",
+    "head",
+    "base",
+    "draft",
+    "title",
+    "body",
+    "maintainer_can_modify"
+  ],
+  "observed_groups": [
+    {
+      "kind": "FILE_REF_ARGS",
+      "keys": [
+        "repository_full_name",
+        "path",
+        "ref"
+      ],
+      "state": "UI_OBSERVED"
+    },
+    {
+      "kind": "BRANCH_ARGS",
+      "keys": [
+        "repository_full_name",
+        "branch_name",
+        "sha"
+      ],
+      "state": "UI_OBSERVED"
+    },
+    {
+      "kind": "FILE_WRITE_ARGS",
+      "keys": [
+        "repository_full_name",
+        "path",
+        "sha",
+        "branch",
+        "content",
+        "message"
+      ],
+      "state": "UI_OBSERVED"
+    },
+    {
+      "kind": "PULL_REQUEST_ARGS",
+      "keys": [
+        "repository_full_name",
+        "head",
+        "base",
+        "draft",
+        "title",
+        "body",
+        "maintainer_can_modify"
+      ],
+      "state": "UI_OBSERVED"
+    }
+  ],
+  "user_report": {
+    "behavior": "First expansion displays JSON; subsequent expansion sometimes shows no details.",
+    "classification": "USER_REPORTED_NOT_REPRODUCED"
+  },
+  "assertions_not_supported": [
+    "Evidence of platform copying user-created workflow/governance method",
+    "Proof of internal data deletion, concealment, or unauthorized processing",
+    "Exact execution or persistence of all displayed UI operations"
+  ],
+  "privacy": {
+    "public_copy": "STRUCTURE_ONLY_NO_RAW_SCREENSHOT_NO_TOKENS_NO_USER_CONTENT",
+    "raw_screenshot_locator": "PRIVATE_CUSTODY_ONLY",
+    "captures_of_other_app_processes": "NOT_AUTHORIZED_BY_THIS_CONTRACT",
+    "frida_role": "OPTIONAL_OBSERVATION_OF_AUTHORIZED_OWN_APP_ONLY"
+  },
+  "status": "RESEARCH_EVIDENCE_CANDIDATE_NOT_CLAIM",
+  "claim_allowed": false,
+  "promotion_gate": [
+    "Reproduce UI display behavior in three controlled trials",
+    "Correlate with GitHub commit/PR provider readback at exact refs",
+    "Document consent and privacy minimization",
+    "Independent review before any platform-use or authorship allegation"
+  ]
+}
