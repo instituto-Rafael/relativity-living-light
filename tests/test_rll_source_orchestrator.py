@@ -1,8 +1,11 @@
 """Offline tests for Nature+Zenodo intake. No network, no external dependencies."""
+import hashlib
 import json
 import sys
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import rll_source_orchestrator as src
@@ -70,6 +73,56 @@ class Sources(unittest.TestCase):
         self.assertEqual(out["provider_status"]["zenodo"]["status"], "TOKEN_VAZIO")
         self.assertEqual(out["total_unique"], 1)
         self.assertFalse(out["claim_allowed"])
+
+    def test_doi_suffix_punctuation_is_identity(self):
+        dois = ["10.1234/topic" + ending for ending in ("", ".", ",", ";")]
+        rows = src.crossref_records({"message": {"items": [{"DOI": d} for d in dois]}}, "nature")
+        self.assertEqual([r["record_url"] for r in rows], ["https://doi.org/" + d for d in dois])
+        rows += src.zenodo_records({"hits": {"hits": [
+            {"id": 7, "doi": "https://doi.org/10.1234/TOPIC."}
+        ]}})
+        merged = {r["doi"]: r for r in src.merge(rows)}
+        self.assertEqual(set(merged), set(dois))
+        self.assertEqual(len(merged[dois[1]]["observations"]), 2)
+        self.assertTrue(merged[dois[1]]["cross_source_identity"])
+
+    def read_outputs(self, path):
+        data = path.read_bytes()
+        catalog = json.loads(data)
+        receipt = json.loads((path.parent / "receipt.json").read_bytes())
+        self.assertEqual(receipt["catalog_sha256"], hashlib.sha256(data).hexdigest())
+        for output in (catalog, receipt):
+            self.assertFalse(output["all_sources_observed"])
+            self.assertFalse(output["claim_allowed"])
+        return catalog
+
+    def test_invalid_envelope_writes_partial_catalog_and_receipt(self):
+        for invalid in (None, [], "unexpected"):
+            for failed, healthy, responses, expected in (
+                ("crossref:nature", "zenodo", [{"message": invalid}, ZENODO], 2),
+                ("zenodo", "crossref:nature", [CROSSREF, {"hits": invalid}], 1),
+            ):
+                with self.subTest(failed=failed, invalid=invalid), TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "catalog.json"
+                    with patch.object(src, "get_json", side_effect=responses):
+                        code = src.main(["--mode", "live", "--journal", "nature", "--output", str(path)])
+                    self.assertEqual(code, 2)
+                    catalog = self.read_outputs(path)
+                    status = catalog["provider_status"]
+                    self.assertEqual(status[failed]["status"], "TOKEN_VAZIO")
+                    self.assertEqual(status[failed]["error_type"], "ValueError")
+                    self.assertEqual(status[healthy]["status"], "OBSERVED")
+                    self.assertEqual(catalog["total_unique"], expected)
+
+    def test_default_offline_writes_receipt_without_fetch(self):
+        with TemporaryDirectory() as tmp, patch.object(src, "get_json") as fetch:
+            path = Path(tmp) / "catalog.json"
+            self.assertEqual(src.main(["--output", str(path)]), 0)
+            fetch.assert_not_called()
+            catalog = self.read_outputs(path)
+            self.assertEqual(catalog["mode"], "OFFLINE_CONTRACT_TEST")
+            self.assertEqual(catalog["records"], [])
+            self.assertEqual({v["status"] for v in catalog["provider_status"].values()}, {"NOT_RUN"})
 
     def test_stable_fingerprint(self):
         self.assertEqual(src.sha256({"a": 1, "b": 2}), src.sha256({"b": 2, "a": 1}))

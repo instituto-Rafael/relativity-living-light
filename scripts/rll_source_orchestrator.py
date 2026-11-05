@@ -41,7 +41,7 @@ def doi_key(value: object) -> str | None:
     if not isinstance(value, str):
         return None
     v = re.sub(r"^(?:https?://(?:dx\.)?doi\.org/|doi:)", "", value.strip(), flags=re.I)
-    v = v.lower().rstrip(".,;")
+    v = v.lower()
     return v if DOI_PATTERN.fullmatch(v) else None
 
 
@@ -62,7 +62,8 @@ def date_parts(value: object) -> str | None:
 
 
 def crossref_records(payload: dict, journal: str) -> list[dict]:
-    items = payload.get("message", {}).get("items")
+    message = payload.get("message")
+    items = message.get("items") if isinstance(message, dict) else None
     if not isinstance(items, list):
         raise ValueError("Crossref missing message.items")
     records = []
@@ -92,7 +93,8 @@ def crossref_records(payload: dict, journal: str) -> list[dict]:
 
 
 def zenodo_records(payload: dict) -> list[dict]:
-    hits = payload.get("hits", {}).get("hits")
+    envelope = payload.get("hits")
+    hits = envelope.get("hits") if isinstance(envelope, dict) else None
     if not isinstance(hits, list):
         raise ValueError("Zenodo missing hits.hits")
     result = []
