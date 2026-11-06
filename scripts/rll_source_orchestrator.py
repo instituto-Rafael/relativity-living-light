@@ -111,8 +111,15 @@ def zenodo_records(payload: dict) -> list[dict]:
         lic = meta.get("license")
         lic_id = display(lic.get("id") if isinstance(lic, dict) else lic, 100)
         creators = meta.get("creators") or []
-        people = [display(a.get("name") or (a.get("person_or_org") or {}).get("name"), 100)
-                  for a in creators[:12] if isinstance(a, dict)] if isinstance(creators, list) else []
+        people = []
+        if isinstance(creators, list):
+            for creator in creators[:12]:
+                if not isinstance(creator, dict):
+                    continue
+                person = creator.get("person_or_org")
+                if not creator.get("name") and person and not isinstance(person, dict):
+                    raise ValueError("Zenodo creator person_or_org must be object")
+                people.append(display(creator.get("name") or (person or {}).get("name"), 100))
         result.append({
             "provider": "zenodo", "collection": "public-records",
             "provider_record_id": ident, "doi": doi,
