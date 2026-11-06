@@ -114,6 +114,24 @@ class Sources(unittest.TestCase):
                     self.assertEqual(status[healthy]["status"], "OBSERVED")
                     self.assertEqual(catalog["total_unique"], expected)
 
+    def test_malformed_nested_creator_writes_partial_receipt(self):
+        malformed = {"hits": {"hits": [
+            {"id": 12347, "metadata": {"creators": [
+                {"person_or_org": "invalid-nested-object"}]}}
+        ]}}
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "catalog.json"
+            with patch.object(src, "get_json", side_effect=[CROSSREF, malformed]):
+                code = src.main(["--mode", "live", "--journal", "nature",
+                                 "--output", str(path)])
+            self.assertEqual(code, 2)
+            catalog = self.read_outputs(path)
+            self.assertEqual(catalog["provider_status"]["zenodo"]["status"], "TOKEN_VAZIO")
+            self.assertEqual(catalog["provider_status"]["zenodo"]["error_type"], "ValueError")
+            self.assertEqual(catalog["provider_status"]["crossref:nature"]["status"], "OBSERVED")
+            self.assertEqual(catalog["total_unique"], 1)
+            self.assertFalse(catalog["claim_allowed"])
+
     def test_default_offline_writes_receipt_without_fetch(self):
         with TemporaryDirectory() as tmp, patch.object(src, "get_json") as fetch:
             path = Path(tmp) / "catalog.json"
