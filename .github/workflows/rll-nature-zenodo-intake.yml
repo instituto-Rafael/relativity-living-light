@@ -1,0 +1,88 @@
+name: RLL scientific sources - Nature and Zenodo (metadata only)
+"on":
+  pull_request:
+    paths:
+      - 'scripts/rll_source_orchestrator.py'
+      - 'tests/test_rll_source_orchestrator.py'
+      - '.github/workflows/rll-nature-zenodo-intake.yml'
+      - 'docs/research/RLL_NATURE_ZENODO_ORCHESTRATOR_V1.md'
+  workflow_dispatch:
+    inputs:
+      fetch_mode:
+        description: "No network by default; live mode fetches public metadata only"
+        type: choice
+        options: [offline, live]
+        default: offline
+        required: true
+      topic:
+        description: "Bounded scientific topic (letters, numbers, spaces, _ or -)"
+        type: string
+        default: cosmology
+        required: true
+      journal:
+        description: "Nature journal collection"
+        type: choice
+        options: [nature, nature-communications, nature-astronomy]
+        default: nature
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: rll-science-intake-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  intake:
+    name: Validate and catalog bounded scholarly metadata
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+      - name: Offline adversarial parser tests
+        run: python -m unittest discover -s tests -p test_rll_source_orchestrator.py -v
+      - name: Intake (manual network only)
+        env:
+          REQUEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.fetch_mode || 'offline' }}
+          REQUEST_TOPIC: ${{ github.event_name == 'workflow_dispatch' && inputs.topic || 'cosmology' }}
+          REQUEST_JOURNAL: ${{ github.event_name == 'workflow_dispatch' && inputs.journal || 'nature' }}
+        run: |
+          set -eu
+          python scripts/rll_source_orchestrator.py \
+            --mode "$REQUEST_MODE" \
+            --query "$REQUEST_TOPIC" \
+            --journal "$REQUEST_JOURNAL" \
+            --limit 5 --output artifacts/rll-science-sources/catalog.json
+      - name: Bound claim and checksum
+        if: always()
+        run: |
+          set -eu
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          p = Path("artifacts/rll-science-sources/catalog.json")
+          if p.exists():
+              d = json.loads(p.read_text())
+              assert d["claim_allowed"] is False
+              assert d["scientific_validation"] is False
+              assert all(not o["content_downloaded"] for x in d["records"] for o in x["observations"])
+              report = {"source_commit": os.environ["GITHUB_SHA"], "run_id": os.environ["GITHUB_RUN_ID"],
+                        "report_sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+                        "all_sources_observed": d["all_sources_observed"],
+                        "claim_allowed": False}
+              Path("artifacts/rll-science-sources/ci_receipt.json").write_text(
+                  json.dumps(report, sort_keys=True) + "\n")
+          PY
+      - name: Upload immutable run artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-scientific-source-catalog-${{ github.run_id }}
+          path: artifacts/rll-science-sources/
+          if-no-files-found: warn
+          retention-days: 30
