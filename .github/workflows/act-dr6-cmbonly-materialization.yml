@@ -120,7 +120,7 @@ jobs:
 
       - name: Upload upstream-test diagnostics before enforcement
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: act-dr6-upstream-test-diagnostics-${{ github.run_id }}
           path: |
@@ -198,7 +198,7 @@ jobs:
 
       - name: Upload reference-value diagnostics before enforcement
         if: always() && steps.upstream_tests.outputs.exit_code == '0'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: act-dr6-reference-diagnostics-${{ github.run_id }}
           path: |
@@ -298,7 +298,7 @@ jobs:
 
       - name: Upload provenance-only ACT success receipts
         if: steps.upstream_tests.outputs.exit_code == '0' && steps.reference_values.outputs.exit_code == '0'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: act-dr6-cmbonly-${{ github.run_id }}
           path: |

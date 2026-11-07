@@ -93,7 +93,7 @@ jobs:
           python scripts/rll_climate_juno_shadow.py \
             --output artifacts/science/climate_juno/static_shadow_receipt.json
       - name: Upload static Climate x Juno receipt
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: rll-climate-juno-static-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/science/climate_juno/static_shadow_receipt.json
@@ -151,7 +151,7 @@ jobs:
           PY
       - name: Upload sanitized runtime evidence
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: rll-climate-engine-live-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/rll-climate-engine/

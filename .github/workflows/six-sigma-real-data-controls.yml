@@ -62,7 +62,7 @@ jobs:
           data/results/repo_inventory_summary.json
     - name: Upload documentation inventory delta
       if: always()
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
       with:
         name: six-sigma-documentation-inventory-${{ github.run_id }}-${{ github.job }}
         path: |
@@ -92,7 +92,7 @@ jobs:
         '
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
       with:
         name: six-sigma-real-data-controls-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/six-sigma-real-data-controls/${{ github.job }}/

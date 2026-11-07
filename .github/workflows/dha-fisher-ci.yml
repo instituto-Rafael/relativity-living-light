@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload DHA forecast artifact
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dha-fisher-forecast
           path: results/dha/fisher_forecast_reference.json
@@ -80,7 +80,7 @@ jobs:
 
       - name: Upload ln(1+z) extractor artifacts
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ln1pz-extractor
           path: |
@@ -91,7 +91,7 @@ jobs:
 
       - name: Upload DESI DHA extractor artifact
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: desi-dha-extractor
           path: results/dha/desi_dha_pipeline_summary.json

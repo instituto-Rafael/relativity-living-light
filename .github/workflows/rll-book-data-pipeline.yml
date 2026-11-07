@@ -109,7 +109,7 @@ jobs:
         printf '%s\n' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
         (cd artifacts/rll-pipeline && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > artifacts/rll-pipeline/CHECKSUMS.sha256
     - name: Upload artifact
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
         name: rll-book-pipeline-${{ github.run_id }}-${{ inputs.book_scope }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
         path: artifacts/rll-pipeline/
@@ -182,7 +182,7 @@ jobs:
         rll_real_data_write_checksums "$ARTIFACT_DIR"
     - name: Upload canonical real-data policy artifact
       if: always()
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
         name: rll-book-data-pipeline-policy-${{ github.run_id }}-${{ github.job }}
         path: artifacts/workflow-policy/rll-book-data-pipeline/${{ github.job }}/

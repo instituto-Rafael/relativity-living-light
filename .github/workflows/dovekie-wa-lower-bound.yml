@@ -101,7 +101,7 @@ jobs:
             > artifacts/science/sn_modern/DOVEKIE_CPL_WA_LOWER_BOUND_CHECKSUMS.sha256
 
       - name: Upload compact lower-bound receipts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: dovekie-wa-lower-bound-${{ github.run_id }}
           path: |
