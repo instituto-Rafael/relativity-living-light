@@ -1,0 +1,22 @@
+{
+  "schema":"rll.entropy_dispersion_stability.method_contract.v1",
+  "date":"2026-11-08",
+  "state":"PROPOSED_DIAGNOSTIC_PLUS_SYNTHETIC_TEST",
+  "claim_allowed":false,
+  "authority":"instituto-Rafael/relativity-living-light",
+  "source_contracts":[
+    "data/contracts/rll_multiscale_heterogeneous_residual.v1.json",
+    "data/contracts/rll_residual_geometry_composite.v2.json",
+    "data/contracts/rll_desi_dr2_covariance_multiscale.v1.json",
+    "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+    "data/governance/RLL_ADAPTIVE_GEOMETRY_FEATURE_LAYER_V1.json",
+    "docs/cronologia-auditoria/15_PARAMETRIZACAO_COERENTE_RLL.md"
+  ],
+  "levels":["symbolic_reconstruction","statistical_stationarity","physical_perturbation_stability","inference_robustness"],
+  "required_observation_keys":["observable_name","unit","source_id","selection","group","measurement_epoch","emission_epoch_if_relevant","instrument","model","covariance_ref"],
+  "statistics":{"sample_variance":"sum((x-xbar)^2)/(n-1)","shannon_discrete_bits":"-sum(p*log2(p))","covariance_whitening":"C=LL^T;z=L^-1(y-model);chi2=z^Tz","group_identity":"TSS=WSS+BSS","regression":"slope(mean(window) vs declared time)","entropy_stability":"sample_std(H_j) with declared quantizer and null calibration","compression":"source_bytes/total_encoded_bytes including decoder and metadata"},
+  "rule":"equal entropy or equal compression ratio never implies equal physical dynamics or statistical stationarity",
+  "t7_role":"7D diagnostic/parameter sweep indexing only; not seven physical spacetime dimensions or seven new cosmological fit parameters",
+  "limits":["do_not_change_likelihood","do_not_change_covariance","do_not_inject_geometric_constants_as_sigma","do_not_modify_observational_or_cosmology_models","no_real_data_claim","no_new_scientific_law"],
+  "pending":["TOKEN_VAZIO_REAL_COSMOLOGY_RESIDUAL_BINDING","TOKEN_VAZIO_NULL_ENSEMBLE","TOKEN_VAZIO_LONG_CORPUS_CALIBRATION","TOKEN_VAZIO_PHYSICAL_DYNAMICS","TOKEN_VAZIO_COSMOLOGICAL_FALSIFIER"]
+}

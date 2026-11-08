@@ -1,0 +1,11 @@
+language,word,phonetic_ipa,source_utf8_bytes,source_entropy_per_byte,ipa_token_entropy_exploratory,zlib9_bytes,writing_direction
+pt,cinco,/ˈsĩ.ku/,5,1.9219280948873623,2.0,13,LTR
+en,five,/faɪv/,4,2.0,1.584962500721156,12,LTR
+es,cinco,/ˈsin.ko/,5,1.9219280948873623,2.321928094887362,13,LTR
+fr,cinq,/sɛ̃k/,4,2.0,1.584962500721156,12,LTR
+de,fünf,/fʏnf/,5,1.9219280948873623,1.5,13,LTR
+it,cinque,/ˈtʃiŋ.kwe/,6,2.584962500721156,2.584962500721156,14,LTR
+ja,五,/ɡo/,3,1.584962500721156,1.0,11,LTR
+ar,خمسة,/ˈxam.sa/,8,2.4056390622295662,1.9219280948873623,17,RTL
+zh,五,/u˨˩˦/,3,1.584962500721156,-0.0,11,LTR
+ru,пять,/pʲætʲ/,8,2.4056390622295662,1.584962500721156,16,LTR

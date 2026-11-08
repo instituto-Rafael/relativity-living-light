@@ -1,0 +1,309 @@
+{
+  "astrophysics": {
+    "gravitational_wave_observation": "TOKEN_VAZIO_WAVE_STRAIN_WITH_PROVENANCE",
+    "local_older_interloper_toy": {
+      "difference_std_gyr": 1.118033988749895,
+      "difference_z_score": 8.94427190999916,
+      "physical_interpretation": "A discrepancy is not a causality diagnosis; migration, selection, metallicity and age systematics must be evaluated.",
+      "star_age_minus_local_population_gyr": 10.0
+    },
+    "lookback_time": "TOKEN_VAZIO_REQUIRES_PINNED_HZ_COSMOLOGY_AND_SOURCE_REDSHIFT",
+    "redshift_correction": "TOKEN_VAZIO_SEPARATE_COSMOLOGICAL_PECULIAR_GRAVITATIONAL_COMPONENTS",
+    "sr_toy_beta_0p6": {
+      "beta": 0.6,
+      "gamma": 1.25,
+      "local_light_speed_m_s": 299792458.0,
+      "moving_clock_proper_dt_per_frame_dt": 0.8,
+      "receding_radial_doppler_1_plus_z": 2.0,
+      "scope": "SPECIAL_RELATIVITY_INERTIAL_RADIAL_TOY_ONLY"
+    },
+    "stellar_ages_and_membership": "TOKEN_VAZIO_SPECTROSCOPY_ASTROMETRY_CHEMICAL_AND_COVARIANCE"
+  },
+  "claim_allowed": false,
+  "gap": [
+    "TOKEN_VAZIO_NATIVE_SPEAKER_IPA_REVIEW",
+    "TOKEN_VAZIO_JAPANESE_LOCAL_PITCH_ACCENT_LEXICON",
+    "TOKEN_VAZIO_ARABIC_TASHKEEL_CONTEXT",
+    "TOKEN_VAZIO_CLASSICAL_CHINESE_I_CHING_PASSAGE_TRANSLATIONS_AND_HISTORICAL_PRONUNCIATION",
+    "TOKEN_VAZIO_REAL_SPEECH_WAVEFORMS_LICENSES_AND_ALIGNMENT",
+    "TOKEN_VAZIO_SPECTRO_TEMPORAL_COVARIANCE",
+    "TOKEN_VAZIO_GRAVITY_DYNAMICAL_PERTURBATION"
+  ],
+  "native_speech_measured": false,
+  "non_equivalences": [
+    "IPA != native speech recording",
+    "waveform FFT != language entropy",
+    "acoustic pressure wave != quantum wavefunction != gravitational strain",
+    "two same-entropy representations do not imply equal semantics or dynamics",
+    "old star in region != older than the universe",
+    "constant speed of light in local vacuum"
+  ],
+  "phonetic_items": [
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 5
+      },
+      "ipa_segment_count": 4,
+      "ipa_token_entropy_exploratory": 2.0,
+      "language": "pt",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/ˈsĩ.ku/",
+      "prosody": "stress_first_syllable; Brazil illustrative",
+      "source_entropy_per_byte": 1.9219280948873623,
+      "source_sha256": "216e1e3f8fed804bf3c16a8f9dac7d25fd4902b7277828729dcceb797c8c1ddc",
+      "source_utf8_bytes": 5,
+      "unicode_nfc": "cinco",
+      "word": "cinco",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 13,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 4
+      },
+      "ipa_segment_count": 3,
+      "ipa_token_entropy_exploratory": 1.584962500721156,
+      "language": "en",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/faɪv/",
+      "prosody": "monosyllabic; accent dependent",
+      "source_entropy_per_byte": 2.0,
+      "source_sha256": "222b0bd51fcef7e65c2e62db2ed65457013bab56be6fafeb19ee11d453153c80",
+      "source_utf8_bytes": 4,
+      "unicode_nfc": "five",
+      "word": "five",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 12,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 5
+      },
+      "ipa_segment_count": 5,
+      "ipa_token_entropy_exploratory": 2.321928094887362,
+      "language": "es",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/ˈsin.ko/",
+      "prosody": "stress_first_syllable; broad phonemic",
+      "source_entropy_per_byte": 1.9219280948873623,
+      "source_sha256": "216e1e3f8fed804bf3c16a8f9dac7d25fd4902b7277828729dcceb797c8c1ddc",
+      "source_utf8_bytes": 5,
+      "unicode_nfc": "cinco",
+      "word": "cinco",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 13,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 4
+      },
+      "ipa_segment_count": 3,
+      "ipa_token_entropy_exploratory": 1.584962500721156,
+      "language": "fr",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/sɛ̃k/",
+      "prosody": "nasal vowel; metropolitan illustrative",
+      "source_entropy_per_byte": 2.0,
+      "source_sha256": "ab8bf5eb556405527d7decd6af32402672efe99071e8417f9928bfa568063da6",
+      "source_utf8_bytes": 4,
+      "unicode_nfc": "cinq",
+      "word": "cinq",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 12,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 4
+      },
+      "ipa_segment_count": 4,
+      "ipa_token_entropy_exploratory": 1.5,
+      "language": "de",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/fʏnf/",
+      "prosody": "monosyllabic",
+      "source_entropy_per_byte": 1.9219280948873623,
+      "source_sha256": "d26898598758e7790be4ffa1f10179bf92b7768bf9b909e51c4cfb8d9e699cda",
+      "source_utf8_bytes": 5,
+      "unicode_nfc": "fünf",
+      "word": "fünf",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 13,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 6
+      },
+      "ipa_segment_count": 6,
+      "ipa_token_entropy_exploratory": 2.584962500721156,
+      "language": "it",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/ˈtʃiŋ.kwe/",
+      "prosody": "stress_first_syllable",
+      "source_entropy_per_byte": 2.584962500721156,
+      "source_sha256": "615b97d3375bc288e0746da1a9cfd78b2939dd764dc4ee66b70ff007e1c49747",
+      "source_utf8_bytes": 6,
+      "unicode_nfc": "cinque",
+      "word": "cinque",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 14,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 1
+      },
+      "ipa_segment_count": 2,
+      "ipa_token_entropy_exploratory": 1.0,
+      "language": "ja",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/ɡo/",
+      "prosody": "single_mora_reading; pitch_context_unspecified",
+      "source_entropy_per_byte": 1.584962500721156,
+      "source_sha256": "c9b87f516a38ea36a0ca35f5137d4676a0705b6af36302cac4b68927a1e42c60",
+      "source_utf8_bytes": 3,
+      "unicode_nfc": "五",
+      "word": "五",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 11,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "AL": 4
+      },
+      "ipa_segment_count": 5,
+      "ipa_token_entropy_exploratory": 1.9219280948873623,
+      "language": "ar",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/ˈxam.sa/",
+      "prosody": "MSA illustrative, vowel_marks_absent_in_word",
+      "source_entropy_per_byte": 2.4056390622295662,
+      "source_sha256": "1ba32ae2545bf97f72f540ca43b2e2bdcb0f19925f8e7f7fc8674ddf350f507d",
+      "source_utf8_bytes": 8,
+      "unicode_nfc": "خمسة",
+      "word": "خمسة",
+      "writing_direction": "RTL",
+      "zlib9_bytes": 17,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 1
+      },
+      "ipa_segment_count": 1,
+      "ipa_token_entropy_exploratory": -0.0,
+      "language": "zh",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/u˨˩˦/",
+      "prosody": "Mandarin citation third tone; realization context dependent",
+      "source_entropy_per_byte": 1.584962500721156,
+      "source_sha256": "c9b87f516a38ea36a0ca35f5137d4676a0705b6af36302cac4b68927a1e42c60",
+      "source_utf8_bytes": 3,
+      "unicode_nfc": "五",
+      "word": "五",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 11,
+      "zlib_exact_roundtrip": true
+    },
+    {
+      "bidi_classes_logical_codepoints": {
+        "L": 4
+      },
+      "ipa_segment_count": 3,
+      "ipa_token_entropy_exploratory": 1.584962500721156,
+      "language": "ru",
+      "not_a_language_entropy_estimate": true,
+      "phonetic_ipa": "/pʲætʲ/",
+      "prosody": "monosyllabic; broad illustrative",
+      "source_entropy_per_byte": 2.4056390622295662,
+      "source_sha256": "abd18920076c974f4405610f0c459b988d218cef24854532242a2fe63238780c",
+      "source_utf8_bytes": 8,
+      "unicode_nfc": "пять",
+      "word": "пять",
+      "writing_direction": "LTR",
+      "zlib9_bytes": 16,
+      "zlib_exact_roundtrip": true
+    }
+  ],
+  "phonetics_model_authored": true,
+  "pilot_source": "data/experiments/rll_cross_script_entropy_v2/parallel_quantity_five_v2.json",
+  "real_cosmology_observations": false,
+  "sampled_speech": false,
+  "schema": "rll.phonetic_chronospectral.receipt_v1",
+  "semantic_controls": [
+    {
+      "forms": [
+        {
+          "ipa": "/ma˥/",
+          "orthography": "妈",
+          "romanization": "mā",
+          "tone": "55"
+        },
+        {
+          "ipa": "/ma˨˩˦/",
+          "orthography": "马",
+          "romanization": "mǎ",
+          "tone": "214"
+        }
+      ],
+      "id": "mandarin_ma_tone",
+      "source": "textbook lexical tone contrast; audio is SYNTHETIC_PROXY"
+    },
+    {
+      "forms": [
+        {
+          "context": "present tense",
+          "ipa": "/riːd/",
+          "orthography": "read"
+        },
+        {
+          "context": "past tense",
+          "ipa": "/rɛd/",
+          "orthography": "read"
+        }
+      ],
+      "id": "english_read_context",
+      "source": "orthography homograph, context is required"
+    }
+  ],
+  "state": "PASS_SCOPED_SYNTHETIC_PENDING_EXTERNAL_VALIDATION",
+  "synthetic_tonal_waves": {
+    "ma1_high_level": {
+      "center_window_dft": {
+        "centroid_hz": 225.9903885665607,
+        "spectral_power_entropy_bits": 1.6817492940765075
+      },
+      "declared_model": "ILLUSTRATIVE_F0_ONLY_NOT_NATIVE_MANDARIN_AUDIO",
+      "duration_s": 0.5,
+      "f0_end_hz": 208.0,
+      "f0_mid_hz": 208.0,
+      "f0_start_hz": 208.0,
+      "normalized_rms": 0.308029392107969,
+      "pcm16_samples_sha256": "cf28774771d796adcd5ec668c17bbd3cad4b3ba2d0abd095d4581d0331ffd5af",
+      "physical_acoustic_pressure_pa": "TOKEN_VAZIO_NO_CALIBRATION",
+      "rate_hz": 8000,
+      "samples": 4000
+    },
+    "ma3_fall_rise": {
+      "center_window_dft": {
+        "centroid_hz": 164.88888109426378,
+        "spectral_power_entropy_bits": 1.687044326802603
+      },
+      "declared_model": "ILLUSTRATIVE_F0_ONLY_NOT_NATIVE_MANDARIN_AUDIO",
+      "duration_s": 0.5,
+      "f0_end_hz": 177.0,
+      "f0_mid_hz": 121.48437109277319,
+      "f0_start_hz": 184.0,
+      "normalized_rms": 0.30802838565084406,
+      "pcm16_samples_sha256": "dca33b9787cd38ed48394e863d57c89da05565ae2ec5f63a0b24139164db9cc7",
+      "physical_acoustic_pressure_pa": "TOKEN_VAZIO_NO_CALIBRATION",
+      "rate_hz": 8000,
+      "samples": 4000
+    }
+  }
+}

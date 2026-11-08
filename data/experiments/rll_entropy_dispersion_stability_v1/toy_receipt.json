@@ -1,0 +1,156 @@
+{
+  "baseline": {
+    "H_linear_slope_bits_per_window": 0.0,
+    "H_mean": 2.321928094887362,
+    "H_sample_std": 0.0,
+    "mean_linear_slope_value_per_window": 0.0,
+    "mean_sample_std_across_windows": 0.0,
+    "per_window": [
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 0
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 1
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 2
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 3
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 4
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 5
+      },
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 6
+      }
+    ],
+    "variance_decomposition": {
+      "between_fraction": 0.0,
+      "between_sse": 0.0,
+      "closure_error": 0.0,
+      "total_sse": 700.0,
+      "within_sse": 700.0
+    }
+  },
+  "claim_allowed": false,
+  "cosmology_fit_modified": false,
+  "dataset": "SYNTHETIC_SEVEN_WINDOWS_OF_FIFTY; NOT_ASTRONOMICAL",
+  "drifting": {
+    "H_linear_slope_bits_per_window": 0.0,
+    "H_mean": 2.321928094887362,
+    "H_sample_std": 0.0,
+    "mean_linear_slope_value_per_window": 1.0,
+    "mean_sample_std_across_windows": 2.160246899469287,
+    "per_window": [
+      {
+        "mean": 0.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 0
+      },
+      {
+        "mean": 1.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 1
+      },
+      {
+        "mean": 2.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 2
+      },
+      {
+        "mean": 3.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 3
+      },
+      {
+        "mean": 4.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 4
+      },
+      {
+        "mean": 5.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 5
+      },
+      {
+        "mean": 6.0,
+        "n": 50,
+        "sample_std": 1.4285714285714286,
+        "shannon_empirical_bits_per_symbol": 2.321928094887362,
+        "time_index": 6
+      }
+    ],
+    "variance_decomposition": {
+      "between_fraction": 0.6666666666666666,
+      "between_sse": 1400.0,
+      "closure_error": 0.0,
+      "total_sse": 2100.0,
+      "within_sse": 700.0
+    }
+  },
+  "equal_entropy_does_not_imply_stationarity": true,
+  "gates": {
+    "held_out_validation": "NOT_RUN",
+    "independent_reproduction": "NOT_RUN",
+    "likelihood": "PRESERVE_CURRENT_RLL_COVARIANCE_AND_CHI2",
+    "lyapunov": "TOKEN_VAZIO_PHYSICAL_DYNAMICS_AND_PERTURBATION_EVOLUTION",
+    "null_ensemble": "TOKEN_VAZIO_PREREGISTERED_NULL_AND_BOOTSTRAP",
+    "real_data": "TOKEN_VAZIO_PINNED_COSMOLOGICAL_RESIDUAL_INPUTS",
+    "thermal_entropy": "TOKEN_VAZIO_THERMODYNAMIC_STATE_AND_EOS",
+    "time_order": "TOKEN_VAZIO_ASTROPHYSICAL_TIME_COORDINATE"
+  },
+  "quantization": "native discrete integer alphabet; no observational bin estimator",
+  "schema": "rll.entropy_dispersion_stability.synthetic_counterexample.v1",
+  "separate_questions": {
+    "compression": "Same compression ratio does not establish equal Shannon entropy or semantics",
+    "geometry": "T7 may index parameter sweeps; not seven physical spacetime dimensions",
+    "observational": "Residuals must use committed full covariance and physical units",
+    "physical": "Dynamical stability needs equations, initial states, perturbations, regime and timescales",
+    "statistical": "H, std(H), slopes, KL and chi2 need null calibration"
+  },
+  "status": "PASS_SCOPED_SYNTHETIC_COUNTEREXAMPLE"
+}
