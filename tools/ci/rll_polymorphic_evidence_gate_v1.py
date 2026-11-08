@@ -163,6 +163,58 @@ def evaluate(contract, g4):
     }
 
 
+
+def compose_routes(contract):
+    """Generate an auditable per-hypothesis route, not an automatic claim.
+
+    A typed source edge marks eligibility to be examined, not evidence of a fit.
+    A speculative relation cannot become quantitative support by traversing the DAG.
+    """
+    by_id = {s["id"]: s for s in contract["sources"]}
+    edges = contract["relations"]
+    routes = []
+    for h in sorted(contract["hypotheses"], key=lambda item: item["id"]):
+        hid = "hypothesis:" + h["id"]
+        incoming = [e for e in edges if e["to"] == hid]
+        primaries = sorted({
+            e["from"].removeprefix("source:")
+            for e in incoming
+            if e["type"] == "ELIGIBLE_LIKELIHOOD_INPUT"
+            and e["from"].startswith("source:")
+            and by_id[e["from"].removeprefix("source:")]["role"] == "OBSERVATIONAL_PRIMARY"
+        })
+        analogies = sorted(e["from"] for e in incoming if e["type"] == "ANALOGY_NOT_CAUSALITY")
+        if h["class"] == "FORMAL_DEDUCTIVE":
+            route_state = "FORMAL_AXIOMATIC_PROOF_ROUTE"
+            gates = ["VERIFY_AXIOMS", "INDEPENDENT_FORMAL_DERIVATION"]
+        elif h["class"] == "EMPIRICAL_REFERENCE":
+            route_state = "REFERENCE_ONLY_LOCAL_EVIDENCE_PENDING"
+            gates = ["PRIMARY_BIOLOGICAL_SOURCE_BINDING", "EXPERIMENTAL_MEASUREMENT"]
+        elif h["class"] == "EXPLORATORY_HYPOTHESIS":
+            route_state = "BLOCKED_PHYSICAL_MECHANISM_TOKEN_VAZIO"
+            gates = ["DEFINE_MECHANISM", "DECLARE_OBSERVABLE_AND_FALSIFIER",
+                     "SAFETY_AND_NEGATIVE_CONTROLS", "INDEPENDENT_REPLICATION"]
+        elif h["domain"] == "cosmology":
+            route_state = "ELIGIBLE_MANUAL_G4_PREWARM_NOT_EXECUTED"
+            gates = ["G3_DATA_COMPATIBILITY", "PANTHEON_OFFICIAL_FULL_COV",
+                     "G4_SIX_MODEL_FIT", "G5_FREEZE", "G6_INDEPENDENT_INFERENCE"]
+        else:
+            route_state = "TOKEN_VAZIO_UNCLASSIFIED_ROUTE"
+            gates = ["SOURCE_BINDING", "DOMAIN_SPECIFIC_FALSIFIER"]
+        routes.append({
+            "hypothesis_id": h["id"],
+            "domain": h["domain"],
+            "class": h["class"],
+            "route_state": route_state,
+            "eligible_primary_source_ids": primaries,
+            "analogies_are_not_causal_evidence": analogies,
+            "required_next_gates": gates,
+            "posterior": "NOT_RUN",
+            "claim_allowed": False,
+        })
+    return routes
+
+
 def bayesian_readiness(payload, source_registry):
     """No Bayesian numerical update. Test whether a future bound run could be reviewed."""
     required = ("prior_h1", "prior_origin", "h0", "h1", "observations_sha256",
@@ -210,6 +262,7 @@ def main():
     parser.add_argument("--require-pass", action="store_true")
     args = parser.parse_args()
     result = evaluate(load_json(SPEC), load_json(G4))
+    result["composed_routes"] = compose_routes(load_json(SPEC))
     result["contract_sha256"] = digest(SPEC)
     result["g4_sha256"] = digest(G4)
     result["git_sha"] = os.environ.get("GITHUB_SHA", "TOKEN_VAZIO_LOCAL_HEAD")
