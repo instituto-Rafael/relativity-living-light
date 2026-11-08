@@ -1,0 +1,42 @@
+{
+  "schema": "rll.smart_lcm_graph_hosted_summary.v1",
+  "date": "2026-11-08",
+  "source": "Local Python 3.13.5 x86-64 independent host, baseline function mirror inspected against RLL, not identical byte source to this PR",
+  "case_count": 72,
+  "correct_count": 72,
+  "old_graph_verified": 35,
+  "old_graph_not_run_cap": 37,
+  "jump_edges_total": 229,
+  "tests_local": "14/14 PASS_SCOPED",
+  "median_ns_same_72": {
+    "math_lcm_C": 153.6,
+    "euclid_native_gcd": 327.8,
+    "jump_native_gcd": 1008.1,
+    "euclid_python_gcd": 1228.7,
+    "jump_python_gcd": 1446.7,
+    "complement_python": 1398.9,
+    "prime_spf_warm": 3453.7,
+    "prime_trial": 5175.3
+  },
+  "median_ns_same_17": {
+    "math_lcm_C": 109.2,
+    "euclid_native_gcd": 333.5,
+    "euclid_python_gcd": 1034.4,
+    "jump_native_gcd": 979,
+    "explicit_step_graph": 38168
+  },
+  "spf": {
+    "table_bytes": 4000136,
+    "precompute_ns": 112173213,
+    "domain_max": 1000033
+  },
+  "findings": {
+    "graph_improves_over_walk": true,
+    "graph_beats_euclid_same_backend": false,
+    "spf_hot_beats_euclid": false
+  },
+  "sha256_provenance": "local source artifact separate; GitHub exact-head CI evidence required",
+  "claim_allowed": false,
+  "producer_ci_exact_head": "NOT_RUN_AT_COMMIT_AUTHORING",
+  "physical_validation": "NOT_RUN"
+}
