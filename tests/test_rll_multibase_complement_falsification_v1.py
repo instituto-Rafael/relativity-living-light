@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parents[2]
+HERE = Path(__file__).resolve().parents[1]
 CONTRACT = HERE / "data/contracts/rll_multibase_complement_falsification.v1.json"
 
 def digits(n, base):
