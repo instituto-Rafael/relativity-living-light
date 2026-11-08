@@ -20,6 +20,9 @@ name: "RLL | G4-G5 Baseline Precalibration (DESI DR2 / Pantheon+)"
       - "data/contracts/rll_epistemic_evidence_graph.v1.json"
       - "tools/ci/rll_polymorphic_evidence_gate_v1.py"
       - "tests/test_rll_polymorphic_evidence_gate_v1.py"
+      - "tools/ci/rll_multilingual_compression_v1.py"
+      - "tests/test_rll_multilingual_compression_v1.py"
+      - "data/contracts/rll_multilingual_semantic_compression_trial.v1.json"
       - "docs/workflows/RLL_POLYMORPHIC_EVIDENCE_ORCHESTRATION_V1.md"
       - "NOVOexport/legacy-workflows/20261107/**"
       - "tools/ci/rll_warmstart_preflight_v1.py"
@@ -55,6 +58,13 @@ jobs:
             --output results/audit/rll_epistemic_graph_receipt.json
           python -m unittest discover -s tests -p test_rll_polymorphic_evidence_gate_v1.py -v
           echo "Evidence topology PASS_SCOPED; priors and model evidence NOT_RUN" >> "$GITHUB_STEP_SUMMARY"
+      - name: "02 Four-language compression vs annotated meaning (toy / offline)"
+        run: |
+          set -euo pipefail
+          python tools/ci/rll_multilingual_compression_v1.py --require-pass \
+            --output results/audit/rll_multilingual_compression_receipt.json
+          python -m unittest discover -s tests -p test_rll_multilingual_compression_v1.py -v
+          echo "Translation NLP NOT_RUN; biological X-ray coupling NOT_PROVEN" >> "$GITHUB_STEP_SUMMARY"
 
   g4-g5:
     name: "10 Real G4-G5 fitting - explicit manual selection only"

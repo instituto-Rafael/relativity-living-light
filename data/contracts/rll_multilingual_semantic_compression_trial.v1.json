@@ -1,0 +1,206 @@
+{
+  "schema": "rll.multilingual_semantic_compression_trial.v1",
+  "intent": "Measure lossless byte savings separately from manually audited semantic anchor retention in 4 languages",
+  "claim_allowed": false,
+  "translation_source": "HAND_AUTHORED_TOY_NO_INDEPENDENT_REPLICATION",
+  "texts_status": "ILLUSTRATIVE_AUTHORED_PARAPHRASES_NO_TRANSLATOR_CONNECTED",
+  "methodological_sources": [
+    "https://doi.org/10.1038/nature07378",
+    "https://www.ncbi.nlm.nih.gov/books/NBK26894/",
+    "https://www.ncbi.nlm.nih.gov/sites/books/NBK9903/",
+    "https://www.math.ucdavis.edu/~saito/data/acha.read.w17/cilibrasi-vitanyi_clustering-by-compression.pdf",
+    "https://aclanthology.org/2026.wac-1.9/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12207520/"
+  ],
+  "excludes": [
+    "independent_translation_replication",
+    "semantic_extraction_model",
+    "Bayes_posterior",
+    "literal_size_independence",
+    "physical_tape_bio_ATP_link"
+  ],
+  "records": [
+    {
+      "id": "TAPE_XRAY_VACUUM",
+      "source_ref": "https://doi.org/10.1038/nature07378",
+      "gold_atoms": {
+        "condition": "moderate_vacuum",
+        "emission": "Xray_pulses",
+        "study_year": "2008",
+        "cellular_ATP": "not_tested"
+      },
+      "translations": {
+        "pt": {
+          "text": "Um estudo de 2008 detectou pulsos de raios X ao descolar fita adesiva sob vácuo moderado, mas não investigou produção celular de ATP.",
+          "annotated_atoms": {
+            "condition": "moderate_vacuum",
+            "emission": "Xray_pulses",
+            "study_year": "2008",
+            "cellular_ATP": "not_tested"
+          }
+        },
+        "es": {
+          "text": "Un estudio de 2008 detectó pulsos de rayos X al despegar cinta adhesiva bajo vacío moderado, pero no investigó la producción celular de ATP.",
+          "annotated_atoms": {
+            "condition": "moderate_vacuum",
+            "emission": "Xray_pulses",
+            "study_year": "2008",
+            "cellular_ATP": "not_tested"
+          }
+        },
+        "en": {
+          "text": "A 2008 study detected X-ray pulses from peeling adhesive tape in moderate vacuum, but did not investigate cellular ATP production.",
+          "annotated_atoms": {
+            "condition": "moderate_vacuum",
+            "emission": "Xray_pulses",
+            "study_year": "2008",
+            "cellular_ATP": "not_tested"
+          }
+        },
+        "fr": {
+          "text": "Une étude de 2008 a détecté des impulsions de rayons X en décollant du ruban adhésif sous vide modéré, sans étudier la production cellulaire d’ATP.",
+          "annotated_atoms": {
+            "condition": "moderate_vacuum",
+            "emission": "Xray_pulses",
+            "study_year": "2008",
+            "cellular_ATP": "not_tested"
+          }
+        }
+      }
+    },
+    {
+      "id": "MITO_O2_ATP",
+      "source_ref": "https://www.ncbi.nlm.nih.gov/books/NBK26894/",
+      "gold_atoms": {
+        "terminal_electron_acceptor": "oxygen",
+        "energy_origin": "nutrient_oxidation",
+        "mechanism": "proton_gradient_to_ATP",
+        "class": "established_biochemistry"
+      },
+      "translations": {
+        "pt": {
+          "text": "Na respiração aeróbia, a energia de nutrientes movimenta elétrons; o oxigênio é aceptor final e o gradiente de prótons impulsiona a síntese de ATP.",
+          "annotated_atoms": {
+            "terminal_electron_acceptor": "oxygen",
+            "energy_origin": "nutrient_oxidation",
+            "mechanism": "proton_gradient_to_ATP",
+            "class": "established_biochemistry"
+          }
+        },
+        "es": {
+          "text": "En la respiración aeróbica, la energía de los nutrientes mueve electrones; el oxígeno es el aceptor final y el gradiente de protones impulsa la síntesis de ATP.",
+          "annotated_atoms": {
+            "terminal_electron_acceptor": "oxygen",
+            "energy_origin": "nutrient_oxidation",
+            "mechanism": "proton_gradient_to_ATP",
+            "class": "established_biochemistry"
+          }
+        },
+        "en": {
+          "text": "During aerobic respiration, nutrient energy drives electron transport; oxygen is the terminal acceptor and a proton gradient powers ATP synthesis.",
+          "annotated_atoms": {
+            "terminal_electron_acceptor": "oxygen",
+            "energy_origin": "nutrient_oxidation",
+            "mechanism": "proton_gradient_to_ATP",
+            "class": "established_biochemistry"
+          }
+        },
+        "fr": {
+          "text": "Dans la respiration aérobie, l’énergie des nutriments entraîne le transport des électrons; l’oxygène est l’accepteur terminal et un gradient de protons permet la synthèse d’ATP.",
+          "annotated_atoms": {
+            "terminal_electron_acceptor": "oxygen",
+            "energy_origin": "nutrient_oxidation",
+            "mechanism": "proton_gradient_to_ATP",
+            "class": "established_biochemistry"
+          }
+        }
+      }
+    },
+    {
+      "id": "BIO_XRAY_ATP_NOT_VALIDATED",
+      "source_ref": "HYPOTHESIS_BOUNDARY_NO_PRIMARY_CELLULAR_MECHANISM",
+      "gold_atoms": {
+        "claim": "not_demonstrated",
+        "target": "cellular_ATP_from_tape_Xrays",
+        "status": "TOKEN_VAZIO_MECHANISM"
+      },
+      "translations": {
+        "pt": {
+          "text": "Não foi demonstrado que raios X gerados ao descolar fita adesiva sejam convertidos diretamente em ATP dentro de células.",
+          "annotated_atoms": {
+            "claim": "not_demonstrated",
+            "target": "cellular_ATP_from_tape_Xrays",
+            "status": "TOKEN_VAZIO_MECHANISM"
+          }
+        },
+        "es": {
+          "text": "No se ha demostrado que los rayos X producidos al despegar cinta adhesiva se conviertan directamente en ATP dentro de células.",
+          "annotated_atoms": {
+            "claim": "not_demonstrated",
+            "target": "cellular_ATP_from_tape_Xrays",
+            "status": "TOKEN_VAZIO_MECHANISM"
+          }
+        },
+        "en": {
+          "text": "It has not been demonstrated that X-rays released by peeling tape are directly converted into ATP inside cells.",
+          "annotated_atoms": {
+            "claim": "not_demonstrated",
+            "target": "cellular_ATP_from_tape_Xrays",
+            "status": "TOKEN_VAZIO_MECHANISM"
+          }
+        },
+        "fr": {
+          "text": "Il n’a pas été démontré que les rayons X émis par le ruban adhésif décollé soient directement transformés en ATP dans les cellules.",
+          "annotated_atoms": {
+            "claim": "not_demonstrated",
+            "target": "cellular_ATP_from_tape_Xrays",
+            "status": "TOKEN_VAZIO_MECHANISM"
+          }
+        }
+      }
+    },
+    {
+      "id": "YEAST_ETHANOL_FERMENTATION",
+      "source_ref": "https://www.ncbi.nlm.nih.gov/sites/books/NBK9903/",
+      "gold_atoms": {
+        "process": "yeast_alcoholic_fermentation",
+        "products": "ethanol_and_CO2",
+        "not_from": "tape_peeling"
+      },
+      "translations": {
+        "pt": {
+          "text": "Na fermentação alcoólica por leveduras, açúcares podem formar etanol e dióxido de carbono; isso é independente do desprendimento da fita.",
+          "annotated_atoms": {
+            "process": "yeast_alcoholic_fermentation",
+            "products": "ethanol_and_CO2",
+            "not_from": "tape_peeling"
+          }
+        },
+        "es": {
+          "text": "En la fermentación alcohólica por levaduras, los azúcares pueden formar etanol y dióxido de carbono; eso es independiente de despegar cinta.",
+          "annotated_atoms": {
+            "process": "yeast_alcoholic_fermentation",
+            "products": "ethanol_and_CO2",
+            "not_from": "tape_peeling"
+          }
+        },
+        "en": {
+          "text": "In alcoholic fermentation by yeast, sugars may form ethanol and carbon dioxide; this is independent of peeling tape.",
+          "annotated_atoms": {
+            "process": "yeast_alcoholic_fermentation",
+            "products": "ethanol_and_CO2",
+            "not_from": "tape_peeling"
+          }
+        },
+        "fr": {
+          "text": "Dans la fermentation alcoolique des levures, les sucres peuvent former de l’éthanol et du dioxyde de carbone; cela ne dépend pas du ruban décollé.",
+          "annotated_atoms": {
+            "process": "yeast_alcoholic_fermentation",
+            "products": "ethanol_and_CO2",
+            "not_from": "tape_peeling"
+          }
+        }
+      }
+    }
+  ]
+}
