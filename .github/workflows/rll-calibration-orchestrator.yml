@@ -23,10 +23,13 @@ name: "RLL | G4-G5 Baseline Precalibration (DESI DR2 / Pantheon+)"
       - "tools/ci/rll_multilingual_compression_v1.py"
       - "tests/test_rll_multilingual_compression_v1.py"
       - "data/contracts/rll_multilingual_semantic_compression_trial.v1.json"
-      - "data/contracts/rll_genesis_lzw12_ratio_v1.json"
-      - "tools/ci/rll_genesis_lzw12_ratio_v1.py"
-      - "tests/test_rll_genesis_lzw12_ratio_v1.py"
-      - "docs/workflows/RLL_GENESIS_COMPRESSION_RATIO_LZW12_V1.md"
+      - "tools/ci/rll_script_entropy_v2.py"
+      - "tools/ci/rll_visual_fft_v2.py"
+      - "tests/test_rll_script_entropy_v2.py"
+      - "tests/test_rll_visual_fft_v2.py"
+      - "data/experiments/rll_cross_script_entropy_v2/**"
+      - "docs/workflows/RLL_CROSS_SCRIPT_ENTROPY_BRAILLE_LIBRAS_FFT_V2.md"
+      - "001_PONTEIRO/RLL_CROSS_SCRIPT_ENTROPY_V2_CURRENT.md"
       - "docs/workflows/RLL_POLYMORPHIC_EVIDENCE_ORCHESTRATION_V1.md"
       - "NOVOexport/legacy-workflows/20261107/**"
       - "tools/ci/rll_warmstart_preflight_v1.py"
@@ -69,13 +72,14 @@ jobs:
             --output results/audit/rll_multilingual_compression_receipt.json
           python -m unittest discover -s tests -p test_rll_multilingual_compression_v1.py -v
           echo "Translation NLP NOT_RUN; biological X-ray coupling NOT_PROVEN" >> "$GITHUB_STEP_SUMMARY"
-      - name: "03 Genesis compression RATIO LZW12 (Hebrew Aramaic Greek)"
+      - name: "03 Ten-language Braille historic-numeral and synthetic 128x128 FFT preflight"
         run: |
           set -euo pipefail
-          python tools/ci/rll_genesis_lzw12_ratio_v1.py --require-pass \
-            --output results/audit/rll_genesis_ratio_lzw12_receipt.json
-          python -m unittest discover -s tests -p test_rll_genesis_lzw12_ratio_v1.py -v
-          echo "R_c=original_bytes/compressed_bytes; upstream blobs pinned; no semantic claim" >> "$GITHUB_STEP_SUMMARY"
+          python tools/ci/rll_script_entropy_v2.py --output results/audit/rll_cross_script_entropy_v2.json
+          python tools/ci/rll_visual_fft_v2.py --output-dir results/audit/rll_visual_fft_v2
+          python -m unittest discover -s tests -p test_rll_script_entropy_v2.py -v
+          python -m unittest discover -s tests -p test_rll_visual_fft_v2.py -v
+          echo "19 scoped tests; real Libras TOKEN_VAZIO; 2D FFT is not language entropy" >> "$GITHUB_STEP_SUMMARY"
 
   g4-g5:
     name: "10 Real G4-G5 fitting - explicit manual selection only"

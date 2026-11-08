@@ -1,0 +1,45 @@
+{
+  "schema": "rll.parallel_cross_script_quantity_5.v2",
+  "semantic_anchor": {"type":"natural_number", "value":5, "proposition":"2 + 3 = 5"},
+  "authorship": "MODEL_AUTHORED_SHORT_EQUIVALENTS_NOT_INDEPENDENT_HUMAN_TRANSLATION",
+  "translation_audit": "TOKEN_VAZIO_HUMAN_LINGUIST_REVIEW",
+  "normalization": "NFC_UTF8",
+  "text_variants": [
+    {"id":"pt", "name":"Português", "script":"Latin", "word":"cinco", "sentence":"Dois mais três são cinco."},
+    {"id":"en", "name":"English", "script":"Latin", "word":"five", "sentence":"Two plus three equals five."},
+    {"id":"es", "name":"Español", "script":"Latin", "word":"cinco", "sentence":"Dos más tres son cinco."},
+    {"id":"fr", "name":"Français", "script":"Latin", "word":"cinq", "sentence":"Deux plus trois font cinq."},
+    {"id":"de", "name":"Deutsch", "script":"Latin", "word":"fünf", "sentence":"Zwei plus drei ergibt fünf."},
+    {"id":"it", "name":"Italiano", "script":"Latin", "word":"cinque", "sentence":"Due più tre fa cinque."},
+    {"id":"ja", "name":"日本語", "script":"Han-Hiragana", "word":"五", "sentence":"二足す三は五に等しい。"},
+    {"id":"ar", "name":"العربية", "script":"Arabic", "word":"خمسة", "sentence":"اثنان زائد ثلاثة يساوي خمسة."},
+    {"id":"zh", "name":"中文（简体）", "script":"Han", "word":"五", "sentence":"二加三等于五。"},
+    {"id":"ru", "name":"Русский", "script":"Cyrillic", "word":"пять", "sentence":"Два плюс три равно пяти."}
+  ],
+  "braille": {
+    "source_locale":"pt", "source_text":"cinco",
+    "grade":"six_dot_uncontracted_alphabetic", "cells_unicode":"⠉⠊⠝⠉⠕", "digits_five":"⠼⠑",
+    "cell_encodings":{"c":"14","i":"24","n":"1345","o":"135"},
+    "limitation":"Portuguese letter-by-letter six-dot example, not a full literary Braille transcriber; paper tactile spacing, punctuation and contractions not measured."
+  },
+  "other_writing_systems": [
+    {"id":"western_digit","text":"5","class":"numeral","source":"Unicode ASCII digit five"},
+    {"id":"mayan_numeral_five","text":"𝋥","class":"numeral","source":"Unicode Mayan numeral five U+1D2E5","not_full_mayan_language":true},
+    {"id":"egyptian_hieroglyph_five","text":"𓏾","class":"numeral","source":"Unicode Egyptian Hieroglyph Z015D U+133FE","not_full_egyptian_sentence":true}
+  ],
+  "libras": {
+    "target_gloss":"CINCO", "modality":"VIDEO_TEMPORAL_SIGN", "real_frame_status":"TOKEN_VAZIO_NO_LICENSED_ALIGNED_FRAME_MATERIALIZED", "source_catalog":[
+      "https://corpuslibras.ufsc.br/", "https://huggingface.co/datasets/ibmectech/minds-libras-raw"],
+    "corpus_binding":"Genuine isolated FIVE sign with frame timing, signer/corpus ID, license and source checksum required before physical cross-modal entropy claims",
+    "frame_contract":{"width":128,"height":128,"grayscale":true,"format":"PGM_P5","fft":"2D_RFFT_ABSOLUTE_SPECTRAL_POWER","frames_policy":"equally sampled 8 frames; same crop policy; temporal order preserved separately"},
+    "do_not_conflate":"Still frame Fourier power is texture/spatial-frequency entropy, not the Shannon entropy of Libras grammar or semantic content."
+  },
+  "provenance": [
+    {"kind":"BRAILLE_PORTUGUESE_NORM","url":"https://portal.mec.gov.br/docman/dezembro-2018-pdf/105421-grafia-braille-para-a-lingua-portuguesa-2018/file"},
+    {"kind":"UNICODE_BRAILLE","url":"https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-21/"},
+    {"kind":"UNICODE_MAYAN_NUMERALS","url":"https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-22/"},
+    {"kind":"UNICODE_EGYPTIAN_GLYPH_Z015D","url":"https://unicode.org/Public/18.0.0/charts/nameslist/13000/"},
+    {"kind":"CORPUS_LIBRAS","url":"https://corpuslibras.ufsc.br/"}
+  ],
+  "claim_allowed": false
+}

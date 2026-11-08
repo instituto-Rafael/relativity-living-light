@@ -1,0 +1,26 @@
+id,unit,text,utf8_bytes,unicode_codepoints,H_byte_bits_per_byte,H_unicode_bits_per_codepoint,zlib9_bytes,zlib9_saving_pct,gzip9_bytes,xz6_bytes
+pt,word,cinco,5,5,1.921928,1.921928,13,-160.0,25,64
+pt,sentence,Dois mais três são cinco.,27,25,3.661933,3.543465,34,-25.926,46,84
+en,word,five,4,4,2.0,2.0,12,-200.0,24,60
+en,sentence,Two plus three equals five.,27,27,3.940073,3.940073,35,-29.63,47,84
+es,word,cinco,5,5,1.921928,1.921928,13,-160.0,25,64
+es,sentence,Dos más tres son cinco.,24,23,3.553509,3.447262,32,-33.333,44,80
+fr,word,cinq,4,4,2.0,2.0,12,-200.0,24,60
+fr,sentence,Deux plus trois font cinq.,26,26,3.931209,3.931209,34,-30.769,46,84
+de,word,fünf,5,4,1.921928,1.5,13,-160.0,25,64
+de,sentence,Zwei plus drei ergibt fünf.,28,27,4.039149,3.958229,35,-25.0,47,84
+it,word,cinque,6,6,2.584963,2.584963,14,-133.333,26,64
+it,sentence,Due più tre fa cinque.,23,22,3.795089,3.697846,31,-34.783,43,80
+ja,word,五,3,1,1.584963,-0.0,11,-266.667,23,60
+ja,sentence,二足す三は五に等しい。,33,11,3.957294,3.459432,42,-27.273,54,92
+ar,word,خمسة,8,4,2.405639,2.0,17,-112.5,29,64
+ar,sentence,اثنان زائد ثلاثة يساوي خمسة.,51,28,3.397602,3.651479,55,-7.843,67,108
+zh,word,五,3,1,1.584963,-0.0,11,-266.667,23,60
+zh,sentence,二加三等于五。,21,7,3.689704,2.807355,30,-42.857,42,80
+ru,word,пять,8,4,2.405639,2.0,16,-100.0,28,64
+ru,sentence,Два плюс три равно пяти.,43,24,3.503683,3.751629,50,-16.279,62,100
+pt_braille,word,⠉⠊⠝⠉⠕,15,5,2.225605,1.921928,22,-46.667,34,72
+pt_braille,numeral,⠼⠑,6,2,1.918296,1.0,14,-133.333,26,64
+western_digit,numeral,5,1,1,-0.0,-0.0,9,-800.0,21,60
+mayan_numeral_five,numeral,𝋥,4,1,2.0,-0.0,12,-200.0,24,60
+egyptian_hieroglyph_five,numeral,𓏾,4,1,2.0,-0.0,12,-200.0,24,60
