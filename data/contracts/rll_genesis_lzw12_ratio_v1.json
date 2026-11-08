@@ -1,0 +1,79 @@
+{
+  "schema": "rll.genesis1_three_language_compression_ratio.lzw12.v1",
+  "subject": "Genesis 1:1-31",
+  "verse_count": 31,
+  "type": "EMPIRICAL_FILE_COMPRESSION_OBSERVATION",
+  "metric_definition": "compression_ratio = raw_utf8_bytes / packed_LZW12_bytes (unitless, expressed X:1)",
+  "complement_metric": "compressed_bits_per_original_byte = 8 * packed_LZW12_bytes / raw_utf8_bytes",
+  "code_length": "LZW fixed-width 12 bits, initial 256 byte codes, max 4096, no clear code, no reset, MSB-first packed, no file header",
+  "normalization": "NFC UTF-8, each verse separated by one LF, terminal LF, no verse labels; Aramaic strips <b> tags; Greek editorial marks retained",
+  "diacritic_policy": "without_diacritics removes all Unicode Mn after NFD and NFC (information-altering transform, not lossless compression of the vocalized text)",
+  "source_snapshot_status": "READ_AND_INDEPENDENT_LZW_COMPUTATION_VERIFIED_VIA_GITHUB_CONNECTOR_2026-11-08",
+  "copyright_boundary": "The upstream texts are NOT vendored; only hashes, metrics, URLs and a reproducible program.",
+  "source_verification_in_pr": "OFFLINE_SOURCE_HASHES_DECLARED; FULL_UPSTREAM_RECHECK_MANUAL_ONLY",
+  "physical_cosmology_claim_allowed": false,
+  "semantic_information_invariance_claim_allowed": false,
+  "claim_allowed": false,
+  "compression_ratio_not_savings_percentage": true,
+  "sources": {
+    "he": {
+      "label": "Hebrew WLC / Bereshit",
+      "repository": "avisonofgod/avisonofgod.github.io",
+      "path": "v1/he/bereshit/1.json",
+      "commit": "2481d07a9ba76b8ade0ba60f65bcbbb78b6fbcfe",
+      "git_blob_sha1": "e9aecbd0d6c5e37d847fbad314cbf1ae5dc7992f"
+    },
+    "arc": {
+      "label": "Aramaic Targum Onkelos / Genesis",
+      "repository": "neelsmith/compnov",
+      "path": "src/onkelos/genesis-merged.txt",
+      "commit": "f407820e0cf4e02ab662bef128ae8d871fa2d1ce",
+      "git_blob_sha1": "2fc33d3ca37b7bae6b52ee8e1321c24ef708dfe4"
+    },
+    "grc": {
+      "label": "Greek Septuagint / Genesis (Swete)",
+      "repository": "sleeptillseven/LXX-Swete",
+      "path": "src/First1KGreek-LXX-RAW/1.Genesis.txt",
+      "commit": "b54817435e4de153d045fd418385843b1bc716fa",
+      "git_blob_sha1": "24d816c89d5b0ebbbc3951bec417bd97c3fb0e56"
+    }
+  },
+  "measurements": {
+    "he": {
+      "vocalized": {
+        "raw_bytes": 7413,
+        "packed_bytes": 3243,
+        "codewords": 2162
+      },
+      "without_diacritics": {
+        "raw_bytes": 3929,
+        "packed_bytes": 1683,
+        "codewords": 1122
+      }
+    },
+    "arc": {
+      "vocalized": {
+        "raw_bytes": 6628,
+        "packed_bytes": 2583,
+        "codewords": 1722
+      },
+      "without_diacritics": {
+        "raw_bytes": 3896,
+        "packed_bytes": 1670,
+        "codewords": 1113
+      }
+    },
+    "grc": {
+      "vocalized": {
+        "raw_bytes": 7944,
+        "packed_bytes": 3401,
+        "codewords": 2267
+      },
+      "without_diacritics": {
+        "raw_bytes": 7300,
+        "packed_bytes": 2859,
+        "codewords": 1906
+      }
+    }
+  }
+}

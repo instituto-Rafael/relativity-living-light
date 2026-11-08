@@ -1,0 +1,6 @@
+janela,inicio_caractere,caracteres,celulas_braille,portugues_utf8_bytes,portugues_zstd_bytes,braille_utf8_bytes,braille_utf8_zstd_bytes,braille_6bit_bytes,braille_6bit_zstd_bytes
+1,0,256,263,262,198,789,278,202,215
+2,256,256,267,270,184,801,250,205,218
+3,512,256,258,266,195,774,266,198,211
+4,768,256,259,267,191,777,253,199,212
+5,1024,232,234,239,177,702,249,180,193
