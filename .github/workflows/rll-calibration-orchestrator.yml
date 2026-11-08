@@ -17,6 +17,10 @@ name: "RLL | G4-G5 Baseline Precalibration (DESI DR2 / Pantheon+)"
       - ".github/workflows/RLL_SCIENTIFIC.yml"
       - ".github/workflows/bayes_analysis.yml"
       - "data/contracts/rll_baseline_warmstart.v1.json"
+      - "data/contracts/rll_epistemic_evidence_graph.v1.json"
+      - "tools/ci/rll_polymorphic_evidence_gate_v1.py"
+      - "tests/test_rll_polymorphic_evidence_gate_v1.py"
+      - "docs/workflows/RLL_POLYMORPHIC_EVIDENCE_ORCHESTRATION_V1.md"
       - "NOVOexport/legacy-workflows/20261107/**"
       - "tools/ci/rll_warmstart_preflight_v1.py"
       - "tests/test_rll_warmstart_preflight_v1.py"
@@ -44,6 +48,13 @@ jobs:
           python tools/ci/rll_warmstart_preflight_v1.py --output results/audit/warmstart_preflight.json
           python -m unittest discover -s tests -p test_rll_warmstart_preflight_v1.py -v
           echo "PASS_SCOPED contract only; claim_allowed=false" >> "$GITHUB_STEP_SUMMARY"
+      - name: "01 Evidence graph: source roles, hypothesis polymorphism, Bayes readiness"
+        run: |
+          set -euo pipefail
+          python tools/ci/rll_polymorphic_evidence_gate_v1.py --require-pass \
+            --output results/audit/rll_epistemic_graph_receipt.json
+          python -m unittest discover -s tests -p test_rll_polymorphic_evidence_gate_v1.py -v
+          echo "Evidence topology PASS_SCOPED; priors and model evidence NOT_RUN" >> "$GITHUB_STEP_SUMMARY"
 
   g4-g5:
     name: "10 Real G4-G5 fitting - explicit manual selection only"
