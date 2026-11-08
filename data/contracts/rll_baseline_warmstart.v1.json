@@ -1,0 +1,89 @@
+{
+  "schema": "rll.baseline_warmstart.v1",
+  "state": "SPECIFIED_NOT_YET_INFERRED",
+  "claim_allowed": false,
+  "merge_allowed": false,
+  "archive_manifest": "NOVOexport/legacy-workflows/20261107/workflows_index.json",
+  "existing_execution": {
+    "G4": "tools/run_g4_background_tournament.py",
+    "G5": "tools/build_g5_canonical_background_manifest.py",
+    "G4_contract": "data/contracts/rll_g4_background_tournament.v1.json",
+    "models": [
+      "LCDM",
+      "wCDM",
+      "CPL",
+      "GEDE",
+      "IDE_QrhoLambda",
+      "RLL"
+    ],
+    "seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "maxiter": 250,
+    "ftol": 1e-10,
+    "integration_points": 4096,
+    "fallback": "NO_SYNTHETIC_OR_DIAGONAL_SUBSTITUTE"
+  },
+  "sources": {
+    "DESI_DR2_BAO": "data/real/cosmology/desi_bao_dr2_cobaya/MANIFEST.json",
+    "PANTHEON_PLUS": "data/real/cosmology/pantheon_plus/MANIFEST.json",
+    "COSMIC_CHRONOMETERS": "data/real/Hz_data_real.csv",
+    "COV_POLICY": "DESI 13x13 observed plus Pantheon full STAT+SYS. Do not silently diagonalize or duplicate BAO-labelled chronometers.",
+    "physical_scope": "BACKGROUND_ONLY_NO_GROWTH_OR_CMB"
+  },
+  "parameters": {
+    "G4_fitted_common": [
+      "H0",
+      "Omega_m",
+      "omega_b_h2"
+    ],
+    "G4_model_specific": {
+      "LCDM": [],
+      "wCDM": [
+        "w"
+      ],
+      "CPL": [
+        "w0",
+        "wa"
+      ],
+      "GEDE": [
+        "Delta"
+      ],
+      "IDE_QrhoLambda": [
+        "beta"
+      ],
+      "RLL": [
+        "Omega_s0",
+        "z_t",
+        "w_t"
+      ]
+    },
+    "nuisance": "Pantheon M_B analytically profiled and counted in k",
+    "wCDM_seven_standard": [
+      "omega_b",
+      "omega_c",
+      "theta_star",
+      "ln10As",
+      "ns",
+      "tau",
+      "w"
+    ],
+    "seven_parameter_fit": "TOKEN_VAZIO_FULL_CMB_LIKELIHOOD_REQUIRED",
+    "note": "Seven standard CMB/wCDM parameters NOT seven geometric T7 coordinates; do not infer from Pantheon+ and DESI alone."
+  },
+  "pipeline": [
+    "G0 Git-source archive and authority -> G1 pinned data integrity -> G2 source/parameter provenance -> manual G3 official Pantheon covariance materialization -> G4 six model background comparisons -> G5 frozen likelihood and hashes -> G6/G8/G9/G10 separate, not implicit"
+  ],
+  "policy": {
+    "pr_event": "audit-only, no heavy optimizer, no network fetch, no upload-artifact",
+    "manual": "G4/G5 explicitly requested, two stage fail-closed",
+    "negative_results": "PRESERVE",
+    "data_leakage": "NO_POST_HOC_MODEL_SPECIFIC_SELECTION",
+    "prewarm_not_result": "A baseline warm start is not a posterior, Bayes evidence, CMB perturbation solution or scientific endorsement.",
+    "claim_allowed": false
+  }
+}

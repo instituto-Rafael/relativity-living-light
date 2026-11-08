@@ -1,0 +1,90 @@
+name: "RLL | G4-G5 Baseline Precalibration (DESI DR2 / Pantheon+)"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: "preflight or manual full G4-G5 background baseline"
+        type: choice
+        required: true
+        options: [preflight, run_g4_g5]
+        default: preflight
+  pull_request:
+    paths:
+      - ".github/workflows/rll-calibration-orchestrator.yml"
+      - ".github/workflows/rll-legacy-archive-index.yml"
+      - ".github/workflows/RLL-CI.yml"
+      - ".github/workflows/RLL_SCIENTIFIC.yml"
+      - ".github/workflows/bayes_analysis.yml"
+      - "data/contracts/rll_baseline_warmstart.v1.json"
+      - "NOVOexport/legacy-workflows/20261107/**"
+      - "tools/ci/rll_warmstart_preflight_v1.py"
+      - "tests/test_rll_warmstart_preflight_v1.py"
+
+permissions:
+  contents: read
+concurrency:
+  group: rll-calibration-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+jobs:
+  preflight:
+    name: "00 Prewarm contracts and original workflow archive"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout no credential persistence
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+      - name: Data custody, parameter boundaries, SHA and covariance checks
+        run: |
+          python tools/ci/rll_warmstart_preflight_v1.py --output results/audit/warmstart_preflight.json
+          python -m unittest discover -s tests -p test_rll_warmstart_preflight_v1.py -v
+          echo "PASS_SCOPED contract only; claim_allowed=false" >> "$GITHUB_STEP_SUMMARY"
+
+  g4-g5:
+    name: "10 Real G4-G5 fitting - explicit manual selection only"
+    needs: preflight
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.phase == 'run_g4_g5' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+      - name: Install numerical dependencies for the EXISTING G4 engine
+        run: python -m pip install "numpy>=1.26,<3" "scipy>=1.13,<2"
+      - name: Materialize pinned original Pantheon covariance (no fake fallback)
+        run: |
+          set -euo pipefail
+          mkdir -p results/audit
+          python scripts/fetch_pantheon_covariance.py \
+            --output-dir data/real/cosmology/pantheon_plus/Pantheon+_Data/4_DISTANCES_AND_COVAR \
+            --receipt results/audit/warmstart_pantheon_cov_receipt.json
+          python tools/ci/rll_warmstart_preflight_v1.py \
+            --require-materialized --output results/audit/warmstart_materialized.json
+      - name: Execute existing six-model frozen G4 tournament
+        run: |
+          set -euo pipefail
+          python tools/run_g4_background_tournament.py \
+            --output results/audit/warmstart_g4.json \
+            --seeds 11,23,37,53,71 --maxiter 250 --ftol 1e-10 \
+            --integration-points 4096 --require-pass
+      - name: Freeze existing G5 canonical same-data likelihood
+        run: |
+          set -euo pipefail
+          python tools/build_g5_canonical_background_manifest.py \
+            --g4-receipt results/audit/warmstart_g4.json \
+            --output results/audit/warmstart_g5.json --require-ready
+          python -c 'import json; from pathlib import Path; g=json.loads(Path("results/audit/warmstart_g5.json").read_text()); assert g["state"]=="READY_G5_CANONICAL_BACKGROUND_LIKELIHOOD" and g["claim_allowed"] is False'
+      - name: Report bounded output without consuming artifact storage quota
+        if: always()
+        run: |
+          echo "G4/G5 receipts: results/audit/warmstart_g4.json and warmstart_g5.json" >> "$GITHUB_STEP_SUMMARY"
+          echo "CMB full seven params, G6/G8/G9/G10: NOT_RUN; claim_allowed=false" >> "$GITHUB_STEP_SUMMARY"
