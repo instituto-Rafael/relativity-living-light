@@ -1,0 +1,46 @@
+name: RLL Operator Lab V1
+
+on:
+  pull_request:
+    paths:
+      - "rx/operator_lab.py"
+      - "tools/rll_operator_lab.py"
+      - "tools/rll_operator_lab_evidence_envelope.py"
+      - "configs/rll_operator_lab_suite_v1.json"
+      - "data/governance/RLL_OPERATOR_LAB_CONTRACT_V1.json"
+      - "schemas/rll_operator_lab_receipt_v1.schema.json"
+      - "tests/test_rll_operator_lab_v1.py"
+      - "docs/science/RLL_OPERATOR_LAB_V1.md"
+      - ".github/workflows/rll-operator-lab-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  operator-lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Unit and mutation tests
+        run: python3 tests/test_rll_operator_lab_v1.py
+      - name: Execute negative-first lab
+        run: python3 tools/rll_operator_lab.py --output-dir results/operator_lab/v1
+      - name: Build evidence envelope
+        run: python3 tools/rll_operator_lab_evidence_envelope.py --output results/operator_lab/v1/evidence_envelope.json
+      - name: Verify evidence envelope
+        run: python3 tools/rll_operator_lab_evidence_envelope.py --output results/operator_lab/v1/evidence_envelope.json --verify
+      - name: Upload receipt/manifests/envelope
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rll-operator-lab-v1-${{ github.run_id }}
+          path: results/operator_lab/v1/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,95 @@
+name: RLL Q16 Tail Shadow Audit V3
+
+on:
+  push:
+    branches:
+      - "work/rll-q16-independent-split-tail-audit-v3-20260929"
+    paths:
+      - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c"
+      - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
+      - ".github/workflows/rll-q16-tail-shadow-audit-v3.yml"
+  pull_request:
+    paths:
+      - "core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c"
+      - "core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c"
+      - "scripts/run_rll_nonnull_q16_physical_armv7_v3.sh"
+      - ".github/workflows/rll-q16-tail-shadow-audit-v3.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile shadow-hard and sibling-tail-disabled
+        run: |
+          set -eu
+          SRC=core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c
+          mkdir -p build/q16-v3
+          clang -std=c11 -O2 -Wall -Wextra -Wshadow -Werror             -ffreestanding -fno-builtin -fno-stack-protector             -fno-unwind-tables -fno-asynchronous-unwind-tables             -fomit-frame-pointer -fno-optimize-sibling-calls             -fno-pic -fno-pie -nostdlib             -ffunction-sections -fdata-sections             -S "$SRC" -o build/q16-v3/x86_64.s
+          clang -std=c11 -O2 -Wall -Wextra -Wshadow -Werror             -ffreestanding -fno-builtin -fno-stack-protector             -fno-unwind-tables -fno-asynchronous-unwind-tables             -fomit-frame-pointer -fno-optimize-sibling-calls             -fno-pic -fno-pie -nostdlib             -ffunction-sections -fdata-sections             -c "$SRC" -o build/q16-v3/x86_64.o
+          ld -static --gc-sections -e _start -o build/q16-v3/x86_64.elf build/q16-v3/x86_64.o
+          test -z "$(nm -u build/q16-v3/x86_64.elf)"
+          ! readelf -l build/q16-v3/x86_64.elf | grep -q INTERP
+          ! readelf -d build/q16-v3/x86_64.elf 2>/dev/null | grep -q NEEDED
+          echo "SHADOW_GATE=PASS"
+          echo "SIBLING_CALL_OPTIMIZATION=DISABLED"
+          echo "SOURCE_SHA256=$(sha256sum "$SRC" | cut -d' ' -f1)"
+          echo "ELF_SHA256=$(sha256sum build/q16-v3/x86_64.elf | cut -d' ' -f1)"
+          echo "ASSEMBLY_LINES=$(wc -l < build/q16-v3/x86_64.s)"
+          OUT="$(build/q16-v3/x86_64.elf)"
+          printf '%s\n' "$OUT"
+          printf '%s\n' "$OUT" | grep -F 'state=PASS'
+
+
+      - name: Split generator recovery executable gate
+        run: |
+          set -eu
+          G=core/lowlevel_runtime/c/rll_q16_matrix_generator_freestanding.c
+          R=core/lowlevel_runtime/c/rll_q16_matrix_recovery_freestanding.c
+          F="-std=c11 -O2 -Wshadow -Werror -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-optimize-sibling-calls -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections"
+
+          clang $F -c "$G" -o build/q16-v3/generator.o
+          clang $F -c "$R" -o build/q16-v3/recovery.o
+          ld -static --gc-sections -e _start -o build/q16-v3/generator.elf build/q16-v3/generator.o
+          ld -static --gc-sections -e _start -o build/q16-v3/recovery.elf build/q16-v3/recovery.o
+
+          test -z "$(nm -u build/q16-v3/generator.elf)"
+          test -z "$(nm -u build/q16-v3/recovery.elf)"
+          ! readelf -l build/q16-v3/generator.elf | grep -q INTERP
+          ! readelf -l build/q16-v3/recovery.elf | grep -q INTERP
+          ! readelf -d build/q16-v3/generator.elf 2>/dev/null | grep -q NEEDED
+          ! readelf -d build/q16-v3/recovery.elf 2>/dev/null | grep -q NEEDED
+
+          build/q16-v3/generator.elf > build/q16-v3/matrix.bin
+          test "$(wc -c < build/q16-v3/matrix.bin)" -eq 132
+          OUT="$(build/q16-v3/recovery.elf < build/q16-v3/matrix.bin)"
+          printf '%s\n' "$OUT"
+          printf '%s\n' "$OUT" | grep -F 'state=PASS'
+          printf '%s\n' "$OUT" | grep -F 'best=1311,65536,19661'
+          echo "GENERATOR_SHA256=$(sha256sum build/q16-v3/generator.elf | cut -d' ' -f1)"
+          echo "MATRIX_SHA256=$(sha256sum build/q16-v3/matrix.bin | cut -d' ' -f1)"
+          echo "RECOVERY_SHA256=$(sha256sum build/q16-v3/recovery.elf | cut -d' ' -f1)"
+          echo "SPLIT_EXECUTABLES=PASS"
+          echo "INDEPENDENT_REIMPLEMENTATION=TOKEN_VAZIO"
+
+      - name: ARMv7 object with same hard flags
+        run: |
+          set -eu
+          SRC=core/lowlevel_runtime/c/rll_nonnull_blind_q16_freestanding.c
+          clang --target=armv7-linux-gnueabihf -march=armv7-a -marm             -std=c11 -O2 -Wall -Wextra -Wshadow -Werror             -ffreestanding -fno-builtin -fno-stack-protector             -fno-unwind-tables -fno-asynchronous-unwind-tables             -fomit-frame-pointer -fno-optimize-sibling-calls             -fno-pic -fno-pie -nostdlib             -ffunction-sections -fdata-sections             -S "$SRC" -o build/q16-v3/armv7.s
+          clang --target=armv7-linux-gnueabihf -march=armv7-a -marm             -std=c11 -O2 -Wall -Wextra -Wshadow -Werror             -ffreestanding -fno-builtin -fno-stack-protector             -fno-unwind-tables -fno-asynchronous-unwind-tables             -fomit-frame-pointer -fno-optimize-sibling-calls             -fno-pic -fno-pie -nostdlib             -ffunction-sections -fdata-sections             -c "$SRC" -o build/q16-v3/armv7.o
+          test -z "$(nm -u build/q16-v3/armv7.o)"
+          readelf -h build/q16-v3/armv7.o | grep -F ELF32
+          readelf -h build/q16-v3/armv7.o | grep -F ARM
+          echo "ARMV7_SHADOW_GATE=PASS"
+          echo "ARMV7_SIBLING_CALL_OPTIMIZATION=DISABLED"
+          echo "ARMV7_OBJECT_SHA256=$(sha256sum build/q16-v3/armv7.o | cut -d' ' -f1)"
+          echo "ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO"

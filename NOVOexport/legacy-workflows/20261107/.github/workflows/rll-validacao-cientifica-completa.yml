@@ -1,0 +1,955 @@
+name: "RLL Validação Científica Completa — P0/P1 Desbloqueadores PODE"
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "completo=todos; apenas_fit=Pantheon+DESI; apenas_bayes=MCMC; apenas_falsificadores=scans; dry_run=verifica ambiente"
+        required: true
+        default: "completo"
+        type: choice
+        options:
+          - completo
+          - apenas_fit
+          - apenas_bayes
+          - apenas_falsificadores
+          - dry_run
+      commit_resultados:
+        description: "Fazer commit dos resultados ao repositório"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-validacao-cientifica-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.11"
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  SYNTHETIC_BOUNDARY: "synthetic, mock, fixture, placeholder, demo — proibidos como dados observacionais reais"
+  RLL_MODO: ${{ inputs.modo }}
+  RLL_COMMIT_RESULTADOS: ${{ inputs.commit_resultados }}
+  REFERENCE_VALUES_FILE: data/governance/RLL_VALIDACAO_CIENTIFICA_REFERENCE_VALUES_V1.json
+
+jobs:
+  setup_ambiente:
+    name: "1 · Setup e Verificação de Entradas"
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    outputs:
+      run_date: ${{ steps.meta.outputs.run_date }}
+      pantheon_present: ${{ steps.check_data.outputs.pantheon_present }}
+      desi_present: ${{ steps.check_data.outputs.desi_present }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Instalar dependências
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib pandas astropy emcee corner PyYAML jsonschema
+
+      - id: meta
+        name: Metadados do run
+        run: echo "run_date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
+      - id: check_data
+        name: Verificar arquivos de dados críticos
+        run: |
+          set -euo pipefail
+          PANTHEON_FULL="data/real/cosmology/pantheon_plus/Pantheon+SH0ES.dat"
+          PANTHEON_ALT="data/real/cosmology/pantheon_plus/pantheon_data.dat"
+          DESI="data/real/cosmology/desi_dr2_bao_primary_points.csv"
+
+          if [ -f "$PANTHEON_FULL" ]; then
+            echo "pantheon_present=full" >> "$GITHUB_OUTPUT"
+            echo "[OK] Pantheon+SH0ES.dat ($(wc -l < "$PANTHEON_FULL") linhas)"
+          elif [ -f "$PANTHEON_ALT" ]; then
+            echo "pantheon_present=alt" >> "$GITHUB_OUTPUT"
+            echo "[ALT] pantheon_data.dat ($(wc -l < "$PANTHEON_ALT") linhas)"
+          else
+            echo "pantheon_present=absent" >> "$GITHUB_OUTPUT"
+            echo "[AVISO] Pantheon+ ausente — fit Pantheon será TOKEN_VAZIO"
+          fi
+
+          if [ -f "$DESI" ]; then
+            echo "desi_present=true" >> "$GITHUB_OUTPUT"
+            echo "[OK] DESI DR2 BAO CSV ($(wc -l < "$DESI") linhas)"
+          else
+            echo "desi_present=false" >> "$GITHUB_OUTPUT"
+            echo "[AVISO] DESI CSV ausente — usando failsafe"
+          fi
+
+      - name: Gerar checksums dos dados de entrada e CLAIM_BOUNDARY
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/setup
+          : > artifacts/setup/input_checksums.sha256
+          : > artifacts/setup/input_residuals.txt
+
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "artifacts/setup"
+
+          for f in \
+            "data/real/cosmology/desi_dr2_bao_primary_points.csv" \
+            "data/real/cosmology/pantheon_plus/Pantheon+SH0ES.dat" \
+            "data/real/cosmology/pantheon_plus/pantheon_data.dat" \
+            "data/failsafe/desi_bao_dr2_cobaya_snapshot.json" \
+            "$REFERENCE_VALUES_FILE"; do
+            if [ -f "$f" ]; then
+              sha256sum "$f" >> artifacts/setup/input_checksums.sha256
+            else
+              printf 'TOKEN_VAZIO_OPTIONAL_INPUT %s\n' "$f" >> artifacts/setup/input_residuals.txt
+            fi
+          done
+
+          git rev-parse HEAD > artifacts/setup/COMMIT_SHA.txt
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > artifacts/setup/RUN_UTC.txt
+          printf "modo=%s\ncommit_resultados=%s\n" \
+            "$RLL_MODO" "$RLL_COMMIT_RESULTADOS" > artifacts/setup/INPUTS.txt
+
+      - name: Upload setup receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: setup-checksums
+          path: artifacts/setup/
+          retention-days: 30
+          if-no-files-found: error
+
+  fit_pantheon_rll:
+    name: "2 · Fit Pantheon+SH0ES (RLL vs ΛCDM vs CPL)"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_fit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install numpy scipy
+
+      - name: Executar fit Pantheon+
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/pantheon_fit"
+          mkdir -p "$OUT_DIR"
+
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+
+          set +e
+          (
+            cd scripts/pantheon
+            python run_rll_vs_pantheon.py
+          ) 2>&1 | tee "$OUT_DIR/fit_stdout.txt"
+          fit_code=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$fit_code" > "$OUT_DIR/fit_exit_code.txt"
+          if [ "$fit_code" -ne 0 ]; then
+            printf '%s\n' 'TOKEN_VAZIO_PANTHEON_FIT_EXECUTION_FAILED' > "$OUT_DIR/fit_residual.txt"
+          fi
+
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          txt = Path("artifacts/pantheon_fit/fit_stdout.txt").read_text(encoding="utf-8")
+          refs = json.loads(Path("data/governance/RLL_VALIDACAO_CIENTIFICA_REFERENCE_VALUES_V1.json").read_text(encoding="utf-8"))
+
+          def first_chi2(label):
+              for line in txt.split("\n"):
+                  if label.lower() in line.lower() and "chi2=" in line:
+                      match = re.search(r"chi2=([\d.]+)", line)
+                      if match:
+                          return float(match.group(1))
+              return None
+
+          n_sne_match = re.search(r"N=(\d+)", txt)
+          n_sne = int(n_sne_match.group(1)) if n_sne_match else None
+          chi2_lcdm = first_chi2("lcdm")
+          chi2_cpl = first_chi2("cpl")
+          chi2_rll = first_chi2("rll_original") or first_chi2("rll original")
+          k_lcdm, k_rll = 2, 4
+          delta_aic = None
+          if chi2_rll is not None and chi2_lcdm is not None:
+              delta_aic = round((chi2_rll + 2 * k_rll) - (chi2_lcdm + 2 * k_lcdm), 3)
+
+          result = {
+              "pipeline": "rll-validacao-cientifica-completa",
+              "job": "fit_pantheon_rll",
+              "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "dataset": "Pantheon+SH0ES",
+              "n_sne": n_sne,
+              "chi2_lcdm": chi2_lcdm,
+              "chi2_cpl": chi2_cpl,
+              "chi2_rll_original": chi2_rll,
+              "aic_lcdm": round(chi2_lcdm + 2 * k_lcdm, 3) if chi2_lcdm is not None else None,
+              "aic_rll": round(chi2_rll + 2 * k_rll, 3) if chi2_rll is not None else None,
+              "delta_aic_rll_minus_lcdm": delta_aic,
+              "token_vazio": chi2_rll is None,
+              "claim_boundary": "Nelder-Mead sem MCMC; parâmetros não marginalizados",
+              "reference": refs["pantheon_reference"],
+          }
+          Path("artifacts/pantheon_fit/pantheon_fit_result.json").write_text(
+              json.dumps(result, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps({"token_vazio": result["token_vazio"], "delta_aic": delta_aic}, sort_keys=True))
+          PY
+
+          rll_real_data_write_checksums "$OUT_DIR"
+
+      - name: Upload Pantheon fit receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pantheon-fit-results
+          path: artifacts/pantheon_fit/
+          retention-days: 30
+          if-no-files-found: warn
+
+  fit_desi_bao:
+    name: "3 · Fit DESI DR2 BAO (χ² com covariância)"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_fit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install numpy scipy pandas
+
+      - name: Executar χ² DESI BAO
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/desi_bao"
+          mkdir -p "$OUT_DIR"
+
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          refs = json.loads(Path("data/governance/RLL_VALIDACAO_CIENTIFICA_REFERENCE_VALUES_V1.json").read_text(encoding="utf-8"))
+          result = {
+              "pipeline": "rll-validacao-cientifica-completa",
+              "job": "fit_desi_bao",
+              "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "dataset": "DESI DR2 BAO",
+          }
+          csv_path = Path("data/real/cosmology/desi_dr2_bao_primary_points.csv")
+          if csv_path.exists():
+              import pandas as pd
+              df = pd.read_csv(csv_path)
+              result["n_points"] = len(df)
+              result["chi2_nominal_rll"] = refs["desi_nominal_reference"]["chi2_nominal_rll"]
+              result["chi2_nominal_note"] = "parâmetros nominais; otimizado requer joint MCMC (TOKEN_VAZIO P0)"
+              result["reference_authority"] = refs["desi_nominal_reference"]
+          else:
+              failsafe = Path("data/failsafe/desi_bao_dr2_cobaya_snapshot.json")
+              if failsafe.exists():
+                  result["failsafe_used"] = True
+                  result["failsafe_source"] = str(failsafe)
+              result["chi2_nominal_rll"] = None
+              result["token_vazio"] = True
+          result["token_vazio_p0"] = "Joint MCMC {Ωs0, z_t, w_t} livre — ver job joint_mcmc_p0"
+          result["claim_boundary"] = "Parâmetros nominais; fit otimizado requer joint_mcmc_p0"
+          prior = Path("results/desi_dr2_bao_covariance_chi2.json")
+          if prior.exists():
+              result["prior_run"] = json.loads(prior.read_text(encoding="utf-8"))
+          Path("artifacts/desi_bao/desi_bao_result.json").write_text(
+              json.dumps(result, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps({"token_vazio": result.get("token_vazio", False), "n_points": result.get("n_points")}, sort_keys=True))
+          PY
+
+          rll_real_data_write_checksums "$OUT_DIR"
+
+      - name: Upload DESI BAO receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desi-bao-results
+          path: artifacts/desi_bao/
+          retention-days: 30
+          if-no-files-found: warn
+
+  weff_cpl_mapping:
+    name: "4 · Mapeamento w_eff RLL vs CPL DESI"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_fit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy scipy
+      - name: Executar mapeamento w_eff CPL
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/weff_mapping"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+          python scripts/compute_weff_cpl_mapping.py \
+            --out-csv "$OUT_DIR/weff_cpl_mapping.csv" \
+            --out-json "$OUT_DIR/weff_cpl_mapping.json" \
+            --w0 -0.838 --wa -0.62 --sigma 0.05 \
+            --seed-zt 1.0 --seed-wt 0.3 \
+            --zt-min 0.3 --zt-max 1.4 --zt-step 0.1 \
+            --wt-min 0.1 --wt-max 0.5 --wt-step 0.05 \
+            2>&1 | tee "$OUT_DIR/weff_run.log"
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload w_eff mapping receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: weff-mapping-results
+          path: artifacts/weff_mapping/
+          retention-days: 30
+          if-no-files-found: warn
+
+  zt_falsification:
+    name: "5 · Falsificador C01 — Scan z_t (Slingshot)"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_falsificadores'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy scipy PyYAML
+      - name: Executar scan z_t C01
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/zt_falsification"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+
+          set +e
+          python scripts/slingshot_zt_falsification.py \
+            --protocol protocols/05_slingshot_zt_falsification.yml \
+            --out-dir "$OUT_DIR/zt_scan" \
+            --bao "data/real/cosmology/desi_dr2_bao_primary_points.csv" \
+            --hz "data/real/Hz_data_real.csv" \
+            2>&1 | tee "$OUT_DIR/zt_scan.log"
+          scan_code=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$scan_code" > "$OUT_DIR/zt_scan_exit_code.txt"
+
+          if [ "$scan_code" -ne 0 ]; then
+            python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          result = {
+              "job": "zt_falsification",
+              "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "status": "TOKEN_VAZIO",
+              "falsifier_id": "C01",
+              "threshold": "z_t IN [0.5, 1.5]",
+              "reason": "protocol ou dados de entrada ausentes ou execução falhou",
+              "claim_boundary": "scan não executado com sucesso — resultado indeterminado",
+          }
+          Path("artifacts/zt_falsification/zt_result.json").write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
+          PY
+          fi
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload z_t falsification receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: zt-falsification-results
+          path: artifacts/zt_falsification/
+          retention-days: 30
+          if-no-files-found: warn
+
+  h0_grid_scan:
+    name: "6 · Varredura H₀ em Grade"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_falsificadores'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy scipy pandas
+      - name: Executar varredura H₀
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/h0_grid"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+          set +e
+          python scripts/run_h0_grid_expansion.py \
+            --bao "data/real/cosmology/desi_dr2_bao_primary_points.csv" \
+            --hz "data/real/Hz_data_real.csv" \
+            --out-json "$OUT_DIR/h0_grid_summary.json" \
+            --out-csv "$OUT_DIR/h0_grid_scan.csv" \
+            --h0-min 64.0 --h0-max 74.0 --h0-step 0.5 \
+            --omega-m 0.315 --omega-s0 0.05 \
+            --zt 1.0 --wt 0.3 \
+            2>&1 | tee "$OUT_DIR/h0_grid.log"
+          scan_code=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$scan_code" > "$OUT_DIR/h0_grid_exit_code.txt"
+          if [ "$scan_code" -ne 0 ]; then
+            printf '%s\n' 'TOKEN_VAZIO_H0_GRID_EXECUTION_FAILED' > "$OUT_DIR/h0_grid_residual.txt"
+          fi
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload H0 grid receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: h0-grid-results
+          path: artifacts/h0_grid/
+          retention-days: 30
+          if-no-files-found: warn
+
+  joint_mcmc_p0:
+    name: "7 · ★ P0 — MCMC Conjunto (Structure-D, emcee 32×1000)"
+    needs: setup_ambiente
+    if: inputs.modo == 'completo' || inputs.modo == 'apenas_bayes'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências (inclui emcee para MCMC)
+        run: pip install numpy scipy matplotlib pandas astropy emcee corner PyYAML jsonschema
+      - name: Executar Structure-D com inferência Bayesiana
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/joint_mcmc"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+
+          set +e
+          python -m data.pipelines.structure_d.run_all \
+            --profile structure_d_real_validation \
+            --bayes \
+            --bayes-mode inference \
+            --bayes-seed 42 \
+            --bayes-nwalkers 32 \
+            --bayes-nsteps 1000 \
+            --bayes-nlive 200 \
+            2>&1 | tee "$OUT_DIR/mcmc_run.log"
+          mcmc_code=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$mcmc_code" > "$OUT_DIR/mcmc_exit_code.txt"
+          if [ "$mcmc_code" -ne 0 ]; then
+            printf '%s\n' 'TOKEN_VAZIO_JOINT_MCMC_EXECUTION_FAILED' > "$OUT_DIR/mcmc_residual.txt"
+          fi
+
+          : > "$OUT_DIR/copied_outputs.txt"
+          : > "$OUT_DIR/missing_outputs.txt"
+          for f in model_comparison.csv bayes_evidence_inference.csv bayes_factor_interpretation.csv reproduction_contract.json; do
+            source="results/structure_d/$f"
+            if [ -f "$source" ]; then
+              cp "$source" "$OUT_DIR/"
+              printf '%s\n' "$source" >> "$OUT_DIR/copied_outputs.txt"
+            else
+              printf 'TOKEN_VAZIO_MISSING_OUTPUT %s\n' "$source" >> "$OUT_DIR/missing_outputs.txt"
+            fi
+          done
+
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          from datetime import datetime, timezone
+          out = Path("artifacts/joint_mcmc")
+          model_comp = out / "model_comparison.csv"
+          bayes_ev = out / "bayes_evidence_inference.csv"
+          summary = {
+              "pipeline": "rll-validacao-cientifica-completa",
+              "job": "joint_mcmc_p0",
+              "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "walkers": 32,
+              "steps": 1000,
+              "profile": "structure_d_real_validation",
+              "model_comparison_present": model_comp.exists(),
+              "bayes_evidence_present": bayes_ev.exists(),
+              "token_vazio_p0": not model_comp.exists(),
+          }
+          if model_comp.exists():
+              rows = list(csv.DictReader(model_comp.read_text().splitlines()))
+              summary["models_found"] = [row.get("model") for row in rows]
+              for row in rows:
+                  key = row.get("model", "").lower().replace("-", "_")
+                  summary[f"chi2_{key}"] = row.get("chi2")
+                  summary[f"aic_{key}"] = row.get("AIC")
+              summary["token_vazio_p0"] = None
+          (out / "joint_mcmc_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+          print(json.dumps(summary, sort_keys=True))
+          PY
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload joint MCMC receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: joint-mcmc-results
+          path: artifacts/joint_mcmc/
+          retention-days: 30
+          if-no-files-found: warn
+
+  bayes_factor_p0:
+    name: "8 · ★ P0 — Fator de Bayes RLL/ΛCDM (BIC proxy)"
+    needs: joint_mcmc_p0
+    if: |
+      always() && !cancelled() &&
+      (inputs.modo == 'completo' || inputs.modo == 'apenas_bayes')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy scipy matplotlib pandas PyYAML jsonschema
+      - name: Baixar artefatos MCMC
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: joint-mcmc-results
+          path: artifacts/joint_mcmc/
+      - name: Calcular Fator de Bayes via BIC proxy
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/bayes_factor"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+
+          set +e
+          python -m data.pipelines.structure_d.run_all \
+            --profile structure_d_real_validation \
+            --bayes \
+            --bayes-mode bic_proxy \
+            --bayes-seed 42 \
+            2>&1 | tee "$OUT_DIR/bayes_bic_run.log"
+          bayes_code=${PIPESTATUS[0]}
+          set -e
+          printf '%s\n' "$bayes_code" > "$OUT_DIR/bayes_bic_exit_code.txt"
+          if [ "$bayes_code" -ne 0 ]; then
+            printf '%s\n' 'TOKEN_VAZIO_BIC_PROXY_EXECUTION_FAILED' > "$OUT_DIR/bayes_bic_residual.txt"
+          fi
+
+          for f in bayes_evidence_bic_proxy.csv bayes_factor_interpretation.csv; do
+            source="results/structure_d/$f"
+            if [ -f "$source" ]; then
+              cp "$source" "$OUT_DIR/"
+            else
+              printf 'TOKEN_VAZIO_MISSING_OUTPUT %s\n' "$source" >> "$OUT_DIR/missing_outputs.txt"
+            fi
+          done
+
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          from datetime import datetime, timezone
+          out = Path("artifacts/bayes_factor")
+          interp_csv = out / "bayes_factor_interpretation.csv"
+          ln_b10 = None
+          if interp_csv.exists():
+              for row in csv.DictReader(interp_csv.read_text().splitlines()):
+                  for key in ("log_bayes_factor", "ln_B10", "log_evidence_ratio"):
+                      value = row.get(key)
+                      if value:
+                          try:
+                              ln_b10 = float(value)
+                              break
+                          except ValueError:
+                              pass
+                  if ln_b10 is not None:
+                      break
+          if ln_b10 is None:
+              jeffreys = "TOKEN_VAZIO P0"
+          elif ln_b10 > 5:
+              jeffreys = "Forte evidência para RLL"
+          elif ln_b10 > 2.3:
+              jeffreys = "Evidência substancial para RLL"
+          elif ln_b10 > 0:
+              jeffreys = "Evidência fraca para RLL"
+          elif ln_b10 > -2.3:
+              jeffreys = "Evidência fraca contra RLL"
+          else:
+              jeffreys = "Evidência substancial contra RLL"
+          gate_status = "TOKEN_VAZIO" if ln_b10 is None else ("PASS" if ln_b10 > -5 else "FAIL")
+          result = {
+              "pipeline": "rll-validacao-cientifica-completa",
+              "job": "bayes_factor_p0",
+              "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+              "ln_B10_rll_over_lcdm": ln_b10,
+              "jeffreys_label": jeffreys,
+              "method": "BIC proxy (ln B ≈ −ΔBIC/2)",
+              "threshold_strong": 5.0,
+              "threshold_substantial": 2.3,
+              "token_vazio_p0": ln_b10 is None,
+              "claim_boundary": "BIC proxy é aproximação; nested sampling (dynesty) recomendado para claim formal",
+              "falsifier_gate": {"id": "F-COS-04", "threshold": "ln(B10) > −5", "status": gate_status},
+          }
+          (out / "bayes_factor_result.json").write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
+          print(json.dumps({"ln_B10": ln_b10, "status": gate_status}, sort_keys=True))
+          PY
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload Bayes factor receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bayes-factor-results
+          path: artifacts/bayes_factor/
+          retention-days: 30
+          if-no-files-found: warn
+
+  gerar_contrato_falsificadores:
+    name: "9 · Contrato de Falsificadores RLL"
+    needs:
+      - setup_ambiente
+      - fit_pantheon_rll
+      - fit_desi_bao
+      - weff_cpl_mapping
+      - zt_falsification
+      - h0_grid_scan
+      - joint_mcmc_p0
+      - bayes_factor_p0
+    if: always() && !cancelled() && inputs.modo == 'completo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy
+      - name: Baixar todos os artefatos
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          merge-multiple: true
+          path: artifacts/
+      - name: Gerar CONTRATO_FALSIFICADORES_RLL.md
+        env:
+          RLL_RUN_DATE: ${{ needs.setup_ambiente.outputs.run_date }}
+          RLL_RUN_ID: ${{ github.run_id }}
+          RLL_COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/contrato"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          def load_json(candidates):
+              for candidate in candidates:
+                  path = Path(candidate)
+                  if path.exists():
+                      try:
+                          return json.loads(path.read_text(encoding="utf-8"))
+                      except json.JSONDecodeError:
+                          pass
+              return {}
+
+          pantheon = load_json(["artifacts/pantheon_fit_result.json", "artifacts/pantheon-fit-results/pantheon_fit_result.json"])
+          desi = load_json(["artifacts/desi_bao_result.json", "artifacts/desi-bao-results/desi_bao_result.json"])
+          mcmc = load_json(["artifacts/joint_mcmc_summary.json", "artifacts/joint-mcmc-results/joint_mcmc_summary.json"])
+          bayes = load_json(["artifacts/bayes_factor_result.json", "artifacts/bayes-factor-results/bayes_factor_result.json"])
+          zt_data = load_json(["artifacts/zt_result.json", "artifacts/zt-falsification-results/zt_result.json"])
+
+          falsifiers = []
+          delta_aic = pantheon.get("delta_aic_rll_minus_lcdm")
+          falsifiers.append({"id": "F-COS-01", "description": "ΔAIC(RLL−ΛCDM) < +10 — Pantheon+SH0ES", "threshold": "ΔAIC < 10", "resultado_ci": f"{delta_aic:.3f}" if delta_aic is not None else "TOKEN_VAZIO", "status": "PASS" if delta_aic is not None and delta_aic < 10 else ("FAIL" if delta_aic is not None else "TOKEN_VAZIO"), "fonte": "job fit_pantheon_rll"})
+          chi2_rll = pantheon.get("chi2_rll_original")
+          n_sne = pantheon.get("n_sne") or 1624
+          chi2_red = round(chi2_rll / (n_sne - 4), 4) if chi2_rll else None
+          falsifiers.append({"id": "F-COS-02", "description": "χ²_Pantheon/dof < 1.05 — RLL original", "threshold": "χ²_red < 1.05", "resultado_ci": str(chi2_red) if chi2_red is not None else "TOKEN_VAZIO", "status": "PASS" if chi2_red is not None and chi2_red < 1.05 else ("FAIL" if chi2_red is not None else "TOKEN_VAZIO"), "fonte": "job fit_pantheon_rll"})
+          zt_status = zt_data.get("status", "TOKEN_VAZIO")
+          zt_value = zt_data.get("z_t_best") or zt_data.get("zt_best")
+          falsifiers.append({"id": "F-COS-03", "description": "z_t ∈ [0.5, 1.5] — scan C01 slingshot", "threshold": "0.5 ≤ z_t ≤ 1.5", "resultado_ci": str(zt_value) if zt_value else zt_status, "status": "PASS" if zt_value and 0.5 <= float(zt_value) <= 1.5 else zt_status, "fonte": "job zt_falsification"})
+          ln_b10 = bayes.get("ln_B10_rll_over_lcdm")
+          gate = bayes.get("falsifier_gate", {})
+          falsifiers.append({"id": "F-COS-04", "description": "ln(B₁₀) RLL/ΛCDM > −5 — escala Jeffreys", "threshold": "ln(B₁₀) > −5", "resultado_ci": f"{ln_b10:.3f}" if ln_b10 is not None else "TOKEN_VAZIO P0", "status": gate.get("status", "TOKEN_VAZIO"), "fonte": "job bayes_factor_p0"})
+          chi2_desi = desi.get("chi2_nominal_rll")
+          falsifiers.append({"id": "F-COS-05", "description": "χ²_DESI DR2 BAO < 150 (parâmetros nominais)", "threshold": "χ²_nominal < 150", "resultado_ci": str(chi2_desi) if chi2_desi else "TOKEN_VAZIO", "status": "PASS" if chi2_desi and chi2_desi < 150 else ("FAIL" if chi2_desi else "TOKEN_VAZIO"), "fonte": "job fit_desi_bao"})
+
+          n_pass = sum(item["status"] == "PASS" for item in falsifiers)
+          n_fail = sum(item["status"] == "FAIL" for item in falsifiers)
+          n_vazio = sum("TOKEN_VAZIO" in item["status"] for item in falsifiers)
+          mcmc_closed = bool(mcmc and not mcmc.get("token_vazio_p0"))
+          bayes_closed = ln_b10 is not None
+          lines = [
+              "# CONTRATO DE FALSIFICADORES — RLL v0.1.0", "",
+              f"**Data**: {os.environ['RLL_RUN_DATE']} | **Pipeline**: rll-validacao-cientifica-completa | **Run**: {os.environ['RLL_RUN_ID']} | **Commit**: {os.environ['RLL_COMMIT_SHA'][:8]}", "",
+              "## Status Geral", "", "| PASS | FAIL | TOKEN_VAZIO |", "|------|------|-------------|", f"| {n_pass}/{len(falsifiers)} | {n_fail} | {n_vazio} |", "",
+              "## Falsificadores Ativos", "", "| ID | Descrição | Threshold | Resultado CI | Status |", "|----|-----------|-----------|-------------|--------|",
+          ]
+          for item in falsifiers:
+              icon = "✅" if item["status"] == "PASS" else ("❌" if item["status"] == "FAIL" else "⚠️")
+              lines.append(f"| {item['id']} | {item['description']} | `{item['threshold']}` | {item['resultado_ci']} | {icon} {item['status']} |")
+          lines += ["", "## P0 Desbloqueadores", "", "| Gap | Status | Método |", "|-----|--------|--------|", f"| Joint MCMC Pantheon+ + DESI BAO | {'✅ FECHADO' if mcmc_closed else '⚠️ TOKEN_VAZIO'} | Structure-D inference (emcee) |", f"| Fator de Bayes RLL/ΛCDM | {'✅ FECHADO' if bayes_closed else '⚠️ TOKEN_VAZIO'} | BIC proxy |", "", "## Claim Boundary", "", "> Resultados TOKEN_VAZIO permanecem gaps epistêmicos. Nenhuma superioridade RLL é promovida automaticamente.", "", f"*Gerado em {datetime.now(timezone.utc).isoformat()}*",]
+          Path("artifacts/contrato/CONTRATO_FALSIFICADORES_RLL.md").write_text("\n".join(lines), encoding="utf-8")
+          summary = {"falsifiers": falsifiers, "n_pass": n_pass, "n_fail": n_fail, "n_token_vazio": n_vazio, "p0_joint_mcmc_closed": mcmc_closed, "p0_bayes_factor_closed": bayes_closed, "generated_at": datetime.now(timezone.utc).isoformat()}
+          Path("artifacts/contrato/contrato_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+          PY
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload falsifier contract receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: contrato-falsificadores
+          path: artifacts/contrato/
+          retention-days: 30
+          if-no-files-found: warn
+
+  relatorio_final:
+    name: "10 · Relatório Final Consolidado"
+    needs:
+      - setup_ambiente
+      - fit_pantheon_rll
+      - fit_desi_bao
+      - weff_cpl_mapping
+      - zt_falsification
+      - h0_grid_scan
+      - joint_mcmc_p0
+      - bayes_factor_p0
+      - gerar_contrato_falsificadores
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - name: Instalar dependências
+        run: pip install numpy
+      - name: Baixar todos os artefatos
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          merge-multiple: true
+          path: artifacts/
+      - name: Gerar relatório final
+        env:
+          RLL_RUN_DATE: ${{ needs.setup_ambiente.outputs.run_date }}
+          RLL_RUN_ID: ${{ github.run_id }}
+          RLL_COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          OUT_DIR="artifacts/relatorio"
+          mkdir -p "$OUT_DIR"
+          . tools/ci/real_data_workflow_policy.sh
+          rll_real_data_write_claim_boundary "$OUT_DIR"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          def load_json(candidates):
+              for candidate in candidates:
+                  path = Path(candidate)
+                  if path.exists():
+                      try:
+                          return json.loads(path.read_text(encoding="utf-8"))
+                      except json.JSONDecodeError:
+                          pass
+              return {}
+
+          pantheon = load_json(["artifacts/pantheon_fit_result.json"])
+          desi = load_json(["artifacts/desi_bao_result.json"])
+          mcmc = load_json(["artifacts/joint_mcmc_summary.json"])
+          bayes = load_json(["artifacts/bayes_factor_result.json"])
+          contrato = load_json(["artifacts/contrato_summary.json"])
+          delta_aic = pantheon.get("delta_aic_rll_minus_lcdm")
+          chi2_rll = pantheon.get("chi2_rll_original")
+          chi2_lcdm = pantheon.get("chi2_lcdm")
+          chi2_desi = desi.get("chi2_nominal_rll")
+          ln_b10 = bayes.get("ln_B10_rll_over_lcdm")
+          lines = [f"# Relatório de Validação Científica RLL — {os.environ['RLL_RUN_DATE']}", "", f"**Pipeline**: rll-validacao-cientifica-completa | **Modo**: {os.environ['RLL_MODO']} | **Run**: {os.environ['RLL_RUN_ID']} | **Commit**: {os.environ['RLL_COMMIT_SHA'][:8]}", "", "## Sumário Executivo", ""]
+          if delta_aic is not None:
+              lines += ["### Fit Pantheon+SH0ES (Nelder-Mead)", "", "| Modelo | χ² | AIC | ΔAIC vs ΛCDM |", "|--------|-----|-----|-------------|", f"| ΛCDM | {chi2_lcdm:.3f} | {pantheon.get('aic_lcdm', 'N/A')} | ref |", f"| RLL original | {chi2_rll:.3f} | {pantheon.get('aic_rll', 'N/A')} | +{delta_aic:.3f} |", ""]
+          else:
+              lines += ["### Fit Pantheon+SH0ES", "", "> TOKEN_VAZIO — fit não disponível neste run", ""]
+          lines += ["### DESI DR2 BAO", "", f"- χ²_nominal_RLL = {chi2_desi}" if chi2_desi else "- TOKEN_VAZIO — aguarda joint MCMC", ""]
+          if mcmc.get("model_comparison_present"):
+              lines += ["### MCMC Conjunto (Structure-D)", "", f"- Walkers: {mcmc.get('walkers')} × Steps: {mcmc.get('steps')}", f"- Modelos: {mcmc.get('models_found')}", ""]
+          else:
+              lines += ["### MCMC Conjunto", "", "> TOKEN_VAZIO P0 — MCMC não executado ou falhou", ""]
+          if ln_b10 is not None:
+              lines += ["### Fator de Bayes", "", f"- ln(B₁₀) RLL/ΛCDM = {ln_b10:.3f}", f"- Jeffreys: {bayes.get('jeffreys_label')}", ""]
+          else:
+              lines += ["### Fator de Bayes", "", "> TOKEN_VAZIO P0 — cálculo não disponível", ""]
+          if contrato:
+              lines += ["### Falsificadores", "", f"- PASS: {contrato.get('n_pass', 0)}", f"- FAIL: {contrato.get('n_fail', 0)}", f"- TOKEN_VAZIO: {contrato.get('n_token_vazio', 0)}", ""]
+          lines += ["## Claim Boundary", "", "> Nenhuma afirmação de superioridade RLL é promovida automaticamente por este relatório.", "> Canônico: `.github/workflows/real-data-complete-execution.yml`", "", f"*Gerado em {datetime.now(timezone.utc).isoformat()}*"]
+          Path("artifacts/relatorio/RELATORIO_FINAL.md").write_text("\n".join(lines), encoding="utf-8")
+          full_summary = {"run_id": os.environ["RLL_RUN_ID"], "commit": os.environ["RLL_COMMIT_SHA"][:8], "run_date": os.environ["RLL_RUN_DATE"], "timestamp_utc": datetime.now(timezone.utc).isoformat(), "modo": os.environ["RLL_MODO"], "pantheon_delta_aic": delta_aic, "desi_chi2_nominal": chi2_desi, "bayes_ln_b10": ln_b10, "p0_joint_mcmc_closed": contrato.get("p0_joint_mcmc_closed"), "p0_bayes_factor_closed": contrato.get("p0_bayes_factor_closed"), "falsifiers_pass": contrato.get("n_pass"), "falsifiers_fail": contrato.get("n_fail")}
+          Path("artifacts/relatorio/full_summary.json").write_text(json.dumps(full_summary, indent=2, ensure_ascii=False) + "\n")
+          PY
+          rll_real_data_write_checksums "$OUT_DIR"
+      - name: Upload final report receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: relatorio-final
+          path: artifacts/relatorio/
+          retention-days: 30
+          if-no-files-found: warn
+
+  commit_resultados:
+    name: "11 · Commit de Resultados (opcional)"
+    needs:
+      - setup_ambiente
+      - relatorio_final
+    if: |
+      inputs.commit_resultados == true &&
+      inputs.modo == 'completo' &&
+      !cancelled()
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RLL_RUN_DATE: ${{ needs.setup_ambiente.outputs.run_date }}
+      RLL_RUN_ID: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Baixar todos os artefatos
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          merge-multiple: true
+          path: artifacts/
+
+      - name: Preparar e commitar resultados
+        run: |
+          set -euo pipefail
+          case "$GITHUB_REF_NAME" in
+            main|rll/release)
+              echo "Direct commit to protected promotion branch is forbidden."
+              exit 1
+              ;;
+          esac
+
+          CI_DIR="results/ci/${RLL_RUN_DATE}"
+          mkdir -p "$CI_DIR" docs/cronologia-auditoria
+          : > "$CI_DIR/copied_outputs.txt"
+          : > "$CI_DIR/missing_outputs.txt"
+
+          for f in pantheon_fit_result.json desi_bao_result.json joint_mcmc_summary.json bayes_factor_result.json full_summary.json; do
+            source="artifacts/$f"
+            if [ -f "$source" ]; then
+              cp "$source" "$CI_DIR/"
+              printf '%s\n' "$source" >> "$CI_DIR/copied_outputs.txt"
+            else
+              printf 'TOKEN_VAZIO_MISSING_OUTPUT %s\n' "$source" >> "$CI_DIR/missing_outputs.txt"
+            fi
+          done
+
+          if [ -f artifacts/RELATORIO_FINAL.md ]; then
+            cp artifacts/RELATORIO_FINAL.md "$CI_DIR/"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_MISSING_FINAL_REPORT' >> "$CI_DIR/missing_outputs.txt"
+          fi
+          if [ -f artifacts/CONTRATO_FALSIFICADORES_RLL.md ]; then
+            cp artifacts/CONTRATO_FALSIFICADORES_RLL.md docs/cronologia-auditoria/
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CI_DIR/"
+          if [ -f docs/cronologia-auditoria/CONTRATO_FALSIFICADORES_RLL.md ]; then
+            git add docs/cronologia-auditoria/CONTRATO_FALSIFICADORES_RLL.md
+          fi
+
+          if git diff --staged --quiet; then
+            echo "Sem alterações para commitar"
+            exit 0
+          fi
+
+          DELTA_AIC=$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("artifacts/full_summary.json")
+          data = json.loads(path.read_text()) if path.exists() else {}
+          value = data.get("pantheon_delta_aic")
+          print(f"{value:.3f}" if value is not None else "TOKEN_VAZIO")
+          PY
+          )
+
+          git commit -m "ci: validação científica RLL ${RLL_RUN_DATE} — ΔAIC_Pantheon=${DELTA_AIC} (run ${RLL_RUN_ID})"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+          git push origin HEAD
+          git config --local --unset-all http.https://github.com/.extraheader

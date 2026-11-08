@@ -1,0 +1,31 @@
+name: RLL Bible Origin Entropy V1
+
+on:
+  pull_request:
+    paths:
+      - "PapersPub/09_language_entropy_formalism/BIBLE_ORIGIN_TRILANG_PROTOCOL_V1.md"
+      - "PapersPub/09_language_entropy_formalism/data/BIBLE_ORIGIN_SOURCE_MANIFEST_V1.json"
+      - "PapersPub/09_language_entropy_formalism/bible_origin_benchmark_v1.py"
+      - ".github/workflows/rll-bible-origin-v1.yml"
+  push:
+    branches:
+      - "research/bible-origin-entropy-zipraf-v1-20260930"
+    paths:
+      - "PapersPub/09_language_entropy_formalism/**"
+      - ".github/workflows/rll-bible-origin-v1.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax
+        run: python -m py_compile PapersPub/09_language_entropy_formalism/bible_origin_benchmark_v1.py
+      - name: Deterministic selftest
+        run: python PapersPub/09_language_entropy_formalism/bible_origin_benchmark_v1.py --selftest

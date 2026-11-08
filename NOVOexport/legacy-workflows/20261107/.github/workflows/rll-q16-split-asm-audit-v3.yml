@@ -1,0 +1,92 @@
+name: RLL Q16 Split + Assembly Audit V3
+
+on:
+  push:
+    branches:
+      - "work/rll-q16-independent-split-asm-audit-v3-20260929"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Minimal toolchain
+        run: |
+          set -eu
+          command -v clang
+          command -v ld
+          command -v nm
+          command -v readelf
+          command -v objdump
+          command -v sha256sum
+          echo PASS_MINIMAL_TOOLCHAIN
+
+      - name: Build static split x86_64 ELFs
+        run: |
+          set -eu
+          mkdir -p build/q16-v3
+          CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections -fno-optimize-sibling-calls -Wshadow -Werror"
+
+          for N in generator recovery; do
+            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_${N}_freestanding.c"
+            clang $CFLAGS -c "$SRC" -o "build/q16-v3/${N}.o"
+            ld -static --gc-sections -e _start -o "build/q16-v3/${N}.elf" "build/q16-v3/${N}.o"
+            test -z "$(nm -u "build/q16-v3/${N}.elf")"
+            ! readelf -l "build/q16-v3/${N}.elf" | grep -q INTERP
+            ! readelf -d "build/q16-v3/${N}.elf" 2>/dev/null | grep -q NEEDED
+            ! nm "build/q16-v3/${N}.elf" | grep -Ei 'stack_chk|shadow|malloc|free|printf|libc'
+            objdump -d "build/q16-v3/${N}.elf" > "build/q16-v3/${N}.asm"
+          done
+
+          echo PASS_SHADOW_SOURCE_DIAGNOSTIC
+          echo PASS_NO_UNDEFINED_OR_DYNAMIC_RUNTIME
+          echo TAIL_POLICY=PASS_FNO_OPTIMIZE_SIBLING_CALLS
+
+      - name: Execute split process boundary
+        run: |
+          set -eu
+          build/q16-v3/generator.elf > build/q16-v3/matrix.q16
+          BYTES="$(wc -c < build/q16-v3/matrix.q16)"
+          test "$BYTES" -eq 132
+          OUT="$(build/q16-v3/recovery.elf < build/q16-v3/matrix.q16)"
+          printf '%s\n' "$OUT"
+          printf '%s\n' "$OUT" | grep -F 'best=1311,65536,19661'
+          printf '%s\n' "$OUT" | grep -F 'grid_evals=1782'
+          printf '%s\n' "$OUT" | grep -F 'claim_allowed=0'
+          echo MATRIX_BYTES=$BYTES
+          echo PASS_SPLIT_PROCESS_RECOVERY
+
+      - name: Freeze source and ELF hashes
+        run: |
+          set -eu
+          sha256sum \
+            core/lowlevel_runtime/c/rll_nonnull_q16_generator_freestanding.c \
+            core/lowlevel_runtime/c/rll_nonnull_q16_recovery_freestanding.c \
+            build/q16-v3/generator.elf \
+            build/q16-v3/recovery.elf \
+            build/q16-v3/matrix.q16 \
+            | tee build/q16-v3/SHA256SUMS
+          echo PASS_HASH_FREEZE
+
+      - name: Cross-build ARMv7 objects
+        run: |
+          set -eu
+          CFLAGS="-std=c11 -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fomit-frame-pointer -fno-pic -fno-pie -nostdlib -ffunction-sections -fdata-sections -fno-optimize-sibling-calls -Wshadow -Werror"
+
+          for N in generator recovery; do
+            SRC="core/lowlevel_runtime/c/rll_nonnull_q16_${N}_freestanding.c"
+            clang --target=armv7-linux-gnueabihf -march=armv7-a -marm $CFLAGS -c "$SRC" -o "build/q16-v3/${N}.armv7.o"
+            test -z "$(nm -u "build/q16-v3/${N}.armv7.o")"
+            readelf -h "build/q16-v3/${N}.armv7.o" | grep -F 'Class:' | grep -F ELF32
+            readelf -h "build/q16-v3/${N}.armv7.o" | grep -F 'Machine:' | grep -F ARM
+          done
+
+          echo PASS_ARMV7_SPLIT_OBJECTS
+          echo ARMV7_STATIC_LINK=TOKEN_VAZIO_TOOLCHAIN_LINKER
+          echo ARMV7_PHYSICAL_EXECUTION=TOKEN_VAZIO

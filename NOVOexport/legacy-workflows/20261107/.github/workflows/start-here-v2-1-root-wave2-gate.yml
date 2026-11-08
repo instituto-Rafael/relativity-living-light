@@ -1,0 +1,21 @@
+name: START HERE V2.1 + Root Wave 2 Gate
+
+on:
+  push:
+    branches:
+      - "work/start-here-v2-1-root-wave2a-20260929"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify V2.1 routing and physical refactor
+        run: |
+          set -eu
+          python3 tools/check_start_here_v2_1_root_wave2.py

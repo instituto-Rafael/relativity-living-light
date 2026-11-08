@@ -1,0 +1,167 @@
+name: "RLL FASE 24.1 — Gate Determinístico"
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "Escopo da execução"
+        required: true
+        type: choice
+        options:
+          - dry_run
+          - apenas_dados
+          - apenas_ciencia
+          - apenas_governanca
+          - completo
+        default: dry_run
+  workflow_call:
+    inputs:
+      modo:
+        description: "Escopo da execução"
+        required: false
+        type: string
+        default: dry_run
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/rll-pipeline-linear-completo.yml"
+      - ".github/workflows/RLL-CI.yml"
+      - ".github/workflows/RLL_SCIENTIFIC.yml"
+      - ".github/workflows/bayes_analysis.yml"
+      - "tools/rll_pipeline_deterministic.py"
+      - "tools/rll_pipeline_fase24_1_runtime.py"
+      - "tools/validate_six_sigma_real_data_controls.py"
+      - "tools/validate_schema_contracts.py"
+      - "tools/audit_github_workflows.py"
+      - "tools/validate_claim_allowed_gate.py"
+      - "tools/validate_schemas_claim_boundary.py"
+      - "tests/test_rll_pipeline_deterministic.py"
+      - "tests/test_rll_pipeline_fase24_1_runtime.py"
+      - "tests/test_validate_six_sigma_real_data_controls.py"
+      - "tests/test_scientific_workflow_path_filters.py"
+      - "src/**"
+      - "data/**"
+      - "validation/**"
+      - "requirements*.txt"
+      - "pyproject.toml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-fase24-1-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: "3.11"
+  CLAIM_ALLOWED: "false"
+  CLAIM_BOUNDARY: "claim_allowed=false; nenhum resultado histórico substitui evidência do run atual"
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  SYNTHETIC_BOUNDARY: "synthetic,mock,fixture,placeholder,demo"
+
+jobs:
+  deterministic-gate:
+    name: "Pipeline lógico 01–44"
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: "01 · Checkout sem persistência de credencial"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: "Setup Python"
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "${{ env.PYTHON_VERSION }}"
+          cache: pip
+
+      - name: "Bootstrap mínimo do gate"
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install PyYAML jsonschema
+
+      - name: "02–42 · Executar orquestrador determinístico"
+        id: gate
+        env:
+          DISPATCH_MODE: "${{ inputs.modo }}"
+          EVENT_NAME: "${{ github.event_name }}"
+        run: |
+          set -o pipefail
+          MODE="$DISPATCH_MODE"
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            MODE="dry_run"
+          fi
+          test -n "$MODE" || MODE="dry_run"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          python tools/rll_pipeline_fase24_1_runtime.py --mode "$MODE" \
+            2>&1 | tee rll-fase24-1-console.log
+
+      - name: "43 · Selar e verificar console, manifesto e cadeia SHA-256"
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p results/linear artifacts/linear/current_run
+          cp rll-fase24-1-console.log artifacts/linear/current_run/rll-fase24-1-console.log
+          python - <<'PY'
+          import importlib.util
+          import sys
+          from pathlib import Path
+
+          module_path = Path("tools/rll_pipeline_fase24_1_runtime.py").resolve()
+          spec = importlib.util.spec_from_file_location("rll_fase24_1_final_seal", module_path)
+          assert spec is not None and spec.loader is not None
+          runtime = importlib.util.module_from_spec(spec)
+          sys.modules[spec.name] = runtime
+          spec.loader.exec_module(runtime)
+          runtime.install()
+          runtime.write_checksums()
+          PY
+          test -s results/linear/CHECKSUMS.sha256
+          test -s artifacts/linear/PROVENANCE.json
+          test -s artifacts/linear/MANIFEST.json
+          test -s artifacts/linear/PYTHON_ENVIRONMENT.txt
+          test -s artifacts/linear/VERIFY_ARTIFACT.py
+          python artifacts/linear/VERIFY_ARTIFACT.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          import hashlib
+
+          provenance = json.loads(Path("artifacts/linear/PROVENANCE.json").read_text(encoding="utf-8"))
+          manifest = json.loads(Path("artifacts/linear/MANIFEST.json").read_text(encoding="utf-8"))
+          checksums = {
+              line.split("  ", 1)[1]: line.split("  ", 1)[0]
+              for line in Path("results/linear/CHECKSUMS.sha256").read_text(encoding="utf-8").splitlines()
+              if line.strip()
+          }
+          assert provenance["claim_allowed"] is False
+          assert provenance["commit_sha"] == "${{ github.sha }}"
+          assert provenance["github"]["GITHUB_RUN_ID"] == "${{ github.run_id }}"
+          assert manifest["claim_allowed"] is False
+          assert manifest["file_count"] == len(manifest["files"]) > 0
+          manifest_paths = set()
+          for item in manifest["files"]:
+              path = Path(item["path"])
+              assert path.is_file(), item["path"]
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              assert digest == item["sha256"], item["path"]
+              assert checksums.get(item["path"]) == digest, item["path"]
+              manifest_paths.add(item["path"])
+          assert "artifacts/linear/current_run/rll-fase24-1-console.log" in manifest_paths
+          print("RLL provenance, manifest and checksum chain: PASS")
+          PY
+
+      - name: "44 · Publicar evidências mesmo com gate bloqueado"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-fase24-1-${{ github.run_id }}-${{ steps.gate.outputs.mode || 'unknown' }}
+          path: |
+            results/linear/
+            logs/linear/
+            artifacts/linear/
+          retention-days: 30
+          if-no-files-found: error

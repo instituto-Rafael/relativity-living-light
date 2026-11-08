@@ -1,0 +1,105 @@
+# Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
+name: Real Data Bootstrap Validation
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Validation mode
+        required: true
+        type: choice
+        default: scan
+        options:
+        - scan
+        - strict
+  pull_request:
+    paths:
+    - data/real/**
+    - docs/science/**
+    - scripts/data_scan/**
+    - .github/workflows/real-data-bootstrap-validation.yml
+  push:
+    paths:
+    - data/real/**
+    - docs/science/**
+    - scripts/data_scan/**
+    - .github/workflows/real-data-bootstrap-validation.yml
+permissions:
+  contents: read
+concurrency:
+  group: real-data-bootstrap-validation-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  scan-real-data-bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - name: Show repository state
+      run: 'git rev-parse HEAD
+
+        git status --short
+
+        '
+    - name: Set up Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: 3.x
+    - name: Install YAML parser
+      run: 'python -m pip install --upgrade pip
+
+        python -m pip install pyyaml
+
+        '
+    - name: Compile scanner
+      run: 'python -m py_compile scripts/data_scan/scan_real_data_bootstrap.py
+
+        '
+    - name: Run real-data bootstrap scan
+      run: 'python scripts/data_scan/scan_real_data_bootstrap.py --repo .
+
+        '
+    - name: Display scan summary
+      run: 'cat data/results/bootstrap/real_data_bootstrap_summary.json
+
+        echo "---"
+
+        cat docs/science/REAL_DATA_BOOTSTRAP_SCAN_REPORT.md
+
+        '
+    - name: Upload bootstrap scan artifacts
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: real-data-bootstrap-scan
+        path: 'data/results/bootstrap/real_data_bootstrap_summary.json
+
+          data/results/bootstrap/real_data_bootstrap_ledger.tsv
+
+          docs/science/REAL_DATA_BOOTSTRAP_SCAN_REPORT.md
+
+          '
+    - name: Strict mode claim gate
+      if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'strict' }}
+      run: "python - <<'PY'\nimport json\nfrom pathlib import Path\np = Path('data/results/bootstrap/real_data_bootstrap_summary.json')\ndata = json.loads(p.read_text())\nif data.get('missing_ledgers', 0) or data.get('blocked_ledgers', 0):\n    raise SystemExit('Strict mode failed: missing or blocked ledgers remain. No claim allowed.')\nif data.get('claim_allowed') is not True:\n    raise SystemExit('Strict mode failed: global claim_allowed is not true.')\nPY\n"
+    - name: Finalize canonical real-data policy checksums
+      if: always()
+      run: 'set -euo pipefail
+
+        ARTIFACT_DIR="artifacts/workflow-policy/real-data-bootstrap-validation/${{ github.job }}"
+
+        mkdir -p "$ARTIFACT_DIR"
+
+        . tools/ci/real_data_workflow_policy.sh
+
+        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+
+        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+
+        rll_real_data_write_checksums "$ARTIFACT_DIR"
+
+        '
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.

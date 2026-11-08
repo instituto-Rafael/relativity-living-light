@@ -1,0 +1,810 @@
+{
+  "schema": "rll.github_workflows_legacy_snapshot.v1",
+  "source_commit": "0987cee8ba0d1abf5d671e23500f74f9d9e8fa79",
+  "archive_directory": "NOVOexport/legacy-workflows/20261107",
+  "original_directory": ".github/workflows",
+  "workflow_count": 133,
+  "policy": "Archive all 133 blobs byte-identically. Keep live workflows; only migrate entrypoints with verified equivalent compatibility wrappers. No bulk disable or deletion.",
+  "outside_workflows_execution": "NOT_SUPPORTED; archival is readable/auditable only",
+  "claim_allowed": false,
+  "entries": [
+    {
+      "original_path": ".github/workflows/555_00_10_20_30_90_rll_omega_freestanding_canonical.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/555_00_10_20_30_90_rll_omega_freestanding_canonical.yml",
+      "blob_sha1": "593d6cd9356184b2affbed0b38caa3c95204d161",
+      "size_bytes": 6411
+    },
+    {
+      "original_path": ".github/workflows/academic-parameter-governance.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/academic-parameter-governance.yml",
+      "blob_sha1": "49b50702a4bdbf41138229256c56584734201f95",
+      "size_bytes": 5521
+    },
+    {
+      "original_path": ".github/workflows/act-dr6-cmbonly-materialization.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/act-dr6-cmbonly-materialization.yml",
+      "blob_sha1": "cf1bc238f9a0a605584c5157702be3b5f7850356",
+      "size_bytes": 18649
+    },
+    {
+      "original_path": ".github/workflows/act-dr6-posterior-preflight-v2.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/act-dr6-posterior-preflight-v2.yml",
+      "blob_sha1": "d4c2435384293ef28cb618da9569b9897e33f670",
+      "size_bytes": 5056
+    },
+    {
+      "original_path": ".github/workflows/act-dr6-reference-chain-custody.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/act-dr6-reference-chain-custody.yml",
+      "blob_sha1": "a166345a63b5288421f29b28a4ee9c4af6473465",
+      "size_bytes": 4791
+    },
+    {
+      "original_path": ".github/workflows/all-ref-topology-census.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/all-ref-topology-census.yml",
+      "blob_sha1": "aaf3df4c790fd069b1f4ea9d88790ec16cc0508e",
+      "size_bytes": 7114
+    },
+    {
+      "original_path": ".github/workflows/android-build.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/android-build.yml",
+      "blob_sha1": "8f352441207f1ddea220b3e9f74bcc9e9d9e6191",
+      "size_bytes": 4562
+    },
+    {
+      "original_path": ".github/workflows/atlas-android-apk-crosscheck.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/atlas-android-apk-crosscheck.yml",
+      "blob_sha1": "5a85c7ae5b8138a67666f871482e8ed57396a233",
+      "size_bytes": 1479
+    },
+    {
+      "original_path": ".github/workflows/bayes_analysis.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/bayes_analysis.yml",
+      "blob_sha1": "f9a66a28e98d334514e3c236674eafc74bb61d0b",
+      "size_bytes": 394
+    },
+    {
+      "original_path": ".github/workflows/blake3-rll-falsifiability.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/blake3-rll-falsifiability.yml",
+      "blob_sha1": "bbdecf352a88c22cad2d1fa97a37c9df0ece7634",
+      "size_bytes": 1687
+    },
+    {
+      "original_path": ".github/workflows/branch-maturity-v2.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/branch-maturity-v2.yml",
+      "blob_sha1": "5430de4d998cffd278c3773e32d0cf85dc3f5e79",
+      "size_bytes": 1485
+    },
+    {
+      "original_path": ".github/workflows/calc-data.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/calc-data.yml",
+      "blob_sha1": "245ca6037416d926b0d76a7db3052cf357566757",
+      "size_bytes": 5305
+    },
+    {
+      "original_path": ".github/workflows/canonical-institute-authority-guard.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/canonical-institute-authority-guard.yml",
+      "blob_sha1": "2b52e393a033963e6a8ab4edb03447a6e0202bec",
+      "size_bytes": 2877
+    },
+    {
+      "original_path": ".github/workflows/canonical-route-artifacts.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/canonical-route-artifacts.yml",
+      "blob_sha1": "9f29e8ba225b377b9244780c073d348301721d25",
+      "size_bytes": 6304
+    },
+    {
+      "original_path": ".github/workflows/cephalopod-falsifiability.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/cephalopod-falsifiability.yml",
+      "blob_sha1": "a2cf5913416a38e729339b46513581cb83c42e8b",
+      "size_bytes": 970
+    },
+    {
+      "original_path": ".github/workflows/ci-scientific-skills.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/ci-scientific-skills.yml",
+      "blob_sha1": "0a41c5e12e80e7f3f2966b0df9a8b3abbc90f444",
+      "size_bytes": 4771
+    },
+    {
+      "original_path": ".github/workflows/claim-allowed-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/claim-allowed-gate.yml",
+      "blob_sha1": "3e3c12c5636190c9814061f11bc497100b1c463f",
+      "size_bytes": 1406
+    },
+    {
+      "original_path": ".github/workflows/claim-boundary-quality-gates.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/claim-boundary-quality-gates.yml",
+      "blob_sha1": "eb8ca129006824588192c9e7516f7e9b8811a20e",
+      "size_bytes": 4982
+    },
+    {
+      "original_path": ".github/workflows/class-camb-baseline-crosscheck.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/class-camb-baseline-crosscheck.yml",
+      "blob_sha1": "8aa5085a312f065237830779a4a717e9a3bfc6a1",
+      "size_bytes": 11044
+    },
+    {
+      "original_path": ".github/workflows/class-camb-first-divergence.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/class-camb-first-divergence.yml",
+      "blob_sha1": "b5dfc46c4015e230cad6cbe2a9dae842eb973665",
+      "size_bytes": 3804
+    },
+    {
+      "original_path": ".github/workflows/concept-knowledge-matrix.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/concept-knowledge-matrix.yml",
+      "blob_sha1": "edef8f88effdf39eee585dbb80dad5b1873ab094",
+      "size_bytes": 1645
+    },
+    {
+      "original_path": ".github/workflows/convention-check.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/convention-check.yml",
+      "blob_sha1": "1d35a56f8b3e00fa2c22677231f7c6b4475a81eb",
+      "size_bytes": 953
+    },
+    {
+      "original_path": ".github/workflows/copilot-setup-steps.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/copilot-setup-steps.yml",
+      "blob_sha1": "766e79bd762e35edffb596d50d324aad6e2170f6",
+      "size_bytes": 4827
+    },
+    {
+      "original_path": ".github/workflows/crf-formalization-artifact.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/crf-formalization-artifact.yml",
+      "blob_sha1": "e84dd656cd1b91da161f879604da4dd96cf8fc46",
+      "size_bytes": 4129
+    },
+    {
+      "original_path": ".github/workflows/dashboard-build.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/dashboard-build.yml",
+      "blob_sha1": "ac0512a6b7ea7f8ee1b3bada2c2b0975a85285ab",
+      "size_bytes": 782
+    },
+    {
+      "original_path": ".github/workflows/dashboard-ux-compilation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/dashboard-ux-compilation.yml",
+      "blob_sha1": "cffac24ac58525cd3ca459d3cc2c2c8ce0d8c1a3",
+      "size_bytes": 9587
+    },
+    {
+      "original_path": ".github/workflows/dense-feature-matrix.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/dense-feature-matrix.yml",
+      "blob_sha1": "cdb2615a866ed182c4ba9a5a6f0bf3f8dfd1b213",
+      "size_bytes": 3041
+    },
+    {
+      "original_path": ".github/workflows/desi-dr2-bao-validation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/desi-dr2-bao-validation.yml",
+      "blob_sha1": "31ec5bc6b253e889a3fc4de6d3d5baa8e19876c1",
+      "size_bytes": 2912
+    },
+    {
+      "original_path": ".github/workflows/desi-dr2-covariance-multiscale-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/desi-dr2-covariance-multiscale-gate.yml",
+      "blob_sha1": "f06ee4f1f3a1d1caa1defde725489e8bb49b01c0",
+      "size_bytes": 2968
+    },
+    {
+      "original_path": ".github/workflows/dha-fisher-ci.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/dha-fisher-ci.yml",
+      "blob_sha1": "15211e68af0aa77667b52d512ceb0b43bb1f1ec3",
+      "size_bytes": 3310
+    },
+    {
+      "original_path": ".github/workflows/dovekie-wa-lower-bound.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/dovekie-wa-lower-bound.yml",
+      "blob_sha1": "d2a86cc637d4c06a1f9a4b69c4da57ca5328fb76",
+      "size_bytes": 5072
+    },
+    {
+      "original_path": ".github/workflows/formulas-artifacts-validation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/formulas-artifacts-validation.yml",
+      "blob_sha1": "2222c9ce4fdca80fb65b0333deb7f6bf3dffc5f9",
+      "size_bytes": 1442
+    },
+    {
+      "original_path": ".github/workflows/formulas-artifacts.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/formulas-artifacts.yml",
+      "blob_sha1": "ba5d806ec1fab245dc3abc1550aa8885dfc46677",
+      "size_bytes": 1029
+    },
+    {
+      "original_path": ".github/workflows/frontier-research-composition.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/frontier-research-composition.yml",
+      "blob_sha1": "eeb020cbea703aac2b61ddc1d3e59ac00913dcfd",
+      "size_bytes": 11476
+    },
+    {
+      "original_path": ".github/workflows/g6-h52-nonidentifiability.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/g6-h52-nonidentifiability.yml",
+      "blob_sha1": "f38f9c37ff167f8f3a7e673dab86879b1e89a502",
+      "size_bytes": 5644
+    },
+    {
+      "original_path": ".github/workflows/geometric-mutation-matrix.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/geometric-mutation-matrix.yml",
+      "blob_sha1": "da5969e74257311e8f33cbbbf280c456e9b0fe6c",
+      "size_bytes": 5980
+    },
+    {
+      "original_path": ".github/workflows/github-platform-assurance-v2.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/github-platform-assurance-v2.yml",
+      "blob_sha1": "6aee2b266d66779de7f2aebff2aeb49f3e89aa1b",
+      "size_bytes": 7310
+    },
+    {
+      "original_path": ".github/workflows/github-platform-assurance.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/github-platform-assurance.yml",
+      "blob_sha1": "5d58a1e490f4e7d3740aed257aff1643c05e3034",
+      "size_bytes": 5787
+    },
+    {
+      "original_path": ".github/workflows/giza-academic-intake-4h.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/giza-academic-intake-4h.yml",
+      "blob_sha1": "07c2d9d57e0ddbfc1d605941dbc7045a1b389cbb",
+      "size_bytes": 4015
+    },
+    {
+      "original_path": ".github/workflows/h0-rd-ablation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/h0-rd-ablation.yml",
+      "blob_sha1": "a82cc0bb848ed9fdfd210f51f8235b1e3cbbb5f1",
+      "size_bytes": 6476
+    },
+    {
+      "original_path": ".github/workflows/hypothesis-instability-orchestrator.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/hypothesis-instability-orchestrator.yml",
+      "blob_sha1": "00412c1d16b79965b762bfc432f484af86e17368",
+      "size_bytes": 3909
+    },
+    {
+      "original_path": ".github/workflows/iml_artifact.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/iml_artifact.yml",
+      "blob_sha1": "1ffdee3acb6e1d1f11c91df4b8449a056a41fe54",
+      "size_bytes": 1741
+    },
+    {
+      "original_path": ".github/workflows/import-data.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/import-data.yml",
+      "blob_sha1": "896bba0f2cfeb6df04a68f4543d68c7167e83f52",
+      "size_bytes": 4494
+    },
+    {
+      "original_path": ".github/workflows/jekyll-gh-pages.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/jekyll-gh-pages.yml",
+      "blob_sha1": "67be9b00bb678d6dcb059ad708b2130499bca1e9",
+      "size_bytes": 1409
+    },
+    {
+      "original_path": ".github/workflows/lgpd-navigation-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/lgpd-navigation-gate.yml",
+      "blob_sha1": "cf0feea92e1e980e8cf87040a5867a9a4fee2c92",
+      "size_bytes": 1050
+    },
+    {
+      "original_path": ".github/workflows/multiscale-heterogeneous-residual-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/multiscale-heterogeneous-residual-gate.yml",
+      "blob_sha1": "be3139e2d01a4c7eb60ef0cf52c2122ec85251a0",
+      "size_bytes": 2871
+    },
+    {
+      "original_path": ".github/workflows/omega-math-explorer.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/omega-math-explorer.yml",
+      "blob_sha1": "49a87007ce4469fb9633ed7c18e45e8a9954a380",
+      "size_bytes": 3231
+    },
+    {
+      "original_path": ".github/workflows/orbital-shape-angular-momentum-validation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/orbital-shape-angular-momentum-validation.yml",
+      "blob_sha1": "f35494a18d08d1bd6e965d107bbdd3a35444f998",
+      "size_bytes": 3023
+    },
+    {
+      "original_path": ".github/workflows/orbital-state-vector-v2.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/orbital-state-vector-v2.yml",
+      "blob_sha1": "0a017e86915defd8a47195527a0b51cee2535e82",
+      "size_bytes": 3086
+    },
+    {
+      "original_path": ".github/workflows/orcid-rll-vector-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/orcid-rll-vector-gate.yml",
+      "blob_sha1": "4ad0096302239d635171aebb18d96fe0c9428309",
+      "size_bytes": 4765
+    },
+    {
+      "original_path": ".github/workflows/pantheon-covariance-materialization.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/pantheon-covariance-materialization.yml",
+      "blob_sha1": "5bea9f3dae9e00d4fdb1d49569af9af533a6a60e",
+      "size_bytes": 16201
+    },
+    {
+      "original_path": ".github/workflows/poincare-7d-evidence-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/poincare-7d-evidence-gate.yml",
+      "blob_sha1": "9e1a440b02226876bc6df2b7c5f672abc519a4f2",
+      "size_bytes": 7454
+    },
+    {
+      "original_path": ".github/workflows/polymathic-concept-matrix.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/polymathic-concept-matrix.yml",
+      "blob_sha1": "30753519421a3675462250502c6b0a7c99cd949f",
+      "size_bytes": 7958
+    },
+    {
+      "original_path": ".github/workflows/python-tests.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/python-tests.yml",
+      "blob_sha1": "276cd67e8567aca6c7f0fe9573f2f5358dc3b562",
+      "size_bytes": 4777
+    },
+    {
+      "original_path": ".github/workflows/rare-events-evidence-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rare-events-evidence-gate.yml",
+      "blob_sha1": "66b67213d2e3ad5aa4e0f7a48bf6299b401e8fec",
+      "size_bytes": 2813
+    },
+    {
+      "original_path": ".github/workflows/raw-data-manifest-status.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/raw-data-manifest-status.yml",
+      "blob_sha1": "2bff57ce507b64c850bed24a0ba24ab594e2aaa5",
+      "size_bytes": 1867
+    },
+    {
+      "original_path": ".github/workflows/real-data-bootstrap-validation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/real-data-bootstrap-validation.yml",
+      "blob_sha1": "e1cf68710ade0c945660d01580b4a091bbabd698",
+      "size_bytes": 3576
+    },
+    {
+      "original_path": ".github/workflows/real-data-complete-execution.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/real-data-complete-execution.yml",
+      "blob_sha1": "b29b22376698ae1a11f85551714b0cf726235d4a",
+      "size_bytes": 30988
+    },
+    {
+      "original_path": ".github/workflows/real-data-contract-ci.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/real-data-contract-ci.yml",
+      "blob_sha1": "b34e494fe3bfdb1e474ae869d85f4e76e7519d97",
+      "size_bytes": 7536
+    },
+    {
+      "original_path": ".github/workflows/real-seed-ingestion-plan.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/real-seed-ingestion-plan.yml",
+      "blob_sha1": "9a472adcd7ac787903e46bed5aa7dbe8151b4275",
+      "size_bytes": 3037
+    },
+    {
+      "original_path": ".github/workflows/real-seed-validation-v0.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/real-seed-validation-v0.yml",
+      "blob_sha1": "0da385b234283e394c3d40e79b3d163095a70e03",
+      "size_bytes": 3536
+    },
+    {
+      "original_path": ".github/workflows/repo-real-inventory.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/repo-real-inventory.yml",
+      "blob_sha1": "4d16b9b629cd75e7d44a980d883160336b12d3c2",
+      "size_bytes": 3424
+    },
+    {
+      "original_path": ".github/workflows/RLL_SCIENTIFIC.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/RLL_SCIENTIFIC.yml",
+      "blob_sha1": "fcd7b92f13446132eca98ef16c3af53c6225c132",
+      "size_bytes": 393
+    },
+    {
+      "original_path": ".github/workflows/rll-academic-safety-route56.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-academic-safety-route56.yml",
+      "blob_sha1": "7b33dc549f97bf196ee8dd5a6d2459623f2f2fe4",
+      "size_bytes": 3339
+    },
+    {
+      "original_path": ".github/workflows/rll-balance-report.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-balance-report.yml",
+      "blob_sha1": "e0d28988b74822e59bb338ce0ce75af7859c30ee",
+      "size_bytes": 6744
+    },
+    {
+      "original_path": ".github/workflows/rll-bible-origin-v1.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-bible-origin-v1.yml",
+      "blob_sha1": "a67f6b74f1ba2a0e9aa7f80c32d4fefb869eda58",
+      "size_bytes": 1040
+    },
+    {
+      "original_path": ".github/workflows/rll-bible10-multilingual.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-bible10-multilingual.yml",
+      "blob_sha1": "fa4f0c7aed6753b7ebff678a4d5f43ebc4bc74ec",
+      "size_bytes": 3543
+    },
+    {
+      "original_path": ".github/workflows/rll-biophoton-metabolic-transduction-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-biophoton-metabolic-transduction-gate.yml",
+      "blob_sha1": "1e39aad3c99c2ea942a706b20ddd0db6a7f1f7ee",
+      "size_bytes": 1263
+    },
+    {
+      "original_path": ".github/workflows/rll-book-data-pipeline.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-book-data-pipeline.yml",
+      "blob_sha1": "b610391c22bb153e5b54a3d4b695023dc5456a0e",
+      "size_bytes": 7435
+    },
+    {
+      "original_path": ".github/workflows/RLL-CI.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/RLL-CI.yml",
+      "blob_sha1": "64fe0b36d9bca69b33b7409451f5a1e30c18ff3c",
+      "size_bytes": 377
+    },
+    {
+      "original_path": ".github/workflows/rll-claim-authority-export.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-claim-authority-export.yml",
+      "blob_sha1": "137b9011f36dcb6012732d44947350ef1a0b60e3",
+      "size_bytes": 1547
+    },
+    {
+      "original_path": ".github/workflows/rll-climate-engine-trial-live.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-climate-engine-trial-live.yml",
+      "blob_sha1": "b8047e8a1677f6669c582fa9a3b7e95494162000",
+      "size_bytes": 5750
+    },
+    {
+      "original_path": ".github/workflows/rll-cosmology-e0-preflight.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-cosmology-e0-preflight.yml",
+      "blob_sha1": "f34d0af80ef7cfbbda917cd79c23079d6194d314",
+      "size_bytes": 2593
+    },
+    {
+      "original_path": ".github/workflows/rll-data-pipeline.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-data-pipeline.yml",
+      "blob_sha1": "0ffda56aedc25cce803770ae86f827a93f6986ee",
+      "size_bytes": 4797
+    },
+    {
+      "original_path": ".github/workflows/rll-desi-adversarial-profile.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-desi-adversarial-profile.yml",
+      "blob_sha1": "2ff926abb398fc2df4dfaef7b92900646cdf93a6",
+      "size_bytes": 2052
+    },
+    {
+      "original_path": ".github/workflows/rll-desi-dr2-covariance-audit.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-desi-dr2-covariance-audit.yml",
+      "blob_sha1": "e2fbb7153844e2504d5920e8507fe9480a17afa3",
+      "size_bytes": 4060
+    },
+    {
+      "original_path": ".github/workflows/rll-dual-api-real-calibration.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-dual-api-real-calibration.yml",
+      "blob_sha1": "48d7e7dbb881d83737d920ea8634b707777a3586",
+      "size_bytes": 4855
+    },
+    {
+      "original_path": ".github/workflows/rll-geometric-operator-omega-g.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-geometric-operator-omega-g.yml",
+      "blob_sha1": "87cedfbb50d5ea75b34889a112dc910d0647cefe",
+      "size_bytes": 818
+    },
+    {
+      "original_path": ".github/workflows/rll-governance-quality-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-governance-quality-gate.yml",
+      "blob_sha1": "1ac2122dd12f7f04e7e8335543d76ac289daf7c8",
+      "size_bytes": 12900
+    },
+    {
+      "original_path": ".github/workflows/rll-homeostatic-field-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-homeostatic-field-gate.yml",
+      "blob_sha1": "6f74e08e83780e1d895e5098d0e6e46e361dec03",
+      "size_bytes": 1415
+    },
+    {
+      "original_path": ".github/workflows/rll-human-societal-gate-v1.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-human-societal-gate-v1.yml",
+      "blob_sha1": "fde21ddda9dcd37e8df00190ba84175b3fa8eb85",
+      "size_bytes": 632
+    },
+    {
+      "original_path": ".github/workflows/rll-language-g123.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-language-g123.yml",
+      "blob_sha1": "5535359e6b31eee4d6a9f1149d5d1343a0058076",
+      "size_bytes": 2502
+    },
+    {
+      "original_path": ".github/workflows/rll-metar-earth-field.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-metar-earth-field.yml",
+      "blob_sha1": "5b12427898614c4cbf49488309fa382c622e50e3",
+      "size_bytes": 4680
+    },
+    {
+      "original_path": ".github/workflows/rll-modern-validation-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-modern-validation-gate.yml",
+      "blob_sha1": "e178973b28ebc0abbfbe8885b7b2b59e3fe6f874",
+      "size_bytes": 7493
+    },
+    {
+      "original_path": ".github/workflows/rll-mpemba-horizon-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-mpemba-horizon-gate.yml",
+      "blob_sha1": "0e0d68ba75f2196965169a89b5d2147858eb2707",
+      "size_bytes": 2138
+    },
+    {
+      "original_path": ".github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml",
+      "blob_sha1": "6cefb0eb76e7d056e4f98baae048cf84159ac394",
+      "size_bytes": 2122
+    },
+    {
+      "original_path": ".github/workflows/rll-nature-zenodo-intake.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-nature-zenodo-intake.yml",
+      "blob_sha1": "273b49baaf8e7d8f17caa00a3b3b9599a97d59c7",
+      "size_bytes": 3601
+    },
+    {
+      "original_path": ".github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-nonnull-blind-q16-freestanding-gate.yml",
+      "blob_sha1": "e26e4d3bfddea9390611c127f765623138b18f38",
+      "size_bytes": 4685
+    },
+    {
+      "original_path": ".github/workflows/rll-observer-mirror-photon-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-observer-mirror-photon-gate.yml",
+      "blob_sha1": "fe8f5b46a390a145f54c68c62fff2bb8a4ff6281",
+      "size_bytes": 1407
+    },
+    {
+      "original_path": ".github/workflows/rll-omega-adapter.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-omega-adapter.yml",
+      "blob_sha1": "d81218ec4cba6fafdd832d97b76457479d31e8bd",
+      "size_bytes": 2292
+    },
+    {
+      "original_path": ".github/workflows/rll-omega-g-cosmology-tournament.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-omega-g-cosmology-tournament.yml",
+      "blob_sha1": "3738abb8e44e75381303a268a4eaf71077f9fcf1",
+      "size_bytes": 2268
+    },
+    {
+      "original_path": ".github/workflows/rll-operational-auto-hotfix.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-operational-auto-hotfix.yml",
+      "blob_sha1": "dd8d54af697eb28b8823228118a9715071e140c3",
+      "size_bytes": 8623
+    },
+    {
+      "original_path": ".github/workflows/rll-operator-lab-v1.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-operator-lab-v1.yml",
+      "blob_sha1": "e94dbdb342d9cef9acb7ac13a182e0d08ef71af0",
+      "size_bytes": 1625
+    },
+    {
+      "original_path": ".github/workflows/rll-pipeline-linear-completo.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-pipeline-linear-completo.yml",
+      "blob_sha1": "5f1912a972508ca52c9cdd33abc42865678c9d9f",
+      "size_bytes": 6182
+    },
+    {
+      "original_path": ".github/workflows/rll-q16-split-asm-audit-v3.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-q16-split-asm-audit-v3.yml",
+      "blob_sha1": "c6100c235a81da1a491b0958a65fe08ba3433823",
+      "size_bytes": 3762
+    },
+    {
+      "original_path": ".github/workflows/rll-q16-tail-shadow-audit-v3.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-q16-tail-shadow-audit-v3.yml",
+      "blob_sha1": "dfa44a56fce865435d9faa750ecc3b884ef423cc",
+      "size_bytes": 6017
+    },
+    {
+      "original_path": ".github/workflows/rll-quantum-vacuum-birefringence-audit.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-quantum-vacuum-birefringence-audit.yml",
+      "blob_sha1": "a48523a90899d6bfee8716da06402d0ab5c3077b",
+      "size_bytes": 5096
+    },
+    {
+      "original_path": ".github/workflows/rll-real-data-evidence-bridge.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-real-data-evidence-bridge.yml",
+      "blob_sha1": "cac49d3cdf440e8901374c007cf0fce6d70f021a",
+      "size_bytes": 3381
+    },
+    {
+      "original_path": ".github/workflows/rll-real-data-orchestrator.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-real-data-orchestrator.yml",
+      "blob_sha1": "e874ce20cee816d72c2cf3d0ca6b89ed36c50045",
+      "size_bytes": 19062
+    },
+    {
+      "original_path": ".github/workflows/rll-repository-pat-assurance.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-repository-pat-assurance.yml",
+      "blob_sha1": "74f1cf6025aebf7015136d0820dc1ca5db334f90",
+      "size_bytes": 2259
+    },
+    {
+      "original_path": ".github/workflows/rll-residual-geometry-composite-v2-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-residual-geometry-composite-v2-gate.yml",
+      "blob_sha1": "bffdd85cc0eaf735c775baff35b1136324c120e5",
+      "size_bytes": 2195
+    },
+    {
+      "original_path": ".github/workflows/rll-retarded-spacetime-contract.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-retarded-spacetime-contract.yml",
+      "blob_sha1": "f303f7761e951f2785ab0153f31b6947e6da9d66",
+      "size_bytes": 966
+    },
+    {
+      "original_path": ".github/workflows/rll-retarded-spacetime-region-context.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-retarded-spacetime-region-context.yml",
+      "blob_sha1": "c76314d38ba72712739e080193f4367838b7b0ed",
+      "size_bytes": 2975
+    },
+    {
+      "original_path": ".github/workflows/rll-safe-expansion-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-safe-expansion-gate.yml",
+      "blob_sha1": "dfea6b393b3f562adedc224953957c7aa030ebea",
+      "size_bytes": 2880
+    },
+    {
+      "original_path": ".github/workflows/rll-scientific-navigation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-scientific-navigation.yml",
+      "blob_sha1": "faf7555dea00d3bbe59aaf465e2266a5768fa76e",
+      "size_bytes": 6485
+    },
+    {
+      "original_path": ".github/workflows/rll-seven-guards-three-window.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-seven-guards-three-window.yml",
+      "blob_sha1": "3f7f8e6eee4d82e8a776e2ab88c5e01bc7d51566",
+      "size_bytes": 3198
+    },
+    {
+      "original_path": ".github/workflows/rll-structural-integration.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-structural-integration.yml",
+      "blob_sha1": "a739a5bc60c1b74bf85580062fcb30349c45e21d",
+      "size_bytes": 1940
+    },
+    {
+      "original_path": ".github/workflows/rll-structural-math-artifacts.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-structural-math-artifacts.yml",
+      "blob_sha1": "1f77ca7900c2fb05bb97777b5ba98bbccb96b1a1",
+      "size_bytes": 6556
+    },
+    {
+      "original_path": ".github/workflows/rll-studio-contract.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-studio-contract.yml",
+      "blob_sha1": "11a3f3fda1cc247f288de96b59e81ef9710ed04c",
+      "size_bytes": 5914
+    },
+    {
+      "original_path": ".github/workflows/rll-v1-tag-provenance.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-v1-tag-provenance.yml",
+      "blob_sha1": "66245b56ef21fb6ce1856450f3908ba9bc97af82",
+      "size_bytes": 4857
+    },
+    {
+      "original_path": ".github/workflows/rll-validacao-cientifica-completa.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rll-validacao-cientifica-completa.yml",
+      "blob_sha1": "ec50e5bb492624c8ea10481d680fdc7e8e71f0ca",
+      "size_bytes": 43442
+    },
+    {
+      "original_path": ".github/workflows/rx-development.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/rx-development.yml",
+      "blob_sha1": "aed1dd063e641c3996f63a9f6182ba1499daf2cc",
+      "size_bytes": 1460
+    },
+    {
+      "original_path": ".github/workflows/scan-poc-coherence.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/scan-poc-coherence.yml",
+      "blob_sha1": "e6e99d9744cebf267a969330184c8efb44370bd7",
+      "size_bytes": 998
+    },
+    {
+      "original_path": ".github/workflows/scientific-cycle-closure.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/scientific-cycle-closure.yml",
+      "blob_sha1": "d15d740af4494a0a3cc3627f5e6e06aac3b55921",
+      "size_bytes": 1776
+    },
+    {
+      "original_path": ".github/workflows/session-evolution-mesh.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/session-evolution-mesh.yml",
+      "blob_sha1": "b12e1ce82109319b20b91239e010a4ace0fbc14f",
+      "size_bytes": 1959
+    },
+    {
+      "original_path": ".github/workflows/six-sigma-real-data-controls.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/six-sigma-real-data-controls.yml",
+      "blob_sha1": "5cc2ff07bc6d44e4739cf67ec497746b742893af",
+      "size_bytes": 3867
+    },
+    {
+      "original_path": ".github/workflows/START_MANUAL_HERE.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/START_MANUAL_HERE.yml",
+      "blob_sha1": "69e1cf30a3b42580a7f08b10c876d4c0d086b465",
+      "size_bytes": 13292
+    },
+    {
+      "original_path": ".github/workflows/start-here-v2-1-root-wave2-gate.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/start-here-v2-1-root-wave2-gate.yml",
+      "blob_sha1": "d69ad3019f05246bec75db7a5021889ccf1b2306",
+      "size_bytes": 428
+    },
+    {
+      "original_path": ".github/workflows/symlink-integrity.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/symlink-integrity.yml",
+      "blob_sha1": "f7346b40d47088d2a3cc6a176b602723f75a20d6",
+      "size_bytes": 728
+    },
+    {
+      "original_path": ".github/workflows/unified-geometry.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/unified-geometry.yml",
+      "blob_sha1": "1525a44c7f31d1d24a3a02c3787b448c33fa7686",
+      "size_bytes": 1006
+    },
+    {
+      "original_path": ".github/workflows/unified-workflow-session-orchestrator.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/unified-workflow-session-orchestrator.yml",
+      "blob_sha1": "4e84cf52c17c073bbc6ce60cd674adaa3d389578",
+      "size_bytes": 11235
+    },
+    {
+      "original_path": ".github/workflows/validacao_real.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validacao_real.yml",
+      "blob_sha1": "309bed416a8026784e5f101abefe8a1b3a9f11a0",
+      "size_bytes": 16223
+    },
+    {
+      "original_path": ".github/workflows/validate-academic-correlation-package.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validate-academic-correlation-package.yml",
+      "blob_sha1": "63368bde0920fc492a4e40fe3330634ab1157bd2",
+      "size_bytes": 2503
+    },
+    {
+      "original_path": ".github/workflows/validate-cross-repo-relationship-registry.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validate-cross-repo-relationship-registry.yml",
+      "blob_sha1": "c055fc19910a078084a80486602d2ba552883826",
+      "size_bytes": 10504
+    },
+    {
+      "original_path": ".github/workflows/validate-real-dataset-variance-registry.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validate-real-dataset-variance-registry.yml",
+      "blob_sha1": "8b66e280916eb9ecc606c439165cfac9b011f7c9",
+      "size_bytes": 2498
+    },
+    {
+      "original_path": ".github/workflows/validate-schema-contracts.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validate-schema-contracts.yml",
+      "blob_sha1": "13df7b82cf0ecf7161ae537d76b3bb024500812d",
+      "size_bytes": 9130
+    },
+    {
+      "original_path": ".github/workflows/validate-sequence-metrics.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/validate-sequence-metrics.yml",
+      "blob_sha1": "34b17ca04a1571aeecee97aaccf1308e0430492c",
+      "size_bytes": 2360
+    },
+    {
+      "original_path": ".github/workflows/workflow-contract-sync-v2.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/workflow-contract-sync-v2.yml",
+      "blob_sha1": "82efab3581dcccdbdc6d561db58da787ec280c2f",
+      "size_bytes": 1634
+    },
+    {
+      "original_path": ".github/workflows/workflow-contract-sync.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/workflow-contract-sync.yml",
+      "blob_sha1": "bfe36d07cd8b72a1d9251048867f4ff676aa14ec",
+      "size_bytes": 4407
+    },
+    {
+      "original_path": ".github/workflows/workflow-preflight-repair-20260903.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/workflow-preflight-repair-20260903.yml",
+      "blob_sha1": "bb2738907e6945df862642e4aa6cc7bc6e2ac063",
+      "size_bytes": 2535
+    },
+    {
+      "original_path": ".github/workflows/ws01-background-decision-evidence.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/ws01-background-decision-evidence.yml",
+      "blob_sha1": "4e6516f816b25313f53365a9f6c51d6effc91067",
+      "size_bytes": 5931
+    },
+    {
+      "original_path": ".github/workflows/yaml-deep-audit.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/yaml-deep-audit.yml",
+      "blob_sha1": "0164d1841f65c68d04a7694b54ac676c2a244614",
+      "size_bytes": 2775
+    },
+    {
+      "original_path": ".github/workflows/yml-syntax-validation.yml",
+      "archive_path": "NOVOexport/legacy-workflows/20261107/.github/workflows/yml-syntax-validation.yml",
+      "blob_sha1": "ae41144a1944b75afdf79278ea2e5fb7997d1d58",
+      "size_bytes": 3752
+    }
+  ]
+}

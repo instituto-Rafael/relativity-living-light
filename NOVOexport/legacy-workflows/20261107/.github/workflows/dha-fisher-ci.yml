@@ -1,0 +1,99 @@
+name: DHA Fisher Validation
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/dha-fisher-ci.yml
+      - src/**
+      - scripts/run_ln1pz_extractor.py
+      - scripts/run_desi_dha_pipeline.py
+      - scripts/export_dha_forecast.py
+      - tests/test_dha_fisher.py
+      - tests/test_ln1pz_extractor.py
+      - tests/test_desi_dha_extractor.py
+      - pyproject.toml
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  dha-fisher:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest
+
+      - name: Run DHA Fisher and ln(1+z) extractor tests
+        run: pytest -q tests/test_dha_fisher.py tests/test_ln1pz_extractor.py tests/test_desi_dha_extractor.py
+
+      - name: Build mock catalog for ln(1+z) extraction
+        run: |
+          mkdir -p results/dha
+          python - <<'PY2'
+          import numpy as np, pandas as pd
+          z = np.linspace(0.1, 6.0, 500)
+          ln1pz = np.log1p(z)
+          pk_baseline = 1000.0 * np.exp(-z/3.0)
+          residual = 0.02 * np.cos(0.91 * ln1pz + 0.4)
+          pk_obs = pk_baseline * (1.0 + residual)
+          pd.DataFrame({'z': z, 'pk_obs': pk_obs, 'pk_baseline': pk_baseline}).to_csv('results/dha/mock_catalog.csv', index=False)
+          PY2
+
+      - name: Run ln(1+z) extractor
+        run: python scripts/run_ln1pz_extractor.py --input results/dha/mock_catalog.csv --output results/dha/ln1pz_fit.csv --summary results/dha/ln1pz_fit_summary.json
+
+      - name: Run DESI/BOSS DHA extractor pipeline
+        run: python scripts/run_desi_dha_pipeline.py --output results/dha/desi_dha_pipeline_summary.json
+
+      - name: Generate deterministic DHA forecast artifact
+        run: python scripts/export_dha_forecast.py
+
+      - name: Upload DHA forecast artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dha-fisher-forecast
+          path: results/dha/fisher_forecast_reference.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload ln(1+z) extractor artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ln1pz-extractor
+          path: |
+            results/dha/ln1pz_fit.csv
+            results/dha/ln1pz_fit_summary.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload DESI DHA extractor artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desi-dha-extractor
+          path: results/dha/desi_dha_pipeline_summary.json
+          retention-days: 30
+          if-no-files-found: warn

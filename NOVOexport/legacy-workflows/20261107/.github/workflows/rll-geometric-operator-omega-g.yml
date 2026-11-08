@@ -1,0 +1,27 @@
+name: RLL Omega_G Geometric Operator
+
+on:
+  pull_request:
+    paths:
+      - "data/contracts/rll_geometric_operator_omega_g.v1.yaml"
+      - "docs/science/RLL_GEOMETRIC_OPERATOR_OMEGA_G_V1.md"
+      - "tools/validate_rll_geometric_operator_omega_g.py"
+      - "tests/test_rll_geometric_operator_omega_g.py"
+      - ".github/workflows/rll-geometric-operator-omega-g.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install pytest pyyaml
+      - run: python tools/validate_rll_geometric_operator_omega_g.py
+      - run: python -m pytest -q tests/test_rll_geometric_operator_omega_g.py

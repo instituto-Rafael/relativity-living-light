@@ -1,0 +1,82 @@
+# Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
+name: DESI DR2 BAO validation
+on:
+  workflow_dispatch: null
+  push:
+    paths:
+    - data/real/cosmology/desi_bao_dr2_cobaya/**
+    - scripts/check_desi_dr2_bao_covariance.py
+    - scripts/smoke_desi_dr2_bao_covariance_loader.py
+    - tests/test_desi_dr2_bao_covariance_loader.py
+    - .github/workflows/desi-dr2-bao-validation.yml
+  pull_request:
+    paths:
+    - data/real/cosmology/desi_bao_dr2_cobaya/**
+    - scripts/check_desi_dr2_bao_covariance.py
+    - scripts/smoke_desi_dr2_bao_covariance_loader.py
+    - tests/test_desi_dr2_bao_covariance_loader.py
+    - .github/workflows/desi-dr2-bao-validation.yml
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
+jobs:
+  desi-dr2-bao:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    steps:
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - name: Verify ARM64 runner
+      run: 'test "$(uname -m)" = "aarch64"
+
+        '
+    - name: Setup Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: '3.12'
+    - name: Install DESI DR2 BAO test dependencies
+      run: 'python -m pip install --upgrade pip
+
+        python -m pip install pytest
+
+        '
+    - name: Validate DESI DR2 BAO loader without external deps
+      run: python scripts/smoke_desi_dr2_bao_covariance_loader.py
+    - name: Validate DESI DR2 BAO loader tests
+      run: python tests/test_desi_dr2_bao_covariance_loader.py
+    - name: Run DESI DR2 BAO covariance chi2 smoke
+      run: python scripts/check_desi_dr2_bao_covariance.py
+    - name: Show DESI DR2 BAO result
+      run: cat results/desi_dr2_bao_covariance_chi2.json
+    - name: Upload DESI DR2 BAO result
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: desi-dr2-bao-covariance-chi2
+        path: results/desi_dr2_bao_covariance_chi2.json
+    - name: Finalize canonical real-data policy checksums
+      if: always()
+      run: 'set -euo pipefail
+
+        ARTIFACT_DIR="artifacts/workflow-policy/desi-dr2-bao-validation/${{ github.job }}"
+
+        mkdir -p "$ARTIFACT_DIR"
+
+        . tools/ci/real_data_workflow_policy.sh
+
+        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+
+        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+
+        rll_real_data_write_checksums "$ARTIFACT_DIR"
+
+        '
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.

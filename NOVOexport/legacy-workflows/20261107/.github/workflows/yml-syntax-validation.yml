@@ -1,0 +1,112 @@
+# KNOWS_BY_ON_FIRST_LINE: structural gate; no scientific promotion.
+name: YAML and Workflow Architecture Gate
+run-name: Workflow architecture Ω · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  pull_request:
+    paths: &workflow_architecture_paths
+      - "**/*.yml"
+      - "**/*.yaml"
+      - ".github/GUIA_WORKFLOWS.md"
+      - ".github/workflow-architecture/**"
+      - "docs/workflows/**"
+      - "tools/audit_github_workflows.py"
+      - "tools/workflow_architecture.py"
+      - "tools/validate_workflow_docs.py"
+      - "tests/test_workflow_architecture.py"
+      - "tests/test_validate_workflow_docs.py"
+  push:
+    branches: [main]
+    paths: *workflow_architecture_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workflow-architecture-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  PYTHON_VERSION: "3.11"
+  RECEIPT_DIR: artifacts/yml-syntax-validation
+
+jobs:
+  validate-workflow-architecture:
+    name: Parse, govern, test, and receipt workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4 resolved 2026-07-30
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5 resolved 2026-07-30
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install deterministic validation dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml pytest
+
+      - name: Parse all YAML and enforce architecture invariants
+        run: |
+          set -euo pipefail
+          mkdir -p "$RECEIPT_DIR"
+          python3 tools/workflow_architecture.py \
+            --contract .github/workflow-architecture/invariants.v1.yml \
+            --output-dir "$RECEIPT_DIR" \
+            --strict \
+            2>&1 | tee "$RECEIPT_DIR/workflow_architecture.log"
+
+      - name: Preserve legacy isolation and real-data policy gates
+        run: |
+          set -euo pipefail
+          python3 tools/audit_github_workflows.py --strict \
+            2>&1 | tee "$RECEIPT_DIR/workflow_audit.log"
+
+      - name: Validate workflow documentation contract
+        run: |
+          set -euo pipefail
+          python3 tools/validate_workflow_docs.py --strict --write-report \
+            2>&1 | tee "$RECEIPT_DIR/workflow_docs_contract.log"
+
+      - name: Run focused adversarial tests
+        run: |
+          set -euo pipefail
+          pytest -q \
+            tests/test_workflow_architecture.py \
+            tests/test_validate_workflow_docs.py \
+            --junitxml="$RECEIPT_DIR/junit.xml" \
+            2>&1 | tee "$RECEIPT_DIR/pytest.log"
+
+      - name: Publish human-readable Ω summary
+        if: always()
+        run: |
+          set -euo pipefail
+          report="$RECEIPT_DIR/WORKFLOW_ARCHITECTURE_REPORT.md"
+          if [[ -f "$report" ]]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' 'TOKEN_VAZIO_WORKFLOW_ARCHITECTURE_REPORT' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload consultable architecture receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4 resolved 2026-07-30
+        with:
+          name: workflow-architecture-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/yml-syntax-validation/
+            artifacts/workflow-docs/
+          retention-days: 30
+          if-no-files-found: error
