@@ -1,0 +1,15 @@
+{
+ "schema":"rll.cad.t7.q16.abi.v1",
+ "status":"SCOPED_2D_TRUSS_PROTOTYPE",
+ "claim_allowed":false,
+ "certified_for_construction":false,
+ "physics_model":"symmetric triangular 3-bar pin-jointed truss; left pin right roller; apex vertical point load only",
+ "units":{"length":"mm","area":"mm^2","force":"kN","stress":"MPa","elastic_modulus":"GPa","thermal_expansion_coefficient":"micrometers-per-meter-per-K (integer 1e-6/K)"},
+ "Q16_16":{"one":65536,"sqrt3_over_2":56756,"pi_over_4":51472,"rounding":"truncation toward zero except SVG decimal presentation"},
+ "t7":{"mathematical_space":"(R/Z)^7","sample_count":42,"interpretation":"seven periodic input coordinates, not seven physical spatial dimensions","parameter_axes":["span_length","truss_rise","diagonal_area","tie_area","apex_load","young_modulus","temperature_delta"],"stability":"bounded domain; finite sampling; no validated geodesic or optimization claim"},
+ "outputs":["diagonal length","angle tangent","diagonal compression","tie tension","diagonal stress","tie stress","apex vertical deflection","unrestrained thermal extension","Euler pinned-pinned buckling kN","Euler buckling force ratio","diagonal circular equivalent diameter","tie circular equivalent diameter","flags"],
+ "critical_exclusions":["beam shear","bending moments","torsional stiffness","member connection shear","fatigue","imperfections","geometric nonlinearity","corrosion","dynamic resonance","earthquake load","distributed loads","foundation settlement","thermal restraint forces","code compliance"],
+ "freestanding_core":{"no_libc":true,"no_malloc":true,"no_syscalls":true,"no_global_mutable_state":true,"armv7_neon_available_after_feature_probe":true,"crc_ieee_software":true,"crc_hw_arm64_requires_feature_probe":true},
+ "hosted_boundary":{"svg_persist":"host file I/O","parallelism":"8 pthread workers in host, not in bare metal core","Android":"Java/DEX ART -> JNI -> native ELF, NDK and device installation NOT_RUN","L2":"small buffers and tiling only; CPU cache residency NOT_VERIFIED"},
+ "SOURCE_NOT_ARTIFACT_NOT_EXECUTION_NOT_EVIDENCE_NOT_CLAIM":true
+}

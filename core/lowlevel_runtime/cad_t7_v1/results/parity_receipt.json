@@ -1,0 +1,9 @@
+{
+  "record_count": 42,
+  "per_svg_embedded_json_parity": "PASS",
+  "binary_little_endian_parity": "PASS",
+  "csv_integer_parity": "PASS",
+  "svg_carries_extra_drawable_structure": true,
+  "schema_required_for_binary_recovery": true,
+  "claim_allowed": false
+}
