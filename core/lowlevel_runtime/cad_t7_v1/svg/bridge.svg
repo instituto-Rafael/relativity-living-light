@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200.000mm" height="700.000mm" viewBox="0 0 1200.000 700.000" data-unit="mm" data-model="2d-3bar-pinjoint" data-certification="NONE">
+<title>RLL T7 Parametric three-bar bridge — illustrative only</title>
+<desc>Physical units millimetres. Circular bar diameter determines stroke width; not a certified steel structure. No flexure, shear, torsion, thermal constraints or live-load combinations.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<line x1="100.000" y1="600.000" x2="600.000" y2="100.000" stroke-width="25.231" data-area-mm2="500.000" stroke="#3566a6" stroke-linecap="round"><title>Left diagonal compression; circular bar</title></line>
+<line x1="600.000" y1="100.000" x2="1100.000" y2="600.000" stroke-width="25.231" data-area-mm2="500.000" stroke="#3566a6" stroke-linecap="round"><title>Right diagonal compression; circular bar</title></line>
+<line x1="100.000" y1="600.000" x2="1100.000" y2="600.000" stroke-width="19.544" data-area-mm2="300.000" stroke="#b45d42" stroke-linecap="round"><title>Tie tension; circular bar</title></line>
+<g fill="#171717"><circle cx="100.000" cy="600.000" r="8"/><circle cx="1100.000" cy="600.000" r="8"/><circle cx="600.000" cy="100.000" r="8"/></g>
+<path d="M 600.000 55.000 v 35 m -10 -10 l 10 10 l 10 -10" fill="none" stroke="#b32929" stroke-width="3"/>
+<text x="15" y="26" font-size="18" fill="#222">P (kN)=1.000</text>
+<text x="15" y="55" font-size="14" fill="#333">span (mm)=1000.000; rise (mm)=500.000</text>
+<text x="15" y="78" font-size="14" fill="#333">tan(theta)=1.000; delta (mm)=0.011</text>
+</svg>
