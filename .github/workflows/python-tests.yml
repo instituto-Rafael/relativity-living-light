@@ -105,6 +105,14 @@ jobs:
           test -s results/audit/rll_real_data_evidence_bridge.json
           test -s results/audit/rll_cosmology_e0_preflight.json
 
+      - name: Scoped LCM modular graph versus Euclid (fail-closed; no gate bypass)
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_rll_lcm_graph_benchmark_v1.py' -v
+          python tools/rll_lcm_graph_benchmark_v1.py --no-timing \
+            --output results/audit/rll_lcm_graph_benchmark_v1_ci.json
+          echo "LCM source algorithms PASS_SCOPED, numerical evidence only; overall pytest and governance gates unchanged" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Run tests with auditable receipt
         run: |
           mkdir -p artifacts/python-tests
