@@ -32,6 +32,28 @@ class EpistemicGraphTests(unittest.TestCase):
         self.assertEqual(r["network_requests"], 0)
         self.assertEqual(r["secrets_read"], 0)
 
+
+    def test_composition_routes_do_not_claim(self):
+        routes = gate.compose_routes(self.contract)
+        self.assertEqual(len(routes), 5)
+        self.assertTrue(all(r["claim_allowed"] is False for r in routes))
+        self.assertTrue(all(r["posterior"] == "NOT_RUN" for r in routes))
+        by_id = {r["hypothesis_id"]: r for r in routes}
+        self.assertEqual(by_id["EUCLIDEAN_DIAGONAL"]["route_state"],
+                         "FORMAL_AXIOMATIC_PROOF_ROUTE")
+        self.assertEqual(by_id["TRIBO_XRAY_CELL"]["route_state"],
+                         "BLOCKED_PHYSICAL_MECHANISM_TOKEN_VAZIO")
+        self.assertEqual(by_id["RLL_BACKGROUND"]["eligible_primary_source_ids"],
+                         ["DESI_DR2_BAO", "PANTHEON_PLUS"])
+        self.assertIn("G5_FREEZE", by_id["RLL_BACKGROUND"]["required_next_gates"])
+
+    def test_analogy_does_not_feed_biological_posterior(self):
+        by_id = {r["hypothesis_id"]: r for r in gate.compose_routes(self.contract)}
+        self.assertEqual(by_id["MITO_ATP"]["eligible_primary_source_ids"], [])
+        self.assertEqual(by_id["MITO_ATP"]["analogies_are_not_causal_evidence"],
+                         ["hypothesis:TRIBO_XRAY_CELL"])
+
+
     def test_news_is_not_primary_data(self):
         x = copy.deepcopy(self.contract)
         x["relations"].append({"from":"source:SCIENCE_X", "to":"hypothesis:RLL_BACKGROUND",
