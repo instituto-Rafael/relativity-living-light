@@ -1,0 +1,4453 @@
+{
+  "schema": "RAFAELIA_SCIENCEX_PUBLIC_METADATA_V3",
+  "reference_date": "2026-11-07",
+  "capture_timestamp_utc": "2026-11-08T00:37:16Z",
+  "source_mhtml_sha256": "34fc8357a32e773011d5a7e7e5ada4ef73c3804de989b78e4242a29a59538cb0",
+  "source_json_sha256": "ceb8c77a4db91822571a169fca00fc9a35af35251663e0b648d3f3e933963905",
+  "counts": {
+    "snapshot_cards": 276,
+    "snapshot_unique": 268,
+    "snapshot_duplicates": 8,
+    "unique_paste_additions": 87,
+    "unique_previous20_only": 9,
+    "unique_total": 364,
+    "by_outlet": {
+      "Phys.org": 278,
+      "Tech Xplore": 16,
+      "Medical Xpress": 64,
+      "Science X": 6
+    }
+  },
+  "epistemic_contract": {
+    "claim_allowed": false,
+    "physical_validation": "NOT_RUN",
+    "medical_guidance": "NOT_AUTHORITATIVE",
+    "news_classification": "HEURISTIC_CANDIDATE",
+    "urls_for_paste_only": "TOKEN_VAZIO_UNRESOLVED",
+    "reader_note": "News titles, URL locators, dates and candidate routes only; do not treat press headlines as primary research or verified truth."
+  },
+  "copyright_boundary": "No publisher excerpts reproduced. Original provided MHTML remains in user-controlled private corpus and artifact download, not in this public repo.",
+  "papers": [
+    {
+      "arxiv": "2604.21895",
+      "title": "Heavy Quark Transport is Non-Gaussian Beyond Leading Log",
+      "url": "https://arxiv.org/abs/2604.21895",
+      "doi": "10.1103/7fd5-1kq5",
+      "epistemic_status": "PAPER_TEXT_READ",
+      "falsifier": "Calculate kernel moments n>=3, asymmetric exponential tails, generalized equilibration identity, fixed-order regulator and collider heavy-flavor data; independent fit NOT_RUN"
+    },
+    {
+      "arxiv": "2507.19588",
+      "title": "Real-Time Observation of Aharonov-Bohm Interference in a Z2 Lattice Gauge Theory on a Hybrid Qubit-Oscillator Quantum Computer",
+      "url": "https://arxiv.org/abs/2507.19588",
+      "doi": "10.1038/s41567-026-03400-6",
+      "epistemic_status": "PAPER_TEXT_READ",
+      "falsifier": "Gauss law [H,G]=0; zero flux tunneled at 2J vs π vison flux suppressed; noise/decoherence; scaling to larger lattices NOT_RUN"
+    },
+    {
+      "arxiv": "2610.00685",
+      "title": "Backdoor Purification for LoRA-Tuned LLMs via Null-Space Projection",
+      "url": "https://arxiv.org/abs/2610.00685",
+      "doi": "10.48550/arxiv.2610.00685",
+      "epistemic_status": "NEWS_PAPER_LOCATOR_ONLY",
+      "falsifier": "Poisoned trigger set, negative controls, clean accuracy, unseen triggers, adaptive attacker; no deployed safeguard"
+    },
+    {
+      "arxiv": "2610.00663",
+      "title": "Backdoor Containment via Expert Quarantine and Shutdown in LLMs",
+      "url": "https://arxiv.org/abs/2610.00663",
+      "doi": "10.48550/arxiv.2610.00663",
+      "epistemic_status": "NEWS_PAPER_LOCATOR_ONLY",
+      "falsifier": "Model routing/containment and regression under adaptive triggers; do not infer guaranteed prevention"
+    },
+    {
+      "arxiv": "2603.13461",
+      "title": "Purifying Generative LLMs from Backdoors without Prior Knowledge or Clean Reference",
+      "url": "https://arxiv.org/abs/2603.13461",
+      "doi": "10.48550/arxiv.2603.13461",
+      "epistemic_status": "NEWS_PAPER_LOCATOR_ONLY",
+      "falsifier": "Worst-case adaptive trigger success and clean-task degradation; no automatic deployment"
+    }
+  ],
+  "news": [
+    {
+      "uid": "SX-P-0001",
+      "outlet": "Phys.org",
+      "title": "The hidden ways insects support animal life—from habitat to health—go way beyond being food",
+      "news_url": "https://phys.org/news/2026-11-hidden-ways-insects-animal-life.html",
+      "date_display_raw": "3 hours ago",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0002",
+      "outlet": "Phys.org",
+      "title": "Two paths, one flux: Trapped ions simulate Aharonov–Bohm interference in a lattice gauge theory",
+      "news_url": "https://phys.org/news/2026-11-paths-flux-ions-simulate-aharonovbohm.html",
+      "date_display_raw": "6 hours ago",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0003",
+      "outlet": "Phys.org",
+      "title": "Heavy rain can more than double glacier speeds in Alaska",
+      "news_url": "https://phys.org/news/2026-11-heavy-glacier-alaska.html",
+      "date_display_raw": "8 hours ago",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0004",
+      "outlet": "Phys.org",
+      "title": "Theory predicting an older universe without dark matter or dark energy passes key cosmological tests",
+      "news_url": "https://phys.org/news/2026-11-theory-older-universe-dark-energy.html",
+      "date_display_raw": "10 hours ago",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0005",
+      "outlet": "Phys.org",
+      "title": "Polar vortex faltering weeks earlier than ever recorded",
+      "news_url": "https://phys.org/news/2026-11-polar-vortex-faltering-weeks-earlier.html",
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0006",
+      "outlet": "Phys.org",
+      "title": "Scientists discovered an unknown baby right whale off Canada. They say it's a cause for joy",
+      "news_url": "https://phys.org/news/2026-11-scientists-unknown-baby-whale-canada.html",
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0007",
+      "outlet": "Phys.org",
+      "title": "Scientists achieve record-breaking low temperature on China's space station, paving the way for new physics experiments",
+      "news_url": "https://phys.org/news/2026-11-scientists-temperature-china-space-station.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0008",
+      "outlet": "Phys.org",
+      "title": "Vibrating mirrors of light create analog of a black hole event horizon",
+      "news_url": "https://phys.org/news/2026-11-vibrating-mirrors-analog-black-hole.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0009",
+      "outlet": "Phys.org",
+      "title": "Noise pollution changes biology or behavior in 80% of animal species studied",
+      "news_url": "https://phys.org/news/2026-11-noise-pollution-biology-behavior-animal.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0010",
+      "outlet": "Phys.org",
+      "title": "A galaxy nicknamed Misty Moons offers a glimpse of early star formation",
+      "news_url": "https://phys.org/news/2026-11-galaxy-nicknamed-misty-moons-glimpse.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0011",
+      "outlet": "Phys.org",
+      "title": "Microplastic pollution could be changing the color of the Pacific Ocean",
+      "news_url": "https://phys.org/news/2026-11-microplastic-pollution-pacific-ocean.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0012",
+      "outlet": "Phys.org",
+      "title": "The wasps that horrified Darwin reveal evolution's one-way streets",
+      "news_url": "https://phys.org/news/2026-11-wasps-horrified-darwin-reveal-evolution.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0013",
+      "outlet": "Phys.org",
+      "title": "Air holes turn silicon wafers into flat ultraviolet focusing mirrors for compact optics",
+      "news_url": "https://phys.org/news/2026-11-air-holes-silicon-wafers-flat.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0014",
+      "outlet": "Phys.org",
+      "title": "Future warming events will outdo the extreme heat waves of the recent past, new study finds",
+      "news_url": "https://phys.org/news/2026-11-future-events-outdo-extreme.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0015",
+      "outlet": "Phys.org",
+      "title": "Robot successfully builds space structure in first autonomous construction demo",
+      "news_url": "https://phys.org/news/2026-11-robot-successfully-space-autonomous-demo.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0016",
+      "outlet": "Phys.org",
+      "title": "AI points researchers toward new disease targets hidden in mitochondria",
+      "news_url": "https://phys.org/news/2026-11-ai-disease-hidden-mitochondria.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0017",
+      "outlet": "Phys.org",
+      "title": "Quantum gas microscope reveals individual atoms in first tunable three-component Hubbard system",
+      "news_url": "https://phys.org/news/2026-11-quantum-gas-microscope-reveals-individual.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0018",
+      "outlet": "Phys.org",
+      "title": "How a metabolite protects the enzyme that consumes it",
+      "news_url": "https://phys.org/news/2026-11-metabolite-enzyme-consumes.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0019",
+      "outlet": "Phys.org",
+      "title": "Light-powered method resurrects 'dead-end' compounds for drug discovery",
+      "news_url": "https://phys.org/news/2026-11-powered-method-resurrects-dead-compounds.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0020",
+      "outlet": "Phys.org",
+      "title": "New 3D microscope packs many imaging tools into one system",
+      "news_url": "https://phys.org/news/2026-11-3d-microscope-imaging-tools.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0021",
+      "outlet": "Phys.org",
+      "title": "New method measures microplastics in the air using an uncrewed aerial system",
+      "news_url": "https://phys.org/news/2026-11-method-microplastics-air-uncrewed-aerial.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0022",
+      "outlet": "Phys.org",
+      "title": "Fruit fly study offers clues to insect survival in a hotter, drier world",
+      "news_url": "https://phys.org/news/2026-11-fruit-fly-clues-insect-survival.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0023",
+      "outlet": "Phys.org",
+      "title": "'Mega heat waves' strengthened by interaction between soil moisture, atmospheric pressure and temperature",
+      "news_url": "https://phys.org/news/2026-11-mega-interaction-soil-moisture-atmospheric.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0024",
+      "outlet": "Phys.org",
+      "title": "High-precision timeline helps clarify an ancient magma surge in the North Cascades",
+      "news_url": "https://phys.org/news/2026-11-high-precision-timeline-ancient-magma.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0025",
+      "outlet": "Phys.org",
+      "title": "European forests need to solve two crises—but not necessarily in one place",
+      "news_url": "https://phys.org/news/2026-11-european-forests-crises-necessarily.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0026",
+      "outlet": "Phys.org",
+      "title": "Paired but out of step: Why electron pairing alone is not enough for room-temperature superconductivity",
+      "news_url": "https://phys.org/news/2026-11-paired-electron-pairing-room-temperature.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0027",
+      "outlet": "Phys.org",
+      "title": "Mineral-forming method removes more than 99% of radioactive technetium from liquid waste",
+      "news_url": "https://phys.org/news/2026-11-mineral-method-radioactive-technetium-liquid.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0028",
+      "outlet": "Phys.org",
+      "title": "Smart packaging film 'lights up' under UV as meat loses freshness",
+      "news_url": "https://phys.org/news/2026-11-smart-packaging-uv-meat-freshness.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0029",
+      "outlet": "Phys.org",
+      "title": "Wacky magnetic fields of ice giants may stem from conductivity changes in their deep interiors",
+      "news_url": "https://phys.org/news/2026-11-wacky-magnetic-fields-ice-giants.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0030",
+      "outlet": "Phys.org",
+      "title": "Atom-scale model could help improve material growth for advanced electronics",
+      "news_url": "https://phys.org/news/2026-11-atom-scale-material-growth-advanced.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0031",
+      "outlet": "Phys.org",
+      "title": "SynFit guides enzyme engineering by balancing several useful traits at once",
+      "news_url": "https://phys.org/news/2026-11-synfit-enzyme-traits.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0032",
+      "outlet": "Phys.org",
+      "title": "Cancer-linked gene uses 'shortcut' to trigger cell division",
+      "news_url": "https://phys.org/news/2026-11-cancer-linked-gene-shortcut-trigger.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0033",
+      "outlet": "Phys.org",
+      "title": "Technique that spots tRNAs in action could accelerate drug development for inherited diseases",
+      "news_url": "https://phys.org/news/2026-11-technique-trnas-action-drug-inherited.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0034",
+      "outlet": "Phys.org",
+      "title": "From chaos to 'intelligent' soft matter—how tiny chemical differences guide droplets into ordered structures",
+      "news_url": "https://phys.org/news/2026-11-chaos-intelligent-soft-tiny-chemical.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0035",
+      "outlet": "Phys.org",
+      "title": "Tiny biodegradable particles poke openings in skin to boost topical drug delivery",
+      "news_url": "https://phys.org/news/2026-11-tiny-biodegradable-particles-skin-boost.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0036",
+      "outlet": "Phys.org",
+      "title": "Innovative study tests how people respond to flood warnings under pressure",
+      "news_url": "https://phys.org/news/2026-11-people-pressure.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0037",
+      "outlet": "Phys.org",
+      "title": "Forests or underground storage? New metric compares risks of carbon removal projects",
+      "news_url": "https://phys.org/news/2026-11-forests-underground-storage-metric-carbon.html",
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0038",
+      "outlet": "Phys.org",
+      "title": "Pinning down the structure of quark-gluon plasma, the universe's first fluid",
+      "news_url": "https://phys.org/news/2026-11-pinning-quark-gluon-plasma-universe.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0039",
+      "outlet": "Phys.org",
+      "title": "Astronomers deliver the sharpest and deepest view yet of the low-frequency radio sky",
+      "news_url": "https://phys.org/news/2026-11-astronomers-sharpest-deepest-view-frequency.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0040",
+      "outlet": "Phys.org",
+      "title": "Archaeologists uncover possible 19th-century castaway camp on island 'at the end of the world'",
+      "news_url": "https://phys.org/news/2026-11-archaeologists-uncover-19th-century-castaway.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0041",
+      "outlet": "Phys.org",
+      "title": "Ancient Maya mercury use may have come at a severe environmental cost",
+      "news_url": "https://phys.org/news/2026-11-ancient-maya-mercury-severe-environmental.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0042",
+      "outlet": "Phys.org",
+      "title": "After 40 years of searching, physicists find evidence for an ultrarare particle decay",
+      "news_url": "https://phys.org/news/2026-11-years-physicists-evidence-ultrarare-particle.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0043",
+      "outlet": "Phys.org",
+      "title": "Earth's slowing spin may have shaped its primordial crust",
+      "news_url": "https://phys.org/news/2026-11-earth-primordial-crust.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0044",
+      "outlet": "Phys.org",
+      "title": "Prehistoric 'giant rat' found in Thailand from fossil teeth",
+      "news_url": "https://phys.org/news/2026-11-prehistoric-giant-rat-thailand-fossil.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0045",
+      "outlet": "Phys.org",
+      "title": "Plastic bags and bottles become industrial-strength adhesives through new upcycling method",
+      "news_url": "https://phys.org/news/2026-11-plastic-bags-bottles-industrial-strength.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0046",
+      "outlet": "Phys.org",
+      "title": "Physicist develops detector capable of counting photons for quantum computing",
+      "news_url": "https://phys.org/news/2026-11-physicist-detector-capable-photons-quantum.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0047",
+      "outlet": "Phys.org",
+      "title": "Fractal patterns reveal hidden limits to AI predictability",
+      "news_url": "https://phys.org/news/2026-11-fractal-patterns-reveal-hidden-limits.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0048",
+      "outlet": "Phys.org",
+      "title": "Webb Space Telescope's little red dots could hold key to first black holes",
+      "news_url": "https://phys.org/news/2026-11-webb-space-telescope-red-dots.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0049",
+      "outlet": "Phys.org",
+      "title": "When Einstein's gravitational waves meet Newton's tides",
+      "news_url": "https://phys.org/news/2026-11-einstein-gravitational-newton-tides.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0050",
+      "outlet": "Phys.org",
+      "title": "Antibiotic pollution may be key factor in honeybee colony collapses",
+      "news_url": "https://phys.org/news/2026-11-antibiotic-pollution-key-factor-honeybee.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0051",
+      "outlet": "Phys.org",
+      "title": "How do octopuses remember? Scientists uncover a surprising secret",
+      "news_url": "https://phys.org/news/2026-11-octopuses-scientists-uncover-secret.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0052",
+      "outlet": "Phys.org",
+      "title": "Connecting artificial intelligence with the tools of astrophysical research",
+      "news_url": "https://phys.org/news/2026-11-artificial-intelligence-tools-astrophysical.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0053",
+      "outlet": "Phys.org",
+      "title": "New microscopy method reveals tiny cell structures and their molecular surroundings",
+      "news_url": "https://phys.org/news/2026-11-microscopy-method-reveals-tiny-cell.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0054",
+      "outlet": "Phys.org",
+      "title": "Land plants' closest algal relatives evolved multicellular growth repeatedly, genetic analysis suggests",
+      "news_url": "https://phys.org/news/2026-11-closest-algal-evolved-multicellular-growth.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0055",
+      "outlet": "Phys.org",
+      "title": "Electrical control of an unconventional quantum transport state demonstrated in a magnet for the first time",
+      "news_url": "https://phys.org/news/2026-11-electrical-unconventional-quantum-state-magnet.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0056",
+      "outlet": "Phys.org",
+      "title": "Coating made from renewable plant-based materials could simplify recycling while reducing exposure to microplastics",
+      "news_url": "https://phys.org/news/2026-11-coating-renewable-based-materials-recycling.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0057",
+      "outlet": "Phys.org",
+      "title": "Which infinity is bigger? Under alternative mathematical rules, a 2D map emerges",
+      "news_url": "https://phys.org/news/2026-11-infinity-bigger-alternative-mathematical-2d.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0058",
+      "outlet": "Phys.org",
+      "title": "Laser-plasma accelerator could generate bright X-rays for biological imaging, simulations show",
+      "news_url": "https://phys.org/news/2026-11-laser-plasma-generate-bright-rays.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0059",
+      "outlet": "Phys.org",
+      "title": "Twisted atomic layers slide spontaneously at room temperature in simulations",
+      "news_url": "https://phys.org/news/2026-11-atomic-layers-spontaneously-room-temperature.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0060",
+      "outlet": "Phys.org",
+      "title": "Microbial growth in simulated Mars conditions could guide search for life",
+      "news_url": "https://phys.org/news/2026-11-microbial-growth-simulated-mars-conditions.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0061",
+      "outlet": "Phys.org",
+      "title": "A 70-million-year-old genetic rescue allowed codfishes to escape extinction and shape the North Atlantic",
+      "news_url": "https://phys.org/news/2026-11-million-year-genetic-codfishes-extinction.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0062",
+      "outlet": "Phys.org",
+      "title": "Mystery origin of iconic Stonehenge Altar Stone deepens as search narrows",
+      "news_url": "https://phys.org/news/2026-11-mystery-iconic-stonehenge-altar-stone.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0063",
+      "outlet": "Phys.org",
+      "title": "How octopuses squeeze through too-small gaps",
+      "news_url": "https://phys.org/news/2026-11-octopuses-small-gaps.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0064",
+      "outlet": "Phys.org",
+      "title": "Paired DNA strands recognize shape, not just sequence, in new small-molecule sensing method",
+      "news_url": "https://phys.org/news/2026-11-paired-dna-strands-sequence-small.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0065",
+      "outlet": "Phys.org",
+      "title": "What AI can lose when it makes Holocaust writings easier to read",
+      "news_url": "https://phys.org/news/2026-11-ai-holocaust-easier.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0066",
+      "outlet": "Phys.org",
+      "title": "New placenta-on-a-chip model allows engineers to study effects of environmental toxins",
+      "news_url": "https://phys.org/news/2026-11-placenta-chip-effects-environmental-toxins.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0067",
+      "outlet": "Phys.org",
+      "title": "Leaf nutrient balance helps explain earlier fall color in US forests",
+      "news_url": "https://phys.org/news/2026-11-leaf-nutrient-earlier-fall-forests.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0068",
+      "outlet": "Phys.org",
+      "title": "Born to be queen: A look inside fire ant hierarchy",
+      "news_url": "https://phys.org/news/2026-11-born-queen-ant-hierarchy.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0069",
+      "outlet": "Phys.org",
+      "title": "DNA nanoswitches find new drug leads faster by measuring protein interactions",
+      "news_url": "https://phys.org/news/2026-11-dna-nanoswitches-drug-faster-protein.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0070",
+      "outlet": "Phys.org",
+      "title": "Swiss Army knife of the Hawaiian Islands—how an endangered bird drills into trees to find food",
+      "news_url": "https://phys.org/news/2026-11-swiss-army-knife-hawaiian-islands.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0071",
+      "outlet": "Phys.org",
+      "title": "Ice-age abrupt climate shifts were not as fast as thought, new study finds",
+      "news_url": "https://phys.org/news/2026-11-ice-age-abrupt-climate-shifts.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0072",
+      "outlet": "Phys.org",
+      "title": "Hooved mammals that migrate may be at greater risk of extinction than those that stay put",
+      "news_url": "https://phys.org/news/2026-11-hooved-mammals-migrate-greater-extinction.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0073",
+      "outlet": "Phys.org",
+      "title": "Newly identified protein mechanism helps explain how cells respond to physical forces",
+      "news_url": "https://phys.org/news/2026-11-newly-protein-mechanism-cells-physical.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0074",
+      "outlet": "Phys.org",
+      "title": "A sweeter future? AI helps scientists discover new sugar substitutes",
+      "news_url": "https://phys.org/news/2026-11-sweeter-future-ai-scientists-sugar.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0075",
+      "outlet": "Phys.org",
+      "title": "Tiny animal populations can recover, challenging assumptions about extinction risk",
+      "news_url": "https://phys.org/news/2026-11-tiny-animal-populations-recover-assumptions.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0076",
+      "outlet": "Phys.org",
+      "title": "Controlling molecular helicity: A new approach to constructing chiral nanographenes",
+      "news_url": "https://phys.org/news/2026-11-molecular-helicity-approach-chiral-nanographenes.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0077",
+      "outlet": "Phys.org",
+      "title": "Chilean rodent population collapse reveals how extreme drought can overwhelm wildlife's resilience",
+      "news_url": "https://phys.org/news/2026-11-chilean-rodent-population-collapse-reveals.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0078",
+      "outlet": "Phys.org",
+      "title": "Centuries-old cemetery helps scientists link climate shocks to Industrial Revolution disease",
+      "news_url": "https://phys.org/news/2026-11-centuries-cemetery-scientists-link-climate.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0079",
+      "outlet": "Phys.org",
+      "title": "Coordinated activity gives large pedestrian crowds a distinctive seismic signature",
+      "news_url": "https://phys.org/news/2026-11-large-pedestrian-crowds-distinctive-seismic.html",
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0080",
+      "outlet": "Phys.org",
+      "title": "Pulsars set first mass limits on supermassive black hole pairs in the early universe",
+      "news_url": "https://phys.org/news/2026-11-pulsars-mass-limits-supermassive-black.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0081",
+      "outlet": "Phys.org",
+      "title": "European orbiter detects fresh hints of volcanic activity on Mars",
+      "news_url": "https://phys.org/news/2026-11-european-orbiter-fresh-hints-volcanic.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0082",
+      "outlet": "Phys.org",
+      "title": "Foot-stiffening socks could make walking less tiring",
+      "news_url": "https://phys.org/news/2026-11-foot-stiffening-socks.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0083",
+      "outlet": "Phys.org",
+      "title": "Evolution has repeatedly turned hawkmoth genitals into defensive tools",
+      "news_url": "https://phys.org/news/2026-11-evolution-hawkmoth-genitals-defensive-tools.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0084",
+      "outlet": "Phys.org",
+      "title": "Hundreds of Ice Age rock art engravings discovered hidden in plain sight",
+      "news_url": "https://phys.org/news/2026-10-hundreds-ice-age-art-engravings.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0085",
+      "outlet": "Phys.org",
+      "title": "CT scans reveal four-letter code to 400-year-old lock from Welsh shipwreck",
+      "news_url": "https://phys.org/news/2026-11-ct-scans-reveal-letter-code.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z",
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0086",
+      "outlet": "Phys.org",
+      "title": "Call adjustments help bats keep their echolocation signals distinct, study finds",
+      "news_url": "https://phys.org/news/2026-11-adjustments-echolocation-distinct.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0087",
+      "outlet": "Phys.org",
+      "title": "First direct observations reveal hydrogen dissolved in tiny gaps between metal atoms",
+      "news_url": "https://phys.org/news/2026-11-reveal-hydrogen-dissolved-tiny-gaps.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0088",
+      "outlet": "Phys.org",
+      "title": "Ancient coins suggest influential Iron Age king was female",
+      "news_url": "https://phys.org/news/2026-11-ancient-coins-influential-iron-age.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0089",
+      "outlet": "Phys.org",
+      "title": "New modeling links gaps in Earth's geological record to rising and sinking continents",
+      "news_url": "https://phys.org/news/2026-11-links-gaps-earth-geological-continents.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0090",
+      "outlet": "Phys.org",
+      "title": "Carbon dots fluoresce their way through the rainbow as liquids change",
+      "news_url": "https://phys.org/news/2026-11-carbon-dots-fluoresce-rainbow-liquids.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0091",
+      "outlet": "Phys.org",
+      "title": "Giant planet emerges from two-year-old JWST data thanks to glare-removal technique",
+      "news_url": "https://phys.org/news/2026-11-giant-planet-emerges-year-jwst.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0092",
+      "outlet": "Phys.org",
+      "title": "A carefully timed pair of light pulses can amplify the motion of atomic layers in a quantum material",
+      "news_url": "https://phys.org/news/2026-11-pair-pulses-amplify-motion-atomic.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0093",
+      "outlet": "Phys.org",
+      "title": "NASA space telescope plunges to Earth after two decades studying cosmic explosions",
+      "news_url": "https://phys.org/news/2026-11-nasa-space-telescope-plunges-earth.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0094",
+      "outlet": "Phys.org",
+      "title": "Flat feet may have helped Neanderthals stay stable while carrying heavy loads",
+      "news_url": "https://phys.org/news/2026-11-flat-feet-neanderthals-stay-stable.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0095",
+      "outlet": "Phys.org",
+      "title": "Cosmic hydrogen measurement marks breakthrough in mapping the universe",
+      "news_url": "https://phys.org/news/2026-11-cosmic-hydrogen-breakthrough-universe.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0096",
+      "outlet": "Phys.org",
+      "title": "Genetic interaction map could lead to better antibiotic pairings for tuberculosis",
+      "news_url": "https://phys.org/news/2026-11-genetic-interaction-antibiotic-pairings-tuberculosis.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0097",
+      "outlet": "Phys.org",
+      "title": "Using ChatGPT at work? Your boss may trust you less, new study finds",
+      "news_url": "https://phys.org/news/2026-11-chatgpt-boss.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0098",
+      "outlet": "Phys.org",
+      "title": "Ancient DNA traces origins of English, German and Scandinavian languages",
+      "news_url": "https://phys.org/news/2026-11-ancient-dna-english-german-scandinavian.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0099",
+      "outlet": "Phys.org",
+      "title": "A cosmic 'leaf blower': Light-propelled winds help explain early universe's bright galaxies",
+      "news_url": "https://phys.org/news/2026-11-cosmic-leaf-blower-propelled-early.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0100",
+      "outlet": "Phys.org",
+      "title": "Long-term temperature records reveal a surprising picture of climate change on Kilimanjaro",
+      "news_url": "https://phys.org/news/2026-11-term-temperature-reveal-picture-climate.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0101",
+      "outlet": "Phys.org",
+      "title": "Wild animals can now GPS-collar themselves for research",
+      "news_url": "https://phys.org/news/2026-11-wild-animals-gps-collar.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0102",
+      "outlet": "Phys.org",
+      "title": "New research uncovers chiral topological phases in metals without structural order",
+      "news_url": "https://phys.org/news/2026-11-uncovers-chiral-topological-phases-metals.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0103",
+      "outlet": "Phys.org",
+      "title": "Traditional Korean paper becomes breathable patch for future wearable health care",
+      "news_url": "https://phys.org/news/2026-11-traditional-korean-paper-breathable-patch.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0104",
+      "outlet": "Phys.org",
+      "title": "Big extended families help adult female ground squirrels survive hibernation",
+      "news_url": "https://phys.org/news/2026-11-big-families-adult-female-ground.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0105",
+      "outlet": "Phys.org",
+      "title": "Molecular choreography: How the p97 protein regulates cellular quality control",
+      "news_url": "https://phys.org/news/2026-11-molecular-choreography-p97-protein-cellular.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0106",
+      "outlet": "Phys.org",
+      "title": "Trained dogs detected invasive plant species in Germany with 75% accuracy",
+      "news_url": "https://phys.org/news/2026-11-dogs-invasive-species-germany-accuracy.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0107",
+      "outlet": "Phys.org",
+      "title": "Gold mining introduces an overlooked threat to wild caimans",
+      "news_url": "https://phys.org/news/2026-11-gold-overlooked-threat-wild-caimans.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0108",
+      "outlet": "Phys.org",
+      "title": "Overlooked insects are bucking the trend and becoming more abundant, study finds",
+      "news_url": "https://phys.org/news/2026-11-overlooked-insects-bucking-trend-abundant.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0109",
+      "outlet": "Phys.org",
+      "title": "AlphaFold 3 predicts complex immune interactions using protein sequences alone",
+      "news_url": "https://phys.org/news/2026-11-alphafold-complex-immune-interactions-protein.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0110",
+      "outlet": "Phys.org",
+      "title": "A 7,000-year-old piece of leather reveals a deep history of Spanish goats",
+      "news_url": "https://phys.org/news/2026-11-year-piece-leather-reveals-deep.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0111",
+      "outlet": "Phys.org",
+      "title": "New species of pygmygoby discovered at the edge of the Red Sea's unexplored deep reefs",
+      "news_url": "https://phys.org/news/2026-11-species-pygmygoby-edge-red-sea.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0112",
+      "outlet": "Phys.org",
+      "title": "Satellite analysis finds little evidence that data centers cause widespread ground warming",
+      "news_url": "https://phys.org/news/2026-11-satellite-analysis-evidence-centers-widespread.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0113",
+      "outlet": "Phys.org",
+      "title": "Smiling can make you happier—unless someone forces you to do it",
+      "news_url": "https://phys.org/news/2026-11-happier.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0114",
+      "outlet": "Phys.org",
+      "title": "This fruit fly's aphrodisiac reveals how social and environmental context shape mating practices",
+      "news_url": "https://phys.org/news/2026-11-fruit-fly-aphrodisiac-reveals-social.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0115",
+      "outlet": "Phys.org",
+      "title": "Molecular imaging reveals how shape-shifting protein complex captures DNA and holds separate sections together",
+      "news_url": "https://phys.org/news/2026-11-molecular-imaging-reveals-shifting-protein.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0116",
+      "outlet": "Phys.org",
+      "title": "Nature's looking glass: Crafting mirrors from plants",
+      "news_url": "https://phys.org/news/2026-11-nature-glass-crafting-mirrors.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0117",
+      "outlet": "Phys.org",
+      "title": "Seagrass helps Biscayne Bay's mangroves keep up with rising seas",
+      "news_url": "https://phys.org/news/2026-11-seagrass-biscayne-bay-mangroves-seas.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0118",
+      "outlet": "Phys.org",
+      "title": "Tracing Darwin's finches' deadly new invader—the avian vampire fly",
+      "news_url": "https://phys.org/news/2026-11-darwin-finches-deadly-invader-avian.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0119",
+      "outlet": "Phys.org",
+      "title": "Tiny melt traces shed light on the Colorado Plateau's explosive past",
+      "news_url": "https://phys.org/news/2026-11-tiny-colorado-plateau-explosive.html",
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0120",
+      "outlet": "Phys.org",
+      "title": "Physicists step closer to the 'Zeptoverse' after 42-year particle search",
+      "news_url": "https://phys.org/news/2026-11-physicists-closer-zeptoverse-year-particle.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0121",
+      "outlet": "Phys.org",
+      "title": "Crow experiments suggest switching to vocal communication requires extra mental effort",
+      "news_url": "https://phys.org/news/2026-11-crow-vocal-communication-requires-extra.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0122",
+      "outlet": "Phys.org",
+      "title": "Bee nest linings could inspire plastics that break down in soil",
+      "news_url": "https://phys.org/news/2026-11-bee-linings-plastics-soil.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0123",
+      "outlet": "Phys.org",
+      "title": "Tell this AI what you want a protein to do—and it designs one",
+      "news_url": "https://phys.org/news/2026-11-ai-protein.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0124",
+      "outlet": "Phys.org",
+      "title": "A tiny shift exposes a cold brown dwarf masquerading as an early galaxy",
+      "news_url": "https://phys.org/news/2026-11-tiny-shift-exposes-cold-brown.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0125",
+      "outlet": "Phys.org",
+      "title": "Leviathan's sprawling stars challenge idea that dusty giants become compact galaxies",
+      "news_url": "https://phys.org/news/2026-10-leviathan-sprawling-stars-idea-dusty.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0126",
+      "outlet": "Phys.org",
+      "title": "Light-matter hybrids form supersolid quantum state at room temperature",
+      "news_url": "https://phys.org/news/2026-11-hybrids-supersolid-quantum-state-room.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0127",
+      "outlet": "Phys.org",
+      "title": "The marginalia found in millions of Arabic manuscripts could reshape our understanding of Islamic history",
+      "news_url": "https://phys.org/news/2026-11-marginalia-millions-arabic-manuscripts-reshape.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0128",
+      "outlet": "Phys.org",
+      "title": "Fire losses to U.S. buildings could nearly triple by 2060 without new protections",
+      "news_url": "https://phys.org/news/2026-11-losses-triple.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0129",
+      "outlet": "Phys.org",
+      "title": "North Atlantic's 'cold blob' may contain climate nuance",
+      "news_url": "https://phys.org/news/2026-11-north-atlantic-cold-blob-climate.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0130",
+      "outlet": "Phys.org",
+      "title": "A type of Arctic Ocean bacteria may be using acetone to turn carbon into food",
+      "news_url": "https://phys.org/news/2026-11-arctic-ocean-bacteria-acetone-carbon.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0131",
+      "outlet": "Phys.org",
+      "title": "Fingernail-sized chip untangles mixed light into clean beams",
+      "news_url": "https://phys.org/news/2026-11-fingernail-sized-chip-untangles.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0132",
+      "outlet": "Phys.org",
+      "title": "Mapping Kīlauea's magma reservoirs at high resolution",
+      "news_url": "https://phys.org/news/2026-11-klauea-magma-reservoirs-high-resolution.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0133",
+      "outlet": "Phys.org",
+      "title": "A laser can draw superconductivity at the nanoscale",
+      "news_url": "https://phys.org/news/2026-11-laser-superconductivity-nanoscale.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0134",
+      "outlet": "Phys.org",
+      "title": "Red and green auroras may share electron-driven origins",
+      "news_url": "https://phys.org/news/2026-11-red-green-auroras-electron-driven.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0135",
+      "outlet": "Phys.org",
+      "title": "Tiny fossils show brittle stars gathered around a dead whale 9.5 million years ago",
+      "news_url": "https://phys.org/news/2026-11-tiny-fossils-brittle-stars-dead.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0136",
+      "outlet": "Phys.org",
+      "title": "'Evolution in the act': Forest lizards reveal rapid adaptation in a warming world",
+      "news_url": "https://phys.org/news/2026-11-evolution-forest-lizards-reveal-rapid.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0137",
+      "outlet": "Phys.org",
+      "title": "When should we listen for alien signals? Scientists turn to game theory",
+      "news_url": "https://phys.org/news/2026-11-alien-scientists-game-theory.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0138",
+      "outlet": "Phys.org",
+      "title": "An asteroid's shape influences where a nuclear blast must be aimed to deflect it",
+      "news_url": "https://phys.org/news/2026-11-asteroid-nuclear-blast-aimed-deflect.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0139",
+      "outlet": "Phys.org",
+      "title": "Boat burial reveals leprosy strain in fifth-century Germany",
+      "news_url": "https://phys.org/news/2026-11-boat-burial-reveals-leprosy-strain.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0140",
+      "outlet": "Phys.org",
+      "title": "Southern Ocean waters reveal distinct nutrient recycling pathways during decades-long journeys north",
+      "news_url": "https://phys.org/news/2026-11-southern-ocean-reveal-distinct-nutrient.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0141",
+      "outlet": "Phys.org",
+      "title": "Scarcer food may have pushed early humans to rework stone tools for longer use",
+      "news_url": "https://phys.org/news/2026-11-scarcer-food-early-humans-rework.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0142",
+      "outlet": "Phys.org",
+      "title": "Forgotten flint tools reveal how Egypt's farmers organized work before the pharaohs",
+      "news_url": "https://phys.org/news/2026-11-forgotten-flint-tools-reveal-egypt.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0143",
+      "outlet": "Phys.org",
+      "title": "Cooking is a bigger source of harmful air particles than vehicle exhausts in London and Beijing",
+      "news_url": "https://phys.org/news/2026-11-cooking-bigger-source-air-particles.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0144",
+      "outlet": "Phys.org",
+      "title": "Using vibrations to reveal what lies beneath other planets' surfaces",
+      "news_url": "https://phys.org/news/2026-11-vibrations-reveal-beneath-planets-surfaces.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0145",
+      "outlet": "Phys.org",
+      "title": "Finding the fingerprints of noisy distributions in random quantum systems",
+      "news_url": "https://phys.org/news/2026-11-fingerprints-noisy-random-quantum.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0146",
+      "outlet": "Phys.org",
+      "title": "Body size, not competition, may kick-start evolution",
+      "news_url": "https://phys.org/news/2026-11-body-size-competition-evolution.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0147",
+      "outlet": "Phys.org",
+      "title": "Cold without consequences? Short-term climate fluctuations appear to have had less impact on early farmers",
+      "news_url": "https://phys.org/news/2026-11-cold-consequences-short-term-climate.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0148",
+      "outlet": "Phys.org",
+      "title": "Semiautomated platform delivers consistent batches of extracellular vesicles for potential regenerative therapies",
+      "news_url": "https://phys.org/news/2026-11-semiautomated-platform-batches-extracellular-vesicles.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0149",
+      "outlet": "Phys.org",
+      "title": "Plant-inspired natural coatings can beat forever chemicals",
+      "news_url": "https://phys.org/news/2026-11-natural-coatings-chemicals.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0150",
+      "outlet": "Phys.org",
+      "title": "Reading single vesicles reveals clues to the origin of chronic inflammation",
+      "news_url": "https://phys.org/news/2026-11-vesicles-reveals-clues-chronic-inflammation.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0151",
+      "outlet": "Phys.org",
+      "title": "Wherever there are people, there is also wildlife—though not necessarily at the same time",
+      "news_url": "https://phys.org/news/2026-11-people-wildlife-necessarily.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0152",
+      "outlet": "Phys.org",
+      "title": "How humans influence fish behavior and why this is important for species conservation",
+      "news_url": "https://phys.org/news/2026-11-humans-fish-behavior-important-species.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0153",
+      "outlet": "Phys.org",
+      "title": "Silent lakes ahead? Long-term study finds common loon productivity is dropping across North America",
+      "news_url": "https://phys.org/news/2026-11-silent-lakes-term-common-loon.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0154",
+      "outlet": "Phys.org",
+      "title": "Tijuana River pollution doesn't stay put—it can travel seven times farther than expected",
+      "news_url": "https://phys.org/news/2026-11-tijuana-river-pollution-doesnt-stay.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0155",
+      "outlet": "Phys.org",
+      "title": "Researchers target PFAS with lower-temperature destruction method",
+      "news_url": "https://phys.org/news/2026-11-pfas-temperature-destruction-method.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0156",
+      "outlet": "Phys.org",
+      "title": "Scientists revive decades-old approach to target cancer-linked genes using synthetic DNA",
+      "news_url": "https://phys.org/news/2026-11-scientists-revive-decades-approach-cancer.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0157",
+      "outlet": "Phys.org",
+      "title": "Pregnant mandrill monkeys are more likely to miscarry when also nursing an infant",
+      "news_url": "https://phys.org/news/2026-11-pregnant-mandrill-monkeys-miscarry-nursing.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0158",
+      "outlet": "Phys.org",
+      "title": "Are Counter-Strike players better at decision-making? Study reveals faster brain processing in expert gamers",
+      "news_url": "https://phys.org/news/2026-11-counter-players-decision-reveals-faster.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0159",
+      "outlet": "Phys.org",
+      "title": "More power, less payoff: Study reveals a bottleneck in cleaner methanol production",
+      "news_url": "https://phys.org/news/2026-11-power-payoff-reveals-bottleneck-cleaner.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0160",
+      "outlet": "Phys.org",
+      "title": "Silk microneedles offer new way to deliver vaccines to farmed fish",
+      "news_url": "https://phys.org/news/2026-11-silk-microneedles-vaccines-farmed-fish.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0161",
+      "outlet": "Phys.org",
+      "title": "Beetle poop may have helped shape millions of years of yeast evolution",
+      "news_url": "https://phys.org/news/2026-11-beetle-poop-millions-years-yeast.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0162",
+      "outlet": "Phys.org",
+      "title": "Plants' immune memory hints at new crop breeding approach",
+      "news_url": "https://phys.org/news/2026-11-immune-memory-hints-crop-approach.html",
+      "date_display_raw": "Nov 3, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0163",
+      "outlet": "Phys.org",
+      "title": "Volcanic eruptions in the tropics are a major factor in Earth's thermostat",
+      "news_url": "https://phys.org/news/2026-11-volcanic-eruptions-tropics-major-factor.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0164",
+      "outlet": "Phys.org",
+      "title": "Early humans needed more than access to water to settle ancient Arabian deserts",
+      "news_url": "https://phys.org/news/2026-11-early-humans-access-ancient-arabian.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0165",
+      "outlet": "Phys.org",
+      "title": "Single molecules could provide the building blocks for future quantum networks",
+      "news_url": "https://phys.org/news/2026-11-molecules-blocks-future-quantum-networks.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0166",
+      "outlet": "Phys.org",
+      "title": "Ultrathin kagome material opens a route to study unusual quantum states",
+      "news_url": "https://phys.org/news/2026-10-ultrathin-kagome-material-route-unusual.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0167",
+      "outlet": "Phys.org",
+      "title": "Dust-shrouded Milky Way star cluster may be nearly as old as the universe",
+      "news_url": "https://phys.org/news/2026-10-shrouded-milky-star-cluster-universe.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0168",
+      "outlet": "Phys.org",
+      "title": "According to science, you may be more likely to gain respect and status by helping others",
+      "news_url": "https://phys.org/news/2026-11-science-gain-respect-status.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0169",
+      "outlet": "Phys.org",
+      "title": "Historical records reveal the bitter truth about 17th-century Transylvania's climate",
+      "news_url": "https://phys.org/news/2026-11-historical-reveal-bitter-truth-17th.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0170",
+      "outlet": "Phys.org",
+      "title": "A smart window grows a silver shield to keep sunlight's heat out",
+      "news_url": "https://phys.org/news/2026-11-smart-window-silver-shield-sunlight.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0171",
+      "outlet": "Phys.org",
+      "title": "A CRISPR gene boost reduces seizures and strengthens muscles in mice",
+      "news_url": "https://phys.org/news/2026-11-crispr-gene-boost-seizures-muscles.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0172",
+      "outlet": "Phys.org",
+      "title": "Scientists build whole-Earth simulation to help find life on other planets",
+      "news_url": "https://phys.org/news/2026-11-scientists-earth-simulation-life-planets.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0173",
+      "outlet": "Phys.org",
+      "title": "From wild to mild: Friendly foxes show changes in brain region",
+      "news_url": "https://phys.org/news/2026-11-wild-mild-friendly-foxes-brain.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0174",
+      "outlet": "Phys.org",
+      "title": "National study pinpoints states with steepest warming trends since 1980",
+      "news_url": "https://phys.org/news/2026-11-national-states-steepest-trends.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0175",
+      "outlet": "Phys.org",
+      "title": "Flexible connectors enable new designer materials built from nanoparticles",
+      "news_url": "https://phys.org/news/2026-11-flexible-connectors-enable-materials-built.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0176",
+      "outlet": "Phys.org",
+      "title": "400,000-year-old fossilized termite nests named after Little Karoo town",
+      "news_url": "https://phys.org/news/2026-11-year-fossilized-termite-karoo-town.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0177",
+      "outlet": "Phys.org",
+      "title": "An unusual sexual bond between a bull and a male donkey",
+      "news_url": "https://phys.org/news/2026-10-unusual-sexual-bond-bull-male.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0178",
+      "outlet": "Phys.org",
+      "title": "Why birds speed up to slow down: The physics of landing",
+      "news_url": "https://phys.org/news/2026-11-birds-physics.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0179",
+      "outlet": "Phys.org",
+      "title": "Overlooked material in Ryugu and meteorites may explain how water spared ancient chemistry",
+      "news_url": "https://phys.org/news/2026-11-overlooked-material-ryugu-meteorites-ancient.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0180",
+      "outlet": "Phys.org",
+      "title": "Predicting jumping genes' roles in changing genome size",
+      "news_url": "https://phys.org/news/2026-11-genes-roles-genome-size.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0181",
+      "outlet": "Phys.org",
+      "title": "Dinosaur blood—oldest discovery rewrites what fossils can reveal about the past",
+      "news_url": "https://phys.org/news/2026-10-dinosaur-blood-oldest-discovery-rewrites.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0182",
+      "outlet": "Phys.org",
+      "title": "Stars make oxygen for small galaxies, but they lose most of it",
+      "news_url": "https://phys.org/news/2026-11-stars-oxygen-small-galaxies.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0183",
+      "outlet": "Phys.org",
+      "title": "Analysis of Inca mummies identifies the drugs used in their most important sacrificial ritual",
+      "news_url": "https://phys.org/news/2026-10-analysis-inca-mummies-drugs-important.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0184",
+      "outlet": "Phys.org",
+      "title": "Enzyme found to have surprising role in earliest infant gut microbiome development",
+      "news_url": "https://phys.org/news/2026-10-enzyme-role-earliest-infant-gut.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0185",
+      "outlet": "Phys.org",
+      "title": "Industrialization reshapes gut microbes, from bacterial communities to their DNA, studies find",
+      "news_url": "https://phys.org/news/2026-11-industrialization-reshapes-gut-microbes-bacterial.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0186",
+      "outlet": "Phys.org",
+      "title": "New study explores how incomplete understanding fuels scientific progress",
+      "news_url": "https://phys.org/news/2026-11-explores-incomplete-fuels-scientific.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0187",
+      "outlet": "Phys.org",
+      "title": "Exactly solvable model reveals how trapped light can create magnetic order in one-dimensional spin chains",
+      "news_url": "https://phys.org/news/2026-11-solvable-reveals-magnetic-dimensional-chains.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0188",
+      "outlet": "Phys.org",
+      "title": "Experiment supports theoretical foundation for potentially more error-resistant quantum computing",
+      "news_url": "https://phys.org/news/2026-11-theoretical-foundation-potentially-error-resistant.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0189",
+      "outlet": "Phys.org",
+      "title": "Gas inside us could fight wound infections, moth study shows",
+      "news_url": "https://phys.org/news/2026-11-gas-wound-infections-moth.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0190",
+      "outlet": "Phys.org",
+      "title": "How competing reproductive needs shaped the evolution of liverworts",
+      "news_url": "https://phys.org/news/2026-11-reproductive-evolution-liverworts.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0191",
+      "outlet": "Phys.org",
+      "title": "Plants may experience 'optical illusions' that affect their direction of growth",
+      "news_url": "https://phys.org/news/2026-11-optical-illusions-affect-growth.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0192",
+      "outlet": "Phys.org",
+      "title": "Magnetic nanocomposites could help shrink the components that power computer chips",
+      "news_url": "https://phys.org/news/2026-11-magnetic-nanocomposites-components-power-chips.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0193",
+      "outlet": "Phys.org",
+      "title": "Stem cells in deep sleep may point to a secret reserve for lifelong blood renewal",
+      "news_url": "https://phys.org/news/2026-11-stem-cells-deep-secret-reserve.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0194",
+      "outlet": "Phys.org",
+      "title": "Deep-sea mussels trade tidal rhythms for a 24-hour cycle in the lab",
+      "news_url": "https://phys.org/news/2026-11-deep-sea-mussels-tidal-rhythms.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0195",
+      "outlet": "Phys.org",
+      "title": "RNA-protein interactions could lead to new coronavirus drug targets",
+      "news_url": "https://phys.org/news/2026-11-rna-protein-interactions-coronavirus-drug.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0196",
+      "outlet": "Phys.org",
+      "title": "Study reveals how coral-associated bacteria help corals survive extreme heat",
+      "news_url": "https://phys.org/news/2026-11-reveals-coral-bacteria-corals-survive.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0197",
+      "outlet": "Phys.org",
+      "title": "Two new bandicoot species discovered after trawling through museum drawers",
+      "news_url": "https://phys.org/news/2026-11-bandicoot-species-trawling-museum-drawers.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0198",
+      "outlet": "Phys.org",
+      "title": "Long-term observations of marine clouds reveal how in-cloud motions shape rain",
+      "news_url": "https://phys.org/news/2026-11-term-marine-clouds-reveal-cloud.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0199",
+      "outlet": "Phys.org",
+      "title": "Molecular dinitrogen anions pave the way for low-temperature ammonia synthesis",
+      "news_url": "https://phys.org/news/2026-11-molecular-dinitrogen-anions-pave-temperature.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0200",
+      "outlet": "Phys.org",
+      "title": "Pearls and bird feathers inspire simpler method for producing structural colors",
+      "news_url": "https://phys.org/news/2026-11-pearls-bird-feathers-simpler-method.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0201",
+      "outlet": "Phys.org",
+      "title": "A new way to make better use of ruthenium in single-atom catalysts",
+      "news_url": "https://phys.org/news/2026-11-ruthenium-atom-catalysts.html",
+      "date_display_raw": "Nov 2, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0202",
+      "outlet": "Phys.org",
+      "title": "Breaking the ice: Scientists use attracting particles to form an anti-spin ice",
+      "news_url": "https://phys.org/news/2026-10-ice-scientists-particles-anti.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0203",
+      "outlet": "Phys.org",
+      "title": "Heavy hydrogen in 3I/ATLAS's methane points to a frigid birthplace",
+      "news_url": "https://phys.org/news/2026-10-heavy-hydrogen-3iatlas-methane-frigid.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0204",
+      "outlet": "Phys.org",
+      "title": "Collective human metabolism produces 2 billion metric tons of CO₂ a year, global study estimates",
+      "news_url": "https://phys.org/news/2026-10-human-metabolism-billion-metric-tons.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0205",
+      "outlet": "Phys.org",
+      "title": "Mars dust may be less abrasive than lunar dust, spacesuit samples suggest",
+      "news_url": "https://phys.org/news/2026-10-mars-abrasive-lunar-spacesuit-samples.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0206",
+      "outlet": "Phys.org",
+      "title": "2,700-year-old mummy head yields first molecular evidence linking aloe to Egyptian embalming",
+      "news_url": "https://phys.org/news/2026-10-year-mummy-yields-molecular-evidence.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0207",
+      "outlet": "Phys.org",
+      "title": "Why some trees thrive far from home—and what that means for carbon sinks",
+      "news_url": "https://phys.org/news/2026-10-trees-home-carbon.html",
+      "date_display_raw": "Nov 1, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0208",
+      "outlet": "Phys.org",
+      "title": "Rare Iron Age Celtic helmet discovered in northeastern Poland far from its homeland",
+      "news_url": "https://phys.org/news/2026-10-rare-iron-age-celtic-helmet.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0209",
+      "outlet": "Phys.org",
+      "title": "Four superconducting cables link two large quantum processors into one",
+      "news_url": "https://phys.org/news/2026-10-superconducting-cables-link-large-quantum.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0210",
+      "outlet": "Phys.org",
+      "title": "Ultracold atoms simulate hard-to-observe matter-antimatter pair production",
+      "news_url": "https://phys.org/news/2026-10-ultracold-atoms-simulate-hard-antimatter.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0211",
+      "outlet": "Phys.org",
+      "title": "Chemists develop AI tool to convert human ingenuity into life-enhancing enzymes",
+      "news_url": "https://phys.org/news/2026-10-chemists-ai-tool-human-ingenuity.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0212",
+      "outlet": "Phys.org",
+      "title": "Giant virus yields potassium channel gene that illuminates complex protein evolution",
+      "news_url": "https://phys.org/news/2026-10-giant-virus-yields-potassium-channel.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0213",
+      "outlet": "Phys.org",
+      "title": "Rare fossil discovery reveals new dinosaur species that specialized in eating fruit",
+      "news_url": "https://phys.org/news/2026-10-rare-fossil-discovery-reveals-dinosaur.html",
+      "date_display_raw": "Oct 31, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0214",
+      "outlet": "Phys.org",
+      "title": "Unusual quantum states in six-layer graphene offer clues to superconductivity",
+      "news_url": "https://phys.org/news/2026-10-unusual-quantum-states-layer-graphene.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0215",
+      "outlet": "Phys.org",
+      "title": "Ancient copper mine hints that Iberia played an important role in Bronze Age trade networks",
+      "news_url": "https://phys.org/news/2026-10-ancient-copper-hints-iberia-played.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0216",
+      "outlet": "Phys.org",
+      "title": "JWST reveals a distant galaxy that may let most of its ionizing radiation escape",
+      "news_url": "https://phys.org/news/2026-10-jwst-reveals-distant-galaxy-ionizing.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0217",
+      "outlet": "Phys.org",
+      "title": "Extraterrestrial detection inspired by firefly communications could distinguish alien signals from pulsars",
+      "news_url": "https://phys.org/news/2026-10-extraterrestrial-firefly-communications-distinguish-alien.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0218",
+      "outlet": "Phys.org",
+      "title": "How fish schools swim in sync may come down to following one influential neighbor",
+      "news_url": "https://phys.org/news/2026-10-fish-schools-sync-influential-neighbor.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0219",
+      "outlet": "Phys.org",
+      "title": "The genetic cost of being a lazy parent ... if you're a cuckoo finch",
+      "news_url": "https://phys.org/news/2026-10-genetic-lazy-parent-youre-cuckoo.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0220",
+      "outlet": "Phys.org",
+      "title": "Confirming altermagnetism: A geometric twist offers experimental proof",
+      "news_url": "https://phys.org/news/2026-10-altermagnetism-geometric-experimental-proof.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0221",
+      "outlet": "Phys.org",
+      "title": "Rediscovered 1935 recordings reveal earliest known spoken audio of endangered Louisiana Creole",
+      "news_url": "https://phys.org/news/2026-10-rediscovered-reveal-earliest-spoken-audio.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0222",
+      "outlet": "Phys.org",
+      "title": "Long-standing Indigenous practice of adding shells to sand helps young clams withstand ocean acidification",
+      "news_url": "https://phys.org/news/2026-10-indigenous-adding-shells-sand-young.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0223",
+      "outlet": "Phys.org",
+      "title": "Marine fossils in Colombia reveal possible evolutionary transition without mass extinction",
+      "news_url": "https://phys.org/news/2026-10-marine-fossils-colombia-reveal-evolutionary.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0224",
+      "outlet": "Phys.org",
+      "title": "UTe₂ reveals two flavors of superconductivity under extreme pressure",
+      "news_url": "https://phys.org/news/2026-10-ute-reveals-flavors-superconductivity-extreme.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0225",
+      "outlet": "Phys.org",
+      "title": "Quantum skyrmions outlast entanglement, hinting at more resilient networks",
+      "news_url": "https://phys.org/news/2026-10-quantum-skyrmions-outlast-entanglement-hinting.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0226",
+      "outlet": "Phys.org",
+      "title": "A decade of carbon dioxide data from space gets an upgrade",
+      "news_url": "https://phys.org/news/2026-10-decade-carbon-dioxide-space.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0227",
+      "outlet": "Phys.org",
+      "title": "Tiny photonic chip links telescopes together to view the universe in 'astonishing' detail",
+      "news_url": "https://phys.org/news/2026-10-tiny-photonic-chip-links-telescopes.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0228",
+      "outlet": "Phys.org",
+      "title": "Figuring out where cosmic neutrinos come from is tricky—radio telescopes could help find 'ghost particles' origin",
+      "news_url": "https://phys.org/news/2026-10-figuring-cosmic-neutrinos-tricky-radio.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0229",
+      "outlet": "Phys.org",
+      "title": "High-speed microscopy captures 3D images of living cells nearly 400 times faster",
+      "news_url": "https://phys.org/news/2026-10-high-microscopy-captures-3d-images.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0230",
+      "outlet": "Phys.org",
+      "title": "Supercharged 'molecule highway' membrane that speeds water transport could transform industrial processing",
+      "news_url": "https://phys.org/news/2026-10-supercharged-molecule-highway-membrane-industrial.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0231",
+      "outlet": "Phys.org",
+      "title": "Global wildlife trade is twice previous species estimates, but major data gaps suggest true scale is even larger",
+      "news_url": "https://phys.org/news/2026-10-global-wildlife-previous-species-major.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0232",
+      "outlet": "Phys.org",
+      "title": "Hidden erosion: Study reveals soft mountain rock erodes three times faster than hard rock—with climate implications",
+      "news_url": "https://phys.org/news/2026-10-hidden-erosion-reveals-soft-mountain.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0233",
+      "outlet": "Phys.org",
+      "title": "Different transcription systems shape chromatin behavior in distinct nuclear regions",
+      "news_url": "https://phys.org/news/2026-10-transcription-chromatin-behavior-distinct-nuclear.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0234",
+      "outlet": "Phys.org",
+      "title": "Small molecular twists may strengthen nature's magnetic compass",
+      "news_url": "https://phys.org/news/2026-10-small-molecular-nature-magnetic-compass.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0235",
+      "outlet": "Phys.org",
+      "title": "Four new frog species reveal more of Peru's biodiversity",
+      "news_url": "https://phys.org/news/2026-10-frog-species-reveal-peru-biodiversity.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0236",
+      "outlet": "Phys.org",
+      "title": "How a 'tropical' shortcut could help particle collider experiments",
+      "news_url": "https://phys.org/news/2026-10-tropical-shortcut-particle-collider.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0237",
+      "outlet": "Phys.org",
+      "title": "A gamma-ray powerhouse's smoking gun? Gas trail points to microquasar jets",
+      "news_url": "https://phys.org/news/2026-10-gamma-ray-powerhouse-gun-gas.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0238",
+      "outlet": "Phys.org",
+      "title": "Customizable nanoparticles show potential for delivering personalized cancer vaccines",
+      "news_url": "https://phys.org/news/2026-10-customizable-nanoparticles-potential-personalized-cancer.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0239",
+      "outlet": "Phys.org",
+      "title": "Snowfall and clouds may slow East Antarctic ice loss in a warmer world",
+      "news_url": "https://phys.org/news/2026-10-snowfall-clouds-east-antarctic-ice.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0240",
+      "outlet": "Phys.org",
+      "title": "Crowding can speed up enzyme reactions—until protein droplets become too packed",
+      "news_url": "https://phys.org/news/2026-10-crowding-enzyme-reactions-protein-droplets.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0241",
+      "outlet": "Phys.org",
+      "title": "Novel chemical reaction expands options for building DNA-encoded libraries",
+      "news_url": "https://phys.org/news/2026-10-chemical-reaction-options-dna-encoded.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0242",
+      "outlet": "Phys.org",
+      "title": "Researchers create light-activated cages for 'protein killer' molecules",
+      "news_url": "https://phys.org/news/2026-10-cages-protein-killer-molecules.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0243",
+      "outlet": "Phys.org",
+      "title": "Scientists find that a 10-millisecond flash could help build more sensitive gas sensors",
+      "news_url": "https://phys.org/news/2026-10-scientists-millisecond-sensitive-gas-sensors.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0244",
+      "outlet": "Phys.org",
+      "title": "WaterPuzzle uses magnets to model water's hydrogen bonds for hands-on classroom exploration",
+      "news_url": "https://phys.org/news/2026-10-waterpuzzle-magnets-hydrogen-bonds-classroom.html",
+      "date_display_raw": "Oct 30, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0245",
+      "outlet": "Phys.org",
+      "title": "Ancient charcoal remains provide clues about Neanderthal camp organization",
+      "news_url": "https://phys.org/news/2026-10-ancient-charcoal-clues-neanderthal.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0246",
+      "outlet": "Phys.org",
+      "title": "Cosmic microwave background offers evidence of gas flowing in galaxy clusters",
+      "news_url": "https://phys.org/news/2026-10-cosmic-microwave-background-evidence-gas.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0247",
+      "outlet": "Phys.org",
+      "title": "Ultrathin carbon ribbons conduct electricity like metals in first successful synthesis",
+      "news_url": "https://phys.org/news/2026-10-ultrathin-carbon-ribbons-electricity-metals.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0248",
+      "outlet": "Phys.org",
+      "title": "New catalyst builds proton highways to tackle a long-standing hurdle in green ammonia synthesis",
+      "news_url": "https://phys.org/news/2026-10-catalyst-proton-highways-tackle-hurdle.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0249",
+      "outlet": "Phys.org",
+      "title": "Grand Theft Astro: Stars' criminal histories could reshape estimates of their internal magnetic fields",
+      "news_url": "https://phys.org/news/2026-10-grand-theft-astro-stars-criminal.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0250",
+      "outlet": "Phys.org",
+      "title": "As ancient oceans warmed, carbon export and fish productivity surged",
+      "news_url": "https://phys.org/news/2026-10-ancient-oceans-carbon-export-fish.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0251",
+      "outlet": "Phys.org",
+      "title": "Smaller ants devote more of their resting energy budget to their brains",
+      "news_url": "https://phys.org/news/2026-10-smaller-ants-devote-resting-energy.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0252",
+      "outlet": "Phys.org",
+      "title": "Experimental study on moths supports the molecular cookie cutter idea proposed for butterflies",
+      "news_url": "https://phys.org/news/2026-10-experimental-moths-molecular-cookie-cutter.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0253",
+      "outlet": "Phys.org",
+      "title": "Electrical signals reveal hidden magnetic information in altermagnets for first time",
+      "news_url": "https://phys.org/news/2026-10-electrical-reveal-hidden-magnetic-altermagnets.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0254",
+      "outlet": "Phys.org",
+      "title": "Rare 4.1-billion-year-old Martian meteorite reveals clues to planet's ancient past",
+      "news_url": "https://phys.org/news/2026-10-rare-billion-year-martian-meteorite.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0255",
+      "outlet": "Phys.org",
+      "title": "What drives temperature preferences? Female mice have temperature sensors tuned to run warmer",
+      "news_url": "https://phys.org/news/2026-10-temperature-female-mice-sensors-tuned.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0256",
+      "outlet": "Phys.org",
+      "title": "Planetary collisions may help young worlds hold on to their atmospheres",
+      "news_url": "https://phys.org/news/2026-10-planetary-collisions-young-worlds-atmospheres.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0257",
+      "outlet": "Phys.org",
+      "title": "Faraway tectonic forces may have accelerated the Gulf of California rifting",
+      "news_url": "https://phys.org/news/2026-10-faraway-tectonic-gulf-california-rifting.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0258",
+      "outlet": "Phys.org",
+      "title": "Long-distance flights can throw seabirds' internal clocks out of sync, causing navigation errors",
+      "news_url": "https://phys.org/news/2026-10-distance-flights-seabirds-internal-clocks.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0259",
+      "outlet": "Phys.org",
+      "title": "Researchers create first whole-body single-cell atlas of an adult vertebrate",
+      "news_url": "https://phys.org/news/2026-10-body-cell-atlas-adult-vertebrate.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0260",
+      "outlet": "Phys.org",
+      "title": "Rubin observatory reveals two hidden companions of the Milky Way",
+      "news_url": "https://phys.org/news/2026-10-rubin-observatory-reveals-hidden-companions.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0261",
+      "outlet": "Phys.org",
+      "title": "Simplified ancestral enzyme makes ATP without amino acid needed for its usual reaction",
+      "news_url": "https://phys.org/news/2026-10-ancestral-enzyme-atp-amino-acid.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0262",
+      "outlet": "Phys.org",
+      "title": "Modest gamma-ray flash followed by dazzling afterglow points to powerful stellar jet viewed off-axis",
+      "news_url": "https://phys.org/news/2026-10-modest-gamma-ray-dazzling-afterglow.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0263",
+      "outlet": "Phys.org",
+      "title": "Amino acid boosts last-resort antibiotic's effectiveness",
+      "news_url": "https://phys.org/news/2026-10-amino-acid-boosts-resort-antibiotic.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0264",
+      "outlet": "Phys.org",
+      "title": "New fossil scans challenge insect flight timeline, suggesting origins up to 80 million years later",
+      "news_url": "https://phys.org/news/2026-10-fossil-scans-insect-flight-timeline.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0265",
+      "outlet": "Phys.org",
+      "title": "Key Atlantic currents could collapse this century, but the risk is missing from almost all national climate plans",
+      "news_url": "https://phys.org/news/2026-10-key-atlantic-currents-collapse-century.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0266",
+      "outlet": "Phys.org",
+      "title": "Zombie bacteria keep building DNA after death",
+      "news_url": "https://phys.org/news/2026-10-zombie-bacteria-dna-death.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0267",
+      "outlet": "Phys.org",
+      "title": "How eggs protect chromosome connections during prolonged dormancy",
+      "news_url": "https://phys.org/news/2026-10-eggs-chromosome-prolonged-dormancy.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-P-0268",
+      "outlet": "Phys.org",
+      "title": "Evolutionary changes in key enzyme may help bacteria make proteins faster",
+      "news_url": "https://phys.org/news/2026-10-evolutionary-key-enzyme-bacteria-proteins.html",
+      "date_display_raw": "Oct 29, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "MHTML_SCREENSHOT_PHYSORG_20261108T003716Z"
+      ],
+      "evidence_type": "NEWS_HEADLINE_AND_EXCERPT"
+    },
+    {
+      "uid": "SX-E-0001",
+      "outlet": "Tech Xplore",
+      "title": "Tesla's Cybertruck heads for an exit after years of hype and division",
+      "news_url": null,
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0002",
+      "outlet": "Tech Xplore",
+      "title": "Japan announces emergency cybersecurity package following a wave of attacks",
+      "news_url": null,
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0003",
+      "outlet": "Tech Xplore",
+      "title": "Cyberattack shuts down internet fan fiction library",
+      "news_url": null,
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0004",
+      "outlet": "Tech Xplore",
+      "title": "Measuring for success: Construction app makes estimates faster, easier",
+      "news_url": null,
+      "date_display_raw": "23 hours ago",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0005",
+      "outlet": "Tech Xplore",
+      "title": "Scientists give hard-to-recycle wind turbine blades a second life",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0006",
+      "outlet": "Tech Xplore",
+      "title": "Inspired by honeycombs, a low-cost cooling structure lasts over 100 million cycles",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0007",
+      "outlet": "Tech Xplore",
+      "title": "Three new techniques target hidden AI backdoors without major performance losses",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0008",
+      "outlet": "Tech Xplore",
+      "title": "Harnessing atomic structure to advance next-generation memory storage",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0009",
+      "outlet": "Tech Xplore",
+      "title": "Newly-developed paint could keep your home cooler and lower energy bills",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0010",
+      "outlet": "Tech Xplore",
+      "title": "Engineers adapt laser physics trick to deliver heat on demand",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0011",
+      "outlet": "Tech Xplore",
+      "title": "AI learns from the products of thinking, not thought itself. That's a problem for machines—and for us",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0012",
+      "outlet": "Tech Xplore",
+      "title": "Nonflammable gel membrane could help batteries run twice as long on a single charge",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0013",
+      "outlet": "Tech Xplore",
+      "title": "Target fabrication achieves new precision through additive manufacturing",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0014",
+      "outlet": "Tech Xplore",
+      "title": "Rechargeable battery prototype runs on vitamin B12",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0015",
+      "outlet": "Tech Xplore",
+      "title": "3D-printed chain mail and more: New method combines thick inks and patterned light for faster, finer structures",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0016",
+      "outlet": "Tech Xplore",
+      "title": "Let there be light—novel AI framework runs on optical hardware",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0017",
+      "outlet": "Medical Xpress",
+      "title": "Normal-looking sleep can mask memory problems, study suggests",
+      "news_url": null,
+      "date_display_raw": "8 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0018",
+      "outlet": "Medical Xpress",
+      "title": "New treatment may cure common hormonal cause of high blood pressure",
+      "news_url": null,
+      "date_display_raw": "9 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0019",
+      "outlet": "Medical Xpress",
+      "title": "Financial incentives nearly double quit rates among underserved people who smoke in national study",
+      "news_url": null,
+      "date_display_raw": "2 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0020",
+      "outlet": "Medical Xpress",
+      "title": "Potential driver of severe early-onset preeclampsia identified",
+      "news_url": null,
+      "date_display_raw": "5 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0021",
+      "outlet": "Medical Xpress",
+      "title": "Heart researchers unpack neutral findings from ZEUS, an anti-inflammatory clinical trial",
+      "news_url": null,
+      "date_display_raw": "9 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0022",
+      "outlet": "Medical Xpress",
+      "title": "New study identifies biological mechanism driving therapy resistance in advanced prostate cancer",
+      "news_url": null,
+      "date_display_raw": "11 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0023",
+      "outlet": "Medical Xpress",
+      "title": "Study: Higher rates of parkinsonism among older adults with autism",
+      "news_url": null,
+      "date_display_raw": "11 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0024",
+      "outlet": "Medical Xpress",
+      "title": "US reports highest number of measles cases in 35 years",
+      "news_url": null,
+      "date_display_raw": "13 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0025",
+      "outlet": "Medical Xpress",
+      "title": "Bariatric surgery is effective rescue strategy after GLP-1 receptor agonist failure",
+      "news_url": null,
+      "date_display_raw": "22 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0026",
+      "outlet": "Medical Xpress",
+      "title": "South African trial tests off-the-shelf killer cells against lymphoma",
+      "news_url": null,
+      "date_display_raw": "23 hours ago",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0027",
+      "outlet": "Medical Xpress",
+      "title": "New trial of AI phone assistant to monitor patients with long-term illness",
+      "news_url": null,
+      "date_display_raw": "21 hours ago",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0028",
+      "outlet": "Medical Xpress",
+      "title": "Stronger cholesterol treatment shrinks more plaque in heart arteries, new clinical trial finds",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0029",
+      "outlet": "Medical Xpress",
+      "title": "COVID-19 vaccines generated trillions in benefits, far exceeding their estimated costs",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0030",
+      "outlet": "Medical Xpress",
+      "title": "One nap doesn't fit all: How childcare's link to napping flips with age",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0031",
+      "outlet": "Medical Xpress",
+      "title": "AI-powered smartwatch detects high blood pressure with sensitivity similar to office screening",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0032",
+      "outlet": "Medical Xpress",
+      "title": "Vitamin K deficiency on the rise as more parents decline recommended shots for their newborns",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0033",
+      "outlet": "Medical Xpress",
+      "title": "DNA 'switch' uncovers new brake on breast cancer growth",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0034",
+      "outlet": "Medical Xpress",
+      "title": "Blood protein panel outperforms leading ALS biomarker in distinguishing patients from healthy individuals",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0035",
+      "outlet": "Medical Xpress",
+      "title": "Drug restores kidney cell function in experimental models of rare Lowe syndrome",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0036",
+      "outlet": "Medical Xpress",
+      "title": "New research identifies biological differences in pancreatic cancer",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0037",
+      "outlet": "Medical Xpress",
+      "title": "Mindfulness therapy assisted by ketamine may strengthen body awareness to reduce opioid cravings",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0038",
+      "outlet": "Medical Xpress",
+      "title": "Mother and baby's immune cells linked to aggressive placental inflammation in preterm cases",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0039",
+      "outlet": "Medical Xpress",
+      "title": "Two compounds target drug-resistant brain cancer cells in laboratory tests",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0040",
+      "outlet": "Medical Xpress",
+      "title": "Crigler-Najjar syndrome: Gene therapy maintains its efficacy four years after treatment",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0041",
+      "outlet": "Medical Xpress",
+      "title": "Researchers develop more precise way to identify preeclampsia from electronic health records",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0042",
+      "outlet": "Medical Xpress",
+      "title": "Genetic variant may increase the risk of pneumonia",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0043",
+      "outlet": "Medical Xpress",
+      "title": "New study challenges belief that women are more sensitive to the effects of cannabis",
+      "news_url": null,
+      "date_display_raw": "Nov 6, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0044",
+      "outlet": "Medical Xpress",
+      "title": "Nasal spray duo offers relief for stubborn blocked noses without rebound congestion in early clinical trial",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0045",
+      "outlet": "Medical Xpress",
+      "title": "A self-charging toothbrush that generates electricity to kill bacteria while you brush",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0046",
+      "outlet": "Medical Xpress",
+      "title": "Microglia drive excessive iron transfer in Parkinson's disease models",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0047",
+      "outlet": "Medical Xpress",
+      "title": "Engineered protein that cuts Alzheimer's-linked brain deposits opens potential therapeutic avenue",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0048",
+      "outlet": "Medical Xpress",
+      "title": "'Gatekeeper' cells can restrict the immune response to cancer",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0049",
+      "outlet": "Medical Xpress",
+      "title": "Kidney care trial challenges default dialysis planning for older adults with frailty",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0050",
+      "outlet": "Medical Xpress",
+      "title": "COVID-19-related stress linked to faster epigenetic aging in adolescents",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0051",
+      "outlet": "Medical Xpress",
+      "title": "'Mini lens' grown in lab could help tackle cataracts",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0052",
+      "outlet": "Medical Xpress",
+      "title": "Hybrid light method reveals how camera signals can probe blood flow in deeper tissues",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0053",
+      "outlet": "Medical Xpress",
+      "title": "When doctors and AI medical opinions diverge, humans must question the difference, according to experts",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0054",
+      "outlet": "Medical Xpress",
+      "title": "Neural signaling protein could be therapeutic target for autism-linked gene deletion",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0055",
+      "outlet": "Medical Xpress",
+      "title": "Putty-like electrode could improve vocal rehabilitation",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0056",
+      "outlet": "Medical Xpress",
+      "title": "Researchers establish best methods to measure genetic variation within the body",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0057",
+      "outlet": "Medical Xpress",
+      "title": "Scientists use AI to develop bird flu vaccine that outperforms current stockpiled shot",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0058",
+      "outlet": "Medical Xpress",
+      "title": "Astrocytes help sustain brain activity and blood flow during prolonged sensory stimulation",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0059",
+      "outlet": "Medical Xpress",
+      "title": "One gene, two paths: Opposite synaptic defects linked to same intellectual disability",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0060",
+      "outlet": "Medical Xpress",
+      "title": "Slug-inspired gel seals digestive tract fistulas in animal tests",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0061",
+      "outlet": "Medical Xpress",
+      "title": "Advanced imaging uncovers genomic Achilles' heel that makes cancer cells vulnerable",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0062",
+      "outlet": "Medical Xpress",
+      "title": "Nail salon air monitoring reveals chemical spikes that traditional assessments may miss",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0063",
+      "outlet": "Medical Xpress",
+      "title": "High levels of indoor radon linked to higher risk of heart failure in postmenopausal women",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0064",
+      "outlet": "Medical Xpress",
+      "title": "New study warns of dangers behind AI chatbots and 'concerning' health advice from private clinics",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "ENGINEERING_SECURITY_AI",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0065",
+      "outlet": "Medical Xpress",
+      "title": "Personalized vaccine targets melanoma recurrence",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0066",
+      "outlet": "Medical Xpress",
+      "title": "How an enriched environment promotes brain plasticity—study identifies the molecular mechanisms",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0067",
+      "outlet": "Medical Xpress",
+      "title": "Light-based cochlear implants trigger more distinct nerve signals than electrical stimulation in gerbil study",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0068",
+      "outlet": "Medical Xpress",
+      "title": "Virtual reality tied to lower presurgery anxiety in kids",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0069",
+      "outlet": "Medical Xpress",
+      "title": "Lower immunity after lockdown likely impacted outbreak of deadly strep A infections",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0070",
+      "outlet": "Medical Xpress",
+      "title": "New blood count ranges could prevent unnecessary testing for people with Duffy-null trait",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0071",
+      "outlet": "Medical Xpress",
+      "title": "EARLY-PREG enables day-by-day tracking of thousands of proteins in the female reproductive tract",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0072",
+      "outlet": "Medical Xpress",
+      "title": "Teen chlamydia and gonorrhea screening climbs to 75% after primary care changes",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0073",
+      "outlet": "Medical Xpress",
+      "title": "Simple text reminders could help close London's bowel cancer screening gap",
+      "news_url": null,
+      "date_display_raw": "Nov 5, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0074",
+      "outlet": "Medical Xpress",
+      "title": "Drawings of near-death experiences reveal patterns in what people remember seeing",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0075",
+      "outlet": "Medical Xpress",
+      "title": "How neurons in the hippocampus separate different aspects of experiences",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0076",
+      "outlet": "Medical Xpress",
+      "title": "New drug-development strategy might protect neurons by displacing proteins that inhibit helpful enzymes",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0077",
+      "outlet": "Medical Xpress",
+      "title": "Extreme heat days may increase dementia risk, with poorer communities facing greater vulnerability",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0078",
+      "outlet": "Medical Xpress",
+      "title": "Blood pressure medication and vibration may boost brain waste clearance",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0079",
+      "outlet": "Medical Xpress",
+      "title": "Brain activity patterns may predict Alzheimer's years before memory slips",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0080",
+      "outlet": "Medical Xpress",
+      "title": "A healthier form of salt could prevent millions of deaths from stroke and heart disease",
+      "news_url": null,
+      "date_display_raw": "Nov 4, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0081",
+      "outlet": "Science X",
+      "title": "Tropical cooling points to a world 5.4°C colder at the Ice Age peak",
+      "news_url": null,
+      "date_display_raw": "Aug 13, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0082",
+      "outlet": "Science X",
+      "title": "Why eye contact may help babies learn: A hidden link between two brains",
+      "news_url": null,
+      "date_display_raw": "Aug 12, 2026",
+      "category_suggestion": "MEDICINE_BIOLOGY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0083",
+      "outlet": "Science X",
+      "title": "A baby's lungs may begin responding to vitamin D sooner than scientists once thought",
+      "news_url": null,
+      "date_display_raw": "Aug 10, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0084",
+      "outlet": "Science X",
+      "title": "Virtual escape test exposes hidden rule people use when identical exits create pressure and no sign points way",
+      "news_url": null,
+      "date_display_raw": "Aug 6, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0085",
+      "outlet": "Science X",
+      "title": "HIV's hidden history: New study reveals much deeper roots stretching back millions of years",
+      "news_url": null,
+      "date_display_raw": "Aug 5, 2026",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0086",
+      "outlet": "Science X",
+      "title": "Curious people embrace richer experiences, but cognitive test scores tell a more complicated story",
+      "news_url": null,
+      "date_display_raw": "Jul 30, 2026",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-E-0087",
+      "outlet": "Phys.org",
+      "title": "Personalized savings reminders can help boost retirement savings",
+      "news_url": null,
+      "date_display_raw": "1 hour ago",
+      "category_suggestion": "OTHER_TRANSVERSAL",
+      "sources": [
+        "USER_PASTED_NETWORK_SECTIONS"
+      ],
+      "evidence_type": "USER_PASTED_HEADLINE_ONLY"
+    },
+    {
+      "uid": "SX-V2-N02",
+      "outlet": "Phys.org",
+      "title": "Cannabis was used as an intoxicant as early as 2,800 years ago",
+      "news_url": "https://phys.org/news/2026-11-cannabis-intoxicant-early-years.html",
+      "date_display_raw": "2026-11-05",
+      "category_suggestion": "ARCHAEOLOGY_HISTORY",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N04",
+      "outlet": "Phys.org",
+      "title": "Fireworks provide a few minutes of joy, but the economic and environmental costs last much longer",
+      "news_url": "https://phys.org/news/2026-11-fireworks-minutes-joy-economic-environmental.html",
+      "date_display_raw": "2026-11-04",
+      "category_suggestion": "ENVIRONMENT_ECOLOGY",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N07",
+      "outlet": "Phys.org",
+      "title": "Testing Einstein's laws from the bottom of the Mediterranean Sea",
+      "news_url": "https://phys.org/news/2026-11-einstein-laws-bottom-mediterranean-sea.html",
+      "date_display_raw": "2026-11-04",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N08",
+      "outlet": "Phys.org",
+      "title": "New research puts age of universe at 26.7 billion years, nearly twice as old as previously believed",
+      "news_url": "https://phys.org/news/2023-07-age-universe-billion-years-previously.html",
+      "date_display_raw": "2023-07-13",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N09",
+      "outlet": "Phys.org",
+      "title": "We need to consider alternatives to dark matter that better explain cosmological observations",
+      "news_url": "https://phys.org/news/2024-07-alternatives-dark-cosmological.html",
+      "date_display_raw": "2024-07-09",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N10",
+      "outlet": "Phys.org",
+      "title": "Dark matter and dark energy may only be a cosmic illusion",
+      "news_url": "https://phys.org/news/2025-10-dark-energy-cosmic-illusion.html",
+      "date_display_raw": "2025-10-01",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N11",
+      "outlet": "Phys.org",
+      "title": "New research suggests that our universe has no dark matter",
+      "news_url": "https://phys.org/news/2024-03-universe-dark.html",
+      "date_display_raw": "2024-03-15",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N12",
+      "outlet": "Phys.org",
+      "title": "Researcher proposes first-time model that replaces dark energy and dark matter in explaining nature of the universe",
+      "news_url": "https://phys.org/news/2025-04-dark-energy-nature-universe.html",
+      "date_display_raw": "2025-04-08",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    },
+    {
+      "uid": "SX-V2-N13",
+      "outlet": "Phys.org",
+      "title": "Latest findings from the South Pole Telescope bolster standard cosmological model",
+      "news_url": "https://phys.org/news/2024-11-latest-south-pole-telescope-bolster.html",
+      "date_display_raw": "2024-11-14",
+      "category_suggestion": "PHYSICS_ASTRO_QUANTUM",
+      "sources": [
+        "ATLAS_V2_PREVIOUS20"
+      ],
+      "evidence_type": "PRIOR_NEWS_CATALOG"
+    }
+  ]
+}
