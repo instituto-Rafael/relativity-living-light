@@ -1,0 +1,41 @@
+{
+  "schema": "rll.braille_fixed_semantic_window_compression.v1",
+  "timestamp_local": "2026-11-08",
+  "source": "User-requested Portuguese text vs grade-1 subset Brazilian Braille (synthetic didactic text from user session)",
+  "source_text_characters": 1256,
+  "source_text_sha256": "ce345d79784d938039382b5d98cc89fa867e137a1a22f46e7a2a7f80623effd2",
+  "semantic_window": 256,
+  "windows": 5,
+  "segmentation": "four windows 256 code points, final 232; same original semantic substring in all encodings",
+  "compression": "Zstandard v1.5.7 -q -19 --long=10 -c; max 1024-byte match history, isolated stream per window, no dictionary",
+  "encoding": [
+    "portugues_utf8",
+    "braille_unicode_utf8",
+    "braille_six_dot_6bit_packed_with_4byte_count_header"
+  ],
+  "metrics": {
+    "pt": {
+      "original_bytes": 1304,
+      "zstd_bytes": 945,
+      "reduction_pct": 27.531,
+      "ratio": 1.37989
+    },
+    "braille_utf8": {
+      "original_bytes": 3843,
+      "zstd_bytes": 1296,
+      "reduction_pct": 66.276,
+      "ratio": 2.96528
+    },
+    "braille_6bits": {
+      "original_bytes": 984,
+      "zstd_bytes": 1049,
+      "reduction_pct": -6.606,
+      "ratio": 0.93804
+    }
+  },
+  "source_text_rights": "original benchmark text, no publisher material",
+  "roundtrip": "verified per window, Braille subset only (not full normative Braille translation)",
+  "claim_allowed": false,
+  "scientific_cosmology_validation": "NOT_RUN",
+  "caveat": "Percent reduction compares compressed payload to its own raw encoding, not semantic entropy. Sum of individually compressed windows, not one whole-file stream."
+}
