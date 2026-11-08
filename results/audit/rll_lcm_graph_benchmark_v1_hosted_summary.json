@@ -1,0 +1,32 @@
+{
+  "schema": "rll.lcm_graph_hosted_benchmark_summary.v1",
+  "date": "2026-11-08",
+  "source": "Host Python 3.13.5 Linux x86_64; 72 cases, seed 20261108",
+  "source_sha256_local": "53133d170749cfdd58ab685e21a0f6e00a70b2909f98457dabc8cf4f7e79f229",
+  "full_results_sha256_local": "c9972ebe39bf2d9c6b97047ed88ea512ef984a632da51e93fd384f1413e35de5",
+  "graph_step_cap": 5000,
+  "stats": {
+    "total_cases": 72,
+    "all_exact_cases": 72,
+    "graph_verified": 35,
+    "graph_skipped_cap": 37,
+    "repeated_complement_near_neighbor": "SKIPPED_COST_AFTER_5000_STEPS"
+  },
+  "unittests_local": "13/13 PASS_SCOPED",
+  "comparison_same_15_small_median_ns": {
+    "math_lcm_native": 116,
+    "euclid_python": 1123,
+    "complement_python": 1283,
+    "graph_python": 48195
+  },
+  "ratio_graph_over_euclid_python": 42.916,
+  "full72_median_ns": {
+    "math_lcm_native": 169,
+    "euclid_python": 1284,
+    "complement_python": 1575
+  },
+  "confidence": "HOSTED_SINGLE_MACHINE_NO_CI_YET",
+  "new_physical_claim": false,
+  "claim_allowed": false,
+  "notes": "Publication of this summary is source/evidence custody, not GitHub CI execution. Timings are descriptive and not hardware independent."
+}
