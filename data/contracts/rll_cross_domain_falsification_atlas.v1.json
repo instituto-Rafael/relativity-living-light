@@ -1,5 +1,5 @@
 {
-  "schema": "rll.falsification_atlas_registry.v1",
+  "schema": "rll.falsification_atlas_registry.v1_1",
   "date": "2026-11-08",
   "source_authority": "instituto-Rafael/relativity-living-light",
   "state": "CANDIDATE_ATLAS_CONSERVATIVE",
@@ -20,7 +20,7 @@
   "formal_note": "Mathematical identities require proof/counterexamples under axioms; physical hypotheses require independent observations and pre-registered likelihood; source reputation is never automatic Bayesian evidence.",
   "items": [
     {
-      "id": "F-MAT-01",
+      "id": "AX-F-MAT-01",
       "domain": "MATEMATICA",
       "kind": "DEMONSTRACAO",
       "claim": "Se q=√3/2<1, uma recorrência afim com q tem órbita exata não estacionária de período 42.",
@@ -32,7 +32,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-MAT-02",
+      "id": "AX-F-MAT-02",
       "domain": "MATEMATICA",
       "kind": "TEOREMA",
       "claim": "Para quadrado euclidiano de lado a, diagonal=a√2.",
@@ -44,7 +44,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-MAT-03",
+      "id": "AX-F-MAT-03",
       "domain": "MATEMATICA",
       "kind": "IDENTIDADE_VS_INFERENCIA",
       "claim": "7 escalado por 10 torna-se 70 e 3 por 10 torna-se 30, preservando soma 100; portanto 7 deixou de ser primo.",
@@ -56,7 +56,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-MAT-04",
+      "id": "AX-F-MAT-04",
       "domain": "MATEMATICA",
       "kind": "HIPOTESE_FISICA",
       "claim": "42 índices/combinações da geometria T7 correspondem a 42 atratores físicos distintos.",
@@ -68,7 +68,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-MAT-05",
+      "id": "AX-F-MAT-05",
       "domain": "MATEMATICA",
       "kind": "HIPOTESE_GEOMETRICA",
       "claim": "Os números 7,35,50,70 compartilham momento angular físico ao alternar bases 7,10,14.",
@@ -80,7 +80,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-CMP-01",
+      "id": "AX-F-CMP-01",
       "domain": "CODIFICACAO",
       "kind": "HIPOTESE_UNIVERSAL",
       "claim": "Usar 5 bits por código sempre reduz o tamanho total em relação a Braille 6 bits.",
@@ -92,7 +92,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-CMP-02",
+      "id": "AX-F-CMP-02",
       "domain": "CODIFICACAO",
       "kind": "HIPOTESE_UNIVERSAL",
       "claim": "Maior redução percentual por compressor sempre corresponde a menor arquivo final.",
@@ -104,7 +104,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-CMP-03",
+      "id": "AX-F-CMP-03",
       "domain": "CODIFICACAO",
       "kind": "HIPOTESE_EXPERIMENTAL",
       "claim": "Uma tabela de 5 bits adaptativa à frequência do português supera todas as representações em bytes comprimidos incluindo dicionário e decodificador.",
@@ -116,7 +116,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-CMP-04",
+      "id": "AX-F-CMP-04",
       "domain": "CODIFICACAO",
       "kind": "HIPOTESE_EXPERIMENTAL",
       "claim": "Transcritor Braille básico preserva qualquer texto português real sem perda e sem adaptação.",
@@ -128,7 +128,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-STB-01",
+      "id": "AX-F-STB-01",
       "domain": "ESTABILIDADE",
       "kind": "HIPOTESE_DINAMICA",
       "claim": "O potencial V_t=Σw_i(t)[1−cos(θ_i−a_i(t))] nunca aumenta com atrator e pesos variáveis.",
@@ -140,7 +140,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-STB-02",
+      "id": "AX-F-STB-02",
       "domain": "ESTABILIDADE",
       "kind": "HIPOTESE_PREDITIVA",
       "claim": "A geometria dinâmica T7 melhora a previsão observacional fora da amostra contra um modelo físico sem T7.",
@@ -152,7 +152,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-STB-03",
+      "id": "AX-F-STB-03",
       "domain": "ESTABILIDADE",
       "kind": "HIPOTESE_UNIVERSAL",
       "claim": "Baixa entropia ou baixo desvio padrão em uma codificação demonstra estabilidade física de uma órbita.",
@@ -164,7 +164,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-OBS-01",
+      "id": "AX-F-OBS-01",
       "domain": "ASTROFISICA",
       "kind": "HIPOTESE_ESTATISTICA",
       "claim": "Uma margem do tipo estoque de segurança B=zσpred mantém cobertura nominal para séries astronômicas heterocedásticas e autocorrelacionadas.",
@@ -176,7 +176,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-OBS-02",
+      "id": "AX-F-OBS-02",
       "domain": "ASTROFISICA",
       "kind": "TESE_CAUSAL",
       "claim": "Tendência linear na velocidade radial isolada prova decaimento de uma órbita.",
@@ -188,7 +188,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-OBS-03",
+      "id": "AX-F-OBS-03",
       "domain": "ASTROFISICA",
       "kind": "HIPOTESE_PREDITIVA",
       "claim": "Espectroscopia + astrometria + lentes produzem massa/gravitacão mais bem calibradas que qualquer canal isolado.",
@@ -200,7 +200,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-OBS-04",
+      "id": "AX-F-OBS-04",
       "domain": "ASTROFISICA",
       "kind": "TESE_UNIVERSAL",
       "claim": "Uma assistência gravitacional sem propulsão sempre aumenta a velocidade heliocêntrica da nave.",
@@ -212,7 +212,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-OBS-05",
+      "id": "AX-F-OBS-05",
       "domain": "ASTROFISICA",
       "kind": "TESE_FACTUAL",
       "claim": "A Voyager cruzou o limite externo da Via Láctea ao atravessar a heliopausa.",
@@ -224,7 +224,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-01",
+      "id": "AX-F-COS-01",
       "domain": "COSMOLOGIA",
       "kind": "MODELO_BAYESIANO",
       "claim": "No conjunto conjunto FASE20, RLL não é substancialmente penalizado frente ao ΛCDM: ln B10 > -5.",
@@ -236,7 +236,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-02",
+      "id": "AX-F-COS-02",
       "domain": "COSMOLOGIA",
       "kind": "HIPOTESE_DE_PARAMETRO",
       "claim": "O parâmetro de transição z_t do ajuste conjunto pertence a [0,5;1,5].",
@@ -248,7 +248,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-03",
+      "id": "AX-F-COS-03",
       "domain": "COSMOLOGIA",
       "kind": "MODELO_PREDITIVO",
       "claim": "RLL supera ΛCDM ao prever BAO DESI DR2, Pantheon+ e cronômetros, com mesma seleção/covariância e penalização.",
@@ -260,7 +260,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-04",
+      "id": "AX-F-COS-04",
       "domain": "COSMOLOGIA",
       "kind": "MODELO_PREDITIVO",
       "claim": "wCDM/CPL com energia escura dinâmica predizem os mesmos observáveis melhor que ΛCDM após a penalização de liberdade extra.",
@@ -272,7 +272,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-05",
+      "id": "AX-F-COS-05",
       "domain": "COSMOLOGIA",
       "kind": "TEORIA_FISICA_INCOMPLETA",
       "claim": "RLL prevê CMB e crescimento de estruturas sem prescrição de perturbações diferente por modelo.",
@@ -284,7 +284,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-COS-06",
+      "id": "AX-F-COS-06",
       "domain": "COSMOLOGIA",
       "kind": "HIPOTESE_COMPARADORA",
       "claim": "Um modelo CCC+TL sem energia/matéria escura explica simultaneamente BBN, CMB, BAO, supernovas e formação de estrutura melhor que ΛCDM.",
@@ -296,7 +296,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-BIO-01",
+      "id": "AX-F-BIO-01",
       "domain": "BIOLOGIA",
       "kind": "HIPOTESE_BIOENERGETICA",
       "claim": "Melanina converte energia de radiação ionizante em produção metabólica útil com rendimento quantitativo mensurável.",
@@ -308,7 +308,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-BIO-02",
+      "id": "AX-F-BIO-02",
       "domain": "BIOLOGIA",
       "kind": "HIPOTESE_EXPLORATORIA",
       "claim": "Células comuns emitem raios X triboluminescentes e os utilizam como fonte de energia metabólica.",
@@ -320,7 +320,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-BIO-03",
+      "id": "AX-F-BIO-03",
       "domain": "BIOLOGIA",
       "kind": "HIPOTESE_DE_MODELO",
       "claim": "Modelo de fluxos N/P/S e redox prevê fisiologia melhor que modelo de estoques de carbono/ATP.",
@@ -332,7 +332,7 @@
       "claim_allowed": false
     },
     {
-      "id": "F-EPI-01",
+      "id": "AX-F-EPI-01",
       "domain": "EPISTEMOLOGIA",
       "kind": "REGRA_METODOLOGICA",
       "claim": "Duas notícias, um DOI e um dataset reanalisado são três evidências observacionais independentes.",
@@ -343,5 +343,6 @@
       "priority": "P0",
       "claim_allowed": false
     }
-  ]
+  ],
+  "id_namespace": "AX-F-* (distinct from historical F-COS-01..05 in rll_falsifier_bundle.json)"
 }
