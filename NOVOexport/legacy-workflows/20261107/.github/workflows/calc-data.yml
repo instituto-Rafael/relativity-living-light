@@ -1,0 +1,130 @@
+name: Calcular/Processar dados reais — guarded audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_path:
+        description: 'Arquivo JSON/CSV já commitado no repositório para auditoria estatística'
+        required: true
+        default: 'data/real/Hz_data_real.csv'
+        type: choice
+        options:
+          - 'data/real/Hz_data_real.csv'
+          - 'data/real/BAO_data_real.csv'
+          - 'data/real/CMB_shift_real.json'
+          - 'data/real/cosmology/fsigma8_growth_real.csv'
+          - 'data/real/cosmology/desi_dr2_bao_primary_points.csv'
+          - 'data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv'
+          - 'data/real/cosmology_observational_seed_2026.csv'
+      output_name:
+        description: 'Nome do artifact gerado'
+        required: false
+        default: 'processed-data-audit-results'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+  CLAIM_BOUNDARY: >-
+    This guarded workflow accepts only committed allowlisted real-data inputs.
+    It rejects synthetic, mock, fixture, placeholder, demo, and example data paths.
+    Processing output is a structural audit artifact only; it does not validate RLL,
+    dark matter, dark energy, or cosmology claims.
+
+jobs:
+  calc-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+
+      - name: Validate stdlib calc-data migration
+        run: python tools/validate_calc_data_stdlib_migration.py
+
+      - name: Run calculations in audit workspace
+        env:
+          INPUT_PATH: ${{ github.event.inputs.input_path }}
+        run: |
+          set -euo pipefail
+          case "$INPUT_PATH" in
+            data/real/Hz_data_real.csv|\
+            data/real/BAO_data_real.csv|\
+            data/real/CMB_shift_real.json|\
+            data/real/cosmology/fsigma8_growth_real.csv|\
+            data/real/cosmology/desi_dr2_bao_primary_points.csv|\
+            data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv|\
+            data/real/cosmology_observational_seed_2026.csv)
+              ;;
+            *)
+              echo "Input path is not in the guarded allowlist: $INPUT_PATH" >&2
+              echo "This workflow intentionally processes only committed local JSON/CSV audit inputs." >&2
+              echo "Synthetic/mock/fixture/placeholder/demo/example data is outside this guarded real-data workflow." >&2
+              echo "Canonical real-data workflow: $CANONICAL_REAL_DATA_WORKFLOW" >&2
+              exit 2
+              ;;
+          esac
+          if [ ! -f "$INPUT_PATH" ]; then
+            echo "Input file not found: $INPUT_PATH" >&2
+            echo "This guarded workflow does not fetch or commit raw data automatically." >&2
+            echo "Use one of the committed canonical real-data inputs listed in workflow_dispatch.options." >&2
+            exit 2
+          fi
+          mkdir -p _audit/processed
+          python scripts/calc_data.py --in "$INPUT_PATH" --out _audit/processed/results.json
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os
+          input_path = Path(os.environ['INPUT_PATH'])
+          artifact_path = Path('_audit/processed/results.json')
+          payload = {
+              'schema': 'rll.calc_data_audit_manifest.v1',
+              'input_path': str(input_path),
+              'input_sha256': hashlib.sha256(input_path.read_bytes()).hexdigest(),
+              'artifact_path': str(artifact_path),
+              'artifact_sha256': hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
+              'artifact_bytes': artifact_path.stat().st_size,
+              'allowed_inputs': [
+                  'data/real/Hz_data_real.csv',
+                  'data/real/BAO_data_real.csv',
+                  'data/real/CMB_shift_real.json',
+                  'data/real/cosmology/fsigma8_growth_real.csv',
+                  'data/real/cosmology/desi_dr2_bao_primary_points.csv',
+                  'data/real/cosmology/RLL_ALL_REAL_DATA_MASTER.csv',
+                  'data/real/cosmology_observational_seed_2026.csv',
+              ],
+              'canonical_real_data_workflow': os.environ['CANONICAL_REAL_DATA_WORKFLOW'],
+              'claim_boundary': os.environ['CLAIM_BOUNDARY'],
+          }
+          Path('_audit/processed/calc_manifest.json').write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Build final checksums
+        run: |
+          set -euo pipefail
+          cd _audit/processed
+          sha256sum results.json calc_manifest.json > CHECKSUMS.sha256
+          cat CHECKSUMS.sha256
+
+      - name: Upload processed audit artifact without committing
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: ${{ github.event.inputs.output_name }}
+          path: _audit/processed/
+          if-no-files-found: error

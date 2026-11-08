@@ -1,0 +1,53 @@
+name: Formulas artifacts validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'data/formulas/**'
+      - 'scripts/validate_formulas_manifest.py'
+      - 'scripts/validate_formula_index_contract.py'
+      - 'scripts/materialize_formula_index.py'
+      - '.github/workflows/formulas-artifacts-validation.yml'
+  pull_request:
+    paths:
+      - 'data/formulas/**'
+      - 'scripts/validate_formulas_manifest.py'
+      - 'scripts/validate_formula_index_contract.py'
+      - 'scripts/materialize_formula_index.py'
+      - '.github/workflows/formulas-artifacts-validation.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  formulas-manifest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+
+      - name: Validate formulas manifest
+        run: python scripts/validate_formulas_manifest.py
+
+      - name: Validate formula index contract
+        run: python scripts/validate_formula_index_contract.py
+
+      - name: Compile materializer
+        run: python -m py_compile scripts/materialize_formula_index.py

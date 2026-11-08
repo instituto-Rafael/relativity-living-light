@@ -1,0 +1,62 @@
+name: Raw Data Manifest Status
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/raw/RAW_DATA_MANIFEST.yml"
+      - "data/raw/**"
+      - "scripts/data_scan/build_raw_data_manifest_status.py"
+      - ".github/workflows/raw-data-manifest-status.yml"
+  push:
+    paths:
+      - "data/raw/RAW_DATA_MANIFEST.yml"
+      - "data/raw/**"
+      - "scripts/data_scan/build_raw_data_manifest_status.py"
+      - ".github/workflows/raw-data-manifest-status.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: raw-data-manifest-status-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-raw-data-manifest-status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.x"
+
+      - name: Compile status builder
+        run: |
+          python -m py_compile scripts/data_scan/build_raw_data_manifest_status.py
+
+      - name: Build raw data manifest status
+        run: |
+          python scripts/data_scan/build_raw_data_manifest_status.py
+
+      - name: Display raw data manifest status
+        run: |
+          cat data/results/bootstrap/raw_data_manifest_status.json
+          echo "---"
+          cat docs/science/RAW_DATA_MANIFEST_STATUS.md
+
+      - name: Upload raw data manifest status artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: raw-data-manifest-status
+          path: |
+            data/results/bootstrap/raw_data_manifest_status.json
+            data/results/bootstrap/raw_data_manifest_status.tsv
+            docs/science/RAW_DATA_MANIFEST_STATUS.md

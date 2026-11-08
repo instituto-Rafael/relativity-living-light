@@ -1,0 +1,363 @@
+{
+  "schema": "rll.polymorphic_evidence_graph.v1",
+  "status": "STRUCTURAL_SHADOW_NO_NETWORK",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "science_execution": "NOT_RUN",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "previous_contracts": [
+    "data/contracts/frontier_research_composition.v1.yml",
+    "data/contracts/rll_scientific_validation_orchestrator.v1.json",
+    "data/contracts/rll_g4_background_tournament.v1.json",
+    "data/science/rll_cellular_metabolic_manifold_claims_v1.json"
+  ],
+  "security": {
+    "pr_network": "DENIED",
+    "pr_secrets": "DENIED",
+    "pull_request_target": "FORBIDDEN",
+    "token_values": "NEVER_READ_OR_LOG",
+    "supabase": "PRIVATE_INDEX_ONLY_RLS; NO_EDGE_FUNCTION_FOUND_AT_AUDIT",
+    "external_secret_names": "TOKEN_VAZIO_NOT_VERIFIED",
+    "automated_secret_inheritance": false
+  },
+  "sources": [
+    {
+      "id": "DESI_DR2_BAO",
+      "role": "OBSERVATIONAL_PRIMARY",
+      "domain": "cosmology",
+      "url": "https://data.desi.lbl.gov/doc/papers/dr2/",
+      "authority": "DESI_COLLAbORATION",
+      "status": "LOCAL_MANIFEST_AUDITABLE",
+      "local_binding": "data/real/cosmology/desi_bao_dr2_cobaya/MANIFEST.json",
+      "independence_group": "DESI_DR2_BAO",
+      "adapter": "G4_EXISTING"
+    },
+    {
+      "id": "PANTHEON_PLUS",
+      "role": "OBSERVATIONAL_PRIMARY",
+      "domain": "cosmology",
+      "url": "https://github.com/PantheonPlusSH0ES/DataRelease",
+      "authority": "PANTHEON_PLUS_TEAM",
+      "status": "CATALOG_AVAILABLE_COVARIANCE_MANUAL",
+      "local_binding": "data/real/cosmology/pantheon_plus/MANIFEST.json",
+      "independence_group": "PANTHEON_PLUS_SN",
+      "adapter": "G4_EXISTING"
+    },
+    {
+      "id": "NOAA_NCEI",
+      "role": "OBSERVATIONAL_PRIMARY",
+      "domain": "climate",
+      "url": "https://www.ncei.noaa.gov/cdo-web/webservices",
+      "authority": "NOAA_NCEI",
+      "status": "MANUAL_ADAPTER_NOT_WIRED",
+      "local_binding": "data/climate/rll_climate_source_registry.v1.json",
+      "independence_group": "NOAA_NCEI_RELEASE_SPECIFIC",
+      "adapter": "EXISTING_NOAA_GOVERNANCE"
+    },
+    {
+      "id": "NIST",
+      "role": "FORMAL_REFERENCE",
+      "domain": "physics",
+      "url": "https://physics.nist.gov/cuu/Constants/",
+      "authority": "NIST",
+      "status": "REFERENCE_NOT_MEASURED_HERE",
+      "local_binding": null,
+      "independence_group": null,
+      "adapter": "NOT_WIRED"
+    },
+    {
+      "id": "NATURE",
+      "role": "SCHOLARLY_PUBLICATION",
+      "domain": "multidisciplinary",
+      "url": "https://www.nature.com/nature-portfolio/editorial-policies/reporting-standards",
+      "authority": "NATURE_PORTFOLIO",
+      "status": "METADATA_ADAPTER_EXISTING_ONLY",
+      "local_binding": ".github/workflows/rll-nature-zenodo-intake.yml",
+      "independence_group": null,
+      "adapter": "rll_source_orchestrator"
+    },
+    {
+      "id": "SCIELO",
+      "role": "SCHOLARLY_PUBLICATION",
+      "domain": "multidisciplinary",
+      "url": "https://www.scielo.org/pt-br/sobre-o-scielo/programa-scielo-modelo-scielo-de-publicacao-e-rede-scielo/",
+      "authority": "SCIELO_NETWORK",
+      "status": "ADAPTER_NOT_WIRED",
+      "local_binding": null,
+      "independence_group": null,
+      "adapter": "OAI_PMH_OR_ARTICLEMETA_REQUIRES_SOURCE_SPEC"
+    },
+    {
+      "id": "ZENODO",
+      "role": "ARCHIVE_REPOSITORY",
+      "domain": "multidisciplinary",
+      "url": "https://zenodo.org/help/versioning",
+      "authority": "CERN_ZENODO",
+      "status": "METADATA_ADAPTER_EXISTING_ONLY",
+      "local_binding": ".github/workflows/rll-nature-zenodo-intake.yml",
+      "independence_group": null,
+      "adapter": "rll_source_orchestrator"
+    },
+    {
+      "id": "CROSSREF",
+      "role": "METADATA_REGISTRY",
+      "domain": "multidisciplinary",
+      "url": "https://api.crossref.org/",
+      "authority": "CROSSREF",
+      "status": "ADAPTER_NOT_WIRED",
+      "local_binding": null,
+      "independence_group": null,
+      "adapter": "DOI_LOOKUP_PLANNED"
+    },
+    {
+      "id": "SCIENCE_X",
+      "role": "NEWS_DISCOVERY",
+      "domain": "multidisciplinary",
+      "url": "https://sciencex.com/help/journalism/",
+      "authority": "SCIENCE_X_NETWORK",
+      "status": "DISCOVERY_ONLY",
+      "local_binding": null,
+      "independence_group": null,
+      "adapter": "NO_PRIMARY_DATA_PROMOTION"
+    },
+    {
+      "id": "SUPABASE_RAF",
+      "role": "PRIVATE_INDEX",
+      "domain": "cross_domain",
+      "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+      "authority": "PRIVATE_USER_WORKSPACE",
+      "status": "MCP_READ_ONLY_OBSERVED",
+      "local_binding": null,
+      "independence_group": null,
+      "adapter": "raf_private_REGISTRY_NO_EDGE_FUNCTION_OBSERVED"
+    },
+    {
+      "id": "GITHUB_RLL",
+      "role": "SOURCE_CODE_CUSTODY",
+      "domain": "cross_domain",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light",
+      "authority": "RLL_PRODUCER",
+      "status": "REPOSITORY_SOURCE_NOT_PHYSICAL_EVIDENCE",
+      "local_binding": "data/contracts/rll_scientific_validation_orchestrator.v1.json",
+      "independence_group": null,
+      "adapter": "CI_EXECUTOR"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "EUCLIDEAN_DIAGONAL",
+      "domain": "mathematics",
+      "class": "FORMAL_DEDUCTIVE",
+      "state": "PROVEN_WITHIN_AXIOMS",
+      "claim": "For a Euclidean square of side a, the diagonal is a*sqrt(2).",
+      "assumptions": [
+        "Euclidean metric",
+        "a>0",
+        "Pythagorean theorem"
+      ],
+      "observable": "SYMBOLIC_IDENTITY",
+      "falsifier": "Contradiction or counterexample within declared Euclidean axioms",
+      "uncertainty": "NOT_A_BAYESIAN_PROBABILITY"
+    },
+    {
+      "id": "MITO_ATP",
+      "domain": "cell_biology",
+      "class": "EMPIRICAL_REFERENCE",
+      "state": "LITERATURE_CONSENSUS_NOT_LOCAL_REPLICATION",
+      "claim": "Cell respiration converts chemical free energy of nutrient oxidation into electrochemical gradients and ATP synthesis, conditional on cellular context.",
+      "assumptions": [
+        "Appropriate metabolic substrate",
+        "Intact energy metabolism",
+        "Biological conditions declared"
+      ],
+      "observable": "ATP-production/oxygen-consumption/flux",
+      "falsifier": "Reproducible opposing flux/energy-balance results under declared controls",
+      "uncertainty": "SOURCE_TO_EXPERIMENT_BINDING_PENDING"
+    },
+    {
+      "id": "TRIBO_XRAY_CELL",
+      "domain": "cell_biology",
+      "class": "EXPLORATORY_HYPOTHESIS",
+      "state": "TOKEN_VAZIO_PHYSICAL_MECHANISM",
+      "claim": "Hypothetical biological tribo-X-ray process directly delivers usable cell energy (user's exploratory example).",
+      "assumptions": [
+        "Mechanism undefined",
+        "Emission dose undefined",
+        "Absorption-energy coupling undefined"
+      ],
+      "observable": "TOKEN_VAZIO",
+      "falsifier": "Measured emission spectrum, uptake-energy balance, dose safety, negative controls and independent replication required",
+      "uncertainty": "NOT_EVIDENCED"
+    },
+    {
+      "id": "LCDM_BACKGROUND",
+      "domain": "cosmology",
+      "class": "MODEL_COMPARATOR",
+      "state": "STANDARD_BASELINE_REFERENCE",
+      "claim": "Standard LCDM expansion background as comparison reference; not assumed optimal for every dataset.",
+      "assumptions": [
+        "G4 data-selection contract",
+        "Same likelihood for all compared models"
+      ],
+      "observable": "H(z), DESI BAO, Pantheon+ SN",
+      "falsifier": "Model-vs-data likelihood diagnostics",
+      "uncertainty": "G4_CURRENT_RUN_NOT_EXECUTED"
+    },
+    {
+      "id": "RLL_BACKGROUND",
+      "domain": "cosmology",
+      "class": "EXPLORATORY_MODEL",
+      "state": "G4_G5_PREWARM_DESIGNED_NOT_PHYSICALLY_VERIFIED",
+      "claim": "RLL phenomenological background compared fairly against LCDM/wCDM/CPL/GEDE/IDE.",
+      "assumptions": [
+        "Same frozen data",
+        "Same covariance and nuisance",
+        "G4 preregistered seeds"
+      ],
+      "observable": "H(z), DESI BAO, Pantheon+ SN",
+      "falsifier": "Null-limit, fit instability, nonconvergence, likelihood and independent replication",
+      "uncertainty": "G4_G5_RUN_TOKEN_VAZIO"
+    }
+  ],
+  "relations": [
+    {
+      "from": "source:DESI_DR2_BAO",
+      "to": "hypothesis:LCDM_BACKGROUND",
+      "type": "ELIGIBLE_LIKELIHOOD_INPUT",
+      "scope": "COSMOLOGY_ONLY",
+      "evidence": "DATA_MANIFEST_ONLY"
+    },
+    {
+      "from": "source:DESI_DR2_BAO",
+      "to": "hypothesis:RLL_BACKGROUND",
+      "type": "ELIGIBLE_LIKELIHOOD_INPUT",
+      "scope": "COSMOLOGY_ONLY",
+      "evidence": "DATA_MANIFEST_ONLY"
+    },
+    {
+      "from": "source:PANTHEON_PLUS",
+      "to": "hypothesis:LCDM_BACKGROUND",
+      "type": "ELIGIBLE_LIKELIHOOD_INPUT",
+      "scope": "COSMOLOGY_ONLY",
+      "evidence": "CATALOG_ONLY_FULL_COV_PENDING"
+    },
+    {
+      "from": "source:PANTHEON_PLUS",
+      "to": "hypothesis:RLL_BACKGROUND",
+      "type": "ELIGIBLE_LIKELIHOOD_INPUT",
+      "scope": "COSMOLOGY_ONLY",
+      "evidence": "CATALOG_ONLY_FULL_COV_PENDING"
+    },
+    {
+      "from": "hypothesis:RLL_BACKGROUND",
+      "to": "hypothesis:LCDM_BACKGROUND",
+      "type": "COMPARED_AGAINST",
+      "scope": "FROZEN_G4",
+      "evidence": "NOT_RUN"
+    },
+    {
+      "from": "hypothesis:TRIBO_XRAY_CELL",
+      "to": "hypothesis:MITO_ATP",
+      "type": "ANALOGY_NOT_CAUSALITY",
+      "scope": "HYPOTHESIS_FORMULATION_ONLY",
+      "evidence": "TOKEN_VAZIO_MECHANISM"
+    },
+    {
+      "from": "hypothesis:TRIBO_XRAY_CELL",
+      "to": "hypothesis:MITO_ATP",
+      "type": "REQUIRES_FALSIFICATION",
+      "scope": "BIOPHYSICS_ONLY",
+      "evidence": "NO_EXPERIMENT"
+    }
+  ],
+  "bayes_protocol": {
+    "state": "NOT_RUN_NO_FROZEN_LIKELIHOOD",
+    "comparison": "posterior odds require registered prior odds and a traceable Bayes factor computed from evidence",
+    "required_fields": [
+      "prior_h1",
+      "prior_origin",
+      "h0",
+      "h1",
+      "observations_sha256",
+      "likelihood_sha256",
+      "covariance_sha256",
+      "selection_sha256",
+      "nuisance_sha256",
+      "independence_groups",
+      "all_preregistered",
+      "model_parameter_counts"
+    ],
+    "double_counting": "DEPENDENT_SAMPLE_COUNTS_DO_NOT_MULTIPLY_INDEPENDENT_LIKELIHOODS",
+    "forbid": [
+      "posterior_by_reputation",
+      "posterior_from_journal_name",
+      "likelihood_from_news",
+      "cross_domain_analogy_as_support",
+      "an_unreviewed_causal_claim",
+      "synthetic_as_observation",
+      "promote_ci_to_physical_validation"
+    ]
+  },
+  "execution_dag": [
+    {
+      "id": "S0",
+      "requires": [],
+      "function": "SOURCE_CATALOG_AND_LICENSE"
+    },
+    {
+      "id": "S1",
+      "requires": [
+        "S0"
+      ],
+      "function": "DEDUPE_DOI_RELEASE_AND_OBSERVATIONAL_GROUP"
+    },
+    {
+      "id": "S2",
+      "requires": [
+        "S1"
+      ],
+      "function": "FORMAL_AXIOM_VERSUS_EMPIRICAL_VERSUS_SPECULATIVE_TYPING"
+    },
+    {
+      "id": "S3",
+      "requires": [
+        "S2"
+      ],
+      "function": "TYPED_HYPOTHESIS_RELATIONS_AND_FALSIFIERS"
+    },
+    {
+      "id": "S4",
+      "requires": [
+        "S3"
+      ],
+      "function": "BAYES_LIKELIHOOD_AND_PRIOR_READINESS_NO_NUMERIC_POSTERIOR"
+    },
+    {
+      "id": "S5",
+      "requires": [
+        "S4"
+      ],
+      "function": "EXISTING_G4_SIX_MODEL_REAL_DATA_IF_MANUALLY_AUTHORIZED"
+    },
+    {
+      "id": "S6",
+      "requires": [
+        "S5"
+      ],
+      "function": "EXISTING_G5_FREEZE_AND_RECEIPT"
+    },
+    {
+      "id": "S7",
+      "requires": [
+        "S6"
+      ],
+      "function": "G6_G8_G9_REPLICATION_SEPARATE_MANUAL_GATES"
+    }
+  ],
+  "boundaries": {
+    "mathematical_proof_not_empirical_measurement": true,
+    "local_source_registry_not_remote_data_ingestion": true,
+    "source_reputation_not_bayes_prior": true,
+    "all_claims_require_separate_promotion": true
+  }
+}

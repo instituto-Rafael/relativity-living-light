@@ -1,0 +1,30 @@
+name: Symlink integrity
+
+on:
+  pull_request:
+    paths:
+      - "figs/**"
+      - "tools/check_symlink_integrity.py"
+      - ".github/workflows/symlink-integrity.yml"
+      - ".github/workflows/jekyll-gh-pages.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "figs/**"
+      - "tools/check_symlink_integrity.py"
+      - ".github/workflows/symlink-integrity.yml"
+      - ".github/workflows/jekyll-gh-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Scan symlink graph
+        run: python3 tools/check_symlink_integrity.py

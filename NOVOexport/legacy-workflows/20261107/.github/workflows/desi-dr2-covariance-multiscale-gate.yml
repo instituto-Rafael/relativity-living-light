@@ -1,0 +1,79 @@
+name: DESI DR2 Covariance Whitened Multiscale Gate
+
+on:
+  push:
+    branches:
+      - "work/desi-dr2-covariance-whitened-multiscale-v1-20260928"
+    paths:
+      - "scripts/rll_desi_dr2_covariance_multiscale.py"
+      - "data/contracts/rll_desi_dr2_covariance_multiscale.v1.json"
+      - "tests/test_rll_desi_dr2_covariance_multiscale.py"
+      - "docs/science/RLL_DESI_DR2_COVARIANCE_WHITENED_MULTISCALE_V1.md"
+      - ".github/workflows/desi-dr2-covariance-multiscale-gate.yml"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/desi_dr2_bao_covariance.csv"
+      - "results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json"
+  pull_request:
+    paths:
+      - "scripts/rll_desi_dr2_covariance_multiscale.py"
+      - "data/contracts/rll_desi_dr2_covariance_multiscale.v1.json"
+      - "tests/test_rll_desi_dr2_covariance_multiscale.py"
+      - "docs/science/RLL_DESI_DR2_COVARIANCE_WHITENED_MULTISCALE_V1.md"
+      - ".github/workflows/desi-dr2-covariance-multiscale-gate.yml"
+      - "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+      - "data/real/desi_dr2_bao_covariance.csv"
+      - "results/RLL_G4_DESI_GEOMETRY_LCDM_RLL_REPRODUCTION_V1.json"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Parse contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("data/contracts/rll_desi_dr2_covariance_multiscale.v1.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["claim_allowed"] is False
+          print("PASS_CONTRACT", d["schema"])
+          PY
+
+      - name: Run covariance-whitened reference
+        run: |
+          python scripts/rll_desi_dr2_covariance_multiscale.py \
+            --output /tmp/rll_desi_covariance_multiscale.json
+          python - <<'PY'
+          import json
+          import math
+          from pathlib import Path
+          d=json.loads(Path("/tmp/rll_desi_covariance_multiscale.json").read_text())
+          assert d["claim_allowed"] is False
+          for model in ("LCDM","RLL"):
+              m=d["models"][model]
+              assert m["chi2_reproduction_match"] is True
+              assert m["block_diagnostics"]["block_closure_pass"] is True
+              assert m["fibonacci_multiscale"]["weights_likelihood"] is False
+          assert math.isclose(
+              d["models"]["RLL"]["chi2_from_whitened"],
+              11.77025905554635,
+              rel_tol=1e-11,
+              abs_tol=1e-11,
+          )
+          print("PASS_REFERENCE", d["models"]["RLL"]["chi2_from_whitened"])
+          PY
+
+      - name: Run focused tests
+        run: |
+          python -m pip install --disable-pip-version-check pytest
+          python -m pytest -q tests/test_rll_desi_dr2_covariance_multiscale.py

@@ -1,0 +1,39 @@
+name: RLL read-only crosscheck — RAFAELIA Android Atlas debug APK
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/atlas-android-apk-crosscheck.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  apk-crosscheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - name: Read public Atlas source at immutable SHA
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: rafaelmeloreisnovo/actions
+          ref: 2daa8d40d401aab20f765fed9c3f229d90c8ff4c
+          persist-credentials: false
+          path: source
+      - name: Verify exact source and build standalone Android debug artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C source rev-parse HEAD)" = "2daa8d40d401aab20f765fed9c3f229d90c8ff4c"
+          bash source/android/atlas_wizard/ci/build_apk.sh
+          echo 'APK build only, not cosmology science, no secret and no data access.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload only APK and build receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: atlas-apk-public-crosscheck-arm32-arm64
+          path: |
+            source/android/atlas_wizard/out/RAFAELIA-Atlas-Wizard-arm32-arm64-debug.apk
+            source/android/atlas_wizard/out/RAFAELIA-Atlas-Wizard-arm32-arm64-debug.apk.receipt.json
+          if-no-files-found: error
+          retention-days: 7

@@ -1,0 +1,169 @@
+# KNOWS_BY_ON_FIRST_LINE: non-publishing geometric mutation/sensitivity receipts.
+name: Geometric Mutation Ω Matrix
+run-name: Geometry Ω · ${{ github.event_name }} · ${{ github.ref_name }}
+
+"on":
+  push:
+    branches: [main]
+    paths: &geometry_paths
+      - "data/contracts/geometric_mutation_matrix.v1.yml"
+      - "scripts/run_geometric_mutation_matrix.py"
+      - "tests/test_geometric_mutation_matrix.py"
+      - "src/rll/cosmology_fairness.py"
+      - "requirements/ci-frontier.txt"
+      - ".github/workflows/geometric-mutation-matrix.yml"
+  pull_request:
+    branches: [main]
+    paths: *geometry_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: geometric-mutation-omega-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+  CONTRACT: data/contracts/geometric_mutation_matrix.v1.yml
+  ARTIFACT_RETENTION_DAYS: "30"
+
+jobs:
+  contract-and-tests:
+    name: Contract + adversarial invariants
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Run geometric mutation contract tests
+        run: |
+          set -euo pipefail
+          pytest -q tests/test_geometric_mutation_matrix.py
+
+  mutate:
+    name: Mutation shard ${{ matrix.shard }}
+    needs: contract-and-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Explore deterministic geometry/projection/fragment mutations
+        run: |
+          set -euo pipefail
+          out="artifacts/geometric-mutation/shard-${{ matrix.shard }}"
+          python scripts/run_geometric_mutation_matrix.py \
+            --contract "$CONTRACT" \
+            --output-dir "$out" \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count 4
+          printf '%s\n' \
+            'claim_allowed=false' \
+            'publication_effect=NONE' \
+            'cross_domain_bridge=SENSITIVITY_ONLY_NO_CAUSAL_CLAIM' \
+            'physical_wormhole_claim=false' \
+            > "$out/CLAIM_BOUNDARY.txt"
+          (cd "$out" && sha256sum * > CHECKSUMS.sha256)
+
+      - name: Upload mutation shard
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: geometric-mutation-shard-${{ matrix.shard }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/shard-${{ matrix.shard }}/
+          retention-days: 30
+          if-no-files-found: error
+
+  aggregate:
+    name: Aggregate geometry × cosmology sensitivity receipt
+    needs: mutate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements/ci-frontier.txt
+
+      - name: Install frozen frontier dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements/ci-frontier.txt
+
+      - name: Download all mutation shards
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: geometric-mutation-shard-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/input
+          merge-multiple: false
+
+      - name: Aggregate matrices, correlations, and bridge sensitivity
+        run: |
+          set -euo pipefail
+          out="artifacts/geometric-mutation/aggregate"
+          python scripts/run_geometric_mutation_matrix.py \
+            --contract "$CONTRACT" \
+            --output-dir "$out" \
+            --aggregate-root artifacts/geometric-mutation/input
+          python -VV > "$out/python-version.txt"
+          python -m pip freeze --all > "$out/pip-freeze.txt"
+          printf '%s\n' \
+            'claim_allowed=false' \
+            'publication_effect=NONE' \
+            'correlation_semantics=ASSOCIATION_ONLY' \
+            'fold_semantics=EXTRINSIC_EMBEDDING_ONLY' \
+            > "$out/CLAIM_BOUNDARY.txt"
+          (cd "$out" && sha256sum * > CHECKSUMS.sha256)
+          cat "$out/REPORT.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload aggregate receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: geometric-mutation-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/geometric-mutation/aggregate/
+          retention-days: 30
+          if-no-files-found: error

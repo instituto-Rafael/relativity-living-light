@@ -1,0 +1,127 @@
+name: WS01 Background Decision Evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "data/contracts/rll_ws01_background_decision_evidence.v1.json"
+      - "data/contracts/rll_ws01_omega_r_physical_authority.v1.json"
+      - "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+      - "data/governance/RLL_RX_PHYSICS_CONVERGENCE_V1.json"
+      - "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+      - "configs/rx_physics_contracts.json"
+      - "tests/test_rx_physics_v2_decision_packet.py"
+      - "tests/test_rll_ws01_ws02_ws21_ws23_bridge.py"
+      - "tools/rx_physics_v2_decision_evidence.py"
+      - "tests/test_rx_physics_v2_decision_evidence.py"
+      - "tools/rx_physics_v2_omega_r_authority.py"
+      - "tests/test_rx_physics_v2_omega_r_authority.py"
+      - "src/rll/cosmology_radiation.py"
+      - "rx/cosmology.py"
+      - "rx/kernel.py"
+      - "data/real/Hz_data_real.csv"
+      - "data/real/cosmology/Hz_cosmic_chronometers_independent.csv"
+      - ".github/workflows/ws01-background-decision-evidence.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ws01-background-decision-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  decision-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Install focused scientific dependencies
+        run: python -m pip install --disable-pip-version-check "scipy>=1.11,<2" "pytest>=8,<10"
+
+      - name: Execute WS01 evidence tests
+        run: python -m pytest -q tests/test_rx_physics_v2_decision_evidence.py
+
+      - name: Execute Omega_r physical authority tests
+        run: python -m pytest -q tests/test_rx_physics_v2_omega_r_authority.py
+
+      - name: Materialize Omega_r physical authority receipt
+        run: |
+          mkdir -p artifacts/science/ws01
+          python tools/rx_physics_v2_omega_r_authority.py \
+            --output artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json \
+            --require-pass
+
+      - name: Materialize WS01 decision receipt
+        run: |
+          mkdir -p artifacts/science/ws01
+          python tools/rx_physics_v2_decision_evidence.py \
+            --output artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE.json \
+            --require-pass
+          sha256sum \
+            data/contracts/rll_ws01_background_decision_evidence.v1.json \
+            tools/rx_physics_v2_decision_evidence.py \
+            data/real/Hz_data_real.csv \
+            data/real/cosmology/Hz_cosmic_chronometers_independent.csv \
+            artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE.json \
+            data/contracts/rll_ws01_omega_r_physical_authority.v1.json \
+            tools/rx_physics_v2_omega_r_authority.py \
+            src/rll/cosmology_radiation.py \
+            artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json \
+            > artifacts/science/ws01/CHECKSUMS.sha256
+
+      - name: Verify fail-closed boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE.json")
+          d = json.loads(p.read_text())
+          omega = json.loads(Path("artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json").read_text())
+          assert d["state"] == "EVIDENCE_REDUCED_WS01_PARTIAL"
+          assert d["claim_allowed"] is False
+          assert d["scientific_confirmation"] is False
+          assert d["terminalizable_axes_from_this_evidence"] == ["hz_dataset", "distance_integration"]
+          assert d["remaining_blocking_axes"] == ["omega_r", "growth_mode"]
+          assert omega["state"] == "PASS_DERIVED_STANDARD_RADIATION_AUTHORITY"
+          assert omega["passed"] is True
+          assert omega["claim_allowed"] is False
+          assert omega["legacy_fixed_values_promoted"] is False
+          print(json.dumps({
+              "state": d["state"],
+              "hz_dataset": d["hz_dataset"]["state"],
+              "selected_rows_from_33": d["hz_dataset"]["selected_from_33_rows"],
+              "excluded_rows_from_33": len(d["hz_dataset"]["excluded_rows"]),
+              "distance_state": d["distance_integration"]["state"],
+              "distance_max_relative_error": d["distance_integration"]["observed"]["max_relative_error_vs_quad"],
+              "distance_max_refinement_delta": d["distance_integration"]["observed"]["max_relative_refinement_delta_2048_to_4096"],
+              "omega_r_state": d["omega_r"]["state"],
+              "omega_r_max_H_delta": max(v["max_relative_delta_H"] for v in d["omega_r"]["sensitivity"].values()),
+              "omega_r_max_DM_delta": max(v["max_relative_delta_DM"] for v in d["omega_r"]["sensitivity"].values()),
+              "pre_omega_remaining_blocking_axes": d["remaining_blocking_axes"],
+              "omega_authority_state": omega["state"],
+              "omega_r_h2": omega["authority"]["omega_r_h2"],
+              "legacy_fixed_snapshots": omega["legacy_fixed_snapshots"],
+              "claim_allowed": False,
+          }, sort_keys=True))
+          PY
+
+      - name: Upload decision evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: ws01-background-decision-evidence-${{ github.run_id }}
+          path: |
+            artifacts/science/ws01/RLL_WS01_BACKGROUND_DECISION_EVIDENCE.json
+            artifacts/science/ws01/RLL_WS01_OMEGA_R_PHYSICAL_AUTHORITY.json
+            artifacts/science/ws01/CHECKSUMS.sha256
+          if-no-files-found: error
+          retention-days: 30

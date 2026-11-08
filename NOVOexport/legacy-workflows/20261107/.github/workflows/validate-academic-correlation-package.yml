@@ -1,0 +1,66 @@
+name: Validate Academic Correlation Package
+
+on:
+  pull_request:
+    paths:
+      - 'docs/research/ACADEMIC_CORRELATION_CANDIDATE_MAP.md'
+      - 'docs/codex/CODEX_ACADEMIC_CORRELATION_IMPLEMENTATION_PLAN.md'
+      - 'docs/formulas/RAFAELIA_SYMBOL_TABLE.md'
+      - 'docs/yml/PROOF_OBLIGATION_REGISTRY.yml'
+      - 'results/relational_validation/RELATIONAL_VALIDATION_LEDGER.yml'
+      - 'results/relational_validation/packages/ACADEMIC_CORR_001/**'
+      - 'schemas/relational_validation_package.schema.json'
+      - 'schemas/relation_graph.schema.json'
+      - 'tools/validate_academic_correlation_package.py'
+      - 'tests/test_academic_correlation_package_validator.py'
+      - 'tests/test_numeric_representation_semantics.py'
+      - '.github/workflows/validate-academic-correlation-package.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/research/ACADEMIC_CORRELATION_CANDIDATE_MAP.md'
+      - 'docs/codex/CODEX_ACADEMIC_CORRELATION_IMPLEMENTATION_PLAN.md'
+      - 'docs/formulas/RAFAELIA_SYMBOL_TABLE.md'
+      - 'docs/yml/PROOF_OBLIGATION_REGISTRY.yml'
+      - 'results/relational_validation/RELATIONAL_VALIDATION_LEDGER.yml'
+      - 'results/relational_validation/packages/ACADEMIC_CORR_001/**'
+      - 'schemas/relational_validation_package.schema.json'
+      - 'schemas/relation_graph.schema.json'
+      - 'tools/validate_academic_correlation_package.py'
+      - 'tests/test_academic_correlation_package_validator.py'
+      - 'tests/test_numeric_representation_semantics.py'
+      - '.github/workflows/validate-academic-correlation-package.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-academic-correlation-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+
+      - name: Install lightweight dependencies
+        run: python -m pip install --upgrade pip PyYAML pytest
+
+      - name: Validate academic correlation package
+        run: python tools/validate_academic_correlation_package.py
+
+      - name: Run focused tests
+        run: >-
+          python -m pytest -q
+          tests/test_academic_correlation_package_validator.py
+          tests/test_numeric_representation_semantics.py

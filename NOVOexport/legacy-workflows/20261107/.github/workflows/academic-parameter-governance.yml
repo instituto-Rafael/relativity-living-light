@@ -1,0 +1,122 @@
+# Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
+name: Academic Parameter Governance
+on:
+  push:
+    paths:
+    - data/inputs/cosmology_joint/parameter_origin_registry.json
+    - data/inputs/cosmology_joint/h0_rd_ablation_matrix.json
+    - data/inputs/cosmology_joint/h0_rd_ablation_matrix.csv
+    - data/inputs/cosmology_joint/rll_outcome_action_matrix.json
+    - tools/validate_academic_parameter_registry.py
+    - tools/scan_rll_model_evidence.py
+    - tools/run_rll_academic_claim_governance.py
+    - tools/make_h0_rd_ablation_matrix.py
+    - tools/apply_rll_outcome_protocol.py
+    - tools/check_rll_report_claim_language.py
+    - docs/RLL_ACADEMIC_PARAMETER_CONVERGENCE_LEDGER.md
+    - docs/RLL_OPERATIONAL_EXCELLENCE_ACADEMIC_STRATEGY.md
+    - docs/RLL_CALCULABLE_EVIDENCE_SCAN_PROTOCOL.md
+    - docs/RLL_H0_RD_ABLATION_MATRIX.md
+    - docs/RLL_OUTCOME_ACTION_MATRIX.md
+    - docs/RLL_CERTAINTY_CALCULATION_BOUNDARY.md
+    - docs/RLL_DATA_FIT_DECISION_TREE.md
+    - results/structure_d/joint_real_likelihood.csv
+    - .github/workflows/academic-parameter-governance.yml
+  pull_request:
+    paths:
+    - data/inputs/cosmology_joint/parameter_origin_registry.json
+    - data/inputs/cosmology_joint/h0_rd_ablation_matrix.json
+    - data/inputs/cosmology_joint/h0_rd_ablation_matrix.csv
+    - data/inputs/cosmology_joint/rll_outcome_action_matrix.json
+    - tools/validate_academic_parameter_registry.py
+    - tools/scan_rll_model_evidence.py
+    - tools/run_rll_academic_claim_governance.py
+    - tools/make_h0_rd_ablation_matrix.py
+    - tools/apply_rll_outcome_protocol.py
+    - tools/check_rll_report_claim_language.py
+    - docs/RLL_ACADEMIC_PARAMETER_CONVERGENCE_LEDGER.md
+    - docs/RLL_OPERATIONAL_EXCELLENCE_ACADEMIC_STRATEGY.md
+    - docs/RLL_CALCULABLE_EVIDENCE_SCAN_PROTOCOL.md
+    - docs/RLL_H0_RD_ABLATION_MATRIX.md
+    - docs/RLL_OUTCOME_ACTION_MATRIX.md
+    - docs/RLL_CERTAINTY_CALCULATION_BOUNDARY.md
+    - docs/RLL_DATA_FIT_DECISION_TREE.md
+    - results/structure_d/joint_real_likelihood.csv
+    - .github/workflows/academic-parameter-governance.yml
+  workflow_dispatch: null
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate-academic-parameter-registry:
+    name: Validate academic parameter registry and evidence scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - name: Set up Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      with:
+        python-version: '3.11'
+    - name: Validate registry JSON and academic governance invariants
+      run: python3 tools/validate_academic_parameter_registry.py
+    - name: Scan current RLL model evidence table
+      run: python3 tools/scan_rll_model_evidence.py --no-write
+    - name: Run integrated academic claim governance wrapper
+      run: python3 tools/run_rll_academic_claim_governance.py --no-write
+    - name: Validate H0/r_d ablation matrix generator
+      run: python3 tools/make_h0_rd_ablation_matrix.py --no-write
+    - name: Validate outcome action protocol for all possible statuses
+      run: 'python3 tools/apply_rll_outcome_protocol.py --no-write --status CLAIM_BLOCKED
+
+        python3 tools/apply_rll_outcome_protocol.py --no-write --status PASS_LIMITED
+
+        python3 tools/apply_rll_outcome_protocol.py --no-write --status PARTIAL
+
+        python3 tools/apply_rll_outcome_protocol.py --no-write --status TOKEN_VAZIO
+
+        python3 tools/apply_rll_outcome_protocol.py --no-write --status AUDIT_FAIL
+
+        python3 tools/apply_rll_outcome_protocol.py --no-write --status RUNTIME_PENDING
+
+        '
+    - name: Print claim boundary reminder
+      run: 'echo "PASS: registry, evidence scanner, governance wrapper, ablation matrix and outcome protocol checks completed."
+
+        echo "Reminder: this gate validates provenance, calculable evidence, ablation policy, outcome routing and claim boundaries only."
+
+        echo "No RLL superiority claim is allowed without fair baselines, k counting, covariance policy, reproducible likelihood outputs, and evidence scan status permitting the claim."
+
+        '
+    - name: Finalize canonical real-data policy checksums
+      if: always()
+      run: 'set -euo pipefail
+
+        ARTIFACT_DIR="artifacts/workflow-policy/academic-parameter-governance/${{ github.job }}"
+
+        mkdir -p "$ARTIFACT_DIR"
+
+        . tools/ci/real_data_workflow_policy.sh
+
+        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+
+        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+
+        rll_real_data_write_checksums "$ARTIFACT_DIR"
+
+        '
+    - name: Upload canonical real-data policy artifact
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: academic-parameter-governance-policy-${{ github.run_id }}-${{ github.job }}
+        path: artifacts/workflow-policy/academic-parameter-governance/${{ github.job }}/
+        retention-days: '14'
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.

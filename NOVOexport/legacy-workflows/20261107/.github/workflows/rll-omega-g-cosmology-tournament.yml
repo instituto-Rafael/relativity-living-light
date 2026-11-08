@@ -1,0 +1,64 @@
+name: RLL Omega_G Cosmology Tournament
+
+on:
+  pull_request:
+    paths:
+      - "data/contracts/rll_omega_g_cosmology_tournament.v1.yaml"
+      - "data/inputs/omega_g/observable_effect_binding_registry.v1.yaml"
+      - "tools/run_omega_g_cosmology_tournament.py"
+      - "tests/test_omega_g_cosmology_tournament.py"
+      - "docs/science/RLL_OMEGA_G_COSMOLOGY_TOURNAMENT_V1.md"
+      - ".github/workflows/rll-omega-g-cosmology-tournament.yml"
+  workflow_dispatch:
+    inputs:
+      run_background_smoke:
+        description: "Run short G4 background smoke through Omega_G bridge"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  structural-and-null:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install focused dependencies
+        run: python -m pip install numpy scipy pyyaml pytest
+      - name: Validate tournament and binding registry
+        run: python tools/run_omega_g_cosmology_tournament.py --mode validate
+      - name: Run exact null-parity gate
+        run: python tools/run_omega_g_cosmology_tournament.py --mode null-parity
+      - name: Focused tests
+        run: python -m pytest -q tests/test_omega_g_cosmology_tournament.py
+
+  optional-background-smoke:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_background_smoke }}
+    needs: structural-and-null
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install numpy scipy pyyaml
+      - name: Run G4 background smoke through Omega_G bridge
+        run: |
+          python tools/run_omega_g_cosmology_tournament.py \
+            --mode baseline \
+            --seeds 11 \
+            --maxiter 3 \
+            --integration-points 1024 \
+            --output artifacts/omega_g/g4_baseline_smoke.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: omega-g-g4-background-smoke-${{ github.run_id }}
+          path: artifacts/omega_g/g4_baseline_smoke.json
+          if-no-files-found: error

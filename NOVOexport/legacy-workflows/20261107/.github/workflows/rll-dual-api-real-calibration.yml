@@ -1,0 +1,141 @@
+name: "RLL Dual API Real Climate Calibration"
+
+on:
+  pull_request:
+    paths:
+      - "scripts/rll_dual_api_real_climate_calibration.py"
+      - "tests/test_rll_dual_api_real_climate_calibration.py"
+      - "data/contracts/rll_dual_api_real_climate_calibration.v1.json"
+      - "docs/science/RLL_DUAL_API_REAL_CALIBRATION_V1.md"
+      - ".github/workflows/rll-dual-api-real-calibration.yml"
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: "Climate Engine dataset"
+        required: true
+        default: "GRIDMET"
+        type: string
+      variable:
+        description: "Climate Engine variable"
+        required: true
+        default: "pr"
+        type: string
+      coordinates:
+        description: "Climate Engine coordinates JSON; use non-sensitive/public locations"
+        required: true
+        default: "[[-121.61,38.78]]"
+        type: string
+      baseline_start_date:
+        description: "Baseline start YYYY-MM-DD"
+        required: true
+        type: string
+      baseline_end_date:
+        description: "Baseline end YYYY-MM-DD"
+        required: true
+        type: string
+      target_start_date:
+        description: "Target start YYYY-MM-DD"
+        required: true
+        type: string
+      target_end_date:
+        description: "Target end YYYY-MM-DD"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-dual-api-calibration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-validation:
+    name: "Static calibration contract tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: "Checkout immutable reviewed action"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "Run unit tests without external credentials"
+        run: python3 -m unittest -v tests.test_rll_dual_api_real_climate_calibration
+
+  real-climate-calibration:
+    name: "Real dual-API calibration — manual only"
+    if: github.event_name == 'workflow_dispatch'
+    needs: static-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      RLL_AGENT_GITHUB_PAT_ENV: GITHUB_TOKEN
+      RLL_AGENT_CLIMATE_KEY_ENV: CLIMATE_ENGINE_API_KEY
+      GITHUB_TOKEN: ${{ github.token }}
+      CLIMATE_ENGINE_API_KEY: ${{ secrets.CLIMA }}
+      RLL_DATASET: ${{ inputs.dataset }}
+      RLL_VARIABLE: ${{ inputs.variable }}
+      RLL_COORDINATES: ${{ inputs.coordinates }}
+      RLL_BASELINE_START: ${{ inputs.baseline_start_date }}
+      RLL_BASELINE_END: ${{ inputs.baseline_end_date }}
+      RLL_TARGET_START: ${{ inputs.target_start_date }}
+      RLL_TARGET_END: ${{ inputs.target_end_date }}
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONHASHSEED: "0"
+
+    steps:
+      - name: "Checkout immutable reviewed action"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: "Run real dual-API calibration with fail-closed receipt"
+        id: calibration
+        shell: bash
+        run: |
+          set +e
+          mkdir -p artifacts/science/climate/dual_api_calibration
+          python3 scripts/rll_dual_api_real_climate_calibration.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --ref "$GITHUB_SHA" \
+            --dataset "$RLL_DATASET" \
+            --variable "$RLL_VARIABLE" \
+            --coordinates "$RLL_COORDINATES" \
+            --baseline-start-date "$RLL_BASELINE_START" \
+            --baseline-end-date "$RLL_BASELINE_END" \
+            --target-start-date "$RLL_TARGET_START" \
+            --target-end-date "$RLL_TARGET_END" \
+            --execute \
+            --receipt artifacts/science/climate/dual_api_calibration/receipt.json
+          rc=$?
+          printf 'CALIBRATION_RC=%s\n' "$rc" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: "Hash calibration receipt"
+        if: always()
+        run: |
+          if [ -f artifacts/science/climate/dual_api_calibration/receipt.json ]; then
+            sha256sum artifacts/science/climate/dual_api_calibration/receipt.json \
+              > artifacts/science/climate/dual_api_calibration/receipt.sha256
+          fi
+
+      - name: "Upload real calibration receipt"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-dual-api-real-calibration-${{ github.run_id }}
+          path: artifacts/science/climate/dual_api_calibration/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: "Fail closed after preserving receipt"
+        if: always()
+        shell: bash
+        run: exit "${CALIBRATION_RC:-99}"

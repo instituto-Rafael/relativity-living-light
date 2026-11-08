@@ -1,0 +1,179 @@
+name: GitHub Platform Assurance V2
+
+on:
+  pull_request:
+    branches: [main, rll/release, rll/integration, rll/lab]
+  push:
+    branches: [main, rll/release, rll/integration]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-platform-assurance-v2-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  platform-capability-contract:
+    name: GitHub platform capability contract V2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install bounded dependencies
+        run: python -m pip install pyyaml pytest
+      - name: Test forward-ported governance
+        run: python -m pytest -q tests/test_github_actions_capability_gate.py tests/test_workflow_contract_sync.py tests/test_branch_advance_registry.py
+      - name: Validate current workflow contract
+        run: python tools/validate_workflow_docs.py --strict --write-report
+      - name: Validate current capability matrix
+        run: python tools/github_actions_capability_gate.py --strict --write-report
+      - name: Upload assurance receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: github-platform-assurance-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/github-platform-assurance-v2/
+            artifacts/workflow-docs/
+          retention-days: 30
+          if-no-files-found: warn
+
+  external-settings-readonly:
+    name: External repository settings read-only authority
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout without persistent credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Test external settings probe
+        run: python -m unittest -v tests.test_github_external_settings_readonly_probe_v1
+      - name: Observe live rulesets and branch protection fail-closed
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p artifacts/github-external-settings-v1
+          python tools/github_external_settings_readonly_probe_v1.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --output artifacts/github-external-settings-v1/receipt.json
+          sha256sum artifacts/github-external-settings-v1/receipt.json \
+            > artifacts/github-external-settings-v1/receipt.sha256
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("artifacts/github-external-settings-v1/receipt.json").read_text(encoding="utf-8"))
+          assert d["claim_allowed"] is False
+          assert d["publication_ready"] is False
+          assert d["publication_effect"] == "NONE"
+          assert d["authority"]["read_only"] is True
+          assert d["authority"]["secret_material_persisted"] is False
+          assert d["summary"]["branch_metadata_complete"] is True
+          print(json.dumps({"state": d["state"], **d["summary"], "claim_allowed": False}, sort_keys=True))
+          PY
+      - name: Upload sanitized external-settings receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: github-external-settings-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/github-external-settings-v1/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Fail closed above laboratory if authority is incomplete
+        if: always() && github.event_name == 'pull_request' && github.base_ref != 'rll/lab'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("artifacts/github-external-settings-v1/receipt.json").read_text(encoding="utf-8"))
+          if not d["summary"]["resolution_eligible"]:
+              raise SystemExit("external GitHub settings authority remains incomplete above laboratory maturity")
+          PY
+
+  dependency-review:
+    name: Dependency review fresh-state gate
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Review introduced dependencies
+        id: review
+        continue-on-error: true
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
+        with:
+          fail-on-severity: high
+      - name: Materialize fresh external-state receipt
+        if: always()
+        env:
+          OUTCOME: ${{ steps.review.outcome }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          mkdir -p artifacts/dependency-review-v2
+          decision=PASS
+          residual=NONE
+          if [[ "$OUTCOME" != success ]]; then
+            decision=TOKEN_VAZIO_EXTERNAL_SETTING
+            residual=DEPENDENCY_REVIEW_NOT_OBSERVED_AS_SUCCESS
+          fi
+          printf '{"schema":"rll.dependency_review.v2","base_ref":"%s","outcome":"%s","decision":"%s","residual":"%s","claim_allowed":false}\n' "$BASE_REF" "$OUTCOME" "$decision" "$residual" > artifacts/dependency-review-v2/receipt.json
+          cat artifacts/dependency-review-v2/receipt.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload dependency receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: dependency-review-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/dependency-review-v2/
+          retention-days: 30
+      - name: Fail closed above laboratory on missing review
+        if: always() && steps.review.outcome != 'success' && github.base_ref != 'rll/lab'
+        run: exit 1
+
+  codeql:
+    name: CodeQL V2 (${{ matrix.language }})
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [actions, python]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          queries: security-extended
+      - name: Analyze
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938
+        with:
+          category: /language:${{ matrix.language }}

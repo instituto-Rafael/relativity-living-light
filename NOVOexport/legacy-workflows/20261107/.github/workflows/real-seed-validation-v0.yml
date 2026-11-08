@@ -1,0 +1,107 @@
+# Auxiliary real-data workflow. Canonical policy: .github/workflows/real-data-complete-execution.yml
+name: Real Seed Validation v0
+on:
+  workflow_dispatch: null
+  pull_request:
+    paths:
+    - data/real/bootstrap/real_observational_seed_v0.*
+    - scripts/validation/**
+    - docs/science/REAL_OBSERVATIONAL_SEED_V0_REPORT.md
+    - .github/workflows/real-seed-validation-v0.yml
+  push:
+    paths:
+    - data/real/bootstrap/real_observational_seed_v0.*
+    - scripts/validation/**
+    - docs/science/REAL_OBSERVATIONAL_SEED_V0_REPORT.md
+    - .github/workflows/real-seed-validation-v0.yml
+permissions:
+  contents: read
+concurrency:
+  group: real-seed-validation-v0-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  real-seed-validation-v0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - name: Show repository state
+      run: 'git rev-parse HEAD
+
+        git status --short
+
+        '
+    - name: Set up Python
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      with:
+        python-version: 3.x
+    - name: Install canonical validation dependency
+      run: 'python -m pip install PyYAML==6.0.2
+
+        '
+    - name: Compile validation scripts
+      run: 'python -m py_compile scripts/validation/real_seed_utils.py
+
+        python -m py_compile scripts/validation/validate_compact_remnant_boundary.py
+
+        python -m py_compile scripts/validation/validate_dark_lens_candidates.py
+
+        python -m py_compile scripts/validation/validate_historical_impulse_candidates.py
+
+        python -m py_compile scripts/validation/validate_high_z_smbh_seeds.py
+
+        python -m py_compile scripts/validation/run_real_seed_validations.py
+
+        '
+    - name: Run all real seed validations
+      run: 'python scripts/validation/run_real_seed_validations.py
+
+        '
+    - name: Display real seed validation index
+      run: 'cat data/results/bootstrap/real_seed_validation_index.json
+
+        echo "---"
+
+        cat docs/science/REAL_SEED_VALIDATION_V0_INDEX.md
+
+        '
+    - name: Upload real seed validation artifacts
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      with:
+        name: real-seed-validation-v0
+        path: 'data/results/compact_objects/remnant_boundary_validation.json
+
+          data/results/compact_objects/wandering_bh_validation.json
+
+          data/results/kinematics/historical_impulse_validation.json
+
+          data/results/high_z_smbh/seed_validation.json
+
+          data/results/bootstrap/real_seed_validation_index.json
+
+          docs/science/REAL_SEED_VALIDATION_V0_INDEX.md
+
+          '
+    - name: Finalize canonical real-data policy checksums
+      if: always()
+      run: 'set -euo pipefail
+
+        ARTIFACT_DIR="artifacts/workflow-policy/real-seed-validation-v0/${{ github.job }}"
+
+        mkdir -p "$ARTIFACT_DIR"
+
+        . tools/ci/real_data_workflow_policy.sh
+
+        rll_real_data_write_claim_boundary "$ARTIFACT_DIR"
+
+        rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
+
+        rll_real_data_write_checksums "$ARTIFACT_DIR"
+
+        '
+    env:
+      CANONICAL_REAL_DATA_WORKFLOW: .github/workflows/real-data-complete-execution.yml
+      CLAIM_BOUNDARY: Auxiliary real-data workflow only; no RLL/cosmology/superiority claim and no synthetic, mock, fixture, demo, example, or placeholder promotion beyond explicit run checks.

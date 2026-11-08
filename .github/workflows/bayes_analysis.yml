@@ -1,11 +1,13 @@
+# Original Git blob archived, see:
+# NOVOexport/legacy-workflows/20261107/.github/workflows/bayes_analysis.yml
+# Compatibility: same workflow label, workflow_dispatch, job id and delegated mode.
 name: "Análise Bayesiana RLL vs ΛCDM — entrada manual canônica"
 
-on:
+"on":
   workflow_dispatch:
 
 permissions:
   contents: read
-
 concurrency:
   group: rll-bayes-manual-${{ github.ref }}
   cancel-in-progress: false
