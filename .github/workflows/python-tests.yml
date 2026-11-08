@@ -37,6 +37,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pytest pyyaml jsonschema
 
+      - name: Federated PR assurance offline snapshot (never promotes science)
+        run: |
+          set -euo pipefail
+          python tools/ci/rll_federated_pr_assurance_v1.py --require-schema \
+            --output results/audit/rll_federated_pr_assurance_v1.json
+          python -m unittest discover -s tests -p test_rll_federated_pr_assurance_v1.py -v
+          echo "Federated PR snapshot STRUCTURAL_PASS only; live GitHub/device/provider READBACK NOT_RUN; merge_allowed=false" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Validate formula-literature append-only history
         env:
           EVENT_NAME: ${{ github.event_name }}
