@@ -1,0 +1,228 @@
+{
+  "schema": "rll.multibase_complement_falsification.v1",
+  "parent_atlas": "data/contracts/rll_cross_domain_falsification_atlas.v1.json",
+  "parent_ids": [
+    "AX-F-MAT-03",
+    "AX-F-MAT-05"
+  ],
+  "source_route": "docs/research/OMEGA7_MODULAR_GEODESIC_TOROIDAL_FOCUS_20260818.md",
+  "source_provenance": "RLL/user prompted bases 7,10,14,100; complement 7+3 and 70+30; multiply 7*70",
+  "status": "FORMAL_FIXTURES_AND_PROPOSED_FALSIFIERS",
+  "claim_allowed": false,
+  "merge_allowed": false,
+  "geometry_physical_claim": "TOKEN_VAZIO_UNLESS_DIMENSIONAL_MODEL",
+  "notation": {
+    "base7": "digits 0..6 only; 7_10=10_7",
+    "base100": "bracketed digit [70]_{100} is ONE digit with numeric value 70, whereas [7,0]_{100}=700",
+    "modulo": "n mod b retains remainder only; exact n needs quotient and remainder",
+    "zero_vs_empty": "0 as calculated residue is known data; TOKEN_VAZIO is unknown/unobserved",
+    "primes": "primality applies to integer value; 7_10=10_7 remains prime",
+    "complement": "7*70=(7+3)*70-3*70; compensating debt exact"
+  },
+  "examples": {
+    "identities": [
+      "7=1*7+0",
+      "7×10=70",
+      "3×10=30",
+      "70+30=100",
+      "7×70=490",
+      "490=[4,90]_100=1300_7",
+      "[70]_100+[30]_100=[1,0]_100"
+    ],
+    "angular_residues": {
+      "base7": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "base10": [
+        7,
+        5,
+        0,
+        0
+      ],
+      "base14": [
+        7,
+        7,
+        8,
+        0
+      ]
+    },
+    "angular_order": [
+      7,
+      35,
+      50,
+      70
+    ],
+    "phase_definition": "theta=2*pi*(n mod b)/b, angular mapping does not yield physical angular momentum",
+    "compression_prior": "RLL PR1161 source text 5bit vs 6bit matched windows; no universal advantage"
+  },
+  "propositions": [
+    {
+      "id": "MB7-01",
+      "kind": "IDENTIDADE",
+      "claim": "7(decimal)=10(base7)=[7](base100)",
+      "state": "PROVAVEL_FORMAL",
+      "test": "converter e reconstruir; qualquer diferença reprova",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-02",
+      "kind": "REGRA_SINTATICA",
+      "claim": "07 não é numeral posicional válido na base 7",
+      "state": "PROVAVEL_FORMAL",
+      "test": "parser restrito base7 precisa rejeitar algarismo 7",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-03",
+      "kind": "RESIDUO",
+      "claim": "7 mod 7=0 e divmod(7,7)=(1,0), zero conhecido ≠ valor ausente",
+      "state": "PROVAVEL_FORMAL",
+      "test": "demonstração divisão euclidiana; parser nulo distinto do resto",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-04",
+      "kind": "NAO_INJETIVIDADE",
+      "claim": "Só o resto 0 mod7 não reconstrói 7,14,21; o quociente é necessário",
+      "state": "PROVAVEL_FORMAL",
+      "test": "colisão r(7)=r(14)=0",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-05",
+      "kind": "COMPLEMENTO",
+      "claim": "(7+3)*10=70+30=100, com escalas declaradas",
+      "state": "PROVAVEL_FORMAL",
+      "test": "teste aritmético inteiro exato",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-06",
+      "kind": "VAI_UM_BASE100",
+      "claim": "[70]_100+[30]_100=[1,0]_100, com dígito 70 como símbolo unitário",
+      "state": "PROVAVEL_FORMAL",
+      "test": "somar e reconstruir valor decimal",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-07",
+      "kind": "MULTIPLICACAO",
+      "claim": "7*70=490_10=[4,90]_100=1300_7",
+      "state": "PROVAVEL_FORMAL",
+      "test": "mesmo inteiro reconstruído em todas as bases",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-08",
+      "kind": "PRIMALIDADE",
+      "claim": "Trocar de base preserva primalidade do valor 7; multiplicar por 10 cria 70, composto",
+      "state": "PROVAVEL_FORMAL",
+      "test": "divisibilidade do valor não é dependente da escrita",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-09",
+      "kind": "COMPENSACAO",
+      "claim": "(a+c)*b-c*b=a*b para inteiros assinados",
+      "state": "PROVAVEL_FORMAL",
+      "test": "verificar identidade distributiva e overflow em representações limitadas",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-10",
+      "kind": "AREA_ASSINADA",
+      "claim": "(a+c)(b+d)-ad-bc-cd=ab para inteiros",
+      "state": "PROVAVEL_FORMAL",
+      "test": "expandir polinômio e cancelar as três parcelas extras",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-11",
+      "kind": "CAMBIO_BASE_E_REM",
+      "claim": "Para b>1: n=b*floor(n/b)+(n mod b), 0≤r<b, inclusive n=0",
+      "state": "PROVAVEL_FORMAL",
+      "test": "sweep exato multibase, 0 não é TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-12",
+      "kind": "ANGULO_MODULAR",
+      "claim": "Sob θ=2π(n mod b)/b, 7,35,50,70 têm o mesmo ângulo em b=7,10,14",
+      "state": "REFUTADA_CONTRAPROVA",
+      "test": "comparar resíduos em cada base; já falha na base7 para 50",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-13",
+      "kind": "ANGULO_VS_FISICA",
+      "claim": "Coincidência do resíduo modular determina momento angular físico igual",
+      "state": "REFUTADA_CONTRAPROVA",
+      "test": "escolher mesmo índice modular, mas momenta diferentes: r×p",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-14",
+      "kind": "REPETENDO",
+      "claim": "1/7 é periódico em base10 (142857), mas finito em base7 (0.1_7)",
+      "state": "PROVAVEL_FORMAL",
+      "test": "divisão racional/repetendo; valor 1/7 invariável",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-15",
+      "kind": "DIGITO_SOMA",
+      "claim": "Σ dígitos de n em base b ≡ n mod (b-1), para b≥2",
+      "state": "PROVAVEL_FORMAL",
+      "test": "congruência com b≡1 mod(b−1)",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-16",
+      "kind": "OTIMIZACAO",
+      "claim": "Complementação reduz operações/latência de multiplicações arbitrárias com primos",
+      "state": "HIPOTESE_BENCHMARK",
+      "test": "comparar mesmo inteiros, instruções, temporários, overflow, latência e mediana com controle",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-17",
+      "kind": "COMPRESSAO",
+      "claim": "Mudar base e empacotar dígitos sempre comprime mais o texto-fonte",
+      "state": "REFUTADA_CONTRAPROVA_LOCAL",
+      "test": "inclua tabela e escapes; comparação Braille 6 bits vs 5 bits em janelas iguais",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-18",
+      "kind": "GEOMETRIA_FISICA",
+      "claim": "Representação modular multibase prediz novas órbitas ou conservação angular física",
+      "state": "TOKEN_VAZIO_FISICA",
+      "test": "exigir mapa dimensional, estado, modelo dinâmico, observáveis e previsão fora da amostra",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-19",
+      "kind": "REPRESENTACAO_07",
+      "claim": "[0,7]_100 e [7]_100 têm mesmo valor 7, mas [7,0]_100 vale 700",
+      "state": "PROVAVEL_FORMAL",
+      "test": "testar dígitos posicionais e zeros à esquerda, sem ambiguidade",
+      "claim_allowed": false
+    },
+    {
+      "id": "MB7-20",
+      "kind": "ESCALA_GERAL",
+      "claim": "x+k=B ⇒ tx+tk=tB, mas isso não implica que x=tx",
+      "state": "PROVAVEL_FORMAL",
+      "test": "demonstrar conservação e distinção de escala com t>1",
+      "claim_allowed": false
+    }
+  ],
+  "local_exact_arithmetic_checks": {
+    "total": 24,
+    "passed": 24,
+    "scope": "JS integer-arithmetic fixture assertions at document preparation; not GitHub CI"
+  }
+}
