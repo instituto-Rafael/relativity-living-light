@@ -1,0 +1,418 @@
+{
+  "schema": "rll.federated_pr_assurance.v1",
+  "source_class": "CONNECTED_GITHUB_POINT_IN_TIME_READ_ONLY",
+  "observed_utc": "2026-11-08",
+  "inventory": {
+    "personal_owned_open": 53,
+    "institute_open": 4,
+    "external_firebird_outgoing": 3
+  },
+  "security": {
+    "network_ci": "DENIED",
+    "secrets_ci": "DENIED",
+    "writes_ci": "DENIED",
+    "automatic_merge": "DENIED"
+  },
+  "epistemic_boundary": "SOURCE!=ARTIFACT!=EXECUTION!=EVIDENCE!=CLAIM",
+  "claim_allowed": false,
+  "merge_allowed": false,
+  "records": [
+    {
+      "repo": "rafaelmeloreisnovo/RmrCti-",
+      "pr": 2,
+      "source_url": "https://github.com/rafaelmeloreisnovo/RmrCti-/pull/2",
+      "head_sha": "6ad6d0629bb392b7ddcea77af4e06ed8c458d6cc",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "6ad6d0629bb392b7ddcea77af4e06ed8c458d6cc",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 1,
+        "failure": 0,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "DEVICE_E2E_MISSING"
+      ],
+      "missing_evidence": [
+        "DEVICE_OAUTH_INDEXER_RECEIPT",
+        "PAGINATED_DRIVE_RECEIPT",
+        "INTERRUPTED_RESUME_RECEIPT"
+      ],
+      "priority": "P0",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/RmrCti-/actions/runs/42473921831"
+      ],
+      "next_owner_action": "Device OAuth+Drive pagination+resume receipt; debug APK upload alone is insufficient",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/termux-app-rafacodephi",
+      "pr": 512,
+      "source_url": "https://github.com/rafaelmeloreisnovo/termux-app-rafacodephi/pull/512",
+      "head_sha": "b5b8ff6fd4ee756dedf7cb2e7c126fab94f5fbee",
+      "observed_utc": "2026-11-08",
+      "draft": false,
+      "merged": false,
+      "ci": {
+        "head_sha": "b5b8ff6fd4ee756dedf7cb2e7c126fab94f5fbee",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 25,
+        "failure": 9,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "BOOTSTRAP_REAL_ARM_FAIL",
+        "CI_FAILURE"
+      ],
+      "missing_evidence": [
+        "REAL_ARM_BOOTSTRAP_RECEIPT",
+        "CONSUMER_APK_E2E"
+      ],
+      "priority": "P0",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/termux-app-rafacodephi/actions/runs/40426205312"
+      ],
+      "next_owner_action": "Repair bootstrap at packages producer, verify artifact digest and run exact APK on ARMv7",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/ZIPRAF_CORE",
+      "pr": 25,
+      "source_url": "https://github.com/rafaelmeloreisnovo/ZIPRAF_CORE/pull/25",
+      "head_sha": "133f2c1c6bdb44c8b48f794495fbcefc3c1167c7",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "133f2c1c6bdb44c8b48f794495fbcefc3c1167c7",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 0,
+        "failure": 4,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "REMOTE_ARTIFACT_QUOTA",
+        "CI_FAILURE"
+      ],
+      "missing_evidence": [
+        "REMOTE_ARTIFACT_CUSTODY",
+        "OWNER_STORAGE_QUOTA"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/ZIPRAF_CORE/actions/runs/42474158131",
+        "https://github.com/rafaelmeloreisnovo/ZIPRAF_CORE/actions/runs/42474158154"
+      ],
+      "next_owner_action": "Restore provider quota, rerun and verify mandatory artifact upload; preupload hashes do not close custody",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/RafGitTools",
+      "pr": 548,
+      "source_url": "https://github.com/rafaelmeloreisnovo/RafGitTools/pull/548",
+      "head_sha": "44aa15c7e2302099468d043c32e5ae1fb34f35a9",
+      "observed_utc": "2026-11-08",
+      "draft": false,
+      "merged": false,
+      "ci": {
+        "head_sha": "44aa15c7e2302099468d043c32e5ae1fb34f35a9",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 0,
+        "failure": 2,
+        "cancelled": 2,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE"
+      ],
+      "missing_evidence": [
+        "PYTHON_GATE_RECEIPT",
+        "SEMCHAOS_GATE_RECEIPT",
+        "TOPOLOGY_GATE_RECEIPT"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/RafGitTools/actions/runs/41662082062"
+      ],
+      "next_owner_action": "Repair isolated Python SEMCHAOS and workflow-topology regressions without weakening exact allowlist",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/Vectras-VM-Android",
+      "pr": 1174,
+      "source_url": "https://github.com/rafaelmeloreisnovo/Vectras-VM-Android/pull/1174",
+      "head_sha": "85f2464c2462da904e50f3b8bf70d6b146e4912f",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "85f2464c2462da904e50f3b8bf70d6b146e4912f",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 6,
+        "failure": 3,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "ANDROID_BUILD_FAILURE",
+        "CI_FAILURE",
+        "DEPENDENCY_MIGRATION_REVIEW"
+      ],
+      "missing_evidence": [
+        "ANDROID_BUILD_SUCCESS",
+        "OKHTTP5_API_COMPATIBILITY",
+        "ABI_DEVICE_E2E"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/Vectras-VM-Android/actions/runs/41659654348"
+      ],
+      "next_owner_action": "Isolate OkHttp major bump and regenerate build on owned Android ABIs",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/Vectras-VM-Android",
+      "pr": 1176,
+      "source_url": "https://github.com/rafaelmeloreisnovo/Vectras-VM-Android/pull/1176",
+      "head_sha": "e7c95b5e9d71d8c24c2becd485791acf281b915b",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "e7c95b5e9d71d8c24c2becd485791acf281b915b",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 6,
+        "failure": 3,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "ANDROID_BUILD_FAILURE",
+        "CI_FAILURE",
+        "DEPENDENCY_MIGRATION_REVIEW"
+      ],
+      "missing_evidence": [
+        "ANDROID_BUILD_SUCCESS",
+        "WORK_RUNTIME_2_12_API_REVIEW",
+        "ABI_DEVICE_E2E"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/Vectras-VM-Android/actions/runs/41659681954"
+      ],
+      "next_owner_action": "Audit WorkManager API and selected Android build without broad automatic dependency promotion",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/UserLAnd",
+      "pr": 400,
+      "source_url": "https://github.com/rafaelmeloreisnovo/UserLAnd/pull/400",
+      "head_sha": "f4c3f325c846aff53ecc5f91ccb547806f8783f0",
+      "observed_utc": "2026-11-08",
+      "draft": false,
+      "merged": false,
+      "ci": {
+        "head_sha": "f4c3f325c846aff53ecc5f91ccb547806f8783f0",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 0,
+        "failure": 7,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "ANDROID_BUILD_FAILURE",
+        "CI_FAILURE",
+        "DEPENDENCY_MIGRATION_REVIEW"
+      ],
+      "missing_evidence": [
+        "ANDROID_BUILD_SUCCESS",
+        "AGP_COMPATIBILITY_MATRIX"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/UserLAnd/actions/runs/40309272601"
+      ],
+      "next_owner_action": "Test Gradle plugin jump on isolated build matrix before merge",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "rafaelmeloreisnovo/Mapa",
+      "pr": 776,
+      "source_url": "https://github.com/rafaelmeloreisnovo/Mapa/pull/776",
+      "head_sha": "f4085dce61aa360858b5df970a323c307cad8b44",
+      "observed_utc": "2026-11-08",
+      "draft": false,
+      "merged": false,
+      "ci": {
+        "head_sha": "f4085dce61aa360858b5df970a323c307cad8b44",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 0,
+        "failure": 14,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE",
+        "SOURCE_PROVENANCE_UNVERIFIED"
+      ],
+      "missing_evidence": [
+        "SOURCE_PROVENANCE_VERIFIED",
+        "WORKFLOW_DAG_GATE_RECEIPT"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/rafaelmeloreisnovo/Mapa/actions/runs/40214692449"
+      ],
+      "next_owner_action": "Resolve upstream pinned reusable-workflow ref and workflow graph gate with exact hashes",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "instituto-Rafael/relativity-living-light",
+      "pr": 1163,
+      "source_url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1163",
+      "head_sha": "71eb09049c3a2be8c7d8600b3200c4ac346258e5",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "71eb09049c3a2be8c7d8600b3200c4ac346258e5",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 18,
+        "failure": 4,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE",
+        "BRANCH_MATURITY",
+        "EXTERNAL_PROTECTION_PARTIAL"
+      ],
+      "missing_evidence": [
+        "OWNER_BRANCH_PROMOTION",
+        "PROVIDER_RULESET_AUTHORITY",
+        "INDEPENDENT_MULTIMODAL_SEMANTICS"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/42464517139"
+      ],
+      "next_owner_action": "Keep draft; follow owner maturity path, gather provider settings, validate semantic held-out before claims",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "instituto-Rafael/relativity-living-light",
+      "pr": 1162,
+      "source_url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1162",
+      "head_sha": "0e8b3997df924820a0734c05c089ab097899d24c",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "0e8b3997df924820a0734c05c089ab097899d24c",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 18,
+        "failure": 4,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE",
+        "BRANCH_MATURITY",
+        "EXTERNAL_PROTECTION_PARTIAL"
+      ],
+      "missing_evidence": [
+        "OWNER_BRANCH_PROMOTION",
+        "PROVIDER_RULESET_AUTHORITY",
+        "FULL_3_LANGUAGE_CORPUS"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/42464419205"
+      ],
+      "next_owner_action": "Keep draft, preserve LZW12 as byte metric, no general semantic invariant",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "instituto-Rafael/relativity-living-light",
+      "pr": 1161,
+      "source_url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1161",
+      "head_sha": "3f9ac8f15678d0d42ef6a32f0d67546aa97a6085",
+      "observed_utc": "2026-11-08",
+      "draft": true,
+      "merged": false,
+      "ci": {
+        "head_sha": "3f9ac8f15678d0d42ef6a32f0d67546aa97a6085",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 10,
+        "failure": 3,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE",
+        "BRANCH_MATURITY",
+        "EXTERNAL_PROTECTION_PARTIAL"
+      ],
+      "missing_evidence": [
+        "OWNER_BRANCH_PROMOTION",
+        "PROVIDER_RULESET_AUTHORITY",
+        "BRAILLE_EQUIVALENCE_VALIDATION"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/42464089878"
+      ],
+      "next_owner_action": "Keep draft and source-aligned control, no merge to main",
+      "claim_allowed": false,
+      "merge_allowed": false
+    },
+    {
+      "repo": "instituto-Rafael/relativity-living-light",
+      "pr": 1151,
+      "source_url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1151",
+      "head_sha": "32607fc19771b26a7dca7e4f789244be249e2831",
+      "observed_utc": "2026-11-08",
+      "draft": false,
+      "merged": false,
+      "ci": {
+        "head_sha": "32607fc19771b26a7dca7e4f789244be249e2831",
+        "scope": "COMMIT_SCOPED_FIRST_PAGE",
+        "success": 12,
+        "failure": 2,
+        "cancelled": 0,
+        "pending": 0
+      },
+      "risk_codes": [
+        "CI_FAILURE",
+        "EXTERNAL_PROTECTION_PARTIAL"
+      ],
+      "missing_evidence": [
+        "PROVIDER_RULESET_AUTHORITY",
+        "OWNER_RELEASE_APPROVAL"
+      ],
+      "priority": "P1",
+      "evidence_urls": [
+        "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/41412906673"
+      ],
+      "next_owner_action": "Use governed rll/lab staging; validate provider protection and action pin before merge",
+      "claim_allowed": false,
+      "merge_allowed": false
+    }
+  ],
+  "reviewed_subset_count": 12
+}
