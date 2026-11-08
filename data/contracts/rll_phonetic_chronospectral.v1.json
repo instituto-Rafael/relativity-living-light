@@ -1,0 +1,33 @@
+{
+  "schema":"rll.phonetic_chronospectral.contract_v1",
+  "date":"2026-11-08",
+  "authority":"instituto-Rafael/relativity-living-light",
+  "status":"DIAGNOSTIC_CONTRACT_AND_SYNTHETIC_EXECUTION",
+  "claim_allowed":false,
+  "source_anchors":[
+    "docs/science/RLL_BIBLE10_MULTILINGUAL_ACOUSTIC_GEOMETRY_PROTOCOL_V1.md",
+    "data/experiments/rll_cross_script_entropy_v2/parallel_quantity_five_v2.json",
+    "docs/science/RLL_ENTROPY_DISPERSION_STABILITY_RETRO_V1.md",
+    "docs/science/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.md"
+  ],
+  "typed_modalities":{
+    "orthography":{"logical_unicode_order":"RAW_BYTES_NFC_VIEW_SEPARATE","writing_direction":"ISO_UAX9_BIDI_METADATA_ONLY","context":"lexical_homographs_not_decidable_without_context"},
+    "phonetics":{"symbols":"IPA","prosody":"stress_mora_length_lexical_tone_phrase_intonation","gate":"human dialect/locale verification required"},
+    "acoustics":{"signal":"normalized synthetic PCM16 x(t)","f0":"synthetic phase integral of f0(t)","fft":"DFT normalized local spectral power, not Shannon entropy of language","physical_pressure":"TOKEN_VAZIO_NO_PA_CALIBRATION"},
+    "history":{"identifiers":"source_id emission_epoch arrival_epoch stellar_age population_age dynamical_membership spectral_bands covariance_ref","age_difference":"difference / sqrt(s1^2+s2^2-2cov) for common-epoch ages only","separate":"stellar age inferred from spectra and models vs lookback from cosmology"},
+    "gravitational_waves":{"signal":"dimensionless strain h(t)","acoustic_analogy":"not physical coupling proof"}
+  },
+  "science_rules":[
+    "equal written bytes do not entail equal pronunciation or prosody",
+    "one IPA symbol is not necessarily one acoustic frequency",
+    "reading order visual RTL does not reverse source text logical order",
+    "Japanese has distinct phoneme and mora inventory, not phonological deficit",
+    "same f0 contour does not mean same utterance semantics",
+    "relativity keeps local vacuum light speed c invariant for every local inertial observer",
+    "time dilation does not itself yield stars older than the Universe",
+    "older star than local population can be a migrated/interloper star",
+    "spacetime gravitational waves are not acoustic pressure waves",
+    "no change to RLL likelihood C chi2 priors or five parameters"
+  ],
+  "required_future_gates":["REAL_LICENSED_SPEECH_WITH_NATIVE_IPA_REVIEW","ALIGNED_AUDIO_WITH_F0_FORMANTS", "AUTHENTIC_CLASSICAL_CHINESE_PASSAGE_INTERPRETATION", "ASTROMETRIC_MEMBERSHIP_AND_STELLAR_MODEL_AGE_POSTERIORS", "FULL_SPECTRAL_WINDOW_SELECTION_COVARIANCE", "INDEPENDENT_WAVE_EVENT_DATASET"]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "rll.phonetic_chronospectral.pilot_v1",
+  "source_anchor": "data/experiments/rll_cross_script_entropy_v2/parallel_quantity_five_v2.json",
+  "semantic_anchor": {"type":"natural_number","value":5,"example_proposition":"2+3=5"},
+  "ipa_status": "MODEL_AUTHORED_BROAD_ILLUSTRATIVE_NOT_NATIVE_VERIFIED",
+  "language_items": [
+    {"id":"pt","word":"cinco","ipa":"/ˈsĩ.ku/","ipa_segments":["s","ĩ","k","u"],"prosody":"stress_first_syllable; Brazil illustrative","direction":"LTR"},
+    {"id":"en","word":"five","ipa":"/faɪv/","ipa_segments":["f","aɪ","v"],"prosody":"monosyllabic; accent dependent","direction":"LTR"},
+    {"id":"es","word":"cinco","ipa":"/ˈsin.ko/","ipa_segments":["s","i","n","k","o"],"prosody":"stress_first_syllable; broad phonemic","direction":"LTR"},
+    {"id":"fr","word":"cinq","ipa":"/sɛ̃k/","ipa_segments":["s","ɛ̃","k"],"prosody":"nasal vowel; metropolitan illustrative","direction":"LTR"},
+    {"id":"de","word":"fünf","ipa":"/fʏnf/","ipa_segments":["f","ʏ","n","f"],"prosody":"monosyllabic","direction":"LTR"},
+    {"id":"it","word":"cinque","ipa":"/ˈtʃiŋ.kwe/","ipa_segments":["tʃ","i","ŋ","k","w","e"],"prosody":"stress_first_syllable","direction":"LTR"},
+    {"id":"ja","word":"五","reading":"ご","ipa":"/ɡo/","ipa_segments":["ɡ","o"],"prosody":"single_mora_reading; pitch_context_unspecified","direction":"LTR"},
+    {"id":"ar","word":"خمسة","ipa":"/ˈxam.sa/","ipa_segments":["x","a","m","s","a"],"prosody":"MSA illustrative, vowel_marks_absent_in_word","direction":"RTL"},
+    {"id":"zh","word":"五","reading":"wǔ","ipa":"/u˨˩˦/","ipa_segments":["u"],"lexical_tone":"214","prosody":"Mandarin citation third tone; realization context dependent","direction":"LTR"},
+    {"id":"ru","word":"пять","ipa":"/pʲætʲ/","ipa_segments":["pʲ","æ","tʲ"],"prosody":"monosyllabic; broad illustrative","direction":"LTR"}
+  ],
+  "contrast_controls": [
+    {"id":"mandarin_ma_tone","forms":[{"orthography":"妈","romanization":"mā","ipa":"/ma˥/","tone":"55"},{"orthography":"马","romanization":"mǎ","ipa":"/ma˨˩˦/","tone":"214"}],"source":"textbook lexical tone contrast; audio is SYNTHETIC_PROXY"},
+    {"id":"english_read_context","forms":[{"orthography":"read","context":"present tense","ipa":"/riːd/"},{"orthography":"read","context":"past tense","ipa":"/rɛd/"}],"source":"orthography homograph, context is required"}
+  ],
+  "language_specific_gaps": [
+    "TOKEN_VAZIO_NATIVE_SPEAKER_IPA_REVIEW",
+    "TOKEN_VAZIO_JAPANESE_LOCAL_PITCH_ACCENT_LEXICON",
+    "TOKEN_VAZIO_ARABIC_TASHKEEL_CONTEXT",
+    "TOKEN_VAZIO_CLASSICAL_CHINESE_I_CHING_PASSAGE_TRANSLATIONS_AND_HISTORICAL_PRONUNCIATION",
+    "TOKEN_VAZIO_REAL_SPEECH_WAVEFORMS_LICENSES_AND_ALIGNMENT"
+  ],
+  "sources": [
+    "https://www.internationalphoneticassociation.org/node/1061",
+    "https://coelang.tufs.ac.jp/ja/en/pmod/practical/03-01-01.php",
+    "https://www.unicode.org/reports/tr9/"
+  ],
+  "claim_allowed": false
+}
