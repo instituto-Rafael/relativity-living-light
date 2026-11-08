@@ -1,0 +1,303 @@
+{
+  "schema": "rll.epistemic_taxonomy.v2",
+  "date": "2026-11-08",
+  "status": "LOCAL_TAXONOMY_PROPOSAL_NOT_CANONICAL_ACADEMIC_SIX_LEVEL_SCALE",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "source_contracts": [
+    {
+      "path": "data/contracts/rll_epistemic_evidence_graph.v1.json",
+      "git_blob_sha1": "c8003e4c37ec6b6903196afe7b1a432028c91025",
+      "role": "original_example_cases_and_relations"
+    },
+    {
+      "path": "data/contracts/rll_scientific_validation_orchestrator.v1.json",
+      "git_blob_sha1": "c6f4b415a8ca8adfe8bf21145f1c6bbe5ada90c0",
+      "role": "canonical_evidence_states_and_G0_G11_gates"
+    }
+  ],
+  "independence_axes": {
+    "epistemic_type": "six nonordinal categories; multiple conceptual relations possible",
+    "evidence_state": "seven canonical evidence states from scientific validation orchestrator; not ranked by type",
+    "formal_proof": "no automatic proof from CI",
+    "Bayes": "posterior only with registered prior/likelihood and independent observational sources"
+  },
+  "types": [
+    {
+      "id": "PROPOSITION_CONJECTURE",
+      "label": "Proposição / conjectura",
+      "definition": "Precise statement with declared assumptions; may be open, mathematical or physical",
+      "verification": "definition",
+      "guard": "NO_AUTOMATIC_EMPIRICAL_VALIDITY",
+      "required_for_manual_readiness": [
+        "statement",
+        "assumptions",
+        "domain"
+      ],
+      "ordinal": null
+    },
+    {
+      "id": "SCIENTIFIC_HYPOTHESIS",
+      "label": "Hipótese científica",
+      "definition": "Potentially falsifiable statement in an empirical domain, prior to validation",
+      "verification": "empirical_test",
+      "guard": "TESTABLE_NOT_CONFIRMED",
+      "required_for_manual_readiness": [
+        "mechanism",
+        "observable",
+        "prediction",
+        "falsifier",
+        "preregistration"
+      ],
+      "ordinal": null
+    },
+    {
+      "id": "MATHEMATICAL_PHYSICAL_MODEL",
+      "label": "Modelo matemático ou físico",
+      "definition": "Idealized formal representation with defined variables, units, regime and predictions",
+      "verification": "fit_and_validation",
+      "guard": "STRUCTURAL_MODEL_NOT_THEORY",
+      "required_for_manual_readiness": [
+        "equations",
+        "units",
+        "validity_domain",
+        "parameters",
+        "baseline",
+        "uncertainty"
+      ],
+      "ordinal": null
+    },
+    {
+      "id": "FORMAL_THEOREM_IDENTITY",
+      "label": "Teorema / identidade formal",
+      "definition": "Deductive consequence relative to explicit axioms and valid reasoning",
+      "verification": "formal_proof",
+      "guard": "PROOF_NOT_EMPIRICAL_MEASUREMENT",
+      "required_for_manual_readiness": [
+        "axioms",
+        "proof",
+        "scope",
+        "independent_review"
+      ],
+      "ordinal": null
+    },
+    {
+      "id": "EMPIRICAL_LAW",
+      "label": "Lei empírica",
+      "definition": "Observed regularity with calibrated domain, uncertainty and replication",
+      "verification": "empirical_regularities",
+      "guard": "LAW_NOT_THEORY",
+      "required_for_manual_readiness": [
+        "dataset",
+        "measurement_model",
+        "scope",
+        "uncertainty",
+        "independent_replication"
+      ],
+      "ordinal": null
+    },
+    {
+      "id": "SCIENTIFIC_THEORY",
+      "label": "Teoria científica",
+      "definition": "Explanatory framework integrating models, observations, predictions and independent tests",
+      "verification": "independent_evidence",
+      "guard": "THEORY_NOT_AUTOMATIC_FROM_MODEL",
+      "required_for_manual_readiness": [
+        "framework",
+        "predictions",
+        "independent_tests",
+        "counterevidence",
+        "scope",
+        "replication"
+      ],
+      "ordinal": null
+    }
+  ],
+  "unclassified_sentinel": "UNCLASSIFIED_TOKEN_VAZIO",
+  "case_bindings": [
+    {
+      "id": "EUCLIDEAN_DIAGONAL",
+      "type": "FORMAL_THEOREM_IDENTITY",
+      "evidence_state": "DECLARED_BY_AUTHOR",
+      "rationale": "Euclidean a√2 follows from Pythagorean theorem; formal proof not executed or attached in this pipeline",
+      "domain": "mathematics",
+      "readiness": "FORMAL_PROOF_REVIEW_PENDING",
+      "scope": "EUCLIDEAN_SQUARE"
+    },
+    {
+      "id": "MITO_ATP",
+      "type": "UNCLASSIFIED_TOKEN_VAZIO",
+      "evidence_state": "DECLARED_BY_AUTHOR",
+      "rationale": "V1 describes empirical biochemistry reference, not automatically an empirical law nor a scientific theory; missing dedicated primary evidence binding in RLL",
+      "domain": "cell_biology",
+      "readiness": "REFERENCE_REVIEW_PENDING",
+      "scope": "CELLULAR_RESPIRATION"
+    },
+    {
+      "id": "TRIBO_XRAY_CELL",
+      "type": "PROPOSITION_CONJECTURE",
+      "evidence_state": "TOKEN_VAZIO",
+      "rationale": "V1 speculative mechanism and observable are undefined; cannot be promoted to testable scientific hypothesis yet",
+      "domain": "cell_biology",
+      "readiness": "MECHANISM_AND_OBSERVABLE_TOKEN_VAZIO",
+      "scope": "HYPOTHETICAL_BIOPHYSICS"
+    },
+    {
+      "id": "LCDM_BACKGROUND",
+      "type": "MATHEMATICAL_PHYSICAL_MODEL",
+      "evidence_state": "DECLARED_BY_AUTHOR",
+      "rationale": "Well-established external comparator in V1; this mapping does not rerun or independently validate cosmological evidence",
+      "domain": "cosmology",
+      "readiness": "G4_G5_LOCAL_FIT_NOT_RUN",
+      "scope": "BACKGROUND_COSMOLOGY"
+    },
+    {
+      "id": "RLL_BACKGROUND",
+      "type": "MATHEMATICAL_PHYSICAL_MODEL",
+      "evidence_state": "DECLARED_BY_AUTHOR",
+      "rationale": "V1 local exploratory background model with unexecuted frozen G4/G5 comparison; no preference claimed",
+      "domain": "cosmology",
+      "readiness": "G4_G5_LOCAL_FIT_NOT_RUN",
+      "scope": "BACKGROUND_COSMOLOGY"
+    }
+  ],
+  "type_relations": [
+    {
+      "from": "PROPOSITION_CONJECTURE",
+      "to": "SCIENTIFIC_HYPOTHESIS",
+      "relation": "CAN_BE_REFORMULATED_AS",
+      "requires": [
+        "observable",
+        "falsifier",
+        "measurable_prediction"
+      ],
+      "implies_validity": false
+    },
+    {
+      "from": "PROPOSITION_CONJECTURE",
+      "to": "FORMAL_THEOREM_IDENTITY",
+      "relation": "CAN_BE_PROVED_AS",
+      "requires": [
+        "axioms",
+        "formal_proof",
+        "review"
+      ],
+      "implies_validity": false
+    },
+    {
+      "from": "SCIENTIFIC_HYPOTHESIS",
+      "to": "MATHEMATICAL_PHYSICAL_MODEL",
+      "relation": "CAN_BE_REPRESENTED_BY",
+      "requires": [
+        "equations",
+        "units",
+        "domain"
+      ],
+      "implies_validity": false
+    },
+    {
+      "from": "SCIENTIFIC_HYPOTHESIS",
+      "to": "EMPIRICAL_LAW",
+      "relation": "MAY_CONTRIBUTE_TO_REGULARITY",
+      "requires": [
+        "observations",
+        "uncertainty",
+        "independent_replication"
+      ],
+      "implies_validity": false
+    },
+    {
+      "from": "MATHEMATICAL_PHYSICAL_MODEL",
+      "to": "SCIENTIFIC_THEORY",
+      "relation": "MAY_CONTRIBUTE_TO",
+      "requires": [
+        "independent_tests",
+        "predictions",
+        "physical_domain"
+      ],
+      "implies_validity": false
+    },
+    {
+      "from": "EMPIRICAL_LAW",
+      "to": "SCIENTIFIC_THEORY",
+      "relation": "MAY_CONSTRAIN",
+      "requires": [
+        "scope",
+        "physical_framework"
+      ],
+      "implies_validity": false
+    }
+  ],
+  "promotion_policy": {
+    "effect": "REVIEW_ONLY_NO_AUTOMATIC_STATUS_WRITE",
+    "claim_allowed": false,
+    "automatic_reclassification": false,
+    "no_fictional_six_step_ladder": true,
+    "required_provenance": [
+      "source_sha256",
+      "artifact_sha256",
+      "authority",
+      "scope",
+      "independent_reviewer"
+    ],
+    "evidence_requirements": {
+      "PROPOSITION_CONJECTURE": [],
+      "SCIENTIFIC_HYPOTHESIS": [
+        "preregistration_sha256",
+        "observation_sha256",
+        "likelihood_sha256",
+        "uncertainty_sha256",
+        "falsifier"
+      ],
+      "MATHEMATICAL_PHYSICAL_MODEL": [
+        "equations_sha256",
+        "units_sha256",
+        "parameter_registry_sha256",
+        "data_sha256",
+        "covariance_sha256",
+        "comparison_sha256",
+        "null_limit_receipt_sha256"
+      ],
+      "FORMAL_THEOREM_IDENTITY": [
+        "axioms_sha256",
+        "proof_sha256",
+        "formal_review_sha256"
+      ],
+      "EMPIRICAL_LAW": [
+        "data_sha256",
+        "instrument_calibration_sha256",
+        "uncertainty_sha256",
+        "independent_replication_sha256"
+      ],
+      "SCIENTIFIC_THEORY": [
+        "theory_spec_sha256",
+        "multiple_independent_tests_sha256",
+        "predictive_validation_sha256",
+        "counterevidence_registry_sha256",
+        "replication_sha256"
+      ]
+    },
+    "negative_results": "APPEND_ONLY_NEVER_HIDE",
+    "verified_status_requires_review": true,
+    "reproducible_status_requires_independence": true,
+    "forbid": [
+      "THEOREM_EQUALS_EXPERIMENT",
+      "MODEL_EQUALS_THEORY",
+      "EMPIRICAL_REFERENCE_EQUALS_LAW",
+      "ANALOGY_EQUALS_CAUSALITY",
+      "NEWS_EQUALS_OBSERVATION",
+      "CI_EQUALS_SCIENCE",
+      "REPUTATION_EQUALS_BAYES_PRIOR",
+      "CONJECTURE_EQUALS_PROOF"
+    ]
+  },
+  "execution": {
+    "no_network": true,
+    "no_secrets": true,
+    "no_database_mutation": true,
+    "no_model_fit": true,
+    "no_new_workflow": true,
+    "existing_workflow": ".github/workflows/rll-calibration-orchestrator.yml",
+    "existing_graph": "data/contracts/rll_epistemic_evidence_graph.v1.json"
+  },
+  "claim_allowed": false
+}
