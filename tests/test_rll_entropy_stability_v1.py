@@ -3,7 +3,7 @@ import math
 from pathlib import Path
 import unittest
 
-SCRIPT=Path(__file__).resolve().parents[1]/'tools/rll_entropy_stability.py'
+SCRIPT=Path(__file__).resolve().parents[1]/'scripts/rll_entropy_stability_v1.py'
 spec=importlib.util.spec_from_file_location('entropy_stability',SCRIPT)
 core=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(core)
