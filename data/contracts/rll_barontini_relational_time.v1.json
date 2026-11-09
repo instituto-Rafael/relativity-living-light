@@ -1,0 +1,75 @@
+{
+  "schema": "rll.barontini_relational_time.external_source.v1",
+  "date": "2026-11-09",
+  "status": "SOURCE_DISCOVERED_INTAKE_TESTED_OFFLINE_REAL_BYTES_NOT_MATERIALIZED",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "source": {
+    "title": "Testing the problem of time with cold atoms",
+    "author": "Giovanni Barontini",
+    "publication": "Physical Review Research 8, L022047 (2026-06-11)",
+    "doi": "10.1103/1h9j-df4k",
+    "arxiv": "2509.07745v3",
+    "data_doi": "10.5281/zenodo.19651064",
+    "zenodo_record": "19651064",
+    "source_links": [
+      "https://doi.org/10.1103/1h9j-df4k",
+      "https://arxiv.org/abs/2509.07745",
+      "https://zenodo.org/records/19651064"
+    ],
+    "data_rights": "TOKEN_VAZIO_DATASET_LICENSE_UNVERIFIED_NO_REDISTRIBUTION"
+  },
+  "files": [
+    {
+      "name": "Fig2Fig3V0.dat",
+      "md5_zenodo": "3ccd2ee4f076e1d87ddf745f3c5817dc",
+      "structure": "t tau phi sigma"
+    },
+    {
+      "name": "Fig2Fig3V03.dat",
+      "md5_zenodo": "335fe6bd46b64505a1db5f8096412748",
+      "structure": "t tau phi sigma"
+    },
+    {
+      "name": "Fig2Fig3V06.dat",
+      "md5_zenodo": "4a26133c0308351324c0943bb81032a5",
+      "structure": "t tau phi sigma"
+    },
+    {
+      "name": "Fig2Fig3V09.dat",
+      "md5_zenodo": "2acb406c4b5801712cd38bc2e53d98cb",
+      "structure": "t tau phi sigma"
+    },
+    {
+      "name": "Fig2Fig3V1.dat",
+      "md5_zenodo": "6298f4b3b9990b344713ae513c629435",
+      "structure": "t tau phi sigma"
+    },
+    {
+      "name": "Fig3numerics.dat",
+      "md5_zenodo": "18823ce15e484770b0ecf981fd55cae4",
+      "structure": "column sigma"
+    },
+    {
+      "name": "Fig4.dat",
+      "md5_zenodo": "0ec7c739502163a0d5889fb9a4e23487",
+      "structure": "unlabelled_numeric_matrix"
+    }
+  ],
+  "invariants": [
+    "Pinned MD5 required before parsing; compute SHA256 for local custody",
+    "Preserve row order, duplicated tau and zero sigma values",
+    "No rescaling, imputation, physical unit assumptions or fits",
+    "Malformed rows are recorded, not silently discarded",
+    "No API keys and no implicit network on audit/import"
+  ],
+  "gate": {
+    "source_verified": true,
+    "local_stdlib_tests_passed": 11,
+    "real_source_bytes_verified_local": "TOKEN_VAZIO",
+    "reproduce_figures": "NOT_RUN",
+    "replicate_effective_schrodinger_equation": "NOT_RUN",
+    "cosmological_scale_bridge": "TOKEN_VAZIO",
+    "claim_allowed": false,
+    "merge_allowed": false
+  }
+}
