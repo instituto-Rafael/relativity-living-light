@@ -1,0 +1,567 @@
+{
+  "schema": "rll.neglected_cross_scale_falsifiers.v1",
+  "date": "2026-11-08",
+  "parent_graph": "data/governance/RLL_CROSS_SCALE_EVIDENCE_GRAPH_20261028.json",
+  "parent_closure": "data/science/perturbations/RLL_PERTURBATION_CLOSURE_CONTRACT_20260808_V1.json",
+  "parent_cosmology": "docs/research/RLL_COSMOLOGY_MODEL_COMPARATOR_AUDIT_20261108.md",
+  "purpose": "Typed additive literature-and-physics blind-spot inventory: obvious confounders, ignored alternatives, and cross-scale non-equivalences. Not a physical RLL fit.",
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "global_fit_performed": false,
+  "publication_ready": false,
+  "source_policy": "papers context not RLL execution; peer-review tier explicit; exact source links retained; no copying paper full text",
+  "sources": [
+    {
+      "id": "DESI_LYA_AP_2026",
+      "title": "DESI DR2 Results IV: Alcock-Paczynski Measurements from the Lyman Alpha Forest",
+      "uri": "https://arxiv.org/abs/2607.27410",
+      "tier": "collaboration_preprint",
+      "year": 2026,
+      "note": "1 percent AP precision at z=2.33 from full-shape; overlaps BAO observations and cannot be blindly double-counted"
+    },
+    {
+      "id": "DESI_LYA_OFFICIAL",
+      "title": "DESI DR2 2026 Lyman-alpha full-shape official release",
+      "uri": "https://www.desi.lbl.gov/2026/07/30/new-desi-dr2-lyman-alpha-results-shed-light-on-dark-energy/",
+      "tier": "official_collaboration",
+      "year": 2026,
+      "note": "full-shape Ly-alpha shifts central estimate toward LCDM; not a proof of LCDM"
+    },
+    {
+      "id": "DESI_TRACER_ALTERNATIVES",
+      "title": "Evidence for evolving dark energy from DESI DR2 BAO and Pantheon+, DES-Dovekie and Union3",
+      "uri": "https://doi.org/10.1140/epjc/s10052-026-15806-w",
+      "tier": "peer_reviewed",
+      "year": 2026,
+      "note": "individual low-z BAO tracer influence and inference instability should be ablated"
+    },
+    {
+      "id": "DES_DOVEKIE_RECALIBRATION",
+      "title": "The Dark Energy Survey supernova program: DES-Dovekie recalibration",
+      "uri": "https://doi.org/10.1093/mnras/stag632",
+      "tier": "collaboration_peer_reviewed",
+      "year": 2026,
+      "note": "recalibration weakened frequentist significance; alternate SN compilations cannot be silently pooled"
+    },
+    {
+      "id": "SN_TRUNCATION_2026",
+      "title": "A truncation test of the DESI evolving dark energy signal: three SN calibrations",
+      "uri": "https://doi.org/10.1093/mnras/stag1868",
+      "tier": "peer_reviewed",
+      "year": 2026,
+      "note": "redshift truncation and calibration variants are distinct confounders"
+    },
+    {
+      "id": "COSMIC_TRANSPARENCY_2026",
+      "title": "Implications for dark energy of cosmic transparency in light of DESI data",
+      "uri": "https://doi.org/10.1093/mnras/stag1380",
+      "tier": "peer_reviewed",
+      "year": 2026,
+      "note": "distance duality/opacity assumptions influence dark-energy inference"
+    },
+    {
+      "id": "DARK_MATTER_W_2026",
+      "title": "Cosmological constraints on non-cold dark matter from DESI DR2 measurements",
+      "uri": "https://doi.org/10.1016/j.physletb.2026.140858",
+      "tier": "peer_reviewed",
+      "year": 2026,
+      "note": "allowing dark-matter effective pressure can mimic changes otherwise assigned to DE"
+    },
+    {
+      "id": "COUPLED_QUINTESSENCE_2026",
+      "title": "Can coupled thawing quintessence reproduce DESI DR2? A test with two potentials",
+      "uri": "https://arxiv.org/abs/2610.23497",
+      "tier": "preprint",
+      "year": 2026,
+      "note": "effective phantom crossing can occur without a phantom fundamental field in an interacting sector; not RLL closure"
+    },
+    {
+      "id": "NICER_REVIEW_2026",
+      "title": "What We Have Learned from NICER About Neutron Star Radii",
+      "uri": "https://doi.org/10.1146/annurev-nucl-100824-043815",
+      "tier": "peer_reviewed_review",
+      "year": 2026,
+      "note": "NICER mass-radius constraints on ultradense EOS; cannot alone infer cosmological parameters"
+    },
+    {
+      "id": "NS_SOUND_SPEED_2026",
+      "title": "Extracting the Central Sound Speed of Neutron Stars through Intrinsic Stellar Structure Scaling",
+      "uri": "https://arxiv.org/abs/2610.21806",
+      "tier": "preprint",
+      "year": 2026,
+      "note": "central sound-speed estimator is EOS-family dependent; not cosmological sound speed"
+    },
+    {
+      "id": "NS_QUARK_CORES_2026",
+      "title": "Hybrid Stars with Different Amount of Quark Matter",
+      "uri": "https://arxiv.org/abs/2610.28408",
+      "tier": "preprint",
+      "year": 2026,
+      "note": "quark core fraction and mass-radius/deformability remain model dependent"
+    },
+    {
+      "id": "NS_DARK_CORE_2026",
+      "title": "NICER neutron stars with dark energy and dark matter: effects on inferred EOS",
+      "uri": "https://arxiv.org/abs/2609.14494",
+      "tier": "preprint",
+      "year": 2026,
+      "note": "dark cores are phenomenological model hypotheses, not detection of cosmological dark energy in NS"
+    },
+    {
+      "id": "BAYESIAN_DESI_2026",
+      "title": "The Bayesian view of DESI DR2",
+      "uri": "https://arxiv.org/abs/2603.05472",
+      "tier": "preprint_analysis",
+      "year": 2026,
+      "note": "prior-volume penalty and SN calibration shift model evidence; already partially indexed by RLL"
+    }
+  ],
+  "items": [
+    {
+      "id": "NG01",
+      "title": "Ly-alpha AP full shape versus BAO overlap",
+      "priority": "P0",
+      "class": "observational_systematic",
+      "source_ids": [
+        "DESI_LYA_AP_2026",
+        "DESI_LYA_OFFICIAL"
+      ],
+      "upstream_node": "bao_distance",
+      "observable": [
+        "z=2.33",
+        "D_H/r_d",
+        "D_M/r_d",
+        "joint_covariance"
+      ],
+      "baseline": "LCDM/CPL same selected Ly-alpha product",
+      "falsifier": "Model improvement evaporates under correct AP-BAO joint covariance or redshift held-out test",
+      "missing": "joint AP+BAO covariance and model-specific RLL likelihood",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Read official product covariance and add conditional holdout without double-counting BAO",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG02",
+      "title": "Redshift and tracer-localized DESI preference",
+      "priority": "P0",
+      "class": "observational_systematic",
+      "source_ids": [
+        "DESI_TRACER_ALTERNATIVES"
+      ],
+      "upstream_node": "bao_distance",
+      "observable": [
+        "LRG1",
+        "LRG2",
+        "z_binned_residual",
+        "conditional_chi2"
+      ],
+      "baseline": "identical model/optimizer with and without correlated tracer blocks",
+      "falsifier": "RLL preference disappears after source-covariance-consistent block ablation",
+      "missing": "hash-bound per-tracer RLL likelihood and conditional covariance",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Compare redshift blocks preserving inverse covariance structure",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG03",
+      "title": "SN calibration vs apparent energy transition",
+      "priority": "P0",
+      "class": "observational_systematic",
+      "source_ids": [
+        "DES_DOVEKIE_RECALIBRATION",
+        "SN_TRUNCATION_2026",
+        "BAYESIAN_DESI_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "w0",
+        "wa",
+        "H0",
+        "Omega_m",
+        "lnZ",
+        "per_z_residual"
+      ],
+      "baseline": "DES-Dovekie vs DES-SN5YR vs Pantheon+ as distinct variants",
+      "falsifier": "Transition parameters highly sensitive to SN calibration or low-z cuts",
+      "missing": "common frozen nuisance and full-covariance fit for each calibration",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Preregister alternate calibrated SN likelihoods without selecting winner",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG04",
+      "title": "Cosmic opacity and distance duality",
+      "priority": "P1",
+      "class": "observational_systematic",
+      "source_ids": [
+        "COSMIC_TRANSPARENCY_2026"
+      ],
+      "upstream_node": "atomic_spectral_forest",
+      "observable": [
+        "D_L",
+        "D_A",
+        "redshift",
+        "distance_duality_eta"
+      ],
+      "baseline": "eta(z)=D_L/((1+z)^2D_A)=1 if metric light propagation and photon conservation",
+      "falsifier": "Fitted energy transition changes when opacity and selection are included",
+      "missing": "joint BAO-SN distance-duality nuisance provenance",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Test eta(z) under stated transparency/selection assumptions, no opacity detection claim",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG05",
+      "title": "Dark matter pressure vs dark energy attribution",
+      "priority": "P0",
+      "class": "model_candidate",
+      "source_ids": [
+        "DARK_MATTER_W_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "w_dm",
+        "w_de",
+        "H(z)",
+        "growth_fsigma8"
+      ],
+      "baseline": "LCDM, wDM extension, CPL and RLL within matched likelihood",
+      "falsifier": "RLL-specific transition loses identifiable support when DM EOS is varied",
+      "missing": "matched dark-matter perturbation and pressure closure",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Require physical fluid perturbation closure before claiming DM/DE discrimination",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG06",
+      "title": "Apparent phantom crossing from coupling",
+      "priority": "P1",
+      "class": "model_candidate",
+      "source_ids": [
+        "COUPLED_QUINTESSENCE_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "w_effective",
+        "Q_mu",
+        "coupling_beta",
+        "perturbation_stability"
+      ],
+      "baseline": "uncoupled and coupled quintessence under identical dataset and prior",
+      "falsifier": "RLL w(z) shape is degenerate with coupled quintessence or violates conservation/regularity",
+      "missing": "RLL Q_mu and gauge-compatible perturbation laws",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "No claim until C06 Q_mu, continuity and perturbative transfer are specified",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG07",
+      "title": "Nuclear EoS TOV is not cosmological EoS",
+      "priority": "P0",
+      "class": "cross_scale_guard",
+      "source_ids": [
+        "NICER_REVIEW_2026",
+        "NS_SOUND_SPEED_2026",
+        "NS_QUARK_CORES_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "P(Pa)",
+        "epsilon(J_per_m3)",
+        "c_s_squared",
+        "mass_radius",
+        "Lambda_tidal"
+      ],
+      "baseline": "TOV solutions with NICER/LVK nuclear priors",
+      "falsifier": "No dimensioned stress-energy and averaging map connects nuclear density/pressure to RLL Omega_s0",
+      "missing": "covariant bridge across coarse graining + compatible dimensions, absent in RLL",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Keep standalone stellar EOS module; no direct RLL parameter injection",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG08",
+      "title": "Dark core fits do not detect cosmic dark energy",
+      "priority": "P1",
+      "class": "model_candidate",
+      "source_ids": [
+        "NS_DARK_CORE_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "mass_radius_posterior",
+        "EOS_pressure",
+        "dark_core_fraction"
+      ],
+      "baseline": "pure baryonic versus hypothetical dark-core NS",
+      "falsifier": "Mass-radius data remain degenerate between hypothetical dark core and ordinary EOS",
+      "missing": "independent signals, field model, conserved stress tensor and consistency with cosmic model",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Separate phenomenological dark core scenarios from cosmological RLL sector",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG09",
+      "title": "Compactness is not size, radius or proton pressure",
+      "priority": "P0",
+      "class": "cross_scale_guard",
+      "source_ids": [
+        "NICER_REVIEW_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "GM_over_Rc2",
+        "R_km",
+        "M_kg",
+        "2GM_over_Rc2"
+      ],
+      "baseline": "GR spherical equilibrium, TOV for nonrotating fluid",
+      "falsifier": "Any proposal predicts BH formation from large size alone or equates proton mechanical stress and bulk stellar pressure",
+      "missing": "stellar mass-radius model and spacetime metric needed for concrete collapse prediction",
+      "rll_status": "KNOWN_IDENTITY_ONLY",
+      "next": "Use dimensionless compactness, distinguish GR Schwarzschild exterior from rotating collapse",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG10",
+      "title": "Proton mechanical stress versus bulk fluid pressure",
+      "priority": "P0",
+      "class": "cross_scale_guard",
+      "source_ids": [
+        "NS_SOUND_SPEED_2026",
+        "NICER_REVIEW_2026"
+      ],
+      "upstream_node": "periodic_atomic_structure",
+      "observable": [
+        "stress_tensor",
+        "pressure_Pa",
+        "energy_density_J_per_m3",
+        "EoS"
+      ],
+      "baseline": "QCD form factors vs macroscopic equilibrium matter",
+      "falsifier": "Atomic/QCD stress is directly substituted for macroscopic P(epsilon) without EOS integration and units",
+      "missing": "micro-to-macro thermodynamics and EOS with stated matter composition",
+      "rll_status": "TOKEN_VAZIO",
+      "next": "Quantify EOS derivation or explicitly classify link as analogy only",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG11",
+      "title": "At Omega_s0 zero, transition shape unidentifiable",
+      "priority": "P0",
+      "class": "model_identifiability",
+      "source_ids": [
+        "BAYESIAN_DESI_2026"
+      ],
+      "upstream_node": "rll_background",
+      "observable": [
+        "Omega_s0",
+        "z_t",
+        "w_t",
+        "nested_logZ",
+        "Rhat"
+      ],
+      "baseline": "null-limit LCDM + RLL prior-sensitivity and multi-seed posterior",
+      "falsifier": "Naive fitting reports physical z_t or w_t when amplitude zero or prior drives evidence",
+      "missing": "G6 stable nested multi-seed and independent model identification; H52 limited MCMC exists",
+      "rll_status": "PARTIAL_LIMITED_H52",
+      "next": "Keep null limit and prior-volume sensitivity separated from parameter point estimates",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG12",
+      "title": "Biochemical proton gradients are analogy not gravity",
+      "priority": "P2",
+      "class": "analogy_only",
+      "source_ids": [],
+      "upstream_node": "recombination_photon_baryon",
+      "observable": [
+        "electrochemical_potential_J_per_mol",
+        "membrane_voltage_V",
+        "ATP_free_energy_J_per_mol"
+      ],
+      "baseline": "oxidative phosphorylation biophysical system, not stellar fluid",
+      "falsifier": "Energy flow metaphor is claimed as shared equation/causal mechanism without derivation",
+      "missing": "none: bridge NOT ESTABLISHED; classify as analogy",
+      "rll_status": "UNSUPPORTED_PHYSICAL_BRIDGE",
+      "next": "Do not promote metaphor to model; retain cross-domain analogy with dimensions",
+      "physical_bridge": false
+    },
+    {
+      "id": "NG13",
+      "title": "International Units are not a mass variable",
+      "priority": "P1",
+      "class": "dimensional_guard",
+      "source_ids": [],
+      "upstream_node": "periodic_atomic_structure",
+      "observable": [
+        "mass_kg",
+        "energy_J",
+        "activity_IU_substance_specific"
+      ],
+      "baseline": "IU is assay/substance-specific biological activity, not a fixed kg conversion",
+      "falsifier": "Numerical IU-to-kg conversion without substance-specific reference definition",
+      "missing": "no canonical cross-substance IU mass map exists",
+      "rll_status": "KNOWN_UNIT_DISTINCTION",
+      "next": "Keep 50000 IU as metaphor or require specific substance conversion",
+      "physical_bridge": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "NEW_NG01",
+      "from": "bao_distance",
+      "to": "NG01",
+      "relation_class": "observational_systematic",
+      "evidence_source_ids": [
+        "DESI_LYA_AP_2026",
+        "DESI_LYA_OFFICIAL"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG02",
+      "from": "bao_distance",
+      "to": "NG02",
+      "relation_class": "observational_systematic",
+      "evidence_source_ids": [
+        "DESI_TRACER_ALTERNATIVES"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG03",
+      "from": "rll_background",
+      "to": "NG03",
+      "relation_class": "observational_systematic",
+      "evidence_source_ids": [
+        "DES_DOVEKIE_RECALIBRATION",
+        "SN_TRUNCATION_2026",
+        "BAYESIAN_DESI_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG04",
+      "from": "atomic_spectral_forest",
+      "to": "NG04",
+      "relation_class": "observational_systematic",
+      "evidence_source_ids": [
+        "COSMIC_TRANSPARENCY_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG05",
+      "from": "rll_background",
+      "to": "NG05",
+      "relation_class": "model_candidate",
+      "evidence_source_ids": [
+        "DARK_MATTER_W_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG06",
+      "from": "rll_background",
+      "to": "NG06",
+      "relation_class": "model_candidate",
+      "evidence_source_ids": [
+        "COUPLED_QUINTESSENCE_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG07",
+      "from": "rll_background",
+      "to": "NG07",
+      "relation_class": "cross_scale_guard",
+      "evidence_source_ids": [
+        "NICER_REVIEW_2026",
+        "NS_SOUND_SPEED_2026",
+        "NS_QUARK_CORES_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG08",
+      "from": "rll_background",
+      "to": "NG08",
+      "relation_class": "model_candidate",
+      "evidence_source_ids": [
+        "NS_DARK_CORE_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG09",
+      "from": "rll_background",
+      "to": "NG09",
+      "relation_class": "cross_scale_guard",
+      "evidence_source_ids": [
+        "NICER_REVIEW_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "KNOWN_IDENTITY_ONLY"
+    },
+    {
+      "id": "NEW_NG10",
+      "from": "periodic_atomic_structure",
+      "to": "NG10",
+      "relation_class": "cross_scale_guard",
+      "evidence_source_ids": [
+        "NS_SOUND_SPEED_2026",
+        "NICER_REVIEW_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "TOKEN_VAZIO"
+    },
+    {
+      "id": "NEW_NG11",
+      "from": "rll_background",
+      "to": "NG11",
+      "relation_class": "model_identifiability",
+      "evidence_source_ids": [
+        "BAYESIAN_DESI_2026"
+      ],
+      "physical_bridge_claimed": false,
+      "status": "PARTIAL_LIMITED_H52"
+    },
+    {
+      "id": "NEW_NG12",
+      "from": "recombination_photon_baryon",
+      "to": "NG12",
+      "relation_class": "analogy_only",
+      "evidence_source_ids": [],
+      "physical_bridge_claimed": false,
+      "status": "UNSUPPORTED_PHYSICAL_BRIDGE"
+    },
+    {
+      "id": "NEW_NG13",
+      "from": "periodic_atomic_structure",
+      "to": "NG13",
+      "relation_class": "dimensional_guard",
+      "evidence_source_ids": [],
+      "physical_bridge_claimed": false,
+      "status": "KNOWN_UNIT_DISTINCTION"
+    }
+  ],
+  "promotion_conditions": [
+    "Never identify same-named pressure without dimensioned micro-to-macro model",
+    "Never double count Ly-alpha AP and shared BAO vector absent valid cross covariance",
+    "Never declare w_de transition distinct from dark matter EOS or coupled quintessence without equal likelihood/prior and perturbation closure",
+    "When Omega_s0=0, report non-identifiability of transition location/width unless independent identification demonstrated",
+    "Follow existing G4 G5 G6 and C01-C09 perturbation closure without weakening them",
+    "Any source publication is context, not model execution/physical confirmation",
+    "Preserve all previous failed gates and negative evidence"
+  ],
+  "evidence_state": "CATALOG_ONLY_UNTESTED_RLL"
+}
