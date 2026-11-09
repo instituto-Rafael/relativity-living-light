@@ -125,6 +125,16 @@ jobs:
           test -s artifacts/python-tests/rll_smart_lcm_ci_cases.csv
           echo "Smart LCM mathematical checks PASS_SCOPED only; original pytest and all governance gates retained" >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Scoped RLL cosmology comparator source audit (no gate bypass)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python-tests
+          python -m unittest discover -s tests -p 'test_rll_comparator_evidence_matrix_v1.py' -v
+          python tools/ci/rll_comparator_evidence_matrix_v1.py --root . \
+            --output artifacts/python-tests/rll_comparator_evidence_matrix_v1.json
+          test -s artifacts/python-tests/rll_comparator_evidence_matrix_v1.json
+          echo "RLL comparator PASS_SCOPED read-only source consistency; no model fit or global gate bypass" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Run tests with auditable receipt
         run: |
           mkdir -p artifacts/python-tests
