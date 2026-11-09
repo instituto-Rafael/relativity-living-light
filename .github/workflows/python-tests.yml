@@ -135,6 +135,16 @@ jobs:
           test -s artifacts/python-tests/rll_comparator_evidence_matrix_v1.json
           echo "RLL comparator PASS_SCOPED read-only source consistency; no model fit or global gate bypass" >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Scoped atoms-to-cosmos neglected falsifier inventory (not physical claim)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python-tests
+          python -m unittest discover -s tests -p 'test_rll_neglected_cross_scale_gate_v1.py' -v
+          python tools/ci/rll_neglected_cross_scale_gate_v1.py --root . \
+            --output artifacts/python-tests/rll_neglected_cross_scale_receipt.json
+          test -s artifacts/python-tests/rll_neglected_cross_scale_receipt.json
+          echo "Cross-scale atlas PASS_SCOPED_STRUCTURE_ONLY; RLL physical evidence still TOKEN_VAZIO" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Run tests with auditable receipt
         run: |
           mkdir -p artifacts/python-tests
