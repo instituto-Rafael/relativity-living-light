@@ -97,6 +97,60 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+      - name: Generate signed APK verification receipt
+        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        env:
+          RLL_RUN_ID: ${{ github.run_id }}
+          RLL_COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p apk-signature-receipts
+          apk_path="$(find app/build/outputs/apk/release -maxdepth 1 -type f -name '*.apk' -print -quit)"
+          test -n "$apk_path"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$apk_path" > apk-signature-receipts/apksigner.txt
+          sha256sum "$apk_path" > apk-signature-receipts/sha256.txt
+          APK_PATH="$apk_path" python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          apk = Path(os.environ["APK_PATH"])
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          cert_lines = Path("apk-signature-receipts/apksigner.txt").read_text(
+              encoding="utf-8"
+          ).splitlines()
+          cert = {}
+          for line in cert_lines:
+              if "Signer #1 certificate DN:" in line:
+                  cert["dn"] = line.split(":", 1)[1].strip()
+              elif "Signer #1 certificate SHA-256 digest:" in line:
+                  cert["sha256"] = line.split(":", 1)[1].strip()
+          receipt = {
+              "schema": "rll.apk-signature-receipt.v1",
+              "state": "VERIFIED_BY_APKSIGNER",
+              "artifact": apk.name,
+              "artifact_sha256": digest,
+              "certificate": cert,
+              "git_commit": os.environ["RLL_COMMIT_SHA"],
+              "github_run_id": os.environ["RLL_RUN_ID"],
+              "claim_allowed": False,
+          }
+          Path("apk-signature-receipts/receipt.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload APK signature receipt
+        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rll-apk-signature-receipt
+          path: apk-signature-receipts/
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Upload signed release APK
         if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
