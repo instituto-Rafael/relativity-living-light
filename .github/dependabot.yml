@@ -11,6 +11,13 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(actions)"
+    # CodeQL init/analyze must share the same pinned release in a workflow.
+    # Version-update grouping does not bypass security/review gates.
+    groups:
+      codeql-lockstep:
+        applies-to: "version-updates"
+        patterns:
+          - "github/codeql-action/*"
     labels:
       - dependencies
       - github-actions
