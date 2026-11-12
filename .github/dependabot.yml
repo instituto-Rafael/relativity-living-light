@@ -11,6 +11,12 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(actions)"
-    labels:
-      - dependencies
-      - github-actions
+    # Labels requested in previous config are not installed in this repository;
+    # dependabot[bot] reported missing `dependencies` and `github-actions` labels.
+    # Do not ask the bot for nonexistent labels; restore when provider labels exist.
+    # Atomic version update group: CodeQL init + analyze must share an exact version.
+    groups:
+      codeql-action-atomic:
+        applies-to: version-updates
+        patterns:
+          - "github/codeql-action*"
