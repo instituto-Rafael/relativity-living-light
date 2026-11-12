@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "supabase-rll-readonly": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=ehwltgfrvbkmjqjjfoqn&read_only=true&features=database,docs"
+    }
+  }
+}
