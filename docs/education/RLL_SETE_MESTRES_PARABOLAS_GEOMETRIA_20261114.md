@@ -1,6 +1,6 @@
 # RLL Ω — A escola dos sete mestres: parábolas da geometria
 
-**Estado:** \`DIDATICO / DRAFT_HOLD / N4_ANALOGIA\` · **claim_allowed=false** · 2026-11-14
+**Estado:** `DIDATICO / DRAFT_HOLD / N4_ANALOGIA` · **claim_allowed=false** · 2026-11-14
 
 **Natureza:** sete parábolas **originais** formuladas no diálogo RAFAELIA Ω, com personagens imaginários e referências culturais respeitosas. **Não** são relatos históricos, transcrições de mestres reais ou atribuições de invenções matemáticas a povos específicos. Cada narrativa tem cenário, mapeamento, ruptura e falsificador, como requer PIRC-2.
 
@@ -10,7 +10,7 @@
 
 Um mestre desenhou um equilátero e convidou quatro aprendizes. A cada um atribuiu uma tarefa: traçar a altura, a mediana, a bissetriz de um ângulo e a mediatriz do lado oposto. Todos encontraram a mesma reta. Um aprendiz perguntou como quatro objetos podiam ocupar o mesmo lugar. O mestre respondeu: “Não inventamos quatro linhas; reconhecemos quatro propriedades de uma mesma construção”.
 
-Ao dividir o lado unitário ao meio, apareceu o triângulo retângulo de lados \`1/2\`, \`√3/2\`, \`1\`. A altura era \`√3/2\`, consequência de Pitágoras, não nova dimensão.
+Ao dividir o lado unitário ao meio, apareceu o triângulo retângulo de lados `1/2`, `√3/2`, `1`. A altura era `√3/2`, consequência de Pitágoras, não nova dimensão.
 
 | Narrativa | Matemática |
 | --- | --- |
@@ -30,8 +30,8 @@ Uma mestra tecelã estendeu um fio de A até B. O aprendiz sobrepôs outro fio, 
 
 | Narrativa | Matemática |
 | --- | --- |
-| Cada fio | Ocorrência \`e=(id,A,B,parent,camada)\` |
-| Sentido invertido | Vetor \`B−A\` versus \`A−B\` |
+| Cada fio | Ocorrência `e=(id,A,B,parent,camada)` |
+| Sentido invertido | Vetor `B−A` versus `A−B` |
 | Mesmo percurso | Segmento geométrico não orientado |
 | História do fio | Proveniência, identidade e relação parental |
 
@@ -47,13 +47,13 @@ Um mestre pediu ao aprendiz que resolvesse uma quadrática para planejar a altur
 
 | Narrativa | Matemática |
 | --- | --- |
-| Duas soluções | \`(-b±√(b²−4ac))/(2a)\` |
-| Comprimento de porta | Unidade definida e \`x≥0\` |
-| Porta admissível | Discriminante \`D≥0\` no domínio real |
+| Duas soluções | `(-b±√(b²−4ac))/(2a)` |
+| Comprimento de porta | Unidade definida e `x≥0` |
+| Porta admissível | Discriminante `D≥0` no domínio real |
 
 **Ruptura:** raízes negativas podem representar deslocamentos orientados ou outras quantidades válidas em modelos diferentes.
 
-**Falsificador:** uma função tipada \`raizes_reais_comprimento\` deve rejeitar \`a=0\`, \`D<0\` e raízes negativas quando o contrato exige comprimento não negativo.
+**Falsificador:** uma função tipada `raizes_reais_comprimento` deve rejeitar `a=0`, `D<0` e raízes negativas quando o contrato exige comprimento não negativo.
 
 **Estatuto:** Esta parábola é **N4 (heurística), não evidência**.
 
@@ -63,13 +63,13 @@ Peças regulares reuniram ângulos que somavam 360°. Um aprendiz celebrou: “O
 
 | Narrativa | Matemática |
 | --- | --- |
-| Fecho de um vértice | \`Σ ângulos internos=360°\` |
+| Fecho de um vértice | `Σ ângulos internos=360°` |
 | Bordas casadas | Compatibilidade métrica de arestas |
 | Piso infinito | Extensão global válida de ladrilhamento |
 
 **Ruptura:** mosaicos artísticos podem empregar peças irregulares, cortes e rejunte; aqui se estuda o caso de polígonos regulares ideais.
 
-**Falsificador:** um algoritmo que só verifica \`Σθ=360°\` deve ser incapaz de certificar sozinho um ladrilhamento global. Exigir reconstrução e extensão é um teste adicional.
+**Falsificador:** um algoritmo que só verifica `Σθ=360°` deve ser incapaz de certificar sozinho um ladrilhamento global. Exigir reconstrução e extensão é um teste adicional.
 
 **Estatuto:** Esta parábola é **N4 (heurística), não evidência**.
 
@@ -79,10 +79,10 @@ Uma mestra dividiu os lados de um jardim triangular em doze partes e contou 144 
 
 | Narrativa | Matemática |
 | --- | --- |
-| Subdividir lados por 12 | Refinamento, \`F_n=12^(2n)\` |
+| Subdividir lados por 12 | Refinamento, `F_n=12^(2n)` |
 | Retirar pedra | Ocupação nula em vértice existente |
 | Apagar ligação | Remoção de aresta |
-| Refinar sem término | Sequência indexada por \`n∈ℕ\` |
+| Refinar sem término | Sequência indexada por `n∈ℕ` |
 
 **Ruptura:** um jardim material não pode ser subdividido indefinidamente com resolução física ilimitada.
 
@@ -92,14 +92,14 @@ Uma mestra dividiu os lados de um jardim triangular em doze partes e contou 144 
 
 ## 6. Mestre navegador — sete relógios e uma distância 42
 
-Um navegador imaginário colocou sete relógios com doze posições. O aprendiz contou \`12^7\` estados e perguntou como percorrê-los. O mestre explicou que, se cada passo altera uma coordenada em uma unidade (com retorno circular), a distância entre estados pode ser calculada diretamente. O maior caminho mínimo é 42: uma propriedade do grafo definido, não uma contagem de estrelas nem de atratores físicos.
+Um navegador imaginário colocou sete relógios com doze posições. O aprendiz contou `12^7` estados e perguntou como percorrê-los. O mestre explicou que, se cada passo altera uma coordenada em uma unidade (com retorno circular), a distância entre estados pode ser calculada diretamente. O maior caminho mínimo é 42: uma propriedade do grafo definido, não uma contagem de estrelas nem de atratores físicos.
 
 | Narrativa | Matemática |
 | --- | --- |
-| Sete relógios | Sete ciclos \`C₁₂\` |
-| Todas as combinações | \`12^7=35.831.808\` estados |
+| Sete relógios | Sete ciclos `C₁₂` |
+| Todas as combinações | `12^7=35.831.808` estados |
 | Passos mínimos | Distância no produto cartesiano de grafos |
-| Limite máximo | Diâmetro \`7×6=42\` |
+| Limite máximo | Diâmetro `7×6=42` |
 
 **Ruptura:** a navegação polinésia histórica não é modelada por essa construção hipotética de sete relógios; trata-se de analogia moderna, não reconstrução cultural.
 
@@ -113,9 +113,9 @@ Uma mestra distribuiu doze pedras em um círculo. Quatro grupos de três represe
 
 | Narrativa | Matemática |
 | --- | --- |
-| Doze pedras | \`θ_k=2πk/12\` |
+| Doze pedras | `θ_k=2πk/12` |
 | Quatro conjuntos de três | Convenção de quatro quadrantes e três marcadores |
-| Pedra oposta | \`k↦(k+6) mod 12\` |
+| Pedra oposta | `k↦(k+6) mod 12` |
 | Intervalos entre pedras | Estados angulares não amostrados |
 
 **Ruptura:** estações reais não têm durações de tempo exatamente iguais, e culturas diferentes usam calendários diferentes. A convenção de quatro estações não é universal.
@@ -138,6 +138,6 @@ O triângulo ensina que uma reta pode ter muitas propriedades. O tear ensina que
 - [Rastreabilidade de claims](../RLL_TRACEABILITY_MAP.md): nenhuma parábola é medição de cosmologia.
 - [Guia técnico de trigonometria](RLL_TRIGONOMETRIA_GEOMETRIA_TIPADA_20261114.md): relações demonstráveis e contratos matemáticos separados da narrativa.
 
-\`SOURCE ≠ ARTIFACT ≠ EXECUTION ≠ EVIDENCE ≠ CLAIM\`. \`RLL_PHYSICAL_MODEL_VALIDATION=NOT_RUN\`. \`NOVELTY=NOT_VERIFIED\`. \`claim_allowed=false\`.
+`SOURCE ≠ ARTIFACT ≠ EXECUTION ≠ EVIDENCE ≠ CLAIM`. `RLL_PHYSICAL_MODEL_VALIDATION=NOT_RUN`. `NOVELTY=NOT_VERIFIED`. `claim_allowed=false`.
 
 **R3:** F_ok = narrativa e mapeamentos formais explicitados; F_gap = originalidade matemática, dados cosmológicos e medições físicas fora do escopo; F_next = materializar verificadores próprios se a camada educativa vier a incorporar software. **FIAT LUX.**
