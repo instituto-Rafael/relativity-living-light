@@ -16,7 +16,11 @@ Make every artifact legible to a technically skeptical reader *without concealin
 | 03 — Experiments | Can the exact likelihood, inputs and outputs be reproduced? | [Papers / reproducibility](../presentation/20_PAPERS_REPRODUCIBILITY.md) |
 | 04 — Adversarial review | Which predictions fail, and what could disprove them? | [Existing math/physics audit](../science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md), [Sign gate](../../data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json) |
 | 05 — Historical provenance | Were values written before new results? | Exact frozen Git tree, commit ID, file path and diff; tag alone insufficient |
-| 06 — Research corpus | What mathematical papers are relevant? | Private `rafaelmeloreisnovo/papers`; math producer `rafaelmeloreisnovo/Matem-tica-`; **no body copying** |
+| 06 — Research corpus | What mathematical papers are relevant? | Private authorial corpus and producer-scoped provenance pointers, accessible only in authorized systems; **no body copying** |
+
+### Bibliography source
+
+Reuse the versioned [BibTeX reference catalogue](RLL_REFERENCES_EXTERNAL_20261114.bib) when generating a manuscript; review metadata against original DOI records before submission.
 
 ### One-screen executive summary convention
 
