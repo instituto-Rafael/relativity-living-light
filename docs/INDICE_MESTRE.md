@@ -8,6 +8,16 @@
 
 ---
 
+## Scientific review and publication-quality documentation · 2026-11-14 (DRAFT)
+
+- [Reader-facing research overview](presentation/30_SCIENTIFIC_RESEARCH_OVERVIEW_20261114.md): accessible research question, exact observed datasets, model limits and diagrams.
+- [Critical DESI DR2 × DES-Dovekie review](research/RLL_DESI_DOVEKIE_CRITICAL_REVIEW_20261114.md): published constraints, full sign/continuity mathematics, bibliographic references, falsifiers and separate model-inference states.
+- [Scientific editorial design standard](editorial/RLL_PUBLICATION_DESIGN_STANDARD_20261114.md): figure provenance, print/mobile accessibility, ethics, authorship and DOI-ready reference expectations.
+
+These are draft review surfaces. They do not supersede the scientific code, change likelihoods, create a release or promote a claim; existing documents remain history. `claim_allowed=false`.
+
+---
+
 ## Escopo deste arquivo
 
 Este arquivo e a **navegacao canonica** da documentacao do repositorio.
