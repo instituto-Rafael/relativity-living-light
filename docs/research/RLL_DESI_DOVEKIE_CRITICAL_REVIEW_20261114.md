@@ -147,6 +147,8 @@ The `papers` repository includes mathematical constructions involving polygons, 
 
 ## 8. Bibliography (primary/peer-reviewed sources)
 
+Machine-readable [BibTeX catalogue](../editorial/RLL_REFERENCES_EXTERNAL_20261114.bib) is available for editorial exports. Its entries must be rechecked against the publishers before journal submission.
+
 1. **DES Collaboration** (2026). *The Dark Energy Survey supernova program: a reanalysis of cosmology results and evidence for evolving dark energy with an updated Type Ia supernova calibration*. **Monthly Notices of the Royal Astronomical Society**, 548, stag632. DOI: https://doi.org/10.1093/mnras/stag632 ; arXiv: https://arxiv.org/abs/2511.07517 .
 2. **Lozano Torres, J. A.** (2026). *Dynamical dark energy from DESI DR2 and DES Year 6 BAO, supernovae, and cosmic chronometers: a 3σ preference without decisive Bayesian evidence*. **Monthly Notices of the Royal Astronomical Society**, 551, stag1607. DOI: https://doi.org/10.1093/mnras/stag1607 .
 3. **DESI Collaboration**, Abdul-Karim, M., et al. (2025). *DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints*. **Physical Review D**, 112, 083515. https://arxiv.org/abs/2503.14738 . Official publications and chains: https://data.desi.lbl.gov/doc/papers/dr2/ .
