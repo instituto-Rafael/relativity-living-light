@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "RLL_FORMA_NORMAL_123_REFERENCE_20261114",
+  "recorded_at": "2026-11-14T00:00:00Z",
+  "kind": "CROSS_REFERENCE",
+  "source": {
+    "pull_request": "https://github.com/rafaelmeloreisnovo/Matem-tica-/pull/93",
+    "head_sha": "083790f4eae8a0cbc986a112f5552f2f3e512c23",
+    "drive_receipt": "https://docs.google.com/document/d/14I95mK_aPheRDfXDQ5L7OwZwwpvm63LpM-z8i0yM22U"
+  },
+  "purpose": "Registrar referência matemática externa potencialmente útil a pipelines de redução; não alterar nem validar claims cosmológicos do RLL.",
+  "evidence_scope": [
+    "formal rewrite-system correction in producer",
+    "finite exhaustive check through length 6",
+    "parameter-family check n=0..128"
+  ],
+  "non_claims": [
+    "no physical interpretation established",
+    "no RLL fit rerun",
+    "no cosmological evidence produced"
+  ],
+  "state": "EVIDENCED_SCOPED",
+  "claim_allowed": false,
+  "gaps": [
+    "RLL_RELEVANCE_REVIEW_PENDING",
+    "INDEPENDENT_MATH_REVIEW_PENDING",
+    "CI_EXACT_HEAD_NOT_OBSERVED"
+  ],
+  "rollback": "Close unmerged PR or append superseding receipt; preserve provenance."
+}
