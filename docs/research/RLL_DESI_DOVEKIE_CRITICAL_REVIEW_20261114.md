@@ -104,7 +104,7 @@ The physically distinct options are (A) derive a conserved effective pressure \(
 
 The audit in `results/coerente/2026-07-09_uploaded_validation_bayes/README.md` records 33 points, \(\chi^2_{\Lambda}=25.65409,\;\chi^2_{\rm RLL}=25.84226\), plus a legacy Bayes factor \(B_{\rm RLL,\Lambda}\approx0.00131497\). However the same audit flags an asymmetry: one \(\Lambda\)CDM log evidence is declared as a *fixed-parameter log likelihood*, which is not a fully matched Bayesian evidence computation. Hence **do not promote the ratio as definitive model odds**. Preserve it as a dated, limited archival artifact.
 
-The later exploratory 13-observable BAO-only comparison is at [RLL_DESI_DR2_BAO_PANTHEON_CROSSWALK_20261114](RLL_DESI_DR2_BAO_PANTHEON_CROSSWALK_20261114.md) on its separate branch `research/desi-dr2-pantheon-source-audit-20261114`; its \(\chi^2/AICc\) values are not a likelihood matched to Dovekie/Planck. In that scoped analysis \(\Lambda\)CDM had the best AICc. No dataset/parameter result should be copied between these scopes without its methodology and provenance.
+The later exploratory 13-observable BAO-only comparison is at [RLL_DESI_DR2_BAO_PANTHEON_CROSSWALK_20261114](https://github.com/instituto-Rafael/relativity-living-light/blob/research/desi-dr2-pantheon-source-audit-20261114/docs/research/RLL_DESI_DR2_BAO_PANTHEON_CROSSWALK_20261114.md) on its separate branch `research/desi-dr2-pantheon-source-audit-20261114`; its \(\chi^2/AICc\) values are not a likelihood matched to Dovekie/Planck. In that scoped analysis \(\Lambda\)CDM had the best AICc. No dataset/parameter result should be copied between these scopes without its methodology and provenance.
 
 ### Historical priority gate
 
