@@ -93,6 +93,8 @@ Each plot requires executable source, hashes/versions of input, units, accessibi
 
 ## Bibliography and credit
 
+The [versioned BibTeX catalogue](../editorial/RLL_REFERENCES_EXTERNAL_20261114.bib) is provided for scholarly citation workflows, separate from data validation.
+
 [1] DES Collaboration (2026). *The Dark Energy Survey supernova program: a reanalysis ... updated Type Ia supernova calibration*. MNRAS 548, stag632. https://doi.org/10.1093/mnras/stag632
 
 [2] Lozano Torres, J. A. (2026). *Dynamical dark energy from DESI DR2 and DES Year 6 BAO, supernovae, and cosmic chronometers*. MNRAS 551, stag1607. https://doi.org/10.1093/mnras/stag1607
