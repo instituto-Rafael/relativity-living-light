@@ -1,0 +1,139 @@
+{
+  "schema": "dependabot.scoped_audit.v1",
+  "observed_at": "2026-11-15T23:05:07.991Z",
+  "claim_allowed": false,
+  "scope": "RLL Dependabot PR1212 only",
+  "change": "Node 24 baseline in the two dashboard workflows only; existing checks and failure semantics preserved",
+  "execution": "STATIC_CONTRACT_CHECK_ONLY; updated CI NOT_RUN",
+  "rollback": "successor revert of the two Node baseline substitutions; preserve bot dependency updates",
+  "pull_requests": [
+    {
+      "repository": "instituto-Rafael/relativity-living-light",
+      "number": 1212,
+      "head_sha": "be4e50be19b5aeeef80636a43ec1aef687756fc1",
+      "base_sha": "4fb5cbf11562d338241cd5a9c195ac4416f20157",
+      "mergeable": true,
+      "mergeable_state": "unstable",
+      "checks": [
+        {
+          "name": "Execute specialty transit with fail-fast barriers",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882795/job/132729111173"
+        },
+        {
+          "name": "Evolutionary semantic branch maturity gate",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882795/job/132729110165"
+        },
+        {
+          "name": "test",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882737/job/132729109935"
+        },
+        {
+          "name": "Inventory and validate the complete transit plan",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882795/job/132729109872"
+        },
+        {
+          "name": "build-formulas-artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882897/job/132729109639"
+        },
+        {
+          "name": "check-conventions",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882749/job/132729109499"
+        },
+        {
+          "name": "canonical-authority",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882798/job/132729109309"
+        },
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882806/job/132729109296"
+        },
+        {
+          "name": "human-societal-science-gate",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882727/job/132729109272"
+        },
+        {
+          "name": "inventory",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882817/job/132729109266"
+        },
+        {
+          "name": "Branch maturity gate V2",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882829/job/132729109221"
+        },
+        {
+          "name": "gate",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882723/job/132729108930"
+        },
+        {
+          "name": "build-knowledge-matrix",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882725/job/132729108928"
+        },
+        {
+          "name": "verify",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686882714/job/132729108849"
+        },
+        {
+          "name": "build-knowledge-matrix",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686876476/job/132729090755"
+        },
+        {
+          "name": "build-formulas-artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686876522/job/132729090561"
+        },
+        {
+          "name": "CodeQL",
+          "status": "completed",
+          "conclusion": "neutral",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/runs/132729090182"
+        },
+        {
+          "name": "submit-gradle",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/43686874822/job/132729090034"
+        }
+      ]
+    }
+  ],
+  "gaps": {
+    "rll": [
+      "tsc executable absent; TypeScript missing from package manifest",
+      "main accepts rll/release only; retain branch governance",
+      "Gradle dependency submission fails: gradle-wrapper.jar absent"
+    ]
+  },
+  "next": "restore and validate dashboard build-time toolchain separately; route dependency changes through lab/integration/release before approval",
+  "merge_performed": false,
+  "workflows_dispatched": false
+}
