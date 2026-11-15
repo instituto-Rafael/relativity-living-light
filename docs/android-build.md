@@ -72,6 +72,10 @@ O workflow `.github/workflows/android-build.yml` executa:
 6. build release assinado somente quando todos os secrets existem;
 7. upload dos APKs/AABs por `actions/upload-artifact@v4`.
 
+### Reconciliação main ↔ lab — evidência de assinatura do APK
+
+O workflow mantém os testes adicionais do laboratório e os pins de Actions mais recentes. Recupera de `main` o passo **Generate signed APK verification receipt**, que executa `apksigner verify --print-certs` apenas após build assinado e somente quando as quatro credenciais exigidas estão presentes. A saída detalhada do verificador fica em arquivo temporário do runner, apagado ao final do passo; **o artefato público contém o SHA-256 do APK e a impressão SHA-256 do certificado, não seu DN/sujeito**. O arquivo `apk-signature-receipts/receipt.json` possui `claim_allowed=false` e o upload é feito com a Action pinada. Em execuções sem credenciais de assinatura, ambos os passos são ignorados e não se declara verificação de APK release. Build verde do APK debug não demonstra assinatura release nem instalação real em ARMv7/AArch64.
+
 Secrets esperados para release no GitHub Actions:
 
 - `RLL_RELEASE_KEYSTORE_BASE64`
