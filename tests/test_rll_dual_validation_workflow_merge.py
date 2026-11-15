@@ -78,3 +78,14 @@ def test_dual_source_files_cannot_replace_each_other() -> None:
     for name in ("fetch_real_data.py","compute_validation.py","make_figures.py","render_report.py"):
         assert "python3 legacy_"+name in legacy, name
     assert "github.ref" not in legacy or "workflow_dispatch" in legacy
+
+
+def test_plot_generator_preserves_png_legacy_and_rx_svg_stdlib() -> None:
+    canonical=(ROOT/"scripts/generate_rll_plots.py").read_text(encoding="utf-8")
+    legacy=(ROOT/"scripts/legacy_generate_rll_plots.py").read_text(encoding="utf-8")
+    assert "from rx import read_csv" in canonical
+    assert "import pandas" not in canonical
+    assert "import matplotlib" not in canonical
+    assert "import pandas as pd" in legacy
+    assert "import matplotlib.pyplot as plt" in legacy
+    assert "Hz_curve.svg" in canonical and "Hz_curve.png" in legacy
