@@ -96,10 +96,27 @@ jobs:
           )
           PY
 
-      - name: Record seven guards without network or credential output
+      - name: Record Actions seven guards without impersonating Copilot Agents
         id: seven-guards
         if: always()
-        run: python -m tools.agent.rll_agent_seven_guards --runtime agents
+        run: |
+          set -euo pipefail
+          python -m tools.agent.rll_agent_seven_guards --runtime actions \
+            --output "artifacts/rll-agent-authority/RLL-AGENT-7G-ACTIONS-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          python - <<'PY'
+          import glob
+          import json
+          from pathlib import Path
+          matches = sorted(glob.glob("artifacts/rll-agent-authority/RLL-AGENT-7G-ACTIONS-*.json"))
+          assert len(matches) == 1, f"Expected 1 Actions-only receipt, got {len(matches)}"
+          receipt = json.loads(Path(matches[0]).read_text(encoding="utf-8"))
+          assert receipt["context"]["runtime_requested"] == "actions"
+          assert receipt["context"]["runtime_identity_attested"] is False
+          assert receipt["claim_allowed"] is False
+          assert receipt["evidence"]["network_requests"] == 0
+          assert receipt["evidence"]["secret_material_persisted"] is False
+          assert receipt["runtime_readiness"] in ("BLOCKED_BINDING", "BINDINGS_PRESENT_AUTH_UNVERIFIED")
+          PY
 
       - name: Preserve seven-guard receipt
         if: always()
