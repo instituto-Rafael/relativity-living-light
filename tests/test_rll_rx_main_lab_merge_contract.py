@@ -124,3 +124,18 @@ def test_runtime_no_ai_guard_has_its_complete_file_set() -> None:
     assert len(required) == 23
     missing = [p for p in required if not (ROOT / p).is_file()]
     assert missing == [], missing
+
+
+def test_rx_authority_preflight_remains_fail_closed() -> None:
+    security = json.loads((ROOT / "data/governance/RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json").read_text(encoding="utf-8"))
+    operation = json.loads((ROOT / "configs/rx_cli_operation.json").read_text(encoding="utf-8"))
+    assert security["schema"] == "rll.development_security_envelope.v1"
+    assert security["default_decision"] == "BLOCK"
+    assert security["claim_allowed"] is False
+    assert security["human_authority"]["required"] is True
+    assert security["human_authority"]["self_authorization"] == "FORBIDDEN"
+    assert operation["schema"] == "rll.development_operation.v1"
+    assert operation["authority"]["human_required"] is True
+    assert operation["authority"]["self_authorized"] is False
+    assert operation["autonomy"]["goal_setting"] is False
+    assert operation["autonomy"]["scope_expansion"] is False
