@@ -132,7 +132,7 @@ def test_lab_stage_retains_experimental_change_freedom(tmp_path: Path):
     assert data["decision"] == "PASS"
 
 
-def test_git_diff_exposes_deleted_source_in_both_lists(tmp_path: Path):
+def test_git_diff_exposes_deleted_source_in_both_lists(tmp_path: Path, monkeypatch):
     def git(*args: str) -> str:
         return subprocess.run(
             ["git", *args], cwd=tmp_path, check=True, text=True,
@@ -148,5 +148,8 @@ def test_git_diff_exposes_deleted_source_in_both_lists(tmp_path: Path):
     git("rm", "-q", "data/source.txt")
     git("-c", "user.name=CI", "-c", "user.email=ci@example.org", "commit", "-qm", "remove")
     head = git("rev-parse", "HEAD")
-    assert "data/source.txt" in changed(base, head, tmp_path)
-    assert deleted(base, head, tmp_path) == ["data/source.txt"]
+    # changed/deleted are CLI-style helpers reading git from process CWD.
+    # Keep this isolated fixture's repository selected for both assertions.
+    monkeypatch.chdir(tmp_path)
+    assert "data/source.txt" in changed(base, head)
+    assert deleted(base, head) == ["data/source.txt"]
