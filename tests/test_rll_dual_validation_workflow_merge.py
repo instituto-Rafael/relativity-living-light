@@ -61,3 +61,20 @@ def test_branch_write_authority_is_explicit_on_both_routes() -> None:
         assert "agent/*|work/*)" in src
         assert "exit 1" in src
         assert "if: ${{ " in src
+
+
+def test_dual_source_files_cannot_replace_each_other() -> None:
+    for name in ("fetch_real_data.py","compute_validation.py","make_figures.py","render_report.py"):
+        canonical=(ROOT/"validacao_real"/name)
+        legacy=(ROOT/"validacao_real"/("legacy_"+name))
+        assert canonical.is_file() and legacy.is_file(), name
+        assert canonical.read_bytes()!=legacy.read_bytes(), name
+    for script in ("fetch_real_data.py","compute_validation.py","make_figures.py"):
+        assert "import yaml" not in (ROOT/"validacao_real"/script).read_text(encoding="utf-8")
+    assert "import matplotlib" not in (ROOT/"validacao_real/make_figures.py").read_text(encoding="utf-8")
+    figures=(ROOT/"validacao_real/legacy_make_figures.py").read_text(encoding="utf-8")
+    assert 'HERE / "legacy_compute_validation.py"' in figures
+    legacy=LEGACY.read_text(encoding="utf-8")
+    for name in ("fetch_real_data.py","compute_validation.py","make_figures.py","render_report.py"):
+        assert "python3 legacy_"+name in legacy, name
+    assert "github.ref" not in legacy or "workflow_dispatch" in legacy
