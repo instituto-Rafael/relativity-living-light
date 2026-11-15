@@ -40,17 +40,20 @@ def valid_transition(head:str,base:str)->bool:
     return bool(expected and ((expected=="WORK" and head not in TOPOLOGY and head!=base) or head==expected))
 
 
-def changed(base_sha:str,head_sha:str)->list[str]:
-    p=subprocess.run(["git","diff","--name-only","--diff-filter=ACDMRTUXB",base_sha,head_sha],check=True,capture_output=True,text=True)
+def changed(base_sha:str,head_sha:str,repo:Path|None=None)->list[str]:
+    """List changed paths in the repository that owns the supplied commits."""
+    p=subprocess.run(
+        ["git","diff","--name-only","--diff-filter=ACDMRTUXB",base_sha,head_sha],
+        cwd=repo,check=True,capture_output=True,text=True,
+    )
     return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
 
 
-
-def deleted(base_sha:str,head_sha:str)->list[str]:
+def deleted(base_sha:str,head_sha:str,repo:Path|None=None)->list[str]:
     """Include removals and rename sources; never silently hide deleted inputs."""
     p=subprocess.run(
         ["git","diff","--name-only","--no-renames","--diff-filter=D",base_sha,head_sha],
-        check=True,capture_output=True,text=True,
+        cwd=repo,check=True,capture_output=True,text=True,
     )
     return sorted({x.strip() for x in p.stdout.splitlines() if x.strip()})
 
