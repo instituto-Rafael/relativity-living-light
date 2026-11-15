@@ -1,5 +1,7 @@
 # Relativity Living Light (RLL/MCRP)
 
+> **Scientific review · 2026-11-14 (draft / no new physical claim):** [Research overview](docs/presentation/30_SCIENTIFIC_RESEARCH_OVERVIEW_20261114.md) · [Critical DESI/Dovekie review](docs/research/RLL_DESI_DOVEKIE_CRITICAL_REVIEW_20261114.md) · [Scientific publishing / figure standard](docs/editorial/RLL_PUBLICATION_DESIGN_STANDARD_20261114.md). These pages distinguish observed results from RLL model hypotheses and prominently disclose negative evidence. No journal acceptance or physical preference is asserted.
+
 > **🧭 Comece aqui:** use o [`START HERE Ω V2.1 DISPATCH`](docs/presentation/00_START_HERE_RLL.md). Ele lê primeiro o [`CURRENT_STATE`](docs/presentation/05_CURRENT_STATE_RLL.md) e limita `μREAD` a até 3 raízes. Para navegação humana por objetivo, use depois o [Navigation Hub](docs/navigation/README.md).
 >
 > - arquivos soltos da raiz: [ROOT_FILES_INDEX](docs/navigation/ROOT_FILES_INDEX.md)
