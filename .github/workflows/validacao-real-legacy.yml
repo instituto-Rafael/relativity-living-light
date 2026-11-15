@@ -34,7 +34,7 @@ jobs:
       run: pip install pyyaml matplotlib
     - name: Fetch/materialize declared data anchors with explicit fallback boundary
       working-directory: validacao_real
-      run: python3 fetch_real_data.py
+      run: python3 legacy_fetch_real_data.py
     - name: Check fallback provenance boundary
       run: |
         set -euo pipefail
@@ -60,13 +60,13 @@ jobs:
         PY
     - name: Compute validation (chi2 / AIC / BIC / falsifiability)
       working-directory: validacao_real
-      run: python3 compute_validation.py
+      run: python3 legacy_compute_validation.py
     - name: Generate figures
       working-directory: validacao_real
-      run: python3 make_figures.py
+      run: python3 legacy_make_figures.py
     - name: Render documentation from artifacts
       working-directory: validacao_real
-      run: python3 render_report.py
+      run: python3 legacy_render_report.py
     - name: Build artifact checksums
       run: |
         set -euo pipefail
