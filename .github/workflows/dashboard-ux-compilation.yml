@@ -160,12 +160,11 @@ jobs:
 
       - name: 🧪 Run tests
         working-directory: apps/dashboard
-        run: npm run test 2>/dev/null || echo "⚠️ Tests not fully configured"
+        run: npm run test -- --run
 
-      - name: 📊 Test coverage
-        working-directory: apps/dashboard
-        run: |
-          npm run test:coverage 2>/dev/null || echo "⚠️ Coverage report not available"
+      - name: Record coverage limitation
+        if: always()
+        run: echo "Coverage: NOT_CONFIGURED; no coverage claim allowed" >> "$GITHUB_STEP_SUMMARY"
 
   quality-gates:
     name: 🎯 Quality Validation Gates
@@ -194,9 +193,10 @@ jobs:
         working-directory: apps/dashboard
         run: |
           echo "Checking TypeScript strict mode..."
-          npx tsc --noEmit && echo "✓ Gate 1 PASSED" || echo "✗ Gate 1 FAILED"
+          npm run type-check
+          echo "✓ Gate 1 PASSED"
 
-      - name: "Gate 2: Zero Tokens Vazios"
+      - name: "Gate 2: Source Marker Inventory (advisory)"
         run: |
           echo "Scanning for empty tokens..."
           ! grep -r "TODO\|FIXME\|XXX\|HACK\|BUG" apps/dashboard/src --include="*.ts" --include="*.tsx" | grep -v node_modules && echo "✓ Gate 2 PASSED" || echo "⚠ Gate 2: Issues found"
@@ -232,11 +232,8 @@ jobs:
       - name: "Gate 5: Security Audit"
         working-directory: apps/dashboard
         run: |
-          if npm audit --audit-level=critical 2>/dev/null; then
-            echo "✓ Gate 5 PASSED - No critical vulnerabilities"
-          else
-            echo "⚠ Gate 5: Vulnerabilities found (non-critical)"
-          fi
+          npm audit --audit-level=critical
+          echo "✓ Gate 5 PASSED - Critical audit threshold met"
 
   summary:
     name: 📊 Pipeline Summary
@@ -245,8 +242,6 @@ jobs:
     if: always()
     permissions:
       contents: read
-      issues: write
-      pull-requests: write
 
     steps:
       - name: 📥 Checkout code
@@ -277,17 +272,3 @@ jobs:
           echo "🔍 Check the logs above for details"
           echo "🔗 View logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           exit 1
-
-      - name: 💬 Comment on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const status = context.payload.pull_request ? 'pending' : 'success';
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## 🚀 Dashboard UX Compilation\n\n${{ job.status === 'success' ? '✅ Compilation passed!' : '❌ Compilation failed' }}\n\n📊 [View artifacts](${context.payload.pull_request.html_url}/checks)`
-            })
-        continue-on-error: true
