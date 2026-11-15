@@ -1,0 +1,374 @@
+#!/usr/bin/env python3
+"""Rx development gate.
+
+Aggregates the executable development chain. This is a software-development
+gate, not a model-training or AI gate.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+paths = {
+    "no_ai": ROOT / "results" / "rx_no_ai_runtime_gate.json",
+    "zero_dependency": ROOT / "results" / "rx_zero_dependency_gate.json",
+    "selftest": ROOT / "results" / "rx_selftest.json",
+    "sound_horizon": ROOT / "results" / "rx_sound_horizon_selftest.json",
+    "freestanding65": ROOT / "results" / "rx_freestanding65_parity.json",
+    "simple": ROOT / "validacao_real" / "results_rx" / "validation_summary_rx.json",
+    "multiprobe": ROOT / "validacao_real" / "results_rx" / "multiprobe_rx.json",
+    "parity": ROOT / "results" / "rx_semantic_parity.json",
+    "dependency_audit": ROOT / "results" / "rx_dependency_audit.json",
+    "migration_plan": ROOT / "results" / "rx_dependency_migration_plan.json",
+    "structure_d_rx": ROOT / "results" / "structure_d" / "joint_real_likelihood_rx.json",
+    "governance": ROOT / "results" / "development_governance_validation.json",
+    "security_surface": ROOT / "results" / "security_surface_audit.json",
+    "authority_registry": ROOT / "results" / "executable_entrypoint_authority_registry_validation.json",
+    "serialization_parity": ROOT / "results" / "validacao_real_serialization_parity.json",
+    "validacao_real_zero_dependency": ROOT / "results" / "validacao_real_zero_dependency_core.json",
+    "http_migration": ROOT / "results" / "rx_http_migration_gate.json",
+    "credential_authority_stdlib": ROOT / "results" / "credential_authority_stdlib_migration.json",
+    "watch_config_stdlib": ROOT / "results" / "watch_config_stdlib_migration.json",
+    "calc_data_stdlib": ROOT / "results" / "calc_data_stdlib_migration.json",
+    "validation_deterministic_stdlib": ROOT / "results" / "validation_deterministic_stdlib_migration.json",
+    "ci_scientific_skills_stdlib": ROOT / "results" / "ci_scientific_skills_stdlib_migration.json",
+    "fairness_stdlib": ROOT / "results" / "rx_fairness_stdlib_gate.json",
+    "inference_baseline": ROOT / "results" / "rx_inference_baseline_gate.json",
+    "dha_angular": ROOT / "results" / "rx_dha_angular_frequency_gate.json",
+    "validation_simple_claim_boundary": ROOT / "results" / "validation_simple_claim_boundary.json",
+    "real_data_materialization_security": ROOT / "results" / "real_data_materialization_security_gate.json",
+    "physics_v2_decision": ROOT / "results" / "rx_physics_v2_decision_packet.json",
+    "perturbation_regularity": ROOT / "artifacts" / "science" / "perturbations" / "RLL_A1_LINEAR_FLUID_REGULARITY_RECEIPT.json",
+    "perturbation_readiness": ROOT / "results" / "rll_perturbation_solver_readiness.json",
+    "g0_source_freeze": ROOT / "artifacts" / "science" / "provenance" / "RLL_G0_SOURCE_FREEZE_RECEIPT.json",
+    "ws23_bridge": ROOT / "artifacts" / "science" / "integration" / "RLL_WS01_WS02_WS21_WS23_BRIDGE_RECEIPT.json",
+}
+
+cli_security_receipts = sorted(
+    (ROOT / "results").glob("rx_cli_security_preflight_*_develop.json")
+)
+if not cli_security_receipts:
+    raise SystemExit("RX_DEVELOPMENT_GATE missing CLI security preflight for develop")
+paths["cli_security"] = cli_security_receipts[-1]
+
+missing = [name for name, path in paths.items() if not path.exists()]
+if missing:
+    raise SystemExit("RX_DEVELOPMENT_GATE missing artifacts: %s" % ", ".join(missing))
+
+data = {
+    name: json.loads(path.read_text(encoding="utf-8"))
+    for name, path in paths.items()
+}
+
+checks = {}
+
+checks["no_ai_runtime_gate"] = data["no_ai"].get("state") == "PASS"
+checks["no_ai_training_false"] = data["no_ai"].get("policy", {}).get("training") is False
+checks["no_ai_runtime_false"] = data["no_ai"].get("policy", {}).get("ai_runtime") is False
+checks["zero_dependency_gate"] = data["zero_dependency"].get("state") == "PASS"
+checks["zero_dependency_list_empty"] = data["zero_dependency"].get("third_party_python_dependencies") == []
+
+checks["governance_bundle_pass"] = data["governance"].get("pass") is True
+checks["governance_claim_closed"] = data["governance"].get("claim_allowed") is False
+checks["security_surface_strict_pass"] = data["security_surface"].get("strict_pass") is True
+checks["security_surface_no_critical"] = data["security_surface"].get("critical_count") == 0
+checks["authority_registry_pass"] = data["authority_registry"].get("pass") is True
+checks["authority_registry_claim_closed"] = data["authority_registry"].get("claim_allowed") is False
+checks["serialization_parity_pass"] = data["serialization_parity"].get("pass") is True
+checks["serialization_parity_zero_third_party"] = data["serialization_parity"].get("third_party_python_dependencies") == []
+checks["serialization_parity_claim_closed"] = data["serialization_parity"].get("claim_allowed") is False
+checks["validacao_real_zero_dependency_pass"] = data["validacao_real_zero_dependency"].get("pass") is True
+checks["validacao_real_zero_dependency_list_empty"] = data["validacao_real_zero_dependency"].get("third_party_python_dependencies") == []
+checks["validacao_real_zero_dependency_claim_closed"] = data["validacao_real_zero_dependency"].get("claim_allowed") is False
+checks["http_migration_pass"] = data["http_migration"].get("pass") is True
+checks["http_migration_zero_third_party"] = data["http_migration"].get("third_party_python_dependencies") == []
+checks["http_migration_no_network_in_gate"] = data["http_migration"].get("network_requests_performed") == 0
+checks["http_migration_claim_closed"] = data["http_migration"].get("claim_allowed") is False
+checks["credential_authority_stdlib_pass"] = data["credential_authority_stdlib"].get("pass") is True
+checks["credential_authority_stdlib_zero_third_party"] = data["credential_authority_stdlib"].get("third_party_python_dependencies") == []
+checks["credential_authority_stdlib_claim_closed"] = data["credential_authority_stdlib"].get("claim_allowed") is False
+checks["watch_config_stdlib_pass"] = data["watch_config_stdlib"].get("pass") is True
+checks["watch_config_stdlib_zero_third_party"] = data["watch_config_stdlib"].get("third_party_python_dependencies") == []
+checks["watch_config_stdlib_claim_closed"] = data["watch_config_stdlib"].get("claim_allowed") is False
+checks["calc_data_stdlib_pass"] = data["calc_data_stdlib"].get("pass") is True
+checks["calc_data_stdlib_zero_third_party"] = data["calc_data_stdlib"].get("third_party_python_dependencies") == []
+checks["calc_data_stdlib_no_network"] = data["calc_data_stdlib"].get("network_requests_performed") == 0
+checks["calc_data_stdlib_claim_closed"] = data["calc_data_stdlib"].get("claim_allowed") is False
+checks["validation_deterministic_stdlib_pass"] = data["validation_deterministic_stdlib"].get("pass") is True
+checks["validation_deterministic_stdlib_zero_third_party"] = data["validation_deterministic_stdlib"].get("third_party_python_dependencies") == []
+checks["validation_deterministic_stdlib_bayes_still_legacy"] = data["validation_deterministic_stdlib"].get("bayesian_legacy_migrated") is False
+checks["validation_deterministic_stdlib_claim_closed"] = data["validation_deterministic_stdlib"].get("claim_allowed") is False
+checks["fairness_stdlib_pass"] = data["fairness_stdlib"].get("pass") is True
+checks["fairness_stdlib_zero_third_party"] = data["fairness_stdlib"].get("third_party_python_dependencies") == []
+checks["fairness_stdlib_legacy_route_preserved"] = data["fairness_stdlib"].get("legacy_numpy_route_replaced") is False
+checks["fairness_stdlib_claim_closed"] = data["fairness_stdlib"].get("claim_allowed") is False
+checks["inference_baseline_pass"] = data["inference_baseline"].get("pass") is True
+checks["inference_baseline_zero_third_party"] = data["inference_baseline"].get("third_party_python_dependencies") == []
+checks["inference_emcee_parity_open"] = data["inference_baseline"].get("emcee_semantic_parity") == "TOKEN_VAZIO"
+checks["inference_dynesty_open"] = data["inference_baseline"].get("dynesty_nested_evidence") == "TOKEN_VAZIO"
+checks["inference_claim_closed"] = data["inference_baseline"].get("claim_allowed") is False
+checks["dha_angular_pass"] = data["dha_angular"].get("pass") is True
+checks["dha_angular_zero_third_party"] = data["dha_angular"].get("third_party_python_dependencies") == []
+checks["dha_astropy_parity_open"] = data["dha_angular"].get("astropy_semantic_parity") == "TOKEN_VAZIO"
+checks["dha_fap_open"] = data["dha_angular"].get("false_alarm_probability") == "TOKEN_VAZIO"
+checks["dha_legacy_route_preserved"] = data["dha_angular"].get("legacy_route_replaced") is False
+checks["dha_claim_closed"] = data["dha_angular"].get("claim_allowed") is False
+checks["validation_simple_claim_boundary_pass"] = data["validation_simple_claim_boundary"].get("pass") is True
+checks["validation_simple_claim_boundary_claim_closed"] = data["validation_simple_claim_boundary"].get("claim_allowed") is False
+checks["real_data_materialization_security_pass"] = data["real_data_materialization_security"].get("pass") is True
+checks["real_data_materialization_security_no_network"] = data["real_data_materialization_security"].get("network_requests_performed") == 0
+checks["real_data_materialization_security_zero_third_party"] = data["real_data_materialization_security"].get("third_party_python_dependencies") == []
+checks["real_data_materialization_security_claim_closed"] = data["real_data_materialization_security"].get("claim_allowed") is False
+
+physics_decision = data["physics_v2_decision"]
+checks["physics_v2_decision_schema"] = physics_decision.get("schema") == "rll.rx.physics_v2_decision_packet.v1"
+checks["physics_v2_decision_state"] = physics_decision.get("state") in {
+    "READY_FOR_VERSIONED_SCIENTIFIC_DECISIONS",
+    "READY_FOR_CANONICAL_V2_IMPLEMENTATION",
+}
+checks["physics_v2_decision_claim_closed"] = physics_decision.get("claim_allowed") is False
+checks["physics_v2_decision_axes_explicit"] = isinstance(physics_decision.get("blocking_axes"), list)
+
+regularity = data["perturbation_regularity"]
+checks["perturbation_regularity_schema"] = regularity.get("schema") == "rll.perturbation_a1_linear_fluid_regularity.v1"
+checks["perturbation_regularity_claim_closed"] = regularity.get("claim_allowed") is False
+checks["perturbation_regularity_no_solver_unlock"] = regularity.get("class_camb_unlock") is False
+checks["perturbation_regularity_negative_result_preserved"] = regularity.get("state") in {
+    "BLOCKED_DIRECT_STANDARD_FLUID_DOUBLE_PRECISION_REGULARITY",
+    "PASS_REPRESENTATION_ONLY_CONDITIONING_REMAINS_DIAGNOSTIC",
+}
+
+readiness = data["perturbation_readiness"]
+checks["perturbation_readiness_schema"] = readiness.get("schema") == "rll.perturbation_solver_readiness.v1"
+checks["perturbation_readiness_claim_closed"] = readiness.get("claim_allowed") is False
+checks["perturbation_readiness_contract_consistent"] = readiness.get("state") != "FAIL_CONTRACT_INCONSISTENCY"
+checks["perturbation_readiness_unlock_boolean"] = isinstance(readiness.get("class_camb_unlock"), bool)
+
+source_freeze = data["g0_source_freeze"]
+checks["g0_source_freeze_schema"] = source_freeze.get("schema") == "rll.g0.source_freeze_receipt.v1"
+checks["g0_source_freeze_claim_closed"] = source_freeze.get("claim_allowed") is False
+checks["g0_source_freeze_inputs_materialized"] = isinstance(source_freeze.get("inputs"), list) and bool(source_freeze.get("inputs"))
+checks["g0_source_freeze_blockers_explicit"] = isinstance(source_freeze.get("blockers"), list)
+
+ws23_bridge = data["ws23_bridge"]
+checks["ws23_bridge_schema"] = ws23_bridge.get("schema") == "rll.ws01_ws02_ws21_ws23_bridge_receipt.v1"
+checks["ws23_bridge_claim_closed"] = ws23_bridge.get("claim_allowed") is False
+checks["ws23_bridge_no_perturbative_promotion"] = ws23_bridge.get("growth_cmb_lensing_promotion") is False
+checks["ws23_bridge_negative_results_preserved"] = ws23_bridge.get("negative_results_preserved") is True
+checks["ws23_bridge_state_explicit"] = ws23_bridge.get("state") in {
+    "BLOCKED_WS23_BACKGROUND_BINDINGS",
+    "READY_WS23_BACKGROUND_BINDINGS",
+}
+bridge_ws01 = ws23_bridge.get("workstreams", {}).get("WS01", {})
+checks["ws23_bridge_physics_axes_consistent"] = sorted(bridge_ws01.get("blocking_axes", [])) == sorted(
+    physics_decision.get("blocking_axes", [])
+)
+checks["cli_security_allow"] = data["cli_security"].get("decision") == "ALLOW"
+checks["cli_security_claim_closed"] = data["cli_security"].get("claim_allowed") is False
+checks["selftest_pass"] = bool(data["selftest"].get("pass"))
+checks["selftest_no_training"] = data["selftest"].get("training") is False
+checks["selftest_no_ai_runtime"] = data["selftest"].get("ai_runtime") is False
+checks["selftest_zero_third_party"] = data["selftest"].get("third_party_python_dependencies") == []
+checks["sound_horizon_reference_pass"] = data["sound_horizon"].get("pass") is True
+checks["sound_horizon_no_training"] = data["sound_horizon"].get("training") is False
+checks["sound_horizon_no_ai_runtime"] = data["sound_horizon"].get("ai_runtime") is False
+checks["sound_horizon_claim_closed"] = data["sound_horizon"].get("claim_allowed") is False
+checks["freestanding65_parity_pass"] = data["freestanding65"].get("pass") is True
+checks["freestanding65_surface_N_65"] = data["freestanding65"].get("surface", {}).get("N") == 65
+checks["freestanding65_no_training"] = data["freestanding65"].get("training") is False
+checks["freestanding65_no_ai_runtime"] = data["freestanding65"].get("ai_runtime") is False
+checks["freestanding65_claim_closed"] = data["freestanding65"].get("claim_allowed") is False
+
+simple_runtime = data["simple"].get("runtime", {})
+checks["simple_claim_closed"] = data["simple"].get("claim_allowed") is False
+checks["simple_zero_third_party"] = simple_runtime.get("third_party_python_dependencies") == []
+
+simple_security_rel = simple_runtime.get("security_preflight", "")
+simple_security_path = ROOT / simple_security_rel if simple_security_rel else None
+checks["simple_security_preflight_exists"] = bool(simple_security_path and simple_security_path.exists())
+if checks["simple_security_preflight_exists"]:
+    simple_security = json.loads(simple_security_path.read_text(encoding="utf-8"))
+    checks["simple_security_allow"] = simple_security.get("decision") == "ALLOW"
+    checks["simple_security_claim_closed"] = simple_security.get("claim_allowed") is False
+else:
+    checks["simple_security_allow"] = False
+    checks["simple_security_claim_closed"] = False
+
+multi = data["multiprobe"]
+multi_runtime = multi.get("runtime", {})
+surface = multi.get("data_surface", {})
+checks["multiprobe_claim_closed"] = multi.get("claim_allowed") is False
+checks["multiprobe_no_training"] = multi_runtime.get("training") is False
+checks["multiprobe_no_ai_runtime"] = multi_runtime.get("ai_runtime") is False
+checks["multiprobe_zero_third_party"] = multi_runtime.get("third_party_python_dependencies") == []
+
+multi_security_rel = multi_runtime.get("security_preflight", "")
+multi_security_path = ROOT / multi_security_rel if multi_security_rel else None
+checks["multiprobe_security_preflight_exists"] = bool(multi_security_path and multi_security_path.exists())
+if checks["multiprobe_security_preflight_exists"]:
+    multi_security = json.loads(multi_security_path.read_text(encoding="utf-8"))
+    checks["multiprobe_security_allow"] = multi_security.get("decision") == "ALLOW"
+    checks["multiprobe_security_claim_closed"] = multi_security.get("claim_allowed") is False
+else:
+    checks["multiprobe_security_allow"] = False
+    checks["multiprobe_security_claim_closed"] = False
+checks["multiprobe_N_consistent"] = (
+    int(surface.get("N", -1))
+    == int(surface.get("Hz", 0))
+    + int(surface.get("DESI_DR2_BAO", 0))
+    + int(surface.get("fsigma8", 0))
+    + int(surface.get("CMB_compressed_parameters", 0))
+)
+checks["multiprobe_current_N_60"] = int(surface.get("N", -1)) == 60
+contract = multi.get("physics_contract", {})
+checks["multiprobe_contract_id"] = contract.get("id") == "RX-STRUCTURE-D-PARITY-V1"
+checks["multiprobe_contract_claim_closed"] = contract.get("claim_allowed") is False
+
+nested = multi.get("nested_invariants", {})
+checks["nested_wCDM"] = bool(nested.get("wCDM", {}).get("pass"))
+checks["nested_CPL"] = bool(nested.get("CPL", {}).get("pass"))
+checks["nested_RLL"] = bool(nested.get("RLL", {}).get("pass"))
+
+parity = data["parity"]
+parity_gates = parity.get("gates", {})
+checks["parity_claim_closed"] = parity_gates.get("claim_allowed") is False
+checks["parity_background_shared"] = parity_gates.get("background_model_equations_shared") == "PASS_BY_CONTRACT"
+checks["growth_divergence_explicit"] = parity_gates.get("growth_semantics_state") == "CONTRACT_DIVERGENCE"
+checks["cmb_divergence_explicit"] = parity_gates.get("cmb_acoustic_semantics_state") == "CONTRACT_DIVERGENCE"
+checks["rd_divergence_explicit"] = parity_gates.get("rd_semantics_state") == "CONTRACT_DIVERGENCE"
+checks["radiation_divergence_explicit"] = parity_gates.get("radiation_density_semantics_state") == "CONTRACT_DIVERGENCE"
+
+audit = data["dependency_audit"]
+checks["dependency_audit_materialized"] = isinstance(audit.get("files"), list)
+migration_plan = data["migration_plan"]
+checks["migration_plan_materialized"] = isinstance(migration_plan.get("rows"), list)
+checks["migration_plan_no_mass_rewrite"] = migration_plan.get("policy", {}).get("automatic_mass_rewrite") is False
+checks["migration_plan_active_rx_zero_dependency"] = migration_plan.get("policy", {}).get("active_rx_runtime_already_zero_dependency") is True
+closed_families = {
+    row.get("family"): row.get("state")
+    for row in migration_plan.get("closed_families", [])
+}
+checks["validacao_real_yaml_matplotlib_migrated"] = (
+    closed_families.get("validacao_real_yaml_matplotlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["requests_public_read_fetchers_migrated"] = (
+    closed_families.get("requests_public_read_fetchers") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["guarded_import_data_stdlib_migrated"] = (
+    closed_families.get("guarded_import_data_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["credential_authority_pyyaml_stdlib_migrated"] = (
+    closed_families.get("credential_authority_pyyaml_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["technology_watch_yaml_jsonschema_stdlib_migrated"] = (
+    closed_families.get("technology_watch_yaml_jsonschema_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["calc_data_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("calc_data_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["validation_deterministic_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("validation_deterministic_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["ci_scientific_skills_numpy_pandas_stdlib_migrated"] = (
+    closed_families.get("ci_scientific_skills_numpy_pandas_stdlib") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["docs_inventory_config_yaml_migrated"] = (
+    closed_families.get("docs_inventory_config_yaml") == "MIGRATED_WITH_PARITY_GATE"
+)
+checks["rll_real_run_plotting_migrated"] = (
+    closed_families.get("rll_real_run_plotting") == "MIGRATED_WITH_PARITY_GATE"
+)
+
+structure_d_rx = data["structure_d_rx"]
+successor = structure_d_rx.get("structure_d_successor", {})
+checks["structure_d_rx_engine"] = successor.get("engine") == "Rx"
+checks["structure_d_rx_zero_third_party"] = successor.get("third_party_python_dependencies") == []
+checks["structure_d_rx_no_training"] = successor.get("training") is False
+checks["structure_d_rx_no_ai_runtime"] = successor.get("ai_runtime") is False
+checks["structure_d_rx_legacy_preserved"] = successor.get("legacy_external_pipeline_mutated") is False
+checks["structure_d_rx_claim_closed"] = structure_d_rx.get("claim_allowed") is False
+
+failed = [name for name, passed in checks.items() if not passed]
+state = "PASS_WITH_OPEN_CONTRACT_DIVERGENCES" if not failed else "FAIL"
+
+payload = {
+    "schema": "rll.rx.development_gate.v1",
+    "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+    "state": state,
+    "training": False,
+    "ai_runtime": False,
+    "claim_allowed": False,
+    "checks": checks,
+    "failed_checks": failed,
+    "open_contract_divergences": [
+        "growth: Structure-D sigma8*Omega_m(z)^0.55 vs freestanding f*sigma8*D(z)",
+        "CMB acoustic scale: Structure-D r_d vs freestanding r_s(z_star)",
+        "sound-horizon calibration: fitted r_d approximation vs pinned/integrated freestanding horizons",
+        "radiation density: Structure-D/Rx 9.0e-5 vs FASE18E/freestanding 9.18e-5",
+    ],
+    "migration_debt": {
+        "python_files_with_external_imports": audit.get("python_files_with_external_imports"),
+        "external_import_occurrences_by_module": audit.get("external_import_occurrences_by_module", {}),
+    },
+    "artifacts": {name: str(path.relative_to(ROOT)) for name, path in paths.items()},
+    "F_ok": (
+        "No-AI runtime gate, zero-dependency runtime, governance bundle validation, entrypoint authority registry, YAML-to-JSON serialization parity, legacy validacao_real zero-dependency core, bounded HTTP requests migration, credential-authority PyYAML stdlib migration, technology-watch YAML/jsonschema stdlib migration, security-surface audit, CLI/simple/multiprobe security preflights, "
+        "sound-horizon vectors, freestanding65 parity, stdlib fairness primitives, deterministic inference baseline, explicit-angular DHA baseline, Structure-D Rx successor, simple validation, current multiprobe surface, "
+        "nested baselines, semantic parity ledger, dependency audit and migration plan are connected in one executable chain."
+    ),
+    "F_gap": (
+        "Growth/CMB/r_d/Omega_r semantics are not yet unified across Structure-D and freestanding; emcee semantic parity, dynesty nested evidence, Astropy DHA parity and DHA FAP remain TOKEN_VAZIO; "
+        "repository-wide third-party Python migration beyond the closed validacao_real serialization/presentation, bounded HTTP fetcher, docs-inventory config, and RLL plotting families, OS sandbox evidence, external GitHub controls and independent security review remain open."
+    ),
+    "F_next": (
+        "Choose and version one common growth/CMB/sound-horizon contract, then require "
+        "numerical parity on the common data surface before retiring legacy Structure-D dependencies."
+    ),
+}
+
+out_json = ROOT / "results" / "rx_development_gate.json"
+out_md = ROOT / "results" / "rx_development_gate.md"
+out_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+lines = [
+    "# Rx development gate",
+    "",
+    "State: **%s**" % state,
+    "",
+    "Training: false. AI runtime: false. Claim allowed: false.",
+    "",
+    "## Checks",
+    "",
+]
+for name, passed in checks.items():
+    lines.append("- %s: %s" % (name, "PASS" if passed else "FAIL"))
+lines += [
+    "",
+    "## Open contract divergences",
+    "",
+]
+for item in payload["open_contract_divergences"]:
+    lines.append("- " + item)
+lines += [
+    "",
+    "## R3",
+    "",
+    "- F_ok: " + payload["F_ok"],
+    "- F_gap: " + payload["F_gap"],
+    "- F_next: " + payload["F_next"],
+]
+out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+print("RX_DEVELOPMENT_GATE=" + state)
+for name, passed in checks.items():
+    print(("PASS " if passed else "FAIL ") + name)
+print("claim_allowed=False training=False ai_runtime=False")
+print("wrote", out_json.relative_to(ROOT))
+print("wrote", out_md.relative_to(ROOT))
+
+if failed:
+    raise SystemExit(1)
