@@ -235,11 +235,11 @@
   },
   {
     "path": ".github/agents/rll-secretary.agent.md",
-    "bytes": 2892,
+    "bytes": 3450,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 57,
-    "sha256": "946c017a138e93058b587f1d6ab7bd3cc5eb55cd33a694725de2c4c833e838e2",
+    "linhas": 65,
+    "sha256": "7a8dfc95410332c97b3807f4a2f196a931819b6b9857165fe30e12229db0b4ee",
     "flags": "token_vazio_declared"
   },
   {
@@ -496,11 +496,11 @@
   },
   {
     "path": ".github/workflows/android-build.yml",
-    "bytes": 4922,
+    "bytes": 4926,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 133,
-    "sha256": "0140704b7daee4b546bf682a2f9b48ba9a0fc3130e0acd5b1c11bf796817f4b8",
+    "sha256": "90dcd7129908338c1814353741aa6a1b4515e257a9e4bcb378c00700119cf4f4",
     "flags": ""
   },
   {
@@ -604,11 +604,11 @@
   },
   {
     "path": ".github/workflows/copilot-setup-steps.yml",
-    "bytes": 4827,
+    "bytes": 5818,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 130,
-    "sha256": "9e8b594ae08a4720180a2c3f0d6c49e1f286c8be18c26142f7aaf097b6d68ed6",
+    "linhas": 147,
+    "sha256": "391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a",
     "flags": "token_vazio_declared"
   },
   {
@@ -1063,11 +1063,11 @@
   },
   {
     "path": ".github/workflows/rll-json-dedup-gate.yml",
-    "bytes": 2200,
+    "bytes": 4002,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 55,
-    "sha256": "8bd84d20a8a3ff806af1780606f87cec40d58eeaa2fe2dd711a12af7ba30b154",
+    "linhas": 87,
+    "sha256": "aafb9d916a5114c3f4216c898c7d8b0fa990f7aa5245bd20762cb7449ab5b9ad",
     "flags": "mentions_synthetic"
   },
   {
@@ -16812,6 +16812,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/science/RLL_JSON_BYTES_EVIDENCE_AFTER_1195_20261115_V2.md",
+    "bytes": 2730,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 27,
+    "sha256": "93d9df97e3dc00b58fa7984173325896e8dd7c49fa31c13c829454ffacd1adeb",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "docs/science/RLL_JSON_CODEX_DEDUP_EVIDENCE_BOUNDARY_20261114_V1.md",
     "bytes": 5408,
     "ext": ".md",
@@ -28288,11 +28297,11 @@
   },
   {
     "path": "tests/test_rll_agent_seven_guards.py",
-    "bytes": 5572,
+    "bytes": 7086,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 105,
-    "sha256": "0af317a2de4ba202b526dd97d13c361f884363cbb457e0b1c71a1247ad3ba2ad",
+    "linhas": 131,
+    "sha256": "e36ae345a232e5f071b5c21c4de7ac600cbc90fb73e1e458774694ec29150291",
     "flags": "mentions_mock_or_placeholder,cosmology_validation_marker"
   },
   {

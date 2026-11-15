@@ -38,7 +38,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | `github_workflow_yml` | 5056 | 106 | `201910a439c38e184f1fc7eead0149fd98ce1baad0abbb34523c0e813b9e788b` |
 | `.github/workflows/act-dr6-reference-chain-custody.yml` | `github_workflow_yml` | 4791 | 106 | `6a5010932ed82fb6f7295177c83615fdfa8be4458b33a406dca7de2fa067af53` |
 | `.github/workflows/all-ref-topology-census.yml` | `github_workflow_yml` | 7114 | 154 | `44343a109a4e1278bd8a9e4f562b850ed782f352e9d153e257362e1922fbe7df` |
-| `.github/workflows/android-build.yml` | `github_workflow_yml` | 4922 | 133 | `0140704b7daee4b546bf682a2f9b48ba9a0fc3130e0acd5b1c11bf796817f4b8` |
+| `.github/workflows/android-build.yml` | `github_workflow_yml` | 4926 | 133 | `90dcd7129908338c1814353741aa6a1b4515e257a9e4bcb378c00700119cf4f4` |
 | `.github/workflows/bayes_analysis.yml` | `github_workflow_yml` | 394 | 18 | `46d56752d2dbe030389906ce1c1a4d8be4c4b092e87546c98b2edf63b5b508f4` |
 | `.github/workflows/branch-maturity-v2.yml` | `github_workflow_yml` | 1485 | 46 | `387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b` |
 | `.github/workflows/calc-data.yml` | `github_workflow_yml` | 5302 | 130 | `27ad458a8e75dfe0787c195014d5e7250c877418e07b121a9b7ed17b6c68b409` |
@@ -50,7 +50,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/class-camb-first-divergence.yml` | `github_workflow_yml` | 3804 | 91 | `0f95a77e27dd0c455c45455ef57ddae50a3029f4bf1e1ccb96a23ca84a2090e9` |
 | `.github/workflows/concept-knowledge-matrix.yml` | `github_workflow_yml` | 1645 | 58 | `0194a734a6860f8e16dc12b6f2c3c97b39642d6beffa4d26cadb21e19f0832fd` |
 | `.github/workflows/convention-check.yml` | `github_workflow_yml` | 3603 | 84 | `0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce` |
-| `.github/workflows/copilot-setup-steps.yml` | `github_workflow_yml` | 4827 | 130 | `9e8b594ae08a4720180a2c3f0d6c49e1f286c8be18c26142f7aaf097b6d68ed6` |
+| `.github/workflows/copilot-setup-steps.yml` | `github_workflow_yml` | 5818 | 147 | `391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a` |
 | `.github/workflows/dashboard-build.yml` | `github_workflow_yml` | 786 | 40 | `00e004b7b54534996cb5bbc0c3d598746b319e888ae5eac2b4668eb56fa35731` |
 | `.github/workflows/dashboard-ux-compilation.yml` | `github_workflow_yml` | 9599 | 284 | `f3aaadc74266ff78f2eddc5f0f372c05efc9e81aa0c51a0c4d539c0c633eec73` |
 | `.github/workflows/dense-feature-matrix.yml` | `github_workflow_yml` | 3041 | 83 | `fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351` |
@@ -101,7 +101,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-geometric-operator-omega-g.yml` | `github_workflow_yml` | 822 | 27 | `d4b91bc220b4f4a674c330c0ac0d4f2bb53bd3f356f59067e26ae27376a4fc4b` |
 | `.github/workflows/rll-governance-quality-gate.yml` | `github_workflow_yml` | 9940 | 211 | `ba380cfad7604c1b3a63dff7b0820863b1f4fc428e6f505e3980a845a9f5ce17` |
 | `.github/workflows/rll-homeostatic-field-gate.yml` | `github_workflow_yml` | 1415 | 41 | `63301ab455e08558f9c8d021c9cf2dce1d3641ada0a13495fa7c8e8f1e34f7ab` |
-| `.github/workflows/rll-json-dedup-gate.yml` | `github_workflow_yml` | 2200 | 55 | `8bd84d20a8a3ff806af1780606f87cec40d58eeaa2fe2dd711a12af7ba30b154` |
+| `.github/workflows/rll-json-dedup-gate.yml` | `github_workflow_yml` | 4002 | 87 | `aafb9d916a5114c3f4216c898c7d8b0fa990f7aa5245bd20762cb7449ab5b9ad` |
 | `.github/workflows/rll-language-g123.yml` | `github_workflow_yml` | 2506 | 68 | `ed154dbb36087e05f8969846bd7efabf4ab56369e294982996a22411b93a0285` |
 | `.github/workflows/rll-metar-earth-field.yml` | `github_workflow_yml` | 4680 | 122 | `7456ee88f694ba60ceee7f597fa3e6670ef2fde2c81a2192fde82b377153d299` |
 | `.github/workflows/rll-modern-validation-gate.yml` | `github_workflow_yml` | 7493 | 165 | `7273f9b7e83ebf01bbf6137c096876bcb2f25a759ad54803e4686b1751fdfe45` |

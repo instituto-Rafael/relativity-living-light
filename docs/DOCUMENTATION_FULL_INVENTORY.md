@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3653 |
-| `cataloged_files` | 3642 |
+| `tracked_files_total` | 3654 |
+| `cataloged_files` | 3643 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 56365495 |
-| `total_text_lines` | 542223 |
-| `markdown_files` | 1213 |
+| `total_bytes` | 56373094 |
+| `total_text_lines` | 542333 |
+| `markdown_files` | 1214 |
 | `yml_yaml_files` | 251 |
 | `github_workflow_yml_files` | 120 |
 | `data_or_result_files` | 992 |
 
-**Total de arquivos catalogados:** 3642
+**Total de arquivos catalogados:** 3643
 
 ## Inventário completo
 
@@ -49,7 +49,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/To_add/rll_adequacao_six_sigma.zip` | 31079 | `.zip` | `other` | 0 | `4b7fcf35f584f6d5edce265503dc6c2efdc9101886d4b9e29d6fc1d8e186052c` | `` |
 | `.github/To_add/start-manual-here-28282463159.zip` | 5366 | `.zip` | `other` | 0 | `fdc7229dfdf05ddc35366fe4440c89eab608fc4f651ae63385f793873ac74701` | `` |
 | `.github/agents/rll-official-data-intake.agent.md` | 1940 | `.md` | `documentation_md` | 18 | `395391c74e10a597edcbc703c14d30d11836b1972f93cb31c69558d052a172ae` | `` |
-| `.github/agents/rll-secretary.agent.md` | 2892 | `.md` | `documentation_md` | 57 | `946c017a138e93058b587f1d6ab7bd3cc5eb55cd33a694725de2c4c833e838e2` | `token_vazio_declared` |
+| `.github/agents/rll-secretary.agent.md` | 3450 | `.md` | `documentation_md` | 65 | `7a8dfc95410332c97b3807f4a2f196a931819b6b9857165fe30e12229db0b4ee` | `token_vazio_declared` |
 | `.github/dependabot.yml` | 969 | `.yml` | `config_yml` | 30 | `19e0d1a005e2efaac750edabee5e2aace68319ca78feccb203d53fe315d14bc7` | `` |
 | `.github/pull_request_template.md` | 593 | `.md` | `documentation_md` | 19 | `fc1b9dc5164ed6b52595b8706dda0e477ce78f002fa9d12a8fac3c83dda4d531` | `` |
 | `.github/workflow-architecture/github-actions-capabilities.v1.yml` | 7197 | `.yml` | `config_yml` | 192 | `f264b79ca5362cb00e5cd6e62e5197f2d0da55f6587df994c753bb9c4269b203` | `token_vazio_declared` |
@@ -78,7 +78,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | 5056 | `.yml` | `github_workflow_yml` | 106 | `201910a439c38e184f1fc7eead0149fd98ce1baad0abbb34523c0e813b9e788b` | `token_vazio_declared` |
 | `.github/workflows/act-dr6-reference-chain-custody.yml` | 4791 | `.yml` | `github_workflow_yml` | 106 | `6a5010932ed82fb6f7295177c83615fdfa8be4458b33a406dca7de2fa067af53` | `token_vazio_declared` |
 | `.github/workflows/all-ref-topology-census.yml` | 7114 | `.yml` | `github_workflow_yml` | 154 | `44343a109a4e1278bd8a9e4f562b850ed782f352e9d153e257362e1922fbe7df` | `` |
-| `.github/workflows/android-build.yml` | 4922 | `.yml` | `github_workflow_yml` | 133 | `0140704b7daee4b546bf682a2f9b48ba9a0fc3130e0acd5b1c11bf796817f4b8` | `` |
+| `.github/workflows/android-build.yml` | 4926 | `.yml` | `github_workflow_yml` | 133 | `90dcd7129908338c1814353741aa6a1b4515e257a9e4bcb378c00700119cf4f4` | `` |
 | `.github/workflows/bayes_analysis.yml` | 394 | `.yml` | `github_workflow_yml` | 18 | `46d56752d2dbe030389906ce1c1a4d8be4c4b092e87546c98b2edf63b5b508f4` | `` |
 | `.github/workflows/branch-maturity-v2.yml` | 1485 | `.yml` | `github_workflow_yml` | 46 | `387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b` | `` |
 | `.github/workflows/calc-data.yml` | 5302 | `.yml` | `github_workflow_yml` | 130 | `27ad458a8e75dfe0787c195014d5e7250c877418e07b121a9b7ed17b6c68b409` | `mentions_synthetic,mentions_mock_or_placeholder` |
@@ -90,7 +90,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/class-camb-first-divergence.yml` | 3804 | `.yml` | `github_workflow_yml` | 91 | `0f95a77e27dd0c455c45455ef57ddae50a3029f4bf1e1ccb96a23ca84a2090e9` | `` |
 | `.github/workflows/concept-knowledge-matrix.yml` | 1645 | `.yml` | `github_workflow_yml` | 58 | `0194a734a6860f8e16dc12b6f2c3c97b39642d6beffa4d26cadb21e19f0832fd` | `` |
 | `.github/workflows/convention-check.yml` | 3603 | `.yml` | `github_workflow_yml` | 84 | `0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce` | `` |
-| `.github/workflows/copilot-setup-steps.yml` | 4827 | `.yml` | `github_workflow_yml` | 130 | `9e8b594ae08a4720180a2c3f0d6c49e1f286c8be18c26142f7aaf097b6d68ed6` | `token_vazio_declared` |
+| `.github/workflows/copilot-setup-steps.yml` | 5818 | `.yml` | `github_workflow_yml` | 147 | `391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a` | `token_vazio_declared` |
 | `.github/workflows/dashboard-build.yml` | 786 | `.yml` | `github_workflow_yml` | 40 | `00e004b7b54534996cb5bbc0c3d598746b319e888ae5eac2b4668eb56fa35731` | `` |
 | `.github/workflows/dashboard-ux-compilation.yml` | 9599 | `.yml` | `github_workflow_yml` | 284 | `f3aaadc74266ff78f2eddc5f0f372c05efc9e81aa0c51a0c4d539c0c633eec73` | `` |
 | `.github/workflows/dense-feature-matrix.yml` | 3041 | `.yml` | `github_workflow_yml` | 83 | `fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351` | `mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared` |
@@ -141,7 +141,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-geometric-operator-omega-g.yml` | 822 | `.yml` | `github_workflow_yml` | 27 | `d4b91bc220b4f4a674c330c0ac0d4f2bb53bd3f356f59067e26ae27376a4fc4b` | `` |
 | `.github/workflows/rll-governance-quality-gate.yml` | 9940 | `.yml` | `github_workflow_yml` | 211 | `ba380cfad7604c1b3a63dff7b0820863b1f4fc428e6f505e3980a845a9f5ce17` | `token_vazio_declared` |
 | `.github/workflows/rll-homeostatic-field-gate.yml` | 1415 | `.yml` | `github_workflow_yml` | 41 | `63301ab455e08558f9c8d021c9cf2dce1d3641ada0a13495fa7c8e8f1e34f7ab` | `` |
-| `.github/workflows/rll-json-dedup-gate.yml` | 2200 | `.yml` | `github_workflow_yml` | 55 | `8bd84d20a8a3ff806af1780606f87cec40d58eeaa2fe2dd711a12af7ba30b154` | `mentions_synthetic` |
+| `.github/workflows/rll-json-dedup-gate.yml` | 4002 | `.yml` | `github_workflow_yml` | 87 | `aafb9d916a5114c3f4216c898c7d8b0fa990f7aa5245bd20762cb7449ab5b9ad` | `mentions_synthetic` |
 | `.github/workflows/rll-language-g123.yml` | 2506 | `.yml` | `github_workflow_yml` | 68 | `ed154dbb36087e05f8969846bd7efabf4ab56369e294982996a22411b93a0285` | `` |
 | `.github/workflows/rll-metar-earth-field.yml` | 4680 | `.yml` | `github_workflow_yml` | 122 | `7456ee88f694ba60ceee7f597fa3e6670ef2fde2c81a2192fde82b377153d299` | `mentions_synthetic` |
 | `.github/workflows/rll-modern-validation-gate.yml` | 7493 | `.yml` | `github_workflow_yml` | 165 | `7273f9b7e83ebf01bbf6137c096876bcb2f25a759ad54803e4686b1751fdfe45` | `token_vazio_declared` |
@@ -1891,6 +1891,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `docs/science/RLL_HZ_REAL_FREESTANDING_MODEL.md` | 3554 | `.md` | `documentation_md` | 136 | `d9e112cc101dad851fdb777cdc125b8f20fa38649800ea211e9f6bbf50d74af1` | `cosmology_validation_marker` |
 | `docs/science/RLL_INFINITY_OPEN_EVOLUTION_PROTOCOL.md` | 5578 | `.md` | `documentation_md` | 144 | `1ae3e108065154bb6c97c2957e516a75fbc713954504464407af04652e88712c` | `token_vazio_declared,cosmology_validation_marker` |
 | `docs/science/RLL_JOINT_REAL_MODEL_BRIDGE_V2.md` | 5464 | `.md` | `documentation_md` | 193 | `105a7a5cff36d98cf1c3bbb7c3baef2693e24ceef3f436aebff056e9a192c888` | `token_vazio_declared,cosmology_validation_marker` |
+| `docs/science/RLL_JSON_BYTES_EVIDENCE_AFTER_1195_20261115_V2.md` | 2730 | `.md` | `documentation_md` | 27 | `93d9df97e3dc00b58fa7984173325896e8dd7c49fa31c13c829454ffacd1adeb` | `cosmology_validation_marker` |
 | `docs/science/RLL_JSON_CODEX_DEDUP_EVIDENCE_BOUNDARY_20261114_V1.md` | 5408 | `.md` | `documentation_md` | 48 | `eb1db7cb7d6c2a5edc7abfc12a25c1bcc878f4eb52f4a616d870ef3d31d3b170` | `mentions_synthetic,token_vazio_declared,cosmology_validation_marker` |
 | `docs/science/RLL_LATENT_THESES_AND_RECENT_DATA_CROSSWALK.md` | 8917 | `.md` | `documentation_md` | 209 | `77d4e721663fa041e56dbef77327ae3ecd047dfad8f2983b5b24e00344f7b08e` | `cosmology_validation_marker` |
 | `docs/science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md` | 13829 | `.md` | `documentation_md` | 408 | `d5240b02f61ca3172ac3cdc38f6939356b33fbe5a2206077bd0240d23362a904` | `token_vazio_declared,cosmology_validation_marker` |
@@ -3166,7 +3167,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tests/test_rll_act_dr6_reference_chain_custody_v1.py` | 2554 | `.py` | `source_code` | 53 | `e8ce83f7edf82a732f6e03e1fe9a2bf3e66ce8acc3ce9cbf8ab41782bb6fb2ed` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_adaptive_permutation_ruler_v1.py` | 3125 | `.py` | `source_code` | 62 | `e08817a2160e7e4343878b9708fe970ce250230c04f912ea548d9dd76dafcf4e` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_agent_authority.py` | 11665 | `.py` | `source_code` | 292 | `8093e272940aa69818346a3d4760fbb31bf2c08d5615a1047904e1d7e8f764c5` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
-| `tests/test_rll_agent_seven_guards.py` | 5572 | `.py` | `source_code` | 105 | `0af317a2de4ba202b526dd97d13c361f884363cbb457e0b1c71a1247ad3ba2ad` | `mentions_mock_or_placeholder,cosmology_validation_marker` |
+| `tests/test_rll_agent_seven_guards.py` | 7086 | `.py` | `source_code` | 131 | `e36ae345a232e5f071b5c21c4de7ac600cbc90fb73e1e458774694ec29150291` | `mentions_mock_or_placeholder,cosmology_validation_marker` |
 | `tests/test_rll_android_adb_witness.py` | 5844 | `.py` | `source_code` | 147 | `4c739f26bbe0b2d3587659671feebca1368b2c589290b8f801e76bfe2375f30d` | `mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_android_diagnostic_ui.py` | 2308 | `.py` | `source_code` | 50 | `3a491b6b1fd3b46c163d2a0512c6753228d5c18145342d25c3ccb662c82432cc` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_android_formula_lab.py` | 3540 | `.py` | `source_code` | 69 | `3cb941da10448c23e19e72f4698a702f770fcfa9ceeb28b84e2f2893ee051c09` | `token_vazio_declared,cosmology_validation_marker` |
