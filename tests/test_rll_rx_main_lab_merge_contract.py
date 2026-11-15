@@ -91,3 +91,36 @@ def test_main_only_rx_code_comes_with_required_contracts() -> None:
         assert (ROOT / path).is_file(), path
     policy = json.loads((ROOT / "data/governance/RLL_GATE_NAMESPACE_REGISTRY_V1.json").read_text(encoding="utf-8"))
     assert isinstance(policy, dict)
+
+
+def test_runtime_no_ai_guard_has_its_complete_file_set() -> None:
+    # The first real Rx CI run found 23 absent active files. The complete set
+    # is required, not a lowered gate or a mocked/suppressed missing-file check.
+    required = (
+        "validacao_real/run_rx_pipeline.py",
+        "validacao_real/run_rx_multiprobe.py",
+        "validacao_real/compute_validation_stdlib.py",
+        "data/pipelines/structure_d/joint_real_likelihood_rx.py",
+        "tools/rx_selftest.py",
+        "tools/rx_sound_horizon_selftest.py",
+        "tools/rx_freestanding65_parity.py",
+        "tools/validate_rx_fairness.py",
+        "tools/validate_rx_inference.py",
+        "tools/rx_dependency_audit.py",
+        "tools/rx_dependency_migration_plan.py",
+        "tools/rx_development_gate.py",
+        "internal/governance/development_guard.py",
+        "tools/validate_rll_development_governance.py",
+        "tools/rll_security_surface_audit.py",
+        "tools/validate_real_data_materialization_security.py",
+        "scripts/materialize_real_data_guarded.py",
+        "tools/validate_ci_scientific_skills_stdlib_migration.py",
+        "tools/validate_calc_data_stdlib_migration.py",
+        "tools/validate_watch_config_stdlib_migration.py",
+        "tools/validate_credential_authority_stdlib_migration.py",
+        "tools/validate_rx_http_migration.py",
+        "tools/validate_executable_entrypoint_authority_registry.py",
+    )
+    assert len(required) == 23
+    missing = [p for p in required if not (ROOT / p).is_file()]
+    assert missing == [], missing
