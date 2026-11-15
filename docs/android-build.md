@@ -8,7 +8,7 @@ Este repositório deve conter o app Android mínimo porque já possui uma ponte 
 
 - `settings.gradle` inclui o módulo `:app` e repositórios oficiais Gradle/Android.
 - `build.gradle` raiz fixa o Android Gradle Plugin.
-- `scripts/bootstrap-gradle-wrapper.sh` gera `gradle/wrapper/gradle-wrapper.jar` em execução; o binário JAR não é versionado.
+- `gradle/wrapper/gradle-wrapper.jar` é versionado e validado pelo `setup-gradle`; o SHA-256 oficial do Wrapper 8.10.2 é `2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046`.
 - `app/build.gradle` declara SDK, NDK, CMake, ABIs, trilhas debug/release e assinatura externa.
 - `app/src/main/AndroidManifest.xml` declara a aplicação e a `MainActivity` de validação nativa.
 - `app/src/main/java/org/rafaelia/rll/KernelBridge.java` carrega `rll_kernel_bridge` e expõe JNI.
@@ -27,7 +27,7 @@ As mesmas ABIs são declaradas em `defaultConfig.externalNativeBuild.cmake.abiFi
 
 ### Debug / validação interna
 
-Use debug para validação interna e smoke test do runtime nativo. Se `gradle/wrapper/gradle-wrapper.jar` ainda não existir, gere-o fora do Git antes do build:
+Use debug para validação interna e smoke test do runtime nativo. Se `gradle/wrapper/gradle-wrapper.jar` estiver ausente por corrupção de checkout, restaure-o do Git; para recuperação controlada, gere-o com:
 
 ```bash
 ANDROID_HOME=/opt/android-sdk JAVA_HOME=/path/to/jdk-21 scripts/bootstrap-gradle-wrapper.sh
