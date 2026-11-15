@@ -38,7 +38,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | `github_workflow_yml` | 5056 | 106 | `201910a439c38e184f1fc7eead0149fd98ce1baad0abbb34523c0e813b9e788b` |
 | `.github/workflows/act-dr6-reference-chain-custody.yml` | `github_workflow_yml` | 4791 | 106 | `6a5010932ed82fb6f7295177c83615fdfa8be4458b33a406dca7de2fa067af53` |
 | `.github/workflows/all-ref-topology-census.yml` | `github_workflow_yml` | 7114 | 154 | `44343a109a4e1278bd8a9e4f562b850ed782f352e9d153e257362e1922fbe7df` |
-| `.github/workflows/android-build.yml` | `github_workflow_yml` | 4926 | 133 | `90dcd7129908338c1814353741aa6a1b4515e257a9e4bcb378c00700119cf4f4` |
+| `.github/workflows/android-build.yml` | `github_workflow_yml` | 5014 | 135 | `ed46f11c5b9532afd4ac8c3710cb122a519b0c28bfa355fc68dded9bdebb5d8d` |
 | `.github/workflows/bayes_analysis.yml` | `github_workflow_yml` | 394 | 18 | `46d56752d2dbe030389906ce1c1a4d8be4c4b092e87546c98b2edf63b5b508f4` |
 | `.github/workflows/branch-maturity-v2.yml` | `github_workflow_yml` | 1485 | 46 | `387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b` |
 | `.github/workflows/calc-data.yml` | `github_workflow_yml` | 5302 | 130 | `27ad458a8e75dfe0787c195014d5e7250c877418e07b121a9b7ed17b6c68b409` |

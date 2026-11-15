@@ -496,11 +496,11 @@
   },
   {
     "path": ".github/workflows/android-build.yml",
-    "bytes": 4926,
+    "bytes": 5014,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 133,
-    "sha256": "90dcd7129908338c1814353741aa6a1b4515e257a9e4bcb378c00700119cf4f4",
+    "linhas": 135,
+    "sha256": "ed46f11c5b9532afd4ac8c3710cb122a519b0c28bfa355fc68dded9bdebb5d8d",
     "flags": ""
   },
   {
@@ -1504,11 +1504,11 @@
   },
   {
     "path": ".gitignore",
-    "bytes": 1400,
+    "bytes": 1367,
     "ext": "NO_EXT",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "6bb2e60d0811940df38a20b8a1134a647e595e34b63be031177ba0c021c077c5",
+    "sha256": "ad396b52a1d5b86e71ccf99025f32f320ce9dd40968e22cda77a828b10a1c831",
     "flags": ""
   },
   {
@@ -12574,11 +12574,11 @@
   },
   {
     "path": "docs/android-build.md",
-    "bytes": 3687,
+    "bytes": 3799,
     "ext": ".md",
     "tipo": "documentation_md",
     "linhas": 83,
-    "sha256": "0bcf2c2f9e90af2c5892b3d9dc6fc392de235dfacfb862c25baeff41e348698a",
+    "sha256": "51a5d38d0b2a695e6eab694aaa466292e5fd0478c707dd5ccbea54ebeae567a1",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -18630,12 +18630,21 @@
     "flags": ""
   },
   {
+    "path": "gradle/wrapper/gradle-wrapper.jar",
+    "bytes": 43583,
+    "ext": ".jar",
+    "tipo": "other",
+    "linhas": 0,
+    "sha256": "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046",
+    "flags": ""
+  },
+  {
     "path": "gradle/wrapper/gradle-wrapper.properties",
-    "bytes": 253,
+    "bytes": 340,
     "ext": ".properties",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "23b7b98fa7f086c7310fb49d39084bdb472003a03f3b8508b43098f381d53114",
+    "sha256": "1de17d500d4671816e3ee230e897e8722157da899c534850aa8ab5cce9577da0",
     "flags": ""
   },
   {
@@ -25039,11 +25048,11 @@
   },
   {
     "path": "scripts/bootstrap-gradle-wrapper.sh",
-    "bytes": 709,
+    "bytes": 701,
     "ext": ".sh",
     "tipo": "source_code",
     "linhas": 24,
-    "sha256": "2cc8f527626c93ea9e88099386380d5dbe014a67daeed5639873f9bffa24671b",
+    "sha256": "19b247ade953c550256a38383dfc5378f3cafdb16e931f3c4e68c07b40f7ec15",
     "flags": "cosmology_validation_marker"
   },
   {
