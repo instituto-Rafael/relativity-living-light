@@ -48,6 +48,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-dependency-path: apps/dashboard/package-lock.json
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
@@ -112,7 +113,7 @@ jobs:
             apps/dashboard/dist/
             apps/dashboard/BUILD_MANIFEST.json
             apps/dashboard/bundle-analysis.json
-            apps/dashboard/SBOM.json
+            apps/dashboard/sbom.json
             apps/dashboard/INTEGRITY_HASHES.txt
             apps/dashboard/COMPILATION_REPORT.md
             apps/dashboard/dashboard-ux-*.tar.gz
@@ -151,6 +152,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-dependency-path: apps/dashboard/package-lock.json
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
@@ -182,6 +184,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-dependency-path: apps/dashboard/package-lock.json
 
       - name: 📋 Install dependencies
         working-directory: apps/dashboard
@@ -197,6 +200,12 @@ jobs:
         run: |
           echo "Scanning for empty tokens..."
           ! grep -r "TODO\|FIXME\|XXX\|HACK\|BUG" apps/dashboard/src --include="*.ts" --include="*.tsx" | grep -v node_modules && echo "✓ Gate 2 PASSED" || echo "⚠ Gate 2: Issues found"
+
+      - name: Retrieve actual build artifact from compile-ux
+        uses: actions/download-artifact@v4
+        with:
+          name: dashboard-build-${{ github.sha }}
+          path: apps/dashboard
 
       - name: "Gate 3: Build Output"
         working-directory: apps/dashboard
