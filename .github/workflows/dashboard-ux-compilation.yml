@@ -164,7 +164,8 @@ jobs:
 
       - name: Record coverage limitation
         if: always()
-        run: echo "Coverage: NOT_CONFIGURED; no coverage claim allowed" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo "Coverage: NOT_CONFIGURED; no coverage claim allowed" >> "$GITHUB_STEP_SUMMARY"
 
   quality-gates:
     name: 🎯 Quality Validation Gates
