@@ -225,6 +225,15 @@
     "flags": ""
   },
   {
+    "path": ".github/agents/rll-official-data-intake.agent.md",
+    "bytes": 1940,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 18,
+    "sha256": "395391c74e10a597edcbc703c14d30d11836b1972f93cb31c69558d052a172ae",
+    "flags": ""
+  },
+  {
     "path": ".github/agents/rll-secretary.agent.md",
     "bytes": 2892,
     "ext": ".md",
@@ -235,11 +244,11 @@
   },
   {
     "path": ".github/dependabot.yml",
-    "bytes": 350,
+    "bytes": 969,
     "ext": ".yml",
     "tipo": "config_yml",
-    "linhas": 16,
-    "sha256": "57218565162ede6c1c78aae98c5ef8848c5bc7e60110c0a31259e0fa64bd6414",
+    "linhas": 30,
+    "sha256": "19e0d1a005e2efaac750edabee5e2aace68319ca78feccb203d53fe315d14bc7",
     "flags": ""
   },
   {
@@ -284,16 +293,16 @@
     "ext": ".yml",
     "tipo": "config_yml",
     "linhas": 337,
-    "sha256": "50e8f961295516719b6f35d904dfe2443df4aab5a1941993003a602be5bc00b4",
+    "sha256": "a1725ce0a85e572b4c0a804dac2a54b8670e06c73f03ecc3295b327fe239f6ff",
     "flags": "token_vazio_declared"
   },
   {
     "path": ".github/workflow-orchestrator/BRANCH_MATURITY.md",
-    "bytes": 4315,
+    "bytes": 5196,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 137,
-    "sha256": "d3d1de27a072bc1223e3747d124eb67e0f5e2d936d7cb6c4d9293ee11e51099e",
+    "linhas": 153,
+    "sha256": "039df4073db048aa4564add4186a1a42f2894ba3a32727f9189b28e8ac592b77",
     "flags": "token_vazio_declared"
   },
   {
@@ -437,7 +446,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 314,
-    "sha256": "1233ed399d2e7966b44d7473f11e5edc4e49a32a053ff94fec1193c36b7d53cd",
+    "sha256": "9cb159472b8fad25e9b707989925913aaa620306a183a1d9ca76cd7a7ef79aba",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -446,7 +455,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 122,
-    "sha256": "a39ba2ba8e60c47e2c6f3048dbe5b52d85c610a7ff512bb3bf329940f83c779a",
+    "sha256": "6207ffe70286767c200b9c525ac4e7139434c8d2f55696b108fbc217d2044440",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -455,7 +464,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 333,
-    "sha256": "97ed6feaf90181b4d1fca22c3307403d7bdd01bd05601ada636aba5c3ce3c666",
+    "sha256": "6c3265624c1e927ff2619979deeeb873f679fddf458a6cd205ef736310437b38",
     "flags": "token_vazio_declared"
   },
   {
@@ -464,7 +473,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 106,
-    "sha256": "42737997a975956d99ce2870bcb21c113d0c042b06b45e56315699ad41c6e5e3",
+    "sha256": "201910a439c38e184f1fc7eead0149fd98ce1baad0abbb34523c0e813b9e788b",
     "flags": "token_vazio_declared"
   },
   {
@@ -473,7 +482,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 106,
-    "sha256": "00870201da7da9b99f78961a515cfb244eefd11010b5a2cd3a04c289574c3a26",
+    "sha256": "6a5010932ed82fb6f7295177c83615fdfa8be4458b33a406dca7de2fa067af53",
     "flags": "token_vazio_declared"
   },
   {
@@ -482,7 +491,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 154,
-    "sha256": "fda61a7783d81125f93cf86969dd25864ff05f76c4fee49917de454cff14a6b2",
+    "sha256": "44343a109a4e1278bd8a9e4f562b850ed782f352e9d153e257362e1922fbe7df",
     "flags": ""
   },
   {
@@ -491,7 +500,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 133,
-    "sha256": "3f7bccd122bc8640cb9436d9899f3f11812972d924fa44b3ac4b5f34530bdab3",
+    "sha256": "0140704b7daee4b546bf682a2f9b48ba9a0fc3130e0acd5b1c11bf796817f4b8",
     "flags": ""
   },
   {
@@ -509,7 +518,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 46,
-    "sha256": "98fb2e173a2fb14e2fc78ea8084115b38d0ac8f169ed4d574fcbe085ec3f6b0d",
+    "sha256": "387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b",
     "flags": ""
   },
   {
@@ -518,7 +527,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 130,
-    "sha256": "a5d808cb992f3737c0dd731b975f548998043445395bf4aa599f7fc6d5264bd1",
+    "sha256": "27ad458a8e75dfe0787c195014d5e7250c877418e07b121a9b7ed17b6c68b409",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -527,7 +536,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 140,
-    "sha256": "459c7cabedb6d2e72feca57545cb7e0aad307ac259ec6b65e09446cc55ce97c5",
+    "sha256": "505f3b07ef6804653156bcf7f961d61bf98469c868c9f1ad512fd5a9ac3435d5",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -536,7 +545,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 124,
-    "sha256": "434a487c4937b376d74a94e207b4a26bd045fab474f85abe53ac68068d406425",
+    "sha256": "9ae7d718a6cba6708abab8fcc741195bda653aba60553e2bd7d303affbba573f",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -545,7 +554,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 64,
-    "sha256": "3b3cfbabc4d9e7bcce76e59d333baa2cfe7ab47a209ac9b5704159aef3f80d0e",
+    "sha256": "9c2392561e2e0266036007784ef8d8173a062dd035be8be29458280ad6424a08",
     "flags": ""
   },
   {
@@ -554,7 +563,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 137,
-    "sha256": "b18c809ca6d8a4eecdb1c3740bee743382ffc778d333d0721e989af30ef750c0",
+    "sha256": "c70282aa20738df19c21217b290ada25248f7288a37542944c3772165078d268",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -563,7 +572,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 275,
-    "sha256": "18e8fe8fb6dc9181544a302515fc1f1a7fdf295caf29c6348e20009a8ffcc73e",
+    "sha256": "2582b81f5d98bae806774afe3658f747e99588e4b76d98533288c6012045fc03",
     "flags": "token_vazio_declared"
   },
   {
@@ -572,7 +581,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 91,
-    "sha256": "0a7a485a4354a3906ee61f5c1efb3a392c7b32baba3e3dacd64b0359eb3b48ca",
+    "sha256": "0f95a77e27dd0c455c45455ef57ddae50a3029f4bf1e1ccb96a23ca84a2090e9",
     "flags": ""
   },
   {
@@ -581,7 +590,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 58,
-    "sha256": "094903d1c01786d0c6ab68070d1be1459c43c97dfc8f163701f158a25fa60f29",
+    "sha256": "0194a734a6860f8e16dc12b6f2c3c97b39642d6beffa4d26cadb21e19f0832fd",
     "flags": ""
   },
   {
@@ -590,7 +599,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 84,
-    "sha256": "c803ee53f30b90522ed1d2ddfdfcd1b9b8272661c7b86d40d3235bfdb83aeeb4",
+    "sha256": "0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce",
     "flags": ""
   },
   {
@@ -599,7 +608,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 130,
-    "sha256": "f89f69dc7b650fe874ddefa824805cc058016e319264e7858359dab82374e843",
+    "sha256": "9e8b594ae08a4720180a2c3f0d6c49e1f286c8be18c26142f7aaf097b6d68ed6",
     "flags": "token_vazio_declared"
   },
   {
@@ -626,7 +635,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 83,
-    "sha256": "c9cb498e7f75f7e8f3250ab3ef1a012a3b6e52b80cc2eb17e58a2803a1553680",
+    "sha256": "fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -635,7 +644,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 82,
-    "sha256": "9f4f08a38297a6692db3bdfbe0dac2f89666bdc5448a6a6cc02b2aee6603dc1a",
+    "sha256": "6fd1a35bb78440df235fa3a5f139fb1b15897ca0c270d6fa7654445cbca65008",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -644,7 +653,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 99,
-    "sha256": "6f1618acd7fd6503af2dfb7017bdf9035a2787e881b352a8f4c647e5f5b0d84e",
+    "sha256": "58b28e9d9de3bb9ea31d67bc742d8a6d448730f3f2a3425ee225620bc5465c9a",
     "flags": "mentions_mock_or_placeholder"
   },
   {
@@ -653,7 +662,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 113,
-    "sha256": "60078ab1e8621996af023c9fccef75d20de91d4b25bf2cc69711326a0995a228",
+    "sha256": "202926138f535c66726f9844197e049357b1352bc0a2aae59ae6e836ee1263b6",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -662,7 +671,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 53,
-    "sha256": "a42b8f2d77fe84d4b78ce109798ec621fbebf479305bc4d2fc57b35619b8f22c",
+    "sha256": "e5fac56b2a2c82d5520de46c9bc72cb53adf89cc2e635aafb0f7e0a544e62cf5",
     "flags": ""
   },
   {
@@ -671,7 +680,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 40,
-    "sha256": "ae3b748eb951149bc01e35f7b3d2ea96014b986f3a7ee768ffae5648923a11ec",
+    "sha256": "6fd8a51e669c2633bba93bf0ed3e8c545ff5460a5c7979695664a959f7f8f31f",
     "flags": ""
   },
   {
@@ -680,7 +689,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 265,
-    "sha256": "1e7917599f1aab1cef6a53044c183574d321787b9f85b487b9d8b5db465e88df",
+    "sha256": "ee4a89694e9a7f791fee41204882a289943b7adcca5ea3ab37bd1bce30cafc04",
     "flags": "token_vazio_declared"
   },
   {
@@ -689,7 +698,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 277,
-    "sha256": "b8e0bf24ace09fac3d4ee8e335e0181aa8c050029e1ef41c6bf8869a40f5b68f",
+    "sha256": "dae014de1cb164d52d0168a51dfcf847c2c7a19d30e3b1ecb2414001b2660b78",
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
@@ -698,7 +707,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 179,
-    "sha256": "8d9d3a1d1f3ebd392de6683e1972047d8f79a6afab8fccb703ccbcd72ceb2021",
+    "sha256": "7fa6947394cff7f8ca5bc22edd58fea09154347ad1c12fbce29ab1590766521f",
     "flags": "token_vazio_declared"
   },
   {
@@ -707,7 +716,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 172,
-    "sha256": "8d2104e35a4256922c124ebe6fb49b8d875934a103a412ae4497aea869277dc0",
+    "sha256": "8e07d5c5a1f345b6ac3442a0989e78e834075a30f993bfd557f02e412508e2c7",
     "flags": "token_vazio_declared"
   },
   {
@@ -716,7 +725,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 106,
-    "sha256": "28c0b668c2db91294e78941f03f3d5c2ca0eb6c229ec6f33eabd9d3e91954887",
+    "sha256": "92fadd109ad2a05658cbbc0589a1f0e99fa1e769ad9837b518ac940f7c06dcd7",
     "flags": ""
   },
   {
@@ -725,7 +734,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 147,
-    "sha256": "c058dc7b845b7ebdda2d44f30ddd2c1ca41d55450f00867097f5791347b2bfa0",
+    "sha256": "9ae16cfa6c72f8f20831fc0c8130b844eb4064cbdcee0f1b70059d3f3339d9b7",
     "flags": "token_vazio_declared"
   },
   {
@@ -743,7 +752,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 64,
-    "sha256": "a7c1fa156d6f552626c53591d4336b28571b1191f1df6c1d508e59bf697f30bd",
+    "sha256": "4b927fcf04fa02a3dac04b1c0898b1e539401f9db98eae7c815c88cf6d6ebf3a",
     "flags": ""
   },
   {
@@ -752,7 +761,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 131,
-    "sha256": "06516ae4b5dd4eb9a2a72d07a9ee1d81c06282e202b3868187f7305a4d1aa43c",
+    "sha256": "66c0b63abd84a795f89455b247ef67eb6a58f0cabc9dd0fb199be22fef16f1d5",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -761,7 +770,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 93,
-    "sha256": "18e9933b6d1abc45e091517bb5b84e9b50e98ee33600fea8b70c87350cb34af1",
+    "sha256": "49c49abac088cf58e0ada2a6f6d75e95909bcb4a8259587eb8597011dc076daf",
     "flags": "token_vazio_declared"
   },
   {
@@ -770,7 +779,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 83,
-    "sha256": "114ecbb7eef6dfc57da35c125f3e127acdd54794db7b97a8ee883855bd83576d",
+    "sha256": "2ed44121d1446c2dc9e17fbc980edbe489c95ab3d7affc0a1359acd0983d4df4",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -779,7 +788,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 85,
-    "sha256": "94be5844dc9256096da8c0d76a12f027c98dc4e3edeca00a10f3e462180b9961",
+    "sha256": "c6d76359c4b78db2bb0e484347df5e994985ab6ca0015ad0bb036a5e098aaaa4",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -788,7 +797,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 113,
-    "sha256": "28473ff9f0abf6dac1cec2eabd4fdd2fb6bac5f8e807eacb3aca444f91c00ba8",
+    "sha256": "1b0746f53107ec7ca97016ad657f4ca9f3a1ddd9526842463df9163195a9eeae",
     "flags": "mentions_synthetic"
   },
   {
@@ -797,16 +806,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 319,
-    "sha256": "1d943ab42e7afad4d0dedec81d122bc9591e040a5668ac8cd48b24a4bb45ee78",
+    "sha256": "dcedb428b00891576ffbbf2d6241074e1c6e97447ba9e84f92ebca7c5d92015b",
     "flags": "token_vazio_declared"
   },
   {
     "path": ".github/workflows/poincare-7d-evidence-gate.yml",
-    "bytes": 7454,
+    "bytes": 7458,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 171,
-    "sha256": "f6328d2149fdc7fac78f3e9029e526e053bb6a99f680243245dd8d484fa79ac8",
+    "sha256": "167a2fc973be06b3c2c0e446046fc9deac4ae8e966ddce61c62aea043c18bcce",
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
@@ -815,7 +824,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 186,
-    "sha256": "31babc857396a144f03c9ffb585879c322b559c6fadc8e5f9930dc234fa81ad4",
+    "sha256": "b499802b6cc7830c2c81813751ee1e8931ecf6ab7c98d2f10c4c1a76fcde82d5",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -824,7 +833,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 166,
-    "sha256": "3d3baa8d991bf67df4c7aade1c708954f08fe2976cbfc6bbb4590b0fdf8656a8",
+    "sha256": "d0a430cb89ad6a900698528f688ad76eb169b9a2b6acbdda24e993822fdc6f83",
     "flags": "token_vazio_declared"
   },
   {
@@ -833,7 +842,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 84,
-    "sha256": "67cbbad5aed75335c336811f50154f6da46fce65fcd6821cc4c7b348bd43bfa2",
+    "sha256": "0c630691c8d1e16540bca6ce0b2fb98a6d92e7c75a0cd6599bca6ec79570b751",
     "flags": ""
   },
   {
@@ -842,7 +851,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 62,
-    "sha256": "05e003020d70edcbd1c65351080db8deba38db6cfe53e6991f1a9313ea43957e",
+    "sha256": "1eca35907020e2d810238a6a8cc90996fadd21d6aa758d08d834c775d7b843be",
     "flags": ""
   },
   {
@@ -851,7 +860,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 105,
-    "sha256": "12509a38d765bf854dc38bd4f2108d74ed24efb24e59c4c725357f36492a5aa4",
+    "sha256": "fd2b242ec2510184153388e0a01db5c46a96defdf5716ea9b9628e780cdaabc1",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -860,7 +869,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 458,
-    "sha256": "1391721139ea1cb1af87c0a31eef689b1a4f1d5a8a67605bda8f31787f0c11c7",
+    "sha256": "9e4d7d872a9d56b3389788f5ac3f1fd14ba0fa21860e3b8840b878063f9ff1b2",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -869,7 +878,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 183,
-    "sha256": "884d7ed51fc3114388ecbd2791610bd86360eebac628a77485ab4e68cd94ca29",
+    "sha256": "a5fe4c541f111d4f6774c517674544dc26e8539cdb828656fe061f164d097a37",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -878,7 +887,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 89,
-    "sha256": "1038948e7f1b324950f3ababa3d8cd501590b19e6d57b1d49642a98729dbe436",
+    "sha256": "82b49976d01e4889fac56e35f872820e731d829c20fc3537e22152d68606454d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -887,7 +896,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 107,
-    "sha256": "fd65596175e2540dbe9e001394498e3209727dd44d6515081f41a4e8094f26ba",
+    "sha256": "6f5b35bcba3a7a846429837ca400131cf55441bf7d8b5a879d00a4283ce15fd8",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -896,16 +905,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 96,
-    "sha256": "09d7e611ce135f794eb88461cb55e51fff1cb92444ad5ae93ae6b36c5d50bdf2",
+    "sha256": "51ad2d47f3d109b650d4d0f111c03550aee549bf2a3471b5c30ed0a031d09fbf",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
     "path": ".github/workflows/rll-academic-safety-route56.yml",
-    "bytes": 3339,
+    "bytes": 3343,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 89,
-    "sha256": "cc79a900f15d1c0895a91010b7c919afb184f62a27416583bd0223600a1a9311",
+    "sha256": "e0af7d0d28cca2d808001e9a3c21ca5ece394702a7afd0d36fcbcdab879f9e28",
     "flags": ""
   },
   {
@@ -914,7 +923,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 224,
-    "sha256": "2f8588e6b27bd2c8a938b7abb0e174cb28e827b2bbe92e44d0fd665fa7b05fdd",
+    "sha256": "8682d258dd7179cb8f5e9cd5919c8a19835276de3464c7f761fab9afb210fc43",
     "flags": "token_vazio_declared"
   },
   {
@@ -923,7 +932,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 180,
-    "sha256": "aa57e79b2c170cd0d3ae3bb77f2afea9c4c2ac104b83b504ba072310da8e0a06",
+    "sha256": "b1db13d597ccc4026a9ad80865444e0c0df9eb2ce008299e74c87b33d906df49",
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
@@ -932,7 +941,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 36,
-    "sha256": "719d84bd0ee1b6736d89218417aa9ffcd8ffb2b7cbd21e59ef1b9b27a6615b35",
+    "sha256": "9e91f66dce589802b7369994c9182d9aa3c90914294eb8418deab40d90914af3",
     "flags": ""
   },
   {
@@ -941,7 +950,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 190,
-    "sha256": "c70c3af710a92122005cffb56a847b644cf14522f40c6b89d51512bc41245873",
+    "sha256": "7d0390a1b63eb7f69304160dce9d7b0250da1353f15e50d3a96f9504ae174a6e",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -950,7 +959,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 114,
-    "sha256": "cd7570744ee84dfc72c97f9348c57c1ecdbd976d42d21e64007133bc2399c82a",
+    "sha256": "d555ad60c73f95dba70a40bc408f8f3d7c65f8831079d699a78f1c8207710414",
     "flags": ""
   },
   {
@@ -959,7 +968,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 52,
-    "sha256": "31d73d8a95e47ba8240d034de7e9dce6edec8bb6a35ea6b2cfce2f0757b04d5f",
+    "sha256": "4034b4b53b69f81531fd5f360907028715b8c14e39c4f6e59c070ddbaad1c76f",
     "flags": ""
   },
   {
@@ -968,25 +977,25 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 159,
-    "sha256": "ebec593618d57459a488620fc4a928c0a6726e69df71a29427ed4ffeaff90278",
+    "sha256": "d6a88cdd886c30025f5607a528521d06e816b20978527d5ba8d34f64c8c2611e",
     "flags": "token_vazio_declared"
   },
   {
     "path": ".github/workflows/rll-cosmology-e0-preflight.yml",
-    "bytes": 2593,
+    "bytes": 2597,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 67,
-    "sha256": "40f89bc405f233c10f4598cdea7fcf2bce2dfcbf1cd0510a326e8c6bfa8d8261",
+    "sha256": "991215e9060036726aaf7012cce520ed0f03d9b6f76a0bc824ff02f1275ded1b",
     "flags": ""
   },
   {
     "path": ".github/workflows/rll-data-pipeline.yml",
-    "bytes": 4797,
+    "bytes": 6201,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 124,
-    "sha256": "90ecde6f5fee6833f48558d70c071504059bb792401e07721b5ecf033a01ad85",
+    "linhas": 156,
+    "sha256": "93d846e6d7f1d0bfd18b37d964a456865756d309cd168b6189afb7babfe6acef",
     "flags": ""
   },
   {
@@ -995,7 +1004,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 101,
-    "sha256": "f80ca06e0e8adec2cd4a0ce0333249d07ef8669dd169aab96125e63f4b5ed4b6",
+    "sha256": "3e72214b594a31b046cecc395daf2a1cf5fc5a7f64b0fe4df3474199c1abc742",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1004,7 +1013,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 34,
-    "sha256": "3bb658de31d12f3f344f99e34d71d20fc157cc9ed04f28b2fa8e2242929738f0",
+    "sha256": "e4a2fb9a55a3dfec11cb5ef66fc868c0fab8d9532b7eb01ab2d314c39a5a74e6",
     "flags": ""
   },
   {
@@ -1013,7 +1022,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 141,
-    "sha256": "509964b63731a8c9dd1ba70a52f999ed4ee2fa17f2ec35726bd5faadd822f6de",
+    "sha256": "11a61c45ec9757be511c2569eabe10a5ade19f36c149adce5ceb61d831765918",
     "flags": ""
   },
   {
@@ -1027,11 +1036,11 @@
   },
   {
     "path": ".github/workflows/rll-geometric-operator-omega-g.yml",
-    "bytes": 818,
+    "bytes": 822,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 27,
-    "sha256": "19eedc2d2e1c677fb3fdaecdc84c16cad7896166d15e582053770d0e281af0d2",
+    "sha256": "d4b91bc220b4f4a674c330c0ac0d4f2bb53bd3f356f59067e26ae27376a4fc4b",
     "flags": ""
   },
   {
@@ -1040,7 +1049,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 211,
-    "sha256": "290e445f94cbc40b79df690716ccb715799ad99438e7b7f3926b69f765ecf241",
+    "sha256": "ba380cfad7604c1b3a63dff7b0820863b1f4fc428e6f505e3980a845a9f5ce17",
     "flags": "token_vazio_declared"
   },
   {
@@ -1049,16 +1058,25 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 41,
-    "sha256": "078f6b53fb5fd5fe255574848c41bf68cce058c81b04457146e4b6e5c2673d62",
+    "sha256": "63301ab455e08558f9c8d021c9cf2dce1d3641ada0a13495fa7c8e8f1e34f7ab",
     "flags": ""
   },
   {
+    "path": ".github/workflows/rll-json-dedup-gate.yml",
+    "bytes": 2200,
+    "ext": ".yml",
+    "tipo": "github_workflow_yml",
+    "linhas": 55,
+    "sha256": "8bd84d20a8a3ff806af1780606f87cec40d58eeaa2fe2dd711a12af7ba30b154",
+    "flags": "mentions_synthetic"
+  },
+  {
     "path": ".github/workflows/rll-language-g123.yml",
-    "bytes": 2502,
+    "bytes": 2506,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 68,
-    "sha256": "a8a224f2cb4827dd51963fed390903e1a322987ffb18b2b412e67297882a51a4",
+    "sha256": "ed154dbb36087e05f8969846bd7efabf4ab56369e294982996a22411b93a0285",
     "flags": ""
   },
   {
@@ -1067,7 +1085,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 122,
-    "sha256": "9e020dea981e591d3e503f18183e7b6175970417af7174a07c3c669938ce5e5b",
+    "sha256": "7456ee88f694ba60ceee7f597fa3e6670ef2fde2c81a2192fde82b377153d299",
     "flags": "mentions_synthetic"
   },
   {
@@ -1076,16 +1094,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 165,
-    "sha256": "c26efcfe78438cfcf7193b48378981592d62b4fd422b69036f49c9cca9553857",
+    "sha256": "7273f9b7e83ebf01bbf6137c096876bcb2f25a759ad54803e4686b1751fdfe45",
     "flags": "token_vazio_declared"
   },
   {
     "path": ".github/workflows/rll-multilayer-circle-polygon-geometry-v1.yml",
-    "bytes": 2122,
+    "bytes": 2126,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 52,
-    "sha256": "fb6f97906d13f357d0e821fea3b9b88ce15ceefa3307aa36fd55a82da00e8cbd",
+    "sha256": "d8211097e61df6b6d25a54278c83d53ab8bfc7c3f023ad7645a6bd7375758549",
     "flags": ""
   },
   {
@@ -1103,7 +1121,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 40,
-    "sha256": "518203acf2e22c78fba676a0f21d6e5c7e124f9c2b665607f09fd8c7d070c7a9",
+    "sha256": "02cdbbcdddfdcc3a40bcf5fef48b1a4f5c9c8d6b6ecfda472f08279eb7cef7d5",
     "flags": ""
   },
   {
@@ -1112,16 +1130,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 73,
-    "sha256": "e653d190048209829ff05365116c2597da29ca8b3df4ebfd95f2396096899bc4",
+    "sha256": "a7ec7e80428139c31063c7b1031d19dd5e3a31ffce1e825b79446766e77122b3",
     "flags": "mentions_synthetic"
   },
   {
     "path": ".github/workflows/rll-omega-g-cosmology-tournament.yml",
-    "bytes": 2268,
+    "bytes": 2276,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 64,
-    "sha256": "8da6ab6c2f44f300ff06d374cbc447e36f9a1adf9733d295ba9eb71ee424a3f2",
+    "sha256": "7478915151af8e5aa044cb1e5d22d46942fab2f5aef4b765e2487afe50a5b259",
     "flags": ""
   },
   {
@@ -1130,7 +1148,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 100,
-    "sha256": "6d9485efbc45322e130c82f0070d7a6701c838092a8282bc762235c25fc9caa3",
+    "sha256": "a4972926b35af749fb8b90aef42dd74b48690da98273624b1761fba9ea50987f",
     "flags": ""
   },
   {
@@ -1139,7 +1157,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 223,
-    "sha256": "08912ccfc627d72953ecbdac29ff5c7fe502c0871e0add6745cf5bb877f8dad5",
+    "sha256": "c58b6fa6d8287416b2351cbdb38448df2f2321d2732568504d3576b28e59cb70",
     "flags": "token_vazio_declared"
   },
   {
@@ -1148,7 +1166,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 168,
-    "sha256": "077e6659b6b16da52ee9cf44b3c779e369c36ebddd305bfec8bef6254bfb214d",
+    "sha256": "85819b4fa90f10f8a494a913a3ea4cff022c39ed981560ad5a11287b15740f54",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1157,16 +1175,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 127,
-    "sha256": "ca68386dd66496bf96ccd035ad4a7aeefa1a95267d8c320038e0d2c9aef98925",
+    "sha256": "b78382d31b9e923433390831d8a19348f54124f01aec46090f8b13d04198999a",
     "flags": "token_vazio_declared"
   },
   {
     "path": ".github/workflows/rll-real-data-evidence-bridge.yml",
-    "bytes": 3381,
+    "bytes": 3385,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 91,
-    "sha256": "8fe5437d7487eb684ec5c9f80c189d966f4ce48d740f82d983782406700420c9",
+    "sha256": "769fe7166ae17b33833ff204d7200202f3fe8bc673f369585fb5ad227bc37199",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1175,7 +1193,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 421,
-    "sha256": "74a24248a28a993ddd91df53317824a0fb6b82520f7e29373d030837af175504",
+    "sha256": "9f44cedf093e9ad98f78375e9a915dfc4c15d5ce583a366efd04a57970493e8e",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1184,16 +1202,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 67,
-    "sha256": "88ca77317c4db1cda2daf016bbb5f10fd0ce5d4eb61d59e4596be6b23bb6f7d2",
+    "sha256": "a963becbf6ad9a6e3a83d394edfc665f7ec1c34630fc99c445e709fbd49b2c5c",
     "flags": ""
   },
   {
     "path": ".github/workflows/rll-retarded-spacetime-contract.yml",
-    "bytes": 966,
+    "bytes": 970,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 28,
-    "sha256": "b0c8827c23c60b766a9e6dd3560fe1379e293e2ad403883e99c669414025b928",
+    "sha256": "992c94e9dc14a140b32b03ecea64ea4af35f7105ff383405cf2812b9b67110f9",
     "flags": ""
   },
   {
@@ -1202,25 +1220,25 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 85,
-    "sha256": "611f3e5723144d6d53f18d5f7fddd7bcc5038a0a2feee1ec0c033a7351fc8de5",
+    "sha256": "8017c1ec36b506bf69a5d14622e78b7dd3db17c22ffdf3e05085b56e4adc8ed7",
     "flags": ""
   },
   {
     "path": ".github/workflows/rll-rmrcti-physical-comparison-v1.yml",
-    "bytes": 1906,
+    "bytes": 1910,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 51,
-    "sha256": "0bb71798bc563b3feca4451d74ff7f0e464ea8a437dc6fcb1dcabf5d62df5c54",
+    "sha256": "e1a53e9a9db5c6e680d4a332d20336e5589875bbda8612db2a7bf577253f6828",
     "flags": ""
   },
   {
     "path": ".github/workflows/rll-safe-expansion-gate.yml",
-    "bytes": 2880,
+    "bytes": 2884,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 71,
-    "sha256": "2735989aa610d88f29f64a1229a4946a007c4829bd0781821a84c0ff768dcd01",
+    "sha256": "e138c304b8b159231335c10b697e917d1b9dd69615b01924f8112b2445a46c21",
     "flags": ""
   },
   {
@@ -1229,7 +1247,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 201,
-    "sha256": "c729c2c4d336da4fb860a1ac978ab17f5de139528472002d6762c63bc54cceb4",
+    "sha256": "abf2c0f768ffce33eaa7d3dabbf7f806e79d1f97a96ea8b2d4b0c8cd5d820a6e",
     "flags": "token_vazio_declared"
   },
   {
@@ -1238,7 +1256,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 88,
-    "sha256": "9395cab73a9eca76810f670e2d5efbef5c3a4c649f00d23d34baaf32173d4f94",
+    "sha256": "2c2854b99f189c1b2012f6aac31a98b466372f60830f0bc168c988eeef784c5d",
     "flags": ""
   },
   {
@@ -1247,7 +1265,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 55,
-    "sha256": "39ce6ff7ce91de71e8d5a139808ff964181bce31623d7c4d3cda24ce9eae5037",
+    "sha256": "490deceb44e80916a17c2a435b07aff2f0c720e74a02dc0e2b223deb219e19ae",
     "flags": ""
   },
   {
@@ -1256,7 +1274,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 182,
-    "sha256": "27ff1b2ef2c92cd6b7e6c33c3b78eb30235fcc00fe60123728b5664bd6946676",
+    "sha256": "50497db17f40fa08499daae4007e2fc6afd9472fd590044fd0ec55119ce17400",
     "flags": "token_vazio_declared"
   },
   {
@@ -1265,7 +1283,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 145,
-    "sha256": "85a530684dbc24bbea871c26395951e05e7d4a1b21166fe84c30a79ed71f7eec",
+    "sha256": "8e96be68a04d9636734615d78d409cc367c4f6eb4a492045103bdadd78057b81",
     "flags": "token_vazio_declared"
   },
   {
@@ -1274,7 +1292,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 132,
-    "sha256": "598b7d89f5570c56ee4dbfd486760899b8af423b84784eee4b3b37e6dfb3874c",
+    "sha256": "e45208aa1139c966b6d35cfc42dfe7451e04842361079b90560125738d5fc34d",
     "flags": "token_vazio_declared"
   },
   {
@@ -1283,7 +1301,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 955,
-    "sha256": "015c601c3ec2d2245e209e47d16bd10662f7a2c989adcb608eca44c5969c23d9",
+    "sha256": "04312981e728ed77e548cd49038ee3fc8622788d05589cf711264214d3de796d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -1301,7 +1319,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 49,
-    "sha256": "e9d3a913667b4126984b6dba7b95414fb9eda41b7a9d53e45102ef002b2fadc4",
+    "sha256": "64fa846ada5a18f55d12bfc8d7d6c82b5d9be695f70884f3c0153180db17424f",
     "flags": "token_vazio_declared"
   },
   {
@@ -1310,7 +1328,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 51,
-    "sha256": "1a95b4b6cc0de14c90e913e51f3847a92cfc99b52575f91263571a2010d454df",
+    "sha256": "69d6576534355598e2d3c27171f659d3763b8347b3139fe98b1324536bf476b5",
     "flags": ""
   },
   {
@@ -1319,7 +1337,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 66,
-    "sha256": "8f8330781ec168ab6e588c1bf1f997b3f1b911d62c40f3b93277059e0170532a",
+    "sha256": "87449d294b9d1f0ed9d5d056ddf026b8f79a75d684917f728645e844eff5a085",
     "flags": "token_vazio_declared"
   },
   {
@@ -1328,7 +1346,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 63,
-    "sha256": "1f4d7e5f53f8c9a1666edfdf93d39a6af98aa9e8329da39db5792f8a5821bef9",
+    "sha256": "721081f7bd76165cbc96425c27fa1fead7e4afbc2b652f4038fe56b5328b69a2",
     "flags": "token_vazio_declared"
   },
   {
@@ -1337,7 +1355,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 99,
-    "sha256": "5ef239994ec470a4d2eb60dd6fe8374ed0b36c34230afdb3d6a6a4ef12a31889",
+    "sha256": "115f2f7376afe381de856fe7f40aed7fa06f44dde56b5804ca1245d19426488b",
     "flags": "token_vazio_declared"
   },
   {
@@ -1346,16 +1364,16 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 102,
-    "sha256": "91b7dec48619f5597df8b454ff201e958c519cf2fc82c5bbbb1c3451def892a2",
+    "sha256": "5c8890159aa94b1b04a575e4526ee36b81c11f7cca4b5ee802463296f2b0514b",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
     "path": ".github/workflows/strong-gravity-photonic-transport.yml",
-    "bytes": 1125,
+    "bytes": 1129,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 33,
-    "sha256": "790742c75ac1f413960e860d3f05c7be5606a89387456cc128c3f167f4f592bc",
+    "sha256": "9cb28dbd6310ac4dac5107ca824119dc620e2fa957fe97433db89f1ef46e579a",
     "flags": ""
   },
   {
@@ -1364,7 +1382,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 35,
-    "sha256": "45e5f9a596a867b90c101217fad520c1c2f01d75fa0df8fd02487714fe5ab303",
+    "sha256": "1085af7b27ac1662b78ef21cfea35e1e1054caf61568b944bc0b64e98fadedeb",
     "flags": ""
   },
   {
@@ -1373,7 +1391,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 295,
-    "sha256": "6458a58342a60b26db154db5d8cb70d9528e31d7cac8df279a05c1ebd16e0d96",
+    "sha256": "2c6b25ec53253e5a73f2d15d1bfd6bad2e79b8fcf0bd397207bb92cd1de6348e",
     "flags": "token_vazio_declared"
   },
   {
@@ -1382,7 +1400,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 149,
-    "sha256": "e632fd6216800f22cc2c01a44882b8d035b33e7a7fc6a27841b2b4d3d7075804",
+    "sha256": "c793d80586bd9da2b2f794232096bae8902d76c972863d24b4c09316305ea2e8",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1391,7 +1409,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 157,
-    "sha256": "cea11405fcd7e71db9e8c720311b3592b515c37beed24193df19594981a23a67",
+    "sha256": "c99ca6d4b281d4b3a8aa1f251c90200cb5901d7497ad2eea26ddb8a451855bbe",
     "flags": ""
   },
   {
@@ -1400,7 +1418,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 216,
-    "sha256": "33a18d54bc3ff7d0b086347b165a3dee29b4983c4c49c686561ffbc0cc56dd78",
+    "sha256": "eccbc800db2c61d470a81dc3c63c541768648a44f4aa157b2cdd29a0834e384f",
     "flags": "token_vazio_declared"
   },
   {
@@ -1409,7 +1427,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 63,
-    "sha256": "0f0c2c0ae54afb5d3e68bcefb43dff016b4b47ff98751186e69ce3a4eafd925d",
+    "sha256": "7c3d96f3fdf477d2960ee62e6d99860330a934db8d57445071818768c25c6b7c",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1418,7 +1436,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 200,
-    "sha256": "232c6ce45deea80092f0a32af6dc0f98e70a7e7514137b99717bf9b3156cbea0",
+    "sha256": "d19d9a0e60b5340b543161c64b4ad49f0a930bde8bc8a41fa8e8bcaff54a882a",
     "flags": "token_vazio_declared"
   },
   {
@@ -1427,7 +1445,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 65,
-    "sha256": "6597e9c1e9d2953ad25ae107b4ef7f42459d8820c89b080573a46a879a760cd0",
+    "sha256": "154961c9a7ade4d0d65b6c8bcf6820454804852998d07fef6b0e032e589b1d6d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -1436,7 +1454,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 49,
-    "sha256": "71b4165596b7e831feb03a559dbc83375308982dd4d02f5c55bbf04b65cc140a",
+    "sha256": "be7b0f66b8a909aa3ae380b76917b741e58fd6081546569d7d1b14375afcc8ea",
     "flags": ""
   },
   {
@@ -1445,7 +1463,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 139,
-    "sha256": "cfd67cb2efc11dfc0e41e48b31090cf803ff662d814859fc390318fc09ff4b54",
+    "sha256": "2302306b1aabc72a1fbf2ceacc4def1214101d20ab2026cd0296a9077996570d",
     "flags": ""
   },
   {
@@ -1454,7 +1472,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 69,
-    "sha256": "00231af501f059d275b2928cbf322a50e7a5936204ae9aaf54195d6c020914b3",
+    "sha256": "38cd06b70d765a441cb2f85678ef8ebe3a1abb5fec7bf4016c22898808f783cc",
     "flags": ""
   },
   {
@@ -1463,7 +1481,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 193,
-    "sha256": "09458864cd1c38615a788651545fcbcfed9927959ff385834954faae8004252e",
+    "sha256": "9eff5d268b692cf70489e8f8c01688e8d098055783c908b59a8215f071e5d819",
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
@@ -1472,7 +1490,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 92,
-    "sha256": "751487aea23e8dca38f7cb1d7f8fc50be5ea9286b8cdbb6313f67c8239202185",
+    "sha256": "e779c049bdcbccbbf2cd6c1b8bf7554481f970beee01f17452f748f00690b622",
     "flags": "token_vazio_declared"
   },
   {
@@ -1481,7 +1499,7 @@
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 112,
-    "sha256": "0cf8678cbc8bed69be43777a3ae29839c2c1a4abb1e6ebccd3f842676e64a600",
+    "sha256": "3f350d09cb4c9ceeff564797234eaccccbeb1ba4f3728e5ffed953acd4976f6c",
     "flags": "token_vazio_declared"
   },
   {
@@ -1491,6 +1509,24 @@
     "tipo": "other",
     "linhas": 0,
     "sha256": "6bb2e60d0811940df38a20b8a1134a647e595e34b63be031177ba0c021c077c5",
+    "flags": ""
+  },
+  {
+    "path": "001_PONTEIRO/RLL_OFFICIAL_SOURCE_INTAKE_CURRENT.md",
+    "bytes": 850,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 11,
+    "sha256": "5eb4bf7d6c80cb0d64d8a3b181b7253e71a0e3dc509e92300e6495df9048af6c",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "001_PONTEIRO/RLL_STATE_RECONCILIATION_V1_CURRENT.md",
+    "bytes": 434,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 9,
+    "sha256": "f172be19253ad739aa7d89bebae603e35573b3fcd6bceabca6d0bdfcdeb8663e",
     "flags": ""
   },
   {
@@ -5895,6 +5931,24 @@
     "flags": ""
   },
   {
+    "path": "core/lowlevel_runtime/c/rll_quantized_orbit_u32.c",
+    "bytes": 3618,
+    "ext": ".c",
+    "tipo": "source_code",
+    "linhas": 105,
+    "sha256": "a17a17b4fb2894b2234b23186c5c876bc02eebf8de233f102986ac29d650e4ac",
+    "flags": ""
+  },
+  {
+    "path": "core/lowlevel_runtime/c/rll_quantized_orbit_u32.h",
+    "bytes": 684,
+    "ext": ".h",
+    "tipo": "source_code",
+    "linhas": 25,
+    "sha256": "0ecfba3c9e7f3f26245e775c35b0029f6c6c3cf42426c341220b9e55523167d0",
+    "flags": ""
+  },
+  {
     "path": "core/lowlevel_runtime/generated/rll_canonical_project_sources.inc",
     "bytes": 11741,
     "ext": ".inc",
@@ -6549,6 +6603,15 @@
     "tipo": "data_or_result",
     "linhas": 324,
     "sha256": "80ba426abc9c89adae25f1f9ec3b2be01a7b967701c94408981aa4a03d4b37e0",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "data/contracts/rll_official_source_intake.v1.json",
+    "bytes": 1695,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 51,
+    "sha256": "bc18238e930bbe80c326801ce551272dcd39c1fa1ebf69c14a197b57531435e7",
     "flags": "token_vazio_declared"
   },
   {
@@ -7227,6 +7290,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "data/governance/RLL_CURRENT_STATE_AUTHORITY_GRAPH_20261115_V2.json",
+    "bytes": 7942,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 234,
+    "sha256": "18344b8636e4e3326b3b0ce8e02fa2940d5c1af3e891f31ff02e1b3665c7c8e1",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "data/governance/RLL_DIVERGED_REF_COHORT_20260808_V1.json",
     "bytes": 3188,
     "ext": ".json",
@@ -7821,6 +7893,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "data/governance/chatgpt_github_json_ui_observation_20261104.json",
+    "bytes": 2859,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 99,
+    "sha256": "4368dd521434d874f2ddc2b81c7a63e90a768036c1df1b6085b698627a996248",
+    "flags": ""
+  },
+  {
     "path": "data/governance/latin-evidence-bridge.v1.json",
     "bytes": 2956,
     "ext": ".json",
@@ -7873,6 +7954,15 @@
     "linhas": 40,
     "sha256": "06dbc8e9935104e735e684211cba228d846182b9e0055eb2ba59f0130b8587d2",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
+  },
+  {
+    "path": "data/governance/rll_state_reconciliation_20261115.v1.json",
+    "bytes": 1355,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 34,
+    "sha256": "f81e8280c2a82e0c6181815e92e511b1f9704c95210695df02d8be97c7d20bdc",
+    "flags": "token_vazio_declared"
   },
   {
     "path": "data/iml/daise_input.example.json",
@@ -14283,6 +14373,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/governance/CHATGPT_GITHUB_JSON_UI_OBSERVATION_20261104.md",
+    "bytes": 2841,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 29,
+    "sha256": "0e2d7ac23266726526570783d1c8c55c1b092658e164b41772f0a4c4d7406806",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/governance/CODEQL_COHERENT_PIN_HOTFIX_RECEIPT_20261015.md",
     "bytes": 2975,
     "ext": ".md",
@@ -14550,6 +14649,15 @@
     "tipo": "documentation_md",
     "linhas": 76,
     "sha256": "4ab290dc5e639793e82fa10f874d3636ae30a01377c94560a93a3fe4c669989c",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/governance/RLL_CURRENT_STATE_AUTHORITY_GRAPH_20261115_V2.md",
+    "bytes": 6475,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 52,
+    "sha256": "028be83d48a8093f5151712fcee67ce8b9d3041748bcac7028a41171df9c4054",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -15525,6 +15633,24 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/research/RLL_EXACT_QUANTIZATION_TOPOLOGY_GATE_20261024.md",
+    "bytes": 5373,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 74,
+    "sha256": "f7db7ed15f103eddad692c7e03a1b5ab83f4d6c5a7ef2464a681c9d81a77f92d",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/research/RLL_FIXED_WIDTH_EXACT_ORBIT_FREESTANDING_GATE_20261024_S2.md",
+    "bytes": 4831,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 37,
+    "sha256": "871f68a6dd69f4a048a246de38ff25b1516fa95cf9c24c89ac5c1bb4bcb9a96c",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/research/RLL_FULL_PERMUTATION_VOID_CENSUS_V1.md",
     "bytes": 10721,
     "ext": ".md",
@@ -15669,6 +15795,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/research/RLL_STATE_RECONCILIATION_AND_EVIDENCE_CLOSURE_20261115.md",
+    "bytes": 1822,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 32,
+    "sha256": "e9fa9e8a5d87a635d12603f7151770745dbb8f6282635ebc77a176388dd9c953",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "docs/research/RLL_STELLAR_LIGHT_LEDGER_OLBERS_BOUNDARY_20260815.md",
     "bytes": 5195,
     "ext": ".md",
@@ -15685,6 +15820,15 @@
     "linhas": 11,
     "sha256": "f6fc6287def58183315fdd9e1790ece04792fb9cf78142caaa12ab286feb0e3f",
     "flags": "mentions_synthetic,token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "docs/research/SIGMA_RAFAELIA_TRIANGULAR_TORUS_TYPED_VOID_ADAPTER_GATE_20261023.md",
+    "bytes": 4329,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 42,
+    "sha256": "c7732b54563f127db2ac6a1c9dbc32336d730add9fbeb707d01341742be6cda7",
+    "flags": "mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "docs/rll_audit_gap_report.py",
@@ -16668,6 +16812,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/science/RLL_JSON_CODEX_DEDUP_EVIDENCE_BOUNDARY_20261114_V1.md",
+    "bytes": 5408,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 48,
+    "sha256": "eb1db7cb7d6c2a5edc7abfc12a25c1bcc878f4eb52f4a616d870ef3d31d3b170",
+    "flags": "mentions_synthetic,token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/science/RLL_LATENT_THESES_AND_RECENT_DATA_CROSSWALK.md",
     "bytes": 8917,
     "ext": ".md",
@@ -16792,6 +16945,15 @@
     "linhas": 82,
     "sha256": "960bbba47abb80d46dc820a6372dc74baa684c715abba9e7615fc2a3400a43d5",
     "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "docs/science/RLL_OFFICIAL_SOURCE_INTAKE_V1.md",
+    "bytes": 4475,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 50,
+    "sha256": "9ba70c49b3207da34f965e1adaeed9d826ef6a484caf22e8b060960c56f2228c",
+    "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "docs/science/RLL_OMEGA_G_COSMOLOGY_TOURNAMENT_V1.md",
@@ -18411,6 +18573,15 @@
     "tipo": "data_or_result",
     "linhas": 76,
     "sha256": "48df9989b7452aee7b08fcc32af9c92d00e2c3556bc6937bfac555a0e0d00ae1",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "governance/receipts/RLL_LAB_MAIN_PROMOTION_PREFLIGHT_20261103.md",
+    "bytes": 1942,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 24,
+    "sha256": "c3b23445fcacfc42870b149ddab4c6a0df13beb9ddab2d75bb30f42773277026",
     "flags": "token_vazio_declared"
   },
   {
@@ -20098,11 +20269,11 @@
   },
   {
     "path": "receipts/2026-10-04_RLL_SOURCE_INTAKE_CUSTODY_RECONCILIATION.md",
-    "bytes": 2644,
+    "bytes": 5149,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 57,
-    "sha256": "352babe689a647dd63b15e7adfcb6831a29670f311825e48f69bdc6841587ce9",
+    "linhas": 109,
+    "sha256": "70b866e8ef9601e2f0388c9e7f8e1c9cdb3220514c677eb70688622ae7d9aece",
     "flags": "token_vazio_declared"
   },
   {
@@ -24840,6 +25011,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "scripts/audit_rll_json_dedup.py",
+    "bytes": 8974,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 198,
+    "sha256": "87f15cfd679340cbdde5a8ce6ca3c68d3bab5018df42579c9bf4887110e40545",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "scripts/bh_flux_calc.py",
     "bytes": 4684,
     "ext": ".py",
@@ -25585,6 +25765,15 @@
     "linhas": 265,
     "sha256": "4c5b0165359e00da84efc162a5e157385e613e2fe6ad3aa47f7e1c426c4f0331",
     "flags": "mentions_mock_or_placeholder,cosmology_validation_marker"
+  },
+  {
+    "path": "scripts/rll_pythagoras_geodesic_bridge_v1.py",
+    "bytes": 3721,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 89,
+    "sha256": "29f4acb583a8dfa36ef3420c27229a4008f35e79e9b51e287023d7c2c85cf85c",
+    "flags": "mentions_synthetic,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "scripts/rll_sn_identifiability_diagnostics.py",
@@ -26883,6 +27072,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "tests/test_audit_rll_json_dedup.py",
+    "bytes": 5593,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 124,
+    "sha256": "e3be681e4d3dfc96ee4152fdb90cdd894a32a991c5e316ac9993bb3672643fd0",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_b0_b1_artifact_flow_graph.py",
     "bytes": 2540,
     "ext": ".py",
@@ -26938,11 +27136,11 @@
   },
   {
     "path": "tests/test_branch_divergence_inventory.py",
-    "bytes": 3976,
+    "bytes": 6095,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 104,
-    "sha256": "5fcc727fda16226c9a5f18aa59a6ae1f00426ba81c8739d8225a90056a3ee26a",
+    "linhas": 155,
+    "sha256": "5b617452d845d9c4a7da9b08c40e453acff64abd72421c576a65f5361a97a75e",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -26956,11 +27154,11 @@
   },
   {
     "path": "tests/test_branch_maturity_gate_v2.py",
-    "bytes": 4184,
+    "bytes": 6645,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 93,
-    "sha256": "acbeed670a94e27138d005801da17faba6a0d0c7807dba5719033f68e7fc108e",
+    "linhas": 155,
+    "sha256": "ac4daefae195f78ae8e4eed3265fa9af15fd080374706b7dde70ab4f63e1075c",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -27123,6 +27321,15 @@
     "tipo": "source_code",
     "linhas": 226,
     "sha256": "2015f45057ea283c5d9fe4fb096683c1bee4ed5e85c57e866a4bb9ed04b6c8f5",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_dependabot_yaml_contract.py",
+    "bytes": 2422,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 69,
+    "sha256": "2cd4038876306ac7c372870bd0a3febed9069037999e64e12724e96cfe49dcb4",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -28413,6 +28620,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_rll_current_state_authority_graph_v2.py",
+    "bytes": 2893,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 78,
+    "sha256": "6df3a4347cdfc0994cbc82de4a10ce794ad947e38fdb4a040720bc0364205c97",
+    "flags": "mentions_synthetic,cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_rll_deltaobs_residual.py",
     "bytes": 4176,
     "ext": ".py",
@@ -28537,6 +28753,15 @@
     "linhas": 110,
     "sha256": "d888c4e6fb3bc3887988828464518b77793eb6a85965c72b1a92e5250f5237af",
     "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_exact_quantized_orbit.py",
+    "bytes": 3272,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 74,
+    "sha256": "1c94fa7063e0bbcc175c493fa3419a3e9a4f631d234baa4c05a8e405464d2f4e",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_execution_queue.py",
@@ -28845,6 +29070,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "tests/test_rll_official_data_intake_v1.py",
+    "bytes": 4659,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 79,
+    "sha256": "12a8d2e1fd59b076e886a5c2e08dcddd9ba5f25348a4ed6e602c8ff0142ca977",
+    "flags": "mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_rll_omega_residual_audit.py",
     "bytes": 2063,
     "ext": ".py",
@@ -28989,6 +29223,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "tests/test_rll_pythagoras_geodesic_bridge_v1.py",
+    "bytes": 2587,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 49,
+    "sha256": "8cc885949603d96103e0aff3e35b07aa81ffaeadb2d0b0079c0d19b38dae8c8e",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_rll_qcd_s_sector_bound.py",
     "bytes": 1971,
     "ext": ".py",
@@ -28996,6 +29239,15 @@
     "linhas": 61,
     "sha256": "2d6d31f4a1d56baa3c8dbeb0a0f472ee270b4f9b9a280ffa75c05bd552a90ab5",
     "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_quantized_orbit_u32_freestanding.py",
+    "bytes": 3955,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 79,
+    "sha256": "4d9b561bf0b890784dcc9dff70fa2233083658f50e6fb2544ac0ca057f7d306c",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_quantum_vacuum_birefringence_crosswalk.py",
@@ -29166,6 +29418,15 @@
     "tipo": "source_code",
     "linhas": 96,
     "sha256": "9d8f3bc8d4c343093145b66160188e681ef7bc9f2dce4effc0930b289804647a",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_state_reconciliation_gate_v1.py",
+    "bytes": 2350,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 55,
+    "sha256": "eb706a5024f5aa46323dbf545bc3093e42e91d0f360c1c65d200a43a69f05ec1",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -30268,11 +30529,11 @@
   },
   {
     "path": "tools/branch_divergence_inventory.py",
-    "bytes": 7940,
+    "bytes": 9091,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 197,
-    "sha256": "a34b6c5b70a9ec417aaa52fab7c9aa7e690a2e68eedec35b9ec1168eb25ac4e1",
+    "linhas": 224,
+    "sha256": "c05d7a8479511e5a52085c7473bd6f885d6411cb3c73c9ec23bdbaab2720a8f2",
     "flags": "token_vazio_declared"
   },
   {
@@ -30286,11 +30547,11 @@
   },
   {
     "path": "tools/branch_maturity_gate_v2.py",
-    "bytes": 5365,
+    "bytes": 6552,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 117,
-    "sha256": "7d403a9ade346a49b40a75b2b97ebdbdc0783314dc00d11b68cbc79073373d9b",
+    "linhas": 138,
+    "sha256": "44f3683deb6549a39726e41ea4d4953ba1b65043d51687e370a2114fc4c9cb7c",
     "flags": "token_vazio_declared"
   },
   {
@@ -30409,6 +30670,15 @@
     "linhas": 60,
     "sha256": "77f47ac1a073f0666c6e5c18c7211bd53596bb37adc8caa55e3eb19e47475804",
     "flags": ""
+  },
+  {
+    "path": "tools/ci/rll_state_reconciliation_gate_v1.py",
+    "bytes": 2751,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 68,
+    "sha256": "a4d3516b58aea72d190d0cc3ec7a5e68ba0b8bfe28433a58d548fb21c5d47811",
+    "flags": "token_vazio_declared"
   },
   {
     "path": "tools/ci_scientific_skills.py",
@@ -30834,6 +31104,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "tools/rll_exact_quantized_orbit.py",
+    "bytes": 3121,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 83,
+    "sha256": "98c609c8530b700722cf88973a18e7115eb9fe2e91b251530798bba0f8288ee1",
+    "flags": ""
+  },
+  {
     "path": "tools/rll_execution_queue_effective.py",
     "bytes": 11333,
     "ext": ".py",
@@ -30966,6 +31245,15 @@
     "tipo": "source_code",
     "linhas": 327,
     "sha256": "db2fc968a34b05adae23d6002a1a83d5083d74d999ee6bfc5e489986127d954a",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "tools/rll_official_data_intake_v1.py",
+    "bytes": 8573,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 178,
+    "sha256": "29c8593e12c110f28e03a026af838956f6251a54da643bdeedad7a2809330b3c",
     "flags": "token_vazio_declared"
   },
   {
@@ -31669,6 +31957,15 @@
     "linhas": 240,
     "sha256": "ad8c0a8312a3b5d568c3fc1ddb07160746d68be90dab6db2b4036b2a6be41630",
     "flags": "token_vazio_declared"
+  },
+  {
+    "path": "tools/validate_rll_current_state_authority_graph_v2.py",
+    "bytes": 5584,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 134,
+    "sha256": "75aa7f3214968e2fa1ffc6aaef4e470415ac750a8ba35c1d5bfe04d83edcafe0",
+    "flags": ""
   },
   {
     "path": "tools/validate_rll_evidence_evolution_matrix.py",
