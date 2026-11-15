@@ -89,3 +89,20 @@ def test_plot_generator_preserves_png_legacy_and_rx_svg_stdlib() -> None:
     assert "import pandas as pd" in legacy
     assert "import matplotlib.pyplot as plt" in legacy
     assert "Hz_curve.svg" in canonical and "Hz_curve.png" in legacy
+
+
+def test_rx_http_data_stdlib_surfaces_preserve_lab_legacy_variants() -> None:
+    for name in (
+        "import_data.py",
+        "fetch_real_sources.py",
+        "fetch_public_astronomy_catalog_samples.py",
+        "calc_data.py",
+    ):
+        modern=(ROOT/"scripts"/name)
+        legacy=(ROOT/"scripts"/("legacy_"+name))
+        assert modern.is_file() and legacy.is_file()
+        assert modern.read_bytes()!=legacy.read_bytes(), name
+    assert "import pandas" not in (ROOT/"scripts/import_data.py").read_text(encoding="utf-8")
+    assert "import requests" not in (ROOT/"scripts/fetch_real_sources.py").read_text(encoding="utf-8")
+    assert "import requests" not in (ROOT/"scripts/fetch_public_astronomy_catalog_samples.py").read_text(encoding="utf-8")
+    assert "import numpy" not in (ROOT/"scripts/calc_data.py").read_text(encoding="utf-8")
