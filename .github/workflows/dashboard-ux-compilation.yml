@@ -58,7 +58,7 @@ jobs:
 
       - name: ✅ TypeScript validation
         working-directory: apps/dashboard
-        run: npx tsc --noEmit 2>&1 || echo "⚠️ TypeScript issues found"
+        run: npm run type-check
 
       - name: 🔍 ESLint validation
         working-directory: apps/dashboard
@@ -119,7 +119,7 @@ jobs:
             apps/dashboard/dashboard-ux-*.tar.gz
             apps/dashboard/dashboard-ux-*.zip
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: error
 
       - name: ✅ Validate compilation success
         working-directory: apps/dashboard
@@ -160,7 +160,7 @@ jobs:
 
       - name: 🧪 Run tests
         working-directory: apps/dashboard
-        run: npm run test 2>/dev/null || echo "⚠️ Tests not fully configured"
+        run: npm run test -- --run
 
       - name: 📊 Test coverage
         working-directory: apps/dashboard
@@ -190,11 +190,20 @@ jobs:
         working-directory: apps/dashboard
         run: npm ci --legacy-peer-deps
 
+      - name: Require successful build and tests
+        env:
+          COMPILE_RESULT: ${{ needs.compile-ux.result }}
+          TEST_RESULT: ${{ needs.test-ux.result }}
+        run: |
+          test "$COMPILE_RESULT" = success
+          test "$TEST_RESULT" = success
+
       - name: "Gate 1: TypeScript Strict Mode"
         working-directory: apps/dashboard
         run: |
           echo "Checking TypeScript strict mode..."
-          npx tsc --noEmit && echo "✓ Gate 1 PASSED" || echo "✗ Gate 1 FAILED"
+          npm run type-check
+          echo "✓ Gate 1 PASSED"
 
       - name: "Gate 2: Zero Tokens Vazios"
         run: |
@@ -232,11 +241,8 @@ jobs:
       - name: "Gate 5: Security Audit"
         working-directory: apps/dashboard
         run: |
-          if npm audit --audit-level=critical 2>/dev/null; then
-            echo "✓ Gate 5 PASSED - No critical vulnerabilities"
-          else
-            echo "⚠ Gate 5: Vulnerabilities found (non-critical)"
-          fi
+          npm audit --audit-level=critical
+          echo "✓ Gate 5 PASSED - No critical vulnerabilities"
 
   summary:
     name: 📊 Pipeline Summary
@@ -251,6 +257,16 @@ jobs:
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v7
+
+      - name: Enforce prerequisite results
+        env:
+          COMPILE_RESULT: ${{ needs.compile-ux.result }}
+          TEST_RESULT: ${{ needs.test-ux.result }}
+          QUALITY_RESULT: ${{ needs.quality-gates.result }}
+        run: |
+          test "$COMPILE_RESULT" = success
+          test "$TEST_RESULT" = success
+          test "$QUALITY_RESULT" = success
 
       - name: 🎉 Success Summary
         if: success()
