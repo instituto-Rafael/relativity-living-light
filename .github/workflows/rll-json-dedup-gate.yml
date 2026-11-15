@@ -1,0 +1,55 @@
+name: RLL JSON Dedup Evidence Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/audit_rll_json_dedup.py'
+      - 'tests/test_audit_rll_json_dedup.py'
+      - '.github/workflows/rll-json-dedup-gate.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-json-dedup-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scoped-json-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact candidate revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic adversarial gates
+        run: python -m unittest discover -s tests -p test_audit_rll_json_dedup.py -v
+      - name: Audit committed Git JSON and JSONL without exporting content
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/audit_rll_json_dedup.py --repo . --rev HEAD --max-file-bytes 16777216 --output "$RUNNER_TEMP/rll-json-dedup.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          receipt = json.loads((Path(os.environ["RUNNER_TEMP"]) / "rll-json-dedup.json").read_text())
+          counts = receipt["counts"]
+          assert counts["json_like_paths"] > 0
+          assert receipt["boundary"]["claim_allowed"] is False
+          assert receipt["boundary"]["content_exported"] is False
+          assert receipt["boundary"]["scientific_validation"] == "NOT_RUN"
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
+              f.write("## RLL JSON metadata-only audit\n\n")
+              f.write(f"Commit: {receipt['source']['repository_commit']}\n\n")
+              for key, value in counts.items():
+                  f.write(f"- {key}: {value}\n")
+              f.write("\nclaim_allowed=false; JSON equivalence is not scientific validation.\n")
+          PY
