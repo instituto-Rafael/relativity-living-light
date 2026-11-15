@@ -5,19 +5,19 @@
 
 ## 1. Major scientific finding: calibration and evidence metrics are not interchangeable
 
-[PRIMARY, alphaXiv arXiv:2511.07517, page 1] The DES-Dovekie reanalysis reports \`w0 = -0.803 ± 0.054\`, \`wa = -0.72 ± 0.21\` for its named DES-Dovekie+DESI DR2+CMB combination, a reported frequentist 3.2σ departure from a cosmological constant, and Bayesian odds ~5:1, **weak** in its own interpretation. This is a posterior in flat CPL; it is neither a directly observed \`wa\` nor a tested RLL forecast.
+[PRIMARY, alphaXiv arXiv:2511.07517, page 1] The DES-Dovekie reanalysis reports `w0 = -0.803 ± 0.054`, `wa = -0.72 ± 0.21` for its named DES-Dovekie+DESI DR2+CMB combination, a reported frequentist 3.2σ departure from a cosmological constant, and Bayesian odds ~5:1, **weak** in its own interpretation. This is a posterior in flat CPL; it is neither a directly observed `wa` nor a tested RLL forecast.
 
 [PRIMARY, arXiv:2503.14738, page 3] DESI DR2 results describe BAO distances and a preference for flat CPL of 3.1σ on DESI DR2+CMB under a stated frequentist comparison, with 2.8–4.2σ across different supernova samples. This cannot be recast as a Bayesian posterior odds without a separate evidence calculation.
 
-[INDEPENDENT METHODS, arXiv:2603.05472v1, pages 1 and 10] A Bayesian nested-sampling reanalysis using PolyChord compares ΛCDM and extensions. For **DESI DR2 + CamSpec (lensing) + DES-Dovekie**, table 3 gives \`ln B(CPL/ΛCDM) = -0.01 ± 0.27\`; for the corresponding **DES-SN5YR older calibration** it gives \`+3.32 ± 0.27\`. For **DESI DR2 + CamSpec (lensing) alone** it gives \`-0.57 ± 0.26\`. These likelihood names must be preserved: other Planck/CMB configurations have different Bayes factors.
+[INDEPENDENT METHODS, arXiv:2603.05472v1, pages 1 and 10] A Bayesian nested-sampling reanalysis using PolyChord compares ΛCDM and extensions. For **DESI DR2 + CamSpec (lensing) + DES-Dovekie**, table 3 gives `ln B(CPL/ΛCDM) = -0.01 ± 0.27`; for the corresponding **DES-SN5YR older calibration** it gives `+3.32 ± 0.27`. For **DESI DR2 + CamSpec (lensing) alone** it gives `-0.57 ± 0.26`. These likelihood names must be preserved: other Planck/CMB configurations have different Bayes factors.
 
-**Provider discrepancy:** the SciSpace fetched abstract excerpt for arXiv:2603.05472 quoted \`ln B=-0.30±0.19\` for DES-Dovekie, while the retrieved arXiv v1 abstract and table 3 support \`-0.01±0.27\` for the specific CamSpec(lensing) triple. The primary-source page text takes precedence until version/likelihood equivalence is independently reconciled. Do not silently copy or average those figures.
+**Provider discrepancy:** the SciSpace fetched abstract excerpt for arXiv:2603.05472 quoted `ln B=-0.30±0.19` for DES-Dovekie, while the retrieved arXiv v1 abstract and table 3 support `-0.01±0.27` for the specific CamSpec(lensing) triple. The primary-source page text takes precedence until version/likelihood equivalence is independently reconciled. Do not silently copy or average those figures.
 
-[INDEPENDENT, peer-reviewed 2026; doi:10.1093/mnras/stag1607] Lozano Torres obtains approximately \`w0=-0.740±0.082,wa=-0.893±0.285\` in a declared joint DESI+DES BAO+SNe+Planck+chronometer analysis, with \`Δχ²≈-12\` but inconclusive \`ln B≈-0.5\` between CPL and ΛCDM. This is not the same likelihood as the DES collaboration combination.
+[INDEPENDENT, peer-reviewed 2026; doi:10.1093/mnras/stag1607] Lozano Torres obtains approximately `w0=-0.740±0.082,wa=-0.893±0.285` in a declared joint DESI+DES BAO+SNe+Planck+chronometer analysis, with `Δχ²≈-12` but inconclusive `ln B≈-0.5` between CPL and ΛCDM. This is not the same likelihood as the DES collaboration combination.
 
 [SECONDARY, arXiv/2026 publication indexed at SciSpace] Kandel et al., doi:10.1140/epjc/s10052-026-16010-6, report weakened dynamical dark-energy support with corrected DES-Dovekie vs DES-SN5YR. The Ekinci 2026 robustness item indexed by SciSpace explicitly describes itself as a *preprint, not peer reviewed*, despite provider metadata describing “Journal Article”; its status must be qualified.
 
-**Conclusion at literature gate:** varying \`w0,wa\` across collaborators and data releases is important; "DES proves RLL" or "RLL's parameters were accurately predicted" is not evidenced. Models must be compared with matched likelihood, covariances, nuisance profiling and priors.
+**Conclusion at literature gate:** varying `w0,wa` across collaborators and data releases is important; "DES proves RLL" or "RLL's parameters were accurately predicted" is not evidenced. Models must be compared with matched likelihood, covariances, nuisance profiling and priors.
 
 ## 2. Mathematical falsification: two possible physical closures must not be conflated
 
@@ -34,7 +34,7 @@ The documented additional density is \(\rho_s=\Omega_{s0}\rho_{c0}g\), with orig
  \left(\frac{d\rho_s}{d\ln a}+3(\rho_s+p_{s,\mathrm{doc}})\right)
 =F(1-a^{-3}).
 \]
-This is nonzero in the nontrivial transition for \(a\neq1\); \`SEPARATELY_CONSERVED_DOCUMENTED_PRESSURE=FAIL\`. It was already recognized in [the existing RLL mathematical audit](../science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md). Physical closure via interactions must balance the energy flux elsewhere.
+This is nonzero in the nontrivial transition for \(a\neq1\); `SEPARATELY_CONSERVED_DOCUMENTED_PRESSURE=FAIL`. It was already recognized in [the existing RLL mathematical audit](../science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md). Physical closure via interactions must balance the energy flux elsewhere.
 
 [DERIVED, alternative A — not an implemented replacement] If \(\rho_s(a)\) is kept but is instead assumed **separately conserved**, define
 \[
@@ -81,7 +81,7 @@ These are **model algebra only**, not numerical integration of DESI, Pantheon or
 | External expert referee report | N5, NOT_RECEIVED | Reviewer identity, decision and review receipt |
 | Publishability or scientific superiority | NOT_ESTABLISHED | Independent replication, same likelihood, predefined thresholds |
 
-**Minimal next experiment:** preserve RLL original model, create a separately named \`RLL_CONSERVED_A_V1\` *proposal* with its rederived pressure and perturbations, add a symbolic/finite-difference continuity test, then independently fit \(\Lambda\)CDM, CPL, original RLL and closure A to the identical official likelihood using fixed data masks/covariance/priors. Do not merge or promote experimental claims without the existing project gates.
+**Minimal next experiment:** preserve RLL original model, create a separately named `RLL_CONSERVED_A_V1` *proposal* with its rederived pressure and perturbations, add a symbolic/finite-difference continuity test, then independently fit \(\Lambda\)CDM, CPL, original RLL and closure A to the identical official likelihood using fixed data masks/covariance/priors. Do not merge or promote experimental claims without the existing project gates.
 
 ## 4. Exact bibliography / provenance
 
@@ -94,4 +94,4 @@ These are **model algebra only**, not numerical integration of DESI, Pantheon or
 
 **Provider notes:** SciSpace returned paper abstracts, metadata and methodological comparisons; alphaXiv returned primary PDF page text. The associated papers were saved to an existing **private** RLL library folder; bibliography is not endorsement or publication.
 
-**R3:** \(F_{\rm ok}\) = source-exact literature cross-check, independent bounded algebra check and both closures distinguished; \(F_{\rm gap}\) = proper covariant theory, observational joint fit, true external referee, claims; \(F_{\rm next}\) = controlled closure A variant and complete reproducible likelihood. \`claim_allowed=false\`.
+**R3:** \(F_{\rm ok}\) = source-exact literature cross-check, independent bounded algebra check and both closures distinguished; \(F_{\rm gap}\) = proper covariant theory, observational joint fit, true external referee, claims; \(F_{\rm next}\) = controlled closure A variant and complete reproducible likelihood. `claim_allowed=false`.
