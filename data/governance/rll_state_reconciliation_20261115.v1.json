@@ -1,0 +1,34 @@
+{
+  "schema": "rll.state_reconciliation.v1",
+  "observed_at": "2026-11-15T01:35:00Z",
+  "producer_repository": "instituto-Rafael/relativity-living-light",
+  "producer_main_at_observation": "11470e9678c94e2f0bc53030998dc8fb27d5cd4c",
+  "historical_state_superseded": true,
+  "pull_requests": [
+    {
+      "number": 1172,
+      "head_sha": "dd7e749cf18c93ccd723bb50adf9655ef0d8bbbf",
+      "merge_commit_sha": "dedb9888e7219f8edb676d3d962b0f71b3f6b44f4",
+      "state": "MERGED",
+      "source_ref": "https://api.github.com/repos/instituto-Rafael/relativity-living-light/pulls/1172"
+    },
+    {
+      "number": 1173,
+      "head_sha": "01156d60ca61e777f3f7c454905a0c2f44dcf076",
+      "merge_commit_sha": "42e700fe20b950884af9dfc06cea639a0b988dac",
+      "state": "MERGED",
+      "source_ref": "https://api.github.com/repos/instituto-Rafael/relativity-living-light/pulls/1173"
+    }
+  ],
+  "scientific_gates": {
+    "same_likelihood_reconciliation": "TOKEN_VAZIO",
+    "official_covariance_validation": "TOKEN_VAZIO",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "full_cmb_tt_te_ee_lensing": "TOKEN_VAZIO",
+    "nonlinear_pk": "TOKEN_VAZIO",
+    "physical_model_validation": "NOT_RUN"
+  },
+  "claim_allowed": false,
+  "scientific_confirmation": false,
+  "rollback": "Revert only this additive reconciliation package; preserve historical records."
+}
