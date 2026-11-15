@@ -496,11 +496,11 @@
   },
   {
     "path": ".github/workflows/android-build.yml",
-    "bytes": 5014,
+    "bytes": 7450,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 135,
-    "sha256": "ed46f11c5b9532afd4ac8c3710cb122a519b0c28bfa355fc68dded9bdebb5d8d",
+    "linhas": 191,
+    "sha256": "7ff2c2cab993067865548b39a68d03c6946807e1d69ec8356881f01ac642d4fd",
     "flags": ""
   },
   {
@@ -12574,11 +12574,11 @@
   },
   {
     "path": "docs/android-build.md",
-    "bytes": 3799,
+    "bytes": 4998,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 83,
-    "sha256": "51a5d38d0b2a695e6eab694aaa466292e5fd0478c707dd5ccbea54ebeae567a1",
+    "linhas": 88,
+    "sha256": "a270c3943a122af4cbcfbd86bafba3c1938b6163b3714374c0086c0de45558d0",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -18649,11 +18649,11 @@
   },
   {
     "path": "gradlew",
-    "bytes": 8733,
+    "bytes": 8752,
     "ext": "NO_EXT",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "b187b4c52e749f5760afdd6fadc31b2a98ad35fb249bf0dff03b72650f320409",
+    "sha256": "734b3879d3501dce471cf0522d3bcbafe76873d9fc5129345b67fb43bd15e933",
     "flags": ""
   },
   {
@@ -27774,6 +27774,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_gradle_wrapper_launch_contract.py",
+    "bytes": 1970,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 48,
+    "sha256": "4ec58811dcef0f32c7e477548bf59742aed247dba0184036b2741883e20d3f91",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_h0_rd_ablation_v1.py",
     "bytes": 2139,
     "ext": ".py",
@@ -28321,6 +28330,15 @@
     "linhas": 147,
     "sha256": "4c739f26bbe0b2d3587659671feebca1368b2c589290b8f801e76bfe2375f30d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_android_ci_merge_no_regression.py",
+    "bytes": 3171,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 75,
+    "sha256": "8adbe8dc5549bad4b302f5540c60b3d3f1562199a82c16c34f0b2ee627e0b6cb",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_android_diagnostic_ui.py",

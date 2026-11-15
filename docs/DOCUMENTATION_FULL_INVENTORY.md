@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3655 |
-| `cataloged_files` | 3644 |
+| `tracked_files_total` | 3657 |
+| `cataloged_files` | 3646 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 56416923 |
-| `total_text_lines` | 542335 |
+| `total_bytes` | 56425718 |
+| `total_text_lines` | 542519 |
 | `markdown_files` | 1214 |
 | `yml_yaml_files` | 251 |
 | `github_workflow_yml_files` | 120 |
 | `data_or_result_files` | 992 |
 
-**Total de arquivos catalogados:** 3644
+**Total de arquivos catalogados:** 3646
 
 ## Inventário completo
 
@@ -78,7 +78,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/act-dr6-posterior-preflight-v2.yml` | 5056 | `.yml` | `github_workflow_yml` | 106 | `201910a439c38e184f1fc7eead0149fd98ce1baad0abbb34523c0e813b9e788b` | `token_vazio_declared` |
 | `.github/workflows/act-dr6-reference-chain-custody.yml` | 4791 | `.yml` | `github_workflow_yml` | 106 | `6a5010932ed82fb6f7295177c83615fdfa8be4458b33a406dca7de2fa067af53` | `token_vazio_declared` |
 | `.github/workflows/all-ref-topology-census.yml` | 7114 | `.yml` | `github_workflow_yml` | 154 | `44343a109a4e1278bd8a9e4f562b850ed782f352e9d153e257362e1922fbe7df` | `` |
-| `.github/workflows/android-build.yml` | 5014 | `.yml` | `github_workflow_yml` | 135 | `ed46f11c5b9532afd4ac8c3710cb122a519b0c28bfa355fc68dded9bdebb5d8d` | `` |
+| `.github/workflows/android-build.yml` | 7450 | `.yml` | `github_workflow_yml` | 191 | `7ff2c2cab993067865548b39a68d03c6946807e1d69ec8356881f01ac642d4fd` | `` |
 | `.github/workflows/bayes_analysis.yml` | 394 | `.yml` | `github_workflow_yml` | 18 | `46d56752d2dbe030389906ce1c1a4d8be4c4b092e87546c98b2edf63b5b508f4` | `` |
 | `.github/workflows/branch-maturity-v2.yml` | 1485 | `.yml` | `github_workflow_yml` | 46 | `387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b` | `` |
 | `.github/workflows/calc-data.yml` | 5302 | `.yml` | `github_workflow_yml` | 130 | `27ad458a8e75dfe0787c195014d5e7250c877418e07b121a9b7ed17b6c68b409` | `mentions_synthetic,mentions_mock_or_placeholder` |
@@ -1420,7 +1420,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `docs/VALIDATION_DATA_MATRIX_RLL_MCRP.md` | 4559 | `.md` | `documentation_md` | 180 | `ee13c68bf23e3ea8d65851471a3839d455d3b08d00cd0ebaef0a1de0289b0605` | `mentions_synthetic,cosmology_validation_marker` |
 | `docs/VELOCIDADE_SOM.md` | 4057 | `.md` | `documentation_md` | 127 | `32e167faa456c1eaebc1e6e365c078735688dbc82202a3d320ed264c2dbe8376` | `cosmology_validation_marker` |
 | `docs/ZIP_CONTENT_INDEX.md` | 8633 | `.md` | `documentation_md` | 177 | `6b8e25c1bc312fa0eb979e6ac8dd4737b0f1dbb511515eafb8c02e996aad3307` | `mentions_synthetic,mentions_mock_or_placeholder,cosmology_validation_marker` |
-| `docs/android-build.md` | 3799 | `.md` | `documentation_md` | 83 | `51a5d38d0b2a695e6eab694aaa466292e5fd0478c707dd5ccbea54ebeae567a1` | `cosmology_validation_marker` |
+| `docs/android-build.md` | 4998 | `.md` | `documentation_md` | 88 | `a270c3943a122af4cbcfbd86bafba3c1938b6163b3714374c0086c0de45558d0` | `cosmology_validation_marker` |
 | `docs/apendices/01_RECONSTRUCAO_POTENCIAL_RLL.md` | 1509 | `.md` | `documentation_md` | 35 | `58ad3ddc8aca75d74bde05405a88c31a993b6b3efbc0e9f94ece80f365894da6` | `cosmology_validation_marker` |
 | `docs/apendices/02_ESTABILIDADE_PERTURBACOES_RLL.md` | 1070 | `.md` | `documentation_md` | 27 | `a84773dec23ac44aba3ff22337ea90ec6bbf1c669c311185ef917736a375c2ce` | `cosmology_validation_marker` |
 | `docs/apendices/03_RESULTADOS_MCMC_RLL.md` | 2588 | `.md` | `documentation_md` | 51 | `7ad9ee76ed378db6d6b827acdb1c53920fd127c1a9240fcdb49a84667184bab8` | `cosmology_validation_marker` |
@@ -2095,7 +2095,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `gradle.properties` | 171 | `.properties` | `other` | 0 | `9708138976d7c40d09854f26fbe5aa9b1af186cd42b66fe15854b3f2912ab644` | `` |
 | `gradle/wrapper/gradle-wrapper.jar` | 43583 | `.jar` | `other` | 0 | `2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046` | `` |
 | `gradle/wrapper/gradle-wrapper.properties` | 340 | `.properties` | `other` | 0 | `1de17d500d4671816e3ee230e897e8722157da899c534850aa8ab5cce9577da0` | `` |
-| `gradlew` | 8733 | `NO_EXT` | `other` | 0 | `b187b4c52e749f5760afdd6fadc31b2a98ad35fb249bf0dff03b72650f320409` | `` |
+| `gradlew` | 8752 | `NO_EXT` | `other` | 0 | `734b3879d3501dce471cf0522d3bcbafe76873d9fc5129345b67fb43bd15e933` | `` |
 | `gradlew.bat` | 2937 | `.bat` | `other` | 0 | `1d297e00bd21de3ace22b4d7f2de1f9dfa858883d66bbf7c1ccbecccec8f4f3b` | `` |
 | `internal/governance/capabilities.json` | 589 | `.json` | `data_or_result` | 21 | `779ff3b009bd4b9bbc066ca723255933996dcc078d49422fc0bfac4fa3a0b92c` | `` |
 | `internal/governance/policy.json` | 454 | `.json` | `data_or_result` | 19 | `9f79f82998905e16d4a6ffbab33d55de440078970efb58b8f7aade6ba299f79e` | `` |
@@ -3109,6 +3109,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tests/test_github_actions_capability_gate.py` | 7195 | `.py` | `source_code` | 186 | `f247a7ec45efe6b28212cc246599c1038f82c17389cebf143cab1e978b62b286` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_github_actions_runtime_ingest.py` | 3447 | `.py` | `source_code` | 97 | `c6d1c37f3ef3b21e1fab5e643ea14417a0d24cf9d1e679ccaf8c9b0b1463764b` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_github_external_settings_readonly_probe_v1.py` | 3182 | `.py` | `source_code` | 62 | `2242cc15d5a31ce427125bc8d0265bcac9450ace987aec4b6fcc5421a117b0fb` | `token_vazio_declared,cosmology_validation_marker` |
+| `tests/test_gradle_wrapper_launch_contract.py` | 1970 | `.py` | `source_code` | 48 | `4ec58811dcef0f32c7e477548bf59742aed247dba0184036b2741883e20d3f91` | `cosmology_validation_marker` |
 | `tests/test_h0_rd_ablation_v1.py` | 2139 | `.py` | `source_code` | 55 | `9c06c49d4c2ebf20244197390a8d561da45546f8f0aa414fd2b390abfdf73cb4` | `cosmology_validation_marker` |
 | `tests/test_import_raw_json_dataset_array.py` | 763 | `.py` | `source_code` | 18 | `a643f44052d15a4783ee7be0f0876e494ae730b13ff4366687936df485395814` | `cosmology_validation_marker` |
 | `tests/test_import_raw_json_dataset_basic.py` | 1139 | `.py` | `source_code` | 27 | `a9c44efc102a006965d17baa7867695e9b5b25bc9330090c7e31436d6d1e305e` | `cosmology_validation_marker` |
@@ -3170,6 +3171,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tests/test_rll_agent_authority.py` | 11665 | `.py` | `source_code` | 292 | `8093e272940aa69818346a3d4760fbb31bf2c08d5615a1047904e1d7e8f764c5` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_agent_seven_guards.py` | 7086 | `.py` | `source_code` | 131 | `e36ae345a232e5f071b5c21c4de7ac600cbc90fb73e1e458774694ec29150291` | `mentions_mock_or_placeholder,cosmology_validation_marker` |
 | `tests/test_rll_android_adb_witness.py` | 5844 | `.py` | `source_code` | 147 | `4c739f26bbe0b2d3587659671feebca1368b2c589290b8f801e76bfe2375f30d` | `mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
+| `tests/test_rll_android_ci_merge_no_regression.py` | 3171 | `.py` | `source_code` | 75 | `8adbe8dc5549bad4b302f5540c60b3d3f1562199a82c16c34f0b2ee627e0b6cb` | `cosmology_validation_marker` |
 | `tests/test_rll_android_diagnostic_ui.py` | 2308 | `.py` | `source_code` | 50 | `3a491b6b1fd3b46c163d2a0512c6753228d5c18145342d25c3ccb662c82432cc` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_android_formula_lab.py` | 3540 | `.py` | `source_code` | 69 | `3cb941da10448c23e19e72f4698a702f770fcfa9ceeb28b84e2f2893ee051c09` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_android_formula_receipt_integrity.py` | 2624 | `.py` | `source_code` | 50 | `fcb33794d54c73cda791e15c49b7430f672d9eb274fb03ee073c783e45534aca` | `token_vazio_declared,cosmology_validation_marker` |
