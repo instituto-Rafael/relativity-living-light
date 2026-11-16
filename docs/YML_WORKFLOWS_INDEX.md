@@ -83,7 +83,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/real-data-contract-ci.yml` | `github_workflow_yml` | 7536 | 183 | `a5fe4c541f111d4f6774c517674544dc26e8539cdb828656fe061f164d097a37` |
 | `.github/workflows/real-seed-ingestion-plan.yml` | `github_workflow_yml` | 3037 | 89 | `82b49976d01e4889fac56e35f872820e731d829c20fc3537e22152d68606454d` |
 | `.github/workflows/real-seed-validation-v0.yml` | `github_workflow_yml` | 3536 | 107 | `6f5b35bcba3a7a846429837ca400131cf55441bf7d8b5a879d00a4283ce15fd8` |
-| `.github/workflows/repo-real-inventory.yml` | `github_workflow_yml` | 3243 | 96 | `51ad2d47f3d109b650d4d0f111c03550aee549bf2a3471b5c30ed0a031d09fbf` |
+| `.github/workflows/repo-real-inventory.yml` | `github_workflow_yml` | 3424 | 100 | `f61f669ee02f75e245bfb92bfdb709712839b79b1a519a7f9765642dd73ebff5` |
 | `.github/workflows/rll-academic-safety-route56.yml` | `github_workflow_yml` | 3343 | 89 | `e0af7d0d28cca2d808001e9a3c21ca5ece394702a7afd0d36fcbcdab879f9e28` |
 | `.github/workflows/rll-authorial-science-fabric-v1.yml` | `github_workflow_yml` | 9917 | 224 | `8682d258dd7179cb8f5e9cd5919c8a19835276de3464c7f761fab9afb210fc43` |
 | `.github/workflows/rll-balance-report.yml` | `github_workflow_yml` | 6744 | 180 | `b1db13d597ccc4026a9ad80865444e0c0df9eb2ce008299e74c87b33d906df49` |

@@ -901,11 +901,11 @@
   },
   {
     "path": ".github/workflows/repo-real-inventory.yml",
-    "bytes": 3243,
+    "bytes": 3424,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 96,
-    "sha256": "51ad2d47f3d109b650d4d0f111c03550aee549bf2a3471b5c30ed0a031d09fbf",
+    "linhas": 100,
+    "sha256": "f61f669ee02f75e245bfb92bfdb709712839b79b1a519a7f9765642dd73ebff5",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -28373,7 +28373,7 @@
     "ext": ".py",
     "tipo": "source_code",
     "linhas": 26,
-    "sha256": "b2e4910031ebc20a86b8eaa16c486900876042b11471f19468165610024c9607",
+    "sha256": "cf5581367cae295a0f699e7b7ec983edaa21082dd8acd6c940e0b5fa9888c24f",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -28942,6 +28942,15 @@
     "linhas": 104,
     "sha256": "2adb767d06af3e03b6c491b4328268fb85a39d66c7f9cddfb11dbcaa94e4433d",
     "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_inventory_parity_main_lab_merge.py",
+    "bytes": 2308,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 54,
+    "sha256": "07699634cf69e7881ee386280171e550d3a4c9614ea40ec93b49b0a0601cc041",
+    "flags": "mentions_synthetic,cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_joint_g0_g2_adapter.py",
@@ -30879,6 +30888,15 @@
     "flags": ""
   },
   {
+    "path": "tools/inventory_config.json",
+    "bytes": 1286,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 61,
+    "sha256": "e13411cfacd5029c6116ef0fd58c96becb3a3bca678be9482791d038cf6b009d",
+    "flags": "mentions_synthetic,token_vazio_declared"
+  },
+  {
     "path": "tools/inventory_config.yml",
     "bytes": 1240,
     "ext": ".yml",
@@ -31839,6 +31857,15 @@
     "tipo": "source_code",
     "linhas": 44,
     "sha256": "5a28e9f643cc6ada56838329d81d3c14ee7d19b58737d800c04485f1124ec219",
+    "flags": ""
+  },
+  {
+    "path": "tools/validate_inventory_config_parity.py",
+    "bytes": 2850,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 74,
+    "sha256": "d7cfa28cffd48c43cf34df2bc8cb5f56d882e9c99beaeaaa43b7c0b064d8d4c2",
     "flags": ""
   },
   {
