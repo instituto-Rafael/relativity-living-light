@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - 'rll/release/**'
+      - 'work/rll-dashboard-lockgen-diagnostic-20261116-v1'
     paths:
       - 'apps/dashboard/**'
       - '.github/workflows/dashboard-ux-compilation.yml'
@@ -30,6 +31,7 @@ env:
 
 jobs:
   compile-ux:
+    if: github.ref != 'refs/heads/work/rll-dashboard-lockgen-diagnostic-20261116-v1'
     name: 🔨 Compile UX Modern Dashboard
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -137,6 +139,7 @@ jobs:
           fi
 
   test-ux:
+    if: github.ref != 'refs/heads/work/rll-dashboard-lockgen-diagnostic-20261116-v1'
     name: 🧪 Test UX Components
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -171,7 +174,7 @@ jobs:
     name: 🎯 Quality Validation Gates
     runs-on: ubuntu-latest
     needs: [compile-ux, test-ux]
-    if: always()
+    if: always() && github.ref != 'refs/heads/work/rll-dashboard-lockgen-diagnostic-20261116-v1'
     permissions:
       contents: read
 
@@ -248,7 +251,7 @@ jobs:
     name: 📊 Pipeline Summary
     runs-on: ubuntu-latest
     needs: [compile-ux, test-ux, quality-gates]
-    if: always()
+    if: always() && github.ref != 'refs/heads/work/rll-dashboard-lockgen-diagnostic-20261116-v1'
     permissions:
       contents: read
 
@@ -291,3 +294,31 @@ jobs:
           echo "🔍 Check the logs above for details"
           echo "🔗 View logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           exit 1
+
+  lockgen:
+    name: Dashboard scoped npm lock diagnostic (no repository writes)
+    if: github.ref == 'refs/heads/work/rll-dashboard-lockgen-diagnostic-20261116-v1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout isolated review branch
+        uses: actions/checkout@v7
+      - name: Setup Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Resolve missing frontend toolchain into temporary runner lock (no commit)
+        working-directory: apps/dashboard
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --save-dev --save-exact tailwindcss@3.4.17 jsdom@26.1.0 --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+          echo "RLL_LOCKGEN_PACKAGE_BEGIN"
+          base64 -w 76 package.json
+          echo "RLL_LOCKGEN_PACKAGE_END"
+          echo "RLL_LOCKGEN_LOCK_BEGIN"
+          base64 -w 76 package-lock.json
+          echo "RLL_LOCKGEN_LOCK_END"
+          echo "RLL_LOCKGEN_DIAGNOSTIC_ONLY"
