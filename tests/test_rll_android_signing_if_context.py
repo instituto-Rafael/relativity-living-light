@@ -7,9 +7,21 @@ WORKFLOW=Path(".github/workflows/android-build.yml")
 def test_android_release_guards_never_use_secret_context_in_if():
     source=WORKFLOW.read_text(encoding="utf-8")
     if_lines=re.findall(r"^\s*if:\s*.*$",source,re.MULTILINE)
-    assert len([line for line in if_lines if "RLL_RELEASE_SIGNING_AVAILABLE" in line])==4
+    # Every current signing operation must have its own no-secret-context guard.
+    signing_steps = (
+        "Decode release keystore",
+        "Build signed release APK and AAB",
+        "Generate signed APK verification receipt",
+        "Upload APK signature receipt",
+        "Upload signed release APK",
+        "Upload signed release AAB",
+    )
+    guard = "if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}"
+    for step_name in signing_steps:
+        assert f"- name: {step_name}\n        {guard}" in source
+    assert len([line for line in if_lines if "RLL_RELEASE_SIGNING_AVAILABLE" in line]) == len(signing_steps)
     assert all("secrets." not in line for line in if_lines)
-    assert source.count("if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}")==4
+    assert source.count(guard) == len(signing_steps)
 
 def test_android_secret_presence_boolean_and_step_owned_keystore():
     source=WORKFLOW.read_text(encoding="utf-8")
