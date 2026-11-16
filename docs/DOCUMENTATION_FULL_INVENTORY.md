@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3805 |
-| `cataloged_files` | 3794 |
+| `tracked_files_total` | 3818 |
+| `cataloged_files` | 3807 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 57214627 |
-| `total_text_lines` | 562987 |
-| `markdown_files` | 1231 |
+| `total_bytes` | 57277164 |
+| `total_text_lines` | 564579 |
+| `markdown_files` | 1232 |
 | `yml_yaml_files` | 254 |
 | `github_workflow_yml_files` | 122 |
-| `data_or_result_files` | 1016 |
+| `data_or_result_files` | 1021 |
 
-**Total de arquivos catalogados:** 3794
+**Total de arquivos catalogados:** 3807
 
 ## Inventário completo
 
@@ -92,7 +92,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/convention-check.yml` | 3603 | `.yml` | `github_workflow_yml` | 84 | `0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce` | `` |
 | `.github/workflows/copilot-setup-steps.yml` | 5818 | `.yml` | `github_workflow_yml` | 147 | `391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a` | `token_vazio_declared` |
 | `.github/workflows/dashboard-build.yml` | 781 | `.yml` | `github_workflow_yml` | 40 | `7ade3b19ae561c97eb44bdba267de894012b5c43538b0ec80d42af07f9947acb` | `` |
-| `.github/workflows/dashboard-ux-compilation.yml` | 9711 | `.yml` | `github_workflow_yml` | 295 | `77ff785083b219c0179b746907422864e8cf894895fa0dd681e3b1e600136f80` | `` |
+| `.github/workflows/dashboard-ux-compilation.yml` | 9711 | `.yml` | `github_workflow_yml` | 295 | `fc76be4bc2e0047bb1cfe774936a6ff18a0d3ae83e2d21b40cfe269bb1f40f79` | `` |
 | `.github/workflows/dense-feature-matrix.yml` | 3041 | `.yml` | `github_workflow_yml` | 83 | `fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351` | `mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared` |
 | `.github/workflows/desi-dr2-bao-validation.yml` | 2912 | `.yml` | `github_workflow_yml` | 82 | `6fd1a35bb78440df235fa3a5f139fb1b15897ca0c270d6fa7654445cbca65008` | `mentions_synthetic,mentions_mock_or_placeholder` |
 | `.github/workflows/dha-fisher-ci.yml` | 3310 | `.yml` | `github_workflow_yml` | 99 | `58b28e9d9de3bb9ea31d67bc742d8a6d448730f3f2a3425ee225620bc5465c9a` | `mentions_mock_or_placeholder` |
