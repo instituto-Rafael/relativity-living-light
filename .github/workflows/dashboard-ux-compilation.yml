@@ -14,6 +14,7 @@ on:
   pull_request:
     branches:
       - main
+      - 'dependabot/**'
     paths:
       - 'apps/dashboard/**'
       - '.github/workflows/dashboard-ux-compilation.yml'
