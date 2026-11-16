@@ -30,10 +30,12 @@ def normalize_arxiv_identifier(value: str) -> tuple[str, str | None]:
         parsed = parse.urlparse(raw)
         if parsed.hostname not in {"arxiv.org", "www.arxiv.org"}:
             raise ValueError("URL must use arxiv.org")
-        parts = parsed.path.strip("/").split("/")
-        if len(parts) != 2 or parts[0] not in {"abs", "pdf"}:
+        if parsed.path.startswith("/abs/"):
+            raw = parsed.path[len("/abs/"):]
+        elif parsed.path.startswith("/pdf/"):
+            raw = parsed.path[len("/pdf/"):]
+        else:
             raise ValueError("URL must be an arXiv abstract or PDF URL")
-        raw = parts[1]
         if raw.endswith(".pdf"):
             raw = raw[:-4]
     raw = raw.strip("/")
@@ -61,9 +63,15 @@ def parse_arxiv_atom(raw_xml: bytes, requested_id: str) -> dict[str, Any]:
     entry_id = _text(entry, "id")
     if not entry_id:
         raise ValueError("arXiv Atom entry is missing its canonical id")
-    record_id = parse.urlparse(entry_id).path.rstrip("/").split("/")[-1]
-    if not record_id:
-        raise ValueError("arXiv Atom entry id is not a paper URL")
+    parsed_entry_id = parse.urlparse(entry_id)
+    if (
+        parsed_entry_id.scheme not in {"https", "http"}
+        or parsed_entry_id.hostname not in {"arxiv.org", "www.arxiv.org"}
+        or not parsed_entry_id.path.startswith("/abs/")
+    ):
+        raise ValueError("arXiv Atom entry id must be a canonical arxiv.org/abs URL")
+    record_id = parsed_entry_id.path[len("/abs/"):].strip("/")
+    normalize_arxiv_identifier(record_id)
     authors = []
     for author in entry.findall(f"{{{ATOM_NS}}}author"):
         name = _text(author, "name")

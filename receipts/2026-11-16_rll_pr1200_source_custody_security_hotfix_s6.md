@@ -1,0 +1,15 @@
+# RLL PR 1200 — Source-custody, arXiv, token-permission hotfix S6
+- μID: MU-RLL-PR1200-S6-20261116
+- parent: fed4f1137edaa7d09167640e47ef3d7fb7b754fe
+- source: https://github.com/instituto-Rafael/relativity-living-light/pull/1200
+- purpose: fail-closed and reversible security/regression fix, scoped to review branch
+- changes: reject duplicate output filenames in source-ingress manifest before materialization; canonical arXiv Atom legacy-prefix recognition; validate arxiv.org host; explicit contents:read in retarded spacetime CI; test negative cases
+- review_refs: https://github.com/instituto-Rafael/relativity-living-light/pull/1200#discussion_r4576991871 and https://github.com/instituto-Rafael/relativity-living-light/pull/1200#discussion_r4576991872
+- blob_refs:
+  - tools/rll_authorial_ingress.py: c8d57e0b4f062f17c84ea69cf7dc557e7c2fe102
+  - tools/ingest_arxiv_candidate.py: 2f0a7d4a3bb12e6600c70e468960d5bdee522383
+  - tests/test_rll_authorial_ingress.py: b9287b4df45e35ecfb56dc371a77b178cd8c9d5d
+  - .github/workflows/rll-retarded-spacetime-contract.yml: bb44c923e06631763677972cf267ee81d157a441
+  - tests/test_rll_authorial_arxiv_regressions.py: 33e99aed481339af39ee11e9d48953351570ef3c
+- status: WRITTEN_NOT_YET_EXECUTED; claim_allowed=false; CI exact HEAD and full scientific E2E TOKEN_VAZIO
+- rollback: use previous commit/tree in review branch; do not force-update, rewrite history or touch main, integration, release.

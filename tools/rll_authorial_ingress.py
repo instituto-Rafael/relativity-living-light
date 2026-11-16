@@ -57,6 +57,7 @@ def validate_manifest(doc: dict[str, Any]) -> list[str]:
         errors.append("sources must be a non-empty list")
         return errors
     seen: set[str] = set()
+    seen_filenames: set[str] = set()
     for idx, source in enumerate(sources):
         prefix = f"sources[{idx}]"
         if not isinstance(source, dict):
@@ -82,6 +83,10 @@ def validate_manifest(doc: dict[str, Any]) -> list[str]:
         filename = source.get("filename")
         if not isinstance(filename, str) or not SAFE_NAME_RE.fullmatch(filename):
             errors.append(f"{prefix}.filename: unsafe or missing")
+        elif filename in seen_filenames:
+            errors.append(f"{prefix}.filename: duplicate destination filename {filename!r}")
+        else:
+            seen_filenames.add(filename)
         expected = source.get("expected_sha256")
         if expected != TOKEN_VAZIO and not (
             isinstance(expected, str) and SHA256_RE.fullmatch(expected)

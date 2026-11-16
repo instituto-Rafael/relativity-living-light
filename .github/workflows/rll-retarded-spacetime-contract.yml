@@ -15,6 +15,9 @@ on:
       - ".github/workflows/rll-retarded-spacetime-contract.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
