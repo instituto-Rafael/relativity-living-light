@@ -1,0 +1,289 @@
+{
+  "schema": "rll.git_readonly_merge_triage_snapshot.v1",
+  "scope": "REPOSITORY_PR_REFS_GITHUB_PROVIDER_SCOPED_NOT_GLOBAL_CI_ATTESTATION",
+  "observed_local_day": "2026-11-15",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "inventory_router_unchanged": true,
+  "claim_allowed": false,
+  "record_kind": "GITHUB_PROVIDER_SNAPSHOT_NOT_LIVE_MONITOR",
+  "branch_heads": {
+    "main": {
+      "sha": "ac833cb1278ffde951e602dd70df4c11bcda6ac0",
+      "protected": true
+    },
+    "rll/lab": {
+      "sha": "a464f6c53482a5bbf60fbdd319a32d19feb5239e",
+      "protected": false
+    },
+    "rll/integration": {
+      "sha": "2f30179ebebf91e7514ffdffb61609a3cf12ef0b",
+      "protected": false
+    },
+    "rll/release": {
+      "sha": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "protected": false
+    },
+    "org": {
+      "sha": null,
+      "state": "NOT_FOUND_GITHUB_BRANCH_404"
+    }
+  },
+  "branch_comparisons": [
+    {
+      "base": "main",
+      "head": "rll/lab",
+      "ahead_by": 738,
+      "behind_by": 1392,
+      "merge_base": "c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1",
+      "status": "diverged",
+      "file_listing": "CAPPED_AT_300_FILES_NOT_EXHAUSTIVE"
+    },
+    {
+      "base": "rll/lab",
+      "head": "rll/integration",
+      "ahead_by": 1,
+      "behind_by": 587,
+      "files_returned": 0,
+      "status": "diverged",
+      "note": "IDENTICAL_TREES_IN_CURRENT_COMPARE_DOES_NOT_PROVE_ALL_OTHER_PR_TREES_IDENTICAL"
+    },
+    {
+      "base": "rll/lab",
+      "head": "rll/release",
+      "ahead_by": 0,
+      "behind_by": 2059,
+      "files_returned": 0,
+      "status": "behind"
+    }
+  ],
+  "provider_errors_and_failures": {
+    "PR1211": "workflow contract expects 120 active workflows but discovers 122; Rx import gate reports import_workflow_no_requests_install; Android signing test expects four guards but found six; parity assertion failed",
+    "PR1212": "Vitest missing jsdom; dashboard build missing tailwindcss; ESLint TS parser reports interface parsing errors; root gradle wrapper jar not found",
+    "PR1208": "six-sigma-real-data-controls failed on exact PR head",
+    "gradle-wrapper.jar": "GitHub 404 on main and rll/lab at snapshot, DO NOT COPY UNVERIFIED BINARY"
+  },
+  "readback_source_urls": [
+    "https://github.com/instituto-Rafael/relativity-living-light/pulls",
+    "https://github.com/instituto-Rafael/relativity-living-light/pull/1208",
+    "https://github.com/instituto-Rafael/relativity-living-light/pull/1211",
+    "https://github.com/instituto-Rafael/relativity-living-light/pull/1212"
+  ],
+  "prs": [
+    {
+      "number": 1200,
+      "head_ref": "rll/lab",
+      "head_sha": "a464f6c53482a5bbf60fbdd319a32d19feb5239e",
+      "base_ref": "main",
+      "base_sha": "11470e9678c94e2f0bc53030998dc8fb27d5cd4c",
+      "draft": false,
+      "mergeable_state": "dirty",
+      "manual_hold": false,
+      "failed_checks": null,
+      "changed_files": 653,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1200"
+    },
+    {
+      "number": 1203,
+      "head_ref": "agent/rll-json-evidence-after-1195-20261115-v1",
+      "head_sha": "d2e57f84322ae20449eadde27f9dceadd65ea49d",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "unstable",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle"
+      ],
+      "changed_files": 2,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1203"
+    },
+    {
+      "number": 1204,
+      "head_ref": "agent/rll-actions-runtime-boundary-20261115-v1",
+      "head_sha": "02b53049b3474091332b8fa0d976de5a12e0a0ea",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "unstable",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle"
+      ],
+      "changed_files": 3,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1204"
+    },
+    {
+      "number": 1205,
+      "head_ref": "work/rll-branch-topology-safe-forwardport-20261115-v1",
+      "head_sha": "d2c2ecceea2ae906a4ee6a307f966d1d70ba7597",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": false,
+      "mergeable_state": "unstable",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle"
+      ],
+      "changed_files": 12,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1205"
+    },
+    {
+      "number": 1206,
+      "head_ref": "work/rll-gradle641-no-jdk-regression-20261115-v1",
+      "head_sha": "0a2c91eeaf3c31e35cbc4436e1396d0161bf021a",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "dirty",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle"
+      ],
+      "changed_files": 1,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1206"
+    },
+    {
+      "number": 1207,
+      "head_ref": "work/rll-convergence-pr1203-1206-20261115-v1",
+      "head_sha": "0be0677907e7661e535788a2b4a3d88efdc8feaf",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": false,
+      "mergeable_state": "dirty",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle",
+        "android"
+      ],
+      "changed_files": 23,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1207"
+    },
+    {
+      "number": 1208,
+      "head_ref": "work/rll-integration-tree-identity-merge-20261115-v1",
+      "head_sha": "686c09cf18b9ea7806c70197540165bd3326c719",
+      "base_ref": "rll/lab",
+      "base_sha": "a464f6c53482a5bbf60fbdd319a32d19feb5239e",
+      "draft": false,
+      "mergeable_state": "unstable",
+      "manual_hold": true,
+      "failed_checks": [
+        "six-sigma-real-data-controls"
+      ],
+      "changed_files": 25,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1208"
+    },
+    {
+      "number": 1209,
+      "head_ref": "work/rll-main-lab-android-receipt-reconcile-20261115-v1",
+      "head_sha": "5c2aa3a110e17aeb539e983bf94b4db52323f2a2",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "dirty",
+      "manual_hold": true,
+      "failed_checks": [
+        "test"
+      ],
+      "changed_files": 26,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1209"
+    },
+    {
+      "number": 1210,
+      "head_ref": "work/rll-main-lab-inventory-parity-merge-20261115-v1",
+      "head_sha": "d5723be5dc53a096af7bd8ff0819bb93c6dd6852",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "dirty",
+      "manual_hold": true,
+      "failed_checks": [
+        "test",
+        "six-sigma-real-data-controls"
+      ],
+      "changed_files": 30,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1210"
+    },
+    {
+      "number": 1211,
+      "head_ref": "work/rll-main-rx-execution-fabric-reconcile-20261115-v1",
+      "head_sha": "33bfc3dad4552de9ad7a4703d76d444cde1ab7e9",
+      "base_ref": "rll/lab",
+      "base_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "draft": true,
+      "mergeable_state": "dirty",
+      "manual_hold": true,
+      "failed_checks": [
+        "rx-execution-fabric-pr-gate",
+        "Evolutionary semantic branch maturity gate",
+        "Verify derived workflow inventory V2",
+        "Verify workflow contract inventory",
+        "Parse, govern, test, and receipt workflows",
+        "six-sigma-real-data-controls",
+        "test"
+      ],
+      "changed_files": 159,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1211"
+    },
+    {
+      "number": 1212,
+      "head_ref": "dependabot/npm_and_yarn/apps/dashboard/npm_and_yarn-c406cfc9b0",
+      "head_sha": "8d5466a69ddd89dcbe0e65a7f31c730d5e1980c2",
+      "base_ref": "main",
+      "base_sha": "4fb5cbf11562d338241cd5a9c195ac4416f20157",
+      "draft": false,
+      "mergeable_state": "unstable",
+      "manual_hold": false,
+      "failed_checks": [
+        "Dashboard Build",
+        "Compile UX Modern Dashboard",
+        "Test UX Components",
+        "Quality Validation Gates",
+        "Branch maturity gate V2",
+        "Evolutionary semantic branch maturity gate",
+        "submit-gradle"
+      ],
+      "changed_files": 5,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1212"
+    },
+    {
+      "number": 1213,
+      "head_ref": "fix/pr1212-dashboard-toolchain-gates-20261115",
+      "head_sha": "7e9aa0142663e2e7061aeda8caf2eef440511ed3",
+      "base_ref": "dependabot/npm_and_yarn/apps/dashboard/npm_and_yarn-c406cfc9b0",
+      "base_sha": "8d5466a69ddd89dcbe0e65a7f31c730d5e1980c2",
+      "draft": true,
+      "mergeable_state": "unstable",
+      "manual_hold": true,
+      "failed_checks": [
+        "submit-gradle"
+      ],
+      "changed_files": 1,
+      "approval_status": "NOT_ESTABLISHED",
+      "ci_execution_scope": "EXACT_HEAD_CHECK_RUNS_PARTIAL_SNAPSHOT",
+      "url": "https://github.com/instituto-Rafael/relativity-living-light/pull/1213"
+    }
+  ]
+}

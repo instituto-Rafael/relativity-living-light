@@ -4,10 +4,13 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from rx.dispersion import route_dispersion
 from rx.formula_selector import load_formula_bindings, select_formulas
-from rx.orchestrator import ROOT, orchestrate
+from rx.orchestrator import (
+    ROOT, _enforce_executable_contract, _route_artifact_contracts, orchestrate,
+)
 from rx.region_router import classify_region
 
 
@@ -55,6 +58,52 @@ class RxExecutionFabricTests(unittest.TestCase):
         self.assertIn("RXF-STAT-COVARIANCE-V1", selected)
         self.assertIn("MF-GEOMETRY-DIRECT-COSMOLOGY", rejected)
         self.assertNotIn("RXF-STAT-DIAGONAL-V1", selected)
+
+    def test_nonactive_plan_contract_is_rejected_before_route_execution(self):
+        with patch("rx.orchestrator.active_contract", return_value=(
+            "RX-STRUCTURE-D-PARITY-V1", {},
+        )):
+            with self.assertRaisesRegex(ValueError, "plan_physics_contract_differs"):
+                _enforce_executable_contract(
+                    "RX-FREESTANDING65-PARITY-V1", ["rx_multiprobe"],
+                )
+            _enforce_executable_contract(
+                "RX-STRUCTURE-D-PARITY-V1", ["rx_multiprobe", "structure_d_rx"],
+            )
+
+    def test_multiprobe_cannot_use_unimplemented_active_contract(self):
+        with patch("rx.orchestrator.active_contract", return_value=(
+            "RX-FREESTANDING65-PARITY-V1", {},
+        )):
+            with self.assertRaisesRegex(ValueError, "route_requires_rx_structure_d"):
+                _enforce_executable_contract(
+                    "RX-FREESTANDING65-PARITY-V1", ["rx_multiprobe"],
+                )
+
+    def test_artifact_contract_readback_requires_all_ids(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            out = root / "results" / "structure_d"
+            out.mkdir(parents=True)
+            (out / "joint_real_likelihood_rx.json").write_text(json.dumps({
+                "physics_contract": {"id": "RX-STRUCTURE-D-PARITY-V1"},
+                "structure_d_successor": {
+                    "physics_contract_id": "INCOMPATIBLE_CONTRACT",
+                },
+            }), encoding="utf-8")
+            (out / "joint_real_likelihood_rx_manifest.json").write_text(
+                json.dumps({"physics_contract_id": "RX-STRUCTURE-D-PARITY-V1"}),
+                encoding="utf-8",
+            )
+            with patch("rx.orchestrator.ROOT", root):
+                ids = _route_artifact_contracts("structure_d_rx")
+                self.assertEqual(len(ids), 3)
+                self.assertIn("INCOMPATIBLE_CONTRACT", ids)
+                self.assertFalse(all(x == "RX-STRUCTURE-D-PARITY-V1" for x in ids))
+                self.assertEqual(
+                    _route_artifact_contracts("rx_multiprobe"),
+                    ["TOKEN_VAZIO_CONTRACT_ID"],
+                )
 
     def test_dry_run_materializes_auditable_outputs(self):
         with tempfile.TemporaryDirectory() as tmp:

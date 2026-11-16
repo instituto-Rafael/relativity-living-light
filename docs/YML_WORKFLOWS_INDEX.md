@@ -43,7 +43,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/branch-maturity-v2.yml` | `github_workflow_yml` | 1485 | 46 | `387927d8be979a3f239adf87ceb87de3505efb7654eb8d3dd85bee75b1bc148b` |
 | `.github/workflows/calc-data.yml` | `github_workflow_yml` | 5305 | 130 | `1910b44f09a110125f32e4f0bde2d43aee21e958bc6f398f6c4602eaf8fa24cf` |
 | `.github/workflows/canonical-route-artifacts.yml` | `github_workflow_yml` | 6304 | 140 | `505f3b07ef6804653156bcf7f961d61bf98469c868c9f1ad512fd5a9ac3435d5` |
-| `.github/workflows/ci-scientific-skills.yml` | `github_workflow_yml` | 4548 | 124 | `9ae7d718a6cba6708abab8fcc741195bda653aba60553e2bd7d303affbba573f` |
+| `.github/workflows/ci-scientific-skills.yml` | `github_workflow_yml` | 4837 | 130 | `e1757c089fd3f98174128e59ce4e43597156bddc5b1d50e71e0e019dd1fc295f` |
 | `.github/workflows/claim-allowed-gate.yml` | `github_workflow_yml` | 2079 | 64 | `9c2392561e2e0266036007784ef8d8173a062dd035be8be29458280ad6424a08` |
 | `.github/workflows/claim-boundary-quality-gates.yml` | `github_workflow_yml` | 4982 | 137 | `c70282aa20738df19c21217b290ada25248f7288a37542944c3772165078d268` |
 | `.github/workflows/class-camb-baseline-crosscheck.yml` | `github_workflow_yml` | 12973 | 275 | `2582b81f5d98bae806774afe3658f747e99588e4b76d98533288c6012045fc03` |
@@ -52,7 +52,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/convention-check.yml` | `github_workflow_yml` | 3603 | 84 | `0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce` |
 | `.github/workflows/copilot-setup-steps.yml` | `github_workflow_yml` | 5818 | 147 | `391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a` |
 | `.github/workflows/dashboard-build.yml` | `github_workflow_yml` | 781 | 40 | `7ade3b19ae561c97eb44bdba267de894012b5c43538b0ec80d42af07f9947acb` |
-| `.github/workflows/dashboard-ux-compilation.yml` | `github_workflow_yml` | 9711 | 295 | `77ff785083b219c0179b746907422864e8cf894895fa0dd681e3b1e600136f80` |
+| `.github/workflows/dashboard-ux-compilation.yml` | `github_workflow_yml` | 9711 | 295 | `fc76be4bc2e0047bb1cfe774936a6ff18a0d3ae83e2d21b40cfe269bb1f40f79` |
 | `.github/workflows/dense-feature-matrix.yml` | `github_workflow_yml` | 3041 | 83 | `fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351` |
 | `.github/workflows/desi-dr2-bao-validation.yml` | `github_workflow_yml` | 2912 | 82 | `6fd1a35bb78440df235fa3a5f139fb1b15897ca0c270d6fa7654445cbca65008` |
 | `.github/workflows/dha-fisher-ci.yml` | `github_workflow_yml` | 3310 | 99 | `58b28e9d9de3bb9ea31d67bc742d8a6d448730f3f2a3425ee225620bc5465c9a` |
@@ -64,7 +64,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/github-platform-assurance-v2.yml` | `github_workflow_yml` | 7310 | 179 | `7fa6947394cff7f8ca5bc22edd58fea09154347ad1c12fbce29ab1590766521f` |
 | `.github/workflows/github-platform-assurance.yml` | `github_workflow_yml` | 5787 | 172 | `8e07d5c5a1f345b6ac3442a0989e78e834075a30f993bfd557f02e412508e2c7` |
 | `.github/workflows/giza-academic-intake-4h.yml` | `github_workflow_yml` | 4015 | 106 | `92fadd109ad2a05658cbbc0589a1f0e99fa1e769ad9837b518ac940f7c06dcd7` |
-| `.github/workflows/h0-rd-ablation.yml` | `github_workflow_yml` | 6476 | 147 | `9ae16cfa6c72f8f20831fc0c8130b844eb4064cbdcee0f1b70059d3f3339d9b7` |
+| `.github/workflows/h0-rd-ablation.yml` | `github_workflow_yml` | 6603 | 151 | `2dc98c73d4b94c83cb844452034a46b989cdee4752683c9f01b1d46601236ea4` |
 | `.github/workflows/hypothesis-instability-orchestrator.yml` | `github_workflow_yml` | 3909 | 110 | `b342702ae11f4bd24d33911efc304e808a869208fa0d0a45c0265c928ca1412a` |
 | `.github/workflows/iml_artifact.yml` | `github_workflow_yml` | 1741 | 64 | `4b927fcf04fa02a3dac04b1c0898b1e539401f9db98eae7c815c88cf6d6ebf3a` |
 | `.github/workflows/import-data.yml` | `github_workflow_yml` | 4735 | 131 | `968f4cbe79d6a820d727c04b33e02c68762c2af10de346896d2f78028e18917c` |
@@ -75,7 +75,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/pantheon-covariance-materialization.yml` | `github_workflow_yml` | 16201 | 319 | `dcedb428b00891576ffbbf2d6241074e1c6e97447ba9e84f92ebca7c5d92015b` |
 | `.github/workflows/poincare-7d-evidence-gate.yml` | `github_workflow_yml` | 7458 | 171 | `167a2fc973be06b3c2c0e446046fc9deac4ae8e966ddce61c62aea043c18bcce` |
 | `.github/workflows/polymathic-concept-matrix.yml` | `github_workflow_yml` | 7958 | 186 | `b499802b6cc7830c2c81813751ee1e8931ecf6ab7c98d2f10c4c1a76fcde82d5` |
-| `.github/workflows/python-tests.yml` | `github_workflow_yml` | 6098 | 166 | `d0a430cb89ad6a900698528f688ad76eb169b9a2b6acbdda24e993822fdc6f83` |
+| `.github/workflows/python-tests.yml` | `github_workflow_yml` | 6601 | 174 | `85d31949578ce4872e5ef876717ad9e6e100264da3477ed108241f937c59ae70` |
 | `.github/workflows/rare-events-evidence-gate.yml` | `github_workflow_yml` | 2813 | 84 | `0c630691c8d1e16540bca6ce0b2fb98a6d92e7c75a0cd6599bca6ec79570b751` |
 | `.github/workflows/raw-data-manifest-status.yml` | `github_workflow_yml` | 1867 | 62 | `1eca35907020e2d810238a6a8cc90996fadd21d6aa758d08d834c775d7b843be` |
 | `.github/workflows/real-data-bootstrap-validation.yml` | `github_workflow_yml` | 3576 | 105 | `fd2b242ec2510184153388e0a01db5c46a96defdf5716ea9b9628e780cdaabc1` |
@@ -140,7 +140,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/unified-geometry.yml` | `github_workflow_yml` | 1006 | 35 | `1085af7b27ac1662b78ef21cfea35e1e1054caf61568b944bc0b64e98fadedeb` |
 | `.github/workflows/unified-workflow-session-orchestrator.yml` | `github_workflow_yml` | 11300 | 295 | `2c6b25ec53253e5a73f2d15d1bfd6bad2e79b8fcf0bd397207bb92cd1de6348e` |
 | `.github/workflows/validacao-real-legacy.yml` | `github_workflow_yml` | 6513 | 152 | `96c01c05c4ab860fdda90506f82813e167be394fd16e841a13bd229e1f83bfb8` |
-| `.github/workflows/validacao_real.yml` | `github_workflow_yml` | 16340 | 325 | `a0729189b867a96c6bd60186b81e4c87f17b9ae45454d8e455fbcd842f2d06bf` |
+| `.github/workflows/validacao_real.yml` | `github_workflow_yml` | 16907 | 337 | `bca940f20671bd52f6679a604eeaf7fbacdda95e953d31f8323787777ced3a30` |
 | `.github/workflows/validate-academic-correlation-package.yml` | `github_workflow_yml` | 6624 | 157 | `c99ca6d4b281d4b3a8aa1f251c90200cb5901d7497ad2eea26ddb8a451855bbe` |
 | `.github/workflows/validate-cross-repo-relationship-registry.yml` | `github_workflow_yml` | 10504 | 216 | `eccbc800db2c61d470a81dc3c63c541768648a44f4aa157b2cdd29a0834e384f` |
 | `.github/workflows/validate-real-dataset-variance-registry.yml` | `github_workflow_yml` | 2498 | 63 | `7c3d96f3fdf477d2960ee62e6d99860330a934db8d57445071818768c25c6b7c` |
