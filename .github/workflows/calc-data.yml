@@ -55,8 +55,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install requirements
-        run: python -m pip install --upgrade pip && pip install pandas numpy
+      - name: Validate stdlib calc-data migration
+        run: python tools/validate_calc_data_stdlib_migration.py
 
       - name: Run calculations in audit workspace
         env:
