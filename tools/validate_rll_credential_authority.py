@@ -154,14 +154,14 @@ def _load_yaml(path: Path) -> dict[str, Any]:
                 raise ValueError("unsupported workflow trigger indentation")
             if indent == trigger_indent:
                 event = re.match(
-                    r"""^(?:'([^']+)'|"([^"]+)"|([A-Za-z_][\\w-]*)):(?:\\s|$)""",
+                    r"""^(?:'([^']+)'|"([^"]+)"|([A-Za-z_][\w-]*)):(?:\s|$)""",
                     stripped,
                 )
                 if event:
                     events.append(next(group for group in event.groups() if group is not None))
                 elif stripped.startswith("- "):
                     item = _strip_plain_yaml_comment(stripped[2:]).strip().strip("'\\\"")
-                    if not re.fullmatch(r"[A-Za-z_][\\w-]*", item):
+                    if not re.fullmatch(r"[A-Za-z_][\w-]*", item):
                         raise ValueError("unsupported workflow trigger list item")
                     events.append(item)
                 else:
@@ -215,7 +215,7 @@ def _triggers(doc: dict[str, Any]) -> set[str]:
 
 def _contains_manual_guard(job: dict[str, Any]) -> bool:
     expr = str(job.get("if", ""))
-    return bool(re.search(r"""\\bgithub\\.event_name\\s*==\\s*(['"])workflow_dispatch\\1""", expr))
+    return bool(re.search(r"""\bgithub\.event_name\s*==\s*(['"])workflow_dispatch\1""", expr))
 
 
 def _audit_secret_job(
