@@ -194,6 +194,18 @@ jobs:
     - name: Materialize reviewed CI develop authority receipt
       run: |
         python3 internal/governance/development_guard.py           --operation configs/rx_cli_operation.json           --authority-mode reviewed_ci_workflow           --receipt results/rx_cli_security_preflight_ci_develop.json           --strict
+    - name: Materialize required Rx scientific decision and provenance receipts
+      env:
+        PYTHONPATH: .
+        RLL_AUTHORITY_MODE: reviewed_ci_workflow
+        RX_NETWORK_PROBE: "0"
+      run: |
+        set -euo pipefail
+        python3 tools/rx_physics_v2_decision_packet.py --write
+        python3 tools/rll_perturbation_a1_linear_fluid_regularity_v1.py --write
+        python3 tools/rll_perturbation_solver_readiness.py --write
+        python3 tools/rll_current_rx_source_freeze.py --write
+        python3 tools/rll_ws01_ws02_ws21_ws23_bridge.py --write
     - name: Rx aggregate development gate
       run: python3 tools/rx_development_gate.py
     - name: Build artifact checksums

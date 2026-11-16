@@ -9,7 +9,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .contracts import load_contracts, require_contract
+from .contracts import active_contract, load_contracts, require_contract
 from .dispersion import route_dispersion
 from .formula_selector import load_formula_bindings, select_formulas
 from .kernel import dump_json
@@ -98,6 +98,42 @@ def _run_route(route_id):
     }
 
 
+def _enforce_executable_contract(contract_id, routes):
+    """Preflight scientific contract before starting subprocesses or writing receipts."""
+    active_id, _ = active_contract()
+    if routes and contract_id != active_id:
+        raise ValueError("plan_physics_contract_differs_from_runtime_active_contract")
+    restricted = {"rx_multiprobe", "structure_d_rx"}
+    if any(route in restricted for route in routes) and contract_id != "RX-STRUCTURE-D-PARITY-V1":
+        raise ValueError("route_requires_rx_structure_d_parity_v1")
+
+
+def _route_artifact_contracts(route_id):
+    """Read actual contract IDs; missing/invalid receipts become typed empty values."""
+    def load_or_empty(path):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return {}
+        return data if isinstance(data, dict) else {}
+
+    def typed(value):
+        return value if isinstance(value, str) and value else "TOKEN_VAZIO_CONTRACT_ID"
+
+    if route_id == "rx_multiprobe":
+        data = load_or_empty(ROOT / "validacao_real/results_rx/multiprobe_rx.json")
+        return [typed((data.get("physics_contract") or {}).get("id"))]
+    if route_id == "structure_d_rx":
+        data = load_or_empty(ROOT / "results/structure_d/joint_real_likelihood_rx.json")
+        manifest = load_or_empty(ROOT / "results/structure_d/joint_real_likelihood_rx_manifest.json")
+        return [
+            typed((data.get("physics_contract") or {}).get("id")),
+            typed((data.get("structure_d_successor") or {}).get("physics_contract_id")),
+            typed(manifest.get("physics_contract_id")),
+        ]
+    return []
+
+
 def _source_manifest(paths):
     rows = []
     for path in paths:
@@ -132,6 +168,13 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
     if not contract_id:
         raise ValueError("physics_contract is required")
     contract = require_contract(contract_id)
+    routes = (plan.get("execution") or {}).get("routes") or []
+    if not isinstance(routes, list):
+        raise ValueError("execution.routes must be a list")
+    if any(str(route_id) not in ROUTES for route_id in routes):
+        raise ValueError("execution route is not whitelisted")
+    if execute:
+        _enforce_executable_contract(contract_id, [str(route_id) for route_id in routes])
 
     region = classify_region(plan["region"])
     dispersion = route_dispersion(plan["dispersion"])
@@ -173,14 +216,19 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
     dump_json(output_dir / "covariance_contract.json", dispersion)
     dump_json(output_dir / "scientific_gate_graph.json", scientific_gate_graph)
 
-    routes = (plan.get("execution") or {}).get("routes") or []
-    if not isinstance(routes, list):
-        raise ValueError("execution.routes must be a list")
-
     route_results = []
     if execute:
         for route_id in routes:
-            route_results.append(_run_route(str(route_id)))
+            row = _run_route(str(route_id))
+            if row["status"] == "PASS" and route_id in {"rx_multiprobe", "structure_d_rx"}:
+                observed = _route_artifact_contracts(route_id)
+                row["artifact_contract_ids"] = observed
+                verified = bool(observed) and all(item == contract_id for item in observed)
+                row["contract_verification"] = "PASS" if verified else "FAIL"
+                if not verified:
+                    row["status"] = "FAIL"
+                    row["contract_mismatch"] = True
+            route_results.append(row)
     else:
         for route_id in routes:
             if str(route_id) not in ROUTES:
@@ -214,7 +262,11 @@ def orchestrate(plan_path="configs/rll_execution_plan.v1.yml", execute=True, out
         ),
         "dispersion_blocked_reasons": dispersion["blocked_reasons"],
         "route_failures": [
-            {"route_id": row["route_id"], "returncode": row["returncode"]}
+            {
+                "route_id": row["route_id"],
+                "returncode": row["returncode"],
+                "contract_verification": row.get("contract_verification", "TOKEN_VAZIO_NOT_CHECKED"),
+            }
             for row in failures
         ],
         "claim_allowed": False,

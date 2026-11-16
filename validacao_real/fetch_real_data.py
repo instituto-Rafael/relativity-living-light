@@ -17,9 +17,14 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Standalone legacy invocations (cd validacao_real && python3 fetch_real_data.py)
+# do not inherit the repository root on sys.path. Keep project imports explicit.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from internal.governance.development_guard import safe_public_probe
 
-ROOT = Path(__file__).resolve().parents[1]
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 OUT = HERE / "fetched"

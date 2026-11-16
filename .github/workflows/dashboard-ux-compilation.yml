@@ -213,7 +213,7 @@ jobs:
           ! grep -r "TODO\|FIXME\|XXX\|HACK\|BUG" apps/dashboard/src --include="*.ts" --include="*.tsx" | grep -v node_modules && echo "✓ Gate 2 PASSED" || echo "⚠ Gate 2: Issues found"
 
       - name: Retrieve actual build artifact from compile-ux
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dashboard-build-${{ github.sha }}
           path: apps/dashboard
