@@ -159,6 +159,44 @@ jobs:
         findings, _ = audit(root)
         self.assertIn("CROSS_CREDENTIAL_SAME_WORKFLOW", {item.code for item in findings})
 
+    def _bracket_credential_workflow(self, ref: str) -> str:
+        """Construct an Actions credential expression without using a real value."""
+        return """name: x
+'on': [push, workflow_dispatch]
+jobs:
+  x:
+    if: true
+    runs-on: ubuntu-latest
+    env:
+      TOKEN: SECRET_REF
+    steps:
+      - run: echo safe
+""".replace("SECRET_REF", "$" + "{{ " + ref + " }}")
+
+    def test_bracketed_gitpat_cannot_bypass_allowed_workflow(self):
+        for ref in ("secrets['GITPAT']", 'secrets["GITPAT"]', "secrets [ 'GITPAT' ]"):
+            with self.subTest(ref=ref):
+                root = self._repo(self._bracket_credential_workflow(ref))
+                findings, _ = audit(root)
+                self.assertIn("GITPAT_OUTSIDE_ASSURANCE_WORKFLOW", {item.code for item in findings})
+
+    def test_bracketed_clima_still_requires_manual_guard(self):
+        for ref in ("secrets['CLIMA']", 'secrets["CLIMA"]', "secrets [ 'CLIMA' ]"):
+            with self.subTest(ref=ref):
+                root = self._repo(self._bracket_credential_workflow(ref))
+                findings, _ = audit(root)
+                self.assertIn("CLIMATE_TRIAL_NON_MANUAL", {item.code for item in findings})
+
+    def test_bracketed_legacy_credentials_are_rejected(self):
+        for name, code in (
+            ("RLL_GITHUB_PAT", "GITHUB_PAT_IN_ACTIONS_FORBIDDEN"),
+            ("CLIMATE", "CLIMATE_SECRET_IN_ACTIONS_FORBIDDEN"),
+        ):
+            with self.subTest(name=name):
+                root = self._repo(self._bracket_credential_workflow("secrets['" + name + "']"))
+                findings, _ = audit(root)
+                self.assertIn(code, {item.code for item in findings})
+
     def test_inline_comment_cannot_fake_manual_guard(self):
         root = self._repo("""name: x
 'on': [push, workflow_dispatch]
