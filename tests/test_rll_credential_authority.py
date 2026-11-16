@@ -212,6 +212,42 @@ jobs:
         self.assertNotIn("WORKFLOW_PARSE", codes)
         self.assertNotIn("CLIMATE_TRIAL_NON_MANUAL", codes)
 
+    def test_boolean_or_cannot_bypass_manual_only_credential_gate(self):
+        workflow = """name: x
+'on': [push, workflow_dispatch]
+jobs:
+  x:
+    if: GUARD_PLACEHOLDER
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+"""
+        unsafe_guards = (
+            "github.event_name == 'workflow_dispatch' || true",
+            "true || github.event_name == 'workflow_dispatch'",
+            "github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'",
+            "${{ github.event_name == 'workflow_dispatch' || true }}",
+        )
+        for guard in unsafe_guards:
+            with self.subTest(guard=guard):
+                root = self._repo(workflow.replace("GUARD_PLACEHOLDER", guard))
+                findings, _ = audit(root)
+                self.assertIn("CLIMATE_TRIAL_NON_MANUAL", {item.code for item in findings})
+
+    def test_complete_manual_guard_remains_accepted(self):
+        from tools.validate_rll_credential_authority import _contains_manual_guard
+        self.assertTrue(_contains_manual_guard(
+            {"if": "github.event_name == 'workflow_dispatch'"}
+        ))
+        self.assertTrue(_contains_manual_guard(
+            {"if": "${{ github.event_name == 'workflow_dispatch' }}"}
+        ))
+        self.assertFalse(_contains_manual_guard(
+            {"if": "github.event_name == 'workflow_dispatch' or true"}
+        ))
+
     def test_runtime_receipt_never_contains_secret_material(self):
         secret = "opaque-test-secret-never-persist"
         with patch.dict(os.environ, {CLIMATE_SECRET: secret}, clear=False):
