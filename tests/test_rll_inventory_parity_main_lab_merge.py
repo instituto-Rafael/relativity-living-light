@@ -49,6 +49,6 @@ def test_main_probe_and_lab_action_are_both_preserved() -> None:
     assert upload["uses"] == "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"
     assert "results/inventory_config_serialization_parity.json" in upload["with"]["path"]
     assert "data/results/repo_inventory.json" in upload["with"]["path"]
-    assert "commit inventory updates through a reviewed pull request" in by_name[
-        "Build inventory checksums and commit policy note"
-    ]["run"].lower()
+    commit_policy_run = by_name["Build inventory checksums and commit policy note"]["run"]
+    assert "commit inventory updates through a reviewed pull request" in commit_policy_run.casefold()
+    assert "git push" not in commit_policy_run.casefold()

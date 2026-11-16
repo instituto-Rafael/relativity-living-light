@@ -1,0 +1,203 @@
+{
+  "schema": "rll.security_privacy_risk_register.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE",
+  "claim_allowed": false,
+  "risks": [
+    {
+      "id": "SEC-01",
+      "risk": "Unauthorized capability expansion",
+      "impact": "Program gains authority beyond declared operation.",
+      "controls": [
+        "deny-by-default capability allowlist",
+        "runtime authority mode",
+        "self-authorization forbidden"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-02",
+      "risk": "Arbitrary network destination or SSRF-like behavior",
+      "impact": "Unintended data access/exfiltration or unsafe external interaction.",
+      "controls": [
+        "network off by default",
+        "exact HTTPS host allowlist",
+        "no userinfo/query/fragment/custom port",
+        "cross-host redirect block"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-03",
+      "risk": "Command or shell injection",
+      "impact": "Arbitrary local command execution.",
+      "controls": [
+        "free-text shell forbidden",
+        "AST audit for eval/exec/os.system/shell=True",
+        "declared deterministic program routes"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-04",
+      "risk": "Secret or credential leakage",
+      "impact": "Credential compromise or unauthorized access.",
+      "controls": [
+        "secret ingestion forbidden by default",
+        "no secret/hash/length in receipts",
+        "no environment dump",
+        "private vulnerability reporting"
+      ],
+      "state": "CONTROL_IMPLEMENTED_EXTERNAL_ROTATION_REMAINS_HUMAN"
+    },
+    {
+      "id": "SEC-05",
+      "risk": "Personal/private data enters scientific runtime",
+      "impact": "Privacy harm, unauthorized processing, retention risk.",
+      "controls": [
+        "allowed data-class registry",
+        "personal data expected=false",
+        "unknown classes require human review",
+        "do-not-commit/quarantine incident rule"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-06",
+      "risk": "Path traversal or write outside governed result surfaces",
+      "impact": "Source/policy tampering or destructive overwrite.",
+      "controls": [
+        "repository-relative paths only",
+        "parent traversal denied",
+        "write-prefix allowlist",
+        "policy/source directories forbidden during guarded run"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-07",
+      "risk": "Provenance tampering or silent input substitution",
+      "impact": "Unreproducible or misleading scientific evidence.",
+      "controls": [
+        "input hashes",
+        "committed source anchors",
+        "receipts",
+        "SOURCE != ARTEFACT != EXECUTION != EVIDENCE != CLAIM"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-08",
+      "risk": "Dependency/supply-chain compromise",
+      "impact": "Unreviewed third-party code affects execution.",
+      "controls": [
+        "Rx stdlib-only route",
+        "dependency audit",
+        "freestanding C route"
+      ],
+      "state": "PARTIAL",
+      "gap": "Legacy Structure-D and historical tools still contain external dependencies."
+    },
+    {
+      "id": "SEC-09",
+      "risk": "Sensitive information in logs/artifacts",
+      "impact": "Persistent disclosure.",
+      "controls": [
+        "secret fields forbidden",
+        "bounded receipts",
+        "non-personal data routes",
+        "artifact purpose registry"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-10",
+      "risk": "Excessive retention",
+      "impact": "Unnecessary persistence of data and logs.",
+      "controls": [
+        "CI retention declared",
+        "raw remote payload not persisted in Rx",
+        "repository commit requires explicit opt-in"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-11",
+      "risk": "Unsafe external side effect",
+      "impact": "Modification of third-party or repository resources without authorization.",
+      "controls": [
+        "network write forbidden",
+        "destructive actions forbidden",
+        "force-push/ref-delete forbidden in credential policy"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-12",
+      "risk": "Policy bypass or drift",
+      "impact": "Code changes while policy artifacts remain apparently valid.",
+      "controls": [
+        "security preflight embedded in Rx",
+        "independent AST security-surface audit",
+        "unit tests",
+        "CI enforcement"
+      ],
+      "state": "IMPLEMENTED_UNTESTED_CI"
+    },
+    {
+      "id": "SEC-13",
+      "risk": "Autonomous scope/goal creep",
+      "impact": "Program acts beyond human-defined development objective.",
+      "controls": [
+        "model_training=false",
+        "autonomous_agent=false",
+        "goal_setting=false",
+        "scope_expansion=false",
+        "runtime authority declaration"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-14",
+      "risk": "Runtime pass interpreted as scientific validation",
+      "impact": "Overclaim or misleading publication.",
+      "controls": [
+        "claim_allowed=false",
+        "claim boundary receipts",
+        "model-selection gate separated from runtime/security gates"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-15",
+      "risk": "Security control interpreted as certification",
+      "impact": "False assurance about legal/security compliance.",
+      "controls": [
+        "SECURITY_CONTROL != SECURITY_CERTIFICATION",
+        "compliance_claim=false",
+        "independent review remains TOKEN_VAZIO"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    },
+    {
+      "id": "SEC-16",
+      "risk": "Incident handled publicly with exploit/secrets detail",
+      "impact": "Increased abuse or further compromise.",
+      "controls": [
+        "private vulnerability reporting",
+        "minimal public summary",
+        "secret rotation/revocation outside repository",
+        "incident receipt without sensitive values"
+      ],
+      "state": "CONTROL_IMPLEMENTED"
+    }
+  ],
+  "residual_gaps": [
+    "TOKEN_VAZIO_OS_SANDBOX_ENFORCEMENT",
+    "TOKEN_VAZIO_EXTERNAL_BRANCH_PROTECTION",
+    "TOKEN_VAZIO_EXTERNAL_SECRET_SCANNING",
+    "TOKEN_VAZIO_INDEPENDENT_SECURITY_REVIEW",
+    "TOKEN_VAZIO_LEGAL_COMPLIANCE_REVIEW",
+    "TOKEN_VAZIO_STRUCTURE_D_RX_MIGRATION"
+  ]
+}
