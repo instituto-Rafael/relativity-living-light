@@ -159,6 +159,59 @@ jobs:
         findings, _ = audit(root)
         self.assertIn("CROSS_CREDENTIAL_SAME_WORKFLOW", {item.code for item in findings})
 
+    def test_inline_comment_cannot_fake_manual_guard(self):
+        root = self._repo("""name: x
+'on': [push, workflow_dispatch]
+jobs:
+  x:
+    if: true # github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        self.assertIn("CLIMATE_TRIAL_NON_MANUAL", {item.code for item in findings})
+
+    def test_quoted_four_space_pull_request_target_is_rejected(self):
+        root = self._repo("""name: x
+'on':
+    'pull_request_target':
+    workflow_dispatch:
+jobs:
+  x:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        self.assertIn("PULL_REQUEST_TARGET_SECRET", {item.code for item in findings})
+
+    def test_nested_trigger_configuration_remains_supported(self):
+        root = self._repo("""name: x
+'on':
+    workflow_dispatch:
+        inputs:
+          reason:
+            required: false
+jobs:
+  x:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        codes = {item.code for item in findings}
+        self.assertNotIn("WORKFLOW_PARSE", codes)
+        self.assertNotIn("CLIMATE_TRIAL_NON_MANUAL", codes)
+
     def test_runtime_receipt_never_contains_secret_material(self):
         secret = "opaque-test-secret-never-persist"
         with patch.dict(os.environ, {CLIMATE_SECRET: secret}, clear=False):
