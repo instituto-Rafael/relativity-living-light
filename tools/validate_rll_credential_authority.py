@@ -214,8 +214,18 @@ def _triggers(doc: dict[str, Any]) -> set[str]:
 
 
 def _contains_manual_guard(job: dict[str, Any]) -> bool:
-    expr = str(job.get("if", ""))
-    return bool(re.search(r"""\bgithub\.event_name\s*==\s*(['"])workflow_dispatch\1""", expr))
+    """Fail closed unless the complete job guard is a manual-dispatch equality.
+
+    A matching substring inside an OR/fallback/expression is not proof that
+    the job cannot execute on push or other automatic events.
+    """
+    expr = str(job.get("if", "")).strip()
+    if expr.startswith("${{") and expr.endswith("}}"):
+        expr = expr[3:-2].strip()
+    return bool(re.fullmatch(
+        r"""github\.event_name\s*==\s*(['"])workflow_dispatch\1""",
+        expr,
+    ))
 
 
 def _audit_secret_job(
