@@ -66,6 +66,32 @@ class Finding:
     job: str = ""
 
 
+def _strip_plain_yaml_comment(value: str) -> str:
+    """Strip a YAML plain-scalar comment while preserving quoted # characters."""
+    quote = ""
+    escaped = False
+    for index, char in enumerate(value):
+        if quote == '"':
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = ""
+            continue
+        if quote == "'":
+            if char == quote:
+                if index + 1 < len(value) and value[index + 1] == quote:
+                    continue
+                quote = ""
+            continue
+        if char in ("'", '"'):
+            quote = char
+        elif char == "#" and (index == 0 or value[index - 1].isspace()):
+            return value[:index].rstrip()
+    return value.rstrip()
+
+
 def _load_yaml(path: Path) -> dict[str, Any]:
     """Fail-closed, dependency-free scanner for the narrow credential audit.
 
@@ -80,6 +106,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     lines: list[str] = []
     guard = ""
     folded = False
+    trigger_indent: int | None = None
     credential = re.compile(r"secrets\.(?:GITPAT|CLIMA)\b", re.IGNORECASE)
 
     def finish() -> None:
@@ -101,6 +128,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
             if section == "jobs":
                 finish()
             active, guard, folded, section = None, "", False, ""
+            trigger_indent = None
             event = re.fullmatch(r"""(?:on|'on'|"on"):\s*(.*)""", stripped)
             if event is not None:
                 section = "on"
@@ -120,14 +148,26 @@ def _load_yaml(path: Path) -> dict[str, Any]:
                 raise ValueError("credential outside explicit job")
             continue
         if section == "on":
-            if indent == 2:
-                event = re.match(r"^([A-Za-z_][\w-]*):(?:\s|$)", stripped)
+            if trigger_indent is None:
+                trigger_indent = indent
+            if indent < trigger_indent:
+                raise ValueError("unsupported workflow trigger indentation")
+            if indent == trigger_indent:
+                event = re.match(
+                    r"""^(?:'([^']+)'|"([^"]+)"|([A-Za-z_][\\w-]*)):(?:\\s|$)""",
+                    stripped,
+                )
                 if event:
-                    events.append(event.group(1))
+                    events.append(next(group for group in event.groups() if group is not None))
                 elif stripped.startswith("- "):
-                    events.append(stripped[2:].split("#", 1)[0].strip().strip("'\""))
-                elif credential.search(raw):
-                    raise ValueError("credential inside trigger")
+                    item = _strip_plain_yaml_comment(stripped[2:]).strip().strip("'\\\"")
+                    if not re.fullmatch(r"[A-Za-z_][\\w-]*", item):
+                        raise ValueError("unsupported workflow trigger list item")
+                    events.append(item)
+                else:
+                    raise ValueError("unsupported workflow trigger declaration")
+            elif credential.search(raw):
+                raise ValueError("credential inside trigger")
             continue
         if section != "jobs":
             if credential.search(raw):
@@ -148,7 +188,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
         if indent == 4:
             match = re.match(r"^if:\s*(.*?)\s*$", stripped)
             if match:
-                value = match.group(1)
+                value = _strip_plain_yaml_comment(match.group(1))
                 folded = value in (">", ">-", "|", "|-")
                 guard = "" if folded else value
             else:
@@ -175,7 +215,7 @@ def _triggers(doc: dict[str, Any]) -> set[str]:
 
 def _contains_manual_guard(job: dict[str, Any]) -> bool:
     expr = str(job.get("if", ""))
-    return "github.event_name" in expr and "workflow_dispatch" in expr
+    return bool(re.search(r"""\\bgithub\\.event_name\\s*==\\s*(['"])workflow_dispatch\\1""", expr))
 
 
 def _audit_secret_job(
