@@ -55,8 +55,30 @@ class TestRllAuthorialIngress(unittest.TestCase):
     def test_pat_is_github_contents_only(self):
         doc = self.good()
         doc["sources"][0]["credential_profile"] = "pat_actions"
+        self.assertIn(
+            "sources[0]: PAT profiles are restricted to api.github.com",
+            mod.validate_manifest(doc),
+        )
+
+    def test_duplicate_output_filename_rejected_before_materialization(self):
+        doc = self.good()
+        second = dict(doc["sources"][0])
+        second["id"] = "another-source"
+        second["url"] = "https://example.org/second.pdf"
+        doc["sources"].append(second)
         self.assertTrue(
-            any("api.github.com" in error for error in mod.validate_manifest(doc))
+            any("duplicate destination filename" in error for error in mod.validate_manifest(doc))
+        )
+
+    def test_pat_url_host_is_exact_match(self):
+        doc = self.good()
+        doc["sources"][0]["credential_profile"] = "pat_actions"
+        doc["sources"][0]["url"] = (
+            "https://api.github.com.evil.example/repos/owner/repo/contents/secret"
+        )
+        self.assertIn(
+            "sources[0]: PAT profiles are restricted to api.github.com",
+            mod.validate_manifest(doc),
         )
 
     def test_credentialed_redirect_is_rejected_before_follow(self):
