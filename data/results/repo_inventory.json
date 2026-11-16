@@ -757,11 +757,11 @@
   },
   {
     "path": ".github/workflows/import-data.yml",
-    "bytes": 4733,
+    "bytes": 4735,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 131,
-    "sha256": "e9752b1dd62352fa64ab58edf5f02a173e5b9e1c4614aea187225fc601b62a84",
+    "sha256": "968f4cbe79d6a820d727c04b33e02c68762c2af10de346896d2f78028e18917c",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -946,11 +946,11 @@
   },
   {
     "path": ".github/workflows/rll-book-data-pipeline.yml",
-    "bytes": 7673,
+    "bytes": 7675,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 190,
-    "sha256": "7d0390a1b63eb7f69304160dce9d7b0250da1353f15e50d3a96f9504ae174a6e",
+    "sha256": "209b17433dede3f5f2815579ce70827285ef28065c23e4fe7301e694d73fae20",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -30427,6 +30427,15 @@
     "linhas": 53,
     "sha256": "24452fa9c526dbb0ea35b9b081631844949df3b29e6438cf186b82373e796429",
     "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_zero_job_workflow_preflight_v1.py",
+    "bytes": 973,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 24,
+    "sha256": "761911afd8a2203159dbd9cb726e20c0d52a9811a16cbb381ce26c96fc059c4c",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rmrcti_hidden_truth_body_y.py",

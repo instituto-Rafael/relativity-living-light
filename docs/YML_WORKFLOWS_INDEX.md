@@ -67,7 +67,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/h0-rd-ablation.yml` | `github_workflow_yml` | 6476 | 147 | `9ae16cfa6c72f8f20831fc0c8130b844eb4064cbdcee0f1b70059d3f3339d9b7` |
 | `.github/workflows/hypothesis-instability-orchestrator.yml` | `github_workflow_yml` | 3909 | 110 | `b342702ae11f4bd24d33911efc304e808a869208fa0d0a45c0265c928ca1412a` |
 | `.github/workflows/iml_artifact.yml` | `github_workflow_yml` | 1741 | 64 | `4b927fcf04fa02a3dac04b1c0898b1e539401f9db98eae7c815c88cf6d6ebf3a` |
-| `.github/workflows/import-data.yml` | `github_workflow_yml` | 4733 | 131 | `e9752b1dd62352fa64ab58edf5f02a173e5b9e1c4614aea187225fc601b62a84` |
+| `.github/workflows/import-data.yml` | `github_workflow_yml` | 4735 | 131 | `968f4cbe79d6a820d727c04b33e02c68762c2af10de346896d2f78028e18917c` |
 | `.github/workflows/omega-math-explorer.yml` | `github_workflow_yml` | 3231 | 93 | `49c49abac088cf58e0ada2a6f6d75e95909bcb4a8259587eb8597011dc076daf` |
 | `.github/workflows/orbital-shape-angular-momentum-validation.yml` | `github_workflow_yml` | 3023 | 83 | `2ed44121d1446c2dc9e17fbc980edbe489c95ab3d7affc0a1359acd0983d4df4` |
 | `.github/workflows/orbital-state-vector-v2.yml` | `github_workflow_yml` | 3086 | 85 | `c6d76359c4b78db2bb0e484347df5e994985ab6ca0015ad0bb036a5e098aaaa4` |
@@ -88,7 +88,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-authorial-science-fabric-v1.yml` | `github_workflow_yml` | 9917 | 224 | `8682d258dd7179cb8f5e9cd5919c8a19835276de3464c7f761fab9afb210fc43` |
 | `.github/workflows/rll-balance-report.yml` | `github_workflow_yml` | 6744 | 180 | `b1db13d597ccc4026a9ad80865444e0c0df9eb2ce008299e74c87b33d906df49` |
 | `.github/workflows/rll-biophoton-metabolic-transduction-gate.yml` | `github_workflow_yml` | 1263 | 36 | `9e91f66dce589802b7369994c9182d9aa3c90914294eb8418deab40d90914af3` |
-| `.github/workflows/rll-book-data-pipeline.yml` | `github_workflow_yml` | 7673 | 190 | `7d0390a1b63eb7f69304160dce9d7b0250da1353f15e50d3a96f9504ae174a6e` |
+| `.github/workflows/rll-book-data-pipeline.yml` | `github_workflow_yml` | 7675 | 190 | `209b17433dede3f5f2815579ce70827285ef28065c23e4fe7301e694d73fae20` |
 | `.github/workflows/rll-canonical-family-pipeline-v1.yml` | `github_workflow_yml` | 4693 | 114 | `d555ad60c73f95dba70a40bc408f8f3d7c65f8831079d699a78f1c8207710414` |
 | `.github/workflows/rll-claim-authority-export.yml` | `github_workflow_yml` | 1547 | 52 | `4034b4b53b69f81531fd5f360907028715b8c14e39c4f6e59c070ddbaad1c76f` |
 | `.github/workflows/rll-climate-engine-trial-live.yml` | `github_workflow_yml` | 5750 | 159 | `d6a88cdd886c30025f5607a528521d06e816b20978527d5ba8d34f64c8c2611e` |
