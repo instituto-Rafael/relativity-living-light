@@ -249,7 +249,13 @@ def _audit_secret_job(
     for job_id, raw_job in (doc.get("jobs") or {}).items():
         if not isinstance(raw_job, dict):
             continue
-        job_text = json.dumps(raw_job, ensure_ascii=False)
+        job_text = raw_job.get("_raw")
+        if not isinstance(job_text, str):
+            findings.append(Finding(
+                "ERROR", "WORKFLOW_PARSE", rel,
+                "credential-bearing job has no original source text", str(job_id),
+            ))
+            continue
         if not secret_re.search(job_text):
             continue
         if not _contains_manual_guard(raw_job):

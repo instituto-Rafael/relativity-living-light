@@ -180,6 +180,23 @@ jobs:
                 findings, _ = audit(root)
                 self.assertIn("GITPAT_OUTSIDE_ASSURANCE_WORKFLOW", {item.code for item in findings})
 
+    def test_bracketed_gitpat_in_assurance_requires_manual_guard(self):
+        for ref in ("secrets['GITPAT']", 'secrets["GITPAT"]'):
+            with self.subTest(ref=ref):
+                root = self._repo(
+                    self._bracket_credential_workflow(ref), GITHUB_ASSURANCE_WORKFLOW
+                )
+                findings, _ = audit(root)
+                self.assertIn("GITPAT_NON_MANUAL", {item.code for item in findings})
+
+    def test_bracketed_clima_detects_destructive_job(self):
+        workflow = self._bracket_credential_workflow('secrets["CLIMA"]')
+        workflow = workflow.replace(
+            "- run: echo safe", "- run: curl -X DELETE https://example.invalid/resource"
+        )
+        findings, _ = audit(self._repo(workflow))
+        self.assertIn("DESTRUCTIVE_OPERATION_WITH_SECRET", {item.code for item in findings})
+
     def test_bracketed_clima_still_requires_manual_guard(self):
         for ref in ("secrets['CLIMA']", 'secrets["CLIMA"]', "secrets [ 'CLIMA' ]"):
             with self.subTest(ref=ref):
