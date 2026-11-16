@@ -1,0 +1,46 @@
+{
+  "schema": "rll.lpt.j0715_1141.observational_seed.v1",
+  "state": "SOURCED_REFERENCE_ONLY_NO_REAL_DATA_INGESTION",
+  "claim_allowed": false,
+  "object_id": "GPM J071507-114153",
+  "object_class": "long_period_radio_transient_binary_white_dwarf_G_type",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "research_article": {
+    "title": "A long-period transient with a Sun-like companion",
+    "doi": "10.1038/s41550-026-03016-z",
+    "publisher": "Nature Astronomy",
+    "publication_date": "2026-11-12"
+  },
+  "upstream_dataset": {
+    "doi": "10.5281/zenodo.21386095",
+    "archive_license": "TOKEN_VAZIO_UNCHECKED",
+    "files_ingested": 0,
+    "checksums_sha256": "TOKEN_VAZIO_NOT_RETRIEVED"
+  },
+  "upstream_analysis_code": {
+    "repository": "https://github.com/robotopia/j0715-1141-analysis",
+    "license": "TOKEN_VAZIO_UNCHECKED",
+    "reuse": "reference_only_no_copied_source"
+  },
+  "reported_approximate_periods": {
+    "spin_minutes": 7.9,
+    "orbital_days": 1.3,
+    "purpose": "descriptive_approximate_values_not_fitted_ephemerides"
+  },
+  "existing_rll_adapters": [
+    "B06_photon_plasma_propagation",
+    "B07_magneto_optical",
+    "src/rll/structural_integration.py#frb_delay_residual",
+    "data/contracts/rll_retarded_spacetime_state.v1.yml"
+  ],
+  "required_before_real_claim": [
+    "upstream_archive_files_and_license_verified",
+    "source_file_hash_and_conversion_receipt",
+    "time_standard_and_barycentric_correction_checked",
+    "pulse_cycle_indices_not_inferred_from_observation_gaps",
+    "RM_extracted_from_multifrequency_polarimetry_with_instrument_model",
+    "orbital_ephemeris_and_independent_holdout",
+    "uncertainty_covariance_and_standard_astrophysical_baseline",
+    "observational_result_and_independent_replication"
+  ]
+}
