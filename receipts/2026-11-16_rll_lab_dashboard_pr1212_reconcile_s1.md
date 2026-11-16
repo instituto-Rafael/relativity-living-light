@@ -1,0 +1,21 @@
+# RLL lab Dashboard Dependabot S1 — selective non-regression handoff (2026-11-16)
+
+- mu_id: MU-RLL-LAB-DASHBOARD-PR1212-20261116-S1
+- source: PR #1212 after merged scoped quality hotfix PR #1213, source HEAD 6f808a74d098176519c140f63c8e890f552c21b7
+- target_parent: rll/lab@62e30235be997427939868178dee887a8e36dbcb
+- source CI: PR #1213 head 5adfb480eda5b02ae12e9ac881a87cfc7ccfe516 had 16 successful checks, including Dashboard compile, UX tests, Quality Validation, summary, Gradle dependency submission.
+- source_tree: bc061d76b743a37a41bc30f4d12332098067a326
+- lab_tree: 2d8af2d8291bc7fbc9bcdf9f514c9e83d909997e
+- evidence: 37/41 apps/dashboard source paths blob-identical; remaining app files are 2 package manifests, vitest jsdom origin config, and new Zustand preferences test.
+- route: work/work/rll-lab-dashboard-dependabot-reconcile-20261116-v1 -> rll/lab, no main mutation, no bypass.
+- selected source blobs:
+  - apps/dashboard/package.json: 1761b834892394430c883d76a538272f027f33fb
+  - apps/dashboard/package-lock.json: 4d8c2cb3dee204f3af0cf6f4592209a6270fd9a0
+  - apps/dashboard/vitest.config.ts: ff6b0262921cb212a09e69087c2443196a6f32e8
+  - apps/dashboard/src/store/appStore.test.ts: 4ee321a03b1a8e7d10c04227a062297e55df615a
+  - .github/workflows/dashboard-build.yml: 70c4ab78eb3b9fe1bb1a4a20f65cda82f9aabc94
+  - .github/workflows/dashboard-ux-compilation.yml: 94efc8610b51611928077a984cc1b99ab0f2a44a
+- workflow conflict resolution: forward-port stricter bot dashboard checks, Node 24 and npm ci while retaining lab's newer setup-node@v7.1.0 pin across workflows.
+- no delete: preserved other lab files, existing wrapper, core/physics/observational code. No auto-commit workflows, no claim promotion.
+- status: IMPLEMENTED_UNTESTED / claim_allowed=false; CI exact HEAD must pass before merge.
+- rollback: append-only reviewed revert/successor; preserve source PR #1212 state and older receipts.
