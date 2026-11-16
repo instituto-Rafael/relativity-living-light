@@ -1,0 +1,110 @@
+{
+  "schema": "rll.muwrite.hete_boundary_geometry.v1",
+  "mu_id": "MU-RLL-HETE-BOUNDARY-GEOMETRY-20260924-V1",
+  "timestamp": "2026-09-24T22:38:00-03:00",
+  "parent": "MU-RLL-FOLD-PASSAGE-144-42-20260924-V1",
+  "kind": "DERIVATION+BOUNDARY_LOCALIZATION+PROJECTION_ALIAS_AUDIT",
+  "delta_summary": "Localized all q=2 HETE non-stable states to five torus positions, derived exact R/r stability plateaus, proved the support is a rectangular-pyramid rather than square-pyramid configuration, and identified the five mixed icosphere bins as projection aliases of distinct torus source states.",
+  "commits": [
+    "681c059861674962faac767e3885722b8e4c07ff",
+    "ed2e9b886ba51e5894bf9b9a6590738e6a3681e8",
+    "140911285689f691f580c7d510dce9a187af0ac5",
+    "d6d070c9e9d297bda105d662fd6c9bc6109b891c"
+  ],
+  "canonical_q2": {
+    "R_over_r": 2,
+    "stable": 126,
+    "unstable": 18,
+    "stable_fraction": "7/8",
+    "unique_unstable_positions": [
+      [
+        0,
+        0
+      ],
+      [
+        30,
+        45
+      ],
+      [
+        30,
+        315
+      ],
+      [
+        330,
+        45
+      ],
+      [
+        330,
+        315
+      ]
+    ],
+    "unstable_per_branch": 3,
+    "period_per_branch": 24,
+    "torus_throat_unstable": 0,
+    "meridian_30_mouth_unstable": 0,
+    "mixed_projection_vertices": [
+      23,
+      30,
+      32,
+      40,
+      41
+    ]
+  },
+  "exact_ratio_thresholds": {
+    "q1": "(cos30-cos45)/(1-cos30) ~= 1.186184747608386",
+    "q2": "3",
+    "q3": "(cos30+cos45)/(1-cos30) ~= 11.742018482667117",
+    "regimes": [
+      {
+        "q": "1<q<q1",
+        "stable": 138,
+        "unstable": 6,
+        "fraction": "23/24"
+      },
+      {
+        "q": "q1<=q<3",
+        "stable": 126,
+        "unstable": 18,
+        "fraction": "7/8"
+      },
+      {
+        "q": "3<=q<q3",
+        "stable": 120,
+        "unstable": 24,
+        "fraction": "5/6"
+      },
+      {
+        "q": "q>=q3",
+        "stable": 108,
+        "unstable": 36,
+        "fraction": "3/4"
+      }
+    ]
+  },
+  "source_shape_result": {
+    "classification": "right_rectangular_pyramid_support",
+    "square_base": false,
+    "square_condition_R_over_r": "1/sqrt(2)",
+    "compatible_with_ring_torus": false
+  },
+  "corrected_interpretations": [
+    "R=2r is the same-scale rigid sphere passage tangent limit, not a HETE bifurcation.",
+    "u=+/-30 azimuth in the flow lattice is distinct from v=+/-30 meridional mouth tangency.",
+    "mixed icosphere vertex does not imply one torus source state has mixed stability.",
+    "square/cube PG-Omega7 layers are not inferred from the five-point unstable support."
+  ],
+  "artifacts": [
+    "rx/toroidal_geodesic_stability.py",
+    "tests/test_toroidal_geodesic_stability.py",
+    "docs/science/RLL_HETE_STABILITY_BOUNDARY_GEOMETRY_V1.md",
+    "scripts/report_toroidal_stability_boundary.py"
+  ],
+  "state": "IMPLEMENTED_EXACT_HEAD_CI_PENDING",
+  "claim_allowed": false,
+  "token_vazio": [
+    "MESH_REFINEMENT_PERSISTENCE",
+    "PHYSICAL_VORTEX_FIELD",
+    "STRONG_GRAVITY_OBSERVATIONAL_BINDING"
+  ],
+  "next": "Close exact-head CI, then run fixed-gate angular refinements at 15deg, 7.5deg and 1deg to decide whether the discrete five-point support converges to a continuous stability boundary or is a lattice artifact."
+}

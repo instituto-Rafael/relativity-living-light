@@ -1,0 +1,64 @@
+{
+  "schema": "rll.geometry_orbit_fields.v1",
+  "version": 1,
+  "created": "2026-11-15",
+  "state": "IMPLEMENTED_UNTESTED_REMOTE",
+  "claim_allowed": false,
+  "producer": "rafaelmeloreisnovo/Matem-tica-",
+  "producer_reference": "docs/formal/2026-11-15_TRIGONOMETRIA_RADIANOS_LOGLOG_COVARIANCIA_2D3D_V3.md",
+  "rll_module": "scripts/validation/rll_geometry_orbit_fields_v1.py",
+  "test_module": "tests/test_rll_geometry_orbit_fields_v1.py",
+  "math_domains": [
+    "EUCLIDEAN_2D",
+    "ORTHOGRAPHIC_3D_TO_2D",
+    "DIMENSIONLESS_LOGS",
+    "FINITE_VERTEX_COVARIANCE"
+  ],
+  "physics_domains": [
+    "NEWTONIAN_ELLIPSE_TWO_BODY",
+    "NEWTONIAN_POINT_MASS_ACCELERATION",
+    "STATIC_VACUUM_DIPOLE_FAR_FIELD"
+  ],
+  "input_units": {
+    "mu_m3_s2": "m^3/s^2",
+    "semi_major_m": "m",
+    "eccentricity": "dimensionless 0<=e<1",
+    "true_anomaly_rad": "rad",
+    "inclination_rad": "rad",
+    "moment_A_m2": "A*m^2",
+    "position_m": "m",
+    "gravity_m_s2": "m/s^2",
+    "dipole_B_tesla": "T"
+  },
+  "required_gates": [
+    "FINITE_INPUT",
+    "DOMAIN_CHECK",
+    "SCOPED_NUMERIC_TESTS",
+    "OBSERVATION_SPECIFIC_MECHANISM",
+    "UNITS_CONSISTENCY",
+    "MEASUREMENT_COVARIANCE",
+    "NO_DOUBLE_COUNTING",
+    "INDEPENDENT_ORACLE",
+    "LIKELIHOOD_REGRESSION"
+  ],
+  "likelihood_binding": {
+    "direct": false,
+    "state": "BLOCKED",
+    "H_z": "TOKEN_VAZIO",
+    "BAO": "TOKEN_VAZIO",
+    "Pantheon": "TOKEN_VAZIO",
+    "CMB": "TOKEN_VAZIO",
+    "fsigma8": "TOKEN_VAZIO",
+    "magnetic_plasma_cosmology": "HYPOTHESIS_UNTESTED"
+  },
+  "execution": {
+    "github_file_written": true,
+    "unit_tests_defined": 17,
+    "unit_tests_executed_on_branch": false,
+    "ci": "NOT_RUN",
+    "arm32": "NOT_RUN",
+    "arm64": "NOT_RUN",
+    "physical_validation": "NOT_RUN"
+  },
+  "rollback": "REVIEW_BRANCH_ONLY; NO MAIN CHANGES; APPEND_ONLY_CORRECTION"
+}

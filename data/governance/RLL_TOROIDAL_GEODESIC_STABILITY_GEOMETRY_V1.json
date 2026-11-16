@@ -1,0 +1,113 @@
+{
+  "schema": "rll.toroidal_geodesic_stability_geometry.v1",
+  "date": "2026-09-24",
+  "author": "RAFAEL MELO REIS",
+  "state": "GEOMETRY_PRIMARY_IMPLEMENTED_CI_PENDING",
+  "claim_allowed": false,
+  "supersedes_scope": {
+    "predecessor_pr": 983,
+    "correction": "Population/dispersion parameters are not the primary construction. Dispersion is an output diagnostic of a geometry-first stability engine."
+  },
+  "authorities": {
+    "formal_pbip": "rafaelmeloreisnovo/Matem-tica-/docs/formal/PITAGORAS_BHASKARA_ISOSCELES_POINCARE_CROSSWALK_V1.md",
+    "formal_crown": "rafaelmeloreisnovo/Matem-tica-/docs/formal/CROWN_15_30_45_PI12_PI5_GEODESIC_REFLECTION_CROSSWALK_V1.md",
+    "formal_rotation_projection": "rafaelmeloreisnovo/Matem-tica-/docs/formal/CIRCULAR_POLYGON_ROTATION_PROJECTION_LAYER_GEOMETRY_V1.md",
+    "poincare_torus": "rafaelmeloreisnovo/papers/papers/poincare_torus_mobile_v1/paper.md",
+    "poincare_7d": "rafaelmeloreisnovo/papers/papers/poincare_ball_7d_freestanding_v1/paper.md",
+    "geodesic_toroidal_synthesis": "rafaelmeloreisnovo/papers/papers/RAFAELIA_GEODESIC_TOROIDAL_WORKFLOW_SYNTHESIS_2026-08-30.md",
+    "stability": "rafaelmeloreisnovo/papers/docs/rmrcti/HETE_018_TOROIDAL_STABILITY_ENRICHMENT.md"
+  },
+  "geometry_chain": [
+    "equilateral/isoceles +/-30 gate",
+    "Pythagoras half-chord and median",
+    "Bhaskara discriminant for line/circle and line/sphere intersections",
+    "standard torus T2 embedding",
+    "three phase families x two chiralities on torus surface",
+    "Poincare return map with du=30deg and |dv|=45deg",
+    "radial projection to minimal enclosing sphere S=R+r",
+    "icosphere f=2 landmarks with V=42,E=120,F=80",
+    "quadratic c-plane fixed points from torus geometry",
+    "HETE local stability test |2z|<1"
+  ],
+  "pulse_binding": {
+    "sin30": 0.5,
+    "cos30": "sqrt(3)/2",
+    "geometric_c": "c=sin30*((R+r*cos(v))/(R+r))*exp(i*u)",
+    "boundary": "This binds the current session rule 'sin30 is the toroidal pulse entry' to a dimensionless geometry map. It is a versioned model definition, not a physical constant claim."
+  },
+  "six_branch_matrix": {
+    "phase_families": 3,
+    "chirality_families": 2,
+    "du": "30deg",
+    "dv": "+/-45deg",
+    "period": 24,
+    "first_u_section_return": 12,
+    "shape_one_period": [6,24],
+    "cell_count": 144,
+    "boundary": "144 is derived from 6 branches times the demonstrated 24-step torus period; it is not promoted to a universal significance."
+  },
+  "mouth_geometry": {
+    "meridian_circle": "(rho-R)^2+z^2=r^2",
+    "tangent_slopes": "m=+/-tan30",
+    "parallel_gap": "2r",
+    "quadratic_outer": "rho(z)=R+sqrt(3)r/4+(sqrt(3)/r)z^2",
+    "quadratic_inner": "rho(z)=R-sqrt(3)r/4-(sqrt(3)/r)z^2",
+    "derivation": "symmetry about z=0 + passage through +/-30 torus boundary points + local dz/drho=+/-tan30",
+    "boundary": "Derived geometric mouth; not a demonstrated physical vortex."
+  },
+  "sphere_projection": {
+    "minimal_enclosing_radius": "S=R+r",
+    "projection": "Pi_S(X)=S*X/||X||",
+    "icosphere_f2": {"V":42,"E":120,"F":80},
+    "line_sphere_discriminant": "Delta=4[(x0.d)^2-|d|^2(|x0|^2-S^2)]",
+    "reflection": "d'=d-2(d.n)n"
+  },
+  "stability": {
+    "quadratic_map": "f_c(z)=z^2+c",
+    "fixed_point_equation": "z^2-z+c=0",
+    "discriminant": "D=1-4c",
+    "roots": "z_pm=(1+/-sqrt(D))/2",
+    "local_rule": "stable iff min(|2z_+|,|2z_-|)<1",
+    "spatial_dependency": "c is generated from each torus cell; stability is therefore evaluated point-by-point on the spatial matrix."
+  },
+  "fine_angle_routes": {
+    "allowed_seed_resolution": ["1 degree","1 arcminute","1 arcsecond"],
+    "complements": ["C60(theta)=60deg-theta","C90(theta)=90deg-theta"],
+    "cathetus_difference": "delta=|d-q| with q=R sin(theta/2), d=R cos(theta/2)",
+    "pythagorean_identity": "q^2+d^2=R^2"
+  },
+  "poincare_7d_boundary": {
+    "state": "TOKEN_VAZIO_GEOMETRY_TO_B7_CHANNEL_MAP",
+    "reason": "The 7D paper proves a canonical lift only after an explicit 1+7 input convention. This V1 does not invent seven channels from a 3D point.",
+    "allowed_now": "Use the torus Poincare return map. Add B7 only after a typed seven-channel mapping is declared and tested."
+  },
+  "figure_eight_fold_boundary": {
+    "state": "TOKEN_VAZIO_TORUS_TO_FIGURE8_OPERATOR",
+    "reason": "The current corpus does not yet provide one canonical twist/fold map proving that the overlap yields exactly four equilateral triangles.",
+    "next": "Declare an explicit fold map and verify the resulting triangle side lengths before promotion."
+  },
+  "tzolkin_boundary": {
+    "role": "SYMBOLIC_OR_COMPARATIVE_ONLY",
+    "physical_geometry_input": false,
+    "note": "Calendar imagery is not used as geometric evidence in this implementation."
+  },
+  "artifacts": [
+    "rx/toroidal_geodesic_stability.py",
+    "tests/test_toroidal_geodesic_stability.py"
+  ],
+  "F_ok": [
+    "geometry is primary rather than fitted dispersion parameters",
+    "six torus-surface branches are generated deterministically",
+    "30-degree equilateral gate and tangent gap are exact",
+    "Bhaskara/Pythagoras/Poincare/HETE are connected with typed boundaries",
+    "42-vertex f2 geodesic sphere is used as a spatial projection lattice"
+  ],
+  "F_gap": [
+    "exact-head CI",
+    "canonical torus-to-figure-eight fold operator",
+    "typed geometry-to-Poincare-B7 seven-channel map",
+    "physical vortex velocity field and observables",
+    "real observational binding"
+  ],
+  "F_next": "Run exact-head CI, then emit one deterministic geometry receipt for the 6x24=144 torus matrix projected onto the 42 f2 sphere vertices; only afterward bind an RLL strong-gravity observable."
+}

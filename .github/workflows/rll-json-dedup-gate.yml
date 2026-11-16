@@ -1,0 +1,87 @@
+name: RLL JSON Dedup Evidence Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/audit_rll_json_dedup.py'
+      - 'tests/test_audit_rll_json_dedup.py'
+      - 'docs/science/RLL_JSON_BYTES_EVIDENCE_AFTER_1195_20261115_V2.md'
+      - '.github/workflows/rll-json-dedup-gate.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rll-json-dedup-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scoped-json-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact candidate revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 resolved 2026-11-14
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Python 3.12
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7 resolved 2026-11-14
+        with:
+          python-version: '3.12'
+      - name: Synthetic adversarial gates
+        run: python -m unittest discover -s tests -p test_audit_rll_json_dedup.py -v
+      - name: Audit committed Git JSON and JSONL without exporting content
+        shell: bash
+        env:
+          EXPECTED_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python scripts/audit_rll_json_dedup.py --repo . --rev HEAD --max-file-bytes 16777216 --output "$RUNNER_TEMP/rll-json-dedup.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          receipt = json.loads((Path(os.environ["RUNNER_TEMP"]) / "rll-json-dedup.json").read_text())
+          counts = receipt["counts"]
+          assert receipt["source"]["repository_commit"] == os.environ["EXPECTED_SOURCE_COMMIT"]
+          assert counts["json_like_paths"] > 0
+          assert counts["json_like_paths"] == len(receipt["file_receipts"])
+          assert (counts["parsed_files"] + counts["size_limit_files"]
+                  + len(receipt["parse_failures"])) == counts["json_like_paths"]
+          # Complete-scoped evidence requires all publicly committed JSON paths to be read.
+          # Report diagnostics are still uploaded by the always() step on failure.
+          assert counts["size_limit_files"] == 0
+          assert counts["symlink_skipped"] == 0
+          assert counts["parse_failed_unique_blobs"] == 0
+          assert receipt["parse_failures"] == []
+          assert counts["parsed_files"] == counts["json_like_paths"]
+          import re
+          assert len({item["path"] for item in receipt["file_receipts"]}) == counts["json_like_paths"]
+          assert all(
+              item["state"] == "PARSED"
+              and re.fullmatch(r"[0-9a-f]{64}", item["raw_sha256"])
+              and re.fullmatch(r"[0-9a-f]{64}", item["canonical_json_sha256"])
+              and re.fullmatch(r"[0-9a-f]{40}", item["git_blob_oid"])
+              for item in receipt["file_receipts"]
+          )
+          assert receipt["boundary"]["claim_allowed"] is False
+          assert receipt["boundary"]["content_exported"] is False
+          assert receipt["boundary"]["scientific_validation"] == "NOT_RUN"
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
+              f.write("## RLL JSON metadata-only audit\n\n")
+              f.write(f"Commit: {receipt['source']['repository_commit']}\n\n")
+              for key, value in counts.items():
+                  f.write(f"- {key}: {value}\n")
+              f.write("\nclaim_allowed=false; JSON equivalence is not scientific validation.\n")
+          PY
+
+      - name: Retain bounded public Git-blob metadata receipt (no source JSON content)
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rll-json-dedup-metadata-${{ github.run_id }}
+          path: ${{ runner.temp }}/rll-json-dedup.json
+          retention-days: 7
+          if-no-files-found: error

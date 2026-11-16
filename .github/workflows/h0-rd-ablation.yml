@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
           cache: pip
@@ -47,8 +47,12 @@ jobs:
           # same already-proven compatibility envelope here.
           python -m pip install --disable-pip-version-check --upgrade \
             "numpy>=1.26,<2" \
+            "pandas>=2,<3" \
+            "astropy>=5.3,<8" \
+            "contourpy>=1.0,<1.4" \
             "pytest>=8,<10" \
             "camb==1.6.6"
+          python -m pip check
           python - <<'PY'
           import importlib.metadata
           from packaging.version import Version
@@ -134,7 +138,7 @@ jobs:
             > artifacts/science/h0/H0_RD_ABLATION_CHECKSUMS.sha256
 
       - name: Upload compact H0/r_d and Boltzmann probe receipts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: h0-rd-ablation-${{ github.run_id }}
           path: |

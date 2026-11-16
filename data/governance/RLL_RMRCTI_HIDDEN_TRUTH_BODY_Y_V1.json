@@ -1,0 +1,37 @@
+{
+  "schema": "rll.rmrcti_hidden_truth_body_y.contract.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "state": "SYNTHETIC_PREREGISTERED_BENCHMARK",
+  "claim_allowed": false,
+  "workstream": "WS18_rmrcti_hidden_truth_and_real_trace_replication",
+  "source_contract": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "purpose": "Execute hidden-truth Body-Y with retarded observation, weak-field propagation, fixed event chain, adversarial controls, G6 covariance residuals and RMRCTI diagnostic routing.",
+  "physics_scope": "dimensionless weak-field toy benchmark only",
+  "frozen_before_noise": {
+    "truth_model": "two_impulse_weak_field_chain",
+    "candidate_scenarios": ["truth", "no_event", "wrong_event_order", "wrong_geometry", "wrong_impulse_sign"],
+    "noise_seeds": [17, 23, 42, 633, 144000],
+    "arrival_count": 15,
+    "primary_G6_feature": "retarded_xy_Mahalanobis2",
+    "decision_rule": "minimum_total_d2_over_frozen_scenarios",
+    "covariance": "diagonal_sigma_0.006_squared"
+  },
+  "adaptive_numerics": {
+    "allowed": "curvature-derived RK4 subdivision only",
+    "forbidden": ["physical_parameter_change", "event_parameter_fit", "cosmological_parameter_change", "likelihood_redefinition"]
+  },
+  "multiple_testing": {
+    "current_claim": "NO_PVALUE_CLAIM",
+    "future_feature_family_policy": "Holm correction required before confirmatory significance language"
+  },
+  "promotion_boundary": [
+    "synthetic truth recovery != real astrophysical validation",
+    "DeltaP_op != physical parameter",
+    "Omega persistence != cosmological likelihood",
+    "adaptive numerics != adaptive physics",
+    "provider CI PASS != independent real-trace replication"
+  ],
+  "required_output": "artifacts/science/rmrcti/RLL_RMRCTI_HIDDEN_TRUTH_RECEIPT.json",
+  "F_next_after_pass": "independent real trace package plus domain-calibrated sensitivity thresholds; keep claim_allowed=false"
+}

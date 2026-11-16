@@ -47,3 +47,21 @@ pytest -q tests/test_validate_workflow_docs.py
 ## Navegação rápida
 
 Consulte [`.github/GUIA_WORKFLOWS.md`](../../.github/GUIA_WORKFLOWS.md).
+
+## Session catalog v3 and capacity profiles
+
+The session catalog is at [`.github/workflow-orchestrator/session.yml`](../../.github/workflow-orchestrator/session.yml). Its read-only inventory scans root workflows for receipts, while dispatch is restricted to explicit manifests under `workflows/tower/` and `workflows/research/`.
+
+| Perfil | Escopo | Budget máximo |
+|---|---|---:|
+| `quick_session` | structure, contract, tests and governance | 120 min |
+| `transit_refactor` | bounded operational tower | 190 min |
+| `real_data_session` | real-data custody and metadata audits | 185 min |
+| `full_session` | tower plus real-data profile; excludes science shadow | 305 min |
+| `science_shadow_session` | deterministic and frontier checks in isolation | 190 min |
+| `literature_session` | academic intake and Jekyll preview | 15 min |
+| `pages_preview_session` | Jekyll preview artifact | 15 min |
+
+Execution is sequential, fail-fast and single-flight. The largest budget leaves 55 minutes under the parent job's 360-minute timeout. The research workflow generates a preview artifact; it does not deploy to Pages. Candidate relations remain `RELATIONAL_PENDING` and `claim_allowed: false`.
+
+See [RLL_RESEARCH_FRAGMENT_ROUTE_V1.md](RLL_RESEARCH_FRAGMENT_ROUTE_V1.md) for provenance, workflow inputs and review gates.

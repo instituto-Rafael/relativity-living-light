@@ -1,0 +1,127 @@
+{
+  "schema": "rll.adaptive_geometry_feature_layer.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "state": "DIAGNOSTIC_FEATURE_CONTRACT",
+  "claim_allowed": false,
+  "parent": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "purpose": "Use geometry as an invertible diagnostic/reparameterization layer over already-defined observables and states, never as a substitute for the physical metric or likelihood.",
+  "regimes": {
+    "G0": {
+      "allowed": [
+        "euclidean_shape_features",
+        "covariance_ellipses",
+        "local_curve_invariants"
+      ]
+    },
+    "G1": {
+      "allowed": [
+        "trajectory_curvature",
+        "trajectory_torsion",
+        "turning_and_encounter_diagnostics"
+      ],
+      "boundary": "Newtonian/weak-field gate must already pass"
+    },
+    "G2": {
+      "allowed": [
+        "local_orthonormal_frame_features"
+      ],
+      "boundary": "No raw Euclidean curvature on coordinate components without declared tetrad/metric adapter"
+    },
+    "G3": {
+      "allowed": [
+        "metric_specific_adapter_only"
+      ],
+      "boundary": "Strong-field geometry must remain Schwarzschild/Kerr/NR-governed"
+    },
+    "G4": {
+      "allowed": [
+        "plasma_trajectory_and_covariance_diagnostics"
+      ],
+      "boundary": "No morphology-to-mechanism promotion"
+    },
+    "G5": {
+      "allowed": [
+        "BAO_observable_space_reparameterization",
+        "distance_curve_shape_diagnostics"
+      ],
+      "boundary": "Does not change flat-FLRW physics contract or add a cosmological parameter"
+    },
+    "G6": {
+      "allowed": [
+        "covariance_ellipse",
+        "Mahalanobis_residual",
+        "projection_geometry"
+      ]
+    }
+  },
+  "bao_observable_space": {
+    "coordinates": [
+      "x=DM/rd",
+      "y=DH/rd"
+    ],
+    "independent_core": [
+      "s=0.5*ln(x*y)",
+      "a=ln(x/y)=ln(F_AP)"
+    ],
+    "inverse": [
+      "x=exp(s+a/2)",
+      "y=exp(s-a/2)"
+    ],
+    "redundancy": [
+      "phi=atan(F_AP) for x,y>0",
+      "q=min(F_AP,1/F_AP)",
+      "A_ellipse=2*pi*A_triangle",
+      "rho^2=(x*y)*(F_AP+1/F_AP)"
+    ],
+    "prior_boundary": "The (ln x, ln y)->(s,a) linear transform has |det|=1 in log-space. In linear (x,y) measure, the Jacobian |dx dy/ds da|=x*y must be accounted for if used in a prior or sampler density."
+  },
+  "motion_geometry": {
+    "G0_G1": {
+      "curvature": "kappa=|v x a|/|v|^3",
+      "torsion": "tau=((v x a).j)/|v x a|^2",
+      "use": "event/turning/encounter diagnostic only"
+    },
+    "G2_G3": "TOKEN_VAZIO_METRIC_SPECIFIC_ADAPTER_REQUIRED"
+  },
+  "covariance_geometry": {
+    "eigen_axes": "lambda_major/minor of 2x2 covariance",
+    "axis_ratio": "sqrt(lambda_min/lambda_max)",
+    "orientation": "0.5*atan2(2*sigma_xy,sigma_xx-sigma_yy)",
+    "residual": "Mahalanobis^2 = delta^T Sigma^-1 delta"
+  },
+  "adaptive_allowed": [
+    "diagnostic coordinate transform",
+    "held-out residual triage",
+    "proposal tuning with explicit density/Jacobian accounting",
+    "regime/event routing features",
+    "posterior/covariance conditioning diagnostics"
+  ],
+  "adaptive_forbidden": [
+    "new cosmological parameter without a physical contract",
+    "likelihood modification without explicit versioned contract",
+    "prior change without Jacobian/density accounting",
+    "visual resemblance as evidence",
+    "polygon/circle constants injected into H(z) by analogy"
+  ],
+  "null_control": {
+    "source": "results/RLL_DESI_SYNTHETIC_GEOMETRY_EMBEDDING_V1.json",
+    "current_recorded_G4_boundary": "Omega_s0=0",
+    "requirement": "RLL adaptive features must collapse to LCDM to numerical/best-fit tolerance at the null boundary"
+  },
+  "implementation": {
+    "module": "rx/adaptive_geometry.py",
+    "tests": "tests/test_adaptive_geometry.py",
+    "local_precommit_status": "PASS",
+    "local_precommit_sha256": {
+      "module": "dc2f86247c2a329f21fe61f15ee61157f5d1dd20c6d74fbfa632c91516fdf1cc",
+      "test": "069d9ab22ea796e6063f38a7d4880642fbd9b1024487bb5c709309b8549d4f1b"
+    }
+  },
+  "F_gap": [
+    "metric-specific curvature/torsion adapter for G2/G3",
+    "full covariance ingestion for DESI observable pairs",
+    "held-out test whether adaptive features improve numerical conditioning without changing scientific conclusions",
+    "provider CI / independent reproduction"
+  ]
+}

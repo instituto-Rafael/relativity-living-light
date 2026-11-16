@@ -18,7 +18,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
 
 SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
@@ -67,9 +66,140 @@ class Finding:
     job: str = ""
 
 
+def _strip_plain_yaml_comment(value: str) -> str:
+    """Strip a YAML plain-scalar comment while preserving quoted # characters."""
+    quote = ""
+    escaped = False
+    for index, char in enumerate(value):
+        if quote == '"':
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = ""
+            continue
+        if quote == "'":
+            if char == quote:
+                if index + 1 < len(value) and value[index + 1] == quote:
+                    continue
+                quote = ""
+            continue
+        if char in ("'", '"'):
+            quote = char
+        elif char == "#" and (index == 0 or value[index - 1].isspace()):
+            return value[:index].rstrip()
+    return value.rstrip()
+
+
 def _load_yaml(path: Path) -> dict[str, Any]:
-    payload = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
-    return payload if isinstance(payload, dict) else {}
+    """Fail-closed, dependency-free scanner for the narrow credential audit.
+
+    Extract only workflow triggers, job boundaries, job-level guards and raw
+    job text. This is NOT a general YAML parser; unsupported layouts fail.
+    """
+    source = path.read_text(encoding="utf-8")
+    events: list[str] = []
+    jobs: dict[str, dict[str, str]] = {}
+    section = ""
+    active: str | None = None
+    lines: list[str] = []
+    guard = ""
+    folded = False
+    trigger_indent: int | None = None
+    credential = re.compile(r"secrets\.(?:GITPAT|CLIMA)\b", re.IGNORECASE)
+
+    def finish() -> None:
+        if active is not None:
+            if active in jobs:
+                raise ValueError("duplicate workflow job")
+            jobs[active] = {"if": guard, "_raw": "\n".join(lines)}
+
+    for raw in source.splitlines():
+        stripped = raw.strip()
+        if "\t" in raw[:len(raw) - len(raw.lstrip())]:
+            raise ValueError("tab indentation in credential workflow")
+        if not stripped or stripped.startswith("#"):
+            if section == "jobs" and active is not None:
+                lines.append(raw)
+            continue
+        indent = len(raw) - len(raw.lstrip(" "))
+        if indent == 0:
+            if section == "jobs":
+                finish()
+            active, guard, folded, section = None, "", False, ""
+            trigger_indent = None
+            event = re.fullmatch(r"""(?:on|'on'|"on"):\s*(.*)""", stripped)
+            if event is not None:
+                section = "on"
+                val = event.group(1).split("#", 1)[0].strip()
+                if val.startswith("[") and val.endswith("]"):
+                    events.extend(
+                        item.strip().strip("'\"")
+                        for item in val[1:-1].split(",") if item.strip()
+                    )
+                elif re.fullmatch(r"[A-Za-z_][\w-]*", val):
+                    events.append(val)
+                elif val:
+                    raise ValueError("unsupported workflow trigger syntax")
+            elif stripped == "jobs:":
+                section = "jobs"
+            elif credential.search(raw):
+                raise ValueError("credential outside explicit job")
+            continue
+        if section == "on":
+            if trigger_indent is None:
+                trigger_indent = indent
+            if indent < trigger_indent:
+                raise ValueError("unsupported workflow trigger indentation")
+            if indent == trigger_indent:
+                event = re.match(
+                    r"""^(?:'([^']+)'|"([^"]+)"|([A-Za-z_][\w-]*)):(?:\s|$)""",
+                    stripped,
+                )
+                if event:
+                    events.append(next(group for group in event.groups() if group is not None))
+                elif stripped.startswith("- "):
+                    item = _strip_plain_yaml_comment(stripped[2:]).strip().strip("'\\\"")
+                    if not re.fullmatch(r"[A-Za-z_][\w-]*", item):
+                        raise ValueError("unsupported workflow trigger list item")
+                    events.append(item)
+                else:
+                    raise ValueError("unsupported workflow trigger declaration")
+            elif credential.search(raw):
+                raise ValueError("credential inside trigger")
+            continue
+        if section != "jobs":
+            if credential.search(raw):
+                raise ValueError("credential outside explicit job")
+            continue
+        if indent == 2:
+            finish()
+            job = re.fullmatch(r"([A-Za-z_][\w-]*):(?:\s*#.*)?", stripped)
+            if job is None:
+                raise ValueError("unsupported job declaration")
+            active, lines, guard, folded = job.group(1), [], "", False
+            continue
+        if active is None:
+            if credential.search(raw):
+                raise ValueError("credential without explicit job")
+            continue
+        lines.append(raw)
+        if indent == 4:
+            match = re.match(r"^if:\s*(.*?)\s*$", stripped)
+            if match:
+                value = _strip_plain_yaml_comment(match.group(1))
+                folded = value in (">", ">-", "|", "|-")
+                guard = "" if folded else value
+            else:
+                folded = False
+        elif folded and indent > 4:
+            guard += " " + stripped
+    if section == "jobs":
+        finish()
+    if not jobs:
+        raise ValueError("no explicit jobs detected")
+    return {"on": events, "jobs": jobs}
 
 
 def _triggers(doc: dict[str, Any]) -> set[str]:
@@ -84,8 +214,18 @@ def _triggers(doc: dict[str, Any]) -> set[str]:
 
 
 def _contains_manual_guard(job: dict[str, Any]) -> bool:
-    expr = str(job.get("if", ""))
-    return "github.event_name" in expr and "workflow_dispatch" in expr
+    """Fail closed unless the complete job guard is a manual-dispatch equality.
+
+    A matching substring inside an OR/fallback/expression is not proof that
+    the job cannot execute on push or other automatic events.
+    """
+    expr = str(job.get("if", "")).strip()
+    if expr.startswith("${{") and expr.endswith("}}"):
+        expr = expr[3:-2].strip()
+    return bool(re.fullmatch(
+        r"""github\.event_name\s*==\s*(['"])workflow_dispatch\1""",
+        expr,
+    ))
 
 
 def _audit_secret_job(

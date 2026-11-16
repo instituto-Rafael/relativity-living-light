@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from validation.load_data import load_real_data
+from validation.load_data_numpy_legacy import load_real_data
 from validation.bayes_rll import model, best_eps
 
 z, y, yerr = load_real_data()

@@ -80,10 +80,25 @@ def test_main_writes_manifest_and_tables_from_repo_inputs(tmp_path: Path, monkey
     assert manifest["status"] == "Real data computed from non-synthetic inputs"
     assert {row["status"] for row in manifest["input_files"]} == {"used_real_non_synthetic"}
     assert manifest["validation_status"]["claim_boundary"] == "local dynamic layer cannot be promoted to background cosmology without scale bridge"
+    assert manifest["claim_allowed"] is False
+    boundary = manifest["comparison_boundary"]
+    assert boundary["status"] == "LEGACY_QUICKCHECK_NONCANONICAL"
+    assert boundary["claim_allowed"] is False
+    assert boundary["cmb_in_model_comparison"] is False
+    assert boundary["desi_dr2_primary_in_model_comparison"] is False
+    assert boundary["desi_full_covariance_in_model_comparison"] is False
+    assert boundary["growth_in_model_comparison"] is False
+    assert boundary["scientific_ranking_requires_canonical_joint"] is True
+    assert boundary["canonical_joint_pipeline"] == "data/pipelines/structure_d/joint_real_likelihood.py"
     assert "Phi_pre" in manifest["validation_status"]["local_dynamic_layer"]
     assert (out / "tables" / "Hz_processed.csv").exists()
     assert (out / "tables" / "BAO_processed.csv").exists()
-    assert (out / "tables" / "model_comparison.csv").exists()
+    model_comparison = pd.read_csv(out / "tables" / "model_comparison.csv")
+    assert set(model_comparison["comparison_status"]) == {"LEGACY_QUICKCHECK_NONCANONICAL"}
+    assert set(model_comparison["claim_allowed"]) == {False}
+    report = (out / "COMPUTE_REPORT.md").read_text(encoding="utf-8")
+    assert "comparison_status: LEGACY_QUICKCHECK_NONCANONICAL" in report
+    assert "best_by_bic_scope: legacy_quickcheck_noncanonical" in report
     manifest_outputs = set(manifest["outputs"])
     assert {"TAGS.json", "WATCHDOG.json", "CHECKSUMS.sha256"} <= manifest_outputs
     watchdog = json.loads((out / "WATCHDOG.json").read_text(encoding="utf-8"))
@@ -134,3 +149,17 @@ def test_atomic_write_keeps_rollback_backup(tmp_path: Path) -> None:
     assert target.read_text(encoding="utf-8") == "new"
     assert result["rollback_available"] is True
     assert Path(str(result["backup_path"])).read_text(encoding="utf-8") == "old"
+
+
+def test_comparison_boundary_fail_closed_to_canonical_joint() -> None:
+    boundary = compute.comparison_boundary_payload(33, 10)
+
+    assert boundary["status"] == "LEGACY_QUICKCHECK_NONCANONICAL"
+    assert boundary["claim_allowed"] is False
+    assert boundary["hz_rows"] == 33
+    assert boundary["bao_rows"] == 10
+    assert boundary["cmb_in_model_comparison"] is False
+    assert boundary["desi_dr2_primary_in_model_comparison"] is False
+    assert boundary["desi_full_covariance_in_model_comparison"] is False
+    assert boundary["growth_in_model_comparison"] is False
+    assert boundary["scientific_ranking_requires_canonical_joint"] is True

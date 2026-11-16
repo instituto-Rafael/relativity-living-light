@@ -1,0 +1,63 @@
+{
+  "schema": "rll.nonnull_split_v3_hardening_receipt.v1",
+  "mu_id": "MU-RLL-_NONNULL-SPLIT-V3-HARDENING-20260928-01",
+  "date": "2026-09-28",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "intent": "Reconcile PR #1010 without importing its divergent history and harden the canonical V3 execution/evidence path.",
+  "provenance": {
+    "reviewed_pr": 1010,
+    "reviewed_head": "86ec3588a59a7e837dafb33391b258c0d7339cb8",
+    "reviewed_base": "88349e4aff5e7934d3cee129eee3d54b3d620ede",
+    "reviewed_mergeable": false,
+    "reviewed_ahead_by": 910,
+    "reviewed_behind_by": 270,
+    "reviewed_changed_files": 472,
+    "canonical_merge_pr": 1011,
+    "canonical_merge_commit": "88349e4aff5e7934d3cee129eee3d54b3d620ede",
+    "hardening_branch": "work/rll-nonnull-split-v3-hardening-20260928"
+  },
+  "review_findings": [
+    {
+      "id": 4128565812,
+      "kind": "symbol_audit_false_pass_if_nm_missing",
+      "state": "IMPLEMENTED_UNTESTED"
+    },
+    {
+      "id": 4128565820,
+      "kind": "workflow_not_active_on_maturity_branches",
+      "state": "IMPLEMENTED_UNTESTED"
+    },
+    {
+      "id": 4128565822,
+      "kind": "signed_i32_residual_overflow",
+      "state": "IMPLEMENTED_UNTESTED"
+    }
+  ],
+  "implementation_commits": [
+    "e60e449019add5b41d4aeccf73adf4afef7954a8",
+    "40c34f160dbc0e3f207298e77f0e2d7e6a5b994b",
+    "27ffb142a7feb845c10cdbc1d9dd3d279595f4e1",
+    "b52d17f651d06cc8637af353bc81f91e49bab786",
+    "3c21a42d80f756ceb0b9c47f4a857dca755d2798",
+    "c89aa0692774fb25afa6336b9a3e5241b7458abf"
+  ],
+  "gates": {
+    "provider_split_binary": "PENDING_FRESH_RUN",
+    "provider_static_elf": "PENDING_FRESH_RUN",
+    "provider_identifier_shadow": "PENDING_FRESH_RUN",
+    "provider_signed_overflow_extreme_i32": "PENDING_FRESH_RUN",
+    "provider_armv7_object_no_undefined": "PENDING_FRESH_RUN",
+    "provider_armv7_named_tail_branch_audit": "PENDING_FRESH_RUN",
+    "armv7_physical_execution": "TOKEN_VAZIO",
+    "independent_reimplementation": "TOKEN_VAZIO",
+    "held_out_real_data": "TOKEN_VAZIO",
+    "cosmological_validation": "TOKEN_VAZIO"
+  },
+  "conflict_resolution": {
+    "pr_1010_merge": "BLOCKED_SUPERSEDED",
+    "reason": "Canonical V3 bytes were already merged through PR #1011; merging #1010 would reintroduce a 910-commit divergent history instead of adding the intended seven-file V3 delta.",
+    "history_rewrite_performed": false
+  },
+  "next": "Run the successor PR provider gates; if green, preserve runtime receipt/artifact. Physical ARMv7 remains a separate gate."
+}

@@ -30,6 +30,17 @@ on:
         default: '14'
         type: choice
         options: ['7','14','30','90']
+      official_source:
+        description: Optional public official source, default legacy pipeline
+        required: true
+        default: none
+        type: choice
+        options: [none, nasa_power_daily, desi_dr2_publications]
+      official_fetch:
+        description: Perform one real official public GET (false = metadata-only)
+        required: true
+        default: false
+        type: boolean
 permissions:
   contents: read
 
@@ -49,7 +60,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: '3.11'
       - name: Prepare artifact directory
@@ -62,7 +73,28 @@ jobs:
           set -euo pipefail
           python3 tools/docs_inventory.py
           python3 tools/docs_inventory.py --check
-      - name: Execute RLL pipeline
+      - name: Validate isolated official source intake contract
+        if: ${{ inputs.official_source != 'none' }}
+        run: |
+          set -euo pipefail
+          python3 -m unittest -v tests.test_rll_official_data_intake_v1
+
+      - name: Execute bounded public source intake (opt-in only)
+        if: ${{ inputs.official_source != 'none' }}
+        env:
+          RLL_OFFICIAL_SOURCE: ${{ inputs.official_source }}
+          RLL_OFFICIAL_FETCH: ${{ inputs.official_fetch }}
+        run: |
+          set -euo pipefail
+          mode=metadata_only
+          if [ "$RLL_OFFICIAL_FETCH" = "true" ]; then mode=fetch; fi
+          python3 tools/rll_official_data_intake_v1.py \
+            --source "$RLL_OFFICIAL_SOURCE" --mode "$mode" \
+            --output-dir artifacts/rll-pipeline/official-data \
+            --run-ref "${GITHUB_RUN_ID}/${GITHUB_SHA}"
+
+      - name: Execute RLL pipeline (legacy unchanged unless official source selected)
+        if: ${{ inputs.official_source == 'none' }}
         run: |
           set -euo pipefail
           python3 scripts/rll_pipeline.py --dataset-group "$RLL_DATASET_GROUP" --mode "$RLL_PIPELINE_MODE" --output-dir artifacts/rll-pipeline
@@ -73,7 +105,7 @@ jobs:
           echo "${GITHUB_SHA}" > artifacts/rll-pipeline/COMMIT_SHA.txt
           printf '%s\n' "Commit is opt-in only via separate write-permission job; artifact upload is the default output." > artifacts/rll-pipeline/COMMIT_POLICY.txt
           (cd artifacts/rll-pipeline && find . -type f ! -name CHECKSUMS.sha256 -print0 | sort -z | xargs -0 sha256sum) > artifacts/rll-pipeline/CHECKSUMS.sha256
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline/
@@ -81,7 +113,7 @@ jobs:
 
   commit-lightweight-artifacts:
     needs: run
-    if: ${{ inputs.commit_artifacts }}
+    if: ${{ inputs.commit_artifacts && inputs.official_source == 'none' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -93,7 +125,7 @@ jobs:
       - name: Checkout for explicit opt-in commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Download pipeline artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: rll-pipeline-${{ github.run_id }}-${{ inputs.dataset_group }}-${{ inputs.mode }}
           path: artifacts/rll-pipeline

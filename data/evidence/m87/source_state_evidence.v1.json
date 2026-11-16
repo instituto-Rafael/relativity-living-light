@@ -1,0 +1,95 @@
+{
+  "schema": "rll.sgpt.m87.source-state-evidence/v1",
+  "id": "SGPT_M87_SOURCE_STATE_EVIDENCE_V1",
+  "source": "M87*",
+  "analysis_role": "DEVELOPMENT_SOURCE_BINDING_NOT_HOLDOUT_RESULT",
+  "claim_allowed": false,
+  "provenance_rule": "Only published development-set quantities are bound. Model-inferred ranges remain explicitly model-dependent.",
+  "observational_or_published_bindings": {
+    "M": {
+      "value": 6.5e9,
+      "units": "M_sun",
+      "class": "EHT_2019_MASS_ESTIMATE_CENTRAL_VALUE",
+      "source": "Event Horizon Telescope Collaboration 2019, First M87 Results VI; official EHT release",
+      "source_url": "https://eventhorizontelescope.org/press-release-april-10-2019-astronomers-capture-first-image-black-hole",
+      "doi": "10.3847/2041-8213/ab1141"
+    },
+    "dot_M": {
+      "min": 3e-4,
+      "max": 2e-3,
+      "units": "M_sun/yr",
+      "class": "GRMHD_POLARIMETRIC_MODEL_INFERENCE",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII, polarimetric viable models",
+      "doi": "10.3847/2041-8213/abe4de",
+      "model_dependence": "order-unity uncertainty reported when electron distribution is generalized"
+    },
+    "B": {
+      "min": 1.0,
+      "max": 30.0,
+      "units": "G",
+      "class": "ONE_ZONE_MODEL_CONSTRAINT",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII, Section 3.1",
+      "doi": "10.3847/2041-8213/abe4de"
+    },
+    "T_e": {
+      "min": 1.0e10,
+      "max": 1.2e11,
+      "units": "K",
+      "class": "ONE_ZONE_MODEL_CONSTRAINT",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII, Section 3.1",
+      "doi": "10.3847/2041-8213/abe4de"
+    },
+    "n_e": {
+      "min": 1.0e4,
+      "max": 1.0e7,
+      "units": "cm^-3",
+      "class": "ONE_ZONE_MODEL_CONSTRAINT",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII, Section 3.1",
+      "doi": "10.3847/2041-8213/abe4de"
+    },
+    "tau_I_230GHz": {
+      "constraint": "<1",
+      "units": "dimensionless",
+      "class": "ONE_ZONE_MODEL_SELECTION_CONDITION",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII, Section 3.1",
+      "doi": "10.3847/2041-8213/abe4de"
+    },
+    "MAD_model_family": {
+      "state": "SUPPORTED_AS_VIABLE_MODEL_FAMILY",
+      "class": "GRMHD_POLARIMETRIC_MODEL_COMPARISON",
+      "source": "Event Horizon Telescope Collaboration 2021, First M87 Results VIII",
+      "doi": "10.3847/2041-8213/abe4de",
+      "boundary": "This does not prove a unique MAD state or a reconnection timescale."
+    }
+  },
+  "deliberately_unbound_source_parameters": {
+    "a_star": "TOKEN_VAZIO_NO_CANONICAL_DEVELOPMENT_VALUE_SELECTED",
+    "T_i": "TOKEN_VAZIO_SOURCE_SPECIFIC_PRIOR_NOT_FROZEN",
+    "Y_e": "TOKEN_VAZIO_COMPOSITION_NOT_OBSERVED; PURE_H_IS_A_MODEL_ASSUMPTION",
+    "compactness": "TOKEN_VAZIO_REQUIRES_FROZEN_LUMINOSITY_AND_SOURCE_SIZE",
+    "rho_direct": "TOKEN_VAZIO_NO_DIRECT_DENSITY_MEASUREMENT; ONLY_n_e_MODEL_RANGE_AVAILABLE"
+  },
+  "domain_references": {
+    "pycnonuclear_density_lower_reference": {
+      "value": 1.0e12,
+      "units": "g/cm^3",
+      "class": "ORDER_OF_MAGNITUDE_NEUTRON_STAR_CRUST_THRESHOLD",
+      "source": "Chamel & Haensel, Physics of Neutron Star Crusts, Living Reviews in Relativity 2008",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5255077/",
+      "boundary": "Threshold is composition/model dependent and uncertain; used only to establish an enormous domain separation."
+    },
+    "strong_QED_field": {
+      "value": 4.414e9,
+      "units": "T",
+      "symbol": "B_Q",
+      "class": "SCHWINGER_CRITICAL_MAGNETIC_FIELD_REFERENCE"
+    }
+  },
+  "rights_and_data_catalog_context": {
+    "official_eht_data_catalog": "https://eventhorizontelescope.org/for-astronomers/data",
+    "development_2017_calibrated_data_doi": "10.25739/g85n-f134",
+    "development_2017_polarimetric_data_doi": "10.25739/q46m-m857",
+    "retrospective_2018_data_doi": "10.25739/epm5-r371"
+  },
+  "status": "SOURCE_BINDINGS_PRESENT_MODEL_DEPENDENCE_EXPLICIT"
+}

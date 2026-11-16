@@ -8,6 +8,7 @@ on:
       - 'build.gradle'
       - 'settings.gradle'
       - 'gradle/wrapper/gradle-wrapper.properties'
+      - 'gradle/wrapper/gradle-wrapper.jar'
       - 'scripts/bootstrap-gradle-wrapper.sh'
       - '.github/workflows/android-build.yml'
   pull_request:
@@ -17,6 +18,7 @@ on:
       - 'build.gradle'
       - 'settings.gradle'
       - 'gradle/wrapper/gradle-wrapper.properties'
+      - 'gradle/wrapper/gradle-wrapper.jar'
       - 'scripts/bootstrap-gradle-wrapper.sh'
       - '.github/workflows/android-build.yml'
   workflow_dispatch:
@@ -36,6 +38,8 @@ jobs:
       ANDROID_COMPILE_SDK: '35'
       ANDROID_NDK_VERSION: '27.2.12479018'
       ANDROID_CMAKE_VERSION: '3.22.1'
+      # Only the boolean presence result is job-scoped; credentials remain step-scoped.
+      RLL_RELEASE_SIGNING_AVAILABLE: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,13 +47,13 @@ jobs:
           persist-credentials: false
 
       - name: Set up JDK 17
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
         with:
           gradle-version: '8.10.2'
 
@@ -60,6 +64,15 @@ jobs:
         run: |
           sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" "build-tools;35.0.0" "ndk;${ANDROID_NDK_VERSION}" "cmake;${ANDROID_CMAKE_VERSION}"
 
+      - name: Formula engine standalone JVM falsifiers
+        run: sh app/verify_formula_engine.sh
+
+      - name: Full covariance DESI DR2 numerical self-test (hosted Java)
+        run: sh app/verify_real_bao_engine.sh
+
+      - name: Canonical Omega 1-click ZIP integrity adversarial test
+        run: sh app/verify_canonical_omega.sh
+
       - name: Generate Gradle Wrapper JAR
         run: scripts/bootstrap-gradle-wrapper.sh
 
@@ -67,13 +80,15 @@ jobs:
         run: ./gradlew --no-daemon :app:assembleDebug :app:assembleValidationUnsigned
 
       - name: Decode release keystore
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
+        env:
+          RLL_RELEASE_KEYSTORE_BASE64: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 }}
         run: |
           mkdir -p "$RUNNER_TEMP/rll-signing"
-          printf '%s' "${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/rll-signing/release.jks"
+          printf '%s' "$RLL_RELEASE_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/rll-signing/release.jks"
 
       - name: Build signed release APK and AAB
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
         env:
           RLL_RELEASE_STORE_FILE: ${{ runner.temp }}/rll-signing/release.jks
           RLL_RELEASE_STORE_PASSWORD: ${{ secrets.RLL_RELEASE_STORE_PASSWORD }}
@@ -82,7 +97,7 @@ jobs:
         run: ./gradlew --no-daemon :app:assembleRelease :app:bundleRelease
 
       - name: Upload debug APK
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rll-debug-apk
           path: app/build/outputs/apk/debug/*.apk
@@ -90,16 +105,72 @@ jobs:
           retention-days: 30
 
       - name: Upload validation unsigned APK
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rll-validation-unsigned-apk
           path: app/build/outputs/apk/validationUnsigned/*.apk
           if-no-files-found: error
           retention-days: 30
 
+      - name: Generate signed APK verification receipt
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
+        env:
+          RLL_RUN_ID: ${{ github.run_id }}
+          RLL_COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p apk-signature-receipts
+          apk_path="$(find app/build/outputs/apk/release -maxdepth 1 -type f -name '*.apk' -print -quit)"
+          test -n "$apk_path"
+          trap 'rm -f "$RUNNER_TEMP/rll-apksigner-verified.txt"' EXIT
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$apk_path" > "$RUNNER_TEMP/rll-apksigner-verified.txt"
+          sha256sum "$apk_path" > apk-signature-receipts/sha256.txt
+          APK_PATH="$apk_path" python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          apk = Path(os.environ["APK_PATH"])
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          cert_lines = (Path(os.environ["RUNNER_TEMP"]) / "rll-apksigner-verified.txt").read_text(
+              encoding="utf-8"
+          ).splitlines()
+          cert = {}
+          for line in cert_lines:
+              if "Signer #1 certificate SHA-256 digest:" in line:
+                  cert["sha256"] = line.split(":", 1)[1].strip()
+          if not cert.get("sha256"):
+              raise SystemExit("Missing signer certificate SHA-256 receipt")
+          receipt = {
+              "schema": "rll.apk-signature-receipt.v1",
+              "state": "VERIFIED_BY_APKSIGNER",
+              "artifact": apk.name,
+              "artifact_sha256": digest,
+              "certificate": cert,
+              "git_commit": os.environ["RLL_COMMIT_SHA"],
+              "github_run_id": os.environ["RLL_RUN_ID"],
+              "claim_allowed": False,
+              "certificate_subject_exported": False,
+          }
+          Path("apk-signature-receipts/receipt.json").write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload APK signature receipt
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rll-apk-signature-receipt
+          path: apk-signature-receipts/
+          if-no-files-found: error
+          retention-days: 90
+
       - name: Upload signed release APK
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rll-release-apk-signed
           path: app/build/outputs/apk/release/*.apk
@@ -107,10 +178,14 @@ jobs:
           retention-days: 30
 
       - name: Upload signed release AAB
-        if: ${{ secrets.RLL_RELEASE_KEYSTORE_BASE64 != '' && secrets.RLL_RELEASE_STORE_PASSWORD != '' && secrets.RLL_RELEASE_KEY_ALIAS != '' && secrets.RLL_RELEASE_KEY_PASSWORD != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ env.RLL_RELEASE_SIGNING_AVAILABLE == 'true' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: rll-release-aab-signed
           path: app/build/outputs/bundle/release/*.aab
           if-no-files-found: error
           retention-days: 30
+
+      - name: Remove temporary signing material
+        if: ${{ always() }}
+        run: rm -f "$RUNNER_TEMP/rll-signing/release.jks"

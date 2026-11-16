@@ -1,0 +1,89 @@
+{
+  "schema": "rll.latin-evidence-bridge.v1",
+  "repo": "instituto-Rafael/relativity-living-light",
+  "owner_role": "SCIENTIFIC_CONSUMER_NOT_AUTHORITATIVE_FOR_LATIN_COMPILE",
+  "source_producers": {
+    "graph": {
+      "repo": "rafaelmeloreisnovo/RafPolimata",
+      "commit": "073822fa5d2fc418f4c8798e5fe13d2b0cfba66d",
+      "path": "research/LATIN/seed.v1.json",
+      "workflow": "555_20_latin_graph.yml"
+    },
+    "governance": {
+      "repo": "rafaelmeloreisnovo/RafGitTools",
+      "commit": "fe32ac37b55bfc9374158e7fba6e8630377825c6",
+      "path": "contracts/latin/latin-authority.v1.json",
+      "workflow": "START.yml"
+    }
+  },
+  "baseline_science_pr": "https://github.com/instituto-Rafael/relativity-living-light/pull/1076",
+  "source_class": "ORIGINAL_METADATA_HYPOTHESIS_ONLY",
+  "admissible_relation_types": [
+    "analogy_only",
+    "candidate_semantic_link",
+    "requires_human_translation_profile"
+  ],
+  "forbidden_claims": [
+    "REAL_COSMOLOGY_VALIDATION",
+    "SCIENTIFIC_CONFIRMATION",
+    "PROVED_ISOMORPHISM",
+    "CULTURAL_TRANSLATION_EQUIVALENCE",
+    "LOWFALA_DEVICE_RUNTIME",
+    "PROVIDER_ADMIN_ENFORCEMENT"
+  ],
+  "outstanding_gates": {
+    "graph_artifact_exact_head": "NOT_OBSERVED",
+    "governance_policy_exact_head": "NOT_OBSERVED",
+    "human_approval": "TOKEN_VAZIO",
+    "provider_server_rule_readback": "TOKEN_VAZIO",
+    "lowfala_ir_abi_parity": "NOT_RUN",
+    "independent_rll_falsifier": "NOT_RUN",
+    "copyright_translation_edition": "TOKEN_VAZIO",
+    "rll_pr1076_independent_validation": "HOLD_SEPARATE_FROM_THIS_BRIDGE",
+    "privacy_legal_review": "TOKEN_VAZIO",
+    "rll_workflow_inventory": "PENDING_READBACK_AFTER_ACTIVE_WORKFLOW_REMOVAL"
+  },
+  "secrets_boundary": {
+    "GITPAT": "RLL_MANUAL_READ_ASSURANCE_ONLY",
+    "CLIMA": "UNRELATED_CLIMATE_GATE",
+    "PAT_ENV": "RafGitTools_MANUAL_SEPARATE_LANE",
+    "K_SECRETS": "TOKEN_VAZIO_NO_VERIFIED_PROVIDER_INSTALLATION",
+    "secret_values_used": false,
+    "secret_fallback": false,
+    "administration_called": false
+  },
+  "replay": "python3 -m unittest discover -s tests/latin -p 'test_*.py' -v && python3 scripts/latin/validate_latin_evidence_bridge.py",
+  "governance": {
+    "no_network": true,
+    "no_admin": true,
+    "no_code_mutation": true,
+    "no_training": true,
+    "auto_dispatch": false,
+    "auto_merge": false,
+    "claim_allowed": false
+  },
+  "standards": [
+    {
+      "ref": "NIST SP 800-218",
+      "state": "PROCESS_MAPPING_ONLY"
+    },
+    {
+      "ref": "ISO/IEC 27001:2022",
+      "state": "PROCESS_MAPPING_NOT_CERTIFIED"
+    },
+    {
+      "ref": "ISO/IEC 27002:2022",
+      "state": "PROCESS_MAPPING_NOT_CERTIFIED"
+    },
+    {
+      "ref": "LGPD Brasil Lei 13.709/2018",
+      "state": "APPLICABILITY_TO_BE_REVIEWED"
+    },
+    {
+      "ref": "SLSA",
+      "state": "ARTIFACT_PROVENANCE_TARGET_NOT_ATTESTED"
+    }
+  ],
+  "memory_write": "PRIVATE_POINTER_ONLY_SEPARATE_AUTHORIZED_ACTION",
+  "claim_allowed": false
+}

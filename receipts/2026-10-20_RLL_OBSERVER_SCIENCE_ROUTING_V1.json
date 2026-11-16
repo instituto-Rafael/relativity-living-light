@@ -1,0 +1,33 @@
+{
+  "schema": "rll.observer-observation-science-routing.receipt/v1",
+  "governing_closure": "CLOSURE_L13",
+  "date": "2026-10-20",
+  "state": "IMPLEMENTED_SOURCE_ONLY",
+  "source_ref": "CHATGPT_CURRENT_SESSION/semantic-pointer-only",
+  "artifacts": [
+    "data/contracts/rll_observer_observation_science_routing.v1.json",
+    "data/observations/2026-10-20_observer_science_closure.v1.json",
+    "tools/validate_rll_observer_observation_science_routing.py",
+    "tests/test_rll_observer_observation_science_routing.py",
+    "docs/science/RLL_OBSERVER_OBSERVATION_COMPLEX_NETWORK_ROUTING_V1.md"
+  ],
+  "claim_allowed": false,
+  "F_ok": [
+    "observer/observation split",
+    "science-route taxonomy",
+    "epistemic-state taxonomy",
+    "complex-network relation vocabulary",
+    "typed gaps and rollback"
+  ],
+  "F_gap": [
+    "TOKEN_VAZIO_REPRODUCTION_OBSERVER_GRAPH_EXECUTION",
+    "TOKEN_VAZIO_GOVERNANCE_SCIENCE_ROUTE_AUTOTAG_REVIEW",
+    "TOKEN_VAZIO_GOVERNANCE_CROSS_REPO_OBSERVER_CONSUMER"
+  ],
+  "F_next": [
+    "exact-head CI",
+    "bind intake consumer in RafPolimata",
+    "bind bounded correction consumer in RafGitTools"
+  ],
+  "rollback": "Revert only additive observer-routing files."
+}

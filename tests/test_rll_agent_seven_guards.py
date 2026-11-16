@@ -30,6 +30,32 @@ class AgentSevenGuardsTests(unittest.TestCase):
             self.assertNotIn(secret, encoded)
             self.assertNotIn(hashlib.sha256(secret.encode()).hexdigest(), encoded)
 
+    def test_actions_preflight_does_not_infer_agent_identity_or_log_secrets(self):
+        values = {"GITPAT": "fixture-actions-only-github",
+                  "CLIMA": "fixture-actions-only-climate"}
+        with mock.patch.dict(os.environ, values, clear=True):
+            receipt = guards.build_receipt("actions", ROOT)
+        self.assertEqual(receipt["context"]["runtime_requested"], "actions")
+        self.assertFalse(receipt["context"]["runtime_identity_attested"])
+        self.assertEqual(receipt["runtime_readiness"], "BINDINGS_PRESENT_AUTH_UNVERIFIED")
+        self.assertFalse(receipt["claim_allowed"])
+        self.assertEqual(receipt["evidence"]["network_requests"], 0)
+        self.assertFalse(receipt["evidence"]["secret_material_persisted"])
+        serialized = json.dumps(receipt)
+        for secret in values.values():
+            self.assertNotIn(secret, serialized)
+            self.assertNotIn(hashlib.sha256(secret.encode()).hexdigest(), serialized)
+
+    def test_copilot_setup_workflow_identifies_actions_runtime(self):
+        config = (ROOT / ".github/workflows/copilot-setup-steps.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("--runtime actions", config)
+        self.assertNotIn("--runtime agents", config)
+        self.assertIn('receipt["context"]["runtime_requested"] == "actions"', config)
+        self.assertIn('receipt["context"]["runtime_identity_attested"] is False', config)
+        self.assertIn('receipt["claim_allowed"] is False', config)
+
     def test_actions_names_are_not_automatically_agent_credentials(self):
         with mock.patch.dict(os.environ, {"GITPAT": "fixture-git", "CLIMA": "fixture-climate"}, clear=True):
             receipt = guards.build_receipt("agents", ROOT)

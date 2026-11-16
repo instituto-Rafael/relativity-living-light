@@ -1,0 +1,79 @@
+{
+  "schema": "rll.geometry_prior_art_crosswalk.v1",
+  "audit_date": "2026-10-08",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "private_corpus_export_allowed": false,
+  "evidence_level": "SCOPED_INDEX_AND_PROVIDER_COMMIT_METADATA",
+  "scope": "Geometry prior-art chronology; not mathematical equivalence or independent discovery",
+  "observation": {
+    "token": "√3/2",
+    "first_observed_user_input_utc": "2025-10-16T08:36:51.144650Z",
+    "scope": "NOVOexport shards 000..010, USER_INPUT container, earliest in scanned window only",
+    "content_origin": "TOKEN_VAZIO_LEXICAL_AUTHORSHIP",
+    "exact_theorem": "TOKEN_VAZIO_NO_THEOREM_PROVED",
+    "source_authority": "PRIVATE_DRIVE_NOVOEXPORT",
+    "evidence_repository": "rafaelmeloreisnovo/CONVERSATIONS_CHUNKS_PRIVATE",
+    "index_commit": "865e1d13d7d962168f6121ea1267c6e242ed3361",
+    "index_commit_utc": "2026-09-28T11:00:25Z",
+    "index_blob_sha": "490d956c8b487641acc9f67820149dfb236f2790",
+    "custody_note": "The 2026 Git commit anchors its index version, not independent proof that the 2025 message was publicly disclosed on that date."
+  },
+  "papers": [
+    {
+      "arxiv_id": "2607.01423",
+      "title": "On Reconstructing a Convex Polygon from Partial Information",
+      "first_arxiv_submission_utc": "2026-07-01T00:00:00Z",
+      "chronology": "USER_TOKEN_BEFORE_PAPER",
+      "relation": "GENERAL_GEOMETRY_OVERLAP_ONLY",
+      "exact_equivalence": "TOKEN_VAZIO_NOT_FORMALLY_COMPARED",
+      "independent_priority_claim": false
+    },
+    {
+      "arxiv_id": "2408.06928",
+      "title": "Constructing reflection-symmetric flexible realisations of graphs",
+      "first_arxiv_submission_utc": "2024-08-13T00:00:00Z",
+      "chronology": "PAPER_BEFORE_USER_TOKEN",
+      "relation": "REFLECTION_THEME_ONLY_NOT_RIGIDITY_THEOREM",
+      "exact_equivalence": "TOKEN_VAZIO_NOT_FORMALLY_COMPARED",
+      "independent_priority_claim": false
+    }
+  ],
+  "publication_boundary": {
+    "source_policy": "data/governance/rll_publication_boundary_v1.json",
+    "public_surface": "CURATED_HASH_ONLY_AND_METHOD_ONLY",
+    "forbidden": [
+      "private message bodies",
+      "secret values",
+      "personal data",
+      "unsupported novelty/priority claims",
+      "arXiv submission without review and author confirmation"
+    ],
+    "statuses": [
+      "INDEXED_SOURCE",
+      "CHRONOLOGY_CHECKED",
+      "EQUIVALENCE_PENDING",
+      "SCIENTIFIC_CLAIM_BLOCKED"
+    ]
+  },
+  "R3": {
+    "F_ok": "preprint dates and scoped private index pointer separated; raw shard hash and source message verified privately; exact notation disambiguation checked",
+    "F_gap": "full corpus lexical frontier, original authorship and formal theorem equivalence unverified; raw message private",
+    "F_next": "compare exact theorem/algorithm formalizations, verify original shard hashes and provider readback"
+  },
+  "notation_ambiguity": {
+    "source_message_rechecked_privately": true,
+    "raw_source_sha256_verified_privately": true,
+    "private_message_body_exported": false,
+    "interpretation_A": {
+      "notation": "sqrt(3)/2",
+      "square": "3/4"
+    },
+    "interpretation_B": {
+      "notation": "sqrt(3/2)",
+      "square": "3/2"
+    },
+    "values_equivalent": false,
+    "source_boundary": "NOTATIONAL_AMBIGUITY_DETECTED_NOT_A_POLYGON_RECONSTRUCTION_THEOREM"
+  }
+}

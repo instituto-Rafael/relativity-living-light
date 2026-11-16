@@ -1,0 +1,54 @@
+{
+  "schema":"rll.muwrite.fold_passage_144_to_42.v1",
+  "mu_id":"MU-RLL-FOLD-PASSAGE-144-42-20260924-V1",
+  "timestamp":"2026-09-24T22:38:00-03:00",
+  "parent":"MU-RLL-PGOMEGA7-SHAPES-20260924-V1",
+  "kind":"GEOMETRY_EXECUTION_DELTA",
+  "delta_summary":"Implemented an explicit triangular-torus cut/fold operator with four equilateral cells, an exact rigid-sphere axial passage gate through a torus hole, and a source-preserving 144 torus-state to 42 geodesic-vertex HETE stability concentration operator.",
+  "formal_results":{
+    "fold_cells":4,
+    "fold_intrinsic_equilateral":"TESTED_BY_SIDE_EQUALITY",
+    "nonzero_twist_xy_projection":"NOT_ASSUMED_EQUILATERAL",
+    "sphere_through_torus_gate":"R >= r + s",
+    "same_scale_s_equals_r_gate":"R >= 2r",
+    "source_states":144,
+    "target_vertices":42
+  },
+  "independent_session_replay":{
+    "geometry":{"R":2.0,"r":1.0,"S":3.0},
+    "assigned_states":144,
+    "active_vertices":22,
+    "stable_states":126,
+    "unstable_states":18,
+    "stable_fraction":0.875,
+    "all_stable_high_occupancy":[
+      {"vertex":0,"stable":12,"total":12},
+      {"vertex":2,"stable":12,"total":12},
+      {"vertex":17,"stable":9,"total":9},
+      {"vertex":15,"stable":8,"total":8},
+      {"vertex":34,"stable":7,"total":7}
+    ],
+    "mixed_vertices":[
+      {"vertex":41,"stable":6,"total":12},
+      {"vertex":32,"stable":3,"total":6},
+      {"vertex":40,"stable":3,"total":6},
+      {"vertex":23,"stable":3,"total":6},
+      {"vertex":30,"stable":3,"total":6}
+    ],
+    "authority":"independent arithmetic replay of committed formulas in current session",
+    "boundary":"not yet an exact-head GitHub Actions artifact"
+  },
+  "artifacts":[
+    "rx/toroidal_geodesic_stability.py",
+    "tests/test_toroidal_geodesic_stability.py",
+    "docs/science/RLL_FOLD_PASSAGE_144_TO_42_V1.md"
+  ],
+  "claim_allowed":false,
+  "state":"IMPLEMENTED_EXACT_HEAD_CI_PENDING",
+  "token_vazio":[
+    "SMOOTH_T2_TO_FIGURE8_EQUIVALENCE",
+    "PHYSICAL_VORTEX_FIELD",
+    "STRONG_GRAVITY_OBSERVATIONAL_BINDING"
+  ],
+  "next":"Observe final exact-head CI; on PASS, supersede this receipt with repository-executed evidence while preserving this replay."
+}

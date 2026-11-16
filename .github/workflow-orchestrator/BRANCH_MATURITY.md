@@ -80,6 +80,22 @@ F_next: executar replicação independente usando os mesmos inputs e tolerância
 
 Ausência não vira zero, sucesso ou conclusão.
 
+### Remoções de fontes e contratos em estágios finais
+
+O gate V2 deve incluir caminhos excluídos no diff e registrar `deleted_files`.
+Em PRs para `rll/release` ou `main`, a remoção de fonte científica,
+testes, ferramentas, configurações, receipts de governança ou workflows
+em caminhos críticos dispara `CRITICAL_DELETION_REQUIRES_REVIEW:<path>`
+e bloqueia a promoção automática, mesmo que exista um receipt no PR.
+
+Renomeações também são inspecionadas como remoção do caminho anterior.
+O laboratório permanece apto a experimentar remoções; a estabilização
+final requer revisão e um processo de migração específico, sem contornar o
+gate ou declarar a aprovação de um revisor que não foi observada.
+
+Limite: este gate local não valida `branch protection`, execução científica,
+testes físicos ou aprovação independente. `claim_allowed=false`.
+
 ## 5. Orquestrador único
 
 `.github/workflows/unified-workflow-session-orchestrator.yml` opera em dois planos:

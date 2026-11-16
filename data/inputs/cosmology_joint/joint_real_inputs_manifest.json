@@ -1,24 +1,39 @@
 {
-  "schema": "rll.cosmology_joint_inputs.v1",
-  "status": "local_real_inputs_manifest",
-  "purpose": "Canonical feeding manifest for the joint H(z)+DESI DR2 BAO+fσ8+CMB-shift likelihood.",
-  "claim_boundary": "Only committed, traceable local inputs are listed. Missing external full products are not fabricated.",
+  "schema": "rll.cosmology_joint_inputs.v2",
+  "status": "local_real_inputs_execution_bound",
+  "purpose": "Canonical feeding manifest for the joint H(z)+DESI DR2 BAO+fσ8+CMB-shift likelihood, binding semantic source identity to the exact bytes consumed by execution.",
+  "claim_boundary": "Only committed, traceable local inputs are listed. Source identity, derived materialization and execution bytes are distinct. Missing external full products are not fabricated.",
   "inputs": [
     {
       "axis": "expansion_Hz",
       "observable": "H_obs",
       "error_policy": "diagonal_sigma_H",
-      "notes": "Materialized H(z) table with source tags per row.",
+      "notes": "Independent cosmic-chronometer subset used by the joint likelihood to avoid reusing BAO-derived H(z) points alongside the BAO likelihood.",
       "source_id": "real_hz",
-      "canonical_source_fields": "resolved from canonical_observational_sources_manifest by source_id"
+      "parent_source_id": "real_hz",
+      "parent_path": "data/real/Hz_data_real.csv",
+      "execution_path": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "execution_sha256": "787e59257b10bae977533ff754c8ef51d03bc9fe818ab10a69ab8f231c992cb1",
+      "derivation": {
+        "type": "row_filter",
+        "predicate": "source == CC_Moresco2022",
+        "preserve_columns": ["z", "H_obs", "sigma_H", "source"],
+        "expected_rows": 28,
+        "order_policy": "preserve_parent_order"
+      },
+      "canonical_source_fields": "parent source resolved from canonical_observational_sources_manifest by parent_source_id; execution bytes verified independently"
     },
     {
       "axis": "bao_DESI_DR2",
       "covariance_summary_path": "data/real/cosmology/desi_dr2_bao_covariance_summary.csv",
       "observable": "DV_over_rd, DM_over_rd, DH_over_rd",
-      "error_policy": "13x13 covariance reconstructed from committed diagonal errors plus same-bin DM/DH correlations; BGS DV remains diagonal.",
-      "notes": "Full external DESI supplement remains an external heavy archive; this manifest uses the committed primary likelihood table and committed covariance summary.",
+      "error_policy": "official_full_covariance_when_available_else_fail_closed_or_explicit_bounded_fallback",
+      "notes": "The joint route consumes the committed DESI DR2 primary table, which is a distinct source contract from the legacy real_bao table.",
       "source_id": "real_desi_dr2_bao",
+      "execution_path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "execution_sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+      "covariance_path": "data/real/desi_dr2_bao_covariance.csv",
+      "covariance_sha256": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658",
       "canonical_source_fields": "resolved from canonical_observational_sources_manifest by source_id"
     },
     {
@@ -27,19 +42,25 @@
       "error_policy": "diagonal_sigma",
       "notes": "Real fσ8/RSD compilation materialized from literature tables; replaces synthetic smooth growth fixture in the joint real route.",
       "source_id": "real_fsigma8_compilation",
+      "execution_path": "data/real/cosmology/fsigma8_growth_real.csv",
+      "execution_sha256": "3781a2fa7bce9ea600060f9feb6e74ba49f4baa4ce2e7344803295c912318211",
       "canonical_source_fields": "resolved from canonical_observational_sources_manifest by source_id"
     },
     {
       "axis": "cmb_shift",
-      "observable": "R_obs, la_obs",
-      "error_policy": "diagonal_R_la_sigma",
-      "notes": "Planck 2018 shift-parameter summary stored locally.",
+      "observable": "R_obs, la_obs, ob_h2_obs",
+      "error_policy": "full_3x3_covariance_when_present",
+      "notes": "Planck 2018 shift-parameter summary stored locally with the committed covariance used by the joint likelihood.",
       "source_id": "real_cmb_shift",
+      "execution_path": "data/real/CMB_shift_real.json",
+      "execution_sha256": "e86d996131cf4b3758f4fe0319b6c7da752a38ab2f141abaa81bec66d8e6d979",
       "canonical_source_fields": "resolved from canonical_observational_sources_manifest by source_id"
     }
   ],
   "failsafe": {
     "no_network_required_for_default_run": true,
+    "strict_execution_hashes": true,
+    "derived_materialization_requires_parent_and_derivation": true,
     "atomic_result_writes": "data.pipelines.structure_d.joint_real_likelihood._atomic_write_text",
     "rollback": "If a downstream check fails after output replacement, restore the paired *.bak artifact written beside the output file."
   },
@@ -55,5 +76,5 @@
     "real_fsigma8_compilation",
     "real_cmb_shift"
   ],
-  "source_resolution_policy": "Resolve source_id against canonical_observational_sources_manifest; do not duplicate per-source status, sha256, local_path, or dataset_type in this consumer manifest."
+  "source_resolution_policy": "Resolve source_id against canonical_observational_sources_manifest. execution_path and execution_sha256 bind the bytes actually consumed. If execution bytes differ from the canonical source bytes, a parent_source_id plus deterministic derivation contract is required; source equivalence must never be inferred from axis equivalence alone."
 }

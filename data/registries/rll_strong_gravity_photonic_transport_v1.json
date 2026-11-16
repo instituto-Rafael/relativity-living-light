@@ -1,0 +1,69 @@
+{
+  "id": "B08_SGPT_V1",
+  "name": "strong-gravity photonic transport",
+  "date": "2026-10-04",
+  "parent_domain": "B08_strong_gravity_magnetokinetic",
+  "status": "IMPLEMENTED_UNTESTED",
+  "claim_allowed": false,
+  "source_artifact": "docs/strong_gravity/STRONG_GRAVITY_PHOTONIC_TRANSPORT_V1.md",
+  "implementation": "src/rll/strong_gravity_photonic_transport.py",
+  "tests": [
+    "tests/test_strong_gravity_photonic_transport.py"
+  ],
+  "established_equations": [
+    "omega(u)=-k_mu*u^mu",
+    "g=nu_obs/nu_em",
+    "g_total=product(g_j)",
+    "dIcal/dlambda=Ecal-Acal*Ical",
+    "u_rad*V^(4/3)=const under isotropic adiabatic radiation assumptions",
+    "T_gamma*V^(1/3)=const when additionally u_rad=a*T_gamma^4",
+    "omega_pe=sqrt(n_e*e^2/(epsilon_0*m_e))",
+    "omega_ce=abs(e*B)/m_e",
+    "lambda_r=2*pi/abs(k_r)"
+  ],
+  "derived_diagnostics": [
+    "C_down=max(0,-Theta)*tau_flow",
+    "R_ram=p_ram/(p_th+p_B+p_rad)",
+    "Da_i=tau_flow/tau_i"
+  ],
+  "hypotheses": [
+    {
+      "id": "H_down",
+      "equation": "H_down=C_down*M_f*R_ram",
+      "status": "HYPOTHESIS",
+      "falsifier": "No out-of-sample predictive gain for shock/heating/spectral hardening after conditioning on Theta, M_f, pressure ratios and standard GRMHD/GRRT baselines."
+    },
+    {
+      "id": "H_logistic_photonic",
+      "equation": "f_gamma(chi)=1/(1+exp((chi-chi_t)/w_chi))",
+      "status": "HYPOTHESIS",
+      "falsifier": "No evidence/likelihood gain over physically motivated transition models after complexity penalty and uncertainty propagation."
+    },
+    {
+      "id": "H_temporal_ordering",
+      "equation": "compression precedes hardening precedes polarization change precedes flare/outflow",
+      "status": "HYPOTHESIS",
+      "falsifier": "Preregistered lag analysis fails to reproduce the predicted ordering across independent observations/simulations."
+    }
+  ],
+  "mandatory_baselines": [
+    "ideal_GRMHD",
+    "resistive_GRMHD",
+    "two_temperature_GRRMHD",
+    "GRPIC",
+    "general_relativistic_radiative_transfer"
+  ],
+  "token_vazio": {
+    "remote_ci": "TOKEN_VAZIO",
+    "calibrated_source_solution": "TOKEN_VAZIO",
+    "exclusive_RLL_observable": "TOKEN_VAZIO",
+    "nuclear_network_closure": "TOKEN_VAZIO"
+  },
+  "non_regression": [
+    "historical strong-gravity calibration unchanged",
+    "event horizon is not treated as a material luminous surface",
+    "sequential frequency shifts multiply rather than add",
+    "fluid/plasma modes remain distinct from photon spectrum",
+    "IMPLEMENTED_UNTESTED is not PASS"
+  ]
+}

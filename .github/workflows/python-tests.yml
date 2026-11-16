@@ -26,8 +26,45 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Build and execute freestanding cost kernel
+        run: |
+          set -euo pipefail
+          OUT="artifacts/python-tests/freestanding"
+          OBJ="$OUT/rll_freestanding_cost_kernel.o"
+          BIN="$OUT/rll_freestanding_cost_kernel_verify"
+          mkdir -p "$OUT"
+
+          cc -std=c11 -O2 -Wall -Wextra -Werror \
+            -ffreestanding -fno-builtin -fno-stack-protector \
+            -fno-unwind-tables -fno-asynchronous-unwind-tables \
+            -nostdinc \
+            -c tools/ci/rll_freestanding_cost_kernel.c \
+            -o "$OBJ"
+
+          if nm -u "$OBJ" | grep -q .; then
+            echo "FAIL: freestanding kernel has unresolved external symbols" >&2
+            nm -u "$OBJ" >&2
+            exit 2
+          fi
+
+          cc -std=c11 -O2 -Wall -Wextra -Werror \
+            tests/rll_freestanding_cost_kernel_host.c \
+            "$OBJ" \
+            -o "$BIN"
+          "$BIN"
+
+          {
+            echo "kernel_compile=PASS"
+            echo "kernel_external_symbols=0"
+            echo "hosted_verifier=PASS"
+            echo "kernel_sha256=$(sha256sum "$OBJ" | awk '{print $1}')"
+            echo "kernel_bytes=$(wc -c < "$OBJ")"
+            echo "energy_measurement=TOKEN_VAZIO_MEASUREMENT"
+            echo "claim_allowed=false"
+          } | tee "$OUT/receipt.txt"
+
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: "3.11"
           cache: pip
@@ -97,6 +134,14 @@ jobs:
           test -s results/audit/rll_real_data_evidence_bridge.json
           test -s results/audit/rll_cosmology_e0_preflight.json
 
+      - name: Scoped LCM modular graph versus Euclid (fail-closed; no gate bypass)
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_rll_lcm_graph_benchmark_v1.py' -v
+          python tools/rll_lcm_graph_benchmark_v1.py --no-timing \
+            --output results/audit/rll_lcm_graph_benchmark_v1_ci.json
+          echo "LCM source algorithms PASS_SCOPED, numerical evidence only; overall pytest and governance gates unchanged" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Run tests with auditable receipt
         run: |
           mkdir -p artifacts/python-tests
@@ -121,7 +166,7 @@ jobs:
 
       - name: Upload test receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: python-tests-${{ github.run_id }}
           path: artifacts/python-tests/

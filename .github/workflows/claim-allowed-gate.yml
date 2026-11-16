@@ -8,8 +8,11 @@ on:
       - 'results/**'
       - 'docs/yml/**'
       - 'schemas/**'
+      - 'src/rll/academic_false_positive_gate.py'
       - 'tools/validate_claim_allowed_gate.py'
+      - 'tools/validate_academic_false_positive_gate.py'
       - 'tests/test_claim_allowed_gate.py'
+      - 'tests/test_academic_false_positive_gate.py'
       - '.github/workflows/claim-allowed-gate.yml'
       - '.github/workflow-contract.yml'
   push:
@@ -19,8 +22,11 @@ on:
       - 'results/**'
       - 'docs/yml/**'
       - 'schemas/**'
+      - 'src/rll/academic_false_positive_gate.py'
       - 'tools/validate_claim_allowed_gate.py'
+      - 'tools/validate_academic_false_positive_gate.py'
       - 'tests/test_claim_allowed_gate.py'
+      - 'tests/test_academic_false_positive_gate.py'
       - '.github/workflows/claim-allowed-gate.yml'
       - '.github/workflow-contract.yml'
 
@@ -39,12 +45,20 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: '3.11'
       - name: Install parser dependency
         run: python -m pip install --disable-pip-version-check PyYAML
-      - name: Unit tests
+      - name: Existing claim-boundary unit tests
         run: python -m unittest tests.test_claim_allowed_gate -v
-      - name: Repository claim gate
+      - name: Academic false-positive unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest tests.test_academic_false_positive_gate -v
+      - name: Repository structural claim gate
         run: python tools/validate_claim_allowed_gate.py
+      - name: Academic false-positive claim gate
+        env:
+          PYTHONPATH: src
+        run: python tools/validate_academic_false_positive_gate.py

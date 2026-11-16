@@ -1,0 +1,60 @@
+{
+  "schema": "rll.current_rx_source_freeze_spec.v1",
+  "date": "2026-09-23",
+  "claim_allowed": false,
+  "scope": "RX-STRUCTURE-D-PARITY-V1 current multiprobe input surface",
+  "inputs": [
+    {
+      "id": "HZ_CC_28",
+      "path": "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+      "role": "H(z) cosmic chronometers",
+      "expected_rows": 28,
+      "provenance_fields": ["source"],
+      "primary_authority_state": "TOKEN_VAZIO_PRIMARY_SOURCE_URL_AND_ROW_LEVEL_CUSTODY",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "DESI_DR2_BAO_13",
+      "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "role": "DESI DR2 BAO primary observables",
+      "expected_rows": 13,
+      "provenance_fields": ["release", "tracer", "source_table", "source_url"],
+      "primary_authority_state": "DECLARED_IN_DATA_ROWS_REQUIRES_OFFICIAL_JOINT_CROSSBLOCK_REPRODUCTION",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "DESI_DR2_BAO_COV_13",
+      "path": "data/real/desi_dr2_bao_covariance.csv",
+      "role": "DESI DR2 BAO covariance used by Rx multiprobe",
+      "expected_rows": 13,
+      "provenance_fields": [],
+      "primary_authority_state": "REPOSITORY_DERIVED_COVARIANCE_REQUIRES_WS10_OFFICIAL_CROSSBLOCK_AUTHORITY",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "FSIGMA8_16",
+      "path": "data/real/cosmology/fsigma8_growth_real.csv",
+      "role": "compiled f-sigma8 growth observations",
+      "expected_rows": 16,
+      "provenance_fields": ["survey", "method", "reference", "source_url"],
+      "primary_authority_state": "ROW_LEVEL_REFERENCES_DECLARED_COMPILED_CUSTODY_NOT_YET_PRIMARY_FROZEN",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    },
+    {
+      "id": "CMB_SHIFT_3",
+      "path": "data/real/CMB_shift_real.json",
+      "role": "compressed CMB shift-vector diagnostic",
+      "expected_rows": null,
+      "provenance_fields": ["primary_source", "parameter_order", "covariance_construction", "claim_boundary"],
+      "primary_authority_state": "PRIMARY_SOURCE_DECLARED_IN_JSON",
+      "rights_state": "TOKEN_VAZIO_RIGHTS_NOT_DECLARED"
+    }
+  ],
+  "execution_sources": [
+    "configs/rx_physics_contracts.json",
+    "configs/rll_execution_plan.v1.yml",
+    "data/governance/RLL_RX_FORMULA_BINDINGS_V1.json",
+    "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json"
+  ],
+  "closure_rule": "Hashes/order/metadata can freeze locally; SCI_GATE:G0 remains open while required primary authority or rights states are TOKEN_VAZIO."
+}

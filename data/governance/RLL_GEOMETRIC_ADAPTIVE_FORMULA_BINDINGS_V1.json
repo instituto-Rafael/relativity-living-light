@@ -1,0 +1,50 @@
+{
+  "schema": "rll.geometric_adaptive_formula_bindings.v1",
+  "date": "2026-09-25",
+  "author": "RAFAEL MELO REIS",
+  "claim_allowed": false,
+  "parent_geometry_context": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "bindings": [
+    {
+      "formula_id": "RXF-G0G6-GEOMETRIC-FEATURES-V1",
+      "name": "Exact dimensionless geometry diagnostic features",
+      "provenance_class": "STANDARD_GEOMETRY_PLUS_PROJECT_TYPED_ADAPTER",
+      "any_regimes": ["G0", "G6"],
+      "observables": [
+        "geometry_feature_vector",
+        "projection_axis_ratio",
+        "annulus_fraction",
+        "polygon_compactness",
+        "phase"
+      ],
+      "implementation": [
+        "rx.geometric_features:annulus_features",
+        "rx.geometric_features:spherical_shell_features",
+        "rx.geometric_features:circle_inversion",
+        "rx.geometric_features:projection_features",
+        "rx.geometric_features:regular_polygon_features",
+        "rx.geometric_features:chebyshev_diagonal_ratios"
+      ],
+      "units_contract": "dimensionless normalized descriptors; source lengths/angles declare units before normalization",
+      "state": "EXECUTABLE_DIAGNOSTIC_ONLY"
+    },
+    {
+      "formula_id": "RXF-G5-GEOMETRY-ADAPTIVE-PHYSICAL-PARAMETERS",
+      "name": "Geometry-driven adaptive physical/cosmological parameters",
+      "provenance_class": "PROJECT_GEOMETRY_CANDIDATE",
+      "required_regimes": ["G5"],
+      "observables": ["H", "E", "BAO", "CMB", "distance"],
+      "implementation": [],
+      "units_contract": "TOKEN_VAZIO_PHYSICAL_MAPPING",
+      "state": "BLOCKED_DIRECT_GEOMETRY_TO_PHYSICAL_PARAMETER_BINDING",
+      "promotion_requires": [
+        "predeclared physical derivation",
+        "units and conservation closure",
+        "same-data fair baseline",
+        "held-out or independent validation",
+        "multiple-testing correction",
+        "scientific gate receipts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "receipt_id": "SGPT_CI_20261004_RUN_37183633283",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "pull_request": 1048,
+  "workflow": "Strong Gravity Photonic Transport",
+  "run_id": 37183633283,
+  "tested_head_sha": "6240b02f3c2437fc4af47afed5d01584ef1f1165",
+  "status": "completed",
+  "conclusion": "success",
+  "evidence_url": "https://github.com/instituto-Rafael/relativity-living-light/actions/runs/37183633283",
+  "scope": [
+    "focused pytest suite",
+    "Python bytecode compilation",
+    "registry JSON syntax validation"
+  ],
+  "claim_boundary": {
+    "software_gate": "PASS_AT_TESTED_HEAD",
+    "physical_validation": "TOKEN_VAZIO",
+    "source_specific_calibration": "TOKEN_VAZIO",
+    "exclusive_RLL_observable": "TOKEN_VAZIO",
+    "new_physics_confirmed": false
+  },
+  "note": "Append-only execution receipt. The registry/document snapshot preceding this run intentionally recorded remote_ci as TOKEN_VAZIO; this receipt is the later evidence event and does not rewrite that history."
+}

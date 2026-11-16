@@ -1,0 +1,33 @@
+{
+  "schema": "rll.sgpt.m87.data-custody-transform-dag/v1",
+  "id": "SGPT_M87_DATA_CUSTODY_TRANSFORM_DAG_V1",
+  "source": "M87*",
+  "claim_allowed": false,
+  "stages": [
+    {"id": "S0_OFFICIAL_BYTES", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S1_CALIBRATION", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S2_FLAG_FILTER", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S3_OBSERVABLE_VECTOR", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S4_COVARIANCE_SYSTEMATICS", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S5_LIKELIHOOD_INPUT", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S6_FIT_OUTPUT", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    {"id": "S7_COMPARISON_RECEIPT", "input_sha256": "TOKEN_VAZIO", "output_sha256": "TOKEN_VAZIO", "software_commit": "TOKEN_VAZIO", "config_hash": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "calibration_state": "TOKEN_VAZIO", "systematics": "TOKEN_VAZIO", "operator": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"}
+  ],
+  "edges": [
+    ["S0_OFFICIAL_BYTES", "S1_CALIBRATION"],
+    ["S1_CALIBRATION", "S2_FLAG_FILTER"],
+    ["S2_FLAG_FILTER", "S3_OBSERVABLE_VECTOR"],
+    ["S3_OBSERVABLE_VECTOR", "S4_COVARIANCE_SYSTEMATICS"],
+    ["S4_COVARIANCE_SYSTEMATICS", "S5_LIKELIHOOD_INPUT"],
+    ["S5_LIKELIHOOD_INPUT", "S6_FIT_OUTPUT"],
+    ["S6_FIT_OUTPUT", "S7_COMPARISON_RECEIPT"]
+  ],
+  "rights_status": "TOKEN_VAZIO",
+  "rules": [
+    "No downstream stage may claim custody if its upstream output hash is absent.",
+    "Published qualitative statements cannot substitute for missing covariance/systematics.",
+    "Public availability does not imply redistribution or ML-training rights.",
+    "All transformations must be append-only receipted after first result-producing execution."
+  ],
+  "status": "LOCKED_UNRESOLVED"
+}

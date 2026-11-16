@@ -1,0 +1,50 @@
+{
+  "schema": "rll.muwrite.toroidal_geodesic_stability.v1",
+  "mu_id": "MU-RLL-TORUS-GEO-STABILITY-20260924-V1",
+  "timestamp": "2026-09-24T22:20:00-03:00",
+  "source_ref": [
+    "current-session correction",
+    "rafaelmeloreisnovo/Matem-tica-:docs/formal/PITAGORAS_BHASKARA_ISOSCELES_POINCARE_CROSSWALK_V1.md",
+    "rafaelmeloreisnovo/Matem-tica-:docs/formal/CROWN_15_30_45_PI12_PI5_GEODESIC_REFLECTION_CROSSWALK_V1.md",
+    "rafaelmeloreisnovo/papers:papers/poincare_torus_mobile_v1/paper.md",
+    "rafaelmeloreisnovo/papers:papers/poincare_ball_7d_freestanding_v1/paper.md",
+    "rafaelmeloreisnovo/papers:docs/rmrcti/HETE_018_TOROIDAL_STABILITY_ENRICHMENT.md"
+  ],
+  "parent": "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json",
+  "supersedes": "PR#983 population-first interpretation as primary route; prior history preserved",
+  "kind": "FORMAL_GEOMETRY+EXECUTABLE_STABILITY+CORRECTIVE_ROUTE",
+  "delta_summary": "Moved RLL dispersion/stability construction back to the author's geometry: +/-30 equilateral gate, exact 2r tangent gap, derived mirrored quadratic mouths, 3x2 torus branches, 30/45 Poincare return, f2 icosphere projection, line-sphere Bhaskara/reflection, and HETE fixed-point stability generated from each spatial torus cell.",
+  "routes": ["L","O","T","P","C","R","I","E","A"],
+  "artifacts": [
+    "rx/toroidal_geodesic_stability.py",
+    "tests/test_toroidal_geodesic_stability.py",
+    "data/governance/RLL_TOROIDAL_GEODESIC_STABILITY_GEOMETRY_V1.json",
+    "docs/science/RLL_TOROIDAL_GEODESIC_SPATIAL_STABILITY_V1.md"
+  ],
+  "commits": [
+    "b1842d9d1b2aec196821962230ec78fd8c1cc27b",
+    "d0a0f822977f0add06fe4c2f1f22a9ee2bcf43b1",
+    "bd2d91d5a6cc5a688c06c19a32bd86d34ca73050",
+    "709457f867e5d8a5f106086eb74a9a3f3dc75009"
+  ],
+  "evidence": {
+    "equilateral_gate": "derived from sin30=1/2 and cos30=sqrt(3)/2",
+    "parallel_tangent_gap": "2r exact",
+    "poincare_period": "24; first section return 12; P(v)=v+pi; P^2=id",
+    "icosphere_f2": "V=42,E=120,F=80",
+    "stability": "HETE z=z^2+c and |2z|<1",
+    "poincare_7d": "located and intentionally kept separate pending typed 7-channel map"
+  },
+  "state": "IMPLEMENTED_CI_PENDING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "token_vazio": [
+    "TORUS_TO_FIGURE8_FOLD_OPERATOR",
+    "FOUR_EQUILATERAL_TRIANGLES_FROM_FOLD",
+    "GEOMETRY_TO_B7_CHANNEL_MAP",
+    "PHYSICAL_VORTEX_FIELD",
+    "OBSERVATIONAL_BINDING"
+  ],
+  "next": "Open successor draft PR from rll/lab, observe exact-head CI, and only then produce normalized 144-cell to 42-vertex execution receipt.",
+  "rollback": "new additive branch; predecessor PR/history untouched until successor is linked"
+}

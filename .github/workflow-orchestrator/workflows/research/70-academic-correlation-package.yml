@@ -1,0 +1,21 @@
+schema: rll.workflow_orchestrator.specialty_block.v1
+claim_allowed: false
+publication_effect: NONE
+
+workflows:
+  - id: academic_correlation_package
+    description: "Validate academic relations, optionally ingest one arXiv record, and build a Jekyll preview artifact."
+    file: validate-academic-correlation-package.yml
+    stage: 80
+    specialty: ACADEMIC_RELATION_PACKAGE
+    enabled: true
+    tags: [literature, pages_preview]
+    wait_for_completion: true
+    timeout_minutes: 15
+    inputs:
+      arxiv_id: ""
+      related_node_ids: ""
+      relation_note: ""
+    override_allowlist: [arxiv_id, related_node_ids, relation_note]
+    claim_allowed: false
+    publication_effect: NONE

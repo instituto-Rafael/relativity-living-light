@@ -1,0 +1,51 @@
+{
+  "schema": "rll.official_source_intake.v1",
+  "status": "PROPOSED_RESEARCH_BRANCH",
+  "default_mode": "metadata_only",
+  "invocation": "manual_workflow_dispatch_only",
+  "automatic_network_calls": false,
+  "network": {
+    "https_only": true,
+    "redirects": "BLOCK",
+    "max_calls_per_invocation": 1,
+    "max_bytes_nasa_power": 512000,
+    "max_bytes_desi": 768000,
+    "anonymous_public_get": true,
+    "secret_access": "NONE",
+    "write_remote": false
+  },
+  "sources": {
+    "nasa_power_daily": {
+      "authority": "NASA_POWER",
+      "domain": "power.larc.nasa.gov",
+      "data_role": "GRIDDED_CLIMATE_ANALYSIS_READY_DAILY",
+      "window": "2025-01-01/2025-01-07",
+      "coordinate": [0, 0],
+      "time_standard": "UTC",
+      "variables": ["T2M", "PS"],
+      "observation_level": "GRIDDED_REANALYSIS_OR_SATELLITE_DERIVED_NOT_STATION_DIRECT"
+    },
+    "desi_dr2_publications": {
+      "authority": "DESI_COLLABORATION_LBL",
+      "domain": "data.desi.lbl.gov",
+      "data_role": "OFFICIAL_PUBLICATION_REFERENCE_INDEX_ONLY",
+      "numerical_catalog_ingested": false,
+      "covariance": "TOKEN_VAZIO",
+      "required_next_gate": "SELECT_PINNED_DESI_NUMERIC_RELEASE_FILE_WITH_LICENSE_SHA256_COVARIANCE"
+    }
+  },
+  "governance": {
+    "canonical_agent": ".github/agents/rll-secretary.agent.md",
+    "agent_surface_secret": "PATGITHUB",
+    "actions_surface_secret": "GITPAT",
+    "secret_interchange": "FORBIDDEN",
+    "climate_engine_secret": "CLIMA",
+    "climate_engine_not_used_for_nasa_power": true,
+    "branch_base": "rll/lab",
+    "review_required": true,
+    "direct_main_push": false,
+    "auto_merge": false,
+    "claim_allowed": false,
+    "delete": false
+  }
+}

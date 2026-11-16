@@ -1,0 +1,45 @@
+{
+  "schema": "rll.sgpt.m87.source-regime-admissibility/v1",
+  "id": "SGPT_M87_SOURCE_REGIME_ADMISSIBILITY_V1",
+  "source": "M87*",
+  "parent_preregistration": "data/contracts/sgpt_m87_firetest.v1.json",
+  "claim_allowed": false,
+  "allowed_states": ["TOKEN_VAZIO", "APPLICABLE", "NOT_APPLICABLE_WITH_JUSTIFICATION", "OUT_OF_DOMAIN", "EXECUTED"],
+  "source_state_required": {
+    "M": "TOKEN_VAZIO",
+    "a_star": "TOKEN_VAZIO",
+    "dot_M": "TOKEN_VAZIO",
+    "rho": "TOKEN_VAZIO",
+    "T_e": "TOKEN_VAZIO",
+    "T_i": "TOKEN_VAZIO",
+    "B": "TOKEN_VAZIO",
+    "Y_e": "TOKEN_VAZIO",
+    "optical_depth": "TOKEN_VAZIO",
+    "compactness": "TOKEN_VAZIO"
+  },
+  "regimes": {
+    "ionized_plasma": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "MAD_reconnection": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "pair_relevant": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "electron_degenerate": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "electron_capture": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "nuclear_network": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "pycnonuclear": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"},
+    "spin_Landau_QED": {"state": "TOKEN_VAZIO", "evidence": "TOKEN_VAZIO"}
+  },
+  "diagnostic_gates": {
+    "eta_e": "TOKEN_VAZIO",
+    "chi_spin": "TOKEN_VAZIO",
+    "chi_L": "TOKEN_VAZIO",
+    "B_over_B_Q": "TOKEN_VAZIO",
+    "beta": "TOKEN_VAZIO",
+    "sigma": "TOKEN_VAZIO"
+  },
+  "rules": [
+    "No regime may be promoted from analogy or memory.",
+    "Dense/nuclear/spin-QED modules require source-bound domain evidence before execution.",
+    "NOT_APPLICABLE_WITH_JUSTIFICATION requires a recorded physics rationale and source binding.",
+    "A regime state is not evidence for an RLL-specific effect."
+  ],
+  "status": "LOCKED_UNRESOLVED"
+}

@@ -48,7 +48,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -120,7 +120,7 @@ jobs:
 
       - name: Upload setup receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: setup-checksums
           path: artifacts/setup/
@@ -138,7 +138,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -220,7 +220,7 @@ jobs:
 
       - name: Upload Pantheon fit receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: pantheon-fit-results
           path: artifacts/pantheon_fit/
@@ -238,7 +238,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -298,7 +298,7 @@ jobs:
 
       - name: Upload DESI BAO receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: desi-bao-results
           path: artifacts/desi_bao/
@@ -315,7 +315,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -339,7 +339,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload w_eff mapping receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: weff-mapping-results
           path: artifacts/weff_mapping/
@@ -356,7 +356,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -401,7 +401,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload z_t falsification receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: zt-falsification-results
           path: artifacts/zt_falsification/
@@ -418,7 +418,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -450,7 +450,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload H0 grid receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: h0-grid-results
           path: artifacts/h0_grid/
@@ -467,7 +467,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
@@ -542,7 +542,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload joint MCMC receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -561,14 +561,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
       - name: Instalar dependências
         run: pip install numpy scipy matplotlib pandas PyYAML jsonschema
       - name: Baixar artefatos MCMC
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: joint-mcmc-results
           path: artifacts/joint_mcmc/
@@ -654,7 +654,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload Bayes factor receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: bayes-factor-results
           path: artifacts/bayes_factor/
@@ -679,14 +679,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
       - name: Instalar dependências
         run: pip install numpy
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -760,7 +760,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload falsifier contract receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: contrato-falsificadores
           path: artifacts/contrato/
@@ -786,14 +786,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # pinned
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # pinned
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
       - name: Instalar dependências
         run: pip install numpy
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/
@@ -857,7 +857,7 @@ jobs:
           rll_real_data_write_checksums "$OUT_DIR"
       - name: Upload final report receipt
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: relatorio-final
           path: artifacts/relatorio/
@@ -887,7 +887,7 @@ jobs:
           persist-credentials: false
 
       - name: Baixar todos os artefatos
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           merge-multiple: true
           path: artifacts/

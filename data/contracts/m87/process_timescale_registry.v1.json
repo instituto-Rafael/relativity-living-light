@@ -1,0 +1,35 @@
+{
+  "schema": "rll.sgpt.m87.process-timescale-registry/v1",
+  "id": "SGPT_M87_PROCESS_TIMESCALE_REGISTRY_V1",
+  "source": "M87*",
+  "parent_regime_lock": "data/contracts/m87/source_regime_admissibility.v1.json",
+  "claim_allowed": false,
+  "definition": "D_i=tau_residence/tau_i",
+  "interpretation": {
+    "D_i_much_less_than_1": "FROZEN_OUT_OR_ADVECTED",
+    "D_i_approximately_1": "TRANSITIONAL",
+    "D_i_much_greater_than_1": "CAN_RELAX_OR_EVOLVE_BEFORE_ESCAPE"
+  },
+  "processes": {
+    "inflow": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "outflow": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "cooling": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "heating": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "Alfven": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "reconnection": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "ionization": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "pair_creation": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "pair_annihilation": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "nuclear": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "electron_capture": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "phase_change": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"},
+    "collisional_thermalization": {"tau": "TOKEN_VAZIO", "units": "TOKEN_VAZIO", "rate_model": "TOKEN_VAZIO", "source": "TOKEN_VAZIO", "domain": "TOKEN_VAZIO", "receipt": "TOKEN_VAZIO"}
+  },
+  "rules": [
+    "tau_i cannot be filled without a declared rate model and applicability domain.",
+    "A timescale comparison is descriptive unless tied to a preregistered observable/falsifier.",
+    "Out-of-domain processes must not receive synthetic placeholder rates.",
+    "Missing source physics remains TOKEN_VAZIO."
+  ],
+  "status": "LOCKED_UNRESOLVED"
+}

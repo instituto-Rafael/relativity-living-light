@@ -1,0 +1,68 @@
+{
+  "schema": "rll.rmrcti_hidden_truth_body_y.v1",
+  "date": "2026-09-25",
+  "dataset_type": "synthetic_hidden_truth",
+  "claim_allowed": false,
+  "physics_scope": "dimensionless weak-field toy benchmark; not an astrophysical fit",
+  "hidden_truth": {
+    "scenario": "two_impulse_weak_field_chain",
+    "candidate_names": ["truth", "no_event", "wrong_event_order", "wrong_geometry", "wrong_impulse_sign"],
+    "candidate_parameters_frozen_before_noise": true
+  },
+  "retarded_observation": {
+    "observer": [8.0, 2.0],
+    "signal_speed": 50.0,
+    "arrival_count": 15,
+    "iterative_emission_time": true
+  },
+  "weak_field_gate": {
+    "max_GM_over_rc2_proxy": 0.00006707088864729387,
+    "max_v_over_c": 0.02226661752164256,
+    "min_radius": 0.47710714209079014,
+    "declared_tolerance": 0.001,
+    "pass": true,
+    "strong_field_branch": false
+  },
+  "adaptive_numerics": {
+    "fixed_dt": 0.08,
+    "truth_reference_dt": 0.002,
+    "fixed_position_rmse": 0.00006915461477726151,
+    "adaptive_position_rmse": 0.00006908074343892289,
+    "adaptive_not_worse": true,
+    "fixed_rk4_steps": 45,
+    "adaptive_rk4_steps": 179,
+    "adaptive_max_subdivision": 8,
+    "physical_parameters_changed": false
+  },
+  "g6_preregistered_primary": {
+    "feature": "retarded_xy_Mahalanobis2",
+    "covariance": "diagonal_sigma_0.006_squared",
+    "decision": "minimum_total_d2_over_frozen_scenarios",
+    "multiple_testing_policy": "no_p_value_claim; any future feature family significance requires Holm correction"
+  },
+  "seed_results": [
+    {"seed":17,"winner":"truth","truth_recovered":true,"truth_score":38.458802157466216,"no_event_score":6289.125375195414,"wrong_event_order_score":12361.20796544588,"wrong_geometry_score":15304.685525842737,"wrong_impulse_sign_score":25624.86794252679,"delta_p_op":-0.25},
+    {"seed":23,"winner":"truth","truth_recovered":true,"truth_score":21.591326793752962,"no_event_score":6379.238417411456,"wrong_event_order_score":12499.192528788319,"wrong_geometry_score":15428.92653725461,"wrong_impulse_sign_score":25823.41264669867,"delta_p_op":0.0},
+    {"seed":42,"winner":"truth","truth_recovered":true,"truth_score":13.87697430650122,"no_event_score":6407.895003332318,"wrong_event_order_score":12446.348386054487,"wrong_geometry_score":15298.609776921145,"wrong_impulse_sign_score":25886.771428904372,"delta_p_op":0.0},
+    {"seed":633,"winner":"truth","truth_recovered":true,"truth_score":30.645031762095464,"no_event_score":6410.540349725698,"wrong_event_order_score":12479.116586791977,"wrong_geometry_score":15325.565508387604,"wrong_impulse_sign_score":25874.246591998137,"delta_p_op":-0.25},
+    {"seed":144000,"winner":"truth","truth_recovered":true,"truth_score":38.50183193057216,"no_event_score":6562.145921255231,"wrong_event_order_score":12722.15103891465,"wrong_geometry_score":15676.772198086936,"wrong_impulse_sign_score":26177.260685639765,"delta_p_op":-0.25}
+  ],
+  "hidden_truth_recovery": {"recovered":5,"total":5,"rate":1.0,"pass":true},
+  "rmrcti_adapter": {
+    "delta_p_op_values": [-0.25, 0.0, 0.0, -0.25, -0.25],
+    "mean_delta_p_op": -0.15,
+    "omega_persistence_recovery_fraction": 1.0,
+    "delta_p_target_0_18_fitted": false,
+    "allowed_use": "routing/stability diagnostic only"
+  },
+  "controls": {
+    "no_event": true,
+    "wrong_event_order": true,
+    "wrong_geometry": true,
+    "wrong_impulse_sign": true,
+    "held_out_noise_seeds": [17,23,42,633,144000]
+  },
+  "state": "PASS_SYNTHETIC_HIDDEN_TRUTH",
+  "execution_state": "LOCAL_DETERMINISTIC_REPLAY_PROVIDER_CI_PENDING"
+}
+

@@ -1,0 +1,38 @@
+{
+  "schema": "rll.rmrcti_hidden_truth_receipt.v1",
+  "event_id": "MU-RLL-BODY-Y-HIDDEN-TRUTH-G6-20260925",
+  "date": "2026-09-25",
+  "workstream": "WS18",
+  "dataset_type": "synthetic_hidden_truth",
+  "claim_allowed": false,
+  "implementation": "rx/rmrcti_hidden_truth_body_y.py",
+  "test": "tests/test_rmrcti_hidden_truth_body_y.py",
+  "contract": "data/governance/RLL_RMRCTI_HIDDEN_TRUTH_BODY_Y_V1.json",
+  "result": "results/RLL_RMRCTI_HIDDEN_TRUTH_BODY_Y_V1.json",
+  "primary_G6_feature": "retarded_xy_Mahalanobis2",
+  "observed_local_result": {
+    "hidden_truth_recovered": "5/5",
+    "recovery_rate": 1.0,
+    "fixed_position_rmse": 0.00006915461477726151,
+    "adaptive_position_rmse": 0.00006908074343892289,
+    "adaptive_not_worse": true,
+    "weak_field_gate": "PASS",
+    "mean_delta_p_op": -0.15,
+    "delta_p_target_0_18_fitted": false
+  },
+  "controls": ["no_event", "wrong_event_order", "wrong_geometry", "wrong_impulse_sign", "five_seed_replay"],
+  "boundary": [
+    "SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM",
+    "synthetic_recovery != real_astrophysical_validation",
+    "adaptive_numerics != adaptive_physics",
+    "DeltaP_op != physical_parameter"
+  ],
+  "gap": [
+    "INDEPENDENT_REAL_RMRCTI_TRACE_PACKAGE",
+    "DOMAIN_CALIBRATED_SENSITIVITY_THRESHOLDS",
+    "PROVIDER_CI_EXACT_HEAD_PENDING_AT_RECEIPT_CREATION"
+  ],
+  "next": "provider CI -> independent real trace replication -> threshold calibration",
+  "rollback": "revert additive Body-Y benchmark files; preserve receipt and negative controls"
+}
+

@@ -81,3 +81,10 @@ Para evitar qualquer percepção de descarte de informação:
 - Checklist objetivo de integridade em `docs/DATA_INTEGRITY_CHECKLIST.md`.
 
 Isso garante trilha de recuperação textual + verificação por metadados (tamanho/hash).
+
+
+## 2026-10-08 — Nova rota D / arquivos soltos → laboratório de ondas (rll/lab)
+
+- [`science/RLL_D_COEFFICIENTS_WAVE_LAB_INDEX_V1.md`](science/RLL_D_COEFFICIENTS_WAVE_LAB_INDEX_V1.md) — distingue `D_i` de dinâmica do grafo, `D_growth(z)` da cosmologia, `D_theta` de geometria e `D(p,q)` de distância; liga `Matemática.md`, `MathRaf.md`, `Numprimod.md` a fontes formais, nota no Papers e EstudioAudio PR#57.
+- Estrutura de maturidade (não alterar): `WORK → rll/lab → rll/integration → rll/release → main`. Esta rota é uma documentação em `rll/lab` sem mudança em dados, ciência ou rádio.
+- Estado: documentação proposta, claim_allowed=false; testes de CI/parecer necessários para promoção. `TOKEN_VAZIO` para dados físicos não calibrados.

@@ -1,0 +1,91 @@
+{
+  "schema": "rll.muwrite.unified_shape_toroidal_transport.v2",
+  "mu_id": "MU-RLL-UNIFIED-SHAPE-TORUS-20260924-V2",
+  "timestamp": "2026-09-24T22:45:00-03:00",
+  "parent": "MU-RLL-TORUS-GEO-STABILITY-20260924-V1",
+  "kind": "FORMAL_GEOMETRY+EXECUTABLE_TRANSPORT+STABILITY_CONCENTRATION",
+  "source_ref": [
+    "rafaelmeloreisnovo/papers:docs/matematica/COMPLEXO_UNIFICADO_TORO_ESFERA_CUBO_BIPIRAMIDE_V1.md",
+    "instituto-Rafael/relativity-living-light:scripts/unified_geometry_system.py",
+    "current-session correction: retain triangle/square/circle/cube/pyramid/sphere/torus in one typed matrix"
+  ],
+  "delta_summary": "Restored the complete unified shape family, introduced one shared radial envelope without object collapse, proved a four-equilateral cross-fold from square 90-degree axes x +/-30-degree pulse, typed equal-sphere overlay versus rigid collision, and added deterministic 144-cell to 42-vertex stability concentration.",
+  "routes": [
+    "L",
+    "O",
+    "T",
+    "P",
+    "C",
+    "R",
+    "I",
+    "E",
+    "A"
+  ],
+  "predecessor_ci": {
+    "head": "f54f7f5e205b34a82a5b1d7f43a14cea7c4b964d",
+    "state": "PASS",
+    "workflows": 13,
+    "python_tests": "success"
+  },
+  "new_artifacts": [
+    "rx/unified_shape_toroidal_transport.py",
+    "tests/test_unified_shape_toroidal_transport.py",
+    "results/geometry/rll_144_to_42_stability_concentration_v1.json",
+    "docs/science/RLL_UNIFIED_SHAPE_TOROIDAL_TRANSPORT_V2.md"
+  ],
+  "new_commits": [
+    "bf77cc9495209307827d4bdb6a6f3fea6a9e09ae",
+    "083eabb305cb767fd8ddad6e9e6b4ad684d1196d",
+    "970ecc64db74a902d82adb76b9ca14bf9eac362a",
+    "4ad04666adff47ca90af1d794012add6e4c48b4c"
+  ],
+  "formal_results": {
+    "common_radial_envelope": "PASS_FORMAL",
+    "four_equilateral_cross_fold": "PASS_FORMAL",
+    "literal_torus_to_figure8_surface_map": "TOKEN_VAZIO",
+    "same_size_geometric_transport": "PASS_FORMAL_UNDER_RIGID_TRANSFORM",
+    "impenetrable_equal_sphere_interpenetration": "NOT_ALLOWED_BY_EUCLIDEAN_RIGID_BODY_MODEL",
+    "shell_field_overlay": "MODEL_ALLOWED"
+  },
+  "concentration_reference": {
+    "fixture": {
+      "R": 2,
+      "r": 1,
+      "S": 3,
+      "branches": 6,
+      "steps": 24
+    },
+    "cells": 144,
+    "sphere_vertices": 42,
+    "occupied_vertices": 21,
+    "stable_cells": 126,
+    "stable_fraction": 0.875,
+    "highest_occupancy": [
+      {
+        "vertex": 0,
+        "visits": 12,
+        "stable": 12
+      },
+      {
+        "vertex": 2,
+        "visits": 12,
+        "stable": 12
+      },
+      {
+        "vertex": 41,
+        "visits": 12,
+        "stable": 6
+      }
+    ]
+  },
+  "state": "IMPLEMENTED_REFERENCE_RESULT_EXACT_HEAD_CI_PENDING",
+  "claim_allowed": false,
+  "publication_ready": false,
+  "gaps": [
+    "continuous torus-surface fold F:T2->R3",
+    "physical interpenetration/flow mechanism",
+    "geometry-to-B7 seven-channel map",
+    "observational causal binding"
+  ],
+  "next": "Wait for exact-head CI on the V2 delta; then implement and falsify a continuous torus-surface fold against triangle/square/cube/pyramid/sphere invariants."
+}

@@ -3,6 +3,7 @@ from pathlib import Path
 
 from tools.branch_divergence_inventory import (
     domain_for,
+    classify_topology,
     inventory,
     parse_left_right_count,
     parse_name_status,
@@ -22,6 +23,55 @@ def test_parse_left_right_count_rejects_invalid_shape() -> None:
         assert "two rev-list counts" in str(exc)
     else:
         raise AssertionError("invalid count shape must fail")
+
+
+def test_topology_distinguishes_one_sided_advancement_without_legacy_breakage() -> None:
+    assert classify_topology(0, 0) == "IDENTICAL"
+    assert classify_topology(3, 0) == "LEFT_AHEAD"
+    assert classify_topology(0, 7) == "RIGHT_AHEAD"
+    assert classify_topology(1, 8) == "DIVERGED"
+    for left, right in ((-1, 0), (0, -1)):
+        try:
+            classify_topology(left, right)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("negative commit counts must fail closed")
+
+
+def test_one_sided_inventory_is_not_mislabeled_two_sided(tmp_path: Path) -> None:
+    root = tmp_path / "repo"
+    root.mkdir()
+    _git(root, "init", "-b", "base")
+    _git(root, "config", "user.name", "RLL Test")
+    _git(root, "config", "user.email", "rll-test@example.invalid")
+    (root / "base.txt").write_text("base\n", encoding="utf-8")
+    _git(root, "add", ".")
+    _git(root, "commit", "-m", "base")
+    _git(root, "switch", "-c", "advanced")
+    (root / "advance.txt").write_text("one sided\n", encoding="utf-8")
+    _git(root, "add", ".")
+    _git(root, "commit", "-m", "advance")
+    advanced = subprocess.run(
+        ["git", "rev-parse", "advanced"], cwd=root, check=True,
+        capture_output=True, text=True
+    ).stdout.strip()
+
+    left = inventory(root, "advanced", "base")
+    right = inventory(root, "base", "advanced")
+    equal = inventory(root, "base", "base")
+    assert left["topology_status"] == "LEFT_AHEAD"
+    assert right["topology_status"] == "RIGHT_AHEAD"
+    assert equal["topology_status"] == "IDENTICAL"
+    # Original v1 clients may still consume status, unchanged.
+    assert left["status"] == right["status"] == "DIVERGED"
+    assert equal["status"] == "IDENTICAL"
+    assert left["claim_allowed"] is right["claim_allowed"] is False
+    assert left["decision"] == right["decision"] == "AUDIT_ONLY_NO_MUTATION"
+    assert subprocess.run(
+        ["git", "rev-parse", "advanced"], cwd=root, check=True,
+        capture_output=True, text=True
+    ).stdout.strip() == advanced
 
 
 def test_parse_name_status_preserves_renames() -> None:
@@ -93,6 +143,7 @@ def test_inventory_detects_real_two_sided_overlap_without_mutating_refs(tmp_path
     ).stdout.strip()
 
     assert payload["status"] == "DIVERGED"
+    assert payload["topology_status"] == "DIVERGED"
     assert payload["left"]["unique_commits"] == 1
     assert payload["right"]["unique_commits"] == 1
     assert payload["overlap_paths"] == ["shared.txt"]

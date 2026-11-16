@@ -35,12 +35,12 @@ jobs:
           persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: '3.11'
 
-      - name: Install requirements
-        run: python -m pip install --upgrade pip && pip install requests pandas
+      - name: Verify zero-third-party import route
+        run: python -m py_compile scripts/import_data.py rx/http.py
 
       - name: Validate artifact name
         env:
@@ -107,7 +107,7 @@ jobs:
           PY
 
       - name: Upload audit artifact without committing
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: ${{ github.event.inputs.output_name }}
           path: _audit/raw/
@@ -128,4 +128,4 @@ jobs:
           rll_real_data_assert_boundary_file "$ARTIFACT_DIR/CLAIM_BOUNDARY.md"
           rll_real_data_write_checksums "$ARTIFACT_DIR"
 
-x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.
+# x-canonical-real-data-policy: Auxiliary real-data workflow; canonical policy is .github/workflows/real-data-complete-execution.yml. Synthetic/mock/fixture/demo/example/placeholder inputs cannot be promoted as real observational evidence.

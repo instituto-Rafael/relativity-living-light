@@ -46,7 +46,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
       - name: Validate field mathematics and artifact contract
@@ -55,7 +55,7 @@ jobs:
           python -m unittest -v tests.test_rll_metar_earth_field
           python scripts/rll_metar_earth_field.py             --stations TST1,TST2,TST3,TST4             --fixture tests/fixtures/rll_metar_synthetic.json             --nx 16 --ny 12             --output-dir artifacts/science/earth_metar_field_static
       - name: Upload deterministic field artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: rll-metar-earth-field-static-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/science/earth_metar_field_static/
@@ -74,7 +74,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
       - name: Fetch one bounded public METAR observation set
@@ -88,7 +88,7 @@ jobs:
             --output-dir artifacts/science/earth_metar_field_observed_smoke
       - name: Upload observed smoke artifact when available
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: rll-metar-earth-field-observed-smoke-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/science/earth_metar_field_observed_smoke/
@@ -106,7 +106,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
       - name: Fetch bounded NOAA/NWS AWC METAR observations and build field
@@ -114,7 +114,7 @@ jobs:
           set -euo pipefail
           python scripts/rll_metar_earth_field.py             --stations "${{ inputs.station_ids }}"             --hours "${{ inputs.hours }}"             --nx "${{ inputs.nx }}"             --ny "${{ inputs.ny }}"             --output-dir artifacts/science/earth_metar_field_live
       - name: Upload observed METAR field
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: rll-metar-earth-field-live-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/science/earth_metar_field_live/

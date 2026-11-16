@@ -146,7 +146,7 @@ workflows:
     stage: 60
     specialty: SCIENCE_DRY_RUN
     enabled: true
-    tags: [tower, science_shadow, validation]
+    tags: [science_shadow, validation]
     wait_for_completion: true
     timeout_minutes: 130
     inputs: {modo: dry_run}
@@ -160,7 +160,7 @@ workflows:
     stage: 70
     specialty: FRONTIER_SHADOW
     enabled: true
-    tags: [tower, science_shadow, validation]
+    tags: [science_shadow, validation]
     wait_for_completion: true
     timeout_minutes: 60
     inputs:

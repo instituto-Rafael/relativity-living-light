@@ -1,0 +1,1060 @@
+{
+  "schema": "rll.chatgpt-76-falsifier-operator-mesh/v1",
+  "date": "2026-10-20",
+  "source_bundle": {
+    "authority": "RafPolimata operational evidence bundle",
+    "ref": "data/evidence/chatgpt/2026-10-20_three_interaction_bundle.v1.json",
+    "interactions": [
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "training_use": false,
+    "dataset_use": false,
+    "operational_evidence_use": true
+  },
+  "target": "RLL falsification and uncertainty-reduction routing",
+  "operator_count": 76,
+  "operators": [
+    {
+      "id": "OP01",
+      "name": "Conditional residual / Schur complement",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Conditional standardized residual remains anomalous after covariance conditioning.",
+      "close_when": "Execute OP01 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP02",
+      "name": "Block influence and leverage",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Block influence and leverage disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP02 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP03",
+      "name": "DM vs DH separation",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from DM vs DH separation disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP03 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP04",
+      "name": "LRG2 z=0.706 ablation",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Model preference disappears or reverses when LRG2 is withheld.",
+      "close_when": "Execute OP04 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP05",
+      "name": "LyA z=2.33 holdout",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "RLL trained without LyA fails to predict the LyA block within predeclared predictive tolerance.",
+      "close_when": "Execute OP05 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP06",
+      "name": "Posterior PSIS-LOO/ELPD",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Out-of-sample ΔELPD does not favor the extension or is dominated by one block.",
+      "close_when": "Execute OP06 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP07",
+      "name": "Contiguous redshift K-fold",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Contiguous redshift K-fold disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP07 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP08",
+      "name": "Low-z↔high-z reversal",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Low-z↔high-z reversal disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP08 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP09",
+      "name": "Injection/recovery",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Null injections recover a false nonzero extension at unacceptable frequency.",
+      "close_when": "Execute OP09 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP10",
+      "name": "Covariance-respecting null mocks",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Observed Δχ² improvement is common under ΛCDM covariance mocks.",
+      "close_when": "Execute OP10 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP11",
+      "name": "Look-elsewhere accounting",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Global significance collapses after trial-factor accounting.",
+      "close_when": "Execute OP11 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP12",
+      "name": "Multiple-testing/FDR",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Discovery set does not survive declared multiplicity control.",
+      "close_when": "Execute OP12 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP13",
+      "name": "Posterior predictive checks",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Posterior predictive checks disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP13 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP14",
+      "name": "LOO-PIT calibration",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from LOO-PIT calibration disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP14 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP15",
+      "name": "Prior predictive checks",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Prior predictive checks disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP15 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP16",
+      "name": "Prior-width sensitivity",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Prior-width sensitivity disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP16 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP17",
+      "name": "Physics-derived priors",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Physics-derived priors disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP17 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP18",
+      "name": "Minimum description length",
+      "category": "STATISTICAL_FALSIFICATION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Minimum description length disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP18 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP19",
+      "name": "Covariance whitening/Pythagorean residual geometry",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Covariance whitening/Pythagorean residual geometry disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP19 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP20",
+      "name": "Residual SVD",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Residual SVD disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP20 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP21",
+      "name": "Effective model rank",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Effective model rank disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP21 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP22",
+      "name": "Information geometry",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Information geometry disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP22 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP23",
+      "name": "Posterior manifold curvature/sloppiness",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Posterior manifold curvature/sloppiness disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP23 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP24",
+      "name": "Coordinate-transform invariance",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Coordinate-transform invariance disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP24 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP25",
+      "name": "Redshift wavelet localization",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Redshift wavelet localization disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP25 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP26",
+      "name": "Equal-complexity kernel swap",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Equal-complexity kernel swap disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP26 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP27",
+      "name": "Reparameterization invariance",
+      "category": "GEOMETRY_IDENTIFIABILITY",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Reparameterization invariance disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP27 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP28",
+      "name": "Physical sign restriction",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Best fit requires parameter sign forbidden by the physical interpretation.",
+      "close_when": "Execute OP28 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP29",
+      "name": "Controlled sound-horizon r_d release",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Controlled sound-horizon r_d release disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP29 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP30",
+      "name": "Compressed vs full CMB likelihood",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Compressed vs full CMB likelihood disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP30 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP31",
+      "name": "Physical growth/fσ8",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Background fit cannot reproduce growth with derived perturbation equations.",
+      "close_when": "Execute OP31 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP32",
+      "name": "Lensing/S8 cross-check",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Lensing/S8 cross-check disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP32 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP33",
+      "name": "SN compilation cross-check",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from SN compilation cross-check disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP33 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP34",
+      "name": "B/P perturbation completion",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Background-equivalent B/P term fails CMB/PMF/plasma perturbative observables.",
+      "close_when": "Execute OP34 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP35",
+      "name": "PMF parity + Faraday observables",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from PMF parity + Faraday observables disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP35 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP36",
+      "name": "BBN+CMB+spectral-distortion phase test",
+      "category": "PHYSICAL_ORTHOGONAL_GATES",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from BBN+CMB+spectral-distortion phase test disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP36 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP37",
+      "name": "Blind analysis/preregistration",
+      "category": "GOVERNANCE_REPRODUCTION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Result changes materially when holdout/gates are frozen before analysis.",
+      "close_when": "Execute OP37 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP38",
+      "name": "Independent implementation/executor reproduction",
+      "category": "GOVERNANCE_REPRODUCTION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I1"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Independent implementation/executor cannot reproduce result within tolerance.",
+      "close_when": "Execute OP38 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP39",
+      "name": "Posterior topology",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Posterior topology disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP39 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP40",
+      "name": "HPD vs equal-tail intervals",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from HPD vs equal-tail intervals disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP40 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP41",
+      "name": "Profile vs marginal comparison",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Profile vs marginal comparison disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP41 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP42",
+      "name": "Frequentist coverage",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Nominal intervals fail empirical coverage under simulations.",
+      "close_when": "Execute OP42 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP43",
+      "name": "Posterior contraction",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Posterior contraction disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP43 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP44",
+      "name": "KL information gain",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from KL information gain disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP44 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP45",
+      "name": "Correlation-sign reversal",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Correlation-sign reversal disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP45 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP46",
+      "name": "Posterior conditioned by block",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Posterior feature disappears when one data block is removed.",
+      "close_when": "Execute OP46 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP47",
+      "name": "Predictive width vs redshift",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Predictive width vs redshift disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP47 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP48",
+      "name": "Prior-width scan",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Prior-width scan disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP48 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP49",
+      "name": "Prior-center scan",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Prior-center scan disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP49 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP50",
+      "name": "Savage-Dickey nested test",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Nested-model density ratio supports null once prior/posterior density is evaluated consistently.",
+      "close_when": "Execute OP50 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP51",
+      "name": "Evidence by two algorithms",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Evidence by two algorithms disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP51 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP52",
+      "name": "Reverse Bayes prior requirement",
+      "category": "POSTERIOR_INTERVAL_EVIDENCE",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Reverse Bayes prior requirement disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP52 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP53",
+      "name": "Influence derivative",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "A single datum has disproportionate derivative influence on fitted parameters.",
+      "close_when": "Execute OP53 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP54",
+      "name": "Systematics Jacobian",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Small plausible systematic shifts move conclusions more than declared uncertainty.",
+      "close_when": "Execute OP54 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP55",
+      "name": "Posterior Hessian",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Posterior Hessian disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP55 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP56",
+      "name": "Stiff vs sloppy eigendirections",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Stiff vs sloppy eigendirections disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP56 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP57",
+      "name": "LCDM→RLL homotopy",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from LCDM→RLL homotopy disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP57 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP58",
+      "name": "Redshift-cut bifurcation",
+      "category": "SENSITIVITY_PARAMETER_GEOMETRY",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Redshift-cut bifurcation disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP58 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP59",
+      "name": "Inverse reconstruction of minimal δH(z)",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Minimal reconstructed δH(z) is inconsistent with the assumed RLL functional form.",
+      "close_when": "Execute OP59 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP60",
+      "name": "Functional derivative δχ²/δlnH(z)",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Functional sensitivity localizes support outside the proposed transition region.",
+      "close_when": "Execute OP60 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP61",
+      "name": "Observable response kernel",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Response kernels show claimed datasets do not constrain the proposed region independently.",
+      "close_when": "Execute OP61 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP62",
+      "name": "Regularized inverse kernel",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Regularized inversion cannot recover a stable deformation across regularization choices.",
+      "close_when": "Execute OP62 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP63",
+      "name": "dDM/dz=DH consistency",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Reconstructed distances violate dDM/dz=DH consistency beyond propagated uncertainty.",
+      "close_when": "Execute OP63 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP64",
+      "name": "Antiderivative cumulative sensitivity",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Antiderivative cumulative sensitivity disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP64 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP65",
+      "name": "Cumulative χ² vs z",
+      "category": "INVERSE_RESPONSE_DYNAMICS",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Cumulative χ² preference appears only after one narrow redshift block.",
+      "close_when": "Execute OP65 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP66",
+      "name": "Cancellation index",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Cancellation index disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP66 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP67",
+      "name": "Physical inequalities/stability",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Physical inequalities/stability disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP67 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP68",
+      "name": "Change-point inference",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Change-point inference disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP68 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP69",
+      "name": "Rebinning invariance",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Rebinning invariance disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP69 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP70",
+      "name": "Address integrity vector↔covariance",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Any row/column/tracer address mismatch invalidates the likelihood result.",
+      "close_when": "Execute OP70 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP71",
+      "name": "Covariance-preserving permutation",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Covariance-preserving permutation disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP71 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP72",
+      "name": "Observable dependency graph",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Observable dependency graph disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP72 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP73",
+      "name": "Contradiction tensor",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Contradiction localizes to method/source axis rather than physical-model axis.",
+      "close_when": "Execute OP73 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP74",
+      "name": "Four-state evidence logic",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P1",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Four-state evidence logic disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP74 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP75",
+      "name": "Causal clustering of failures",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P2",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "The claimed advantage from Causal clustering of failures disappears, reverses, or becomes statistically/physically non-identifiable under the declared control.",
+      "close_when": "Execute OP75 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    },
+    {
+      "id": "OP76",
+      "name": "Prequential sequential model competition",
+      "category": "ADDRESS_CONTRADICTION_COMPETITION",
+      "urgency": "P0",
+      "provenance_interactions": [
+        "I2"
+      ],
+      "state": "PROPOSED_NOT_EXECUTED",
+      "falsifier": "Sequential predictive score does not improve when new blocks arrive.",
+      "close_when": "Execute OP76 with frozen inputs, emit exact-head receipt, and classify PASS/FAIL/INCONCLUSIVE without inheriting status from another operator.",
+      "claim_effect": "NONE_UNTIL_EXECUTED"
+    }
+  ],
+  "gate_order": [
+    "ADDRESS_AND_COVARIANCE_INTEGRITY",
+    "OUT_OF_SAMPLE_PREDICTION",
+    "NULL_AND_MULTIPLE_TESTING",
+    "PRIOR_AND_POSTERIOR_ROBUSTNESS",
+    "INVERSE_RESPONSE_AND_GEOMETRIC_IDENTIFIABILITY",
+    "ORTHOGONAL_PHYSICS_GATES",
+    "INDEPENDENT_REPRODUCTION"
+  ],
+  "p0_rule": "P0 operators can directly falsify a current interpretation, reveal false-positive/overfit/address error, or block unsafe promotion.",
+  "non_compensation": "No number of P1/P2 PASS results can compensate for an unresolved P0 gate.",
+  "typed_gaps": [
+    {
+      "id": "TOKEN_VAZIO_LOG_OP_EXECUTION_RECEIPTS",
+      "type": "NOT_EXECUTED",
+      "close_when": "Run operators and bind exact-head receipts."
+    },
+    {
+      "id": "TOKEN_VAZIO_REPRODUCTION_PSI_ELPD_RLL",
+      "type": "NOT_EXECUTED",
+      "close_when": "Run posterior leave-redshift-block-out/PSIS-LOO or equivalent ELPD."
+    },
+    {
+      "id": "TOKEN_VAZIO_REPRODUCTION_DESI_LYA_FULL_SHAPE",
+      "type": "NOT_EXECUTED",
+      "close_when": "Bind non-overlapping DESI Lyα full-shape/AP likelihood."
+    },
+    {
+      "id": "TOKEN_VAZIO_GOVERNANCE_RLL_GROWTH_PERTURBATIONS",
+      "type": "MISSING_MODEL",
+      "close_when": "Derive perturbation/growth model before fσ8."
+    },
+    {
+      "id": "TOKEN_VAZIO_REPRODUCTION_RLL_BAYES_EVIDENCE",
+      "type": "NOT_EXECUTED",
+      "close_when": "Define physical priors and compute lnZ with algorithm cross-check."
+    },
+    {
+      "id": "TOKEN_VAZIO_GOVERNANCE_PMF_PERTURBATIVE_LIKELIHOOD",
+      "type": "MISSING_LIKELIHOOD",
+      "close_when": "Bind PMF amplitude/spectrum/helicity/Faraday/CMB perturbation likelihood."
+    },
+    {
+      "id": "TOKEN_VAZIO_REPRODUCTION_INDEPENDENT_76_MESH",
+      "type": "MISSING_REPRODUCTION",
+      "close_when": "Independent implementation executes the promoted P0 subset."
+    }
+  ],
+  "claim_allowed": false,
+  "publication_ready": false,
+  "rollback": "Remove/revert only this additive mesh, validator, test and receipt; preserve predecessor RLL data/results.",
+  "governing_closure": "CLOSURE_L13"
+}

@@ -36,6 +36,23 @@ def parse_left_right_count(text: str) -> tuple[int, int]:
     return left, right
 
 
+def classify_topology(left_only: int, right_only: int) -> str:
+    """Classify ancestry without assuming content or semantic equivalence.
+
+    Legacy status is preserved for consumers; topology distinguishes a
+    one-sided advancement from a two-sided branch divergence.
+    """
+    if left_only < 0 or right_only < 0:
+        raise ValueError("negative unique commit count")
+    if left_only == right_only == 0:
+        return "IDENTICAL"
+    if left_only > 0 and right_only == 0:
+        return "LEFT_AHEAD"
+    if left_only == 0 and right_only > 0:
+        return "RIGHT_AHEAD"
+    return "DIVERGED"
+
+
 def parse_name_status(text: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for raw in text.splitlines():
@@ -112,6 +129,15 @@ def inventory(root: Path, left: str, right: str) -> dict[str, object]:
         "right": {"ref": right, "sha": right_sha, "unique_commits": right_count},
         "merge_base": merge_base,
         "status": "IDENTICAL" if left_count == 0 and right_count == 0 else "DIVERGED",
+        "topology_status": classify_topology(left_count, right_count),
+        "topology_rule": (
+            "commit ancestry only; LEFT_AHEAD/RIGHT_AHEAD is not permission "
+            "to promote, merge, delete, or assume semantic equivalence"
+        ),
+        "legacy_status_notice": (
+            "status retains v1 semantics: DIVERGED means any non-identical "
+            "commit history; use topology_status for one-sided ancestry"
+        ),
         "left_changes": left_rows,
         "right_changes": right_rows,
         "left_path_count": len(left_paths),
@@ -151,6 +177,7 @@ def write_products(out: Path, payload: dict[str, object]) -> None:
         f"- left: `{payload['left']['ref']}` @ `{payload['left']['sha']}`",
         f"- right: `{payload['right']['ref']}` @ `{payload['right']['sha']}`",
         f"- merge base: `{payload['merge_base']}`",
+        f"- topology: `{payload['topology_status']}` (read-only ancestry classification)",
         f"- left-only commits: `{payload['left']['unique_commits']}`",
         f"- right-only commits: `{payload['right']['unique_commits']}`",
         f"- left changed paths from merge base: `{payload['left_path_count']}`",

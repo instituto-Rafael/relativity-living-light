@@ -1,0 +1,38 @@
+{
+  "schema": "rll.github_platform_live_reconciliation.v1",
+  "observed_at": "2026-09-25",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "source": {
+    "workflow": "GitHub Platform Assurance V2",
+    "run_id": 36169792228,
+    "job_id": 108186255604,
+    "artifact_id": 10879902755
+  },
+  "observed": {
+    "branch_count": 4,
+    "branch_metadata_complete": true,
+    "protection_detail_complete": false,
+    "rulesets_observed": true,
+    "resolution_eligible": false,
+    "state": "PARTIAL_EXTERNAL_SETTINGS_OBSERVED"
+  },
+  "historical_context": {
+    "token": "TOKEN_VAZIO_EXTERNAL_SETTINGS",
+    "historical_observation_date": "2026-08-08",
+    "historical_state": "RESOLVED_NEGATIVE",
+    "rule": "Historical provider state is retained append-only but is not current provider truth."
+  },
+  "current_decision": {
+    "TOKEN_VAZIO_GITHUB_PLATFORM_ENFORCEMENT": "OPEN",
+    "main_protected_deployment_allowed": false,
+    "reason": "Protection detail is incomplete and current observation is not resolution-eligible."
+  },
+  "invariants": [
+    "HISTORICAL_NEGATIVE_OBSERVATION != CURRENT_PLATFORM_STATE",
+    "WORKFLOW_SUCCESS != EXTERNAL_ENFORCEMENT_RESOLVED",
+    "TOKEN_VAZIO != ZERO",
+    "claim_allowed=false"
+  ]
+}

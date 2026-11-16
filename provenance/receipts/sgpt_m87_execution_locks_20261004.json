@@ -1,0 +1,44 @@
+{
+  "schema": "rll.sgpt.m87.execution-locks-receipt/v1",
+  "date": "2026-10-04",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "pull_request": 1049,
+  "tested_head_before_receipt_commit": "0fdbe493dc939a723a02286b96fe417a49850596",
+  "execution_locks": {
+    "workflow": "SGPT M87 Execution Locks",
+    "run_id": 37195347524,
+    "job_id": 111415947309,
+    "conclusion": "success",
+    "scope": [
+      "six contract JSON files",
+      "fail-closed validator",
+      "14 illegal mutation controls",
+      "evidence ceiling assertion",
+      "bounded artifact receipt"
+    ],
+    "status": "PASS_LOCKS_CONTRACT_ONLY"
+  },
+  "workflow_inventory_reconciliation": {
+    "workflow": "Workflow Contract Reconciliation V2",
+    "run_id": 37195347526,
+    "job_id": 111415946929,
+    "conclusion": "success",
+    "expected_active_workflows": 113,
+    "observed_active_workflows": 113,
+    "status": "PASS"
+  },
+  "scientific_ceiling": {
+    "source_regime_execution": "TOKEN_VAZIO",
+    "process_timescale_execution": "TOKEN_VAZIO",
+    "data_ingestion": "TOKEN_VAZIO",
+    "statistical_fit": "TOKEN_VAZIO",
+    "independent_reproduction": "TOKEN_VAZIO",
+    "G4_BASELINE": "TOKEN_VAZIO",
+    "G5_REPRODUCTION": "TOKEN_VAZIO",
+    "G6_PREDICTION": "TOKEN_VAZIO",
+    "G7_CLAIM_PROMOTION": "TOKEN_VAZIO",
+    "scientific_validation": "TOKEN_VAZIO",
+    "claim_allowed": false
+  },
+  "note": "Append-only repository receipt describing executions on the immediately preceding tested head. This receipt commit itself is not a scientific execution and does not promote any gate."
+}

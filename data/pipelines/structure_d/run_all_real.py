@@ -28,6 +28,11 @@ MODEL_RLL_AGN = "rll_like_agn"
 REGIME_REAL = "real"
 REGIME_PARTIAL_REAL = "partial_real"
 
+LEGACY_ROUTE_SCOPE = "background_three_axis"
+LEGACY_CONSUMED_DATASET_IDS = ("real_hz", "real_bao", "real_cmb_shift")
+LEGACY_EFFECTIVE_COVARIANCE_POLICY = "diagonal_only"
+SUPPORTED_COVARIANCE_POLICIES = ("prefer_full", "diagonal_only", "full_required")
+
 C_KMS = 299792.458
 Z_CMB = 1089.92
 
@@ -48,8 +53,6 @@ EXPECTED_MODEL_COMPARISON_HEADER = [
 EXPECTED_MODEL_COMPARISON_FIT_PARAMS_HEADER = ["H0", "Om", "OL", "Ob_h2", "Os0", "zt", "wt"]
 
 
-
-
 def _expected_model_comparison_header(include_fit_params):
     header = list(EXPECTED_MODEL_COMPARISON_HEADER)
     if bool(include_fit_params):
@@ -65,6 +68,59 @@ def _validate_model_comparison_header(csv_path, include_fit_params):
         raise RuntimeError(
             f"schema mismatch for {os.path.basename(csv_path)}: missing required columns {missing}; got {actual_header}"
         )
+
+
+def build_legacy_execution_contract(active_dataset_ids, covariance_policy):
+    """Describe what this legacy objective actually consumes.
+
+    This is an execution/evidence contract, not a scientific validation claim.
+    The objective below uses only diagonal sigma arrays for H(z), BAO and CMB.
+    """
+    active = list(active_dataset_ids)
+    requested_policy = str(covariance_policy)
+    if requested_policy not in SUPPORTED_COVARIANCE_POLICIES:
+        raise ValueError(
+            f"unsupported covariance_policy={requested_policy!r}; "
+            f"supported={list(SUPPORTED_COVARIANCE_POLICIES)}"
+        )
+
+    consumed = list(LEGACY_CONSUMED_DATASET_IDS)
+    missing_required = [dataset_id for dataset_id in consumed if dataset_id not in active]
+    if missing_required:
+        raise RuntimeError(
+            "legacy background objective requires active datasets "
+            f"{consumed}; missing from profile: {missing_required}"
+        )
+
+    if requested_policy == "full_required":
+        raise RuntimeError(
+            "covariance_policy='full_required' is incompatible with the legacy "
+            "three-axis objective: run_all_real.py evaluates diagonal sigma arrays. "
+            "Use the joint real likelihood for claim-bearing full-covariance work."
+        )
+
+    unconsumed = [dataset_id for dataset_id in active if dataset_id not in consumed]
+    covariance_gap = None
+    if requested_policy == "prefer_full":
+        covariance_gap = (
+            "requested prefer_full, but the legacy objective evaluates diagonal "
+            "sigma arrays; effective policy is diagonal_only"
+        )
+
+    return {
+        "schema": "rll.structure_d.legacy_execution_contract.v1",
+        "route_scope": LEGACY_ROUTE_SCOPE,
+        "active_datasets_declared": active,
+        "datasets_consumed_in_objective": consumed,
+        "unconsumed_active_datasets": unconsumed,
+        "full_profile_consumed": not unconsumed,
+        "datasets_used_semantics": "objective_consumed_only",
+        "covariance_policy_requested": requested_policy,
+        "covariance_policy_effective": LEGACY_EFFECTIVE_COVARIANCE_POLICY,
+        "covariance_gap": covariance_gap,
+        "claim_allowed": False,
+        "scientific_confirmation": False,
+    }
 
 
 def _f_log(z, zt, wt):
@@ -127,12 +183,32 @@ def _chi2_hz_rll(z_hz, h_obs, s_h, h0, om, ol, os0, zt, wt):
 
 
 def _chi2_bao_lcdm(z_bao, dv_obs, s_dv, h0, om, ol, ob_h2, dc_cache=None):
-    dv_th = np.array([_dv_over_rs(z, _hz_lcdm, h0, om, ob_h2, ol, dc_cache=dc_cache) for z in z_bao], dtype=float)
+    dv_th = np.array(
+        [_dv_over_rs(z, _hz_lcdm, h0, om, ob_h2, ol, dc_cache=dc_cache) for z in z_bao],
+        dtype=float,
+    )
     return float(np.sum(((dv_obs - dv_th) / s_dv) ** 2))
 
 
 def _chi2_bao_rll(z_bao, dv_obs, s_dv, h0, om, ol, os0, zt, wt, ob_h2, dc_cache=None):
-    dv_th = np.array([_dv_over_rs(z, _hz_rll, h0, om, ob_h2, ol, os0, zt, wt, dc_cache=dc_cache) for z in z_bao], dtype=float)
+    dv_th = np.array(
+        [
+            _dv_over_rs(
+                z,
+                _hz_rll,
+                h0,
+                om,
+                ob_h2,
+                ol,
+                os0,
+                zt,
+                wt,
+                dc_cache=dc_cache,
+            )
+            for z in z_bao
+        ],
+        dtype=float,
+    )
     return float(np.sum(((dv_obs - dv_th) / s_dv) ** 2))
 
 
@@ -143,7 +219,20 @@ def _chi2_cmb_lcdm(r_obs, la_obs, r_sig, la_sig, h0, om, ol, ob_h2, dc_cache=Non
     return ((r_th - r_obs) / r_sig) ** 2 + ((la_th - la_obs) / la_sig) ** 2
 
 
-def _chi2_cmb_rll(r_obs, la_obs, r_sig, la_sig, h0, om, ol, os0, zt, wt, ob_h2, dc_cache=None):
+def _chi2_cmb_rll(
+    r_obs,
+    la_obs,
+    r_sig,
+    la_sig,
+    h0,
+    om,
+    ol,
+    os0,
+    zt,
+    wt,
+    ob_h2,
+    dc_cache=None,
+):
     dc_cmb = _dc(Z_CMB, _hz_rll, h0, om, ol, os0, zt, wt, cache=dc_cache)
     r_th = np.sqrt(om) * h0 / C_KMS * dc_cmb
     la_th = np.pi * dc_cmb / _rs_fn(h0, ob_h2, om)
@@ -165,12 +254,38 @@ def _obj_rll(params, z_hz, h_obs, s_h, z_bao, dv_obs, s_dv, r_obs, la_obs, r_sig
     dc_cache = {}
     c2 = 0.0
     c2 += _chi2_hz_rll(z_hz, h_obs, s_h, h0, om, ol, os0, zt, wt)
-    c2 += _chi2_bao_rll(z_bao, dv_obs, s_dv, h0, om, ol, os0, zt, wt, ob_h2, dc_cache=dc_cache)
-    c2 += _chi2_cmb_rll(r_obs, la_obs, r_sig, la_sig, h0, om, ol, os0, zt, wt, ob_h2, dc_cache=dc_cache)
+    c2 += _chi2_bao_rll(
+        z_bao,
+        dv_obs,
+        s_dv,
+        h0,
+        om,
+        ol,
+        os0,
+        zt,
+        wt,
+        ob_h2,
+        dc_cache=dc_cache,
+    )
+    c2 += _chi2_cmb_rll(
+        r_obs,
+        la_obs,
+        r_sig,
+        la_sig,
+        h0,
+        om,
+        ol,
+        os0,
+        zt,
+        wt,
+        ob_h2,
+        dc_cache=dc_cache,
+    )
     return c2
 
 
-def _write_error_mode_usage(datasets):
+def _write_error_mode_usage(datasets, consumed_dataset_ids):
+    consumed = set(consumed_dataset_ids)
     rows = []
     for dataset_id, entry in datasets.items():
         has_cov = entry.get("covariance") is not None
@@ -183,7 +298,14 @@ def _write_error_mode_usage(datasets):
             mode = "errors"
         else:
             mode = "none"
-        rows.append({"dataset_id": dataset_id, "observable": entry.get("observable", "unknown"), "error_mode": mode})
+        rows.append(
+            {
+                "dataset_id": dataset_id,
+                "observable": entry.get("observable", "unknown"),
+                "error_mode": mode,
+                "consumed_in_objective": dataset_id in consumed,
+            }
+        )
 
     out_error_mode = os.path.join(RESULTS, "error_mode_usage.csv")
     evaluate_model(rows, out_error_mode)
@@ -219,6 +341,11 @@ def main(
 
     load_t0 = time.perf_counter()
     cfg_meta, datasets = load_active_datasets(config_path, profile_name=profile_name)
+    execution_contract = build_legacy_execution_contract(
+        cfg_meta.get("active_datasets", []),
+        covariance_policy,
+    )
+
     hz = datasets["real_hz"]
     bao = datasets["real_bao"]
     cmb = datasets["real_cmb_shift"]
@@ -239,7 +366,15 @@ def main(
     n_obs = len(hz["values"]) + len(bao["values"]) + len(cmb["values"])
 
     bounds_l = [(60.0, 80.0), (0.10, 0.60), (0.50, 0.90), (0.018, 0.026)]
-    bounds_r = [(60.0, 80.0), (0.10, 0.60), (0.50, 0.90), (0.000, 0.250), (0.1, 10.0), (0.1, 1.0), (0.018, 0.026)]
+    bounds_r = [
+        (60.0, 80.0),
+        (0.10, 0.60),
+        (0.50, 0.90),
+        (0.000, 0.250),
+        (0.1, 10.0),
+        (0.1, 1.0),
+        (0.018, 0.026),
+    ]
     lcdm_param_order = ["H0", "Om", "OL", "Ob_h2"]
     rll_param_order = ["H0", "Om", "OL", "Os0", "zt", "wt", "Ob_h2"]
     seed = int(os.environ.get("STRUCTURE_D_SEED", "42"))
@@ -247,7 +382,19 @@ def main(
     lcdm_maxiter = int(os.environ.get("STRUCTURE_D_MAXITER_LCDM", "200"))
     rll_maxiter = int(os.environ.get("STRUCTURE_D_MAXITER_RLL", "300"))
     res_l = differential_evolution(
-        lambda p: _obj_lcdm(p, z_hz, h_obs, s_h, z_bao, dv_obs, s_dv, r_obs, la_obs, r_sig, la_sig),
+        lambda p: _obj_lcdm(
+            p,
+            z_hz,
+            h_obs,
+            s_h,
+            z_bao,
+            dv_obs,
+            s_dv,
+            r_obs,
+            la_obs,
+            r_sig,
+            la_sig,
+        ),
         bounds_l,
         seed=seed,
         maxiter=lcdm_maxiter,
@@ -256,7 +403,19 @@ def main(
     )
 
     res_r = differential_evolution(
-        lambda p: _obj_rll(p, z_hz, h_obs, s_h, z_bao, dv_obs, s_dv, r_obs, la_obs, r_sig, la_sig),
+        lambda p: _obj_rll(
+            p,
+            z_hz,
+            h_obs,
+            s_h,
+            z_bao,
+            dv_obs,
+            s_dv,
+            r_obs,
+            la_obs,
+            r_sig,
+            la_sig,
+        ),
         bounds_r,
         seed=seed,
         maxiter=rll_maxiter,
@@ -273,11 +432,13 @@ def main(
     k_l = N_FREE_PARAMS_LCDM
     k_r = N_FREE_PARAMS_RLL
 
-    datasets_used = ",".join(cfg_meta["active_datasets"])
+    consumed_dataset_ids = execution_contract["datasets_consumed_in_objective"]
+    datasets_used = ",".join(consumed_dataset_ids)
+    effective_covariance_policy = execution_contract["covariance_policy_effective"]
     run_name = cfg_meta["run_name"]
     profile = cfg_meta["profile_name"]
 
-    has_cmb = "real_cmb_shift" in cfg_meta.get("active_datasets", [])
+    has_cmb = "real_cmb_shift" in consumed_dataset_ids
     effective_regime = REGIME_REAL if has_cmb else REGIME_PARTIAL_REAL
 
     row_lcdm = dict(
@@ -294,7 +455,7 @@ def main(
         datasets_used=datasets_used,
         run_name=run_name,
         profile_name=profile,
-        covariance_policy=covariance_policy,
+        covariance_policy=effective_covariance_policy,
     )
     row_rll = dict(
         model=MODEL_RLL_AGN,
@@ -310,7 +471,7 @@ def main(
         datasets_used=datasets_used,
         run_name=run_name,
         profile_name=profile,
-        covariance_policy=covariance_policy,
+        covariance_policy=effective_covariance_policy,
     )
     if include_fit_params:
         row_lcdm.update(
@@ -336,21 +497,30 @@ def main(
             }
         )
 
-    rows = [
-        row_lcdm,
-        row_rll,
-    ]
+    rows = [row_lcdm, row_rll]
 
     write_t0 = time.perf_counter()
     out = os.path.join(RESULTS, output_filename)
-    out_error_mode = _write_error_mode_usage(datasets)
+    out_error_mode = _write_error_mode_usage(datasets, consumed_dataset_ids)
     df = evaluate_model(rows, out)
     _validate_model_comparison_header(out, include_fit_params=include_fit_params)
     fit_metadata = {
         "output_csv": out,
         "profile_name": profile,
         "run_name": run_name,
-        "datasets_used": cfg_meta["active_datasets"],
+        "route_scope": LEGACY_ROUTE_SCOPE,
+        "claim_allowed": False,
+        "scientific_confirmation": False,
+        "active_datasets_declared": execution_contract["active_datasets_declared"],
+        "datasets_used": consumed_dataset_ids,
+        "datasets_consumed_in_objective": consumed_dataset_ids,
+        "unconsumed_active_datasets": execution_contract["unconsumed_active_datasets"],
+        "full_profile_consumed": execution_contract["full_profile_consumed"],
+        "datasets_used_semantics": execution_contract["datasets_used_semantics"],
+        "covariance_policy_requested": execution_contract["covariance_policy_requested"],
+        "covariance_policy_effective": execution_contract["covariance_policy_effective"],
+        "covariance_gap": execution_contract["covariance_gap"],
+        "legacy_execution_contract": execution_contract,
         "optimizer": {
             "name": "scipy.optimize.differential_evolution",
             "seed": seed,
@@ -360,16 +530,28 @@ def main(
         "fit_models": {
             "LCDM": {
                 "param_order": lcdm_param_order,
-                "bounds": [{"name": name, "min": float(low), "max": float(high)} for name, (low, high) in zip(lcdm_param_order, bounds_l)],
+                "bounds": [
+                    {"name": name, "min": float(low), "max": float(high)}
+                    for name, (low, high) in zip(lcdm_param_order, bounds_l)
+                ],
                 "maxiter": lcdm_maxiter,
-                "best_fit": {name: float(value) for name, value in zip(lcdm_param_order, b_l)},
+                "best_fit": {
+                    name: float(value)
+                    for name, value in zip(lcdm_param_order, b_l)
+                },
                 "chi2": c2_l,
             },
             "RLL_like+AGN": {
                 "param_order": rll_param_order,
-                "bounds": [{"name": name, "min": float(low), "max": float(high)} for name, (low, high) in zip(rll_param_order, bounds_r)],
+                "bounds": [
+                    {"name": name, "min": float(low), "max": float(high)}
+                    for name, (low, high) in zip(rll_param_order, bounds_r)
+                ],
                 "maxiter": rll_maxiter,
-                "best_fit": {name: float(value) for name, value in zip(rll_param_order, b_r)},
+                "best_fit": {
+                    name: float(value)
+                    for name, value in zip(rll_param_order, b_r)
+                },
                 "chi2": c2_r,
             },
         },

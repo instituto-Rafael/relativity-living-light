@@ -1,0 +1,234 @@
+{
+  "schema": "rll.current_state_authority_graph.v2",
+  "observation_date_utc": "2026-11-15",
+  "producer_repository": "instituto-Rafael/relativity-living-light",
+  "kind": "PROVIDER_REF_SNAPSHOT_NOT_RUNTIME_OR_SCIENTIFIC_ATTESTATION",
+  "supersedes_snapshot": "docs/governance/RLL_CURRENT_STATE_AUTHORITY_GRAPH_20260911.md",
+  "root_authority": "rll/lab",
+  "claim_allowed": false,
+  "publication_effect": "NONE",
+  "auto_merge": false,
+  "source_method": "GitHub branch endpoints and compare endpoints; workflow-directory contents list; GitHub open issues/PRs; per-ref snapshots, not exhaustive repo-history classification",
+  "refs": [
+    {
+      "name": "main",
+      "sha": "0f1dc947c150c67626b173b23db7d6cd98670343",
+      "workflow_files": 135,
+      "protected_metadata": true
+    },
+    {
+      "name": "rll/lab",
+      "sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "workflow_files": 120,
+      "protected_metadata": false
+    },
+    {
+      "name": "rll/integration",
+      "sha": "2f30179ebebf91e7514ffdffb61609a3cf12ef0b",
+      "workflow_files": 107,
+      "protected_metadata": false
+    },
+    {
+      "name": "rll/release",
+      "sha": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "workflow_files": 69,
+      "protected_metadata": false
+    }
+  ],
+  "compare_edges": [
+    {
+      "left": "main",
+      "right": "rll/lab",
+      "left_only_commits": 1388,
+      "right_only_commits": 736,
+      "merge_base": "c5d1f5b4ef249f7b59043ae1325b4d7a0d6637a1",
+      "topology_status": "DIVERGED",
+      "current_path_overlap": "TOKEN_VAZIO_NOT_FULLY_MATERIALIZED",
+      "promotion": "BLOCKED_BATCH_REVIEW"
+    },
+    {
+      "left": "rll/lab",
+      "right": "rll/integration",
+      "left_only_commits": 585,
+      "right_only_commits": 1,
+      "merge_base": "de4099bbbb7c5adeb21eeeabc220aa803aaa5011",
+      "topology_status": "DIVERGED",
+      "current_path_overlap": "TOKEN_VAZIO_NOT_FULLY_MATERIALIZED",
+      "promotion": "BLOCKED_BATCH_REVIEW"
+    },
+    {
+      "left": "rll/integration",
+      "right": "rll/release",
+      "left_only_commits": 1473,
+      "right_only_commits": 0,
+      "merge_base": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "topology_status": "LEFT_AHEAD",
+      "current_path_overlap": "NOT_APPLICABLE_RIGHT_AT_MERGEBASE",
+      "promotion": "BLOCKED_MATURITY_REVIEW"
+    },
+    {
+      "left": "rll/lab",
+      "right": "rll/release",
+      "left_only_commits": 2057,
+      "right_only_commits": 0,
+      "merge_base": "2cb3e3e88677ea9ac1f263377114b539db7bc47f",
+      "topology_status": "LEFT_AHEAD",
+      "current_path_overlap": "NOT_APPLICABLE_RIGHT_AT_MERGEBASE",
+      "promotion": "BLOCKED_MATURITY_REVIEW"
+    }
+  ],
+  "active_work_prs": [
+    {
+      "number": 1203,
+      "head": "agent/rll-json-evidence-after-1195-20261115-v1",
+      "sha": "d2e57f84322ae20449eadde27f9dceadd65ea49d",
+      "base": "rll/lab",
+      "draft": true,
+      "gate": "PASS_SCOPED_UNMERGED",
+      "parent_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d"
+    },
+    {
+      "number": 1204,
+      "head": "agent/rll-actions-runtime-boundary-20261115-v1",
+      "sha": "02b53049b3474091332b8fa0d976de5a12e0a0ea",
+      "base": "rll/lab",
+      "draft": true,
+      "gate": "PASS_SCOPED_UNMERGED",
+      "parent_sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d"
+    },
+    {
+      "number": 1200,
+      "head": "rll/lab",
+      "sha": "80d839b8758c475b0a4bbb1dc519664fcc16082d",
+      "base": "main",
+      "draft": true,
+      "gate": "DIRTY_MERGE_CONFLICT_AND_INVALID_DIRECT_PROMOTION"
+    }
+  ],
+  "layers": [
+    {
+      "layer": "EXACT",
+      "domain": "geometry_and_formula",
+      "source": "PapersPub/09_poincare_ball_7d_freestanding",
+      "artifact": "docs/governance/RLL_CURRENT_STATE_AUTHORITY_GRAPH_20260911.md",
+      "execution": "TOKEN_VAZIO_PAIR_BASELINE",
+      "claim": "SCIENTIFIC_PROMOTION_BLOCKED",
+      "issues": [
+        863,
+        793
+      ]
+    },
+    {
+      "layer": "EMPIRICAL",
+      "domain": "cosmology",
+      "source": "data/contracts/rll_scientific_validation_orchestrator.v1.json",
+      "artifact": "data/governance/rll_state_reconciliation_20261115.v1.json",
+      "execution": "TOKEN_VAZIO_INDEPENDENT_CMB_DESI_AND_COVARIANCE",
+      "claim": "SCIENTIFIC_PROMOTION_BLOCKED",
+      "issues": [
+        732,
+        648
+      ]
+    },
+    {
+      "layer": "OPERATIONAL",
+      "domain": "branch_reconciliation",
+      "source": "tools/branch_divergence_inventory.py",
+      "artifact": "data/governance/RLL_BRANCH_GENEALOGY_RECONCILIATION_20260930_V2.json",
+      "execution": "AUDIT_ONLY",
+      "claim": "NO_AUTO_MERGE",
+      "issues": [
+        860,
+        861,
+        868,
+        869
+      ]
+    },
+    {
+      "layer": "OPERATIONAL",
+      "domain": "workflow_inventory",
+      "source": ".github/workflow-contract.yml",
+      "artifact": "GitHub contents workflow directory per exact ref",
+      "execution": "DIRECTORY_COUNT_ONLY_NOT_FULL_REGENERATION",
+      "claim": "NO_GLOBAL_WORKFLOW_COMPLETENESS_CLAIM",
+      "issues": [
+        865
+      ]
+    },
+    {
+      "layer": "OPERATIONAL",
+      "domain": "platform_authority",
+      "source": "data/governance/rll_agent_authority.v1.json",
+      "artifact": "GitHub branch metadata per ref",
+      "execution": "TOKEN_VAZIO_ADMIN_SETTINGS_READBACK",
+      "claim": "NO_EXTERNAL_ENFORCEMENT_ASSERTION",
+      "issues": [
+        964,
+        864
+      ]
+    },
+    {
+      "layer": "OPERATIONAL",
+      "domain": "real_data_zero_job",
+      "source": ".github/workflows/rll-real-data-orchestrator.yml",
+      "artifact": "issue#876 post-PR877 historical receipt",
+      "execution": "TOKEN_VAZIO_POSTFIX_DISPATCH",
+      "claim": "NO_POSTFIX_JOB_MATERIALIZATION_ASSERTION",
+      "issues": [
+        876
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "GAP-BRANCH-AUTHORITY-DIVERGENCE",
+      "issue": 860,
+      "state": "OPEN",
+      "next": "partition current main/lab overlapping changed paths with exact Git tree inventory before selective forward-port"
+    },
+    {
+      "id": "GAP-AUTHORITY-GRAPH-ACCEPTANCE",
+      "issue": 869,
+      "state": "REVIEW_PENDING",
+      "next": "verify human and JSON graph from same immutable ref baseline; run static tests and exact-head CI"
+    },
+    {
+      "id": "GAP-WORKFLOW-COUNT-GLOBAL",
+      "issue": 865,
+      "state": "PARTIAL_DIRECTORY_COUNTS_ONLY",
+      "next": "regenerate versioned canonical inventory at intended producer ref; check completeness and ownership"
+    },
+    {
+      "id": "GAP-EXTERNAL-SETTINGS-AUTHORITY",
+      "issue": 964,
+      "state": "BLOCKED_AUTHORITY",
+      "next": "authorized read-only rulesets/branch-protection receipt; never weaken CI"
+    },
+    {
+      "id": "GAP-REALDATA-ORCHESTRATOR-JOBS",
+      "issue": 876,
+      "state": "BLOCKED_RUNTIME",
+      "next": "dispatch exact corrected ref and read job list"
+    },
+    {
+      "id": "GAP-SCIENTIFIC-REPLICATION",
+      "issue": 732,
+      "state": "BLOCKED_SCIENTIFIC",
+      "next": "independent empirical validation and covariance receipts"
+    }
+  ],
+  "falsifiers": [
+    "Exact ref HEAD differs from frozen snapshot: SUPERSEDE; no silent update",
+    "Any left/right commit count reversed or merge base mismatch: FAIL_N0_SOURCE_RECONCILIATION",
+    "Any machine graph claim_allowed=true or auto_merge=true: FAIL_CLAIM_BOUNDARY",
+    "Missing canonical predecessor pointer or typed gap: FAIL_SCHEMA",
+    "Code and CI PASS_SCOPED != physical scientific PASS"
+  ],
+  "rollback": {
+    "mode": "fresh successor PR only; no protected ref write, no rebase/force push or deletion",
+    "executed": false
+  },
+  "F_ok": "provider ref comparisons and per-ref workflow directory listing observed",
+  "F_gap": "cross-ref semantic merge conflict map not fully produced; runtime provider and scientific evidence absent",
+  "F_next": "run repository static contract tests then review minimal selective forward-port batches from fresh rll/lab"
+}

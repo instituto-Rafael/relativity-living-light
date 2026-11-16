@@ -1,0 +1,217 @@
+{
+  "schema": "rll.strong_gravity.sgpt_m87_firetest.v1",
+  "id": "SGPT_M87_FIRETEST_V1",
+  "locked_at": "2026-10-04",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "parent_model": "B08_SGPT_V1",
+  "parent_model_commit": "e287ef13be4d5e6d366f29e234c8a5d113d21729",
+  "analysis_class": "RETROSPECTIVE_EXTERNAL_SOURCE_PREREGISTRATION",
+  "prospective_claim": false,
+  "claim_allowed": false,
+  "truth_boundary": "This contract freezes a source-specific evaluation route before repository-local data ingestion and fitting. All referenced EHT outcomes are already public, so this is not a prospective discovery claim.",
+  "source": {
+    "object": "M87*",
+    "source_class": "supermassive_black_hole_low_accretion_active_galactic_nucleus",
+    "parameter_values": {
+      "M": "TOKEN_VAZIO",
+      "a_star": "TOKEN_VAZIO",
+      "dot_M": "TOKEN_VAZIO",
+      "B": "TOKEN_VAZIO",
+      "rho": "TOKEN_VAZIO",
+      "T_e": "TOKEN_VAZIO"
+    },
+    "parameter_rule": "No source parameter value may be copied from memory or tuned to improve SGPT. Values/priors must be bound to the selected baseline literature or inference product with units and source before model fitting."
+  },
+  "public_data_sources": [
+    {
+      "id": "EHT_2017_L1",
+      "role": "RAW_CALIBRATION_CUSTODY_REFERENCE",
+      "publisher": "Event Horizon Telescope Collaboration / Joint ALMA Observatory",
+      "doi": "10.25739/kat4-na03",
+      "official_page": "https://eventhorizontelescope.org/blog/public-data-release-event-horizon-telescope-2017-observations",
+      "file_sha256": "TOKEN_VAZIO",
+      "local_path": "TOKEN_VAZIO",
+      "rights_status": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    },
+    {
+      "id": "EHT_2019_D01_01",
+      "role": "PRIMARY_2017_CALIBRATED_M87_DATA",
+      "publisher": "Event Horizon Telescope Collaboration",
+      "doi": "10.25739/g85n-f134",
+      "official_index": "https://eventhorizontelescope.org/for-astronomers/data",
+      "file_sha256": "TOKEN_VAZIO",
+      "local_path": "TOKEN_VAZIO",
+      "rights_status": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    },
+    {
+      "id": "EHT_2019_D01_02",
+      "role": "PUBLIC_IMAGING_PIPELINE_REFERENCE",
+      "repository": "eventhorizontelescope/2019-D01-02",
+      "commit": "80d230e76c08edd31548e7cfe61dc7cf94300780",
+      "local_path": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    },
+    {
+      "id": "EHT_2021_D02_01",
+      "role": "2017_MULTI_WAVELENGTH_CONTEXT",
+      "publisher": "Event Horizon Telescope Multi-Wavelength Science Working Group",
+      "doi": "10.25739/mhh2-cw46",
+      "official_index": "https://eventhorizontelescope.org/for-astronomers/data",
+      "file_sha256": "TOKEN_VAZIO",
+      "local_path": "TOKEN_VAZIO",
+      "rights_status": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    },
+    {
+      "id": "EHT_2023_D01_01",
+      "role": "2017_CALIBRATED_POLARIMETRIC_DATA",
+      "publisher": "Event Horizon Telescope Collaboration",
+      "doi": "10.25739/q46m-m857",
+      "official_index": "https://eventhorizontelescope.org/for-astronomers/data",
+      "file_sha256": "TOKEN_VAZIO",
+      "local_path": "TOKEN_VAZIO",
+      "rights_status": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    },
+    {
+      "id": "EHT_2024_D01_01",
+      "role": "RETROSPECTIVE_REPLICATION_2018_M87_CALIBRATED_DATA",
+      "publisher": "Event Horizon Telescope Collaboration",
+      "doi": "10.25739/epm5-r371",
+      "official_index": "https://eventhorizontelescope.org/for-astronomers/data",
+      "file_sha256": "TOKEN_VAZIO",
+      "local_path": "TOKEN_VAZIO",
+      "rights_status": "TOKEN_VAZIO",
+      "ingestion_state": "TOKEN_VAZIO"
+    }
+  ],
+  "rights_rule": "Public availability and DOI do not imply redistribution or ML-training rights. Exact applicable terms must be captured before local redistribution or training. Analysis use must remain within the recorded terms.",
+  "split": {
+    "development": [
+      "EHT_2019_D01_01",
+      "EHT_2021_D02_01",
+      "EHT_2023_D01_01"
+    ],
+    "retrospective_holdout": [
+      "EHT_2024_D01_01"
+    ],
+    "raw_custody_reference": [
+      "EHT_2017_L1"
+    ],
+    "pipeline_reference": [
+      "EHT_2019_D01_02"
+    ],
+    "holdout_warning": "The 2018 M87 result is already public. It is frozen here only as a repository-local analysis holdout and must not be described as a prospective blind prediction."
+  },
+  "hypotheses": [
+    {
+      "id": "H_down",
+      "equation": "H_down=max(0,-Theta)*tau_flow*M_f*p_ram/(p_th+p_B+p_rad)",
+      "primary_test": "Compare out-of-sample predictive performance for a frozen shock/heating/spectral-hardening target against standard baseline predictors with and without H_down.",
+      "falsifier": "No robust held-out gain after uncertainty propagation and complexity penalty, or gains reproduced by shuffled/sign-flipped/drop-term controls."
+    },
+    {
+      "id": "H_logistic_photonic",
+      "equation": "f_gamma(chi)=1/(1+exp((chi-chi_t)/w_chi))",
+      "primary_test": "Compare the logistic transition against physically motivated GRRT transition models under the same frozen likelihood/data split.",
+      "falsifier": "No penalized predictive gain, unstable transition parameters, or equivalent/better fit from baseline transitions."
+    },
+    {
+      "id": "H_temporal_ordering",
+      "equation": "compression -> hardening -> polarization_change -> flare_or_outflow",
+      "primary_test": "TOKEN_VAZIO",
+      "falsifier": "Preregistered lag ordering fails across an adequate time-resolved dataset.",
+      "state": "TOKEN_VAZIO_NOT_RUN",
+      "reason": "No adequate cadence/time-series product has yet been ingested and frozen for this specific ordering test."
+    }
+  ],
+  "mandatory_baselines": [
+    "ideal_GRMHD",
+    "resistive_GRMHD",
+    "two_temperature_GRRMHD",
+    "GRPIC",
+    "general_relativistic_radiative_transfer"
+  ],
+  "baseline_rule": "A missing mandatory baseline is not a neutral omission. G4 remains TOKEN_VAZIO unless every baseline is either executed under a declared comparable scope or explicitly ruled inapplicable with a physics justification reviewed before result inspection.",
+  "negative_controls": [
+    "drop_Theta",
+    "drop_M_f",
+    "drop_R_ram",
+    "flip_Theta_sign",
+    "shuffle_predictor_variables",
+    "permute_temporal_targets",
+    "baseline_only"
+  ],
+  "observables": {
+    "primary_family": [
+      "EHT calibrated visibility and closure quantities where present in the selected product",
+      "polarimetric/Stokes-derived quantities only when their calibration and covariance are explicitly available",
+      "broadband contemporaneous flux constraints from the declared 2017 multi-wavelength product"
+    ],
+    "forbidden_substitution": [
+      "image appearance alone for visibility-domain likelihood",
+      "published qualitative statements for missing covariance",
+      "Hawking temperature inferred from synchrotron or polarization observables",
+      "event horizon treated as a material emitting surface"
+    ],
+    "exact_primary_vector": "TOKEN_VAZIO",
+    "covariance_model": "TOKEN_VAZIO",
+    "likelihood": "TOKEN_VAZIO"
+  },
+  "statistics": {
+    "primary_metric": "TOKEN_VAZIO",
+    "complexity_penalty": "TOKEN_VAZIO",
+    "uncertainty_propagation": "REQUIRED",
+    "multiplicity_control": "REQUIRED_FOR_SECONDARY_SCANS",
+    "post_hoc_parameter_tuning": "FORBIDDEN",
+    "selection_rule": "Freeze exact observable vector, likelihood, priors, metric and model comparison rule before the first result-producing fit."
+  },
+  "gate_order": [
+    "G0_IDENTITY",
+    "G1_MATHEMATICS",
+    "G2_DETERMINISM",
+    "G3_ADVERSARIAL",
+    "G4_BASELINE",
+    "G5_REPRODUCTION",
+    "G6_PREDICTION",
+    "G7_CLAIM_PROMOTION"
+  ],
+  "gates": {
+    "G0_IDENTITY": "TOKEN_VAZIO",
+    "G1_MATHEMATICS": "TOKEN_VAZIO",
+    "G2_DETERMINISM": "TOKEN_VAZIO",
+    "G3_ADVERSARIAL": "TOKEN_VAZIO",
+    "G4_BASELINE": "TOKEN_VAZIO",
+    "G5_REPRODUCTION": "TOKEN_VAZIO",
+    "G6_PREDICTION": "TOKEN_VAZIO",
+    "G7_CLAIM_PROMOTION": "TOKEN_VAZIO"
+  },
+  "promotion_requirements": [
+    "official bytes and file-level SHA256 frozen",
+    "data-use/license terms recorded for each consumed product",
+    "source/model parameter priors source-bound with units",
+    "primary observable vector frozen",
+    "covariance/uncertainty model frozen",
+    "mandatory baselines evaluated",
+    "negative controls evaluated",
+    "retrospective holdout evaluated without tuning from its result",
+    "independent operator/repository reproduction",
+    "genuinely future or otherwise independent held-out prediction for any stronger claim",
+    "explicit human authorization"
+  ],
+  "current_state": {
+    "contract": "PREREGISTERED_UNEXECUTED",
+    "data_ingested": false,
+    "source_parameters_frozen": false,
+    "observable_vector_frozen": false,
+    "baseline_models_executed": false,
+    "negative_controls_executed": false,
+    "retrospective_holdout_executed": false,
+    "independent_replication": "TOKEN_VAZIO",
+    "scientific_validation": "TOKEN_VAZIO",
+    "claim_allowed": false
+  },
+  "rollback": "Supersede or revert this preregistration before data/result ingestion. After any result-producing execution, corrections must append a successor protocol and preserve the original lock and result receipts."
+}
