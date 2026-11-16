@@ -18,7 +18,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
 
 SCHEMA = "rll.credential_authority.audit.v1"
 DEFAULT_POLICY = Path("data/governance/RLL_CREDENTIAL_AUTHORITY_POLICY_V1.json")
@@ -68,8 +67,99 @@ class Finding:
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
-    payload = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
-    return payload if isinstance(payload, dict) else {}
+    """Fail-closed, dependency-free scanner for the narrow credential audit.
+
+    Extract only workflow triggers, job boundaries, job-level guards and raw
+    job text. This is NOT a general YAML parser; unsupported layouts fail.
+    """
+    source = path.read_text(encoding="utf-8")
+    events: list[str] = []
+    jobs: dict[str, dict[str, str]] = {}
+    section = ""
+    active: str | None = None
+    lines: list[str] = []
+    guard = ""
+    folded = False
+    credential = re.compile(r"secrets\.(?:GITPAT|CLIMA)\b", re.IGNORECASE)
+
+    def finish() -> None:
+        if active is not None:
+            if active in jobs:
+                raise ValueError("duplicate workflow job")
+            jobs[active] = {"if": guard, "_raw": "\n".join(lines)}
+
+    for raw in source.splitlines():
+        stripped = raw.strip()
+        if "\t" in raw[:len(raw) - len(raw.lstrip())]:
+            raise ValueError("tab indentation in credential workflow")
+        if not stripped or stripped.startswith("#"):
+            if section == "jobs" and active is not None:
+                lines.append(raw)
+            continue
+        indent = len(raw) - len(raw.lstrip(" "))
+        if indent == 0:
+            if section == "jobs":
+                finish()
+            active, guard, folded, section = None, "", False, ""
+            event = re.fullmatch(r"""(?:on|'on'|"on"):\s*(.*)""", stripped)
+            if event is not None:
+                section = "on"
+                val = event.group(1).split("#", 1)[0].strip()
+                if val.startswith("[") and val.endswith("]"):
+                    events.extend(
+                        item.strip().strip("'\"")
+                        for item in val[1:-1].split(",") if item.strip()
+                    )
+                elif re.fullmatch(r"[A-Za-z_][\w-]*", val):
+                    events.append(val)
+                elif val:
+                    raise ValueError("unsupported workflow trigger syntax")
+            elif stripped == "jobs:":
+                section = "jobs"
+            elif credential.search(raw):
+                raise ValueError("credential outside explicit job")
+            continue
+        if section == "on":
+            if indent == 2:
+                event = re.match(r"^([A-Za-z_][\w-]*):(?:\s|$)", stripped)
+                if event:
+                    events.append(event.group(1))
+                elif stripped.startswith("- "):
+                    events.append(stripped[2:].split("#", 1)[0].strip().strip("'\""))
+                elif credential.search(raw):
+                    raise ValueError("credential inside trigger")
+            continue
+        if section != "jobs":
+            if credential.search(raw):
+                raise ValueError("credential outside explicit job")
+            continue
+        if indent == 2:
+            finish()
+            job = re.fullmatch(r"([A-Za-z_][\w-]*):(?:\s*#.*)?", stripped)
+            if job is None:
+                raise ValueError("unsupported job declaration")
+            active, lines, guard, folded = job.group(1), [], "", False
+            continue
+        if active is None:
+            if credential.search(raw):
+                raise ValueError("credential without explicit job")
+            continue
+        lines.append(raw)
+        if indent == 4:
+            match = re.match(r"^if:\s*(.*?)\s*$", stripped)
+            if match:
+                value = match.group(1)
+                folded = value in (">", ">-", "|", "|-")
+                guard = "" if folded else value
+            else:
+                folded = False
+        elif folded and indent > 4:
+            guard += " " + stripped
+    if section == "jobs":
+        finish()
+    if not jobs:
+        raise ValueError("no explicit jobs detected")
+    return {"on": events, "jobs": jobs}
 
 
 def _triggers(doc: dict[str, Any]) -> set[str]:

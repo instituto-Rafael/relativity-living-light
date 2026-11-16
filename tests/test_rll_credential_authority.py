@@ -189,5 +189,47 @@ jobs:
                 self.assertIn("CLIMATE_SECRET_SURFACE_OR_NAME", {item.code for item in findings})
 
 
+    def test_workflow_level_credential_outside_job_fails_closed(self):
+        root = self._repo("""name: x
+'on':
+  workflow_dispatch:
+env:
+  PAT: ${{ secrets.GITPAT }}
+jobs:
+  seemingly-safe:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo safe
+""", GITHUB_ASSURANCE_WORKFLOW)
+        findings, _ = audit(root)
+        self.assertIn("WORKFLOW_PARSE", {item.code for item in findings})
+
+    def test_quoted_on_guard_still_works_without_pyyaml(self):
+        import ast
+        source = (ROOT / "tools" / "validate_rll_credential_authority.py").read_text(encoding="utf-8")
+        parsed = ast.parse(source)
+        imports = {
+            alias.name.split(".")[0]
+            for node in ast.walk(parsed) if isinstance(node, ast.Import)
+            for alias in node.names
+        }
+        self.assertNotIn("yaml", imports)
+        root = self._repo("""name: x
+'on': [workflow_dispatch]
+jobs:
+  manual:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      GITPAT: ${{ secrets.GITPAT }}
+    steps:
+      - run: echo safe
+""", GITHUB_ASSURANCE_WORKFLOW)
+        findings, _ = audit(root)
+        self.assertNotIn("GITPAT_NON_MANUAL", {item.code for item in findings})
+        self.assertNotIn("WORKFLOW_PARSE", {item.code for item in findings})
+
+
 if __name__ == "__main__":
     unittest.main()
