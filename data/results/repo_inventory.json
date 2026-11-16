@@ -499,8 +499,8 @@
     "bytes": 7450,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 191,
-    "sha256": "7ff2c2cab993067865548b39a68d03c6946807e1d69ec8356881f01ac642d4fd",
+    "linhas": 133,
+    "sha256": "0140704b7daee4b546bf682a2f9b48ba9a0fc3130e0acd5b1c11bf796817f4b8",
     "flags": ""
   },
   {
@@ -607,8 +607,8 @@
     "bytes": 5818,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 147,
-    "sha256": "391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a",
+    "linhas": 130,
+    "sha256": "9e8b594ae08a4720180a2c3f0d6c49e1f286c8be18c26142f7aaf097b6d68ed6",
     "flags": "token_vazio_declared"
   },
   {
@@ -1063,11 +1063,11 @@
   },
   {
     "path": ".github/workflows/rll-json-dedup-gate.yml",
-    "bytes": 4002,
+    "bytes": 2200,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 87,
-    "sha256": "aafb9d916a5114c3f4216c898c7d8b0fa990f7aa5245bd20762cb7449ab5b9ad",
+    "linhas": 55,
+    "sha256": "8bd84d20a8a3ff806af1780606f87cec40d58eeaa2fe2dd711a12af7ba30b154",
     "flags": "mentions_synthetic"
   },
   {
@@ -1509,6 +1509,24 @@
     "tipo": "other",
     "linhas": 0,
     "sha256": "ad396b52a1d5b86e71ccf99025f32f320ce9dd40968e22cda77a828b10a1c831",
+    "flags": ""
+  },
+  {
+    "path": "001_PONTEIRO/RLL_OFFICIAL_SOURCE_INTAKE_CURRENT.md",
+    "bytes": 850,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 11,
+    "sha256": "5eb4bf7d6c80cb0d64d8a3b181b7253e71a0e3dc509e92300e6495df9048af6c",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "001_PONTEIRO/RLL_STATE_RECONCILIATION_V1_CURRENT.md",
+    "bytes": 434,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 9,
+    "sha256": "f172be19253ad739aa7d89bebae603e35573b3fcd6bceabca6d0bdfcdeb8663e",
     "flags": ""
   },
   {
@@ -16810,15 +16828,6 @@
     "linhas": 193,
     "sha256": "105a7a5cff36d98cf1c3bbb7c3baef2693e24ceef3f436aebff056e9a192c888",
     "flags": "token_vazio_declared,cosmology_validation_marker"
-  },
-  {
-    "path": "docs/science/RLL_JSON_BYTES_EVIDENCE_AFTER_1195_20261115_V2.md",
-    "bytes": 2730,
-    "ext": ".md",
-    "tipo": "documentation_md",
-    "linhas": 27,
-    "sha256": "93d9df97e3dc00b58fa7984173325896e8dd7c49fa31c13c829454ffacd1adeb",
-    "flags": "cosmology_validation_marker"
   },
   {
     "path": "docs/science/RLL_JSON_CODEX_DEDUP_EVIDENCE_BOUNDARY_20261114_V1.md",

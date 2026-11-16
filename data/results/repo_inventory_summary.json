@@ -1,10 +1,10 @@
 {
-  "tracked_files_total": 3657,
-  "cataloged_files": 3646,
+  "tracked_files_total": 3653,
+  "cataloged_files": 3642,
   "uncataloged_or_error_files": 0,
-  "total_bytes": 56425718,
-  "total_text_lines": 542519,
-  "markdown_files": 1214,
+  "total_bytes": 56365495,
+  "total_text_lines": 542223,
+  "markdown_files": 1213,
   "yml_yaml_files": 251,
   "github_workflow_yml_files": 120,
   "data_or_result_files": 992
