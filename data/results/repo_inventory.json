@@ -235,11 +235,11 @@
   },
   {
     "path": ".github/agents/rll-secretary.agent.md",
-    "bytes": 2892,
+    "bytes": 3450,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 57,
-    "sha256": "946c017a138e93058b587f1d6ab7bd3cc5eb55cd33a694725de2c4c833e838e2",
+    "linhas": 65,
+    "sha256": "7a8dfc95410332c97b3807f4a2f196a931819b6b9857165fe30e12229db0b4ee",
     "flags": "token_vazio_declared"
   },
   {
@@ -496,7 +496,7 @@
   },
   {
     "path": ".github/workflows/android-build.yml",
-    "bytes": 4922,
+    "bytes": 7450,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 133,
@@ -604,7 +604,7 @@
   },
   {
     "path": ".github/workflows/copilot-setup-steps.yml",
-    "bytes": 4827,
+    "bytes": 5818,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
     "linhas": 130,
@@ -1504,11 +1504,29 @@
   },
   {
     "path": ".gitignore",
-    "bytes": 1400,
+    "bytes": 1367,
     "ext": "NO_EXT",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "6bb2e60d0811940df38a20b8a1134a647e595e34b63be031177ba0c021c077c5",
+    "sha256": "ad396b52a1d5b86e71ccf99025f32f320ce9dd40968e22cda77a828b10a1c831",
+    "flags": ""
+  },
+  {
+    "path": "001_PONTEIRO/RLL_OFFICIAL_SOURCE_INTAKE_CURRENT.md",
+    "bytes": 850,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 11,
+    "sha256": "5eb4bf7d6c80cb0d64d8a3b181b7253e71a0e3dc509e92300e6495df9048af6c",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "001_PONTEIRO/RLL_STATE_RECONCILIATION_V1_CURRENT.md",
+    "bytes": 434,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 9,
+    "sha256": "f172be19253ad739aa7d89bebae603e35573b3fcd6bceabca6d0bdfcdeb8663e",
     "flags": ""
   },
   {
@@ -12574,11 +12592,11 @@
   },
   {
     "path": "docs/android-build.md",
-    "bytes": 3687,
+    "bytes": 4998,
     "ext": ".md",
     "tipo": "documentation_md",
-    "linhas": 83,
-    "sha256": "0bcf2c2f9e90af2c5892b3d9dc6fc392de235dfacfb862c25baeff41e348698a",
+    "linhas": 88,
+    "sha256": "a270c3943a122af4cbcfbd86bafba3c1938b6163b3714374c0086c0de45558d0",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -18621,21 +18639,30 @@
     "flags": ""
   },
   {
+    "path": "gradle/wrapper/gradle-wrapper.jar",
+    "bytes": 43583,
+    "ext": ".jar",
+    "tipo": "other",
+    "linhas": 0,
+    "sha256": "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046",
+    "flags": ""
+  },
+  {
     "path": "gradle/wrapper/gradle-wrapper.properties",
-    "bytes": 253,
+    "bytes": 340,
     "ext": ".properties",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "23b7b98fa7f086c7310fb49d39084bdb472003a03f3b8508b43098f381d53114",
+    "sha256": "1de17d500d4671816e3ee230e897e8722157da899c534850aa8ab5cce9577da0",
     "flags": ""
   },
   {
     "path": "gradlew",
-    "bytes": 8733,
+    "bytes": 8752,
     "ext": "NO_EXT",
     "tipo": "other",
     "linhas": 0,
-    "sha256": "b187b4c52e749f5760afdd6fadc31b2a98ad35fb249bf0dff03b72650f320409",
+    "sha256": "734b3879d3501dce471cf0522d3bcbafe76873d9fc5129345b67fb43bd15e933",
     "flags": ""
   },
   {
@@ -25030,11 +25057,11 @@
   },
   {
     "path": "scripts/bootstrap-gradle-wrapper.sh",
-    "bytes": 709,
+    "bytes": 701,
     "ext": ".sh",
     "tipo": "source_code",
     "linhas": 24,
-    "sha256": "2cc8f527626c93ea9e88099386380d5dbe014a67daeed5639873f9bffa24671b",
+    "sha256": "19b247ade953c550256a38383dfc5378f3cafdb16e931f3c4e68c07b40f7ec15",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -27756,6 +27783,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_gradle_wrapper_launch_contract.py",
+    "bytes": 1970,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 48,
+    "sha256": "4ec58811dcef0f32c7e477548bf59742aed247dba0184036b2741883e20d3f91",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_h0_rd_ablation_v1.py",
     "bytes": 2139,
     "ext": ".py",
@@ -28288,11 +28324,11 @@
   },
   {
     "path": "tests/test_rll_agent_seven_guards.py",
-    "bytes": 5572,
+    "bytes": 7086,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 105,
-    "sha256": "0af317a2de4ba202b526dd97d13c361f884363cbb457e0b1c71a1247ad3ba2ad",
+    "linhas": 131,
+    "sha256": "e36ae345a232e5f071b5c21c4de7ac600cbc90fb73e1e458774694ec29150291",
     "flags": "mentions_mock_or_placeholder,cosmology_validation_marker"
   },
   {
@@ -28303,6 +28339,15 @@
     "linhas": 147,
     "sha256": "4c739f26bbe0b2d3587659671feebca1368b2c589290b8f801e76bfe2375f30d",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_android_ci_merge_no_regression.py",
+    "bytes": 3171,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 75,
+    "sha256": "8adbe8dc5549bad4b302f5540c60b3d3f1562199a82c16c34f0b2ee627e0b6cb",
+    "flags": "cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_android_diagnostic_ui.py",

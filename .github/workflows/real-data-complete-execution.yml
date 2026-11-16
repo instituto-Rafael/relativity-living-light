@@ -3,6 +3,50 @@ name: Real Data Complete Execution
 "on":
   pull_request:
     paths:
+      - "rx/**"
+      - "configs/rll_execution_plan.v1.yml"
+      - "configs/rx_physics_contracts.json"
+      - "data/governance/RLL_RX_FORMULA_BINDINGS_V1.json"
+      - "data/governance/RLL_DYNAMIC_STRUCTURAL_GEOMETRY_CONTEXT_V1.json"
+      - "data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json"
+      - "data/governance/RLL_CLOSURE_WORKSTREAM_REGISTRY_V1.json"
+      - "data/governance/RLL_GATE_NAMESPACE_REGISTRY_V1.json"
+      - "tools/rll_closure_queue.py"
+      - "tools/validate_rx_dha.py"
+      - "tests/test_rll_closure_queue.py"
+      - "tools/rll_closure_work_packets.py"
+      - "tests/test_rll_closure_work_packets.py"
+      - "scripts/termux/rll_execution_fabric_replay_v1.sh"
+      - "tools/validate_rll_execution_fabric_termux_replay.py"
+      - "tools/compare_rll_execution_fabric_receipts.py"
+      - "tests/test_rll_execution_fabric_termux_replay.py"
+      - "data/governance/RLL_RX_PHYSICS_V2_DECISION_AUTHORITY_V1.json"
+      - "tools/rx_physics_v2_decision_packet.py"
+      - "tests/test_rx_physics_v2_decision_packet.py"
+      - "tools/rll_perturbation_solver_readiness.py"
+      - "tests/test_rll_perturbation_solver_readiness.py"
+      - "data/science/perturbations/RLL_ALPHAXIV_LITERATURE_ACTION_MATRIX_20260923_V1.json"
+      - "tools/validate_rll_alphaxiv_literature_action_matrix.py"
+      - "tests/test_rll_alphaxiv_literature_action_matrix.py"
+      - "PapersPub/01_cosmology_pantheon_desi/references.bib"
+      - "PapersPub/01_cosmology_pantheon_desi/references.md"
+      - "PapersPub/02_cosmology_growth_structure_d/references.bib"
+      - "PapersPub/02_cosmology_growth_structure_d/references.md"
+      - "docs/science/RLL_ALPHAXIV_LITERATURE_ACTIONS_20260923.md"
+      - "data/governance/RLL_SCIENTIFIC_GATE_EXECUTOR_REGISTRY_V1.json"
+      - "rx/scientific_gates.py"
+      - "tests/test_rx_scientific_gate_graph.py"
+      - "data/governance/RLL_CURRENT_RX_SOURCE_FREEZE_SPEC_V1.json"
+      - "tools/rll_current_rx_source_freeze.py"
+      - "tests/test_rll_current_rx_source_freeze.py"
+      - "data/contracts/RLL_ENERGY_MOMENTUM_BRIDGE_UNITS_V1.json"
+      - "tools/validate_energy_momentum_bridge_dimensions.py"
+      - "tests/test_energy_momentum_bridge_dimensions.py"
+      - "data/governance/RLL_BRANCH_MATURITY_RECONCILIATION_DECISION_V1.json"
+      - "tools/rll_branch_maturity_decision_packet.py"
+      - "tests/test_rll_branch_maturity_decision_packet.py"
+      - "docs/governance/RLL_CLOSURE_PROGRAM_V1.md"
+      - "tests/test_rx_execution_fabric_stdlib.py"
       - "scripts/download_real_cosmology_inputs.sh"
       - "scripts/verify_pantheon_inputs.py"
       - "tools/validate_scientific_validation_orchestrator_v3.py"
@@ -59,6 +103,126 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  rx-execution-fabric-pr-gate:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: .
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Rx execution-fabric stdlib tests
+        run: python3 -m unittest tests.test_rx_execution_fabric_stdlib
+
+      - name: RLL closure dependency-graph tests
+        run: python3 -m unittest tests.test_rll_closure_queue
+
+      - name: Build discipline-oriented closure work packets
+        run: |
+          python3 -m unittest tests.test_rll_closure_work_packets
+          python3 tools/rll_closure_work_packets.py --write
+
+      - name: Validate Termux Execution Fabric capsule contract
+        run: |
+          sh -n scripts/termux/rll_execution_fabric_replay_v1.sh
+          python3 -m unittest tests.test_rll_execution_fabric_termux_replay tests.test_compare_rll_execution_fabric_actions_termux
+
+      - name: Build canonical V2 scientific decision packet
+        run: |
+          python3 -m unittest tests.test_rx_physics_v2_decision_packet
+          python3 tools/rx_physics_v2_decision_packet.py --write
+
+      - name: Enforce perturbation solver handoff boundary
+        run: |
+          python3 -m unittest tests.test_rll_perturbation_a1_linear_fluid_regularity_v1
+          python3 tools/rll_perturbation_a1_linear_fluid_regularity_v1.py --write
+          python3 -m unittest tests.test_rll_perturbation_solver_readiness
+          python3 tools/rll_perturbation_solver_readiness.py --write
+
+      - name: Validate alphaXiv literature action matrix
+        run: |
+          python3 -m unittest tests.test_rll_alphaxiv_literature_action_matrix
+          python3 tools/validate_rll_alphaxiv_literature_action_matrix.py --write
+
+      - name: Validate fail-closed SCI_GATE execution graph
+        run: python3 -m unittest tests.test_rx_scientific_gate_graph
+
+      - name: Reconcile current TOKEN_VAZIO authority view
+        run: |
+          python3 -m unittest tests.test_rll_token_vazio_reconcile_v4
+          python3 tools/rll_token_vazio_reconcile_v4.py             --output artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
+
+      - name: Freeze current Rx source bytes and provenance gaps
+        run: |
+          python3 -m unittest tests.test_rll_current_rx_source_freeze
+          python3 tools/rll_current_rx_source_freeze.py --write
+
+      - name: Audit energy-momentum bridge dimensional boundary
+        run: |
+          python3 -m unittest tests.test_energy_momentum_bridge_dimensions
+          python3 tools/validate_energy_momentum_bridge_dimensions.py --write
+
+      - name: Materialize branch maturity reconciliation decision
+        run: |
+          python3 -m unittest tests.test_rll_branch_maturity_decision_packet
+          python3 tools/rll_branch_maturity_decision_packet.py --write
+
+      - name: Validate Rx DHA angular-frequency baseline
+        run: python3 tools/validate_rx_dha.py
+
+      - name: Build RLL closure queue receipt
+        run: python3 tools/rll_closure_queue.py --write
+
+      - name: Rx no-AI runtime gate
+        run: python3 tools/rx_no_ai_gate.py
+
+      - name: Rx zero-third-party gate
+        run: python3 tools/rx_zero_dependency_gate.py
+
+      - name: Execute canonical Rx engineering plan
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+        run: python3 -m rx orchestrate --plan configs/rll_execution_plan.v1.yml
+
+      - name: Execute aggregate Rx development closure
+        env:
+          RLL_AUTHORITY_MODE: reviewed_ci_workflow
+          RX_NETWORK_PROBE: "0"
+          RLL_LEGACY_NETWORK_PROBE: "0"
+        run: python3 -m rx develop
+
+      - name: Cross-runtime semantic parity gate
+        run: python3 tools/rx_semantic_parity.py
+
+      - name: Upload Rx execution receipt bundle
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rll-execution-fabric-${{ github.run_id }}
+          path: |
+            results/rll-execution/
+            results/rx_dha_angular_frequency_gate.json
+            results/rll_closure_queue.json
+            results/rll_closure_queue.md
+            results/rll_closure_work_packets.json
+            results/rll_closure_work_packets.md
+            results/rx_physics_v2_decision_packet.json
+            results/rll_perturbation_solver_readiness.json
+            artifacts/science/perturbations/RLL_A1_LINEAR_FLUID_REGULARITY_RECEIPT.json
+            artifacts/science/integration/RLL_WS01_WS02_WS21_WS23_BRIDGE_RECEIPT.json
+            results/rll_alphaxiv_literature_action_matrix.json
+            artifacts/governance/RLL_TOKEN_VAZIO_RECONCILIATION_CURRENT.json
+            artifacts/science/provenance/RLL_G0_SOURCE_FREEZE_RECEIPT.json
+            results/rll_energy_momentum_dimension_gate.json
+            results/rll_branch_maturity_decision_packet.json
+          retention-days: 30
+          if-no-files-found: error
+
   pantheon-full-covariance-pr-gate:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
