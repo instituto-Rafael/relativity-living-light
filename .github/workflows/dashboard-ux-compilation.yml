@@ -14,6 +14,7 @@ on:
   pull_request:
     branches:
       - main
+      - 'dependabot/**'
     paths:
       - 'apps/dashboard/**'
       - '.github/workflows/dashboard-ux-compilation.yml'
@@ -58,7 +59,7 @@ jobs:
 
       - name: ✅ TypeScript validation
         working-directory: apps/dashboard
-        run: npx tsc --noEmit 2>&1 || echo "⚠️ TypeScript issues found"
+        run: npm run type-check
 
       - name: 🔍 ESLint validation
         working-directory: apps/dashboard
@@ -119,7 +120,7 @@ jobs:
             apps/dashboard/dashboard-ux-*.tar.gz
             apps/dashboard/dashboard-ux-*.zip
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: error
 
       - name: ✅ Validate compilation success
         working-directory: apps/dashboard
@@ -190,6 +191,14 @@ jobs:
         working-directory: apps/dashboard
         run: npm ci --legacy-peer-deps
 
+      - name: Require successful build and tests
+        env:
+          COMPILE_RESULT: ${{ needs.compile-ux.result }}
+          TEST_RESULT: ${{ needs.test-ux.result }}
+        run: |
+          test "$COMPILE_RESULT" = success
+          test "$TEST_RESULT" = success
+
       - name: "Gate 1: TypeScript Strict Mode"
         working-directory: apps/dashboard
         run: |
@@ -247,6 +256,16 @@ jobs:
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v7
+
+      - name: Enforce prerequisite results
+        env:
+          COMPILE_RESULT: ${{ needs.compile-ux.result }}
+          TEST_RESULT: ${{ needs.test-ux.result }}
+          QUALITY_RESULT: ${{ needs.quality-gates.result }}
+        run: |
+          test "$COMPILE_RESULT" = success
+          test "$TEST_RESULT" = success
+          test "$QUALITY_RESULT" = success
 
       - name: 🎉 Success Summary
         if: success()

@@ -14,7 +14,7 @@ fi
 
 if ! command -v gradle >/dev/null 2>&1; then
   cat >&2 <<MSG
-Gradle executable not found and $WRAPPER_JAR is intentionally not committed.
+Gradle executable not found and $WRAPPER_JAR is missing from this checkout.
 Install Gradle or run this script in CI after gradle/actions/setup-gradle with gradle-version configured.
 MSG
   exit 127
