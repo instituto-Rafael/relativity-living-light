@@ -1,0 +1,33 @@
+{
+  "schema": "rll.lpt.j0715_1141.synthetic_receipt.v1",
+  "date_utc": "2026-11-16",
+  "timestamp_utc_exact": "TOKEN_VAZIO_NOT_CAPTURED",
+  "kind": "LOCAL_SYNTHETIC_TEST_EVIDENCE",
+  "scope": "isolated_LPT_pulse_timing_and_RM_operators",
+  "repository": "instituto-Rafael/relativity-living-light",
+  "branch": "research/lpt-j0715-1141-b06-b07-synthetic-20261116",
+  "producer_commit": "5e652099cfc4e2434769cbe640f6cde83efa7b48",
+  "parent_commit": "ac833cb1278ffde951e602dd70df4c11bcda6ac0",
+  "execution_environment": "local_sandbox_Linux_x86_64_Python_3.13.5",
+  "test_command": "python -m unittest discover -s /mnt/data/rll_lpt_patch/tests -p test_lpt_j0715_1141.py -v",
+  "syntax_command": "python -m py_compile /mnt/data/rll_lpt_patch/src/rll/lpt_j0715_1141.py",
+  "local_tests_run": 8,
+  "local_tests_passed": 8,
+  "local_tests_failed": 0,
+  "syntax_check": "PASS_SCOPED",
+  "source_blob_sha": {
+    "src/rll/lpt_j0715_1141.py": "5ac9eb499d4e5e7bd1a4a37cdd6f490a78de9e33",
+    "tests/test_lpt_j0715_1141.py": "6e179f7e6041678cb7874b27aa179de5377590c9",
+    "data/inputs/lpt_j0715_1141/manifest.v1.json": "81327688964df7a97b685197d111f2b2cdcc691a",
+    "docs/science/LPT_J0715_1141_SCOPED_DIAGNOSTIC_V1.md": "09211ecce1318099b02639c2b4f8ed86b6af3d2b"
+  },
+  "provider_readback": "FOUR_BLOBS_EXACTLY_MATCH_LOCAL_TESTED_FILES",
+  "original_zenodo_data_ingested": false,
+  "observational_replication": "NOT_RUN",
+  "remote_ci": "NOT_RUN_SKIP_CI_COMMIT",
+  "termux_android_e2e": "NOT_RUN",
+  "orbital_physical_fit": "NOT_RUN",
+  "claim_allowed": false,
+  "rollback": "revert_additive_commits_or_discard_isolated_branch_without_touching_main",
+  "next": "verify_upstream_Zenodo_files_license_timestamps_RM_extraction_and_independent_astrophysical_baseline"
+}
