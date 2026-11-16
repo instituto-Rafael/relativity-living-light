@@ -541,11 +541,11 @@
   },
   {
     "path": ".github/workflows/ci-scientific-skills.yml",
-    "bytes": 4548,
+    "bytes": 4837,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 124,
-    "sha256": "9ae7d718a6cba6708abab8fcc741195bda653aba60553e2bd7d303affbba573f",
+    "linhas": 130,
+    "sha256": "e1757c089fd3f98174128e59ce4e43597156bddc5b1d50e71e0e019dd1fc295f",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -730,11 +730,11 @@
   },
   {
     "path": ".github/workflows/h0-rd-ablation.yml",
-    "bytes": 6476,
+    "bytes": 6603,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 147,
-    "sha256": "9ae16cfa6c72f8f20831fc0c8130b844eb4064cbdcee0f1b70059d3f3339d9b7",
+    "linhas": 151,
+    "sha256": "2dc98c73d4b94c83cb844452034a46b989cdee4752683c9f01b1d46601236ea4",
     "flags": "token_vazio_declared"
   },
   {
@@ -829,11 +829,11 @@
   },
   {
     "path": ".github/workflows/python-tests.yml",
-    "bytes": 6098,
+    "bytes": 6601,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 166,
-    "sha256": "d0a430cb89ad6a900698528f688ad76eb169b9a2b6acbdda24e993822fdc6f83",
+    "linhas": 174,
+    "sha256": "85d31949578ce4872e5ef876717ad9e6e100264da3477ed108241f937c59ae70",
     "flags": "token_vazio_declared"
   },
   {
@@ -1414,11 +1414,11 @@
   },
   {
     "path": ".github/workflows/validacao_real.yml",
-    "bytes": 16340,
+    "bytes": 16907,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 325,
-    "sha256": "a0729189b867a96c6bd60186b81e4c87f17b9ae45454d8e455fbcd842f2d06bf",
+    "linhas": 337,
+    "sha256": "bca940f20671bd52f6679a604eeaf7fbacdda95e953d31f8323787777ced3a30",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder"
   },
   {
@@ -5787,6 +5787,15 @@
     "flags": ""
   },
   {
+    "path": "configs/real_data_materialization_operation.json",
+    "bytes": 1496,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 53,
+    "sha256": "aab44c817b1f96b4f6406f04d07098c848078925e14cc22d84a21569492ae91c",
+    "flags": ""
+  },
+  {
     "path": "configs/rll_execution_plan.v1.yml",
     "bytes": 1163,
     "ext": ".yml",
@@ -6759,6 +6768,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "data/contracts/rll_ws02_canonical_background_surface.v1.json",
+    "bytes": 3116,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 65,
+    "sha256": "7a61fbdac257b906b93298a3f49fbf7446d3ae69d3a6b3e83238af25afd40c20",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "data/contracts/session_multiscale_avalanche.v1.json",
     "bytes": 1422,
     "ext": ".json",
@@ -7350,6 +7368,15 @@
     "tipo": "data_or_result",
     "linhas": 84,
     "sha256": "5eedc2568cdbc9b89e2f9b97b32fd042b8d6669b86c6dae4410da98cdc77289f",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "data/governance/RLL_CANONICAL_BACKGROUND_SOURCE_FREEZE_SPEC_V1.json",
+    "bytes": 3307,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 75,
+    "sha256": "def1fb8607b47137dde8e1e2551ea570b5493a6ad044ec890906612d8ddc8add",
     "flags": "token_vazio_declared"
   },
   {
@@ -8295,6 +8322,15 @@
     "tipo": "config_yml",
     "linhas": 118,
     "sha256": "969c86b7aa54fede8e2da6e3fa34906d809d52a3549903c85ecbfcccee12ed3c",
+    "flags": "token_vazio_declared"
+  },
+  {
+    "path": "data/inputs/omega_g/observable_effect_binding_registry.v2.json",
+    "bytes": 4059,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 79,
+    "sha256": "0e8d178ea90b401cec1a2d3eceeaaaeb46e14504e8e7146887749643b392bd5d",
     "flags": "token_vazio_declared"
   },
   {
@@ -20574,6 +20610,15 @@
     "flags": ""
   },
   {
+    "path": "receipts/2026-11-16_rll_h0_ablation_numpy_ci_compat_s1.md",
+    "bytes": 1186,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 13,
+    "sha256": "fd340fe2b97f5d297bf24d7a80c57c1a2b8c5fc257c9f349b8a0e0e20168912b",
+    "flags": ""
+  },
+  {
     "path": "receipts/2026-11-16_rll_lab_dashboard_ci_trigger_s2.md",
     "bytes": 776,
     "ext": ".md",
@@ -24606,6 +24651,15 @@
     "flags": "mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
+    "path": "rll_inovacao_tecnologica_watch.json",
+    "bytes": 2162,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 86,
+    "sha256": "e9faf4c8ff9cb5b462b31c233e913c90053d8b02de7f724067a2d7124c20aa1f",
+    "flags": ""
+  },
+  {
     "path": "rll_inovacao_tecnologica_watch.yml",
     "bytes": 1700,
     "ext": ".yml",
@@ -24787,11 +24841,11 @@
   },
   {
     "path": "rx/orchestrator.py",
-    "bytes": 13013,
+    "bytes": 15612,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 350,
-    "sha256": "042e18935b04ec595c78b54f387d89283545429470590ba89a251dbb90376bde",
+    "linhas": 402,
+    "sha256": "c726ec21e02b6388b2ad925bad0495be784d6aa87c2d2c7cc783a3a6ff9a23b2",
     "flags": "token_vazio_declared"
   },
   {
@@ -26029,11 +26083,11 @@
   },
   {
     "path": "scripts/materialize_real_data.py",
-    "bytes": 4120,
+    "bytes": 7848,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 126,
-    "sha256": "9cc19fa4c9fcb3ff81d5cc5bbdcb4664d4e14896278b8734ee24bc59fb509f74",
+    "linhas": 239,
+    "sha256": "512384635a15d369e32a528f79e245cfdee1f39cdd61aec947b26cc1c041c680",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -26893,11 +26947,11 @@
   },
   {
     "path": "scripts/validate_watch_config.py",
-    "bytes": 1386,
+    "bytes": 2094,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 53,
-    "sha256": "73ec181bfc69e50150b9455337c155fbe83dc2f4fb41b95c8976472d14caca67",
+    "linhas": 68,
+    "sha256": "c326fc3eaa52977f4a11ea12f196dedc4605ad7cabf22ca9beb4ef1151de75ca",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -27820,11 +27874,11 @@
   },
   {
     "path": "tests/test_ci_scientific_skills.py",
-    "bytes": 2042,
+    "bytes": 3184,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 59,
-    "sha256": "0625398ac6b83e2a1e3bf7263bf1082f9ae6da50d0db81fb7029407f3533c690",
+    "linhas": 73,
+    "sha256": "4c9d296c671e8568470955faa7c04680c88c84a1bc25e84b5b5589e465c07e2c",
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
@@ -28410,6 +28464,15 @@
     "tipo": "source_code",
     "linhas": 34,
     "sha256": "df5593faf2f658f894b1ef2a236e4745c2279eaa9e96e2e361396da029a02209",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_h0_rd_ablation_ci_compat.py",
+    "bytes": 1063,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 28,
+    "sha256": "b7618aaab48607e7656d3f26a3cde2b3a0536bf7ae173b39567085251cb02ad8",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -29314,11 +29377,11 @@
   },
   {
     "path": "tests/test_rll_credential_authority.py",
-    "bytes": 6062,
+    "bytes": 10264,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 193,
-    "sha256": "e52119a7935398a988404a422f5ff4ac59cfe818b8b830217014ef5e47992eaf",
+    "linhas": 324,
+    "sha256": "fb1faa8b71257dd3b967c8980c637adc19698e4e552914e32e36964320b6c283",
     "flags": "mentions_mock_or_placeholder,cosmology_validation_marker"
   },
   {
@@ -29718,6 +29781,24 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_rll_lcm_graph_benchmark_v1.py",
+    "bytes": 3107,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 65,
+    "sha256": "11863ca8fac94085e29d53dbaea556ac85e32dd4217de8a6756bc8513888cfbd",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_legacy_real_data_direct_import.py",
+    "bytes": 1397,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 40,
+    "sha256": "b776dedcc23a60e7968b89bdf033c920efd043f68f9d188be234d47acd6bfb0c",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_rll_main_deployment_path.py",
     "bytes": 3762,
     "ext": ".py",
@@ -30048,6 +30129,15 @@
     "tipo": "source_code",
     "linhas": 65,
     "sha256": "ea596fdd8791483fae9ba1708dcb054a982f90fbf36ae1d68bc3901ba4dcdbe8",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_real_data_receipt_graph.py",
+    "bytes": 1276,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 36,
+    "sha256": "79466f565a3d460ab2187ca32e8e5e0a8e6e8843c353c41bfe8aedbf5ecc6dc5",
     "flags": "cosmology_validation_marker"
   },
   {
@@ -30402,6 +30492,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "tests/test_rll_watch_config_stdlib_contract.py",
+    "bytes": 3335,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 81,
+    "sha256": "b3f58c7417facf864723ee107d3d0e91788bac7bfff3f35aa3f7a8011bbb1a43",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "tests/test_rll_wg250_geometry_intake.py",
     "bytes": 1697,
     "ext": ".py",
@@ -30457,12 +30556,12 @@
   },
   {
     "path": "tests/test_rx_execution_fabric_stdlib.py",
-    "bytes": 3407,
+    "bytes": 5711,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 88,
-    "sha256": "a5bc86747f8baa825004ed9fcfe7830a0d75bd7edf7720fc0feaa24e5f691bf3",
-    "flags": "cosmology_validation_marker"
+    "linhas": 137,
+    "sha256": "dc3066efc2020b75467ff6c91538e5bee8b2de0e7daa763f93bd2deb54161bfa",
+    "flags": "mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker"
   },
   {
     "path": "tests/test_rx_physics_v2_decision_packet.py",
@@ -31537,11 +31636,11 @@
   },
   {
     "path": "tools/ci_scientific_skills.py",
-    "bytes": 8715,
+    "bytes": 11117,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 236,
-    "sha256": "56a3397c27fe6c2b6e657517b430b37fb69e0011020f098dd40ab30a92c7b633",
+    "linhas": 310,
+    "sha256": "329e50d43af394b0c125981a7e897c77cf02460762f581b3a5430c165f1a83e1",
     "flags": "token_vazio_declared"
   },
   {
@@ -31582,11 +31681,11 @@
   },
   {
     "path": "tools/docs_inventory.py",
-    "bytes": 16973,
+    "bytes": 16800,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 470,
-    "sha256": "a47657bad2c32fa66d9820e55f0db25172b6668bcc71f53637053634ebfd121f",
+    "linhas": 465,
+    "sha256": "dc0b0e3058a940ba9be9924dc1852d05b11cabfb1274a5b5cfa4a5c0954e0dd6",
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
@@ -32128,6 +32227,15 @@
     "linhas": 235,
     "sha256": "f4ddf70891d71766f5cdf86c51f092c29647b66ea003cc302c96f390145862ed",
     "flags": "token_vazio_declared"
+  },
+  {
+    "path": "tools/rll_lcm_graph_benchmark_v1.py",
+    "bytes": 7776,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 205,
+    "sha256": "c6257d970f4db7fbc08694d004e6952d44f7faa04a7548f4f5791b595b853bef",
+    "flags": ""
   },
   {
     "path": "tools/rll_legacy_consumption_truth.py",
@@ -33049,11 +33157,11 @@
   },
   {
     "path": "tools/validate_rll_credential_authority.py",
-    "bytes": 15553,
+    "bytes": 21133,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 356,
-    "sha256": "fcf77cc6f918f186623ab802e1f33fd3599bd9fbe12cc9324e49fab7b20b107f",
+    "linhas": 496,
+    "sha256": "cef8077577f07373cfb79e99a88daff4b3c974688bf8806e1306cd4735fbf041",
     "flags": "token_vazio_declared"
   },
   {
@@ -33670,11 +33778,11 @@
   },
   {
     "path": "validacao_real/fetch_real_data.py",
-    "bytes": 3706,
+    "bytes": 3934,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 101,
-    "sha256": "6730da9de2c50e5fde2f1b0d585b225ec5334b05bde440be2f0577b9723d6126",
+    "linhas": 106,
+    "sha256": "be924446df502e2b4e15d5cd9206e19e1265e0c920e66038abd5c4a288f1c855",
     "flags": ""
   },
   {
@@ -33985,47 +34093,56 @@
   },
   {
     "path": "validation/bayes_compare.py",
-    "bytes": 594,
+    "bytes": 607,
     "ext": ".py",
     "tipo": "source_code",
     "linhas": 24,
-    "sha256": "bfbc820bdd82b8ac663132270d81577e3c4ba8ef447921c05a9a7a10e82e97e4",
+    "sha256": "bba05829a450892fc482afb1d15a9db45e8375b78f01bc666b7f67461a0e0335",
     "flags": ""
   },
   {
     "path": "validation/bayes_rll.py",
-    "bytes": 1161,
+    "bytes": 1174,
     "ext": ".py",
     "tipo": "source_code",
     "linhas": 54,
-    "sha256": "e447825129150d6ec4acc4da2905d4f6b33535852b5fa63a1894878e9e6803ec",
+    "sha256": "71a617cb89f150b0d2ccc9c246ec8a4f97d6b50b7d3c25d08864840adf321a82",
     "flags": ""
   },
   {
     "path": "validation/check_falsification.py",
-    "bytes": 398,
+    "bytes": 2167,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 19,
-    "sha256": "f7f391f21291660e19d05b57dd8c39b57c94fc058e40470727ae7c9cbfae11ef",
+    "linhas": 67,
+    "sha256": "b5dbe8bfd081ea6b8677d375338a26a82c3e821c5b85f472664c4b646933da46",
     "flags": ""
   },
   {
     "path": "validation/compare_models.py",
-    "bytes": 1128,
+    "bytes": 1508,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 38,
-    "sha256": "78d03391f066770760362457ff3c6157ef818f19fbd8cca7072e589e398b2e68",
+    "linhas": 49,
+    "sha256": "0257bce6cf9d8735ea1b2b70230f143a5c8d11ec905f7baa35249c7f19dfd5a2",
     "flags": ""
   },
   {
     "path": "validation/load_data.py",
-    "bytes": 1805,
+    "bytes": 2554,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 50,
-    "sha256": "a024b22eae89ad54647f44b3431520f12368a04d412acff4849926cefab61424",
+    "linhas": 78,
+    "sha256": "ef934e7138b14ec0beb76378b0f1959622112665786daa21dbb536a4f5df387b",
+    "flags": ""
+  },
+  {
+    "path": "validation/load_data_numpy_legacy.py",
+    "bytes": 2018,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 56,
+    "sha256": "077eb222a344da7b70e6d2daafaffa6b7e374ae67ac9dec27a24455ca354a7aa",
     "flags": "mentions_synthetic"
   },
   {
@@ -34048,20 +34165,20 @@
   },
   {
     "path": "validation/run_lcdm.py",
-    "bytes": 589,
+    "bytes": 634,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 27,
-    "sha256": "7080916cc36202f5b91b7153643ca02c6e7c49feea8162a2d23e0aefc93c24a3",
+    "linhas": 29,
+    "sha256": "09502f95f76be72bce8652576acc87792f0f8cd0154cd17bdc1f8cdaa6e25afc",
     "flags": ""
   },
   {
     "path": "validation/run_rll.py",
-    "bytes": 606,
+    "bytes": 670,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 27,
-    "sha256": "a03389171a5d9fa2f4d3b7d72520dd2495ba19ae837a8b70a43111211446a2af",
+    "linhas": 30,
+    "sha256": "fdd6dc41326f8c2eccac09e3d3cfd0f7955c311f7bfbd23007b510cb43b6597b",
     "flags": ""
   },
   {
