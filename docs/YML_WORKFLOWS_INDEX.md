@@ -52,7 +52,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/convention-check.yml` | `github_workflow_yml` | 3603 | 84 | `0c5b2bd8440cca0b41c5397c190404b8d50145af429ab52512558fc33faebfce` |
 | `.github/workflows/copilot-setup-steps.yml` | `github_workflow_yml` | 5818 | 147 | `391ab8dd0748236d177192a354e3dc3cd6de2ed8837003b131d51d7ee4b5376a` |
 | `.github/workflows/dashboard-build.yml` | `github_workflow_yml` | 781 | 40 | `7ade3b19ae561c97eb44bdba267de894012b5c43538b0ec80d42af07f9947acb` |
-| `.github/workflows/dashboard-ux-compilation.yml` | `github_workflow_yml` | 9711 | 295 | `77ff785083b219c0179b746907422864e8cf894895fa0dd681e3b1e600136f80` |
+| `.github/workflows/dashboard-ux-compilation.yml` | `github_workflow_yml` | 9711 | 295 | `fc76be4bc2e0047bb1cfe774936a6ff18a0d3ae83e2d21b40cfe269bb1f40f79` |
 | `.github/workflows/dense-feature-matrix.yml` | `github_workflow_yml` | 3041 | 83 | `fced0da38a4775532934094d9c0d28a73ca7f4dcabf21beb7c68e4f40a9d2351` |
 | `.github/workflows/desi-dr2-bao-validation.yml` | `github_workflow_yml` | 2912 | 82 | `6fd1a35bb78440df235fa3a5f139fb1b15897ca0c270d6fa7654445cbca65008` |
 | `.github/workflows/dha-fisher-ci.yml` | `github_workflow_yml` | 3310 | 99 | `58b28e9d9de3bb9ea31d67bc742d8a6d448730f3f2a3425ee225620bc5465c9a` |
