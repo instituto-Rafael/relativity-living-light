@@ -43,8 +43,7 @@ local.properties
 .cxx/
 **/.cxx/
 
-# Generated at execution by scripts/bootstrap-gradle-wrapper.sh
-gradle/wrapper/gradle-wrapper.jar
+# Gradle Wrapper JAR is versioned and validated by setup-gradle.
 
 # ORCID ↔ RLL runtime artifacts; credentials are never persisted
 artifacts/orcid_rll/*.sqlite3

@@ -35,8 +35,16 @@ GitHub mutation boundary:
 - workflow dispatch and rerun are allowed only when the existing workflow contract allows them;
 - every allowed mutation must produce a receipt with target/ref/result and no credentials.
 
-Before a credential-backed operation, run:
+Before a credential-backed operation **inside the real Copilot cloud agent**, run:
 `python -m tools.agent.rll_agent_seven_guards --runtime agents --require-bindings`.
+
+For a GitHub Actions workflow job, use `--runtime actions` instead: Actions
+secrets (`GITPAT`, `CLIMA`) and Copilot Agents secrets (`PATGITHUB`,
+`CLIMATE`) are distinct planes. The ordinary `copilot-setup-steps.yml` CI
+does **not** receive Copilot Agents credentials merely because it is named
+"Copilot Secretary Setup". Its read-only preflight must record absent bindings
+as `BLOCKED_BINDING` (or presence as `BINDINGS_PRESENT_AUTH_UNVERIFIED`),
+never claim an authenticated agent runtime, and never print a secret.
 
 The receipt covers provenance, context, evidence, contradiction, uncertainty,
 reproduction and rollback. A structural PASS is not authentication evidence.

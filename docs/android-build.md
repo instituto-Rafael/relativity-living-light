@@ -8,7 +8,8 @@ Este repositório deve conter o app Android mínimo porque já possui uma ponte 
 
 - `settings.gradle` inclui o módulo `:app` e repositórios oficiais Gradle/Android.
 - `build.gradle` raiz fixa o Android Gradle Plugin.
-- `scripts/bootstrap-gradle-wrapper.sh` gera `gradle/wrapper/gradle-wrapper.jar` em execução; o binário JAR não é versionado.
+- `gradle/wrapper/gradle-wrapper.jar` é versionado e validado pelo `setup-gradle`; o SHA-256 oficial do Wrapper 8.10.2 é `2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046`.
+- O script `gradlew` carrega esse JAR com `-classpath` e executa `org.gradle.wrapper.GradleWrapperMain`; **não** executa o JAR com `java -jar` (o JAR oficial não declara `Main-Class` no manifesto).
 - `app/build.gradle` declara SDK, NDK, CMake, ABIs, trilhas debug/release e assinatura externa.
 - `app/src/main/AndroidManifest.xml` declara a aplicação e a `MainActivity` de validação nativa.
 - `app/src/main/java/org/rafaelia/rll/KernelBridge.java` carrega `rll_kernel_bridge` e expõe JNI.
@@ -27,7 +28,7 @@ As mesmas ABIs são declaradas em `defaultConfig.externalNativeBuild.cmake.abiFi
 
 ### Debug / validação interna
 
-Use debug para validação interna e smoke test do runtime nativo. Se `gradle/wrapper/gradle-wrapper.jar` ainda não existir, gere-o fora do Git antes do build:
+Use debug para validação interna e smoke test do runtime nativo. Se `gradle/wrapper/gradle-wrapper.jar` estiver ausente por corrupção de checkout, restaure-o do Git; para recuperação controlada, gere-o com:
 
 ```bash
 ANDROID_HOME=/opt/android-sdk JAVA_HOME=/path/to/jdk-21 scripts/bootstrap-gradle-wrapper.sh
@@ -65,11 +66,15 @@ O workflow `.github/workflows/android-build.yml` executa:
 
 1. checkout;
 2. setup JDK 17;
-3. setup Gradle e geração local do Gradle Wrapper JAR não versionado;
+3. setup Gradle e validação do Gradle Wrapper JAR versionado; geração local somente se o JAR estiver ausente e o ambiente permitir bootstrap;
 4. setup Android SDK, NDK `27.2.12479018` e CMake `3.22.1`;
 5. build debug e validation unsigned;
 6. build release assinado somente quando todos os secrets existem;
 7. upload dos APKs/AABs por `actions/upload-artifact@v4`.
+
+### Reconciliação main ↔ lab — evidência de assinatura do APK
+
+O workflow mantém os testes adicionais do laboratório e os pins de Actions mais recentes. Recupera de `main` o passo **Generate signed APK verification receipt**, que executa `apksigner verify --print-certs` apenas após build assinado e somente quando as quatro credenciais exigidas estão presentes. A saída detalhada do verificador fica em arquivo temporário do runner, apagado ao final do passo; **o artefato público contém o SHA-256 do APK e a impressão SHA-256 do certificado, não seu DN/sujeito**. O arquivo `apk-signature-receipts/receipt.json` possui `claim_allowed=false` e o upload é feito com a Action pinada. Em execuções sem credenciais de assinatura, ambos os passos são ignorados e não se declara verificação de APK release. Build verde do APK debug não demonstra assinatura release nem instalação real em ARMv7/AArch64.
 
 Secrets esperados para release no GitHub Actions:
 

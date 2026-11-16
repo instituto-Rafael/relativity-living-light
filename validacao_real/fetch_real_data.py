@@ -1,34 +1,30 @@
 #!/usr/bin/env python3
-"""Fetch/materialize declared real-data anchors for the RLL validation route.
+"""Materialize declared real-data anchors for the legacy validation route.
 
-Strategy: remote-reachability check plus committed local fallback. The script
-attempts the declared public portal for each source. If the network is
-unreachable inside a restricted runner, it uses the committed embedded payload
-under validacao_real/data/ and records that provenance explicitly.
+Stdlib/project-local only. JSON is the executable serialization; historical
+YAML files remain preserved as provenance and are checked by
+tools/validate_validacao_real_serialization_parity.py.
 
-Important boundary:
-- embedded fallback means a committed local snapshot/payload was used;
-- it is not a fresh remote download;
-- it must not be promoted to a new scientific validation claim by itself.
-
-No heavy dependencies: standard library + PyYAML only.
+Network is OFF by default. Optional public-source reachability probes must be
+explicitly enabled with RLL_LEGACY_NETWORK_PROBE=1 and pass the shared
+development_guard host policy.
 """
-
 from __future__ import annotations
 
 import json
+import os
 import sys
-import urllib.request
-import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 
-import yaml
+from internal.governance.development_guard import safe_public_probe
 
+ROOT = Path(__file__).resolve().parents[1]
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 OUT = HERE / "fetched"
-TIMEOUT = 20
+SOURCES = HERE / "sources_rx.json"
+POLICY = ROOT / "data" / "governance" / "RLL_DEVELOPMENT_SECURITY_ENVELOPE_V1.json"
 CLAIM_BOUNDARY = (
     "Committed local fallback payloads are provenance anchors only. "
     "Remote reachability or fallback materialization does not validate RLL, "
@@ -36,73 +32,70 @@ CLAIM_BOUNDARY = (
     "likelihood with baseline, metric, uncertainty/covariance and report."
 )
 
-
-def utc_now() -> str:
+def utc_now():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
+def load_json(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
-def load_yaml(path: Path) -> dict:
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
-
-
-def try_download(url: str) -> bytes | None:
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "RLL-validacao/1.0"})
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
-            return r.read()
-    except (urllib.error.URLError, TimeoutError, OSError) as exc:
-        print(
-            "  remote unreachable "
-            f"({exc.__class__.__name__}); using committed local fallback "
-            "without promoting it as a fresh remote download"
-        )
-        return None
-
-
-def materialize(source: dict) -> dict:
-    sid = source["id"]
-    fallback = DATA / Path(source["embedded_fallback"]).name
-    portal = source.get("remote", {}).get("portal", "")
-    print(f"[{sid}] portal: {portal or 'n/a'}")
-
-    raw = try_download(portal) if portal else None
-    payload = load_yaml(fallback)
-    used = "remote_reachable_committed_payload" if raw else "committed_embedded_fallback_remote_unreachable"
-    provenance = {
-        "source_id": sid,
-        "fetched_utc": utc_now(),
-        "portal": portal,
-        "remote_bytes": (len(raw) if raw else 0),
-        "used": used,
-        "fallback_path": str(fallback.relative_to(HERE)),
-        "fallback_state": "committed_local_payload_not_fresh_remote_download",
-        "claim_boundary": CLAIM_BOUNDARY,
-        "n_points": len(payload.get("points", [])),
-    }
-    return {"payload": payload, "provenance": provenance}
-
-
-def main() -> int:
-    sources = load_yaml(HERE / "sources.yml")["sources"]
+def main():
+    registry = load_json(SOURCES)
+    policy = load_json(POLICY)
+    network_enabled = os.environ.get("RLL_LEGACY_NETWORK_PROBE", "0") == "1"
     OUT.mkdir(exist_ok=True)
     manifest = {
+        "schema": "rll.validacao_real.legacy_json_materialization.v1",
         "generated_utc": utc_now(),
+        "network_probe_enabled": network_enabled,
         "claim_boundary": CLAIM_BOUNDARY,
         "sources": [],
     }
 
-    for source in sources:
-        result = materialize(source)
-        out_path = OUT / f"{source['id']}.yml"
-        out_path.write_text(yaml.safe_dump(result["payload"], sort_keys=False, allow_unicode=True), encoding="utf-8")
-        manifest["sources"].append(result["provenance"])
-        print(f"  -> wrote {out_path.relative_to(HERE)} ({result['provenance']['n_points']} points)")
+    for source in registry["sources"]:
+        sid = source["id"]
+        fallback = HERE / source["embedded_fallback"]
+        portal = source.get("portal", "")
+        remote = None
+        remote_error = "NETWORK_OFF"
+        if network_enabled and portal:
+            try:
+                remote = safe_public_probe(policy, portal, user_agent="RLL-validacao-json/1.0")
+                remote_error = ""
+            except Exception as exc:
+                remote_error = exc.__class__.__name__
 
-    (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"\nmanifest -> {(OUT / 'manifest.json').relative_to(HERE)}")
-    print(f"claim boundary -> {CLAIM_BOUNDARY}")
+        payload = load_json(fallback)
+        out_path = OUT / (sid + ".json")
+        out_path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+            encoding="utf-8",
+        )
+        provenance = {
+            "source_id": sid,
+            "fetched_utc": utc_now(),
+            "portal": portal,
+            "network_probe_enabled": network_enabled,
+            "remote_probe": remote,
+            "remote_error": remote_error or "NONE",
+            "used": "committed_rx_json_fallback",
+            "fallback_path": str(fallback.relative_to(HERE)),
+            "fallback_state": "committed_local_payload_not_fresh_remote_download",
+            "claim_boundary": CLAIM_BOUNDARY,
+            "n_points": len(payload.get("points", [])),
+        }
+        manifest["sources"].append(provenance)
+        print("[%s] wrote %s (%d points)" % (
+            sid, out_path.relative_to(HERE), provenance["n_points"]
+        ))
+
+    (OUT / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    print("manifest -> fetched/manifest.json")
+    print("serialization=JSON third_party_python_dependencies=0")
+    print("claim boundary -> " + CLAIM_BOUNDARY)
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -21,7 +21,7 @@ Scoring: chi2 (diagonal), AIC = 2k + chi2, BIC = k ln(n) + chi2.
 Falsifiability: per-point pull = (model-obs)/sigma; a model is rejected in a
 regime if the mean |pull| there exceeds REJECT_SIGMA.
 
-Stdlib only. No numpy, scipy, pandas.
+Stdlib only. No numpy, scipy, pandas or PyYAML.
 """
 
 from __future__ import annotations
@@ -32,8 +32,6 @@ import math
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from pathlib import Path
-
-import yaml
 
 HERE = Path(__file__).resolve().parent
 FETCHED = HERE / "fetched"
@@ -116,12 +114,12 @@ def model_bao(c: Cosmo, z: float, observable: str) -> float:
 
 
 def load_points(path: Path) -> list[dict]:
-    return yaml.safe_load(path.read_text(encoding="utf-8")).get("points", [])
+    return json.loads(path.read_text(encoding="utf-8")).get("points", [])
 
 
 def evaluate(models: dict[str, Cosmo]) -> dict:
-    bao = load_points(FETCHED / "desi_dr2_bao.yml")
-    hz = load_points(FETCHED / "hz_cosmic_chronometers.yml")
+    bao = load_points(FETCHED / "desi_dr2_bao.json")
+    hz = load_points(FETCHED / "hz_cosmic_chronometers.json")
 
     rows = []
     chi2 = {m: {"bao": 0.0, "hz": 0.0} for m in models}
