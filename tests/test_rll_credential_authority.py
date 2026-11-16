@@ -159,6 +159,95 @@ jobs:
         findings, _ = audit(root)
         self.assertIn("CROSS_CREDENTIAL_SAME_WORKFLOW", {item.code for item in findings})
 
+    def test_inline_comment_cannot_fake_manual_guard(self):
+        root = self._repo("""name: x
+'on': [push, workflow_dispatch]
+jobs:
+  x:
+    if: true # github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        self.assertIn("CLIMATE_TRIAL_NON_MANUAL", {item.code for item in findings})
+
+    def test_quoted_four_space_pull_request_target_is_rejected(self):
+        root = self._repo("""name: x
+'on':
+    'pull_request_target':
+    workflow_dispatch:
+jobs:
+  x:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        self.assertIn("PULL_REQUEST_TARGET_SECRET", {item.code for item in findings})
+
+    def test_nested_trigger_configuration_remains_supported(self):
+        root = self._repo("""name: x
+'on':
+    workflow_dispatch:
+        inputs:
+          reason:
+            required: false
+jobs:
+  x:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+""")
+        findings, _ = audit(root)
+        codes = {item.code for item in findings}
+        self.assertNotIn("WORKFLOW_PARSE", codes)
+        self.assertNotIn("CLIMATE_TRIAL_NON_MANUAL", codes)
+
+    def test_boolean_or_cannot_bypass_manual_only_credential_gate(self):
+        workflow = """name: x
+'on': [push, workflow_dispatch]
+jobs:
+  x:
+    if: GUARD_PLACEHOLDER
+    runs-on: ubuntu-latest
+    env:
+      CLIMA: ${{ secrets.CLIMA }}
+    steps:
+      - run: echo safe
+"""
+        unsafe_guards = (
+            "github.event_name == 'workflow_dispatch' || true",
+            "true || github.event_name == 'workflow_dispatch'",
+            "github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'",
+            "${{ github.event_name == 'workflow_dispatch' || true }}",
+        )
+        for guard in unsafe_guards:
+            with self.subTest(guard=guard):
+                root = self._repo(workflow.replace("GUARD_PLACEHOLDER", guard))
+                findings, _ = audit(root)
+                self.assertIn("CLIMATE_TRIAL_NON_MANUAL", {item.code for item in findings})
+
+    def test_complete_manual_guard_remains_accepted(self):
+        from tools.validate_rll_credential_authority import _contains_manual_guard
+        self.assertTrue(_contains_manual_guard(
+            {"if": "github.event_name == 'workflow_dispatch'"}
+        ))
+        self.assertTrue(_contains_manual_guard(
+            {"if": "${{ github.event_name == 'workflow_dispatch' }}"}
+        ))
+        self.assertFalse(_contains_manual_guard(
+            {"if": "github.event_name == 'workflow_dispatch' or true"}
+        ))
+
     def test_runtime_receipt_never_contains_secret_material(self):
         secret = "opaque-test-secret-never-persist"
         with patch.dict(os.environ, {CLIMATE_SECRET: secret}, clear=False):
