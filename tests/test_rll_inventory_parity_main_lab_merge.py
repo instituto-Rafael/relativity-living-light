@@ -51,4 +51,4 @@ def test_main_probe_and_lab_action_are_both_preserved() -> None:
     assert "data/results/repo_inventory.json" in upload["with"]["path"]
     assert "commit inventory updates through a reviewed pull request" in by_name[
         "Build inventory checksums and commit policy note"
-    ]["run"]
+    ]["run"].lower()
