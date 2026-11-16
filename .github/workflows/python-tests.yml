@@ -74,6 +74,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pytest pyyaml jsonschema
 
+      - name: Federated PR assurance offline snapshot (never promotes science)
+        run: |
+          set -euo pipefail
+          python tools/ci/rll_federated_pr_assurance_v1.py --require-schema \
+            --output results/audit/rll_federated_pr_assurance_v1.json
+          python -m unittest discover -s tests -p test_rll_federated_pr_assurance_v1.py -v
+          echo "Federated PR snapshot STRUCTURAL_PASS only; live GitHub/device/provider READBACK NOT_RUN; merge_allowed=false" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Validate formula-literature append-only history
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -133,6 +141,46 @@ jobs:
             --output results/audit/rll_cosmology_e0_preflight.json
           test -s results/audit/rll_real_data_evidence_bridge.json
           test -s results/audit/rll_cosmology_e0_preflight.json
+
+      - name: Scoped LCM modular graph versus Euclid (fail-closed; no gate bypass)
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_rll_lcm_graph_benchmark_v1.py' -v
+          python tools/rll_lcm_graph_benchmark_v1.py --no-timing \
+            --output results/audit/rll_lcm_graph_benchmark_v1_ci.json
+          echo "LCM source algorithms PASS_SCOPED, numerical evidence only; overall pytest and governance gates unchanged" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Scoped smart LCM jump and prime-lattice comparison (no gate bypass)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python-tests
+          python -m unittest discover -s tests -p 'test_rll_lcm_smart_graph_v1.py' -v
+          python tools/bench_rll_lcm_smart_graph_v1.py --quick \
+            --output artifacts/python-tests/rll_smart_lcm_ci.json \
+            --csv artifacts/python-tests/rll_smart_lcm_ci_cases.csv
+          test -s artifacts/python-tests/rll_smart_lcm_ci.json
+          test -s artifacts/python-tests/rll_smart_lcm_ci_cases.csv
+          echo "Smart LCM mathematical checks PASS_SCOPED only; original pytest and all governance gates retained" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Scoped RLL cosmology comparator source audit (no gate bypass)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python-tests
+          python -m unittest discover -s tests -p 'test_rll_comparator_evidence_matrix_v1.py' -v
+          python tools/ci/rll_comparator_evidence_matrix_v1.py --root . \
+            --output artifacts/python-tests/rll_comparator_evidence_matrix_v1.json
+          test -s artifacts/python-tests/rll_comparator_evidence_matrix_v1.json
+          echo "RLL comparator PASS_SCOPED read-only source consistency; no model fit or global gate bypass" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Scoped atoms-to-cosmos neglected falsifier inventory (not physical claim)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python-tests
+          python -m unittest discover -s tests -p 'test_rll_neglected_cross_scale_gate_v1.py' -v
+          python tools/ci/rll_neglected_cross_scale_gate_v1.py --root . \
+            --output artifacts/python-tests/rll_neglected_cross_scale_receipt.json
+          test -s artifacts/python-tests/rll_neglected_cross_scale_receipt.json
+          echo "Cross-scale atlas PASS_SCOPED_STRUCTURE_ONLY; RLL physical evidence still TOKEN_VAZIO" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Run tests with auditable receipt
         run: |
