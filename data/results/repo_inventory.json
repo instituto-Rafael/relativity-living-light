@@ -29341,11 +29341,11 @@
   },
   {
     "path": "tests/test_rll_current_state_authority_graph_v2.py",
-    "bytes": 2893,
+    "bytes": 4450,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 78,
-    "sha256": "6df3a4347cdfc0994cbc82de4a10ce794ad947e38fdb4a040720bc0364205c97",
+    "linhas": 116,
+    "sha256": "aece2566f4320258784c2e3b693895e4c7f6da7145d23bb7583428074db967a0",
     "flags": "mentions_synthetic,cosmology_validation_marker"
   },
   {
@@ -33058,11 +33058,11 @@
   },
   {
     "path": "tools/validate_rll_current_state_authority_graph_v2.py",
-    "bytes": 5584,
+    "bytes": 6565,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 134,
-    "sha256": "75aa7f3214968e2fa1ffc6aaef4e470415ac750a8ba35c1d5bfe04d83edcafe0",
+    "linhas": 153,
+    "sha256": "d7f8ef1f44d97a3e8643cdb68eff46daa3b5458333d3983350f45f251eebe361",
     "flags": ""
   },
   {

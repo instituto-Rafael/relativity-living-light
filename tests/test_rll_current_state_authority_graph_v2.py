@@ -76,3 +76,41 @@ def test_static_success_is_not_provider_freshness_or_scientific_pass():
     assert validate_graph(graph, md) == []
     assert graph["kind"] == "PROVIDER_REF_SNAPSHOT_NOT_RUNTIME_OR_SCIENTIFIC_ATTESTATION"
     assert "NO_AUTO_MERGE" in [layer["claim"] for layer in graph["layers"]]
+
+def test_swapped_existing_ref_shas_fail_when_not_bound_to_own_row():
+    graph, md = _sources()
+    candidate = copy.deepcopy(graph)
+    candidate["refs"][0]["sha"], candidate["refs"][1]["sha"] = (
+        candidate["refs"][1]["sha"], candidate["refs"][0]["sha"]
+    )
+    assert "HUMAN_MACHINE_REF_MISMATCH" in validate_graph(candidate, md)
+
+
+def test_swapped_diverged_edge_counts_fail_even_if_topology_unchanged():
+    graph, md = _sources()
+    candidate = copy.deepcopy(graph)
+    edge = candidate["compare_edges"][0]
+    edge["left_only_commits"], edge["right_only_commits"] = (
+        edge["right_only_commits"], edge["left_only_commits"]
+    )
+    assert "HUMAN_MACHINE_EDGE_MISMATCH" in validate_graph(candidate, md)
+
+
+def test_workflow_count_from_another_branch_cannot_pass_global_presence():
+    graph, md = _sources()
+    candidate = copy.deepcopy(graph)
+    candidate["refs"][0]["workflow_files"] = candidate["refs"][1]["workflow_files"]
+    assert "HUMAN_MACHINE_REF_MISMATCH" in validate_graph(candidate, md)
+
+
+def test_valid_but_wrong_edge_merge_base_is_rejected():
+    graph, md = _sources()
+    candidate = copy.deepcopy(graph)
+    candidate["compare_edges"][0]["merge_base"] = candidate["compare_edges"][1]["merge_base"]
+    assert "HUMAN_MACHINE_EDGE_MISMATCH" in validate_graph(candidate, md)
+
+
+def test_duplicate_markdown_ref_row_is_rejected():
+    graph, md = _sources()
+    row = next(s for s in md.splitlines() if s.startswith("| `main` |"))
+    assert "HUMAN_MACHINE_REF_MISMATCH" in validate_graph(graph, md + "\n" + row + "\n")

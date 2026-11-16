@@ -21,6 +21,11 @@ SHA = re.compile(r"[0-9a-f]{40}\Z")
 
 def validate_graph(graph: dict, markdown: str) -> list[str]:
     errors: list[str] = []
+    human_rows = [
+        tuple(cell.strip() for cell in line.strip()[1:-1].split("|"))
+        for line in markdown.splitlines()
+        if line.strip().startswith("|") and line.strip().endswith("|")
+    ]
     if graph.get("schema") != "rll.current_state_authority_graph.v2":
         errors.append("SCHEMA_MISMATCH")
     if graph.get("claim_allowed") is not False or graph.get("auto_merge") is not False:
@@ -50,8 +55,15 @@ def validate_graph(graph: dict, markdown: str) -> list[str]:
         if type(row.get("protected_metadata")) is not bool:
             errors.append("UNVERIFIED_PROTECTION_TYPE")
         refs[name] = sha
-        if sha not in markdown or f"`{name}`" not in markdown:
+        human_refs = [cells for cells in human_rows if len(cells) == 4 and cells[0] == f"`{name}`"]
+        if len(human_refs) != 1:
             errors.append("HUMAN_MACHINE_REF_MISMATCH")
+        else:
+            human_sha, human_count, human_protection = human_refs[0][1:]
+            if (human_sha.strip("`") != sha
+                    or human_count.replace(",", "") != str(row.get("workflow_files"))
+                    or human_protection.lower() != str(row.get("protected_metadata")).lower()):
+                errors.append("HUMAN_MACHINE_REF_MISMATCH")
 
     if set(refs) != {"main", "rll/lab", "rll/integration", "rll/release"}:
         errors.append("CANONICAL_REF_SET_MISMATCH")
@@ -78,13 +90,20 @@ def validate_graph(graph: dict, markdown: str) -> list[str]:
             errors.append("TOPOLOGY_CLASSIFICATION_MISMATCH")
         if not SHA.fullmatch(str(edge.get("merge_base"))):
             errors.append("INVALID_MERGE_BASE")
-        if str(edge.get("merge_base")) not in markdown:
-            errors.append("HUMAN_MACHINE_MERGE_BASE_MISMATCH")
-        # Presence in the human document: do not mistake this for live freshness.
-        if f"{a:,}".replace(",", ",") not in markdown and str(a) not in markdown:
-            errors.append("HUMAN_COMMIT_COUNT_MISSING")
-        if f"{b:,}" not in markdown and str(b) not in markdown:
-            errors.append("HUMAN_COMMIT_COUNT_MISSING")
+        # Compare a complete endpoint/count/merge-base/topology tuple in ONE Markdown row.
+        human_edges = [
+            cells for cells in human_rows
+            if len(cells) == 5 and cells[0] == f"`{left}` → `{right}`"
+        ]
+        if len(human_edges) != 1:
+            errors.append("HUMAN_MACHINE_EDGE_MISMATCH")
+        else:
+            human_left, human_right, human_base, human_topology = human_edges[0][1:]
+            if (human_left.replace(",", "") != str(a)
+                    or human_right.replace(",", "") != str(b)
+                    or human_base.strip("`") != str(edge.get("merge_base"))
+                    or human_topology.removeprefix("two-sided ").strip() != edge.get("topology_status")):
+                errors.append("HUMAN_MACHINE_EDGE_MISMATCH")
     if ("main", "rll/lab") not in pairs:
         errors.append("MAIN_LAB_EDGE_MISSING")
 

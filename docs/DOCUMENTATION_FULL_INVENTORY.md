@@ -10,8 +10,8 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tracked_files_total` | 3799 |
 | `cataloged_files` | 3788 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 57183933 |
-| `total_text_lines` | 562345 |
+| `total_bytes` | 57186471 |
+| `total_text_lines` | 562402 |
 | `markdown_files` | 1229 |
 | `yml_yaml_files` | 254 |
 | `github_workflow_yml_files` | 122 |
@@ -3283,7 +3283,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tests/test_rll_credential_authority.py` | 6062 | `.py` | `source_code` | 193 | `e52119a7935398a988404a422f5ff4ac59cfe818b8b830217014ef5e47992eaf` | `mentions_mock_or_placeholder,cosmology_validation_marker` |
 | `tests/test_rll_cross_repo_entrelaces.py` | 2593 | `.py` | `source_code` | 78 | `d693596016c7c0e872bc59f12a9bc5ba20357db8319e990beebbfa01bbef1a28` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_current_rx_source_freeze.py` | 1246 | `.py` | `source_code` | 32 | `7abd87584f95f5cf19ae6c428918b17e5802144cdd259b29ded48b833470a297` | `cosmology_validation_marker` |
-| `tests/test_rll_current_state_authority_graph_v2.py` | 2893 | `.py` | `source_code` | 78 | `6df3a4347cdfc0994cbc82de4a10ce794ad947e38fdb4a040720bc0364205c97` | `mentions_synthetic,cosmology_validation_marker` |
+| `tests/test_rll_current_state_authority_graph_v2.py` | 4450 | `.py` | `source_code` | 116 | `aece2566f4320258784c2e3b693895e4c7f6da7145d23bb7583428074db967a0` | `mentions_synthetic,cosmology_validation_marker` |
 | `tests/test_rll_deltaobs_residual.py` | 4176 | `.py` | `source_code` | 106 | `7e466f3793c710fd63321ccd261d353d60e4c5c1f30e88dcb0b875309ad7f85f` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_desi_dr2_cobaya_custody_v1.py` | 1502 | `.py` | `source_code` | 35 | `a3f6136939da9e52bf22a4c8ad8c7522e99ee9bed11bf3fb01fc0f2066436ff2` | `mentions_mock_or_placeholder,token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_rll_desi_dr2_reference_loglike_probe_v1.py` | 1650 | `.py` | `source_code` | 40 | `30e54f82333205eecc5ae9fc1a3cec967f8c9618d6989e102ab79e03a906f154` | `token_vazio_declared,cosmology_validation_marker` |
@@ -3696,7 +3696,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tools/validate_rll_chatgpt_76_falsifier_operator_mesh.py` | 1891 | `.py` | `source_code` | 34 | `2e31a0f8342b2050070292e607216ba83ef27393200109f73d425c870b6d8de0` | `token_vazio_declared` |
 | `tools/validate_rll_credential_authority.py` | 15553 | `.py` | `source_code` | 356 | `fcf77cc6f918f186623ab802e1f33fd3599bd9fbe12cc9324e49fab7b20b107f` | `token_vazio_declared` |
 | `tools/validate_rll_cross_repo_entrelaces.py` | 9824 | `.py` | `source_code` | 240 | `ad8c0a8312a3b5d568c3fc1ddb07160746d68be90dab6db2b4036b2a6be41630` | `token_vazio_declared` |
-| `tools/validate_rll_current_state_authority_graph_v2.py` | 5584 | `.py` | `source_code` | 134 | `75aa7f3214968e2fa1ffc6aaef4e470415ac750a8ba35c1d5bfe04d83edcafe0` | `` |
+| `tools/validate_rll_current_state_authority_graph_v2.py` | 6565 | `.py` | `source_code` | 153 | `d7f8ef1f44d97a3e8643cdb68eff46daa3b5458333d3983350f45f251eebe361` | `` |
 | `tools/validate_rll_development_governance.py` | 10503 | `.py` | `source_code` | 255 | `ebec18e9602d164d0ca074c6bc781bb57e4162b35138a0196b0b042e35408e2d` | `` |
 | `tools/validate_rll_evidence_evolution_matrix.py` | 4395 | `.py` | `source_code` | 122 | `e0dc7c8bcf23870fd8d6d766e6a0886dd484537cad9ec1109b060af0f275f78f` | `token_vazio_declared` |
 | `tools/validate_rll_execution_fabric_termux_replay.py` | 6904 | `.py` | `source_code` | 173 | `d25bb10469f4c19c361fc15328583f6f139227370284152d6fc6a794cd3fbfdd` | `` |
