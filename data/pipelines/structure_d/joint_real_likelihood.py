@@ -38,7 +38,11 @@ except ImportError as exc:  # pragma: no cover - exercised by environment setup
     ) from exc
 
 from rll.cosmology_fairness import covariance_readiness, growth_backend_benchmark_status, load_parameter_origin_registry
-from rll.desi_dr2_authority_v1 import align_verified_desi_covariance, observation_vector_n
+from rll.desi_dr2_authority_v1 import (
+    align_verified_desi_covariance,
+    observation_vector_n,
+    verify_desi_points_source,
+)
 
 from .energy_momentum_bridge import build_fnext_gate
 from .likelihood import aic, aicc, bic, chi2_with_covariance
@@ -246,7 +250,11 @@ def build_desi_covariance(points: pd.DataFrame, summary: pd.DataFrame) -> np.nda
     cov = np.diag(points["sigma"].astype(float).to_numpy() ** 2)
     for _, block in summary.iterrows():
         block_name = str(block["covariance_block"])
-        idx = points.index[points["covariance_block"] == block_name].tolist()
+        # The matrix is indexed by row POSITION, not DataFrame index LABEL.
+        # Sampling or slicing the same data must not displace covariance pairs.
+        idx = np.flatnonzero(
+            points["covariance_block"].to_numpy() == block_name
+        ).tolist()
         if len(idx) != 2:
             raise ValueError(f"DESI covariance block {block_name} must map to exactly two rows")
         i, j = idx
@@ -281,6 +289,14 @@ def cmb_shift_prediction(e2_fn: Callable, params: tuple[float, ...], ob_h2: floa
 
 def _chi2_diag(obs: np.ndarray, pred: np.ndarray, sigma: np.ndarray) -> float:
     return float(np.sum(((np.asarray(obs, dtype=float) - np.asarray(pred, dtype=float)) / np.asarray(sigma, dtype=float)) ** 2))
+
+
+def _cmb_claim_status(cmb: dict) -> dict[str, bool]:
+    """Availability is not evidence of model validity or claim authority."""
+    return {
+        "covariance_available": cmb.get("covariance") is not None,
+        "claim_allowed": False,
+    }
 
 
 def _cmb_chi2(cmb: dict, e2_fn: Callable, params: tuple[float, ...], ob_h2: float, cache: dict | None = None) -> float:
@@ -375,6 +391,8 @@ def load_joint_inputs() -> dict:
     registry = load_parameter_registry()
     _validate_model_parameter_registry(registry)
     hz = pd.read_csv(HZ_PATH)
+    # SHA-256 exact custody check must occur BEFORE the source is parsed.
+    verified_points = verify_desi_points_source(DESI_POINTS_PATH)
     desi = pd.read_csv(DESI_POINTS_PATH)
     desi_summary = pd.read_csv(DESI_COV_SUMMARY_PATH)
     fs8 = pd.read_csv(FSIGMA8_PATH)
@@ -383,6 +401,7 @@ def load_joint_inputs() -> dict:
     return {
         "hz": hz,
         "desi": desi,
+        "desi_points_source": verified_points,
         "desi_summary": desi_summary,
         "desi_cov": desi_cov,
         "desi_covariance_info": covariance_info,
@@ -561,6 +580,9 @@ def _delta_against(rows_by_model: dict[str, dict], model: str, baseline: str = M
 def run_joint_likelihood(output_stem: str = "joint_real_likelihood") -> dict:
     start = time.perf_counter()
     inputs = load_joint_inputs()
+    # Fail CLOSED on the actual sample-vector contract before any optimizer
+    # evaluation; malformed CMB metadata must never trigger a silent fallback.
+    n_obs = observation_vector_n(inputs)
     seed = int(os.environ.get("STRUCTURE_D_JOINT_SEED", "42"))
     tol = float(os.environ.get("STRUCTURE_D_JOINT_TOL", "1e-6"))
     default_maxiter = int(os.environ.get("STRUCTURE_D_JOINT_MAXITER", "140"))
@@ -577,14 +599,14 @@ def run_joint_likelihood(output_stem: str = "joint_real_likelihood") -> dict:
 
     registry = inputs["parameter_registry"]
     commit_sha = _git_sha()
-    # Count all actual CMB covariance dimensions (3 on current real data).
-    # This is vector dimension only; effective BIC sample semantics remain review-bound.
-    n_obs = observation_vector_n(inputs)
+    # n_obs was validated before fitting, not silently recomputed post-fit.
+    # Vector dimension is NOT independent sky sample size for BIC inference.
     rows = [_model_row(model, fitted[model][0], fitted[model][1], n_obs, registry=registry, commit_sha=commit_sha) for model in MODEL_ORDER]
     rows_by_model = {row["model"]: row for row in rows}
     rll_delta = _delta_against(rows_by_model, MODEL_RLL)
     model_deltas = {model: _delta_against(rows_by_model, model) for model in (MODEL_WCDM, MODEL_CPL, MODEL_RLL)}
     growth_benchmark = growth_backend_benchmark_status(require_external=True)
+    cmb_claim_status = _cmb_claim_status(inputs["cmb"])
 
     outputs = []
     outputs.append(_atomic_write_text(RESULTS / f"{output_stem}.csv", _rows_to_csv(rows)))
@@ -636,7 +658,8 @@ def run_joint_likelihood(output_stem: str = "joint_real_likelihood") -> dict:
         "covariance_claim_gates": {
             "desi_bao_claim_allowed": inputs["desi_covariance_info"].get("claim_allowed", False),
             "desi_bao_mode": inputs["desi_covariance_info"].get("mode", "unknown"),
-            "cmb_claim_allowed": bool(inputs["cmb"].get("covariance")),
+            "cmb_claim_allowed": cmb_claim_status["claim_allowed"],
+            "cmb_covariance_available": cmb_claim_status["covariance_available"],
             "cmb_mode": "full_3x3_R_la_Ob_h2" if inputs["cmb"].get("covariance") else "diagonal_R_la_only",
             "growth_claim_allowed": bool(growth_benchmark.get("claim_allowed", False)),
             "growth_status": growth_benchmark.get("status", "unknown"),
