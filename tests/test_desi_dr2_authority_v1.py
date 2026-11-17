@@ -142,3 +142,49 @@ def test_interpretation_label_is_pairwise_not_global_winner():
     assert min(rows, key=lambda row: row["BIC"])["model"] == joint.MODEL_CPL
     assert artifact["model_deltas_vs_lcdm"][joint.MODEL_RLL]["delta_aicc_rll_minus_lcdm"] > 0.0
     assert artifact["claim_allowed"] is False
+
+# ADVERSE INDEX AUDIT: these tests must fail on the pre-fix implementation.
+def test_fallback_covariance_uses_row_positions_not_stale_dataframe_labels():
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    points = pd.read_csv(joint.DESI_POINTS_PATH)
+    summary = pd.read_csv(joint.DESI_COV_SUMMARY_PATH)
+    baseline = joint.build_desi_covariance(points, summary)
+    reorder = [10, 1, 8, 2, 0, 6, 7, 12, 5, 4, 9, 3, 11]
+    reordered_points = points.iloc[reorder]  # intentionally retains source index labels
+    expected = baseline[np.ix_(reorder, reorder)]
+    actual = joint.build_desi_covariance(reordered_points, summary)
+    np.testing.assert_allclose(actual, expected, rtol=0.0, atol=1e-15)
+
+
+def test_source_identity_rejects_decimal_redshift_alias():
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    points = pd.read_csv(joint.DESI_POINTS_PATH)
+    raw_cov = pd.read_csv(joint.DESI_FULL_COV_PATH, index_col=0).to_numpy(dtype=float)
+    mutated = points.copy()
+    mutated.loc[0, "z_eff"] = 0.2954  # old round(z,3) aliases this to 0.295
+    with pytest.raises(ValueError, match="DESI_OBSERVABLE_IDENTITY"):
+        align_verified_desi_covariance(mutated, raw_cov, joint.DESI_FULL_COV_PATH)
+
+
+def test_source_identity_rejects_subcenti_decimal_measurement_alias():
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    points = pd.read_csv(joint.DESI_POINTS_PATH)
+    raw_cov = pd.read_csv(joint.DESI_FULL_COV_PATH, index_col=0).to_numpy(dtype=float)
+    mutated = points.copy()
+    mutated.loc[0, "value"] = 7.950  # old 0.01 absolute-tolerance accepts the altered datum
+    with pytest.raises(ValueError, match="DESI_MEAN_SOURCE_VALUE_MISMATCH"):
+        align_verified_desi_covariance(mutated, raw_cov, joint.DESI_FULL_COV_PATH)
+
+
+def test_cmb_covariance_presence_never_promotes_scientific_claim():
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    available = {"covariance": np.eye(3).tolist(), "parameter_order": ["R", "la", "ob_h2"]}
+    status = joint._cmb_claim_status(available)
+    assert status["covariance_available"] is True
+    assert status["claim_allowed"] is False
+    assert joint._cmb_claim_status({})["covariance_available"] is False
+    assert joint._cmb_claim_status({})["claim_allowed"] is False
