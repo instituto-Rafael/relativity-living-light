@@ -13,6 +13,7 @@ on:
       - tests/test_joint_real_likelihood.py
       - tests/test_rll_observational_arithmetic_v1.py
       - data/governance/RLL_WS02_INDEX_DECIMAL_ADVERSARIAL_RECEIPT_20261117_S3.json
+      - data/governance/RLL_OBSERVATIONAL_ARITHMETIC_RECEIPT_20261117_S4.json
   workflow_dispatch:
 
 permissions:
@@ -64,11 +65,16 @@ jobs:
               "data/real/desi_dr2_bao_covariance.csv",
               "data/real/cosmology/desi_dr2_bao_primary_points.csv",
               "data/real/cosmology/Hz_cosmic_chronometers_independent.csv",
+              "data/real/Hz_data_real.csv",
               "data/real/cosmology/fsigma8_growth_real.csv",
               "data/real/CMB_shift_real.json",
+              "results/structure_d/joint_real_likelihood.json",
               "src/rll/desi_dr2_authority_v1.py",
               "data/pipelines/structure_d/joint_real_likelihood.py",
-              "tests/test_desi_dr2_authority_v1.py"
+              "data/pipelines/structure_d/likelihood.py",
+              "tests/test_desi_dr2_authority_v1.py",
+              "tests/test_rll_observational_arithmetic_v1.py",
+              "data/governance/RLL_OBSERVATIONAL_ARITHMETIC_RECEIPT_20261117_S4.json"
           ]
           state = {}
           for p in paths:
