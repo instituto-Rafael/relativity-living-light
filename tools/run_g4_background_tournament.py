@@ -164,6 +164,12 @@ def load_cc(path: Path = HZ_PATH) -> CCBlock:
 
 
 def load_desi(points_path: Path = DESI_POINTS_PATH, covariance_path: Path = DESI_COV_PATH) -> DESIBlock:
+    # Index-only covariance checks cannot detect a DM/DH swap within a block.
+    # Reuse the G3 source-order receipt before forming any likelihood.
+    order_guard = _module("rll_g4_desi_order_guard", ROOT / "tools/build_desi_covariance_order_receipt.py")
+    order_receipt = order_guard.build_receipt(
+        ROOT, points_override=points_path, covariance_override=covariance_path
+    )
     rows: list[dict[str, str]]
     with points_path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -172,6 +178,9 @@ def load_desi(points_path: Path = DESI_POINTS_PATH, covariance_path: Path = DESI
     matrix = np.loadtxt(covariance_path, delimiter=",", skiprows=1, usecols=range(1, 14), dtype=float)
     if matrix.shape != (13, 13):
         raise ValueError(f"DESI covariance shape={matrix.shape}")
+    if (order_guard.sha256_file(points_path) != order_receipt["points_sha256"]
+            or order_guard.sha256_file(covariance_path) != order_receipt["covariance_sha256"]):
+        raise ValueError("DESI input changed between order validation and likelihood load")
     if not np.allclose(matrix, matrix.T, rtol=0.0, atol=1e-12):
         raise ValueError("DESI covariance is not symmetric")
     if np.any(np.diag(matrix) <= 0.0):
