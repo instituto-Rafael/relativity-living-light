@@ -1,0 +1,152 @@
+{
+  "schema": "rll.observational_arithmetic_adversarial_receipt.v1",
+  "mu_id": "MU-RLL-OBS-MATH-20261117-S4",
+  "predecessor": "MU-RLL-WS02-INDEX-DECIMAL-20261117-S3",
+  "kind": "SCOPED_MEASURED_OBSERVATIONAL_ARITHMETIC_WITH_SCIENTIFIC_GAPS",
+  "date_utc": "2026-11-17",
+  "source": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "work/rll-ws02-desi-order-nobs-falsifier-20261117-v1",
+    "source_head_before_receipt": "29e2459dc08a9a5cb94218e2fa9b56672edef3c4",
+    "archived_model_artifact_git_blob": "fe6707efbb9d5b4f0f0ab79d24b80b852f80d492",
+    "desi_points_sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+    "desi_covariance_sha256": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658"
+  },
+  "observation_selection": {
+    "archived_Hz_rows": 33,
+    "pure_CC_rows": 28,
+    "archived_excluded_BAO_derived_rows": 5,
+    "DESI_primary_rows": 13,
+    "growth_rows": 16,
+    "CMB_compressed_components": 3,
+    "archived_information_criterion_N": 64,
+    "current_joint_vector_components": 60,
+    "n_bic_independent_sampling_units": "TOKEN_VAZIO_NOT_ESTABLISHED",
+    "BAO_overlap_risk": "EXCLUDED_BY_COSMIC_CHRONOMETER_CANONICAL_POLICY_NOT_PROOF_OF_SAME_SURVEY_DUPLICATE"
+  },
+  "per_model_fixed_historical_parameter_recheck": [
+    {
+      "model": "LCDM_joint_real",
+      "archive_hz33": 28.689146678458307,
+      "hz28_fixed": 17.221810087685437,
+      "hz_excluded_five": 11.467336590772872,
+      "archive_bao_unaligned": 19.07091845950121,
+      "bao_aligned_fixed": 19.588271120383823,
+      "archive_total": 93.95354560099567,
+      "fixed_observational_recheck_chi2": 83.0035616711049,
+      "important": "NOT_REFITTED_DO_NOT_USE_AS_MODEL_WINNER",
+      "remaining_terms": "historical growth/CMB terms unchanged",
+      "not_a_scientific_claim": true
+    },
+    {
+      "model": "wCDM_joint_real",
+      "archive_hz33": 28.258331520090362,
+      "hz28_fixed": 17.319878281600825,
+      "hz_excluded_five": 10.93845323848954,
+      "archive_bao_unaligned": 15.463676477799806,
+      "bao_aligned_fixed": 16.157667914980838,
+      "archive_total": 92.79427056355686,
+      "fixed_observational_recheck_chi2": 82.54980876225088,
+      "important": "NOT_REFITTED_DO_NOT_USE_AS_MODEL_WINNER",
+      "remaining_terms": "historical growth/CMB terms unchanged",
+      "not_a_scientific_claim": true
+    },
+    {
+      "model": "CPL_w0waCDM_joint_real",
+      "archive_hz33": 20.49695533658436,
+      "hz28_fixed": 18.769708304918407,
+      "hz_excluded_five": 1.7272470316659623,
+      "archive_bao_unaligned": 11.122948121040453,
+      "bao_aligned_fixed": 17.40556415320231,
+      "archive_total": 63.119554616395284,
+      "fixed_observational_recheck_chi2": 67.67492361686539,
+      "important": "NOT_REFITTED_DO_NOT_USE_AS_MODEL_WINNER",
+      "remaining_terms": "historical growth/CMB terms unchanged",
+      "not_a_scientific_claim": true
+    },
+    {
+      "model": "RLL_joint_real",
+      "archive_hz33": 28.70658045782483,
+      "hz28_fixed": 17.22381463433642,
+      "hz_excluded_five": 11.48276582348841,
+      "archive_bao_unaligned": 19.198725661654947,
+      "bao_aligned_fixed": 19.617237739051095,
+      "archive_total": 93.95983068903539,
+      "fixed_observational_recheck_chi2": 82.89557694203555,
+      "important": "NOT_REFITTED_DO_NOT_USE_AS_MODEL_WINNER",
+      "remaining_terms": "historical growth/CMB terms unchanged",
+      "not_a_scientific_claim": true
+    }
+  ],
+  "red_green": [
+    {
+      "run_id": 44017371544,
+      "commit": "0d1735775811c9e0a8cad0627f93b05641b543ea",
+      "passed": 40,
+      "failed": 5,
+      "state": "RED_REPRODUCED",
+      "failed_contracts": [
+        "negative sigma",
+        "zero sigma",
+        "nonfinite sigma",
+        "observation/prediction implicit numpy broadcasting",
+        "nonfinite observation"
+      ]
+    },
+    {
+      "run_id": 44017511312,
+      "commit": "29e2459dc08a9a5cb94218e2fa9b56672edef3c4",
+      "passed": 45,
+      "failed": 0,
+      "state": "PASS_SCOPED_REAL_DATA_ARITHMETIC"
+    }
+  ],
+  "scientific_authority_and_caveats": [
+    {
+      "field": "CMB_acoustic_ellA",
+      "state": "BLOCKED_WRONG_SONIC_HORIZON_SEMANTICS",
+      "source_code": "data/pipelines/structure_d/joint_real_likelihood.py#cmb_shift_prediction",
+      "finding": "Current model computes pi*DC(z*)/rd_drag but compressed CMB acoustic prior is pi*DM(z*)/rs(z*). No independent rs(z*) evaluation exists in that path.",
+      "reference": "https://link.springer.com/article/10.1140/epjc/s10052-026-16526-x",
+      "consequence": "Current CMB chi2 cannot be scientifically promoted."
+    },
+    {
+      "field": "BAO_DM_geometry",
+      "state": "TOKEN_VAZIO_CURVATURE_CONSISTENCY",
+      "finding": "Current BAO prediction uses DC as DM. This equality requires the flat-geometry assumption, while E2(0) is not normalized for archived parameter vectors."
+    },
+    {
+      "field": "growth_fs8",
+      "state": "ENGINEERING_PROXY_NOT_PHYSICAL_PERTURBATION",
+      "finding": "f*sigma8=sigma8*Omega_m(z)^0.55 is a proxy without D(z) dynamics or validated CLASS/CAMB parity."
+    },
+    {
+      "field": "source_published_vs_Cobaya_mean",
+      "state": "MULTI_REPRESENTATION_CUSTODY",
+      "finding": "Published DESI DR2 BAO Table IV gives Ly-alpha DM/rd=38.988 while pinned Cobaya mean uses 38.988973961958784. Do not silently round/correct; pair data representation with matching source covariance and record chosen surface."
+    },
+    {
+      "field": "optimization",
+      "state": "TOKEN_VAZIO_CONVERGENCE",
+      "finding": "Optimizer success/nfev/nit are not emitted with historical fits; no claim of new convergence."
+    },
+    {
+      "field": "cross_survey_covariances",
+      "state": "TOKEN_VAZIO_EXTERNAL_AUTHORITY"
+    }
+  ],
+  "runtime_claims": {
+    "observational_chi2_source_arithmetic": "PASS_SCOPED",
+    "new_scientific_fit": "NOT_RUN",
+    "scientific_model_preference": "BLOCKED",
+    "claim_allowed": false,
+    "protected_branches_modified": false,
+    "old_archived_artifact_modified": false,
+    "raw_observations_modified": false
+  },
+  "rollback": {
+    "type": "append_only_successor",
+    "parent_commit": "29e2459dc08a9a5cb94218e2fa9b56672edef3c4",
+    "no_force_push": true
+  }
+}
