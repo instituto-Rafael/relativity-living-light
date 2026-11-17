@@ -181,6 +181,8 @@ def load_desi(points_path: Path = DESI_POINTS_PATH, covariance_path: Path = DESI
     if (order_guard.sha256_file(points_path) != order_receipt["points_sha256"]
             or order_guard.sha256_file(covariance_path) != order_receipt["covariance_sha256"]):
         raise ValueError("DESI input changed between order validation and likelihood load")
+    permutation = order_receipt["covariance_index_for_primary_row"]
+    matrix = matrix[np.ix_(permutation, permutation)]
     if not np.allclose(matrix, matrix.T, rtol=0.0, atol=1e-12):
         raise ValueError("DESI covariance is not symmetric")
     if np.any(np.diag(matrix) <= 0.0):
