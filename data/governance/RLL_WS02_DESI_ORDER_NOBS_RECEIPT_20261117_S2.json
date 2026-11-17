@@ -1,0 +1,115 @@
+{
+  "schema": "rll.ws02.scoped_observational_falsification_evidence.v1",
+  "mu_id": "MU-RLL-WS02-DESI-ORDER-NOBS-20261117-S2",
+  "predecessor": "MU-RLL-WS02-DESI-ORDER-NOBS-20261117-S1",
+  "source_ref": {
+    "repo": "instituto-Rafael/relativity-living-light",
+    "branch": "work/rll-ws02-desi-order-nobs-falsifier-20261117-v1",
+    "exact_head_predecessor": "16c019a2539d6ae4d575485a5222ed194837caa5",
+    "source_commits": [
+      "4701c431093ca3b0e12744455858aa97e09dd7b2",
+      "d93944f2f7f58096c773938fa552b28d890e7856",
+      "a90f73e27655b729b4866cdeff790d10446a20d7",
+      "c08dd1fa955a6d151c70a1365ed62fcc386b07f9",
+      "16c019a2539d6ae4d575485a5222ed194837caa5"
+    ]
+  },
+  "kind": "SCOPED_EVIDENCE_APPEND_ONLY",
+  "scope": "actual_public_RLL_and_Cobaya_Git_blobs_static_validation",
+  "measurement": {
+    "sample_vector": {
+      "pure_CC": 28,
+      "DESI_BAO": 13,
+      "growth_fs8": 16,
+      "CMB_compressed_prior_components": 3,
+      "vector_components_total": 60
+    },
+    "published_origin": "CobayaSampler/bao_data master: desi_gaussian_bao_ALL_GCcomb_mean.txt, desi_gaussian_bao_ALL_GCcomb_cov.txt",
+    "source_mean_blob": "8aff444fdb42c0946342aa0011ab287eda097c4c",
+    "source_covariance_blob": "fd8e5697ab61379b07b52efb781ea6713417a4d9",
+    "source_matrix_exact_numeric_equality_to_Cobaya": true,
+    "lyalpha_permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      11
+    ],
+    "covariance_SPD_before": true,
+    "covariance_SPD_after": true,
+    "max_relative_variance_delta_before": 26.71157523772179,
+    "max_relative_variance_delta_after": 0.13284632963988918
+  },
+  "executed_tests": {
+    "provider_real_data_static": {
+      "state": "PASS_SCOPED",
+      "expected": 7,
+      "passed": 7,
+      "mechanism": "GitHub connector independent source retrieval + deterministic matrix/mean checks",
+      "external_CI": false
+    },
+    "local_guard_unit": {
+      "state": "PASS_SCOPED_SYNTHETIC_NEGATIVE",
+      "expected": 2,
+      "passed": 2,
+      "command": "PYTHONPATH=/mnt/data/rll_delta/src pytest -q /mnt/data/rll_delta/tests/test_desi_dr2_authority_v1.py -k 'reject_wrong_order or malformed_cmb'"
+    },
+    "historical_AICc_N_sensitivity": {
+      "state": "PASS_SCOPED_ALGEBRA_NOT_REFIT",
+      "Ns": [
+        59,
+        60,
+        64,
+        65
+      ],
+      "best": "CPL",
+      "delta_AICc_RLL_minus_CPL": [
+        33.524,
+        33.51,
+        33.458,
+        33.447
+      ]
+    },
+    "exact_branch_head_pytest": "NOT_RUN",
+    "CLASS_RLL": "NOT_RUN",
+    "CAMB_RLL": "NOT_RUN",
+    "independent_rll_perturbation_closure": "BLOCKED_WS03",
+    "independent_replication": "TOKEN_VAZIO_REPLICATION"
+  },
+  "interpretation": {
+    "historic_lcdm_preferred_label_scope": "PAIRWISE_RLL_VS_LCDM",
+    "global_best_AICc_BIC_in_recorded_run": "CPL",
+    "claim_allowed": false,
+    "interpretation_issue": "AMBIGUOUS_UNQUALIFIED_LABEL_NOT_METRIC_ARITHMETIC_ERROR"
+  },
+  "physical_contract": {
+    "WS01_state": "BLOCKED_SCIENTIFIC_DECISION",
+    "hz_dataset": "28_PURE_CC_FROZEN",
+    "omega_r": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION",
+    "growth_mode": "TOKEN_VAZIO_HUMAN_SCIENTIFIC_DECISION",
+    "rad_and_background_normalization": "BLOCKED_WS01",
+    "rd": "INTEGRAL_REQUIRED_NOT_LEGACY_POWER_LAW_FOR_CANONICAL_V2",
+    "cmb": "RS_STAR_REQUIRED_IN_V2",
+    "CLASS_CAMB": "WAIT_WS03_FULL_PERTURBATION_CLOSURE",
+    "WS02_background_only": "growth_CMB_lensing_excluded_from_canonical_likelihood_until_physics_gates"
+  },
+  "risk_control": {
+    "generated_inventory": "TOKEN_VAZIO_REGEN_AFTER_NEW_CODE_AND_RECEIPTS",
+    "exact_head_focused_CI": "TOKEN_VAZIO_NO_PYTHON_TEST_WORKFLOW_DISPATCH_TOOL",
+    "no_source_measurements_modified": true,
+    "no_historical_results_modified": true,
+    "no_original_branches_modified": true,
+    "rollback": "retain original parent bae41429fc78b875cc194ae0b81e448d45a21bd0; append successor, no force, no delete"
+  },
+  "F_ok": "Source-bound covariance order and sample-vector metadata corrected in isolated source, 7/7 static real-data checks, 2/2 local guard tests; unrelated historical files unchanged.",
+  "F_gap": "Exact-head pytest, independent likelihood rerun, actual physical WS01 normalization and CLASS/CAMB, Bayesian/posterior and replication not completed.",
+  "F_next": "Run targeted pytest exact HEAD, regenerate generated repository inventory, obtain scientific decision on WS01 axes, refit four models on one frozen data likelihood then CLASS/CAMB parity."
+}
