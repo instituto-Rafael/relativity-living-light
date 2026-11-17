@@ -188,3 +188,41 @@ def test_cmb_covariance_presence_never_promotes_scientific_claim():
     assert status["claim_allowed"] is False
     assert joint._cmb_claim_status({})["covariance_available"] is False
     assert joint._cmb_claim_status({})["claim_allowed"] is False
+
+def test_primary_points_sha256_is_rechecked_before_reading(tmp_path):
+    from rll.desi_dr2_authority_v1 import SOURCE_POINTS_SHA256, verify_desi_points_source
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    verified = verify_desi_points_source(joint.DESI_POINTS_PATH)
+    assert verified["sha256"] == SOURCE_POINTS_SHA256
+    forged = tmp_path / "forged_points.csv"
+    forged.write_bytes(joint.DESI_POINTS_PATH.read_bytes() + b"\n")
+    with pytest.raises(ValueError, match="DESI_PRIMARY_POINTS_SOURCE_SHA256"):
+        verify_desi_points_source(forged)
+
+
+def test_cmb_dimension_and_order_fail_before_optimizer_is_called(monkeypatch):
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    fake_inputs = {
+        "hz": list(range(28)), "desi": list(range(13)), "fs8": list(range(16)),
+        "cmb": {"parameter_order": ["la", "R", "ob_h2"], "covariance": np.eye(3).tolist()},
+    }
+    invoked = []
+    monkeypatch.setattr(joint, "load_joint_inputs", lambda: fake_inputs)
+    monkeypatch.setattr(joint, "fit_model", lambda *args, **kwargs: invoked.append(True))
+    with pytest.raises(ValueError, match="BLOCKED_CMB_PARAMETER_ORDER"):
+        joint.run_joint_likelihood(output_stem="invalid_cmb_index_must_not_write")
+    assert invoked == []
+
+
+def test_block_covariance_rejects_negative_sigma_even_when_squared_positive():
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    points = pd.read_csv(joint.DESI_POINTS_PATH)
+    summary = pd.read_csv(joint.DESI_COV_SUMMARY_PATH)
+    corrupted = points.copy()
+    corrupted.loc[0, "sigma"] = -0.075
+    # Squaring a negative input must not make invalid measured uncertainty valid.
+    with pytest.raises(ValueError, match="DESI_BLOCK_SIGMA"):
+        joint.build_desi_covariance(corrupted, summary)
