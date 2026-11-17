@@ -30,6 +30,7 @@ from rx.cosmology import (
     rd_drag_mpc,
 )
 from rx.kernel import dump_json, invert_matrix, load_json, read_csv
+from tools.build_desi_covariance_order_receipt import build_receipt, sha256_file
 OUT_JSON = ROOT / "results" / "rx_semantic_parity.json"
 OUT_MD = ROOT / "results" / "rx_semantic_parity.md"
 
@@ -43,6 +44,12 @@ bao_cov = []
 for row in cov_rows:
     keys = sorted((key for key in row if key != ""), key=lambda value: int(value))
     bao_cov.append([float(row[key]) for key in keys])
+order_receipt = build_receipt(ROOT)
+if (sha256_file(ROOT / "data/real/desi_dr2_bao_covariance.csv") != order_receipt["covariance_sha256"]
+        or sha256_file(ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv") != order_receipt["points_sha256"]):
+    raise ValueError("DESI covariance/point file mutated after orientation preflight")
+permutation = order_receipt["covariance_index_for_primary_row"]
+bao_cov = [[bao_cov[i][j] for j in permutation] for i in permutation]
 bao_inv = invert_matrix(bao_cov)
 cmb_inv = invert_matrix(cmb["covariance"])
 
