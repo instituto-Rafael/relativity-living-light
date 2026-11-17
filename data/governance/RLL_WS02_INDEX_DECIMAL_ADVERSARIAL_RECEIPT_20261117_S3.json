@@ -1,0 +1,112 @@
+{
+  "schema": "rll.ws02.adversarial_index_decimal_receipt.v1",
+  "mu_id": "MU-RLL-WS02-INDEX-DECIMAL-20261117-S3",
+  "predecessor": "MU-RLL-WS02-DESI-ORDER-NOBS-20261117-S2",
+  "kind": "OBSERVED_FAILURES_REPRODUCED_FIXED_SCOPED",
+  "date_utc": "2026-11-17",
+  "source_ref": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "work/rll-ws02-desi-order-nobs-falsifier-20261117-v1",
+    "exact_head_before_receipt": "8367acc9ba2a838b09d4471da991591d32645834",
+    "previous_receipt_path": "data/governance/RLL_WS02_DESI_ORDER_NOBS_RECEIPT_20261117_S2.json"
+  },
+  "authority": {
+    "points_source_sha256": "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69",
+    "covariance_source_sha256": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658",
+    "row_count": 13,
+    "covariance_shape": [
+      13,
+      13
+    ],
+    "upstream": "CobayaSampler/bao_data (pinned source mean/covariance git blobs)",
+    "raw_observational_data_modified": false,
+    "historical_fit_artifacts_modified": false
+  },
+  "red_green_evidence": [
+    {
+      "run_id": 44014831219,
+      "commit": "fd74d4f820eb68345e5c2a4802894389b10c741c",
+      "state": "RED_EXPECTED",
+      "passed": 24,
+      "failed": 4,
+      "scopes": [
+        "nonpositional covariance block mapping",
+        "rounded redshift alias",
+        "mean decimal alias",
+        "CMB covariance presence vs claim gate"
+      ],
+      "classification": "REPRODUCED_PRE_FIX"
+    },
+    {
+      "run_id": 44015079174,
+      "commit": "96f298c7aa40cb4ce0895894f399d40f46951832",
+      "state": "PASS_SCOPED",
+      "passed": 28,
+      "failed": 0,
+      "classification": "AFTER_FOUR_INDEX_FIXES"
+    },
+    {
+      "run_id": 44015262995,
+      "commit": "9cbf830054d5f9421fc224a797e214283e43ceb7",
+      "state": "RED_EXPECTED",
+      "passed": 30,
+      "failed": 1,
+      "scopes": [
+        "negative sigma silently made positive by squaring in DESI fallback covariance"
+      ],
+      "classification": "REPRODUCED_PRE_FIX"
+    },
+    {
+      "run_id": 44015385326,
+      "commit": "8367acc9ba2a838b09d4471da991591d32645834",
+      "state": "PASS_SCOPED",
+      "passed": 31,
+      "failed": 0,
+      "classification": "AFTER_SIGMA_SIGN_FIX"
+    }
+  ],
+  "corrective_invariants": {
+    "covariance_position": "NUMPY_POSITIONAL_INDEX_NOT_PANDAS_LABEL",
+    "measurement_decimal": "MAX_ABSOLUTE_SOURCE_MEAN_DELTA_0.001_WITH_SHA256_POINTS_AND_COVARIANCE_PINS",
+    "redshift_identity": "NO_ROUNDING_ALIAS_ABS_TOL_1E-12",
+    "negative_uncertainty": "BLOCKED_BEFORE_SQUARING",
+    "cmb_claim": "PRESENCE_IS_AVAILABLE_NOT_SCIENTIFIC_CLAIM",
+    "optimizer_preflight": "CMB_ORDER_AND_SHAPE_VALIDATED_BEFORE_FIRST_FIT"
+  },
+  "additional_observational_gaps": {
+    "lyalpha_DM_cobaya_value": 38.988973961958784,
+    "lyalpha_DM_three_decimal_repository_value": 38.988,
+    "lyalpha_DM_absolute_source_delta": 0.0009739619587847415,
+    "lyalpha_DM_nearest_three_decimal_source_value": 38.989,
+    "lyalpha_DM_rounding_classification": "SOURCE_REPORTED_LAST_DIGIT_CONFLICT_NOT_AUTOCORRECTED",
+    "desi_covariance_diag_vs_rounded_sigma_max_relative_difference": 0.132846,
+    "effective_sample_size_BIC": "TOKEN_VAZIO_NOT_ESTABLISHED_WITH_CROSS_PROBE_COVARIANCE",
+    "independent_CC_28_provenance": "PUBLISHED_DIAGONAL_SIGMAS_PRESENT__CROSS_SOURCE_COVARIANCE_TOKEN_VAZIO",
+    "fsigma8_16_cross_survey_covariance": "TOKEN_VAZIO_NOT_PRESENT",
+    "RLL_effective_identifiable_k_at_Os0_0": "TOKEN_VAZIO_NON_REGULAR_BOUNDARY",
+    "optimizer_actual_convergence_success_flag": "TOKEN_VAZIO_NOT_EMITTED_BY_FIT_MODEL",
+    "RX_PHYSICS_CANONICAL_V2": "TOKEN_VAZIO_SCIENTIFIC_DECISION",
+    "CLASS_CAMB_RLL_PARITY": "NOT_RUN",
+    "joint_refit_after_index_fix": "NOT_RUN"
+  },
+  "boundary": {
+    "vector_components_current": 60,
+    "legacy_artifact_N": 64,
+    "legacy_unchanged": true,
+    "background_canonical_contract_excludes_CMB_and_growth": true,
+    "claim_allowed": false,
+    "publish": false,
+    "merge": false
+  },
+  "rollback": {
+    "policy": "APPEND_ONLY_SUCCESSOR_NO_REWRITE",
+    "branch_isolated": true,
+    "source_branch_sha_before_receipt": "8367acc9ba2a838b09d4471da991591d32645834",
+    "protected_branches_unchanged": "REVERIFY_BEFORE_MERGE"
+  },
+  "next_reversible": [
+    "Expose differential_evolution.success/nit/nfev and bound finite objective as an execution receipt; do not assume convergence",
+    "Reconcile Ly-alpha DM source last-digit and cross-survey covariance with independent primary authorities",
+    "WS01 normalization and parameter-identifiability falsification before a new scientific refit"
+  ]
+}
