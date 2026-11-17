@@ -11,6 +11,7 @@ on:
       - data/pipelines/structure_d/joint_real_likelihood.py
       - tests/test_desi_dr2_authority_v1.py
       - tests/test_joint_real_likelihood.py
+      - data/governance/RLL_WS02_INDEX_DECIMAL_ADVERSARIAL_RECEIPT_20261117_S3.json
   workflow_dispatch:
 
 permissions:
