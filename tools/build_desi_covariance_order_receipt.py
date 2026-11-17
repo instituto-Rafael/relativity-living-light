@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POINTS_PATH = ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv"
 COVARIANCE_PATH = ROOT / "data/real/desi_dr2_bao_covariance.csv"
 SUMMARY_PATH = ROOT / "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
+G3_PRIMARY_SOURCE = ROOT / "data/contracts/rll_g3_dataset_compatibility.v1.json"
 EXPECTED_ROWS = 13
 
 
@@ -36,6 +37,68 @@ def sha256_json(value: Any) -> str:
     payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
 
+
+
+def verify_primary_source_order(
+    points: list[dict[str, str]], contract_path: Path = G3_PRIMARY_SOURCE
+) -> dict[str, Any]:
+    """Fail closed on row permutation, DM/DH reversal or numeric sign drift.
+
+    Contract G3 is a separate, frozen source-table transcription. This validates
+    repository custody, not independent external covariance-order provenance.
+    """
+    with contract_path.open(encoding="utf-8") as handle:
+        contract = json.load(handle)
+    if contract.get("claim_allowed") is not False:
+        raise ValueError("G3 primary-source authority must remain claim_allowed=false")
+    entries = contract["sources"]["desi_dr2"]["table4_primary_rows"]
+    expected: list[tuple[str, float, str, float, float, str, float | None]] = []
+    for item in entries:
+        tracer = str(item["tracer"])
+        redshift = float(item["z_eff"])
+        if item.get("observable") == "DV_over_rd":
+            expected.append((tracer, redshift, "DV_over_rd", float(item["value"]), float(item["sigma"]), "", None))
+        else:
+            correlation = float(item["correlation"])
+            expected.append((tracer, redshift, "DM_over_rd", float(item["dm_over_rd"]), float(item["dm_sigma"]), "DH_over_rd", correlation))
+            expected.append((tracer, redshift, "DH_over_rd", float(item["dh_over_rd"]), float(item["dh_sigma"]), "DM_over_rd", correlation))
+    if len(expected) != EXPECTED_ROWS or len(points) != EXPECTED_ROWS:
+        raise ValueError("G3 primary-source vector and DESI rows must have exactly 13 entries")
+    for index, (row, record) in enumerate(zip(points, expected)):
+        tracer, redshift, observable, value, sigma, paired, correlation = record
+        if row["tracer"] != tracer or row["observable"] != observable:
+            raise ValueError(f"DESI primary source/order mismatch at index {index}: tracer/observable")
+        if row.get("paired_observable", "").strip() != paired:
+            raise ValueError(f"DESI primary source/order mismatch at index {index}: paired_observable")
+        for field, reference in (("z_eff", redshift), ("value", value), ("sigma", sigma)):
+            observed = float(row[field])
+            if not math.isfinite(observed) or not math.isclose(
+                observed, reference, rel_tol=0.0, abs_tol=1e-12
+            ):
+                raise ValueError(f"DESI primary source/order mismatch at index {index}: {field}")
+        raw_corr = row.get("correlation_coefficient", "").strip()
+        if correlation is None:
+            if raw_corr:
+                raise ValueError(f"DESI primary source/order mismatch at index {index}: isotropic correlation")
+        else:
+            observed_corr = float(raw_corr)
+            if not math.isfinite(observed_corr) or not math.isclose(
+                observed_corr, correlation, rel_tol=0.0, abs_tol=1e-12
+            ):
+                raise ValueError(f"DESI primary source/order mismatch at index {index}: correlation sign/value")
+    return {
+        "status": "G3_TABLE4_ORDER_VALUE_SIGMA_CORRELATION_CHECKED",
+        "contract_path": str(contract_path),
+        "contract_sha256": sha256_file(contract_path),
+        "checked_rows": EXPECTED_ROWS,
+    }
+
+
+def _repo_path(path: Path, root: Path) -> str:
+    try:
+        return str(path.relative_to(root))
+    except ValueError:
+        return str(path)
 
 def read_points(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
@@ -74,11 +137,14 @@ def read_summary(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def build_receipt(root: Path = ROOT) -> dict[str, Any]:
-    points_path = root / POINTS_PATH.relative_to(ROOT)
-    covariance_path = root / COVARIANCE_PATH.relative_to(ROOT)
+def build_receipt(
+    root: Path = ROOT, *, points_override: Path | None = None, covariance_override: Path | None = None
+) -> dict[str, Any]:
+    points_path = Path(points_override) if points_override is not None else root / POINTS_PATH.relative_to(ROOT)
+    covariance_path = Path(covariance_override) if covariance_override is not None else root / COVARIANCE_PATH.relative_to(ROOT)
     summary_path = root / SUMMARY_PATH.relative_to(ROOT)
     points = read_points(points_path)
+    source_binding = verify_primary_source_order(points)
     matrix = read_covariance(covariance_path)
     summary = read_summary(summary_path)
 
@@ -105,6 +171,12 @@ def build_receipt(root: Path = ROOT) -> dict[str, Any]:
         if len(indices) != 2:
             raise ValueError(f"covariance block {block_name} must map to exactly two primary-vector rows")
         i, j = sorted(indices)
+        if (points[i]["tracer"] != block["tracer"] or points[j]["tracer"] != block["tracer"]
+                or not math.isclose(float(points[i]["z_eff"]), float(block["z_eff"]), rel_tol=0.0, abs_tol=1e-12)
+                or not math.isclose(float(points[j]["z_eff"]), float(block["z_eff"]), rel_tol=0.0, abs_tol=1e-12)
+                or points[i]["observable"] != block["observable_a"]
+                or points[j]["observable"] != block["observable_b"]):
+            raise ValueError(f"covariance block {block_name} source/observable orientation mismatch")
         expected_nonzero_pairs.add((i, j))
         observed = matrix[i][j]
         correlation = float(block["correlation_coefficient"])
@@ -148,9 +220,10 @@ def build_receipt(root: Path = ROOT) -> dict[str, Any]:
         "state": "VERIFIED_REPO_ORDER_BINDING",
         "claim_allowed": False,
         "scientific_confirmation": False,
-        "points_path": str(points_path.relative_to(root)),
+        "primary_source_binding": source_binding,
+        "points_path": _repo_path(points_path, root),
         "points_sha256": sha256_file(points_path),
-        "covariance_path": str(covariance_path.relative_to(root)),
+        "covariance_path": _repo_path(covariance_path, root),
         "covariance_sha256": sha256_file(covariance_path),
         "summary_path": str(summary_path.relative_to(root)),
         "summary_sha256": sha256_file(summary_path),
