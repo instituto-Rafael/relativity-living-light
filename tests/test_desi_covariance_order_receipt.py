@@ -108,3 +108,27 @@ def test_native_covariance_lyman_alignment_has_correct_sigma_axis() -> None:
     sigma_dh = native_matrix[axis[12]][axis[12]] ** 0.5
     assert abs(sigma_dm - 0.531) / 0.531 < 0.01
     assert abs(sigma_dh - 0.101) / 0.101 < 0.01
+
+
+def test_rx_fallback_identity_matches_canonical_desi_vector() -> None:
+    import json
+    from tools.build_desi_covariance_order_receipt import (
+        read_points, verify_observation_vector_matches_primary
+    )
+    file = ROOT / "validacao_real/data/desi_dr2_bao_rx.json"
+    observed = json.loads(file.read_text(encoding="utf-8"))["points"]
+    canonical = read_points(ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv")
+    verify_observation_vector_matches_primary(observed, canonical)
+
+
+def test_rx_fallback_rejects_inverted_lyman_observables() -> None:
+    import json
+    from tools.build_desi_covariance_order_receipt import (
+        read_points, verify_observation_vector_matches_primary
+    )
+    file = ROOT / "validacao_real/data/desi_dr2_bao_rx.json"
+    observed = json.loads(file.read_text(encoding="utf-8"))["points"]
+    canonical = read_points(ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv")
+    observed[-1], observed[-2] = observed[-2], observed[-1]
+    with pytest.raises(ValueError, match="identity mismatch"):
+        verify_observation_vector_matches_primary(observed, canonical)
