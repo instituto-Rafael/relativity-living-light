@@ -136,6 +136,35 @@ def read_covariance(path: Path) -> list[list[float]]:
 
 
 
+
+def verify_observation_vector_matches_primary(
+    observed_rows: list[dict[str, Any]], primary_rows: list[dict[str, str]]
+) -> None:
+    """Check external JSON/derived observations against canonical primary row axes."""
+    if len(observed_rows) != len(primary_rows) or len(primary_rows) != EXPECTED_ROWS:
+        raise ValueError("DESI observation vector cardinality/order mismatch")
+    for index, (actual, reference) in enumerate(zip(observed_rows, primary_rows)):
+        for field in ("tracer", "observable", "paired_observable", "covariance_block"):
+            if field == "covariance_block" and field not in actual:
+                continue  # JSON fallback predates the block identifier; identity still pinned.
+            if str(actual.get(field, "") or "") != str(reference.get(field, "") or ""):
+                raise ValueError(f"DESI derived observation identity mismatch at index {index}: {field}")
+        for field in ("z_eff", "value", "sigma", "correlation_coefficient"):
+            source_value = reference.get(field, "")
+            input_value = actual.get(field)
+            if source_value is None or str(source_value).strip() == "":
+                if input_value is not None and str(input_value).strip() != "":
+                    raise ValueError(f"DESI derived observation spurious value at {index}: {field}")
+                continue
+            if input_value is None:
+                raise ValueError(f"DESI derived observation missing value at {index}: {field}")
+            number = float(input_value)
+            if not math.isfinite(number) or not math.isclose(
+                number, float(source_value), rel_tol=0.0, abs_tol=1e-10
+            ):
+                raise ValueError(f"DESI derived observation value/sign mismatch at {index}: {field}")
+
+
 def bind_native_covariance_order(
     points: list[dict[str, str]], matrix: list[list[float]], root: Path = ROOT
 ) -> dict[str, Any]:
