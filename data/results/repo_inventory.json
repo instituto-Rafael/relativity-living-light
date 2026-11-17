@@ -14877,6 +14877,15 @@
     "flags": "token_vazio_declared,cosmology_validation_marker"
   },
   {
+    "path": "docs/governance/RLL_BRANCH_LINEAGE_CONSOLIDATION_20261116_V1.md",
+    "bytes": 3227,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 41,
+    "sha256": "27b6416e32792577fcdb75159d3211b02cea0e76da88167ae2c8168f334fb997",
+    "flags": "token_vazio_declared,cosmology_validation_marker"
+  },
+  {
     "path": "docs/governance/RLL_CANONICAL_OMEGA_ALL_EVIDENCE_ONE_CLICK_20261009.md",
     "bytes": 6283,
     "ext": ".md",
@@ -29404,11 +29413,11 @@
   },
   {
     "path": "tests/test_rll_credential_authority.py",
-    "bytes": 10264,
+    "bytes": 12788,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 324,
-    "sha256": "fb1faa8b71257dd3b967c8980c637adc19698e4e552914e32e36964320b6c283",
+    "linhas": 379,
+    "sha256": "bdadd7104c21328a0d5a5e897feb441fd485efef304f4bc2ce16078e8648ca8a",
     "flags": "mentions_mock_or_placeholder,cosmology_validation_marker"
   },
   {
@@ -33202,11 +33211,11 @@
   },
   {
     "path": "tools/validate_rll_credential_authority.py",
-    "bytes": 21133,
+    "bytes": 21587,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 496,
-    "sha256": "cef8077577f07373cfb79e99a88daff4b3c974688bf8806e1306cd4735fbf041",
+    "linhas": 507,
+    "sha256": "2e3a43964cf8f385fd90431871c9163f8ac88d6e5cbb209558e63291799ddcf1",
     "flags": "token_vazio_declared"
   },
   {
