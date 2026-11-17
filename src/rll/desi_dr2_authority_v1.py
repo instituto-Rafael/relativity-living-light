@@ -18,6 +18,12 @@ from pathlib import Path
 import numpy as np
 
 SOURCE_SHA256 = "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658"
+SOURCE_POINTS_SHA256 = "5ab328705937c69cedb662bbb35888df20c6cabf3810ec3c5e7376d69ccb0a69"
+# Max permitted mismatch against high precision Cobaya mean for the three-decimal
+# published observation table; measured max is 0.000973962 for Ly-alpha DM.
+# This is a source-alignment guard, never a scientifically significant tolerance.
+SOURCE_MEAN_ABS_TOLERANCE = 0.001
+SOURCE_REDSHIFT_ABS_TOLERANCE = 1.0e-12
 SOURCE_MEAN_BLOB = "8aff444fdb42c0946342aa0011ab287eda097c4c"
 SOURCE_COV_BLOB = "fd8e5697ab61379b07b52efb781ea6713417a4d9"
 # (tracer, observable, redshift, upstream measurement), in ORIGINAL upstream order.
@@ -36,6 +42,18 @@ UPSTREAM = (
     ("Lya", "DH_over_rd", 2.330, 8.631545674846294),
     ("Lya", "DM_over_rd", 2.330, 38.988973961958784),
 )
+
+
+def verify_desi_points_source(points_source_path):
+    """Require the exact reviewed 13-point observational table (SHA-256).
+
+    Values in a DataFrame alone cannot prove which revision of a source was read.
+    Synthetic mutation tests should target align_verified_desi_covariance directly.
+    """
+    observed = hashlib.sha256(Path(points_source_path).read_bytes()).hexdigest()
+    if observed != SOURCE_POINTS_SHA256:
+        raise ValueError("BLOCKED_DESI_PRIMARY_POINTS_SOURCE_SHA256")
+    return {"path": str(points_source_path), "sha256": observed, "state": "SOURCE_BOUND_SCOPED"}
 
 
 def align_verified_desi_covariance(points, raw_cov, source_path):
@@ -60,13 +78,24 @@ def align_verified_desi_covariance(points, raw_cov, source_path):
         raise ValueError("BLOCKED_DESI_SOURCE_IDENTITIES_NOT_UNIQUE")
     perm = []
     sigma = []
+    max_measured_mean_delta = 0.0
     for _, row in points.iterrows():
-        key = (str(row["tracer"]), str(row["observable"]), round(float(row["z_eff"]), 3))
+        observed_z = float(row["z_eff"])
+        if not np.isfinite(observed_z):
+            raise ValueError("BLOCKED_DESI_OBSERVABLE_IDENTITY_NONFINITE_REDSHIFT")
+        # Identity keys are useful for lookup, but round(z,3) alone aliases
+        # physically distinct redshifts, e.g. 0.295 and 0.2954.
+        key = (str(row["tracer"]), str(row["observable"]), round(observed_z, 3))
         if key not in source_index or source_index[key] in perm:
             raise ValueError("BLOCKED_DESI_OBSERVABLE_IDENTITY_OR_DUPLICATE")
         source_i = source_index[key]
-        if not np.isfinite(float(row["value"])) or abs(float(row["value"]) - UPSTREAM[source_i][3]) > 0.01:
+        if abs(observed_z - UPSTREAM[source_i][2]) > SOURCE_REDSHIFT_ABS_TOLERANCE:
+            raise ValueError("BLOCKED_DESI_OBSERVABLE_IDENTITY_REDSHIFT_ALIAS")
+        observed_value = float(row["value"])
+        mean_delta = abs(observed_value - UPSTREAM[source_i][3])
+        if not np.isfinite(observed_value) or mean_delta > SOURCE_MEAN_ABS_TOLERANCE:
             raise ValueError("BLOCKED_DESI_MEAN_SOURCE_VALUE_MISMATCH")
+        max_measured_mean_delta = max(max_measured_mean_delta, mean_delta)
         sig = float(row["sigma"])
         if not np.isfinite(sig) or sig <= 0:
             raise ValueError("BLOCKED_DESI_SIGMA_NONPOSITIVE")
@@ -88,6 +117,10 @@ def align_verified_desi_covariance(points, raw_cov, source_path):
         "source_order_to_observation_order": perm,
         "lyalpha_reordered": perm[-2:] == [12, 11],
         "max_variance_to_rounded_sigma_relative_delta": float(np.max(np.abs(variance_ratios - 1.0))),
+        "max_mean_to_source_absolute_delta": float(max_measured_mean_delta),
+        "mean_alignment_absolute_tolerance": SOURCE_MEAN_ABS_TOLERANCE,
+        "redshift_alignment_absolute_tolerance": SOURCE_REDSHIFT_ABS_TOLERANCE,
+        "points_source_sha256_authority": SOURCE_POINTS_SHA256,
         "claim_allowed": False,
     }
 
