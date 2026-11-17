@@ -14976,6 +14976,15 @@
     "flags": "cosmology_validation_marker"
   },
   {
+    "path": "docs/governance/RLL_INVENTORY_HOTFIX_RECEIPT_20261116_V1.md",
+    "bytes": 1133,
+    "ext": ".md",
+    "tipo": "documentation_md",
+    "linhas": 13,
+    "sha256": "506ba7c2635c7d27f157f374b5ad2bf9429f91c1a4e0f0c7cb55ed0556660d78",
+    "flags": "cosmology_validation_marker"
+  },
+  {
     "path": "docs/governance/RLL_LAB_GAPFILL_RECONCILIATION_20260922.md",
     "bytes": 2038,
     "ext": ".md",
