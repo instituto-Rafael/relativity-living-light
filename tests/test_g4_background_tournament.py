@@ -1,4 +1,7 @@
 import importlib.util
+import csv
+
+import pytest
 import json
 import sys
 from pathlib import Path
@@ -90,3 +93,20 @@ def test_g4_contract_source_equations_are_pinned():
     assert ide["primary_source"] == "arXiv:1506.06349"
     assert ide["interaction"].startswith("Q=3*beta*H*rho_Lambda")
     assert ide["null_limit"] == "beta=0 -> LCDM"
+
+def test_g4_loader_rejects_swapped_desi_rows_before_fit(tmp_path: Path):
+    source = ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+    with source.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = reader.fieldnames
+        assert fieldnames is not None
+        rows = list(reader)
+    rows[1], rows[2] = rows[2], rows[1]
+    swapped = tmp_path / "desi_swapped.csv"
+    with swapped.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    mod = load_module()
+    with pytest.raises(ValueError, match="source/order mismatch"):
+        mod.load_desi(points_path=swapped)
