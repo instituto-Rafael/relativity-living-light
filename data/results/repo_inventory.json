@@ -1306,11 +1306,11 @@
   },
   {
     "path": ".github/workflows/rll-ws02-falsification-isolated.yml",
-    "bytes": 6064,
+    "bytes": 6604,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 129,
-    "sha256": "eb7fd690ae11af415d48ec79f9247d9d310a92debc0b0ca14e388b63fc882d52",
+    "linhas": 136,
+    "sha256": "ed4036aa713c5f53cf77b8d78edbd8d7e9c32c050907957e2c268a622725597e",
     "flags": "token_vazio_declared"
   },
   {
@@ -7749,6 +7749,15 @@
     "flags": "token_vazio_declared"
   },
   {
+    "path": "data/governance/RLL_OBSERVATIONAL_ARITHMETIC_RECEIPT_20261117_S4.json",
+    "bytes": 6271,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 152,
+    "sha256": "80fd91b32b6ed24c0954e2b2976a7b335e7ca46a7073ce34c161bada5270d6eb",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "data/governance/RLL_OBSERVATIONAL_TOPOLOGY_20260808_V1.json",
     "bytes": 34608,
     "ext": ".json",
@@ -8965,11 +8974,11 @@
   },
   {
     "path": "data/pipelines/structure_d/joint_real_likelihood.py",
-    "bytes": 33714,
+    "bytes": 34873,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 764,
-    "sha256": "6996dda781f4bc7f415b354ca63decfd85d8286d2ac301d598927864868f329d",
+    "linhas": 791,
+    "sha256": "6d54dfa901109925e461d8c2b0d3eed70cd293329eb141eca812edbc1b51fc5b",
     "flags": "mentions_synthetic"
   },
   {
@@ -30004,6 +30013,15 @@
     "linhas": 70,
     "sha256": "4b00b304ca6b5a3f2f54560151448f3cfa99d91843d37cec153775ca84eaa62e",
     "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_rll_observational_arithmetic_v1.py",
+    "bytes": 5225,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 135,
+    "sha256": "579c2dab8c3a8c96c0ac2b2de269ca44a54562c47841e148c235aad39abcf5bc",
+    "flags": "mentions_synthetic,cosmology_validation_marker"
   },
   {
     "path": "tests/test_rll_observational_topology.py",
