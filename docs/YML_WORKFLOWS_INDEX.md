@@ -128,7 +128,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-studio-contract.yml` | `github_workflow_yml` | 5914 | 145 | `8e96be68a04d9636734615d78d409cc367c4f6eb4a492045103bdadd78057b81` |
 | `.github/workflows/rll-v1-tag-provenance.yml` | `github_workflow_yml` | 4857 | 132 | `e45208aa1139c966b6d35cfc42dfe7451e04842361079b90560125738d5fc34d` |
 | `.github/workflows/rll-validacao-cientifica-completa.yml` | `github_workflow_yml` | 43442 | 955 | `04312981e728ed77e548cd49038ee3fc8622788d05589cf711264214d3de796d` |
-| `.github/workflows/rll-ws02-falsification-isolated.yml` | `github_workflow_yml` | 5980 | 128 | `5ec0d4b9ebed74b3b9848ab51853cb22fcb60088f060850cbbd08e69d939233a` |
+| `.github/workflows/rll-ws02-falsification-isolated.yml` | `github_workflow_yml` | 6064 | 129 | `eb7fd690ae11af415d48ec79f9247d9d310a92debc0b0ca14e388b63fc882d52` |
 | `.github/workflows/rx-development.yml` | `github_workflow_yml` | 1460 | 53 | `1f52fe53627861e41adfba50bd83c1977bf233621842057532547af7715b19a4` |
 | `.github/workflows/scan-poc-coherence.yml` | `github_workflow_yml` | 998 | 30 | `0321f353ef65b7ca8438dfde0c6aae0775878c7d4fc3108393d0d1fd3b19f666` |
 | `.github/workflows/scientific-cycle-closure.yml` | `github_workflow_yml` | 1776 | 49 | `64fa846ada5a18f55d12bfc8d7d6c82b5d9be695f70884f3c0153180db17424f` |

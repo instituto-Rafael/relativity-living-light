@@ -1306,11 +1306,11 @@
   },
   {
     "path": ".github/workflows/rll-ws02-falsification-isolated.yml",
-    "bytes": 5980,
+    "bytes": 6064,
     "ext": ".yml",
     "tipo": "github_workflow_yml",
-    "linhas": 128,
-    "sha256": "5ec0d4b9ebed74b3b9848ab51853cb22fcb60088f060850cbbd08e69d939233a",
+    "linhas": 129,
+    "sha256": "eb7fd690ae11af415d48ec79f9247d9d310a92debc0b0ca14e388b63fc882d52",
     "flags": "token_vazio_declared"
   },
   {
@@ -8127,6 +8127,15 @@
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
+    "path": "data/governance/RLL_WS02_INDEX_DECIMAL_ADVERSARIAL_RECEIPT_20261117_S3.json",
+    "bytes": 4637,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 112,
+    "sha256": "63602c134baabf4c49190d8e7e3ae17bf0bc64b5882ff876c4abf701633bbc3f",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": "data/governance/RLL_WS18_HIDDEN_TRUTH_STATUS_DELTA_V1.json",
     "bytes": 856,
     "ext": ".json",
@@ -8956,11 +8965,11 @@
   },
   {
     "path": "data/pipelines/structure_d/joint_real_likelihood.py",
-    "bytes": 32608,
+    "bytes": 33714,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 738,
-    "sha256": "e7f799cb63be09dba25524092cda448f70646a5fd43949c7d0b29b6afa853152",
+    "linhas": 764,
+    "sha256": "6996dda781f4bc7f415b354ca63decfd85d8286d2ac301d598927864868f329d",
     "flags": "mentions_synthetic"
   },
   {
@@ -27361,12 +27370,12 @@
   },
   {
     "path": "src/rll/desi_dr2_authority_v1.py",
-    "bytes": 5544,
+    "bytes": 7489,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 115,
-    "sha256": "25a2f3b81c01bdbfcc4e50553c233ada4cb899b442f6d66b89a854dcbddce067",
-    "flags": ""
+    "linhas": 148,
+    "sha256": "b3840a1d930ac3ca9ff64ab6286da0098394ce05c37f1df0dee2dac4fdfd9aef",
+    "flags": "mentions_synthetic"
   },
   {
     "path": "src/rll/dha_fisher.py",
@@ -28135,11 +28144,11 @@
   },
   {
     "path": "tests/test_desi_dr2_authority_v1.py",
-    "bytes": 6276,
+    "bytes": 10448,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 144,
-    "sha256": "aa189528310cc80c21d580cf49bcadc4ff25d350a38365902993ccbda3c5f3c9",
+    "linhas": 228,
+    "sha256": "d24d9bb2915f68054624aaf1ac514622482a6083cfca544d9ebfa7e309109107",
     "flags": "cosmology_validation_marker"
   },
   {

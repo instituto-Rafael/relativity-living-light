@@ -5,15 +5,15 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3825 |
-| `cataloged_files` | 3814 |
+| `tracked_files_total` | 3826 |
+| `cataloged_files` | 3815 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 57313391 |
-| `total_text_lines` | 565355 |
+| `total_bytes` | 57325335 |
+| `total_text_lines` | 565611 |
 | `markdown_files` | 1234 |
 | `yml_yaml_files` | 255 |
 | `github_workflow_yml_files` | 123 |
-| `data_or_result_files` | 1023 |
+| `data_or_result_files` | 1024 |
 
 ## Contrato operacional
 
