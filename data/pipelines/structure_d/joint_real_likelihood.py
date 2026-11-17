@@ -247,7 +247,10 @@ def bao_prediction(row: pd.Series, e2_fn: Callable, params: tuple[float, ...], o
 
 
 def build_desi_covariance(points: pd.DataFrame, summary: pd.DataFrame) -> np.ndarray:
-    cov = np.diag(points["sigma"].astype(float).to_numpy() ** 2)
+    sigma = points["sigma"].to_numpy(dtype=float)
+    if sigma.ndim != 1 or not np.isfinite(sigma).all() or np.any(sigma <= 0.0):
+        raise ValueError("BLOCKED_DESI_BLOCK_SIGMA_INVALID")
+    cov = np.diag(sigma ** 2)
     for _, block in summary.iterrows():
         block_name = str(block["covariance_block"])
         # The matrix is indexed by row POSITION, not DataFrame index LABEL.
