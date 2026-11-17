@@ -1,0 +1,141 @@
+{
+  "schema": "rll.ws02.observational_order_falsification_receipt.v1",
+  "mu_id": "MU-RLL-WS02-DESI-ORDER-NOBS-20261117-S1",
+  "observed_utc_date": "2026-11-17",
+  "scope": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "branch": "work/rll-ws02-desi-order-nobs-falsifier-20261117-v1",
+    "parent": "bae41429fc78b875cc194ae0b81e448d45a21bd0",
+    "head_before_receipt": "a90f73e27655b729b4866cdeff790d10446a20d7",
+    "write_target": "isolated_branch_only",
+    "main_modified": false,
+    "lab_modified": false,
+    "integration_modified": false,
+    "release_modified": false,
+    "claim_allowed": false,
+    "publication_effect": "NONE"
+  },
+  "authority": {
+    "source_mean": {
+      "repository": "CobayaSampler/bao_data",
+      "path": "desi_bao_dr2/desi_gaussian_bao_ALL_GCcomb_mean.txt",
+      "git_blob": "8aff444fdb42c0946342aa0011ab287eda097c4c"
+    },
+    "source_covariance": {
+      "repository": "CobayaSampler/bao_data",
+      "path": "desi_bao_dr2/desi_gaussian_bao_ALL_GCcomb_cov.txt",
+      "git_blob": "fd8e5697ab61379b07b52efb781ea6713417a4d9"
+    },
+    "desi_publication": "https://arxiv.org/abs/2503.14738",
+    "source_rll_points": {
+      "path": "data/real/cosmology/desi_dr2_bao_primary_points.csv",
+      "git_blob": "f6d05ead6fef7fea663eff8b31bc2c337dc30435"
+    },
+    "source_rll_covariance": {
+      "path": "data/real/desi_dr2_bao_covariance.csv",
+      "git_blob": "e01d0235a2f0e61d81af0c36a7338953f845f5c3",
+      "sha256": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658"
+    },
+    "source_historical_fit": {
+      "path": "results/structure_d/joint_real_likelihood.json",
+      "git_blob": "fe6707efbb9d5b4f0f0ab79d24b80b852f80d492",
+      "N": 64,
+      "claim_allowed": false
+    }
+  },
+  "changes": [
+    {
+      "kind": "IMPLEMENTED_UNTESTED_EXACT_HEAD",
+      "path": "src/rll/desi_dr2_authority_v1.py",
+      "action": "source_bound_mean_and_covariance_permutation",
+      "original_source_untouched": true
+    },
+    {
+      "kind": "IMPLEMENTED_UNTESTED_EXACT_HEAD",
+      "path": "data/pipelines/structure_d/joint_real_likelihood.py",
+      "action": "apply_verified_permutation_then_reassess_covariance; count_current_3x3_CMB_dimension_as_3",
+      "original_science_artifact_untouched": true
+    },
+    {
+      "kind": "IMPLEMENTED_UNTESTED_EXACT_HEAD",
+      "path": "tests/test_desi_dr2_authority_v1.py",
+      "action": "real_source_and_adversarial_tests"
+    }
+  ],
+  "observed_statistical_vector": {
+    "hz_independent": 28,
+    "desi_bao": 13,
+    "growth_fs8": 16,
+    "cmb_compressed_components": 3,
+    "total": 60,
+    "old_code_total": 59,
+    "historical_artifact_total": 64,
+    "interpretation": "N is source-bound vector dimension; effective BIC sample size has separate methodological gate"
+  },
+  "covariance_alignment": {
+    "cobaya_order_lya": [
+      "DH_over_rd",
+      "DM_over_rd"
+    ],
+    "rll_points_order_lya": [
+      "DM_over_rd",
+      "DH_over_rd"
+    ],
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      11
+    ],
+    "source_matrix_numeric_equality_13x13": "OBSERVED_PUBLIC_GITHUB_SOURCE_SCOPED",
+    "source_hash_guard": true,
+    "rel_sigma_difference_max_after_align": 0.13284632963988918
+  },
+  "test_evidence": {
+    "local_scope": "2_2_PYTHON_TESTS_ON_STANDALONE_GUARD_WITH_SYNTHETIC_NEGATIVE_FIXTURES",
+    "local_test_pass_count": 2,
+    "repo_real_source_pytest": "NOT_RUN_AT_THIS_RECEIPT",
+    "exact_head_ci": "TOKEN_VAZIO_CI",
+    "class_rll": "NOT_RUN",
+    "camb_rll": "NOT_RUN",
+    "joint_scientific_refit": "NOT_RUN",
+    "independent_replication": "NOT_RUN"
+  },
+  "scientific_blockers": {
+    "WS01": "BLOCKED_SCIENTIFIC_DECISION_BACKGROUND_E2_ZERO_AND_RADIATION_DENSITY_CONVENTION",
+    "WS02": "IMPLEMENTED_UNTESTED_SOURCE_BOUND_CORRECTION",
+    "WS03": "BLOCKED_PERTURBATION_CLOSURE_AND_RLL_NULL_LIMIT_IDENTIFIABILITY",
+    "WS04": "WAIT_DEPENDENCY_WS03_CLASS_RLL",
+    "WS05": "WAIT_DEPENDENCY_WS03_CAMB_RLL",
+    "WS06": "WAIT_DEPENDENCY_CLASS_CAMB_PARITY",
+    "WS13": "WAIT_DEPENDENCY_POSTERIOR_BAYESIAN_EVIDENCE",
+    "WS14": "WAIT_DEPENDENCY_MULTISEED_PRIOR_ABLATION",
+    "WS15": "WAIT_DEPENDENCY_INDEPENDENT_REPLICATION",
+    "WS20": "BLOCKED_PUBLICATION_AND_SUPERIORITY_CLAIMS",
+    "interpretation_label": "CONTRADICTION_lcdm_preferred_VS_CPL_CRITERIA_IN_OLD_64_ARTIFACT"
+  },
+  "acceptance_gates": [
+    "exact_head_pytest_tests/test_desi_dr2_authority_v1.py_and_tests/test_joint_real_likelihood.py",
+    "source_sha256_and_upstream_git_blob_readback",
+    "full_generated_inventory_alignment_before_merge",
+    "full_covariance_positive_definite_after_permutation_and_order_identity",
+    "scientific_WS01_background_closure_authorized_and_frozen",
+    "same_vector_60_components_all_four_models_independent_reproductions",
+    "CLASS_CAMB_two_independent_implementations_after_WS03",
+    "posterior_multiseed_boundary_sensitivity_and_independent_replication",
+    "only_after_all_acceptance_gates_claim_review"
+  ],
+  "rollback": "No force push, no deletion, preserve old commits/results; corrective successor append-only. Revert isolated changes by following parent SHA, not rewriting protected refs.",
+  "F_ok": "Source matrix and mean ordering compared with independently hosted Cobaya files; 3 code/test paths written and readback verified in isolated branch.",
+  "F_gap": "CI on new exact HEAD, full 4-model refit, physics authority WS01, CLASS/CAMB and independent scientific replication remain typed.",
+  "F_next": "Run focused real-source pytest on exact HEAD; regenerate docs inventory; decide WS01 background physics and then execute same-likelihood refits before solver work."
+}
