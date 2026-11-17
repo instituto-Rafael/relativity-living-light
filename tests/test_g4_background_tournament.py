@@ -110,3 +110,20 @@ def test_g4_loader_rejects_swapped_desi_rows_before_fit(tmp_path: Path):
     mod = load_module()
     with pytest.raises(ValueError, match="source/order mismatch"):
         mod.load_desi(points_path=swapped)
+
+
+def test_g4_lyman_covariance_aligned_to_primary_dm_dh_order():
+    mod = load_module()
+    block = mod.load_desi()
+    assert block.observable[-2:] == ("DM_over_rd", "DH_over_rd")
+    assert abs(np.sqrt(block.covariance[-2, -2]) - 0.531) / 0.531 < 0.01
+    assert abs(np.sqrt(block.covariance[-1, -1]) - 0.101) / 0.101 < 0.01
+    # Coordinate relabeling of C and r together preserves the quadratic form.
+    raw = np.loadtxt(ROOT / "data/real/desi_dr2_bao_covariance.csv", delimiter=",", skiprows=1, usecols=range(1, 14))
+    residual = np.linspace(-0.25, 0.25, 13)
+    perm = list(range(11)) + [12, 11]
+    native_residual = np.empty(13)
+    native_residual[perm] = residual
+    left = float(residual @ np.linalg.solve(block.covariance, residual))
+    right = float(native_residual @ np.linalg.solve(raw, native_residual))
+    assert np.isclose(left, right, rtol=1e-11, atol=1e-11)
