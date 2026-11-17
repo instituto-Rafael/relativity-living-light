@@ -328,6 +328,22 @@ def _validate_model_parameter_registry(registry: dict) -> None:
 def _load_desi_covariance(points: pd.DataFrame, summary: pd.DataFrame) -> tuple[np.ndarray, dict[str, object]]:
     if DESI_FULL_COV_PATH.exists():
         full_cov = pd.read_csv(DESI_FULL_COV_PATH, index_col=0).to_numpy(dtype=float)
+        # Native DESI/Cobaya covariance ends Lya DH,DM; primary points end DM,DH.
+        # Do not accept an unlabelled covariance axis based on shape/Cholesky.
+        guard_path = BASE_DIR / "tools" / "build_desi_covariance_order_receipt.py"
+        spec = importlib.util.spec_from_file_location("rll_joint_desi_order_guard", guard_path)
+        if spec is None or spec.loader is None:
+            raise ValueError("DESI primary/covariance binding guard unavailable")
+        order_guard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(order_guard)
+        order_receipt = order_guard.build_receipt(
+            BASE_DIR, points_override=DESI_POINTS_PATH, covariance_override=DESI_FULL_COV_PATH
+        )
+        if (order_guard.sha256_file(DESI_FULL_COV_PATH) != order_receipt["covariance_sha256"]
+                or order_guard.sha256_file(DESI_POINTS_PATH) != order_receipt["points_sha256"]):
+            raise ValueError("DESI points/covariance changed during order preflight")
+        permutation = order_receipt["covariance_index_for_primary_row"]
+        full_cov = full_cov[np.ix_(permutation, permutation)]
         readiness = covariance_readiness(full_cov, mode="official_full")
         if readiness.ready and full_cov.shape == (len(points), len(points)):
             return full_cov, {
@@ -340,7 +356,9 @@ def _load_desi_covariance(points: pd.DataFrame, summary: pd.DataFrame) -> tuple[
                 "sha256": _sha256_file(DESI_FULL_COV_PATH),
                 "metric": "chi2_with_covariance",
                 "baseline": [MODEL_LCDM, MODEL_WCDM, MODEL_CPL],
-                "uncertainty_or_covariance_status": "official_full_covariance_matrix",
+                "uncertainty_or_covariance_status": "manifest_bound_native_cobaya_permuted_to_primary_order",
+                "covariance_index_for_primary_row": permutation,
+                "native_covariance_manifest_sha256": order_receipt["native_covariance_binding"]["native_manifest_sha256"],
                 "command": "python -m data.pipelines.structure_d.joint_real_likelihood",
                 "claim_boundary": (
                     "Covariance readiness is a technical evidence gate for using the official full "
