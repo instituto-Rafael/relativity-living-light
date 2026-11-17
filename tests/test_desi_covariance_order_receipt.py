@@ -18,7 +18,9 @@ def test_current_desi_repo_order_binding_is_deterministic() -> None:
     assert len(receipt["matrix_index_to_vector_row"]) == 13
     assert len(receipt["pair_checks"]) == 6
     assert receipt["unexpected_nonzero_pairs"] == []
-    assert receipt["consumer_binding"]["status"] == "VERIFIED_REPO_WIRING"
+    assert receipt["consumer_binding"]["status"] == "VERIFIED_G4_ALIGNMENT_ONLY"
+    assert receipt["covariance_index_for_primary_row"] == list(range(11)) + [12, 11]
+    assert receipt["native_covariance_binding"]["status"] == "LOCAL_COBAYA_CUSTODY_AND_PERMUTATION_CHECKED"
     assert receipt["provenance_boundary"]["repo_order_binding"] == "VERIFIED"
     assert "BOUNDED" in receipt["provenance_boundary"]["external_primary_covariance_order_metadata"]
 
@@ -94,3 +96,15 @@ def test_guard_rejects_covariance_block_label_swap(tmp_path: Path) -> None:
     target = _mutate_points(tmp_path, swap_labels)
     with pytest.raises(ValueError, match="source/observable orientation mismatch"):
         build_receipt(ROOT, points_override=target)
+
+
+def test_native_covariance_lyman_alignment_has_correct_sigma_axis() -> None:
+    receipt = build_receipt(ROOT)
+    native_matrix = read_covariance(ROOT / "data/real/desi_dr2_bao_covariance.csv")
+    axis = receipt["covariance_index_for_primary_row"]
+    # Canonical primary DESI order is Lya DM, DH; Cobaya native is DH, DM.
+    assert axis[-2:] == [12, 11]
+    sigma_dm = native_matrix[axis[11]][axis[11]] ** 0.5
+    sigma_dh = native_matrix[axis[12]][axis[12]] ** 0.5
+    assert abs(sigma_dm - 0.531) / 0.531 < 0.01
+    assert abs(sigma_dh - 0.101) / 0.101 < 0.01
