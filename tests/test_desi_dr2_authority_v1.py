@@ -110,3 +110,35 @@ def test_rll_os0_zero_makes_transition_unidentifiable():
     x = joint.e2_rll(z, *p, 0.5, 0.2)
     y = joint.e2_rll(z, *p, 8.0, 1.5)
     assert np.array_equal(x, y)
+
+
+@pytest.mark.parametrize("n", [59, 60, 64, 65])
+def test_historical_aicc_count_sensitivity_fixed_chi2_only(n):
+    """Do not confuse an N arithmetic perturbation with a new likelihood fit."""
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    with joint.RESULTS.joinpath("joint_real_likelihood.json").open(encoding="utf-8") as f:
+        artifact = json.load(f)
+    rows = artifact["rows"]
+    def aicc(row):
+        k, chi2 = row["k"], row["chi2"]
+        return chi2 + 2 * k + 2 * k * (k + 1) / (n - k - 1)
+    best = min(rows, key=aicc)
+    assert best["model"] == joint.MODEL_CPL
+    rll = next(row for row in rows if row["model"] == joint.MODEL_RLL)
+    assert aicc(rll) - aicc(best) > 33.0
+    assert artifact["claim_allowed"] is False
+
+
+def test_interpretation_label_is_pairwise_not_global_winner():
+    """The historic label is RLL-vs-LCDM; the global winner must be separate."""
+    from data.pipelines.structure_d import joint_real_likelihood as joint
+
+    with joint.RESULTS.joinpath("joint_real_likelihood.json").open(encoding="utf-8") as f:
+        artifact = json.load(f)
+    rows = artifact["rows"]
+    assert artifact["interpretation_label"] == "lcdm_preferred"
+    assert min(rows, key=lambda row: row["AICc"])["model"] == joint.MODEL_CPL
+    assert min(rows, key=lambda row: row["BIC"])["model"] == joint.MODEL_CPL
+    assert artifact["model_deltas_vs_lcdm"][joint.MODEL_RLL]["delta_aicc_rll_minus_lcdm"] > 0.0
+    assert artifact["claim_allowed"] is False
