@@ -42,3 +42,55 @@ def test_covariance_reader_rejects_row_index_drift(tmp_path: Path) -> None:
         csv.writer(handle).writerows(rows)
     with pytest.raises(ValueError, match="explicit index"):
         read_covariance(target)
+
+
+def _mutate_points(tmp_path: Path, mutate) -> Path:
+    source = ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+    with source.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = reader.fieldnames
+        assert fieldnames is not None
+        rows = list(reader)
+    mutate(rows)
+    target = tmp_path / "mutated_points.csv"
+    with target.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    return target
+
+
+def test_guard_rejects_dm_dh_row_swap_even_when_same_covariance_block(tmp_path: Path) -> None:
+    def swap(rows):
+        rows[1], rows[2] = rows[2], rows[1]
+    target = _mutate_points(tmp_path, swap)
+    with pytest.raises(ValueError, match="source/order mismatch"):
+        build_receipt(ROOT, points_override=target)
+
+
+def test_guard_rejects_value_inversion_without_row_reordering(tmp_path: Path) -> None:
+    def swap_values(rows):
+        rows[1]["value"], rows[2]["value"] = rows[2]["value"], rows[1]["value"]
+    target = _mutate_points(tmp_path, swap_values)
+    with pytest.raises(ValueError, match="source/order mismatch"):
+        build_receipt(ROOT, points_override=target)
+
+
+def test_guard_rejects_reversed_correlation_sign(tmp_path: Path) -> None:
+    def flip_sign(rows):
+        rows[1]["correlation_coefficient"] = "0.459"
+    target = _mutate_points(tmp_path, flip_sign)
+    with pytest.raises(ValueError, match="correlation sign/value"):
+        build_receipt(ROOT, points_override=target)
+
+
+def test_guard_rejects_covariance_block_label_swap(tmp_path: Path) -> None:
+    def swap_labels(rows):
+        for row in rows:
+            if row["tracer"] == "LRG1":
+                row["covariance_block"] = "DESI_DR2_LRG2_DM_DH"
+            elif row["tracer"] == "LRG2":
+                row["covariance_block"] = "DESI_DR2_LRG1_DM_DH"
+    target = _mutate_points(tmp_path, swap_labels)
+    with pytest.raises(ValueError, match="source/observable orientation mismatch"):
+        build_receipt(ROOT, points_override=target)
