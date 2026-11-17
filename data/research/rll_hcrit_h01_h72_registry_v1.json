@@ -3,7 +3,7 @@
   "date": "2026-11-17",
   "producer": "instituto-Rafael/relativity-living-light",
   "scope": "research-only branch; synthetic scalar diagnostics; no EOS, stellar hydrodynamics, astrophysical validation or RLL H(z) integration",
-  "state": "IMPLEMENTED_UNTESTED_PROVIDER_CI",
+  "state": "IMPLEMENTED_TESTED_LOCAL_SYNTHETIC_SCOPE_PROVIDER_CI_NOT_RUN",
   "source_parent": "https://github.com/rafaelmeloreisnovo/Mapa/blob/research/hcrit-literature-20261117-s1/docs/research/HCRIT_PRESSURE_HYDROGEN_DEGENERACY_LITERATURE_20261117_S1.md",
   "legacy_routes": [
     "docs/research/RLL_OBVIOUS_NEGLECTED_ATOMS_COSMOS_20261108.md",
@@ -192,8 +192,8 @@
       "observable": "momentum kg m/s",
       "falsifier": "Assumes spin-half ideal electrons",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "fermi_momentum",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -220,8 +220,8 @@
       "observable": "Theta dimensionless",
       "falsifier": "Must use same EOS and T",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "degeneracy_theta",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -234,8 +234,8 @@
       "observable": "electron pressure Pa",
       "falsifier": "Not equivalent to thermal ideal gas",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "degenerate_pressure_nr",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -248,8 +248,8 @@
       "observable": "coupling dimensionless",
       "falsifier": "Requires charge, spacing and composition",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "coulomb_gamma",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -276,8 +276,8 @@
       "observable": "energy release J",
       "falsifier": "Total energy does not imply instantaneous detonation",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "mass_defect_energy",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -304,8 +304,8 @@
       "observable": "luminosity W",
       "falsifier": "Need geometry, feedback and reaction time",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "reaction_power",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -360,8 +360,8 @@
       "observable": "growth instability",
       "falsifier": "Only idealized medium and boundary conditions",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "jeans_mass",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -472,8 +472,8 @@
       "observable": "luminosity W",
       "falsifier": "Efficiency not universal or complete matter conversion",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "accretion_power",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -500,8 +500,8 @@
       "observable": "frequency ratio",
       "falsifier": "Emitter, observer and velocity frame matter",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "frequency_shift",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -528,8 +528,8 @@
       "observable": "net radiative W",
       "falsifier": "Temperature offset not evidence for ionospheric resonance",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "radiation_balance",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -556,8 +556,8 @@
       "observable": "distance Mpc",
       "falsifier": "Do not inject dense matter EOS into H(z) automatically",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "hubble_distance",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -584,8 +584,8 @@
       "observable": "AICc",
       "falsifier": "Different likelihoods/datasets cannot be directly compared",
       "classification": "CATALOG_RECONCILED",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "aicc",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -772,8 +772,8 @@
       "observable": "contact angle",
       "falsifier": "Saturation and dielectric leakage limit model",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "electrowetting",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -786,8 +786,8 @@
       "observable": "reversible strain",
       "falsifier": "Separate electrostriction from Joule heating",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "electrostriction",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -800,8 +800,8 @@
       "observable": "piezoelectric strain",
       "falsifier": "Crystal symmetry may forbid linear response",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "piezoelectric",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -870,8 +870,8 @@
       "observable": "thermal flux W/m2",
       "falsifier": "Cooling or heating needs boundary conditions",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "thermal_flux",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -898,8 +898,8 @@
       "observable": "chemical potential",
       "falsifier": "Non-equilibrium rates unknown",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "chemical_margin",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -954,8 +954,8 @@
       "observable": "yield stress Pa",
       "falsifier": "Strength not same as elastic modulus",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "hall_petch",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -968,8 +968,8 @@
       "observable": "phase boundary slope",
       "falsifier": "Do not extrapolate monotonic solidification",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "clapeyron_slope",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -996,8 +996,8 @@
       "observable": "neutrino optical depth",
       "falsifier": "Transport regime changes at high optical depth",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "optical_depth",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -1010,8 +1010,8 @@
       "observable": "Damkohler ratio",
       "falsifier": "Instantaneous change invalid if reaction too slow",
       "classification": "ADDITIVE_TANGIBLE",
-      "kernel": null,
-      "execution": "MODEL_REQUIRED",
+      "kernel": "damkohler",
+      "execution": "SCALAR_KERNEL_AVAILABLE",
       "data": "TOKEN_VAZIO",
       "claim_allowed": false,
       "source_refs": []
@@ -1030,5 +1030,6 @@
       "claim_allowed": false,
       "source_refs": []
     }
-  ]
+  ],
+  "predecessor_commit": "3ca0d819fe6a2c5c7c7ed628204b70cb7726e46c"
 }

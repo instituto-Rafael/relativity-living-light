@@ -132,12 +132,9 @@ class HcritTests(unittest.TestCase):
         self.assertEqual(mod.evaluate("molar_area", {"amount_mol":1,"area_m2":1e-48})["unit"],"mol/m2")
 
     def test_28_chemical_margin_not_rate(self):
-        self.assertEqual(self.calc("chemical_margin", mu_p_MeV=938.272,
+        self.assertAlmostEqual(self.calc("chemical_margin", mu_p_MeV=938.272,
                                   mu_e_MeV=1, mu_n_MeV=939.565,
-                                  mu_nu_MeV=0), -.29300000000000637 if False else
-                                  self.calc("chemical_margin", mu_p_MeV=938.272,
-                                  mu_e_MeV=1, mu_n_MeV=939.565,
-                                  mu_nu_MeV=0))
+                                  mu_nu_MeV=0), -0.293, places=10)
         self.assertEqual(mod.evaluate("chemical_margin", dict(mu_p_MeV=938.272,
                                   mu_e_MeV=1, mu_n_MeV=939.565, mu_nu_MeV=0))["unit"], "MeV")
 
@@ -207,6 +204,96 @@ class HcritTests(unittest.TestCase):
         # No "horizon pressure" or "explosion critical mass" function is exported.
         self.assertNotIn("horizon_solid_pressure",mod.KERNELS)
         self.assertNotIn("universal_hydrogen_explosion_mass",mod.KERNELS)
+
+
+    def test_43_fermi_momentum_and_zero(self):
+        self.assertEqual(self.calc("fermi_momentum", n_e_m3=0), 0.0)
+        self.assertGreater(self.calc("fermi_momentum", n_e_m3=1e30), 0.0)
+
+    def test_44_theta_ratio(self):
+        self.assertAlmostEqual(self.calc("degeneracy_theta", E_F_MeV=1,
+                                      T_K=1.160451812e10), 1, delta=1e-6)
+
+    def test_45_pressure_nr_domain(self):
+        self.assertGreater(self.calc("degenerate_pressure_nr", n_e_m3=1e30), 0)
+        with self.assertRaises(mod.Blocked):
+            self.calc("degenerate_pressure_nr", n_e_m3=1e39)
+
+    def test_46_coulomb_gamma(self):
+        self.assertGreater(self.calc("coulomb_gamma", n_i_m3=1e22, Z=1,T_K=1e4), 0)
+        with self.assertRaises(mod.Blocked):
+            self.calc("coulomb_gamma", n_i_m3=1e22, Z=1,T_K=0)
+
+    def test_47_mass_defect_signed(self):
+        self.assertAlmostEqual(self.calc("mass_defect_energy", delta_mass_kg=1), mod.C**2)
+        self.assertLess(self.calc("mass_defect_energy", delta_mass_kg=-1), 0)
+
+    def test_48_reaction_power(self):
+        self.assertEqual(self.calc("reaction_power", rate_m3_s=5, Q_J=3, volume_m3=2), 30)
+
+    def test_49_jeans_domain(self):
+        self.assertGreater(self.calc("jeans_mass", sound_speed_m_s=1e3, rho_kg_m3=1e-20),0)
+        with self.assertRaises(mod.Blocked):
+            self.calc("jeans_mass", sound_speed_m_s=.5*mod.C, rho_kg_m3=1e-20)
+
+    def test_50_accretion_efficiency(self):
+        self.assertAlmostEqual(self.calc("accretion_power", eta=.1, mdot_kg_s=1), .1*mod.C**2)
+        with self.assertRaises(mod.Blocked):
+            self.calc("accretion_power", eta=1.01, mdot_kg_s=1)
+
+    def test_51_frequency_shift_not_observation(self):
+        self.assertEqual(self.calc("frequency_shift", g=.5, nu_emit_Hz=100),50)
+
+    def test_52_radiative_balance_can_be_negative(self):
+        self.assertEqual(self.calc("radiation_balance", emit_W=10,atmos_W=8,
+                              solar_W=3,nonrad_W=2),-3)
+
+    def test_53_hubble_distance_unit_meters(self):
+        self.assertAlmostEqual(self.calc("hubble_distance", H_s_inv=1),mod.C)
+        self.assertEqual(mod.evaluate("hubble_distance",{"H_s_inv":1})["unit"],"m")
+
+    def test_54_aicc_denominator(self):
+        self.assertAlmostEqual(self.calc("aicc",chi2=20,k=2,N=10),20+4+12/7)
+        with self.assertRaises(mod.Blocked):
+            self.calc("aicc",chi2=20,k=2,N=3)
+        with self.assertRaises(mod.Blocked):
+            self.calc("aicc",chi2=20,k=2.5,N=10)
+
+    def test_55_electrowetting_saturation(self):
+        self.assertAlmostEqual(self.calc("electrowetting",theta0_rad=1,
+                            C_area_F_m2=0,V_V=20,gamma_N_m=.07),1)
+        with self.assertRaises(mod.Blocked):
+            self.calc("electrowetting",theta0_rad=1,
+                            C_area_F_m2=.1,V_V=20,gamma_N_m=.07)
+
+    def test_56_electrostriction_even_field(self):
+        a=self.calc("electrostriction",Q_m2_V2=1e-18,E_V_m=100)
+        b=self.calc("electrostriction",Q_m2_V2=1e-18,E_V_m=-100)
+        self.assertAlmostEqual(a,b)
+
+    def test_57_piezoelectric_signed(self):
+        self.assertEqual(self.calc("piezoelectric", d_m_V=1e-10,E_V_m=1e6),1e-4)
+
+    def test_58_fourier_heat_flux(self):
+        self.assertEqual(self.calc("thermal_flux",conductivity_W_m_K=5,
+                                  grad_T_K_m=2),-10)
+
+    def test_59_hall_petch(self):
+        self.assertEqual(self.calc("hall_petch",sigma0_Pa=100,k_Pa_sqrt_m=2,
+                                  grain_m=4),101)
+
+    def test_60_clapeyron_negative_slope(self):
+        self.assertEqual(self.calc("clapeyron_slope",delta_s_J_mol_K=5,
+                                  delta_v_m3_mol=-.1),-50)
+        with self.assertRaises(mod.Blocked):
+            self.calc("clapeyron_slope",delta_s_J_mol_K=5,delta_v_m3_mol=0)
+
+    def test_61_damkohler(self):
+        self.assertEqual(self.calc("damkohler",flow_s=5,reaction_s=10),.5)
+
+    def test_62_more_fake_claim_guards(self):
+        self.assertNotIn("hydrogen_critical_explosion_mass",mod.KERNELS)
+        self.assertNotIn("neutron_star_eos_validated",mod.KERNELS)
 
 if __name__ == "__main__":
     unittest.main()

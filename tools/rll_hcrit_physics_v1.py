@@ -191,6 +191,98 @@ def _chi2(a):
         y[i] = (v[i] - sum(lower[i][j] * y[j] for j in range(i))) / lower[i][i]
     return {"value": sum(x * x for x in y), "unit": "1"}
 
+
+def _fermi_momentum(a):
+    n = number(a, "n_e_m3", minimum=0)
+    return {"value": HBAR * (3 * math.pi**2 * n) ** (1/3), "unit": "kg*m/s"}
+
+def _theta(a):
+    ef = number(a, "E_F_MeV", positive=True)
+    return {"value": KB * number(a, "T_K", minimum=0) / (ef * 1e6 * QE), "unit": "1"}
+
+def _electron_pressure_nr(a):
+    n = number(a, "n_e_m3", minimum=0)
+    pf = HBAR * (3 * math.pi**2 * n) ** (1/3)
+    if pf / (ME * C) > 0.1: raise Blocked("NONREL_DEGENERACY_DOMAIN")
+    return {"value": HBAR**2 * (3 * math.pi**2)**(2/3) * n**(5/3) / (5 * ME), "unit": "Pa"}
+
+def _coupling(a):
+    ni = number(a, "n_i_m3", positive=True)
+    z = number(a, "Z", positive=True)
+    t = number(a, "T_K", positive=True)
+    spacing = (3 / (4 * math.pi * ni)) ** (1/3)
+    return {"value": z * z * QE * QE / (4 * math.pi * EPS0 * spacing * KB * t), "unit": "1"}
+
+def _mass_defect(a):
+    return {"value": number(a, "delta_mass_kg") * C**2, "unit": "J"}
+
+def _reaction_power(a):
+    rate = number(a, "rate_m3_s", minimum=0)
+    q = number(a, "Q_J", minimum=0)
+    volume = number(a, "volume_m3", minimum=0)
+    return {"value": rate * q * volume, "unit": "W"}
+
+def _jeans(a):
+    cs = number(a, "sound_speed_m_s", positive=True)
+    density = number(a, "rho_kg_m3", positive=True)
+    if cs >= .1 * C: raise Blocked("NEWTONIAN_JEANS_DOMAIN")
+    return {"value": math.pi**2.5 * cs**3 / (6 * G**1.5 * math.sqrt(density)), "unit": "kg"}
+
+def _accretion(a):
+    eta = number(a, "eta", minimum=0)
+    if eta > 1: raise Blocked("EFFICIENCY_GT_ONE")
+    return {"value": eta * number(a, "mdot_kg_s", minimum=0) * C**2, "unit": "W"}
+
+def _frequency(a):
+    return {"value": number(a, "g", positive=True) * number(a, "nu_emit_Hz", minimum=0), "unit": "Hz"}
+
+def _radiation_balance(a):
+    return {"value": number(a, "emit_W", minimum=0) - number(a, "atmos_W", minimum=0)
+            - number(a, "solar_W", minimum=0) - number(a, "nonrad_W", minimum=0), "unit": "W"}
+
+def _hubble(a):
+    return {"value": C / number(a, "H_s_inv", positive=True), "unit": "m"}
+
+def _aicc(a):
+    chi2 = number(a, "chi2", minimum=0)
+    k = number(a, "k", minimum=0)
+    n = number(a, "N", positive=True)
+    if k != int(k) or n != int(n) or n <= k + 1: raise Blocked("AICC_DOMAIN")
+    return {"value": chi2 + 2*k + 2*k*(k+1)/(n-k-1), "unit": "1"}
+
+def _electrowetting(a):
+    theta0 = number(a, "theta0_rad", minimum=0)
+    if theta0 > math.pi: raise Blocked("THETA_DOMAIN")
+    ca = number(a, "C_area_F_m2", minimum=0)
+    voltage = number(a, "V_V")
+    gamma = number(a, "gamma_N_m", positive=True)
+    ct = math.cos(theta0) + ca * voltage**2 / (2 * gamma)
+    if not -1 <= ct <= 1: raise Blocked("YOUNG_LIPPMANN_SATURATION")
+    return {"value": math.acos(ct), "unit": "rad"}
+
+def _electrostriction(a):
+    return {"value": number(a, "Q_m2_V2") * number(a, "E_V_m")**2, "unit": "1"}
+
+def _piezoelectric(a):
+    return {"value": number(a, "d_m_V") * number(a, "E_V_m"), "unit": "1"}
+
+def _heat_flux(a):
+    return {"value": -number(a, "conductivity_W_m_K", minimum=0)
+            * number(a, "grad_T_K_m"), "unit": "W/m2"}
+
+def _hall_petch(a):
+    return {"value": number(a, "sigma0_Pa", minimum=0)
+            + number(a, "k_Pa_sqrt_m", minimum=0) / math.sqrt(number(a, "grain_m", positive=True)), "unit": "Pa"}
+
+def _clapeyron(a):
+    dv = number(a, "delta_v_m3_mol")
+    if dv == 0: raise Blocked("ZERO_PHASE_VOLUME_DIFFERENCE")
+    return {"value": number(a, "delta_s_J_mol_K") / dv, "unit": "Pa/K"}
+
+def _damkohler(a):
+    return {"value": number(a, "flow_s", positive=True) /
+            number(a, "reaction_s", positive=True), "unit": "1"}
+
 KERNELS = {
  "thermal_pressure": _thermal, "adiabatic_T": _adiabatic,
  "plasma_omega": _plasma, "cyclotron_omega": _cyclotron,
@@ -204,7 +296,17 @@ KERNELS = {
  "energy_per_time": _power, "capillary_pressure": _capillary,
  "radiation_pressure": _radiation, "coulomb_force": _coulomb,
  "schwarzschild_g": _redshift, "molar_area": _density_mol,
- "chemical_margin": _mu_capture_margin, "chi2_spd": _chi2
+ "chemical_margin": _mu_capture_margin, "chi2_spd": _chi2,
+ "fermi_momentum": _fermi_momentum, "degeneracy_theta": _theta,
+ "degenerate_pressure_nr": _electron_pressure_nr, "coulomb_gamma": _coupling,
+ "mass_defect_energy": _mass_defect, "reaction_power": _reaction_power,
+ "jeans_mass": _jeans, "accretion_power": _accretion,
+ "frequency_shift": _frequency, "radiation_balance": _radiation_balance,
+ "hubble_distance": _hubble, "aicc": _aicc,
+ "electrowetting": _electrowetting, "electrostriction": _electrostriction,
+ "piezoelectric": _piezoelectric, "thermal_flux": _heat_flux,
+ "hall_petch": _hall_petch, "clapeyron_slope": _clapeyron,
+ "damkohler": _damkohler
 }
 
 def evaluate(kernel, inputs):

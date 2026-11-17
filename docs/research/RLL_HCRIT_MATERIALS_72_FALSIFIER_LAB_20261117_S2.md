@@ -1,0 +1,13 @@
+# RLL H-CRIT S2 — Physics kernel expansion, scoped local proof
+
+- Parent commit `3ca0d819fe6a2c5c7c7ed628204b70cb7726e46c` (S1). This is an **additive successor**, not a promotion of a physical model.
+- H01-H72 registry preserved; 72 typed analyses, 45 callable scalar functions, 42 entries bound to scalar kernels, and 30 entries marked `MODEL_REQUIRED`. No EOS/stellar/molecular multi-physics simulation, observational fit, device test, or CI performed.
+- S2 adds 19 guarded scalar functions: Fermi momentum, degeneracy ratio and nonrelativistic electron pressure, Coulomb coupling, mass defect, reaction power, ideal Jeans mass, accretion power, frequency transfer, radiative balance, Hubble distance, AICc, Young-Lippmann electrowetting, electrostriction, piezoelectricity, Fourier heat flow, Hall-Petch, Clapeyron slope, Damkohler ratio.
+- **Important:** the nonrelativistic degeneracy pressure intentionally rejects `p_F/(m_e c) > 0.1`; Jeans rejects high sound speed; electrowetting rejects calculated states beyond `|cos θ| <= 1`. No universal high-pressure solidification, nuclear threshold, or horizon wall is implied.
+- Test 28 S1 compared a chemical margin to itself (tautological test). S2 corrects it to an independent expected value `-0.293 MeV`. New tests cover 19 additional physical/dimensional gates.
+- Verified local tool copy against S1 Git blob SHA1 before the modification. At this stage tests passed **62/62 on the local Python files with a synthetic 72-record registry structurally equivalent to the GitHub registry**; the **exact full GitHub registry payload was not materialized** in the local runtime. After S2 write, compare Git blob SHA1 of Python source and test suite against the exact local files.
+- Production `H(z)`, DESI likelihood, covariance PR#1232, workflows, `main`, Drive B0159/B0160, releases and permissions **unchanged**.
+- Scientific status: `CLAIM_ALLOWED=false`; `SCALAR_TESTS_LOCAL_SYNTHETIC_PASS_SCOPED` is not a GRMHD/EOS/chemistry/magnetism simulation, nor experimental validation.
+- Rebuild: `python -m unittest discover -s tests -p test_rll_hcrit_physics_v1.py -v`; `python tools/rll_hcrit_physics_v1.py --registry data/research/rll_hcrit_h01_h72_registry_v1.json --audit`.
+- Falsifiers: source SHA mismatch; JSON audit rejects any ID gap/fake PASS/fake data zero; permutation of residuals without both covariance axes changes chi-square; incorrect value of chemical margin fails; missing inputs reject `TOKEN_VAZIO`.
+- Rollback: keep S1 commit as predecessor and branch unmerged; correct through an S3 successor if needed. `F_next`: exact GitHub registry run, independent EOS and measured material verification prior to any physics claim.
