@@ -99,3 +99,30 @@ jobs:
           path: artifacts/rll-ws02-focused/
           if-no-files-found: warn
           retention-days: 14
+      - name: Generate metadata-only deterministic inventory and check reproducibility
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/validate_six_sigma_real_data_controls.py
+          python tools/docs_inventory.py
+          python tools/docs_inventory.py --check
+          mkdir -p artifacts/rll-ws02-focused
+          git diff --numstat -- docs/DOCUMENTATION_FULL_INVENTORY.md docs/REAL_NUMBERS_REPORT.md docs/YML_WORKFLOWS_INDEX.md data/results/repo_inventory.json data/results/repo_inventory.tsv data/results/repo_inventory_summary.json > artifacts/rll-ws02-focused/inventory_delta_numstat.tsv
+          cat data/results/repo_inventory_summary.json
+          echo "INVENTORY_GENERATED_NOT_COMMITTED; claim_allowed=false"
+      - name: Upload generated inventory metadata (not observational datasets)
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rll-ws02-inventory-${{ github.sha }}
+          path: |
+            docs/DOCUMENTATION_FULL_INVENTORY.md
+            docs/REAL_NUMBERS_REPORT.md
+            docs/YML_WORKFLOWS_INDEX.md
+            data/results/repo_inventory.json
+            data/results/repo_inventory.tsv
+            data/results/repo_inventory_summary.json
+            artifacts/rll-ws02-focused/inventory_delta_numstat.tsv
+          if-no-files-found: error
+          retention-days: 14
