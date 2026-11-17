@@ -7,17 +7,17 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 
 | Métrica | Valor |
 |---|---:|
-| `tracked_files_total` | 3820 |
-| `cataloged_files` | 3809 |
+| `tracked_files_total` | 3825 |
+| `cataloged_files` | 3814 |
 | `uncataloged_or_error_files` | 0 |
-| `total_bytes` | 57284502 |
-| `total_text_lines` | 564699 |
+| `total_bytes` | 57313391 |
+| `total_text_lines` | 565355 |
 | `markdown_files` | 1234 |
-| `yml_yaml_files` | 254 |
-| `github_workflow_yml_files` | 122 |
-| `data_or_result_files` | 1021 |
+| `yml_yaml_files` | 255 |
+| `github_workflow_yml_files` | 123 |
+| `data_or_result_files` | 1023 |
 
-**Total de arquivos catalogados:** 3809
+**Total de arquivos catalogados:** 3814
 
 ## Inventário completo
 
@@ -168,6 +168,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `.github/workflows/rll-studio-contract.yml` | 5914 | `.yml` | `github_workflow_yml` | 145 | `8e96be68a04d9636734615d78d409cc367c4f6eb4a492045103bdadd78057b81` | `token_vazio_declared` |
 | `.github/workflows/rll-v1-tag-provenance.yml` | 4857 | `.yml` | `github_workflow_yml` | 132 | `e45208aa1139c966b6d35cfc42dfe7451e04842361079b90560125738d5fc34d` | `token_vazio_declared` |
 | `.github/workflows/rll-validacao-cientifica-completa.yml` | 43442 | `.yml` | `github_workflow_yml` | 955 | `04312981e728ed77e548cd49038ee3fc8622788d05589cf711264214d3de796d` | `mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared` |
+| `.github/workflows/rll-ws02-falsification-isolated.yml` | 5980 | `.yml` | `github_workflow_yml` | 128 | `5ec0d4b9ebed74b3b9848ab51853cb22fcb60088f060850cbbd08e69d939233a` | `token_vazio_declared` |
 | `.github/workflows/rx-development.yml` | 1460 | `.yml` | `github_workflow_yml` | 53 | `1f52fe53627861e41adfba50bd83c1977bf233621842057532547af7715b19a4` | `` |
 | `.github/workflows/scan-poc-coherence.yml` | 998 | `.yml` | `github_workflow_yml` | 30 | `0321f353ef65b7ca8438dfde0c6aae0775878c7d4fc3108393d0d1fd3b19f666` | `` |
 | `.github/workflows/scientific-cycle-closure.yml` | 1776 | `.yml` | `github_workflow_yml` | 49 | `64fa846ada5a18f55d12bfc8d7d6c82b5d9be695f70884f3c0153180db17424f` | `token_vazio_declared` |
@@ -923,6 +924,8 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `data/governance/RLL_W0WA_SIGN_FALSIFIABILITY_GATE_V1.json` | 4478 | `.json` | `data_or_result` | 83 | `44fb13a3a6c7dc588108912b4bafce31b323a93a306da10a234006b19054e78f` | `token_vazio_declared` |
 | `data/governance/RLL_WG250_GEOMETRY_INTAKE_V1.json` | 4509 | `.json` | `data_or_result` | 169 | `0fa98d98718b3d122deebe3e236486199014e6fef95248323d97e1ebd98d4c8e` | `token_vazio_declared` |
 | `data/governance/RLL_WORLDLINE_CASCADE_FORMULA_ROUTER_V1.json` | 3504 | `.json` | `data_or_result` | 129 | `fc09a3558c3ab294e18b83941d4512d5944788c104d74d814e4f8bfc45f70931` | `mentions_synthetic,token_vazio_declared` |
+| `data/governance/RLL_WS02_DESI_ORDER_NOBS_RECEIPT_20261117_S2.json` | 4551 | `.json` | `data_or_result` | 115 | `f2184b183f60a8dd6d4559ca7c1e3e03416a92b5b27a327ced1682d5ca01ecea` | `mentions_synthetic,token_vazio_declared` |
+| `data/governance/RLL_WS02_DESI_ORDER_NOBS_RECEIPT_20261117_V1.json` | 5738 | `.json` | `data_or_result` | 141 | `71743b7534808bec4ef1959624ca8d29d07ab3a1f0402b804d5f494a0d808dad` | `mentions_synthetic,token_vazio_declared` |
 | `data/governance/RLL_WS18_HIDDEN_TRUTH_STATUS_DELTA_V1.json` | 856 | `.json` | `data_or_result` | 24 | `17285e0d444db8862fa7371a8eff42b74549f366e3279b5a027baf49543e44da` | `mentions_synthetic,token_vazio_declared` |
 | `data/governance/branch_advance_registry.v2.json` | 8346 | `.json` | `data_or_result` | 58 | `5ec5684090855300a517a2ac1ea532da3431eaa83a99c63112de0ba25fa785be` | `token_vazio_declared` |
 | `data/governance/chatgpt_github_json_ui_observation_20261104.json` | 2859 | `.json` | `data_or_result` | 99 | `4368dd521434d874f2ddc2b81c7a63e90a768036c1df1b6085b698627a996248` | `` |
@@ -1015,7 +1018,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `data/pipelines/structure_d/feedback_agn.py` | 916 | `.py` | `source_code` | 26 | `feee58af0e29ab4bd3b4ca741c45250130e95c54e0dfa9f8fcdb2ef4507219f2` | `` |
 | `data/pipelines/structure_d/growth.py` | 650 | `.py` | `source_code` | 17 | `51ce065c45a140378f1c64f07cf29bcf14071e89c83961b55bd86d00f9f84aa6` | `` |
 | `data/pipelines/structure_d/inference.py` | 13272 | `.py` | `source_code` | 429 | `de5c93c931580d5f942bdf725a76e052fc411215b75d0282759d7ae6087981cb` | `` |
-| `data/pipelines/structure_d/joint_real_likelihood.py` | 31808 | `.py` | `source_code` | 725 | `d3ac28a14469734f01753a6457db474df6efa9c5c10dd7ad6d4511826aefcd4f` | `mentions_synthetic` |
+| `data/pipelines/structure_d/joint_real_likelihood.py` | 32608 | `.py` | `source_code` | 738 | `e7f799cb63be09dba25524092cda448f70646a5fd43949c7d0b29b6afa853152` | `mentions_synthetic` |
 | `data/pipelines/structure_d/joint_real_likelihood_flat.py` | 10167 | `.py` | `source_code` | 269 | `f0c5bd7f03eb76a4ad94d128f6c910878473ef573a2b451ae4db1d40adb5cf47` | `token_vazio_declared` |
 | `data/pipelines/structure_d/joint_real_likelihood_rx.py` | 3457 | `.py` | `source_code` | 94 | `da37d42f19dcc92abe704509788d973d286af2ec42a9eb01761622f8f1faedd5` | `` |
 | `data/pipelines/structure_d/likelihood.py` | 15486 | `.py` | `source_code` | 448 | `a5eb2a2587a2b3a7baf0fe8415cb61924546e2dcd1abd90d9ec5fb40983fe9b0` | `` |
@@ -3060,6 +3063,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `src/rll/cosmology_radiation.py` | 3224 | `.py` | `source_code` | 102 | `7e8bdca998e58d03fb381b343bac8043dd3ef82ee26066e98332061a4d4a0145` | `` |
 | `src/rll/cosmology_recombination.py` | 4726 | `.py` | `source_code` | 162 | `4d3b01612857bc32b6ef2e2c47a0fd3a1e74878d6d3b3c49cd6d47eb682521be` | `` |
 | `src/rll/desi_dha_extractor.py` | 4359 | `.py` | `source_code` | 126 | `7fb2e0991960ea4ea693341855fde38023dd6c0c03cfa8dbbb5eec87604171fe` | `` |
+| `src/rll/desi_dr2_authority_v1.py` | 5544 | `.py` | `source_code` | 115 | `25a2f3b81c01bdbfcc4e50553c233ada4cb899b442f6d66b89a854dcbddce067` | `` |
 | `src/rll/dha_fisher.py` | 2769 | `.py` | `source_code` | 83 | `7a407f231ebe454bcbb3b1afc9c5fd111b4ebc74f2d498e3acf26b2af4336062` | `` |
 | `src/rll/discrete_ontology.py` | 9230 | `.py` | `source_code` | 260 | `db6d884017a0f91294547e22347f8632627bf9a92406cdefc98e0f59040136eb` | `token_vazio_declared` |
 | `src/rll/eft_exhaustion.py` | 20456 | `.py` | `source_code` | 567 | `91bacc782cd13b09106ce692153f9a5cf6e672a4041831f53c45893ca6bfd582` | `token_vazio_declared` |
@@ -3145,6 +3149,7 @@ Base: arquivos rastreados por `git ls-files`; campos voláteis de data/hora e co
 | `tests/test_desi_50_hypothesis_intake.py` | 2577 | `.py` | `source_code` | 68 | `11e1b85844b7254101bfa95c5eeb2e0e66dadc87c8633b31f162c9a9d0d49c90` | `token_vazio_declared,cosmology_validation_marker` |
 | `tests/test_desi_covariance_order_receipt.py` | 1815 | `.py` | `source_code` | 44 | `6022eae2045f6c084a1a4ebd931811e1f69efc6a969f3eb7ece3c87b98b188d1` | `cosmology_validation_marker` |
 | `tests/test_desi_dha_extractor.py` | 361 | `.py` | `source_code` | 11 | `056cef79bc6e86084747710dfd49da08e2296bc5bf29ce4c805841ea093bc009` | `cosmology_validation_marker` |
+| `tests/test_desi_dr2_authority_v1.py` | 6276 | `.py` | `source_code` | 144 | `aa189528310cc80c21d580cf49bcadc4ff25d350a38365902993ccbda3c5f3c9` | `cosmology_validation_marker` |
 | `tests/test_desi_dr2_bao_covariance_loader.py` | 1264 | `.py` | `source_code` | 38 | `bf166aa39a7ae145a74b0cc5b82af9281575d157fae8c92acf818e1a0ba7194f` | `cosmology_validation_marker` |
 | `tests/test_desi_dr2_bao_materialized.py` | 1366 | `.py` | `source_code` | 37 | `4cc0249fe150adb866989be7bcb3cb9d615ed998418bf7a55c3a0ae9792696c4` | `cosmology_validation_marker` |
 | `tests/test_desi_dr2_cobaya_materialization_v2.py` | 3149 | `.py` | `source_code` | 93 | `e3f51b526644472b042b112b9a42fe9b6b64793b5cbcd080cf6290738e272cf4` | `cosmology_validation_marker` |

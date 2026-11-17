@@ -1305,6 +1305,15 @@
     "flags": "mentions_synthetic,mentions_mock_or_placeholder,token_vazio_declared"
   },
   {
+    "path": ".github/workflows/rll-ws02-falsification-isolated.yml",
+    "bytes": 5980,
+    "ext": ".yml",
+    "tipo": "github_workflow_yml",
+    "linhas": 128,
+    "sha256": "5ec0d4b9ebed74b3b9848ab51853cb22fcb60088f060850cbbd08e69d939233a",
+    "flags": "token_vazio_declared"
+  },
+  {
     "path": ".github/workflows/rx-development.yml",
     "bytes": 1460,
     "ext": ".yml",
@@ -8100,6 +8109,24 @@
     "flags": "mentions_synthetic,token_vazio_declared"
   },
   {
+    "path": "data/governance/RLL_WS02_DESI_ORDER_NOBS_RECEIPT_20261117_S2.json",
+    "bytes": 4551,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 115,
+    "sha256": "f2184b183f60a8dd6d4559ca7c1e3e03416a92b5b27a327ced1682d5ca01ecea",
+    "flags": "mentions_synthetic,token_vazio_declared"
+  },
+  {
+    "path": "data/governance/RLL_WS02_DESI_ORDER_NOBS_RECEIPT_20261117_V1.json",
+    "bytes": 5738,
+    "ext": ".json",
+    "tipo": "data_or_result",
+    "linhas": 141,
+    "sha256": "71743b7534808bec4ef1959624ca8d29d07ab3a1f0402b804d5f494a0d808dad",
+    "flags": "mentions_synthetic,token_vazio_declared"
+  },
+  {
     "path": "data/governance/RLL_WS18_HIDDEN_TRUTH_STATUS_DELTA_V1.json",
     "bytes": 856,
     "ext": ".json",
@@ -8929,11 +8956,11 @@
   },
   {
     "path": "data/pipelines/structure_d/joint_real_likelihood.py",
-    "bytes": 31808,
+    "bytes": 32608,
     "ext": ".py",
     "tipo": "source_code",
-    "linhas": 725,
-    "sha256": "d3ac28a14469734f01753a6457db474df6efa9c5c10dd7ad6d4511826aefcd4f",
+    "linhas": 738,
+    "sha256": "e7f799cb63be09dba25524092cda448f70646a5fd43949c7d0b29b6afa853152",
     "flags": "mentions_synthetic"
   },
   {
@@ -27333,6 +27360,15 @@
     "flags": ""
   },
   {
+    "path": "src/rll/desi_dr2_authority_v1.py",
+    "bytes": 5544,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 115,
+    "sha256": "25a2f3b81c01bdbfcc4e50553c233ada4cb899b442f6d66b89a854dcbddce067",
+    "flags": ""
+  },
+  {
     "path": "src/rll/dha_fisher.py",
     "bytes": 2769,
     "ext": ".py",
@@ -28095,6 +28131,15 @@
     "tipo": "source_code",
     "linhas": 11,
     "sha256": "056cef79bc6e86084747710dfd49da08e2296bc5bf29ce4c805841ea093bc009",
+    "flags": "cosmology_validation_marker"
+  },
+  {
+    "path": "tests/test_desi_dr2_authority_v1.py",
+    "bytes": 6276,
+    "ext": ".py",
+    "tipo": "source_code",
+    "linhas": 144,
+    "sha256": "aa189528310cc80c21d580cf49bcadc4ff25d350a38365902993ccbda3c5f3c9",
     "flags": "cosmology_validation_marker"
   },
   {
