@@ -291,7 +291,34 @@ def cmb_shift_prediction(e2_fn: Callable, params: tuple[float, ...], ob_h2: floa
 
 
 def _chi2_diag(obs: np.ndarray, pred: np.ndarray, sigma: np.ndarray) -> float:
-    return float(np.sum(((np.asarray(obs, dtype=float) - np.asarray(pred, dtype=float)) / np.asarray(sigma, dtype=float)) ** 2))
+    """Reject invalid observations instead of silently broadcasting or squaring signs.
+
+    Data-space validity is an independent gate from the physical-model fit.
+    Returned scalar chi2 is meaningful only for equal-length, finite 1D vectors
+    and strictly positive reported standard deviations.
+    """
+    observed = np.asarray(obs, dtype=float)
+    predicted = np.asarray(pred, dtype=float)
+    errors = np.asarray(sigma, dtype=float)
+    if (
+        observed.ndim != 1
+        or predicted.ndim != 1
+        or errors.ndim != 1
+        or observed.shape != predicted.shape
+        or observed.shape != errors.shape
+    ):
+        raise ValueError("BLOCKED_OBSERVATION_SHAPE_OR_BROADCAST")
+    if not np.isfinite(errors).all() or np.any(errors <= 0.0):
+        raise ValueError("BLOCKED_OBSERVATION_SIGMA_NONFINITE_OR_NONPOSITIVE")
+    if not np.isfinite(observed).all() or not np.isfinite(predicted).all():
+        raise ValueError("BLOCKED_OBSERVATION_NONFINITE")
+    residual = (observed - predicted) / errors
+    if not np.isfinite(residual).all():
+        raise ValueError("BLOCKED_OBSERVATION_NONFINITE_RESIDUAL")
+    result = float(np.dot(residual, residual))
+    if not np.isfinite(result):
+        raise ValueError("BLOCKED_OBSERVATION_NONFINITE_CHI2")
+    return result
 
 
 def _cmb_claim_status(cmb: dict) -> dict[str, bool]:
