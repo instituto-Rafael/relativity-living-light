@@ -22,6 +22,9 @@ POINTS_PATH = ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv"
 COVARIANCE_PATH = ROOT / "data/real/desi_dr2_bao_covariance.csv"
 SUMMARY_PATH = ROOT / "data/real/cosmology/desi_dr2_bao_covariance_summary.csv"
 G3_PRIMARY_SOURCE = ROOT / "data/contracts/rll_g3_dataset_compatibility.v1.json"
+COBAYA_MEAN = ROOT / "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_mean.tsv"
+COBAYA_COV = ROOT / "data/real/cosmology/desi_bao_dr2_cobaya/desi_gaussian_bao_ALL_GCcomb_cov.tsv"
+COBAYA_MANIFEST = ROOT / "data/real/cosmology/desi_bao_dr2_cobaya/MANIFEST.json"
 EXPECTED_ROWS = 13
 
 
@@ -132,6 +135,82 @@ def read_covariance(path: Path) -> list[list[float]]:
     return matrix
 
 
+
+def bind_native_covariance_order(
+    points: list[dict[str, str]], matrix: list[list[float]], root: Path = ROOT
+) -> dict[str, Any]:
+    """Bind the Cobaya covariance's native row order to primary DESI row identities.
+
+    The public DESI/Cobaya ALL mean places Lya DH before DM, whereas the
+    repository's Table-IV primary vector places DM before DH. Never infer the
+    covariance axis from a bare 13x13 shape; do not edit the immutable input.
+    """
+    mean_path = root / COBAYA_MEAN.relative_to(ROOT)
+    cov_path = root / COBAYA_COV.relative_to(ROOT)
+    manifest_path = root / COBAYA_MANIFEST.relative_to(ROOT)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("claim_boundary", {}).get("claim_allowed") is not False:
+        raise ValueError("DESI upstream-custody manifest must remain claim_allowed=false")
+    records = {item["local_file"]: item for item in manifest["files"]}
+    for source_path in (mean_path, cov_path):
+        identifier = _repo_path(source_path, root)
+        record = records.get(identifier)
+        if record is None or sha256_file(source_path) != record.get("local_sha256"):
+            raise ValueError(f"DESI source custody missing or hash mismatch for {identifier}")
+    with mean_path.open(newline="", encoding="utf-8") as handle:
+        native = list(csv.DictReader(handle, delimiter="\t"))
+    if len(native) != EXPECTED_ROWS:
+        raise ValueError("DESI native Cobaya mean must contain 13 indexed observables")
+    native_cov = [
+        [float(value) for value in line.split()]
+        for line in cov_path.read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
+    if len(native_cov) != EXPECTED_ROWS or any(len(row) != EXPECTED_ROWS for row in native_cov):
+        raise ValueError("DESI native Cobaya covariance must be 13x13")
+    if any(
+        not math.isclose(matrix[i][j], native_cov[i][j], rel_tol=0.0, abs_tol=1e-12)
+        for i in range(EXPECTED_ROWS) for j in range(EXPECTED_ROWS)
+    ):
+        raise ValueError("DESI repository covariance differs from pinned Cobaya native matrix")
+    permutation: list[int] = []
+    used: set[int] = set()
+    deviations: list[float] = []
+    for index, point in enumerate(points):
+        matches = [
+            native_index for native_index, item in enumerate(native)
+            if math.isclose(float(item["z"]), float(point["z_eff"]), rel_tol=0.0, abs_tol=1e-9)
+            and item["quantity"].replace("_over_rs", "_over_rd") == point["observable"]
+        ]
+        if len(matches) != 1 or matches[0] in used:
+            raise ValueError(f"DESI native covariance has ambiguous/missing axis for primary row {index}")
+        native_index = matches[0]
+        used.add(native_index)
+        permutation.append(native_index)
+        if abs(float(native[native_index]["value"]) - float(point["value"])) > 0.002:
+            raise ValueError(f"DESI native mean/Table-IV value disagreement at row {index}")
+        sigma_native = math.sqrt(matrix[native_index][native_index])
+        sigma_table = float(point["sigma"])
+        drift = abs(sigma_native / sigma_table - 1.0)
+        deviations.append(drift)
+        # An operational diagnostic tolerance, not a scientific source-error bar.
+        if not math.isfinite(drift) or drift > 0.10:
+            raise ValueError(f"DESI native covariance sigma inconsistent with primary row {index}")
+    if sorted(permutation) != list(range(EXPECTED_ROWS)):
+        raise ValueError("DESI native covariance mapping is not bijective")
+    return {
+        "status": "LOCAL_COBAYA_CUSTODY_AND_PERMUTATION_CHECKED",
+        "covariance_index_for_primary_row": permutation,
+        "native_mean_path": _repo_path(mean_path, root),
+        "native_mean_sha256": sha256_file(mean_path),
+        "native_covariance_path": _repo_path(cov_path, root),
+        "native_covariance_sha256": sha256_file(cov_path),
+        "native_manifest_sha256": sha256_file(manifest_path),
+        "max_sigma_relative_drift": max(deviations),
+        "sigma_drift_operational_limit": 0.10,
+        "external_independent_reanalysis": "TOKEN_VAZIO",
+    }
+
+
 def read_summary(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
@@ -145,7 +224,10 @@ def build_receipt(
     summary_path = root / SUMMARY_PATH.relative_to(ROOT)
     points = read_points(points_path)
     source_binding = verify_primary_source_order(points)
-    matrix = read_covariance(covariance_path)
+    matrix_native = read_covariance(covariance_path)
+    native_binding = bind_native_covariance_order(points, matrix_native, root)
+    permutation = native_binding["covariance_index_for_primary_row"]
+    matrix = [[matrix_native[i][j] for j in permutation] for i in permutation]
     summary = read_summary(summary_path)
 
     mapping: list[dict[str, Any]] = []
@@ -221,6 +303,8 @@ def build_receipt(
         "claim_allowed": False,
         "scientific_confirmation": False,
         "primary_source_binding": source_binding,
+        "native_covariance_binding": native_binding,
+        "covariance_index_for_primary_row": permutation,
         "points_path": _repo_path(points_path, root),
         "points_sha256": sha256_file(points_path),
         "covariance_path": _repo_path(covariance_path, root),
@@ -234,17 +318,17 @@ def build_receipt(
         "pair_checks": pair_checks,
         "unexpected_nonzero_pairs": [],
         "consumer_binding": {
-            "path": "data/pipelines/structure_d/joint_real_likelihood.py",
-            "behavior": "pd.read_csv(primary_points) preserves file row order; covariance is read with index_col=0 and accepted only at matching shape",
-            "status": "VERIFIED_REPO_WIRING",
+            "path": "tools/run_g4_background_tournament.py",
+            "behavior": "G4 consumes this custody receipt and permutes source covariance axes before likelihood construction",
+            "status": "VERIFIED_G4_ALIGNMENT_ONLY",
         },
         "provenance_boundary": {
             "repo_order_binding": "VERIFIED",
             "external_primary_covariance_order_metadata": "BOUNDED_BY_REPO_DOCUMENTATION_NOT_INDEPENDENT_PRIMARY_ORDER_RECEIPT",
             "interpretation": "This receipt proves deterministic repository wiring, not independent external-source authorship of the matrix ordering.",
         },
-        "F_ok": "13 primary rows are deterministically bound to covariance indices 0..12 and six anisotropic covariance blocks map to the expected row pairs",
-        "F_gap": "independent primary-source covariance-order metadata is not promoted by this repo-local receipt",
+        "F_ok": "13 primary rows are G3-bound and the native Cobaya covariance is aligned by a verified permutation; six canonical pairs are checked",
+        "F_gap": "non-G4 consumers of the raw matrix remain unaudited; no independent DESI catalog reconstruction or physical cosmology claim",
         "F_next": "carry this vector identity hash into the future G2/G5 canonical likelihood manifest",
     }
 
