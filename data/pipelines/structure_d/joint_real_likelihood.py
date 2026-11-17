@@ -38,6 +38,7 @@ except ImportError as exc:  # pragma: no cover - exercised by environment setup
     ) from exc
 
 from rll.cosmology_fairness import covariance_readiness, growth_backend_benchmark_status, load_parameter_origin_registry
+from rll.desi_dr2_authority_v1 import align_verified_desi_covariance, observation_vector_n
 
 from .energy_momentum_bridge import build_fnext_gate
 from .likelihood import aic, aicc, bic, chi2_with_covariance
@@ -326,37 +327,47 @@ def _validate_model_parameter_registry(registry: dict) -> None:
 
 
 def _load_desi_covariance(points: pd.DataFrame, summary: pd.DataFrame) -> tuple[np.ndarray, dict[str, object]]:
+    # The official Cobaya file places Ly-alpha DH before DM, unlike our
+    # observation table. Reindex a copy by SOURCE-BOUND identities, not by
+    # guessed variance similarities. Never alter raw source or old results.
     if DESI_FULL_COV_PATH.exists():
         full_cov = pd.read_csv(DESI_FULL_COV_PATH, index_col=0).to_numpy(dtype=float)
-        readiness = covariance_readiness(full_cov, mode="official_full")
-        if readiness.ready and full_cov.shape == (len(points), len(points)):
-            return full_cov, {
-                "path": str(DESI_FULL_COV_PATH.relative_to(BASE_DIR)),
-                "source_path": str(DESI_FULL_COV_PATH.relative_to(BASE_DIR)),
-                "mode": readiness.mode,
-                "ready": readiness.ready,
-                "claim_allowed": readiness.claim_allowed,
-                "reason": readiness.reason,
-                "sha256": _sha256_file(DESI_FULL_COV_PATH),
-                "metric": "chi2_with_covariance",
-                "baseline": [MODEL_LCDM, MODEL_WCDM, MODEL_CPL],
-                "uncertainty_or_covariance_status": "official_full_covariance_matrix",
-                "command": "python -m data.pipelines.structure_d.joint_real_likelihood",
-                "claim_boundary": (
-                    "Covariance readiness is a technical evidence gate for using the official full "
-                    "DESI DR2 BAO covariance in chi2_with_covariance; it does not by itself confirm or "
-                    "validate RLL against LCDM/CPL."
-                ),
-            }
+        if full_cov.shape != (len(points), len(points)):
+            raise ValueError("BLOCKED_DESI_FULL_COVARIANCE_DIMENSION")
+        aligned_cov, mapping = align_verified_desi_covariance(points, full_cov, DESI_FULL_COV_PATH)
+        readiness = covariance_readiness(aligned_cov, mode="official_full")
+        if not readiness.ready:
+            raise ValueError("BLOCKED_DESI_FULL_COVARIANCE_READINESS")
+        return aligned_cov, {
+            "path": str(DESI_FULL_COV_PATH.relative_to(BASE_DIR)),
+            "source_path": str(DESI_FULL_COV_PATH.relative_to(BASE_DIR)),
+            "mode": readiness.mode,
+            "ready": readiness.ready,
+            "claim_allowed": False,
+            "reason": readiness.reason,
+            "sha256": _sha256_file(DESI_FULL_COV_PATH),
+            "metric": "chi2_with_covariance",
+            "baseline": [MODEL_LCDM, MODEL_WCDM, MODEL_CPL],
+            "uncertainty_or_covariance_status": "official_full_covariance_matrix_order_aligned",
+            "command": "python -m data.pipelines.structure_d.joint_real_likelihood",
+            "claim_boundary": (
+                "Verified DESI source-to-observation ordering is only a scoped "
+                "covariance ingestion check; no RLL scientific claim is allowed."
+            ),
+            **mapping,
+        }
+    # Explicitly preserve historical block-summary fallback when the full
+    # source does not exist; a malformed present full source is NEVER bypassed.
     block_cov = build_desi_covariance(points, summary)
     readiness = covariance_readiness(block_cov, mode="block_summary")
     return block_cov, {
         "path": str(DESI_COV_SUMMARY_PATH.relative_to(BASE_DIR)),
         "mode": readiness.mode,
         "ready": readiness.ready,
-        "claim_allowed": readiness.claim_allowed,
+        "claim_allowed": False,
         "reason": readiness.reason,
         "sha256": _sha256_file(DESI_COV_SUMMARY_PATH),
+        "claim_boundary": "Block-summary covariance is a limited fallback, not scientific validation.",
     }
 
 
@@ -566,7 +577,9 @@ def run_joint_likelihood(output_stem: str = "joint_real_likelihood") -> dict:
 
     registry = inputs["parameter_registry"]
     commit_sha = _git_sha()
-    n_obs = int(len(inputs["hz"]) + len(inputs["desi"]) + len(inputs["fs8"]) + 2)
+    # Count all actual CMB covariance dimensions (3 on current real data).
+    # This is vector dimension only; effective BIC sample semantics remain review-bound.
+    n_obs = observation_vector_n(inputs)
     rows = [_model_row(model, fitted[model][0], fitted[model][1], n_obs, registry=registry, commit_sha=commit_sha) for model in MODEL_ORDER]
     rows_by_model = {row["model"]: row for row in rows}
     rll_delta = _delta_against(rows_by_model, MODEL_RLL)
