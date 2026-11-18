@@ -88,3 +88,17 @@ def test_local_curve_rejects_nonfinite_inputs():
     ):
         with pytest.raises(ValueError):
             local_curve_invariants_3d(v,a,j)
+
+
+def test_local_curve_rejects_nonfinite_intermediate_results():
+    import pytest
+    for v,a,j in (
+        ((1e200,0,0),(0,0,0),None),
+        ((1,0,0),(0,1e200,0),(0,0,1e200)),
+        ((1e150,0,0),(0,1e150,0),None),
+    ):
+        with pytest.raises(ValueError):
+            local_curve_invariants_3d(v,a,j)
+    valid = local_curve_invariants_3d((1.,0.,0.),(0.,1.,0.),(0.,0.,1.))
+    assert valid["curvature"] == 1.0
+    assert valid["torsion"] == 1.0

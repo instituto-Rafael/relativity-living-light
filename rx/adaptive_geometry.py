@@ -11,7 +11,7 @@ EPS = 1e-15
 
 
 def _norm3(v):
-    return math.sqrt(sum(float(x) * float(x) for x in v))
+    return math.hypot(*(float(x) for x in v))
 
 
 def _cross3(a, b):
@@ -159,13 +159,23 @@ def local_curve_invariants_3d(velocity, acceleration, jerk=None):
     if not all(math.isfinite(x) for x in (*v, *a)):
         raise ValueError("velocity and acceleration must be finite")
     speed = _norm3(v)
+    if not math.isfinite(speed):
+        raise ValueError("speed must remain finite; rescale input units")
     if speed <= EPS:
         return {"state": "TOKEN_VAZIO_ZERO_SPEED", "speed": speed, "curvature": None, "torsion": None, "claim_allowed": False}
     cross_va = _cross3(v, a)
     cross_norm = _norm3(cross_va)
-    curvature = cross_norm / (speed ** 3)
-    tangential_accel = _dot3(v, a) / speed
-    normal_accel = cross_norm / speed
+    if not math.isfinite(cross_norm):
+        raise ValueError("cross-product magnitude not finite; rescale inputs")
+    try:
+        curvature = cross_norm / (speed ** 3)
+        tangential_accel = _dot3(v, a) / speed
+        normal_accel = cross_norm / speed
+    except (OverflowError, ZeroDivisionError) as exc:
+        raise ValueError("curve diagnostics not representable; rescale inputs") from exc
+    if not all(math.isfinite(x) for x in
+               (curvature, tangential_accel, normal_accel)):
+        raise ValueError("curve diagnostics not finite; rescale inputs")
     torsion = None
     torsion_state = "TOKEN_VAZIO_JERK_NOT_SUPPLIED"
     if jerk is not None:
@@ -175,10 +185,14 @@ def local_curve_invariants_3d(velocity, acceleration, jerk=None):
         if not all(math.isfinite(x) for x in j):
             raise ValueError("jerk must be finite")
         denom = cross_norm * cross_norm
+        if not math.isfinite(denom):
+            raise ValueError("torsion denominator overflow; rescale inputs")
         if denom <= EPS:
             torsion_state = "TOKEN_VAZIO_ZERO_CURVATURE"
         else:
             torsion = _dot3(cross_va, j) / denom
+            if not math.isfinite(torsion):
+                raise ValueError("torsion is not finite; rescale inputs")
             torsion_state = "DEFINED"
     return {
         "state": "DEFINED",
