@@ -1,39 +1,56 @@
-# DESI DR2 BAO-only — execução independente G4, RLL × ΛCDM × wCDM (2026-11-18)
+# RLL Ω · DESI DR2 BAO-only ΛCDM × wCDM × RLL — correção de índice da covariância
 
-**Estado:** REVIEW_ONLY / BAO_ONLY_SYNTHETIC_SOURCE_ADAPTER_PASS_SCOPED / PROVIDER_EXACT_HEAD_NOT_RUN_AT_CREATION / \`claim_allowed=false\`.
+**Atualização 2026-11-18.** `claim_allowed=false`, PR #1235 DRAFT/HOLD. Este documento sucede a primeira transcrição local, sem apagar seu registro. Código-fonte e observações não foram alterados.
 
-## Fonte de autoridade
-- Produtor: \`instituto-Rafael/relativity-living-light\`, base \`rll/lab@f83f6173cb98fc785935da35afe4b31c609f1744\`
-- Equações: \`tools/run_g4_background_tournament.py\` (G4); o executor apenas usa seu \`e2\`.
-- Dados: \`data/real/cosmology/desi_dr2_bao_primary_points.csv\` (13 coordenadas; blob \`f6d05ead6fef7fea663eff8b31bc2c337dc30435\`), matriz \`data/real/desi_dr2_bao_covariance.csv\` (13×13; blob \`e01d0235a2f0e61d81af0c36a7338953f845f5c3\`). O carregador G4 valida ordem dos elementos e hashes das entradas; nenhuma tabela observacional foi duplicada no executor.
-- Parâmetro livre BAO-only \`q=c/(H0*r_d)\`, além de \`Omega_m\` e extensões. Dados BAO isolados não estimam H0 nem r_d separadamente.
+## Falha falsificada e correção
 
-## Primeiro ensaio local independente (transcrição auditável)
+O teste inicial esperava χ²=(10.902987, 7.467261, 6.474229), mas a suíte de CI no HEAD `c46fbf3eeeca71cda8f6ab8fe0303dc2cd4beac2` encontrou ΛCDM χ²=10.291044479494511. Causa confirmada: a matriz pública DESI/Cobaya nativa ordena **Lyman-α DH antes de DM**, enquanto o vetor Table IV no repositório ordena **DM antes de DH**. A transcrição local anterior usava incorretamente a matriz nativa como se tivesse a ordem do vetor. O G4 já implementava a permutação, portanto o erro era do **benchmark de referência/teste**, não das equações `g4.e2` ou da base observacional. A falha nunca deve ser escondida por ampliação arbitrária da tolerância.
 
-| Modelo | n | k | min χ² | AICc | BIC |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| ΛCDM | 13 | 2 | 10.90298739 | 16.10298739 | 16.03288610 |
-| wCDM | 13 | 3 | 7.46726123 | 16.13392790 | 15.16210930 |
-| RLL | 13 | 5 | 6.47422916 | 25.04565773 | 19.29897595 |
+Proveniência:
 
-AICc: ΛCDM e wCDM quase empatam, RLL penalizado pela complexidade. Menor χ² do RLL não prova superioridade física; seus parâmetros \`Omega_m=0.10\` e \`w_t=0.05\` ficaram nas fronteiras estabelecidas. Null checks \`w=-1\` e \`Omega_s0=0\` = 0. Modelos usam \`Omega_r=9e-5\` e geometria FLRW plana G4.
+- `tools/build_desi_covariance_order_receipt.py` valida `G3_TABLE4_ORDER_VALUE_SIGMA_CORRELATION_CHECKED` e a bijeção com o Cobaya nativo;
+- `tools/run_g4_background_tournament.py::load_desi()` aplica `matrix[np.ix_(permutation,permutation)]`, após validação de hash/ordem e Cholesky;
+- `data/real/cosmology/desi_dr2_bao_primary_points.csv` blob Git `f6d05ead6fef7fea663eff8b31bc2c337dc30435`;
+- `data/real/desi_dr2_bao_covariance.csv` blob Git `e01d0235a2f0e61d81af0c36a7338953f845f5c3`.
+- Um teste de regressão agora exige permutação **[0..10,12,11]**, a covariância simétrica positiva e o par Lya na ordem DM,DH da tabela.
 
-## Falsificação e sensibilidade
+## Nova reprodução independente ligada ao G4, com ordem correta
 
-- Refits BAO-only removendo cada um dos sete tracers: em 7/7 subconjuntos RLL não foi escolhido por AICc (ΛCDM 6; wCDM 1); não tratar como sete estudos independentes.
-- Relaxar experimentalmente os limites de \`Omega_m\` e \`w_t\` permite min χ² de 6.4742 chegar a 5.4093; ainda no limite de matéria. Essa sensibilidade invalida a inferência física forte da região ótima BAO-only.
-- Fonte original G4 Pantheon+ \`STAT+SYS\` ~33 MB não está no checkout/versionamento atual. **Não usar diagonal como se fosse covariância completa.**
-- O novo script depende de fonte local G4 e usa \`g4.load_desi()\`; o ensaio local reproduziu os valores por um adaptador sintético correspondente à fonte. **CI real de HEAD e reprodução externa ainda devem ser observadas.**
+13 observáveis e matriz 13×13. Mesmas regras de quadratura Gauss–Legendre 96/192, amplitude efetiva livre `q=c/(H0*r_d)`, mesmo otimizador multistart e bounds. Resultados reproduzidos localmente com o adaptador equivalente ao G4, sujeitos à verificação da CI do novo HEAD:
 
-## Executar sem sobrescrever resultados existentes
+| Modelo | k | χ² | AICc | BIC |
+|---|---:|---:|---:|---:|
+| ΛCDM | 2 | 10.2910444795 | **15.4910444795** | **15.4209431944** |
+| wCDM | 3 | 9.0274881328 | 17.6941547994 | 16.7223362051 |
+| RLL | 5 | **7.8039737280** | 26.3754022994 | 20.6287205153 |
 
-\`\`\`sh
-OPENBLAS_NUM_THREADS=1 python scripts/run_bao_only_from_g4_v1.py --starts-extra 18 --output artifacts/evidence/bao_only_g4_3model_$(date -u +%Y%m%dT%H%M%SZ).json
-\`\`\`
+Parâmetros da melhor solução:
+- ΛCDM: `q=29.5225994480; Ωm=0.2971567020`.
+- wCDM: `q=30.0589082143; Ωm=0.2973710261; w=-0.9107922977`.
+- RLL: `q=28.4039182605; Ωm=0.1340362727; Ωs0=0.1343514672; z_t=0.3988747690; w_t=0.05`.
 
-O script falha quando o destino já existe; \`python -m pytest -q tests/test_bao_only_g4_v1.py\` exige os 13 pontos e matriz completos na ordem canônica.
+19, 19, 20 iniciações no executor novo (todas as melhores soluções com otimizador `success=true`). O RLL atinge o limite `w_t=0.05`; o perfil de verossimilhança e incerteza dos parâmetros continuam `TOKEN_VAZIO`.
 
-## Próximo gate científico
-Materializar e verificar \`Pantheon+SH0ES_STAT+SYS.cov\` por hash/tamanho/dimensão; então executar **G4 completo** com SN+BAO+CC na mesma seleção, nuisance profile e parâmetros/priors justos, em vários seeds. Manter separados G4 e ajuste legado de 64 pontos com growth/CMB aproximados.
+### Revisão dos resultados anteriores
 
-\`SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM\`; \`claim_allowed=false\`. Sem merge nem mudança na main.
+Os χ² e derivados AICc/BIC do primeiro ensaio BAO-only sem permutação **não são comparáveis como resultados verificados** e ficam expressamente **SUPERSEDED_WRONG_COVARIANCE_INDEX**. O jackknife 7/7 e sensibilidade dos limites antes publicados com aquela matriz devem ser **RECOMPUTED_NOT_RUN**, nunca importados para estes resultados. Preservar o relatório anterior como evidência histórica do bug, não como valor canônico.
+
+Critério de seleção com AICc e BIC ainda favorece ΛCDM sobre RLL; menor χ² do RLL apenas reflete maior liberdade paramétrica neste conjunto.
+
+### Bloqueios explícitos
+
+- `Pantheon+SH0ES_STAT+SYS.cov` oficial e sidecar SHA-256 ainda não disponíveis neste checkout: `TOKEN_VAZIO_FULL_COVARIANCE`. Não usar diagonal como substituto.
+- Torneio G4 completo Pantheon+ + BAO + cronômetros cósmicos: `NOT_RUN` neste commit.
+- Perfil de parâmetros / estimativa robusta de intervalos de confiança / replicação independente com arquivo Cobaya original: `NOT_RUN`.
+- `claim_allowed=false`; PR DRAFT/HOLD; `main`, `rll/lab` e ciência observacional imutáveis.
+
+## Comandos para verificação
+
+```sh
+OPENBLAS_NUM_THREADS=1 python -m pytest -q tests/test_bao_only_g4_v1.py
+OPENBLAS_NUM_THREADS=1 python scripts/run_bao_only_from_g4_v1.py --starts-extra 18 --output artifacts/evidence/bao_g4_source_order_20261118.json
+```
+
+Saída append-only: escolher nome novo a cada execução. O comando rejeita um arquivo existente.
+
+`SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM` / `IMPLEMENTED_UNTESTED != PASS`.
