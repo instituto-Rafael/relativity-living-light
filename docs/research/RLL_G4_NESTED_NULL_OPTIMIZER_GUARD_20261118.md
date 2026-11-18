@@ -20,3 +20,27 @@ This branch changes ONLY the G4 optimizer's starting set and guard:
 
 ## Provenance
 Review branch from `rll/lab@f83f6173cb98fc785935da35afe4b31c609f1744`, source `tools/run_g4_background_tournament.py`, tests `tests/test_g4_nested_null_optimization_v1.py`. This is a scientific numerical improvement candidate, not yet an accepted optimum or merge authorization. Rollback: leave review PR unmerged and preserve original source and receipt.
+
+
+## Post-merge lab reassessment (2026-11-18) — source-level regression
+
+Live lab advanced from `f83f6173cb98fc785935da35afe4b31c609f1744` to
+`a84cb8a00425da97915d8f64d1c6704ebf4f8397` after PRs #1234/#1235/
+#1237/#1238/#1239/#1240 were merged. This PR remains a distinct DRAFT/HOLD
+candidate, initially 17 commits behind lab and mergeable in the GitHub API.
+The G4 source blob on lab remains `cb4c449e05e520b73135facd4074d4bb236a3f9b`,
+and this PR's corrected source differs only by its audited nested-null logic.
+
+A new `test_g4_nested_full_background_profiles_are_equal_across_all_blocks`
+uses **synthetic** correlated Pantheon-like, chronometer and DESI-like data
+and checks exact equality of every forward observable, the profiled M_B,
+each χ² component, and total χ² at the true nested LCDM embedding for all
+five extended models. This falsifies a narrower but critical failure missed by
+the original test: equal E² while distances, sound horizon, covariances, or
+nuisance profiling disagree. These synthetic values are not measured survey
+data and cannot supply a cosmological claim.
+
+The exact-HEAD provider CI, including G4 integration and G6 scientific
+BLOCKED receipts, must still pass after this successor commit. A green
+workflow never means perturbative closure or physical confirmation.
+No merge is authorized by this review; `rll/lab` and `main` stay untouched.
