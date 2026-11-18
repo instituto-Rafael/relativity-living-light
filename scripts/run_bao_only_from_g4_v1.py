@@ -20,6 +20,7 @@ ROOT=Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0,str(ROOT))
 from tools import run_g4_background_tournament as g4
+from tools.bao_boundary_gate_v1 import boundary_report, gate_boundary_claim, format_chi2
 
 C_KM_S=299792.458
 PARAMS={
@@ -97,7 +98,15 @@ def fit(block,model,starts_extra=18,seed=20261118):
     diff=solve_triangular(l,out-block.observed,lower=True,check_finite=True)
     exact_chi=float(diff@diff)
     n=block.n;k=len(opt.x)
+    boundary=boundary_report(opt,(lower,upper),PARAMS[model],n)
+    gate_boundary_claim(boundary)
     result={'model':model,'N':n,'k':k,'chi2':exact_chi,
+            'chi2_display':format_chi2(exact_chi,boundary),
+            'boundary_diagnostics':boundary,
+            'min_grad_inf':boundary['min_grad_inf'],
+            'claim_blocked_reason':boundary['claim_blocked_reason'],
+            'optimization_quadrature_nodes':96,
+            'verification_quadrature_nodes':192,
             'AIC':exact_chi+2*k,'AICc':exact_chi+2*k+2*k*(k+1)/(n-k-1),
             'BIC':exact_chi+k*math.log(n),
             'parameters':dict(zip(PARAMS[model],map(float,opt.x))),
@@ -120,6 +129,21 @@ def run(starts_extra=18):
     if any(v>1e-12 for v in null_tests.values()):
         raise ValueError('nested null-limit failure')
     rows=[fit(block,name,starts_extra=starts_extra) for name in PARAMS]
+    results={item['model']: {
+        'chi2':item['chi2'],
+        'chi2_display':item['chi2_display'],
+        'boundary_diagnostics':item['boundary_diagnostics'],
+        'min_grad_inf':item['min_grad_inf'],
+        'claim_allowed':False,
+        'claim_blocked_reason':item['claim_blocked_reason'],
+    } for item in rows}
+    for item in results.values():
+        gate_boundary_claim(item['boundary_diagnostics'])
+    rendered_table={
+        'rows':[{'model':item['model'], 'chi2':item['chi2_display'],
+                 'AICc':item['AICc'], 'BIC':item['BIC']} for item in rows],
+        'footnote':'* corner: fitted optimum at declared parameter bound; see results.<model>.boundary_diagnostics. Not a scientific endorsement.',
+    }
     return {'schema':'rll.bao_only_g4_three_model.v1','state':'BAO_ONLY_EXECUTED','claim_allowed':False,
             'source':'rll/lab tools/run_g4_background_tournament.py + pinned DESI DR2 local input',
             'data_blobs':{'points':'f6d05ead6fef7fea663eff8b31bc2c337dc30435','covariance':'e01d0235a2f0e61d81af0c36a7338953f845f5c3'},
@@ -127,6 +151,8 @@ def run(starts_extra=18):
             'null_tests':null_tests,'independent_amplitude':'q=c/(H0*r_d)',
             'radiation_source':'G4 OMEGA_R0',
             'models':rows,
+            'results':results,
+            'rendered_table':rendered_table,
             'Pantheon_plus':'TOKEN_VAZIO_FULL_COVARIANCE',
             'G4_joint_fit':'NOT_RUN',
             'claim_note':'BAO-only results depend on bounds, are not Pantheon or full physics and cannot confirm RLL superiority.'}
@@ -141,6 +167,6 @@ def main():
     report=run(starts_extra=ns.starts_extra)
     ns.output.parent.mkdir(parents=True,exist_ok=True)
     ns.output.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-    print(json.dumps({'state':report['state'],'rows':[{'model':r['model'],'chi2':r['chi2'],'AICc':r['AICc'],'BIC':r['BIC']} for r in report['models']],'Pantheon_plus':report['Pantheon_plus']},ensure_ascii=False))
+    print(json.dumps({'state':report['state'],'rows':[{'model':r['model'],'chi2':r['chi2_display'],'AICc':r['AICc'],'BIC':r['BIC']} for r in report['models']], 'footnote':report['rendered_table']['footnote'],'Pantheon_plus':report['Pantheon_plus']},ensure_ascii=False))
 
 if __name__=='__main__':main()

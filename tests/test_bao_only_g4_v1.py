@@ -39,6 +39,23 @@ def test_bao_only_g4_three_model_full_covariance_source():
     assert all(row['optimizer_success'] is True for row in by.values())
     assert abs(by['RLL']['parameters']['w_t']-0.05)<1e-9
     assert by['RLL']['parameters']['Omega_s0']>0.0
+    # New contract: diagnostics of the SAME corrected best-fit object.
+    assert report['results']['RLL']['boundary_diagnostics'] == by['RLL']['boundary_diagnostics']
+    assert report['results']['RLL']['min_grad_inf'] == by['RLL']['min_grad_inf']
+    assert report['results']['RLL']['claim_allowed'] is False
+    for item in report['models']:
+        assert item['boundary_diagnostics']['claim_allowed'] is False
+        assert item['chi2_display'].endswith('*') == item['boundary_diagnostics']['corner_solution']
+        assert math.isfinite(item['min_grad_inf'])
+        assert item['boundary_diagnostics']['n_effective_dof'] is None
+        assert item['boundary_diagnostics']['n_effective_dof_status'] == 'TOKEN_VAZIO_NOT_ESTIMATED'
+    rll=by['RLL']
+    assert rll['boundary_diagnostics']['at_boundary']['w_t'] is True
+    assert rll['boundary_diagnostics']['at_boundary']['Omega_m'] is False
+    assert rll['boundary_diagnostics']['n_residual_dof_nominal'] == 8
+    assert rll['chi2_display'] == '7.8040*'
+    assert 'corner' in rll['claim_blocked_reason']
+    assert 'corner' in report['rendered_table']['footnote']
 
 
 
