@@ -102,3 +102,29 @@ def test_local_curve_rejects_nonfinite_intermediate_results():
     valid = local_curve_invariants_3d((1.,0.,0.),(0.,1.,0.),(0.,0.,1.))
     assert valid["curvature"] == 1.0
     assert valid["torsion"] == 1.0
+
+
+def test_bao_extreme_magnitudes_fail_closed_without_silent_inf():
+    import pytest
+    for x, y in (
+        (1e300, 1e-300),  # finite inputs, ratio overflows
+        (1e-300, 1e-300), # finite inputs, product underflows
+        (1e160, 1e160),   # finite inputs, product overflows
+        (1e155, 1e-155),  # derived ellipse/metric not representable
+        (1e-320, 1e308), # derived ratio underflows
+    ):
+        with pytest.raises(ValueError):
+            bao_observable_geometry(x, y)
+
+
+def test_bao_log_coordinates_stable_at_representable_scales():
+    for x, y in (
+        (1e-150, 1e-150), (1e150, 1e150),
+        (1e-200, 1e100), (0.0001, 100.0),
+    ):
+        g = bao_observable_geometry(x, y)
+        assert math.isclose(g["reconstruction"]["DM_over_rd"], x, rel_tol=1e-12)
+        assert math.isclose(g["reconstruction"]["DH_over_rd"], y, rel_tol=1e-12)
+        assert math.isfinite(g["log_scale"])
+        assert math.isfinite(g["anisotropy_log_ratio"])
+        assert g["claim_allowed"] is False

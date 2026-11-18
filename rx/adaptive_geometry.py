@@ -39,16 +39,33 @@ def bao_observable_geometry(dm_over_rd, dh_over_rd):
         raise ValueError("DM/rd and DH/rd must be finite and positive")
     ratio = x / y
     product = x * y
-    log_scale = 0.5 * math.log(product)
-    anisotropy = math.log(ratio)
-    x_reconstructed = math.exp(log_scale + 0.5 * anisotropy)
-    y_reconstructed = math.exp(log_scale - 0.5 * anisotropy)
+    if not (math.isfinite(ratio) and ratio > 0.0 and
+            math.isfinite(product) and product > 0.0):
+        raise ValueError("BAO ratio/product cannot be represented as finite positive floats")
+    # Use separate input logarithms to avoid needless loss of precision.
+    log_x, log_y = math.log(x), math.log(y)
+    log_scale = 0.5 * (log_x + log_y)
+    anisotropy = log_x - log_y
+    try:
+        x_reconstructed = math.exp(log_scale + 0.5 * anisotropy)
+        y_reconstructed = math.exp(log_scale - 0.5 * anisotropy)
+    except OverflowError as exc:
+        raise ValueError("BAO reconstruction exceeds finite range") from exc
     q = min(ratio, 1.0 / ratio)
     ecc = math.sqrt(max(0.0, 1.0 - q * q))
     rho = math.hypot(x, y)
     phi = math.atan2(x, y)
     a_tri = 0.5 * product
     a_ellipse = math.pi * product
+    # Fail closed rather than silently exporting infinite/zeroed geometry proxies.
+    phi_identity = phi - math.atan(ratio)
+    area_identity = a_ellipse - 2.0 * math.pi * a_tri
+    radial_identity = rho * rho - product * (ratio + 1.0 / ratio)
+    derived = (x_reconstructed, y_reconstructed, q, ecc, rho, phi,
+               a_tri, a_ellipse, phi_identity, area_identity, radial_identity)
+    if not all(math.isfinite(v) for v in derived) or not (
+            x_reconstructed > 0.0 and y_reconstructed > 0.0 and q > 0.0):
+        raise ValueError("BAO derived geometry cannot be represented as finite floats")
     return {
         "DM_over_rd": x,
         "DH_over_rd": y,
@@ -64,9 +81,9 @@ def bao_observable_geometry(dm_over_rd, dh_over_rd):
         "ellipse_area_proxy": a_ellipse,
         "reconstruction": {"DM_over_rd": x_reconstructed, "DH_over_rd": y_reconstructed},
         "redundancy_identities": {
-            "phi_equals_atan_F_AP": phi - math.atan(ratio),
-            "ellipse_area_minus_2pi_triangle_area": a_ellipse - 2.0 * math.pi * a_tri,
-            "rho2_minus_product_times_ratio_plus_inverse": rho * rho - product * (ratio + 1.0 / ratio),
+            "phi_equals_atan_F_AP": phi_identity,
+            "ellipse_area_minus_2pi_triangle_area": area_identity,
+            "rho2_minus_product_times_ratio_plus_inverse": radial_identity,
         },
         "claim_allowed": False,
     }
