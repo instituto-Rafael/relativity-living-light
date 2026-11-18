@@ -96,5 +96,6 @@
       "const": "BOUNDARY_DIAGNOSTIC_ONLY"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "description": "Structural contract for bounded least-squares diagnostics; not a scientifically validated model or claim."
 }
