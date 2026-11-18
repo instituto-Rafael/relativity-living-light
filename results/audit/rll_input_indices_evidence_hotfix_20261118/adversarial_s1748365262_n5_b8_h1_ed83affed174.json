@@ -1,0 +1,375 @@
+{
+  "claim_allowed": false,
+  "fit": {
+    "CPL": {
+      "boundary_parameters": [
+        "w0"
+      ],
+      "chi2": 5.699271710367336,
+      "converged": true,
+      "k_fit": 4,
+      "model": "CPL",
+      "params": {
+        "H0": 62.90460917775837,
+        "Om": 0.37364160048032397,
+        "w0": -0.30000000000000004,
+        "wa": -2.301339086934662
+      },
+      "scores_diagnostic_only": {
+        "AIC": 13.699271710367336,
+        "AICc": 18.699271710367334,
+        "BIC": 15.959069140213483
+      },
+      "starts": [
+        {
+          "chi2": 5.699271710367396,
+          "nfev": 15,
+          "start": 0,
+          "success": true
+        },
+        {
+          "chi2": 5.699271710367423,
+          "nfev": 14,
+          "start": 1,
+          "success": true
+        },
+        {
+          "chi2": 5.699271710367358,
+          "nfev": 22,
+          "start": 2,
+          "success": true
+        },
+        {
+          "chi2": 9.818242692587486,
+          "nfev": 34,
+          "start": 3,
+          "success": true
+        },
+        {
+          "chi2": 5.699271710367336,
+          "nfev": 27,
+          "start": 4,
+          "success": true
+        }
+      ]
+    },
+    "LCDM": {
+      "boundary_parameters": [],
+      "chi2": 10.284009526976341,
+      "converged": true,
+      "k_fit": 2,
+      "model": "LCDM",
+      "params": {
+        "H0": 69.03874358710983,
+        "Om": 0.29713656695038676
+      },
+      "scores_diagnostic_only": {
+        "AIC": 14.284009526976341,
+        "AICc": 15.48400952697634,
+        "BIC": 15.413908241899414
+      },
+      "starts": [
+        {
+          "chi2": 10.284009526976341,
+          "nfev": 6,
+          "start": 0,
+          "success": true
+        },
+        {
+          "chi2": 10.28400952697637,
+          "nfev": 7,
+          "start": 1,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526976378,
+          "nfev": 7,
+          "start": 2,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526976341,
+          "nfev": 8,
+          "start": 3,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526976371,
+          "nfev": 9,
+          "start": 4,
+          "success": true
+        }
+      ]
+    },
+    "RLL": {
+      "boundary_parameters": [
+        "wt"
+      ],
+      "chi2": 7.813068489503591,
+      "converged": true,
+      "k_fit": 5,
+      "model": "RLL",
+      "params": {
+        "H0": 71.74798963520395,
+        "Om": 0.13452195764800967,
+        "Os": 0.13394389486692027,
+        "wt": 0.05000000000000001,
+        "zt": 0.398787179696685
+      },
+      "scores_diagnostic_only": {
+        "AIC": 17.813068489503593,
+        "AICc": 26.384497060932162,
+        "BIC": 20.637815276811274
+      },
+      "starts": [
+        {
+          "chi2": 10.284009526977746,
+          "nfev": 21,
+          "start": 0,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526976416,
+          "nfev": 3,
+          "start": 1,
+          "success": true
+        },
+        {
+          "chi2": 7.813068489503591,
+          "nfev": 3,
+          "start": 2,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526976394,
+          "nfev": 19,
+          "start": 3,
+          "success": true
+        },
+        {
+          "chi2": 10.284009526993058,
+          "nfev": 22,
+          "start": 4,
+          "success": true
+        }
+      ]
+    }
+  },
+  "fixed_point_chi2": {
+    "LCDM": 28.693741018891878,
+    "RLL": 34.527535985332776
+  },
+  "holdout": [
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 0.7370737750787655,
+          "train_chi2": 5.284770541592267
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 0.5111055050485588,
+          "train_chi2": 9.912583937932764
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 1.1598288363555278,
+          "train_chi2": 7.358031269538187
+        }
+      },
+      "n_heldout": 1,
+      "n_train": 12,
+      "tracer": "BGS"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 4.4700375473195395,
+          "train_chi2": 2.3038491325034376
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 5.036537944421397,
+          "train_chi2": 5.707130616759646
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 4.243028328419837,
+          "train_chi2": 4.485451694395772
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "LRG_z0"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 2.423505292861716,
+          "train_chi2": 4.0000032353014365
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 5.147243891737123,
+          "train_chi2": 5.863125429284156
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 3.8215094988477114,
+          "train_chi2": 5.115990343737761
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "LRG_z1"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 1.9856235751034494,
+          "train_chi2": 4.462732549607224
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 0.9676660575702069,
+          "train_chi2": 9.395694168153991
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 3.2843124559969383,
+          "train_chi2": 5.244434974732251
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "LRGplusELG"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 0.2898095968598494,
+          "train_chi2": 5.450019209459829
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 0.4714421036879428,
+          "train_chi2": 9.844674466092766
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 0.42798898187537404,
+          "train_chi2": 7.427268209065026
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "ELG"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 0.545281189875547,
+          "train_chi2": 5.162246558731909
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 0.6971943115885701,
+          "train_chi2": 9.605230176129854
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 0.7525833327555942,
+          "train_chi2": 7.07896146751887
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "QSO"
+    },
+    {
+      "models": {
+        "CPL": {
+          "heldout_conditional_chi2": 0.34211713300299357,
+          "train_chi2": 5.649388526017294
+        },
+        "LCDM": {
+          "heldout_conditional_chi2": 0.16243597167641266,
+          "train_chi2": 10.18594016226735
+        },
+        "RLL": {
+          "heldout_conditional_chi2": 3.4542467448029837,
+          "train_chi2": 6.37386173993081
+        }
+      },
+      "n_heldout": 2,
+      "n_train": 11,
+      "tracer": "Lya"
+    }
+  ],
+  "limitations": [
+    "BAO only, no calibrated posterior/priors",
+    "fixed rd/Omega_r",
+    "not a certified global optimum",
+    "null boundary Os=0 unidentified zt/wt",
+    "no CLASS/CAMB perturbations",
+    "no joint SN/CMB/RSD full likelihood",
+    "not external referee verified"
+  ],
+  "method": {
+    "bootstrap_simulations": 8,
+    "fixed_Omega_r": 9.2e-05,
+    "fixed_rd_mpc": 147.09,
+    "integrator": "64 point Gauss-Legendre",
+    "likelihood": "correlated Gaussian BAO 13x13",
+    "models": [
+      "LCDM",
+      "CPL",
+      "RLL"
+    ],
+    "no_asymptotic_LRT_under_nonregular_boundary": true,
+    "numpy_version": "2.3.5",
+    "scipy_version": "1.17.0",
+    "seed": 1748365262,
+    "sigma_from_full_covariance": true,
+    "starts": 5
+  },
+  "model_comparison": {
+    "delta_chi2_cpl_minus_lcdm": -4.584737816609005,
+    "delta_chi2_rll_minus_lcdm": -2.47094103747275,
+    "information_criteria_exploratory_only": true
+  },
+  "null_bootstrap": {
+    "alternative": "RLL",
+    "critical_values_calibrated": false,
+    "extreme_count": 3,
+    "note": "No asymptotic chi-square p-value at Os=0: nuisance zt/wt unidentified. Bootstrap finite-sample, low B is a smoke test, not scientific significance.",
+    "null": "LCDM",
+    "observed_lrt": 2.47094103747275,
+    "plus_one_monte_carlo_p_exploratory": 0.4444444444444444,
+    "reliable_tail_inference": false,
+    "replicates": 8,
+    "resolution": 0.1111111111111111,
+    "statistics": [
+      1.598061649380016,
+      2.4499900921616673,
+      0.5269956848924835,
+      4.234514053932704,
+      0.7580513583405128,
+      3.6244590894511983,
+      6.314880854979247,
+      0.22081506747571034
+    ]
+  },
+  "provenance_verified": true,
+  "rll_fisher_condition_estimate": 525111.6841520283,
+  "rll_fisher_condition_state": "ILL_CONDITIONED",
+  "rll_scaled_jacobian_singular_values": [
+    365.0108444460848,
+    40.073677782597834,
+    4.793954155733843,
+    1.586876631172376,
+    0.5037092504593798
+  ],
+  "schema": "rll.desi_dr2.adversarial_profile.v1",
+  "scientific_validation": "NOT_ESTABLISHED",
+  "source": {
+    "covariance": {
+      "git_blob_sha1": "e01d0235a2f0e61d81af0c36a7338953f845f5c3",
+      "sha256": "4c95c45bf14f8eb49bf03fa512984448428920f7a2ba0a846dae30ed1da08658",
+      "size_bytes": 2606
+    },
+    "measurements": {
+      "git_blob_sha1": "8611587e98e60389f7f7b1cb2cf9ab095654d74a",
+      "sha256": "ed83affed17413bbd12fc27e028a8d70a9039aa8e2468bd5513fcd5bf1bb70c7",
+      "size_bytes": 718
+    }
+  }
+}
