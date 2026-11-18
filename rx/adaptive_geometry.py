@@ -72,26 +72,50 @@ def bao_observable_geometry(dm_over_rd, dh_over_rd):
     }
 
 
-def covariance_ellipse_2d(sigma_xx, sigma_xy, sigma_yy):
-    """Principal-axis diagnostics for a symmetric 2x2 covariance matrix."""
-    sxx = float(sigma_xx)
-    sxy = float(sigma_xy)
-    syy = float(sigma_yy)
+
+def _scaled_covariance_2d(sigma_xx, sigma_xy, sigma_yy, positive_definite=False):
+    """Scale-independent PSD/PD gate for a 2D symmetric covariance.
+
+    Validity must not depend on a fixed absolute epsilon with physical units.
+    This routine does not infer geometry or change an observational likelihood.
+    """
+    sxx, sxy, syy = (float(sigma_xx), float(sigma_xy), float(sigma_yy))
     if not all(math.isfinite(v) for v in (sxx, sxy, syy)):
         raise ValueError("covariance values must be finite")
-    det = sxx * syy - sxy * sxy
-    if sxx < -EPS or syy < -EPS or det < -EPS:
+    scale = max(abs(sxx), abs(sxy), abs(syy))
+    if scale == 0.0:
+        if positive_definite:
+            raise ValueError("covariance must be positive definite")
+        return (0.0, 0.0, 0.0, 0.0, 0.0)
+    a, b, c = sxx / scale, sxy / scale, syy / scale
+    det = a * c - b * b
+    if a < 0.0 or c < 0.0 or det < 0.0:
         raise ValueError("covariance must be positive semidefinite")
-    trace = sxx + syy
-    disc = math.sqrt(max(0.0, ((sxx - syy) * 0.5) ** 2 + sxy * sxy))
-    lmax = max(0.0, 0.5 * trace + disc)
-    lmin = max(0.0, 0.5 * trace - disc)
-    major = math.sqrt(lmax)
-    minor = math.sqrt(lmin)
-    q = 0.0 if major <= EPS else minor / major
+    if positive_definite and (a <= 0.0 or c <= 0.0 or det <= 0.0):
+        raise ValueError("covariance must be positive definite")
+    return scale, a, b, c, det
+
+
+def covariance_ellipse_2d(sigma_xx, sigma_xy, sigma_yy):
+    """Principal-axis diagnostics for a symmetric 2x2 covariance matrix."""
+    scale, a, b, c, det_normalized = _scaled_covariance_2d(
+        sigma_xx, sigma_xy, sigma_yy)
+    if scale == 0.0:
+        lmax = lmin = 0.0
+    else:
+        lmax_normalized = 0.5 * (a + c) + math.hypot(0.5 * (a - c), b)
+        lmin_normalized = det_normalized / lmax_normalized if lmax_normalized else 0.0
+        lmax = scale * lmax_normalized
+        lmin = scale * lmin_normalized
+    major, minor = math.sqrt(lmax), math.sqrt(lmin)
+    q = minor / major if major else 0.0
     ecc = math.sqrt(max(0.0, 1.0 - q * q))
-    angle = 0.5 * math.atan2(2.0 * sxy, sxx - syy)
-    cond = math.inf if lmin <= EPS else lmax / lmin
+    angle = 0.5 * math.atan2(2.0 * b, a - c)
+    cond = math.inf if lmin == 0.0 else lmax / lmin
+    area = math.pi * major * minor
+    det = (scale * scale) * det_normalized
+    if not all(math.isfinite(v) for v in (lmax, lmin, major, minor, area, det)):
+        raise ValueError("covariance diagnostics exceed finite range; rescale inputs")
     return {
         "lambda_major": lmax,
         "lambda_minor": lmin,
@@ -100,24 +124,26 @@ def covariance_ellipse_2d(sigma_xx, sigma_xy, sigma_yy):
         "axis_ratio_q": q,
         "eccentricity": ecc,
         "orientation_rad": angle,
-        "area_1sigma": math.pi * major * minor,
-        "determinant": max(0.0, det),
+        "area_1sigma": area,
+        "determinant": det,
         "condition_number": cond,
         "claim_allowed": False,
     }
 
 
 def mahalanobis2_2d(dx, dy, sigma_xx, sigma_xy, sigma_yy):
-    """Squared Mahalanobis residual for a nonsingular 2x2 covariance."""
-    dx = float(dx)
-    dy = float(dy)
-    sxx = float(sigma_xx)
-    sxy = float(sigma_xy)
-    syy = float(sigma_yy)
-    det = sxx * syy - sxy * sxy
-    if not math.isfinite(det) or det <= EPS:
-        raise ValueError("covariance must be positive definite")
-    return (syy * dx * dx - 2.0 * sxy * dx * dy + sxx * dy * dy) / det
+    """Squared Mahalanobis residual for a positive-definite 2x2 covariance."""
+    dx, dy = float(dx), float(dy)
+    if not math.isfinite(dx) or not math.isfinite(dy):
+        raise ValueError("residual values must be finite")
+    scale, a, b, c, det = _scaled_covariance_2d(
+        sigma_xx, sigma_xy, sigma_yy, positive_definite=True)
+    divisor = math.sqrt(scale)
+    x, y = dx / divisor, dy / divisor
+    result = (c * x * x - 2.0 * b * x * y + a * y * y) / det
+    if not math.isfinite(result) or result < 0.0:
+        raise ValueError("Mahalanobis residual is not finite and nonnegative")
+    return result
 
 
 def local_curve_invariants_3d(velocity, acceleration, jerk=None):
