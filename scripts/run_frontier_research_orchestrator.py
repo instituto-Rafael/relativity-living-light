@@ -22,6 +22,11 @@ PASS_MINIMUM_STAGE = {
     "P7_REPLICATE": "S8_REPLICATION",
     "P8_SYNTHESIZE": "S9_SYNTHESIS",
 }
+STAGE_IDS = (
+    "S0_FRAGMENT", "S1_REFERENCE", "S2_HYPOTHESIS", "S3_FORMALIZATION",
+    "S4_IMPLEMENTATION", "S5_SYNTHETIC_VALIDATION", "S6_OBSERVATIONAL_VALIDATION",
+    "S7_FALSIFICATION", "S8_REPLICATION", "S9_SYNTHESIS",
+)
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -36,28 +41,72 @@ def sha256(path: Path) -> str:
 
 
 def stage_order(contract: dict[str, Any]) -> dict[str, int]:
-    return {str(stage["id"]): int(stage["order"]) for stage in contract["stages"]}
+    if not isinstance(contract, dict):
+        raise ValueError("INVALID_CONTRACT_ROOT")
+    stages = contract.get("stages")
+    if not isinstance(stages, list) or not stages:
+        raise ValueError("INVALID_STAGE_INDEX")
+    orders: dict[str, int] = {}
+    for position, stage in enumerate(stages):
+        if (not isinstance(stage, dict) or not isinstance(stage.get("id"), str)
+                or not stage["id"] or stage["id"] in orders
+                or type(stage.get("order")) is not int or stage["order"] != position):
+            raise ValueError("INVALID_STAGE_INDEX")
+        orders[stage["id"]] = position
+    if tuple(orders) != STAGE_IDS:
+        raise ValueError("INVALID_STAGE_INDEX_ORDER")
+    return orders
+
+
+def validate_passes(contract: dict[str, Any]) -> list[dict[str, Any]]:
+    evolution = contract.get("prompt_evolution")
+    passes = evolution.get("passes") if isinstance(evolution, dict) else None
+    if not isinstance(passes, list):
+        raise ValueError("INVALID_PASS_INDEX")
+    seen: set[str] = set()
+    for entry in passes:
+        if not isinstance(entry, dict):
+            raise ValueError("INVALID_PASS_INDEX")
+        pid = entry.get("id")
+        if not isinstance(pid, str) or pid not in PASS_MINIMUM_STAGE or pid in seen:
+            raise ValueError("INVALID_PASS_INDEX")
+        seen.add(pid)
+        checks = entry.get("checks")
+        if (not isinstance(checks, list) or not checks
+                or any(not isinstance(check, str) or not check.strip() for check in checks)
+                or not isinstance(entry.get("on_failure"), str)
+                or not entry["on_failure"].startswith(TOKEN_PREFIX)):
+            raise ValueError("INVALID_PASS_CONTRACT")
+    if seen != set(PASS_MINIMUM_STAGE):
+        raise ValueError("MISSING_REQUIRED_PASS")
+    return passes
 
 
 def evaluate_item(item: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:
     orders = stage_order(contract)
-    current_stage = str(item["current_stage"])
+    passes = validate_passes(contract)
+    if not isinstance(item, dict):
+        raise ValueError("INVALID_QUEUE_ITEM")
+    for field in ("fragment_id", "title", "state", "current_stage"):
+        if not isinstance(item.get(field), str) or not item[field].strip():
+            raise ValueError("INVALID_QUEUE_ITEM_" + field)
+    for field in ("evidence", "gaps"):
+        values = item.get(field, [])
+        if not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values):
+            raise ValueError("INVALID_QUEUE_ITEM_" + field)
+    current_stage = item["current_stage"]
+    if current_stage not in orders:
+        raise ValueError("UNKNOWN_CURRENT_STAGE")
     current_order = orders[current_stage]
     outcomes: list[dict[str, Any]] = []
-    for prompt_pass in contract["prompt_evolution"]["passes"]:
+    for prompt_pass in passes:
         pass_id = str(prompt_pass["id"])
         minimum_stage = PASS_MINIMUM_STAGE[pass_id]
         minimum_order = orders[minimum_stage]
-        if current_order >= minimum_order and not str(item.get("state", "")).startswith(TOKEN_PREFIX):
-            state = "PASS"
-            reason = f"current stage {current_stage} reaches {minimum_stage}"
-        elif current_order >= minimum_order and (
-            item.get("evidence")
-            or (pass_id == "P1_SOURCE" and item.get("references"))
-            or (pass_id == "P0_ATOMIZE" and item.get("title"))
-        ):
-            state = "PASS_WITH_BOUNDARY"
-            reason = f"stage reached but item state remains {item.get('state')}"
+        reached = current_order >= minimum_order
+        if reached:
+            state = "TOKEN_VAZIO_CHECK_EXECUTION"
+            reason = f"declared stage {current_stage} reaches {minimum_stage}; checks not executed by this router"
         else:
             state = str(prompt_pass["on_failure"])
             reason = f"current stage {current_stage} does not reach {minimum_stage}"
@@ -67,6 +116,8 @@ def evaluate_item(item: dict[str, Any], contract: dict[str, Any]) -> dict[str, A
             "state": state,
             "reason": reason,
             "checks": list(prompt_pass["checks"]),
+            "declared_stage_reached": reached,
+            "checks_execution": "NOT_RUN",
         })
     return {
         "fragment_id": item["fragment_id"],
@@ -84,6 +135,22 @@ def iterate_to_fixed_point(
     queue: dict[str, Any],
     max_iterations: int = 32,
 ) -> tuple[list[dict[str, Any]], int]:
+    stage_order(contract)
+    validate_passes(contract)
+    if (not isinstance(queue, dict) or contract.get("claim_allowed") is not False
+            or queue.get("claim_allowed") is not False):
+        raise ValueError("INVALID_QUEUE_OR_CLAIM_POLICY")
+    if type(max_iterations) is not int or max_iterations < 2:
+        raise ValueError("AT_LEAST_TWO_ITERATIONS_REQUIRED")
+    items = queue.get("items")
+    if not isinstance(items, list) or not items:
+        raise ValueError("INVALID_QUEUE_ITEMS")
+    ids: set[str] = set()
+    for item in items:
+        fid = item.get("fragment_id") if isinstance(item, dict) else None
+        if not isinstance(fid, str) or not fid.startswith("FRAG-") or fid in ids:
+            raise ValueError("INVALID_OR_DUPLICATE_FRAGMENT_ID")
+        ids.add(fid)
     previous: str | None = None
     latest: list[dict[str, Any]] = []
     for iteration in range(1, max_iterations + 1):
@@ -108,6 +175,8 @@ def build_receipt(contract_path: Path, queue_path: Path) -> dict[str, Any]:
     return {
         "schema": "rll.frontier_research_prompt_evolution.receipt.v1",
         "status": "FIXED_POINT",
+        "fixed_point_scope": "DECLARATION_EVALUATION_ONLY",
+        "scientific_checks_execution": "NOT_RUN",
         "iterations": iterations,
         "claim_allowed": False,
         "publication_effect": "NONE",
@@ -125,6 +194,8 @@ def render_markdown(receipt: dict[str, Any]) -> str:
         "",
         f"- status: `{receipt['status']}`",
         f"- iterations to fixed point: `{receipt['iterations']}`",
+        f"- fixed point scope: `{receipt['fixed_point_scope']}`",
+        f"- scientific checks execution: `{receipt['scientific_checks_execution']}`",
         f"- claim_allowed: `{str(receipt['claim_allowed']).lower()}`",
         f"- TOKEN_VAZIO pass outcomes: `{receipt['token_vazio_pass_count']}`",
         "",

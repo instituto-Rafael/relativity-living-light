@@ -36,6 +36,7 @@ PARAMS = {
     'CPL': (('H0', 'Om', 'w0', 'wa'), (55., .10, -2.5, -3.), (85., .50, -.3, 3.)),
     'RLL': (('H0', 'Om', 'Os', 'zt', 'wt'), (55., .10, 0., .05, .05), (85., .50, .25, 3., 1.5)),
 }
+MEAS_FIELDS = ['index', 'tracer', 'z_eff', 'observable', 'value', 'sigma']
 NODES, WEIGHTS = np.polynomial.legendre.leggauss(64)
 
 
@@ -52,17 +53,22 @@ def load_inputs(root: Path = ROOT, enforce_pins: bool = True) -> dict:
         if enforce_pins and inputs[name]['git_blob_sha1'] != pin:
             raise ValueError(f'UNPINNED_SOURCE_{name}: {inputs[name]["git_blob_sha1"]} != {pin}')
     with (root / MEAS).open(newline='', encoding='utf-8') as f:
-        rows = list(csv.DictReader(f))
-    if len(rows) != 13 or [int(r['index']) for r in rows] != list(range(13)):
+        reader = csv.DictReader(f)
+        if reader.fieldnames != MEAS_FIELDS:
+            raise ValueError('MEASUREMENT_HEADER_MISMATCH')
+        rows = list(reader)
+    if any(None in r or any(v is None for v in r.values()) for r in rows):
+        raise ValueError('MEASUREMENT_ROW_SHAPE_MISMATCH')
+    if len(rows) != 13 or [r['index'] for r in rows] != [str(i) for i in range(13)]:
         raise ValueError('EXPECTED_13_ORDERED_BAO_ROWS')
     if any(r['observable'] not in {'DV_over_rd', 'DM_over_rd', 'DH_over_rd'} for r in rows):
         raise ValueError('UNKNOWN_BAO_OBSERVABLE')
     z = np.array([float(r['z_eff']) for r in rows]); y = np.array([float(r['value']) for r in rows]); s = np.array([float(r['sigma']) for r in rows]); names = [r['tracer'] for r in rows]
     with (root / COV).open(newline='', encoding='utf-8') as f:
         rr = list(csv.reader(f))
-    if rr[0] != [''] + [str(i) for i in range(13)] or len(rr) != 14:
+    if len(rr) != 14 or rr[0] != [''] + [str(i) for i in range(13)]:
         raise ValueError('COVARIANCE_HEADER_SHAPE_MISMATCH')
-    if any(r[0] != str(i) or len(r) != 14 for i, r in enumerate(rr[1:])):
+    if any(len(r) != 14 or r[0] != str(i) for i, r in enumerate(rr[1:])):
         raise ValueError('COVARIANCE_ROW_ID_MISMATCH')
     cov = np.array([[float(x) for x in r[1:]] for r in rr[1:]])
     if not (np.all(np.isfinite(y)) and np.all(np.isfinite(z)) and np.all(np.isfinite(s)) and np.all(np.isfinite(cov))):
@@ -97,6 +103,12 @@ def predict(model: str, theta: np.ndarray, z: np.ndarray, obs: list[str]) -> np.
     # Gauss-Legendre 64-point integration of flat FLRW comoving distance.
     # This is an explicit phenomenological background, NOT a perturbation solver.
     zz = np.asarray(z, dtype=float)
+    theta = np.asarray(theta, dtype=float)
+    if model not in PARAMS or theta.shape != (len(PARAMS[model][0]),) or not np.all(np.isfinite(theta)) or theta[0] <= 0:
+        raise ValueError('INVALID_MODEL_PARAMETERS')
+    if (zz.ndim != 1 or not zz.size or not np.all(np.isfinite(zz)) or np.any(zz < 0)
+            or len(obs) != len(zz) or any(ob not in {'DM_over_rd', 'DH_over_rd', 'DV_over_rd'} for ob in obs)):
+        raise ValueError('INVALID_PREDICTION_OBSERVABLE_ALIGNMENT')
     sample = .5 * zz[:, None] * (NODES[None, :] + 1.)
     e2 = hubble_ratio_sq(model, theta, sample)
     e2z = hubble_ratio_sq(model, theta, zz)
@@ -167,6 +179,16 @@ def public_fit(f: dict, n: int) -> dict:
 
 
 def subdata(data: dict, indices: np.ndarray, y: np.ndarray | None = None) -> dict:
+    indices = np.asarray(indices)
+    n = len(data['y'])
+    if (indices.ndim != 1 or not indices.size or indices.dtype.kind not in 'iu'
+            or np.any(indices < 0) or np.any(indices >= n)
+            or len(np.unique(indices)) != len(indices)):
+        raise ValueError('INVALID_SUBDATA_INDICES')
+    if y is not None:
+        y = np.asarray(y, dtype=float)
+        if y.shape != (n,) or not np.all(np.isfinite(y)):
+            raise ValueError('INVALID_SUBDATA_OBSERVATIONS')
     cov = data['cov'][np.ix_(indices, indices)]
     return {'z':data['z'][indices], 'y':data['y'][indices] if y is None else y[indices], 'obs':[data['obs'][i] for i in indices],
             'tracer':[data['tracer'][i] for i in indices], 'cov':cov, 'chol':np.linalg.cholesky(cov)}

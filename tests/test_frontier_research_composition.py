@@ -5,6 +5,7 @@ import importlib.util
 from pathlib import Path
 
 import yaml
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "validate_frontier_research_composition.py"
@@ -121,12 +122,13 @@ def test_prompt_evolution_reaches_fixed_point():
     assert len(results) == len(queue["items"])
 
 
-def test_rll_fragment_passes_implementation_but_not_statistics():
+def test_rll_declared_implementation_does_not_prove_executed_checks():
     contract = load(CONTRACT_PATH)
     queue = load(QUEUE_PATH)
     result = orch.evaluate_item(queue["items"][0], contract)
     states = {entry["pass_id"]: entry["state"] for entry in result["prompt_passes"]}
-    assert states["P4_IMPLEMENT"] == "PASS"
+    assert states["P4_IMPLEMENT"] == "TOKEN_VAZIO_CHECK_EXECUTION"
+    assert result["prompt_passes"][4]["declared_stage_reached"] is True
     assert states["P5_STATISTICS"].startswith("TOKEN_VAZIO")
 
 
@@ -135,7 +137,7 @@ def test_unformalized_fragment_does_not_receive_implicit_promotion():
     queue = load(QUEUE_PATH)
     result = orch.evaluate_item(queue["items"][1], contract)
     states = {entry["pass_id"]: entry["state"] for entry in result["prompt_passes"]}
-    assert states["P1_SOURCE"] == "PASS_WITH_BOUNDARY"
+    assert states["P1_SOURCE"] == "TOKEN_VAZIO_CHECK_EXECUTION"
     assert states["P2_FORMAL"].startswith("TOKEN_VAZIO")
     assert result["claim_allowed"] is False
 
@@ -146,3 +148,74 @@ def test_receipt_preserves_publication_boundary():
     assert receipt["publication_effect"] == "NONE"
     assert receipt["claim_allowed"] is False
     assert receipt["token_vazio_pass_count"] > 0
+    assert receipt["fixed_point_scope"] == "DECLARATION_EVALUATION_ONLY"
+    assert receipt["scientific_checks_execution"] == "NOT_RUN"
+
+
+def test_high_stage_and_filenames_cannot_promote_to_pass():
+    contract = load(CONTRACT_PATH)
+    item = load(QUEUE_PATH)["items"][0]
+    item.update(current_stage="S9_SYNTHESIS", state="REPLICATED")
+    for evidence in ([], ["unexecuted_test.py"], ["receipt-not-verified.json"]):
+        item["evidence"] = evidence
+        result = orch.evaluate_item(item, contract)
+        assert all(outcome["state"] == "TOKEN_VAZIO_CHECK_EXECUTION" for outcome in result["prompt_passes"])
+        assert all(outcome["checks_execution"] == "NOT_RUN" for outcome in result["prompt_passes"])
+
+
+def test_runtime_rejects_stage_index_aliases_and_collisions():
+    for field, value in (("order", True), ("order", "1"), ("order", -1), ("id", "S0_FRAGMENT")):
+        contract = load(CONTRACT_PATH)
+        contract["stages"][1][field] = value
+        with pytest.raises(ValueError, match="INVALID_STAGE_INDEX"):
+            orch.iterate_to_fixed_point(contract, load(QUEUE_PATH))
+
+
+def test_runtime_rejects_unknown_duplicate_and_missing_passes():
+    for mode in ("unknown", "duplicate", "missing"):
+        contract = load(CONTRACT_PATH)
+        passes = contract["prompt_evolution"]["passes"]
+        if mode == "unknown":
+            passes[0]["id"] = "P99_UNKNOWN"
+        elif mode == "duplicate":
+            passes.append(copy.deepcopy(passes[0]))
+        else:
+            passes.pop()
+        with pytest.raises(ValueError, match="PASS"):
+            orch.iterate_to_fixed_point(contract, load(QUEUE_PATH))
+
+
+def test_runtime_rejects_duplicate_fragments_before_fixed_point():
+    queue = load(QUEUE_PATH)
+    queue["items"].append(copy.deepcopy(queue["items"][0]))
+    with pytest.raises(ValueError, match="DUPLICATE_FRAGMENT_ID"):
+        orch.iterate_to_fixed_point(load(CONTRACT_PATH), queue)
+
+
+def test_runtime_rejects_empty_unknown_and_null_inputs():
+    with pytest.raises(ValueError, match="INVALID_QUEUE_ITEMS"):
+        orch.iterate_to_fixed_point(load(CONTRACT_PATH), {"items": [], "claim_allowed": False})
+    for field, value in (("current_stage", "UNKNOWN"), ("state", None), ("title", "")):
+        queue = load(QUEUE_PATH)
+        queue["items"][0][field] = value
+        with pytest.raises(ValueError):
+            orch.iterate_to_fixed_point(load(CONTRACT_PATH), queue)
+
+
+def test_stage_label_swaps_cannot_change_gate_meaning():
+    contract = load(CONTRACT_PATH)
+    a, b = contract["stages"][0], contract["stages"][-1]
+    a["id"], b["id"] = b["id"], a["id"]
+    with pytest.raises(ValueError, match="INVALID_STAGE_INDEX_ORDER"):
+        orch.iterate_to_fixed_point(contract, load(QUEUE_PATH))
+
+
+def test_runtime_rejects_claim_promotion_and_string_evidence():
+    queue = load(QUEUE_PATH)
+    queue["claim_allowed"] = True
+    with pytest.raises(ValueError, match="CLAIM_POLICY"):
+        orch.iterate_to_fixed_point(load(CONTRACT_PATH), queue)
+    queue = load(QUEUE_PATH)
+    queue["items"][0]["evidence"] = "a filename is not a list of evidence"
+    with pytest.raises(ValueError, match="INVALID_QUEUE_ITEM_evidence"):
+        orch.iterate_to_fixed_point(load(CONTRACT_PATH), queue)

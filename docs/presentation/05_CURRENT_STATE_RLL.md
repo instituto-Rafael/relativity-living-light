@@ -19,6 +19,8 @@ Este arquivo é estado operacional curto. Histórico, inventários extensos e na
 - Estado de validação: `VALIDATION_STATUS.md`.
 - Evidência executada: `receipts/` + `results/`.
 - `claim_allowed=false` continua a fronteira padrão.
+- Hotfix de inputs/índices e falso PASS do roteador: [receipt 2026-11-18](../../receipts/2026-11-18_RLL_INPUT_INDICES_EVIDENCE_HOTFIX.md).
+  Branch isolada; testes locais de software; promoção e CI exact-head pendentes.
 
 ## Active node 3 — Governance / privacy
 

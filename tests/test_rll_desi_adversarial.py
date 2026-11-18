@@ -96,6 +96,45 @@ class DESIAdversarialTests(unittest.TestCase):
             self.assertEqual(result['null_bootstrap']['state'],'NOT_EXECUTED')
             with self.assertRaises(FileExistsError): MOD.main(args)
 
+    def test_subset_indices_reject_aliasing_and_double_counting(self):
+        for indices in ([-1, 0], [0, 13], [0, 0], [True, False], [0., 1.], [], [[0, 1]]):
+            with self.subTest(indices=indices), self.assertRaisesRegex(ValueError, 'INVALID_SUBDATA_INDICES'):
+                MOD.subdata(self.data, np.asarray(indices))
+
+    def test_valid_permutation_keeps_observations_and_covariance_aligned(self):
+        indices = np.array([12, 0, 3, 1])
+        result = MOD.subdata(self.data, indices)
+        np.testing.assert_array_equal(result['y'], self.data['y'][indices])
+        np.testing.assert_array_equal(result['cov'], self.data['cov'][np.ix_(indices, indices)])
+        self.assertEqual(result['obs'], [self.data['obs'][i] for i in indices])
+        np.testing.assert_allclose(result['chol'] @ result['chol'].T, result['cov'])
+
+    def test_subset_override_requires_complete_finite_vector(self):
+        for y in (np.zeros(12), np.zeros((13, 1)), np.full(13, np.nan)):
+            with self.assertRaisesRegex(ValueError, 'INVALID_SUBDATA_OBSERVATIONS'):
+                MOD.subdata(self.data, np.array([0, 1]), y)
+
+    def test_prediction_rejects_partial_observable_vector(self):
+        for obs in (self.data['obs'][:-1], self.data['obs'] + ['DM_over_rd'], ['UNKNOWN'] * 13):
+            with self.assertRaisesRegex(ValueError, 'INVALID_PREDICTION_OBSERVABLE_ALIGNMENT'):
+                MOD.predict('LCDM', np.array([67.4, .315]), self.data['z'], obs)
+
+    def test_malformed_csv_rows_and_duplicate_columns_fail_closed(self):
+        for mutation, expected in (
+            (lambda text: text.replace('index,tracer', 'index,index'), 'HEADER_MISMATCH'),
+            (lambda text: text.replace('0,BGS,', '0,BGS,EXTRA,'), 'ROW_SHAPE_MISMATCH'),
+            (lambda text: text.replace('0,BGS,', '00,BGS,'), 'ORDERED_BAO_ROWS'),
+        ):
+            with tempfile.TemporaryDirectory() as td:
+                base = Path(td)
+                for source in (MOD.MEAS, MOD.COV):
+                    (base/source).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy(ROOT/source, base/source)
+                target = base/MOD.MEAS
+                target.write_text(mutation(target.read_text()))
+                with self.assertRaisesRegex(ValueError, expected):
+                    MOD.load_inputs(base, enforce_pins=False)
+
 
 if __name__=='__main__':
     unittest.main()
