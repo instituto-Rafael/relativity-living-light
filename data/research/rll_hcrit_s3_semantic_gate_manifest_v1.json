@@ -1,0 +1,355 @@
+{
+  "schema": "RLL_HCRIT_S3_SEMANTIC_GATES_V1",
+  "date": "2026-11-17",
+  "kind": "RESEARCH_SCOPED_GATE_SPEC",
+  "producer": "instituto-Rafael/relativity-living-light",
+  "predecessor_commit": "4bcfbfeb13e9e9d3948a0de85396ae08baaafe7d",
+  "target_branch": "research/rll-hcrit-semantic-gates-s3-20261117",
+  "current_claim_allowed": false,
+  "legacy_registry": "data/research/rll_hcrit_h01_h72_registry_v1.json",
+  "physics_status": "NOT_VALIDATED",
+  "ci_status": "NOT_RUN",
+  "provenance": "SOURCE!=ARTIFACT!=EXECUTION!=EVIDENCE!=CLAIM",
+  "typed_gates": [
+    {
+      "id": "H40",
+      "application": "covariance_bound_chi2",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H18",
+      "application": "capture_margin",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H63",
+      "application": "chemical_affinity",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H34",
+      "application": "optical_depth_photon",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H70",
+      "application": "optical_depth_neutrino",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H45",
+      "application": "nanoporous_modulus_ideal_geometry",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H46",
+      "application": "nanoporous_modulus_measurement",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H47",
+      "application": "nanoporous_modulus_adsorption_confounds",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    },
+    {
+      "id": "H48",
+      "application": "magnetic_maxwell_stress",
+      "scope": "SCALAR_TYPED_DIAGNOSTIC_ONLY",
+      "source_data": "TOKEN_VAZIO",
+      "claim_allowed": false
+    }
+  ],
+  "controls": [
+    {
+      "id": "G01",
+      "title": "Spectroscopy and phonons",
+      "covers": [
+        "nanopore_topology",
+        "model_boundary"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Raman or phonon spectra vs T",
+      "falsifier": "Vibrational mode shift inconsistent with structural claim",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G02",
+      "title": "Electrical double layer",
+      "covers": [
+        "surface_adsorption",
+        "unit_mismatch"
+      ],
+      "relative_cost": 2,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Measured charge density vs electrode potential",
+      "falsifier": "Stiffness changes with no resolvable surface charge relation",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G03",
+      "title": "Yield stress versus modulus",
+      "covers": [
+        "model_boundary",
+        "thermal_confound"
+      ],
+      "relative_cost": 2,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Full stress-strain curve and temperature",
+      "falsifier": "Yield threshold presented as elastic modulus",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G04",
+      "title": "Joule heating versus field effect",
+      "covers": [
+        "thermal_confound",
+        "surface_adsorption"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Local temperature, potential, adsorbate and stiffness",
+      "falsifier": "Effect vanishes under isothermal adsorption-controlled experiment",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G05",
+      "title": "3D pore connectivity",
+      "covers": [
+        "nanopore_topology",
+        "model_boundary"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Ligament diameter distribution and 3D connectivity",
+      "falsifier": "Cylinder A/V predicts bulk modulus despite disconnected network",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G06",
+      "title": "Fe dopant impurity phases",
+      "covers": [
+        "model_boundary",
+        "untrusted_source_hash"
+      ],
+      "relative_cost": 2,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "XRD, Mössbauer/XAS, elemental maps",
+      "falsifier": "Magnetization disappears after impurity phase exclusion",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G07",
+      "title": "Diffusion and chemical segregation",
+      "covers": [
+        "surface_adsorption",
+        "particle_species"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Composition vs depth and time",
+      "falsifier": "Unmeasured segregation mistaken for permanent single phase",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G08",
+      "title": "Shock entropy and history",
+      "covers": [
+        "chemical_convention",
+        "model_boundary"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Entropy and P-T-rho time trajectory",
+      "falsifier": "Adiabatic assumption contradicted by irreversible shock",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G09",
+      "title": "Magnetic stress tensor",
+      "covers": [
+        "magnetic_tension",
+        "unit_mismatch"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Full B-vector geometry and gradients",
+      "falsifier": "Scalar pressure predicts same behavior for rotated field",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G10",
+      "title": "Pressure anisotropy in plasma",
+      "covers": [
+        "magnetic_tension",
+        "model_boundary"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Parallel/perpendicular kinetic distributions",
+      "falsifier": "Isotropic EOS fails to reproduce directional pressure",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G11",
+      "title": "Reconnection and particle acceleration",
+      "covers": [
+        "particle_species",
+        "opacity_spectral"
+      ],
+      "relative_cost": 3,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Field reconnection and particle spectra",
+      "falsifier": "Thermal emitter incorrectly used for nonthermal component",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G12",
+      "title": "Timescale versus reaction",
+      "covers": [
+        "chemical_convention",
+        "particle_species"
+      ],
+      "relative_cost": 2,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Flow time, reaction rates, opacity by species",
+      "falsifier": "Reaction claimed instantaneous when timescale exceeds flow",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G13",
+      "title": "Observation-source identity lock",
+      "covers": [
+        "identity_mismatch",
+        "covariance_axis_swap",
+        "untrusted_source_hash",
+        "unit_mismatch"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Exact labels, units, source refs, SHA256 and covariance axes",
+      "falsifier": "Permutation of only covariance labels changes chi2, or external order unknown",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G14",
+      "title": "Chemical potential reaction typing",
+      "covers": [
+        "chemical_convention",
+        "charge_conservation"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Species, stoichiometric coefficients, mu conventions",
+      "falsifier": "Capture assumed spontaneous without full chemical potentials",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G15",
+      "title": "Spectral opacity model typing",
+      "covers": [
+        "opacity_spectral",
+        "particle_species"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Photon wavelength or neutrino species, energy and EOS",
+      "falsifier": "Scalar optical depth promoted to transport solution",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    },
+    {
+      "id": "G16",
+      "title": "Evidence and scientific claim lock",
+      "covers": [
+        "false_pass",
+        "untrusted_source_hash"
+      ],
+      "relative_cost": 1,
+      "cost_semantics": "ordinal_heuristic_only",
+      "required_observation": "Execution receipt, exact source refs, external readback and claim status",
+      "falsifier": "NOT_RUN, synthetic or provider-unverified result promoted to PASS",
+      "evidence": "TOKEN_VAZIO",
+      "execution": "MODEL_REQUIRED",
+      "claim_allowed": false
+    }
+  ],
+  "risks": [
+    "identity_mismatch",
+    "untrusted_source_hash",
+    "unit_mismatch",
+    "covariance_axis_swap",
+    "chemical_convention",
+    "charge_conservation",
+    "opacity_spectral",
+    "particle_species",
+    "nanopore_topology",
+    "surface_adsorption",
+    "thermal_confound",
+    "magnetic_tension",
+    "model_boundary",
+    "false_pass"
+  ],
+  "falsifier_selection": {
+    "algorithm": "deterministic_greedy_set_cover_by_marginal_risk_coverage_per_ordinal_cost",
+    "not_statistical_or_physics_validation": true,
+    "tie_break": "stable_id",
+    "uncertainty": "Ordinal cost ranks are declared heuristics, not measured time or causal weights"
+  },
+  "rollback": "Leave S3 branch unmerged; append S4 successor if correction is required; no force push, no deletions.",
+  "do_not_change": [
+    "main",
+    "H(z)",
+    "DESI_covariance_PR1232",
+    "Drive_START_HERE",
+    "B0159",
+    "B0160",
+    "CI_workflows",
+    "claims"
+  ]
+}
