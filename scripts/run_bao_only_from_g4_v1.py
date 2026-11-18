@@ -104,7 +104,7 @@ def fit(block,model,starts_extra=18,seed=20261118):
             'best_initialization_index':i,'optimizer_success':bool(opt.success),
             'starts':len(initials),
             'finite_starts':sum(math.isfinite(x[0]) for x in scores),
-            'chi2_min_max':[float(min(s[0] for s in scores)),float(max(s[0] for s in scores)],
+            'chi2_min_max':[float(min(s[0] for s in scores)),float(max(s[0] for s in scores))],
             'predictions':[float(x) for x in out],
             'claim_allowed':False}
     return result
