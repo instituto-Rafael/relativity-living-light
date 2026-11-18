@@ -26,3 +26,14 @@ For the corrected 13-observable BAO-only fit (χ² RLL ~7.804), `results.RLL.bou
 - Before merge require exact-head Python tests and schema gate, reviewer check and explicit human authorization. This branch may be safely abandoned; main and lab stay unchanged, no history deletion.
 
 SOURCE != ARTIFACT != EXECUTION != EVIDENCE != CLAIM. IMPLEMENTED_UNTESTED != PASS.
+
+
+## Exact-head exported BAO JSON and hash receipt (successor protocol)
+
+The Python CI job now runs `scripts/run_bao_only_from_g4_v1.py` **after pytest** using the same source-verified 13 DESI DR2 BAO inputs and writes:
+- `artifacts/python-tests/bao_source_order_boundary_v1.json`: complete fit and `results.RLL.boundary_diagnostics` with measured `res.grad`, active sides, KKT and unmodified physical χ²/AICc/BIC;
+- `artifacts/python-tests/bao_source_order_boundary_v1.receipt.json`: file SHA-256, actual PR head, SHA-256 plus matching Git blob identities for DESI points and covariance, typed scope and claim=false.
+
+`tools/ci/validate_bao_boundary_receipt_v1.py` validates each model against the existing JSON schema, catches invalid/missing markers, duplicated/mutated model rows, forged `n_effective_dof`, input identity mismatches, hidden claim promotion and unstable reference result. Adversarial mutations are exercised in `tests/test_bao_boundary_receipt_contract_v1.py`.
+
+The workflow already uploads `artifacts/python-tests/` append-only as an immutable GitHub Actions artifact; there is no separate repository file overwrite or new permissions. The receipt labels this **PASS_SCOPED_BAO_BOUNDARY_RECEIPT_CONTRACT**, never a cosmological detection. If any validation fails, the workflow fails and no acceptable receipt is emitted. Only exact-head CI can close this new implementation.
