@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:rll:bao-boundary-diagnostics:v1",
+  "title": "RLL BAO bounded least-squares diagnostic",
+  "type": "object",
+  "required": [
+    "at_boundary",
+    "bound_distance",
+    "normalized_bound_distance",
+    "active_side",
+    "corner_solution",
+    "strict_corner",
+    "active_bound_count",
+    "min_grad_inf",
+    "optimizer_optimality",
+    "kkt_violation_inf",
+    "n_residual_dof_nominal",
+    "n_effective_dof",
+    "n_effective_dof_status",
+    "claim_allowed",
+    "claim_blocked_reason",
+    "status"
+  ],
+  "properties": {
+    "at_boundary": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "bound_distance": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "normalized_bound_distance": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "active_side": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "LOWER",
+          "UPPER",
+          "INTERIOR"
+        ]
+      }
+    },
+    "corner_solution": {
+      "type": "boolean"
+    },
+    "strict_corner": {
+      "type": "boolean"
+    },
+    "active_bound_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "min_grad_inf": {
+      "type": "number",
+      "minimum": 0,
+      "description": "infinity norm of res.grad; not the norm of res.jac or projected optimality"
+    },
+    "optimizer_optimality": {
+      "type": "number",
+      "minimum": 0
+    },
+    "kkt_violation_inf": {
+      "type": "number",
+      "minimum": 0
+    },
+    "n_residual_dof_nominal": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "n_effective_dof": {
+      "type": "null"
+    },
+    "n_effective_dof_status": {
+      "const": "TOKEN_VAZIO_NOT_ESTIMATED"
+    },
+    "claim_allowed": {
+      "const": false
+    },
+    "claim_blocked_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "BOUNDARY_DIAGNOSTIC_ONLY"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Structural contract for bounded least-squares diagnostics; not a scientifically validated model or claim."
+}
