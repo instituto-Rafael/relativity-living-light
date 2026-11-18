@@ -76,3 +76,15 @@ def test_covariance_zero_and_invalid_values_fail_closed():
             pass
         else:
             raise AssertionError("invalid Mahalanobis residual was accepted")
+
+
+def test_local_curve_rejects_nonfinite_inputs():
+    import pytest
+    for v,a,j in (
+        ((math.nan,1,0),(1,0,0),None),
+        ((1,0,0),(math.inf,0,0),None),
+        ((1,0,0),(0,1,0),(math.nan,0,0)),
+        ((1,0,0),(0,1,0),(0,0,math.inf)),
+    ):
+        with pytest.raises(ValueError):
+            local_curve_invariants_3d(v,a,j)

@@ -156,6 +156,8 @@ def local_curve_invariants_3d(velocity, acceleration, jerk=None):
     a = tuple(map(float, acceleration))
     if len(v) != 3 or len(a) != 3:
         raise ValueError("velocity and acceleration must be 3-vectors")
+    if not all(math.isfinite(x) for x in (*v, *a)):
+        raise ValueError("velocity and acceleration must be finite")
     speed = _norm3(v)
     if speed <= EPS:
         return {"state": "TOKEN_VAZIO_ZERO_SPEED", "speed": speed, "curvature": None, "torsion": None, "claim_allowed": False}
@@ -170,6 +172,8 @@ def local_curve_invariants_3d(velocity, acceleration, jerk=None):
         j = tuple(map(float, jerk))
         if len(j) != 3:
             raise ValueError("jerk must be a 3-vector")
+        if not all(math.isfinite(x) for x in j):
+            raise ValueError("jerk must be finite")
         denom = cross_norm * cross_norm
         if denom <= EPS:
             torsion_state = "TOKEN_VAZIO_ZERO_CURVATURE"
