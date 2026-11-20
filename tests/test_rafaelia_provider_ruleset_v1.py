@@ -353,5 +353,106 @@ class AdversarialPolicyTests(unittest.TestCase):
             self.assertTrue(p.WRITE_ATTEMPTED)
         p.WRITE_ATTEMPTED = False
 
+
+class RecoveryFalsifiers(unittest.TestCase):
+    """No real GitHub writes. Recovery is a strictly offline, non-destructive plan."""
+
+    def test_valid_rollback_plan_does_not_contact_provider(self):
+        import tempfile, hashlib
+        with tempfile.TemporaryDirectory() as d:
+            snapshot = {"repo": "rafaelmeloreisnovo/RafGitTools",
+                        "head_sha": "a" * 40, "ruleset": None}
+            prestate = pathlib.Path(d) / "prestate.json"
+            prestate.write_text(json.dumps(snapshot, sort_keys=True), encoding="utf8")
+            digest = hashlib.sha256(prestate.read_bytes()).hexdigest()
+            argv = ["gate", "--repo", snapshot["repo"], "--mode", "rollback-plan",
+                    "--prestate-file", str(prestate), "--prestate-sha256", digest]
+            with mock.patch.object(sys, "argv", argv), \
+                 mock.patch.dict(os.environ, {}, clear=True), \
+                 mock.patch.object(p, "api") as api_mock, \
+                 mock.patch.object(p, "receipt") as receipt_mock:
+                self.assertEqual(p.main(), 0)
+                api_mock.assert_not_called()
+                receipt = receipt_mock.call_args.args[0]
+                self.assertEqual(receipt["state"], "ROLLBACK_PLAN_ONLY_NOT_EXECUTED")
+                self.assertIs(receipt["automatic_deletion"], False)
+                self.assertIs(receipt["claim_allowed"], False)
+                self.assertEqual(receipt["remote_state_at_recovery"], "TOKEN_VAZIO_NOT_READ")
+
+    def test_rollback_hash_is_not_metadata_hash(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            prestate = pathlib.Path(d) / "snapshot.json"
+            prestate.write_text('{"repo":"rafaelmeloreisnovo/RafGitTools"}', encoding="utf8")
+            argv = ["gate", "--repo", "rafaelmeloreisnovo/RafGitTools",
+                    "--mode", "rollback-plan",
+                    "--prestate-file", str(prestate), "--prestate-sha256", "a" * 64]
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(p, "api") as api_mock:
+                with self.assertRaisesRegex(p.Blocked, "PRESTATE_BYTES_HASH_MISMATCH"):
+                    p.main()
+                api_mock.assert_not_called()
+
+    def test_rollback_wrong_repository_denied(self):
+        import tempfile, hashlib
+        with tempfile.TemporaryDirectory() as d:
+            prestate = pathlib.Path(d) / "snapshot.json"
+            prestate.write_text('{"repo":"unrelated/other","head_sha":"' + "a" * 40 + '","ruleset":null}',
+                                encoding="utf8")
+            digest = hashlib.sha256(prestate.read_bytes()).hexdigest()
+            argv = ["gate", "--repo", "rafaelmeloreisnovo/RafGitTools",
+                    "--mode", "rollback-plan",
+                    "--prestate-file", str(prestate), "--prestate-sha256", digest]
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(p, "api") as api_mock:
+                with self.assertRaisesRegex(p.Blocked, "FOREIGN_OR_UNBOUND_PRESTATE"):
+                    p.main()
+                api_mock.assert_not_called()
+
+    def test_rollback_wrong_ruleset_id_denied(self):
+        import tempfile, hashlib
+        with tempfile.TemporaryDirectory() as d:
+            prestate = pathlib.Path(d) / "snapshot.json"
+            snap = {"repo": "instituto-Rafael/relativity-living-light",
+                    "head_sha": "a" * 40, "ruleset": {"id": 999}}
+            prestate.write_text(json.dumps(snap), encoding="utf8")
+            digest = hashlib.sha256(prestate.read_bytes()).hexdigest()
+            argv = ["gate", "--repo", snap["repo"], "--mode", "rollback-plan",
+                    "--prestate-file", str(prestate), "--prestate-sha256", digest]
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(p, "api") as api_mock:
+                with self.assertRaisesRegex(p.Blocked, "PRESTATE_RULESET_IDENTITY_MISMATCH"):
+                    p.main()
+                api_mock.assert_not_called()
+
+    def test_apply_refuses_to_overwrite_existing_recovery(self):
+        import tempfile
+        argv = ["gate", "--mode", "apply", "--repo",
+                "rafaelmeloreisnovo/RafGitTools", "--expected-main-sha", "a" * 40,
+                "--reviewer-login", "verified-human",
+                "--confirm", "APPLY-P0:rafaelmeloreisnovo/RafGitTools"]
+        env = {"GH_API_TOKEN": "fake", "GITHUB_REPOSITORY": "rafaelmeloreisnovo/RafGitTools",
+               "GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main",
+               "GITHUB_ACTOR": p.ACTOR, "RAFAELIA_REVIEWER_GATE_EVIDENCE":
+               "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK"}
+        def fake_api(method, path, token, payload=None):
+            if method == "GET" and path.endswith("/permission"):
+                return {"permission": "write"}
+            self.fail("API must never write when recovery snapshot already exists")
+        cwd = os.getcwd()
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                os.chdir(d)
+                folder = pathlib.Path("artifacts/rafaelia-provider-p0")
+                folder.mkdir(parents=True)
+                (folder / "prestate.json").write_text("EXISTING_PRESTATE", encoding="utf8")
+                with mock.patch.object(sys, "argv", argv), \
+                     mock.patch.dict(os.environ, env, clear=True), \
+                     mock.patch.object(p, "live", return_value=("a" * 40, None)), \
+                     mock.patch.object(p, "api", side_effect=fake_api), \
+                     mock.patch.object(p, "receipt"):
+                    with self.assertRaises(FileExistsError):
+                        p.main()
+                self.assertEqual((folder / "prestate.json").read_text(), "EXISTING_PRESTATE")
+        finally:
+            os.chdir(cwd)
+
 if __name__ == "__main__":
     unittest.main()
