@@ -1,0 +1,91 @@
+name: RAFAELIA P0 Provider Enforcement
+on:
+  pull_request:
+    branches: [main, rll/lab]
+    paths:
+      - '.github/workflows/rafaelia-provider-enforcement.yml'
+      - 'scripts/ci/rafaelia_provider_ruleset_v1.py'
+      - 'tests/test_rafaelia_provider_ruleset_v1.py'
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        required: true
+        default: audit
+        options: [audit, apply]
+      expected_main_sha:
+        description: 'Exact 40-hex main HEAD from GitHub; needed for apply'
+        type: string
+        required: false
+      confirm:
+        description: 'For apply only: APPLY-P0:instituto-Rafael/relativity-living-light'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rafaelia-provider-p0-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  source-tests:
+    name: RAFAELIA P0 / source tests
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests -p 'test_rafaelia_provider_ruleset_v1.py' -v
+      - run: python3 scripts/ci/rafaelia_provider_ruleset_v1.py --mode validate --repo 'instituto-Rafael/relativity-living-light'
+
+  provider-audit:
+    name: RAFAELIA P0 / provider audit
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'audit'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Read-only provider audit
+        env:
+          GH_API_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci/rafaelia_provider_ruleset_v1.py --mode audit --repo 'instituto-Rafael/relativity-living-light'
+      - name: Preserve scoped receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rafaelia-provider-audit-${{ github.run_id }}
+          path: artifacts/rafaelia-provider-p0/
+          retention-days: 30
+          if-no-files-found: warn
+
+  provider-apply:
+    name: RAFAELIA P0 / manual admin apply
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'apply' && github.ref == 'refs/heads/main' && github.actor == 'rafaelmeloreisnovo'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Scoped write and immediate readback
+        env:
+          GH_API_TOKEN: ${{ secrets.RAFAELIA_PROVIDER_ADMIN_TOKEN }}
+          EXPECTED_MAIN_SHA: ${{ inputs.expected_main_sha }}
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          python3 scripts/ci/rafaelia_provider_ruleset_v1.py --mode apply --repo 'instituto-Rafael/relativity-living-light' \
+            --expected-main-sha "$EXPECTED_MAIN_SHA" --confirm "$CONFIRM"
+      - name: Preserve prestate and readback receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rafaelia-provider-apply-${{ github.run_id }}
+          path: artifacts/rafaelia-provider-p0/
+          retention-days: 90
+          if-no-files-found: warn
