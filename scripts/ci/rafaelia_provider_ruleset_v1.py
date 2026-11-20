@@ -343,6 +343,12 @@ def main():
         raise Blocked("RULESET_BASELINE_CHANGED_REVIEW_REQUIRED")
     if current and profile["ruleset_id"] is None:
         raise Blocked("EXISTING_NEW_POLICY_CHANGED_REVIEW_REQUIRED")
+    # Preflight administrative capability, never infer it from a named secret.
+    authority = api("GET", "/repos/" + args.repo, token)
+    if (not isinstance(authority, dict) or authority.get("id") != profile["repository_id"]
+        or authority.get("full_name") != args.repo
+        or authority.get("permissions", {}).get("admin") is not True):
+        raise Blocked("PROVIDER_ADMIN_WRITE_AUTHORITY_NOT_PROVEN")
     # Confirm a distinct collaborator with actual write-level review capability.
     reviewer = args.reviewer_login.strip()
     if (not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", reviewer)
