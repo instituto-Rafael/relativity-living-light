@@ -17,6 +17,16 @@ on:
         description: 'Exact 40-hex main HEAD from GitHub; needed for apply'
         type: string
         required: false
+      reviewer_login:
+        description: 'Distinct qualified reviewer GitHub login; mandatory for apply'
+        type: string
+        required: false
+      reviewer_gate_evidence:
+        description: 'Manual evidence of independent reviewer and tested rollback; never self-approves'
+        type: choice
+        required: true
+        default: NOT_VERIFIED
+        options: [NOT_VERIFIED, REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK]
       confirm:
         description: 'For apply only: APPLY-P0:instituto-Rafael/relativity-living-light'
         type: string
@@ -77,10 +87,13 @@ jobs:
         env:
           GH_API_TOKEN: ${{ secrets.RAFAELIA_PROVIDER_ADMIN_TOKEN }}
           EXPECTED_MAIN_SHA: ${{ inputs.expected_main_sha }}
+          REVIEWER_LOGIN: ${{ inputs.reviewer_login }}
+          RAFAELIA_REVIEWER_GATE_EVIDENCE: ${{ inputs.reviewer_gate_evidence }}
           CONFIRM: ${{ inputs.confirm }}
         run: |
           python3 scripts/ci/rafaelia_provider_ruleset_v1.py --mode apply --repo 'instituto-Rafael/relativity-living-light' \
-            --expected-main-sha "$EXPECTED_MAIN_SHA" --confirm "$CONFIRM"
+            --expected-main-sha "$EXPECTED_MAIN_SHA" --confirm "$CONFIRM" \
+            --reviewer-login "$REVIEWER_LOGIN"
       - name: Preserve prestate and readback receipt
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
