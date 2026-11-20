@@ -4,6 +4,7 @@ No admin token on PR jobs, no auto-merge, no deletion, no secret logging.
 """
 import argparse
 import copy
+import hashlib
 import json
 import os
 import re
@@ -255,12 +256,14 @@ def receipt(data):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=("validate", "audit", "apply"), default="validate")
+    parser.add_argument("--mode", choices=("validate", "audit", "apply", "rollback-plan"), default="validate")
     parser.add_argument("--repo", required=True, choices=list(PROFILES))
     parser.add_argument("--expected-main-sha", default="")
     parser.add_argument("--confirm", default="")
     parser.add_argument("--operator", choices=("actions", "agent"), default="actions")
     parser.add_argument("--reviewer-login", default="", help="GitHub login eligible to review independently")
+    parser.add_argument("--prestate-file", default="", help="Local pre-mutation provider snapshot for offline rollback plan")
+    parser.add_argument("--prestate-sha256", default="", help="Exact SHA-256 of prestate file bytes")
     args = parser.parse_args()
     profile = PROFILES[args.repo]
     expected = policy(profile)
@@ -269,6 +272,38 @@ def main():
     if args.mode == "validate":
         receipt({"state": "VALIDATED_POLICY_SHAPE_ONLY", "repo": args.repo,
                  "checks": profile["checks"], "claim_allowed": False})
+        return 0
+    if args.mode == "rollback-plan":
+        if not re.fullmatch(r"[a-f0-9]{64}", args.prestate_sha256) or not args.prestate_file:
+            raise Blocked("PRESTATE_HASH_AND_PATH_REQUIRED")
+        content = Path(args.prestate_file).read_bytes()
+        if not content or len(content) > 1048576:
+            raise Blocked("INVALID_PRESTATE_SIZE")
+        actual_sha = hashlib.sha256(content).hexdigest()
+        if actual_sha != args.prestate_sha256:
+            raise Blocked("PRESTATE_BYTES_HASH_MISMATCH")
+        snapshot = json.loads(content)
+        if (not isinstance(snapshot, dict) or snapshot.get("repo") != args.repo
+            or not re.fullmatch(r"[a-f0-9]{40}", str(snapshot.get("head_sha", "")))):
+            raise Blocked("FOREIGN_OR_UNBOUND_PRESTATE")
+        baseline = snapshot.get("ruleset")
+        if (baseline is not None and
+            (not isinstance(baseline, dict)
+             or (profile["ruleset_id"] is not None and baseline.get("id") != profile["ruleset_id"]))):
+            raise Blocked("PRESTATE_RULESET_IDENTITY_MISMATCH")
+        # Never automatically restore a weaker protection or delete a ruleset.
+        receipt({
+            "state": "ROLLBACK_PLAN_ONLY_NOT_EXECUTED",
+            "repo": args.repo,
+            "prestate_sha256": actual_sha,
+            "source_head_sha": snapshot["head_sha"],
+            "previous_ruleset_id": (baseline or {}).get("id"),
+            "rollback": "HUMAN_REVIEWED_CORRECTIVE_SUCCESSOR_ONLY",
+            "automatic_deletion": False,
+            "remote_state_at_recovery": "TOKEN_VAZIO_NOT_READ",
+            "negative_merge_test": "NOT_RUN",
+            "claim_allowed": False
+        })
         return 0
     token = os.environ.get("GH_API_TOKEN", "")
     if not token:
@@ -321,11 +356,15 @@ def main():
         raise Blocked("INDEPENDENT_REVIEWER_AND_ROLLBACK_NOT_VERIFIED")
     # Snapshot before mutation. This is a local recovery receipt, not a rollback execution.
     Path("artifacts/rafaelia-provider-p0").mkdir(parents=True, exist_ok=True)
-    Path("artifacts/rafaelia-provider-p0/prestate.json").write_text(
-        json.dumps({"repo": args.repo, "head_sha": head_sha, "ruleset": current,
-                    "rollback": "HUMAN_REVIEW_REQUIRED", "claim_allowed": False},
-                   indent=2, sort_keys=True) + "\n",
-        encoding="utf-8")
+    prestate = {
+        "repo": args.repo, "head_sha": head_sha, "ruleset": current,
+        "rollback": "HUMAN_REVIEW_REQUIRED", "claim_allowed": False
+    }
+    prestate_bytes = (json.dumps(prestate, indent=2, sort_keys=True) + "\n").encode("utf-8")
+    prestate_sha256 = hashlib.sha256(prestate_bytes).hexdigest()
+    # Exclusive creation protects recovery evidence against an accidental second run.
+    with Path("artifacts/rafaelia-provider-p0/prestate.json").open("xb") as f:
+        f.write(prestate_bytes)
     again_sha, again_rule = live(args.repo, profile, token)
     if again_sha != head_sha or again_rule != current:
         raise Blocked("CONCURRENT_PROVIDER_CHANGE_STOP")
@@ -333,9 +372,15 @@ def main():
     # A network timeout after an HTTP write is an UNKNOWN remote outcome, never a safe retry.
     global WRITE_ATTEMPTED
     WRITE_ATTEMPTED = True
-    receipt({"state": "MUTATION_ATTEMPT_BEGIN_REMOTE_OUTCOME_UNKNOWN",
-             "repo": args.repo, "head_sha": head_sha,
-             "prestate_saved": True, "claim_allowed": False})
+    attempt = {
+        "state": "MUTATION_ATTEMPT_BEGIN_REMOTE_OUTCOME_UNKNOWN",
+        "repo": args.repo, "head_sha": head_sha, "prestate_sha256": prestate_sha256,
+        "previous_ruleset_id": (current or {}).get("id"),
+        "claim_allowed": False
+    }
+    with Path("artifacts/rafaelia-provider-p0/mutation_intent.json").open("x", encoding="utf-8") as f:
+        f.write(json.dumps(attempt, sort_keys=True, indent=2) + "\n")
+    receipt(attempt)
     if current:
         after = api("PUT", path + "/" + str(current["id"]), token, planned)
     else:
@@ -351,7 +396,7 @@ def main():
              "configured_checks": profile["checks"],
              "independent_reviewer_login": reviewer,
              "independence_of_human_identity": "TOKEN_VAZIO_NOT_PROVED_BY_PERMISSION",
-             "rollback_test": "NOT_RUN",
+             "rollback_test": "NOT_RUN", "prestate_sha256": prestate_sha256,
              "negative_merge_test": "NOT_RUN", "claim_allowed": False})
     return 0
 
