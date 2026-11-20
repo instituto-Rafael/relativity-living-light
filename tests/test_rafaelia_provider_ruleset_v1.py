@@ -1,5 +1,6 @@
 """Exact static falsifiers for provider policy; no API calls, no secrets."""
 import importlib.util
+import json
 import pathlib
 import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
