@@ -256,6 +256,7 @@ class AdversarialPolicyTests(unittest.TestCase):
         argv = ["gate", "--mode", "apply", "--repo",
                 "rafaelmeloreisnovo/RafGitTools",
                 "--expected-main-sha", "a" * 40,
+                "--reviewer-login", "trusted-reviewer",
                 "--confirm", "APPLY-P0:rafaelmeloreisnovo/RafGitTools"]
         env = {"GH_API_TOKEN": "fake", "GITHUB_REPOSITORY": "rafaelmeloreisnovo/RafGitTools",
                "GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main",
@@ -263,10 +264,45 @@ class AdversarialPolicyTests(unittest.TestCase):
         with mock.patch.object(sys, "argv", argv), \
              mock.patch.dict(os.environ, env, clear=True), \
              mock.patch.object(p, "live", return_value=("a" * 40, None)), \
-             mock.patch.object(p, "api") as api_mock:
+             mock.patch.object(p, "api", return_value={"permission": "write"}) as api_mock:
             with self.assertRaisesRegex(p.Blocked, "REVIEWER_AND_ROLLBACK_NOT_VERIFIED"):
                 p.main()
+            self.assertTrue(all(call.args[0] == "GET" for call in api_mock.call_args_list))
+
+    def test_apply_rejects_self_review_even_with_manual_evidence(self):
+        argv = ["gate", "--mode", "apply", "--repo",
+                "rafaelmeloreisnovo/RafGitTools",
+                "--expected-main-sha", "a" * 40,
+                "--reviewer-login", p.ACTOR,
+                "--confirm", "APPLY-P0:rafaelmeloreisnovo/RafGitTools"]
+        env = {"GH_API_TOKEN": "fake", "GITHUB_REPOSITORY": "rafaelmeloreisnovo/RafGitTools",
+               "GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main",
+               "GITHUB_ACTOR": p.ACTOR, "RAFAELIA_REVIEWER_GATE_EVIDENCE":
+               "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK"}
+        with mock.patch.object(sys, "argv", argv), \
+             mock.patch.dict(os.environ, env, clear=True), \
+             mock.patch.object(p, "live", return_value=("a" * 40, None)), \
+             mock.patch.object(p, "api") as api_mock:
+            with self.assertRaisesRegex(p.Blocked, "REVIEWER_LOGIN_INVALID"):
+                p.main()
             api_mock.assert_not_called()
+
+    def test_apply_rejects_unqualified_reviewer_read_only(self):
+        argv = ["gate", "--mode", "apply", "--repo",
+                "rafaelmeloreisnovo/RafGitTools", "--expected-main-sha", "a" * 40,
+                "--reviewer-login", "other-human",
+                "--confirm", "APPLY-P0:rafaelmeloreisnovo/RafGitTools"]
+        env = {"GH_API_TOKEN": "fake", "GITHUB_REPOSITORY": "rafaelmeloreisnovo/RafGitTools",
+               "GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main",
+               "GITHUB_ACTOR": p.ACTOR, "RAFAELIA_REVIEWER_GATE_EVIDENCE":
+               "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK"}
+        with mock.patch.object(sys, "argv", argv), \
+             mock.patch.dict(os.environ, env, clear=True), \
+             mock.patch.object(p, "live", return_value=("a" * 40, None)), \
+             mock.patch.object(p, "api", return_value={"permission": "read"}) as api_mock:
+            with self.assertRaisesRegex(p.Blocked, "REVIEWER_PERMISSION_NOT_VERIFIED"):
+                p.main()
+            self.assertTrue(all(call.args[0] == "GET" for call in api_mock.call_args_list))
 
     def test_apply_rejects_old_head_even_with_reviewer_evidence(self):
         argv = ["gate", "--mode", "apply", "--repo",
@@ -296,22 +332,26 @@ class AdversarialPolicyTests(unittest.TestCase):
     def test_uncertain_write_state_is_latched_on_exception(self):
         argv = ["gate", "--mode", "apply", "--repo",
                 "rafaelmeloreisnovo/RafGitTools", "--expected-main-sha", "a" * 40,
+                "--reviewer-login", "verified-human",
                 "--confirm", "APPLY-P0:rafaelmeloreisnovo/RafGitTools"]
         env = {"GH_API_TOKEN": "fake", "GITHUB_REPOSITORY": "rafaelmeloreisnovo/RafGitTools",
                "GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF": "refs/heads/main",
                "GITHUB_ACTOR": p.ACTOR, "RAFAELIA_REVIEWER_GATE_EVIDENCE":
                "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK"}
+        def fake_api(method, path, token, payload=None):
+            if method == "GET" and path.endswith("/permission"):
+                return {"permission": "write"}
+            raise p.Blocked("PROVIDER_NETWORK_ERROR")
         p.WRITE_ATTEMPTED = False
         with mock.patch.object(sys, "argv", argv), \
              mock.patch.dict(os.environ, env, clear=True), \
              mock.patch.object(p, "live", return_value=("a" * 40, None)), \
-             mock.patch.object(p, "api", side_effect=p.Blocked("PROVIDER_NETWORK_ERROR")), \
+             mock.patch.object(p, "api", side_effect=fake_api), \
              mock.patch.object(p, "receipt"):
             with self.assertRaisesRegex(p.Blocked, "PROVIDER_NETWORK_ERROR"):
                 p.main()
             self.assertTrue(p.WRITE_ATTEMPTED)
         p.WRITE_ATTEMPTED = False
-
 
 if __name__ == "__main__":
     unittest.main()
