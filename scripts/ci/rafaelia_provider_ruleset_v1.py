@@ -260,6 +260,7 @@ def main():
     parser.add_argument("--expected-main-sha", default="")
     parser.add_argument("--confirm", default="")
     parser.add_argument("--operator", choices=("actions", "agent"), default="actions")
+    parser.add_argument("--reviewer-login", default="", help="GitHub login eligible to review independently")
     args = parser.parse_args()
     profile = PROFILES[args.repo]
     expected = policy(profile)
@@ -307,12 +308,23 @@ def main():
         raise Blocked("RULESET_BASELINE_CHANGED_REVIEW_REQUIRED")
     if current and profile["ruleset_id"] is None:
         raise Blocked("EXISTING_NEW_POLICY_CHANGED_REVIEW_REQUIRED")
+    # Confirm a distinct collaborator with actual write-level review capability.
+    reviewer = args.reviewer_login.strip()
+    if (not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", reviewer)
+        or reviewer.lower() == ACTOR.lower()):
+        raise Blocked("INDEPENDENT_REVIEWER_LOGIN_INVALID_OR_UNKNOWN")
+    permission = api("GET", "/repos/" + args.repo + "/collaborators/" + reviewer + "/permission", token)
+    if permission.get("permission") not in ("write", "maintain", "admin"):
+        raise Blocked("REVIEWER_PERMISSION_NOT_VERIFIED")
+    # A permitted account is not proof of a distinct human. Require documented review.
     if os.environ.get("RAFAELIA_REVIEWER_GATE_EVIDENCE") != "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK":
         raise Blocked("INDEPENDENT_REVIEWER_AND_ROLLBACK_NOT_VERIFIED")
     # Snapshot before mutation. This is a local recovery receipt, not a rollback execution.
     Path("artifacts/rafaelia-provider-p0").mkdir(parents=True, exist_ok=True)
     Path("artifacts/rafaelia-provider-p0/prestate.json").write_text(
-        json.dumps({"repo": args.repo, "ruleset": current}, indent=2, sort_keys=True) + "\n",
+        json.dumps({"repo": args.repo, "head_sha": head_sha, "ruleset": current,
+                    "rollback": "HUMAN_REVIEW_REQUIRED", "claim_allowed": False},
+                   indent=2, sort_keys=True) + "\n",
         encoding="utf-8")
     again_sha, again_rule = live(args.repo, profile, token)
     if again_sha != head_sha or again_rule != current:
@@ -321,6 +333,9 @@ def main():
     # A network timeout after an HTTP write is an UNKNOWN remote outcome, never a safe retry.
     global WRITE_ATTEMPTED
     WRITE_ATTEMPTED = True
+    receipt({"state": "MUTATION_ATTEMPT_BEGIN_REMOTE_OUTCOME_UNKNOWN",
+             "repo": args.repo, "head_sha": head_sha,
+             "prestate_saved": True, "claim_allowed": False})
     if current:
         after = api("PUT", path + "/" + str(current["id"]), token, planned)
     else:
@@ -334,6 +349,9 @@ def main():
     receipt({"state": "CONFIG_READBACK_SCOPED_NEGATIVE_TEST_NOT_RUN", "repo": args.repo,
              "head_sha": head_sha, "ruleset_id": new_id,
              "configured_checks": profile["checks"],
+             "independent_reviewer_login": reviewer,
+             "independence_of_human_identity": "TOKEN_VAZIO_NOT_PROVED_BY_PERMISSION",
+             "rollback_test": "NOT_RUN",
              "negative_merge_test": "NOT_RUN", "claim_allowed": False})
     return 0
 
