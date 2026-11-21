@@ -103,6 +103,8 @@ class MultibaseV2(unittest.TestCase):
                 self.assertLessEqual(low**8,base**j)
                 self.assertGreaterEqual(high**8,base**j)
                 self.assertLessEqual(low,high)
+                self.assertLessEqual(Fraction(row["upper_exact"])-Fraction(row["lower_exact"]),
+                                     Fraction(row["max_absolute_width_le"]))
 
     def test_claim_boundary_with_extended_validation(self):
         report=m.compute()

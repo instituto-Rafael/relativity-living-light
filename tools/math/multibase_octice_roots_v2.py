@@ -154,7 +154,7 @@ def certified_step_bounds(multiplier: int,side: Decimal,places: int=18) -> list[
         exact=(q**8==n)
         upper=lower if exact else Fraction(side)*Fraction(q+1,unit)
         rows.append({"step":j,"lower_exact":str(lower),"upper_exact":str(upper),
-                     "exact":exact,"max_absolute_width_lt":str(Fraction(side)/unit)})
+                     "exact":exact,"max_absolute_width_le":str(Fraction(side)/unit)})
     return rows
 
 def scale_eighth(multiplier: int, side: Decimal=Decimal(1)) -> dict:
