@@ -68,5 +68,48 @@ class MultibaseV2(unittest.TestCase):
             m.numeric_value((),7)
         self.assertFalse(m.compute()["claim_allowed"])
 
+
+    def test_integer_and_zero_fraction_notation(self):
+        self.assertEqual(m.fraction_expansion(1,1,10)["notation"],"1")
+        self.assertEqual(m.fraction_expansion(0,7,10)["notation"],"0")
+        self.assertEqual(m.fraction_expansion(1,12,10)["notation"],"0.08(3)")
+
+    def test_crt_construction_and_incompatibility(self):
+        self.assertEqual(m.crt_pairwise(((3,7),(4,10))),(24,70))
+        self.assertEqual(m.crt_pairwise(((3,7),(4,50))),(304,350))
+        self.assertEqual(m.crt_general(((3,14),(17,35))),(17,70))
+        with self.assertRaises(ValueError):
+            m.crt_general(((3,14),(16,35)))
+        with self.assertRaises(ValueError):
+            m.crt_pairwise(((3,14),(17,35)))
+
+    def test_factorization_totient_dynamic(self):
+        self.assertEqual(m.factorization(350),{2:1,5:2,7:1})
+        self.assertEqual(m.factorization(210),{2:1,3:1,5:1,7:1})
+        self.assertEqual(m.totient(210),48)
+        self.assertEqual(m.totient(350),120)
+        self.assertEqual(m.factorization_string(350),"2 * 5^2 * 7")
+
+    def test_certified_eighth_bounds(self):
+        from fractions import Fraction
+        for base in (2,3):
+            bounds=m.certified_step_bounds(base,Decimal("7"))
+            self.assertEqual(len(bounds),9)
+            self.assertEqual(Fraction(bounds[0]["lower_exact"]),7)
+            self.assertEqual(Fraction(bounds[8]["lower_exact"]),7*base)
+            for j,row in enumerate(bounds):
+                low=Fraction(row["lower_exact"])/7
+                high=Fraction(row["upper_exact"])/7
+                self.assertLessEqual(low**8,base**j)
+                self.assertGreaterEqual(high**8,base**j)
+                self.assertLessEqual(low,high)
+
+    def test_claim_boundary_with_extended_validation(self):
+        report=m.compute()
+        self.assertIs(report["claim_allowed"],False)
+        self.assertEqual(report["crt_verified"]["pair_7_10"],(24,70))
+        self.assertTrue(report["scale_eighth_root_2"]["certified_step_bounds"][8]["exact"])
+
+
 if __name__=="__main__":
     unittest.main()
