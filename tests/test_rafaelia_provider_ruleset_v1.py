@@ -59,6 +59,19 @@ class AdversarialPolicyTests(unittest.TestCase):
     RLL = p.PROFILES["instituto-Rafael/relativity-living-light"]
     RAF = p.PROFILES["rafaelmeloreisnovo/RafGitTools"]
 
+    @staticmethod
+    def admin_read_fixture(method, path, token, payload=None, permission="write"):
+        """Only fake GET reads; any mock write is a test failure."""
+        if method != "GET":
+            raise AssertionError("Unexpected provider mutation in dry-run test")
+        repo = "rafaelmeloreisnovo/RafGitTools"
+        if path == "/repos/" + repo:
+            return {"id": p.PROFILES[repo]["repository_id"],
+                    "full_name": repo, "permissions": {"admin": True}}
+        if path.endswith("/permission"):
+            return {"permission": permission}
+        raise AssertionError("Unexpected provider lookup: " + path)
+
     def rule(self, doc, name):
         return next(x for x in doc["rules"] if x["type"] == name)
 
@@ -265,7 +278,7 @@ class AdversarialPolicyTests(unittest.TestCase):
         with mock.patch.object(sys, "argv", argv), \
              mock.patch.dict(os.environ, env, clear=True), \
              mock.patch.object(p, "live", return_value=("a" * 40, None)), \
-             mock.patch.object(p, "api", return_value={"permission": "write"}) as api_mock:
+             mock.patch.object(p, "api", side_effect=self.admin_read_fixture) as api_mock:
             with self.assertRaisesRegex(p.Blocked, "REVIEWER_AND_ROLLBACK_NOT_VERIFIED"):
                 p.main()
             self.assertTrue(all(call.args[0] == "GET" for call in api_mock.call_args_list))
@@ -300,7 +313,9 @@ class AdversarialPolicyTests(unittest.TestCase):
         with mock.patch.object(sys, "argv", argv), \
              mock.patch.dict(os.environ, env, clear=True), \
              mock.patch.object(p, "live", return_value=("a" * 40, None)), \
-             mock.patch.object(p, "api", return_value={"permission": "read"}) as api_mock:
+             mock.patch.object(p, "api",
+                               side_effect=lambda method, path, token, payload=None:
+                                   self.admin_read_fixture(method, path, token, payload, "read")) as api_mock:
             with self.assertRaisesRegex(p.Blocked, "REVIEWER_PERMISSION_NOT_VERIFIED"):
                 p.main()
             self.assertTrue(all(call.args[0] == "GET" for call in api_mock.call_args_list))
@@ -340,8 +355,9 @@ class AdversarialPolicyTests(unittest.TestCase):
                "GITHUB_ACTOR": p.ACTOR, "RAFAELIA_REVIEWER_GATE_EVIDENCE":
                "REVIEWED_INDEPENDENT_REVIEWER_AND_ROLLBACK"}
         def fake_api(method, path, token, payload=None):
-            if method == "GET" and path.endswith("/permission"):
-                return {"permission": "write"}
+            if method == "GET":
+                return self.admin_read_fixture(method, path, token, payload)
+            # Simulate ambiguous network error only after the write is attempted.
             raise p.Blocked("PROVIDER_NETWORK_ERROR")
         p.WRITE_ATTEMPTED = False
         with mock.patch.object(sys, "argv", argv), \
@@ -449,7 +465,7 @@ class RecoveryFalsifiers(unittest.TestCase):
                      mock.patch.object(p, "live", return_value=("a" * 40, None)), \
                      mock.patch.object(p, "api", side_effect=fake_api), \
                      mock.patch.object(p, "receipt"):
-                    with self.assertRaises(FileExistsError):
+                    with self.assertRaisesRegex(p.Blocked, "RECOVERY_SNAPSHOT_ALREADY_EXISTS"):
                         p.main()
                 self.assertEqual((folder / "prestate.json").read_text(), "EXISTING_PRESTATE")
         finally:

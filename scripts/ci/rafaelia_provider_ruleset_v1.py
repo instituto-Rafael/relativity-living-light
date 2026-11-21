@@ -343,6 +343,14 @@ def main():
         raise Blocked("RULESET_BASELINE_CHANGED_REVIEW_REQUIRED")
     if current and profile["ruleset_id"] is None:
         raise Blocked("EXISTING_NEW_POLICY_CHANGED_REVIEW_REQUIRED")
+    # Pure local preflights precede any privileged provider lookup.
+    reviewer = args.reviewer_login.strip()
+    if (not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", reviewer)
+        or reviewer.lower() == ACTOR.lower()):
+        raise Blocked("INDEPENDENT_REVIEWER_LOGIN_INVALID_OR_UNKNOWN")
+    recovery_path = Path("artifacts/rafaelia-provider-p0/prestate.json")
+    if recovery_path.exists() or recovery_path.is_symlink():
+        raise Blocked("RECOVERY_SNAPSHOT_ALREADY_EXISTS")
     # Preflight administrative capability, never infer it from a named secret.
     authority = api("GET", "/repos/" + args.repo, token)
     if (not isinstance(authority, dict) or authority.get("id") != profile["repository_id"]
@@ -350,10 +358,6 @@ def main():
         or authority.get("permissions", {}).get("admin") is not True):
         raise Blocked("PROVIDER_ADMIN_WRITE_AUTHORITY_NOT_PROVEN")
     # Confirm a distinct collaborator with actual write-level review capability.
-    reviewer = args.reviewer_login.strip()
-    if (not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", reviewer)
-        or reviewer.lower() == ACTOR.lower()):
-        raise Blocked("INDEPENDENT_REVIEWER_LOGIN_INVALID_OR_UNKNOWN")
     permission = api("GET", "/repos/" + args.repo + "/collaborators/" + reviewer + "/permission", token)
     if permission.get("permission") not in ("write", "maintain", "admin"):
         raise Blocked("REVIEWER_PERMISSION_NOT_VERIFIED")
@@ -369,7 +373,7 @@ def main():
     prestate_bytes = (json.dumps(prestate, indent=2, sort_keys=True) + "\n").encode("utf-8")
     prestate_sha256 = hashlib.sha256(prestate_bytes).hexdigest()
     # Exclusive creation protects recovery evidence against an accidental second run.
-    with Path("artifacts/rafaelia-provider-p0/prestate.json").open("xb") as f:
+    with recovery_path.open("xb") as f:
         f.write(prestate_bytes)
     again_sha, again_rule = live(args.repo, profile, token)
     if again_sha != head_sha or again_rule != current:
