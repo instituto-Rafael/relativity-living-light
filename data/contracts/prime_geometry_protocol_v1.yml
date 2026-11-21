@@ -1,0 +1,30 @@
+# Research contract / metadata only. Not a GitHub Actions workflow.
+protocol: RAFAELIA_PRIME_GEOMETRY_V1
+version: 1
+math_owner: "papers:Prime Distribution in Compatible Residue Systems (V1, 2026-09-06)"
+experiment_owner: "RLL producer branch only after human review"
+moduli: [3, 7, 10, 13, 14, 35, 50, 70, 140, 1400]
+global_modulus: 54600
+global_phi: 11520
+focal_moduli: [70, 210, 350, 1400, 54600]
+expected_projection_fibers:
+  "70": 480
+  "210": 240
+  "350": 96
+  "1400": 24
+  "54600": 1
+negative_controls:
+  coprime_composite: 121
+  modulus_rejected_composite: 169
+  fragmented_orbit: {n: 8, step: 2, length: 4}
+  complete_orbit: {n: 7, step: 2, length: 7}
+privacy_class: PUBLIC_SYNTHETIC
+imports_private_data: false
+writes_to_supabase: false
+writes_to_drive: false
+publishes_to_slack: false
+cosmological_inference: NOT_EXECUTED
+spectral_dirichlet_test: NOT_EXECUTED
+novelty_proof: TOKEN_VAZIO_PROOF
+claim_allowed: false
+approval_required_before_promotion: true

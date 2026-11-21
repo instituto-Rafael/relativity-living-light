@@ -1,0 +1,40 @@
+# RAFAELIA V2 — metadata only; not workflow and not a theorem proof.
+protocol: RAFAELIA_MULTIBASE_OCTIC_V2
+predecessor: RAFAELIA_PRIME_GEOMETRY_V1
+status: BRANCH_ONLY_REVIEW
+claim_allowed: false
+radices: [7, 10, 14, 35, 50, 70]
+common_lcm: 350
+support_primes: [2, 5, 7]
+expected_phi_350: 120
+coprime_pairs: [[7, 10], [7, 50]]
+radix_position: integer_base_ge_2
+fractional_radices_exploratory: NOT_EXECUTED
+radix_1: UNARY_NOT_POSITIONAL
+radix_0: INVALID_POSITIONAL_RADIX
+token_empty_is_not_zero: true
+extra_digits: BRACKETED_DECIMAL_DIGIT_FOR_VALUES_10_OR_GREATER
+independent_invariants:
+  - decode_encode_value_conservation
+  - exact_fraction_periodicity
+  - gcd_lcm_pairwise
+  - chinese_remainder_coprime_pairs
+  - eighth_power_scale_symbolic
+scales:
+  - {root_index: 8, radicand: 2, expression: 'side * 2^(1/8)', eight_steps_side_multiplier: 2, eight_steps_area_multiplier: 4}
+  - {root_index: 8, radicand: 3, expression: 'side * 3^(1/8)', eight_steps_side_multiplier: 3, eight_steps_area_multiplier: 9}
+eighth_roots_not_octagon_diagonals: true
+octagonal_spiral:
+  n: 8
+  angle_step_k: 3
+  gcd_n_k: 1
+  angle_delta: '3 * pi / 4'
+  radial_factors_per_step: ['2^(1/8)', '3^(1/8)']
+  state_after_8: 'same angle, distinct radius'
+  negative_angular_step_k: 2
+  negative_unique_directions: 4
+source_comparison: 'papers: BASE_SHIFT_PRIME_MODULAR_FLUID + PRIMES_RESIDUAL_54600 V1'
+cosmology_use: PROHIBITED_UNTIL_INDEPENDENT_EXPERIMENT_GATE
+hardware_runtime: NOT_TESTED
+repo_omega_explorer_integration: BRANCH_ONLY_IMPLEMENTED_CI_NOT_VERIFIED
+online_write: REVIEW_BRANCH_COMMIT_ONLY
