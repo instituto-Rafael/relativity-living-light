@@ -13,8 +13,11 @@ run-name: Ω Math Explorer · ${{ github.event_name }} · ${{ github.ref_name }}
       - "tests/test_omega_math_explorer.py"
       - "tools/math/prime_geometry_v1.py"
       - "tools/math/multibase_octice_roots_v2.py"
+      - "tools/math/open_math_spectral_topology_v1.py"
       - "tests/test_prime_geometry_v1.py"
       - "tests/test_multibase_octice_roots_v2.py"
+      - "tests/test_open_math_spectral_topology_v1.py"
+      - "docs/research/RLL_OPEN_MATH_SPECTRAL_TOPOLOGY_V1.md"
       - "data/contracts/prime_geometry_protocol_v1.yml"
       - "data/contracts/multibase_octice_protocol_v2.yml"
       - ".github/workflows/omega-math-explorer.yml"
@@ -70,11 +73,12 @@ jobs:
           set -euo pipefail
           python tools/math/prime_geometry_v1.py --limit 10000 --out-dir "$RECEIPT_DIR/prime_geometry_v1"
           python tools/math/multibase_octice_roots_v2.py --out-dir "$RECEIPT_DIR/multibase_octice_v2"
+          python tools/math/open_math_spectral_topology_v1.py --limit 10000 --draws 127 --seed 20261121 --grid 3 --out-dir "$RECEIPT_DIR/open_math_v1"
 
       - name: Run focused regression tests
         run: |
           set -euo pipefail
-          pytest -q tests/test_omega_math_explorer.py tests/test_prime_geometry_v1.py tests/test_multibase_octice_roots_v2.py --junitxml="$RECEIPT_DIR/junit.xml"
+          pytest -q tests/test_omega_math_explorer.py tests/test_prime_geometry_v1.py tests/test_multibase_octice_roots_v2.py tests/test_open_math_spectral_topology_v1.py --junitxml="$RECEIPT_DIR/junit.xml"
 
       - name: Seal environment and claim boundary
         if: always()
