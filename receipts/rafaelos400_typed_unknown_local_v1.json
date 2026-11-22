@@ -1,0 +1,29 @@
+{
+  "schema": "rll.rafaelos400.typed_unknown.assurance_receipt.v1",
+  "executed_at_utc": "2026-11-22T07:17:21.875501+00:00",
+  "scope": "finite-domain synthetic T={0,1}, standard-library, local Python",
+  "source_sha256": "04395efc6193912795073342203750d5c4a0414242c3033fcb0052964fffdcf4",
+  "source_git_blob_oid": "ec8d3548c6836a1d694c80b37ea804adf1727f18",
+  "source_path": "tools/ci/rll_rafaelos400_typed_unknown_gate_v1.py",
+  "execution_command": "python tools/ci/rll_rafaelos400_typed_unknown_gate_v1.py --output /tmp/rll_rafaelos400_typed_unknown_receipt_v1.json",
+  "runtime_kind": "LOCAL_CONTAINER_PYTHON_NOT_GITHUB_CI_NOT_DEVICE",
+  "tests_executed": 13,
+  "tests_passed": 13,
+  "tests_failed": 0,
+  "status": "PASS_SCOPED_LOCAL_SYNTHETIC",
+  "evidence_state": "VERIFIED_LIMITED",
+  "assurance_scope": "implementation behavior of this finite synthetic fixture only",
+  "source_message_fidelity": "NOT_RUN",
+  "all_400_formulas_proved": false,
+  "cosmology_validated": false,
+  "independent_review": "NOT_RUN",
+  "ci_status": "NOT_RUN",
+  "claim_allowed": false,
+  "limitations": [
+    "not a formal proof assistant",
+    "does not access 400 private formulas",
+    "no real observational data",
+    "no claim of new mathematics"
+  ],
+  "reproducibility": "Run source with Python 3.10+; independently capture runtime/version and byte sha256."
+}
