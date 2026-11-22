@@ -1,0 +1,38 @@
+{
+  "schema": "rll.rafaelos400.negative_control_receipt.v1",
+  "executed_at_utc": "2026-11-22T07:21:22.346830+00:00",
+  "source_sha256": "04395efc6193912795073342203750d5c4a0414242c3033fcb0052964fffdcf4",
+  "baseline": {
+    "executed": 13,
+    "failed": 0,
+    "detected_by": []
+  },
+  "mutation_unconditional_unknown": {
+    "executed": 13,
+    "failed": 3,
+    "detected_by": [
+      "test_all_binary_maps_are_sound",
+      "test_constant_unknown_can_be_known",
+      "test_partial_function_blocked"
+    ]
+  },
+  "mutation_ignore_context": {
+    "executed": 13,
+    "failed": 1,
+    "detected_by": [
+      "test_merge_requires_shared_variable_context"
+    ]
+  },
+  "restored_baseline": {
+    "executed": 13,
+    "failed": 0,
+    "detected_by": []
+  },
+  "mutants_introduced": 2,
+  "mutants_detected": 2,
+  "status": "PASS_SCOPED_LOCAL_NEGATIVE_CONTROLS",
+  "independent_replication": "NOT_RUN",
+  "ci_status": "NOT_RUN",
+  "cosmology_validation": "NOT_RUN",
+  "claim_allowed": false
+}
