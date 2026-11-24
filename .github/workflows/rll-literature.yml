@@ -16,24 +16,50 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - name: Restore previously observed DOIs
-        id: history
-        uses: actions/cache/restore@v4
-        with:
-          path: literature.json
-          key: literature-v1-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: literature-v1-
-      - name: Search literature and classify candidates
+      - name: Read last catalog from the producer ledger
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          baseline=data/chronology/literature.json
-          if test -f literature.json; then baseline=literature.json; fi
-          python3 tools/rll_literature.py --baseline "$baseline" --output literature.json
+          endpoint="repos/$GITHUB_REPOSITORY/contents/data/chronology/literature.json?ref=rll/literature-ledger"
+          gh api "$endpoint" > baseline-response.json
+          jq -r .content baseline-response.json | base64 -d > baseline.json
+          jq -er .sha baseline-response.json > predecessor.sha
+      - name: Search public Crossref
+        run: python3 tools/rll_literature.py --baseline baseline.json --output literature.json
+      - name: Detect changes to evidence records
+        id: delta
+        run: |
+          jq -S .records baseline.json > old.json
+          jq -S .records literature.json > new.json
+          if cmp -s old.json new.json; then echo 'changed=false' >> "$GITHUB_OUTPUT"; else echo 'changed=true' >> "$GITHUB_OUTPUT"; fi
       - uses: actions/upload-artifact@v7
         with:
           name: literature-${{ github.run_id }}-${{ github.run_attempt }}
-          path: literature.json
+          path: |
+            literature.json
+            predecessor.sha
           if-no-files-found: error
-      - uses: actions/cache/save@v4
+    outputs:
+      changed: ${{ steps.delta.outputs.changed }}
+  record:
+    needs: discover
+    if: needs.discover.outputs.changed == 'true' && github.ref_name == github.event.repository.default_branch && github.repository == 'instituto-Rafael/relativity-living-light'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
         with:
-          path: literature.json
-          key: literature-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          name: literature-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Commit catalog and verify bytes at returned commit
+        env:
+          GH_TOKEN: ${{ secrets.PAT_ACTIONS }}
+        run: |
+          set -eu
+          test -n "$GH_TOKEN" || { echo 'PAT_ACTIONS binding missing'; exit 1; }
+          endpoint="repos/$GITHUB_REPOSITORY/contents/data/chronology/literature.json"
+          base64 -w0 literature.json > content.b64
+          jq -n --rawfile content content.b64 --arg sha "$(cat predecessor.sha)" --arg message "Record literature delta from Actions run $GITHUB_RUN_ID" \
+            '{branch:"rll/literature-ledger",content:$content,sha:$sha,message:$message}' > request.json
+          commit=$(gh api --method PUT "$endpoint" --input request.json --jq .commit.sha)
+          gh api "$endpoint?ref=$commit" --jq .content | base64 -d > readback.json
+          cmp literature.json readback.json
+          echo "Verified catalog at $commit" >> "$GITHUB_STEP_SUMMARY"
