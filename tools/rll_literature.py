@@ -61,10 +61,11 @@ def main():
     parser.add_argument("--baseline", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    records = json.loads(args.baseline.read_text())["records"] if args.baseline else {}
+    baseline = json.loads(args.baseline.read_text()) if args.baseline else {}
+    records = baseline.get("records", {})
     before = set(records)
     collect(records, crossref)
-    payload = {"provider": "Crossref", "retrieved_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    payload = {**baseline, "provider": "Crossref", "retrieved_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                "queries": [t[0] for t in TOPICS], "added_dois": sorted(set(records) - before),
                "records": records}
     temp = args.output.with_suffix(".tmp")

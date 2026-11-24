@@ -1,0 +1,41 @@
+{
+  "https://arxiv.org/abs/2112.04510": {
+    "title": "Riess et al. — local value of the Hubble constant",
+    "topics": [
+      "hubble",
+      "supernova"
+    ],
+    "h0_mentions": [
+      [
+        73.04,
+        1.04
+      ]
+    ],
+    "source_text_sha256": "5eb166d9a9dc0e9ec094a34cd6f558a0855fd3ff1e18415889b0c543db9b8901",
+    "candidate_model_paths": [
+      "data/pipelines/cosmology/late_time_cascade_observables.py",
+      "src/rll/cosmology_fairness.py",
+      "src/rll/cosmology_radiation.py",
+      "src/rll/cosmology_recombination.py",
+      "tools/check_formula_cosmology_geometry_crosswalk.py",
+      "tools/make_h0_rd_ablation_matrix.py",
+      "tools/rll_cosmology_e0_preflight.py",
+      "tools/rll_cosmology_flat_closure_preflight.py"
+    ],
+    "tests": [
+      {
+        "observable": "H0",
+        "unit": "km/s/Mpc",
+        "reported": 73.04,
+        "reported_error": 1.04,
+        "nominal_model": 67.4,
+        "residual_in_reported_errors": 5.423076923076923,
+        "model_source": "tools/rll_age_gate.py:H0",
+        "status": "conditional_numeric_screen"
+      }
+    ],
+    "status": "screened",
+    "claim_allowed": false,
+    "feed": "historical calibration"
+  }
+}

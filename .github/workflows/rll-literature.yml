@@ -2,7 +2,7 @@ name: RLL literature discovery
 on:
   workflow_dispatch:
   schedule:
-    - cron: '27 9 * * 5'
+    - cron: '27 9 * * *'
 permissions:
   contents: read
 concurrency:
@@ -26,11 +26,13 @@ jobs:
           jq -er .sha baseline-response.json > predecessor.sha
       - name: Search public Crossref
         run: python3 tools/rll_literature.py --baseline baseline.json --output literature.json
+      - name: Cross incoming publications against producer models
+        run: python3 -m tools.rll_publication_cross literature.json
       - name: Detect changes to evidence records
         id: delta
         run: |
-          jq -S .records baseline.json > old.json
-          jq -S .records literature.json > new.json
+          jq -S '{records, publication_crosses}' baseline.json > old.json
+          jq -S '{records, publication_crosses}' literature.json > new.json
           if cmp -s old.json new.json; then echo 'changed=false' >> "$GITHUB_OUTPUT"; else echo 'changed=true' >> "$GITHUB_OUTPUT"; fi
       - uses: actions/upload-artifact@v7
         with:
