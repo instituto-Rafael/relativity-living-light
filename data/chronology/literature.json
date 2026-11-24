@@ -1,0 +1,359 @@
+{
+  "added_dois": [
+    "10.1016/j.aop.2021.168432",
+    "10.1017/pasa.2021.61",
+    "10.1017/s1743921323001552",
+    "10.1038/s41550-023-02103-9",
+    "10.1051/0004-6361/202450427",
+    "10.1088/1475-7516/2021/06/052",
+    "10.1088/1475-7516/2026/09/146",
+    "10.1093/mnras/stad1069",
+    "10.1093/mnras/stae282",
+    "10.1093/mnras/staf015",
+    "10.1093/mnras/staf1939",
+    "10.1103/gmd1-k3f1",
+    "10.1140/epjc/s10052-026-15672-6",
+    "10.3847/1538-4357/ab9eb0",
+    "10.3847/1538-4357/ac3240",
+    "10.3847/1538-4357/ad372d",
+    "10.3847/1538-4357/adaf1a",
+    "10.3847/1538-4357/ae03ad",
+    "10.3847/1538-4357/ae95fc",
+    "10.3847/1538-4357/ae9f5c",
+    "10.3847/2041-8213/aba11c",
+    "10.3847/2041-8213/add1d4",
+    "10.54254/2753-8818/2026.35494"
+  ],
+  "provider": "Crossref",
+  "queries": [
+    "globular cluster ages Gaia",
+    "cosmic chronometers stellar population covariance",
+    "JWST massive quiescent galaxy stellar ages"
+  ],
+  "records": {
+    "10.1016/j.aop.2021.168432": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1016/j.aop.2021.168432",
+      "status": "bibliographic_candidate",
+      "title": "Constraints on Energy–Momentum Squared Gravity from cosmic chronometers and Supernovae Type Ia data",
+      "year": 2021
+    },
+    "10.1017/pasa.2021.61": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.1017/pasa.2021.61",
+      "status": "bibliographic_candidate",
+      "title": "Massive high-redshift quiescent galaxies with JWST",
+      "year": 2022
+    },
+    "10.1017/s1743921323001552": {
+      "claim_allowed": false,
+      "interpretation": "Conferir no artigo se cada tempo mede idade, duração ou erro.",
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "reported_time_mentions": [
+        "1Gyr"
+      ],
+      "source": "https://doi.org/10.1017/s1743921323001552",
+      "status": "bibliographic_candidate",
+      "title": "Revelation of Massive Quiescent Galaxies at z>3 from Deep JWST Spectroscopy",
+      "year": 2022
+    },
+    "10.1038/s41550-023-02103-9": {
+      "claim_allowed": false,
+      "interpretation": "Conferir no artigo se cada tempo mede idade, duração ou erro.",
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "reported_time_mentions": [
+        "10 Gyr"
+      ],
+      "source": "https://doi.org/10.1038/s41550-023-02103-9",
+      "status": "bibliographic_candidate",
+      "title": "A massive compact quiescent galaxy at z = 2 with a complete Einstein ring in JWST imaging",
+      "year": 2023
+    },
+    "10.1051/0004-6361/202450427": {
+      "claim_allowed": false,
+      "questions": {
+        "globular cluster ages Gaia": {
+          "evidence_needed": "Extrair idade, distância, metalicidade e erros compartilhados.",
+          "hypothesis_to_test": "Quanto tempo sobra para a formação dos aglomerados em cada cosmologia?"
+        }
+      },
+      "source": "https://doi.org/10.1051/0004-6361/202450427",
+      "status": "bibliographic_candidate",
+      "title": "Relative evolution of eclipsing binaries: A tool for measuring globular cluster ages and He abundances",
+      "year": 2024
+    },
+    "10.1088/1475-7516/2021/06/052": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1088/1475-7516/2021/06/052",
+      "status": "bibliographic_candidate",
+      "title": "A test of cosmic distance duality relation using SPT-SZ  galaxy clusters, Type Ia supernovae, and cosmic chronometers",
+      "year": 2021
+    },
+    "10.1088/1475-7516/2026/09/146": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1088/1475-7516/2026/09/146",
+      "status": "bibliographic_candidate",
+      "title": "Testing ΛCDM with ANN-reconstructed expansion history from cosmic chronometers",
+      "year": 2026
+    },
+    "10.1093/mnras/stad1069": {
+      "claim_allowed": false,
+      "interpretation": "Conferir no artigo se cada tempo mede idade, duração ou erro.",
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "reported_time_mentions": [
+        "1 Gyr",
+        "0.4 Gyr",
+        "0.2 Gyr",
+        "1.0 Gyr",
+        "2.3 Gyr"
+      ],
+      "source": "https://doi.org/10.1093/mnras/stad1069",
+      "status": "bibliographic_candidate",
+      "title": "Constraining quenching time-scales in galaxy clusters by forward-modelling stellar ages and quiescent fractions in projected phase space",
+      "year": 2023
+    },
+    "10.1093/mnras/stae282": {
+      "claim_allowed": false,
+      "questions": {
+        "globular cluster ages Gaia": {
+          "evidence_needed": "Extrair idade, distância, metalicidade e erros compartilhados.",
+          "hypothesis_to_test": "Quanto tempo sobra para a formação dos aglomerados em cada cosmologia?"
+        }
+      },
+      "source": "https://doi.org/10.1093/mnras/stae282",
+      "status": "bibliographic_candidate",
+      "title": "Measuring M31 globular cluster ages and metallicities using both photometry and spectroscopy",
+      "year": 2024
+    },
+    "10.1093/mnras/staf015": {
+      "claim_allowed": false,
+      "questions": {
+        "globular cluster ages Gaia": {
+          "evidence_needed": "Extrair idade, distância, metalicidade e erros compartilhados.",
+          "hypothesis_to_test": "Quanto tempo sobra para a formação dos aglomerados em cada cosmologia?"
+        }
+      },
+      "source": "https://doi.org/10.1093/mnras/staf015",
+      "status": "bibliographic_candidate",
+      "title": "Globular cluster ages and their relation to high-redshift stellar cluster formation times from different globular cluster models",
+      "year": 2025
+    },
+    "10.1093/mnras/staf1939": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1093/mnras/staf1939",
+      "status": "bibliographic_candidate",
+      "title": "Measuring the expansion history of the Universe with DESI cosmic chronometers",
+      "year": 2025
+    },
+    "10.1103/gmd1-k3f1": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1103/gmd1-k3f1",
+      "status": "bibliographic_candidate",
+      "title": "EFT of dark energy with cosmic chronometers: Reconstructing background EFT functions",
+      "year": 2026
+    },
+    "10.1140/epjc/s10052-026-15672-6": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.1140/epjc/s10052-026-15672-6",
+      "status": "bibliographic_candidate",
+      "title": "Cosmological dynamics of exponential quintessence constrained by BAO, cosmic chronometers, and DES-SN5YR/Pantheon$$^+$$ data",
+      "year": 2026
+    },
+    "10.3847/1538-4357/ab9eb0": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.3847/1538-4357/ab9eb0",
+      "status": "bibliographic_candidate",
+      "title": "Setting the Stage for Cosmic Chronometers. II. Impact of Stellar Population Synthesis Models Systematics and Full Covariance Matrix",
+      "year": 2020
+    },
+    "10.3847/1538-4357/ac3240": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.3847/1538-4357/ac3240",
+      "status": "bibliographic_candidate",
+      "title": "Toward a Better Understanding of Cosmic Chronometers: Stellar Population Properties of Passive Galaxies at Intermediate Redshift",
+      "year": 2022
+    },
+    "10.3847/1538-4357/ad372d": {
+      "claim_allowed": false,
+      "interpretation": "Conferir no artigo se cada tempo mede idade, duração ou erro.",
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "reported_time_mentions": [
+        "150 Myr"
+      ],
+      "source": "https://doi.org/10.3847/1538-4357/ad372d",
+      "status": "bibliographic_candidate",
+      "title": "The Heavy Metal Survey: The Evolution of Stellar Metallicities, Abundance Ratios, and Ages of Massive Quiescent Galaxies since z ∼ 2",
+      "year": 2024
+    },
+    "10.3847/1538-4357/adaf1a": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.3847/1538-4357/adaf1a",
+      "status": "bibliographic_candidate",
+      "title": "Testing Galaxy Formation Models with the Stellar Mass–Halo Mass Relations for Star-forming and Quiescent Galaxies",
+      "year": 2025
+    },
+    "10.3847/1538-4357/ae03ad": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.3847/1538-4357/ae03ad",
+      "status": "bibliographic_candidate",
+      "title": "Stellar Mass Assembly History of Massive Quiescent Galaxies since\n                    z\n                     ∼ 4: Insights from Spatially Resolved Spectral Energy Distribution Fitting with JWST Data",
+      "year": 2025
+    },
+    "10.3847/1538-4357/ae95fc": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.3847/1538-4357/ae95fc",
+      "status": "bibliographic_candidate",
+      "title": "The Role of Cluster Environments in Quiescent Galaxy Stellar Halo Assembly",
+      "year": 2026
+    },
+    "10.3847/1538-4357/ae9f5c": {
+      "claim_allowed": false,
+      "interpretation": "Conferir no artigo se cada tempo mede idade, duração ou erro.",
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "reported_time_mentions": [
+        "500 Myr"
+      ],
+      "source": "https://doi.org/10.3847/1538-4357/ae9f5c",
+      "status": "bibliographic_candidate",
+      "title": "Resolved Maps of Gas and Dust in a Massive Quiescent Galaxy at\n                    z\n                    = 2 from INQUEST-JWST: Evidence of Accretion and Rejuvenation",
+      "year": 2026
+    },
+    "10.3847/2041-8213/aba11c": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.3847/2041-8213/aba11c",
+      "status": "bibliographic_candidate",
+      "title": "Resolved Multi-element Stellar Chemical Abundances in the Brightest Quiescent Galaxy at z ∼ 2",
+      "year": 2020
+    },
+    "10.3847/2041-8213/add1d4": {
+      "claim_allowed": false,
+      "questions": {
+        "JWST massive quiescent galaxy stellar ages": {
+          "evidence_needed": "Separar redshift observado, idade estelar e prior cosmológico.",
+          "hypothesis_to_test": "O tempo disponível permite a história de formação inferida do espectro?"
+        }
+      },
+      "source": "https://doi.org/10.3847/2041-8213/add1d4",
+      "status": "bibliographic_candidate",
+      "title": "ADF22-WEB: Detection of a Molecular Gas Reservoir in a Massive Quiescent Galaxy Located in a z ≈ 3 Protocluster Core",
+      "year": 2025
+    },
+    "10.54254/2753-8818/2026.35494": {
+      "claim_allowed": false,
+      "questions": {
+        "cosmic chronometers stellar population covariance": {
+          "evidence_needed": "Extrair H(z), calibração de população estelar e matriz de covariância.",
+          "hypothesis_to_test": "A expansão inferida de idades diferenciais reproduz a inclinação prevista pelo RLL?"
+        }
+      },
+      "source": "https://doi.org/10.54254/2753-8818/2026.35494",
+      "status": "bibliographic_candidate",
+      "title": "Cosmic Chronometers: A Model-Independent Route to H(z) and Implications for the Hubble Tension",
+      "year": 2026
+    }
+  },
+  "retrieved_utc": "2026-11-24T08:19:59.455260+00:00"
+}

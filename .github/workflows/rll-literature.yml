@@ -1,0 +1,39 @@
+name: RLL literature discovery
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 9 * * 5'
+permissions:
+  contents: read
+concurrency:
+  group: rll-literature
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Restore previously observed DOIs
+        id: history
+        uses: actions/cache/restore@v4
+        with:
+          path: literature.json
+          key: literature-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: literature-v1-
+      - name: Search literature and classify candidates
+        run: |
+          baseline=data/chronology/literature.json
+          if test -f literature.json; then baseline=literature.json; fi
+          python3 tools/rll_literature.py --baseline "$baseline" --output literature.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: literature-${{ github.run_id }}-${{ github.run_attempt }}
+          path: literature.json
+          if-no-files-found: error
+      - uses: actions/cache/save@v4
+        with:
+          path: literature.json
+          key: literature-v1-${{ github.run_id }}-${{ github.run_attempt }}
