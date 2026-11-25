@@ -33,7 +33,7 @@ def covariance(rows, rho, variant):
 def chi2(residual, cov):
     # Cholesky whitening: no inverse and reject nonpositive pivots.
     n = len(residual)
-    if n != 3 or len(cov) != n or any(len(r) != n for r in cov):
+    if n not in (2, 3) or len(cov) != n or any(len(r) != n for r in cov):
         raise ValueError("INVALID_COVARIANCE_SHAPE")
     if any(not math.isfinite(x) for x in residual):
         raise ValueError("NONFINITE_RESIDUAL")
@@ -58,6 +58,26 @@ def chi2(residual, cov):
     return value
 
 
+def leave_one_out(zs, residuals, covs):
+    """Diagnostic influence screen; recompute the marginal covariance, no refit."""
+    if len(zs) != 3 or set(residuals) != {"LCDM", "RLL_PROBE"} or any(len(r) != 3 for r in residuals.values()):
+        raise ValueError("INVALID_INFLUENCE_INPUT")
+    out = {}
+    for name, cov in covs.items():
+        full = chi2(residuals["RLL_PROBE"], cov) - chi2(residuals["LCDM"], cov)
+        rows = []
+        for excluded in range(3):
+            kept = [i for i in range(3) if i != excluded]
+            marginal = [[cov[i][j] for j in kept] for i in kept]
+            scores = {m: chi2([r[i] for i in kept], marginal) for m, r in residuals.items()}
+            delta = scores["RLL_PROBE"] - scores["LCDM"]
+            rows.append(dict(excluded_z=zs[excluded], chi2=scores, delta_chi2=delta,
+                             sign_reversal=(full < 0 < delta or delta < 0 < full)))
+        out[name] = dict(full_delta_chi2=full, omissions=rows,
+                         sign_robust=not any(r["sign_reversal"] for r in rows))
+    return out
+
+
 def build():
     c = json.loads(CONTRACT.read_text(encoding="utf-8"))
     if (c.get("schema") != "rll.literature_cc_covariance_screen.v1"
@@ -65,6 +85,10 @@ def build():
             or c.get("unit") != "km s^-1 Mpc^-1" or c.get("covariance_variants") != list(VARIANTS)
             or c.get("joint_ingestion") != "BLOCKED_OVERLAP_AND_COVARIANCE_NOT_VERIFIED"):
         raise ValueError("CONTRACT_DRIFT")
+    model_bytes = Path(cosmology.__file__).read_bytes()
+    model_blob = hashlib.sha1(b"blob " + str(len(model_bytes)).encode("ascii") + b"\0" + model_bytes).hexdigest()
+    if c["model_source"]["blob"] != model_blob:
+        raise ValueError("MODEL_SOURCE_BLOB_DRIFT")
     rows = c["rows"]
     zs = [r["z"] for r in rows]
     if len(rows)!=3 or zs!=sorted(set(zs)) or any(not math.isfinite(r[k]) or r[k]<=0 for r in rows for k in ("z","h")):
@@ -85,11 +109,13 @@ def build():
         cosmology.ORAD = prior
     if any(not math.isclose(a,b,rel_tol=1e-12,abs_tol=1e-12) for a,b in zip(results["LCDM"]["h"],results["RLL_NULL"]["h"])):
         raise ValueError("NULL_EQUIVALENCE_FAIL")
+    influence = leave_one_out(zs, {m: results[m]["residual"] for m in ("LCDM", "RLL_PROBE")}, covs)
     return dict(schema="rll.literature_cc_covariance_receipt.v1",claim_allowed=False,
                 promotion_allowed=False,model_selection="NOT_RUN",joint_ingestion=c["joint_ingestion"],
                 source=c["source"],contract_sha256=hashlib.sha256(CONTRACT.read_bytes()).hexdigest(),
-                model_source_sha256=hashlib.sha256(Path(cosmology.__file__).read_bytes()).hexdigest(),
-                covariance=covs,results=results)
+                model_source_sha256=hashlib.sha256(model_bytes).hexdigest(), model_source_git_blob=model_blob,
+                covariance=covs,results=results, leave_one_out=influence,
+                influence_boundary="EXPLORATORY_NO_REFIT_NO_MODEL_SELECTION")
 
 
 if __name__ == "__main__":
