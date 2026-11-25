@@ -1,0 +1,29 @@
+name: RLL chronological evidence
+on:
+  pull_request:
+    paths:
+      - 'tools/rll_age_gate.py'
+      - 'data/chronology/oldest_gc_v1.json'
+      - 'tests/test_rll_age_gate.py'
+      - '.github/workflows/rll-age-gate.yml'
+      - 'src/rll/cosmology_radiation.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: rll-age-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  age:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests -p test_rll_age_gate.py
+      - run: python3 -m tools.rll_age_gate > rll-age.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: rll-age-${{ github.sha }}
+          path: rll-age.json
+          if-no-files-found: error
