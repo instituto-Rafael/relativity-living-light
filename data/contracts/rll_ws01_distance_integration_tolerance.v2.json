@@ -1,0 +1,89 @@
+{
+  "schema": "rll.ws01_distance_integration_tolerance.v2",
+  "status": "SUCCESSOR_PROTOCOL_FROZEN_BEFORE_V2_EXECUTION_POSTHOC_TO_V1_FAILURE",
+  "claim_allowed": false,
+  "predecessor": {
+    "repository": "instituto-Rafael/relativity-living-light",
+    "commit": "263e2380a525011d3e9debdfdc6f9366e5f45230",
+    "path": "data/contracts/rll_ws01_distance_integration_tolerance.v1.json",
+    "blob": "517be9c3a6baba3431e37313bfa59218761e0050",
+    "run_id": 45605612699,
+    "result": "FAIL_PREREGISTERED_DISTANCE_TOLERANCE",
+    "preserve": true
+  },
+  "source_dependencies": {
+    "cosmology_blob": "f60b5f895061b91f7f47913dde0952c5760d07a7",
+    "kernel_blob": "a2092f63682e28a591b4e5f13ad27f5b078a5a6a"
+  },
+  "rationale": "V1 direct-z Simpson resolution failed at z=1100; increase direct reference resolution without changing the tolerance or canonical candidate. V2 is diagnostic follow-up, not independent preregistration of V1, and cannot erase V1 failure.",
+  "models": {
+    "LCDM": [
+      67.4,
+      0.315,
+      0.02236,
+      0.811
+    ],
+    "RLL_NULL": [
+      67.4,
+      0.315,
+      0,
+      1,
+      0.3,
+      0.02236,
+      0.811
+    ],
+    "RLL_PROBE": [
+      67.4,
+      0.315,
+      0.001,
+      1,
+      0.3,
+      0.02236,
+      0.811
+    ]
+  },
+  "omega_r": 0.0000918,
+  "replay_redshifts": [
+    0.01,
+    0.1,
+    0.3,
+    0.5,
+    1,
+    1.5,
+    2,
+    3,
+    5,
+    10,
+    1100
+  ],
+  "additional_redshifts": [
+    0.02,
+    0.7,
+    4.658,
+    100,
+    1089.92,
+    1500
+  ],
+  "steps": {
+    "log_coarse": 1024,
+    "log_fine": 4096,
+    "log_trapezoid": 16384,
+    "direct_coarse": 16384,
+    "direct_fine": 32768
+  },
+  "tolerance": {
+    "rtol": 0.000001,
+    "atol_mpc": 0.001
+  },
+  "checks": [
+    "log_fine_vs_trapezoid",
+    "log_fine_vs_direct_fine",
+    "log_coarse_vs_log_fine",
+    "direct_coarse_vs_direct_fine",
+    "positive_finite",
+    "strict_monotonic_distance",
+    "LCDM_RLL_NULL_equivalence"
+  ],
+  "selection": "ALL checks on all replay and additional numerical points; no scientific or workflow promotion; no modification of V1 gate.",
+  "scientific_effect": "NONE"
+}
