@@ -6,13 +6,15 @@ import json
 import math
 from pathlib import Path
 import re
-from tools.rll_age_gate import MATTER
 import subprocess
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
 
-from tools.rll_age_gate import H0
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.rll_age_gate import H0, MATTER
 from tools.rll_literature import require_unpromoted, write_json_atomic
 
 FEEDS = ("https://www.nature.com/nature.rss", "https://rss.arxiv.org/rss/astro-ph.CO",

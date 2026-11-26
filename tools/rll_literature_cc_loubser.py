@@ -3,9 +3,13 @@ import hashlib
 import json
 import math
 from pathlib import Path
-from rx import cosmology
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+if not __package__:
+    sys.path.insert(0, str(ROOT))
+
+from rx import cosmology
 CONTRACT = ROOT / "data/contracts/rll_literature_cc_loubser.v1.json"
 VARIANTS = ("reported_total_correlation", "systematic_only_sensitivity", "diagonal_diagnostic")
 
