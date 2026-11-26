@@ -23,7 +23,21 @@ def plan_append(baseline, expected_blob, search):
     if initial["state"] != "NOOP_NO_WRITE":
         return {"candidate": None, "deferred_revisions": {}, "receipt": initial}
     old = json.loads(baseline)
-    observed = collect(copy.deepcopy(old["records"]), search)
+    # The preflight accepts legacy records without a questions mapping.
+    # Normalize only the private working copy for collection.
+    working = copy.deepcopy(old["records"])
+    legacy = {doi for doi, row in working.items()
+              if not isinstance(row.get("questions"), dict)}
+    for doi in legacy:
+        working[doi]["questions"] = {}
+    observed = collect(working, search)
+    for doi in legacy:
+        if not observed[doi]["questions"]:
+            # No matching discovery: do not invent a metadata revision.
+            if "questions" in old["records"][doi]:
+                observed[doi]["questions"] = old["records"][doi]["questions"]
+            else:
+                observed[doi].pop("questions")
     candidate = copy.deepcopy(old)
     deferred = {}
     for doi, row in observed.items():
