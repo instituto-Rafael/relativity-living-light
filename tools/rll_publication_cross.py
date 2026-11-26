@@ -13,6 +13,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 from tools.rll_age_gate import H0
+from tools.rll_literature import require_unpromoted, write_json_atomic
 
 FEEDS = ("https://www.nature.com/nature.rss", "https://rss.arxiv.org/rss/astro-ph.CO",
          "https://rss.arxiv.org/rss/gr-qc", "https://rss.arxiv.org/rss/astro-ph.SR")
@@ -92,9 +93,16 @@ def main():
     target = args.output or args.catalog
     if args.offline and (not args.output or target.resolve() == args.catalog.resolve()):
         parser.error("--offline requires a distinct --output")
-    catalog = json.loads(args.catalog.read_text(encoding="utf-8"))
+    seed_path = Path("data/chronology/publication_seed.json")
+    if target.resolve() == seed_path.resolve():
+        parser.error("output must not replace the source seed")
+    source_bytes = args.catalog.read_bytes()
+    seed_bytes = seed_path.read_bytes()
+    catalog = json.loads(source_bytes)
+    seed = json.loads(seed_bytes)
+    require_unpromoted(catalog)
+    require_unpromoted(seed)
     records = catalog.setdefault("publication_crosses", {})
-    seed = json.loads(Path("data/chronology/publication_seed.json").read_text())
     for url, row in seed.items():
         records.setdefault(url, row)
     failures = []
@@ -114,9 +122,9 @@ def main():
     catalog["unavailable_feeds"] = None if args.offline else failures
     catalog["feed_status"] = "NOT_RUN_OFFLINE" if args.offline else ("PARTIAL" if failures else "FETCHED")
     catalog["claim_allowed"] = False
-    temp = target.with_suffix(target.suffix + ".tmp")
-    temp.write_text(json.dumps(catalog, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    temp.replace(target)
+    catalog["catalog_input_sha256"] = hashlib.sha256(source_bytes).hexdigest()
+    catalog["publication_seed_sha256"] = hashlib.sha256(seed_bytes).hexdigest()
+    write_json_atomic(target, catalog)
 
 
 if __name__ == '__main__':
