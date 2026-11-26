@@ -4,9 +4,13 @@ import json
 import math
 from pathlib import Path
 
-from rx import cosmology
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+if not __package__:
+    sys.path.insert(0, str(ROOT))
+
+from rx import cosmology
 CONTRACT = ROOT / "data/contracts/rll_ws01_distance_integration_tolerance.v2.json"
 PANEL_COUNTS = dict(log_coarse=1024, log_fine=4096, log_trapezoid=16384,
                     direct_coarse=16384, direct_fine=32768)
