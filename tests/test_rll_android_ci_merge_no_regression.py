@@ -38,7 +38,8 @@ def test_main_apk_signature_receipt_survives_merge_without_public_subject() -> N
 
 def test_lab_newer_actions_and_three_android_falsifier_steps_survive_merge() -> None:
     steps = _steps()
-    assert "77dd5b2ce225ea11469928ac317850245a74ae78" in steps["Set up JDK 17"]["uses"]
+    assert steps["Set up JDK 17"]["uses"] == "actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880"
+    assert steps["Set up JDK 17"]["with"]["problem-matcher"] is True
     assert "8da46b539cd8fe6ab27ca75128919a18d757604c" in steps["Set up Gradle"]["uses"]
     assert "be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd" in steps["Set up Android SDK and NDK"]["uses"]
     for name in (
