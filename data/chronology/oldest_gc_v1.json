@@ -1,0 +1,9 @@
+{
+  "source": "https://arxiv.org/abs/2503.19481",
+  "observable": "age of oldest globular clusters",
+  "age_gyr": 13.39,
+  "stat_gyr": 0.1,
+  "sys_gyr": 0.23,
+  "delay_assumption_gyr": 0,
+  "role": "central-value screen only"
+}

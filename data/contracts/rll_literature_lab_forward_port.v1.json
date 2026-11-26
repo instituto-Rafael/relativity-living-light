@@ -1,0 +1,30 @@
+{
+  "schema": "rll.literature_lab_forward_port.v1",
+  "origin_pr": 1247,
+  "origin_commit": "263e2380a525011d3e9debdfdc6f9366e5f45230",
+  "age_dependency_pr": 1248,
+  "age_dependency_commit": "5898cea346b6c0ca3acc8a030a3f65b6f1a7ac14",
+  "ledger": {
+    "branch": "rll/literature-ledger",
+    "commit": "05b608bb5dae6f37c8a15e9276e7b61788898463",
+    "path": "data/chronology/literature.json",
+    "git_blob": "d9362b2ac69fb49c1edda31ab64269d99b247057",
+    "disposition": "REFERENCE_ONLY"
+  },
+  "source_blobs": {
+    "tools/rll_literature.py": "c3592aadfcacded2767540c3695513132f1cfed7",
+    "tools/rll_publication_cross.py": "35a3d6e95ce1f40ac41e837753c15b592309e8cb",
+    "data/chronology/publication_seed.json": "65db844525350fd639f459784753a7e08f7774c6",
+    ".github/workflows/rll-literature.yml": "6e6fa0dd6d20a1e3a880095a179727f6a16342ba",
+    "data/governance/RLL_LITERATURE_CREDENTIAL_ROUTE_V1.json": "9aab41cbd233fb20b883501cd7fd8fb5a23222a1"
+  },
+  "execution": "OFFLINE_REPLAY_ONLY_FOR_LAB_ACCEPTANCE",
+  "schedule": "NOT_PORTED",
+  "credential": "NOT_PORTED_RUNTIME_UNVERIFIED",
+  "publication": "NONE",
+  "prior_negative": "FAIL_PREREGISTERED_DISTANCE_TOLERANCE_PRESERVED",
+  "claim_allowed": false,
+  "promotion_allowed": false,
+  "ci_status": "NOT_RUN_NEW_HEAD",
+  "rollback": "revert this additive commit on isolated review branch"
+}
