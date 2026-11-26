@@ -60,3 +60,24 @@ class LiteratureAppendPlanTests(unittest.TestCase):
     def test_deterministic_candidate_and_receipt(self):
         self.assertEqual(plan_append(self.raw, self.sha, self.search),
                          plan_append(self.raw, self.sha, self.search))
+
+    def test_legacy_questions_mapping_is_normalized_only_on_copy(self):
+        for mode in ("absent", "null", "string"):
+            with self.subTest(mode=mode):
+                row = self.old["records"][self.doi]
+                if mode == "absent":
+                    row.pop("questions", None)
+                else:
+                    row["questions"] = None if mode == "null" else "legacy"
+                raw = json.dumps(self.old, sort_keys=True).encode()
+                expected = blob(raw)
+                result = plan_append(raw, expected, self.search)
+                self.assertEqual(result["receipt"]["state"], "CANDIDATE_REQUIRES_AUTHORITY")
+                self.assertFalse(result["receipt"]["write_allowed"])
+                self.assertEqual(json.loads(result["candidate"])["records"][self.doi], row)
+                self.assertIn(self.doi, result["deferred_revisions"])
+                self.assertIsInstance(result["deferred_revisions"][self.doi]["proposed_record"]["questions"], dict)
+                replay = plan_append(raw, expected, lambda _: [])
+                self.assertEqual(replay["receipt"]["state"], "NOOP_NO_WRITE")
+                self.assertEqual(replay["deferred_revisions"], {})
+                self.assertEqual(json.loads(replay["candidate"])["records"][self.doi], row)
