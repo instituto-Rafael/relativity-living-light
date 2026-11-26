@@ -119,7 +119,7 @@ jobs:
       - name: Review introduced dependencies
         id: review
         continue-on-error: true
-        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
+        uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec
         with:
           fail-on-severity: high
       - name: Materialize fresh external-state receipt
