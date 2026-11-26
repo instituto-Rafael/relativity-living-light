@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -134,25 +135,49 @@ def pick(row: dict[str, str], names: list[str]) -> str | None:
 
 
 def read_data(path: str | None) -> list[dict[str, float]]:
-    if not path:
+    """Strict CSV input for observational fσ8: absent-by-choice != missing file.
+
+    None or "" explicitly requests a prediction-only run. A nonempty path
+    MUST exist, contain valid rows and have finite, nonnegative z and positive
+    finite sigma. Duplicate redshifts across surveys are preserved.
+    """
+    if path is None or path == "":
         return []
     file_path = Path(path)
     if not file_path.exists():
-        return []
+        raise FileNotFoundError(f"FSIGMA8_INPUT_MISSING: {file_path}")
+    if not file_path.is_file():
+        raise ValueError(f"FSIGMA8_INPUT_NOT_REGULAR_FILE: {file_path}")
     out = []
     with file_path.open("r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
-        for row in reader:
-            z = float(pick(row, ["z", "redshift"]))
-            obs = float(pick(row, ["fsigma8", "f_sigma8", "fs8", "value"]))
-            err = float(pick(row, ["sigma", "error", "err"]))
+        if not reader.fieldnames:
+            raise ValueError(f"FSIGMA8_INPUT_EMPTY: {file_path}")
+        for line_number, row in enumerate(reader, start=2):
+            try:
+                z = float(pick(row, ["z", "redshift"]))
+                obs = float(pick(row, ["fsigma8", "f_sigma8", "fs8", "value"]))
+                err = float(pick(row, ["sigma", "error", "err"]))
+            except (ValueError, TypeError) as exc:
+                raise ValueError(f"FSIGMA8_INPUT_MALFORMED: {file_path}:{line_number}") from exc
+            if not (math.isfinite(z) and z >= 0 and math.isfinite(obs) and math.isfinite(err) and err > 0):
+                raise ValueError(f"FSIGMA8_INPUT_INVALID_PHYSICAL_ROW: {file_path}:{line_number}")
             out.append({"z": z, "obs": obs, "sigma": err})
+    if not out:
+        raise ValueError(f"FSIGMA8_INPUT_NO_DATA_ROWS: {file_path}")
     return out
 
 
 def evaluate_models(p: argparse.Namespace) -> tuple[dict, list[dict[str, float]]]:
     models = ["lcdm", "w0wa", "rll"] if p.model == "all" else [p.model]
     data = read_data(p.data)
+    if data:
+        if not (math.isfinite(p.a_min) and 0 < p.a_min < 1):
+            raise ValueError("FSIGMA8_MODEL_A_MIN_INVALID")
+        max_supported_z = 1.0 / p.a_min - 1.0
+        if any(item["z"] > max_supported_z + 1e-10 for item in data):
+            raise ValueError("FSIGMA8_INPUT_OUTSIDE_INTEGRATION_GRID: no silent extrapolation")
+    input_sha256 = hashlib.sha256(Path(p.data).read_bytes()).hexdigest() if data else None
     all_predictions: list[dict[str, float]] = []
     summary: dict[str, object] = {
         "params": {
@@ -168,6 +193,10 @@ def evaluate_models(p: argparse.Namespace) -> tuple[dict, list[dict[str, float]]
             "data": p.data,
         },
         "data_policy": {
+            "input_status": "PRESENT_VALIDATED" if data else "NOT_REQUESTED_PREDICTIONS_ONLY",
+            "input_sha256": input_sha256,
+            "input_row_count": len(data),
+            "claim_allowed": False,
             "covariance": "diagonal_only",
             "full_covariance": "TOKEN_VAZIO",
             "note": "chi2_fsigma8 uses the sigma column only unless a future covariance block is provided",

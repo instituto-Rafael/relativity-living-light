@@ -150,6 +150,21 @@ jobs:
             --junitxml=artifacts/python-tests/junit.xml \
             2>&1 | tee artifacts/python-tests/pytest.log
 
+      - name: Execute and audit independent BAO boundary JSON receipt (fail closed)
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python scripts/run_bao_only_from_g4_v1.py \
+            --starts-extra 18 \
+            --output artifacts/python-tests/bao_source_order_boundary_v1.json
+          python tools/ci/validate_bao_boundary_receipt_v1.py \
+            --input artifacts/python-tests/bao_source_order_boundary_v1.json \
+            --schema schemas/rll_bao_boundary_diagnostics_v1.schema.json \
+            --head-sha "$PR_HEAD_SHA" \
+            --receipt artifacts/python-tests/bao_source_order_boundary_v1.receipt.json
+          echo "BAO receipt: source-ordered 13x13; boundary/grad/KKT schema-checked; scientific_claim=false" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Write quality execution monitor receipt
         if: always()
         env:

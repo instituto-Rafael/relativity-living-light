@@ -10,6 +10,7 @@ No third-party Python packages are required.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import math
 import os
 import subprocess
@@ -141,6 +142,26 @@ for row in cov_rows:
     cov.append([float(row[k]) for k in numeric_keys])
 if len(cov) != len(bao) or any(len(row) != len(bao) for row in cov):
     raise SystemExit("Rx covariance shape mismatch")
+# The committed fallback JSON uses Table-IV DM,DH while Cobaya ALL places
+# Lya DH,DM. Shape-only validation silently associates wrong uncertainties.
+guard_path = ROOT / "tools" / "build_desi_covariance_order_receipt.py"
+guard_spec = importlib.util.spec_from_file_location("rx_pipeline_desi_order_guard", guard_path)
+if guard_spec is None or guard_spec.loader is None:
+    raise SystemExit("BLOCKED_RX_DESI_SOURCE_BINDING_UNAVAILABLE")
+order_guard = importlib.util.module_from_spec(guard_spec)
+guard_spec.loader.exec_module(order_guard)
+primary_path = ROOT / "data/real/cosmology/desi_dr2_bao_primary_points.csv"
+receipt = order_guard.build_receipt(
+    ROOT, points_override=primary_path, covariance_override=DESI_COV
+)
+order_guard.verify_observation_vector_matches_primary(
+    bao, order_guard.read_points(primary_path)
+)
+if (order_guard.sha256_file(primary_path) != receipt["points_sha256"]
+        or order_guard.sha256_file(DESI_COV) != receipt["covariance_sha256"]):
+    raise SystemExit("BLOCKED_RX_DESI_INPUT_CHANGED")
+perm = receipt["covariance_index_for_primary_row"]
+cov = [[cov[i][j] for j in perm] for i in perm]
 cov_inv = invert_matrix(cov)
 
 simpson_steps = max(32, int(os.environ.get("RX_SIMPSON_STEPS", "128")))

@@ -164,6 +164,12 @@ def load_cc(path: Path = HZ_PATH) -> CCBlock:
 
 
 def load_desi(points_path: Path = DESI_POINTS_PATH, covariance_path: Path = DESI_COV_PATH) -> DESIBlock:
+    # Index-only covariance checks cannot detect a DM/DH swap within a block.
+    # Reuse the G3 source-order receipt before forming any likelihood.
+    order_guard = _module("rll_g4_desi_order_guard", ROOT / "tools/build_desi_covariance_order_receipt.py")
+    order_receipt = order_guard.build_receipt(
+        ROOT, points_override=points_path, covariance_override=covariance_path
+    )
     rows: list[dict[str, str]]
     with points_path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -172,6 +178,11 @@ def load_desi(points_path: Path = DESI_POINTS_PATH, covariance_path: Path = DESI
     matrix = np.loadtxt(covariance_path, delimiter=",", skiprows=1, usecols=range(1, 14), dtype=float)
     if matrix.shape != (13, 13):
         raise ValueError(f"DESI covariance shape={matrix.shape}")
+    if (order_guard.sha256_file(points_path) != order_receipt["points_sha256"]
+            or order_guard.sha256_file(covariance_path) != order_receipt["covariance_sha256"]):
+        raise ValueError("DESI input changed between order validation and likelihood load")
+    permutation = order_receipt["covariance_index_for_primary_row"]
+    matrix = matrix[np.ix_(permutation, permutation)]
     if not np.allclose(matrix, matrix.T, rtol=0.0, atol=1e-12):
         raise ValueError("DESI covariance is not symmetric")
     if np.any(np.diag(matrix) <= 0.0):
@@ -496,6 +507,42 @@ def information_criteria(chi2: float, n: int, k: int) -> dict[str, float | int]:
     return {"chi2": float(chi2), "AIC": aic, "AICc": aicc, "BIC": bic, "N": n, "k": k, "dof": n - k}
 
 
+
+NESTED_NULL_EXTRAS = {
+    "wCDM": (-1.0,),
+    "CPL": (-1.0, 0.0),
+    "GEDE": (0.0,),
+    "IDE_QrhoLambda": (0.0,),
+    "RLL": (0.0, 1.0, 0.30),
+}
+
+
+def nested_null_start(model: str, lcdm_best: dict[str, float]) -> np.ndarray:
+    """Exact best-fit LCDM embedding; physical comparison, not new evidence.
+
+    Without this anchor, a nested model can return a worse *local optimum*
+    than the already-observed LCDM solution, violating the fit upper bound.
+    """
+    if model not in NESTED_NULL_EXTRAS:
+        raise ValueError(f"no declared nested null mapping for {model}")
+    values = [float(lcdm_best[k]) for k in COMMON_NAMES]
+    values.extend(NESTED_NULL_EXTRAS[model])
+    out = np.asarray(values, dtype=float)
+    box = np.asarray(bounds(model), dtype=float)
+    if out.size != len(parameter_names(model)) or not np.all(np.isfinite(out)):
+        raise ValueError("invalid nested reference vector")
+    if np.any(out < box[:, 0]) or np.any(out > box[:, 1]):
+        raise ValueError("nested reference outside model bounds")
+    return out
+
+
+def nested_fit_gap_exceeds_tolerance(chi2: float, baseline_chi2: float) -> bool:
+    """True means the alleged best fit is worse than an exact nested null."""
+    if not math.isfinite(float(chi2)) or not math.isfinite(float(baseline_chi2)):
+        return True
+    tolerance = max(1e-6, 1e-8 * abs(float(baseline_chi2)))
+    return float(chi2) > float(baseline_chi2) + tolerance
+
 def _start(model: str, seed: int, index: int) -> tuple[np.ndarray, str]:
     spec = MODEL_SPEC[model]
     if index == 0:
@@ -514,10 +561,18 @@ def _boundary_hits(model: str, values: Sequence[float], fraction: float = 2e-5) 
     return hits
 
 
-def fit_model(data: TournamentData, model: str, seeds: Sequence[int], maxiter: int, ftol: float) -> dict[str, Any]:
+def fit_model(data: TournamentData, model: str, seeds: Sequence[int], maxiter: int, ftol: float,
+              *, nested_baseline: dict[str, float] | None = None) -> dict[str, Any]:
     runs: list[dict[str, Any]] = []
-    for index, seed in enumerate(seeds):
-        x0, strategy = _start(model, int(seed), index)
+    starts = [(int(seed), *_start(model, int(seed), index)) for index, seed in enumerate(seeds)]
+    nested_reference_chi2: float | None = None
+    if nested_baseline is not None:
+        null_start = nested_null_start(model, nested_baseline)
+        # Direct evaluation is the falsifier; optimization alone is not proof
+        # of an improvement, especially near a nested null boundary.
+        nested_reference_chi2 = float(profiled_components(data, model, null_start)["total"])
+        starts.append((-1, null_start, "best_LCDM_embedded_exact_null"))
+    for seed, x0, strategy in starts:
         started = time.perf_counter()
         result = minimize(
             lambda x: objective_and_gradient(data, model, np.asarray(x, dtype=float)),
@@ -577,6 +632,12 @@ def fit_model(data: TournamentData, model: str, seeds: Sequence[int], maxiter: i
     return {
         "model": model,
         "status": "PASS" if all(run["success"] for run in runs) else "PASS_WITH_NONCONVERGED_SEED",
+        "nested_null_chi2": nested_reference_chi2,
+        "nested_fit_consistency": (
+            "NOT_APPLICABLE" if nested_reference_chi2 is None else
+            "BLOCKED_NESTED_OPTIMUM_WORSE_THAN_NULL" if nested_fit_gap_exceeds_tolerance(best["chi2"], nested_reference_chi2) else
+            "PASS_SCOPED_NESTED_UPPER_BOUND"
+        ),
         "best": row,
         "runs": runs,
         "stability": {
@@ -620,10 +681,14 @@ def build_report(*, seeds: Sequence[int] | None = None, maxiter: int | None = No
     data = load_data(integration_points=integration_points)
     models: dict[str, Any] = {}
     rows: list[dict[str, Any]] = []
+    lcdm_best: dict[str, float] | None = None
     for model in MODEL_ORDER:
-        result = fit_model(data, model, seeds, maxiter, ftol)
+        result = fit_model(data, model, seeds, maxiter, ftol,
+                           nested_baseline=lcdm_best if model != "LCDM" else None)
         models[model] = result
         rows.append(result["best"])
+        if model == "LCDM":
+            lcdm_best = {name: float(result["best"][name]) for name in COMMON_NAMES}
 
     by_name = {row["model"]: row for row in rows}
     lcdm = by_name["LCDM"]
@@ -640,7 +705,18 @@ def build_report(*, seeds: Sequence[int] | None = None, maxiter: int | None = No
     all_finite = all(math.isfinite(float(row["chi2"])) for row in rows)
     all_models_present = set(by_name) == set(MODEL_ORDER)
     at_least_one_converged_each = all(models[m]["stability"]["converged_count"] >= 1 for m in MODEL_ORDER)
-    state = "PASS_LIMITED_G4_BACKGROUND_TOURNAMENT" if all_finite and all_models_present and at_least_one_converged_each else "BLOCKED_G4_BACKGROUND_TOURNAMENT"
+    nested_failed = [
+        m for m in MODEL_ORDER[1:]
+        if nested_fit_gap_exceeds_tolerance(
+            float(models[m]["best"]["chi2"]), float(lcdm["chi2"])
+        )
+        or nested_fit_gap_exceeds_tolerance(
+            float(models[m]["nested_null_chi2"]), float(lcdm["chi2"])
+        )
+    ]
+    state = ("PASS_LIMITED_G4_BACKGROUND_TOURNAMENT" if
+             all_finite and all_models_present and at_least_one_converged_each and not nested_failed
+             else "BLOCKED_G4_BACKGROUND_TOURNAMENT")
 
     input_paths = [HZ_PATH, DESI_POINTS_PATH, DESI_COV_PATH, PANTHEON_CATALOG, PANTHEON_COV, CONTRACT_PATH]
     return {
@@ -668,6 +744,9 @@ def build_report(*, seeds: Sequence[int] | None = None, maxiter: int | None = No
             "ftol": ftol,
             "integration_points": integration_points,
             "optimizer": "multistart L-BFGS-B with analytic-profile nuisance and finite-difference physical gradient",
+            "nested_best_fit_anchor": "exact LCDM best parameters injected at each declared null limit",
+            "nested_fit_gate": "a nested candidate cannot have chi2 larger than the LCDM best beyond numerical tolerance",
+            "nested_failed_models": nested_failed,
             "Pantheon_covariance": "full STAT+SYS",
             "DESI_covariance": "full committed 13x13",
             "sound_horizon": "same rd(H0,Omega_m,omega_b_h2) calibrated approximation for all six models",
@@ -694,6 +773,7 @@ def build_report(*, seeds: Sequence[int] | None = None, maxiter: int | None = No
             "GEDE/IDE implementations in this gate are background-only despite primary papers treating perturbations",
             "nested-sampling evidence remains G6, not replaced by AIC/AICc/BIC",
             "independent replication remains G10",
+            *([f"BLOCKED_NESTED_OPTIMUM_{model}" for model in nested_failed] if nested_failed else []),
         ],
         "F_next": "freeze this tournament as the G4 background manifest; build G5 canonical joint background likelihood around the exact same hashes before inference",
     }

@@ -8,6 +8,7 @@ Current data surface is derived from files at runtime; no hard-coded N.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import math
 import os
 import subprocess
@@ -89,6 +90,22 @@ bao_cov = []
 for row in cov_rows:
     keys = sorted((key for key in row if key != ""), key=lambda value: int(value))
     bao_cov.append([float(row[key]) for key in keys])
+# Fail closed on the native Cobaya DH,DM -> primary Table-IV DM,DH difference.
+guard_spec = importlib.util.spec_from_file_location(
+    "rx_desi_order_guard", ROOT / "tools/build_desi_covariance_order_receipt.py"
+)
+if guard_spec is None or guard_spec.loader is None:
+    raise SystemExit("BLOCKED_DESI_COVARIANCE_ORDER_GUARD_UNAVAILABLE")
+order_guard = importlib.util.module_from_spec(guard_spec)
+guard_spec.loader.exec_module(order_guard)
+order_receipt = order_guard.build_receipt(
+    ROOT, points_override=BAO_PATH, covariance_override=BAO_COV_PATH
+)
+if (order_guard.sha256_file(BAO_PATH) != order_receipt["points_sha256"]
+        or order_guard.sha256_file(BAO_COV_PATH) != order_receipt["covariance_sha256"]):
+    raise SystemExit("BLOCKED_DESI_ORDER_INPUT_CHANGED")
+permutation = order_receipt["covariance_index_for_primary_row"]
+bao_cov = [[bao_cov[i][j] for j in permutation] for i in permutation]
 bao_cov_inv = invert_matrix(bao_cov)
 
 cmb_cov = [[float(x) for x in row] for row in cmb["covariance"]]

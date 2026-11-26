@@ -26,23 +26,28 @@ GITHUB_SECRET = "GITPAT"
 CLIMATE_SECRET = "CLIMA"
 GITHUB_ASSURANCE_WORKFLOW = ".github/workflows/rll-repository-pat-assurance.yml"
 
-GITHUB_SECRET_REF_RE = re.compile(rf"secrets\.{re.escape(GITHUB_SECRET)}\b", re.IGNORECASE)
-LEGACY_PAT_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_GITHUB_AUTOMATION_PAT|RLL_GITHUB_PAT|GITHUB_PAT|GH_PAT|PAT_GIT|GIT_PAT|PATGITHUB|GIT)\b",
-    re.IGNORECASE,
+def _secret_ref(*names: str) -> re.Pattern[str]:
+    """Recognize literal GitHub Actions dot and bracket secret expressions.
+
+    A static audit must not treat a bracketed credential as an unrelated
+    expression merely because it uses secrets['NAME'] instead of secrets.NAME.
+    """
+    choices = "|".join(re.escape(name) for name in names)
+    return re.compile(
+        rf"""(?<!\w)secrets\s*(?:\.\s*(?:{choices})\b|\[\s*(['"])(?:{choices})\1\s*\])""",
+        re.IGNORECASE,
+    )
+
+
+GITHUB_SECRET_REF_RE = _secret_ref(GITHUB_SECRET)
+LEGACY_PAT_SECRET_REF_RE = _secret_ref(
+    "RLL_GITHUB_AUTOMATION_PAT", "RLL_GITHUB_PAT", "GITHUB_PAT",
+    "GH_PAT", "PAT_GIT", "GIT_PAT", "PATGITHUB", "GIT",
 )
-LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
-    re.IGNORECASE,
+LEGACY_CLIMATE_SECRET_REF_RE = _secret_ref(
+    "RLL_CLIMATE_ENGINE_TRIAL_TOKEN", "CLIMATE",
 )
-CLIMATE_SECRET_REF_RE = re.compile(
-    rf"secrets\.{re.escape(CLIMATE_SECRET)}\b",
-    re.IGNORECASE,
-)
-LEGACY_CLIMATE_SECRET_REF_RE = re.compile(
-    r"secrets\.(?:RLL_CLIMATE_ENGINE_TRIAL_TOKEN|CLIMATE)\b",
-    re.IGNORECASE,
-)
+CLIMATE_SECRET_REF_RE = _secret_ref(CLIMATE_SECRET)
 DESTRUCTIVE_RE = re.compile(
     r"(?:\bcurl\b[^\n]*(?:-X|--request)\s*(?:POST|PUT|PATCH|DELETE)\b|"
     r"\bgh\s+api\b[^\n]*(?:-X|--method)\s*(?:POST|PUT|PATCH|DELETE)\b|"
@@ -244,7 +249,13 @@ def _audit_secret_job(
     for job_id, raw_job in (doc.get("jobs") or {}).items():
         if not isinstance(raw_job, dict):
             continue
-        job_text = json.dumps(raw_job, ensure_ascii=False)
+        job_text = raw_job.get("_raw")
+        if not isinstance(job_text, str):
+            findings.append(Finding(
+                "ERROR", "WORKFLOW_PARSE", rel,
+                "credential-bearing job has no original source text", str(job_id),
+            ))
+            continue
         if not secret_re.search(job_text):
             continue
         if not _contains_manual_guard(raw_job):
