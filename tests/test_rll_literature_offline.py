@@ -99,3 +99,57 @@ class LiteratureOfflineTests(unittest.TestCase):
             with patch("sys.argv", ["cross", str(src), "--offline", "--output", str(seed)]), self.assertRaises(SystemExit):
                 cross.main()
         self.assertEqual(seed.read_bytes(), before)
+
+    def test_live_refresh_archives_previous_measurement_and_deduplicates(self):
+        url = "https://example.invalid/paper"
+        feed = "https://example.invalid/feed"
+        old = dict(cross.observation("Hubble", "H0 = 73.04 ± 1.04 km/s/Mpc"), feed=feed)
+        cross.evaluate(old, [])
+        old = json.loads(cross.record_bytes(old))
+        old["extra_evidence"] = {"negative": True}
+        def rss(description):
+            return (f"<rss><channel><item><link>{url}</link><title>Hubble</title>"
+                    f"<description>{description}</description></item></channel></rss>").encode()
+        with tempfile.TemporaryDirectory() as d:
+            target = Path(d) / "catalog.json"
+            target.write_text(json.dumps({"publication_crosses": {url: old},
+                                          "cross_model_commit": "old-model"}), encoding="utf-8")
+            with patch.object(cross, "FEEDS", (feed,)), patch.object(cross, "fetch", return_value=rss("No H0 measurement")), patch(
+                "sys.argv", ["cross", str(target)]):
+                cross.main()
+                first = json.loads(target.read_text())
+                self.assertEqual(first["publication_crosses"][url]["tests"], [])
+                archived = first["publication_cross_history"][url]
+                self.assertEqual(len(archived), 1)
+                self.assertEqual(archived[0]["record"], old)
+                self.assertEqual(archived[0]["model_commit"], "old-model")
+                self.assertEqual(archived[0]["record_sha256"], hashlib.sha256(cross.record_bytes(old)).hexdigest())
+                cross.main()
+                self.assertEqual(json.loads(target.read_text())["publication_cross_history"][url], archived)
+            with patch.object(cross, "FEEDS", (feed,)), patch.object(cross, "fetch", return_value=rss("H0 = 70 ± 2 km/s/Mpc")), patch(
+                "sys.argv", ["cross", str(target)]):
+                cross.main()
+            last = json.loads(target.read_text())
+            self.assertEqual(last["publication_cross_history"][url][0], archived[0])
+            self.assertEqual(last["publication_cross_history"][url][1]["record"], first["publication_crosses"][url])
+            self.assertTrue(last["publication_crosses"][url]["tests"])
+            self.assertFalse(last["claim_allowed"])
+
+    def test_offline_reevaluation_archives_previous_screen(self):
+        url = "https://example.invalid/paper"
+        old = cross.observation("Hubble", "H0 = 73.04 ± 1.04 km/s/Mpc")
+        cross.evaluate(old, [])
+        old = json.loads(cross.record_bytes(old))
+        old["tests"][0]["nominal_model"] = 71.0
+        with tempfile.TemporaryDirectory() as d:
+            src, out = Path(d) / "source.json", Path(d) / "out.json"
+            src.write_text(json.dumps({"publication_crosses": {url: old}, "cross_model_commit": "old-model"}))
+            before = src.read_bytes()
+            with patch.object(cross, "fetch", side_effect=AssertionError("network")), patch(
+                "sys.argv", ["cross", str(src), "--output", str(out), "--offline"]):
+                cross.main()
+            result = json.loads(out.read_text())
+            self.assertEqual(src.read_bytes(), before)
+            self.assertEqual(result["publication_cross_history"][url][0]["record"], old)
+            self.assertEqual(result["publication_cross_history"][url][0]["model_commit"], "old-model")
+            self.assertEqual(result["publication_crosses"][url]["tests"][0]["nominal_model"], cross.H0)

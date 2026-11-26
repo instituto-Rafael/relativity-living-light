@@ -74,14 +74,37 @@ def fetch(url):
         return response.read(8_000_000)
 
 
-def ingest(data, feed, records):
+def record_bytes(record):
+    return json.dumps(record, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def replace_record(key, candidate, records, history, bindings, model_commit):
+    """Archive the complete previous row before a semantic change, not just its hash."""
+    if key in records:
+        previous = record_bytes(records[key])
+        if previous == record_bytes(candidate):
+            bindings[key] = model_commit
+            return
+        history.setdefault(key, []).append({
+            "record_sha256": hashlib.sha256(previous).hexdigest(),
+            "record": json.loads(previous),
+            "model_commit": bindings.get(key),
+        })
+    records[key] = candidate
+    bindings[key] = model_commit
+
+
+def ingest(data, feed, records, history, bindings, models, model_commit):
     for item in ET.fromstring(data).iter():
         if item.tag.split('}')[-1] != 'item':
             continue
         fields = {n.tag.split('}')[-1]: ''.join(n.itertext()).strip() for n in item}
         key = fields.get('link')
         if key and fields.get('title'):
-            records[key] = dict(observation(fields['title'], fields.get('description', '')), feed=feed)
+            candidate = dict(observation(fields['title'], fields.get('description', '')), feed=feed)
+            evaluate(candidate, models)
+            replace_record(key, candidate, records, history, bindings, model_commit)
 
 
 def main():
@@ -103,22 +126,27 @@ def main():
     require_unpromoted(catalog)
     require_unpromoted(seed)
     records = catalog.setdefault("publication_crosses", {})
+    history = catalog.setdefault("publication_cross_history", {})
+    bindings = dict.fromkeys(records, catalog.get("cross_model_commit"))
     for url, row in seed.items():
         records.setdefault(url, row)
+    paths = subprocess.check_output(["git","ls-files","src","data/pipelines","tools"],text=True).splitlines()
+    models = [(p, tags(p)) for p in paths if p.endswith(('.py','.c','.h'))]
+    model_commit = subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
     failures = []
     for feed in (() if args.offline else FEEDS):
         try:
-            ingest(fetch(feed), feed, records)
+            ingest(fetch(feed), feed, records, history, bindings, models, model_commit)
         except (OSError, ET.ParseError) as err:
             failures.append(feed)
             print(f"feed unavailable: {feed} ({type(err).__name__})", file=sys.stderr)
     if not args.offline and len(failures) == len(FEEDS):
         raise RuntimeError("all publication feeds unavailable")
-    paths = subprocess.check_output(["git","ls-files","src","data/pipelines","tools"],text=True).splitlines()
-    models = [(p, tags(p)) for p in paths if p.endswith(('.py','.c','.h'))]
-    for record in records.values():
-        evaluate(record, models)
-    catalog["cross_model_commit"] = subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+    for key, record in list(records.items()):
+        candidate = json.loads(record_bytes(record))
+        evaluate(candidate, models)
+        replace_record(key, candidate, records, history, bindings, model_commit)
+    catalog["cross_model_commit"] = model_commit
     catalog["unavailable_feeds"] = None if args.offline else failures
     catalog["feed_status"] = "NOT_RUN_OFFLINE" if args.offline else ("PARTIAL" if failures else "FETCHED")
     catalog["claim_allowed"] = False
