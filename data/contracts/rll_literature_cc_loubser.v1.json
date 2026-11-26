@@ -1,0 +1,99 @@
+{
+  "schema": "rll.literature_cc_covariance_screen.v1",
+  "state": "EXPLORATORY_FIXED_PARAMETER_SCREEN",
+  "claim_allowed": false,
+  "promotion_allowed": false,
+  "source": {
+    "author": "S. Ilani Loubser",
+    "title": "Measuring the expansion history of the Universe with DESI Cosmic Chronometers",
+    "year": 2025,
+    "doi": "10.1093/mnras/staf1939",
+    "arxiv": "2511.02730v1",
+    "url": "https://arxiv.org/abs/2511.02730v1",
+    "locators": [
+      "p. 1 abstract; p. 6 selection/calibration; p. 8 correlation coefficients and discussion"
+    ],
+    "provenance": "Public article factual measurement transcription; no article text or survey catalog copied; DOI crosswalk from producer literature ledger",
+    "catalog_ref": "rll/literature-ledger:data/chronology/literature.json",
+    "catalog_blob": "d9362b2ac69fb49c1edda31ab64269d99b247057"
+  },
+  "observable": "H(z)",
+  "unit": "km s^-1 Mpc^-1",
+  "rows": [
+    {
+      "z": 0.46,
+      "h": 88.48,
+      "stat": 0.57,
+      "syst": 12.32
+    },
+    {
+      "z": 0.67,
+      "h": 119.45,
+      "stat": 6.39,
+      "syst": 16.64
+    },
+    {
+      "z": 0.83,
+      "h": 108.28,
+      "stat": 10.07,
+      "syst": 15.08
+    }
+  ],
+  "correlation": [
+    [
+      1,
+      0.932,
+      0.83
+    ],
+    [
+      0.932,
+      1,
+      0.776
+    ],
+    [
+      0.83,
+      0.776,
+      1
+    ]
+  ],
+  "covariance_variants": [
+    "reported_total_correlation",
+    "systematic_only_sensitivity",
+    "diagonal_diagnostic"
+  ],
+  "covariance_note": "The paper provides correlations between measurements and states shared systematic uncertainty. Evaluate reported correlations on total uncertainties, plus explicit sensitivity if applied only to systematic errors. Diagonal is diagnostic only. No fitted covariance or cross-survey independence inferred.",
+  "model_source": {
+    "path": "rx/cosmology.py",
+    "blob": "f60b5f895061b91f7f47913dde0952c5760d07a7",
+    "omega_r": 0.0000918,
+    "models": {
+      "LCDM": [
+        67.4,
+        0.315,
+        0.02236,
+        0.811
+      ],
+      "RLL_NULL": [
+        67.4,
+        0.315,
+        0,
+        1,
+        0.3,
+        0.02236,
+        0.811
+      ],
+      "RLL_PROBE": [
+        67.4,
+        0.315,
+        0.02,
+        1,
+        0.3,
+        0.02236,
+        0.811
+      ]
+    }
+  },
+  "joint_ingestion": "BLOCKED_OVERLAP_AND_COVARIANCE_NOT_VERIFIED",
+  "falsifier": "Any invalid measurement or covariance, nonfinite model, or failed null equivalence blocks report; fixed-parameter chi-square is not model selection.",
+  "boundary": "Independent bibliographic screen only; no fit, Bayes factor, scientific promotion, source rights inference, automated catalog write, PAT or new schedule."
+}
