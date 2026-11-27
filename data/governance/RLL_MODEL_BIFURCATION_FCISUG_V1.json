@@ -1,0 +1,108 @@
+{
+  "schema": "rll.model_bifurcation.fcisug.v1",
+  "version": "1.0.0",
+  "date": "2026-11-26",
+  "authority": "instituto-Rafael/relativity-living-light",
+  "predecessor": "data/governance/RLL_GROWTH_SEMANTICS_ABC_V1.json",
+  "producer": "tools/rll_growth_semantics_abc.py",
+  "claim_allowed": false,
+  "selected_physical_winner": "TOKEN_VAZIO_NOT_SELECTED",
+  "comparison_contract": {
+    "same_data": true,
+    "same_covariance": true,
+    "same_nuisance_policy": true,
+    "same_convergence_policy": true,
+    "point_evaluation_is_fit": false,
+    "bic_approximation_is_nested_evidence": false,
+    "required_states": ["POINT_EVALUATION", "PROFILED_FIT", "POSTERIOR", "EVIDENCE"]
+  },
+  "branches": {
+    "F": {
+      "id": "PHENOMENOLOGICAL_BACKGROUND",
+      "predecessor_route": "C",
+      "status": "DOCUMENTED_BACKGROUND_ONLY",
+      "urgency": "P0",
+      "evidence_state": "DOCUMENTED",
+      "equations": ["E2_RLL logistic background"],
+      "provenance": ["rll_vs_lcdm.py", "tools/rll_growth_semantics_abc.py"],
+      "gaps": ["TOKEN_VAZIO_MICROPHYSICAL_IDENTITY", "TOKEN_VAZIO_DARK_SECTOR_PERTURBATIONS"],
+      "falsifiers": ["loses against adversarial baselines under a common likelihood", "background claim is promoted to microphysics"],
+      "promotion_gate": "common fitted likelihood plus explicit claim boundary",
+      "rollback": "retain background implementation and remove physical interpretation"
+    },
+    "C": {
+      "id": "CONSERVED_EFFECTIVE_FLUID",
+      "predecessor_route": "A",
+      "status": "MATH_GATE_PASS_PHYSICS_OPEN",
+      "urgency": "P0",
+      "evidence_state": "SIMULATED",
+      "equations": ["p_cons=-rho_s-(1/3)d rho_s/dln(a)", "w_cons=p_cons/rho_s"],
+      "provenance": ["data/governance/RLL_GROWTH_SEMANTICS_ABC_V1.json", "tools/rll_growth_semantics_abc.py"],
+      "gaps": ["TOKEN_VAZIO_REST_FRAME_CLOSURE", "TOKEN_VAZIO_GAUGE_IC_VALIDATION", "TOKEN_VAZIO_OBSERVATIONAL_POSTERIOR"],
+      "falsifiers": ["nonzero continuity residual", "singular perturbations", "failed gauge or initial-condition checks"],
+      "promotion_gate": "continuity plus stable perturbations plus reproduced posterior",
+      "rollback": "restore selected semantics to TOKEN_VAZIO and preserve negative receipt"
+    },
+    "I": {
+      "id": "INTERACTING_SECTOR",
+      "predecessor_route": "B",
+      "status": "FORMAL_Q_PASS_RECEIVER_BLOCKED",
+      "urgency": "P0",
+      "evidence_state": "SIMULATED",
+      "equations": ["Q_s/H=Omega_s0*rho_c0*f_prime*(1-a^-3)", "Q_receiver=-Q_s"],
+      "provenance": ["data/governance/RLL_GROWTH_SEMANTICS_ABC_V1.json", "tools/rll_growth_semantics_abc.py"],
+      "gaps": ["TOKEN_VAZIO_RECEIVER_SECTOR", "TOKEN_VAZIO_COVARIANT_Q_MU", "TOKEN_VAZIO_MOMENTUM_TRANSFER"],
+      "falsifiers": ["total stress-energy fails to close", "receiver sector is absent", "growth or lensing instability"],
+      "promotion_gate": "covariant receiver implementation plus total conservation plus perturbation tests",
+      "rollback": "remove interaction candidate without rewriting documented-pressure history"
+    },
+    "S": {
+      "id": "SCALAR_FIELD_OR_EFT",
+      "predecessor_route": "TOKEN_VAZIO_NO_DIRECT_PREDECESSOR",
+      "status": "TOKEN_VAZIO_PHYSICAL_CLOSURE",
+      "urgency": "P1",
+      "evidence_state": "TOKEN_VAZIO",
+      "equations": [],
+      "provenance": ["docs/LAGRANGIANO_EFT.md"],
+      "gaps": ["TOKEN_VAZIO_ACTION", "TOKEN_VAZIO_POTENTIAL", "TOKEN_VAZIO_SOUND_SPEED_DERIVATION"],
+      "falsifiers": ["ghost", "negative gradient stability", "failure to reproduce selected background"],
+      "promotion_gate": "versioned action plus equations of motion plus stability domain",
+      "rollback": "retain reconstruction as hypothesis only"
+    },
+    "U": {
+      "id": "UNIFIED_DARK_SECTOR",
+      "predecessor_route": "TOKEN_VAZIO_NO_DIRECT_PREDECESSOR",
+      "status": "TOKEN_VAZIO_EQUIVALENCE_TEST",
+      "urgency": "P1",
+      "evidence_state": "TOKEN_VAZIO",
+      "equations": [],
+      "provenance": ["docs/science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md"],
+      "gaps": ["TOKEN_VAZIO_UNIFIED_PRESSURE", "TOKEN_VAZIO_EQUIVALENCE_CLASS", "TOKEN_VAZIO_IDENTIFIABILITY"],
+      "falsifiers": ["exact reduction to an existing model without a distinct observable", "unstable adiabatic sound speed"],
+      "promotion_gate": "equivalence map plus perturbations plus identifiable observable",
+      "rollback": "classify as known-model parametrization and preserve authorship of implementation"
+    },
+    "G": {
+      "id": "MODIFIED_GRAVITY",
+      "predecessor_route": "TOKEN_VAZIO_NO_DIRECT_PREDECESSOR",
+      "status": "TOKEN_VAZIO_COVARIANT_FIELD_EQUATIONS",
+      "urgency": "P2",
+      "evidence_state": "TOKEN_VAZIO",
+      "equations": [],
+      "provenance": ["docs/science/RLL_MATH_LITERATURE_COHERENCE_AUDIT_20260808.md"],
+      "gaps": ["TOKEN_VAZIO_ACTION_OR_FIELD_EQUATIONS", "TOKEN_VAZIO_GR_LIMIT", "TOKEN_VAZIO_LENSING_GROWTH_SLIP"],
+      "falsifiers": ["failure of GR limit", "ghost or gradient instability", "inconsistent lensing or growth"],
+      "promotion_gate": "covariant equations plus GR limit plus background and perturbation validation",
+      "rollback": "remove gravity claim and retain background phenomenology"
+    }
+  },
+  "global_gates": {
+    "no_post_data_branch_selection": true,
+    "preserve_negative_results": true,
+    "token_vazio_is_not_zero": true,
+    "implemented_untested_is_not_pass": true,
+    "pass_scoped_is_not_pass_global": true,
+    "source_not_artifact_not_execution_not_evidence_not_claim": true
+  },
+  "next": "run F/C/I through common fitted likelihood; close C or I perturbation contract before S/U/G promotion"
+}
