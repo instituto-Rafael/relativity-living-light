@@ -1,0 +1,31 @@
+name: RLL model bifurcation gate
+
+on:
+  pull_request:
+    paths:
+      - "data/governance/RLL_MODEL_BIFURCATION_FCISUG_V1.json"
+      - "tools/ci/rll_model_bifurcation_gate_v1.py"
+      - "tests/test_rll_model_bifurcation_gate_v1.py"
+      - ".github/workflows/rll-model-bifurcation-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bifurcation-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile gate
+        run: python -m py_compile tools/ci/rll_model_bifurcation_gate_v1.py
+      - name: Run fail-closed gate
+        run: python tools/ci/rll_model_bifurcation_gate_v1.py
+      - name: Run focused negative tests
+        run: python -m unittest -v tests.test_rll_model_bifurcation_gate_v1
