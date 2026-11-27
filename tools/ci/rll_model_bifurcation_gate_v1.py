@@ -8,6 +8,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "data/governance/RLL_MODEL_BIFURCATION_FCISUG_V1.json"
+BRANCH_CONTRACT = ROOT / "data/governance/RLL_BRANCH_CONTRACT_V1.json"
 EXPECTED_BRANCHES = {"F", "C", "I", "S", "U", "G"}
 REQUIRED_BRANCH_FIELDS = {
     "id", "predecessor_route", "status", "urgency", "evidence_state",
@@ -79,9 +80,49 @@ def validate(data: dict[str, Any]) -> list[str]:
     return errors
 
 
+def validate_branch_contract(data: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if data.get("schema") != "rll.branch_contract.v1":
+        errors.append("BRANCH_CONTRACT_SCHEMA_MISMATCH")
+    if data.get("claim_allowed") is not False:
+        errors.append("BRANCH_CONTRACT_CLAIM_BOUNDARY_OPEN")
+    if set(data.get("result_relation_types", {})) != {"E1", "E2", "E3"}:
+        errors.append("RESULT_RELATION_TYPES_INCOMPLETE")
+    core = data.get("core", {})
+    if core.get("derivative_coordinate") != "prime=d/dln(a)":
+        errors.append("DERIVATIVE_COORDINATE_UNFROZEN")
+    if core.get("sign_invariant") != "q_s=A*f_prime*(1-a^-3)<=0":
+        errors.append("INTERACTION_SIGN_INVARIANT_MISSING")
+    required = set(data.get("required_contract_fields", []))
+    branches = data.get("branches", {})
+    if set(branches) != EXPECTED_BRANCHES:
+        errors.append("BRANCH_CONTRACT_SET_MISMATCH")
+        return errors
+    for key, branch in branches.items():
+        missing = required - set(branch)
+        if missing:
+            errors.append("BRANCH_CONTRACT_MISSING_FIELDS:" + key + ":" + ",".join(sorted(missing)))
+        for field in required:
+            value = branch.get(field)
+            if not isinstance(value, list) or not value:
+                errors.append("BRANCH_CONTRACT_EMPTY_FIELD:" + key + ":" + field)
+    policy = data.get("freeze_policy", {})
+    expected_policy = {
+        "pre_result_registration": True,
+        "negative_results_append_only": True,
+        "refuted_branch_remains_historical": True,
+        "refuted_branch_remains_physically_viable": False,
+        "post_result_parameter_or_equation_change_requires_successor_version": True,
+    }
+    if policy != expected_policy:
+        errors.append("FREEZE_POLICY_NOT_FAIL_CLOSED")
+    return errors
+
+
 def main() -> int:
     data = json.loads(CONTRACT.read_text(encoding="utf-8"))
-    errors = validate(data)
+    branch_data = json.loads(BRANCH_CONTRACT.read_text(encoding="utf-8"))
+    errors = validate(data) + validate_branch_contract(branch_data)
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, indent=2))
         return 1
@@ -90,6 +131,7 @@ def main() -> int:
         "claim_allowed": False,
         "branches": sorted(EXPECTED_BRANCHES),
         "contract": str(CONTRACT.relative_to(ROOT)),
+        "branch_contract": str(BRANCH_CONTRACT.relative_to(ROOT)),
     }, indent=2))
     return 0
 
