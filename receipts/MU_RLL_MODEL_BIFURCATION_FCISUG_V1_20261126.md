@@ -17,7 +17,7 @@ Claim boundary: claim_allowed=false
 - Mapped F/C/I to existing C/A/B semantics without duplicating equations.
 - Kept S/U/G as typed TOKEN_VAZIO.
 - Added fair-comparison gates and negative tests.
-- Added isolated pull-request CI with read-only permissions.
+- Reused the repository Python test workflow instead of adding a new workflow inventory entry.
 
 ## Local execution
 
@@ -44,5 +44,5 @@ does not rewrite the predecessor contract, historical failures, or model code.
 ## R3
 
 - F_ok: typed branches, provenance, urgency, gaps, falsifiers and rollback are materialized; local gate and 6 negative/contract tests pass.
-- F_gap: remote CI, independent reproduction, physical closure and common posterior remain open.
+- F_gap: repository Python CI, independent reproduction, physical closure and common posterior remain open.
 - F_next: run focused tests, open PR, inspect checks, then update this receipt with a successor.
