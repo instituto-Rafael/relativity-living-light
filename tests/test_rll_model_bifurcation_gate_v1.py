@@ -11,6 +11,10 @@ def contract() -> dict:
     return json.loads(gate.CONTRACT.read_text(encoding="utf-8"))
 
 
+def branch_contract() -> dict:
+    return json.loads(gate.BRANCH_CONTRACT.read_text(encoding="utf-8"))
+
+
 class RllModelBifurcationGateV1Tests(unittest.TestCase):
     def test_canonical_contract_passes_scoped_gate(self) -> None:
         self.assertEqual(gate.validate(contract()), [])
@@ -40,6 +44,19 @@ class RllModelBifurcationGateV1Tests(unittest.TestCase):
         data = copy.deepcopy(contract())
         data["branches"]["F"]["status"] = "PASS_GLOBAL"
         self.assertIn("FORBIDDEN_GLOBAL_PASS:F", gate.validate(data))
+
+    def test_branch_contract_is_complete_and_fail_closed(self) -> None:
+        self.assertEqual(gate.validate_branch_contract(branch_contract()), [])
+
+    def test_interaction_sign_invariant_cannot_be_silently_reversed(self) -> None:
+        data = copy.deepcopy(branch_contract())
+        data["core"]["sign_invariant"] = "q_s>=0"
+        self.assertIn("INTERACTION_SIGN_INVARIANT_MISSING", gate.validate_branch_contract(data))
+
+    def test_e1_e2_e3_are_distinct_and_required(self) -> None:
+        data = copy.deepcopy(branch_contract())
+        del data["result_relation_types"]["E2"]
+        self.assertIn("RESULT_RELATION_TYPES_INCOMPLETE", gate.validate_branch_contract(data))
 
 
 if __name__ == "__main__":
