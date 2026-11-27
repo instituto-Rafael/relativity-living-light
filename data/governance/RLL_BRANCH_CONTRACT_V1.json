@@ -1,0 +1,113 @@
+{
+  "schema": "rll.branch_contract.v1",
+  "version": "1.0.0",
+  "date": "2026-11-26",
+  "claim_allowed": false,
+  "core": {
+    "rho_s": "A*[f+(1-f)*a^-3]",
+    "f_z": "1/(1+exp((z-z_t)/w_t))",
+    "redshift_scale_factor": "1+z=a^-1",
+    "derivative_coordinate": "prime=d/dln(a)",
+    "f_prime": "(1+z)*f*(1-f)/w_t",
+    "domain": ["A>0", "w_t>0", "z>=0", "0<f<1"],
+    "sign_invariant": "q_s=A*f_prime*(1-a^-3)<=0",
+    "interaction_convention": "q_s<0 means RLL loses energy and receiver gains energy"
+  },
+  "result_relation_types": {
+    "E1": "EXACT_MATHEMATICAL_EQUIVALENCE",
+    "E2": "OBSERVATIONAL_DEGENERACY_AT_DECLARED_PRECISION",
+    "E3": "OBSERVABLE_PHYSICAL_DIFFERENCE"
+  },
+  "freeze_policy": {
+    "pre_result_registration": true,
+    "negative_results_append_only": true,
+    "refuted_branch_remains_historical": true,
+    "refuted_branch_remains_physically_viable": false,
+    "post_result_parameter_or_equation_change_requires_successor_version": true
+  },
+  "required_contract_fields": [
+    "equations", "free_parameters", "allowed_intervals", "physical_hypotheses",
+    "initial_boundary_conditions", "data_covariance", "predeclared_rejection",
+    "code_data_identity", "known_model_relations", "limitations"
+  ],
+  "branches": {
+    "F": {
+      "status": "PARTIAL",
+      "equations": ["E2_RLL logistic background"],
+      "free_parameters": ["Omega_s0", "z_t", "w_t"],
+      "allowed_intervals": ["Omega_s0>=0", "w_t>0", "TOKEN_VAZIO_Z_T_BOUND"],
+      "physical_hypotheses": ["background-only phenomenology"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_NOT_APPLICABLE_OR_UNDECLARED"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["fails common-likelihood goodness or predictive checks", "violates declared background domain"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["E1 limit Omega_s0=0 -> LambdaCDM background", "E2 to be measured against wCDM/CPL"],
+      "limitations": ["no microphysical claim", "no perturbation closure"]
+    },
+    "C": {
+      "status": "PARTIAL",
+      "equations": ["p_C=-A*f-(A/3)*f_prime*(1-a^-3)", "continuity_residual=0"],
+      "free_parameters": ["Omega_s0", "z_t", "w_t", "TOKEN_VAZIO_PERTURBATION_CLOSURE_PARAMETERS"],
+      "allowed_intervals": ["A>0", "w_t>0", "TOKEN_VAZIO_STABILITY_DOMAIN"],
+      "physical_hypotheses": ["separately conserved effective fluid"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_GAUGE_AND_INITIAL_CONDITIONS"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["nonzero continuity residual", "ghost or gradient instability", "inadmissible sound speed"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["E1 background inherited from RLL core", "E2/E3 require perturbation observables"],
+      "limitations": ["rest-frame closure absent", "posterior absent"]
+    },
+    "I": {
+      "status": "PARTIAL",
+      "equations": ["p_I=-A*f", "q_s=A*f_prime*(1-a^-3)", "Q_s=H*q_s", "Q_receiver=-Q_s"],
+      "free_parameters": ["Omega_s0", "z_t", "w_t", "TOKEN_VAZIO_RECEIVER_PARAMETERS"],
+      "allowed_intervals": ["A>0", "w_t>0", "z>=0", "q_s<=0"],
+      "physical_hypotheses": ["interacting RLL sector", "total stress-energy conservation"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_RECEIVER_INITIAL_CONDITIONS"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["receiver absent", "negative receiver density", "total conservation failure", "growth or lensing instability"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["E2 background degeneracy possible", "E3 expected in growth/lensing after covariant closure"],
+      "limitations": ["receiver dynamics absent", "covariant Q_mu absent"]
+    },
+    "S": {
+      "status": "TOKEN_VAZIO_NOT_CLOSED",
+      "equations": ["TOKEN_VAZIO_ACTION", "TOKEN_VAZIO_EQUATIONS_OF_MOTION"],
+      "free_parameters": ["TOKEN_VAZIO_FIELD_PARAMETERS"],
+      "allowed_intervals": ["TOKEN_VAZIO_STABILITY_DOMAIN"],
+      "physical_hypotheses": ["scalar-field or EFT reconstruction candidate"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_FIELD_INITIAL_CONDITIONS"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["ghost", "gradient instability", "failure to reproduce frozen background"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["TOKEN_VAZIO_E1_E2_E3_CLASSIFICATION"],
+      "limitations": ["action and potential absent"]
+    },
+    "U": {
+      "status": "TOKEN_VAZIO_NOT_CLOSED",
+      "equations": ["TOKEN_VAZIO_UNIFIED_FLUID_DYNAMICS"],
+      "free_parameters": ["TOKEN_VAZIO_UNIFIED_PARAMETERS"],
+      "allowed_intervals": ["TOKEN_VAZIO_PHYSICAL_DOMAIN"],
+      "physical_hypotheses": ["unified dark-sector candidate"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_UNIFIED_INITIAL_CONDITIONS"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["exact known-model reduction without distinct observable", "unstable adiabatic sound speed"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["TOKEN_VAZIO_E1_EQUIVALENCE_MAP"],
+      "limitations": ["unified pressure and identifiability absent"]
+    },
+    "G": {
+      "status": "TOKEN_VAZIO_NOT_CLOSED",
+      "equations": ["TOKEN_VAZIO_COVARIANT_FIELD_EQUATIONS"],
+      "free_parameters": ["TOKEN_VAZIO_GRAVITY_PARAMETERS"],
+      "allowed_intervals": ["TOKEN_VAZIO_GHOST_FREE_DOMAIN"],
+      "physical_hypotheses": ["modified-gravity candidate"],
+      "initial_boundary_conditions": ["TOKEN_VAZIO_GRAVITY_INITIAL_CONDITIONS"],
+      "data_covariance": ["TOKEN_VAZIO_FROZEN_DATASET", "TOKEN_VAZIO_FROZEN_COVARIANCE"],
+      "predeclared_rejection": ["failure of GR limit", "ghost or gradient instability", "inconsistent gravitational slip"],
+      "code_data_identity": ["TOKEN_VAZIO_CODE_COMMIT", "TOKEN_VAZIO_DATA_SHA256"],
+      "known_model_relations": ["TOKEN_VAZIO_GR_LIMIT_AND_E1_MAP"],
+      "limitations": ["action, field equations and GR limit absent"]
+    }
+  }
+}
