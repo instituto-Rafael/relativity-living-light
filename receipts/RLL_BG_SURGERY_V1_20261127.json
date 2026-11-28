@@ -1,0 +1,200 @@
+{
+  "schema": "rll.background.surgery.receipt.v1",
+  "date_local": "2026-11-27",
+  "state": "REMOTE_WRITTEN_READBACK_LOCAL_SCOPED_AND_INDEPENDENT_SCAN",
+  "claim_allowed": false,
+  "base": "c73b560bed94f12a9c9714afc556615fa907a937",
+  "tested_code_head": "9cf65a20aa140359d70e54b4b44014ce6f426d6e",
+  "predecessor_pr": 1260,
+  "predecessor_status": "OPEN_UNMODIFIED",
+  "producer": "rll_vs_lcdm.py",
+  "producer_blob": "6ff9d76d6dfa5859e139521af29f876bfc049c84",
+  "canonical_background": "tools/run_g4_background_tournament.py",
+  "canonical_background_blob": "dcfe4bf7231b664f381ff4728ce1a3a1585e877e",
+  "artifacts": {
+    "background_likelihood_v1": "7a92492e8c78b99c904e4b98807368c59008cf46",
+    "run_background_desi_v1": "8670111dad34d0cc135ca02f7e1d5490ddb879bf",
+    "background_scale_profile_v1": "c3afdcde31e4d10713ea52a1c65fb491d4a41a98",
+    "test_background_likelihood_v1": "4e0200bfb2f1b4954c22dc893d6cfa30636fd468",
+    "test_background_scale_profile_v1": "de2490136752d7ba69b73541d386e996b8ef7c31",
+    "original_doc": "92982c39754982b4766365066700dbeae573a383"
+  },
+  "local_tests": {
+    "status": "PASS_SCOPED",
+    "passed": 18,
+    "failed": 0,
+    "command": "PYTHONPATH=<producer_excerpt>:<isolated_patch> python -m unittest discover -s tests -p 'test_background*py' -v",
+    "python": "3.13",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "limitation": "Two new source files' complete Git blob identities matched; producer dependency is a manually transcribed excerpt, not a full checkout. Local test does not validate G4 loader execution, repository CI or cosmological fit."
+  },
+  "scan": {
+    "status": "INDEPENDENT_COORDINATE_SCAN_NOT_CANONICAL_FIT",
+    "observations": 13,
+    "train_observations": 11,
+    "held_out_observations": 2,
+    "holdout_z": 2.33,
+    "source_blob": {
+      "points": "f6d05ead6fef7fea663eff8b31bc2c337dc30435",
+      "covariance": "e01d0235a2f0e61d81af0c36a7338953f845f5c3",
+      "native_mean": "a1af6c879f55a2073799471ec0a842356352b6e5",
+      "native_covariance": "e5d3278addc66416b25ba0e825ed3ca6ddc9260d"
+    },
+    "native_covariance_equal": true,
+    "permutation": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      11
+    ],
+    "cross_covariance_zero_in_committed_matrix": true,
+    "max_mean_rounding_difference": 0.0009739619587847415,
+    "max_sigma_relative_drift": 0.06435254011060132,
+    "method": "Independent JavaScript implementation of late-time flat no-radiation model equations. Cholesky whitening; analytical constrained profile of c/(H0 rd), H0 pivot 70, rd 100..200; deterministic coordinate search, 12 starts (one nested-null, 11 seeded LCG seed 42), up to 150 iterations; initial coordinate step 18% of span, halved if no improvement; Simpson 128 intervals, final at 512, check 256 versus 512. Training scale unchanged in holdout. Not a run of new Python runner. No posterior or trial factor.",
+    "bounds": {
+      "om": [
+        0.1,
+        0.6
+      ],
+      "w0": [
+        -2,
+        -0.3
+      ],
+      "wa": [
+        -3,
+        3
+      ],
+      "os0": [
+        0,
+        0.25
+      ],
+      "zt": [
+        0.1,
+        10
+      ],
+      "wt": [
+        0.05,
+        2
+      ]
+    },
+    "rows": [
+      {
+        "model": "LCDM",
+        "chi2_all": 10.278241470507966,
+        "chi2_train": 10.182881731344164,
+        "chi2_holdout": 0.15668310402100175,
+        "all_shape": [
+          0.2974749375926331
+        ],
+        "train_shape": [
+          0.29915974943432955
+        ],
+        "all_rd_pivot": 145.05378953107325,
+        "train_rd_pivot": 144.92574240731142,
+        "all_start_range": [
+          10.278241500008395,
+          10.278241505679373
+        ]
+      },
+      {
+        "model": "wCDM",
+        "chi2_all": 9.035930163294541,
+        "chi2_train": 6.5618173825257236,
+        "chi2_holdout": 30.248857016527047,
+        "all_shape": [
+          0.2977007161779329,
+          -0.9114654490854589
+        ],
+        "train_shape": [
+          0.25243449422065173,
+          -0.7161800904795529
+        ],
+        "all_rd_pivot": 142.48607769518347,
+        "train_rd_pivot": 139.150400246986,
+        "all_start_range": [
+          9.035930167362535,
+          9.035930167753516
+        ]
+      },
+      {
+        "model": "CPL",
+        "chi2_all": 5.699016397211852,
+        "chi2_train": 5.648799148310585,
+        "chi2_holdout": 0.3499784583734481,
+        "all_shape": [
+          0.37395592712331566,
+          -0.3,
+          -2.3019136872701345
+        ],
+        "train_shape": [
+          0.3699932100670413,
+          -0.3,
+          -2.221237907409668
+        ],
+        "all_rd_pivot": 132.17436526803118,
+        "train_rd_pivot": 132.0461088206365,
+        "all_start_range": [
+          5.699016288777957,
+          10.984426802718222
+        ],
+        "warning": "BOUNDARY_W0_AND_START_SENSITIVITY"
+      },
+      {
+        "model": "RLL",
+        "chi2_all": 9.093189682795373,
+        "chi2_train": 8.10606334472526,
+        "chi2_holdout": 0.4373206213293064,
+        "all_shape": [
+          0.24986134855542205,
+          0.0401659762114286,
+          0.3784375,
+          0.05
+        ],
+        "train_shape": [
+          0.20486134855542343,
+          0.07461910121142858,
+          0.3784375,
+          0.05
+        ],
+        "all_rd_pivot": 146.4944256866782,
+        "train_rd_pivot": 148.1902805529156,
+        "all_start_range": [
+          9.093189703460325,
+          10.615666320205975
+        ],
+        "warning": "BOUNDARY_WT_AND_ITERATION_LIMIT_AND_START_SENSITIVITY"
+      }
+    ],
+    "max_quadrature_delta_chi2": 6.391339013589459e-9,
+    "limitations": [
+      "Not independent of the repository's observational source custody; external upstream checksum was not recomputed in scan.",
+      "Numerical search incomplete, no predictive distribution, no full joint posterior, no significance or model selection claim.",
+      "Holdout cross covariance zero in committed matrix does not prove all observational systematics independent.",
+      "The analysis code was executed in a separate JS harness; the receipt records its method and output, not a standalone replay artifact."
+    ]
+  },
+  "gates": {
+    "remote_commit": "VERIFIED_READBACK",
+    "full_checkout": "BLOCKED_DNS",
+    "full_ci": "TOKEN_VAZIO_EXACT_HEAD",
+    "python_real_runner": "NOT_RUN",
+    "null_mocks": "NOT_RUN",
+    "cc_full_covariance": "TOKEN_VAZIO",
+    "lyalpha_ap": "TOKEN_VAZIO_FROZEN_DATA_COVARIANCE",
+    "sn_dovekie_union": "TOKEN_VAZIO_FROZEN_DATA",
+    "growth_cmb": "TOKEN_VAZIO_PHYSICAL_CLOSURE",
+    "merge": "NOT_RUN"
+  },
+  "rollback": "Leave isolated branch unmerged; any correction via successor, no deletion or history rewrite.",
+  "next": "Run G4 and free-scale diagnostic on exact head; independent mock calibration, parameter identifiability, prior expansion and probe holdouts before any physical claim."
+}
